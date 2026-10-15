@@ -102,7 +102,7 @@ function useDJPlaybackController() {
     await client.invalidateQueries({ queryKey: ['localState'] });
     if (patch.enabled === false) live.current.player.stopNews();
   } });
-  const error = current?.failure ?? (settings.enabled && !room ? 'Choose an available Listening Room.' : null);
+  const error = current?.failure ?? (settings.enabled && !room ? 'Choose an available News bucket.' : null);
   return { state, settings, rooms, room, sources, pending: current?.pending ?? null, preparing: current?.preparing ?? false, placing: current?.placing ?? false, waitingForPreparation: current?.waiting ?? false,
     error, update, songsUntilBreak: Math.max(1, settings.everySongs - completed), retry: () => retry.current() };
 }

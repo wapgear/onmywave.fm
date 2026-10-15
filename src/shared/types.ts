@@ -77,6 +77,7 @@ export type NewsTransitionSettings = {
   fadeInSeconds: number;
 };
 export type NewsArticle = { id: string; title: string; url: string; source: string; publishedAt?: string };
+export type ReviewedNewsArticle = NewsArticle & { canonicalUrl: string; requestId: string; reviewedAt: string; status: 'submitted' | 'reviewed' | 'interrupted'; outcome?: 'selected' | 'not-selected' };
 export type NewsScript = { requestId: string; script: string; articles: NewsArticle[]; warnings: string[] };
 export type NewsBreak = NewsScript & { id: string; audioUrl: string; engine: NewsSettings['speechEngine']; createdAt: string };
 export type DJVoicePreview = { audioUrl: string | null; createdAt: string | null; available: boolean; stale: boolean; attempted: boolean };
@@ -101,7 +102,7 @@ export type PreparedNewsProvenance = { dj: DJ; mood: string; sources: NewsSource
 export type PreparedNewsScript = NewsScript & { id: string; createdAt: string; provenance: PreparedNewsProvenance };
 export type PreparedNewsTake = NewsBreak & { signature: string; provenance: PreparedNewsProvenance; renderingDJ: DJ; available: boolean; byteLength: number; model: string; voice: string; delivery: string; scriptId: string; deliveryState?: { status: 'ready' | 'claimed' | 'played'; claimedAt?: string; playedAt?: string } };
 export type PreparedNewsRequest = { requestId: string; kind: 'script' | 'audio'; inputHash: string; status: 'running' | 'complete' | 'failed' | 'interrupted' | 'skipped'; artifactId?: string; error?: string };
-export type PreparedNewsLibrary = { scripts: PreparedNewsScript[]; takes: PreparedNewsTake[]; selectedTakeId: string | null; requests: PreparedNewsRequest[] };
+export type PreparedNewsLibrary = { scripts: PreparedNewsScript[]; takes: PreparedNewsTake[]; selectedTakeId: string | null; requests: PreparedNewsRequest[]; reviewedArticles: ReviewedNewsArticle[] };
 export type LocalState = { djPlayback: DJPlaybackSettings; roomProfiles: RoomProfile[]; activeRoomProfileId: string; newsTransitions: NewsTransitionSettings; djs: DJ[]; vibe: string; playback: PlaybackSnapshot | null; sources: NewsSource[]; listeningRoom: ListeningRoom; workflowDraft: WorkflowDraft };
 export type PlaybackResource = { url: string; offsetSeconds: number; transcoded: boolean };
 export interface WaveApi {

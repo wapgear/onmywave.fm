@@ -1,6 +1,14 @@
-# Listening Room workflows
+# News bucket workflows
 
 Status: DJ playback consumes saved news. A separate local news workflow prepares recordings on an hourly schedule. Morning weather remains future work.
+
+## News bucket and review history
+
+The bucket is the default view of saved news. It shows actual scheduled or speaking DJ audio separately from recordings eligible for playback and drafts awaiting audio. The DJ-selected profile can differ from the profile open on this page; playback context is shown explicitly. Source articles retain their original HTTP(S) links.
+
+Review history is global across profiles. The preparation service filters canonical article URLs before a paid assessment, reserves only the candidates sent to the model, and records selected and unselected outcomes, including no-selection results. Submitted requests with an unknown outcome stay excluded and are labeled interrupted. A failed source fetch does not mark unseen articles reviewed. A definitive provider rejection releases its candidate reservations so a later attempt can assess them. Unknown outcomes stay excluded to avoid repeating a possibly charged request. Known selected articles from existing scripts and audio seed the ledger; rejected articles from earlier versions cannot be reconstructed.
+
+There is no expiry or automatic re-review for a URL, even if interests change or an article at that URL is updated. Feeds continue supplying new URLs. The current index retains full review metadata; an indexed store can replace it if history size makes rewrites slow.
 
 ## Playback
 

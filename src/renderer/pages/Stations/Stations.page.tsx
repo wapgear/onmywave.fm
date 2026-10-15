@@ -12,6 +12,7 @@ import { PreparedTakes } from './components/PreparedTakes.component';
 import { useDJPlayback } from '../../dj-playback';
 import { WorkflowPreferences } from '../Settings/components/WorkflowPreferences.component';
 import { DJPlaybackSettings } from '../Settings/components/DJPlaybackSettings.component';
+import { NewsBucket } from './components/NewsBucket.component';
 import './Stations.styles.css';
 
 export type RoomDraft = { scriptId: string; script: string } | null;
@@ -29,7 +30,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   const setSetup = (setup: ListeningRoom | null) => setConfigDraft(current => ({ ...current, setup }));
   const setMoodDraft = (moodDraft: string | null) => setConfigDraft(current => ({ ...current, moodDraft }));
   const manualTools = useRef<HTMLDetailsElement>(null);
-  const tab = configDraft.tab ?? 'overview';
+  const tab = configDraft.tab ?? 'bucket';
   const setTab = (tab: string) => setConfigDraft(current => ({ ...current, tab }));
   const aiStatus = useQuery({ queryKey: ['aiStatus'], meta: { aiOperation: true }, queryFn: async () => unwrap(await window.wave.getAiStatus()) });
   const elevenStatus = useQuery({ queryKey: ['elevenLabsStatus'], meta: { aiOperation: true }, queryFn: async () => unwrap(await window.wave.getElevenLabsStatus()) });
@@ -159,18 +160,20 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   const sourceSnapshot = (values: typeof sources) => JSON.stringify([...values].sort((a, b) => a.id.localeCompare(b.id)));
   const differs = selectedTake && (selectedTake.script !== editing?.script || JSON.stringify(selectedTake.renderingDJ) !== JSON.stringify(dj) || selectedTake.provenance.mood !== mood || (selectedTake.provenance.newsInterests ?? selectedTake.provenance.dj.news?.interests ?? '') !== newsInterests || sourceSnapshot(selectedTake.provenance.sources) !== sourceSnapshot(chosenSources));
   function loadDraft(take: PreparedNewsTake) { setTab('prepare'); setDraft({ scriptId: take.scriptId, script: take.script }); requestAnimationFrame(() => { if (manualTools.current) manualTools.current.open = true; manualTools.current?.scrollIntoView({ block: 'start', behavior: 'auto' }); manualTools.current?.querySelector<HTMLTextAreaElement>('#news-draft')?.focus({ preventScroll: true }); }); }
+  function loadScriptDraft(script: { id: string; script: string }) { setTab('prepare'); setDraft({ scriptId: script.id, script: script.script }); requestAnimationFrame(() => { if (manualTools.current) manualTools.current.open = true; manualTools.current?.scrollIntoView({ block: 'start', behavior: 'auto' }); manualTools.current?.querySelector<HTMLTextAreaElement>('#news-draft')?.focus({ preventScroll: true }); }); }
+  function openPreparation() { setTab('prepare'); requestAnimationFrame(() => { if (manualTools.current) manualTools.current.open = true; manualTools.current?.scrollIntoView({ block: 'start', behavior: 'auto' }); }); }
   return <>
-    <PageHeading title="Listening Room" />
+    <PageHeading title="News bucket" />
     <div className="listening-room">
       {state.isPending && <p className="loading" role="status">Opening your room…</p>}
       <ErrorNotice error={state.error} retry={() => void state.refetch()} />
-      {state.data && <><div className="room-profile-bar"><label htmlFor="room-profile">Listening room<select id="room-profile" value={state.data.activeRoomProfileId} disabled={busy} onChange={event => chooseProfile(event.target.value)}>{state.data.roomProfiles.map(value => <option key={value.id} value={value.id}>{value.name}{value.id === state.data?.activeRoomProfileId ? ' · Active' : ''}</option>)}</select></label><button disabled={busy} onClick={() => { profiles.reset(); setProfileName(''); setNewProfileOpen(true); }}>Save as new</button></div>
+      {state.data && <><div className="room-profile-bar"><label htmlFor="room-profile">Setup profile<select id="room-profile" value={state.data.activeRoomProfileId} disabled={busy} onChange={event => chooseProfile(event.target.value)}>{state.data.roomProfiles.map(value => <option key={value.id} value={value.id}>{value.name}{value.id === state.data?.activeRoomProfileId ? ' · Active' : ''}</option>)}</select></label><button disabled={busy} onClick={() => { profiles.reset(); setProfileName(''); setNewProfileOpen(true); }}>Save as new</button></div>
       {activeProfile && <details className="room-advanced"><summary>Advanced room options</summary><label className="room-dj-enabled"><input type="checkbox" checked={activeProfile.enabled} disabled={busy} onChange={event => enableProfile.mutate({ id: activeProfile.id, enabled: event.target.checked })} />Show in DJ player room selector</label></details>}
       <ErrorNotice error={enableProfile.error} />
-      <p className="form-hint">Choose a room here, then enable its automatic DJ breaks in Preparation.</p>
+      <p className="form-hint">Choose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.</p>
       {profileNotice && <p className="form-hint room-profile-notice" role="status">{profileNotice}</p>}
       {!newProfileOpen && !switchTarget && <ErrorNotice error={profiles.error} />}
-      <ConfigurationTabs id="room" tabs={[{ id: 'overview', label: 'Overview' }, { id: 'news', label: 'News' }, { id: 'host', label: 'Host & mood' }, { id: 'prepare', label: 'Preparation' }, { id: 'saved', label: 'Saved audio' }]} value={tab} onChange={setTab} />
+      <ConfigurationTabs id="room" label="News bucket and configuration" tabs={[{ id: 'bucket', label: 'News bucket' }, { id: 'overview', label: 'Overview' }, { id: 'news', label: 'News' }, { id: 'host', label: 'Host & mood' }, { id: 'prepare', label: 'Preparation' }, { id: 'saved', label: 'Saved audio' }]} value={tab} onChange={setTab} />
       {unsavedSetup && tab !== 'news' && tab !== 'host' && <div className="room-unsaved"><p>Unsaved setup changes. Enabling automatic DJ also saves your setup.</p><button disabled={busy} onClick={() => save.mutate()}>{save.isPending ? 'Saving…' : 'Save setup'}</button><ErrorNotice error={save.error} /></div>}
       <RoomSetup sources={sources} djs={state.data.djs} room={room} mood={mood} newsInterests={newsInterests} dj={dj} tab={tab} onTabChange={setTab} busy={busy} saving={save.isPending} ready={ready} validSources={validSources} finite={finite} saveError={save.error}
         openAiLabel={aiStatus.isPending ? 'Checking…' : aiStatus.error ? 'Status unavailable' : textKeyReady ? aiStatus.data?.sessionOnly ? 'Available this session' : 'Configured' : 'Add key in Settings'}
@@ -180,6 +183,12 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
         automationSummary={scheduledForRoom ? `Enabled · every ${automation.settings.everySongs} songs` : automation.settings.enabled ? `Enabled for ${automation.room?.name ?? 'another room'}` : 'Off'} automationComplete={scheduledForRoom}
         setSetup={setSetup} setMoodDraft={setMoodDraft} setNewsInterests={setNewsInterests} configureSources={configureSources} configureDJ={configureDJ} configureSettings={configureSettings}
         onSave={() => save.mutate()} /></>}
+      {state.data && <section id="room-panel-bucket" role="tabpanel" aria-labelledby="room-tab-bucket" hidden={tab !== 'bucket'} tabIndex={0}>
+        <ErrorNotice error={library.error} retry={() => void library.refetch()} />
+        {library.isPending && <p className="loading" role="status">Opening the news bucket…</p>}
+        {library.data && <NewsBucket library={library.data} localState={state.data} automation={automation} openSource={url => source.mutate(url)} openPreparation={openPreparation} openDraft={loadScriptDraft} />}
+        <ErrorNotice error={source.error} />
+      </section>}
       {preparing && <div className="news-progress room-active-progress" role="status"><LoaderCircle className="spinning" size={17} /><span>{progress?.message ?? 'Preparing…'}</span><button disabled={cancel.isPending} onClick={() => cancel.mutate()}>Cancel preparation</button></div>}
       {tab !== 'prepare' && prepare.isError && !noNews && <div className="room-background-error"><ErrorNotice error={prepare.error} /><button className="room-link" onClick={() => setTab('prepare')}>Review preparation</button></div>}
       <section id="room-panel-prepare" role="tabpanel" aria-labelledby="room-tab-prepare" hidden={tab !== 'prepare'} tabIndex={0} className="room-preparation">

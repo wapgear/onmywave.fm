@@ -18,7 +18,7 @@ import { PlaylistsPage } from './pages/Playlists/Playlists.page';
 import { StationsPage, type RoomDraft, type RoomSetupDraft } from './pages/Stations/Stations.page';
 import { SettingsPage, type SettingsSection } from './pages/Settings/Settings.page';
 type PageName = 'songs' | 'albums' | 'playlists' | 'stations' | 'settings';
-const navigation = [{ id: 'songs', name: 'All songs', icon: Music2 }, { id: 'albums', name: 'Albums', icon: Disc3 }, { id: 'playlists', name: 'Playlists', icon: ListMusic }, { id: 'stations', name: 'Listening Room', icon: Radio }] as const;
+const navigation = [{ id: 'songs', name: 'All songs', icon: Music2 }, { id: 'albums', name: 'Albums', icon: Disc3 }, { id: 'playlists', name: 'Playlists', icon: ListMusic }, { id: 'stations', name: 'News bucket', icon: Radio }] as const;
 export default function App() {
   const client = useQueryClient();
   const connectionQuery = useQuery({ queryKey: ['connection'], queryFn: async () => unwrap(await window.wave.getConnection()), retry: false });

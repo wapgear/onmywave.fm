@@ -12,7 +12,7 @@ import { JellyfinService, ServiceError } from './jellyfin';
 import { getLocalState, openAIKeyStatus, readConnection, readOpenAIKey, updateLocalState, writeConnection, writeOpenAIKey, readElevenLabsKey, elevenLabsKeyStatus, writeElevenLabsKey } from './storage';
 import { preparePlayback, registerMedia, registerSpeechAudio, revokeMedia, revokeSpeechAudio } from './media';
 import { NewsService, validateNewsSettings } from './news';
-import { getPreparedNews, prepareNewsScript, renderNewsTake, selectNewsTake, cancelPreparedNews, isPreparedNewsActive, nextRoomNews, releasePreparedNews, markPreparedNewsPlayed, reconcilePreparedNews } from './prepared-news';
+import { getPreparedNews, prepareNewsScript, renderNewsTake, selectNewsTake, cancelPreparedNews, isPreparedNewsActive, nextRoomNews, releasePreparedNews, markPreparedNewsPlayed, reconcilePreparedNews, submitReviewedCandidates, completeReviewedCandidates, interruptReviewedCandidates, releaseReviewedCandidates, savePreparedScript, reviewedArticleUrls } from './prepared-news';
 import { pauseNewsWorkflow, startNewsWorkflow, stopNewsWorkflow } from './news-workflow';
 import { isNewsTransitionSettings, normalizeNewsTransitionSettings } from '../shared/news-transitions';
 import { isWorkflowDraft, normalizeWorkflowDraft } from '../shared/workflow';
@@ -272,7 +272,13 @@ function registerIpc() {
           if (newsGeneration === generation && activeNews === input.requestId && window && !window.isDestroyed()) window.webContents.send('wave:newsProgress', value);
         };
         progress({ requestId: input.requestId, phase: 'feeds', message: 'Fetching your feeds and writing a personalized bulletin…' });
-        const result = await news.generate({ ...input, dj, music, settings: dj.news, engine: 'elevenlabs-v4' });
+        const result = await news.generate({ ...input, dj, music, settings: dj.news, engine: 'elevenlabs-v4', excludeArticleUrls: await reviewedArticleUrls(),
+          onCandidates: candidates => submitReviewedCandidates(input.requestId, candidates), onReleaseCandidates: candidates => releaseReviewedCandidates(input.requestId, candidates), onReview: url => completeReviewedCandidates(input.requestId, url),
+          onPreparedScript: async result => {
+            const state = await getLocalState();
+            const sources = dj.news!.feedUrls.map((url, index) => state.sources.find(source => source.url === url) ?? { id: `preview-${index}`, name: new URL(url).hostname, url, kind: 'rss' as const });
+            await savePreparedScript({ ...result, id: input.requestId, createdAt: new Date().toISOString(), provenance: { dj, mood: state.vibe, sources, newsInterests: dj.news!.interests } });
+          } });
         const script = result;
         const bytes = result.audio;
         const mime = result.mimeType;
@@ -281,6 +287,7 @@ function registerIpc() {
         return { requestId: input.requestId, script: script.script, articles: script.articles, warnings: script.warnings,
           id: input.requestId, audioUrl, engine: result.engine, createdAt: new Date().toISOString() };
       } catch (error) {
+        await interruptReviewedCandidates(input.requestId);
         if (newsGeneration === generation && activeNews === input.requestId) { activeNews = null; revokeSpeechAudio(); }
         throw error;
       } finally { preparingNewsPreview = false; }

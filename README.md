@@ -30,13 +30,13 @@ Reopening automatically restores the previous queue, song, playback position, vo
 
 ## Scope
 
-See [the requirements](REQUIREMENTS.md) and [approved design](docs/design/macos-production-concept-v4.png). Browse your Jellyfin library, manage playlists, and configure prepared news in Listening Room. AI playlist generation remains future work. The player DJ plays saved news on a song interval; a separate workflow prepares it.
+See [the requirements](REQUIREMENTS.md) and [approved design](docs/design/macos-production-concept-v4.png). Browse your Jellyfin library, manage playlists, and configure prepared news in News bucket. AI playlist generation remains future work. The player DJ plays saved news on a song interval; a separate workflow prepares it.
 
-## Listening Room
+## News bucket
 
-Listening Room opens on a grouped checklist for News, Host and mood, Provider access, and Automatic workflow. Preparation shows the automatic workflow status and can save and enable the current room directly. Configure the song interval there. Manual text and audio preparation is available under collapsed testing tools; it is not required for automatic breaks. Saved audio stays accessible in its own tab.
+News bucket opens on pending recordings, drafts, and reviewed articles. The Overview tab has a setup checklist for News, Host and mood, Provider access, and Automatic workflow. Preparation shows the automatic workflow status and can save and enable the current room directly. Configure the song interval there. Manual text and audio preparation is available under collapsed testing tools; it is not required for automatic breaks. Saved audio stays accessible in its own tab.
 
-Settings owns shared source/DJ management and provider keys. News preparation controls its own hourly checks and daily limits in Workflows or Listening Room. Morning weather remains planned.
+Settings owns shared source/DJ management and provider keys. News preparation controls its own hourly checks and daily limits in Workflows or News bucket. Morning weather remains planned.
 
 Sources supports RSS/Atom URLs, Twitter / X recent-search queries, and Hacker News Top, New, or Best stories. Hacker News needs no key. Twitter requires a bearer token with recent-search access in Settings → Provider keys. The token stays in the main process and uses encrypted local storage, or session-only storage when encryption is unavailable. Source content is bounded, checked for freshness when dated, and deduplicated. A failed source produces a named warning while remaining sources may still prepare a story.
 
@@ -44,15 +44,15 @@ Twitter setup help is available beside the bearer-token field and in the Twitter
 
 The adapters follow the [official Hacker News API](https://github.com/HackerNews/API) and [X recent-search documentation](https://docs.x.com/x-api/posts/search/quickstart/recent-search). No live paid provider requests were made for verification. A fixture-backed browser check covered mode switching, saving the prompt, and adding a Twitter source; a focused preparation check covered mixed sources, partial failures, and missing Twitter credentials.
 
-Listening Room supports named configurations. Use **Save as new** to keep a separate, inactive copy of your current sources, DJ, mood, news prompt, and workflow preferences. Incomplete configurations can be saved for later. Choose a saved room from the picker to use it; unsaved edits can be saved or discarded before switching. The existing setup migrates into **My room**. Saving and preparing update the active room. Switching rooms keeps your script and selected audio. Sources, DJs, and provider keys are shared across rooms.
+News bucket supports named configurations. Use **Save as new** to keep a separate, inactive copy of your current sources, DJ, mood, news prompt, and workflow preferences. Incomplete configurations can be saved for later. Choose a saved room from the picker to use it; unsaved edits can be saved or discarded before switching. The existing setup migrates into **My room**. Saving and preparing update the active room. Switching rooms keeps your script and selected audio. Sources, DJs, and provider keys are shared across rooms.
 
-Listening Room starts with a setup checklist. Choose a checklist action or tab to edit news, host, and mood. Setup progress survives visits to Settings. Saving room setup requires no provider key. Automatic news preparation runs only after its separate workflow is enabled.
+Use the Overview checklist or configuration tabs to edit news, host, and mood. Setup progress survives visits to Settings. Saving room setup requires no provider key. Automatic news preparation runs only after its separate workflow is enabled.
 
-Settings owns provider keys and shared source and DJ management. Listening Room owns setup, automation, and testing. Explanations are available from a small number of info buttons.
+Settings owns provider keys and shared source and DJ management. News bucket owns setup, automation, and testing. Explanations are available from a small number of info buttons.
 
-News preparation has its own opt-in hourly workflow, independent of playback. Configure it in Listening Room → Preparation or Settings → Workflows. It runs while the app is open and your Mac is awake. Weather, calendar, and reminder workflows remain planned. [Read the workflow plan](docs/LISTENING_ROOM_WORKFLOW.md) for execution, costs, lifecycle, and expected results.
+News preparation has its own opt-in hourly workflow, independent of playback. Configure it in News bucket → Preparation or Settings → Workflows. It runs while the app is open and your Mac is awake. Weather, calendar, and reminder workflows remain planned. [Read the workflow plan](docs/LISTENING_ROOM_WORKFLOW.md) for execution, costs, lifecycle, and expected results.
 
-The player’s **DJ** button opens room selection, schedule status, upcoming news and the last news heard this session. Make saved rooms available in Listening Room, select one in the popover, then enable DJ. Listening Room → Preparation controls the interval from 1 to 100 songs, defaulting to 3. Choose 1 for testing. The switch and selected room persist; song progress starts over on enable, room or interval changes, and relaunch.
+The player’s **DJ** button opens room selection, schedule status, upcoming news and the last news heard this session. Make saved rooms available in News bucket, select one in the popover, then enable DJ. News bucket → Preparation controls the interval from 1 to 100 songs, defaulting to 3. Choose 1 for testing. The switch and selected room persist; song progress starts over on enable, room or interval changes, and relaunch.
 
 Only natural song completions count, including repeat-one. Skips, pause, seeking and playback retries do not count. At the song interval, the DJ checks the saved news pool for a matching fresh recording. If none is available, music continues without a generation request. Played takes are tracked so automatic playback does not repeat them. News generation runs independently on its own switch and hourly cadence, with a daily recording cap and a bounded number of source assessments. Manual saved-take selection remains independent.
 
@@ -62,7 +62,7 @@ After setup, enable DJ playback in Preparation and play music. Enable News prepa
 
 The setup separates named RSS/Atom feeds, Twitter searches, and Hacker News **Sources**, a saved **DJ** with voice and hosting preferences, and **Station mood** for the atmosphere and delivery. Existing station text and DJ feed URLs migrate into this setup.
 
-1. Manage feeds and searches in Settings → Sources and hosts in Settings → DJs. Select up to 20 sources, a DJ, and station mood in Listening Room.
+1. Manage feeds and searches in Settings → Sources and hosts in Settings → DJs. Select up to 20 sources, a DJ, and station mood in News bucket.
 2. Configure protected keys in Settings → Provider keys. OpenAI uses `gpt-6-luna` with reasoning disabled to select and prepare stories from your feeds. ElevenLabs is the only voice provider. Create a DJ with a predefined personality and Man/Woman voice, search your available ElevenLabs voices in Simple, or enter a voice ID and tune all preferences in Advanced.
 3. **Prepare news text** saves the setup, reads bounded feed excerpts, and generates one short story. Review and edit its script and inspect references.
 4. **Generate audio take** renders the reviewed text. Matching saved audio is reused. **Generate another take** explicitly requests a new render.
@@ -73,7 +73,7 @@ Saving setup does not fetch feeds, generate news, or start audio. No song needs 
 
 Scripts, MP3 takes, source snapshots, rendering settings, and selection persist under the app's `prepared-news` data directory. Saved recordings play without provider keys. Missing files retain their script and settings and never trigger automatic regeneration. Existing DJ settings migrate to ElevenLabs and `gpt-6-luna`. Saved takes keep their original provenance, provider labels, and audio.
 
-Scheduling measures the clip before arming it for the current song occurrence. Music fades down before narration, then the next song starts when the clip ends. Pause controls both channels. Stop break restores the current song without advancing it. Seeking or changing songs cancels the scheduled occurrence.
+Scheduling measures the clip before arming it for the current song occurrence. Music fades down before narration, then the next song starts when the clip ends. Pause controls both channels. Stop break restores the current song without advancing it. Changing songs cancels the scheduled occurrence. Seeking preserves it by default and can be configured in Settings.
 
 Request IDs persist before dispatch. Checking a saved result does not repeat a completed provider call. Interrupted or uncertain requests require an explicit new attempt. A provider may still charge for a request interrupted before its response arrives.
 
@@ -98,3 +98,11 @@ Custom IDs have a Generate sample button when no saved recording exists. Generat
 Voice preview playback pauses music. Starting music, changing voice, closing the editor, or starting another sample stops it. A sample completing after the user changes voice must not play unexpectedly. Saving a DJ does not generate speech.
 
 The bundled samples are in `src/renderer/public/voice-previews/` with generation metadata. To prepare missing assets once, set `ELEVENLABS_API_KEY` and run `node scripts/prepare-voice-previews.mjs`. The script skips completed matching files and makes no automatic retry after a provider error. Replaying those assets does not need a key. Increment `VOICE_SAMPLE_VERSION` when changing the fixed text, model, or rendering settings, then regenerate the bundled assets for that version.
+
+## News bucket and reviewed articles
+
+The News bucket opens on saved stories and the actual DJ playback state. Ready recordings use the same eligibility and ordering rules as the player; they are distinct from a break already scheduled near a song ending. Drafts awaiting audio and reviewed article history remain visible with their original source links. Profile setup and preparation remain available in secondary tabs.
+
+All preparation paths share a permanent article URL history. Known tracking parameters and URL fragments are ignored when comparing links. Articles already submitted for assessment are excluded across profiles before another text-generation request. Completed assessments record selected and unselected articles, including checks where no story qualifies. An interrupted assessment keeps its source links and is excluded to avoid repeating a possibly charged request. Feeds remain enabled and can supply new article URLs. Updates at a previously reviewed URL are also excluded.
+
+Existing saved scripts and recordings seed the history with their known selected articles. Past rejected candidates cannot be recovered because older versions did not save them.

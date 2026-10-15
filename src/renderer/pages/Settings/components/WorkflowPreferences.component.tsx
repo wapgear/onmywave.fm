@@ -25,7 +25,7 @@ export function WorkflowPreferences({ onConfigureRoom }: { onConfigureRoom?: () 
     <ErrorNotice error={state.error} retry={() => void state.refetch()} />
     {state.isPending && <p className="loading" role="status">Loading preferences…</p>}
     {room && <form key={room.id} onSubmit={event => { event.preventDefault(); if (!save.isPending) save.mutate(); }}>
-      <p className="settings-description">Listening room: {room.name}</p>
+      <p className="settings-description">News profile: {room.name}</p>
       <fieldset className="news-workflow-fields" disabled={save.isPending || !room.enabled}>
         <label className="news-workflow-toggle"><input type="checkbox" checked={settings.newsEnabled ?? false} onChange={event => change({ newsEnabled: event.target.checked })} /> Automatically prepare news for this room</label>
         <label>Check sources every<select value={settings.everyHours ?? 3} onChange={event => change({ everyHours: Number(event.target.value) as 1 | 3 | 6 })}><option value={1}>1 hour</option><option value={3}>3 hours</option><option value={6}>6 hours</option></select></label>
@@ -35,11 +35,11 @@ export function WorkflowPreferences({ onConfigureRoom }: { onConfigureRoom?: () 
         <p className="settings-description">Requires a saved DJ, sources, mood, and provider keys. Saving an enabled workflow authorizes these provider calls.</p>
         <button className="primary" disabled={save.isPending || draft === null}>{save.isPending ? 'Saving…' : 'Save news workflow'}</button>
       </fieldset>
-      {!room.enabled && <p className="notice">Make this room available in Listening Room to enable preparation.</p>}
+      {!room.enabled && <p className="notice">Make this room available in News bucket to enable preparation.</p>}
       {room.workflowDraft.newsWorkflowError ? <><p className="notice" role="alert">Preparation paused: {room.workflowDraft.newsWorkflowError}</p><button type="button" disabled={save.isPending} onClick={() => save.mutate()}>Resume preparation</button></> : <p className="settings-description" role="status">{room.workflowDraft.newsEnabled ? room.workflowDraft.nextNewsCheckAt ? `Next check: ${new Date(room.workflowDraft.nextNewsCheckAt).toLocaleString()}` : 'First check pending.' : 'Automatic news preparation is off.'}</p>}
       <ErrorNotice error={save.error} />
       {save.isSuccess && draft === null && <p className="form-hint" role="status">News workflow saved.</p>}
     </form>}
-    {onConfigureRoom && <button type="button" onClick={onConfigureRoom}>Configure Listening Room</button>}
+    {onConfigureRoom && <button type="button" onClick={onConfigureRoom}>Configure News bucket</button>}
   </div>;
 }
