@@ -89,6 +89,7 @@ export function NewsBucket({ library, localState, automation, openSource, openPr
         ? <p><strong>Playback: {automation.room.name}</strong> · {runtimeDJ?.name ?? 'DJ not configured'} · Every {automation.settings.everySongs} songs{!runtimePending && !onAir && !scheduled ? ` · Next check in ${automation.songsUntilBreak} ${automation.songsUntilBreak === 1 ? 'song' : 'songs'}` : ''}</p>
         : <p><strong>Playback is off.</strong> The ready queue below remains available for this profile.</p>}
     </div>
+    <p className="news-bucket-muted" role="status">{pageProfile?.workflowDraft.newsWorkflowError ? `News preparation paused: ${pageProfile.workflowDraft.newsWorkflowError}` : pageProfile?.workflowDraft.newsEnabled ? `News preparation is on.${pageProfile.workflowDraft.nextNewsCheckAt ? ` Next check: ${new Date(pageProfile.workflowDraft.nextNewsCheckAt).toLocaleString()}.` : ' First check pending.'}` : 'Automatic news preparation is off.'} <button className="room-link" onClick={openPreparation}>News settings</button></p>
     {automation.settings.enabled && automation.room && runtimeDiffersFromPage && <p className="news-bucket-notice">The DJ is using <strong>{automation.room.name}</strong>. This page shows the ready queue for <strong>{pageProfile?.name ?? 'the selected profile'}</strong>.</p>}
     <ErrorNotice error={automation.error ? new Error(automation.error) : null} />
 
@@ -108,7 +109,7 @@ export function NewsBucket({ library, localState, automation, openSource, openPr
 
     <section className="news-bucket-drafts" aria-labelledby="news-bucket-drafts-title">
       <div className="news-bucket-section-heading"><div><span className="eyebrow">In preparation</span><h3 id="news-bucket-drafts-title">Drafts for {pageProfile?.name ?? 'this profile'}</h3></div><span>{pageDrafts.length}</span></div>
-      {!pageDrafts.length ? <div className="news-bucket-draft-empty"><p>No drafts are waiting for audio.</p><button onClick={openPreparation}>Prepare a story</button></div> : <div className="news-bucket-draft-list">{pageDrafts.map(draft)}</div>}
+      {!pageDrafts.length ? <div className="news-bucket-draft-empty"><p>No drafts are waiting for audio.</p></div> : <div className="news-bucket-draft-list">{pageDrafts.map(draft)}</div>}
     </section>
 
     <section className="news-bucket-history" aria-labelledby="news-bucket-history-title">

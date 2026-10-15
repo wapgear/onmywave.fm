@@ -34,9 +34,9 @@ See [the requirements](REQUIREMENTS.md) and [approved design](docs/design/macos-
 
 ## News bucket
 
-News bucket opens on pending recordings, drafts, and reviewed articles. The Overview tab has a setup checklist for News, Host and mood, Provider access, and Automatic workflow. Preparation shows the automatic workflow status and can save and enable the current room directly. Configure the song interval there. Manual text and audio preparation is available under collapsed testing tools; it is not required for automatic breaks. Saved audio stays accessible in its own tab.
+News bucket opens on pending recordings, drafts, and reviewed articles, with automatic preparation status. Its Settings tab combines sources, interests, DJ, mood, and news preparation. Manual text and audio tools stay collapsed. Saved audio has its own tab. DJ playback interval, seeking behavior, and voice volume live in app Settings → General.
 
-Settings owns shared source/DJ management and provider keys. News preparation controls its own hourly checks and daily limits in Workflows or News bucket. Morning weather remains planned.
+Settings owns shared source/DJ management and provider keys. News preparation controls its hourly checks and daily limits in News bucket → Settings. Morning weather remains planned.
 
 Sources supports RSS/Atom URLs, Twitter / X recent-search queries, and Hacker News Top, New, or Best stories. Hacker News needs no key. Twitter requires a bearer token with recent-search access in Settings → Provider keys. The token stays in the main process and uses encrypted local storage, or session-only storage when encryption is unavailable. Source content is bounded, checked for freshness when dated, and deduplicated. A failed source produces a named warning while remaining sources may still prepare a story.
 
@@ -46,19 +46,19 @@ The adapters follow the [official Hacker News API](https://github.com/HackerNews
 
 News bucket supports named configurations. Use **Save as new** to keep a separate, inactive copy of your current sources, DJ, mood, news prompt, and workflow preferences. Incomplete configurations can be saved for later. Choose a saved room from the picker to use it; unsaved edits can be saved or discarded before switching. The existing setup migrates into **My room**. Saving and preparing update the active room. Switching rooms keeps your script and selected audio. Sources, DJs, and provider keys are shared across rooms.
 
-Use the Overview checklist or configuration tabs to edit news, host, and mood. Setup progress survives visits to Settings. Saving room setup requires no provider key. Automatic news preparation runs only after its separate workflow is enabled.
+Use the News bucket Settings tab to edit news, host, mood, and preparation. Setup progress survives visits to Settings. Saving room setup requires no provider key. Automatic news preparation runs only after its separate workflow is enabled.
 
 Settings owns provider keys and shared source and DJ management. News bucket owns setup, automation, and testing. Explanations are available from a small number of info buttons.
 
-News preparation has its own opt-in hourly workflow, independent of playback. Configure it in News bucket → Preparation or Settings → Workflows. It runs while the app is open and your Mac is awake. Weather, calendar, and reminder workflows remain planned. [Read the workflow plan](docs/LISTENING_ROOM_WORKFLOW.md) for execution, costs, lifecycle, and expected results.
+News preparation has its own opt-in hourly workflow, independent of playback. Configure it in News bucket → Settings. It runs while the app is open and your Mac is awake. Weather, calendar, and reminder workflows remain planned. [Read the workflow plan](docs/LISTENING_ROOM_WORKFLOW.md) for execution, costs, lifecycle, and expected results.
 
-The player’s **DJ** button opens room selection, schedule status, upcoming news and the last news heard this session. Make saved rooms available in News bucket, select one in the popover, then enable DJ. News bucket → Preparation controls the interval from 1 to 100 songs, defaulting to 3. Choose 1 for testing. The switch and selected room persist; song progress starts over on enable, room or interval changes, and relaunch.
+The player’s **DJ** button opens room selection, schedule status, upcoming news and the last news heard this session. Make saved rooms available in News bucket, select one in the popover, then enable DJ. App Settings → General controls the interval from 1 to 100 songs, defaulting to 3. Choose 1 for testing. The switch and selected room persist; song progress starts over on enable, room or interval changes, and relaunch.
 
 Only natural song completions count, including repeat-one. Skips, pause, seeking and playback retries do not count. At the song interval, the DJ checks the saved news pool for a matching fresh recording. If none is available, music continues without a generation request. Played takes are tracked so automatic playback does not repeat them. News generation runs independently on its own switch and hourly cadence, with a daily recording cap and a bounded number of source assessments. Manual saved-take selection remains independent.
 
 Settings → General → DJ playback controls the song interval, whether seeking preserves the DJ break, and narration volume. Seeking preserves scheduled and speaking DJ breaks by default. The voice defaults to 70% of player volume.
 
-After setup, enable DJ playback in Preparation and play music. Enable News preparation separately to refill the saved pool. Saved takes remain accessible even with incomplete setup or missing keys. The optional steps below describe the manual testing tools.
+After setup, enable DJ playback in the player popover and play music. Enable News preparation separately to refill the saved pool. Saved takes remain accessible even with incomplete setup or missing keys. The optional steps below describe the manual testing tools.
 
 The setup separates named RSS/Atom feeds, Twitter searches, and Hacker News **Sources**, a saved **DJ** with voice and hosting preferences, and **Station mood** for the atmosphere and delivery. Existing station text and DJ feed URLs migrate into this setup.
 
@@ -101,7 +101,7 @@ The bundled samples are in `src/renderer/public/voice-previews/` with generation
 
 ## News bucket and reviewed articles
 
-The News bucket opens on saved stories and the actual DJ playback state. Ready recordings use the same eligibility and ordering rules as the player; they are distinct from a break already scheduled near a song ending. Drafts awaiting audio and reviewed article history remain visible with their original source links. Profile setup and preparation remain available in secondary tabs.
+The News bucket opens on saved stories and the actual DJ playback state. Ready recordings use the same eligibility and ordering rules as the player; they are distinct from a break already scheduled near a song ending. Drafts awaiting audio and reviewed article history remain visible with their original source links. Profile setup and preparation share one Settings tab.
 
 All preparation paths share a permanent article URL history. Known tracking parameters and URL fragments are ignored when comparing links. Articles already submitted for assessment are excluded across profiles before another text-generation request. Completed assessments record selected and unselected articles, including checks where no story qualifies. An interrupted assessment keeps its source links and is excluded to avoid repeating a possibly charged request. Feeds remain enabled and can supply new article URLs. Updates at a previously reviewed URL are also excluded.
 

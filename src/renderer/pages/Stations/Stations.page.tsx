@@ -11,7 +11,6 @@ import { RoomSetup } from './components/RoomSetup.component';
 import { PreparedTakes } from './components/PreparedTakes.component';
 import { useDJPlayback } from '../../dj-playback';
 import { WorkflowPreferences } from '../Settings/components/WorkflowPreferences.component';
-import { DJPlaybackSettings } from '../Settings/components/DJPlaybackSettings.component';
 import { NewsBucket } from './components/NewsBucket.component';
 import './Stations.styles.css';
 
@@ -30,11 +29,10 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   const setSetup = (setup: ListeningRoom | null) => setConfigDraft(current => ({ ...current, setup }));
   const setMoodDraft = (moodDraft: string | null) => setConfigDraft(current => ({ ...current, moodDraft }));
   const manualTools = useRef<HTMLDetailsElement>(null);
-  const tab = configDraft.tab ?? 'bucket';
+  const tab = ['news', 'host', 'prepare', 'settings'].includes(configDraft.tab ?? '') ? 'settings' : configDraft.tab === 'saved' ? 'saved' : 'bucket';
   const setTab = (tab: string) => setConfigDraft(current => ({ ...current, tab }));
   const aiStatus = useQuery({ queryKey: ['aiStatus'], meta: { aiOperation: true }, queryFn: async () => unwrap(await window.wave.getAiStatus()) });
   const elevenStatus = useQuery({ queryKey: ['elevenLabsStatus'], meta: { aiOperation: true }, queryFn: async () => unwrap(await window.wave.getElevenLabsStatus()) });
-  const twitterStatus = useQuery({ queryKey: ['twitterStatus'], queryFn: async () => unwrap(await window.wave.getTwitterStatus()) });
   const [progress, setProgress] = useState<NewsProgress | null>(null);
   const [lastRequest, setLastRequest] = useState<Preparation | null>(null);
   const [newProfileOpen, setNewProfileOpen] = useState(false);
@@ -61,7 +59,6 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   const editing = draft ?? (latestScript ? { scriptId: latestScript.id, script: latestScript.script } : null);
   const scriptRecord = library.data?.scripts.find(value => value.id === editing?.scriptId);
   const selectedTake = library.data?.takes.find(value => value.id === library.data?.selectedTakeId);
-  const scheduledForRoom = !!activeProfile && automation.settings.enabled && automation.settings.roomId === activeProfile.id;
   const finite = dj?.news?.speechEngine === 'elevenlabs-v4';
   const words = editing?.script.trim().split(/\s+/u).filter(Boolean).length ?? 0;
   const validSources = room.sourceIds.length > 0 && room.sourceIds.length <= 20 && room.sourceIds.every(id => sources.some(source => source.id === id));
@@ -79,7 +76,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
     const latest = unwrap(await window.wave.getLocalState());
     unwrap(await window.wave.saveWorkflowDraft({ workflowDraft: { ...latest.workflowDraft, newsInterests }, room, mood: mood.trim() }));
     await client.invalidateQueries({ queryKey: ['localState'] });
-    setConfigDraft(current => ({ ...current, setup: current.setup === setup ? null : current.setup, moodDraft: current.moodDraft === moodDraft ? null : current.moodDraft, newsInterests: current.newsInterests === configDraft.newsInterests ? undefined : current.newsInterests, tab: 'overview' }));
+    setConfigDraft(current => ({ ...current, setup: current.setup === setup ? null : current.setup, moodDraft: current.moodDraft === moodDraft ? null : current.moodDraft, newsInterests: current.newsInterests === configDraft.newsInterests ? undefined : current.newsInterests, tab: 'settings' }));
   } });
   const source = useMutation({ mutationFn: async (url: string) => unwrap(await window.wave.openSource(url)) });
   const prepare = useMutation({
@@ -127,19 +124,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
     unwrap(await window.wave.setRoomProfileEnabled(input));
     await client.invalidateQueries({ queryKey: ['localState'] });
   } });
-  const automationChange = useMutation({ mutationFn: async () => {
-    if (!activeProfile) return;
-    if (scheduledForRoom) { await automation.update.mutateAsync({ enabled: false }); return; }
-    await persistSetup();
-    const latest = unwrap(await window.wave.getLocalState());
-    if (!latest.roomProfiles.find(profile => profile.id === activeProfile.id)?.enabled) {
-      unwrap(await window.wave.setRoomProfileEnabled({ id: activeProfile.id, enabled: true }));
-      await client.invalidateQueries({ queryKey: ['localState'] });
-    }
-    await automation.update.mutateAsync({ roomId: activeProfile.id, enabled: true });
-  } });
-  const busy = preparing || save.isPending || profiles.isPending || enableProfile.isPending || automation.update.isPending || automationChange.isPending;
-  const automationBusy = save.isPending || profiles.isPending || enableProfile.isPending || automation.update.isPending || automationChange.isPending;
+  const busy = preparing || save.isPending || profiles.isPending || enableProfile.isPending;
   function chooseProfile(id: string) {
     if (busy || id === state.data?.activeRoomProfileId) return;
     profiles.reset(); setProfileNotice('');
@@ -159,9 +144,9 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   const chosenSources = sources.filter(value => room.sourceIds.includes(value.id));
   const sourceSnapshot = (values: typeof sources) => JSON.stringify([...values].sort((a, b) => a.id.localeCompare(b.id)));
   const differs = selectedTake && (selectedTake.script !== editing?.script || JSON.stringify(selectedTake.renderingDJ) !== JSON.stringify(dj) || selectedTake.provenance.mood !== mood || (selectedTake.provenance.newsInterests ?? selectedTake.provenance.dj.news?.interests ?? '') !== newsInterests || sourceSnapshot(selectedTake.provenance.sources) !== sourceSnapshot(chosenSources));
-  function loadDraft(take: PreparedNewsTake) { setTab('prepare'); setDraft({ scriptId: take.scriptId, script: take.script }); requestAnimationFrame(() => { if (manualTools.current) manualTools.current.open = true; manualTools.current?.scrollIntoView({ block: 'start', behavior: 'auto' }); manualTools.current?.querySelector<HTMLTextAreaElement>('#news-draft')?.focus({ preventScroll: true }); }); }
-  function loadScriptDraft(script: { id: string; script: string }) { setTab('prepare'); setDraft({ scriptId: script.id, script: script.script }); requestAnimationFrame(() => { if (manualTools.current) manualTools.current.open = true; manualTools.current?.scrollIntoView({ block: 'start', behavior: 'auto' }); manualTools.current?.querySelector<HTMLTextAreaElement>('#news-draft')?.focus({ preventScroll: true }); }); }
-  function openPreparation() { setTab('prepare'); requestAnimationFrame(() => { if (manualTools.current) manualTools.current.open = true; manualTools.current?.scrollIntoView({ block: 'start', behavior: 'auto' }); }); }
+  function loadDraft(take: PreparedNewsTake) { setTab('settings'); setDraft({ scriptId: take.scriptId, script: take.script }); requestAnimationFrame(() => { if (manualTools.current) manualTools.current.open = true; manualTools.current?.scrollIntoView({ block: 'start', behavior: 'auto' }); manualTools.current?.querySelector<HTMLTextAreaElement>('#news-draft')?.focus({ preventScroll: true }); }); }
+  function loadScriptDraft(script: { id: string; script: string }) { setTab('settings'); setDraft({ scriptId: script.id, script: script.script }); requestAnimationFrame(() => { if (manualTools.current) manualTools.current.open = true; manualTools.current?.scrollIntoView({ block: 'start', behavior: 'auto' }); manualTools.current?.querySelector<HTMLTextAreaElement>('#news-draft')?.focus({ preventScroll: true }); }); }
+  function openPreparation() { setTab('settings'); }
   return <>
     <PageHeading title="News bucket" />
     <div className="listening-room">
@@ -173,16 +158,9 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
       <p className="form-hint">Choose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.</p>
       {profileNotice && <p className="form-hint room-profile-notice" role="status">{profileNotice}</p>}
       {!newProfileOpen && !switchTarget && <ErrorNotice error={profiles.error} />}
-      <ConfigurationTabs id="room" label="News bucket and configuration" tabs={[{ id: 'bucket', label: 'News bucket' }, { id: 'overview', label: 'Overview' }, { id: 'news', label: 'News' }, { id: 'host', label: 'Host & mood' }, { id: 'prepare', label: 'Preparation' }, { id: 'saved', label: 'Saved audio' }]} value={tab} onChange={setTab} />
-      {unsavedSetup && tab !== 'news' && tab !== 'host' && <div className="room-unsaved"><p>Unsaved setup changes. Enabling automatic DJ also saves your setup.</p><button disabled={busy} onClick={() => save.mutate()}>{save.isPending ? 'Saving…' : 'Save setup'}</button><ErrorNotice error={save.error} /></div>}
-      <RoomSetup sources={sources} djs={state.data.djs} room={room} mood={mood} newsInterests={newsInterests} dj={dj} tab={tab} onTabChange={setTab} busy={busy} saving={save.isPending} ready={ready} validSources={validSources} finite={finite} saveError={save.error}
-        openAiLabel={aiStatus.isPending ? 'Checking…' : aiStatus.error ? 'Status unavailable' : textKeyReady ? aiStatus.data?.sessionOnly ? 'Available this session' : 'Configured' : 'Add key in Settings'}
-        elevenLabel={elevenStatus.isPending ? 'Checking…' : elevenStatus.error ? 'Status unavailable' : audioKeyReady ? elevenStatus.data?.sessionOnly ? 'Available this session' : 'Configured' : 'Add key in Settings'}
-        twitterLabel={twitterStatus.isPending ? 'Checking…' : twitterStatus.error ? 'Status unavailable' : twitterStatus.data?.configured ? twitterStatus.data.sessionOnly ? 'Available this session' : 'Configured' : 'Add token in Settings'}
-        textKeyReady={!!textKeyReady} audioKeyReady={!!audioKeyReady} twitterKeyReady={!!twitterStatus.data?.configured}
-        automationSummary={scheduledForRoom ? `Enabled · every ${automation.settings.everySongs} songs` : automation.settings.enabled ? `Enabled for ${automation.room?.name ?? 'another room'}` : 'Off'} automationComplete={scheduledForRoom}
-        setSetup={setSetup} setMoodDraft={setMoodDraft} setNewsInterests={setNewsInterests} configureSources={configureSources} configureDJ={configureDJ} configureSettings={configureSettings}
-        onSave={() => save.mutate()} /></>}
+      <ConfigurationTabs id="room" label="News bucket and configuration" tabs={[{ id: 'bucket', label: 'News bucket' }, { id: 'settings', label: 'Settings' }, { id: 'saved', label: 'Saved audio' }]} value={tab} onChange={setTab} />
+      {unsavedSetup && tab !== 'settings' && <div className="room-unsaved"><p>Unsaved news settings.</p><button onClick={() => setTab('settings')}>Review settings</button></div>}
+      </>}
       {state.data && <section id="room-panel-bucket" role="tabpanel" aria-labelledby="room-tab-bucket" hidden={tab !== 'bucket'} tabIndex={0}>
         <ErrorNotice error={library.error} retry={() => void library.refetch()} />
         {library.isPending && <p className="loading" role="status">Opening the news bucket…</p>}
@@ -190,19 +168,12 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
         <ErrorNotice error={source.error} />
       </section>}
       {preparing && <div className="news-progress room-active-progress" role="status"><LoaderCircle className="spinning" size={17} /><span>{progress?.message ?? 'Preparing…'}</span><button disabled={cancel.isPending} onClick={() => cancel.mutate()}>Cancel preparation</button></div>}
-      {tab !== 'prepare' && prepare.isError && !noNews && <div className="room-background-error"><ErrorNotice error={prepare.error} /><button className="room-link" onClick={() => setTab('prepare')}>Review preparation</button></div>}
-      <section id="room-panel-prepare" role="tabpanel" aria-labelledby="room-tab-prepare" hidden={tab !== 'prepare'} tabIndex={0} className="room-preparation">
-      <section className="room-automatic" aria-labelledby="room-automatic-title"><div className="room-section-heading"><div><span className="eyebrow">Automatic workflow</span><h2 id="room-automatic-title">DJ breaks</h2></div></div>
-        <p>{scheduledForRoom ? `Enabled for ${activeProfile?.name ?? 'this room'} · checks every ${automation.settings.everySongs} songs.` : automation.settings.enabled ? `Currently enabled for ${automation.room?.name ?? 'another room'}.` : 'Disabled. Enable to play matching saved news automatically. News generation has its own workflow in Settings.'}</p>
-        <button className={scheduledForRoom ? '' : 'primary'} disabled={automationBusy || !activeProfile || (!scheduledForRoom && !ready)} onClick={() => automationChange.mutate()}>{automationBusy ? 'Updating…' : scheduledForRoom ? 'Disable automatic DJ' : automation.settings.enabled ? 'Switch DJ to this room' : 'Enable automatic DJ'}</button>
-        {!ready && <p className="form-hint">Complete the sources, host, and mood setup before enabling automatic DJ.</p>}
-        {ready && (!textKeyReady || !audioKeyReady || !finite) && <p className="form-hint">Automatic preparation needs an OpenAI key, an ElevenLabs key, and an ElevenLabs voice.</p>}
-        <ErrorNotice error={automationChange.error} /><ErrorNotice error={automation.update.error} /><ErrorNotice error={enableProfile.error} />
-        <p className="form-hint">Only qualifying stories become audio. When there is no news, music continues.</p>
-        {scheduledForRoom && <ErrorNotice error={automation.error ? new Error(automation.error) : null} retry={automation.error ? automation.retry : undefined} />}
-        <DJPlaybackSettings />
-        <WorkflowPreferences />
-      </section>
+      {tab !== 'settings' && prepare.isError && !noNews && <div className="room-background-error"><ErrorNotice error={prepare.error} /><button className="room-link" onClick={() => setTab('settings')}>Review preparation</button></div>}
+      <section id="room-panel-settings" role="tabpanel" aria-labelledby="room-tab-settings" hidden={tab !== 'settings'} tabIndex={0} className="room-preparation">
+      {state.data && <RoomSetup sources={sources} djs={state.data.djs} room={room} mood={mood} newsInterests={newsInterests} busy={busy} saving={save.isPending} saveError={save.error} setSetup={setSetup} setMoodDraft={setMoodDraft} setNewsInterests={setNewsInterests} configureSources={configureSources} configureDJ={configureDJ} onSave={() => save.mutate()} />}
+      <WorkflowPreferences disabled={unsavedSetup || busy} />
+      {unsavedSetup && <p className="form-hint">Save your setup before changing news preparation.</p>}
+      {(!textKeyReady || !audioKeyReady) && <p className="form-hint">News preparation needs OpenAI and ElevenLabs keys. <button className="room-link" onClick={configureSettings}>Provider keys</button></p>}
       <details className="room-script room-testing-tools" ref={manualTools}><summary>Testing tools · Prepare a story manually</summary><div className="room-script-content" aria-labelledby="script-title"><div className="room-section-heading"><div><span className="eyebrow">Manual testing</span><h2 id="script-title">Prepare a story</h2></div><InfoHelp label="About manual preparation"><p>Use these tools to test a script or voice. Text and audio requests use your provider accounts and save completed results locally.</p><p>DJ playback only picks saved recordings. The news workflow prepares stories on its own schedule.</p></InfoHelp></div><p>Prepare text, review it, then generate an audio take.</p>
         <button className="primary" disabled={busy || !ready || !textKeyReady} onClick={prepareText}>{prepare.isPending && lastRequest?.kind === 'script' ? <LoaderCircle size={15} className="spinning" /> : <Newspaper size={15} />}{prepare.isPending && lastRequest?.kind === 'script' ? 'Preparing text…' : 'Prepare news text'}</button>
         {!ready && <p className="form-hint">Choose sources and a DJ, and describe your station mood first.</p>}

@@ -7,13 +7,12 @@ import { LibraryChooser } from '../../components/LibraryChooser';
 import { ProviderKeys } from '../../components/ProviderKeys/ProviderKeys.component';
 import { SourcesPage } from '../Sources/Sources.page';
 import { DJsPage } from '../DJs/DJs.page';
-import { WorkflowPreferences } from './components/WorkflowPreferences.component';
 import { DJPlaybackSettings } from './components/DJPlaybackSettings.component';
 import { NewsTransitions } from './components/NewsTransitions.component';
 import './Settings.styles.css';
-export type SettingsSection = 'general' | 'keys' | 'sources' | 'djs' | 'workflow';
-const sections: { id: SettingsSection; label: string }[] = [{ id: 'general', label: 'General' }, { id: 'keys', label: 'Provider keys' }, { id: 'sources', label: 'Sources' }, { id: 'djs', label: 'DJs' }, { id: 'workflow', label: 'Workflows' }];
-export function SettingsPage({ connection, update, disconnected, section, onSectionChange, returnToSetup, onConfigureRoom }: { connection: Connection; update: (value: Connection) => void; disconnected: () => void; section?: SettingsSection; onSectionChange?: (value: SettingsSection) => void; returnToSetup?: () => void; onConfigureRoom?: () => void }) {
+export type SettingsSection = 'general' | 'keys' | 'sources' | 'djs';
+const sections: { id: SettingsSection; label: string }[] = [{ id: 'general', label: 'General' }, { id: 'keys', label: 'Provider keys' }, { id: 'sources', label: 'Sources' }, { id: 'djs', label: 'DJs' }];
+export function SettingsPage({ connection, update, disconnected, section, onSectionChange, returnToSetup }: { connection: Connection; update: (value: Connection) => void; disconnected: () => void; section?: SettingsSection; onSectionChange?: (value: SettingsSection) => void; returnToSetup?: () => void }) {
   const [confirm, setConfirm] = useState(false);
   const [localSection, setLocalSection] = useState<SettingsSection>('general');
   const activeSection = section ?? localSection;
@@ -23,7 +22,6 @@ export function SettingsPage({ connection, update, disconnected, section, onSect
     {activeSection === 'keys' && <div className="settings-content settings-preferences"><ProviderKeys /></div>}
     {activeSection === 'sources' && <SourcesPage />}
     {activeSection === 'djs' && <DJsPage />}
-    {activeSection === 'workflow' && <WorkflowPreferences onConfigureRoom={onConfigureRoom} />}
     {activeSection === 'general' && <div className="settings-content settings-preferences">
     <section><h2>Account</h2><dl className="settings-account"><div><dt>Signed in as</dt><dd>{connection.userName}</dd></div><div><dt>Server</dt><dd>{connection.serverUrl}</dd></div><div><dt>Version</dt><dd>Jellyfin {connection.serverVersion}</dd></div></dl><button className="settings-signout" onClick={() => setConfirm(true)}>Sign out</button>{connection.sessionOnly && <p className="notice">Secure storage is unavailable. You will need to sign in again after quitting the app.</p>}</section>
     <section><h2>Music libraries</h2><p className="settings-description">Choose the libraries shown in your collection. Your listening queue stays available.</p><LibraryChooser key={`${connection.id}-${connection.selectedLibraryIds.join(',')}`} connection={connection} done={update} /></section>

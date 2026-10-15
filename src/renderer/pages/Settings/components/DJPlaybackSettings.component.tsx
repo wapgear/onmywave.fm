@@ -24,7 +24,7 @@ export function DJPlaybackSettings() {
     {state.isPending && <p role="status">Loading DJ schedule…</p>}
     <form onSubmit={event => { event.preventDefault(); if (!save.isPending) save.mutate(); }}>
       <fieldset disabled={!state.data || save.isPending}>
-        <label className="dj-song-interval">Check news every<input type="number" min={1} max={100} step={1} required value={Number.isNaN(settings.everySongs) ? '' : settings.everySongs} aria-describedby="dj-interval-help" onChange={event => change({ everySongs: event.target.value === '' ? NaN : Number(event.target.value) })} /><span>songs</span></label>
+        <label className="dj-song-interval">Check news every<input type="number" min={1} max={100} step={1} required value={Number.isNaN(settings.everySongs) ? '' : settings.everySongs} aria-describedby="dj-interval-help" onChange={event => change({ everySongs: event.target.value === '' ? NaN : Number(event.target.value) })} /><span>{settings.everySongs === 1 ? 'song' : 'songs'}</span></label>
         <p id="dj-interval-help" className="settings-footnote">Only finished songs count. Choose 1 for testing. Empty news pools are skipped without generating anything.</p>
         <label className="dj-song-interval"><input type="checkbox" checked={settings.keepOnSeek} onChange={event => change({ keepOnSeek: event.target.checked })} />Keep the DJ when seeking or rewinding</label>
         <p className="settings-footnote">Keeps scheduled breaks and lets a speaking DJ finish while you seek within a song.</p>

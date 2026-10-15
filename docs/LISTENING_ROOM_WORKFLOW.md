@@ -4,7 +4,7 @@ Status: DJ playback consumes saved news. A separate local news workflow prepares
 
 ## News bucket and review history
 
-The bucket is the default view of saved news. It shows actual scheduled or speaking DJ audio separately from recordings eligible for playback and drafts awaiting audio. The DJ-selected profile can differ from the profile open on this page; playback context is shown explicitly. Source articles retain their original HTTP(S) links.
+The bucket is the default view of saved news. It shows actual scheduled or speaking DJ audio separately from recordings eligible for playback and drafts awaiting audio. The DJ-selected profile can differ from the profile open on this page; playback context is shown explicitly. Source articles retain their original HTTP(S) links. The bucket also shows preparation status. Sources, interests, DJ, mood, and the news workflow share one Settings tab, with manual tools collapsed. DJ playback cadence lives only in app Settings → General.
 
 Review history is global across profiles. The preparation service filters canonical article URLs before a paid assessment, reserves only the candidates sent to the model, and records selected and unselected outcomes, including no-selection results. Submitted requests with an unknown outcome stay excluded and are labeled interrupted. A failed source fetch does not mark unseen articles reviewed. A definitive provider rejection releases its candidate reservations so a later attempt can assess them. Unknown outcomes stay excluded to avoid repeating a possibly charged request. Known selected articles from existing scripts and audio seed the ledger; rejected articles from earlier versions cannot be reconstructed.
 
