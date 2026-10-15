@@ -1,0 +1,66 @@
+{
+  "name": "onmywave-desktop-light",
+  "version": "0.1.0",
+  "private": true,
+  "license": "GPL-3.0-only",
+  "author": "onmywave.fm contributors",
+  "description": "A light macOS music player for your Jellyfin library",
+  "main": "out/main/index.js",
+  "type": "module",
+  "scripts": {
+    "postinstall": "install-electron",
+    "dev": "electron-vite dev",
+    "build": "node scripts/prepare-voice-previews.mjs --check && npm run typecheck && electron-vite build",
+    "preview": "electron-vite preview",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --max-warnings=0",
+    "package:mac": "npm run build && electron-builder --mac --dir --publish never"
+  },
+  "dependencies": {
+    "@fontsource/inter": "^5.2.8",
+    "@fontsource/manrope": "^5.2.8",
+    "@tanstack/react-query": "5.96.2",
+    "@tanstack/react-virtual": "^3.14.19",
+    "fast-xml-parser": "^5.11.2",
+    "lucide-react": "^0.468.0",
+    "react": "19.2.7",
+    "react-dom": "19.2.7",
+    "ws": "^8.22.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.4",
+    "@types/node": "^24.13.1",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@types/ws": "^8.18.2",
+    "@vitejs/plugin-react": "^5.2.0",
+    "electron": "43.7.0",
+    "electron-builder": "^26.15.7",
+    "electron-vite": "5.0.0",
+    "eslint": "^9.39.4",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.0",
+    "vite": "7.3.5"
+  },
+  "build": {
+    "appId": "fm.onmywave.light",
+    "productName": "onmywave.fm Light",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "out/**",
+      "package.json",
+      "LICENSE",
+      "THIRD_PARTY_NOTICES.md"
+    ],
+    "mac": {
+      "category": "public.app-category.music",
+      "target": [
+        "dir"
+      ],
+      "icon": "resources/icon.icns"
+    }
+  }
+}

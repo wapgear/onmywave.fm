@@ -1,0 +1,5 @@
+.configuration-tabs{display:flex;gap:6px;overflow-x:auto;max-width:100%;padding:4px 2px 12px;margin:12px 0 24px;border-bottom:1px solid var(--separator)}
+.configuration-tabs>[role=tab]{flex-shrink:0;border-radius:8px;font-size:13px;background:transparent;color:var(--muted)}
+.configuration-tabs>[role=tab]:hover{background:var(--hover);color:var(--text)}
+.configuration-tabs>[role=tab][aria-selected=true]{background:var(--surface);color:var(--text);font-weight:500}
+[role=tabpanel][hidden]{display:none}

@@ -1,0 +1,7 @@
+.virtual-songs { min-width: 0; overflow-anchor: none; }
+.virtual-songs .song-table tbody tr:not(.song-spacer) { height: 56px; }
+.virtual-songs .song-table tbody tr:not(.song-spacer) > td { height: 56px; max-height: 56px; }
+.virtual-songs .song-table .song-spacer > td { background: transparent; line-height: 0; }
+.song-load-status { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; padding: 20px 0; color: var(--muted); font-size: 12px; }
+.song-load-status > .notice { width: 100%; margin: 0; }
+.song-load-status > button { font-size: 12px; }

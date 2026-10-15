@@ -1,0 +1,18 @@
+{
+  "requestId": "0bfe4189-607e-4bd0-a01f-8954ca5aed8d",
+  "script": "Get ready to catch up with the gang! HBO’s \"Girls\" is making a comeback to explore turning forty — ten years after their finale. It's like disco for your TV cravings, all grooving to life’s milestones!",
+  "articles": [
+    {
+      "id": "story-8",
+      "title": "Lena Dunham's Girls to return for limited HBO run",
+      "url": "https://www.bbc.co.uk/news/articles/c9m26xp4zp8jo?at_medium=RSS&at_campaign=rss",
+      "source": "BBC News",
+      "publishedAt": "2026-10-14T02:09:30.000Z"
+    }
+  ],
+  "warnings": [],
+  "engine": "openai-tts",
+  "id": "dj-vibe-demo",
+  "musicContext": "Upbeat disco / funk — Funkytown",
+  "createdAt": "2026-10-15T10:45:02.771Z"
+}

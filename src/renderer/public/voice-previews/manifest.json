@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "model": "eleven_v4",
+  "text": "You're listening to your own wave. A familiar favorite, a surprising discovery, and a little room to breathe. Turn it up, settle in, and let the next song take you somewhere good.",
+  "clips": {
+    "TX3LPaxmHKxFdv7VOQHJ": {
+      "byteLength": 182691,
+      "createdAt": "2026-10-15T16:08:57.912Z"
+    },
+    "FGY2WhTYpPnrIDTdsKH5": {
+      "byteLength": 191886,
+      "createdAt": "2026-10-15T16:09:00.765Z"
+    },
+    "JBFqnCBsd6RMkjVDRZzb": {
+      "byteLength": 201917,
+      "createdAt": "2026-10-15T16:09:04.221Z"
+    },
+    "EXAVITQu4vr4xnSDxMaL": {
+      "byteLength": 195647,
+      "createdAt": "2026-10-15T16:09:07.027Z"
+    },
+    "cgSgspJ2msm6clMCkdW9": {
+      "byteLength": 189378,
+      "createdAt": "2026-10-15T16:09:10.300Z"
+    },
+    "cjVigY5qzO86Huf0OWal": {
+      "byteLength": 188124,
+      "createdAt": "2026-10-15T16:09:13.549Z"
+    },
+    "onwK4e9ZLuTAKqWW03F9": {
+      "byteLength": 207350,
+      "createdAt": "2026-10-15T16:09:16.533Z"
+    }
+  }
+}
