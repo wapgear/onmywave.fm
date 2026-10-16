@@ -1,0 +1,396 @@
+{
+  "date": "2026-10-16",
+  "base": "9e041725720db7a1dad91639b38372873542b7e5",
+  "problem": "Overlapping selected roots returned duplicate items before slicing and summed their counts. Native repro: an80-item service page had40 unique items and the UI showed40 of20,000 songs loaded for10,000 unique songs.",
+  "before": {
+    "service": {
+      "ok": true,
+      "count": 80,
+      "unique": 40,
+      "total": 20000
+    },
+    "nativeStatus": "40 of 20,000 songs loaded"
+  },
+  "fixedUnionAndPaging": {
+    "cases": [
+      {
+        "kind": "partial-songs",
+        "exactUniqueTotal": 20000,
+        "firstSecondAndEndPagesCorrect": true,
+        "normalizedAliasesAndEqualTitleTieOrder": true,
+        "latencies": [
+          {
+            "start": 0,
+            "elapsedMs": 2870
+          },
+          {
+            "start": 80,
+            "elapsedMs": 12
+          },
+          {
+            "start": 19965,
+            "elapsedMs": 14
+          }
+        ],
+        "result": "passed"
+      },
+      {
+        "kind": "partial-albums",
+        "exactUniqueTotal": 2000,
+        "firstSecondAndEndPagesCorrect": true,
+        "normalizedAliasesAndEqualTitleTieOrder": true,
+        "latencies": [
+          {
+            "start": 0,
+            "elapsedMs": 102
+          },
+          {
+            "start": 80,
+            "elapsedMs": 4
+          },
+          {
+            "start": 1965,
+            "elapsedMs": 3
+          }
+        ],
+        "result": "passed"
+      },
+      {
+        "kind": "partial-native",
+        "firstVisibleMs": 3881,
+        "nativeNextPageMs": 24,
+        "laterPageVisible": true,
+        "heartbeat": {
+          "ticks": 419,
+          "maxGapMs": 17.799999952316284
+        },
+        "clampedPageSize": 500,
+        "result": "passed"
+      },
+      {
+        "kind": "partial-refresh",
+        "serverRemovalReflected": true,
+        "pagedSnapshotRebuilt": true,
+        "result": "passed"
+      },
+      {
+        "kind": "full-songs",
+        "exactUniqueTotal": 10000,
+        "firstSecondAndEndPagesCorrect": true,
+        "normalizedAliasesAndEqualTitleTieOrder": true,
+        "latencies": [
+          {
+            "start": 0,
+            "elapsedMs": 4870
+          },
+          {
+            "start": 80,
+            "elapsedMs": 13
+          },
+          {
+            "start": 9965,
+            "elapsedMs": 6
+          }
+        ],
+        "result": "passed"
+      },
+      {
+        "kind": "full-albums",
+        "exactUniqueTotal": 1000,
+        "firstSecondAndEndPagesCorrect": true,
+        "normalizedAliasesAndEqualTitleTieOrder": true,
+        "latencies": [
+          {
+            "start": 0,
+            "elapsedMs": 153
+          },
+          {
+            "start": 80,
+            "elapsedMs": 5
+          },
+          {
+            "start": 965,
+            "elapsedMs": 3
+          }
+        ],
+        "result": "passed"
+      },
+      {
+        "kind": "full-native",
+        "firstVisibleMs": 5490,
+        "nativeNextPageMs": 16,
+        "laterPageVisible": true,
+        "heartbeat": {
+          "ticks": 598,
+          "maxGapMs": 17.700000047683716
+        },
+        "clampedPageSize": 200,
+        "result": "passed"
+      },
+      {
+        "kind": "full-refresh",
+        "serverRemovalReflected": true,
+        "pagedSnapshotRebuilt": true,
+        "result": "passed"
+      }
+    ],
+    "result": "passed",
+    "viewport": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "providerCalls": 0
+  },
+  "snapshotRacesAndScopes": {
+    "cases": [
+      {
+        "kind": "superseded-snapshot",
+        "oldPageZeroRejected": true,
+        "newerAndLaterPageCoherent": true,
+        "result": "passed"
+      },
+      {
+        "kind": "library-membership",
+        "oldScanRejected": true,
+        "committedSelectionClearsSnapshot": true,
+        "offsetMissBuildsCompleteUnion": true,
+        "result": "passed"
+      },
+      {
+        "kind": "query-isolation",
+        "genreAndTagScopeCorrect": true,
+        "unfilteredSnapshotNotReplaced": true,
+        "result": "passed"
+      }
+    ],
+    "result": "passed"
+  },
+  "nativeActionOrdering": {
+    "cases": [
+      {
+        "kind": "selected-songs",
+        "selectedCount": 3,
+        "playExactOrder": true,
+        "queueExactAppendPaused": true,
+        "addServerExactAppendOrder": true,
+        "result": "passed"
+      },
+      {
+        "kind": "single",
+        "selectedCount": 1,
+        "playExactOrder": true,
+        "queueExactAppendPaused": true,
+        "addServerExactAppendOrder": true,
+        "result": "passed"
+      },
+      {
+        "kind": "album",
+        "selectedCount": 10,
+        "playExactOrder": true,
+        "queueExactAppendPaused": true,
+        "addServerExactAppendOrder": true,
+        "result": "passed"
+      },
+      {
+        "kind": "selected-album-tracks",
+        "selectedCount": 3,
+        "playExactOrder": true,
+        "queueExactAppendPaused": true,
+        "addServerExactAppendOrder": true,
+        "result": "passed"
+      }
+    ],
+    "result": "passed",
+    "viewport": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "remoteMutations": 4,
+    "providerCalls": 0
+  },
+  "liveBrowsingBeforeFix": {
+    "cases": [
+      {
+        "kind": "complete-live-song-paging",
+        "loaded": 1311,
+        "total": 1311,
+        "scrollLoads": 16,
+        "result": "passed"
+      },
+      {
+        "kind": "live-song-title-search",
+        "knownMatchShown": true,
+        "uniqueResults": true,
+        "total": 1,
+        "elapsedMs": 508,
+        "result": "passed"
+      },
+      {
+        "kind": "live-song-artist-search",
+        "knownMatchShown": true,
+        "uniqueResults": true,
+        "total": 2,
+        "elapsedMs": 545,
+        "result": "passed"
+      },
+      {
+        "kind": "live-song-album-search",
+        "knownMatchShown": true,
+        "uniqueResults": true,
+        "total": 1,
+        "elapsedMs": 554,
+        "result": "passed"
+      },
+      {
+        "kind": "live-song-inspector",
+        "availableMetadataMatchesService": true,
+        "artworkDecodedOrUnavailable": true,
+        "result": "passed"
+      },
+      {
+        "kind": "complete-live-album-paging",
+        "loaded": 1157,
+        "total": 1157,
+        "scrollLoads": 24,
+        "result": "passed"
+      },
+      {
+        "kind": "live-album-title-search",
+        "knownMatchShown": true,
+        "elapsedMs": 448,
+        "result": "passed"
+      },
+      {
+        "kind": "live-album-artist-search",
+        "knownMatchShown": true,
+        "elapsedMs": 414,
+        "result": "passed"
+      },
+      {
+        "kind": "live-album-detail",
+        "orderedTracksMatchService": true,
+        "count": 1,
+        "result": "passed"
+      }
+    ],
+    "savedConnectionReused": true,
+    "serverVersion": "12.2.0",
+    "radioRemainsOff": true,
+    "remoteWritesBlocked": true,
+    "viewport": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "result": "passed"
+  },
+  "liveLargeSelectionBeforeFix": {
+    "kind": "large-live-selection",
+    "loaded": 1311,
+    "total": 1311,
+    "scrollLoads": 16,
+    "allLoadedSongsSelected": true,
+    "uniqueQueueCount": 1311,
+    "queueRemainsPaused": true,
+    "queueActionSettledMs": 63,
+    "remoteWritesBlocked": true,
+    "viewport": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "result": "passed"
+  },
+  "liveSearchAfterFix": {
+    "cases": [
+      {
+        "kind": "post-fix-live-title-search",
+        "knownSongShown": true,
+        "result": "passed"
+      },
+      {
+        "kind": "post-fix-live-artist-search",
+        "knownSongShown": true,
+        "result": "passed"
+      },
+      {
+        "kind": "post-fix-live-album-search",
+        "knownSongShown": true,
+        "result": "passed"
+      }
+    ],
+    "savedConnectionReused": true,
+    "serverVersion": "12.2.0",
+    "remoteWritesBlocked": true,
+    "result": "passed"
+  },
+  "sourceFreshness": "Initial live paging/metadata and native action checks ran at base before the service fix. Renderer/action source is unchanged; the single-library browse branch remains paged and unchanged. Live title/artist/album search was rerun after the fix, and overlap/race checks use freshly bundled final main. Earlier records are retained, not rehashed as new runs.",
+  "baseSourceSha256": {
+    "src/main/jellyfin.ts": "f4d2e4d8ae75807447bd5b4f64b97938594f3935834932bb7d1bec43a8360448",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/main/storage.ts": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+    "src/shared/types.ts": "12c7b75803e661219ce729a9b6a20088c36cf13c9ba3face3ce73aa08ee9c3e1",
+    "src/renderer/App.tsx": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+    "src/renderer/pages/Songs/Songs.page.tsx": "79b3115960d53568bac407d5754ff0996fee44ba895b222d99b4e0fb71e3007f",
+    "src/renderer/pages/Albums/Albums.page.tsx": "8abce67107438b4ed395443875aa920b6e71cbc968b3b834c9702ddd745f81ed",
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "c6d1b4c4f94a8cc67f9c052526b054ad8b716fbb3ceb9f83e347946bd4ad3a63"
+  },
+  "finalSha256": {
+    "src/main/jellyfin.ts": "22f083327dfdcbb0952d9750662df95d13c31e09a83f628f8c1e3393072f90eb",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/main/storage.ts": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+    "src/shared/types.ts": "12c7b75803e661219ce729a9b6a20088c36cf13c9ba3face3ce73aa08ee9c3e1",
+    "src/renderer/App.tsx": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+    "src/renderer/pages/Songs/Songs.page.tsx": "79b3115960d53568bac407d5754ff0996fee44ba895b222d99b4e0fb71e3007f",
+    "src/renderer/pages/Albums/Albums.page.tsx": "8abce67107438b4ed395443875aa920b6e71cbc968b3b834c9702ddd745f81ed",
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "c6d1b4c4f94a8cc67f9c052526b054ad8b716fbb3ceb9f83e347946bd4ad3a63",
+    "out/main/index.js": "a8bead2ca32dc7d02904bc298ec856d7e33b4c5a4993ea0195c4371afc6e11e0",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+    "out/renderer/index.html": "169d435b2ccfeefc5667110e9a15566fc4531911b8a6155b648bcef73aa6db1a"
+  },
+  "implementation": "For multiple selected roots, read bounded500-item batches with existing session checks, deduplicate canonical GUID identities, sort complete union, slice and report unique total. Retain at most two completed in-memory query snapshots for later offsets; page0 rebuilds, session/library commits clear, and superseded scans cannot publish or return old data. Single-root path and Page API unchanged.",
+  "decision": {
+    "Boris": "Supported full union after identifying unverifiable provider-comparator equality; measured repeated-scan cost then supported page0 rebuild plus two no-TTL snapshots. Reviewed initial full-union artifact without actionable issue.",
+    "Nadia": "Supported full union with latency reservation; initially preferred explicit clear IPC, then accepted existing page0 refetch boundary after challenge. Required token check before returning superseded data. Reviewed final snapshot artifact without actionable finding.",
+    "owner": "Primary implemented and ran native/live checks.",
+    "alternatives": "Bounded-prefix merging could not prove global ordering under different Jellyfin comparators. Repeated full scans failed the later-page latency check. No new IPC, persistent index, dependency or unit framework was added."
+  },
+  "runtime": {
+    "macOS": "27.2 arm64",
+    "electron": "43.7.0",
+    "liveJellyfin": "12.2.0",
+    "viewport": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    }
+  },
+  "fixture": "Hidden muted native windows. Controlled overlap server:20k unique songs/2k albums,25k raw song records for partial overlap, GUID aliases and equal title keys,20ms delay per page. Full-overlap mode clamps requests to200. Dummy protected accounts/keys; shared key adapter isolated; providers blocked, zero calls. Live runs copy only the protected test connection and matching device identity into disposable data; all remote writes blocked, no password re-entry.",
+  "performance": "Native Load more16\u201324ms. Cold startup first visible rows3.9\u20135.5s in slow overlap fixture; cold named sort scan2.9\u20134.9s. Renderer heartbeat maximum gap17.8ms during cold scans. Later song/album slices2\u201314ms. Actual live1,311-song queue action settled in63ms paused. These are measured fixtures/samples, not all-server latency guarantees.",
+  "driverCorrections": [
+    "Read service pages within supported500-item limit.",
+    "Select the album count span separately from the loading indicator.",
+    "Remove an unintended second Load more before checking Refresh.",
+    "Use lexical canonical GUID tie ordering rather than numeric comparison of opaque ID strings."
+  ],
+  "checks": {
+    "productionBuildIncludingTypeScript": "passed",
+    "fullESLint": "passed",
+    "whitespace": "passed"
+  },
+  "limits": [
+    "Actual live server has one selected music library. Overlapping roots are controlled; B01 remains Review for broader live configuration acceptance.",
+    "Cold multi-root reads materialize the complete union in main; at most two query snapshots are retained. Revisit indexing/cache design if real-server latency or memory requires it.",
+    "The existing allItems helper relies on server totals and empty-page semantics; no server snapshot or transaction guarantee.",
+    "B03/B05/B08 retain broader review scope. Human usability, audible quality, OS matrix and Q10 shutdown finding remain separate."
+  ],
+  "checklistUpdates": {
+    "B02": "Live, sampled title/artist/album search on named server and runtime",
+    "B04": "Controlled, single/selection Play Queue Add exact order",
+    "B07": "Live, sampled title/album-artist lookup and ordered detail on named server",
+    "B09": "Live, full configured catalog paging and all-loaded selection/queue"
+  },
+  "result": "passed"
+}
