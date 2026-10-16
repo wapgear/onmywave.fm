@@ -15,8 +15,8 @@ const presets: { id: string; name: string; settings: NewsTransitionSettings }[] 
 const fields = [
   { key: 'fadeOutSeconds', label: 'Lower music over', max: 5, hint: 'Fade down before the DJ starts.' },
   { key: 'leadInSeconds', label: 'Breathing room before speech', max: 3, hint: 'Wait after the music fades or finishes.' },
-  { key: 'postSpeechSeconds', label: 'Pause after speech', max: 3, hint: 'Leave a moment before the next song.' },
-  { key: 'fadeInSeconds', label: 'Bring in the next song over', max: 5, hint: 'Fade the next song up to your listening volume.' },
+  { key: 'postSpeechSeconds', label: 'Pause after speech', max: 3, hint: 'Leave a moment before music resumes.' },
+  { key: 'fadeInSeconds', label: 'Bring music back over', max: 5, hint: 'Fade music up to your listening volume.' },
 ] as const;
 
 export function NewsTransitions() {

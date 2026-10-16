@@ -1,0 +1,135 @@
+{
+  "date": "2026-10-16",
+  "scope": "P03 six live native addition variants; P06 duplicate preflight and ordered remainder/no-write behavior",
+  "environment": {
+    "server": "User-authorized Jellyfin server; same endpoint/account as prior live acceptance",
+    "profile": "Existing isolated protected acceptance installation; credentials not re-entered or copied into the report",
+    "native": "Actual Electron main/preload/production renderer, hidden window and muted audio",
+    "providers": "Null key adapter and external networking blocked"
+  },
+  "sixVariants": {
+    "variants": [
+      {
+        "mode": "single",
+        "destination": "new",
+        "count": 1,
+        "exactOrder": true
+      },
+      {
+        "mode": "single",
+        "destination": "existing",
+        "count": 1,
+        "exactOrder": true
+      },
+      {
+        "mode": "selected",
+        "destination": "new",
+        "count": 3,
+        "exactOrder": true
+      },
+      {
+        "mode": "selected",
+        "destination": "existing",
+        "count": 3,
+        "exactOrder": true
+      },
+      {
+        "mode": "album",
+        "destination": "new",
+        "count": 6,
+        "exactOrder": true
+      },
+      {
+        "mode": "album",
+        "destination": "existing",
+        "count": 6,
+        "exactOrder": true
+      }
+    ],
+    "skipExistingAllDuplicate": {
+      "newWrites": 0,
+      "recoveryFileUnchanged": true,
+      "orderUnchanged": true
+    },
+    "restartRetainsAllCreatedDestinations": true,
+    "createdPlaylists": 4,
+    "result": "passed",
+    "cleanup": [
+      {
+        "deletionStatus": 204,
+        "subsequentRead": 404
+      },
+      {
+        "deletionStatus": 204,
+        "subsequentRead": 404
+      },
+      {
+        "deletionStatus": 204,
+        "subsequentRead": 404
+      },
+      {
+        "deletionStatus": 204,
+        "subsequentRead": 404
+      }
+    ],
+    "allTestPlaylistsAbsent": true
+  },
+  "mixedDuplicateCase": {
+    "mixedSkipExisting": {
+      "inputCount": 3,
+      "alreadyPresent": 1,
+      "appendedCount": 2,
+      "displayOrderPreserved": true,
+      "duplicateReadBeforeWrite": true,
+      "writeCount": 1
+    },
+    "noFalseRecoveryLock": true,
+    "result": "passed",
+    "cleanup": [
+      {
+        "deletionStatus": 204,
+        "subsequentRead": 404
+      }
+    ],
+    "allTestPlaylistsAbsent": true
+  },
+  "selectionOrdering": "Selected rows were checked in order 3,1,2; fresh server entries match displayed row order 1,2,3.",
+  "albumSample": "Six actual tracks; optional album songCount was absent, so the multi-track album was discovered through real song.albumId membership and opened through the native album search.",
+  "duplicateProof": {
+    "allPresent": "Six album tracks already present: zero additional POST /Playlists/{id}/Items requests, unchanged playlist order and byte hash/inode/mtime/size of playlist-recovery.json.",
+    "mixed": "Leave only the middle selected song in the created test playlist; selected-add with skip existing reads entries before its single write and yields existing middle song followed by first and third songs. Fresh detail has no recovery marker."
+  },
+  "cleanup": "Four test-only destinations in the final variant run and one in the focused mixed run. Each delete guarded exact created ID, Playlist type and unique prefix; each returned204 with404 follow-up and absence from a fresh full list. Earlier selector-failed variant run also cleaned its four destinations. No existing playlist or music file was mutated.",
+  "observationCorrections": [
+    "Optional album songCount was unavailable; sample discovery now uses actual track membership. No mutation occurred in that discovery-only failed attempt.",
+    "Albums names both navigation and detail Back controls; the final script scopes navigation to the Main navigation landmark. This was a script-selector correction; no product fix was needed."
+  ],
+  "acceptance": {
+    "P03": "Live: single song, out-of-order selected songs and entire six-track album each saved to new and existing destinations; fresh exact server order checked for all six.",
+    "P06": "Live: duplicate read precedes mixed write; ordered new remainder preserved; all-duplicate remainder sends no write and leaves recovery file unchanged.",
+    "stillOpen": "Read-only/unknown permissions, selected-entry playback and broader failure/uncertain-write recovery reconciliation."
+  },
+  "checks": {
+    "productionBuildTypeScriptAndESLint": "Prior passing production checks remain applicable; source/bundle hashes unchanged.",
+    "permanentUnitTests": "None added or run.",
+    "providerNetworking": "Blocked with null key adapter.",
+    "nativeWindow": "Hidden, muted and existing isolated protected profile reused."
+  },
+  "sourceAndBundleSha256": {
+    "src/main/jellyfin.ts": "1935b48ade2e58fcbf52f763bc9174d401231972ef2ebe34c6de1e840df2e153",
+    "src/main/playlist-recovery.ts": "2738ebe918ef064209c13fdf459492bb62d0197de6fb0c945eeb379f4240f8bb",
+    "src/main/storage.ts": "8c06bf1f1fd99f53d224a6ac61a61ea34e48426e3fa33ca276e9880e638c1e36",
+    "src/main/index.ts": "104a29c622b56003a4ec249f3ad3ff97f42220e56f2001a2ece4b03da89f1603",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "8dbd43a0679ef656bea673acebe9b1a3ad624e9403e4b041289c43bed03a28d0",
+    "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": "7ec7af5dedfed6f3a29e6584c2b5b2559df4477682b1fcdd19d9ee7456e18d7c",
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "df34c595244bc9ef00519fbad74f09b370bee7a3d68777a1ba2c77f26e3c1053",
+    "out/main/index.js": "b1b952808f79100f95178d295f74385d1f5227229e5b4b4ab4283441eda530a0",
+    "out/preload/index.cjs": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215",
+    "out/renderer/assets/index-BelPLV-I.js": "41a8f17f81806ab80ee076101d11efd402cc667a132fc112b6cced0fc0af0e47"
+  },
+  "reproductionScripts": [
+    "/private/tmp/live-radio-acceptance/add-variants.cjs",
+    "/private/tmp/live-radio-acceptance/mixed-skip.cjs",
+    "/private/tmp/live-radio-acceptance/playlist-bootstrap.mjs"
+  ]
+}

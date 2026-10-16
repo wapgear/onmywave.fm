@@ -1,0 +1,128 @@
+{
+  "date": "2026-10-16",
+  "scope": "R10 pending setup save navigation, newer-draft cleanup guards, active-profile commit guards and late save after sign-out/new account",
+  "native": {
+    "cases": [
+      {
+        "kind": "newer-draft-success",
+        "renderer": "actual source with exposed existing root setter",
+        "pendingLocksSurviveNavigation": true,
+        "durableStateMatchesOutcome": true,
+        "newerSourcesHostMoodInterestsWorkflowAndStopErrorRetained": true,
+        "errorSurvivesNavigation": "not applicable",
+        "explicitSavePersistsNewerDraft": true,
+        "providerRequests": 0,
+        "result": "passed"
+      },
+      {
+        "kind": "newer-draft-failure",
+        "renderer": "actual source with exposed existing root setter",
+        "pendingLocksSurviveNavigation": true,
+        "durableStateMatchesOutcome": true,
+        "newerSourcesHostMoodInterestsWorkflowAndStopErrorRetained": true,
+        "errorSurvivesNavigation": "passed",
+        "explicitSavePersistsNewerDraft": true,
+        "providerRequests": 0,
+        "result": "passed"
+      },
+      {
+        "kind": "changed-profile-before-entry",
+        "renderer": "production bundle",
+        "pendingLocksSurviveNavigation": true,
+        "rejectsWithoutChangingEitherProfile": true,
+        "originalDraftRetained": true,
+        "providerRequests": 0,
+        "result": "passed"
+      },
+      {
+        "kind": "changed-profile-before-commit",
+        "renderer": "production bundle",
+        "pendingLocksSurviveNavigation": true,
+        "rejectsWithoutChangingEitherProfile": true,
+        "originalDraftRetained": true,
+        "providerRequests": 0,
+        "result": "passed"
+      },
+      {
+        "kind": "signout-late-save-new-account",
+        "renderer": "actual source with exposed existing root setter",
+        "oldWriteRejected": true,
+        "newSessionDraftNotCleared": true,
+        "oldErrorNotAttachedToNewSession": true,
+        "providerRequests": 0,
+        "result": "passed"
+      }
+    ],
+    "result": "passed"
+  },
+  "method": {
+    "runtime": {
+      "platform": "macOS 27.2 arm64",
+      "electron": "43.7.0"
+    },
+    "application": "Actual main/preload/typed IPC, serialized atomic LocalState storage and current renderer code in protected fresh dummy-account profiles. Hidden muted windows and owned localhost catalog. Shared provider Keychain adapter substituted. All non-fixture external requests blocked; zero provider requests in all five cases.",
+    "productionRenderer": "Two changed-profile cases use the unchanged current production renderer bundle. Hold a Save before main handler entry or immediately before actual LocalState update, navigate to music and back, confirm mood and profile controls remain locked, switch active profile through actual typed IPC, then release old save. Neither profile changes, the old draft remains and the main guard returns an actionable error. The profile change is a controlled main-boundary stimulus, not a claim that disabled UI permits switching.",
+    "newerDraftRenderer": "Three cases build the actual current renderer source with a test-only reference exposing the existing SessionContent root draft getter/setter. No mutation/query/save logic is replaced. Actual UI submits a setup save, while the test holds its IPC reply after durable publication or its actual temporary-file rename before a controlled write failure. After native music navigation and lock checks, inject newer source/host/mood/interests/workflow/stop-error state through the real setter. Both old success and failure retain every newer field; error survives navigation; a later explicit UI Save commits the newer draft. This is controlled concurrency stress beyond what locked UI currently allows.",
+    "storage": "Success hold occurs after actual handler has committed. Failure holds after writing the temporary LocalState file but before rename; the old on-disk profile remains, and actual atomic writer throws. Production main sanitizes the unexpected error and renderer shows explicit retry. No production file operation is replaced.",
+    "accountTransition": "Hold an actual save before commit. Native Settings confirmation signs out; native dummy sign-in and actual library selection enter a second account. Inject its newer draft through the exposed real setter, then release the old save. Final epoch guard rejects the write; old root setter/error callback cannot touch the new SessionContent. Persisted mood stays unchanged and the new session shows no old sign-out error.",
+    "cleanup": "Each app.close is followed by assertion that the isolated captured-fatal file is absent. Final matrix driver terminates zero; no individual Electron process exit-code claim. Owned server terminates and control file resets."
+  },
+  "productionChange": false,
+  "checks": {
+    "nativeCases": 5,
+    "result": "passed",
+    "buildIncludingTypeScript": "preceding passing current snapshot; no production source changes",
+    "fullESLint": "preceding passing current snapshot; no production source changes",
+    "newControlled": [
+      "R10"
+    ],
+    "inventory": {
+      "total": 187,
+      "Review": 114,
+      "Dated": 11,
+      "Recorded": 5,
+      "Controlled": 39,
+      "Live": 9,
+      "External": 9
+    },
+    "starMappings": 27,
+    "overallPercentage": null,
+    "goalComplete": false
+  },
+  "fixtureCorrections": [
+    "First checkpoint poll supplied its custom value as Electron callback first argument; Electron supplies its module there. Corrected both callbacks to use the second argument and reran.",
+    "Initial account fixture looked for a nonexistent Open music button. Source and rendered chooser show Archive music checkbox and Save libraries; used those actual controls and reran the complete five-case matrix. Neither adapter correction changed production."
+  ],
+  "limits": [
+    "Two cases use production renderer; three use actual source with only a test reference to the real draft setter. Injected edits and direct typed active-profile changes test guard behavior rather than observed regular-user interaction.",
+    "One macOS/runtime and controlled dummy accounts. No live Jellyfin auth failures, provider delivery, OS Keychain behavior or observed listener usability is inferred.",
+    "The earlier debugger-associated shutdown diagnostic remains open under Q10. This record does not attribute or fix it.",
+    "Broader automatic artifact reconciliation remains A19; this record covers setup writes and SessionContent draft ownership."
+  ],
+  "sha256": {
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/main/storage.ts": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+    "src/main/news-workflow.ts": "7cab5b92c6d4d1476526a75831069de80623ef5b6ca4686345bacfaf01103fb0",
+    "src/preload/index.ts": "0c7edf2153d5210b24a0fac9db667fd254e324366d4737653578ef067c1eac63",
+    "src/shared/types.ts": "71e36cce9f904d7327f8d85c38f8ce050c7955877888ed9dde27e4105a6c57f0",
+    "src/shared/workflow.ts": "19e2afad8909330c33195420af54cbbbe836f0bc81bde166cfdf42dd3230e6ac",
+    "src/renderer/pages/Stations/Stations.page.tsx": "7aa25c18baaa834b112e44819333221f1d45aeda269c5ce22c5aed4715199596",
+    "src/renderer/pages/Stations/components/RoomSetup.component.tsx": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330",
+    "out/main/index.js": "33a41de07b02aa7fc1fae714013462e62f871fe9653bc481cf743240281398c7",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+    "out/renderer/assets/index-ZOgMZShw.css": "d8229b9932315a7d35fd286e73333f3c63eb5a2b0c08077751b537daa13118dd",
+    "out/renderer/assets/index-Ff4sAwLj.js": "998c6d2c97924dba981d44faf3bd91aec3411431f6aed9b018b0cacfdc97fdd7"
+  },
+  "fixtureReproducerSha256": {
+    "/private/tmp/native-setup-order/build.mjs": "8d1ef95231c1e405e556740e9438c500375fa874488964aa794b50bcc5ccc77d",
+    "/private/tmp/native-setup-order/build-renderer.mjs": "4aff4d0c601e2e8d2022cc233262a10def5cd1ded38b95e74b5037b93cbef38c",
+    "/private/tmp/native-setup-order/bootstrap.mjs": "6125003b2590719b4a83acfe8a01b5e2eff66f62ad2dfaa97e16407d9120042f",
+    "/private/tmp/native-setup-order/run.cjs": "f38f3d7402f2e8cbb72f1118aaa478f745df8e46b3e375c2266932cd29dfc73d",
+    "/private/tmp/native-setup-order/report.json": "0fb6b485308f8ccd62ca0930b58693ec15558f1262b50b287eed59a721d104d5",
+    "/private/tmp/native-setup-order/renderer-build.log": "0c236886509bb9172d8688de8ca3178961d5e9892520d33661dfab875adfd8f1",
+    "/private/tmp/native-setup-order/out/main/index.js": "900fd989c58cb87344a9e4f02bb36d4563571f7ec009b245250e854c1c64940d",
+    "/private/tmp/native-setup-order/stress-renderer/assets/index-DlFlMDaR.css": "e86d3b6666a5de909aea8a745ede59264daf5f0d325da4f10ac26a2e4d16a63b",
+    "/private/tmp/native-setup-order/stress-renderer/assets/index-kR5ve1n8.js": "6db3ab3a97246aca8fdf8e6a4938168a3acff095562398047e92592d3c614feb"
+  },
+  "priorSnapshot": "2026-10-16-copied-profiles.json. Current recorded source/bundle hashes match its passing build/TypeScript/full ESLint snapshot. Earlier dated records are unchanged."
+}

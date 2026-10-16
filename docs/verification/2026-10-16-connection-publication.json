@@ -1,0 +1,290 @@
+{
+  "date": "2026-10-16",
+  "scope": "C09/C11 pending-auth credential publication, sign-out cancellation and coherent saved account ordering",
+  "runtime": {
+    "macOS": "27.2 arm64",
+    "electron": "43.7.0",
+    "liveJellyfin": "12.2.0"
+  },
+  "before": [
+    {
+      "mode": "success",
+      "original": "Original",
+      "immediately": "Replacement",
+      "oldSignInAccepted": false,
+      "oldError": "invalid",
+      "during": "Replacement",
+      "diskDuring": "Replacement",
+      "signoutSucceeded": true,
+      "final": null,
+      "diskFinal": null
+    },
+    {
+      "mode": "pausefail",
+      "original": "Original",
+      "immediately": "Replacement",
+      "oldSignInAccepted": false,
+      "oldError": "invalid",
+      "during": "Replacement",
+      "diskDuring": "Replacement",
+      "signoutSucceeded": false,
+      "final": "Replacement",
+      "diskFinal": "Replacement"
+    },
+    {
+      "mode": "deletefail",
+      "original": "Original",
+      "immediately": "Replacement",
+      "oldSignInAccepted": false,
+      "oldError": "invalid",
+      "during": "Replacement",
+      "diskDuring": "Replacement",
+      "signoutSucceeded": false,
+      "final": "Replacement",
+      "diskFinal": "Replacement"
+    }
+  ],
+  "afterActualMain": [
+    {
+      "mode": "success",
+      "original": "Original",
+      "immediately": "Original",
+      "oldSignInAccepted": false,
+      "oldError": "invalid",
+      "during": "Original",
+      "diskDuring": "Original",
+      "signoutSucceeded": true,
+      "final": null,
+      "diskFinal": null
+    },
+    {
+      "mode": "pausefail",
+      "original": "Original",
+      "immediately": "Original",
+      "oldSignInAccepted": false,
+      "oldError": "invalid",
+      "during": "Original",
+      "diskDuring": "Original",
+      "signoutSucceeded": false,
+      "final": "Original",
+      "diskFinal": "Original"
+    },
+    {
+      "mode": "deletefail",
+      "original": "Original",
+      "immediately": "Original",
+      "oldSignInAccepted": false,
+      "oldError": "invalid",
+      "during": "Original",
+      "diskDuring": "Original",
+      "signoutSucceeded": false,
+      "final": "Original",
+      "diskFinal": "Original"
+    }
+  ],
+  "actualService": {
+    "actualService": true,
+    "cases": 18,
+    "passed": [
+      "both-staged-fail",
+      "older-staged-fails-newer-succeeds",
+      "older-staged-stale-newer-fails",
+      "older-staged-stale-newer-succeeds",
+      "already-committed-older-newer-succeeds",
+      "already-committed-older-newer-fails",
+      "failed-stage-does-not-cancel-newer-pending-auth",
+      "stale-queued-and-inflight-candidates-never-publish",
+      "cancel-before-commit-retains-original",
+      "cancel-after-commit-retains-baseline",
+      "ephemeral-clear-commits-before-session-promotion",
+      "selection-stale-stage",
+      "selection-committed-baseline",
+      "failed-signout-retains-committed-account",
+      "signout-visible-until-guarded-delete-commits",
+      "signout-cancels-staged-auth-before-clear",
+      "postcommit-cleanup-error-does-not-unaccept-account",
+      "signout-supersedes-auth-response"
+    ],
+    "providerRequests": 0
+  },
+  "authOrderingRegression": {
+    "cases": 12,
+    "passedLines": [
+      "PASS info-success old login superseded immediately; coherent account through pause/delete outcome; deliberate later sign-in persists",
+      "PASS info-pausefail old login superseded immediately; coherent account through pause/delete outcome; deliberate later sign-in persists",
+      "PASS info-deletefail old login superseded immediately; coherent account through pause/delete outcome; deliberate later sign-in persists",
+      "PASS auth-success old login superseded immediately; coherent account through pause/delete outcome; deliberate later sign-in persists",
+      "PASS auth-pausefail old login superseded immediately; coherent account through pause/delete outcome; deliberate later sign-in persists",
+      "PASS auth-deletefail old login superseded immediately; coherent account through pause/delete outcome; deliberate later sign-in persists",
+      "PASS denied-success old login superseded immediately; coherent account through pause/delete outcome; deliberate later sign-in persists",
+      "PASS denied-pausefail old login superseded immediately; coherent account through pause/delete outcome; deliberate later sign-in persists",
+      "PASS denied-deletefail old login superseded immediately; coherent account through pause/delete outcome; deliberate later sign-in persists",
+      "PASS body-success old login superseded immediately; coherent account through pause/delete outcome; deliberate later sign-in persists",
+      "PASS body-pausefail old login superseded immediately; coherent account through pause/delete outcome; deliberate later sign-in persists",
+      "PASS body-deletefail old login superseded immediately; coherent account through pause/delete outcome; deliberate later sign-in persists"
+    ],
+    "scope": "Actual main/service/storage/IPC with controlled crypto and held info/auth/rejected-auth/body and pause/delete failures"
+  },
+  "nativePublicationBoundary": [
+    {
+      "mode": "success",
+      "originalRetainedDuringPending": true,
+      "encryptedTempStagedBeforeCancel": true,
+      "canceledTempRemoved": true,
+      "stagedSignInRejected": true,
+      "encryptedCredentialUnchangedBeforeFinalClear": true,
+      "pendingActionDisabled": true,
+      "explicitFailureRetry": false,
+      "reopenedOriginalAfterFailure": false,
+      "finalDisconnected": true,
+      "authRequests": 1,
+      "providerRequests": 0
+    },
+    {
+      "mode": "pausefail",
+      "originalRetainedDuringPending": true,
+      "encryptedTempStagedBeforeCancel": true,
+      "canceledTempRemoved": true,
+      "stagedSignInRejected": true,
+      "encryptedCredentialUnchangedBeforeFinalClear": true,
+      "pendingActionDisabled": true,
+      "explicitFailureRetry": true,
+      "reopenedOriginalAfterFailure": true,
+      "finalDisconnected": true,
+      "authRequests": 1,
+      "providerRequests": 0
+    },
+    {
+      "mode": "deletefail",
+      "originalRetainedDuringPending": true,
+      "encryptedTempStagedBeforeCancel": true,
+      "canceledTempRemoved": true,
+      "stagedSignInRejected": true,
+      "encryptedCredentialUnchangedBeforeFinalClear": true,
+      "pendingActionDisabled": true,
+      "explicitFailureRetry": true,
+      "reopenedOriginalAfterFailure": true,
+      "finalDisconnected": true,
+      "authRequests": 1,
+      "providerRequests": 0
+    }
+  ],
+  "nativeSessionOnlyFallback": {
+    "readableSavedAccountStillPlays": true,
+    "failedReplacementRestoresOriginalAccountAndDisk": true,
+    "successfulRetrySessionOnlyAndOldRecordCleared": true,
+    "oneRuntimeIdentityAcrossAccountAndMedia": true,
+    "restartDoesNotResurrectOlderAccount": true,
+    "providerRequests": 0
+  },
+  "nativeLibraryAndIdentityLifecycle": {
+    "librarySaveKeepsPlayingResource": true,
+    "identitySurvivesSignout": true,
+    "identitySurvivesAccountReplacement": true,
+    "identitySurvivesRestart": true,
+    "protectedReplacementRestored": true,
+    "sessionOnly": false,
+    "providerRequests": 0
+  },
+  "liveSessionAndLibrarySave": {
+    "restartWithoutLogin": true,
+    "sameLibrarySaveKeepsPlaying": true,
+    "libraries": 1,
+    "catalogLoaded": true,
+    "decodedPlayback": true,
+    "djOff": true,
+    "preparationOff": true,
+    "providerRequests": 0
+  },
+  "liveIndependentInstallations": {
+    "allApiArtworkAudioHeadersMatchIdentityFile": true,
+    "transcodeQueryMatchesIdentityFile": true,
+    "differentInstallationIdentities": true,
+    "firstSessionSurvivesSecondLogin": true,
+    "bothReadLibraries": true,
+    "firstDecodesAfterSecondLogin": true,
+    "restartKeepsIdentity": true,
+    "restartWithoutSignIn": true,
+    "bothStillReadAfterRestart": true,
+    "decodedPlaybackAfterRestart": true,
+    "convertedHeadStatus": 200,
+    "convertedOffset": 5,
+    "sessionOnly": false,
+    "djOff": true,
+    "preparationOff": true,
+    "providerRequests": 0
+  },
+  "decision": {
+    "independentProposals": {
+      "Boris": "Cancel/restore committed account, wait for writes and compensate disk before pausing workflow",
+      "Nadia": "Stage candidate, validate ticket at credential publication, activate only on commit"
+    },
+    "challenge": "Compensating writes can fail after replacing the credential; an asynchronous guard/rename has an event-loop gap",
+    "revisedPositions": "Both support staging and a synchronous guard/publication/promotion callback",
+    "primaryChoice": "Keep encrypted temp writes asynchronous; only final local rename/unlink and session promotion share one synchronous turn",
+    "review": "Nadia reviewed actual staged code without a concrete blocker",
+    "reservation": "The final local metadata operation briefly blocks the main thread; no full storage-performance claim"
+  },
+  "checks": {
+    "buildWithTypeScript": "passed",
+    "fullEslint": "passed",
+    "whitespace": "passed",
+    "albumAndSongSearchRegressions": "passed"
+  },
+  "isolation": {
+    "controlledCredentials": "dummy only",
+    "nativeControlledEncryption": "actual Electron safeStorage",
+    "nativeControlledServer": "owned localhost5191, terminated after checks",
+    "liveCredentials": "stdin/protected storage only; no tokens/passwords/account identifiers in evidence",
+    "liveInstallations": "reused both existing isolated app identities rather than creating more server devices",
+    "providerKeys": "isolated null adapter",
+    "providerRequests": 0,
+    "liveAudioMuted": true,
+    "liveWindowsHidden": true
+  },
+  "fixtureCorrections": [
+    "Adapt the temporary writeConnection signature hooks and native initialization to the actual changed source",
+    "Separate before-publication candidates from accounts already committed before a newer intent",
+    "Count native authentication requests across both processes after adding failure/restart checks"
+  ],
+  "limits": [
+    "Controlled publication races use explicit checkpoints around actual storage and real native crypto; no live network failure was induced",
+    "A server may reject an older token after accepting a new authentication even when the local candidate is canceled; the app preserves local account identity and uses normal reauthentication if needed",
+    "Post-commit cleanup/supersession is distinct from canceling an uncommitted account; committed account state is never rolled back by a late response",
+    "Live converted HEAD remains route/identity evidence, not audible converted-codec proof",
+    "Other OS/server combinations, full VoiceOver, live playlist/provider delivery and observed listener usability remain open"
+  ],
+  "sha256": {
+    "src/main/jellyfin.ts": "1935b48ade2e58fcbf52f763bc9174d401231972ef2ebe34c6de1e840df2e153",
+    "src/main/storage.ts": "8c06bf1f1fd99f53d224a6ac61a61ea34e48426e3fa33ca276e9880e638c1e36",
+    "src/main/index.ts": "104a29c622b56003a4ec249f3ad3ff97f42220e56f2001a2ece4b03da89f1603",
+    "src/main/media.ts": "6768544bd3215e37187a12293571c894a1023619ebe8f09e25403bdec0bfb671",
+    "src/renderer/pages/Connection/Connection.page.tsx": "59c3fbc4d305491a570c1520d522e4d0658d285a06df259000adf9bf27dd86c2",
+    "src/renderer/pages/Settings/Settings.page.tsx": "ce0c41cd58f82a801b651940cb641945c12ed4c83b765377f6be8d809d1e5d9f",
+    "out/main/index.js": "b1b952808f79100f95178d295f74385d1f5227229e5b4b4ab4283441eda530a0",
+    "out/preload/index.cjs": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215",
+    "out/renderer/index.html": "b116b8435d67749a0bd1c88109cce696c632de32074308169b61007f7212c41f",
+    "out/renderer/assets/index-ZOgMZShw.css": "d8229b9932315a7d35fd286e73333f3c63eb5a2b0c08077751b537daa13118dd",
+    "out/renderer/assets/index-tG379VyE.js": "27842df12009f3d639d6019f8c7fe87b3a9d752a88effc6f526c943d9ba06e2e"
+  },
+  "beforeBundleSha256": "b136b9f259c579d3bd5e72b9f2855fe206eaebdf8f23552b7f5b4ceefcba97d9",
+  "fixtureSha256": {
+    "publication/check.ts": "1617b8cbc228ed653857d8f4bd44aadef26bc50ead840d936b990eac99d21efb",
+    "publication/build.mjs": "60bf1880c803a00950bb23c9983a18b7727d211e6dc3e5b02dddae8200841e96",
+    "publication/run.mjs": "ad1c4374edf2b2af8d68095bded79f0c02169dd9349ff210c02e3dc04536c558",
+    "publication/staged-persistence.mjs": "852eb83d3b5d4c735b555ec9e9cb5290190be379456c61ad083ec06e9f68bfbe",
+    "publication/native.cjs": "a543e299522ad1babec0086437a92744ddfd07fb92c547804976194683648a37",
+    "publication/native-publication.cjs": "df868b326f4310856d0efb4bc23032334a4ab9cd2d1fe23ba4912955d2d3d9e3",
+    "publication/live-restart.cjs": "169117a0c6029a893268a073426db0ab3446ecd52450526003239ab01d915edf",
+    "native/build.mjs": "d6faa8474157815167e30bac1e58d64e3ea2a89564d3fff27a144b0a22dc9a9e",
+    "native/bootstrap.mjs": "87f35dc96d5f0fd30b9651c069b4cf90d00c654b0ad33f1640f62199befb9b24",
+    "native/run.cjs": "3236fe25198f6dc28267ef835cd476ccf5a109d0bab8867ad55c7fb34c6ab9c6",
+    "native/valid.cjs": "f6e66bfbaa102484c33b223a30d961b781ac394a4292039aa8f573e649ba4116",
+    "live/build.mjs": "b5ed39273fdbd587badd77aeb5996fa5fb7177b677a517406df2eb3024293044",
+    "live/bootstrap.mjs": "84175fd1be89de37daaceba92530d4c7967ead3b0c2a50d0dc71a50f363400a0",
+    "live/device-pair.cjs": "e1c5417caa8747d301f441ebeee6c596811ad193849a705acb73376b4397fb63",
+    "auth-order/build.mjs": "ea44776c589e9cb8545f3cbda9e23824b05a6ff249dd3e16216941452108d4bc",
+    "auth-order/check.ts": "2a54c2d7277fd904c1016d101d9e36221cee9e47f4c1defe2faa45766fb00f00",
+    "auth-order/run.mjs": "245ec0f26829c449e690cddcc2d034261cf71a79b5dbbab786b8adc4012fb7d5"
+  }
+}

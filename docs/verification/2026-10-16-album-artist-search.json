@@ -1,0 +1,191 @@
+{
+  "date": "2026-10-16",
+  "scope": "Album title/album-artist search fix; sampled native live song search, complete catalog paging and three-track listening-session restore",
+  "runtime": {
+    "macOS": "27.2 arm64",
+    "electron": "43.7.0",
+    "jellyfin": "12.2.0"
+  },
+  "before": {
+    "albumCount": 1151,
+    "artistSearch": {
+      "sampleHasArtist": true,
+      "total": 0,
+      "containsKnownAlbum": false,
+      "uiStatus": null,
+      "empty": true
+    },
+    "multiTrackAlbumCount": 0
+  },
+  "documentedEndpointLiveProbe": {
+    "artistStatus": 200,
+    "artists": 1,
+    "albumStatus": 200,
+    "albumCount": 1,
+    "containsKnownAlbum": true,
+    "sampledSongCount": 500,
+    "sampledMultiTrackAlbum": true
+  },
+  "decision": {
+    "proposers": [
+      "Boris",
+      "Nadia"
+    ],
+    "mode": "Independent read-only proposals, one challenge and revision",
+    "primaryOwnership": "Implementation, fixtures, native/live checks and PRD updates",
+    "result": "Both support generalizing the existing bounded song-search pipeline with type-specific artist lookup and Audio-only album expansion",
+    "reservation": "Albums without indexed album-artist relationships may still be omitted; full-library enumeration fallback is not established by this change",
+    "review": "Nadia found no blocking regression; her multi-library browse-sort consistency note was addressed and verified"
+  },
+  "finalLiveBrowsing": {
+    "songPaging": {
+      "loaded": 1305,
+      "total": 1305,
+      "scrollLoads": 16
+    },
+    "songSearch": [
+      {
+        "kind": "title",
+        "containsKnownTrack": true,
+        "uniqueReturnedIds": true,
+        "total": 1,
+        "elapsedMs": 659
+      },
+      {
+        "kind": "artist",
+        "containsKnownTrack": true,
+        "uniqueReturnedIds": true,
+        "total": 5,
+        "elapsedMs": 695
+      },
+      {
+        "kind": "album",
+        "containsKnownTrack": true,
+        "uniqueReturnedIds": true,
+        "total": 3,
+        "elapsedMs": 651
+      }
+    ],
+    "emptySongSearchRecovers": true,
+    "albumPaging": {
+      "loaded": 1152,
+      "total": 1152,
+      "scrollLoads": 23
+    },
+    "album": {
+      "titleSearch": true,
+      "trackCount": 1,
+      "displayMatchesServiceOrder": true,
+      "playbackClockAdvanced": true
+    },
+    "restoredPaused": {
+      "exactSavedSnapshot": true,
+      "queueLength": 1,
+      "shuffle": true,
+      "repeat": "all",
+      "volume": 0.42
+    },
+    "providerRequests": 0,
+    "result": "passed"
+  },
+  "finalLiveMultiTrack": {
+    "artistSearch": {
+      "containsKnownAlbum": true,
+      "total": 1,
+      "nativeTileShown": true
+    },
+    "trackCount": 3,
+    "displayAndQueueMatchServiceOrder": true,
+    "pausedNextReachesSecond": true,
+    "pausedPreviousReachesFirst": true,
+    "seekSeconds": 5,
+    "restoredExactSnapshot": true,
+    "restoredPaused": true,
+    "volume": 0.37,
+    "shuffle": true,
+    "repeat": "all",
+    "providerRequests": 0
+  },
+  "actualServiceIntegration": {
+    "actualService": true,
+    "mergedTitleArtistMatches": true,
+    "normalizedIdDeduplication": true,
+    "selectedLibraryContainment": true,
+    "genreTagPropagation": true,
+    "serverPageBeyond500": true,
+    "unionPaging520": true,
+    "albumArtistSort": true,
+    "multiLibraryBrowseSortMatchesSearch": true,
+    "titleSortDirections": true,
+    "albumSort": true,
+    "noSelectedLibrariesNoFetch": true,
+    "noArtistStillFindsTitle": true,
+    "broadSearchBound": true,
+    "unauthorizedAndServerErrors": true,
+    "sessionChangedDuringBodyRejected": true,
+    "providerRequests": 0
+  },
+  "songRegression": "Actual service title/artist/album union, matched-album containment, filters, Date added ordering and token-free URL assertions passed",
+  "checks": {
+    "buildWithTypeScript": "passed",
+    "fullEslint": "passed",
+    "diffWhitespace": "passed"
+  },
+  "isolation": {
+    "server": "User-authorized LAN server; address/account/catalog identifiers omitted",
+    "session": "Actual safeStorage in isolated app data",
+    "providerKeys": "null read adapter; shared key writes blocked",
+    "providerRequestsBlocked": true,
+    "providerRequests": 0,
+    "audioMuted": true,
+    "hiddenWindow": true
+  },
+  "sessionFinding": {
+    "status": "Open",
+    "observation": "An earlier encrypted session was later rejected with401. Rejected request token matched the stored token. Fresh native authentication and immediate fresh-process restart succeeded. No root cause or authentication fix is claimed."
+  },
+  "fixtureCorrections": [
+    "Use singular song/album status CSS selectors",
+    "Scroll the native list instead of trying to click the moving infinite-load button",
+    "Compare normalized GUID identities rather than requiring wire casing",
+    "Correct temporary built-module import path",
+    "Use actual server-reported totals: library changed from1304 songs/1151 albums to1305/1152 during this round",
+    "Album ChildCount was absent/unhelpful; identify a multi-track album from actual song AlbumId membership instead",
+    "Run dynamic imports inside the Electron bootstrap module rather than Playwright serialized evaluate"
+  ],
+  "limits": [
+    "One live server/account/runtime only; no supported-version matrix claim",
+    "All catalog pages loaded, but every individual metadata value was not audited",
+    "Song search title/artist/album and album artist lookup are samples, not exhaustive query coverage",
+    "Single-track browsing transport is not used as Next/Previous evidence; separate three-track replay verifies those transitions",
+    "No audible quality, live provider, playlist mutation, VoiceOver or observed-listener acceptance",
+    "Intermittent saved-session401 remains open"
+  ],
+  "sha256": {
+    "src/main/jellyfin.ts": "8a1c3d9d9d74c1beedcb7a97bb8053c485f1364f72cc754481c89a4ae3d18aa1",
+    "src/main/index.ts": "9388633986fe655374126c8f0740ac6a94a6d1fb9ee300d76fc2b32ccf642c2a",
+    "src/main/storage.ts": "15a0f548f5362cbb8f2cfdb93d0d33b15bc007c75d581266f7a81da8d55c3100",
+    "src/renderer/pages/Albums/Albums.page.tsx": "8abce67107438b4ed395443875aa920b6e71cbc968b3b834c9702ddd745f81ed",
+    "src/renderer/pages/Albums/VirtualAlbums.component.tsx": "a1685437270b676a8a58395b18068911dbf772a82e59cbdcc85be2f17287d62b",
+    "src/renderer/pages/Songs/Songs.page.tsx": "79b3115960d53568bac407d5754ff0996fee44ba895b222d99b4e0fb71e3007f",
+    "src/renderer/pages/Songs/VirtualSongs.component.tsx": "95ada95c0533bb1e462a818f6981c60d22cd4a9a8e4df27b8cea6cc3119606e4",
+    "src/renderer/player.tsx": "d682d6ca0ae69d18f6b26dea4d2c9243d316acce8a9a7900fec1a101c6ff0051",
+    "out/main/index.js": "da60dcc8760bc9ea46103c63012900d0a5777332690a795c5b7e9044cea2bbc2",
+    "out/preload/index.cjs": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215",
+    "out/renderer/index.html": "f4cc0837f996e186d071bcbca643afb5e34733d23d4f5123966a7326cb71fafa",
+    "out/renderer/assets/index-ZOgMZShw.css": "d8229b9932315a7d35fd286e73333f3c63eb5a2b0c08077751b537daa13118dd",
+    "out/renderer/assets/index-BwEJCjdB.js": "ad341e6ebcda958c38266dd27ef8edd9322f59f640d4a6504883f77776c52a0f"
+  },
+  "fixtureSha256": {
+    "build.mjs": "b5ed39273fdbd587badd77aeb5996fa5fb7177b677a517406df2eb3024293044",
+    "bootstrap.mjs": "c35bec3de6d06ebc3661c4c4211be300fd1faf6441d69843ec16cc5b329bca49",
+    "browsing.cjs": "1dca12ff8dd2aa9a2149abbb604b0eecb0f46da6c8dbe23fdd8240b3009b4551",
+    "multitrack.cjs": "8e3ba5d757d72431ae143e027b17d9e1cee452565652c1feac94e893da5d0cef",
+    "album-search-service.mjs": "0fcc0aa685d19abe81f25b50c5c5d8d40a8f3f190a09f26c6a2e3d5acd6377e0",
+    "song-regression.mjs": "57fa03c8ae62df8e91beead018734a3348be7ef7cd8cbdb02ba1484e0859ee17"
+  },
+  "primarySources": {
+    "albumArtistLookup": "https://typescript-sdk.jellyfin.org/interfaces/generated-client.ArtistApiGetAlbumArtistsRequest.html",
+    "albumArtistItemFilter": "https://typescript-sdk.jellyfin.org/interfaces/generated-client.LibraryApiGetItemsRequest.html"
+  }
+}

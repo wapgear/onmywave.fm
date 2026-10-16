@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-16",
+  "scope": "P02 live native create/rename persistence; focused selected-add, move/remove, decode and restart evidence for parts of P03/P04/P05",
+  "environment": {
+    "server": "User-authorized Jellyfin server; same endpoint/account as prior live acceptance",
+    "profile": "Existing isolated protected acceptance installation; credentials not re-entered or copied into the report",
+    "native": "Actual Electron main/preload/production renderer, hidden window and muted audio",
+    "providers": "Null key adapter and external networking blocked"
+  },
+  "finalNativeResult": {
+    "nativeCreateIndependentlyReadable": true,
+    "renamePersisted": true,
+    "addDestinationVisible": true,
+    "selectedThreeAddedInDisplayOrder": true,
+    "permission": true,
+    "movePersisted": true,
+    "removePersisted": true,
+    "playlistDecodesAudio": true,
+    "restartRetainsNameAndOrder": true,
+    "result": "passed",
+    "cleanupStatus": 204,
+    "cleanupReadStatus": 404,
+    "onlyCreatedPlaylistRemoved": true
+  },
+  "persistenceProof": "Fresh authenticated HTTP metadata/entry reads bypassed the Jellyfin service and renderer cache, using the same existing account/session. Fresh process then reopened the renamed playlist and read the same remaining order. This is a second HTTP request path, not an observed second Jellyfin GUI client.",
+  "cleanup": "Each attempt created a unique test-only playlist. Cleanup guarded its exact created ID, Playlist type and unique name prefix. Final deletion returned204, metadata read404, and a fresh complete app playlist read excluded its ID. Prior attempts also confirmed deletion. Existing playlists and music files were not edited or removed.",
+  "verificationCorrections": [
+    {
+      "stage": "Add destination",
+      "issue": "Exact implicit-label selector did not match the dialog select.",
+      "resolution": "Used the actual dialog select observed in source; no product change."
+    },
+    {
+      "stage": "Return to Playlists",
+      "issue": "Script expected tiles while app retained its selected detail view.",
+      "resolution": "Accepted existing detail view or awaited loaded list before opening tile."
+    },
+    {
+      "stage": "Restart list loading",
+      "issue": "Immediate list-presence probe ran before async list load.",
+      "resolution": "Awaited grid or retained detail before deciding; final restart passes."
+    }
+  ],
+  "acceptance": {
+    "P02": "Live on tested account/server; create/rename returned native result and persisted through independent reads and restart.",
+    "P03": "Review; only three selected songs added to existing playlist in this run, not every single/album/new-destination variant.",
+    "P04": "Review; move/remove, native playlist audio and restarted order pass; selected-entry playback and full order/duplicate variants remain.",
+    "P05": "Review; tested account canEdit=true; read-only and unknown-permission live variants remain."
+  },
+  "checks": {
+    "productionBuildTypeScriptAndESLint": "Prior player-DJ round passed; all covered source/bundle hashes remain unchanged; not rerun for this evidence-only update.",
+    "liveFixtureBundle": "Rebuilt actual current main with only isolated provider adapter and hidden-window hooks.",
+    "whitespace": "passed"
+  },
+  "sourceAndBundleSha256": {
+    "src/main/jellyfin.ts": "1935b48ade2e58fcbf52f763bc9174d401231972ef2ebe34c6de1e840df2e153",
+    "src/main/playlist-recovery.ts": "2738ebe918ef064209c13fdf459492bb62d0197de6fb0c945eeb379f4240f8bb",
+    "src/main/storage.ts": "8c06bf1f1fd99f53d224a6ac61a61ea34e48426e3fa33ca276e9880e638c1e36",
+    "src/main/index.ts": "104a29c622b56003a4ec249f3ad3ff97f42220e56f2001a2ece4b03da89f1603",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "8dbd43a0679ef656bea673acebe9b1a3ad624e9403e4b041289c43bed03a28d0",
+    "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": "7ec7af5dedfed6f3a29e6584c2b5b2559df4477682b1fcdd19d9ee7456e18d7c",
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "df34c595244bc9ef00519fbad74f09b370bee7a3d68777a1ba2c77f26e3c1053",
+    "out/main/index.js": "b1b952808f79100f95178d295f74385d1f5227229e5b4b4ab4283441eda530a0",
+    "out/preload/index.cjs": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215",
+    "out/renderer/assets/index-BelPLV-I.js": "41a8f17f81806ab80ee076101d11efd402cc667a132fc112b6cced0fc0af0e47"
+  },
+  "referenceForScopedCleanupApi": "https://github.com/jellyfin/jellyfin-sdk-typescript/blob/master/src/generated-client/api/library-api.ts",
+  "reproductionScripts": [
+    "/private/tmp/live-radio-acceptance/playlists.cjs",
+    "/private/tmp/live-radio-acceptance/playlist-bootstrap.mjs"
+  ]
+}

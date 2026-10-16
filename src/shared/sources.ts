@@ -6,7 +6,9 @@ export function normalizeNewsSource(source: NewsSource): NewsSource {
   const kind = source.kind ?? 'rss';
   if (!['rss', 'twitter', 'hacker-news'].includes(kind)) throw new Error('Choose a supported source type.');
   if (typeof source.url !== 'string' || source.url.length > 4096) throw new Error('Enter a complete source URL.');
-  const url = new URL(source.url);
+  let url: URL;
+  try { url = new URL(source.url); }
+  catch { throw new Error('Enter a complete HTTP or HTTPS source URL.'); }
   if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) throw new Error('Use an HTTP or HTTPS URL without credentials.');
   url.hash = '';
   const base = { id: source.id, name: source.name.trim(), kind };

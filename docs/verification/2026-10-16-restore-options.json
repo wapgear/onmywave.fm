@@ -1,0 +1,272 @@
+{
+  "date": "2026-10-16",
+  "scope": "M12 early/failed/empty-queue options persistence and distinct retry; focused M13 ownership invariants only",
+  "before": {
+    "failedRestore": {
+      "failureMessage": "Jellyfin could not complete the request (503).",
+      "noAutomaticRestoreRetry": true,
+      "failedRestoreRetainsCompleteSavedQueue": true,
+      "recoveryRequiresExplicitRetry": true,
+      "queueRestoredAtSavedDuplicateAndPositionPaused": true,
+      "userOptionsWinAndPersist": true,
+      "restartRetainsQueueAndOptions": true,
+      "mode": "failed",
+      "result": "passed"
+    },
+    "failedQuit": {
+      "mode": "failedquit",
+      "uiVolumeBeforeQuit": "0.31",
+      "persistedVolumeBeforeQuit": 0.42,
+      "uiVolumeAfterRestart": "0.42",
+      "queueRetained": true
+    }
+  },
+  "nativeFlows": {
+    "failed": {
+      "failureMessage": "Your saved queue could not be restored. It is still saved. Jellyfin could not complete the request (503).",
+      "noAutomaticRestoreRetry": true,
+      "failedRestoreRetainsCompleteSavedQueue": true,
+      "recoveryRequiresExplicitRetry": true,
+      "queueRestoredAtSavedDuplicateAndPositionPaused": true,
+      "userOptionsWinAndPersist": true,
+      "restartRetainsQueueAndOptions": true,
+      "mode": "failed",
+      "result": "passed"
+    },
+    "early": {
+      "optionsChangedBeforeInitialStateReadCompletes": true,
+      "queueRestoredAtSavedDuplicateAndPositionPaused": true,
+      "userOptionsWinAndPersist": true,
+      "restartRetainsQueueAndOptions": true,
+      "mode": "early",
+      "result": "passed"
+    },
+    "empty": {
+      "emptyQueueControlsAvailableWithoutStartingMusic": true,
+      "userOptionsWinAndPersist": true,
+      "restartRetainsQueueAndOptions": true,
+      "mode": "empty",
+      "result": "passed"
+    },
+    "early-volume": {
+      "editedVolumePersistsBeforeReadRelease": true,
+      "uneditedShuffleAndRepeatPreservedBeforeAndAfterRead": true,
+      "queueStillRestores": true,
+      "result": "passed"
+    },
+    "options-error": {
+      "layout": [
+        {
+          "width": 1280,
+          "height": 800,
+          "zoom": 1,
+          "retryKeyboardReachable": true,
+          "noHorizontalOverflow": true
+        },
+        {
+          "width": 960,
+          "height": 640,
+          "zoom": 1,
+          "retryKeyboardReachable": true,
+          "noHorizontalOverflow": true
+        },
+        {
+          "width": 960,
+          "height": 640,
+          "zoom": 2,
+          "retryKeyboardReachable": true,
+          "noHorizontalOverflow": true
+        }
+      ],
+      "optionsRetryDoesNotRestoreOrStartAudio": true,
+      "queueAndPositionPreserved": true,
+      "restoreErrorRemainsVisible": true,
+      "savedVolume": 0.23,
+      "result": "passed"
+    }
+  },
+  "failedQuitAfter": {
+    "mode": "failedquit",
+    "uiVolumeBeforeQuit": "0.31",
+    "persistedVolumeBeforeQuit": 0.31,
+    "uiVolumeAfterRestart": "0.31",
+    "queueRetained": true,
+    "shuffle": true,
+    "repeat": "all"
+  },
+  "nativeIpcGuards": {
+    "cases": [
+      {
+        "name": "volume",
+        "passed": true
+      },
+      {
+        "name": "shuffle",
+        "passed": true
+      },
+      {
+        "name": "repeat",
+        "passed": true
+      },
+      {
+        "name": "negative volume",
+        "passed": true
+      },
+      {
+        "name": "excess volume",
+        "passed": true
+      },
+      {
+        "name": "string volume",
+        "passed": true
+      },
+      {
+        "name": "nonfinite volume",
+        "passed": true
+      },
+      {
+        "name": "invalid shuffle",
+        "passed": true
+      },
+      {
+        "name": "array repeat",
+        "passed": true
+      },
+      {
+        "name": "undefined repeat",
+        "passed": true
+      },
+      {
+        "name": "unknown field",
+        "passed": true
+      },
+      {
+        "name": "empty options",
+        "passed": true
+      },
+      {
+        "name": "null options",
+        "passed": true
+      },
+      {
+        "name": "queued merge preserves latest same-account queue/position/output",
+        "passed": true
+      },
+      {
+        "name": "queued owner change prevents stale-account patch",
+        "passed": true
+      },
+      {
+        "name": "active service owner mismatch prevents patch",
+        "passed": true
+      },
+      {
+        "name": "absent snapshot is not created",
+        "passed": true
+      }
+    ],
+    "result": "passed"
+  },
+  "ordinaryListeningRegressions": {
+    "controls": {
+      "initialDuplicateOccurrencePositionAndVolumeRestoredPaused": true,
+      "queueShowsCurrentUpcomingAndEarlierOccurrences": true,
+      "manualNextSkipsRepeatOneAndPausedPreviousNextStayPaused": true,
+      "shuffleVisitsEachDuplicateOccurrenceOnce": true,
+      "shufflePreviousAndNextFollowActualHistory": true,
+      "shuffleRepeatOffStopsAtExhaustion": true,
+      "shuffleRepeatAllWrapsWithEachOccurrenceOnce": true,
+      "persistedBeforeRestart": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 17,
+        "volume": 0.37,
+        "shuffle": true,
+        "repeat": "all"
+      },
+      "noRestorePrompt": true,
+      "restartRestoresQueueDuplicatePositionOptionsPaused": true,
+      "result": "passed"
+    },
+    "remove": {
+      "initialDuplicateOccurrencePositionAndVolumeRestoredPaused": true,
+      "queueShowsCurrentUpcomingAndEarlierOccurrences": true,
+      "queuePlaySelectsCorrectDuplicateOccurrence": true,
+      "removeOtherDuplicatePreservesCurrentOccurrencePositionAndPause": true,
+      "removeEarlierDifferentSongPreservesCurrentAndPause": true,
+      "noRestorePrompt": true,
+      "restartRestoresQueueDuplicatePositionOptionsPaused": true,
+      "result": "passed"
+    }
+  },
+  "environment": {
+    "runtime": "Actual main/preload/production renderer, macOS27.2 arm64/Electron43.7.0",
+    "profiles": "Fresh isolated encrypted localhost connections; hidden muted windows; no configured provider keys and shared keychain adapter disabled",
+    "metadata": "Owned local music server with actual HTTP503 responses for song metadata; normal response restored for explicit Retry",
+    "earlyRead": "Main captures actual state then optionally delays renderer IPC response; internal storage remains actual",
+    "optionsFailure": "That options IPC rejects before mutation under a controlled test flag; not an actual filesystem failure",
+    "serializedGuards": "One actual local-state atomic write is held before rename/publication; later full and preference updates use the real serialized queue"
+  },
+  "decision": {
+    "Steve": "Proposed atomic preference-only update, challenged stale full-snapshot approach, reviewed final boolean result and effect cleanup without blocker.",
+    "Elena": "Proposed atomic preference-only update and distinct retry, found duplicate ready-state writes; reviewed final gate and UI without blocker.",
+    "implementationOwner": "Primary agent edited typed bridge, main validation/merge, renderer persistence/error recovery and PRD."
+  },
+  "checks": {
+    "nativeFlowVariants": 6,
+    "nativeIpcCases": 17,
+    "layoutCases": 3,
+    "ordinaryRegressionFlows": 2,
+    "buildIncludingTypeScript": "passed",
+    "fullEslint": "passed",
+    "inventoryUniqueRequirements": 187,
+    "inventoryCounts": {
+      "Review": 135,
+      "Controlled": 19,
+      "External": 9,
+      "Dated": 12,
+      "Live": 7,
+      "Recorded": 5
+    }
+  },
+  "contractChange": {
+    "M12Before": "| M12 | Options survive an empty queue and early startup edits; failed restore retains the saved queue for explicit Retry. | N+S | Review |",
+    "M12After": "| M12 | Options survive an empty queue, delayed startup and failed-restoration quit/reopen; restore failure explains the retained queue and offers explicit Retry; an options-save failure has its own retry without starting music. | N+S | Controlled |",
+    "reason": "Native failed-restoration quit discarded user option edits and the original error did not explain retained queue state."
+  },
+  "acceptance": {
+    "M12": "Controlled for recorded delayed-startup, empty, failed/retry/quit flows and distinct save retry.",
+    "M13": "Review; focused atomic ownership tests do not establish full real account-switch behavior."
+  },
+  "limits": [
+    "No live Jellyfin outage/account change, OS media control or audible quality check this round.",
+    "No forced-quit, corrupted-storage, universal filesystem failure or measured long-slider-drag performance claim.",
+    "No observed listener usability or overall acceptance percentage."
+  ],
+  "sha256": {
+    "src/shared/types.ts": "f7b202cd1999a787e94ff24ee5d988b4d8e1013d67aa0f753d592bbd2e1efeb2",
+    "src/preload/index.ts": "0e85c1e2a356d8bae956df5720185e4eabf7da42a8dde22ae6a68f63a06909b2",
+    "src/main/index.ts": "4675f80050467a58db32dd75d07ebbedbac77be20552e073efddb114782af028",
+    "src/main/storage.ts": "8c06bf1f1fd99f53d224a6ac61a61ea34e48426e3fa33ca276e9880e638c1e36",
+    "src/renderer/player.tsx": "a2d1db5413a7942c02b2cf0885ce9051bf8f47c563f8a3532d35a7aa5d28af93",
+    "src/renderer/components/Player/Player.component.tsx": "37a8009dbf0f2041d39fd3797782c91d59797a6905d5ce2991455b0f82274c7a",
+    "src/renderer/components/Player/Player.styles.css": "c14c24b2b563243706fd7deecf0e7e1307965a3830d6208d313b8d0ac25d8114",
+    "out/main/index.js": "be7c8c608205cc05f55adb37a673fa2d54d661d1b699afec0ed5c08dacaac3bd",
+    "out/preload/index.cjs": "fa395f09215cfe7dae1a008d631d7ccb85df50ed5f57dd7b38902926e61959c5",
+    "out/renderer/assets/index-DkeUtVJ9.js": "98fe267ec02b6b99922fd7de9d0bd15b1fdfa4e02e672aab0c71dc2de31b108d"
+  },
+  "fixtureMainSha256": {
+    "restore": "97f1f658443d1e7a1ee211c25aaf8fd2e70ff2001402fd65217184ceba1016fc",
+    "ordinaryListening": "103d852e3a81159061bab95522162e11f524d08fe579b74e8d242089c3da1d53"
+  },
+  "captures": [
+    "2026-10-16-restore-options-1-1280.png",
+    "2026-10-16-restore-options-2-960.png"
+  ]
+}

@@ -1,0 +1,158 @@
+{
+  "date": "2026-10-16",
+  "scope": "Current native live persistent-player controls, occurrence metadata and real Jellyfin conversion/paused seek",
+  "server": "User-authorized LAN Jellyfin; address, account, device identifier, token and song metadata omitted",
+  "serverVersion": "12.2.0",
+  "runtime": {
+    "platform": "macOS 27.2 arm64",
+    "electron": "43.7.0"
+  },
+  "result": {
+    "savedConnectionReused": true,
+    "serverVersion": "12.2.0",
+    "nativeDirectDecoded": true,
+    "directPausedSeek": true,
+    "convertedDecoded": true,
+    "convertedPausedSeek": true,
+    "convertedResumedFromOffset": true,
+    "nativeVolumeAndMute": true,
+    "repeatCyclePersisted": true,
+    "pausedNextPreviousAndMetadata": true,
+    "shuffleAndActualPrevious": true,
+    "metadataAndElapsedFollowOccurrence": true,
+    "djOff": true,
+    "preparationOff": true,
+    "audioRequests": [
+      {
+        "kind": "audio",
+        "converted": false,
+        "offsetTicks": null,
+        "status": 206,
+        "mime": "audio/flac"
+      },
+      {
+        "kind": "audio",
+        "converted": true,
+        "offsetTicks": "200000000",
+        "status": 200,
+        "mime": "audio/mpeg"
+      },
+      {
+        "kind": "audio",
+        "converted": true,
+        "offsetTicks": "300000000",
+        "status": 200,
+        "mime": "audio/mpeg"
+      },
+      {
+        "kind": "audio",
+        "converted": false,
+        "offsetTicks": null,
+        "status": 206,
+        "mime": "audio/mpeg"
+      },
+      {
+        "kind": "audio",
+        "converted": false,
+        "offsetTicks": null,
+        "status": 206,
+        "mime": "audio/flac"
+      },
+      {
+        "kind": "audio",
+        "converted": false,
+        "offsetTicks": null,
+        "status": 206,
+        "mime": "audio/flac"
+      },
+      {
+        "kind": "audio",
+        "converted": false,
+        "offsetTicks": null,
+        "status": 206,
+        "mime": "audio/flac"
+      },
+      {
+        "kind": "audio",
+        "converted": false,
+        "offsetTicks": null,
+        "status": 206,
+        "mime": "audio/flac"
+      }
+    ],
+    "nativeQuitExit": 0,
+    "result": "passed"
+  },
+  "method": {
+    "session": "Reused the latest isolated protected test connection with its matching persistent device identity. No new sign-in or supplied-password use was needed. Only the protected connection and identity were copied into a fresh isolated test profile.",
+    "application": "Actual current main, preload, renderer, IPC and media protocol. Main fixture blocks shared provider key access and hides the native window. Renderer CDP only, no Node inspector; audio muted.",
+    "direct": "Actual server FLAC decoded and advanced; paused native seek reached20 seconds.",
+    "fallback": "Controlled native media failure changes the direct element to a missing local resource. Actual player fallback requests Jellyfin universal conversion at20 seconds, decodes audio/mpeg and advances. No synthetic error callback is invoked.",
+    "convertedSeek": "Paused slider seek to30 seconds requests startTimeTicks300000000, receives actual audio/mpeg200, stays paused, then resumes beyond31 seconds.",
+    "controls": "Volume0.37 reaches native Audio.volume, Mute reaches zero and Unmute restores0.37. Repeat cycles all/one/off and persists each. Paused Next/Previous changes actual occurrence without playing. Shuffle Next changes occurrence and Previous returns through actual history.",
+    "metadata": "For each inspected occurrence, current title/artist equal the actual song-service result, slider maximum matches that song duration, artwork is decoded with matching alt or has the correct unavailable fallback, and displayed elapsed position advances with native playback. Song names are not stored in this report.",
+    "shutdown": "Owned child receives SIGUSR2; fixture calls actual app.quit. Exit0, no fatal file. No personal app window or profile was operated."
+  },
+  "harnessCorrections": [
+    "Initial fixture expected an identity file in a legacy profile that had none.",
+    "Initial renderer reload raced startup navigation; waiting for initial DOM and wave-app URL corrected the fixture.",
+    "The oldest saved test session returned401. The later session with its matching persistent identity succeeded without reauthentication. No production auth change was made."
+  ],
+  "checks": {
+    "productionChangedThisRound": false,
+    "productionHashesMatchPriorPassingBuildTypeScriptAndFullESLint": true,
+    "priorRecord": "2026-10-16-retained-dj-break.json"
+  },
+  "acceptance": {
+    "M01": "Live",
+    "M02": "Live",
+    "M17": "External; actual conversion and paused offset playback established for this server/runtime sample only",
+    "inventory": {
+      "Review": 127,
+      "Dated": 12,
+      "Recorded": 5,
+      "Controlled": 25,
+      "Live": 9,
+      "External": 9,
+      "total": 187
+    }
+  },
+  "limits": [
+    "One authorized Jellyfin12.2.0 server/account and macOS27.2 arm64 only; this is a tested combination, not a broader supported-version declaration.",
+    "The direct-error trigger is controlled; conversion responses, decoding, seek and resume are real server/native media behavior.",
+    "No audible quality, physical OS controls, missing-duration live metadata, codec matrix, live DJ/provider generation or listener-comprehension acceptance.",
+    "Earlier debugger-associated shutdown exception remains open under Q10 despite successful native quits.",
+    "No overall acceptance percentage or full-goal completion is claimed."
+  ],
+  "sha256": {
+    "src/renderer/player.tsx": "0d72985571ede7ae6562a95220c03bbdfec6f9367c0741e131a06481bd40e7f6",
+    "src/renderer/dj-playback.tsx": "31e217aa382a88dcfddbfb0b06b0294825d4acdb7a9bc0127dd8e367adf85c5f",
+    "src/renderer/components/Player/Player.component.tsx": "66f946823cd41e86f27ed6a53d21998cf7543c929066bc8152ccad2e59c89041",
+    "src/renderer/components/Player/DJPopover.component.tsx": "656e1d9ee5f39a1beabf6211a69e6483cab04950aea4cdb87971bf682d5806df",
+    "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx": "be6052babfe16f1b501be68e15feceebba30e960e5596c32329d605c3cc666ae",
+    "src/main/prepared-news.ts": "f09a7fd83da395c8de08e1eab3b52f87454e80bbc36dcdad6d2fd1d21f229155",
+    "src/main/index.ts": "03c70d68a326aac2ab8826329c7020620404b1daeb9cedb9c317be7f080d4757",
+    "src/main/media.ts": "6768544bd3215e37187a12293571c894a1023619ebe8f09e25403bdec0bfb671",
+    "src/preload/index.ts": "0c7edf2153d5210b24a0fac9db667fd254e324366d4737653578ef067c1eac63",
+    "src/shared/types.ts": "71e36cce9f904d7327f8d85c38f8ce050c7955877888ed9dde27e4105a6c57f0",
+    "REQUIREMENTS.md": "215350f31c5168487cdbac6e1e92223814defb64116d36d701ed99866bf06d84",
+    "docs/RADIO_EXPERIENCE.md": "46d209e26fa5e5b1b78eac5b31cdd3641dd99b5d3c785139b37d37220a06a0fc",
+    "out/main/index.js": "852222e0fa542a8acc20e2aa4483dc3f4a489054e015cba72d3a8f433b8f399d",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+    "out/renderer/assets/index-B_aKl3L3.js": "53b064f1d4b72d6c56260b9565b9e9c9e47df12e1ca7e20fcbbcc4c7bcd8b084",
+    "src/main/jellyfin.ts": "f4d2e4d8ae75807447bd5b4f64b97938594f3935834932bb7d1bec43a8360448",
+    "src/main/storage.ts": "844254b83525cc7eaf7c9ad7469eec3550f02e1ebb8b88270018c68937ec5adc",
+    "src/main/playback-preferences.ts": "015bbe70cc718f2449061cf25066ecd85e9d2bf281a0cb7d6dd7949fddc5ea4f",
+    "src/renderer/App.tsx": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+    "src/renderer/components/Shared.tsx": "303972b169cf42303085a3db1988c04899870a69a6e7591ee4292656785ed2af",
+    "src/renderer/components/Player/Player.styles.css": "c14c24b2b563243706fd7deecf0e7e1307965a3830d6208d313b8d0ac25d8114",
+    "out/renderer/index.html": "d401cacd4926cb6248daa47118643a5661c98f2d842204668d960fa1d1f22bea"
+  },
+  "fixtureSha256": {
+    "build.mjs": "8d2c7f077f5913cf0fb3278990de196ab267c4e6a375e668816362918cc1b3cd",
+    "bootstrap.mjs": "33bc3592b964406ebbc3cccb6179022bca5abb8af79f2b605fc8facc4896f00c",
+    "run.cjs": "4cba643c3d87da986921b651c3c59043df9f21e21df83126f009ec242a55cb45",
+    "report.json": "94d3b1e34612e160ffba8395d6c49677213cc9e0c227e9edb157123c63fe0626",
+    "out/main/index.js": "d687911e2b5c2f4a4e0b0b9d579b6d494eb3d3ce406fb09cf1ca0b3b844b2965"
+  }
+}

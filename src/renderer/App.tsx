@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type Dispatch, type SetStateAction } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Disc3, ListMusic, Music2, Radio, Settings } from 'lucide-react';
 import type { Connection, Song } from '../shared/types';
@@ -13,12 +13,12 @@ import { Inspector } from './components/Inspector/Inspector.component';
 import { ErrorNotice } from './components/Shared';
 import { ConnectionPage } from './pages/Connection/Connection.page';
 import { SongsPage, initialSongsView } from './pages/Songs/Songs.page';
-import { AlbumsPage, type AlbumsView } from './pages/Albums/Albums.page';
-import { PlaylistsPage } from './pages/Playlists/Playlists.page';
+import { AlbumsPage, initialAlbumsView } from './pages/Albums/Albums.page';
+import { PlaylistsPage, usePlaylistRecovery } from './pages/Playlists/Playlists.page';
 import { StationsPage, type RoomDraft, type RoomSetupDraft } from './pages/Stations/Stations.page';
 import { SettingsPage, type SettingsSection } from './pages/Settings/Settings.page';
 type PageName = 'songs' | 'albums' | 'playlists' | 'stations' | 'settings';
-const navigation = [{ id: 'songs', name: 'All songs', icon: Music2 }, { id: 'albums', name: 'Albums', icon: Disc3 }, { id: 'playlists', name: 'Playlists', icon: ListMusic }, { id: 'stations', name: 'Listening Room', icon: Radio }] as const;
+const navigation = [{ id: 'songs', name: 'All songs', icon: Music2 }, { id: 'albums', name: 'Albums', icon: Disc3 }, { id: 'playlists', name: 'Playlists', icon: ListMusic }, { id: 'stations', name: 'News bucket', icon: Radio }] as const;
 export default function App() {
   const client = useQueryClient();
   const connectionQuery = useQuery({ queryKey: ['connection'], queryFn: async () => unwrap(await window.wave.getConnection()), retry: false });
@@ -34,14 +34,24 @@ export default function App() {
   const connection = connectionQuery.data ?? null;
   if (connectionQuery.isPending) return <main className="startup"><span className="wordmark">onmywave.fm</span><p role="status">Opening your library…</p></main>;
   if (connectionQuery.error) return <main className="startup"><span className="wordmark">onmywave.fm</span><ErrorNotice error={connectionQuery.error} retry={() => void connectionQuery.refetch()} /></main>;
-  if (!connection || expired || !connection.selectedLibraryIds.length) return <ConnectionPage key={`${connection?.id ?? 'new'}-${expired}`} connection={connection} expired={expired} connected={setConnection} librariesSelected={setConnection} />;
-  return <PlayerProvider key={connection.id} connection={connection}><DJPlaybackProvider><ReadyApp key={connection.id} connection={connection} update={setConnection} disconnected={() => setConnection(null)} /></DJPlaybackProvider></PlayerProvider>;
+  return <SessionContent key={connection?.id ?? 'signed-out'} connection={connection} expired={expired && !!connection} setConnection={setConnection} />;
 }
-function ReadyApp({ connection, update, disconnected }: { connection: Connection; update: (connection: Connection) => void; disconnected: () => void }) {
-  const [songsView, setSongsView] = useState(initialSongsView);
-  const [albumsView, setAlbumsView] = useState<AlbumsView>({ album: null, draft: '' });
+type RadioDrafts = {
+  roomDraft: RoomDraft; setRoomDraft: Dispatch<SetStateAction<RoomDraft>>;
+  roomSetupDraft: RoomSetupDraft; setRoomSetupDraft: Dispatch<SetStateAction<RoomSetupDraft>>;
+};
+function SessionContent({ connection, expired, setConnection }: { connection: Connection | null; expired: boolean; setConnection: (connection: Connection | null) => Promise<void> }) {
+  const playlistRecovery = usePlaylistRecovery();
   const [roomDraft, setRoomDraft] = useState<RoomDraft>(null);
   const [roomSetupDraft, setRoomSetupDraft] = useState<RoomSetupDraft>({ setup: null, moodDraft: null });
+  if (!connection || expired || !connection.selectedLibraryIds.length) return <ConnectionPage key={`${connection?.id ?? 'new'}-${expired}`} connection={connection} expired={expired} connected={setConnection} librariesSelected={setConnection} />;
+  return <PlayerProvider key={connection.id} connection={connection}><DJPlaybackProvider><ReadyApp key={connection.id} connection={connection} update={setConnection} disconnected={() => setConnection(null)} playlistRecovery={playlistRecovery} roomDraft={roomDraft} setRoomDraft={setRoomDraft} roomSetupDraft={roomSetupDraft} setRoomSetupDraft={setRoomSetupDraft} /></DJPlaybackProvider></PlayerProvider>;
+}
+function ReadyApp({ connection, update, disconnected, playlistRecovery, roomDraft, setRoomDraft, roomSetupDraft, setRoomSetupDraft }: { connection: Connection; update: (connection: Connection) => void; disconnected: () => void; playlistRecovery: ReturnType<typeof usePlaylistRecovery> } & RadioDrafts) {
+  const active = useRef(false);
+  useEffect(() => { active.current = true; return () => { active.current = false; }; }, []);
+  const [songsView, setSongsView] = useState(initialSongsView);
+  const [albumsView, setAlbumsView] = useState(initialAlbumsView);
   const [playlistId, setPlaylistId] = useState<string | null>(null);
   const main = useRef<HTMLElement>(null);
   const content = useRef<HTMLDivElement>(null);
@@ -49,6 +59,8 @@ function ReadyApp({ connection, update, disconnected }: { connection: Connection
   const [page, setPage] = useState<PageName>('songs');
   const [settingsSection, setSettingsSection] = useState<SettingsSection>('general');
   const [returnToSetup, setReturnToSetup] = useState(false);
+  const setupReturnTarget = useRef('');
+  const restoreSetupFocus = useRef(false);
   const [drawer, setDrawer] = useState<Song | 'queue' | null>(null);
   const drawerTrigger = useRef<HTMLElement | null>(null);
   const drawerClose = useRef<HTMLButtonElement>(null);
@@ -62,7 +74,8 @@ function ReadyApp({ connection, update, disconnected }: { connection: Connection
   useLayoutEffect(() => { if (drawer) drawerClose.current?.focus({ preventScroll: true }); }, [drawer]);
   const [adding, setAdding] = useState<Song[] | null>(null);
   function updateLibraries(value: Connection) {
-    setSongsView(initialSongsView()); setAlbumsView({ album: null, draft: '' }); setPlaylistId(null); setDrawer(null); scrollPositions.current.clear();
+    if (!active.current || value?.id !== connection.id) return;
+    setSongsView(initialSongsView()); setAlbumsView(initialAlbumsView()); setPlaylistId(null); setDrawer(null); scrollPositions.current.clear();
     update(value);
   }
   const client = useQueryClient();
@@ -103,9 +116,24 @@ function ReadyApp({ connection, update, disconnected }: { connection: Connection
     return () => window.removeEventListener('keydown', shortcut);
   }, []);
   function navigate(next: PageName) { setPage(next); setDrawer(null); setReturnToSetup(false); }
-  function configureRoom(section: SettingsSection) { setSettingsSection(section); setReturnToSetup(true); setPage('settings'); setDrawer(null); }
+  function configureRoom(section: SettingsSection) {
+    setupReturnTarget.current = section === 'sources' ? '#manage-room-sources' : section === 'djs' ? '#manage-room-djs' : '.news-workflow-toggle input';
+    setSettingsSection(section); setReturnToSetup(true); setPage('settings'); setDrawer(null);
+  }
+  useLayoutEffect(() => {
+    if (page !== 'stations' || !restoreSetupFocus.current) return;
+    restoreSetupFocus.current = false;
+    const frame = requestAnimationFrame(() => {
+      const preferred = main.current?.querySelector<HTMLElement>(setupReturnTarget.current);
+      const target = preferred && !preferred.matches(':disabled') ? preferred : document.getElementById('room-tab-settings');
+      target?.focus({ preventScroll: true });
+      target?.scrollIntoView({ block: 'nearest' });
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [page]);
+
   return <div className={`app-shell ${drawer ? 'has-drawer' : ''}`}><aside className="sidebar"><div className="traffic-light-space" /><div className="wordmark">onmywave.fm</div><nav aria-label="Main navigation">{navigation.map(item => <button key={item.id} className={page === item.id ? 'active' : ''} aria-current={page === item.id ? 'page' : undefined} onClick={() => navigate(item.id)}><item.icon size={21} strokeWidth={1.7} />{item.name}</button>)}</nav><div className="sidebar-bottom"><button className={`settings-nav ${page === 'settings' ? 'active' : ''}`} onClick={() => navigate('settings')} aria-current={page === 'settings' ? 'page' : undefined}><Settings size={20} strokeWidth={1.7} />Settings</button><p className={`connection-status ${networkError ? 'unreachable' : ''}`}><span />{networkError ? 'Server unreachable' : 'Jellyfin connected'}</p></div></aside>
-    <div className="titlebar-drag-region" /><main ref={main} className="main-content" id="main-content"><div ref={content} className="page-content">{page === 'songs' && <SongsPage view={songsView} setView={setSongsView} add={setAdding} details={openDrawer} />}{page === 'albums' && <AlbumsPage view={albumsView} setView={setAlbumsView} add={setAdding} details={openDrawer} />}{page === 'playlists' && <PlaylistsPage id={playlistId} setId={setPlaylistId} add={setAdding} details={openDrawer} />}{page === 'stations' && <StationsPage draft={roomDraft} setDraft={setRoomDraft} configDraft={roomSetupDraft} setConfigDraft={setRoomSetupDraft} configureSources={() => configureRoom('sources')} configureDJ={() => configureRoom('djs')} configureSettings={() => configureRoom('keys')} />}{page === 'settings' && <SettingsPage onConfigureRoom={() => { setPage('stations'); setReturnToSetup(false); }} section={settingsSection} onSectionChange={setSettingsSection} returnToSetup={returnToSetup ? () => { setPage('stations'); setReturnToSetup(false); } : undefined} connection={connection} update={updateLibraries} disconnected={disconnected} />}</div></main>
-    {drawer && <aside id="listening-drawer" className="side-drawer" aria-labelledby="drawer-title"><header className="drawer-heading"><h2 id="drawer-title">{drawer === 'queue' ? 'Playing Next' : 'Song details'}</h2><button ref={drawerClose} className="icon-button" onClick={closeDrawer} aria-label={drawer === 'queue' ? 'Close queue' : 'Close song details'}><span aria-hidden="true">×</span></button></header><div key={drawer === 'queue' ? 'queue' : drawer.id} className="drawer-body">{drawer === 'queue' ? <Queue /> : <Inspector key={drawer.id} song={drawer} />}</div></aside>}<Player openRoom={() => navigate('stations')} openSettings={() => configureRoom('general')} queueOpen={drawer === 'queue'} toggleQueue={() => drawer === 'queue' ? closeDrawer() : openDrawer('queue')} />{adding && <AddPlaylist songs={adding} close={() => setAdding(null)} />}
+    <div className="titlebar-drag-region" /><main ref={main} className="main-content" id="main-content"><div ref={content} className="page-content">{page === 'songs' && <SongsPage view={songsView} setView={setSongsView} add={setAdding} details={openDrawer} />}{page === 'albums' && <AlbumsPage view={albumsView} setView={setAlbumsView} add={setAdding} details={openDrawer} />}{page === 'playlists' && <PlaylistsPage recovery={playlistRecovery} id={playlistId} setId={setPlaylistId} add={setAdding} details={openDrawer} />}{page === 'stations' && <StationsPage draft={roomDraft} setDraft={setRoomDraft} configDraft={roomSetupDraft} setConfigDraft={setRoomSetupDraft} configureSources={() => configureRoom('sources')} configureDJ={() => configureRoom('djs')} configureSettings={() => configureRoom('keys')} />}{page === 'settings' && <SettingsPage section={settingsSection} onSectionChange={setSettingsSection} returnToSetup={returnToSetup ? () => { restoreSetupFocus.current = true; setRoomSetupDraft(current => ({ ...current, tab: 'settings' })); setPage('stations'); setReturnToSetup(false); } : undefined} connection={connection} update={updateLibraries} disconnected={() => { if (active.current) disconnected(); }} />}</div></main>
+    {drawer && <aside id="listening-drawer" className="side-drawer" aria-labelledby="drawer-title"><header className="drawer-heading"><h2 id="drawer-title">{drawer === 'queue' ? 'Playing Next' : 'Song details'}</h2><button ref={drawerClose} className="icon-button" onClick={closeDrawer} aria-label={drawer === 'queue' ? 'Close queue' : 'Close song details'}><span aria-hidden="true">×</span></button></header><div key={drawer === 'queue' ? 'queue' : drawer.id} className="drawer-body">{drawer === 'queue' ? <Queue /> : <Inspector key={drawer.id} song={drawer} />}</div></aside>}<Player openRoom={() => navigate('stations')} openSettings={() => configureRoom('general')} queueOpen={drawer === 'queue'} toggleQueue={() => drawer === 'queue' ? closeDrawer() : openDrawer('queue')} />{adding && <AddPlaylist songs={adding} close={() => setAdding(null)} checkPlaylists={() => { setAdding(null); setPlaylistId(null); navigate('playlists'); }} />}
   </div>;
 }

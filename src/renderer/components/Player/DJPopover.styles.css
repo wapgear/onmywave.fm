@@ -15,6 +15,10 @@
 .dj-status { font-size: 11px; color: var(--muted); }
 .dj-status.is-active { color: var(--accent); }
 .dj-popover .dj-automation-note { margin-top: 12px; padding: 9px 11px; background: var(--accent-soft); border-radius: 8px; font-size: 11px; }
+.dj-popover .dj-preparation-status { padding-top: 16px; border-top: 1px solid var(--border); }
+.dj-popover .dj-preparation-status h3 { margin-bottom: 6px; }
+.dj-popover .dj-preparation-link { padding: 3px 0; color: var(--accent); background: transparent; }
+.dj-popover .dj-preparation-link:hover { background: transparent; text-decoration: underline; }
 .dj-popover button { font-size: 11px; }
 .dj-control > button { flex-shrink: 0; }
 .dj-take-label { display: block; margin-bottom: 6px; font-size: 11px; color: var(--muted); }
@@ -30,3 +34,5 @@
 @media (max-width: 1100px) { .player-volume { width: 48px; } .player-tools { gap: 3px; } }
 
 .dj-source-link { white-space: normal; }
+
+.dj-story .dj-preparation-notes { padding-left:16px; list-style:disc; line-height:1.6; overflow-wrap:anywhere; }

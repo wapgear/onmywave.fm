@@ -91,28 +91,36 @@ export async function getVoicePreview(voiceId: string): Promise<DJVoicePreview> 
   return saved;
 }
 export async function getDJVoicePreview(djId: string): Promise<DJVoicePreview> {
-  const legacyKey = cacheKey(djId);
+  const key = cacheKey(djId);
   const dj = await savedDJ(djId);
-  const shared = await getVoicePreview(dj.news?.elevenVoiceId || 'JBFqnCBsd6RMkjVDRZzb');
-  if (shared.available) return shared;
-  const legacy = await snapshot(legacyKey, dj, await readManifest(legacyKey));
-  return legacy.available && !legacy.stale ? legacy : shared;
+  return snapshot(key, dj, await readManifest(key));
 }
 export async function prepareDJVoicePreview(news: NewsService, input: { djId: string; regenerate?: boolean }): Promise<DJVoicePreview> {
   if (!input || (input.regenerate !== undefined && typeof input.regenerate !== 'boolean')) throw new ServiceError('invalid', 'Invalid voice preview request.');
-  cacheKey(input.djId);
-  if (!input.regenerate) {
-    const saved = await getDJVoicePreview(input.djId);
-    if (saved.available) return saved;
-  }
-  const dj = await savedDJ(input.djId);
-  return prepareVoicePreview(news, { voiceId: dj.news?.elevenVoiceId || 'JBFqnCBsd6RMkjVDRZzb', regenerate: input.regenerate });
+  const key = cacheKey(input.djId);
+  const flightKey = `dj:${key}`;
+  const running = inFlight.get(flightKey);
+  if (running) return running;
+  const signal = news.generationSignal();
+  const task = Promise.resolve().then(async () => {
+    const dj = await savedDJ(input.djId);
+    const previous = await readManifest(key, input.regenerate === true);
+    if (!input.regenerate) {
+      const existing = await snapshot(key, dj, previous);
+      if (existing.available || existing.attempted) return existing;
+    }
+    return generatePreview(news, key, dj, previous, signal);
+  }).finally(() => { if (inFlight.get(flightKey) === task) inFlight.delete(flightKey); });
+  inFlight.set(flightKey, task);
+  return task;
 }
 export async function prepareVoicePreview(news: NewsService, input: { voiceId: string; regenerate?: boolean }): Promise<DJVoicePreview> {
   if (!input || (input.regenerate !== undefined && typeof input.regenerate !== 'boolean')) throw new ServiceError('invalid', 'Invalid voice preview request.');
   const key = voiceKey(input.voiceId);
-  const running = inFlight.get(key);
+  const flightKey = `voice:${key}`;
+  const running = inFlight.get(flightKey);
   if (running) return running;
+  const signal = news.generationSignal();
   const task = Promise.resolve().then(async () => {
     const dj = voiceDJ(input.voiceId);
     const previous = await readManifest(key, input.regenerate === true);
@@ -120,22 +128,27 @@ export async function prepareVoicePreview(news: NewsService, input: { voiceId: s
       const existing = await getVoicePreview(input.voiceId);
       if (existing.available || existing.attempted) return existing;
     }
-    const settings = validateNewsSettings(speechSettings(dj));
-    if (!await readElevenLabsKey()) throw new ServiceError('invalid', 'Add your ElevenLabs API key before generating a voice sample.');
-    // The durable attempt marker prevents implicit paid retries after failure or restart.
-    await writeManifest(key, { version: 1, attempted: true, clip: previous?.clip ?? null });
-    const requestId = randomUUID();
-    const result = await news.renderPreparedSpeech({ requestId, dj, settings, engine: 'elevenlabs-v4' }, { requestId, script: sample, articles: [], warnings: [] }, AbortSignal.timeout(120000));
-    const clip: Clip = { id: randomUUID(), signature: signature(dj), createdAt: new Date().toISOString(), byteLength: result.audio.length };
-    const target = join(directory(key), `${clip.id}.mp3`);
-    await writeFile(`${target}.tmp`, result.audio, { mode: 0o600 });
-    await rename(`${target}.tmp`, target);
-    const manifest: Manifest = { version: 1, attempted: true, clip };
-    await writeManifest(key, manifest);
-    return snapshot(key, dj, manifest);
-  }).finally(() => { if (inFlight.get(key) === task) inFlight.delete(key); });
-  inFlight.set(key, task);
+    return generatePreview(news, key, dj, previous, signal);
+  }).finally(() => { if (inFlight.get(flightKey) === task) inFlight.delete(flightKey); });
+  inFlight.set(flightKey, task);
   return task;
+}
+async function generatePreview(news: NewsService, key: string, dj: DJ, previous: Manifest | null, signal: AbortSignal): Promise<DJVoicePreview> {
+  const settings = validateNewsSettings(speechSettings(dj));
+  if (!await readElevenLabsKey()) throw new ServiceError('invalid', 'Add your ElevenLabs API key before generating a voice sample.');
+  signal.throwIfAborted();
+  // The durable attempt marker prevents implicit paid retries after failure or restart.
+  await writeManifest(key, { version: 1, attempted: true, clip: previous?.clip ?? null });
+  signal.throwIfAborted();
+  const requestId = randomUUID();
+  const result = await news.renderPreparedSpeech({ requestId, dj, settings, engine: 'elevenlabs-v4' }, { requestId, script: sample, articles: [], warnings: [] }, AbortSignal.any([signal, AbortSignal.timeout(120000)]));
+  const clip: Clip = { id: randomUUID(), signature: signature(dj), createdAt: new Date().toISOString(), byteLength: result.audio.length };
+  const target = join(directory(key), `${clip.id}.mp3`);
+  await writeFile(`${target}.tmp`, result.audio, { mode: 0o600 });
+  await rename(`${target}.tmp`, target);
+  const manifest: Manifest = { version: 1, attempted: true, clip };
+  await writeManifest(key, manifest);
+  return snapshot(key, dj, manifest);
 }
 export async function djPreviewAudio(key: string, clipId: string): Promise<Buffer | null> {
   if (typeof key !== 'string' || !validKey(key) || !validClip(clipId)) return null;

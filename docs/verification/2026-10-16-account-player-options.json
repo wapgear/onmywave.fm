@@ -1,0 +1,328 @@
+{
+  "date": "2026-10-16",
+  "scope": "M13 account-specific player options with a single last queue; M12 restore/options and ordinary listening regressions",
+  "before": {
+    "openingBPreservesAQueue": true,
+    "browsingAndBOptionsDoNotOverwriteA": true,
+    "bOptionsBeforeQuit": {
+      "volume": "0.27",
+      "shuffle": "true",
+      "repeat": "Repeat: all"
+    },
+    "bOptionsAfterQuit": {
+      "volume": "0.75",
+      "shuffle": "false",
+      "repeat": "Repeat: off"
+    },
+    "bRestartPreservesAQueue": true,
+    "bDoesNotRestoreAIntoOtherAccount": true,
+    "returningARestoresDuplicatePositionAndOptionsPaused": true,
+    "result": "passed"
+  },
+  "accountSwitch": {
+    "openingBPreservesAQueue": true,
+    "browsingAndBOptionsDoNotOverwriteA": true,
+    "bOptionsBeforeQuit": {
+      "volume": "0.27",
+      "shuffle": "true",
+      "repeat": "Repeat: all"
+    },
+    "bOptionsAfterQuit": {
+      "volume": "0.27",
+      "shuffle": "true",
+      "repeat": "Repeat: all"
+    },
+    "bOptionsPersistAcrossRestart": true,
+    "bRestartPreservesAQueue": true,
+    "bDoesNotRestoreAIntoOtherAccount": true,
+    "returningARestoresDuplicatePositionAndOptionsPaused": true,
+    "onlyHashedAccountKeys": true,
+    "result": "passed"
+  },
+  "nativeChecks": {
+    "failed": {
+      "failureMessage": "Your saved queue could not be restored. It is still saved. Jellyfin could not complete the request (503).",
+      "noAutomaticRestoreRetry": true,
+      "failedRestoreRetainsCompleteSavedQueue": true,
+      "recoveryRequiresExplicitRetry": true,
+      "queueRestoredAtSavedDuplicateAndPositionPaused": true,
+      "userOptionsWinAndPersist": true,
+      "restartRetainsQueueAndOptions": true,
+      "mode": "failed",
+      "result": "passed"
+    },
+    "early": {
+      "optionsChangedBeforeInitialStateReadCompletes": true,
+      "queueRestoredAtSavedDuplicateAndPositionPaused": true,
+      "userOptionsWinAndPersist": true,
+      "restartRetainsQueueAndOptions": true,
+      "mode": "early",
+      "result": "passed"
+    },
+    "empty": {
+      "emptyQueueControlsAvailableWithoutStartingMusic": true,
+      "userOptionsWinAndPersist": true,
+      "restartRetainsQueueAndOptions": true,
+      "mode": "empty",
+      "result": "passed"
+    },
+    "early-volume": {
+      "editedVolumePersistsBeforeReadRelease": true,
+      "uneditedShuffleAndRepeatPreservedBeforeAndAfterRead": true,
+      "queueStillRestores": true,
+      "result": "passed"
+    },
+    "options-error": {
+      "layout": [
+        {
+          "width": 1280,
+          "height": 800,
+          "zoom": 1,
+          "retryKeyboardReachable": true,
+          "noHorizontalOverflow": true
+        },
+        {
+          "width": 960,
+          "height": 640,
+          "zoom": 1,
+          "retryKeyboardReachable": true,
+          "noHorizontalOverflow": true
+        },
+        {
+          "width": 960,
+          "height": 640,
+          "zoom": 2,
+          "retryKeyboardReachable": true,
+          "noHorizontalOverflow": true
+        }
+      ],
+      "optionsRetryDoesNotRestoreOrStartAudio": true,
+      "queueAndPositionPreserved": true,
+      "restoreErrorRemainsVisible": true,
+      "savedVolume": 0.23,
+      "result": "passed"
+    },
+    "account-guards": {
+      "cases": [
+        {
+          "name": "volume",
+          "passed": true
+        },
+        {
+          "name": "shuffle",
+          "passed": true
+        },
+        {
+          "name": "repeat",
+          "passed": true
+        },
+        {
+          "name": "negative volume",
+          "passed": true
+        },
+        {
+          "name": "excess volume",
+          "passed": true
+        },
+        {
+          "name": "string volume",
+          "passed": true
+        },
+        {
+          "name": "nonfinite volume",
+          "passed": true
+        },
+        {
+          "name": "invalid shuffle",
+          "passed": true
+        },
+        {
+          "name": "array repeat",
+          "passed": true
+        },
+        {
+          "name": "undefined repeat",
+          "passed": true
+        },
+        {
+          "name": "unknown field",
+          "passed": true
+        },
+        {
+          "name": "empty options",
+          "passed": true
+        },
+        {
+          "name": "null options",
+          "passed": true
+        },
+        {
+          "name": "queued merge preserves latest same-account queue/position/output",
+          "passed": true
+        },
+        {
+          "name": "stale foreign full save refused; active patch preserves latest own queue",
+          "passed": true
+        },
+        {
+          "name": "active service owner mismatch prevents patch",
+          "passed": true
+        },
+        {
+          "name": "null full save cannot clear foreign queue",
+          "passed": true
+        },
+        {
+          "name": "absent queue remains absent while own preferences save",
+          "passed": true
+        },
+        {
+          "name": "preference getter checks active account",
+          "passed": true
+        },
+        {
+          "name": "own option patch preserves foreign queue",
+          "passed": true
+        },
+        {
+          "name": "full snapshot rejects array repeat",
+          "passed": true
+        }
+      ],
+      "result": "passed"
+    },
+    "migration": {
+      "cases": [
+        {
+          "mode": "legacy",
+          "passed": true
+        },
+        {
+          "mode": "preferred",
+          "passed": true
+        },
+        {
+          "mode": "malformed",
+          "passed": true
+        }
+      ],
+      "result": "passed"
+    }
+  },
+  "failedQuit": {
+    "mode": "failedquit",
+    "uiVolumeBeforeQuit": "0.31",
+    "persistedVolumeBeforeQuit": 0.31,
+    "uiVolumeAfterRestart": "0.31",
+    "queueRetained": true,
+    "shuffle": true,
+    "repeat": "all"
+  },
+  "ordinaryListening": {
+    "controls": {
+      "initialDuplicateOccurrencePositionAndVolumeRestoredPaused": true,
+      "queueShowsCurrentUpcomingAndEarlierOccurrences": true,
+      "manualNextSkipsRepeatOneAndPausedPreviousNextStayPaused": true,
+      "shuffleVisitsEachDuplicateOccurrenceOnce": true,
+      "shufflePreviousAndNextFollowActualHistory": true,
+      "shuffleRepeatOffStopsAtExhaustion": true,
+      "shuffleRepeatAllWrapsWithEachOccurrenceOnce": true,
+      "persistedBeforeRestart": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 17,
+        "volume": 0.37,
+        "shuffle": true,
+        "repeat": "all"
+      },
+      "noRestorePrompt": true,
+      "restartRestoresQueueDuplicatePositionOptionsPaused": true,
+      "result": "passed"
+    },
+    "remove": {
+      "initialDuplicateOccurrencePositionAndVolumeRestoredPaused": true,
+      "queueShowsCurrentUpcomingAndEarlierOccurrences": true,
+      "queuePlaySelectsCorrectDuplicateOccurrence": true,
+      "removeOtherDuplicatePreservesCurrentOccurrencePositionAndPause": true,
+      "removeEarlierDifferentSongPreservesCurrentAndPause": true,
+      "noRestorePrompt": true,
+      "restartRestoresQueueDuplicatePositionOptionsPaused": true,
+      "result": "passed"
+    }
+  },
+  "environment": {
+    "runtime": "macOS27.2 arm64, Electron43.7.0; actual main/preload/production renderer in hidden muted native windows",
+    "accounts": "Dummy accounts A and B, actual authentication/library selection/sign-out through owned localhost HTTP fixture; fresh encrypted profiles, shared provider keychain disabled, nonfixture network blocked",
+    "migration": "Actual local-state startup normalization, native renderer/getter and storage; legacy snapshot, preferred valid entry, invalid-entry isolation",
+    "serializedGuards": "Actual state queue with one atomic write held before rename; internal helper seeds foreign/absent snapshots unreachable via newly guarded public full save",
+    "errors": "Real HTTP503 song metadata; controlled single-operation options rejection before mutation, delayed renderer reply for early edits"
+  },
+  "decision": {
+    "Boris": "Separate per-account map, authoritative stored options and legacy seed; raw-key proposal revised to hash/getter during challenge; final review no blocker after verifying keyed provider.",
+    "Nadia": "Separate per-account map, serialization/ownership checks and queue preservation; preferred raw keys for simplicity; final review requested foreign-queue readiness, now implemented; keyed provider resolves dirty-ref concern.",
+    "owner": "Primary implemented main SHA256 keys, migration, getter, guarded full/partial saves, renderer initialization and docs."
+  },
+  "contractChange": {
+    "M13Before": "Opening another account alone does not overwrite the saved listening queue.",
+    "M13After": "Opening another account alone does not overwrite the saved listening queue; each server/account keeps its player options across restart, and returning to the queue owner restores its own options paused.",
+    "reason": "Controlled account-switch repro preserved queue but lost second-account empty-player options on quit/reopen.",
+    "queueModel": "One last queue; explicit Play/enqueue may replace it. Player preferences stored per server/account."
+  },
+  "checks": {
+    "buildIncludingTypeScript": "passed",
+    "fullEslint": "passed",
+    "nativeIpcCases": 21,
+    "migrationCases": 3,
+    "restoreOptionsFlows": 6,
+    "ordinaryFlows": 2,
+    "inventoryUniqueRequirements": 187,
+    "inventoryCounts": {
+      "Review": 134,
+      "Dated": 12,
+      "Recorded": 5,
+      "Controlled": 20,
+      "Live": 7,
+      "External": 9
+    }
+  },
+  "acceptance": {
+    "M13": "Controlled for named actual native account switch/restart and queue/options isolation variants.",
+    "M12": "Controlled retained with rerun startup/failed/empty/save-error variants."
+  },
+  "supersedes": "2026-10-16-restore-options.json remains dated evidence. Its foreign/absent snapshot option-only no-op semantics are replaced by active-account map updates preserving the queue.",
+  "limits": [
+    "Controlled local accounts, not live multi-account Jellyfin compatibility or all macOS versions.",
+    "No forced quit, broad filesystem failure, OS media control or audible-quality claim.",
+    "No observed listener-usability or overall acceptance percentage."
+  ],
+  "harnessCorrections": [
+    "Early-volume rerun needed EARLY_EDITS and SAVED_OPTIONS startup flags.",
+    "Temporary internal state seed needed Electron callback second argument; corrected before guard evidence."
+  ],
+  "sha256": {
+    "src/main/playback-preferences.ts": "015bbe70cc718f2449061cf25066ecd85e9d2bf281a0cb7d6dd7949fddc5ea4f",
+    "src/main/index.ts": "03c70d68a326aac2ab8826329c7020620404b1daeb9cedb9c317be7f080d4757",
+    "src/main/storage.ts": "844254b83525cc7eaf7c9ad7469eec3550f02e1ebb8b88270018c68937ec5adc",
+    "src/shared/types.ts": "71e36cce9f904d7327f8d85c38f8ce050c7955877888ed9dde27e4105a6c57f0",
+    "src/preload/index.ts": "0c7edf2153d5210b24a0fac9db667fd254e324366d4737653578ef067c1eac63",
+    "src/renderer/player.tsx": "614b0ed1d58fe8f0061696d63ead91cbd8e62e41bd16f8a7310cdd9aa0bcc808",
+    "src/renderer/App.tsx": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+    "out/main/index.js": "852222e0fa542a8acc20e2aa4483dc3f4a489054e015cba72d3a8f433b8f399d",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+    "out/renderer/assets/index-PI0E1Fb2.js": "9e29ce3cca3f3dd6c712bb7516ed3e8c26644a816f9b0af54051e6979e589b3f"
+  },
+  "fixtureMainSha256": {
+    "restore": "394d7ee9e5557ac1478fac83a561a8ae1dd5ab46db1ce439a0765cd8eb21e26b",
+    "accountAndOrdinary": "6a5ba90a29e01dd4fee51e0a0758ac96236fbeaa194815ebad6949b3b4cf4da6"
+  },
+  "captures": [
+    "2026-10-16-account-options-1-1280.png",
+    "2026-10-16-account-options-2-960.png"
+  ]
+}

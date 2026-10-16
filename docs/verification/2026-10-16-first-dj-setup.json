@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-16",
+  "scope": "Focused first-DJ missing-prerequisite action, R2/R12 and partial checklist R08",
+  "runtime": {
+    "macOS": "27.2 arm64",
+    "electron": "43.7.0",
+    "server": "Controlled local Jellyfin fixture"
+  },
+  "before": {
+    "actionLabel": "Review DJ",
+    "afterAction": {
+      "heading": "News bucket",
+      "focused": "DJChoose a DJ",
+      "emptyDJList": true,
+      "draftMood": "Quiet morning"
+    }
+  },
+  "after": {
+    "actionLabel": "Manage DJs",
+    "emptyActionOpensManagement": true,
+    "returnPreservesDraftAndFocus": true,
+    "savedDJActionFocusesSelector": true,
+    "savedDJSelectable": true,
+    "independentOptInsRemainOff": true,
+    "musicContinues": true,
+    "native": true,
+    "providerNetworkingBlocked": true
+  },
+  "verification": {
+    "buildIncludingTypeScript": "passed",
+    "fullESLint": "passed",
+    "nativeWindow": "hidden, audio muted, isolated protected profile",
+    "providerKeys": "null fixture adapter",
+    "providerNetworking": "blocked"
+  },
+  "limits": [
+    "R08 remains Review; other prerequisite/save/turn-off branches were not replayed in this round.",
+    "Controlled engineering verification does not establish live provider quality or observed listener understanding."
+  ],
+  "sourceAndBundleSha256": {
+    "src/renderer/pages/Stations/Stations.page.tsx": "76a0f3676a7a2bd3009557b07f02c35ca9061757075d86caa6e9c203a492ac79",
+    "src/renderer/pages/Stations/components/RoomSetup.component.tsx": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330",
+    "src/renderer/pages/DJs/DJs.page.tsx": "59edbcbd3f4e56834f4757910120b9d914bac36cda4311a5508b81ecb46e8e30",
+    "src/renderer/App.tsx": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+    "out/main/index.js": "b1b952808f79100f95178d295f74385d1f5227229e5b4b4ab4283441eda530a0",
+    "out/preload/index.cjs": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215",
+    "out/renderer/assets/index-BEj8mXoQ.js": "52780b619bade44001a886855241831c6f10de34c0a38458a669e7d1aa9699c1"
+  },
+  "reproductionScripts": [
+    "/private/tmp/native-first-radio/check.cjs",
+    "/private/tmp/native-first-radio/after.cjs"
+  ]
+}

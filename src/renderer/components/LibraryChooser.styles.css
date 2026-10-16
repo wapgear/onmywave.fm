@@ -4,7 +4,11 @@
 .library-chooser .library-choice-row { display: flex; flex-direction: row; align-items: center; gap: 12px; padding: 13px 2px; margin: 0; border-bottom: 1px solid var(--border, #e4e4e7); cursor: pointer; font-size: 13px; font-weight: 400; }
 .library-choice-row input { width: 16px; height: 16px; min-height: 16px; margin: 0; padding: 0; flex-shrink: 0; accent-color: var(--accent); }
 .library-choice-row span { overflow-wrap: anywhere; }
-.library-chooser fieldset:disabled .library-choice-row { cursor: default; opacity: .65; }
+.library-chooser fieldset:disabled .library-choice-row { cursor: default; color: var(--muted); }
 .library-choice-footer { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-top: 16px; }
 .library-choice-footer > span { font-size: 12px; color: var(--muted); }
 .library-choice-footer > button { border-radius: 8px; font-size: 12px; }
+
+.library-chooser .library-choice-retry { display:block; margin:16px auto 0; }
+
+.library-change-account { margin-top:20px; white-space:normal; }

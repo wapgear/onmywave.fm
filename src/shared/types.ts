@@ -41,10 +41,12 @@ export type Song = {
   size?: number;
 };
 export type Album = { id: string; name: string; artist: string; year?: number; imageUrl?: string; songCount?: number };
-export type CatalogQuery = { start?: number; limit?: number; search?: string; genre?: string; tag?: string; sort?: 'name' | 'artist' | 'album' | 'year'; descending?: boolean };
-export type Playlist = { id: string; name: string; imageUrl?: string; songCount?: number };
+export type CatalogQuery = { start?: number; limit?: number; search?: string; genre?: string; tag?: string; sort?: 'name' | 'artist' | 'album' | 'year' | 'dateAdded'; descending?: boolean };
+export type Playlist = { id: string; name: string; imageUrl?: string; songCount?: number; recoveryStatus?: 'pending' | 'review' | 'unavailable' };
 export type PlaylistEntry = { entryId: string; song: Song };
-export type PlaylistDetail = Playlist & { canEdit: boolean | null; restriction?: string; entries: PlaylistEntry[] };
+export type PlaylistEditRecovery = { status: 'pending' | 'review'; markerId: string; receipt?: string } | { status: 'unavailable' };
+export type PlaylistLibrary = { items: Playlist[]; creationRecovery?: PlaylistEditRecovery };
+export type PlaylistDetail = Playlist & { canEdit: boolean | null; restriction?: string; entries: PlaylistEntry[]; editRecovery?: PlaylistEditRecovery };
 export type DJ = {
   id: string;
   name: string;
@@ -77,6 +79,7 @@ export type NewsTransitionSettings = {
   fadeInSeconds: number;
 };
 export type NewsArticle = { id: string; title: string; url: string; source: string; publishedAt?: string };
+export type ReviewedNewsArticle = NewsArticle & { canonicalUrl: string; requestId: string; reviewedAt: string; status: 'submitted' | 'reviewed' | 'interrupted'; outcome?: 'selected' | 'not-selected' };
 export type NewsScript = { requestId: string; script: string; articles: NewsArticle[]; warnings: string[] };
 export type NewsBreak = NewsScript & { id: string; audioUrl: string; engine: NewsSettings['speechEngine']; createdAt: string };
 export type DJVoicePreview = { audioUrl: string | null; createdAt: string | null; available: boolean; stale: boolean; attempted: boolean };
@@ -94,6 +97,7 @@ export type PlaybackSnapshot = {
   repeat: 'off' | 'all' | 'one';
   outputId?: string;
 };
+export type PlaybackPreferences = Pick<PlaybackSnapshot, 'volume' | 'shuffle' | 'repeat'>;
 export type NewsSource = { id: string; name: string; url: string; kind?: 'rss' | 'twitter' | 'hacker-news'; query?: string };
 export type ListeningRoom = { djId: string | null; sourceIds: string[] };
 export type RoomProfile = { enabled: boolean; id: string; name: string; room: ListeningRoom; mood: string; workflowDraft: WorkflowDraft };
@@ -101,8 +105,8 @@ export type PreparedNewsProvenance = { dj: DJ; mood: string; sources: NewsSource
 export type PreparedNewsScript = NewsScript & { id: string; createdAt: string; provenance: PreparedNewsProvenance };
 export type PreparedNewsTake = NewsBreak & { signature: string; provenance: PreparedNewsProvenance; renderingDJ: DJ; available: boolean; byteLength: number; model: string; voice: string; delivery: string; scriptId: string; deliveryState?: { status: 'ready' | 'claimed' | 'played'; claimedAt?: string; playedAt?: string } };
 export type PreparedNewsRequest = { requestId: string; kind: 'script' | 'audio'; inputHash: string; status: 'running' | 'complete' | 'failed' | 'interrupted' | 'skipped'; artifactId?: string; error?: string };
-export type PreparedNewsLibrary = { scripts: PreparedNewsScript[]; takes: PreparedNewsTake[]; selectedTakeId: string | null; requests: PreparedNewsRequest[] };
-export type LocalState = { djPlayback: DJPlaybackSettings; roomProfiles: RoomProfile[]; activeRoomProfileId: string; newsTransitions: NewsTransitionSettings; djs: DJ[]; vibe: string; playback: PlaybackSnapshot | null; sources: NewsSource[]; listeningRoom: ListeningRoom; workflowDraft: WorkflowDraft };
+export type PreparedNewsLibrary = { scripts: PreparedNewsScript[]; takes: PreparedNewsTake[]; selectedTakeId: string | null; requests: PreparedNewsRequest[]; reviewedArticles: ReviewedNewsArticle[] };
+export type LocalState = { djPlayback: DJPlaybackSettings; roomProfiles: RoomProfile[]; activeRoomProfileId: string; newsTransitions: NewsTransitionSettings; djs: DJ[]; vibe: string; playback: PlaybackSnapshot | null; playbackPreferences: Record<string, PlaybackPreferences>; sources: NewsSource[]; listeningRoom: ListeningRoom; workflowDraft: WorkflowDraft };
 export type PlaybackResource = { url: string; offsetSeconds: number; transcoded: boolean };
 export interface WaveApi {
   getConnection(): Promise<Result<Connection | null>>;
@@ -113,10 +117,13 @@ export interface WaveApi {
   selectLibraries(ids: string[]): Promise<Result<Connection>>;
   songs(query: CatalogQuery): Promise<Result<Page<Song>>>;
   albums(query: CatalogQuery): Promise<Result<Page<Album>>>;
+  album(id: string): Promise<Result<Album>>;
   albumTracks(id: string): Promise<Result<Song[]>>;
   song(id: string): Promise<Result<Song>>;
-  playlists(): Promise<Result<Playlist[]>>;
+  playlists(): Promise<Result<PlaylistLibrary>>;
   playlist(id: string): Promise<Result<PlaylistDetail>>;
+  acknowledgePlaylistRecovery(input: { id: string; markerId: string; receipt: string }): Promise<Result<void>>;
+  acknowledgePlaylistCreation(input: { markerId: string; receipt: string }): Promise<Result<void>>;
   createPlaylist(input: { name: string; trackIds: string[] }): Promise<Result<{ id: string }>>;
   renamePlaylist(input: { id: string; name: string }): Promise<Result<void>>;
   addPlaylistItems(input: { id: string; trackIds: string[]; skipExisting: boolean }): Promise<Result<void>>;
@@ -129,7 +136,10 @@ export interface WaveApi {
   saveVibe(vibe: string): Promise<Result<void>>;
   saveNewsTransitions(settings: NewsTransitionSettings): Promise<Result<NewsTransitionSettings>>;
   savePlayback(snapshot: PlaybackSnapshot | null): Promise<Result<void>>;
-  saveWorkflowDraft(input: { workflowDraft: WorkflowDraft; room: ListeningRoom; mood: string }): Promise<Result<void>>;
+  getPlaybackPreferences(connectionId: string): Promise<Result<PlaybackPreferences | null>>;
+  savePlaybackPreferences(input: { connectionId: string; options: Partial<PlaybackPreferences> }): Promise<Result<boolean>>;
+  saveWorkflowDraft(input: { expectedProfileId: string; workflowDraft: WorkflowDraft; room: ListeningRoom; mood: string; resumePreparation?: boolean }): Promise<Result<void>>;
+  disableNewsPreparation(roomId: string): Promise<Result<void>>;
   saveRoomProfile(input: { name: string; room: ListeningRoom; mood: string; workflowDraft: WorkflowDraft }): Promise<Result<void>>;
   activateRoomProfile(id: string): Promise<Result<void>>;
   renameRoomProfile(input: { id: string; name: string }): Promise<Result<void>>;
@@ -142,8 +152,8 @@ export interface WaveApi {
   releasePreparedNews(id: string): Promise<Result<void>>;
   markPreparedNewsPlayed(id: string): Promise<Result<void>>;
   getPreparedNews(): Promise<Result<PreparedNewsLibrary>>;
-  prepareNewsScript(input: { requestId: string; djId: string; sourceIds: string[] }): Promise<Result<PreparedNewsScript>>;
-  renderNewsTake(input: { requestId: string; scriptId: string; script: string; djId: string; newVariation?: boolean }): Promise<Result<PreparedNewsTake>>;
+  prepareNewsScript(input: { reconcileOnly?: boolean; requestId: string; djId: string; sourceIds: string[] }): Promise<Result<PreparedNewsScript>>;
+  renderNewsTake(input: { reconcileOnly?: boolean; requestId: string; scriptId: string; script: string; djId: string; newVariation?: boolean }): Promise<Result<PreparedNewsTake>>;
   selectNewsTake(takeId: string | null): Promise<Result<void>>;
   cancelPreparedNews(requestId: string): Promise<Result<void>>;
   getVoicePreview(voiceId: string): Promise<Result<DJVoicePreview>>;

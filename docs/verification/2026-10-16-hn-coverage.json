@@ -1,0 +1,190 @@
+{
+  "date": "2026-10-16",
+  "scope": "Focused S02/S07/A08 malformed Hacker News coverage and manual native feedback",
+  "before": [
+    {
+      "name": "null response",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "missing title",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "unsafe link",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "mixed valid and malformed",
+      "warnings": [],
+      "providerCalls": 1
+    }
+  ],
+  "serviceCases": [
+    {
+      "name": "null response",
+      "error": "server",
+      "message": "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "missing title",
+      "error": "server",
+      "message": "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "unsafe link",
+      "error": "server",
+      "message": "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "mixed valid and malformed",
+      "warnings": [
+        "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete."
+      ],
+      "providerCalls": 1
+    },
+    {
+      "name": "mismatched identity",
+      "error": "server",
+      "message": "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "missing identity",
+      "error": "server",
+      "message": "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "numeric title",
+      "error": "server",
+      "message": "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "invalid timestamp",
+      "error": "server",
+      "message": "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "unknown type",
+      "error": "server",
+      "message": "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "mixed valid and object type",
+      "warnings": [
+        "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete."
+      ],
+      "providerCalls": 1
+    },
+    {
+      "name": "nonstring URL",
+      "error": "server",
+      "message": "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "absent URL",
+      "warnings": [],
+      "providerCalls": 1
+    },
+    {
+      "name": "normal exclusions",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "empty list",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "valid story",
+      "warnings": [],
+      "providerCalls": 1
+    }
+  ],
+  "native": {
+    "allMalformedNamedIncompleteErrorAndNoTextDispatch": true,
+    "mixedPreservesStoryAndNamedWarning": true,
+    "tabs": [
+      "News bucket",
+      "Settings",
+      "Saved audio"
+    ],
+    "draftBucketWarningVisible": true,
+    "musicContinues": true,
+    "network": {
+      "substitutedTextCalls": 1,
+      "blockedExternalCalls": 0
+    },
+    "result": "passed"
+  },
+  "environment": {
+    "runtime": "Actual Electron main/preload/production renderer on macOS 27.2 arm64 / Electron 43.7.0",
+    "catalog": "Owned localhost HTTP catalog; fresh protected profile and hidden muted window",
+    "network": "HN and text-provider responses substituted; no real source/provider requests; dummy local key with shared keychain adapter disabled"
+  },
+  "decision": {
+    "Boris": "Supports incomplete coverage for null/unreadable items and validated requested-ID fallback.",
+    "Nadia": "Initially proposed null as ordinary unavailable; after challenge supports incomplete coverage because null cannot establish intentional exclusion. Reviewed actual change without blocker.",
+    "owner": "Primary agent implemented HN-only classification; existing downstream states/UI reused."
+  },
+  "verificationCorrections": [
+    "Initial native fixture omitted required DJ news settings; supplied complete settings.",
+    "Initial native text locator matched visible and hidden-tab copies; scoped to active panels.",
+    "Final capture scrolled to draft warning before visual inspection."
+  ],
+  "checks": {
+    "serviceCases": 15,
+    "caseAssertions": "passed",
+    "native": "passed",
+    "buildIncludingTypeScript": "passed",
+    "fullEslint": "passed",
+    "inventoryUniqueRows": 187,
+    "inventoryCounts": {
+      "Review": 144,
+      "Controlled": 11,
+      "External": 9,
+      "Dated": 13,
+      "Live": 5,
+      "Recorded": 5
+    }
+  },
+  "acceptance": {
+    "S02": "Review; scoped controlled coverage only, no new live HN acceptance.",
+    "S07": "Review; manual draft/details/bucket path checked; broader saved audio/current/scheduled scope retains prior evidence.",
+    "A08": "Review; scoped HN failure/no-news distinction checked."
+  },
+  "limits": [
+    "No actual provider output or live source relevance validation.",
+    "No automatic scheduler, generated audio or full screen-reader exercise this round.",
+    "No regular-user usability or overall acceptance percentage."
+  ],
+  "reference": "https://github.com/HackerNews/API",
+  "capture": "2026-10-16-hn-coverage.png",
+  "sha256": {
+    "src/main/news.ts": "408a58755035d98536acf000d45b0fd9d875a90f2553ca2d1738a6064849f829",
+    "src/main/prepared-news.ts": "f09a7fd83da395c8de08e1eab3b52f87454e80bbc36dcdad6d2fd1d21f229155",
+    "src/main/news-workflow.ts": "7cab5b92c6d4d1476526a75831069de80623ef5b6ca4686345bacfaf01103fb0",
+    "src/renderer/pages/Stations/components/NewsBucket.component.tsx": "a6aaf865c317b6e16b2e7c983e0a78936bd1e768b8a424482de083fe18b978c4",
+    "out/main/index.js": "1a6aee01c0edbd0dcdfb142a3f7f823e2238a04244fbed5ab70d087c504ee911",
+    "out/preload/index.cjs": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215",
+    "out/renderer/assets/index-Dp_ujpwb.js": "471854df36510226e6199b3939ef356f53b5ac7310e3d435761ea140f294f973"
+  },
+  "nativeFixtureMainSha256": "84f28be07b2b840ff9c466c6bd53f150325e580069009d66028937e041862ffb"
+}

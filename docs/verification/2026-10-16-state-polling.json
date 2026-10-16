@@ -1,0 +1,99 @@
+{
+  "recordedAt": "2026-10-16T09:52:12.290443+00:00",
+  "scope": "Six corrected native controlled-flow checks. This is not the full requirement denominator or a usability score.",
+  "sourceTreeSha256": "e3963cff379fcacd1910324e034d7986111621398b7f72a513b2dd436bb32f7e",
+  "bundleSha256": {
+    "isolatedMain": "a27fb7a8e009592969097e2a87b489b8ce7f3203438ee3fbf2f7bf60abd3c74a",
+    "preload": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215"
+  },
+  "negativeControl": {
+    "asyncFalsePredicate": {
+      "waitCompleted": true,
+      "returnedValue": false,
+      "elapsedMilliseconds": 21
+    },
+    "syncFalsePredicate": {
+      "waitCompleted": false,
+      "error": "TimeoutError",
+      "elapsedMilliseconds": 402
+    },
+    "configuredTimeoutMilliseconds": 400
+  },
+  "inventory": {
+    "oldAsyncWaitUses": 14,
+    "temporaryScripts": 10,
+    "authoritativeFlowsCorrectedAndReplayed": 6,
+    "correctedWaitUses": 7,
+    "supersededZoomScripts": 4
+  },
+  "substitutions": [
+    "disposable app data",
+    "local Jellyfin/RSS fixture servers",
+    "isolated shared-Keychain adapter",
+    "identity encryption fixture",
+    "substituted provider responses for explicit manual generation"
+  ],
+  "checks": {
+    "manual_at_automatic_limit": {
+      "fixture": "native-cap-scope",
+      "observed": {
+        "data": "/private/tmp/native-cap-scope-SfCRTA",
+        "providerCalls": [
+          "text",
+          "voice"
+        ],
+        "beforeTakes": 1,
+        "afterTakes": 2,
+        "automaticClips": 3,
+        "automaticChecks": 8
+      },
+      "result": "passed",
+      "provider_scope": "one substituted text response and one substituted voice response; no real endpoint"
+    },
+    "failure_resume": {
+      "fixture": "native-preparation-guidance",
+      "result": "passed",
+      "observed": "saved pause clears only after explicit Resume; named saved source error and recovery action visible"
+    },
+    "zoom_and_error_recovery": {
+      "fixture": "native-zoom-verified",
+      "result": "passed",
+      "observed": {
+        "zoomFactors": [
+          1,
+          1.25,
+          1.5,
+          2
+        ],
+        "savedMoodReadBack": true,
+        "queueAndFocusChecks": true,
+        "playbackErrorRetry": true,
+        "providerCalls": 0
+      }
+    },
+    "unavailable_and_empty_libraries": {
+      "fixture": "native-library-recovery",
+      "result": "passed",
+      "data": "/private/tmp/native-library-recovery-Pn4RDT",
+      "observed": "actual selected library IDs read back after save; empty-list Retry after access grant reaches music"
+    },
+    "initial_selection_and_pending_library_save": {
+      "fixture": "native-account-exit",
+      "result": "passed",
+      "data": "/private/tmp/native-account-exit-I2q2Q2",
+      "observed": "saved two-library selection read back after music navigation; account switch/signout locked during save"
+    },
+    "continuous_first_use": {
+      "fixture": "first-use",
+      "result": "passed",
+      "data": "/private/tmp/native-first-use-M1VTq5",
+      "observed": "saved host/mood read back, decoded WAV time advances, opt-ins independent, restart paused, legacy DJ preference retained on edit; no provider calls"
+    }
+  },
+  "limits": [
+    "no real provider requests or personal credentials",
+    "no live Jellyfin persistence/codec proof",
+    "no supported-OS/display-scale/VoiceOver acceptance",
+    "no observed listener usability or audible-quality score"
+  ]
+}
