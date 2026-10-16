@@ -1,0 +1,118 @@
+{
+  "date": "2026-10-17",
+  "base": "0c6b6a9730b6ccddf869f8189b79794b60e3ae39",
+  "problem": "Interrupted requests omit original profile and start time after a full app restart.",
+  "before": {
+    "reservedFields": [
+      "requestId",
+      "kind",
+      "inputHash",
+      "status"
+    ],
+    "actualOrigin": "Science room",
+    "summary": "A previous audio preparation did not finish. It was not restarted automatically. A provider request may have been charged. Review its saved status before starting a new attempt.\nReview preparation history",
+    "history": "Preparation history\n\nAudio take \u00b7 interrupted\nThe app stopped before this request completed. Start an explicit new attempt.",
+    "result": "reproduced"
+  },
+  "after": {
+    "summary": "A previous audio preparation did not finish. Manual \u00b7 Science room \u00b7 10/17/2026, 12:14:48 AM. It was not restarted automatically. A provider request may have been charged. Review its saved status before starting a new attempt.\nReview preparation history",
+    "history": "Preparation history\n\nAudio take \u00b7 interrupted\nManual \u00b7 Science room \u00b7 10/17/2026, 12:14:48 AM\nThe app stopped before this request completed. Start an explicit new attempt.",
+    "manualRestart": {
+      "origin": {
+        "kind": "manual",
+        "profileId": "notes-room",
+        "startedAt": "2026-10-16T22:14:48.040Z",
+        "profileName": "Science room"
+      },
+      "replay": "uncertain-write",
+      "providerCalls": 0,
+      "renamedProfileDidNotRewriteOrigin": true,
+      "keyboardFocus": true
+    },
+    "manualText": {
+      "status": "interrupted",
+      "origin": {
+        "kind": "manual",
+        "profileId": "other-room",
+        "startedAt": "2026-10-16T22:14:49.330Z",
+        "profileName": "Morning room"
+      },
+      "providerCalls": 0
+    },
+    "automatic": {
+      "origin": {
+        "kind": "automatic",
+        "profileId": "notes-room",
+        "profileName": "Renamed science",
+        "startedAt": "2026-10-16T22:14:49.340Z"
+      },
+      "error": "Enable the news workflow for this Listening Room before preparing automatic news.",
+      "snapshotSurvivesRename": true
+    },
+    "longNameFitsSummary": true,
+    "legacy": {
+      "summary": "A previous text preparation did not finish. Original profile and time not recorded. It was not restarted automatically. A provider request may have been charged. Review its saved status before starting a new attempt.\nReview preparation history",
+      "malformedMetadataRemoved": true,
+      "providerCalls": 0
+    },
+    "invalidInputRejectedBeforeDispatch": true,
+    "viewport": {
+      "width": 1280,
+      "height": 720
+    },
+    "zoom": 1,
+    "result": "passed"
+  },
+  "runtime": {
+    "macOS": "27.2 arm64",
+    "electron": "43.7.0",
+    "fixtureNode": "24.4.1",
+    "cssViewport": [
+      1280,
+      720
+    ],
+    "zoomFactor": 1,
+    "hidden": true,
+    "muted": true
+  },
+  "method": {
+    "actualMainPreloadProductionRendererAndStores": true,
+    "network": "Owned localhost Jellyfin server, substituted providers, blocked unrelated external traffic",
+    "sharedKeys": "null adapter; protected dummy per-app keys",
+    "automaticCases": "Actual prepareRoomNews with explicit non-active profile and supplied reserved snapshot; pre-dispatch validation failure",
+    "restart": "Controlled application close while dummy voice fetch is held, then relaunch same isolated userData",
+    "recoveryProviderCalls": 0,
+    "fatalLogAfterOwnedClose": false
+  },
+  "checks": {
+    "buildAndTypeScript": "passed",
+    "eslint": "passed",
+    "nativeDriverExit": 0,
+    "capturesVisuallyInspected": true
+  },
+  "decision": {
+    "Boris": "Accepted after independent proposal and challenge; diff review found no actionable issue. ISO round-trip reservation addressed.",
+    "Nadia": "Supported optional origin metadata; preferred a bounded UI name fallback for deleted profiles.",
+    "Morgan": "Capture manual profile ID at action boundary; resolve name in main after synchronous reservation, unknown if deleted. Automatic uses supplied snapshot. Keep context outside inputHash and immutable on reconciliation."
+  },
+  "limitations": [
+    "Controlled provider and restart evidence, not billing, power loss or live outage proof.",
+    "Automatic identity tests stop before provider generation; no completed automatic journey claimed here.",
+    "T06 broader supersession, failed-refresh and duplicate-summary coverage remains Review.",
+    "No observed listener, VoiceOver, other OS, deferred small-window or enlarged-zoom checks.",
+    "Q10 remains open."
+  ],
+  "sourceSha256": {
+    "src/shared/types.ts": "d67dcace88513b8ee42238aa512eb2c480ded9b1275977567e8b3d1cec62a652",
+    "src/main/prepared-news.ts": "0d0d40b27e899d04bea54d064d62017643c58211997f8c3e36f896b26c24bd2d",
+    "src/main/news-workflow.ts": "16e61a8e65a69bf97a59101befcd6a66e23cdb69350c9e2b854ed3e2772e11a2",
+    "src/renderer/pages/Stations/Stations.page.tsx": "824931ae9fc61bb4035d6a208de7f217596b72628739fd1a8eee3ad92c80b28e",
+    "src/renderer/pages/Stations/Stations.styles.css": "19b9a1dc0cf630b57f36f57c13fb1b44c65464f3db740c88770a837a10a72646"
+  },
+  "fixtureSha256": {
+    "build.mjs": "c08da0ac0d3f905875c67c89ba9e60d20cb78f2a6ad69d5091175b18e52b288d",
+    "bootstrap.mjs": "32f6d2bbaf688b091ea743e35ab64b678b166b83c0b8d015c89e829df957fea1",
+    "before.cjs": "0edebb15e308f5e3050f311abe92e0296b6705810adb94f216b13f6eb842d85a",
+    "after.cjs": "307f53b11881620edde0ae1505778c8eabefcc412263d6dbebbb9597c0ac710a"
+  }
+}
