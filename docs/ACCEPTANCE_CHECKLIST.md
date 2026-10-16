@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 67 Review, 8 Dated, 4 Recorded, 85 Controlled, 12 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 64 Review, 8 Dated, 3 Recorded, 88 Controlled, 13 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -112,17 +112,17 @@ Source: REQUIREMENTS: Playlists; M5,M6.
 | P05 | Explicit read-only disables editing; unavailable permission lookup explains unknown permission and lets Jellyfin authorize attempts. | N+S+L | Review |
 | P06 | Skip existing tracks performs duplicate reads first, preserves chosen order and makes no write/recovery lock for an empty remainder. | N+S | Live |
 | P07 | Pending/failed/review state survives navigation, playlist switches, library saves and same-account sign-in. | N+S | Controlled |
-| P08 | Create/add/reorder/remove reserve durable account-owned intent before dispatch and retain one addition intent across all batches. | S | Review |
-| P09 | Lost/malformed creation confirmation remains uncertain and never replays automatically, including when no created ID is known. | N+S | Recorded |
+| P08 | Create/add/reorder/remove reserve durable account-owned intent before dispatch and retain one addition intent across all batches. | S | Controlled |
+| P09 | Lost/malformed creation confirmation remains uncertain and never replays automatically, including when no created ID is known. | N+S | Controlled |
 | P10 | Inline uncertain reorder/removal blocks edits until a fresh successful detail read and explicit acknowledgement. | N+S | Controlled |
-| P11 | An unresolved creation needs a fresh complete playlist-list read and explicit acknowledgement before any creation, including from Add. | N+S | Review |
+| P11 | An unresolved creation needs a fresh complete playlist-list read and explicit acknowledgement before any creation, including from Add. | N+S | Controlled |
 | P12 | A read begun while the write was pending cannot authorize acknowledgement. | S | Controlled |
 | P13 | Unresolved edits survive process restart; affected tiles say Review needed and affected Add destinations are disabled. | N+S | Controlled |
 | P14 | Rename and additions respect affected locks while other playlists remain usable. | N+S | Controlled |
 | P15 | Unavailable recovery storage rejects edits before dispatch while listening remains available. | N+S | Controlled |
 | P16 | Account changes hide old feedback; returning restores that account's review, and late old results cannot alter the new account. | N+S | Controlled |
 | P17 | Successful status-only rename/add/remove/move stays confirmed despite a hanging unused body; failure to cancel that unused response body cannot undo confirmation. | S | Controlled |
-| P18 | Partial multi-batch changes report uncertainty and are not retried automatically. | S+L | Review |
+| P18 | Partial multi-batch changes report uncertainty and are not retried automatically. | S+L | Live |
 | P19 | Repeated/missing/invalid server entry IDs never merge occurrence selection or become unsafe Move/Remove requests; explain row restrictions, preserve safe actions/stable selections, and clear unreliable selections when entries change. Preflight rejects ambiguous/absent targets before reservation or dispatch. | N+S+L | Review |
 
 ## Music playback and listening-session persistence
@@ -405,3 +405,5 @@ A04/T11 evidence: [provider-free saved-radio record](verification/2026-10-17-key
 A16/A18 evidence: [current sign-out record](verification/2026-10-17-signout-current.json). Native publication/sign-out, signed-out restart, reconnect and named per-profile Resume pass. Twenty-one actual-main/service/storage lifecycle cases cover stale setup/Resume, failure boundaries and automatic/manual/preview key/in-flight/publication checkpoints. No new provider dispatch follows the sign-out boundary or signed-out startup.
 
 P07/P10/P13/P14/P16 evidence: [playlist-boundary record](verification/2026-10-17-playlist-boundaries.json). Native uncertain move/removal and definite rejection cover navigation, playlist switches, library saves and same-account sign-in. Restart retains tile/Add locks; failed detail reads cannot authorize acknowledgement; healthy sibling playlists remain usable. A late old-account mutation leaves the new account untouched and return restores the original review. Existing addition-restart and late-read evidence was reviewed against unchanged affected source methods.
+
+P08/P09/P11/P18 evidence: [creation and batch record](verification/2026-10-17-playlist-creation-batches.json). Four native creation-confirmation variants retain a global lock through restart and both entry points; a failed second list page cannot authorize acknowledgement. Actual on-disk account-owned markers precede create/add/reorder/remove dispatch and stay singular across100/100/50 batches. Local and live later-batch confirmation loss retain uncertainty and prevent blind replay. The one live private test playlist was deleted and its absence confirmed.
