@@ -35,6 +35,7 @@
 .prepared-source-links { margin-top: 16px; }
 .prepared-source-links h4 { font-size: 12px; font-weight: 500; margin: 0 0 8px; }
 .prepared-source-links button { background: none; padding: 4px 0; justify-content: flex-start; text-align: left; min-height: 26px; color: var(--accent); white-space: normal; }
+.prepared-source-links > button { margin-inline-end: 12px; }
 .prepared-source-links button > svg { flex-shrink: 0; }
 .prepared-source-links button > span { overflow-wrap: anywhere; }
 .prepared-source-links p { color: var(--muted); font-size: 10px; margin-bottom: 8px; }
