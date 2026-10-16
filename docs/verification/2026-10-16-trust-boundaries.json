@@ -1,0 +1,144 @@
+{
+  "date": "2026-10-16",
+  "scope": "Q01 renderer/preload/IPC isolation and Q04 account-bound media handle and redirect boundaries",
+  "mergedSource": "cad69dd6503077b54665323158ba9a121f7374db",
+  "productionChanges": false,
+  "rendererAndIPC": {
+    "cases": [
+      {
+        "kind": "renderer-ipc-boundary",
+        "actualNativePreferences": {
+          "contextIsolation": true,
+          "nodeIntegration": false,
+          "sandbox": true,
+          "webviewTag": false
+        },
+        "mainWorldHasNoNodeOrRawIPC": true,
+        "narrowPreloadMethodCount": 61,
+        "secondRendererReadAndMutationDenied": true,
+        "invalidPayloadsRejectedWithoutMutation": 8,
+        "rendererNavigationPrevented": true,
+        "popupsDenied": true,
+        "cspBlocksRendererNetworkingAndFrames": true,
+        "providerCalls": 0,
+        "result": "passed"
+      }
+    ],
+    "result": "passed"
+  },
+  "mediaProtocol": {
+    "cases": [
+      {
+        "kind": "opaque-native-music-range",
+        "rendererURLHasNoCredentials": true,
+        "upstreamAuthorizationPresent": true,
+        "rangeForwarded": true,
+        "noAuthorizationInResponse": true,
+        "result": "passed"
+      },
+      {
+        "kind": "invalid-handle-method",
+        "unknownHandle404": true,
+        "post405": true,
+        "noUpstreamRequest": true,
+        "result": "passed"
+      },
+      {
+        "kind": "off-origin-redirect",
+        "rejected502": true,
+        "onlyOriginalOriginRequested": true,
+        "noCredentialForwardingToRedirect": true,
+        "result": "passed"
+      },
+      {
+        "kind": "same-origin-redirect",
+        "twoAuthorizedSameOriginRequests": true,
+        "result": "passed"
+      },
+      {
+        "kind": "redirect-loop",
+        "boundedAtFiveHops": true,
+        "result": "passed"
+      },
+      {
+        "kind": "revoked-cross-account-music",
+        "signedOut401WithoutUpstream": true,
+        "oldHandle404AfterNewAccountWithoutUpstream": true,
+        "newAccountHasDistinctWorkingHandle": true,
+        "result": "passed"
+      }
+    ],
+    "result": "passed"
+  },
+  "method": {
+    "runtime": "macOS27.2 arm64, Electron43.7.0",
+    "application": "Actual native production renderer/preload, source-bundled main/services/protocol/storage and fresh protected dummy account. Shared Keychain and provider HTTP substituted. No personal provider entries or external/billed calls.",
+    "isolation": "Inspect actual BrowserWindow preferences and main-world globals. Context isolation and sandbox are on; renderer Node integration/webview are off. No require, process, ipcRenderer, invoke or send is exposed. The preload exports61 named operations. A second hidden BrowserWindow loads the same preload/app page; actual read and mutation IPC return forbidden before touching state.",
+    "validation": "Review the complete operation gateway, source validators and delegated catalog/playlist/preview handlers. Eight native malformed calls cover object/type/range/source-scheme/path/size errors; all reject without changing the local state or dispatching providers. This is focused boundary verification, not exhaustive fuzzing of every input combination.",
+    "navigation": "Actual renderer navigation is prevented by the main window handler, popup creation is denied, and renderer fetch is blocked. Inspect the actual app response CSP for self-only scripts plus connect/frame/object/base restrictions. The senderFrame identity check is inspected in the common gateway; the second-window denial is exercised. No claim of executing IPC inside a CSP-blocked child frame.",
+    "media": "Actual typed preparePlayback returns an opaque native URL. Actual Electron net.fetch enters the production wave-media protocol; a native range read forwards authorization/range upstream and returns the expected16 bytes without exposing authorization. Missing handles and invalid methods make no upstream call. Controlled same-origin redirect succeeds; off-origin redirect is rejected before a second request; redirect loop stops after five upstream hops.",
+    "accounts": "Actual disconnect revokes music resources, and old URL returns401 with no upstream request. Sign into a second localhost dummy account; old URL returns404 without forwarding credentials, while a distinct new handle works. No actual password/token value is retained in evidence.",
+    "sourceReview": "All account-bound audio/artwork use the same current-session proxy and same-origin redirect branch; connection changes revoke resources and active requests. Transient speech maps are cleared too. Local prepared news and voice samples intentionally remain local/shared across account changes, per the saved-data contract; their missing-file rejection is separately exercised in the current listener-journey record.",
+    "cleanup": "Both final drivers terminate zero. Each owned native close checks absence of captured fatal output, and the extra untrusted window is destroyed. Localhost servers stop and control file resets."
+  },
+  "fixtureCorrection": "An inherited paused queue could issue background metadata reads during the redirect test and doubled its observed upstream count. Remove that queue before launch to isolate the explicitly requested protocol call. The corrected full six-case run passes; no production change was needed.",
+  "checks": {
+    "nativeCases": 7,
+    "newControlled": [
+      "Q01",
+      "Q04"
+    ],
+    "sourceAndBundleMatchPriorBuildTypeScriptAndESLint": true,
+    "noRedundantBuild": true,
+    "inventory": {
+      "total": 187,
+      "Review": 105,
+      "Dated": 11,
+      "Recorded": 5,
+      "Controlled": 48,
+      "Live": 9,
+      "External": 9
+    },
+    "starMappings": 27,
+    "overallPercentage": null,
+    "goalComplete": false
+  },
+  "limits": [
+    "Controlled runtime with dummy accounts and substituted upstream responses. No penetration-test, OS Keychain, live authentication or exhaustive input-fuzzing claim.",
+    "Artwork uses the same inspected proxy branch; dynamic redirect/account cases exercise music handles. Source/frame checks and native second-window denial are distinct evidence.",
+    "This record does not establish user comprehension, audible quality or broader OS/hardware coverage. The earlier Q10 shutdown diagnostic remains open."
+  ],
+  "sha256": {
+    "src/main/news.ts": "9c2076bf3808221980dac5aa2befb9d5532278027ccdcc6197e8324930b6571e",
+    "src/main/prepared-news.ts": "c5f75f9818c3537fbf2cc177d5980328926b1d73202a3952f0da84258df11dd2",
+    "src/main/news-workflow.ts": "16e61a8e65a69bf97a59101befcd6a66e23cdb69350c9e2b854ed3e2772e11a2",
+    "src/main/storage.ts": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+    "src/shared/types.ts": "12c7b75803e661219ce729a9b6a20088c36cf13c9ba3face3ce73aa08ee9c3e1",
+    "src/shared/workflow.ts": "22bbb66493579cc57e09c69119943adec0fa2373d823820a2579bd4996e6cc77",
+    "src/shared/news-preparation-status.ts": "27803f7289d4cf64a0d350a361fe9682231e518e93bd4a71e3590a4df771eae9",
+    "src/renderer/pages/Stations/Stations.page.tsx": "9a0b361a10ee083c30d9197ff608d4e08f367700d32e4310f34eea12cdb00aa1",
+    "src/renderer/pages/Stations/components/NewsBucket.component.tsx": "de83e49585e17339bca32a0866b4c5126e95ceacb1cc4bf9e80d81a50221f5a7",
+    "src/renderer/components/Player/DJPopover.component.tsx": "6ffca314f80c990adb9c1fbf81f970560cd5d2debc786e855098f89551e2e4ec",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": "6f1c4fd3956da61639d94c430605bb321903da2ffac953894278a3c79c6ae2a9",
+    "out/main/index.js": "a9b553b2d478277d897ee492b4bb1acc2bc85edff8e08c399b10c0743e77022a",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+    "out/renderer/assets/index-ZOgMZShw.css": "d8229b9932315a7d35fd286e73333f3c63eb5a2b0c08077751b537daa13118dd",
+    "out/renderer/assets/index-BiujlJ_X.js": "dae277d3897d3c20025fc5e2b8ba6c8fe22d5f4ca02f37b4855ceda060a67013",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/main/media.ts": "6768544bd3215e37187a12293571c894a1023619ebe8f09e25403bdec0bfb671",
+    "src/main/jellyfin.ts": "f4d2e4d8ae75807447bd5b4f64b97938594f3935834932bb7d1bec43a8360448",
+    "src/main/dj-previews.ts": "56d36390dbf9ba2a3177c46ff2a20d4478fa20bc37d6220bc1459b6e592722b3",
+    "src/main/dj-voices.ts": "c5dd6b8af812181e99eb5d30cd4844ede4717460b641319d267620ba5b51f1e9",
+    "src/preload/index.ts": "0c7edf2153d5210b24a0fac9db667fd254e324366d4737653578ef067c1eac63"
+  },
+  "fixtureReproducerSha256": {
+    "/private/tmp/native-recording-publication/build.mjs": "7d7a999d54e9492b4eff24b5137a9100d29c25f6a11f630c2e58980e186dc4d2",
+    "/private/tmp/native-recording-publication/bootstrap.mjs": "084467e78b690b98a090cfbfc5987fc37035dcc11ec5c0e56fc85d6eceb472a3",
+    "/private/tmp/native-recording-publication/security.cjs": "e86388b4ef2ac99ba89faadd90b45958d2896cea1bf7d2686edc69ff01a41349",
+    "/private/tmp/native-recording-publication/security.json": "4815a17c18fc72e9185b7f9661c1661db458db2f4b2b0dc4e0db969a181f50d1",
+    "/private/tmp/native-media-boundary/bootstrap.mjs": "02de651ea78d83203ea042718f72e481947d4e8eb78ef7a5d0cf8f76d4289932",
+    "/private/tmp/native-media-boundary/run.cjs": "d572f8752d37274dc3bccc3aa39db5f25fc5b7c02c2b694b7c77befd17ef873c",
+    "/private/tmp/native-media-boundary/run.json": "4aa6d329551ba63956ba27de84b794825c3599e97767cc333c3ae65a8439f932"
+  },
+  "priorBuildEvidence": "2026-10-16-partial-coverage.json"
+}

@@ -19,7 +19,7 @@ Evidence entry points are [the detailed audit](UX_ACCEPTANCE.md), [the corrected
 
 The inventory is provisional until every source paragraph and STAR result is reconciled against it. No overall percentage is calculated yet. Human usability and live/OS coverage remain separate from controlled engineering coverage. Every critical invariant must pass regardless of a future percentage.
 
-Current inventory: 187 rows. 107 Review, 11 Dated, 5 Recorded, 46 Controlled, 9 Live, 9 External. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows. 105 Review, 11 Dated, 5 Recorded, 48 Controlled, 9 Live, 9 External. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -270,10 +270,10 @@ Source: REQUIREMENTS: Design acceptance, stack, settings, acceptance and release
 
 | ID | Observable result | Proof | Status |
 | --- | --- | --- | --- |
-| Q01 | Context isolation and disabled renderer Node integration accompany a narrow validated sender/frame-aware preload/IPC boundary. | I+S+N | Review |
+| Q01 | Context isolation and disabled renderer Node integration accompany a narrow validated sender/frame-aware preload/IPC boundary. | I+S+N | Controlled |
 | Q02 | Actual OS protected connection/local-key encryption decrypts in a fresh process and clearing/corrupt/unavailable paths are honest. | S+O | Review |
 | Q03 | Actual shared-provider Keychain adapter supports isolated read/write/independent clear without exposing secrets to renderer. | S+O | Review |
-| Q04 | Media URLs/handles reject revoked/missing/cross-account resources and off-origin redirects without leaking tokens. | S+N | Review |
+| Q04 | Media URLs/handles reject revoked/missing/cross-account resources and off-origin redirects without leaking tokens. | S+N | Controlled |
 | Q05 | Local secret/recovery files have appropriate private modes and no inspection/test touches personal entries. | I+S+O | Review |
 | Q06 | All essential controls have accessible names, visible focus and keyboard operation; source checkbox groups have names. | N+O | Review |
 | Q07 | Filter Tab/Escape, dialogs and setup detours restore logical focus, including removed-opener fallback to page heading. | N | Review |
@@ -289,6 +289,7 @@ Source: REQUIREMENTS: Design acceptance, stack, settings, acceptance and release
 
 | Check | Reviewed evidence | Scope limit |
 | --- | --- | --- |
+| Q01,Q04 | [Trust-boundary record](verification/2026-10-16-trust-boundaries.json):actual native isolation/CSP/navigation, second-window IPC denial, eight malformed mutations, opaque range playback, redirect limits and revoked/cross-account handles | Dynamic media cases exercise music; artwork shares the inspected proxy. Local saved news remains shared by contract. Focused checks do not establish exhaustive fuzzing, OS Keychain or a penetration test. |
 | T09,T10 | [Listener journey record](verification/2026-10-16-listener-journey.json):native immutable writing/rendering provenance after setup edits/restart; missing, empty and truncated audio controls plus explicit replacement and durable selection | Includes a controlled full first-radio journey and two inspected captures. Provider responses are substituted; first sign-in, live quality, audible transitions and observed listener comprehension remain separate. |
 | A19,T12 | [Recording recovery record](verification/2026-10-16-recording-recovery.json):12 native cases covering durable dispatch reservation, four publication/settlement boundaries, two restarts, late cancel/OFF/sign-out, incomplete-file rejection, manual replay and unknown-request reconciliation | Actual stores/IPC/services with substituted providers. Controlled quit/reopen and two incomplete-file variants do not establish arbitrary forced termination, power loss, disk faults or live billing. |
 | A08 | [Partial coverage record](verification/2026-10-16-partial-coverage.json):22 native outcomes, held-settlement quit/reopen, two restarts, same-ID automatic/manual replay, normal cadence continuation and three layout cases | Actual stores/IPC/services with substituted providers; physical crash/sleep, broader late cancellation, live quality and observed comprehension remain separate. |
