@@ -53,7 +53,7 @@ Seeking preserves a scheduled/active DJ break by default, following the global K
 
 ## What the listener can see
 
-The player popover shows playback state, selected playback profile, host, next song condition, upcoming/current script and source links, and last heard this session. A separate preparation line names the profile it describes and links to its setup. It must never describe the page's profile as the playback profile.
+The player popover shows playback state, selected playback profile, host, next song condition, upcoming/current script and source links, and last heard this session. A separate preparation line names the profile it describes and links to its setup. It must never describe the page's profile as the playback profile. A scheduled recording stays Upcoming until its transition starts and does not enter Last heard until speech actually plays. Last heard distinguishes On air, Paused, Played to the end and Interrupted; it is limited to this app session and remains visible when the playback profile changes. A failed saved-pool read shows Needs attention and Try again. Retrying shows Checking pool while it reads saved recordings and never prepares new text or voice.
 
 News bucket shows the profile being inspected, preparation status, timestamp and reason for its last check, actual next check, daily check/recording usage, and fresh matching recordings ready to play. Count labels define their scope. Review history is global and says so. It is not a count of all news on the internet or money spent.
 

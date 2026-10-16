@@ -1,0 +1,133 @@
+{
+  "date": "2026-10-17",
+  "base": "77c019ed1479fe7c0ae2ca118cb166a3637beef6",
+  "scope": [
+    "D07"
+  ],
+  "productionChanges": false,
+  "native": {
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "cases": [
+      {
+        "kind": "selected profile versus editing profile",
+        "result": "passed",
+        "selectedHostSourcesCadence": true,
+        "preparationBelongsToPlaybackProfile": true,
+        "emptyUpcomingAndSession": true
+      },
+      {
+        "kind": "scheduled upcoming script and source details",
+        "result": "passed",
+        "notHeardBeforeSpeech": true,
+        "scriptAndWarningsVisible": true,
+        "missingDateExplicit": true,
+        "originalSourceLinkOpenedThroughMain": true
+      },
+      {
+        "kind": "paused scheduled break before speech",
+        "result": "passed",
+        "noFalseHeardEntry": true
+      },
+      {
+        "kind": "current speaking and last heard",
+        "result": "passed",
+        "onAirAfterActualPlay": true,
+        "currentAndHeardScriptMatch": true
+      },
+      {
+        "kind": "pause during speech",
+        "result": "passed",
+        "currentAndHeardPaused": true
+      },
+      {
+        "kind": "completed voice and return to music",
+        "result": "passed",
+        "completedOnlyAfterActualEnded": true
+      },
+      {
+        "kind": "profile switch and disabled DJ",
+        "result": "passed",
+        "newHostAndPreparationShown": true,
+        "heardSessionRetained": true,
+        "preparationNotTurnedOff": true
+      },
+      {
+        "kind": "fresh session history",
+        "result": "passed",
+        "priorSessionNotPresentedAsCurrent": true
+      },
+      {
+        "kind": "stopped heard recording",
+        "result": "passed",
+        "interruptedStatusAndSourcesRetained": true
+      },
+      {
+        "kind": "pool error retry and pending read",
+        "result": "passed",
+        "needsAttentionWithActionableError": true,
+        "retryClearsOldError": true,
+        "checkingPoolVisibleDuringRead": true,
+        "retrySchedulesSavedRecording": true
+      }
+    ],
+    "result": "passed",
+    "rendererErrors": 0,
+    "fatalFileAbsent": true,
+    "providerRequests": 0
+  },
+  "observations": [
+    "The selected playback profile Science room and Fixture host remain distinct from the Morning room being edited in News bucket. Preparation status names the playback profile and explains where to edit it.",
+    "The scheduled recording shows its full script, source links, dated/undated references and partial-source warnings. The original HTTPS source URL reaches the captured main-side OS-open boundary.",
+    "No Last heard entry appears before actual speech. Native audio play and ended events establish On air, Paused, Played to the end and Interrupted statuses.",
+    "Switching the playback profile updates host and preparation status while retaining the actual heard script for this session. Separate freshly launched isolated sessions start with no heard item.",
+    "Controlled nextRoomNews handler failure displays Needs attention and an actionable error. Try again clears the error and shows Checking pool while a held read waits, then schedules the existing recording."
+  ],
+  "inspection": {
+    "screenshots": [
+      "2026-10-17-player-dj-status-scheduled.png",
+      "2026-10-17-player-dj-status-paused.png"
+    ],
+    "layout": "Inspected native 1280x720 content at 100% app zoom. Scrollable popover shows the corresponding current/upcoming content and persistent player controls. Retina pixels are 2560x1440.",
+    "source": "DJPopover derives header state from actual player phase and pool controller; player records Last heard only in audio onplay and marks completed in onended; React session state is not stored as durable heard history."
+  },
+  "checks": {
+    "nativeCases": 10,
+    "rendererErrors": 0,
+    "fatalFileAbsent": true,
+    "buildTypeLint": "Application source unchanged from PR37 passing production build/TypeScript/full ESLint snapshot, so not repeated.",
+    "driverCorrections": [
+      "Stop DJ is in the transition banner above the player bar, so its selector was scoped to the actual page button.",
+      "The existing error action is named Try again, not Retry. Corrected the driver without application changes."
+    ]
+  },
+  "limits": [
+    "Muted native audio and controlled local server data do not establish audible transitions, physical media keys, observed comprehension, live provider quality or live Jellyfin codec behavior.",
+    "The pool error and read delay are injected at the main handler boundary to exercise real renderer recovery; they do not reproduce a physical disk outage.",
+    "The final OS source-open call is captured; no external browser page opens.",
+    "Nonlocal network requests are blocked by the fixture. No paid provider request is dispatched.",
+    "Fresh-session checks use separately seeded isolated app data. Source inspection additionally confirms heard history remains renderer session state.",
+    "D05/D06 and Q10 retain their broader open scope. No deferred size or zoom checks ran."
+  ],
+  "sourceSha256": {
+    "src/renderer/components/Player/DJPopover.component.tsx": "6ffca314f80c990adb9c1fbf81f970560cd5d2debc786e855098f89551e2e4ec",
+    "src/renderer/components/Player/DJPopover.styles.css": "e86622d91af213471f08f03840d76c01a3bece3349e5a9f7d44d159aab143cfb",
+    "src/renderer/components/Player/Player.component.tsx": "66f946823cd41e86f27ed6a53d21998cf7543c929066bc8152ccad2e59c89041",
+    "src/renderer/player.tsx": "481d350ef35d5e11d77848f661419f5eea265cbf643db234c665174255ec562c",
+    "src/renderer/dj-playback.tsx": "31e217aa382a88dcfddbfb0b06b0294825d4acdb7a9bc0127dd8e367adf85c5f",
+    "src/main/prepared-news.ts": "0d0d40b27e899d04bea54d064d62017643c58211997f8c3e36f896b26c24bd2d",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/shared/news-preparation-status.ts": "27803f7289d4cf64a0d350a361fe9682231e518e93bd4a71e3590a4df771eae9",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370"
+  },
+  "fixtureSha256": {
+    "/private/tmp/native-dj-status-current/status.cjs": "c494780af81aa712c86eade6e3db52c81a58aec5541f8326b272a3c5d4d5c0da",
+    "/private/tmp/native-dj-status-current/bootstrap.mjs": "ac35cbcb9f42f51b6b7918b4c60fea55cb220ce351e7e94e7faca0ed3813062e",
+    "/private/tmp/native-dj-status-current/build.mjs": "87c257c772d9fcaab0483da1330771bc345d350a25905e41e361566ebe2eb295",
+    "/private/tmp/native-dj-status-current/server.mjs": "75fa3a1e4afc0d22bc6457158f2baa95ef5340056b29a30d5907dfda063e234b",
+    "/private/tmp/native-dj-status-current/out/main/index.js": "944868ced38b5c5f2c13bac3754a9df8136a044a957318d2343d1ae41aacc649"
+  }
+}
