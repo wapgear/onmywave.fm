@@ -1,0 +1,140 @@
+{
+  "date": "2026-10-16",
+  "base": "755a8cffea983ab274fda228e971a492a84740e0",
+  "purpose": "Verify different-account, different-server and explicit sign-out boundaries clear unsaved radio state and live completion/error feedback while preserving saved local material.",
+  "variants": {
+    "account": {
+      "cases": [
+        {
+          "kind": "account boundary",
+          "result": "passed",
+          "allUnsavedSetupAndScriptCleared": true,
+          "oldLiveOperationAndCompletionFeedbackAbsent": true,
+          "lateOldFailureDoesNotLockNewEditor": true,
+          "storedLibraryAndSelectionRetained": true,
+          "providerRedispatches": 0
+        }
+      ],
+      "baseline": {
+        "width": 1280,
+        "height": 720,
+        "zoom": 1
+      },
+      "invariants": {
+        "realProviderCalls": 0,
+        "explicitSubstitutedVoiceAttempts": 1,
+        "rendererErrors": 0
+      },
+      "result": "passed"
+    },
+    "server": {
+      "cases": [
+        {
+          "kind": "server boundary",
+          "result": "passed",
+          "allUnsavedSetupAndScriptCleared": true,
+          "oldLiveOperationAndCompletionFeedbackAbsent": true,
+          "storedLibraryAndSelectionRetained": true,
+          "providerRedispatches": 0
+        }
+      ],
+      "baseline": {
+        "width": 1280,
+        "height": 720,
+        "zoom": 1
+      },
+      "invariants": {
+        "realProviderCalls": 0,
+        "explicitSubstitutedVoiceAttempts": 1,
+        "rendererErrors": 0
+      },
+      "result": "passed"
+    },
+    "signout": {
+      "cases": [
+        {
+          "kind": "sign-out cancel retains edits and result",
+          "result": "passed"
+        },
+        {
+          "kind": "signout boundary",
+          "result": "passed",
+          "allUnsavedSetupAndScriptCleared": true,
+          "oldLiveOperationAndCompletionFeedbackAbsent": true,
+          "storedLibraryAndSelectionRetained": true,
+          "providerRedispatches": 0
+        }
+      ],
+      "baseline": {
+        "width": 1280,
+        "height": 720,
+        "zoom": 1
+      },
+      "invariants": {
+        "realProviderCalls": 0,
+        "explicitSubstitutedVoiceAttempts": 1,
+        "rendererErrors": 0
+      },
+      "result": "passed"
+    }
+  },
+  "evidenceDetails": {
+    "editedFields": [
+      "mood",
+      "news interests",
+      "source checkbox selection",
+      "chosen DJ",
+      "manual script"
+    ],
+    "differentAccount": "A held voice request from the old account fails after the second account is committed. The new editor uses saved defaults, is enabled and has no old live operation/error/completion feedback.",
+    "differentServer": "A completed manual result and unsaved fields clear when the same dummy user ID connects to a second owned HTTP server on another port. Its saved recording remains in the library.",
+    "signOut": "Cancel retains the edited script/mood and completion action. Confirm clears them; signing into the same account again starts from saved defaults and retains the new recording. Enabled preparation remains explicitly paused.",
+    "sourceInspection": "App SessionContent is keyed by normalized connection ID and owns both radio draft state values; changing identity or signing out remounts this owner. Saved local profiles/audio/history are outside that unsaved owner.",
+    "reportNormalization": "A false not-applicable late-failure probe flag was omitted from the server/signout reports; only the account variant exercises that probe."
+  },
+  "runtime": {
+    "macOS": "27.2 arm64",
+    "electron": "43.7.0",
+    "fixtureNode": "24.4.1",
+    "window": {
+      "cssWidth": 1280,
+      "cssHeight": 720,
+      "zoomFactor": 1,
+      "hidden": true,
+      "muted": true
+    }
+  },
+  "scope": {
+    "actualMainPreloadProductionRendererAndStores": true,
+    "localDummyServers": [
+      "127.0.0.1:5191",
+      "127.0.0.1:5192"
+    ],
+    "protectedDummyConnection": "real safeStorage",
+    "providerResponses": "substituted, external traffic blocked",
+    "sharedProviderKeys": "null adapter",
+    "appCodeChanged": false,
+    "unitFrameworkAdded": false
+  },
+  "limitations": [
+    "Controlled native engineering evidence, not live Jellyfin account or outage acceptance.",
+    "This verifies clearing unsaved/live state, not deleting durable local radio profiles, recordings or history. Those remain shared on the same Mac as documented.",
+    "The late old-account request is allowed to settle before checking the new editor. This does not claim parallel provider requests are allowed while global work is active.",
+    "No VoiceOver, other macOS versions, observed listener session, smaller windows or enlarged zoom covered.",
+    "Q10 remains unattributed/open."
+  ],
+  "sourceSha256": {
+    "src/renderer/App.tsx": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+    "src/renderer/pages/Stations/Stations.page.tsx": "2627f57cb89db0ac5ed73dc85f4bea39987387b07844f5f840e34de81b89fa92",
+    "src/renderer/pages/Settings/Settings.page.tsx": "ce0c41cd58f82a801b651940cb641945c12ed4c83b765377f6be8d809d1e5d9f",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/main/prepared-news.ts": "c5f75f9818c3537fbf2cc177d5980328926b1d73202a3952f0da84258df11dd2"
+  },
+  "fixtureSha256": {
+    "build.mjs": "11ef34ee6f511cd1cb0dab2b1a90cd61dc1abd511fb4ea90567dff3cb7ce0caa",
+    "bootstrap.mjs": "423ba49f2bbb1da0709618e28ee1e367498861a9ceca4a9d6ba0ff02fd9a2290",
+    "server.mjs": "131d1dc311e46f8455f2b8fd9f2ddb74db3a5a9743119d165c9fffc1666f8f4d",
+    "server2.mjs": "e4dca7c2955cabc2e5c3092b7c16cc26f1ef672e6315c79d852799be5c6d6015",
+    "run.cjs": "ef7fe3f7256a098ade522e0c4405fb9e17b1f5ce766d33f2a7d2f96ab0dbaa70"
+  }
+}

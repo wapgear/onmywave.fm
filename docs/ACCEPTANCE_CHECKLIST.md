@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 82 Review, 8 Dated, 4 Recorded, 70 Controlled, 12 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 81 Review, 8 Dated, 4 Recorded, 71 Controlled, 12 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -67,7 +67,7 @@ Source: REQUIREMENTS: Jellyfin connection; RADIO_EXPERIENCE: Entry and first use
 | C11 | Account/library snapshots and saved credentials become active together; asynchronous failure/cancellation keeps the latest committed account and choices across restart. | S+O | Controlled |
 | C12 | Offline reads preserve the session and offer explicit Retry;401 prefills server/username with empty password. | N+L | Review |
 | C13 | Same-account reauthentication retains unsaved radio/script/manual-operation state without saving or redispatch; music restores paused. | N+S | Controlled |
-| C14 | Different account/server and explicit sign-out clear unsaved radio/script drafts and hide old-account feedback. | N+S | Review |
+| C14 | Different account/server and explicit sign-out clear unsaved radio/script drafts and hide old-account live feedback, including manual completion notices; saved local radio material remains. | N+S | Controlled |
 | C15 | A failed newer login supersedes older attempts while retaining the previously committed account. | S | Recorded |
 | C16 | Jellyfin sign-in JSON deadlines include stalled bodies; after 20 seconds the form is usable and no account is committed. | N+S | Controlled |
 | C17 | Library JSON requests time out through body consumption; the existing single read retry ends in useful error and explicit Retry restores data. | N+S | Controlled |
@@ -391,3 +391,5 @@ The [script-replacement record](verification/2026-10-16-script-replacement.json)
 The [manual-audio result record](verification/2026-10-16-manual-audio-result.json) establishes native generation/comparison, explicit selection, normal reuse and variation, including a later valid matching take. Together with the [script-replacement record](verification/2026-10-16-script-replacement.json), T07/T08 are Controlled for the recorded runtime. It also verifies truthful completion, focused review, missing/read-failure recovery, and original-profile attribution through music navigation and completion while the page is unmounted.
 
 The [current connection-recovery record](verification/2026-10-16-connection-recovery-current.json) establishes C03/C04 with native Back/failure draft preservation, focus restoration, repeated same-account reset and different-account fresh selection/save. C13 now has native pending/error/cancellation recovery with unsaved setup/script retention and no implicit save/redispatch. The controlled offline/401 cases add evidence for C12, which remains Review for live-server recovery.
+
+The [current account-boundary record](verification/2026-10-16-account-boundary-current.json) establishes C14 with independent native different-account, different-server and sign-out cases. It checks source/DJ/mood/interests/script clearing, old live feedback removal, a late old-account failure, sign-out Cancel preservation and saved-recording retention. It does not claim deletion of shared durable radio history or concurrent provider operation availability.
