@@ -27,7 +27,7 @@ export function DJPlaybackSettings() {
         <label className="dj-song-interval">Check news every<input type="number" min={1} max={100} step={1} required value={Number.isNaN(settings.everySongs) ? '' : settings.everySongs} aria-describedby="dj-interval-help" onChange={event => change({ everySongs: event.target.value === '' ? NaN : Number(event.target.value) })} /><span>{settings.everySongs === 1 ? 'song' : 'songs'}</span></label>
         <p id="dj-interval-help" className="settings-footnote">Only finished songs count. Choose 1 for testing. Empty news pools are skipped without generating anything.</p>
         <label className="dj-song-interval"><input type="checkbox" checked={settings.keepOnSeek} onChange={event => change({ keepOnSeek: event.target.checked })} />Keep the DJ when seeking or rewinding</label>
-        <p className="settings-footnote">Keeps scheduled breaks and lets a speaking DJ finish while you seek within a song.</p>
+        <p className="settings-footnote">Keeps the break when you seek. Speech waits for the next suitable ending and resumes where it paused.</p>
         <label className="dj-song-interval">DJ voice volume<input type="range" min={0} max={1} step={0.05} value={settings.voiceVolume} aria-valuetext={`${Math.round(settings.voiceVolume * 100)}% of player volume`} onChange={event => change({ voiceVolume: Number(event.target.value) })} /><span>{Math.round(settings.voiceVolume * 100)}%</span></label>
         <p className="settings-footnote">Relative to player volume. The default is 70%.</p>
         <button className="primary" disabled={draft === null || save.isPending}>{save.isPending ? 'Saving…' : 'Save DJ playback'}</button>

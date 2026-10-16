@@ -1,0 +1,268 @@
+{
+  "date": "2026-10-16",
+  "scope": "Per-installation Jellyfin identity and coherent connection persistence/rollback",
+  "runtime": {
+    "macOS": "27.2 arm64",
+    "electron": "43.7.0",
+    "liveServer": "User-authorized Jellyfin12.2.0 LAN server; account/address/identifiers omitted"
+  },
+  "reproduction": [
+    {
+      "round": 1,
+      "before": {
+        "ok": true,
+        "libraries": 1
+      },
+      "afterSame": {
+        "a": {
+          "ok": false,
+          "code": "unauthorized"
+        },
+        "b": {
+          "ok": true,
+          "libraries": 1
+        },
+        "sameIssuedToken": false
+      },
+      "afterDifferent": {
+        "a": {
+          "ok": false,
+          "code": "unauthorized"
+        },
+        "b": {
+          "ok": true,
+          "libraries": 1
+        },
+        "c": {
+          "ok": true,
+          "libraries": 1
+        }
+      }
+    },
+    {
+      "round": 2,
+      "before": {
+        "ok": true,
+        "libraries": 1
+      },
+      "afterSame": {
+        "a": {
+          "ok": false,
+          "code": "unauthorized"
+        },
+        "b": {
+          "ok": true,
+          "libraries": 1
+        },
+        "sameIssuedToken": false
+      },
+      "afterDifferent": {
+        "a": {
+          "ok": false,
+          "code": "unauthorized"
+        },
+        "b": {
+          "ok": true,
+          "libraries": 1
+        },
+        "c": {
+          "ok": true,
+          "libraries": 1
+        }
+      }
+    },
+    {
+      "round": 3,
+      "before": {
+        "ok": true,
+        "libraries": 1
+      },
+      "afterSame": {
+        "a": {
+          "ok": false,
+          "code": "unauthorized"
+        },
+        "b": {
+          "ok": true,
+          "libraries": 1
+        },
+        "sameIssuedToken": false
+      },
+      "afterDifferent": {
+        "a": {
+          "ok": false,
+          "code": "unauthorized"
+        },
+        "b": {
+          "ok": true,
+          "libraries": 1
+        },
+        "c": {
+          "ok": true,
+          "libraries": 1
+        }
+      }
+    }
+  ],
+  "legacyHeaderProbe": [
+    {
+      "label": "legacy-header",
+      "status": 200
+    },
+    {
+      "label": "new-install-header",
+      "status": 200
+    },
+    {
+      "label": "legacy-header-again",
+      "status": 200
+    }
+  ],
+  "legacyNativeRestart": {
+    "restartWithoutLogin": true,
+    "libraries": 1,
+    "catalogLoaded": true,
+    "decodedPlayback": true,
+    "djOff": true,
+    "preparationOff": true,
+    "providerRequests": 0
+  },
+  "storage": {
+    "actualStorageModule": true,
+    "twelveConcurrentProcessesOneIdentity": true,
+    "inProcessCache": true,
+    "restartStable": true,
+    "separateDirectoriesIndependent": true,
+    "fileMode": "0600",
+    "noTempFiles": true,
+    "corruptFilePreservedAndSessionFallback": true,
+    "unwritableDirectorySessionFallback": true,
+    "unreadableFileSessionFallback": true
+  },
+  "connectionPersistence": {
+    "actualService": true,
+    "cases": 13,
+    "passed": [
+      "older-failure-newer-success",
+      "both-fail",
+      "older-success-newer-failure",
+      "both-success",
+      "rollback-does-not-cancel-newer-pending-auth",
+      "stale-queued-candidate-skipped",
+      "single-failure-restores-committed-account",
+      "ephemeral-success-clears-old-record-and-is-rollback-baseline",
+      "selection-rollback-both-fail",
+      "selection-rollback-last-committed",
+      "failed-signout-restores-account-and-disk",
+      "signout-ordered-after-held-auth-write",
+      "signout-supersedes-pending-auth"
+    ],
+    "providerRequests": 0
+  },
+  "nativeFallback": {
+    "readableSavedAccountStillPlays": true,
+    "failedReplacementRestoresOriginalAccountAndDisk": true,
+    "successfulRetrySessionOnlyAndOldRecordCleared": true,
+    "oneRuntimeIdentityAcrossAccountAndMedia": true,
+    "restartDoesNotResurrectOlderAccount": true,
+    "providerRequests": 0
+  },
+  "nativeIdentityLifecycle": {
+    "identitySurvivesSignout": true,
+    "identitySurvivesAccountReplacement": true,
+    "identitySurvivesRestart": true,
+    "protectedReplacementRestored": true,
+    "sessionOnly": false,
+    "providerRequests": 0
+  },
+  "liveSeparateInstallations": {
+    "allApiArtworkAudioHeadersMatchIdentityFile": true,
+    "transcodeQueryMatchesIdentityFile": true,
+    "differentInstallationIdentities": true,
+    "firstSessionSurvivesSecondLogin": true,
+    "bothReadLibraries": true,
+    "firstDecodesAfterSecondLogin": true,
+    "restartKeepsIdentity": true,
+    "restartWithoutSignIn": true,
+    "bothStillReadAfterRestart": true,
+    "decodedPlaybackAfterRestart": true,
+    "convertedHeadStatus": 200,
+    "convertedOffset": 5,
+    "sessionOnly": false,
+    "djOff": true,
+    "preparationOff": true,
+    "providerRequests": 0
+  },
+  "mainAuthOrderingRegression": {
+    "cases": 12,
+    "result": "passed",
+    "scope": "Actual main/service/storage/IPC, held preparation pause and info/auth/rejected-auth/auth-body completion, success/failed pause/failed credential deletion, deliberate later sign-in",
+    "encryption": "controlled identity adapter",
+    "providerRequests": 0
+  },
+  "decision": {
+    "pair": [
+      "Boris",
+      "Nadia"
+    ],
+    "mode": "Independent proposals and one challenge/revision for identity and persistence failure boundary",
+    "initialPosition": "Fail Jellyfin startup when identity cannot be persisted",
+    "revisedPosition": "Preserve listening with one temporary process identity and session-only credentials; never use shared literal",
+    "primaryChoice": "Exclusive hard-link publication for missing ID; existing invalid file is preserved and uses process fallback rather than racing repairs",
+    "persistence": "Service owns revision-tagged immutable snapshots, serialized writes and latest committed runtime account; rollback compares current revision without canceling newer auth intent",
+    "review": "Nadia found credential-clear rollback blocker in first implementation; final queue review found no remaining actionable blocker"
+  },
+  "checks": {
+    "buildWithTypeScript": "passed",
+    "eslint": "passed",
+    "whitespace": "passed",
+    "albumAndSongSearchActualServiceRegressions": "passed"
+  },
+  "sourceSnapshotNote": "Final source/bundle hashes below. Live two-installation check used the final backend and preceded a copy-only Settings notice wording correction; final native fallback/lifecycle checks used the final renderer and validated the notice. No backend change followed the live check.",
+  "isolation": {
+    "realPassword": "stdin only, not saved in scripts or reports",
+    "realSessionTokens": "actual safeStorage in isolated temporary profiles only",
+    "liveProviderKeys": "null adapter; writes blocked",
+    "providerRequests": 0,
+    "liveAudioMuted": true,
+    "windowsHidden": true,
+    "controlledServer": "owned localhost5191, terminated after each native run"
+  },
+  "limits": [
+    "Demonstrates shared-device session invalidation; historical individual401 responses were not forensically attributed",
+    "One live server/account and OS/architecture only",
+    "Converted HEAD200 establishes route/identity acceptance, not converted audible quality or every codec",
+    "Invalid/unreadable identity file is preserved; process-only fallback does not promise identity stability across restart",
+    "Read-only directory and concurrent publication use actual filesystem/module checks; actual native fallback uses corrupt-file and injected credential-clear failure",
+    "No live playlist edits, provider generation, full VoiceOver or observed listener acceptance",
+    "Broader lifecycle and full acceptance inventory remain active"
+  ],
+  "sha256": {
+    "src/main/storage.ts": "c428f123873ae86eb3f2f6f761dc3731e5e71ed7c389ec4a4f543ef5e53eea8c",
+    "src/main/index.ts": "a3191348221693707c7465d60fecfd5518dd2ceed1e5628df72d3dbac873ffd0",
+    "src/main/jellyfin.ts": "2986fadbe7af2a7a673e0af85ff210bb64dd458ae9c5295e79c3a8fb31c7c7c3",
+    "src/main/media.ts": "6768544bd3215e37187a12293571c894a1023619ebe8f09e25403bdec0bfb671",
+    "src/renderer/pages/Settings/Settings.page.tsx": "ce0c41cd58f82a801b651940cb641945c12ed4c83b765377f6be8d809d1e5d9f",
+    "out/main/index.js": "5186664af31863c6749a48d3103f5063b36475adbc2171cae73f8c5bfea57a8f",
+    "out/preload/index.cjs": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215",
+    "out/renderer/index.html": "b116b8435d67749a0bd1c88109cce696c632de32074308169b61007f7212c41f",
+    "out/renderer/assets/index-ZOgMZShw.css": "d8229b9932315a7d35fd286e73333f3c63eb5a2b0c08077751b537daa13118dd",
+    "out/renderer/assets/index-tG379VyE.js": "27842df12009f3d639d6019f8c7fe87b3a9d752a88effc6f526c943d9ba06e2e"
+  },
+  "fixtureSha256": {
+    "live/session-collision.mjs": "81ab4f50bb0a7fb6e036befdaf6db72ea542c52771823532dcfa748b44289129",
+    "live/identity-storage.mjs": "cacd60b8f2e2f881c9fc386994b8707e20bfe0e615cb9e9e64989abee2bf99f7",
+    "live/connection-persistence.mjs": "1a7c30e7ae314c1f79d95047d161a56d87df805dbf659bbe84c5b8c5b02884d4",
+    "live/device-pair.cjs": "93eefa6dbb6778fc7859f4af3afc9de499f333624c009ddd360df6f79ba33ee3",
+    "live/build.mjs": "b5ed39273fdbd587badd77aeb5996fa5fb7177b677a517406df2eb3024293044",
+    "live/bootstrap.mjs": "84175fd1be89de37daaceba92530d4c7967ead3b0c2a50d0dc71a50f363400a0",
+    "live/legacy-restart.cjs": "474f0eb976c737ee0b48df7e9b23563c77db3a4fee1804e6e3fd209637438c7d",
+    "native/build.mjs": "af7aab823f9aab39aec55653e89f61e02d5aa20b6435905138ba5233d0f8386e",
+    "native/bootstrap.mjs": "87f35dc96d5f0fd30b9651c069b4cf90d00c654b0ad33f1640f62199befb9b24",
+    "native/run.cjs": "3236fe25198f6dc28267ef835cd476ccf5a109d0bab8867ad55c7fb34c6ab9c6",
+    "native/valid.cjs": "4cab828440bae6093496fe68e5158025c7503ea918abed15ce04e7025225758e",
+    "auth-order/build.mjs": "4b1d2c61074620a89424e55413dafde76303be67460244b61291028f3889a888",
+    "auth-order/check.ts": "2a54c2d7277fd904c1016d101d9e36221cee9e47f4c1defe2faa45766fb00f00",
+    "auth-order/run.mjs": "245ec0f26829c449e690cddcc2d034261cf71a79b5dbbab786b8adc4012fb7d5"
+  }
+}

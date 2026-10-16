@@ -1,0 +1,155 @@
+{
+  "date": "2026-10-16",
+  "scope": "Copied room availability, independent preparation opt-in, retained original draft and named profile attribution",
+  "before": {
+    "newProfileAvailable": true,
+    "newProfilePreparationEnabled": false,
+    "activeProfileUnchanged": true,
+    "result": "recorded"
+  },
+  "native": {
+    "cases": [
+      {
+        "kind": "visible-copy-availability-and-attribution",
+        "cancelPreservesDraft": true,
+        "copyUsesDraftWithoutSavingOriginal": true,
+        "copyUnavailableAndPreparationOff": true,
+        "sourceAndPlaybackChoicesUnchanged": true,
+        "originalDraftAndSwitchCancelRetained": true,
+        "unavailablePersistsAfterRestart": true,
+        "unavailableActivationRejected": true,
+        "availabilityAloneDoesNotDispatch": true,
+        "namedEditsAndPreparationAttributed": true,
+        "staleNamedSaveRejectedWithoutMutation": true,
+        "separateExplicitPreparationDispatchesOnce": true,
+        "controlledTextCalls": 1,
+        "controlledVoiceCalls": 0,
+        "result": "passed"
+      },
+      {
+        "kind": "metadata-and-keyless-incomplete-copy",
+        "runCountersHistoryErrorAndPauseCleared": true,
+        "copiedPreferencesKept": true,
+        "originalProfilesAndPlaybackUnchanged": true,
+        "incompleteCopyWithoutKeys": true,
+        "result": "passed"
+      }
+    ],
+    "result": "passed"
+  },
+  "layout": {
+    "cases": [
+      {
+        "width": 1280,
+        "height": 800,
+        "zoom": 1,
+        "actionsKeyboardReachable": true,
+        "noHorizontalOverflow": true,
+        "escapeRestoresOpener": true,
+        "capture": "copy-dialog-1280-800-1.png",
+        "result": "passed"
+      },
+      {
+        "width": 960,
+        "height": 640,
+        "zoom": 1,
+        "actionsKeyboardReachable": true,
+        "noHorizontalOverflow": true,
+        "escapeRestoresOpener": true,
+        "capture": "copy-dialog-960-640-1.png",
+        "result": "passed"
+      },
+      {
+        "width": 960,
+        "height": 640,
+        "zoom": 2,
+        "actionsKeyboardReachable": true,
+        "noHorizontalOverflow": true,
+        "escapeRestoresOpener": true,
+        "capture": "copy-dialog-960-640-2.png",
+        "result": "passed"
+      }
+    ],
+    "result": "passed"
+  },
+  "method": {
+    "runtime": {
+      "platform": "macOS 27.2 arm64",
+      "electron": "43.7.0"
+    },
+    "application": "Actual current production renderer/preload and source-bundled main, typed IPC, encrypted dummy-account storage and owned localhost catalog. Fresh hidden muted native window. Shared provider Keychain adapters and external provider responses substituted, with personal entries untouched. All non-fixture external requests blocked.",
+    "before": "Actual saveRoomProfile created an available copy with preparation off while leaving the original active. This violated the separate availability gate in R06, although it did not itself dispatch preparation. The preceding activation-keys record preserves the pre-copy production hashes.",
+    "journey": "Actual UI copies an unsaved enabled draft, cancels and saves dialogs, retains original draft, cancels/discards switching, then restarts with copied availability false. Actual typed activation rejects unavailable copy; visible Review room options opens availability, which alone dispatches nothing. Named copy edits preserve parent, stale parent-target save rejects unchanged, explicit enable/save followed by actual scheduler tick produces one no-story text assessment attributed to the copied name. No voice or live paid calls.",
+    "metadata": "Actual typed copy of current enabled workflow with prior run, pause, error and counters resets operational metadata while retaining settings. Actual incomplete null-host/empty-source/mood copy saves without either required key.",
+    "layout": "Settled native webContents captures at1280x800,960x640 and960x640/200% inspected. Cancel and Save room keyboard focus/reachability, no horizontal document overflow and Escape focus return verified. At200%, content scrolls inside existing dialog to reach actions.",
+    "scheduler": "Test-only reference invokes actual private tick after stopping interval to isolate deliberate gates. Real scheduler body/service/storage retained.",
+    "cleanup": "Owned local server terminated. Corrected final run and layout commands each terminated zero. Fixture asserts absence of captured fatal file after each app.close without claiming a measured zero exit for every individual Electron process."
+  },
+  "change": {
+    "productionFiles": [
+      "src/main/index.ts",
+      "src/renderer/pages/Stations/Stations.page.tsx"
+    ],
+    "behavior": "New copies set enabled:false as well as existing newsEnabled:false. Preserve draft-based copied setup, original selection and DJ playback choice. Existing operational metadata reset remains. Dialog and named success notice explain availability and the separate preparation choice. No new wizard, dependency or migration. Existing stored profiles are not modified.",
+    "decision": "Boris and Nadia independently supported unavailable copies to honor R06. Challenged the alternative of retaining availability and revising wording to reduce steps. Both retained strict availability with existing direct Review room options; Nadia reserved that named next-step guidance was required. Final code reviews found no actionable blocker."
+  },
+  "checks": {
+    "buildIncludingTypeScript": "passed",
+    "fullESLint": "passed",
+    "nativeJourneys": 2,
+    "nativeLayoutCases": 3,
+    "newControlled": [
+      "R06"
+    ],
+    "inventory": {
+      "total": 187,
+      "Review": 115,
+      "Dated": 11,
+      "Recorded": 5,
+      "Controlled": 38,
+      "Live": 9,
+      "External": 9
+    },
+    "starMappings": 27,
+    "goalComplete": false,
+    "overallPercentage": null
+  },
+  "fixtureCorrections": [
+    "An unsupported dynamic import inside Electron evaluation failed during first cleanup after the copy assertions. Moved file access to the Node driver and reran the full journey. No app change for this fixture correction."
+  ],
+  "limits": [
+    "One recorded macOS/architecture/runtime, controlled source/provider responses and protected dummy credentials. No live provider quality, audible mix or observed ordinary-listener comprehension.",
+    "Named profile attribution covers copy edits, rejected stale target and one controlled automatic assessment, not every cross-profile historical/manual reconciliation path. R10 and A19 broader scope remain separate.",
+    "The earlier Q10 debugger-associated shutdown diagnostic remains open.",
+    "Earlier evidence retains its own source hashes and dates; this newer production snapshot does not rewrite prior records."
+  ],
+  "sha256": {
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/main/storage.ts": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+    "src/main/news-workflow.ts": "7cab5b92c6d4d1476526a75831069de80623ef5b6ca4686345bacfaf01103fb0",
+    "src/preload/index.ts": "0c7edf2153d5210b24a0fac9db667fd254e324366d4737653578ef067c1eac63",
+    "src/shared/types.ts": "71e36cce9f904d7327f8d85c38f8ce050c7955877888ed9dde27e4105a6c57f0",
+    "src/shared/workflow.ts": "19e2afad8909330c33195420af54cbbbe836f0bc81bde166cfdf42dd3230e6ac",
+    "src/renderer/pages/Stations/Stations.page.tsx": "7aa25c18baaa834b112e44819333221f1d45aeda269c5ce22c5aed4715199596",
+    "src/renderer/pages/Stations/components/RoomSetup.component.tsx": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330",
+    "out/main/index.js": "33a41de07b02aa7fc1fae714013462e62f871fe9653bc481cf743240281398c7",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+    "out/renderer/assets/index-ZOgMZShw.css": "d8229b9932315a7d35fd286e73333f3c63eb5a2b0c08077751b537daa13118dd",
+    "out/renderer/assets/index-Ff4sAwLj.js": "998c6d2c97924dba981d44faf3bd91aec3411431f6aed9b018b0cacfdc97fdd7"
+  },
+  "fixtureReproducerSha256": {
+    "/private/tmp/native-copy-profiles/before.json": "aade469b0faa4d83fd8fb7e57a8b2b65cd800e22c60f0e925fc9023243cb94b1",
+    "/private/tmp/native-copy-profiles/layout.cjs": "59f7503a46ab097e278b58c729654bd2b6437875eeb2d6212f3dbb08770d051c",
+    "/private/tmp/native-copy-profiles/run.cjs": "a2507fece39017a77998dc1a66fdb600fa69a25c48be4351d82d38910febe521",
+    "/private/tmp/native-copy-profiles/report.json": "a1ee3c1241ba08359c9f299681a40ae4fe106e56947f586268aa6048818613b1",
+    "/private/tmp/native-copy-profiles/lint.log": "6f1680e0ff047e07a06dcf9afc079770fad3f871d47a52ee12dccaaa84366d63",
+    "/private/tmp/native-copy-profiles/before.cjs": "a5d6fd1da08fb165d9dd6d29ca8dc2a4d5e93cd347941fd216e2fb237ddb62f7",
+    "/private/tmp/native-copy-profiles/build.mjs": "5957ad4b0d95c08cb11becb1aefbca5890799df97be9a3ea27e87cc56fdf54a8",
+    "/private/tmp/native-copy-profiles/layout.json": "76ca1d28ba69c33020db506b689229570b25ecaae19121a8e701111ca69df662",
+    "/private/tmp/native-copy-profiles/copy-dialog-960-640-2.png": "3ad8054ef80fd2ac9eb493b1da032eec79ff5aa847a2980d6880395785f1bd88",
+    "/private/tmp/native-copy-profiles/copy-dialog-960-640-1.png": "2121b16fdf4d4291650ffe2062bc92dbda6c0edba8a8aee2062d03d0fe26423a",
+    "/private/tmp/native-copy-profiles/bootstrap.mjs": "b54a95a71a3a2e8fb2f214f950ee284c159b08b0c0a746e53e263efc10b32a0a",
+    "/private/tmp/native-copy-profiles/copy-dialog-1280-800-1.png": "b6304ad813901ad97d6edac5b9e01be333f604b80b055b58cbe3011312f7e153",
+    "/private/tmp/native-copy-profiles/build.log": "8f147eb2d2f7d359f94bcb74a26dfa797a8d1cc644380139e1f184a498182a3d"
+  }
+}

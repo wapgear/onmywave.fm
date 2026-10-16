@@ -1,0 +1,68 @@
+{
+  "date": "2026-10-16",
+  "scope": "C01 live initial sign-in, selected music library and All songs; protected-session restart and decoded playback samples",
+  "server": "User-authorized LAN Jellyfin server; address and account identifiers omitted",
+  "serverVersion": "12.2.0",
+  "runtime": {
+    "platform": "macOS 27.2 arm64",
+    "electron": "43.7.0"
+  },
+  "initial": {
+    "availableLibraries": 1,
+    "songCount": "80 of 1,304 songs loaded\nLoad more songs",
+    "decodedTimeAdvanced": true,
+    "djOff": true,
+    "preparationOff": true,
+    "sessionOnly": false,
+    "protectedEncryptionAvailable": true
+  },
+  "restart": {
+    "restartWithoutLogin": true,
+    "libraries": 1,
+    "catalogLoaded": true,
+    "decodedPlayback": true,
+    "djOff": true,
+    "preparationOff": true,
+    "providerRequests": 0
+  },
+  "credentials": "Password supplied through process stdin only, never written into scripts/reports. Session token saved with actual Electron safeStorage in isolated local app data. Neither included here.",
+  "isolation": {
+    "actualMainPreloadProductionRenderer": true,
+    "hiddenWindow": true,
+    "audioMuted": true,
+    "providerKeyAdapter": "read returns null; shared writes blocked",
+    "externalProviderRequestsBlocked": true,
+    "providerRequests": 0
+  },
+  "diagnostics": {
+    "initialAttempt": "First script read checkbox count before library loading settled and closed. Later saved-token reads returned401.",
+    "comparison": "Fresh direct Python and actual-service Node sign-ins read the music library. No production auth change was made.",
+    "final": "Fresh native UI sign-in, protected read, decoded playback and fresh-process restart all passed with no intervening sign-in. Initial401 cause remains unconfirmed."
+  },
+  "limits": [
+    "One Jellyfin server/account and one macOS architecture/version only",
+    "Song count is server-reported; first80 loaded, not all1304 individually inspected",
+    "Decoded playback clock advanced with audio muted; audible quality not evaluated",
+    "No live playlist edits, provider generation, DJ playback, VoiceOver or observed listener session in this check"
+  ],
+  "sha256": {
+    "src/renderer/styles.css": "d2574b87ecdadde78394f477adf6b859905ac871acaeee90bdfbb811b537b61c",
+    "src/renderer/pages/DJs/DJs.page.tsx": "59edbcbd3f4e56834f4757910120b9d914bac36cda4311a5508b81ecb46e8e30",
+    "src/renderer/pages/Sources/Sources.page.tsx": "5ba788b023b3f207d37b36a2ff93e9e21fc3d3b0bf3916ccd1a972c54c4f6942",
+    "src/renderer/components/Shared.tsx": "303972b169cf42303085a3db1988c04899870a69a6e7591ee4292656785ed2af",
+    "src/main/index.ts": "9388633986fe655374126c8f0740ac6a94a6d1fb9ee300d76fc2b32ccf642c2a",
+    "src/main/jellyfin.ts": "e17c24a469b3f7d61cb39a55df9edf761660ec28596050888a571284dd95e4a9",
+    "src/main/storage.ts": "15a0f548f5362cbb8f2cfdb93d0d33b15bc007c75d581266f7a81da8d55c3100",
+    "out/main/index.js": "568eacd971f993691a588a74b57fca82844f5f401f7c6694df26d87ebb6512fa",
+    "out/preload/index.cjs": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215",
+    "out/renderer/index.html": "f4cc0837f996e186d071bcbca643afb5e34733d23d4f5123966a7326cb71fafa",
+    "out/renderer/assets/index-ZOgMZShw.css": "d8229b9932315a7d35fd286e73333f3c63eb5a2b0c08077751b537daa13118dd",
+    "out/renderer/assets/index-BwEJCjdB.js": "ad341e6ebcda958c38266dd27ef8edd9322f59f640d4a6504883f77776c52a0f"
+  },
+  "fixtureSha256": {
+    "build.mjs": "b5ed39273fdbd587badd77aeb5996fa5fb7177b677a517406df2eb3024293044",
+    "bootstrap.mjs": "e567ebeb38a499d03aa7c559c990e344008bca66fb362a9f7b734fcd5b00a198",
+    "run.cjs": "7b650af91f9d004734289419769550bc253a995f71b327ced5155e914b59bc90",
+    "restart.cjs": "538d36f8f57165e5f41dcc14dd101a12a142acbfe0e164f167cfc7330479c1e3"
+  }
+}

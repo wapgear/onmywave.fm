@@ -1,43 +1,74 @@
-import { useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { unwrap } from '../../../api';
-import { ErrorNotice } from '../../../components/Shared';
+import type { RoomProfile } from '../../../../shared/types';
 import type { WorkflowDraft } from '../../../../shared/workflow';
+import { ErrorNotice } from '../../../components/Shared';
+import { newsPreparationStatus } from '../../../../shared/news-preparation-status';
 import './WorkflowPreferences.styles.css';
 
-export function WorkflowPreferences({ disabled = false }: { disabled?: boolean }) {
-  const client = useQueryClient();
-  const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()), refetchInterval: 10000 });
-  const room = state.data?.roomProfiles.find(room => room.id === state.data?.activeRoomProfileId);
-  const [draftState, setDraft] = useState<{ roomId: string; patch: Partial<WorkflowDraft> } | null>(null);
-  const draft = draftState?.roomId === room?.id ? draftState?.patch ?? null : null;
-  const settings = { ...room?.workflowDraft, ...draft };
-  const save = useMutation({ mutationFn: async () => {
-    const latest = unwrap(await window.wave.getLocalState());
-    if (latest.activeRoomProfileId !== room?.id) throw new Error('The active room changed. Open its workflow again.');
-    unwrap(await window.wave.saveWorkflowDraft({ workflowDraft: { ...latest.workflowDraft, ...draft, nextNewsCheckAt: undefined, newsWorkflowError: undefined }, room: latest.listeningRoom, mood: latest.vibe }));
-    await client.invalidateQueries({ queryKey: ['localState'] });
-  }, onSuccess: () => setDraft(null) });
-  function change(patch: Partial<WorkflowDraft>) { if (!room) return; save.reset(); setDraft({ roomId: room.id, patch: { ...draft, ...patch } }); }
+export type PreparationIssue = { message: string; action?: { label: string; run: () => void } };
+type Props = {
+  room?: RoomProfile;
+  value: WorkflowDraft;
+  dirty: boolean;
+  disabled: boolean;
+  saving: boolean;
+  saveError: unknown;
+  activationReady: boolean;
+  statusLoading: boolean;
+  statusError: unknown;
+  profileStatusUnknown: boolean;
+  issues: PreparationIssue[];
+  onChange: (patch: Partial<WorkflowDraft>) => void;
+  onSave: () => void;
+  onResume: () => void;
+  onTurnOff: () => void;
+  stopping: boolean;
+  stopDisabled: boolean;
+  onRetryStatus: () => void;
+};
+
+export function WorkflowPreferences({ room, value, dirty, disabled, saving, saveError, activationReady, statusLoading, statusError, profileStatusUnknown, issues, onChange, onSave, onResume, onTurnOff, stopping, stopDisabled, onRetryStatus }: Props) {
+  const status = room ? newsPreparationStatus(room) : null;
+  const activating = !!value.newsEnabled && !room?.workflowDraft.newsEnabled;
+  const mayEnable = activationReady && !statusLoading && !statusError;
+  const canTurnOn = mayEnable || !!room?.workflowDraft.newsEnabled;
+  const blockedActivation = activating && !mayEnable;
+  const blockedSave = value.newsEnabled && !mayEnable;
+  const needsRepair = !!room?.workflowDraft.newsEnabled && blockedSave;
+
   return <div className="settings-workflow">
-    <h2>News preparation</h2>
-    <p className="settings-description">Prepare stories automatically while the app is open and your Mac is awake.</p>
-    <ErrorNotice error={state.error} retry={() => void state.refetch()} />
-    {state.isPending && <p className="loading" role="status">Loading preferences…</p>}
-    {room && <form key={room.id} onSubmit={event => { event.preventDefault(); if (!save.isPending) save.mutate(); }}>
-      <fieldset className="news-workflow-fields" disabled={disabled || save.isPending || !room.enabled}>
-        <label className="news-workflow-toggle"><input type="checkbox" checked={settings.newsEnabled ?? false} onChange={event => change({ newsEnabled: event.target.checked })} /> Automatically prepare news</label>
-        <label>Check sources every<select value={settings.everyHours ?? 3} onChange={event => change({ everyHours: Number(event.target.value) as 1 | 3 | 6 })}><option value={1}>1 hour</option><option value={3}>3 hours</option><option value={6}>6 hours</option></select></label>
-        <label>News selection<select value={settings.importance ?? 'major'} onChange={event => change({ importance: event.target.value as 'major' | 'relevant' })}><option value="major">Major developments only</option><option value="relevant">Relevant stories</option></select></label>
-        <label>Maximum recordings per day<input type="number" min={1} max={10} required value={settings.maxNewsClipsPerDay ?? 3} onChange={event => change({ maxNewsClipsPerDay: Number(event.target.value) })} /></label>
-        <p className="settings-description">Up to {Math.ceil(24 / (settings.everyHours ?? 3))} source assessments per day. Assessments can use paid text generation even when no story qualifies. Voice generation stops at the recording limit.</p>
-        <p className="settings-description">Requires a saved DJ, sources, mood, and provider keys. Saving an enabled workflow authorizes these provider calls.</p>
-        <button className="primary" disabled={save.isPending || draft === null}>{save.isPending ? 'Saving…' : 'Save news workflow'}</button>
+    <h2>Automatic news preparation</h2>
+    <p className="settings-description">Prepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running.</p>
+    {room && <form key={room.id} onSubmit={event => { event.preventDefault(); if (!saving && !disabled && !blockedSave) onSave(); }}>
+      <fieldset className="news-workflow-fields" disabled={disabled || saving}>
+        <label className="news-workflow-toggle"><input type="checkbox" checked={value.newsEnabled ?? false} disabled={!value.newsEnabled && !canTurnOn} onChange={event => onChange({ newsEnabled: event.target.checked })} /> Automatically prepare news</label>
+        <label>Check sources every<select value={value.everyHours} onChange={event => onChange({ everyHours: Number(event.target.value) as 1 | 3 | 6 })}><option value={1}>1 hour</option><option value={3}>3 hours</option><option value={6}>6 hours</option></select></label>
+        <label>News selection<select value={value.importance} onChange={event => onChange({ importance: event.target.value as 'major' | 'relevant' })}><option value="major">Major developments only</option><option value="relevant">Relevant stories</option></select></label>
+        <label>Maximum automatic recordings per day<input type="number" min={1} max={10} required value={value.maxNewsClipsPerDay} onChange={event => onChange({ maxNewsClipsPerDay: Number(event.target.value) })} /></label>
+        <p className="settings-description">Up to {Math.ceil(24 / value.everyHours)} scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.</p>
+        <p className="settings-description">Saving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.</p>
+        {dirty && <p className="notice" role="status">Unsaved profile changes. {activating ? 'Preparation stays off until you save.' : 'Your changes apply after you save.'}</p>}
+        {(!mayEnable && !value.newsEnabled) || blockedActivation ? <div className="news-workflow-readiness">
+          <strong role="status">Finish setup before enabling preparation</strong>
+          {statusLoading && <p role="status">Checking provider key status…</p>}
+          {!!issues.length && <ul>{issues.map((issue, index) => <li key={`${issue.message}-${index}`}><span>{issue.message}</span>{issue.action && <button type="button" onClick={issue.action.run}>{issue.action.label}</button>}</li>)}</ul>}
+        </div> : null}
+        {needsRepair && <div className="news-workflow-readiness"><strong role="status">Preparation cannot run with the current setup</strong><p>Restore the missing requirements, or turn preparation off and save this profile.</p>{!!issues.length && <ul>{issues.map((issue, index) => <li key={`${issue.message}-${index}`}><span>{issue.message}</span>{issue.action && <button type="button" onClick={issue.action.run}>{issue.action.label}</button>}</li>)}</ul>}</div>}
+        <button className="primary" disabled={saving || disabled || !dirty || blockedSave}>{saving ? 'Saving…' : activating ? 'Save setup and enable preparation' : 'Save setup'}</button>
       </fieldset>
-      {!room.enabled && <p className="notice">Make this room available in News bucket to enable preparation.</p>}
-      {room.workflowDraft.newsWorkflowError ? <><p className="notice" role="alert">Preparation paused: {room.workflowDraft.newsWorkflowError}</p><button type="button" disabled={disabled || save.isPending} onClick={() => save.mutate()}>Resume preparation</button></> : <p className="settings-description" role="status">{room.workflowDraft.newsEnabled ? room.workflowDraft.nextNewsCheckAt ? `Next check: ${new Date(room.workflowDraft.nextNewsCheckAt).toLocaleString()}` : 'First check pending.' : 'Automatic news preparation is off.'}</p>}
-      <ErrorNotice error={save.error} />
-      {save.isSuccess && draft === null && <p className="form-hint" role="status">News workflow saved.</p>}
+      {!room.enabled && <p className="notice">This profile is unavailable for playback. You can save preparation as off; make the profile available before enabling it.</p>}
+      {room.workflowDraft.newsEnabled && <div className="news-workflow-stop">
+        <button type="button" disabled={stopping || stopDisabled} onClick={onTurnOff}>{stopping ? 'Turning off…' : 'Turn off automatic preparation'}</button>
+        <p className="form-hint">Takes effect immediately and asks this profile's automatic check to stop. Other unsaved edits stay here. A provider request already sent may still complete.</p>
+      </div>}
+      {status && <p className="settings-description" role="status">{profileStatusUnknown
+        ? <>Current automatic preparation status could not be confirmed. Last saved automatic setting: {room.workflowDraft.newsEnabled ? 'on' : 'off'}. Retry the failed status check above.</>
+        : <>{status.label}. {status.detail}</>}</p>}
+      {room.enabled && room.workflowDraft.newsEnabled && (room.workflowDraft.newsWorkflowError || room.workflowDraft.newsWorkflowPaused) && <button type="button" disabled={disabled || saving || dirty || !mayEnable} onClick={onResume}>Resume preparation</button>}
+      {dirty && (room.workflowDraft.newsWorkflowError || room.workflowDraft.newsWorkflowPaused) && <p className="form-hint">Save your changes before resuming preparation. Resume remains a separate action.</p>}
+      {!dirty && !mayEnable && room.enabled && room.workflowDraft.newsEnabled && (room.workflowDraft.newsWorkflowError || room.workflowDraft.newsWorkflowPaused) && <p className="form-hint">Resolve the listed setup or key issues before resuming preparation.</p>}
+      <ErrorNotice error={saveError} />
+      <ErrorNotice error={statusError ? new Error('Provider key status could not be checked.') : null} />
+      {Boolean(statusError) && <button type="button" onClick={onRetryStatus}>Retry key status</button>}
     </form>}
   </div>;
 }

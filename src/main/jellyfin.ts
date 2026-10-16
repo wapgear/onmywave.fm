@@ -1,4 +1,5 @@
 import type { Album, ApiError, CatalogQuery, Connection, Library, LibraryFilters, Page, Playlist, PlaylistDetail, PlaylistEntry, Song } from '../shared/types';
+import { editablePlaylistEntryIds, playlistEntryIdentity } from '../shared/playlist-entries';
 
 export class ServiceError extends Error {
   constructor(public code: ApiError['code'], message: string) { super(message); }
@@ -10,14 +11,15 @@ export type Session = {
 type AudioStream = { Type?: string; Index?: number; Codec?: string; BitRate?: number; SampleRate?: number };
 type Item = {
   Id: string; Name?: string; Type?: string; CollectionType?: string; MediaType?: string;
-  Album?: string; AlbumId?: string; AlbumArtist?: string; Artists?: string[];
-  RunTimeTicks?: number; ProductionYear?: number; Genres?: string[]; Tags?: string[];
+  Album?: string; AlbumId?: string; AlbumPrimaryImageTag?: string; AlbumArtist?: string; Artists?: string[];
+  DateCreated?: string; RunTimeTicks?: number; ProductionYear?: number; Genres?: string[]; Tags?: string[];
   IndexNumber?: number; ParentIndexNumber?: number; ChildCount?: number; SortName?: string;
   Container?: string; MediaStreams?: AudioStream[]; MediaSources?: { Container?: string; Size?: number; Bitrate?: number; DefaultAudioStreamIndex?: number; MediaStreams?: AudioStream[] }[]; ImageTags?: Record<string, string>;
   PlaylistItemId?: string; Items?: Item[]; TotalRecordCount?: number; CanEdit?: boolean;
   AccessToken?: string; User?: { Id: string; Name?: string }; Version?: string;
 };
-type Deps = { deviceId: string; imageUrl: (id: string) => string; onConnectionChanged?: () => void };
+export const PLAYLIST_CREATION = 'playlist-creation';
+type Deps = { deviceId: string; imageUrl: (id: string, tag?: string) => string; onConnectionChanged?: () => void; persistConnection?: (session: Session | null, commit: (write: () => boolean) => boolean) => Promise<void>; playlistWrite?: (session: Session, id: string, reserve: boolean, operation: () => Promise<void>, canStart: () => boolean) => Promise<void> };
 const fields = 'Genres,Tags,MediaSources,MediaStreams,DateCreated,Overview,SortName,ParentId';
 const validId = (value: unknown): string => {
   if (typeof value !== 'string' || !/^(?:[a-f\d]{32}|[a-f\d]{8}(?:-[a-f\d]{4}){3}-[a-f\d]{12})$/i.test(value)) throw new ServiceError('invalid', 'Invalid library item.');
@@ -28,7 +30,7 @@ const ids = (values: unknown): string[] => {
   return values.map(validId);
 };
 const playlistEntryId = (value: unknown): string => {
-  if (typeof value !== 'string' || !/^[a-zA-Z0-9_-]{1,128}$/.test(value)) throw new ServiceError('invalid', 'Invalid playlist entry.');
+  if (typeof value !== 'string' || playlistEntryIdentity(value) === null) throw new ServiceError('invalid', 'Invalid playlist entry.');
   return value;
 };
 const name = (value: unknown): string => {
@@ -46,6 +48,9 @@ const stringArray = (value: unknown): string[] => Array.isArray(value) ? value.f
 
 export class JellyfinService {
   private session: Session | null = null;
+  private connectionIntent = 0;
+  private sessionRevision = 0;
+  private connectionWrites = Promise.resolve();
   private writes = new Map<string, Promise<unknown>>();
   constructor(private deps: Deps) {}
   connection(): Connection | null {
@@ -53,64 +58,107 @@ export class JellyfinService {
     return s ? { id: `${s.serverUrl}|${s.userId}`, serverUrl: s.serverUrl, serverVersion: s.serverVersion, userName: s.userName, selectedLibraryIds: [...s.selectedLibraryIds], sessionOnly: s.sessionOnly } : null;
   }
   exportSession(): Session | null { return this.session ? { ...this.session, selectedLibraryIds: [...this.session.selectedLibraryIds] } : null; }
+  cancelPendingSignIns(): void { ++this.connectionIntent; }
   restore(session: Session | null): void {
-    this.session = session ? { ...session, serverUrl: serverAddress(session.serverUrl), userId: validId(session.userId), selectedLibraryIds: ids(session.selectedLibraryIds) } : null;
+    const restored = session ? { ...session, serverUrl: serverAddress(session.serverUrl), userId: validId(session.userId), selectedLibraryIds: ids(session.selectedLibraryIds) } : null;
+    ++this.connectionIntent;
+    this.session = restored;
+    ++this.sessionRevision;
     this.deps.onConnectionChanged?.();
   }
-  setSessionOnly(value: boolean): void { if (this.session) this.session.sessionOnly = value; }
+  private async persistSession(candidate: Session | null, notify: boolean, intent?: number): Promise<void> {
+    const revision = ++this.sessionRevision;
+    const snapshot = candidate ? { ...candidate, selectedLibraryIds: [...candidate.selectedLibraryIds] } : null;
+    const current = () => revision === this.sessionRevision && (intent === undefined || intent === this.connectionIntent);
+    const superseded = () => new ServiceError('invalid', 'A newer account change replaced this request. Try again if needed.');
+    const write = this.connectionWrites.then(async () => {
+      if (!current()) throw superseded();
+      let committed = false;
+      const commit = (publish: () => boolean) => {
+        if (!current()) throw superseded();
+        const saved = publish();
+        this.session = snapshot ? { ...snapshot, sessionOnly: !saved } : null;
+        committed = true;
+        if (notify) this.deps.onConnectionChanged?.();
+        return saved;
+      };
+      try {
+        if (this.deps.persistConnection) await this.deps.persistConnection(snapshot, commit);
+        else commit(() => !snapshot?.sessionOnly);
+      } catch (error) { if (!committed) throw error; }
+      if (!committed) throw new ServiceError('server', 'The connection could not be saved. Try again.');
+    });
+    this.connectionWrites = write.catch(() => {});
+    await write;
+    if (!current()) throw superseded();
+  }
   private requireSession(): Session {
     if (!this.session) throw new ServiceError('unauthorized', 'Sign in to Jellyfin.');
     return this.session;
   }
-  private async request(base: string, path: string, init: RequestInit = {}, token?: string): Promise<Response> {
+  private async request<T>(base: string, path: string, init: RequestInit, token: string | undefined, consume: (response: Response) => Promise<T>): Promise<T> {
     if (!path.startsWith('/') || path.startsWith('//') || path.includes('\\')) throw new ServiceError('invalid', 'Invalid server request.');
     const target = new URL(base + path);
     if (target.origin !== new URL(base).origin) throw new ServiceError('invalid', 'Invalid server request.');
     const headers = new Headers(init.headers);
     headers.set('Authorization', `MediaBrowser Client="onmywave.fm", Device="Mac", DeviceId="${this.deps.deviceId.replace(/[^a-zA-Z0-9-]/g, '')}", Version="0.1.0"${token ? `, Token="${token}"` : ''}`);
     if (init.body) headers.set('Content-Type', 'application/json');
-    const write = init.method && !['GET', 'HEAD'].includes(init.method.toUpperCase());
+    const write = path !== '/Users/AuthenticateByName' && init.method && !['GET', 'HEAD'].includes(init.method.toUpperCase());
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), 20000);
     try {
       const response = await fetch(target, { ...init, headers, redirect: 'manual', signal: init.signal ? AbortSignal.any([init.signal, controller.signal]) : controller.signal });
-      clearTimeout(timer);
       if (response.status >= 300 && response.status < 400) throw new ServiceError('server', 'Jellyfin redirected the request. Check the server address.');
       if (response.status === 401) throw new ServiceError('unauthorized', 'Your Jellyfin session expired. Sign in again.');
       if (response.status === 403) throw new ServiceError('forbidden', 'Your Jellyfin account cannot perform this action.');
       if (response.status === 404) throw new ServiceError('not-found', 'This Jellyfin item is unavailable.');
       if (!response.ok) throw new ServiceError('server', `Jellyfin could not complete the request (${response.status}).`);
-      return response;
+      return await consume(response);
     } catch (error) {
       if (error instanceof ServiceError) throw error;
+      if (error instanceof SyntaxError && !controller.signal.aborted && !init.signal?.aborted) {
+        throw new ServiceError(write ? 'uncertain-write' : 'server', write ? 'Jellyfin did not return a readable confirmation. Refresh before trying again.' : 'Jellyfin returned an unreadable response.');
+      }
       if (write) throw new ServiceError('uncertain-write', 'The connection was interrupted. Refresh to check whether Jellyfin saved the change before trying again.');
-      throw new ServiceError(error instanceof Error && ['TimeoutError', 'AbortError'].includes(error.name) ? 'timeout' : 'offline', 'Could not reach Jellyfin. Check the connection and try again.');
+      throw new ServiceError(controller.signal.aborted || init.signal?.aborted || error instanceof Error && ['TimeoutError', 'AbortError'].includes(error.name) ? 'timeout' : 'offline', 'Could not reach Jellyfin. Check the connection and try again.');
     } finally { clearTimeout(timer); }
   }
   async authenticatedRequest(path: string, init?: RequestInit): Promise<Response> {
     const session = this.requireSession();
-    return this.request(session.serverUrl, path, init, session.token);
+    return this.request(session.serverUrl, path, init || {}, session.token, async response => {
+      void response.body?.cancel().catch(() => {});
+      return response;
+    });
+  }
+  private requestJson(base: string, path: string, init: RequestInit = {}, token?: string): Promise<Item> {
+    return this.request(base, path, init, token, response => response.json());
   }
   private async json(path: string, init?: RequestInit): Promise<Item> {
-    const response = await this.authenticatedRequest(path, init);
-    try { return await response.json(); } catch {
-      if (init?.method && !['GET', 'HEAD'].includes(init.method.toUpperCase())) throw new ServiceError('uncertain-write', 'Jellyfin did not return a readable confirmation. Refresh before trying again.');
-      throw new ServiceError('server', 'Jellyfin returned an unreadable response.');
-    }
+    const session = this.requireSession();
+    return this.requestJson(session.serverUrl, path, init, session.token);
   }
   async connect(input: { serverUrl: string; username: string; password: string }): Promise<Connection> {
     const base = serverAddress(input.serverUrl);
     if (typeof input.username !== 'string' || !input.username.trim() || typeof input.password !== 'string') throw new ServiceError('invalid', 'Enter your Jellyfin username and password.');
-    const info = await (await this.request(base, '/System/Info/Public')).json();
+    const intent = ++this.connectionIntent;
+    const ensureCurrent = () => {
+      if (intent !== this.connectionIntent) throw new ServiceError('invalid', 'A newer account change replaced this sign-in. Try again if needed.');
+    };
+    let info: Item;
+    try { info = await this.requestJson(base, '/System/Info/Public'); }
+    catch (error) { ensureCurrent(); throw error; }
+    ensureCurrent();
     let auth: Item;
-    try { auth = await (await this.request(base, '/Users/AuthenticateByName', { method: 'POST', body: JSON.stringify({ Username: input.username.trim(), Pw: input.password }) })).json(); }
-    catch (error) { if (error instanceof ServiceError && error.code === 'unauthorized') throw new ServiceError('unauthorized', 'Jellyfin did not accept your username or password.'); throw error; }
+    try { auth = await this.requestJson(base, '/Users/AuthenticateByName', { method: 'POST', body: JSON.stringify({ Username: input.username.trim(), Pw: input.password }) }); }
+    catch (error) { ensureCurrent(); if (error instanceof ServiceError && error.code === 'unauthorized') throw new ServiceError('unauthorized', 'Jellyfin did not accept your username or password.'); throw error; }
+    ensureCurrent();
     if (!auth.AccessToken || !auth.User?.Id) throw new ServiceError('server', 'Jellyfin did not return a valid session.');
-    this.session = { serverUrl: base, token: auth.AccessToken, userId: validId(auth.User.Id), userName: auth.User.Name || input.username, serverVersion: info.Version || '', selectedLibraryIds: [], sessionOnly: false };
-    this.deps.onConnectionChanged?.();
+    const candidate = { serverUrl: base, token: auth.AccessToken, userId: validId(auth.User.Id), userName: auth.User.Name || input.username, serverVersion: info.Version || '', selectedLibraryIds: [], sessionOnly: false };
+    await this.persistSession(candidate, true, intent);
+    ensureCurrent();
     return this.connection()!;
   }
-  async disconnect(): Promise<void> { this.session = null; this.writes.clear(); this.deps.onConnectionChanged?.(); }
+  async disconnect(): Promise<void> { this.cancelPendingSignIns(); await this.persistSession(null, true); this.writes.clear(); }
   async libraries(): Promise<Library[]> {
     const s = this.requireSession();
     const data = await this.json(`/Users/${s.userId}/Views`);
@@ -131,7 +179,7 @@ export class JellyfinService {
     const available = new Set((await this.libraries()).map(item => item.id));
     if (this.session !== session) throw new ServiceError('unauthorized', 'The connection changed. Select libraries again.');
     if (selected.some(id => !available.has(id))) throw new ServiceError('forbidden', 'One of these libraries is unavailable to your account.');
-    session.selectedLibraryIds = selected;
+    await this.persistSession({ ...session, selectedLibraryIds: selected }, false);
     return this.connection()!;
   }
   private songItem(item: Item): Song {
@@ -139,20 +187,20 @@ export class JellyfinService {
     const source = item.MediaSources?.[0];
     const streams = source?.MediaStreams ?? item.MediaStreams ?? [];
     const stream = streams.find(value => value.Type === 'Audio' && value.Index === source?.DefaultAudioStreamIndex) ?? streams.find(value => value.Type === 'Audio');
-    return { id: item.Id, name: item.Name || 'Untitled song', artists: stringArray(item.Artists), album: item.Album || '', albumId: item.AlbumId, albumArtist: item.AlbumArtist, duration: Math.max(0, (item.RunTimeTicks || 0) / 10000000), year: item.ProductionYear, genres: stringArray(item.Genres), tags: stringArray(item.Tags), trackNumber: item.IndexNumber, discNumber: item.ParentIndexNumber, imageUrl: image ? this.deps.imageUrl(image) : undefined, container: item.Container || source?.Container, codec: stream?.Codec, bitRate: stream?.BitRate ?? source?.Bitrate, sampleRate: stream?.SampleRate, size: source?.Size };
+    return { id: item.Id, name: item.Name || 'Untitled song', artists: stringArray(item.Artists), album: item.Album || '', albumId: item.AlbumId, albumArtist: item.AlbumArtist, duration: Math.max(0, (item.RunTimeTicks || 0) / 10000000), year: item.ProductionYear, genres: stringArray(item.Genres), tags: stringArray(item.Tags), trackNumber: item.IndexNumber, discNumber: item.ParentIndexNumber, imageUrl: image ? this.deps.imageUrl(image, item.ImageTags?.Primary || item.AlbumPrimaryImageTag) : undefined, container: item.Container || source?.Container, codec: stream?.Codec, bitRate: stream?.BitRate ?? source?.Bitrate, sampleRate: stream?.SampleRate, size: source?.Size };
   }
   private albumItem(item: Item): Album {
-    return { id: item.Id, name: item.Name || 'Untitled album', artist: item.AlbumArtist || stringArray(item.Artists).join(', '), year: item.ProductionYear, songCount: item.ChildCount, imageUrl: item.ImageTags?.Primary ? this.deps.imageUrl(item.Id) : undefined };
+    return { id: item.Id, name: item.Name || 'Untitled album', artist: item.AlbumArtist || stringArray(item.Artists).join(', '), year: item.ProductionYear, songCount: item.ChildCount, imageUrl: item.ImageTags?.Primary ? this.deps.imageUrl(item.Id, item.ImageTags.Primary) : undefined };
   }
-  private async catalog(type: string, query: CatalogQuery): Promise<Page<Item>> {
+  private async catalog(type: 'Audio' | 'MusicAlbum', query: CatalogQuery): Promise<Page<Item>> {
     const s = this.requireSession();
     const start = query.start ?? 0, limit = query.limit ?? 100;
     if (!Number.isSafeInteger(start) || start < 0 || !Number.isSafeInteger(limit) || limit < 1 || limit > 500 || start > 1000000) throw new ServiceError('invalid', 'Invalid catalog page.');
-    const sort = { name: 'SortName', artist: 'Artist,SortName', album: 'Album,ParentIndexNumber,IndexNumber,SortName', year: 'ProductionYear,SortName' }[query.sort || 'name'];
+    const sort = { name: 'SortName', artist: 'Artist,SortName', album: 'Album,ParentIndexNumber,IndexNumber,SortName', year: 'ProductionYear,SortName', dateAdded: 'DateCreated,SortName' }[query.sort || 'name'];
     if (!sort) throw new ServiceError('invalid', 'Invalid catalog sort.');
     for (const value of [query.search, query.genre, query.tag]) if (value !== undefined && (typeof value !== 'string' || value.length > 500)) throw new ServiceError('invalid', 'Invalid catalog filter.');
     if (!s.selectedLibraryIds.length) return { items: [], total: 0, start };
-    if (type === 'Audio' && query.search?.trim()) return this.searchSongs({ ...query, search: query.search.trim() }, sort, start, limit);
+    if (query.search?.trim()) return this.searchCatalog(type, { ...query, search: query.search.trim() }, sort, start, limit);
     const multiple = s.selectedLibraryIds.length > 1;
     const pages = await Promise.all(s.selectedLibraryIds.map(async parent => {
       const params = new URLSearchParams({ ParentId: parent, Recursive: 'true', IncludeItemTypes: type, Fields: fields, StartIndex: String(multiple ? 0 : start), Limit: String(multiple ? start + limit : limit), SortBy: sort, SortOrder: query.descending ? 'Descending' : 'Ascending', EnableTotalRecordCount: 'true' });
@@ -166,9 +214,10 @@ export class JellyfinService {
       const compareText = (a: unknown, b: unknown) => String(a || '').localeCompare(String(b || ''), undefined, { numeric: true, sensitivity: 'base' });
       items.sort((a, b) => {
         let value = 0;
+        if (query.sort === 'dateAdded') value = (Date.parse(a.DateCreated || '') || 0) - (Date.parse(b.DateCreated || '') || 0);
         if (query.sort === 'year') value = (a.ProductionYear || 0) - (b.ProductionYear || 0);
-        if (query.sort === 'artist') value = compareText(a.Artists?.[0] || a.AlbumArtist, b.Artists?.[0] || b.AlbumArtist);
-        if (query.sort === 'album') value = compareText(a.Album, b.Album) || (a.ParentIndexNumber || 0) - (b.ParentIndexNumber || 0) || (a.IndexNumber || 0) - (b.IndexNumber || 0);
+        if (query.sort === 'artist') value = compareText(type === 'MusicAlbum' ? a.AlbumArtist || a.Artists?.[0] : a.Artists?.[0] || a.AlbumArtist, type === 'MusicAlbum' ? b.AlbumArtist || b.Artists?.[0] : b.Artists?.[0] || b.AlbumArtist);
+        if (query.sort === 'album') value = type === 'MusicAlbum' ? compareText(a.SortName || a.Name, b.SortName || b.Name) : compareText(a.Album, b.Album) || (a.ParentIndexNumber || 0) - (b.ParentIndexNumber || 0) || (a.IndexNumber || 0) - (b.IndexNumber || 0);
         value ||= compareText(a.SortName || a.Name, b.SortName || b.Name) || compareText(a.Id, b.Id);
         return query.descending ? -value : value;
       });
@@ -176,7 +225,7 @@ export class JellyfinService {
     }
     return { items, total: pages.reduce((sum, page) => sum + (page.TotalRecordCount || 0), 0), start };
   }
-  private async searchSongs(query: CatalogQuery, sort: string, start: number, limit: number): Promise<Page<Item>> {
+  private async searchCatalog(type: 'Audio' | 'MusicAlbum', query: CatalogQuery, sort: string, start: number, limit: number): Promise<Page<Item>> {
     const session = this.requireSession();
     const term = query.search!;
     const maximum = 10000;
@@ -188,6 +237,7 @@ export class JellyfinService {
         if (this.session !== session) throw new ServiceError('unauthorized', 'The connection changed. Search again.');
         const params = new URLSearchParams({ ...parameters, Fields: fields, EnableTotalRecordCount: 'true', StartIndex: String(result.length), Limit: '500' });
         const page = await this.json(`${path}?${params}`);
+        if (this.session !== session) throw new ServiceError('unauthorized', 'The connection changed. Search again.');
         const batch = page.Items || [];
         result.push(...batch);
         if ((page.TotalRecordCount || 0) > maximum || result.length > maximum) throw new ServiceError('unsupported', 'This search matches too much music. Enter a more specific title, artist, or album.');
@@ -198,16 +248,17 @@ export class JellyfinService {
       for (const item of items) matches.set(identity(item.Id), item);
       if (matches.size > maximum) throw new ServiceError('unsupported', 'This search matches too much music. Enter a more specific title, artist, or album.');
     };
-    const artists = await bounded('/Artists', { UserId: session.userId, SearchTerm: term });
+    const artists = await bounded(type === 'Audio' ? '/Artists' : '/Artists/AlbumArtists', { UserId: session.userId, SearchTerm: term });
     const artistIds = artists.map(item => validId(item.Id));
     for (const library of session.selectedLibraryIds) {
-      const base: Record<string, string> = { ParentId: library, Recursive: 'true', IncludeItemTypes: 'Audio', SortBy: sort, SortOrder: query.descending ? 'Descending' : 'Ascending' };
+      const base: Record<string, string> = { ParentId: library, Recursive: 'true', IncludeItemTypes: type, SortBy: sort, SortOrder: query.descending ? 'Descending' : 'Ascending' };
       if (query.genre) base.Genres = query.genre;
       if (query.tag) base.Tags = query.tag;
       add(await bounded(`/Users/${session.userId}/Items`, { ...base, SearchTerm: term }));
       for (let index = 0; index < artistIds.length; index += 100) {
-        add(await bounded(`/Users/${session.userId}/Items`, { ...base, ArtistIds: artistIds.slice(index, index + 100).join(',') }));
+        add(await bounded(`/Users/${session.userId}/Items`, { ...base, [type === 'Audio' ? 'ArtistIds' : 'AlbumArtistIds']: artistIds.slice(index, index + 100).join(',') }));
       }
+      if (type !== 'Audio') continue;
       const albums = await bounded(`/Users/${session.userId}/Items`, { ParentId: library, Recursive: 'true', IncludeItemTypes: 'MusicAlbum', SearchTerm: term });
       for (let index = 0; index < albums.length; index += 100) {
         const albumIds = albums.slice(index, index + 100).map(item => validId(item.Id));
@@ -220,26 +271,37 @@ export class JellyfinService {
     const compareText = (a: unknown, b: unknown) => String(a || '').localeCompare(String(b || ''), undefined, { numeric: true, sensitivity: 'base' });
     const items = [...matches.values()].sort((a, b) => {
       let value = 0;
+      if (query.sort === 'dateAdded') value = (Date.parse(a.DateCreated || '') || 0) - (Date.parse(b.DateCreated || '') || 0);
       if (query.sort === 'year') value = (a.ProductionYear || 0) - (b.ProductionYear || 0);
-      if (query.sort === 'artist') value = compareText(a.Artists?.[0] || a.AlbumArtist, b.Artists?.[0] || b.AlbumArtist);
-      if (query.sort === 'album') value = compareText(a.Album, b.Album) || (a.ParentIndexNumber || 0) - (b.ParentIndexNumber || 0) || (a.IndexNumber || 0) - (b.IndexNumber || 0);
+      if (query.sort === 'artist') value = compareText(type === 'MusicAlbum' ? a.AlbumArtist || a.Artists?.[0] : a.Artists?.[0] || a.AlbumArtist, type === 'MusicAlbum' ? b.AlbumArtist || b.Artists?.[0] : b.Artists?.[0] || b.AlbumArtist);
+      if (query.sort === 'album') value = type === 'MusicAlbum' ? compareText(a.SortName || a.Name, b.SortName || b.Name) : compareText(a.Album, b.Album) || (a.ParentIndexNumber || 0) - (b.ParentIndexNumber || 0) || (a.IndexNumber || 0) - (b.IndexNumber || 0);
       value ||= compareText(a.SortName || a.Name, b.SortName || b.Name) || compareText(a.Id, b.Id);
       return query.descending ? -value : value;
     });
+    if (this.session !== session) throw new ServiceError('unauthorized', 'The connection changed. Search again.');
     return { items: items.slice(start, start + limit), total: items.length, start };
   }
   async songs(query: CatalogQuery): Promise<Page<Song>> { const page = await this.catalog('Audio', query); return { ...page, items: page.items.map(item => this.songItem(item)) }; }
   async albums(query: CatalogQuery): Promise<Page<Album>> { const page = await this.catalog('MusicAlbum', query); return { ...page, items: page.items.map(item => this.albumItem(item)) }; }
   private async allItems(path: string, parameters: Record<string, string> = {}): Promise<Item[]> {
+    const session = this.requireSession();
     const items: Item[] = [];
     while (true) {
+      if (this.session !== session) throw new ServiceError('invalid', 'The connection changed. Refresh your library.');
       const params = new URLSearchParams({ ...parameters, StartIndex: String(items.length), Limit: '500', Fields: fields });
       const page = await this.json(`${path}?${params}`);
+      if (this.session !== session) throw new ServiceError('invalid', 'The connection changed. Refresh your library.');
       const batch = page.Items || [];
       items.push(...batch);
       if (!batch.length || items.length >= (page.TotalRecordCount ?? items.length)) return items;
       if (items.length > 1000000) throw new ServiceError('unsupported', 'This selection is too large to load at once.');
     }
+  }
+  async album(value: string): Promise<Album> {
+    const id = validId(value), s = this.requireSession();
+    const item = await this.json(`/Users/${s.userId}/Items/${id}`);
+    if (item.Type !== 'MusicAlbum') throw new ServiceError('invalid', 'This item is not an album.');
+    return this.albumItem(item);
   }
   async albumTracks(value: string): Promise<Song[]> {
     const id = validId(value), s = this.requireSession();
@@ -251,7 +313,7 @@ export class JellyfinService {
     if (item.Type !== 'Audio') throw new ServiceError('invalid', 'This item is not a song.');
     return this.songItem(item);
   }
-  private playlistItem(item: Item): Playlist { return { id: item.Id, name: item.Name || 'Untitled playlist', songCount: item.ChildCount, imageUrl: item.ImageTags?.Primary ? this.deps.imageUrl(item.Id) : undefined }; }
+  private playlistItem(item: Item): Playlist { return { id: item.Id, name: item.Name || 'Untitled playlist', songCount: item.ChildCount, imageUrl: item.ImageTags?.Primary ? this.deps.imageUrl(item.Id, item.ImageTags.Primary) : undefined }; }
   async playlists(): Promise<Playlist[]> {
     const s = this.requireSession();
     return (await this.allItems(`/Users/${s.userId}/Items`, { Recursive: 'true', IncludeItemTypes: 'Playlist', SortBy: 'SortName' })).filter(item => !item.MediaType || item.MediaType === 'Audio').map(item => this.playlistItem(item));
@@ -260,30 +322,56 @@ export class JellyfinService {
     const s = this.requireSession();
     return (await this.allItems(`/Playlists/${id}/Items`, { UserId: s.userId })).map(item => ({ entryId: item.PlaylistItemId || '', song: this.songItem(item) }));
   }
+  private async validateEntryChanges(id: string, targets: string[]): Promise<PlaylistEntry[]> {
+    const current = await this.entries(id);
+    const editable = editablePlaylistEntryIds(current);
+    if (targets.some(entry => !editable.has(entry))) throw new ServiceError('invalid', 'Jellyfin cannot identify this playlist entry separately. Refresh the playlist; repeated or unavailable entries cannot be moved or removed safely.');
+    return current;
+  }
   async playlist(value: string): Promise<PlaylistDetail> {
     const id = validId(value), s = this.requireSession();
     const item = await this.json(`/Users/${s.userId}/Items/${id}`);
+    if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
     let canEdit: boolean | null = null;
-    try { const permission = await this.json(`/Playlists/${id}/Users/${s.userId}`); canEdit = permission?.CanEdit === true; }
-    catch (error) { if (!(error instanceof ServiceError) || !['not-found', 'forbidden', 'unsupported'].includes(error.code)) throw error; }
-    return { ...this.playlistItem(item), canEdit, restriction: canEdit === true ? undefined : canEdit === false ? 'Your account can listen to this playlist but cannot edit it.' : 'Jellyfin could not confirm edit permission. The server will check each change.', entries: await this.entries(id) };
+    try { const permission = await this.json(`/Playlists/${id}/Users/${s.userId}`); canEdit = typeof permission?.CanEdit === 'boolean' ? permission.CanEdit : null; }
+    catch (error) { if (!(error instanceof ServiceError) || !['not-found', 'forbidden', 'unsupported', 'server', 'offline', 'timeout'].includes(error.code)) throw error; }
+    if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
+    const entries = await this.entries(id);
+    if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
+    return { ...this.playlistItem(item), canEdit, restriction: canEdit === true ? undefined : canEdit === false ? 'Your account can listen to this playlist but cannot edit it.' : 'Jellyfin could not confirm edit permission. The server will check each change.', entries };
   }
-  private serialize<T>(id: string, operation: () => Promise<T>): Promise<T> {
+  private serialize(id: string, operation: () => Promise<void>, reserve = false): Promise<void> {
     const session = this.requireSession();
-    const prior = this.writes.get(id) || Promise.resolve();
+    const key = JSON.stringify([session.serverUrl, session.userId.toLowerCase().replaceAll('-', ''), id.toLowerCase().replaceAll('-', '')]);
+    const prior = this.writes.get(key) || Promise.resolve();
     const current = prior.catch(() => {}).then(() => {
-      if (this.session !== session) throw new ServiceError('unauthorized', 'The connection changed. Refresh before editing this playlist.');
-      return operation();
+      if (this.session !== session) throw new ServiceError('invalid', 'The connection changed. Refresh before editing this playlist.');
+      const dispatch = () => {
+        if (this.session !== session) throw new ServiceError('invalid', 'The connection changed. Refresh before editing this playlist.');
+        return operation();
+      };
+      return this.runPlaylistWrite(session, id, reserve, dispatch);
     });
-    this.writes.set(id, current);
-    void current.finally(() => { if (this.writes.get(id) === current) this.writes.delete(id); }).catch(() => {});
+    this.writes.set(key, current);
+    void current.finally(() => { if (this.writes.get(key) === current) this.writes.delete(key); }).catch(() => {});
     return current;
+  }
+  private runPlaylistWrite(session: Session, id: string, reserve: boolean, operation: () => Promise<void>): Promise<void> {
+    const canStart = () => this.session === session;
+    if (!canStart()) return Promise.reject(new ServiceError('invalid', 'The connection changed. Refresh this playlist.'));
+    return this.deps.playlistWrite ? this.deps.playlistWrite(session, id, reserve, operation, canStart) : operation();
   }
   async createPlaylist(input: { name: string; trackIds: string[] }): Promise<{ id: string }> {
     const label = name(input.name), tracks = ids(input.trackIds), s = this.requireSession();
-    const result = await this.json('/Playlists', { method: 'POST', body: JSON.stringify({ Name: label, Ids: tracks, UserId: s.userId, MediaType: 'Audio', IsPublic: false }) });
-    return { id: validId(result.Id) };
+    let createdId = '';
+    await this.serialize(PLAYLIST_CREATION, async () => {
+      const result = await this.json('/Playlists', { method: 'POST', body: JSON.stringify({ Name: label, Ids: tracks, UserId: s.userId, MediaType: 'Audio', IsPublic: false }) });
+      try { createdId = validId(result.Id); }
+      catch { throw new ServiceError('uncertain-write', 'Jellyfin did not confirm the new playlist. Check your playlists before creating another.'); }
+    }, true);
+    return { id: createdId };
   }
+
   async renamePlaylist(input: { id: string; name: string }): Promise<void> {
     const id = validId(input.id), label = name(input.name);
     return this.serialize(id, async () => { await this.authenticatedRequest(`/Playlists/${id}`, { method: 'POST', body: JSON.stringify({ Name: label }) }); });
@@ -293,30 +381,48 @@ export class JellyfinService {
     return this.serialize(id, async () => {
       let tracks = selection;
       if (input.skipExisting) { const present = new Set((await this.entries(id)).map(entry => entry.song.id)); tracks = selection.filter(track => { if (present.has(track)) return false; present.add(track); return true; }); }
-      for (let index = 0; index < tracks.length; index += 100) {
-        if (this.session !== session) throw new ServiceError('uncertain-write', 'The connection changed. Refresh this playlist before adding again.');
-        const params = new URLSearchParams({ Ids: tracks.slice(index, index + 100).join(','), UserId: this.requireSession().userId });
-        try { await this.authenticatedRequest(`/Playlists/${id}/Items?${params}`, { method: 'POST' }); }
-        catch (error) { if (index > 0) throw new ServiceError('uncertain-write', 'Some songs were added before the operation stopped. Refresh this playlist before adding again.'); throw error; }
-      }
+      if (!tracks.length) return;
+      const write = async () => {
+        for (let index = 0; index < tracks.length; index += 100) {
+          if (this.session !== session) throw new ServiceError(index ? 'uncertain-write' : 'invalid', 'The connection changed. Refresh this playlist before adding again.');
+          const params = new URLSearchParams({ Ids: tracks.slice(index, index + 100).join(','), UserId: this.requireSession().userId });
+          try { await this.authenticatedRequest(`/Playlists/${id}/Items?${params}`, { method: 'POST' }); }
+          catch (error) { if (index > 0) throw new ServiceError('uncertain-write', 'Some songs were added before the operation stopped. Refresh this playlist before adding again.'); throw error; }
+        }
+      };
+      return this.runPlaylistWrite(session, id, true, write);
     });
   }
   async removePlaylistEntries(input: { id: string; entryIds: string[] }): Promise<void> {
     const id = validId(input.id), session = this.requireSession();
     if (!Array.isArray(input.entryIds) || input.entryIds.length > 100000) throw new ServiceError('invalid', 'Invalid playlist entries.');
     const entries = input.entryIds.map(playlistEntryId);
+    if (new Set(entries.map(playlistEntryIdentity)).size !== entries.length) throw new ServiceError('invalid', 'Choose each playlist entry only once.');
+    if (!entries.length) return;
     return this.serialize(id, async () => {
-      for (let index = 0; index < entries.length; index += 100) {
-        if (this.session !== session) throw new ServiceError('uncertain-write', 'The connection changed. Refresh this playlist.');
-        const params = new URLSearchParams({ EntryIds: entries.slice(index, index + 100).join(',') });
-        try { await this.authenticatedRequest(`/Playlists/${id}/Items?${params}`, { method: 'DELETE' }); }
-        catch (error) { if (index > 0) throw new ServiceError('uncertain-write', 'Some entries were removed before the operation stopped. Refresh this playlist.'); throw error; }
-      }
+      await this.validateEntryChanges(id, entries);
+      const write = async () => {
+        for (let index = 0; index < entries.length; index += 100) {
+          if (this.session !== session) throw new ServiceError(index ? 'uncertain-write' : 'invalid', 'The connection changed. Refresh this playlist.');
+          const params = new URLSearchParams({ EntryIds: entries.slice(index, index + 100).join(',') });
+          try { await this.authenticatedRequest(`/Playlists/${id}/Items?${params}`, { method: 'DELETE' }); }
+          catch (error) { if (index > 0) throw new ServiceError('uncertain-write', 'Some entries were removed before the operation stopped. Refresh this playlist.'); throw error; }
+        }
+      };
+      return this.runPlaylistWrite(session, id, true, write);
     });
   }
   async movePlaylistEntry(input: { id: string; entryId: string; index: number }): Promise<void> {
-    const id = validId(input.id), entry = playlistEntryId(input.entryId);
+    const id = validId(input.id), entry = playlistEntryId(input.entryId), session = this.requireSession();
     if (!Number.isSafeInteger(input.index) || input.index < 0) throw new ServiceError('invalid', 'Invalid playlist position.');
-    return this.serialize(id, async () => { await this.authenticatedRequest(`/Playlists/${id}/Items/${entry}/Move/${input.index}`, { method: 'POST' }); });
+    return this.serialize(id, async () => {
+      const current = await this.validateEntryChanges(id, [entry]);
+      if (input.index >= current.length) throw new ServiceError('invalid', 'The playlist changed. Refresh before moving this entry.');
+      const write = async () => {
+        if (this.session !== session) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
+        await this.authenticatedRequest(`/Playlists/${id}/Items/${entry}/Move/${input.index}`, { method: 'POST' });
+      };
+      return this.runPlaylistWrite(session, id, true, write);
+    });
   }
 }

@@ -1,0 +1,151 @@
+{
+  "date": "2026-10-16",
+  "scope": "S11/S13 native source deletion, playback-consequence warning and historical artifact retention",
+  "before": {
+    "confirmation": "Delete Shared headlines?\n\nThis removes Shared headlines from your saved sources. It will also be removed from My room, Evening listening, Dormant listening and their future news preparation. Review those profiles after deleting. Saved scripts and audio takes keep their source information.\n\nCancel\nDelete source",
+    "warnsPlaybackTurnsOff": false,
+    "cancelPreservesAllProfilesAndPlayback": true,
+    "referencesCleanedAcrossActiveInactiveUnavailableProfiles": true,
+    "otherSetupAndIndependentProfilePreserved": true,
+    "lastSourceDisablesSelectedProfileDj": true,
+    "savedLibraryAndProvenanceUnchanged": true,
+    "savedAudioStillReadable": true,
+    "noProviderCallsDuringDeletion": true,
+    "musicContinues": true,
+    "restartPreservesCleanupAndHistoricalProvenance": true,
+    "result": "passed"
+  },
+  "nativeVariants": {
+    "after": {
+      "confirmation": "Delete Shared headlines?\n\nThis removes Shared headlines from your saved sources. It will also be removed from My room, Evening listening, Dormant listening and their future news preparation. Review those profiles after deleting. Saved scripts and audio takes keep their source information.\n\nDJ breaks for Evening listening will turn off. Choose another source in News bucket before enabling them again.\n\nCancel\nDelete source",
+      "warnsPlaybackTurnsOff": true,
+      "mode": "last",
+      "layout": [
+        {
+          "width": 1280,
+          "height": 800,
+          "zoom": 1,
+          "noHorizontalOverflow": true,
+          "deleteKeyboardReachable": true
+        },
+        {
+          "width": 960,
+          "height": 640,
+          "zoom": 1,
+          "noHorizontalOverflow": true,
+          "deleteKeyboardReachable": true
+        },
+        {
+          "width": 960,
+          "height": 640,
+          "zoom": 2,
+          "noHorizontalOverflow": true,
+          "deleteKeyboardReachable": true
+        }
+      ],
+      "cancelPreservesAllProfilesAndPlayback": true,
+      "referencesCleanedAcrossActiveInactiveUnavailableProfiles": true,
+      "otherSetupAndIndependentProfilePreserved": true,
+      "selectedPlaybackMatchesRemainingSources": true,
+      "djDisabledAfterDeletion": true,
+      "savedLibraryAndProvenanceUnchanged": true,
+      "savedAudioStillReadable": true,
+      "noProviderCallsDuringDeletion": true,
+      "musicContinues": true,
+      "restartPreservesCleanupAndHistoricalProvenance": true,
+      "result": "passed"
+    },
+    "remaining": {
+      "confirmation": "Delete Shared headlines?\n\nThis removes Shared headlines from your saved sources. It will also be removed from My room, Evening listening, Dormant listening and their future news preparation. Review those profiles after deleting. Saved scripts and audio takes keep their source information.\n\nCancel\nDelete source",
+      "warnsPlaybackTurnsOff": false,
+      "mode": "remaining",
+      "cancelPreservesAllProfilesAndPlayback": true,
+      "referencesCleanedAcrossActiveInactiveUnavailableProfiles": true,
+      "otherSetupAndIndependentProfilePreserved": true,
+      "selectedPlaybackMatchesRemainingSources": true,
+      "djDisabledAfterDeletion": false,
+      "savedLibraryAndProvenanceUnchanged": true,
+      "savedAudioStillReadable": true,
+      "noProviderCallsDuringDeletion": true,
+      "musicContinues": true,
+      "restartPreservesCleanupAndHistoricalProvenance": true,
+      "result": "passed"
+    },
+    "disabled": {
+      "confirmation": "Delete Shared headlines?\n\nThis removes Shared headlines from your saved sources. It will also be removed from My room, Evening listening, Dormant listening and their future news preparation. Review those profiles after deleting. Saved scripts and audio takes keep their source information.\n\nCancel\nDelete source",
+      "warnsPlaybackTurnsOff": false,
+      "mode": "disabled",
+      "cancelPreservesAllProfilesAndPlayback": true,
+      "referencesCleanedAcrossActiveInactiveUnavailableProfiles": true,
+      "otherSetupAndIndependentProfilePreserved": true,
+      "selectedPlaybackMatchesRemainingSources": true,
+      "djDisabledAfterDeletion": true,
+      "savedLibraryAndProvenanceUnchanged": true,
+      "savedAudioStillReadable": true,
+      "noProviderCallsDuringDeletion": true,
+      "musicContinues": true,
+      "restartPreservesCleanupAndHistoricalProvenance": true,
+      "result": "passed"
+    }
+  },
+  "environment": {
+    "runtime": "Actual native main/preload/production renderer on macOS27.2 arm64/Electron43.7.0",
+    "profiles": "Fresh isolated encrypted connection and dummy provider keys; shared keychain adapter disabled; owned local music HTTP server; hidden muted windows",
+    "generation": "Controlled HN/text/voice replies prepare one saved test artifact per variant; no real source/provider networking",
+    "deletion": "UI confirmation/Cancel/Delete; actual IPC/storage/media protocol; generation counters unchanged during deletion"
+  },
+  "review": {
+    "Elena": "Reviewed actual condition/copy against storage synchronization; no actionable defect.",
+    "implementation": "Primary applied existing DJ-deletion pattern; no backend mutation change."
+  },
+  "verificationCorrections": [
+    "Sources is a Settings navigation button, not a tab.",
+    "Configuration comparisons exclude progressing music transport state.",
+    "CSP blocks renderer fetch; actual Audio element decodes saved media metadata instead.",
+    "Restart comparisons use JSON-equivalent objects because durable JSON omits undefined optional fields."
+  ],
+  "checks": {
+    "nativeVariants": 3,
+    "layoutCases": 3,
+    "buildIncludingTypeScript": "passed",
+    "fullEslint": "passed",
+    "inventoryUniqueRequirements": 187,
+    "inventoryCounts": {
+      "Review": 140,
+      "Controlled": 13,
+      "External": 9,
+      "Dated": 13,
+      "Live": 7,
+      "Recorded": 5
+    }
+  },
+  "contractChange": {
+    "S13Before": "| S13 | Source deletion confirmation names every affected profile; Cancel keeps it and confirmation preserves historical audio provenance. | N+S | Review |",
+    "S13After": "| S13 | Source deletion confirmation names every affected profile and warns when DJ breaks will turn off; Cancel keeps it and confirmation preserves historical audio provenance. | N+S | Controlled |",
+    "reason": "Native final-source deletion silently disabled DJ playback; PRD now requires the confirmation to explain this consequence."
+  },
+  "acceptance": {
+    "S11": "Controlled: multi-profile reference cleanup, other setup/history, safe selected playback and restart.",
+    "S13": "Controlled: every affected profile named, conditional playback warning, Cancel and historical provenance preserved."
+  },
+  "limits": [
+    "Muted controlled generation does not prove paid-provider delivery or audible quality.",
+    "No observed regular-user comprehension or full screen-reader run.",
+    "Automatic checks in flight and broader source editing/draft behavior remain separate acceptance scope."
+  ],
+  "sha256": {
+    "src/renderer/pages/Sources/Sources.page.tsx": "ca6d1678a1c72dbf57e184f109e86449e4f2d2c90214fe46be49466e39039d09",
+    "src/renderer/pages/DJs/DJs.page.tsx": "59edbcbd3f4e56834f4757910120b9d914bac36cda4311a5508b81ecb46e8e30",
+    "src/main/index.ts": "0178f81ae501df23ba8462e7810cdd4fa8438777ac424419cb52a5e8f7197e3c",
+    "src/main/storage.ts": "8c06bf1f1fd99f53d224a6ac61a61ea34e48426e3fa33ca276e9880e638c1e36",
+    "src/main/prepared-news.ts": "f09a7fd83da395c8de08e1eab3b52f87454e80bbc36dcdad6d2fd1d21f229155",
+    "out/main/index.js": "5e640d063164ba11555a76b3f29b84be136599373e00088de33484ebb37ca7f8",
+    "out/preload/index.cjs": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215",
+    "out/renderer/assets/index-CAUv1dOD.js": "a0fecb0ea181b9476d8f5c11e4d3f8ee934ede99ad9a4d189b4d0b1cbff7dde8"
+  },
+  "nativeFixtureMainSha256": "33d3aa205e30246f2c9fe81d57b49c903aaf32161daa617cd65906727273eb94",
+  "captures": [
+    "2026-10-16-source-deletion-dialog-1-1280.png",
+    "2026-10-16-source-deletion-dialog-2-960.png"
+  ]
+}

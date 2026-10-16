@@ -1,0 +1,222 @@
+{
+  "date": "2026-10-16",
+  "scope": "M10 unknown duration UI and system seek action availability, later finite recovery; M09/M16/M17 remain broader unverified scopes",
+  "before": {
+    "cases": [
+      {
+        "metadata": "missing",
+        "media": "infinity",
+        "elapsedAdvances": true,
+        "totalUnavailableAndLabelled": true,
+        "seekingDisabledUntilKnown": true,
+        "laterNativeTotal60EnablesSeek": true,
+        "pausedSeekKeepsQuiet": true,
+        "catalogDurationUnchanged": true,
+        "queueOccurrencePreserved": true
+      },
+      {
+        "metadata": "negative",
+        "media": "zero",
+        "elapsedAdvances": true,
+        "totalUnavailableAndLabelled": true,
+        "seekingDisabledUntilKnown": true,
+        "laterNativeTotal60EnablesSeek": true,
+        "pausedSeekKeepsQuiet": true,
+        "catalogDurationUnchanged": true,
+        "queueOccurrencePreserved": true
+      },
+      {
+        "metadata": "invalid",
+        "media": "nan",
+        "elapsedAdvances": true,
+        "totalUnavailableAndLabelled": true,
+        "seekingDisabledUntilKnown": true,
+        "laterNativeTotal60EnablesSeek": true,
+        "pausedSeekKeepsQuiet": true,
+        "catalogDurationUnchanged": true,
+        "queueOccurrencePreserved": true
+      }
+    ],
+    "unknownMediaSeek": {
+      "before": 13.053946,
+      "after": 23.033984,
+      "jumpedWhileSeekDisabled": true
+    },
+    "mediaSeekingWhileUnknown": {
+      "seekto": "function",
+      "seekforward": "function",
+      "seekbackward": "function"
+    },
+    "layouts": [
+      {
+        "width": 1280,
+        "height": 800,
+        "zoom": 1,
+        "progressInViewport": true,
+        "totalInViewport": true,
+        "noHorizontalOverflow": true
+      },
+      {
+        "width": 960,
+        "height": 640,
+        "zoom": 1,
+        "progressInViewport": true,
+        "totalInViewport": true,
+        "noHorizontalOverflow": true
+      },
+      {
+        "width": 960,
+        "height": 640,
+        "zoom": 2,
+        "progressInViewport": true,
+        "totalInViewport": true,
+        "noHorizontalOverflow": true
+      }
+    ],
+    "result": "passed"
+  },
+  "after": {
+    "cases": [
+      {
+        "metadata": "missing",
+        "media": "infinity",
+        "elapsedAdvances": true,
+        "totalUnavailableAndLabelled": true,
+        "seekingDisabledUntilKnown": true,
+        "laterNativeTotal60EnablesSeek": true,
+        "pausedSeekKeepsQuiet": true,
+        "catalogDurationUnchanged": true,
+        "queueOccurrencePreserved": true,
+        "unknownMediaSeekActionsDisabled": true,
+        "transportActionsRemainAvailable": true,
+        "knownMediaSeekActionsRecoverAndStayPaused": true
+      },
+      {
+        "metadata": "negative",
+        "media": "zero",
+        "elapsedAdvances": true,
+        "totalUnavailableAndLabelled": true,
+        "seekingDisabledUntilKnown": true,
+        "laterNativeTotal60EnablesSeek": true,
+        "pausedSeekKeepsQuiet": true,
+        "catalogDurationUnchanged": true,
+        "queueOccurrencePreserved": true,
+        "unknownMediaSeekActionsDisabled": true,
+        "transportActionsRemainAvailable": true,
+        "knownMediaSeekActionsRecoverAndStayPaused": true
+      },
+      {
+        "metadata": "invalid",
+        "media": "nan",
+        "elapsedAdvances": true,
+        "totalUnavailableAndLabelled": true,
+        "seekingDisabledUntilKnown": true,
+        "laterNativeTotal60EnablesSeek": true,
+        "pausedSeekKeepsQuiet": true,
+        "catalogDurationUnchanged": true,
+        "queueOccurrencePreserved": true,
+        "unknownMediaSeekActionsDisabled": true,
+        "transportActionsRemainAvailable": true,
+        "knownMediaSeekActionsRecoverAndStayPaused": true
+      }
+    ],
+    "layouts": [
+      {
+        "width": 1280,
+        "height": 800,
+        "zoom": 1,
+        "progressInViewport": true,
+        "totalInViewport": true,
+        "noHorizontalOverflow": true
+      },
+      {
+        "width": 960,
+        "height": 640,
+        "zoom": 1,
+        "progressInViewport": true,
+        "totalInViewport": true,
+        "noHorizontalOverflow": true
+      },
+      {
+        "width": 960,
+        "height": 640,
+        "zoom": 2,
+        "progressInViewport": true,
+        "totalInViewport": true,
+        "noHorizontalOverflow": true
+      }
+    ],
+    "result": "passed"
+  },
+  "method": {
+    "runtime": "macOS27.2 arm64/Electron43.7.0; actual main/preload/production renderer, native Audio, encrypted fresh protected localhost profiles, muted hidden windows",
+    "metadata": "Actual HTTP item lookup omits RunTimeTicks or supplies negative/invalid value; real JellyfinService normalizes/maps the response. No server metadata write occurs.",
+    "unknownMedia": "Audio constructor captures actual native elements and supplies an own duration getter returning Infinity,0 or NaN. Real WAV time/playback continues; deleting the override exposes native60-second duration and an explicit durationchange notification triggers recovery.",
+    "mediaActions": "Wrapper captures and forwards actual navigator.mediaSession.setActionHandler calls. Before: invoke actual seekforward handler and observe native time jump. After: unknown seeks are null, transport callbacks present; finite-total seekto/backward/forward invoked after visible position updates and remain paused.",
+    "layout": "Native BrowserWindow resize/zoom, two animation frames plus200ms, webContents.capturePage, progress/total viewport and document overflow assertions",
+    "providers": "Owned local HTTP server only; dummy account, shared provider keychain disabled, no paid calls."
+  },
+  "change": {
+    "file": "src/renderer/player.tsx",
+    "behavior": "Register seek actions as null without known current duration, refresh registration when duration changes; retain ordinary transport actions.",
+    "reason": "Unknown-duration app slider was disabled while registered system seek callback still moved native audio."
+  },
+  "checks": {
+    "nativeMetadataMediaVariants": 3,
+    "layoutVariants": 3,
+    "buildIncludingTypeScript": "passed",
+    "fullEslint": "passed",
+    "inventoryUniqueRequirements": 187,
+    "inventoryCounts": {
+      "Review": 132,
+      "Dated": 12,
+      "Recorded": 5,
+      "Controlled": 22,
+      "Live": 7,
+      "External": 9
+    }
+  },
+  "acceptance": {
+    "M10": "Controlled for named native unknown-total presentation, seek availability, catalog preservation and later finite recovery.",
+    "M09": "Review; broader current-resource conversion offset and live codec scope remains.",
+    "M16": "External; captured MediaSession registration/callbacks do not establish physical OS controls.",
+    "M17": "External; no real encoder/codec compatibility claim."
+  },
+  "limits": [
+    "Controlled duration property and notification, not actual indefinitely streaming native codec.",
+    "Muted WAV; no audible quality or physical OS media-control proof.",
+    "Media callbacks run after each observed position commit; rapid bursts remain unverified.",
+    "No observed regular-user usability or overall acceptance percentage."
+  ],
+  "harnessCorrections": [
+    "Wait for initial DOM navigation before controlled reload.",
+    "Wait for displayed elapsed value after native timeupdate.",
+    "Observe committed position before the next relative media seek callback."
+  ],
+  "sha256": {
+    "src/renderer/player.tsx": "78729fac82440a7590c885c9722a9bbd0ec67934aac79dd30c5392e297b7c5fa",
+    "src/renderer/components/Player/Player.component.tsx": "37a8009dbf0f2041d39fd3797782c91d59797a6905d5ce2991455b0f82274c7a",
+    "src/main/jellyfin.ts": "f4d2e4d8ae75807447bd5b4f64b97938594f3935834932bb7d1bec43a8360448",
+    "src/main/media.ts": "6768544bd3215e37187a12293571c894a1023619ebe8f09e25403bdec0bfb671",
+    "src/main/index.ts": "03c70d68a326aac2ab8826329c7020620404b1daeb9cedb9c317be7f080d4757",
+    "src/main/storage.ts": "844254b83525cc7eaf7c9ad7469eec3550f02e1ebb8b88270018c68937ec5adc",
+    "src/preload/index.ts": "0c7edf2153d5210b24a0fac9db667fd254e324366d4737653578ef067c1eac63",
+    "src/shared/types.ts": "71e36cce9f904d7327f8d85c38f8ce050c7955877888ed9dde27e4105a6c57f0",
+    "REQUIREMENTS.md": "cd9dd02a2ad7641488e303037983977021e4d7f5a69e2fd92264924b1fe60f5a",
+    "docs/RADIO_EXPERIENCE.md": "db3f487d45710f33d9b06a6279fe3de2d995cee7c2a519c4d8c365986b4af30f",
+    "out/main/index.js": "852222e0fa542a8acc20e2aa4483dc3f4a489054e015cba72d3a8f433b8f399d",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+    "out/renderer/assets/index-BiUlQ4VO.js": "1941d7ba6af149c10bba29410d5ced434e8e41bb12ee715a18a98b5a8b4f1aa1"
+  },
+  "fixtureSha256": {
+    "server.mjs": "ad8d0c4a2b2ecf4065da3e07e20acd163784376dbd487faca822763b0e2e8879",
+    "run.cjs": "71efdcbc6e884ea01856a6ddbe292450e92fe7391f785788ef88c4fc8ce6c80a",
+    "media-probe.cjs": "4f860f6542be8899a39c61ddde499fa6a905c53fed55f609fe9b57fc152408fb",
+    "after.cjs": "3035193e2542d23fe32550bf9331fab9cdeb625670f59037bf053f2b69c9872c",
+    "nativeMain": "6a5ba90a29e01dd4fee51e0a0758ac96236fbeaa194815ebad6949b3b4cf4da6"
+  },
+  "captures": [
+    "2026-10-16-unknown-duration-1.png",
+    "2026-10-16-unknown-duration-2.png"
+  ]
+}

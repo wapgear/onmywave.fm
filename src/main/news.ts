@@ -9,6 +9,7 @@ import { ServiceError } from './jellyfin';
 export type { NewsArticle, NewsScript } from '../shared/types';
 export type GeneratedNews = NewsScript & { audio: Buffer; mimeType: 'audio/mpeg'; engine: 'elevenlabs-v4' };
 type Candidate = NewsArticle & { summary: string };
+type SourceBatch = { articles: Candidate[]; coverageWarnings: string[] };
 type Input = { sources?: NewsSource[]; mood?: string; requestId: string; settings: NewsSettings; dj: DJ; music?: Pick<Song, 'name' | 'artists' | 'album' | 'genres' | 'tags'>; importance?: 'major' | 'relevant'; excludeArticleUrls?: string[]; freshWithinHours?: number; onCandidates?: (articles: NewsArticle[]) => Promise<void>; onReleaseCandidates?: (articles: NewsArticle[]) => Promise<void>; onReview?: (selectedUrl?: string) => Promise<void>; onPreparedScript?: (script: NewsScript) => Promise<void> };
 class DefinitiveProviderRejection extends ServiceError {}
 const musicContext = (input: Input) => ({ title: input.music?.name.slice(0, 256), artists: input.music?.artists.slice(0, 8).map(value => value.slice(0, 128)), album: input.music?.album.slice(0, 256), genres: input.music?.genres.slice(0, 12).map(value => value.slice(0, 128)), tags: input.music?.tags.slice(0, 12).map(value => value.slice(0, 128)), listenerPreferences: input.dj.musicPreferences.slice(0, 1000) });
@@ -62,7 +63,14 @@ async function boundedBytes(response: Response, limit: number, signal: AbortSign
 }
 export class NewsService {
   private active: { id: string; controller: AbortController } | null = null;
-  constructor(private deps: { getApiKey: () => Promise<string | null>; getTwitterKey?: () => Promise<string | null>; getElevenApiKey?: () => Promise<string | null>; onProgress?: (progress: NewsProgress) => void }) {}
+  private generation = new AbortController();
+  constructor(private deps: { getApiKey: () => Promise<string | null>; getTwitterKey?: () => Promise<string | null>; getElevenApiKey?: () => Promise<string | null>; canGenerate?: () => boolean; onProgress?: (progress: NewsProgress) => void }) {}
+  generationSignal() {
+    if (this.deps.canGenerate?.() === false || this.generation.signal.aborted) throw new ServiceError('invalid', 'Sign in before starting another news or voice request.');
+    return this.generation.signal;
+  }
+  cancelGeneration() { this.generation.abort(); this.cancel(); }
+  resumeGeneration() { if (this.generation.signal.aborted) this.generation = new AbortController(); }
   cancel(requestId?: string): void {
     if (this.active && (!requestId || this.active.id === requestId)) { this.active.controller.abort(); this.active = null; }
   }
@@ -73,17 +81,18 @@ export class NewsService {
     if (input.sources && input.sources.length > 20) throw new ServiceError('invalid', 'Choose at most 20 sources.');
     if (this.active) throw new ServiceError('invalid', 'Another news preparation is running. Finish or cancel it first.');
     const active = { id: input.requestId, controller: new AbortController() };
+    const signal = AbortSignal.any([active.controller.signal, this.generationSignal()]);
     this.active = active;
     const timer = setTimeout(() => active.controller.abort(), 240000);
     try {
       const key = await this.deps.getApiKey();
-      active.controller.signal.throwIfAborted();
+      signal.throwIfAborted();
       if (!key) throw new ServiceError('invalid', 'Add your OpenAI API key before generating a news break.');
-      const result = await operation(settings, key, active.controller.signal);
-      active.controller.signal.throwIfAborted();
+      const result = await operation(settings, key, signal);
+      signal.throwIfAborted();
       return result;
     } catch (error) {
-      if (active.controller.signal.aborted) throw new ServiceError('timeout', 'News generation stopped or reached its time limit.');
+      if (signal.aborted) throw new ServiceError('timeout', 'News generation stopped or reached its time limit.');
       if (error instanceof ServiceError) throw error;
       throw new ServiceError('server', 'Could not prepare the news break. Check the connection and try again.');
     } finally {
@@ -91,7 +100,7 @@ export class NewsService {
       if (this.active === active) this.active = null;
     }
   }
-  private async feed(address: string, parentSignal: AbortSignal): Promise<Candidate[]> {
+  private async feed(address: string, parentSignal: AbortSignal): Promise<SourceBatch> {
     const signal = AbortSignal.any([parentSignal, AbortSignal.timeout(15000)]);
     let target = httpUrl(address);
     let response: Response | undefined;
@@ -114,23 +123,24 @@ export class NewsService {
     const entries = channel.item !== undefined ? array(channel.item) : array(atom.entry || node(document.RDF).item);
     if (!Object.keys(channel).length && !Object.keys(atom).length && !document.RDF) throw new ServiceError('invalid', 'The source is not an RSS or Atom feed.');
     const result: Candidate[] = [];
+    let malformed = 0;
     for (const entry of entries.slice(0, 50)) {
       const item = node(entry);
       const title = plain(item.title, 240);
       const links = array(item.link);
       const link = links.find(link => typeof link === 'string' || !node(link)['@_rel'] || node(link)['@_rel'] === 'alternate');
       const rawLink = typeof link === 'string' ? link : plain(node(link)['@_href'], 4096);
-      if (!title || !rawLink) continue;
+      if (!title || !rawLink) { malformed++; continue; }
       let url: URL;
-      try { url = httpUrl(rawLink, target.href); } catch { continue; }
+      try { url = httpUrl(rawLink, target.href); } catch { malformed++; continue; }
       const rawDate = plain(item.pubDate || item.published || item.updated || item.date, 100);
       const timestamp = rawDate ? Date.parse(rawDate) : NaN;
       if (Number.isFinite(timestamp) && (timestamp < Date.now() - 7 * 86400000 || timestamp > Date.now() + 300000)) continue;
       result.push({ id: randomUUID(), title, url: url.href, source, publishedAt: Number.isFinite(timestamp) ? new Date(timestamp).toISOString() : undefined, summary: plain(item.description || item.summary || item.encoded || item.content, 1500) });
     }
-    return result;
+    return { articles: result, coverageWarnings: malformed ? [`${malformed} feed ${malformed === 1 ? 'entry could' : 'entries could'} not be read because a title or valid story link was missing.`] : [] };
   }
-  private async source(source: NewsSource, parentSignal: AbortSignal): Promise<Candidate[]> {
+  private async source(source: NewsSource, parentSignal: AbortSignal): Promise<SourceBatch> {
     const normalized = normalizeNewsSource(source);
     if (normalized.kind === 'rss') return this.feed(normalized.url, parentSignal);
     const signal = AbortSignal.any([parentSignal, AbortSignal.timeout(15000)]);
@@ -152,37 +162,57 @@ export class NewsService {
       url.searchParams.set('max_results', '25');
       url.searchParams.set('tweet.fields', 'created_at');
       const payload = node(await json(url.href, { Authorization: `Bearer ${key}` }));
-      if (array(payload.errors).length) throw new ServiceError('server', 'Twitter returned a search error. Check the query and API access.');
-      return array(payload.data).flatMap(value => {
+      const partial = payload.errors !== undefined && (!Array.isArray(payload.errors) || payload.errors.length > 0);
+      const posts = Array.isArray(payload.data) ? payload.data : [];
+      const count = node(payload.meta).result_count;
+      const invalidData = payload.data === undefined ? count !== 0 : !Array.isArray(payload.data) || (count !== undefined && count !== posts.length);
+      let malformed = 0;
+      const articles = posts.flatMap(value => {
         const post = node(value);
-        const text = plain(post.text, 1500);
+        const text = typeof post.text === 'string' ? plain(post.text, 1500) : '';
         const date = typeof post.created_at === 'string' ? Date.parse(post.created_at) : NaN;
-        if (typeof post.id !== 'string' || !/^\d+$/.test(post.id) || !text || !Number.isFinite(date) || date < Date.now() - 7 * 86400000 || date > Date.now() + 300000) return [];
+        if (typeof post.id !== 'string' || !/^\d+$/.test(post.id) || !text || !Number.isFinite(date)) { malformed++; return []; }
+        if (date < Date.now() - 7 * 86400000 || date > Date.now() + 300000) return [];
         return [{ id: randomUUID(), title: text.slice(0, 240), summary: text, url: `https://x.com/i/web/status/${post.id}`, source: normalized.name, publishedAt: new Date(date).toISOString() }];
       });
+      if (partial && !articles.length) throw new ServiceError('server', 'Twitter returned a search error. Check the query and API access.');
+      return { articles, coverageWarnings: [
+        ...(partial ? ['Twitter returned only partial search results. Check the query and API access.'] : []),
+        ...(invalidData ? ['Twitter returned unreadable search results. Coverage is incomplete.'] : []),
+        ...(malformed ? [`${malformed} Twitter post${malformed === 1 ? '' : 's'} could not be read. Coverage is incomplete.`] : []),
+      ] };
     }
     const ids = await json(normalized.url);
     if (!Array.isArray(ids)) throw new ServiceError('server', 'Hacker News returned an invalid story list.');
-    const outcomes = await Promise.allSettled(ids.filter(id => Number.isSafeInteger(id) && id > 0).slice(0, 20).map(id => json(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)));
+    const invalidIds = ids.filter(id => typeof id !== 'number' || !Number.isSafeInteger(id) || id <= 0).length;
+    const requestedIds = ids.filter(id => Number.isSafeInteger(id) && id > 0).slice(0, 20);
+    const outcomes = await Promise.allSettled(requestedIds.map(id => json(`https://hacker-news.firebaseio.com/v0/item/${id}.json`)));
     const stories: Candidate[] = [];
-    for (const outcome of outcomes) {
+    let malformed = 0;
+    for (const [index, outcome] of outcomes.entries()) {
       if (outcome.status !== 'fulfilled') continue;
       const story = node(outcome.value);
-      const title = plain(story.title, 240);
+      if (story.id !== requestedIds[index]) { malformed++; continue; }
+      if (story.deleted === true || story.dead === true || ['job', 'comment', 'poll', 'pollopt'].some(type => type === story.type)) continue;
       const date = typeof story.time === 'number' ? story.time * 1000 : NaN;
-      if (story.type !== 'story' || story.deleted || story.dead || !title || !Number.isFinite(date) || date < Date.now() - 7 * 86400000 || date > Date.now() + 300000) continue;
+      if (story.type === 'story' && Number.isFinite(date) && (date < Date.now() - 7 * 86400000 || date > Date.now() + 300000)) continue;
+      const title = typeof story.title === 'string' ? plain(story.title, 240) : '';
+      if (story.type !== 'story' || !title || !Number.isFinite(date)) { malformed++; continue; }
       let url: URL;
-      try { url = httpUrl(typeof story.url === 'string' ? story.url : `https://news.ycombinator.com/item?id=${story.id}`); } catch { continue; }
+      try {
+        if (story.url !== undefined && typeof story.url !== 'string') throw new Error('Invalid story URL');
+        url = httpUrl(story.url === undefined ? `https://news.ycombinator.com/item?id=${requestedIds[index]}` : story.url as string);
+      } catch { malformed++; continue; }
       stories.push({ id: randomUUID(), title, summary: plain(story.text, 1500), source: normalized.name, url: url.href, publishedAt: new Date(date).toISOString() });
     }
-    if (!stories.length && outcomes.some(outcome => outcome.status === 'rejected')) throw new ServiceError('server', 'Hacker News stories could not be read. Try again.');
-    return stories;
+    const failed = outcomes.filter(outcome => outcome.status === 'rejected').length;
+    return { articles: stories, coverageWarnings: [...(failed ? [`${failed} of ${outcomes.length} Hacker News story requests failed. Coverage is incomplete.`] : []), ...(invalidIds ? ['Hacker News returned invalid story IDs; those entries were skipped.'] : []), ...(malformed ? [`${malformed} Hacker News story response${malformed === 1 ? '' : 's'} could not be read. Coverage is incomplete.`] : [])] };
   }
   private async openai(key: string, path: string, body: unknown, signal: AbortSignal, onDispatch: () => void): Promise<Response> {
     signal.throwIfAborted();
     onDispatch();
     const response = await fetch(`https://api.openai.com/v1/${path}`, { method: 'POST', redirect: 'error', signal: AbortSignal.any([signal, AbortSignal.timeout(120000)]), headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-    if (response.status === 401) throw new DefinitiveProviderRejection('invalid', 'OpenAI did not accept the API key. Update it in news settings.');
+    if (response.status === 401) throw new DefinitiveProviderRejection('invalid', 'OpenAI did not accept the API key. Update it in Settings → Provider keys.');
     if (response.status === 403 || response.status === 404) throw new DefinitiveProviderRejection('unsupported', 'This OpenAI model is unavailable for your API key.');
     if (response.status === 429) throw new DefinitiveProviderRejection('server', 'OpenAI rate or billing limits prevented this news break.');
     if (!response.ok) throw new ServiceError('server', `OpenAI could not complete the news break (${response.status}).`);
@@ -194,22 +224,28 @@ export class NewsService {
     const outcomes = await Promise.allSettled(sources.map(source => this.source(source, signal)));
     signal.throwIfAborted();
     const candidates: Candidate[] = [], warnings: string[] = [];
-    let readableCandidateCount = 0;
+    const sourceFailure = outcomes.some(outcome => outcome.status === 'rejected' || outcome.value.coverageWarnings.length > 0);
+    let undatedSkipped = false;
     const urls = new Set((input.excludeArticleUrls ?? []).map(value => canonicalArticleUrl(value)).filter((value): value is string => Boolean(value)));
     const cutoff = input.freshWithinHours === undefined ? null : Date.now() - input.freshWithinHours * 60 * 60 * 1000;
     outcomes.forEach((outcome, index) => {
       if (outcome.status === 'rejected') { warnings.push(`Could not read ${sources[index].name}: ${outcome.reason instanceof ServiceError ? outcome.reason.message : 'Check the source and try again.'}`); return; }
-      for (const article of outcome.value) {
-        readableCandidateCount++;
+      warnings.push(...outcome.value.coverageWarnings.map(warning => `${sources[index].name}: ${warning}`));
+      for (const article of outcome.value.articles) {
         const url = httpUrl(article.url).href;
         const canonical = canonicalArticleUrl(url);
         const published = article.publishedAt ? Date.parse(article.publishedAt) : NaN;
+        if (canonical && !urls.has(canonical) && cutoff !== null && !Number.isFinite(published)) undatedSkipped = true;
         if (canonical && !urls.has(canonical) && (cutoff === null || (Number.isFinite(published) && published >= cutoff && published <= Date.now())) && candidates.length < 200) {
           urls.add(canonical); candidates.push({ ...article, url, id: `story-${candidates.length + 1}` });
         }
       }
     });
-    if (!candidates.length) throw new ServiceError(warnings.length && readableCandidateCount === 0 ? 'server' : 'no-news', warnings.length && readableCandidateCount === 0 ? warnings.join(' ') : 'No recent news. Music continues.');
+    if (undatedSkipped) warnings.push('Entries without publication dates were skipped because their freshness could not be verified.');
+    if (!candidates.length) {
+      if (sourceFailure) throw new ServiceError('server', `${warnings.join(' ')} News coverage is incomplete; try again.`);
+      throw new ServiceError('no-news', `No recent news. Music continues.${warnings.length ? ` ${warnings.join(' ')}` : ''}`);
+    }
     if (candidates.some(article => !article.publishedAt)) warnings.push('Some feed entries have no publication date. Their freshness could not be verified.');
     this.deps.onProgress?.({ requestId: input.requestId, phase: 'writing', message: 'Writing one short DJ segue…' });
     const submittedCandidates = candidates.map(({ id, title, url, source, publishedAt }) => ({ id, title, url, source, publishedAt }));
@@ -233,7 +269,7 @@ export class NewsService {
     const text = array(node(payload).output).flatMap(output => array(node(output).content)).filter(content => node(content).type === 'output_text').map(content => typeof node(content).text === 'string' ? node(content).text : '').join('');
     let bulletin: XmlNode;
     try { bulletin = node(JSON.parse(text)); } catch { throw new ServiceError('server', 'OpenAI did not return a complete news script.'); }
-    if (bulletin.articleId === null && bulletin.script === '') { await input.onReview?.(); throw new ServiceError('no-news', 'No qualifying news. Music continues.'); }
+    if (bulletin.articleId === null && bulletin.script === '') { await input.onReview?.(); throw new ServiceError('no-news', `No qualifying news. Music continues.${warnings.length ? ` ${warnings.join(' ')}` : ''}`); }
     const chosen = [bulletin.articleId];
     const script = typeof bulletin.script === 'string' ? bulletin.script.trim() : '';
     if (!script || script.length > 700 || script.split(/\s+/u).length > 55 || !candidates.some(article => article.id === bulletin.articleId)) throw new ServiceError('server', 'The DJ story was too long or had an invalid source. Generate another short segue.');
@@ -246,6 +282,8 @@ export class NewsService {
   }
   prepareScript(input: Input): Promise<NewsScript> { return this.run(input, (settings, key, signal) => this.script(input, settings, key, signal)); }
   async renderPreparedSpeech(input: Input & { engine: 'elevenlabs-v4' }, script: NewsScript, signal: AbortSignal): Promise<GeneratedNews> {
+    signal = AbortSignal.any([signal, this.generationSignal()]);
+    signal.throwIfAborted();
     const settings = validateNewsSettings(input.settings);
     if (input.engine !== 'elevenlabs-v4') throw new ServiceError('invalid', 'Use ElevenLabs to generate voice audio.');
     const elevenKey = await this.deps.getElevenApiKey?.();
@@ -258,7 +296,7 @@ export class NewsService {
       headers: { 'xi-api-key': elevenKey!, 'Content-Type': 'application/json', Accept: 'audio/mpeg' },
       body: JSON.stringify({ model_id: 'eleven_v4', text: `${settings.elevenTags || ''} ${script.script}`.trim(), voice_settings: { stability: 0.5, similarity_boost: 0.75 } }),
     });
-    if (response.status === 401) throw new ServiceError('invalid', 'ElevenLabs did not accept the API key. Update it in DJ settings.');
+    if (response.status === 401) throw new ServiceError('invalid', 'ElevenLabs did not accept the API key. Update it in Settings → Provider keys.');
     if ([403, 404, 422].includes(response.status)) throw new ServiceError('unsupported', 'Eleven v4 or this voice is unavailable for your key. Check model access, voice ID, and text-to-speech permission.');
     if (response.status === 429) throw new ServiceError('server', 'ElevenLabs rate or credit limits prevented this DJ clip.');
     if (!response.ok) throw new ServiceError('server', `ElevenLabs could not render the clip (${response.status}).`);

@@ -1,0 +1,480 @@
+{
+  "date": "2026-10-16",
+  "scope": "Ordered preparation activation and provider-key edits; required prerequisites, direct setup recovery, keyless OFF saves, queued cadence and explicit Resume regressions",
+  "native": {
+    "before": {
+      "cases": [
+        {
+          "provider": "openai",
+          "keyRemovedAfterReadinessChecks": true,
+          "preparationEnabledAfterRemoval": true,
+          "alerts": [],
+          "providerRequests": 0
+        },
+        {
+          "provider": "elevenlabs",
+          "keyRemovedAfterReadinessChecks": true,
+          "preparationEnabledAfterRemoval": true,
+          "alerts": [],
+          "providerRequests": 0
+        }
+      ],
+      "result": "recorded"
+    },
+    "ordering": {
+      "cases": [
+        {
+          "provider": "openai",
+          "order": "activation-first",
+          "deletionWaitsThroughDurablePublication": true,
+          "providerRequests": 0,
+          "result": "passed"
+        },
+        {
+          "provider": "openai",
+          "order": "deletion-first",
+          "rejectsStaleOrMissingPrerequisite": true,
+          "error": "Add an OpenAI key before enabling news preparation.",
+          "providerRequests": 0,
+          "result": "passed"
+        },
+        {
+          "provider": "openai",
+          "order": "replacement-first",
+          "queuedReplacementPrecedesValidatedSave": true,
+          "providerRequests": 0,
+          "result": "passed"
+        },
+        {
+          "provider": "elevenlabs",
+          "order": "activation-first",
+          "deletionWaitsThroughDurablePublication": true,
+          "providerRequests": 0,
+          "result": "passed"
+        },
+        {
+          "provider": "elevenlabs",
+          "order": "deletion-first",
+          "rejectsStaleOrMissingPrerequisite": true,
+          "error": "Add an ElevenLabs key before enabling news preparation.",
+          "providerRequests": 0,
+          "result": "passed"
+        },
+        {
+          "provider": "elevenlabs",
+          "order": "replacement-first",
+          "queuedReplacementPrecedesValidatedSave": true,
+          "providerRequests": 0,
+          "result": "passed"
+        },
+        {
+          "provider": "twitter",
+          "order": "activation-first",
+          "deletionWaitsThroughDurablePublication": true,
+          "providerRequests": 0,
+          "result": "passed"
+        },
+        {
+          "provider": "twitter",
+          "order": "deletion-first",
+          "rejectsStaleOrMissingPrerequisite": true,
+          "error": "Add an X bearer token for the selected X sources before enabling news preparation.",
+          "providerRequests": 0,
+          "result": "passed"
+        },
+        {
+          "provider": "twitter",
+          "order": "replacement-first",
+          "queuedReplacementPrecedesValidatedSave": true,
+          "providerRequests": 0,
+          "result": "passed"
+        },
+        {
+          "provider": "openai",
+          "order": "key-failure",
+          "rejectedKeyWriteDoesNotPoisonQueue": true,
+          "providerRequests": 0,
+          "result": "passed"
+        },
+        {
+          "provider": "openai",
+          "order": "off-bypass",
+          "incompleteOffSaveBypassesHeldKeyWrite": true,
+          "providerRequests": 0,
+          "result": "passed"
+        },
+        {
+          "provider": "openai",
+          "order": "signout-queued",
+          "rejectsStaleOrMissingPrerequisite": true,
+          "error": "Sign-out interrupted this save. Sign in and review the saved news settings.",
+          "providerRequests": 0,
+          "result": "passed"
+        },
+        {
+          "provider": "openai",
+          "order": "host-queued",
+          "rejectsStaleOrMissingPrerequisite": true,
+          "error": "The selected host or sources changed while saving. Review them and save again.",
+          "providerRequests": 0,
+          "result": "passed"
+        },
+        {
+          "provider": "openai",
+          "order": "source-queued",
+          "rejectsStaleOrMissingPrerequisite": true,
+          "error": "The selected host or sources changed while saving. Review them and save again.",
+          "providerRequests": 0,
+          "result": "passed"
+        },
+        {
+          "provider": "openai",
+          "order": "profile-queued",
+          "rejectsStaleOrMissingPrerequisite": true,
+          "error": "The profile changed while saving. Review its settings and save again.",
+          "providerRequests": 0,
+          "result": "passed"
+        },
+        {
+          "provider": "openai",
+          "order": "availability-queued",
+          "rejectsStaleOrMissingPrerequisite": true,
+          "error": "The selected host or sources changed while saving. Review them and save again.",
+          "providerRequests": 0,
+          "result": "passed"
+        },
+        {
+          "provider": "openai",
+          "order": "missing-resume",
+          "missingKeyDoesNotClearResumePause": true,
+          "providerRequests": 0,
+          "result": "passed"
+        }
+      ],
+      "result": "passed"
+    },
+    "unselectedX": {
+      "cases": [
+        {
+          "provider": "twitter",
+          "order": "unselected-x-deletion",
+          "queuedReplacementPrecedesValidatedSave": true,
+          "providerRequests": 0,
+          "result": "passed"
+        },
+        {
+          "provider": "twitter",
+          "order": "unselected-x-replacement",
+          "queuedReplacementPrecedesValidatedSave": true,
+          "providerRequests": 0,
+          "result": "passed"
+        }
+      ],
+      "result": "passed"
+    },
+    "prerequisites": {
+      "cases": [
+        {
+          "kind": "no-source",
+          "rejected": true,
+          "savedProfilesUnchanged": true,
+          "error": "Choose at least one source before enabling news preparation."
+        },
+        {
+          "kind": "missing-source",
+          "rejected": true,
+          "savedProfilesUnchanged": true,
+          "error": "A selected DJ or source no longer exists."
+        },
+        {
+          "kind": "no-dj",
+          "rejected": true,
+          "savedProfilesUnchanged": true,
+          "error": "Choose a saved DJ with voice settings before enabling news preparation."
+        },
+        {
+          "kind": "no-voice-settings",
+          "rejected": true,
+          "savedProfilesUnchanged": true,
+          "error": "Choose a saved DJ with voice settings before enabling news preparation."
+        },
+        {
+          "kind": "blank-mood",
+          "rejected": true,
+          "savedProfilesUnchanged": true,
+          "error": "Describe the host mood before enabling news preparation."
+        },
+        {
+          "kind": "unavailable-profile",
+          "rejected": true,
+          "savedProfilesUnchanged": true,
+          "error": "Make this profile available before enabling news preparation."
+        },
+        {
+          "kind": "no-openai",
+          "rejected": true,
+          "savedProfilesUnchanged": true,
+          "error": "Add an OpenAI key before enabling news preparation."
+        },
+        {
+          "kind": "no-elevenlabs",
+          "rejected": true,
+          "savedProfilesUnchanged": true,
+          "error": "Add an ElevenLabs key before enabling news preparation."
+        },
+        {
+          "kind": "selected-x-no-token",
+          "rejected": true,
+          "savedProfilesUnchanged": true,
+          "error": "Add an X bearer token for the selected X sources before enabling news preparation."
+        }
+      ],
+      "rssWithoutXTokenAccepted": true,
+      "incompleteUnavailableOffSaveWithoutKeys": true,
+      "providerRequests": 0,
+      "result": "passed"
+    },
+    "visibleJourneys": {
+      "cases": [
+        {
+          "kind": "key-removal-during-activation",
+          "removalsVisiblyPendingThroughDurableSave": true,
+          "laterRemovalShowsRepairGuidance": true,
+          "turnOffWithoutEitherKey": true,
+          "availabilityActionReturnsFocus": true,
+          "providerRequests": 0,
+          "result": "passed"
+        },
+        {
+          "kind": "keyless-incomplete-setup",
+          "missingActionsRouteToSourcesDJsKeysMood": true,
+          "managementFocusAndDraftRetained": true,
+          "incompleteOffSaveWithoutKeys": true,
+          "sourceRequests": 0,
+          "providerRequests": 0,
+          "result": "passed"
+        }
+      ],
+      "result": "passed"
+    },
+    "cadence": {
+      "runCompletesWhileSaveWaitsForCredentialLane": true,
+      "cadenceAnchoredToCapturedRunStart": true,
+      "recordingCountedOnce": true,
+      "controlledTextCalls": 1,
+      "controlledVoiceCalls": 1,
+      "result": "passed"
+    },
+    "resume": {
+      "cases": [
+        {
+          "variant": "failure-resume",
+          "identifiedRunAllowsEditing": true,
+          "profileSwitchAndManualGenerationLocked": true,
+          "causeRetainedAcrossRepairSave": true,
+          "saveDoesNotResumeOrRetry": true,
+          "explicitResumeDispatchesOnce": true,
+          "noVoiceForNoStory": true,
+          "selectedTakeUnchanged": true,
+          "musicRemainsPaused": true,
+          "result": "passed"
+        },
+        {
+          "variant": "interrupted-resume",
+          "identifiedRunAllowsEditing": true,
+          "profileSwitchAndManualGenerationLocked": true,
+          "causeRetainedAcrossRepairSave": true,
+          "saveDoesNotResumeOrRetry": true,
+          "explicitResumeDispatchesOnce": true,
+          "noVoiceForNoStory": true,
+          "selectedTakeUnchanged": true,
+          "musicRemainsPaused": true,
+          "result": "passed"
+        }
+      ],
+      "result": "passed"
+    }
+  },
+  "method": {
+    "runtime": {
+      "platform": "macOS 27.2 arm64",
+      "electron": "43.7.0"
+    },
+    "application": "Actual current main/preload/production renderer, typed IPC, serialized LocalState and encrypted per-profile key storage. Fresh protected dummy profiles and hidden muted native windows. Shared provider Keychain adapters substituted to avoid personal entries. Non-fixture external requests blocked.",
+    "before": "After actual required-key checks, hold enabled save before LocalState update. Remove actual OpenAI or ElevenLabs fixture key through typed IPC, then release save. Both original runs committed newsEnabled=true after key removal completed, without an alert. No provider requests.",
+    "ordering": "17 variants hold actual key writers or enabled save at controlled checkpoints. For three providers, activation-first holds later deletion through temporary-file publication; deletion-first rejects activation; replacement-first uses the completed replacement. Further cases cover rejected-write queue recovery, keyless OFF bypass, sign-out, changed host/source/profile/availability and missing-key Resume. Two additional variants prove unselected X deletion/replacement does not become an RSS-profile prerequisite.",
+    "prerequisites": "Nine rejected typed saves preserve all saved profiles. Positive controls accept RSS without X token and incomplete unavailable-profile OFF with no required keys.",
+    "visibleJourneys": "Real UI removes both required keys during held activation. Both removals remain visibly pending until durable save, then missing-setup guidance appears and Turn off succeeds. Fresh default setup directly routes to sources, DJs, provider keys and mood with draft/focus retained; incomplete OFF save succeeds without keys.",
+    "cadence": "Actual automatic text/voice run finishes while a second setup save waits behind a preceding enabled save in the credential queue. The second save captured running request identity before queue entry. It commits six-hour cadence anchored to the original run start and records the completed clip once.",
+    "resume": "Two actual scheduler/service/native UI cases preserve failure/interruption through repair and ordinary Save, suppress implicit retry and dispatch once on separate Resume. Controlled no-story response makes no voice request, changes no selected take and leaves music paused.",
+    "providers": "Activation and prerequisite cases make zero provider requests. Cadence and Resume use substituted OpenAI/ElevenLabs responses with actual service parsing/cancellation/storage; cadence returns valid saved MP3. No live or billed provider requests.",
+    "checkpoints": "Test-only holds expose existing key-write and atomic rename boundaries. Scheduler reference invokes actual tick; production scheduler logic is retained. Activation-only scheduler timers are stopped to isolate save behavior."
+  },
+  "change": {
+    "files": [
+      "src/main/index.ts",
+      "src/main/storage.ts"
+    ],
+    "behavior": "Reuse existing keyWrites promise queue for required-key reads through durable enabled setup save. Keep initial run capture before queue entry and final sign-out/profile/reference/availability guards. Add early sign-out check before queued key reads. OFF/incomplete OFF saves bypass credential queue and required-key checks. Internal key reads/status remain unqueued to avoid recursive deadlock.",
+    "review": "Boris and Nadia independently proposed revision checking versus existing queue. Challenge identified the asynchronous file-publication gap in revision-only checks. Both supported the queue and reviewed the final implementation without a remaining blocker. Nadia suggested the added early sign-out check.",
+    "dependenciesAdded": false,
+    "frontendProductionChangedThisRound": false
+  },
+  "checks": {
+    "buildIncludingTypeScript": "passed",
+    "fullESLint": "passed",
+    "focusedNative": "passed"
+  },
+  "acceptance": {
+    "newControlled": [
+      "R07",
+      "R08"
+    ],
+    "regression": [
+      "R12",
+      "A10"
+    ],
+    "inventory": {
+      "total": 187,
+      "Review": 116,
+      "Dated": 11,
+      "Recorded": 5,
+      "Controlled": 37,
+      "Live": 9,
+      "External": 9
+    },
+    "starMappings": 27,
+    "overallPercentage": null,
+    "goalComplete": false
+  },
+  "fixtureCorrections": [
+    "Availability checkboxes persist through backend/refetch, so UI tests click and poll saved state rather than asserting immediate check/uncheck state.",
+    "An initial cadence fixture held a key edit, which legitimately cancels current generation. Revised cadence case holds a preceding enabled setup save instead, allowing the actual run to finish while another save waits. No app change was needed for that fixture premise.",
+    "The unselected-X report uses a generic queuedReplacementPrecedesValidatedSave field for both deletion and replacement; its explicit order field distinguishes the operations."
+  ],
+  "limits": [
+    "Process-local ordering is verified. Shared OS Keychain read/write latency, external applications changing shared keys, broader hardware/platform behavior and forced termination are not established.",
+    "A later removal retains the saved preparation choice and requires repair; this record does not claim that every later key edit disables opt-in.",
+    "No new layout captures or observed ordinary-listener usability in this round. Live provider quality, audible mix and full PRD acceptance remain open.",
+    "R06 profile-copy behavior and R10 full stale draft scope remain Review. Earlier Q10 debugger-associated shutdown diagnostic remains open.",
+    "Current activation fixtures are debugger-driven. They assert absence of captured fatal files after app close, without claiming a measured zero process exit for every case. Separate Resume regression command terminated zero."
+  ],
+  "sha256": {
+    "src/main/dj-previews.ts": "56d36390dbf9ba2a3177c46ff2a20d4478fa20bc37d6220bc1459b6e592722b3",
+    "src/main/dj-voices.ts": "c5dd6b8af812181e99eb5d30cd4844ede4717460b641319d267620ba5b51f1e9",
+    "src/main/index.ts": "914962e25be78e12f24b7598d338312215850defaa0c9e27a6e245bef8cfcf90",
+    "src/main/jellyfin.ts": "f4d2e4d8ae75807447bd5b4f64b97938594f3935834932bb7d1bec43a8360448",
+    "src/main/keychain.ts": "3d2dd986b94ab4b7dd7b59d96c1e64a9d6f563db4a6c19d6ac781fbb7d3200b5",
+    "src/main/media.ts": "6768544bd3215e37187a12293571c894a1023619ebe8f09e25403bdec0bfb671",
+    "src/main/news-workflow.ts": "7cab5b92c6d4d1476526a75831069de80623ef5b6ca4686345bacfaf01103fb0",
+    "src/main/news.ts": "772a9b50e5c569cd1139498854638866ea7e2d29eef335d05268b6cd6a96be27",
+    "src/main/playback-preferences.ts": "015bbe70cc718f2449061cf25066ecd85e9d2bf281a0cb7d6dd7949fddc5ea4f",
+    "src/main/playlist-recovery.ts": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+    "src/main/prepared-news.ts": "f09a7fd83da395c8de08e1eab3b52f87454e80bbc36dcdad6d2fd1d21f229155",
+    "src/main/storage.ts": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+    "src/preload/index.ts": "0c7edf2153d5210b24a0fac9db667fd254e324366d4737653578ef067c1eac63",
+    "src/renderer/api.ts": "a44175c0fa1b6d5bb3b5fe611e652334f974aa73a93b37b42b0ab2ad45debeca",
+    "src/renderer/env.d.ts": "312771befc8be69efb2c7b2e4050765f6c8f62d9d042f1a103c6c8b4a4a3258d",
+    "src/renderer/pages/DJs/components/DJEditor.presets.ts": "1994c54feef51b032cfb15038b9422f3fcb6243a7bf6df1a453ccf3db597ed5a",
+    "src/shared/dj-playback.ts": "14581d724b465452a8db6314f92134b9d1b1c9709b1def8b805c2f455ffc9a01",
+    "src/shared/news-pool.ts": "2f8ac1bde20b4a9adfd3beedf015e2d7e843dda584e7713be29e1a4c7ad3fa77",
+    "src/shared/news-preparation-status.ts": "188a3acaed39fb05e0f2b32d413701dcc992b42228b7c15c687b8575a01b359c",
+    "src/shared/news-transitions.ts": "dae2314678e39262b7e89986412320c33d96cf8af3dc841188fe5e604eda8c90",
+    "src/shared/playlist-entries.ts": "bb58ab3747844f5080fae78be9a9431bc9cb841fbbb704866cd7e064b5a1292c",
+    "src/shared/sources.ts": "1da2117a59995911c14d098c8c814811ec309fb0d81c2fbf24b53721404e8f18",
+    "src/shared/types.ts": "71e36cce9f904d7327f8d85c38f8ce050c7955877888ed9dde27e4105a6c57f0",
+    "src/shared/voice-previews.ts": "4ebe9fe7dad73cc2195573ec729cb99440313fe8eea24e5b0201154cc8095bfe",
+    "src/shared/workflow.ts": "19e2afad8909330c33195420af54cbbbe836f0bc81bde166cfdf42dd3230e6ac",
+    "src/renderer/App.tsx": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+    "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": "7ec7af5dedfed6f3a29e6584c2b5b2559df4477682b1fcdd19d9ee7456e18d7c",
+    "src/renderer/components/ConfigurationTabs/ConfigurationTabs.component.tsx": "96400645f0978e408da20c69ec9692250e7d58b4d6caec72afec7711f2c8a4b3",
+    "src/renderer/components/FilterSelect/FilterSelect.component.tsx": "2b4bdf3336d249313dc515bce3b58aaacca7257f0f29774c6c5bde5d89189554",
+    "src/renderer/components/InfoHelp/InfoHelp.component.tsx": "be2433410cfe2387f36bae23bc6e993a3f54942e9f7979c1854908a83b508cc8",
+    "src/renderer/components/Inspector/Inspector.component.tsx": "39f001049a50433d0eb0bb16af4a8f51d00811e437c12e2145068e8b329dd893",
+    "src/renderer/components/LibraryChooser.tsx": "3a64a4447975c88150b7076c7e1e6bc8cee1e9396d61829f032c12624e0329d8",
+    "src/renderer/components/Player/DJPopover.component.tsx": "6ffca314f80c990adb9c1fbf81f970560cd5d2debc786e855098f89551e2e4ec",
+    "src/renderer/components/Player/Player.component.tsx": "66f946823cd41e86f27ed6a53d21998cf7543c929066bc8152ccad2e59c89041",
+    "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx": "bbded7b5200757a132f24dd5d2b56edd644c4741e2e26da2d4f2d23c62323f6e",
+    "src/renderer/components/ProviderKeys/TwitterSetupHelp.component.tsx": "49a4b7bd305c502937618daa3acb00fc85100267a60df492cac37efb13254317",
+    "src/renderer/components/Queue/Queue.component.tsx": "4938e07285b9188b3d9105556ed2ebbed3b20951d4b094b079f27a14d113c1a5",
+    "src/renderer/components/Shared.tsx": "303972b169cf42303085a3db1988c04899870a69a6e7591ee4292656785ed2af",
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "953613b0ae870f2160e465ccc820095ac1ddeaa95ff31d6a11fe0b47a44822ee",
+    "src/renderer/dj-playback.tsx": "31e217aa382a88dcfddbfb0b06b0294825d4acdb7a9bc0127dd8e367adf85c5f",
+    "src/renderer/main.tsx": "863a6596bde95ba270f0d554a2ac2bd0c3819ca832f1bfd577d0edf9bb69a7cc",
+    "src/renderer/pages/Albums/Albums.page.tsx": "8abce67107438b4ed395443875aa920b6e71cbc968b3b834c9702ddd745f81ed",
+    "src/renderer/pages/Albums/VirtualAlbums.component.tsx": "a1685437270b676a8a58395b18068911dbf772a82e59cbdcc85be2f17287d62b",
+    "src/renderer/pages/Connection/Connection.page.tsx": "59c3fbc4d305491a570c1520d522e4d0658d285a06df259000adf9bf27dd86c2",
+    "src/renderer/pages/DJs/DJs.page.tsx": "59edbcbd3f4e56834f4757910120b9d914bac36cda4311a5508b81ecb46e8e30",
+    "src/renderer/pages/DJs/components/DJEditor.component.tsx": "2c1260a44cc2fed82542972a9055f63b4d4890fe6232793eaa97a825898c4a7d",
+    "src/renderer/pages/DJs/components/DJPreview.component.tsx": "496eaaac54e8fedb02e33bd2c07b01bc5c4a0b23fcb57940729c32a5bd11c3b8",
+    "src/renderer/pages/DJs/components/NewsDemo.component.tsx": "32c3c7403ed5fc3cb5bfa8841e53650e20eab85e866021d5130af1059e2da8bb",
+    "src/renderer/pages/DJs/components/NewsTest.component.tsx": "228cef24594243a8b2d0591b8c3b9f2611b7c9d94edb9cff1ce0d7253f23e880",
+    "src/renderer/pages/DJs/components/VoicePreview.component.tsx": "b33006579294d0c1fc455f2be47478c6bea30140b7bcbb4ad926dc4c7c3ce81c",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "8bea51f6cb40f8b4ca0714e8af6b344b7e0a6e40278e018935b6a0d5e7f4e721",
+    "src/renderer/pages/Settings/Settings.page.tsx": "ce0c41cd58f82a801b651940cb641945c12ed4c83b765377f6be8d809d1e5d9f",
+    "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx": "be6052babfe16f1b501be68e15feceebba30e960e5596c32329d605c3cc666ae",
+    "src/renderer/pages/Settings/components/NewsTransitionPreview.component.tsx": "b44dc08192dd9d4a354a8f921c1b5e17c6a0cf2291b26b8aa3bd285d55b2ff31",
+    "src/renderer/pages/Settings/components/NewsTransitions.component.tsx": "6335bb50284506a95a0c89cef02b22aeed1e7b87d915800f44237b81899c19b4",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": "6f1c4fd3956da61639d94c430605bb321903da2ffac953894278a3c79c6ae2a9",
+    "src/renderer/pages/Songs/Songs.page.tsx": "79b3115960d53568bac407d5754ff0996fee44ba895b222d99b4e0fb71e3007f",
+    "src/renderer/pages/Songs/VirtualSongs.component.tsx": "95ada95c0533bb1e462a818f6981c60d22cd4a9a8e4df27b8cea6cc3119606e4",
+    "src/renderer/pages/Sources/Sources.page.tsx": "ca6d1678a1c72dbf57e184f109e86449e4f2d2c90214fe46be49466e39039d09",
+    "src/renderer/pages/Stations/Stations.page.tsx": "eb2bd7d0dc351364e2ab221f3411098b0fe66a21665bd5aba408ca63750b97e8",
+    "src/renderer/pages/Stations/components/NewsBucket.component.tsx": "6c0f50ac02b5f6b5cd81c9ec45fb378a9a966cc7752d7ce6b5c4d1c4bae14b73",
+    "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": "f0d6f796583bacd037d689097fbfa106986411ec14cce1dd1f947f543f6f2d3d",
+    "src/renderer/pages/Stations/components/RoomSetup.component.tsx": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330",
+    "src/renderer/player.tsx": "0d72985571ede7ae6562a95220c03bbdfec6f9367c0741e131a06481bd40e7f6",
+    "src/renderer/components/ConfigurationTabs/ConfigurationTabs.styles.css": "37c975396e44e614cbdc4a93c754811a3354de480368110b669de0f22e4b7aac",
+    "src/renderer/components/Drawer/Drawer.styles.css": "dde2398e4d04bfbb0f08213cef31269cd976369c0da572265b5f66c2063b8ebd",
+    "src/renderer/components/FilterSelect/FilterSelect.styles.css": "0b5fdd8572893b66491b254570073cffa6159c43c9994f5735620d9c8b20ecf5",
+    "src/renderer/components/InfoHelp/InfoHelp.styles.css": "11ead1741c69a410363a03a2f2b0d35c5af343194af07d279f4a4cb4e6e457dd",
+    "src/renderer/components/LibraryChooser.styles.css": "f6179de164b95ac12688d0315e1fcbe6bb88d99e05c8f456686e685ba8070b4d",
+    "src/renderer/components/Player/DJPopover.styles.css": "e86622d91af213471f08f03840d76c01a3bece3349e5a9f7d44d159aab143cfb",
+    "src/renderer/components/Player/Player.styles.css": "c14c24b2b563243706fd7deecf0e7e1307965a3830d6208d313b8d0ac25d8114",
+    "src/renderer/components/ProviderKeys/ProviderKeys.styles.css": "a5c4591adee99b2d12a3cbcbd217a237a5c63d1a400c561f6d5f7b34a70a7eef",
+    "src/renderer/components/ProviderKeys/TwitterSetupHelp.styles.css": "903f3e8e1a8b28bed66ea43215ea748e882d86ca84af10d2aff90ceee5343372",
+    "src/renderer/components/TrackTable/TrackTable.styles.css": "bff832f10f28bbb8518a60ea5b2a87ed7706609efb2d68473f6f4bef36d4531b",
+    "src/renderer/pages/Albums/Albums.styles.css": "303df2716fabb9f24cc9dfa5bd8cf2e41c34d6b5e2ab0ac0d4d16d698bfc677f",
+    "src/renderer/pages/DJs/DJs.styles.css": "81044baca1044543c53e8ea534e80a88c1de87f022cee0b7f695fd740bac166c",
+    "src/renderer/pages/DJs/components/DJEditor.styles.css": "ae4d6645080ff472534359c69e085afe541ac958aa0baaf586deeaf647a63307",
+    "src/renderer/pages/DJs/components/VoicePreview.styles.css": "72330c31a16ed631f0864cb53ef89c4692144fb1807190fb959214e2d1e23ecd",
+    "src/renderer/pages/Settings/Settings.styles.css": "3dee7bb24d07bfdd2bde886d5939346242a601cabb49e6133042e9bb2c29abd8",
+    "src/renderer/pages/Settings/components/NewsTransitions.styles.css": "c754457c4e14e987ef9b10e4d08b05bea0fbdf60cdcfee552efae28f550519e2",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.styles.css": "f0c2acdbd464220ecc5a396e99d3d2f670da8115fe6a5fbb7efa11ca82db250b",
+    "src/renderer/pages/Songs/VirtualSongs.styles.css": "519f4e3dd502c1d1fb90edf70f7cede0753be941954b5bc405e889cf19558792",
+    "src/renderer/pages/Sources/Sources.styles.css": "e83a0ebcf841578e24c3f0accc40e5f8f977f6d27fcdf23198faf2400f2793c7",
+    "src/renderer/pages/Stations/Stations.styles.css": "635dc822e94170972a94ab6803f29cadf3f10c4e5551c894184acfa4bceb3e01",
+    "src/renderer/pages/Stations/components/NewsBucket.styles.css": "90748f9d847eebc8682f9de81ae231b3392712a6299489d953dca201769408ef",
+    "src/renderer/pages/Stations/components/PreparedTakes.styles.css": "1fe1fda94498078afc0b38cbc30eaa1fe8b94e7481415d2159a9699a02a94143",
+    "src/renderer/styles.css": "d2574b87ecdadde78394f477adf6b859905ac871acaeee90bdfbb811b537b61c",
+    "out/main/index.js": "495e032e735900c0ea49341bb7bb59aead28d3f1bbf4410772d854cbea0150b5",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+    "out/renderer/assets/index-DTtfGQkf.js": "e933b164342c6d89c1ab5d23b9ce50b92443418fa6705ee66f32fb94f6a15e23",
+    "out/renderer/assets/index-ZOgMZShw.css": "d8229b9932315a7d35fd286e73333f3c63eb5a2b0c08077751b537daa13118dd"
+  },
+  "fixtureReproducerSha256": {
+    "/private/tmp/native-activation-guards/before-build.mjs": "74a501ef7899b402fd8737eab5956cdb62193bc3d2352597d9018e104584b505",
+    "/private/tmp/native-activation-guards/before-main.js": "792c266a8a7d77ad59a297adf309456287f6e08afdc902f2900621fa69dc4b83",
+    "/private/tmp/native-activation-guards/race.cjs": "a0fc53fda833444a4cd3f4ac9a7cf25929dfad79336de56c393162b7a77de21e",
+    "/private/tmp/native-activation-guards/build.mjs": "22b609681315fd459ce0366f8af1a181157ae02e1eb62ab359c7d8e330db5c00",
+    "/private/tmp/native-activation-guards/bootstrap.mjs": "b54a95a71a3a2e8fb2f214f950ee284c159b08b0c0a746e53e263efc10b32a0a",
+    "/private/tmp/native-activation-guards/queue.cjs": "96da5fa5a48e24e286ebed1b2ab4c4dc9d6ea512584fa0c887c3b261fa209f71",
+    "/private/tmp/native-activation-guards/prerequisites.cjs": "4c9a3c9094be8d34447a14021a66d02de189104ca2b4e90ab8e91ca0a7e41d0a",
+    "/private/tmp/native-activation-guards/ui.cjs": "2537eb3a913305e90c38c948c7436ea23e06a11af0435e0b5f60c187bee3b49d",
+    "/private/tmp/native-activation-guards/cadence.cjs": "21c0cea7227c995049b7513ffbfb3fd91c155562b10018b5d362fb54490bfe39",
+    "/private/tmp/native-activation-guards/cadence-key-edit-attempt.cjs": "260f512281144f7e703f2b0bfd60d7878b11d42a86358a6c3ac895c342c9fbdf",
+    "/private/tmp/native-activation-guards/build.log": "81b8b7bcb5bc949f17df05fb46a636a29e466a5de64dc03777cc3f471f275765",
+    "/private/tmp/native-activation-guards/lint.log": "6f1680e0ff047e07a06dcf9afc079770fad3f871d47a52ee12dccaaa84366d63",
+    "/private/tmp/native-activation-guards/before-race.json": "5d1ad3246b6e9910ed097f145bcf3f7d6a553d63dfa492e4d37e063690a6df2f",
+    "/private/tmp/native-activation-guards/queue-main.json": "88457963b46cd7d35b933b00bd5c609f0fd163a0386f59a55cdadab3e39c604b",
+    "/private/tmp/native-activation-guards/queue-extra.json": "8bc677c30812379c41dbfcaa9b18da7743da30e18a2018df4bd5380284eeb466",
+    "/private/tmp/native-activation-guards/prerequisites.json": "6042725935ca9bac10aa807aed9893a00b3befbb14ab62d9abc4d6175d8466db",
+    "/private/tmp/native-activation-guards/ui.json": "36cac7e9112ec08c6242bc958143544c7dab118e0f92bd848543abeecb75f3db",
+    "/private/tmp/native-activation-guards/cadence.json": "ae29ed3a09768d3828014f36669b06ef2ebabad6949bdd28cb445277ca797114",
+    "/private/tmp/native-activation-resume/build.mjs": "bb10a13fa56b694a2e8ecf634f10575205fe00999458748720f5557abdc56adf",
+    "/private/tmp/native-activation-resume/bootstrap.mjs": "af562563eaa0f9cf5a0fbfb23def7a02b7d63311cb7729f8c714080beeaa82cd",
+    "/private/tmp/native-activation-resume/run.cjs": "ca1163e000150960f16754159ed064ab68bd97b97524c19cef426918043d52ee",
+    "/private/tmp/native-activation-resume/report.json": "ea55c974e89f0d5ddbe01a7882df97bc939da9509ad263726359725663436c57"
+  },
+  "priorSnapshot": "2026-10-16-automatic-controls.json preserves the previous production source/bundle hashes. Prior dated records remain unchanged."
+}

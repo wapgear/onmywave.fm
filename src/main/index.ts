@@ -8,16 +8,18 @@ import { app, BrowserWindow, ipcMain, net, protocol, session, shell } from 'elec
 import { randomUUID } from 'node:crypto';
 import { dirname, extname, join, relative, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { JellyfinService, ServiceError } from './jellyfin';
-import { getLocalState, openAIKeyStatus, readConnection, readOpenAIKey, updateLocalState, writeConnection, writeOpenAIKey, readElevenLabsKey, elevenLabsKeyStatus, writeElevenLabsKey } from './storage';
+import { acknowledgePlaylistRecovery, beginPlaylistRead, finishPlaylistRead, invalidatePlaylistReceipts, playlistRecoveryKey, playlistCreationRecoveryKey, playlistRecoveryStatuses, withPlaylistRecovery } from './playlist-recovery';
+import { JellyfinService, ServiceError, PLAYLIST_CREATION } from './jellyfin';
+import { getLocalState, openAIKeyStatus, readDeviceIdentity, readConnection, readOpenAIKey, updateLocalState, withProviderKeys, writeConnection, writeOpenAIKey, readElevenLabsKey, elevenLabsKeyStatus, writeElevenLabsKey } from './storage';
 import { preparePlayback, registerMedia, registerSpeechAudio, revokeMedia, revokeSpeechAudio } from './media';
 import { NewsService, validateNewsSettings } from './news';
-import { getPreparedNews, prepareNewsScript, renderNewsTake, selectNewsTake, cancelPreparedNews, isPreparedNewsActive, nextRoomNews, releasePreparedNews, markPreparedNewsPlayed, reconcilePreparedNews, submitReviewedCandidates, completeReviewedCandidates, interruptReviewedCandidates, releaseReviewedCandidates, savePreparedScript, reviewedArticleUrls } from './prepared-news';
-import { pauseNewsWorkflow, startNewsWorkflow, stopNewsWorkflow } from './news-workflow';
+import { getPreparedNews, prepareNewsScript, renderNewsTake, selectNewsTake, cancelPreparedNews, cancelActivePreparedNews, isPreparedNewsActive, nextRoomNews, releasePreparedNews, markPreparedNewsPlayed, reconcilePreparedNews, submitReviewedCandidates, completeReviewedCandidates, interruptReviewedCandidates, releaseReviewedCandidates, savePreparedScript, reviewedArticleUrls } from './prepared-news';
+import { pauseNewsWorkflow, startNewsWorkflow, stopNewsWorkflow, invalidateNewsWorkflow } from './news-workflow';
 import { isNewsTransitionSettings, normalizeNewsTransitionSettings } from '../shared/news-transitions';
 import { isWorkflowDraft, normalizeWorkflowDraft } from '../shared/workflow';
 import type { WorkflowDraft } from '../shared/workflow';
-import type { ApiError, DJ, NewsBreak, NewsProgress, PlaybackSnapshot, NewsSource, ListeningRoom, LocalState } from '../shared/types';
+import type { ApiError, DJ, NewsBreak, NewsProgress, PlaybackSnapshot, PlaybackPreferences, NewsSource, ListeningRoom, LocalState } from '../shared/types';
+import { defaultPlaybackPreferences, playbackPreferenceKey } from './playback-preferences';
 
 app.setName('onmywave.fm Light');
 app.setPath('userData', join(app.getPath('appData'), 'onmywave-light'));
@@ -27,7 +29,9 @@ protocol.registerSchemesAsPrivileged([
 ]);
 const directory = dirname(fileURLToPath(import.meta.url));
 let window: BrowserWindow | null = null;
-const news = new NewsService({ getApiKey: readOpenAIKey, getTwitterKey: readTwitterKey, getElevenApiKey: readElevenLabsKey, onProgress: value => {
+let signingOut = false;
+let preparationEpoch = 0;
+const news = new NewsService({ canGenerate: () => !signingOut && !!service.connection(), getApiKey: readOpenAIKey, getTwitterKey: readTwitterKey, getElevenApiKey: readElevenLabsKey, onProgress: value => {
   if ((activeNews === value.requestId || isPreparedNewsActive(value.requestId)) && window && !window.isDestroyed()) window.webContents.send('wave:newsProgress', value);
 } });
 let activeNews: string | null = null;
@@ -37,7 +41,10 @@ function cancelNews(requestId?: string) {
   news.cancel(requestId);
   if (!requestId || requestId === activeNews) { ++newsGeneration; activeNews = null; revokeSpeechAudio(); }
 }
-const service = new JellyfinService({ deviceId: 'onmywave-light', imageUrl: id => `wave-media://artwork/${id}`, onConnectionChanged: () => { cancelNews(); revokeMedia(); } });
+let playlistSessionEpoch = 0;
+let service: JellyfinService;
+let deviceId: string;
+let persistentDeviceIdentity = false;
 const invalid = () => { throw new ServiceError('invalid', 'Invalid request.'); };
 const isRecord = (value: unknown): value is Record<string, unknown> => !!value && typeof value === 'object' && !Array.isArray(value);
 const text = (value: unknown, max: number): value is string => typeof value === 'string' && value.length <= max;
@@ -67,6 +74,11 @@ function validateRoomConfiguration(value: unknown): asserts value is { room: Lis
 function validateRoomReferences(room: ListeningRoom, state: LocalState) {
   if ((room.djId !== null && !state.djs.some(dj => dj.id === room.djId)) || room.sourceIds.some(id => !state.sources.some(source => source.id === id))) throw new ServiceError('invalid', 'A selected DJ or source no longer exists.');
 }
+function markChangedProfileRuns(state: LocalState, affected: (profile: LocalState['roomProfiles'][number]) => boolean): Partial<LocalState> {
+  const roomProfiles = state.roomProfiles.map(profile => affected(profile) && profile.workflowDraft.newsLastRun
+    ? { ...profile, workflowDraft: { ...profile.workflowDraft, newsLastRun: { ...profile.workflowDraft.newsLastRun, setupChanged: true } } } : profile);
+  return { roomProfiles, ...(state.activeRoomProfileId ? { workflowDraft: roomProfiles.find(profile => profile.id === state.activeRoomProfileId)?.workflowDraft } : {}) };
+}
 function profileName(value: unknown): string {
   if (!text(value, 80) || !value.trim()) throw new ServiceError('invalid', 'Give this configuration a name of up to 80 characters.');
   return value.trim();
@@ -81,42 +93,111 @@ function validatePlayback(value: unknown): asserts value is PlaybackSnapshot | n
     || !Number.isInteger(value.currentIndex) || (value.currentIndex as number) < 0 || (value.currentIndex as number) >= Math.max(1, (value.trackIds as string[]).length)
     || typeof value.position !== 'number' || !Number.isFinite(value.position) || value.position < 0
     || typeof value.volume !== 'number' || !Number.isFinite(value.volume) || value.volume < 0 || value.volume > 1
-    || typeof value.shuffle !== 'boolean' || !['off', 'all', 'one'].includes(String(value.repeat))
+    || typeof value.shuffle !== 'boolean' || typeof value.repeat !== 'string' || !['off', 'all', 'one'].includes(value.repeat)
     || (value.outputId !== undefined && !text(value.outputId, 512))) invalid();
 }
 
-async function persistConnection() {
-  const value = service.exportSession();
-  const saved = await writeConnection(value ? { ...value, id: service.connection()!.id } : null);
-  service.setSessionOnly(!saved);
-}
 
 function registerIpc() {
   const operations: Record<string, (input: never) => unknown> = {
     getConnection: () => service.connection(),
     connect: async (input: { serverUrl: string; username: string; password: string }) => {
       if (!isRecord(input) || !text(input.serverUrl, 2048) || !text(input.username, 256) || !text(input.password, 4096)) invalid();
+      if (signingOut) throw new ServiceError('invalid', 'Wait for sign-out to finish before signing in.');
       await service.connect(input);
-      await persistConnection();
+      if (service.connection() && !signingOut) news.resumeGeneration();
       return service.connection();
     },
-    disconnect: async () => { await service.disconnect(); await persistConnection(); },
+    disconnect: async () => {
+      if (signingOut) throw new ServiceError('invalid', 'Sign-out is already in progress.');
+      signingOut = true;
+      service.cancelPendingSignIns();
+      ++preparationEpoch;
+      invalidateNewsWorkflow();
+      cancelActivePreparedNews();
+      news.cancelGeneration();
+      try {
+        await updateLocalState(state => {
+          const roomProfiles = state.roomProfiles.map(profile => profile.workflowDraft.newsEnabled
+            ? { ...profile, workflowDraft: { ...profile.workflowDraft, newsWorkflowPaused: true, nextNewsCheckAt: undefined } } : profile);
+          return { roomProfiles, workflowDraft: roomProfiles.find(profile => profile.id === state.activeRoomProfileId)!.workflowDraft };
+        });
+        try { await service.disconnect(); }
+        catch {
+          throw new ServiceError('server', 'Sign-out could not finish. You are still signed in. Try again.');
+        }
+      } finally {
+        signingOut = false;
+        if (service.connection()) news.resumeGeneration();
+      }
+    },
     libraries: () => service.libraries(),
     libraryFilters: () => service.libraryFilters(),
-    selectLibraries: async input => { await service.selectLibraries(input); await persistConnection(); return service.connection(); },
+    selectLibraries: input => service.selectLibraries(input),
     songs: input => service.songs(input), albums: input => service.albums(input),
-    albumTracks: input => service.albumTracks(input), song: input => service.song(input),
-    playlists: () => service.playlists(), playlist: input => service.playlist(input),
+    album: input => service.album(input), albumTracks: input => service.albumTracks(input), song: input => service.song(input),
+    playlists: async () => {
+      const current = service.exportSession(), epoch = playlistSessionEpoch;
+      if (!current) throw new ServiceError('unauthorized', 'Sign in to Jellyfin.');
+      const key = playlistCreationRecoveryKey(current.serverUrl, current.userId);
+      let before;
+      try { before = await beginPlaylistRead(key); } catch { /* Existing playlists remain available for listening. */ }
+      if (epoch !== playlistSessionEpoch) throw new ServiceError('invalid', 'The connection changed. Refresh your playlists.');
+      const items = await service.playlists();
+      if (epoch !== playlistSessionEpoch) throw new ServiceError('invalid', 'The connection changed. Refresh your playlists.');
+      let creationRecovery;
+      try { creationRecovery = before ? await finishPlaylistRead(key, before) : { status: 'unavailable' as const }; }
+      catch { creationRecovery = { status: 'unavailable' as const }; }
+      const statuses = await playlistRecoveryStatuses(items.map(item => playlistRecoveryKey(current.serverUrl, current.userId, item.id)));
+      if (epoch !== playlistSessionEpoch) throw new ServiceError('invalid', 'The connection changed. Refresh your playlists.');
+      return { items: items.map((item, index) => ({ ...item, recoveryStatus: statuses[index] })), creationRecovery };
+    },
+    acknowledgePlaylistCreation: async (input: { markerId: string; receipt: string }) => {
+      if (!isRecord(input) || !text(input.markerId, 36) || !text(input.receipt, 36)) invalid();
+      const current = service.exportSession(), epoch = playlistSessionEpoch;
+      if (!current) throw new ServiceError('unauthorized', 'Sign in to Jellyfin.');
+      await acknowledgePlaylistRecovery(playlistCreationRecoveryKey(current.serverUrl, current.userId), input.markerId, input.receipt, () => epoch === playlistSessionEpoch);
+    },
+    playlist: async (input: string) => {
+      const current = service.exportSession(), epoch = playlistSessionEpoch;
+      if (!current) throw new ServiceError('unauthorized', 'Sign in to Jellyfin.');
+      const key = typeof input === 'string' ? playlistRecoveryKey(current.serverUrl, current.userId, input) : '';
+      let before;
+      try { before = await beginPlaylistRead(key); } catch { /* Listening stays available if edit recovery cannot be read. */ }
+      if (epoch !== playlistSessionEpoch) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
+      const detail = await service.playlist(input);
+      if (epoch !== playlistSessionEpoch) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
+      let editRecovery;
+      try { editRecovery = before ? await finishPlaylistRead(key, before) : { status: 'unavailable' as const }; }
+      catch { editRecovery = { status: 'unavailable' as const }; }
+      if (epoch !== playlistSessionEpoch) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
+      return { ...detail, editRecovery };
+    },
+    acknowledgePlaylistRecovery: async (input: { id: string; markerId: string; receipt: string }) => {
+      if (!isRecord(input) || !text(input.id, 128) || !text(input.markerId, 36) || !text(input.receipt, 36)) invalid();
+      const current = service.exportSession(), epoch = playlistSessionEpoch;
+      if (!current) throw new ServiceError('unauthorized', 'Sign in to Jellyfin.');
+      await acknowledgePlaylistRecovery(playlistRecoveryKey(current.serverUrl, current.userId, input.id), input.markerId, input.receipt, () => epoch === playlistSessionEpoch);
+    },
     createPlaylist: input => service.createPlaylist(input), renamePlaylist: input => service.renamePlaylist(input),
     addPlaylistItems: input => service.addPlaylistItems(input), removePlaylistEntries: input => service.removePlaylistEntries(input),
     movePlaylistEntry: input => service.movePlaylistEntry(input),
     preparePlayback: (input: { id: string; transcode?: boolean; offsetSeconds?: number }) => {
       if (!isRecord(input) || typeof input.id !== 'string' || (input.transcode !== undefined && typeof input.transcode !== 'boolean')) invalid();
       const current = service.exportSession();
-      return preparePlayback(current ? { ...current, id: service.connection()!.id } : null, input);
+      return preparePlayback(current ? { ...current, id: service.connection()!.id } : null, input, deviceId);
     },
     getLocalState: () => getLocalState(),
-    saveDjs: async input => { validateDjs(input); await updateLocalState({ djs: input }); },
+    saveDjs: async input => {
+      validateDjs(input);
+      const djs = input as DJ[];
+      await updateLocalState(state => {
+        const before = new Map(state.djs.map(dj => [dj.id, JSON.stringify(dj)]));
+        const after = new Map(djs.map(dj => [dj.id, JSON.stringify(dj)]));
+        const changed = new Set([...before.keys(), ...after.keys()].filter(id => before.get(id) !== after.get(id)));
+        return { djs, ...markChangedProfileRuns(state, profile => Boolean(profile.room.djId && changed.has(profile.room.djId))) };
+      });
+    },
     searchDJVoices,
     saveVibe: async input => { if (!text(input, 20_000)) invalid(); await updateLocalState({ vibe: input }); },
     saveNewsTransitions: async input => {
@@ -125,40 +206,128 @@ function registerIpc() {
       await updateLocalState({ newsTransitions: settings });
       return settings;
     },
-    savePlayback: async input => { validatePlayback(input); await updateLocalState({ playback: input }); },
-    saveWorkflowDraft: async (input: { workflowDraft: WorkflowDraft; room: ListeningRoom; mood: string }) => {
-      validateRoomConfiguration(input);
-      const latest = await getLocalState();
-      const activeProfileId = latest.activeRoomProfileId;
+    savePlayback: async (input: PlaybackSnapshot | null) => {
+      validatePlayback(input);
       await updateLocalState(state => {
-        validateRoomReferences(input.room, state);
-        const profile = state.roomProfiles.find(value => value.id === activeProfileId);
-        const requested = normalizeWorkflowDraft(input.workflowDraft);
-        const room = { djId: input.room.djId, sourceIds: [...new Set(input.room.sourceIds)] };
-        const changed = !profile || requested.newsEnabled !== profile.workflowDraft.newsEnabled || requested.everyHours !== profile.workflowDraft.everyHours
-          || requested.importance !== profile.workflowDraft.importance || requested.maxNewsClipsPerDay !== profile.workflowDraft.maxNewsClipsPerDay
-          || requested.newsInterests !== profile.workflowDraft.newsInterests || input.mood.trim() !== profile.mood || JSON.stringify(room) !== JSON.stringify(profile.room);
-        const workflowDraft: WorkflowDraft = {
-          ...requested,
-          ...(profile?.workflowDraft.newsAssessmentDate ? { newsAssessmentDate: profile.workflowDraft.newsAssessmentDate } : {}),
-          ...(profile?.workflowDraft.newsAssessmentsToday !== undefined ? { newsAssessmentsToday: profile.workflowDraft.newsAssessmentsToday } : {}),
-          ...(profile?.workflowDraft.newsClipDate ? { newsClipDate: profile.workflowDraft.newsClipDate } : {}),
-          ...(profile?.workflowDraft.newsClipsToday !== undefined ? { newsClipsToday: profile.workflowDraft.newsClipsToday } : {}),
-          ...(!changed && profile?.workflowDraft.nextNewsCheckAt ? { nextNewsCheckAt: profile.workflowDraft.nextNewsCheckAt } : {}),
+        const connectionId = service.connection()?.id;
+        if (signingOut || !connectionId) return {};
+        if (!input) return state.playback?.connectionId === connectionId ? { playback: null } : {};
+        if (input.connectionId !== connectionId) return {};
+        const { volume, shuffle, repeat } = input;
+        return {
+          playback: state.playback && state.playback.connectionId !== connectionId && !input.trackIds.length ? state.playback : input,
+          playbackPreferences: { ...state.playbackPreferences, [playbackPreferenceKey(connectionId)]: { volume, shuffle, repeat } },
         };
-        return { workflowDraft, listeningRoom: room, vibe: input.mood.trim() };
       });
+    },
+    getPlaybackPreferences: async (connectionId: string) => {
+      if (!text(connectionId, 4096) || !connectionId) invalid();
+      const state = await getLocalState();
+      if (signingOut || service.connection()?.id !== connectionId) return null;
+      return state.playbackPreferences[playbackPreferenceKey(connectionId)] ?? defaultPlaybackPreferences();
+    },
+    savePlaybackPreferences: async (input: { connectionId: string; options: Partial<PlaybackPreferences> }) => {
+      if (!isRecord(input) || !text(input.connectionId, 4096) || !input.connectionId || !isRecord(input.options)) invalid();
+      const options = input.options;
+      if (!Object.keys(options).length || Object.keys(options).some(key => !['volume', 'shuffle', 'repeat'].includes(key))
+        || ('volume' in options && (typeof options.volume !== 'number' || !Number.isFinite(options.volume) || options.volume < 0 || options.volume > 1))
+        || ('shuffle' in options && typeof options.shuffle !== 'boolean')
+        || ('repeat' in options && (typeof options.repeat !== 'string' || !['off', 'all', 'one'].includes(options.repeat)))) invalid();
+      let saved = false;
+      await updateLocalState(state => {
+        const playback = state.playback;
+        if (signingOut || service.connection()?.id !== input.connectionId) return {};
+        saved = true;
+        const key = playbackPreferenceKey(input.connectionId);
+        return {
+          playback: playback?.connectionId === input.connectionId ? { ...playback, ...options } : playback,
+          playbackPreferences: { ...state.playbackPreferences, [key]: { ...(state.playbackPreferences[key] ?? defaultPlaybackPreferences()), ...options } },
+        };
+      });
+      return saved;
+    },
+    saveWorkflowDraft: async (input: { expectedProfileId: string; workflowDraft: WorkflowDraft; room: ListeningRoom; mood: string; resumePreparation?: boolean }) => {
+      const epoch = preparationEpoch;
+      if (signingOut) throw new ServiceError('invalid', 'Wait for sign-out to finish before saving news settings.');
+      validateRoomConfiguration(input);
+      profileId(input.expectedProfileId);
+      if (input.resumePreparation !== undefined && typeof input.resumePreparation !== 'boolean') invalid();
+      const latest = await getLocalState();
+      const activeProfileId = input.expectedProfileId;
+      const initialRun = latest.roomProfiles.find(profile => profile.id === activeProfileId)?.workflowDraft.newsLastRun;
+      const runningRequestId = initialRun?.outcome === 'running' ? initialRun.requestId : undefined;
+      if (latest.activeRoomProfileId !== activeProfileId) throw new ServiceError('invalid', 'The profile changed before saving. Review its settings and save again.');
+      validateRoomReferences(input.room, latest);
+      const selectedSources = latest.sources.filter(source => input.room.sourceIds.includes(source.id));
+      const selectedDj = latest.djs.find(dj => dj.id === input.room.djId);
+      if (input.workflowDraft.newsEnabled) {
+        if (!latest.roomProfiles.find(profile => profile.id === activeProfileId)?.enabled) throw new ServiceError('invalid', 'Make this profile available before enabling news preparation.');
+        if (!selectedSources.length) throw new ServiceError('invalid', 'Choose at least one source before enabling news preparation.');
+        if (!selectedDj?.news) throw new ServiceError('invalid', 'Choose a saved DJ with voice settings before enabling news preparation.');
+        if (!input.mood.trim()) throw new ServiceError('invalid', 'Describe the host mood before enabling news preparation.');
+      }
+      const save = async () => {
+        if (signingOut || epoch !== preparationEpoch) throw new ServiceError('invalid', 'Sign-out interrupted this save. Sign in and review the saved news settings.');
+        if (input.workflowDraft.newsEnabled) {
+          if (!await readOpenAIKey()) throw new ServiceError('invalid', 'Add an OpenAI key before enabling news preparation.');
+          if (!await readElevenLabsKey()) throw new ServiceError('invalid', 'Add an ElevenLabs key before enabling news preparation.');
+          if (selectedSources.some(source => source.kind === 'twitter') && !await readTwitterKey()) throw new ServiceError('invalid', 'Add an X bearer token for the selected X sources before enabling news preparation.');
+        }
+        await updateLocalState(state => {
+          if (signingOut || epoch !== preparationEpoch) throw new ServiceError('invalid', 'Sign-out interrupted this save. Sign in and review the saved news settings.');
+          if (state.activeRoomProfileId !== activeProfileId) throw new ServiceError('invalid', 'The profile changed while saving. Review its settings and save again.');
+          validateRoomReferences(input.room, state);
+          if (input.workflowDraft.newsEnabled && (JSON.stringify(selectedDj) !== JSON.stringify(state.djs.find(dj => dj.id === input.room.djId))
+            || JSON.stringify(selectedSources) !== JSON.stringify(state.sources.filter(source => input.room.sourceIds.includes(source.id)))
+            || !state.roomProfiles.find(profile => profile.id === activeProfileId)?.enabled)) throw new ServiceError('invalid', 'The selected host or sources changed while saving. Review them and save again.');
+          const profile = state.roomProfiles.find(value => value.id === activeProfileId);
+          const requested = normalizeWorkflowDraft(input.workflowDraft);
+          const explicitResume = input.resumePreparation === true;
+          const room = { djId: input.room.djId, sourceIds: [...new Set(input.room.sourceIds)] };
+          const changed = !profile || requested.newsEnabled !== profile.workflowDraft.newsEnabled || requested.everyHours !== profile.workflowDraft.everyHours
+            || requested.importance !== profile.workflowDraft.importance || requested.maxNewsClipsPerDay !== profile.workflowDraft.maxNewsClipsPerDay
+            || requested.newsInterests !== profile.workflowDraft.newsInterests || input.mood.trim() !== profile.mood || JSON.stringify(room) !== JSON.stringify(profile.room);
+          const run = profile?.workflowDraft.newsLastRun;
+          const anchoredRun = run && (run.outcome === 'running' || run.requestId === runningRequestId) ? run : undefined;
+          const workflowDraft: WorkflowDraft = {
+            ...requested,
+            newsLastRun: profile?.workflowDraft.newsLastRun ? { ...profile.workflowDraft.newsLastRun, ...(changed ? { setupChanged: true } : {}) } : undefined,
+            newsWorkflowPaused: profile?.workflowDraft.newsWorkflowPaused && !explicitResume ? true : undefined,
+            newsWorkflowError: explicitResume ? undefined : profile?.workflowDraft.newsWorkflowError,
+            newsAssessmentDate: profile?.workflowDraft.newsAssessmentDate,
+            newsAssessmentsToday: profile?.workflowDraft.newsAssessmentsToday,
+            newsClipDate: profile?.workflowDraft.newsClipDate,
+            newsClipsToday: profile?.workflowDraft.newsClipsToday,
+            nextNewsCheckAt: !requested.newsEnabled ? undefined : !changed ? profile?.workflowDraft.nextNewsCheckAt
+              : anchoredRun ? new Date(Date.parse(anchoredRun.startedAt) + requested.everyHours * 60 * 60 * 1000).toISOString() : undefined,
+          };
+          return { workflowDraft, listeningRoom: room, vibe: input.mood.trim() };
+        });
+      };
+      if (input.workflowDraft.newsEnabled) await withProviderKeys(save);
+      else await save();
       if (input.workflowDraft.newsEnabled === false) pauseNewsWorkflow(activeProfileId);
+    },
+    disableNewsPreparation: async (input: string) => {
+      profileId(input);
+      await updateLocalState(state => {
+        const profile = state.roomProfiles.find(value => value.id === input);
+        if (!profile) throw new ServiceError('not-found', 'This news profile no longer exists.');
+        const workflowDraft = { ...profile.workflowDraft, newsEnabled: false, nextNewsCheckAt: undefined };
+        return { roomProfiles: state.roomProfiles.map(value => value.id === input ? { ...value, workflowDraft } : value),
+          ...(state.activeRoomProfileId === input ? { workflowDraft } : {}) };
+      });
+      pauseNewsWorkflow(input);
     },
     saveRoomProfile: async (input: { name: string; room: ListeningRoom; mood: string; workflowDraft: WorkflowDraft }) => {
       validateRoomConfiguration(input);
       const name = profileName(input.name);
       const workflowDraft = { ...normalizeWorkflowDraft(input.workflowDraft), newsEnabled: false, nextNewsCheckAt: undefined, newsWorkflowError: undefined,
-        newsAssessmentDate: undefined, newsAssessmentsToday: undefined, newsClipDate: undefined, newsClipsToday: undefined };
+        newsAssessmentDate: undefined, newsAssessmentsToday: undefined, newsClipDate: undefined, newsClipsToday: undefined, newsLastRun: undefined, newsWorkflowPaused: undefined };
       await updateLocalState(state => {
         validateRoomReferences(input.room, state);
         if (state.roomProfiles.length >= 100) throw new ServiceError('invalid', 'You can save up to 100 configurations.');
-        return { roomProfiles: [...state.roomProfiles, { enabled: true, id: randomUUID(), name, room: { djId: input.room.djId, sourceIds: [...new Set(input.room.sourceIds)] }, mood: input.mood.trim(), workflowDraft }] };
+        return { roomProfiles: [...state.roomProfiles, { enabled: false, id: randomUUID(), name, room: { djId: input.room.djId, sourceIds: [...new Set(input.room.sourceIds)] }, mood: input.mood.trim(), workflowDraft }] };
       });
     },
     activateRoomProfile: async (input: string) => {
@@ -194,7 +363,13 @@ function registerIpc() {
       let sources: NewsSource[];
       try { sources = input.map(normalizeNewsSource); } catch (error) { throw new ServiceError('invalid', error instanceof Error ? error.message : 'Invalid source.'); }
       if (new Set(sources.map(source => `${source.kind}:${source.url}`)).size !== sources.length) throw new ServiceError('invalid', 'This source is already configured.');
-      await updateLocalState(state => ({ sources, listeningRoom: { ...state.listeningRoom, sourceIds: state.listeningRoom.sourceIds.filter(id => sources.some(source => source.id === id)) } }));
+      await updateLocalState(state => {
+        const before = new Map(state.sources.map(source => [source.id, JSON.stringify(source)]));
+        const after = new Map(sources.map(source => [source.id, JSON.stringify(source)]));
+        const changed = new Set([...before.keys(), ...after.keys()].filter(id => before.get(id) !== after.get(id)));
+        return { sources, listeningRoom: { ...state.listeningRoom, sourceIds: state.listeningRoom.sourceIds.filter(id => sources.some(source => source.id === id)) },
+          ...markChangedProfileRuns(state, profile => profile.room.sourceIds.some(id => changed.has(id))) };
+      });
     },
     saveListeningRoom: async (input: ListeningRoom) => {
       if (!isRecord(input) || (input.djId !== null && !text(input.djId, 128)) || !strings(input.sourceIds, 20)) invalid();
@@ -228,8 +403,8 @@ function registerIpc() {
     releasePreparedNews: input => releasePreparedNews(input),
     markPreparedNewsPlayed: input => markPreparedNewsPlayed(input),
     getPreparedNews: () => getPreparedNews(),
-    prepareNewsScript: input => prepareNewsScript(news, input),
-    renderNewsTake: input => renderNewsTake(news, input),
+    prepareNewsScript: input => { news.generationSignal(); return prepareNewsScript(news, input); },
+    renderNewsTake: input => { news.generationSignal(); return renderNewsTake(news, input); },
     selectNewsTake: input => selectNewsTake(input),
     cancelPreparedNews: input => cancelPreparedNews(input),
     getVoicePreview: input => getVoicePreview(input),
@@ -256,6 +431,7 @@ function registerIpc() {
     },
     prepareNewsBreak: async (input: { requestId: string; djId: string; songId: string }): Promise<NewsBreak> => {
       if (!isRecord(input) || !text(input.requestId, 128) || !/^[a-zA-Z0-9-]+$/.test(input.requestId) || !text(input.djId, 128) || !text(input.songId, 128)) invalid();
+      const lifecycle = news.generationSignal();
       if (preparingNewsPreview) throw new ServiceError('invalid', 'Another DJ preview is running. Finish or cancel it first.');
       preparingNewsPreview = true;
       const generation = newsGeneration;
@@ -272,7 +448,10 @@ function registerIpc() {
           if (newsGeneration === generation && activeNews === input.requestId && window && !window.isDestroyed()) window.webContents.send('wave:newsProgress', value);
         };
         progress({ requestId: input.requestId, phase: 'feeds', message: 'Fetching your feeds and writing a personalized bulletin…' });
-        const result = await news.generate({ ...input, dj, music, settings: dj.news, engine: 'elevenlabs-v4', excludeArticleUrls: await reviewedArticleUrls(),
+        const excluded = await reviewedArticleUrls();
+        checkActive();
+        lifecycle.throwIfAborted();
+        const result = await news.generate({ ...input, dj, music, settings: dj.news, engine: 'elevenlabs-v4', excludeArticleUrls: excluded,
           onCandidates: candidates => submitReviewedCandidates(input.requestId, candidates), onReleaseCandidates: candidates => releaseReviewedCandidates(input.requestId, candidates), onReview: url => completeReviewedCandidates(input.requestId, url),
           onPreparedScript: async result => {
             const state = await getLocalState();
@@ -337,6 +516,11 @@ async function createWindow() {
 }
 
 app.whenReady().then(async () => {
+  const identity = await readDeviceIdentity();
+  deviceId = identity.id;
+  persistentDeviceIdentity = identity.persistent;
+  service = new JellyfinService({ deviceId, persistConnection: async (value, commit) => { await writeConnection(value && persistentDeviceIdentity ? { ...value, id: `${value.serverUrl}|${value.userId}` } : null, publish => commit(() => { const saved = publish(); return persistentDeviceIdentity && saved; })); }, imageUrl: (id, tag) => `wave-media://artwork/${id}${typeof tag === 'string' && /^[a-zA-Z0-9_-]{1,128}$/.test(tag) ? `?tag=${encodeURIComponent(tag)}` : ''}`, onConnectionChanged: () => { ++playlistSessionEpoch; invalidatePlaylistReceipts(); cancelNews(); revokeMedia(); }, playlistWrite: (session, id, reserve, operation, canStart) => withPlaylistRecovery(id === PLAYLIST_CREATION ? playlistCreationRecoveryKey(session.serverUrl, session.userId) : playlistRecoveryKey(session.serverUrl, session.userId, id), reserve, operation, id === PLAYLIST_CREATION, canStart) });
+
   const root = resolve(directory, '../renderer');
   protocol.handle('wave-app', async request => {
     const url = new URL(request.url);
@@ -353,14 +537,14 @@ app.whenReady().then(async () => {
   session.defaultSession.setPermissionRequestHandler((_webContents, _permission, callback) => callback(false));
   session.defaultSession.setPermissionCheckHandler(() => false);
   const stored = await readConnection();
-  if (stored) service.restore({ ...stored, sessionOnly: false });
+  if (stored) service.restore({ ...stored, sessionOnly: !persistentDeviceIdentity });
   registerMedia(() => {
     const current = service.exportSession();
     return current ? { ...current, id: service.connection()!.id } : null;
-  });
+  }, deviceId);
   registerIpc();
   await reconcilePreparedNews();
-  await startNewsWorkflow(news);
+  await startNewsWorkflow(news, () => !signingOut && !!service.connection());
   await createWindow();
   app.on('activate', () => { if (!window) void createWindow(); });
 }).catch(() => { app.quit(); });

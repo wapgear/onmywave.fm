@@ -1,0 +1,121 @@
+{
+  "date": "2026-10-16",
+  "scope": "M03/M06/M11/M18/M19 native queue duplicates, paused transport, shuffle/repeat and restart",
+  "native": {
+    "controls": {
+      "initialDuplicateOccurrencePositionAndVolumeRestoredPaused": true,
+      "queueShowsCurrentUpcomingAndEarlierOccurrences": true,
+      "manualNextSkipsRepeatOneAndPausedPreviousNextStayPaused": true,
+      "shuffleVisitsEachDuplicateOccurrenceOnce": true,
+      "shufflePreviousAndNextFollowActualHistory": true,
+      "shuffleRepeatOffStopsAtExhaustion": true,
+      "shuffleRepeatAllWrapsWithEachOccurrenceOnce": true,
+      "persistedBeforeRestart": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 17,
+        "volume": 0.37,
+        "shuffle": true,
+        "repeat": "all"
+      },
+      "noRestorePrompt": true,
+      "restartRestoresQueueDuplicatePositionOptionsPaused": true,
+      "result": "passed"
+    },
+    "remove": {
+      "initialDuplicateOccurrencePositionAndVolumeRestoredPaused": true,
+      "queueShowsCurrentUpcomingAndEarlierOccurrences": true,
+      "queuePlaySelectsCorrectDuplicateOccurrence": true,
+      "removeOtherDuplicatePreservesCurrentOccurrencePositionAndPause": true,
+      "removeEarlierDifferentSongPreservesCurrentAndPause": true,
+      "restartRestoresQueueDuplicatePositionOptionsPaused": true,
+      "result": "passed"
+    },
+    "natural": {
+      "naturalRepeatOff": {
+        "occurrenceIndices": [
+          2,
+          1,
+          3,
+          0
+        ],
+        "eachOccurrenceOnce": true,
+        "stopsAtExhaustion": true
+      },
+      "naturalRepeatAll": {
+        "occurrenceIndices": [
+          0,
+          2,
+          1,
+          3,
+          1
+        ],
+        "eachOccurrenceOnce": true,
+        "wrapsAndKeepsPlaying": true
+      },
+      "audioInstrumentation": {
+        "audioElements": 1,
+        "rate": 16
+      },
+      "result": "passed"
+    }
+  },
+  "environment": {
+    "runtime": "Actual native main/preload/production renderer, macOS27.2 arm64/Electron43.7.0",
+    "profile": "Fresh isolated encrypted localhost connection; no configured provider keys; shared keychain adapter disabled; hidden muted windows",
+    "catalog": "Owned local Jellyfin HTTP fixture with60-second silent WAV",
+    "naturalCompletion": "Native Audio constructor capture plus playbackRate16; genuine media-ended events, no synthetic ended dispatch; production source unchanged",
+    "initialSnapshot": "A,B,A,C index2 position12 volume0.42 shuffle off repeat off",
+    "finalControlsSnapshot": "A,B,A,C index2 position17 volume0.37 shuffle on repeat all; fresh process restores paused"
+  },
+  "review": {
+    "Elena": "Supported the five exact rows as Controlled, with bounded queue/snapshot scope and no wider live/OS/quality claim.",
+    "promptEvidence": "Reviewer noted implicit prompt absence; final control replay explicitly asserts zero open dialogs after automatic restore."
+  },
+  "acceptance": {
+    "M03": "Controlled for recorded native scenarios",
+    "M06": "Controlled for recorded native scenarios",
+    "M11": "Controlled for recorded native scenarios",
+    "M18": "Controlled for recorded native scenarios",
+    "M19": "Controlled for recorded native scenarios"
+  },
+  "checks": {
+    "sourceAndBundlesMatchPriorPassingBuildTypeLint": true,
+    "inventoryUniqueRequirements": 187,
+    "inventoryCounts": {
+      "Review": 136,
+      "Controlled": 18,
+      "External": 9,
+      "Dated": 12,
+      "Live": 7,
+      "Recorded": 5
+    }
+  },
+  "verificationCorrection": "Initial queue text assertion included collapsed history; scoped it to the upcoming section. No production fix.",
+  "limits": [
+    "Four queue occurrences and one restore snapshot, not arbitrary queue sizes or all concurrent mutations.",
+    "Natural-end audio uses local WAV at16\u00d7, not live codec/network or audible quality.",
+    "DJ continuation, corrupt/failed restore, startup preference races, account transitions and operating-system media controls remain separate rows.",
+    "No observed listener usability or overall acceptance percentage."
+  ],
+  "sha256": {
+    "src/renderer/player.tsx": "d682d6ca0ae69d18f6b26dea4d2c9243d316acce8a9a7900fec1a101c6ff0051",
+    "src/renderer/components/Player/Player.component.tsx": "6a2aba53fae5835a94d1d78d23933ed7245c8a68ece8839f6f7f176a41e15108",
+    "src/renderer/components/Queue/Queue.component.tsx": "4938e07285b9188b3d9105556ed2ebbed3b20951d4b094b079f27a14d113c1a5",
+    "src/main/index.ts": "0178f81ae501df23ba8462e7810cdd4fa8438777ac424419cb52a5e8f7197e3c",
+    "src/main/storage.ts": "8c06bf1f1fd99f53d224a6ac61a61ea34e48426e3fa33ca276e9880e638c1e36",
+    "src/main/jellyfin.ts": "f4d2e4d8ae75807447bd5b4f64b97938594f3935834932bb7d1bec43a8360448",
+    "src/main/media.ts": "6768544bd3215e37187a12293571c894a1023619ebe8f09e25403bdec0bfb671",
+    "src/shared/types.ts": "1ace790d5d37178ead6a375a17ead26b8cc561786dcbc68cb1df136ad37a8852",
+    "out/main/index.js": "5e640d063164ba11555a76b3f29b84be136599373e00088de33484ebb37ca7f8",
+    "out/preload/index.cjs": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215",
+    "out/renderer/assets/index-CAUv1dOD.js": "a0fecb0ea181b9476d8f5c11e4d3f8ee934ede99ad9a4d189b4d0b1cbff7dde8"
+  },
+  "nativeFixtureMainSha256": "33d3aa205e30246f2c9fe81d57b49c903aaf32161daa617cd65906727273eb94"
+}

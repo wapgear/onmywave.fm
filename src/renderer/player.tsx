@@ -3,19 +3,21 @@ import { useQuery } from '@tanstack/react-query';
 import { normalizeDJPlaybackSettings } from '../shared/dj-playback';
 import { defaultNewsTransitionSettings, normalizeNewsTransitionSettings } from '../shared/news-transitions';
 import type { NewsTransitionSettings } from '../shared/news-transitions';
-import type { Connection, NewsBreak, PlaybackSnapshot, Song } from '../shared/types';
+import type { Connection, NewsBreak, PlaybackSnapshot, PlaybackPreferences, Song } from '../shared/types';
 import { unwrap, WaveError } from './api';
 
 type HeardNews = { news: NewsBreak; startedAt: string; status: 'playing' | 'completed' | 'interrupted' };
 type NewsPhase = 'waiting' | 'fading' | 'lead-in' | 'speaking' | 'tail';
-type ScheduledNews = { token: number; key: string; duration: number; bed: number; phase: NewsPhase; trackEnded: boolean; settings: NewsTransitionSettings; elapsed: number; lastTick: number; startLevel: number };
+type ScheduledNews = { token: number; key: string; duration: number; bed: number; phase: NewsPhase; trackEnded: boolean; settings: NewsTransitionSettings; elapsed: number; lastTick: number; startLevel: number; speechAttempt: number };
 
 type QueueEntry = { key: string; song: Song };
 type PlayerState = {
   queue: QueueEntry[]; current?: Song; currentKey?: string; playing: boolean; requestedPlaying: boolean; busy: boolean;
   position: number; duration: number; error: string | null; volume: number; shuffle: boolean;
   repeat: PlaybackSnapshot['repeat']; canRetry: boolean; completedSongs: number;
+  optionsError: string | null; retryOptions(): void;
   play(songs: Song[], index?: number): void; playQueueEntry(key: string): void; enqueue(songs: Song[]): void;
+  musicCommandRevision: number; getMusicCommandRevision(): number; pauseForPreview(): void;
   toggle(): void; next(): void; previous(): void; seek(seconds: number): void;
   setVolume(value: number): void; toggleShuffle(): void; cycleRepeat(): void;
   removeQueue(key: string): void; retry(): void;
@@ -46,6 +48,11 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const [repeat, setRepeat] = useState<PlaybackSnapshot['repeat']>('off');
   const [restore, setRestore] = useState<PlaybackSnapshot | null>(null);
   const [restoreAttempt, setRestoreAttempt] = useState(0);
+  const [readyConnection, setReadyConnection] = useState<string | null>(null);
+  const preferenceEdits = useRef({ volume: false, shuffle: false, repeat: false });
+  const [optionsError, setOptionsError] = useState<string | null>(null);
+  const [optionsSaveAttempt, setOptionsSaveAttempt] = useState(0);
+  const handledOptionsRetry = useRef(0);
   const [attempt, setAttempt] = useState(0);
   const [newsPhase, setNewsPhase] = useState<PlayerState['newsPhase']>('idle');
   const [activeNewsId, setActiveNewsId] = useState<string>();
@@ -53,6 +60,10 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const [newsLoading, setNewsLoading] = useState(false);
   const [lastNews, setLastNews] = useState<HeardNews | null>(null);
   const [completedSongs, setCompletedSongs] = useState(0);
+  const commandRevision = useRef(0);
+  const [musicCommandRevision, setMusicCommandRevision] = useState(0);
+  const musicCommand = useCallback(() => { setMusicCommandRevision(++commandRevision.current); }, []);
+  const getMusicCommandRevision = useCallback(() => commandRevision.current, []);
   const countedSongGeneration = useRef(-1);
   const audio = useRef<HTMLAudioElement | null>(null);
   const speech = useRef<HTMLAudioElement | null>(null);
@@ -77,7 +88,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const requestPlayback = useCallback((value: boolean) => { playIntent.current = value; setRequestedPlaying(value); }, []);
   const current = queue[index]?.song;
   const currentKey = queue[index]?.key;
-  const duration = current?.duration || 0;
+  const duration = current && Number.isFinite(current.duration) && current.duration > 0 ? current.duration : 0;
   const live = useRef({ queue, index, current, repeat, shuffle, position, volume });
   useEffect(() => { live.current = { queue, index, current, repeat, shuffle, position, volume }; }, [queue, index, current, repeat, shuffle, position, volume]);
 
@@ -90,7 +101,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       let previousTime = performance.now();
       let elapsed = 0;
       const step = (time: number) => {
-        if (!followPlayback || (playIntent.current && audio.current && !audio.current.paused && audio.current.readyState >= 3)) elapsed += time - previousTime;
+        if (!followPlayback || (playIntent.current && audio.current && !audio.current.paused && audio.current.readyState >= 3)) elapsed += Math.max(0, time - previousTime);
         previousTime = time;
         const progress = seconds <= 0 ? 1 : Math.min(1, elapsed / (seconds * 1000));
         duck.current = from + (to - from) * progress;
@@ -130,9 +141,11 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
 
   const load = useCallback(async (song: Song, transcode = false, start = 0) => {
     const token = ++generation.current;
+    const key = live.current.queue[live.current.index]?.key;
     consumedEnd.current = null;
     const element = audio.current;
     if (!element) return;
+    element.ondurationchange = null;
     preparing.current = true;
     element.pause();
     element.removeAttribute('src');
@@ -146,6 +159,17 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       converted.current = resource.transcoded;
       target.current = resource.transcoded ? 0 : start;
       setPosition(start);
+      if (!Number.isFinite(song.duration) || song.duration <= 0) {
+        element.ondurationchange = () => {
+          const measured = resource.offsetSeconds + element.duration;
+          if (!key || token !== generation.current || audio.current !== element || element.currentSrc !== resource.url
+            || live.current.queue[live.current.index]?.key !== key || !Number.isFinite(measured) || measured <= 0) return;
+          setQueue(items => {
+            if (token !== generation.current || items.find(item => item.key === key)?.song.duration === measured) return items;
+            return items.map(item => item.key === key ? { ...item, song: { ...item.song, duration: measured } } : item);
+          });
+        };
+      }
       element.src = resource.url;
       element.load();
       preparing.current = false;
@@ -218,7 +242,6 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     } else if (state.index + 1 < state.queue.length) nextIndex = state.index + 1;
     else if (state.repeat === 'all') nextIndex = 0;
     if (nextIndex !== undefined) {
-      requestPlayback(true);
       changeTrack(nextIndex);
     } else {
       stopNews();
@@ -233,6 +256,16 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       setPlaying(false);
     }
   }, [stopNews, requestPlayback, changeTrack]);
+
+  const skipNext = useCallback(() => { musicCommand(); next(); }, [musicCommand, next]);
+
+  const continueAfterSong = useCallback((afterNews = false) => {
+    const state = live.current;
+    if (state.repeat === 'one' && state.current) {
+      stopNews(afterNews);
+      void load(state.current, converted.current, 0);
+    } else next(afterNews);
+  }, [load, next, stopNews]);
 
   const checkScheduledNews = useCallback(() => {
     const planned = newsSchedule.current;
@@ -255,7 +288,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       setNewsPhase(phase);
     };
     if (planned.phase === 'waiting') {
-      const budget = overMusic ? settings.fadeOutSeconds + settings.leadInSeconds + planned.duration + settings.postSpeechSeconds + 0.3 : settings.fadeOutSeconds;
+      const budget = overMusic ? settings.fadeOutSeconds + settings.leadInSeconds + Math.max(0, planned.duration - voice.currentTime) + settings.postSpeechSeconds + 0.3 : settings.fadeOutSeconds;
       if (!planned.trackEnded && remaining > budget) return;
       newsActive.current = true;
       planned.startLevel = duck.current;
@@ -275,25 +308,26 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     }
     if (planned.phase === 'lead-in' && planned.elapsed >= settings.leadInSeconds) {
       enter('speaking');
+      const attempt = ++planned.speechAttempt;
       void voice.play().then(() => {
-        if (planned.token !== newsGeneration.current) return;
+        if (planned.token !== newsGeneration.current || attempt !== planned.speechAttempt) return;
         if (!playIntent.current) { voice.pause(); setNewsPhase('paused'); setPlaying(false); }
         else setPlaying(true);
       }).catch(() => {
-        if (planned.token !== newsGeneration.current) return;
+        if (planned.token !== newsGeneration.current || attempt !== planned.speechAttempt) return;
         const ended = planned.trackEnded;
         stopNews();
         setError('The news break could not start. Your music can continue.');
-        if (ended) next();
+        if (ended) continueAfterSong();
       });
     }
     if (planned.phase === 'tail' && planned.elapsed >= settings.postSpeechSeconds && planned.trackEnded) {
       const seconds = settings.fadeInSeconds;
       consumedEnd.current = generation.current;
-      next(true);
+      continueAfterSong(true);
       if (fadeOnNext.current) fadeOnNext.current.seconds = seconds;
     }
-  }, [next, stopNews]);
+  }, [continueAfterSong, stopNews]);
 
   useEffect(() => {
     const lifecycle = generation;
@@ -326,7 +360,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       }
       setBusy(false);
     };
-    element.ontimeupdate = () => { setPosition(offset.current + element.currentTime); void checkScheduledNews(); };
+    element.ontimeupdate = () => { if (!newsSchedule.current?.trackEnded) setPosition(offset.current + element.currentTime); void checkScheduledNews(); };
     const newsClock = window.setInterval(() => void checkScheduledNews(), 25);
     element.onended = () => {
       if (!element.ended || consumedEnd.current === generation.current) return;
@@ -340,11 +374,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         checkScheduledNews();
         return;
       }
-      stopNews();
-      if (live.current.repeat === 'one') {
-        const song = live.current.current;
-        if (song) void load(song, converted.current, 0);
-      } else next();
+      continueAfterSong();
     };
     element.onerror = () => {
       const song = live.current.current;
@@ -378,13 +408,13 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         speechElement.current = null;
       }
       element.onplay = element.onpause = element.onwaiting = element.onplaying = null;
-      element.onerror = element.onended = element.ontimeupdate = element.onloadedmetadata = null;
+      element.onerror = element.onended = element.ontimeupdate = element.onloadedmetadata = element.ondurationchange = null;
       element.pause();
       element.removeAttribute('src');
       element.load();
       audio.current = null;
     };
-  }, [load, next, checkScheduledNews, stopNews, fadeMusic, requestPlayback]);
+  }, [load, continueAfterSong, checkScheduledNews, stopNews, fadeMusic, requestPlayback]);
 
   const restoreSession = useCallback(async (saved: PlaybackSnapshot) => {
     const resumeToken = ++resumeGeneration.current;
@@ -419,7 +449,8 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       setQueue(entries(songs));
       setIndex(Math.min(restoredIndex, songs.length - 1));
       setRestore(null);
-    } catch (cause) { if (resumeToken === resumeGeneration.current) setError(cause instanceof Error ? cause.message : 'Could not restore the session.'); }
+      setReadyConnection(saved.connectionId);
+    } catch (cause) { if (resumeToken === resumeGeneration.current) setError(`Your saved queue could not be restored. It is still saved. ${cause instanceof Error ? cause.message : 'Check the connection and try again.'}`); }
     finally { if (resumeToken === resumeGeneration.current) setBusy(false); }
   }, [requestPlayback, stopNews]);
 
@@ -427,17 +458,39 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     let active = true;
     const token = ++resumeGeneration.current;
     const restoreLifecycle = resumeGeneration;
-    void window.wave.getLocalState().then(unwrap).then(state => {
+    const connectionId = connection?.id;
+    void Promise.all([window.wave.getLocalState().then(unwrap), connectionId ? window.wave.getPlaybackPreferences(connectionId).then(unwrap) : Promise.resolve(null)]).then(([state, options]) => {
       if (!active || token !== restoreLifecycle.current) return;
+      if (options) {
+        if (!preferenceEdits.current.volume) setVolume(options.volume);
+        if (!preferenceEdits.current.shuffle) setShuffle(options.shuffle);
+        if (!preferenceEdits.current.repeat) setRepeat(options.repeat);
+      }
       const saved = state.playback;
-      if (!saved || saved.connectionId !== connection?.id) return;
-      setVolume(saved.volume);
-      setShuffle(saved.shuffle);
-      setRepeat(saved.repeat);
+      if (!saved || saved.connectionId !== connectionId) { setReadyConnection(connectionId ?? null); return; }
       if (saved.trackIds.length) void restoreSession(saved);
+      else setReadyConnection(connectionId ?? null);
     }).catch(() => { if (active && token === restoreLifecycle.current) setError('Your previous listening session could not be restored.'); });
     return () => { active = false; ++restoreLifecycle.current; };
   }, [connection?.id, restoreSession, restoreAttempt]);
+
+  useEffect(() => {
+    const retry = optionsSaveAttempt !== handledOptionsRetry.current;
+    handledOptionsRetry.current = optionsSaveAttempt;
+    if (!connection || (readyConnection === connection.id && !retry)) return;
+    const options: Partial<PlaybackPreferences> = {};
+    if (preferenceEdits.current.volume) options.volume = volume;
+    if (preferenceEdits.current.shuffle) options.shuffle = shuffle;
+    if (preferenceEdits.current.repeat) options.repeat = repeat;
+    if (!Object.keys(options).length) return;
+    let active = true;
+    void window.wave.savePlaybackPreferences({ connectionId: connection.id, options }).then(unwrap).then(saved => {
+      if (active && saved) setOptionsError(null);
+    }).catch(() => {
+      if (active) setOptionsError('Player options could not be saved. Your saved queue is unchanged.');
+    });
+    return () => { active = false; };
+  }, [connection, readyConnection, volume, shuffle, repeat, optionsSaveAttempt]);
 
   useEffect(() => {
     if (currentKey && current) {
@@ -452,41 +505,71 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   useEffect(() => { if (audio.current) audio.current.volume = volume * duck.current; if (speech.current) speech.current.volume = volume * djSettings.voiceVolume; }, [volume, djSettings.voiceVolume]);
 
   useEffect(() => {
-    if (!connection) return;
+    if (!connection || readyConnection !== connection.id) return;
     const save = () => {
       const state = live.current;
-      if (!state.queue.length) return;
       void window.wave.savePlayback({
         connectionId: connection.id, trackIds: state.queue.map(item => item.song.id),
-        currentIndex: state.index, position: state.position, volume: state.volume,
+        currentIndex: state.queue.length ? state.index : 0, position: state.queue.length ? state.position : 0, volume: state.volume,
         shuffle: state.shuffle, repeat: state.repeat,
-      }).then(unwrap).catch(() => setError('Playback continues, but the session could not be saved.'));
+      }).then(unwrap).then(() => setOptionsError(null)).catch(() => setError('Playback continues, but the session could not be saved.'));
     };
     save();
     const timer = window.setInterval(save, 5000);
     window.addEventListener('beforeunload', save);
     return () => { clearInterval(timer); window.removeEventListener('beforeunload', save); };
-  }, [connection, queue, index, volume, shuffle, repeat]);
+  }, [connection, readyConnection, queue, index, volume, shuffle, repeat]);
 
   const seek = useCallback((seconds: number) => {
+    musicCommand();
     if (!djSettings.keepOnSeek) stopNews();
-    if (newsSchedule.current) {
-      newsSchedule.current.trackEnded = false;
-      newsSchedule.current.lastTick = performance.now();
-    }
     const state = live.current;
     if (!state.current || !audio.current) return;
     const value = Math.max(0, Math.min(seconds, state.current.duration || seconds));
+    const planned = newsSchedule.current;
+    if (planned) {
+      planned.trackEnded = false;
+      planned.lastTick = performance.now();
+      if (value < state.current.duration && planned.phase !== 'waiting') {
+        ++planned.speechAttempt;
+        speech.current?.pause();
+        if (planned.phase !== 'tail') {
+          planned.phase = 'waiting';
+          planned.elapsed = 0;
+          setNewsPhase('waiting');
+        }
+        void fadeMusic(1);
+      }
+    }
+    if (Number.isFinite(state.current.duration) && state.current.duration > 0 && value === state.current.duration) {
+      // An explicit endpoint seek is a track boundary, not a natural completion.
+      ++generation.current;
+      consumedEnd.current = generation.current;
+      preparing.current = false;
+      target.current = 0;
+      audio.current.pause();
+      audio.current.removeAttribute('src');
+      audio.current.load();
+      setBusy(false);
+      setPosition(value);
+      if (newsSchedule.current) {
+        newsSchedule.current.trackEnded = true;
+        setPlaying(playIntent.current);
+        checkScheduledNews();
+      } else continueAfterSong();
+      return;
+    }
     if (preparing.current) void load(state.current, false, value);
-    else if (converted.current) void load(state.current, true, value);
+    else if (converted.current || !audio.current.src) void load(state.current, converted.current, value);
     else {
       try { audio.current.currentTime = value; setPosition(value); }
       catch { setError('Seeking is not available yet. Wait for playback and try again.'); }
     }
-  }, [load, stopNews, djSettings.keepOnSeek]);
-  const toggle = useCallback(() => {
+  }, [load, stopNews, continueAfterSong, checkScheduledNews, djSettings.keepOnSeek, musicCommand, fadeMusic]);
+  const toggle = useCallback((origin?: 'preview') => {
+    if (origin !== 'preview') musicCommand();
     const element = audio.current;
-    if (speech.current && newsActive.current && newsSchedule.current) {
+    if (speech.current && newsSchedule.current && ((newsActive.current && newsSchedule.current.phase !== 'waiting') || newsSchedule.current.trackEnded)) {
       const voice = speech.current;
       const planned = newsSchedule.current;
       if (!playIntent.current) {
@@ -494,14 +577,17 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         planned.lastTick = performance.now();
         setNewsPhase(planned.phase);
         setPlaying(true);
+        const attempt = ++planned.speechAttempt;
         const resume = async () => {
           if (planned.phase === 'speaking') await voice.play();
-          if (planned.token !== newsGeneration.current || !playIntent.current) { voice.pause(); return; }
+          if (planned.token !== newsGeneration.current || attempt !== planned.speechAttempt) return;
+          if (!playIntent.current) { voice.pause(); return; }
           if (element && !element.ended && !planned.trackEnded) await element.play();
           if (planned.token === newsGeneration.current && !playIntent.current) { voice.pause(); element?.pause(); }
         };
-        void resume().catch(cause => { if (planned.token === newsGeneration.current && playIntent.current && !(cause instanceof DOMException && cause.name === 'AbortError')) { const ended = planned.trackEnded; stopNews(); setError('The news break could not resume.'); if (ended) next(); } });
+        void resume().catch(cause => { if (planned.token === newsGeneration.current && attempt === planned.speechAttempt && playIntent.current && !(cause instanceof DOMException && cause.name === 'AbortError')) { const ended = planned.trackEnded; stopNews(); setError('The news break could not resume.'); if (ended) continueAfterSong(); } });
       } else {
+        ++planned.speechAttempt;
         requestPlayback(false);
         voice.pause(); element?.pause(); setNewsPhase('paused'); setPlaying(false);
       }
@@ -521,8 +607,9 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         setError('Playback could not resume. Retry this track.');
       });
     } else { requestPlayback(false); element.pause(); }
-  }, [stopNews, requestPlayback, load, next]);
+  }, [stopNews, requestPlayback, load, continueAfterSong, musicCommand]);
   const previous = useCallback(() => {
+    musicCommand();
     const state = live.current;
     if (state.position > 3) { seek(0); return; }
     if (state.shuffle) {
@@ -536,7 +623,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       seek(0);
     } else if (state.index > 0) { stopNews(); changeTrack(state.index - 1); }
     else seek(0);
-  }, [seek, stopNews, changeTrack]);
+  }, [seek, stopNews, changeTrack, musicCommand]);
 
   useEffect(() => {
     const handleKey = (event: KeyboardEvent) => {
@@ -546,14 +633,14 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       if (event.code === 'Space' && !event.metaKey && !event.shiftKey && live.current.current) { event.preventDefault(); toggle(); }
       else if (event.metaKey && !event.shiftKey) {
         if (event.key === 'ArrowLeft' && live.current.current) { event.preventDefault(); previous(); }
-        else if (event.key === 'ArrowRight' && live.current.current) { event.preventDefault(); next(); }
+        else if (event.key === 'ArrowRight' && live.current.current) { event.preventDefault(); skipNext(); }
         else if (event.key === 'ArrowUp') { event.preventDefault(); setVolume(value => Math.min(1, value + 0.05)); }
         else if (event.key === 'ArrowDown') { event.preventDefault(); setVolume(value => Math.max(0, value - 0.05)); }
       }
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [next, previous, toggle]);
+  }, [skipNext, previous, toggle]);
 
   useEffect(() => {
     if (!('mediaSession' in navigator)) return;
@@ -564,17 +651,18 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     navigator.mediaSession.playbackState = playing ? 'playing' : 'paused';
     const handlers: [MediaSessionAction, MediaSessionActionHandler][] = [
       ['play', () => { if (!playIntent.current) toggle(); }],
-      ['pause', () => { requestPlayback(false); setPlaying(false); audio.current?.pause(); if (speech.current && newsActive.current) { speech.current.pause(); setNewsPhase('paused'); } }], ['previoustrack', previous], ['nexttrack', () => next()],
+      ['pause', () => { musicCommand(); requestPlayback(false); setPlaying(false); audio.current?.pause(); if (speech.current && newsActive.current) { speech.current.pause(); setNewsPhase('paused'); } }], ['previoustrack', previous], ['nexttrack', skipNext],
       ['seekto', event => seek(event.seekTime ?? 0)],
       ['seekbackward', event => seek(live.current.position - (event.seekOffset ?? 10))],
       ['seekforward', event => seek(live.current.position + (event.seekOffset ?? 10))],
     ];
-    for (const [action, handler] of handlers) navigator.mediaSession.setActionHandler(action, handler);
+    for (const [action, handler] of handlers) navigator.mediaSession.setActionHandler(action, action.startsWith('seek') && !duration ? null : handler);
     return () => { for (const [action] of handlers) navigator.mediaSession.setActionHandler(action, null); };
-  }, [current, playing, next, previous, seek, toggle, requestPlayback]);
+  }, [current, duration, playing, skipNext, previous, seek, toggle, requestPlayback, musicCommand]);
 
   const play = (songs: Song[], start = 0) => {
     if (!songs.length) return;
+    musicCommand();
     stopNews();
     ++resumeGeneration.current;
     requestPlayback(true);
@@ -587,6 +675,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     shuffleHistory.current = { keys: [], cursor: -1, visited: new Set() };
     setQueue(entries(songs));
     setIndex(Math.min(Math.max(0, start), songs.length - 1));
+    setReadyConnection(connection?.id ?? null);
   };
   const scheduleNews = async (news: NewsBreak, duckVolume = 0.05) => {
     const state = live.current;
@@ -636,14 +725,15 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       const scheduledAt = songDuration - budget;
       if (settings.mode === 'over-music' && scheduledAt < songDuration / 2) throw new Error('This break is too long for the song ending. Choose News bulletin in Settings > General > DJ transitions to play it between songs.');
       if (audio.current!.ended || (settings.mode === 'over-music' && offset.current + audio.current!.currentTime > scheduledAt)) throw new Error('It is too late for this transition. Choose News bulletin in Settings > General > DJ transitions, or try the next song.');
-      const planned: ScheduledNews = { token, key, duration: element.duration, bed: Math.max(0, Math.min(0.08, Number.isFinite(duckVolume) ? duckVolume : 0.05)), phase: 'waiting', trackEnded: false, settings, elapsed: 0, lastTick: performance.now(), startLevel: 1 };
+      const planned: ScheduledNews = { token, key, duration: element.duration, bed: Math.max(0, Math.min(0.08, Number.isFinite(duckVolume) ? duckVolume : 0.05)), phase: 'waiting', trackEnded: false, settings, elapsed: 0, lastTick: performance.now(), startLevel: 1, speechAttempt: 0 };
       newsSchedule.current = planned;
       setActiveNewsId(news.id);
       setNewsLoading(false);
       setNewsPhase('waiting');
       let heard = false;
       element.onplay = () => {
-        if (heard || token !== newsGeneration.current) return;
+        if (token !== newsGeneration.current || planned.phase !== 'speaking' || !playIntent.current) { element.pause(); return; }
+        if (heard) return;
         heard = true;
         setLastNews({ news, startedAt: new Date().toISOString(), status: 'playing' });
         if ('deliveryState' in news) void window.wave.markPreparedNewsPlayed(news.id).then(unwrap).catch(() => setError('Could not save DJ playback history.'));
@@ -662,7 +752,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         const ended = planned.trackEnded;
         stopNews();
         setError('The news audio could not play. Your music can continue.');
-        if (ended) next();
+        if (ended) continueAfterSong();
       };
       void checkScheduledNews();
     } catch (cause) {
@@ -674,12 +764,15 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
 
   return <PlayerContext.Provider value={{
     queue, current, currentKey, playing, requestedPlaying, busy, position, duration, error, volume, shuffle, repeat, completedSongs,
-    newsPhase, activeNewsId, newsLoading, activeNews, lastNews, scheduleNews, stopNews: () => { const ended = newsSchedule.current?.trackEnded; stopNews(); if (ended) next(); },
+    optionsError, retryOptions: () => setOptionsSaveAttempt(value => value + 1),
+    newsPhase, activeNewsId, newsLoading, activeNews, lastNews, scheduleNews, stopNews: () => { const ended = newsSchedule.current?.trackEnded; if (ended) continueAfterSong(); else stopNews(); },
     canRetry: !!current || !!restore || !!error,
+    musicCommandRevision, getMusicCommandRevision, pauseForPreview: () => { if (playIntent.current) toggle('preview'); },
     play, playQueueEntry: key => {
       const state = live.current;
       const nextIndex = state.queue.findIndex(item => item.key === key);
       if (nextIndex < 0) return;
+      musicCommand();
       stopNews();
       requestPlayback(true);
       shuffleHistory.current = { keys: [key], cursor: 0, visited: new Set([key]) };
@@ -690,18 +783,21 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       setRestore(null);
       if (!live.current.current) setBusy(false);
       setQueue(items => [...items, ...entries(songs)]);
-    }, toggle, next: () => next(), previous, seek,
-    setVolume: value => setVolume(Math.max(0, Math.min(1, value))),
+      setReadyConnection(connection?.id ?? null);
+    }, toggle, next: skipNext, previous, seek,
+    setVolume: value => { preferenceEdits.current.volume = true; setVolume(Math.max(0, Math.min(1, value))); },
     toggleShuffle: () => {
+      preferenceEdits.current.shuffle = true;
       const key = live.current.queue[live.current.index]?.key;
       shuffleHistory.current = { keys: key ? [key] : [], cursor: key ? 0 : -1, visited: new Set(key ? [key] : []) };
       setShuffle(value => !value);
     },
-    cycleRepeat: () => setRepeat(value => value === 'off' ? 'all' : value === 'all' ? 'one' : 'off'),
+    cycleRepeat: () => { preferenceEdits.current.repeat = true; setRepeat(value => value === 'off' ? 'all' : value === 'all' ? 'one' : 'off'); },
     removeQueue: key => {
       const removed = queue.findIndex(item => item.key === key);
       if (removed < 0) return;
       if (key === currentKey) {
+        musicCommand();
         stopNews();
         ++generation.current;
         preparing.current = true;
@@ -709,7 +805,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         setError(null);
       }
       const remaining = queue.filter(item => item.key !== key);
-      if (!remaining.length) { requestPlayback(false); preparing.current = false; audio.current?.pause(); audio.current?.removeAttribute('src'); audio.current?.load(); ++generation.current; ++resumeGeneration.current; setBusy(false); setPlaying(false); setPosition(0); void window.wave.savePlayback(null); }
+      if (!remaining.length) { requestPlayback(false); preparing.current = false; audio.current?.pause(); audio.current?.removeAttribute('src'); audio.current?.load(); ++generation.current; ++resumeGeneration.current; setBusy(false); setPlaying(false); setPosition(0); }
       const nextIndex = removed < index ? index - 1 : Math.min(index, Math.max(0, remaining.length - 1));
       if (key === currentKey && remaining.length) {
         const history = shuffleHistory.current;
@@ -722,6 +818,6 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       setQueue(remaining);
       setIndex(nextIndex);
     },
-    retry: () => { stopNews(); if (current) { requestPlayback(true); void load(current, converted.current, position); } else if (restore) void restoreSession(restore); else setRestoreAttempt(value => value + 1); },
+    retry: () => { musicCommand(); stopNews(); if (current) { requestPlayback(true); void load(current, converted.current, position); } else if (restore) void restoreSession(restore); else setRestoreAttempt(value => value + 1); },
   }}>{children}</PlayerContext.Provider>;
 }

@@ -2,8 +2,8 @@ import { app } from 'electron';
 import { mkdir, readFile, writeFile, rename, stat, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { createHash, randomUUID } from 'node:crypto';
-import type { DJ, NewsArticle, PreparedNewsLibrary, PreparedNewsRequest, PreparedNewsScript, PreparedNewsTake } from '../shared/types';
-import { canonicalArticleUrl, eligibleNewsTakes } from '../shared/news-pool';
+import type { DJ, LocalState, NewsArticle, PreparedNewsLibrary, PreparedNewsRequest, PreparedNewsScript, PreparedNewsTake } from '../shared/types';
+import { canonicalArticleUrl, eligibleNewsTakes, matchesNewsRoom } from '../shared/news-pool';
 import { getLocalState, readOpenAIKey, readElevenLabsKey, readTwitterKey } from './storage';
 import { NewsService, validateNewsSettings } from './news';
 import { ServiceError } from './jellyfin';
@@ -27,6 +27,13 @@ async function load() {
     if (!Array.isArray(value.scripts) || !Array.isArray(value.takes) || !Array.isArray(value.requests)) throw new Error('Invalid prepared news index');
     const migrated: PreparedNewsLibrary = { ...value, reviewedArticles: Array.isArray(value.reviewedArticles) ? value.reviewedArticles : [] };
     let shouldPersist = !Array.isArray(value.reviewedArticles);
+    for (const article of migrated.reviewedArticles) {
+      const canonicalUrl = canonicalArticleUrl(article.url);
+      if (canonicalUrl && canonicalUrl !== article.canonicalUrl) {
+        article.canonicalUrl = canonicalUrl;
+        shouldPersist = true;
+      }
+    }
     const known = [...(migrated.scripts ?? []), ...(migrated.takes ?? [])];
     for (const artifact of known) for (const article of artifact.articles ?? []) {
       const canonicalUrl = canonicalArticleUrl(article.url);
@@ -147,14 +154,16 @@ async function recoverCompletedAudio() {
 }
 export function isPreparedNewsActive(requestId: string) { return active?.id === requestId; }
 export async function preparedAudio(id: string): Promise<Buffer | null> {
-  if (!validId(id) || !(await load()).takes.some(take => take.id === id)) return null;
-  try { return await readFile(audioPath(id)); } catch { return null; }
+  if (!validId(id)) return null;
+  const take = (await load()).takes.find(value => value.id === id);
+  if (!take || !Number.isSafeInteger(take.byteLength) || take.byteLength <= 0) return null;
+  try { const audio = await readFile(audioPath(id)); return audio.length === take.byteLength ? audio : null; } catch { return null; }
 }
 export async function getPreparedNews(): Promise<PreparedNewsLibrary> {
   await writes;
   await recoverCompletedAudio();
   const snapshot = structuredClone(await load());
-  snapshot.takes = await Promise.all(snapshot.takes.map(async take => ({ ...take, available: await stat(audioPath(take.id)).then(info => info.isFile() && info.size > 0, () => false) })));
+  snapshot.takes = await Promise.all(snapshot.takes.map(async take => ({ ...take, available: await stat(audioPath(take.id)).then(info => info.isFile() && Number.isSafeInteger(take.byteLength) && take.byteLength > 0 && info.size === take.byteLength, () => false) })));
   return snapshot;
 }
 export async function reconcilePreparedNews() {
@@ -177,6 +186,9 @@ export async function nextRoomNews(input: { roomId: string; excludedIds: string[
   const candidates = eligibleNewsTakes(snapshot.takes, state, input.roomId).filter(take => !excluded.has(take.id));
   for (const candidate of candidates) {
     if (!(await preparedAudio(candidate.id))?.length) continue;
+    const latestState = await getLocalState();
+    const latestNews = await getPreparedNews();
+    if (!eligibleNewsTakes(latestNews.takes, latestState, input.roomId).some(take => take.id === candidate.id && !excluded.has(take.id))) continue;
     let claimed = false;
     await change(current => {
       const take = current.takes.find(value => value.id === candidate.id);
@@ -185,7 +197,14 @@ export async function nextRoomNews(input: { roomId: string; excludedIds: string[
       claimed = true;
       return current;
     });
-    if (claimed) return { ...candidate, available: true, deliveryState: { status: 'claimed', claimedAt: new Date().toISOString() } };
+    if (claimed) {
+      const finalState = await getLocalState();
+      const finalProfile = finalState.roomProfiles.find(value => value.id === input.roomId);
+      const finalTake = (await getPreparedNews()).takes.find(value => value.id === candidate.id);
+      if (finalProfile?.enabled && finalTake?.available && matchesNewsRoom(finalTake, finalState, input.roomId)) return { ...finalTake, available: true, deliveryState: { status: 'claimed', claimedAt: new Date().toISOString() } };
+      await releasePreparedNews(candidate.id);
+      return null;
+    }
   }
   return null;
 }
@@ -207,12 +226,13 @@ export async function cancelPreparedNews(id: string) {
   if (!validId(id)) invalid();
   if (active?.id === id) active.controller.abort();
 }
+export function cancelActivePreparedNews() { active?.controller.abort(); }
 function validateDj(dj: DJ | undefined): DJ {
   if (!dj?.news) return invalid('Choose a saved DJ with news settings.');
   validateNewsSettings(dj.news!);
   return structuredClone(dj);
 }
-async function execute<T extends PreparedNewsScript | PreparedNewsTake>(requestId: string, kind: PreparedNewsRequest['kind'], payload: unknown, work: (signal: AbortSignal) => Promise<T>): Promise<T> {
+async function execute<T extends PreparedNewsScript | PreparedNewsTake>(requestId: string, kind: PreparedNewsRequest['kind'], payload: unknown, work: (signal: AbortSignal) => Promise<T>, reconcileOnly = false): Promise<T> {
   if (!validId(requestId)) invalid();
   const inputHash = hash(payload);
   // Reserve the operation synchronously before any await so concurrent IPC calls cannot both claim it.
@@ -239,6 +259,7 @@ async function execute<T extends PreparedNewsScript | PreparedNewsTake>(requestI
         }
         throw new ServiceError('uncertain-write', old.error || 'This request did not complete. Start an explicit new attempt to try again.');
       }
+      if (reconcileOnly) throw new ServiceError('uncertain-write', 'No completed result is saved for this request. Start a new attempt explicitly if you want to prepare it again.');
       await change(current => ({ ...current, requests: [...current.requests, { requestId, kind, inputHash, status: 'running' }] }));
       controller.signal.throwIfAborted();
       const result = await work(controller.signal);
@@ -261,8 +282,9 @@ async function execute<T extends PreparedNewsScript | PreparedNewsTake>(requestI
   })();
   return operation.promise;
 }
-export async function prepareNewsScript(news: NewsService, input: { requestId: string; djId: string; sourceIds: string[] }) {
+export async function prepareNewsScript(news: NewsService, input: { requestId: string; djId: string; sourceIds: string[]; reconcileOnly?: boolean }) {
   if (!input || !validId(input.djId) || !Array.isArray(input.sourceIds) || input.sourceIds.length > 20 || input.sourceIds.some(id => !validId(id))) invalid();
+  if (input.reconcileOnly !== undefined && typeof input.reconcileOnly !== 'boolean') invalid();
   return execute(input.requestId, 'script', { djId: input.djId, sourceIds: input.sourceIds }, async signal => {
     const state = await getLocalState();
     const dj = validateDj(state.djs.find(item => item.id === input.djId));
@@ -271,15 +293,17 @@ export async function prepareNewsScript(news: NewsService, input: { requestId: s
     const cancel = () => news.cancel(input.requestId);
     signal.addEventListener('abort', cancel, { once: true });
     try {
+      const excluded = await reviewedArticleUrls();
       signal.throwIfAborted();
       const result = await news.prepareScript({ requestId: input.requestId, dj, sources, settings: { ...dj.news!, interests: state.workflowDraft.newsInterests ?? dj.news!.interests, feedUrls: sources.filter(source => !source.kind || source.kind === 'rss').map(source => source.url) }, mood: state.vibe,
-        excludeArticleUrls: await reviewedArticleUrls(), onCandidates: candidates => submitReviewedCandidates(input.requestId, candidates), onReleaseCandidates: candidates => releaseReviewedCandidates(input.requestId, candidates), onReview: url => completeReviewedCandidates(input.requestId, url) });
+        excludeArticleUrls: excluded, onCandidates: candidates => submitReviewedCandidates(input.requestId, candidates), onReleaseCandidates: candidates => releaseReviewedCandidates(input.requestId, candidates), onReview: url => completeReviewedCandidates(input.requestId, url) });
       return { ...result, id: randomUUID(), createdAt: new Date().toISOString(), provenance: { dj, mood: state.vibe, sources, newsInterests: state.workflowDraft.newsInterests ?? dj.news!.interests } };
     } finally { signal.removeEventListener('abort', cancel); }
-  });
+  }, input.reconcileOnly === true);
 }
-export async function renderNewsTake(news: NewsService, input: { requestId: string; scriptId: string; script: string; djId: string; newVariation?: boolean }) {
+export async function renderNewsTake(news: NewsService, input: { requestId: string; scriptId: string; script: string; djId: string; newVariation?: boolean; reconcileOnly?: boolean }) {
   if (!input || !validId(input.scriptId) || !validId(input.djId) || typeof input.script !== 'string' || !input.script.trim() || input.script.length > 700 || input.script.trim().split(/\s+/u).length > 55 || (input.newVariation !== undefined && typeof input.newVariation !== 'boolean')) invalid('Use a reviewed script of at most 55 words.');
+  if (input.reconcileOnly !== undefined && typeof input.reconcileOnly !== 'boolean') invalid();
   return execute(input.requestId, 'audio', { scriptId: input.scriptId, script: input.script, djId: input.djId, newVariation: input.newVariation === true }, async signal => {
     const saved = (await load()).scripts.find(item => item.id === input.scriptId);
     if (!saved) invalid('Prepare a script first.');
@@ -290,15 +314,18 @@ export async function renderNewsTake(news: NewsService, input: { requestId: stri
     const voice = settings.elevenVoiceId || 'JBFqnCBsd6RMkjVDRZzb';
     const delivery = settings.elevenTags || '';
     const signature = hash({ scriptId: saved!.id, script: input.script.trim(), engine, model, voice, delivery, language: dj.language, personality: dj.personality, musicPreferences: dj.musicPreferences, mood: saved!.provenance.mood });
-    const existing = !input.newVariation && (await load()).takes.find(take => take.signature === signature && take.provenance.dj.id === saved!.provenance.dj.id);
-    if (existing && await preparedAudio(existing.id)) return structuredClone(existing);
+    if (!input.newVariation) {
+      const matches = (await load()).takes.filter(take => take.signature === signature && take.provenance.dj.id === saved!.provenance.dj.id)
+        .sort((a, b) => (Date.parse(b.createdAt) || 0) - (Date.parse(a.createdAt) || 0));
+      for (const take of matches) if (await preparedAudio(take.id)) return structuredClone(take);
+    }
     const result = await news.renderPreparedSpeech({ requestId: input.requestId, dj, settings, mood: saved!.provenance.mood, engine }, { requestId: input.requestId, script: input.script.trim(), articles: saved!.articles, warnings: saved!.warnings }, AbortSignal.any([signal, AbortSignal.timeout(120000)]));
     signal.throwIfAborted();
     const id = randomUUID();
     const take = { id, requestId: input.requestId, scriptId: saved!.id, script: result.script, articles: result.articles, warnings: result.warnings, audioUrl: `wave-media://prepared/${id}`, engine, createdAt: new Date().toISOString(), signature, provenance: saved!.provenance, renderingDJ: dj, available: true, byteLength: result.audio.length, model, voice, delivery } as PreparedNewsTake;
     await publishTake(take, result.audio);
     return take;
-  });
+  }, input.reconcileOnly === true);
 }
 
 async function publishTake(take: PreparedNewsTake, audio: Buffer) {
@@ -313,10 +340,10 @@ async function publishTake(take: PreparedNewsTake, audio: Buffer) {
   await rename(temp, audioPath(take.id));
 }
 
-export async function prepareRoomNews(news: NewsService, input: { requestId: string; roomId: string }): Promise<PreparedNewsTake> {
+export async function prepareRoomNews(news: NewsService, input: { requestId: string; roomId: string }, snapshot?: Pick<LocalState, 'roomProfiles' | 'djs' | 'sources'>): Promise<PreparedNewsTake> {
   if (!input || !validId(input.requestId) || !validId(input.roomId)) invalid();
   return execute(input.requestId, 'audio', { automaticRoomId: input.roomId }, async signal => {
-    const state = await getLocalState();
+    const state = snapshot ?? await getLocalState();
     const profile = state.roomProfiles.find(value => value.id === input.roomId) ?? invalid('This Listening Room no longer exists.');
     if (!profile.enabled) invalid('Choose an enabled Listening Room.');
     if (!profile.workflowDraft.newsEnabled) invalid('Enable the news workflow for this Listening Room before preparing automatic news.');
@@ -324,8 +351,8 @@ export async function prepareRoomNews(news: NewsService, input: { requestId: str
     const dj = validateDj(state.djs.find(value => value.id === profile.room.djId));
     const sources = [...new Set(profile.room.sourceIds)].map(id => state.sources.find(value => value.id === id) || invalid('A room source no longer exists. Edit this Listening Room.'));
     if (!sources.length) invalid('Choose at least one source in this Listening Room.');
-    if (!await readOpenAIKey()) invalid('Add your OpenAI API key before enabling DJ.');
-    if (!await readElevenLabsKey()) invalid('Add your ElevenLabs API key before enabling DJ.');
+    if (!await readOpenAIKey()) invalid('Add your OpenAI API key in Settings → Provider keys before resuming automatic preparation.');
+    if (!await readElevenLabsKey()) invalid('Add your ElevenLabs API key in Settings → Provider keys before resuming automatic preparation.');
     if (sources.some(source => source.kind === 'twitter') && !await readTwitterKey()) invalid('Add an X bearer token for this Listening Room’s sources.');
     const interests = profile.workflowDraft.newsInterests ?? dj.news!.interests;
     const settings = { ...dj.news!, interests, feedUrls: sources.filter(source => !source.kind || source.kind === 'rss').map(source => source.url) };
@@ -333,8 +360,9 @@ export async function prepareRoomNews(news: NewsService, input: { requestId: str
     const cancel = () => news.cancel(input.requestId);
     signal.addEventListener('abort', cancel, { once: true });
     try {
+      const excluded = await reviewedArticleUrls();
       signal.throwIfAborted();
-      const scriptResult = await news.prepareScript({ requestId: input.requestId, dj, sources, mood: profile.mood, settings, importance: profile.workflowDraft.importance, excludeArticleUrls: await reviewedArticleUrls(), freshWithinHours: 24,
+      const scriptResult = await news.prepareScript({ requestId: input.requestId, dj, sources, mood: profile.mood, settings, importance: profile.workflowDraft.importance, excludeArticleUrls: excluded, freshWithinHours: 24,
         onCandidates: candidates => submitReviewedCandidates(input.requestId, candidates), onReleaseCandidates: candidates => releaseReviewedCandidates(input.requestId, candidates), onReview: url => completeReviewedCandidates(input.requestId, url) });
       signal.throwIfAborted();
       const script: PreparedNewsScript = { requestId: input.requestId, script: scriptResult.script, articles: scriptResult.articles, warnings: scriptResult.warnings, id: randomUUID(), createdAt: new Date().toISOString(), provenance };

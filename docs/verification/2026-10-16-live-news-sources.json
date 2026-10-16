@@ -1,0 +1,703 @@
+{
+  "date": "2026-10-16",
+  "scope": "S01/S02 actual source collection and controlled edge cases; no generation",
+  "live": {
+    "observedAt": "2026-10-16T12:54:26.321Z",
+    "scope": "Actual NewsService source reads only; no text/voice/key access",
+    "results": [
+      {
+        "source": {
+          "id": "live-hn-top",
+          "name": "Hacker News Top",
+          "kind": "hacker-news",
+          "url": "https://hacker-news.firebaseio.com/v0/topstories.json"
+        },
+        "elapsedMs": 590,
+        "articles": 20,
+        "dated": 20,
+        "within24Hours": 13,
+        "linksSafe": true,
+        "titlesNonempty": true,
+        "coverageWarnings": [],
+        "snapshotSha256": "20e3dddc33709756697bdc2e94f4c6520336af125db7ca003814d878b407f770"
+      },
+      {
+        "source": {
+          "id": "live-hn-new",
+          "name": "Hacker News New",
+          "kind": "hacker-news",
+          "url": "https://hacker-news.firebaseio.com/v0/newstories.json"
+        },
+        "elapsedMs": 225,
+        "articles": 20,
+        "dated": 20,
+        "within24Hours": 20,
+        "linksSafe": true,
+        "titlesNonempty": true,
+        "coverageWarnings": [],
+        "snapshotSha256": "0d8b9fd154382e9fc154095d803c045340aa45f77c427abdc8313f28f778f47e"
+      },
+      {
+        "source": {
+          "id": "live-hn-best",
+          "name": "Hacker News Best",
+          "kind": "hacker-news",
+          "url": "https://hacker-news.firebaseio.com/v0/beststories.json"
+        },
+        "elapsedMs": 234,
+        "articles": 20,
+        "dated": 20,
+        "within24Hours": 7,
+        "linksSafe": true,
+        "titlesNonempty": true,
+        "coverageWarnings": [],
+        "snapshotSha256": "08a5c2d1fef461b1f34e290794188767f146ad8fe6e8f66c26a4b2848abe859e"
+      },
+      {
+        "source": {
+          "id": "live-rss",
+          "name": "BBC Science",
+          "kind": "rss",
+          "url": "https://feeds.bbci.co.uk/news/science_and_environment/rss.xml"
+        },
+        "elapsedMs": 194,
+        "articles": 30,
+        "dated": 30,
+        "within24Hours": 12,
+        "linksSafe": true,
+        "titlesNonempty": true,
+        "coverageWarnings": [],
+        "snapshotSha256": "989792fad61cb94f31ed1a9d542bef65da9623c378676b240d502182055fda75"
+      },
+      {
+        "source": {
+          "id": "live-atom",
+          "name": "Node.js releases",
+          "kind": "rss",
+          "url": "https://github.com/nodejs/node/releases.atom"
+        },
+        "elapsedMs": 2194,
+        "articles": 2,
+        "dated": 2,
+        "within24Hours": 0,
+        "linksSafe": true,
+        "titlesNonempty": true,
+        "coverageWarnings": [],
+        "snapshotSha256": "e45aab1af30bfbe639550d6dd98cdf597e96e26c4c1056f3ded8bd66dbc7a114"
+      }
+    ],
+    "requests": [
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/topstories.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50077225.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50065859.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50111852.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50107379.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50084790.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50072485.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50105647.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50112330.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50114342.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50109715.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50103338.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50106023.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50079280.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50109375.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50112739.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50068203.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50105777.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50085553.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50108872.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50116255.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/newstories.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50117772.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50117765.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50117746.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50117736.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50117713.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50117708.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50117705.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50117693.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50117685.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50117682.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50117654.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50117653.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50117639.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50117626.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50117617.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50117607.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50117602.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50117598.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50117588.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50117569.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/beststories.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50093568.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50091788.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50094994.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50107379.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50105647.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50096142.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50088935.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50103338.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50089921.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50109715.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50093180.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50090246.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50106023.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50090349.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50103000.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50101813.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50112657.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50094694.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50092730.json",
+        "status": 200
+      },
+      {
+        "origin": "https://hacker-news.firebaseio.com",
+        "path": "/v0/item/50092664.json",
+        "status": 200
+      },
+      {
+        "origin": "https://feeds.bbci.co.uk",
+        "path": "/news/science_and_environment/rss.xml",
+        "status": 200
+      },
+      {
+        "origin": "https://github.com",
+        "path": "/nodejs/node/releases.atom",
+        "status": 200
+      }
+    ]
+  },
+  "controlled": {
+    "hnLists": [
+      {
+        "mode": "invalid list",
+        "error": "server",
+        "message": "Hacker News returned an invalid story list.",
+        "itemRequests": 0,
+        "result": "passed"
+      },
+      {
+        "mode": "invalid only",
+        "articles": 0,
+        "warnings": [
+          "Hacker News returned invalid story IDs; those entries were skipped."
+        ],
+        "itemRequests": 0,
+        "result": "passed"
+      },
+      {
+        "mode": "mixed invalid IDs",
+        "articles": 1,
+        "warnings": [
+          "Hacker News returned invalid story IDs; those entries were skipped."
+        ],
+        "itemRequests": 1,
+        "result": "passed"
+      },
+      {
+        "mode": "empty",
+        "articles": 0,
+        "warnings": [],
+        "itemRequests": 0,
+        "result": "passed"
+      },
+      {
+        "mode": "partial HTTP",
+        "articles": 1,
+        "warnings": [
+          "1 of 2 Hacker News story requests failed. Coverage is incomplete."
+        ],
+        "itemRequests": 2,
+        "result": "passed"
+      },
+      {
+        "mode": "all HTTP",
+        "articles": 0,
+        "warnings": [
+          "1 of 1 Hacker News story requests failed. Coverage is incomplete."
+        ],
+        "itemRequests": 1,
+        "result": "passed"
+      },
+      {
+        "mode": "partial JSON",
+        "articles": 1,
+        "warnings": [
+          "1 of 2 Hacker News story requests failed. Coverage is incomplete."
+        ],
+        "itemRequests": 2,
+        "result": "passed"
+      },
+      {
+        "mode": "bounded",
+        "articles": 20,
+        "warnings": [],
+        "itemRequests": 20,
+        "result": "passed"
+      }
+    ],
+    "feeds": [
+      {
+        "mode": "RSS dated",
+        "articles": 1,
+        "source": "Science desk",
+        "url": "https://example.com/story",
+        "dated": true,
+        "warnings": [],
+        "result": "passed"
+      },
+      {
+        "mode": "Atom alternate",
+        "articles": 1,
+        "source": "Release desk",
+        "url": "https://example.com/story",
+        "dated": true,
+        "warnings": [],
+        "result": "passed"
+      },
+      {
+        "mode": "RSS relative",
+        "articles": 1,
+        "source": "Science desk",
+        "url": "https://example.com/story",
+        "dated": true,
+        "warnings": [],
+        "result": "passed"
+      },
+      {
+        "mode": "Atom relative",
+        "articles": 1,
+        "source": "Release desk",
+        "url": "https://example.com/story",
+        "dated": true,
+        "warnings": [],
+        "result": "passed"
+      },
+      {
+        "mode": "redirect relative",
+        "articles": 1,
+        "source": "Science desk",
+        "url": "https://example.com/nested/story",
+        "dated": true,
+        "warnings": [],
+        "result": "passed"
+      },
+      {
+        "mode": "RSS empty",
+        "articles": 0,
+        "dated": false,
+        "warnings": [],
+        "result": "passed"
+      },
+      {
+        "mode": "Atom empty",
+        "articles": 0,
+        "dated": false,
+        "warnings": [],
+        "result": "passed"
+      },
+      {
+        "mode": "mixed unsafe",
+        "articles": 1,
+        "source": "Science desk",
+        "url": "https://example.com/story",
+        "dated": true,
+        "warnings": [
+          "1 feed entry could not be read because a title or valid story link was missing."
+        ],
+        "result": "passed"
+      },
+      {
+        "mode": "mixed missing title",
+        "articles": 1,
+        "source": "Science desk",
+        "url": "https://example.com/story",
+        "dated": true,
+        "warnings": [
+          "1 feed entry could not be read because a title or valid story link was missing."
+        ],
+        "result": "passed"
+      }
+    ],
+    "hnStories": [
+      {
+        "name": "null response",
+        "error": "server",
+        "message": "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+        "providerCalls": 0
+      },
+      {
+        "name": "missing title",
+        "error": "server",
+        "message": "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+        "providerCalls": 0
+      },
+      {
+        "name": "unsafe link",
+        "error": "server",
+        "message": "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+        "providerCalls": 0
+      },
+      {
+        "name": "mixed valid and malformed",
+        "warnings": [
+          "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete."
+        ],
+        "providerCalls": 1
+      },
+      {
+        "name": "mismatched identity",
+        "error": "server",
+        "message": "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+        "providerCalls": 0
+      },
+      {
+        "name": "missing identity",
+        "error": "server",
+        "message": "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+        "providerCalls": 0
+      },
+      {
+        "name": "numeric title",
+        "error": "server",
+        "message": "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+        "providerCalls": 0
+      },
+      {
+        "name": "invalid timestamp",
+        "error": "server",
+        "message": "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+        "providerCalls": 0
+      },
+      {
+        "name": "unknown type",
+        "error": "server",
+        "message": "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+        "providerCalls": 0
+      },
+      {
+        "name": "mixed valid and object type",
+        "warnings": [
+          "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete."
+        ],
+        "providerCalls": 1
+      },
+      {
+        "name": "nonstring URL",
+        "error": "server",
+        "message": "Technology headlines: 1 Hacker News story response could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+        "providerCalls": 0
+      },
+      {
+        "name": "absent URL",
+        "warnings": [],
+        "providerCalls": 1
+      },
+      {
+        "name": "normal exclusions",
+        "error": "no-news",
+        "message": "No recent news. Music continues.",
+        "providerCalls": 0
+      },
+      {
+        "name": "empty list",
+        "error": "no-news",
+        "message": "No recent news. Music continues.",
+        "providerCalls": 0
+      },
+      {
+        "name": "valid story",
+        "warnings": [],
+        "providerCalls": 1
+      }
+    ]
+  },
+  "checks": {
+    "liveSources": 5,
+    "successfulPublicGETs": 65,
+    "hnListCases": 8,
+    "rssAtomCases": 9,
+    "hnStoryCases": 15,
+    "currentSourceAndBundlesMatchLastPassingBuildTypeLint": true,
+    "inventoryUniqueRequirements": 187,
+    "inventoryCounts": {
+      "Review": 142,
+      "Dated": 13,
+      "Recorded": 5,
+      "Controlled": 11,
+      "Live": 7,
+      "External": 9
+    }
+  },
+  "environment": {
+    "live": "Actual NewsService source() calls through public HTTPS; only HN/BBC/GitHub origins allowed; no key access permitted",
+    "controlled": "Actual source service and owned local HTTP servers; text output substituted only for HN script classification",
+    "storage": "No app account/profile changes; no paid provider calls"
+  },
+  "limits": [
+    "Dated live collection snapshot; feeds can change or become unavailable.",
+    "No proof that a bounded HN20/feed50 sample discovers all news.",
+    "No live text/voice generation, X access, output relevance, audibility or listener comprehension demonstrated.",
+    "Relative-link variants verified with controlled HTTP feeds; named live feeds establish actual public collection."
+  ],
+  "sha256": {
+    "src/main/news.ts": "772a9b50e5c569cd1139498854638866ea7e2d29eef335d05268b6cd6a96be27",
+    "src/shared/sources.ts": "1da2117a59995911c14d098c8c814811ec309fb0d81c2fbf24b53721404e8f18",
+    "src/shared/news-pool.ts": "2f8ac1bde20b4a9adfd3beedf015e2d7e843dda584e7713be29e1a4c7ad3fa77",
+    "out/main/index.js": "5e640d063164ba11555a76b3f29b84be136599373e00088de33484ebb37ca7f8",
+    "out/preload/index.cjs": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215",
+    "out/renderer/assets/index-Dp_ujpwb.js": "471854df36510226e6199b3939ef356f53b5ac7310e3d435761ea140f294f973"
+  },
+  "acceptance": {
+    "S01": "Live for named BBC Science RSS and Node.js releases Atom snapshots; controlled HTTP relative-link/date/attribution variants pass.",
+    "S02": "Live for HN Top/New/Best snapshots; controlled invalid/partial/bounded behavior and downstream no-news/incomplete classification pass.",
+    "reviewer": "Nadia independently reviewed exact row scope and supported Live with live collection separate from controlled fault coverage."
+  }
+}

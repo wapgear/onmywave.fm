@@ -1,0 +1,67 @@
+{
+  "date": "2026-10-16",
+  "scope": "S14 source saving without preparation plus focused R2/R12 source detour, validation and persistence",
+  "native": {
+    "sourceTypeAX": "- combobox \"Source type\":\n  - option \"RSS / Atom\" [selected]\n  - option \"Twitter / X\"\n  - option \"Hacker News\"",
+    "hackerNewsSaved": true,
+    "duplicateRetainsDialogAndSavedSource": true,
+    "xSearchSavesWithoutProviderSetup": true,
+    "invalidRssErrorRetainsDraftAndCorrectedSaveWorks": true,
+    "returnPreservesDraftAndFocus": true,
+    "selectionAndSaveAreExplicit": true,
+    "independentOptInsStayOff": true,
+    "musicContinues": true,
+    "selectedSourceEditPreservesReference": true,
+    "externalFetchAttempts": 0,
+    "restartPreservesSourceEditAndExplicitSetup": true,
+    "preparationArtifacts": {
+      "scripts": 0,
+      "takes": 0,
+      "requests": 0
+    },
+    "result": "passed"
+  },
+  "environment": {
+    "runtime": "Actual current native main/preload/production renderer on tested macOS/Electron installation",
+    "server": "Owned local large-catalog HTTP fixture; source URLs not fetched",
+    "profile": "Fresh isolated protected connection profile; hidden window and muted audio",
+    "providers": "Null key adapter and external networking blocked; fetch counter installed after launch and before exercise"
+  },
+  "flow": [
+    "Play ordinary music, open player DJ controls, News bucket Settings, draft mood/interests and Manage sources.",
+    "Save Hacker News Best stories; duplicate endpoint retains form and existing source.",
+    "Save an X search while provider keys are absent; access/token guidance remains visible.",
+    "Reject credential-bearing RSS URL without discarding name; correct URL and save.",
+    "Back to setup restores focus/draft, leaves sources unselected; explicitly select RSS and Save setup.",
+    "Edit selected RSS URL, return with selection intact, then reopen the native process.",
+    "Fresh-process state retains three sources, selected-source reference, updated URL, mood/interests and both opt-ins off; preparation library remains empty."
+  ],
+  "acceptance": {
+    "S14": "Controlled: creating/editing sources produces no external fetch during the exercise and no preparation request/script/take; no radio opt-in changes.",
+    "R2/R12": "Focused source detour and focus/draft evidence only, not every setup field/keyboard/screen-reader or observed-usability result."
+  },
+  "limits": [
+    "Automatic preparation was off. Existing independently enabled profiles remain governed by their saved opt-in; this does not promise they stop when a source is edited.",
+    "No RSS/HN/X live collection, source relevance, actual X entitlement or provider generation quality is established.",
+    "Accessible name observed only for source type combobox; no full VoiceOver claim."
+  ],
+  "checks": {
+    "productionSourceAndBundle": "Unchanged from preceding passing build/TypeScript/full ESLint checks; no redundant build run for evidence-only update.",
+    "noProductionFixNeeded": true,
+    "whitespace": "passed"
+  },
+  "sourceAndBundleSha256": {
+    "src/renderer/pages/Sources/Sources.page.tsx": "5ba788b023b3f207d37b36a2ff93e9e21fc3d3b0bf3916ccd1a972c54c4f6942",
+    "src/renderer/pages/Stations/Stations.page.tsx": "76a0f3676a7a2bd3009557b07f02c35ca9061757075d86caa6e9c203a492ac79",
+    "src/renderer/pages/Stations/components/RoomSetup.component.tsx": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330",
+    "src/shared/sources.ts": "1da2117a59995911c14d098c8c814811ec309fb0d81c2fbf24b53721404e8f18",
+    "src/main/index.ts": "0178f81ae501df23ba8462e7810cdd4fa8438777ac424419cb52a5e8f7197e3c",
+    "src/main/news-workflow.ts": "7cab5b92c6d4d1476526a75831069de80623ef5b6ca4686345bacfaf01103fb0",
+    "src/renderer/App.tsx": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+    "out/main/index.js": "dcb9a98af250c59f9ac2efe3299d44fe1bc3833a81e7e53be5c7ef01f49e41c2",
+    "out/preload/index.cjs": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215",
+    "out/renderer/assets/index-Dp_ujpwb.js": "471854df36510226e6199b3939ef356f53b5ac7310e3d435761ea140f294f973"
+  },
+  "nativeFixtureMainSha256": "ee4987a6697648a2dc5739056b08bc60bdeb3a94ed662a473c0c5ad999989e70",
+  "reproductionScript": "/private/tmp/native-first-radio/sources.cjs"
+}

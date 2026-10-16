@@ -54,7 +54,7 @@ function clipResponse(request: Request, clip: { bytes: Buffer; mime: string }): 
   return new Response(request.method === 'HEAD' ? null : new Uint8Array(clip.bytes.subarray(start, end + 1)), { status: range ? 206 : 200, headers });
 }
 
-export function preparePlayback(session: Session | null, input: { id: string; transcode?: boolean; offsetSeconds?: number }): PlaybackResource {
+export function preparePlayback(session: Session | null, input: { id: string; transcode?: boolean; offsetSeconds?: number }, deviceId: string): PlaybackResource {
   if (!session) throw { code: 'unauthorized', message: 'Sign in to play music.' };
   if (!itemId(input.id) || (input.offsetSeconds !== undefined && (!Number.isFinite(input.offsetSeconds) || input.offsetSeconds < 0))) {
     throw { code: 'invalid', message: 'Invalid playback request.' };
@@ -63,7 +63,7 @@ export function preparePlayback(session: Session | null, input: { id: string; tr
   const offsetSeconds = transcode ? input.offsetSeconds ?? 0 : 0;
   const handle = randomUUID();
   const query = new URLSearchParams(transcode ? {
-    userId: session.userId, deviceId: 'onmywave-light', container: 'mp3', audioCodec: 'mp3',
+    userId: session.userId, deviceId, container: 'mp3', audioCodec: 'mp3',
     transcodingContainer: 'mp3', transcodingProtocol: 'http', maxAudioSampleRate: '48000',
     startTimeTicks: String(Math.round(offsetSeconds * 10_000_000)), enableRedirection: 'false', playSessionId: handle,
   } : { static: 'true' });
@@ -73,7 +73,7 @@ export function preparePlayback(session: Session | null, input: { id: string; tr
   return { url: `wave-media://audio/${handle}`, offsetSeconds, transcoded: transcode };
 }
 
-export function registerMedia(getSession: () => Session | null) {
+export function registerMedia(getSession: () => Session | null, deviceId: string) {
   protocol.handle('wave-media', async (request) => {
     if (request.method !== 'GET' && request.method !== 'HEAD') return new Response(null, { status: 405 });
     const url = new URL(request.url);
@@ -113,7 +113,7 @@ export function registerMedia(getSession: () => Session | null) {
     request.signal.addEventListener('abort', () => controller.abort(), { once: true });
     const timeout = setTimeout(() => controller.abort(), 20_000);
     let streaming = false;
-    const headers = new Headers({ Authorization: `MediaBrowser Client="onmywave.fm", Device="Mac", DeviceId="onmywave-light", Version="0.1.0", Token="${session.token}"` });
+    const headers = new Headers({ Authorization: `MediaBrowser Client="onmywave.fm", Device="Mac", DeviceId="${deviceId}", Version="0.1.0", Token="${session.token}"` });
     for (const key of ['range', 'if-range']) {
       const value = request.headers.get(key);
       if (value) headers.set(key, value);

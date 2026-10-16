@@ -9,7 +9,8 @@ export function canonicalArticleUrl(value: string): string | null {
     url.hash = '';
     url.hostname = url.hostname.toLowerCase();
     if ((url.protocol === 'https:' && url.port === '443') || (url.protocol === 'http:' && url.port === '80')) url.port = '';
-    for (const key of [...url.searchParams.keys()]) if (trackingParams.test(key)) url.searchParams.delete(key);
+    const bbcArticle = url.hostname === 'www.bbc.co.uk' && /^\/news\/articles\/[^/]+\/?$/.test(url.pathname);
+    for (const key of [...url.searchParams.keys()]) if (trackingParams.test(key) || (bbcArticle && /^at_(medium|campaign)$/i.test(key))) url.searchParams.delete(key);
     url.searchParams.sort();
     return url.href;
   } catch { return null; }

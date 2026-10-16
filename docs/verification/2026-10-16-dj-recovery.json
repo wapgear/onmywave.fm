@@ -1,0 +1,243 @@
+{
+  "recordedDate": "2026-10-16",
+  "scope": "Native DJ save recovery and shared-host deletion impact confirmation; D20 controlled evidence, not all DJ/editor/provenance or overall usability acceptance",
+  "before": {
+    "confirmationNamedAffectedProfiles": false,
+    "actualEffects": "Two profiles lost the host and enabled selected DJ playback turned off",
+    "longProfileName": {
+      "validLength": 80,
+      "dialogClientWidth": 438,
+      "dialogScrollWidth": 655
+    }
+  },
+  "saveRecovery": {
+    "data": "/private/tmp/native-dj-recovery-RmxgB0",
+    "dj": {
+      "id": "0242f4e4-eaff-4640-bd7f-f8572951a971",
+      "name": "Recovery host",
+      "description": "Soft, unhurried, easy company.",
+      "instructions": "Use short factual sentences",
+      "musicPreferences": "",
+      "exclusions": "",
+      "language": "",
+      "personality": "Calm and concise, preserving my wording",
+      "speakingFrequency": "never",
+      "news": {
+        "feedUrls": [],
+        "interests": "",
+        "minStories": 1,
+        "maxStories": 1,
+        "voice": "coral",
+        "textModel": "gpt-6-luna",
+        "speechEngine": "elevenlabs-v4",
+        "duckVolume": 0.05,
+        "elevenVoiceId": "EXAVITQu4vr4xnSDxMaL",
+        "elevenTags": ""
+      }
+    },
+    "checks": [
+      "pending controls locked",
+      "Escape cannot discard pending save",
+      "failed save retains entered fields",
+      "failed save does not change saved DJs",
+      "explicit retry saves same draft",
+      "both opt-ins remain off",
+      "zero providers"
+    ]
+  },
+  "conditionalDeletion": {
+    "enabled": {
+      "data": "/private/tmp/native-dj-recovery-1Ii9DQ",
+      "mode": "enabled",
+      "confirmation": "Delete Recovery host?\n\nThis DJ will be removed from My room, Evening listening. Choose another DJ in those profiles before preparing more news. Saved scripts and audio takes keep their original DJ information.\n\nDJ breaks for My room will turn off. Choose another DJ in News bucket before enabling them again.\n\nCancel\nDelete DJ",
+      "namesShown": true,
+      "allProfilesBefore": [
+        "My room",
+        "Evening listening"
+      ],
+      "cancelPreserved": true,
+      "confirmedClearedOnlyAffectedHostReferences": true,
+      "djPlaybackDisabled": true,
+      "providerCalls": 0
+    },
+    "off": {
+      "data": "/private/tmp/native-dj-recovery-BeIAIX",
+      "mode": "off",
+      "confirmation": "Delete Recovery host?\n\nThis DJ will be removed from My room, Evening listening. Choose another DJ in those profiles before preparing more news. Saved scripts and audio takes keep their original DJ information.\n\nCancel\nDelete DJ",
+      "namesShown": true,
+      "allProfilesBefore": [
+        "My room",
+        "Evening listening"
+      ],
+      "cancelPreserved": true,
+      "confirmedClearedOnlyAffectedHostReferences": true,
+      "djPlaybackDisabled": true,
+      "providerCalls": 0
+    },
+    "other": {
+      "data": "/private/tmp/native-dj-recovery-rYZshc",
+      "mode": "other",
+      "confirmation": "Delete Recovery host?\n\nThis DJ will be removed from My room, Evening listening. Choose another DJ in those profiles before preparing more news. Saved scripts and audio takes keep their original DJ information.\n\nCancel\nDelete DJ",
+      "namesShown": true,
+      "allProfilesBefore": [
+        "My room",
+        "Evening listening",
+        "Independent room"
+      ],
+      "cancelPreserved": true,
+      "confirmedClearedOnlyAffectedHostReferences": true,
+      "djPlaybackDisabled": false,
+      "providerCalls": 0
+    },
+    "unused": {
+      "data": "/private/tmp/native-dj-recovery-1srO3z",
+      "mode": "unused",
+      "confirmation": "Delete Other host?\n\nThis removes the host configuration. Saved scripts and audio takes keep their original DJ information.\n\nCancel\nDelete DJ",
+      "namesShown": false,
+      "allProfilesBefore": [
+        "My room",
+        "Evening listening"
+      ],
+      "cancelPreserved": true,
+      "confirmedClearedOnlyAffectedHostReferences": true,
+      "djPlaybackDisabled": false,
+      "providerCalls": 0
+    }
+  },
+  "maximumProfileName": {
+    "data": "/private/tmp/native-dj-recovery-RmxgB0",
+    "confirmation": "Delete Recovery host?\n\nThis DJ will be removed from My room, EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE. Choose another DJ in those profiles before preparing more news. Saved scripts and audio takes keep their original DJ information.\n\nDJ breaks for My room will turn off. Choose another DJ in News bucket before enabling them again.\n\nCancel\nDelete DJ",
+    "namesShown": true,
+    "affectedProfiles": [
+      "My room",
+      "EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE"
+    ],
+    "cancelPreserved": true,
+    "confirmedRemovedHostReferences": true,
+    "djPlaybackDisabled": true,
+    "providerCalls": 0
+  },
+  "layout": {
+    "viewports": [
+      [
+        960,
+        640
+      ],
+      [
+        1280,
+        800
+      ],
+      [
+        1600,
+        1000
+      ]
+    ],
+    "minimumWindowZoom": 2,
+    "horizontalOverflow": false,
+    "confirmActionBounds": "inside dialog below sticky heading after scrolling",
+    "screenshots": [
+      "2026-10-16-dj-deletion-200-top.png",
+      "2026-10-16-dj-deletion-200-actions.png"
+    ],
+    "visuallyInspected": true
+  },
+  "review": {
+    "reviewer": "Elena",
+    "mode": "read-only actual-code review",
+    "result": "No concrete issue in confirmation truth, conditional warning or scoped paragraph wrapping",
+    "scopeChoice": "Reuse established source-deletion confirmation pattern; existing mutation/storage/playback behavior unchanged"
+  },
+  "checks": {
+    "buildWithTypeScript": "passed",
+    "fullEslint": "passed",
+    "gitDiffCheck": "passed"
+  },
+  "isolation": {
+    "ownedServer": "localhost5191",
+    "storage": "disposable identity-encryption fixture",
+    "sharedKeys": "null adapter",
+    "realProviderRequests": 0,
+    "scheduledPreparation": "off for all profiles"
+  },
+  "fixtureCorrections": [
+    "Use textbox roles for populated multiline fields rather than exact DOM-label lookup including their content",
+    "Await Electron capturePage before calling NativeImage.toPNG",
+    "Name the report collection allProfilesBefore rather than incorrectly labeling all rooms as affected"
+  ],
+  "limits": [
+    "No running-check cancellation or saved-artifact provenance replay was added in this round; existing behavior is unchanged",
+    "No live-provider, personal-credential, VoiceOver or observed-listener claim",
+    "Screenshot is native window content at app zoom, not full macOS desktop/display-scale evidence"
+  ],
+  "sha256": {
+    "src/renderer/pages/DJs/DJs.page.tsx": "c605629270b31d6c68fee08b04e7b4e64cf39834648f427eb38a0737fbe7ff78",
+    "src/renderer/pages/DJs/components/DJEditor.component.tsx": "2c1260a44cc2fed82542972a9055f63b4d4890fe6232793eaa97a825898c4a7d",
+    "src/renderer/components/Shared.tsx": "303972b169cf42303085a3db1988c04899870a69a6e7591ee4292656785ed2af",
+    "src/renderer/styles.css": "0609ee7ca817c7e7b0459b213c9efd1540484dae20776b49a734b1d8336930fa",
+    "src/main/index.ts": "9388633986fe655374126c8f0740ac6a94a6d1fb9ee300d76fc2b32ccf642c2a",
+    "src/main/storage.ts": "15a0f548f5362cbb8f2cfdb93d0d33b15bc007c75d581266f7a81da8d55c3100",
+    "out/main/index.js": "568eacd971f993691a588a74b57fca82844f5f401f7c6694df26d87ebb6512fa",
+    "out/preload/index.cjs": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215",
+    "out/renderer/assets/index-CLK5XRY3.js": "51b482e1c133a5aa8cc8ae60a8f7b0c91a8833a0885bf5b7eaf22df1e10a7a36",
+    "out/renderer/assets/index-DA188lkD.css": "ed9ed72dfc08b9fba63ca9970fd9558b139137275ce634206e32a3585dd02c3d",
+    "out/renderer/assets/inter-cyrillic-400-normal-HOLc17fK.woff": "6e441a6c94788318fa02b6d0a633aa29eebe27b69c6567eb1e59b4edc68ed70e",
+    "out/renderer/assets/inter-cyrillic-400-normal-obahsSVq.woff2": "f0bb586459ce8f09b238285040f17e3e9e9538b2c5a7aae0775194e33c36c3c3",
+    "out/renderer/assets/inter-cyrillic-500-normal-BasfLYem.woff2": "b77a86ec16aadc157f4a99e8898d71cd75ea264753d9bdf13f962f8c3988cbb0",
+    "out/renderer/assets/inter-cyrillic-500-normal-CxZf_p3X.woff": "5be18e0345781cb882a267798518553c0e915174fc70731ab5f085ca64ba1ebc",
+    "out/renderer/assets/inter-cyrillic-ext-400-normal-BQZuk6qB.woff2": "ef572f9187a8be018d9d9c2c6b77c1f6cb2af4199f02fc16c292ea10ab25a2cc",
+    "out/renderer/assets/inter-cyrillic-ext-400-normal-DQukG94-.woff": "5cb2f1cc0936f89a42ceae34f5a5720248dc5b8114c12b1c33a7d2ef01a9b6b9",
+    "out/renderer/assets/inter-cyrillic-ext-500-normal-B0yAr1jD.woff2": "1c2db92d3cd9b237ca7c9c07af556d542f28ded1db54cd4382cf776501c5291f",
+    "out/renderer/assets/inter-cyrillic-ext-500-normal-BmqWE9Dz.woff": "e250c05aebcf49971e0b25f476992dd463c28c0292ebb204d9db542fb5066ca7",
+    "out/renderer/assets/inter-greek-400-normal-B4URO6DV.woff2": "c15ddd00a9927b56f5c655a41f976f79bd848a20cce91fc14227751872a1cc27",
+    "out/renderer/assets/inter-greek-400-normal-q2sYcFCs.woff": "bdae9d28729e8c68587d5d54e216d771a40d7a6800e824586a6e2f570c2f10df",
+    "out/renderer/assets/inter-greek-500-normal-BIZE56-Y.woff2": "cc197d79d33a3615a047baae85f4d1957f6f98b8898313658e160b1d519b1b6f",
+    "out/renderer/assets/inter-greek-500-normal-Xzm54t5V.woff": "86d55a4b1b9cbced7e61e76d5d44cf49d0bd1c814d3df2de67b7136ab4fdcece",
+    "out/renderer/assets/inter-greek-ext-400-normal-DGGRlc-M.woff2": "eadedd9e13c2582430a9fb1519eb86152fdabb483a6f66d90f8d8a52e977a1b7",
+    "out/renderer/assets/inter-greek-ext-400-normal-KugGGMne.woff": "4f2b6f92ddfece8812e79774d446218aa6e0773ff8c2d31130fe2bdc23bd22d0",
+    "out/renderer/assets/inter-greek-ext-500-normal-2j5mBUwD.woff": "c85d11bde719108cc9a4f6f5b008087f6c36493b47395580d4f5336182b0f0c7",
+    "out/renderer/assets/inter-greek-ext-500-normal-C4iEst2y.woff2": "75a9ec9383a3b7a7bf7cfb94f64edf38d9cfdc5f7ffa0cbed2733627a6e4426d",
+    "out/renderer/assets/inter-latin-400-normal-C38fXH4l.woff2": "8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc",
+    "out/renderer/assets/inter-latin-400-normal-CyCys3Eg.woff": "e20fa0b4fd2dd26e4d14b3ac3cc922509c3a63fa5e910e90c614544aa042dd45",
+    "out/renderer/assets/inter-latin-500-normal-BL9OpVg8.woff": "9b42c108da48b5ed55a3072e815ffee2d271562e6c0dd6998910e8f9c09e0a3d",
+    "out/renderer/assets/inter-latin-500-normal-Cerq10X2.woff2": "f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f",
+    "out/renderer/assets/inter-latin-ext-400-normal-77YHD8bZ.woff": "22ae8360fbad24d2af7c6c9898a346c881774dc87f7cf94bd262c48ad58d7116",
+    "out/renderer/assets/inter-latin-ext-400-normal-C1nco2VV.woff2": "6744a7f509ebc6ab220a6cd4ea77e898adf014f03d88dcda5d45d8a9feefb4e9",
+    "out/renderer/assets/inter-latin-ext-500-normal-BxGbmqWO.woff": "30d2903ce97f8a89ea0e9c083b42cb8bf97e7bbb5607e7f00352815f19cb0d5b",
+    "out/renderer/assets/inter-latin-ext-500-normal-CV4jyFjo.woff2": "2c6fbc42d315528beb06c1096df45487bf4186c4b78b8111d12c9c951f8acca2",
+    "out/renderer/assets/inter-vietnamese-400-normal-Bbgyi5SW.woff": "54aa42d325bcdfd623ecb9eac4a5e3c6420c63d7b86e9d8545fb479f653beb57",
+    "out/renderer/assets/inter-vietnamese-400-normal-DMkecbls.woff2": "547ad9fdaeb0ae43487f4b8a02e47c36553c0c0cb73c8aa98f93b7b615f6b55d",
+    "out/renderer/assets/inter-vietnamese-500-normal-DOriooB6.woff2": "44e36aa5a8f12130029a29bb0e6695d0262b67446ce321e878b1fb56162b5de6",
+    "out/renderer/assets/inter-vietnamese-500-normal-mJboJaSs.woff": "18a4a09f751671cd8929d7c66e8fe7d820b511c36e51cf6047ffceab88eec4a4",
+    "out/renderer/assets/manrope-cyrillic-600-normal-DvRl3Mj-.woff2": "80b86efbef1c9fb66557cc4cc7b6db42db2fd631f1a9b8735f3bbefbb5128799",
+    "out/renderer/assets/manrope-cyrillic-600-normal-It4mZcQk.woff": "716a12f36cf789e399e0ad0bd205e3d1c66e4de66fe0c7e94a59ab7f007fce89",
+    "out/renderer/assets/manrope-greek-600-normal-BoRV6lzK.woff2": "18d69aa241a76095c4c5f8c224abe6519ff60db3b4085e843d59fb4965a4eebd",
+    "out/renderer/assets/manrope-greek-600-normal-CF2i9ZRY.woff": "59fa49c299110657ee3dbc02beed32f5fda899423686058a0ce7e499851e6e7a",
+    "out/renderer/assets/manrope-latin-600-normal-4f0koTD-.woff2": "f7ac6258da20ab7541939b59851155753d1d24f1b30cbcb949077a3faa3d1593",
+    "out/renderer/assets/manrope-latin-600-normal-BqgrALkZ.woff": "8d1f509774bca963fa02faf674678ce9244474306361ca2798583fa600346df6",
+    "out/renderer/assets/manrope-latin-ext-600-normal-_gBojHdJ.woff2": "ff679412842fc3b5ce2dfad626db5261a4e663dcfd1bf1209bdfc61c2b2f37e6",
+    "out/renderer/assets/manrope-latin-ext-600-normal-u5Pl7hTU.woff": "80ff78480448f4c2c0f586cb016928554b8cd84b2b95dec5e5f7579274f757a0",
+    "out/renderer/assets/manrope-vietnamese-600-normal-C1J5PCl_.woff2": "bce46331a74572cd723ddb8200a11c00e71370fad490f045564989527469aa3d",
+    "out/renderer/assets/manrope-vietnamese-600-normal-lA7a_7Ok.woff": "628a1c849748530c6f7c02c18bdd3191bc19264e20ad2308a8a954605cdb620b",
+    "out/renderer/demo/news-break.json": "fad8cf445ffac400596faa134c1ca357b28a6de86dec5e8389597b1277050c46",
+    "out/renderer/demo/news-break.mp3": "718a35bc38f30397b7b43965db4a4bf5211d59c0a5f37c4e23ef38428a614f74",
+    "out/renderer/demo/transcript.md": "d64810c60028cc5d69ff10c156b07f8cf5d78cee42ae34e5e6cc0e6553f3fb44",
+    "out/renderer/index.html": "240e6d1fe215065475b691cd146ece001e8b9344fa8b3403b76feda078d95143",
+    "out/renderer/voice-previews/EXAVITQu4vr4xnSDxMaL.mp3": "fef86e7100a94578dd2dcee7db9085fcf5c6f50b07aeceeabae05dd09b17a539",
+    "out/renderer/voice-previews/FGY2WhTYpPnrIDTdsKH5.mp3": "97fc724a7c41b0c02884aec975e2e4a749daabb1fc57a8229b34e8180e1fe418",
+    "out/renderer/voice-previews/JBFqnCBsd6RMkjVDRZzb.mp3": "ac1804ae2ee825f7414d819e2036369297bf9fc01a816b4f3d9c51e7357d32cf",
+    "out/renderer/voice-previews/TX3LPaxmHKxFdv7VOQHJ.mp3": "f8018932908f1c3cfaed40a94b13fe4d498489f3fd1d37d3fa86984af721e40c",
+    "out/renderer/voice-previews/cgSgspJ2msm6clMCkdW9.mp3": "addac5c0fecee048baed846784c7f599fa0bcce636556e7a6bc63daa43ffee9f",
+    "out/renderer/voice-previews/cjVigY5qzO86Huf0OWal.mp3": "3f485d54b0932999ab76225e4af338b37c2becac438c8595023bc13984bfc8e5",
+    "out/renderer/voice-previews/manifest.json": "15811b8afa01189660b5da6e6e0f54958a4889b644d9ef18d1474e10acead7dc",
+    "out/renderer/voice-previews/onwK4e9ZLuTAKqWW03F9.mp3": "9c91149960d8c492f19a7d53522af8a4597b490e90f0fe8dd7022653c9824c52",
+    "docs/verification/2026-10-16-dj-deletion-200-top.png": "d90701ba50ed71e0208dde95b6cbf3f3cf0b157159f714e41201a4242f29eafa",
+    "docs/verification/2026-10-16-dj-deletion-200-actions.png": "3f06a67420ac72268698cd2b5e45d283b6f2a3b7cdef4cf6029b7d070da2c028"
+  },
+  "fixtureSha256": {
+    "build.mjs": "50c72c87609f49ced301fe87a36aed24c8301cdb91fe8e5e8a8610aac622cedc",
+    "run.cjs": "7d356a4a0344c6a3bec1b82d8c05f7bd20dbe723d7c1a6ecbed91026eb22c34c",
+    "conditional.cjs": "001435c8d436eca6f82f32e1c9524ddcca0a34c6d73891fbe8081876d8b45908",
+    "long-name.cjs": "4b5a6d2513844e6de525a03aedc3a55f35c905b7aa1e0ba996928158dcd42530",
+    "isolatedMain": "28ae6cebb9e815e130b8ea1a36daf83123041c81ba4e92b2d1f606951ad20fa2"
+  }
+}

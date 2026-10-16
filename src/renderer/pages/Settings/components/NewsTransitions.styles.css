@@ -14,5 +14,5 @@
 .transition-preview-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; list-style: none; padding: 0; margin: 14px 0; }
 .transition-preview-steps li { padding: 9px; border-radius: 6px; font-size: 11px; line-height: 1.5; }
 .transition-preview-steps li[aria-current] { background: var(--accent); color: white; }
-.transition-preview-steps small { display: block; font-size: 10px; opacity: 0.8; }
+.transition-preview-steps small { display: block; font-size: 10px; }
 @media (max-width: 760px) { .news-transition-grid { grid-template-columns: minmax(0, 1fr); } }

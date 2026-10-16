@@ -1,0 +1,245 @@
+{
+  "date": "2026-10-16",
+  "scope": "Native automatic-preparation defaults, daily caps and controlled midnight, identified-run editing, reserved snapshots, stop/failure/late response, and explicit Resume",
+  "native": {
+    "stopCases": [
+      {
+        "variant": "stop",
+        "identifiedRunAllowsEditing": true,
+        "profileSwitchAndManualGenerationLocked": true,
+        "offOnlyNamedProfile": true,
+        "unsavedEditsRetainedWithoutSaving": true,
+        "cancellationPreventsVoiceAndPaidRetry": true,
+        "interruptionDurable": true,
+        "selectedTakeUnchanged": true,
+        "musicRemainsPaused": true,
+        "result": "passed"
+      },
+      {
+        "variant": "failed-stop",
+        "identifiedRunAllowsEditing": true,
+        "profileSwitchAndManualGenerationLocked": true,
+        "failedStopRetainsEnabledStateAndRetry": true,
+        "offOnlyNamedProfile": true,
+        "unsavedEditsRetainedWithoutSaving": true,
+        "cancellationPreventsVoiceAndPaidRetry": true,
+        "interruptionDurable": true,
+        "selectedTakeUnchanged": true,
+        "musicRemainsPaused": true,
+        "result": "passed"
+      },
+      {
+        "variant": "late-provider-stop",
+        "identifiedRunAllowsEditing": true,
+        "profileSwitchAndManualGenerationLocked": true,
+        "offOnlyNamedProfile": true,
+        "unsavedEditsRetainedWithoutSaving": true,
+        "cancellationPreventsVoiceAndPaidRetry": true,
+        "interruptionDurable": true,
+        "selectedTakeUnchanged": true,
+        "musicRemainsPaused": true,
+        "result": "passed"
+      }
+    ],
+    "saveAfterPublication": [
+      {
+        "variant": "save-after-publication",
+        "identifiedRunAllowsEditing": true,
+        "profileSwitchAndManualGenerationLocked": true,
+        "reservedSnapshotRetainedAcrossSharedEdits": true,
+        "cadenceAnchoredAfterPublication": true,
+        "completedRecordingCountedOnce": true,
+        "selectedTakeUnchanged": true,
+        "musicRemainsPaused": true,
+        "result": "passed"
+      }
+    ],
+    "saveAfterCompletedRun": [
+      {
+        "variant": "save-after-run-completion",
+        "identifiedRunAllowsEditing": true,
+        "profileSwitchAndManualGenerationLocked": true,
+        "reservedSnapshotRetainedAcrossSharedEdits": true,
+        "cadenceAnchoredAfterRunFinished": true,
+        "completedRecordingCountedOnce": true,
+        "selectedTakeUnchanged": true,
+        "musicRemainsPaused": true,
+        "result": "passed"
+      }
+    ],
+    "resumeCases": [
+      {
+        "variant": "failure-resume",
+        "identifiedRunAllowsEditing": true,
+        "profileSwitchAndManualGenerationLocked": true,
+        "causeRetainedAcrossRepairSave": true,
+        "saveDoesNotResumeOrRetry": true,
+        "explicitResumeDispatchesOnce": true,
+        "noVoiceForNoStory": true,
+        "selectedTakeUnchanged": true,
+        "musicRemainsPaused": true,
+        "result": "passed"
+      },
+      {
+        "variant": "interrupted-resume",
+        "identifiedRunAllowsEditing": true,
+        "profileSwitchAndManualGenerationLocked": true,
+        "causeRetainedAcrossRepairSave": true,
+        "saveDoesNotResumeOrRetry": true,
+        "explicitResumeDispatchesOnce": true,
+        "noVoiceForNoStory": true,
+        "selectedTakeUnchanged": true,
+        "musicRemainsPaused": true,
+        "result": "passed"
+      }
+    ],
+    "dailyLimits": [
+      {
+        "kind": "check",
+        "defaultsShown": true,
+        "capPreventsSourceAndProviderDispatch": true,
+        "nextCheckLocalMidnight": true,
+        "controlledMidnightResetsEligibility": true,
+        "newDaySingleAssessment": true,
+        "noVoiceForNoStory": true,
+        "reason": "No qualifying news. Music continues.",
+        "noImmediateRepeat": true,
+        "result": "passed"
+      },
+      {
+        "kind": "recording",
+        "defaultsShown": true,
+        "capPreventsSourceAndProviderDispatch": true,
+        "nextCheckLocalMidnight": true,
+        "controlledMidnightResetsEligibility": true,
+        "newDaySingleAssessment": true,
+        "noVoiceForNoStory": true,
+        "reason": "No qualifying news. Music continues.",
+        "noImmediateRepeat": true,
+        "result": "passed"
+      }
+    ],
+    "freshDefaults": {
+      "actualNoLocalStateStartup": true,
+      "oneDefaultProfile": true,
+      "noSourcesOrDjs": true,
+      "everyHours": 3,
+      "importance": "major",
+      "maxAutomaticRecordings": 3,
+      "preparationOff": true,
+      "djOff": true,
+      "providerRequests": 0,
+      "sourceRequests": 0,
+      "result": "passed"
+    },
+    "caseCount": 10,
+    "result": "passed"
+  },
+  "method": {
+    "runtime": {
+      "platform": "macOS 27.2 arm64",
+      "electron": "43.7.0"
+    },
+    "application": "Actual current main/preload/production renderer, typed IPC, NewsService, prepared-news publication and serialized filesystem storage. Hidden muted native windows and protected dummy localhost accounts. All non-fixture external traffic blocked; only non-secret fixture provider keys exist in these isolated profiles.",
+    "providers": "OpenAI and ElevenLabs HTTP responses are substituted at fetch while actual service request construction, cancellation, parsing, generation guards and artifact storage run. Valid MP3 bytes are returned for one completed voice recording. No live provider or billed request.",
+    "scheduler": "A test-only reference invokes the actual private scheduler tick rather than waiting for its minute interval. Source and provider call counts are observed. Actual production scheduler bodies are retained.",
+    "defaultStartup": "The seeded local-state file is removed before actual main startup. Actual storage default creates one default-room with no hosts/sources and both opt-ins off. Native controls show every3 hours, major stories and maximum3 automatic recordings. Existing saved fixture audio is not a source or automation opt-in.",
+    "caps": "At default cadence, eight scheduled checks or three automatic recordings for the current local date prevent all source/provider dispatch and persist next check at actual local midnight. Native status names check versus recording cap and explains the reset.",
+    "midnight": "After observing the cap, test-only Date adapters in owned main and renderer advance to the next local day at00:00:01. Actual date-key logic permits one assessment, shows1/8 and0/3, and persists the no-story reason. A second tick before the newly scheduled time makes no call. This models midnight bookkeeping, not a physical OS clock/sleep/wake test.",
+    "stop": "An identified automatic request is held after text dispatch. Setup stays editable; profile switching and manual generation are disabled. Turn off saves only notes-room OFF, leaves another future-enabled profile enabled, retains unsaved mood/interests/cadence, requests cancellation and prevents voice dispatch. An actual atomic OFF write failure leaves enabled state and survives navigation with explicit retry. A provider that ignores abort and returns late still cannot dispatch speech.",
+    "snapshot": "While text is pending, actual shared DJ/source saves change host name/personality/voice and source URL. Future profile mood/interests/cadence also change. Completed recording provenance, text context and voice retain the reserved original values. Selected audio and paused music stay unchanged.",
+    "lateSaves": "One actual setup atomic write is held until the recording publishes. A stronger separate case holds main save after it captures the running request ID but before its state mutation; the scheduler fully finishes and persists prepared before the save continues. Both next checks equal original run start plus6 hours, and the recording count remains1.",
+    "resume": "Provider503 failure and explicit-stop interruption preserve their cause through repair/save. Saving or ticking makes no retry. The separately enabled Resume action clears pause/error; one subsequent assessment produces no story and no voice.",
+    "shutdown": "Each owned app.close and owned-server cleanup completes. No exit-code-zero assertion was added to these _electron runs. The earlier debugger-associated shutdown investigation remains separate."
+  },
+  "checks": {
+    "nativeCases": 10,
+    "productionCodeChangedThisRound": false,
+    "productionBundleAndPreviouslyRecordedSourceHashesMatchLastPassingBuildTypeScriptAndFullESLint": true,
+    "priorBuildRecord": "2026-10-16-profile-drafts-status.json",
+    "noRedundantBuild": "Only PRD/evidence edits were made this round.",
+    "liveProviderRequests": 0,
+    "billedRequests": 0,
+    "inventoryUniqueRequirements": 187,
+    "STARMappingRows": 27,
+    "inventoryCounts": {
+      "Review": 118,
+      "Dated": 11,
+      "Recorded": 5,
+      "Controlled": 35,
+      "Live": 9,
+      "External": 9
+    }
+  },
+  "acceptance": {
+    "R11": "Controlled; identified automatic run keeps setup editable and locks profile switching/manual generation",
+    "R12": "Controlled; reserved source/host/profile values and cadence anchoring before publication and after fully persisted completion",
+    "A01": "Controlled; actual fresh default state/UI and bounded scheduled checks",
+    "A09": "Controlled; check and recording caps with actual dispatch suppression and modeled local-midnight eligibility",
+    "A10": "Controlled; cause retained, no automatic retry after repair/save, explicit Resume for failure and interruption",
+    "A12": "Controlled; named OFF-only save, cancellation, retained unrelated edits and unchanged selected result",
+    "A04": "Review; preparation does not start music or replace the take here, but full independent DJ-playback scope remains separate",
+    "A05": "Review; controlled clock does not establish actual Mac sleep/wake/coalescing",
+    "A13": "Review; failed stop/navigation/retry engineering passes, listener interpretation remains unobserved",
+    "A19": "Review; one completed count here is not full restart/publication reconciliation coverage",
+    "R07": "Review; these valid-key cases do not establish every missing prerequisite/activation guard"
+  },
+  "harnessCorrections": [
+    "Two fixture calls used nonexistent API aliases; correcting them to typed selectNewsTake/saveNewsSources affected no application implementation. The first three stop cases passed before the independent corrected snapshot case.",
+    "The first clock adapter treated the Electron module argument as the target time, producing an Invalid time value fatal in that isolated test. The corrected two-argument callback passed both cap/day cases; no production time change or error suppression.",
+    "The initial Resume check observed persistence before the UI save/refetch/draft clearing finished. Waiting for the actual Resume button to become enabled corrected that observation race.",
+    "Final fixture reproducers include optional cap/default seeding branches added after earlier variants. Those flags are inactive in the earlier cases; production source/bundles stayed unchanged."
+  ],
+  "limits": [
+    "Substituted provider responses establish orchestration/cancellation/storage behavior, not live provider access, relevance, cost or audible output quality.",
+    "One runtime/platform. Native Date adapters and explicit scheduler ticks do not establish physical sleep/wake, actual system midnight or OS/hardware controls.",
+    "No observed listener/usability result or overall acceptance percentage.",
+    "Earlier Q10 debugger-associated shutdown exception remains open; no production shutdown change was made.",
+    "Full STAR scenarios retain all other linked checklist requirements; promoting these six rows does not complete their whole scenario or the full goal."
+  ],
+  "sha256": {
+    "src/main/news-workflow.ts": "7cab5b92c6d4d1476526a75831069de80623ef5b6ca4686345bacfaf01103fb0",
+    "src/main/news.ts": "772a9b50e5c569cd1139498854638866ea7e2d29eef335d05268b6cd6a96be27",
+    "src/main/prepared-news.ts": "f09a7fd83da395c8de08e1eab3b52f87454e80bbc36dcdad6d2fd1d21f229155",
+    "src/main/index.ts": "03c70d68a326aac2ab8826329c7020620404b1daeb9cedb9c317be7f080d4757",
+    "src/main/storage.ts": "844254b83525cc7eaf7c9ad7469eec3550f02e1ebb8b88270018c68937ec5adc",
+    "src/shared/workflow.ts": "19e2afad8909330c33195420af54cbbbe836f0bc81bde166cfdf42dd3230e6ac",
+    "src/shared/news-preparation-status.ts": "188a3acaed39fb05e0f2b32d413701dcc992b42228b7c15c687b8575a01b359c",
+    "src/shared/types.ts": "71e36cce9f904d7327f8d85c38f8ce050c7955877888ed9dde27e4105a6c57f0",
+    "src/renderer/App.tsx": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+    "src/renderer/player.tsx": "0d72985571ede7ae6562a95220c03bbdfec6f9367c0741e131a06481bd40e7f6",
+    "src/renderer/dj-playback.tsx": "31e217aa382a88dcfddbfb0b06b0294825d4acdb7a9bc0127dd8e367adf85c5f",
+    "src/renderer/pages/Stations/Stations.page.tsx": "eb2bd7d0dc351364e2ab221f3411098b0fe66a21665bd5aba408ca63750b97e8",
+    "src/renderer/pages/Stations/components/NewsBucket.component.tsx": "6c0f50ac02b5f6b5cd81c9ec45fb378a9a966cc7752d7ce6b5c4d1c4bae14b73",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": "6f1c4fd3956da61639d94c430605bb321903da2ffac953894278a3c79c6ae2a9",
+    "src/renderer/components/Player/DJPopover.component.tsx": "6ffca314f80c990adb9c1fbf81f970560cd5d2debc786e855098f89551e2e4ec",
+    "src/preload/index.ts": "0c7edf2153d5210b24a0fac9db667fd254e324366d4737653578ef067c1eac63",
+    "REQUIREMENTS.md": "ecd9d815e97878569324120b380d1be436c4a48623a69e1107a7a62b54c5ba5e",
+    "docs/RADIO_EXPERIENCE.md": "0ee58a940e65f3289f8730866ef152bf68f3a38f6bf11062ce4ab83bac7a9ec7",
+    "out/main/index.js": "852222e0fa542a8acc20e2aa4483dc3f4a489054e015cba72d3a8f433b8f399d",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+    "out/renderer/index.html": "46eff84192a1455040d21054ed404065240cf1fde0f98abc95894926736d8de4",
+    "out/renderer/assets/index-DTtfGQkf.js": "e933b164342c6d89c1ab5d23b9ce50b92443418fa6705ee66f32fb94f6a15e23"
+  },
+  "fixtureReproducerSha256": {
+    "build.mjs": "51a78cb5245e724999c27c26ca4afa77e8f7ba9af43cbc9a01173e0a4d35e314",
+    "bootstrap.mjs": "af562563eaa0f9cf5a0fbfb23def7a02b7d63311cb7729f8c714080beeaa82cd",
+    "run.cjs": "04dfb6d8f6b91b716a0c2dd300203c25334fe530b51f098854f1077c78f47cc4",
+    "limits.cjs": "73428f1fa5653b233572f7bd857e5181876f1e1e8ce6a45d158f23046786c94b",
+    "resume.cjs": "5d412e3f12aae7e61393a6e180cc1507571f5b7d895902025987fe486982cf44",
+    "defaults.cjs": "ec1098cb4ae66e33fbc9c7940518cb00483c4c0a77fbefa9e5913d39cd4ed3c4",
+    "stop-cases.json": "29cef2d1664e56ac410075a6db5a4aa2fee9fae55af37018738ed66a7592615d",
+    "report.json": "a16c5de38d0c25ce4a4538849502aa8a518ee94111f62188d7bfef6532366661",
+    "limits.json": "37dd54eeebcef3dae9ec15e09b5fabf2393cc3f653017993e580f9b27042307a",
+    "resume.json": "ea55c974e89f0d5ddbe01a7882df97bc939da9509ad263726359725663436c57",
+    "defaults.json": "b12a60e4d937a3479d5137b451803822ee772882a197ebf2a3893b2e5edc53db",
+    "out/main/index.js": "73659d598f8fda2764bbf3521ae93cb44e0383a0851e00bdb77e3b49744a3042"
+  },
+  "lateRunFixtureSha256": {
+    "build.mjs": "b0c0e3c7f8a3833c883a47f14988a5318c24352e93d879c148dbe113022704e3",
+    "bootstrap.mjs": "98660e0ff9aed1603128712f91f10eedb843ee0310501bfb32e1d98e60a18156",
+    "run.cjs": "5b05442a1bf08a03e4bbbba5b9673a3304388db7831dc6acf077dabaa923cc70",
+    "report.json": "43715cfea7a28043ff101d47824c804be97e5086f680af3e4094d3415d288aa0",
+    "out/main/index.js": "a98b7fdc04734c85bff0561e93e565084ee4b99da06ecab077b7acd321d657bc"
+  }
+}

@@ -1,0 +1,232 @@
+{
+  "date": "2026-10-16",
+  "scope": "R03/R04/R05 complete profile draft save/navigation/switch journey and R13 truthful preparation status under pending/failed reads",
+  "before": {
+    "report": {
+      "editingDidNotSave": true,
+      "draftSurvivesMusic": true,
+      "sharedManagementAndFocus": true,
+      "cancelRetainsEntireDraft": true,
+      "saveAndSwitchEntireDraft": true,
+      "discardDropsEntireDraft": true,
+      "atomicSaveFailureAndExplicitRecovery": true,
+      "pendingAndErrorSurviveNavigation": true,
+      "unknownStatusLocksEditing": true,
+      "unknownStatusVisibleText": "News preparation\n\nPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running.\n\nAutomatically prepare news\nCheck sources every\n1 hour\n3 hours\n6 hours\nNews selection\nMajor developments only\nRelevant stories\nMaximum automatic recordings per day\n\nUp to 4 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.\n\nSaving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.\n\nFinish setup before enabling preparation\nOpenAI key is missing.Provider keys\nElevenLabs key is missing.Provider keys\nSave setup\n\nPreparation off. Saved recordings remain available. Enable news preparation in News settings.",
+      "unknownBucketText": "MORNING ROOM\nNews preparation\nNews settings\n\nPreparation off. Saved recordings remain available. Enable news preparation in News settings.\n\nScheduled checks started today\n0 / 4\nAutomatic recordings saved today\n0 / 3\nReady for this profile\n0\n\nOnly scheduled preparation is counted for this profile in your Mac's local day. Checks can use paid text generation even when no recording is made.\n\nNo scheduled check has been recorded for this profile yet.",
+      "statusRetryPreservesSetup": true,
+      "sourceRequests": 0,
+      "providerRequests": 0,
+      "result": "passed"
+    },
+    "finding": "The native profile journey already retained fields and recovered a failed write, but a failed prepared-news read left an unqualified Preparation off summary and current-looking saved-news counts. Automatic state comes from localState while requests/recordings come from preparedNews; treating them as the same confirmation is misleading."
+  },
+  "native": {
+    "initialPendingStatusLocksEditing": true,
+    "editingDidNotSave": true,
+    "draftSurvivesMusic": true,
+    "sharedManagementAndFocus": true,
+    "cancelRetainsEntireDraft": true,
+    "saveAndSwitchEntireDraft": true,
+    "discardDropsEntireDraft": true,
+    "atomicSaveFailureAndExplicitRecovery": true,
+    "pendingAndErrorSurviveNavigation": true,
+    "unknownStatusLocksEditing": true,
+    "unknownStatusVisibleText": "Automatic news preparation\n\nPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running.\n\nAutomatically prepare news\nCheck sources every\n1 hour\n3 hours\n6 hours\nNews selection\nMajor developments only\nRelevant stories\nMaximum automatic recordings per day\n\nUp to 4 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.\n\nSaving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.\n\nFinish setup before enabling preparation\nOpenAI key is missing.Provider keys\nElevenLabs key is missing.Provider keys\nSave setup\n\nPreparation off. Saved recordings remain available. Enable news preparation in News settings.",
+    "unknownBucketText": "MORNING ROOM\nAutomatic news preparation\nNews settings\n\nPreparation off. Saved recordings remain available. Enable news preparation in News settings.\n\nScheduled checks started today\n0 / 4\nAutomatic recordings saved today\n0 / 3\nLast loaded ready recordings\n0\n\nOnly scheduled preparation is counted for this profile in your Mac's local day. Checks can use paid text generation even when no recording is made.\n\nNo scheduled check has been recorded for this profile yet.",
+    "libraryFailureKeepsConfirmedAutomaticCounts": true,
+    "cachedEligibilityAndHistoryQualified": true,
+    "statusRetryPreservesSetup": true,
+    "localStatusFailureMasksCurrentClaims": true,
+    "popoverAutomaticScopeAndCachedSetting": true,
+    "layouts": [
+      {
+        "width": 1280,
+        "height": 800,
+        "zoom": 1,
+        "horizontalOverflow": false,
+        "capture": "/private/tmp/native-profile-drafts/status-1280-800-1.png"
+      },
+      {
+        "width": 960,
+        "height": 640,
+        "zoom": 1,
+        "horizontalOverflow": false,
+        "capture": "/private/tmp/native-profile-drafts/status-960-640-1.png"
+      },
+      {
+        "width": 960,
+        "height": 640,
+        "zoom": 2,
+        "horizontalOverflow": false,
+        "capture": "/private/tmp/native-profile-drafts/status-960-640-2.png"
+      }
+    ],
+    "keyboardStatusRetryDoesNotSaveDraft": true,
+    "sourceRequests": 0,
+    "providerRequests": 0,
+    "result": "passed"
+  },
+  "providerKeyDetour": {
+    "initialPendingStatusLocksEditing": true,
+    "editingDidNotSave": true,
+    "draftSurvivesMusic": true,
+    "sharedManagementAndFocus": true,
+    "providerKeyReturnRetainsDraftAndFocus": true,
+    "sourceRequests": 0,
+    "providerRequests": 0,
+    "result": "passed"
+  },
+  "settingsAndPopoverLayouts": {
+    "initialPendingStatusLocksEditing": true,
+    "editingDidNotSave": true,
+    "draftSurvivesMusic": true,
+    "sharedManagementAndFocus": true,
+    "statusLayouts": [
+      {
+        "width": 1280,
+        "height": 800,
+        "zoom": 1,
+        "settingsHorizontalOverflow": false,
+        "popupWithinViewport": true,
+        "escapeReturnsFocus": true,
+        "settingsCapture": "/private/tmp/native-profile-drafts/settings-status-1280-800-1.png",
+        "popupCapture": "/private/tmp/native-profile-drafts/popover-status-1280-800-1.png"
+      },
+      {
+        "width": 960,
+        "height": 640,
+        "zoom": 1,
+        "settingsHorizontalOverflow": false,
+        "popupWithinViewport": true,
+        "escapeReturnsFocus": true,
+        "settingsCapture": "/private/tmp/native-profile-drafts/settings-status-960-640-1.png",
+        "popupCapture": "/private/tmp/native-profile-drafts/popover-status-960-640-1.png"
+      },
+      {
+        "width": 960,
+        "height": 640,
+        "zoom": 2,
+        "settingsHorizontalOverflow": false,
+        "popupWithinViewport": true,
+        "escapeReturnsFocus": true,
+        "settingsCapture": "/private/tmp/native-profile-drafts/settings-status-960-640-2.png",
+        "popupCapture": "/private/tmp/native-profile-drafts/popover-status-960-640-2.png"
+      }
+    ],
+    "sourceRequests": 0,
+    "providerRequests": 0,
+    "result": "passed"
+  },
+  "method": {
+    "runtime": {
+      "platform": "macOS 27.2 arm64",
+      "electron": "43.7.0"
+    },
+    "application": "Actual main/preload/current production renderer, IPC, protected dummy localhost account and serialized filesystem storage. Hidden muted native windows; owned HTTP catalog fixture. Shared provider key access stubbed, all external-provider fetches blocked.",
+    "draftFields": "Source checkbox, DJ choice, mood, interests, every-hours cadence, importance and automatic daily recording cap. Automatic preparation and DJ playback remain off.",
+    "journey": "Edits do not save on change. Music, source management, DJ management and provider-key detours retain every draft field. Management Back to setup restores its matching control; missing-key return uses the Settings tab when the disabled enable checkbox cannot receive focus.",
+    "switch": "Cancel retains the complete draft and original profile. Save and switch saves every changed field to the original profile then activates the target. Discard and switch drops the changed mood/cadence; returning confirms the discarded values never saved.",
+    "atomicFailure": "The actual serialized local-state writer is held after writing its temporary file and before rename, then fails. The prior profile mood remains on disk. Setup/profile controls stay disabled across navigation. The sanitized failure and draft survive navigation. Explicit Save recovers mood, interests and cadence together without enabling preparation. Source inspection confirms all setup fields share one atomic local-state mutation and memory publishes only after rename.",
+    "readFaults": "Actual preload IPC is retained. Test-only main handler wrappers hold the initial prepared-news reply or return a bounded error for preparedNews/localState. Actual data/store reads and production rendering run normally otherwise. Native polling observes the error; no private renderer query cache is replaced.",
+    "recovery": "Library-only failure retains independently confirmed automatic counters and marks cached eligibility/drafts/history last loaded. Local-state failure shows only the last saved automatic setting and hides current-looking workflow counters/last-run. Both retain unsafe-edit locks. Retry restores editing without saving the unsaved mood or starting preparation.",
+    "layout": "Three window/zoom variants each for Bucket, Settings and DJPopover. Native settled capturePage images; main content has no horizontal overflow, popover stays in the viewport, and Escape returns focus. Scroll is expected at enlarged zoom; whole forms are not required to fit simultaneously."
+  },
+  "decision": {
+    "pairedProposals": "Steve and Elena independently proposed separating saved choice from current activity. Both initially considered the combined unknown signal; challenge distinguished automatic local-state data from the request/artifact library.",
+    "chosen": "Source-specific freshness, explicit Automatic news preparation headings, last-saved automatic choice for failed local-state reads, and last-loaded recordings/drafts/history for uncertain library/profile matching. No extra popover library query; its line explicitly describes automatic workflow. Existing combined setup lock remains. Root owns all edits.",
+    "review": "Both final reviews found no remaining blocker. Their initial review caught stale current-ready/empty/history claims and the combined notice falsely implying recordings were not checked on a local-state-only failure; these were corrected before final native verification.",
+    "reservation": "Elena favored an additional open-only library observer for a broadly labeled popover. The chosen automatic-only heading avoids that broader contract. Her final minor note accepts that global history is conservatively labeled last loaded on a local-state-only failure even when its library read succeeded."
+  },
+  "checks": {
+    "buildIncludingTypeScript": "passed",
+    "fullEslint": "passed",
+    "nativeProfileJourneyAndFaultRecovery": "passed",
+    "providerKeyDetourAndFocus": "passed",
+    "layoutCases": 9,
+    "sourceRequests": 0,
+    "providerRequests": 0,
+    "inventoryUniqueRequirements": 187,
+    "STARMappingRows": 27,
+    "inventoryCounts": {
+      "Review": 123,
+      "Dated": 12,
+      "Recorded": 5,
+      "Controlled": 29,
+      "Live": 9,
+      "External": 9
+    }
+  },
+  "acceptance": {
+    "R03": "Controlled; combined explicit save and real atomic write failure/recovery",
+    "R04": "Controlled; complete draft across music, sources, DJs and provider-key management with focus return",
+    "R05": "Controlled; complete Save and switch / Discard and switch / Cancel journey",
+    "R13": "Controlled; initial pending, cached library error, cached local-state error, locks and explicit keyboard recovery without false current claims",
+    "R10": "Review; pending/error navigation is covered here, but broader stale-account/profile/result races remain separate"
+  },
+  "harnessCorrections": [
+    "Exact label matching included nested textarea values or select options; use actual textarea/profile IDs and accessible combobox-name prefixes. No application edit was needed for those locators.",
+    "Storage faults are sanitized by actual main IPC; assertions now match the user-facing generic failure rather than the internal fixture exception.",
+    "The first status fix passed native checks but independent review found remaining stale copy. The final rebuilt run includes the corrections."
+  ],
+  "limits": [
+    "Controlled local accounts and fault wrappers are not live multi-profile/provider-service acceptance.",
+    "One macOS architecture/version; physical OS integration, audible quality and observed listener comprehension remain open.",
+    "The status correction does not prove all scheduler dispatch, limits, sign-out, run snapshot or stale-result races.",
+    "Earlier debugger-associated shutdown exception remains open under Q10; no shutdown production change was made.",
+    "No overall acceptance percentage or full-goal completion is claimed."
+  ],
+  "sha256": {
+    "src/renderer/App.tsx": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+    "src/renderer/pages/Stations/Stations.page.tsx": "eb2bd7d0dc351364e2ab221f3411098b0fe66a21665bd5aba408ca63750b97e8",
+    "src/renderer/pages/Stations/components/RoomSetup.component.tsx": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330",
+    "src/renderer/pages/Stations/components/NewsBucket.component.tsx": "6c0f50ac02b5f6b5cd81c9ec45fb378a9a966cc7752d7ce6b5c4d1c4bae14b73",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": "6f1c4fd3956da61639d94c430605bb321903da2ffac953894278a3c79c6ae2a9",
+    "src/renderer/components/Player/DJPopover.component.tsx": "6ffca314f80c990adb9c1fbf81f970560cd5d2debc786e855098f89551e2e4ec",
+    "src/shared/news-preparation-status.ts": "188a3acaed39fb05e0f2b32d413701dcc992b42228b7c15c687b8575a01b359c",
+    "src/main/index.ts": "03c70d68a326aac2ab8826329c7020620404b1daeb9cedb9c317be7f080d4757",
+    "src/main/storage.ts": "844254b83525cc7eaf7c9ad7469eec3550f02e1ebb8b88270018c68937ec5adc",
+    "src/preload/index.ts": "0c7edf2153d5210b24a0fac9db667fd254e324366d4737653578ef067c1eac63",
+    "REQUIREMENTS.md": "ecd9d815e97878569324120b380d1be436c4a48623a69e1107a7a62b54c5ba5e",
+    "docs/RADIO_EXPERIENCE.md": "90d338601861167dc39ef018dbc9f52684b4f85610da933eda21c4c1f96b6874",
+    "out/main/index.js": "852222e0fa542a8acc20e2aa4483dc3f4a489054e015cba72d3a8f433b8f399d",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+    "out/renderer/index.html": "46eff84192a1455040d21054ed404065240cf1fde0f98abc95894926736d8de4",
+    "out/renderer/assets/index-DTtfGQkf.js": "e933b164342c6d89c1ab5d23b9ce50b92443418fa6705ee66f32fb94f6a15e23"
+  },
+  "fixtureSha256": {
+    "bootstrap.mjs": "8da8f79014b31c3e2dd47a806f9a379db26edb27f18e6cc8de4e254f423d3b4c",
+    "run.cjs": "c38aade4b35004ae92d57844bbd03a66bae8c2c7f513a7b6dbf323afc0f1de85",
+    "key-return.cjs": "2bdf1c02d0160ac220e728a9686f20cc7ba3da5a75abdd023a8f4dc000b35f9e",
+    "settings-layout.cjs": "5dd338a8b7ce24261a6397960eeb8e1f9081498101c87153f206294b3e9778ea",
+    "before-status.json": "69d946c482d4537f08a01508f4eb66fbfaad37399a2071d3337662b1805dd596",
+    "report.json": "deed89087b925cbc7bd2ea912a1597ed6b7685224917a95c7ccc58d2ac97c266",
+    "key-return.json": "c155faf1f4ec65a4d436aaefda5869c0d6f5cbd2e3c76d629c1bad02f5e32088",
+    "settings-layout.json": "c743a80d1eee2a1b5da88dcf0f4fcacec8fe2fb055140dfd7ad2084b604847c7",
+    "build.log": "16fdd7aa20c62a50c67d11e416421c84800081f7a81392b0022da489d83d3c51",
+    "lint.log": "6f1680e0ff047e07a06dcf9afc079770fad3f871d47a52ee12dccaaa84366d63"
+  },
+  "mainFixtureSha256": "f5ed5789a8a491499d654ad22efc7f09c02a4b51fc91c9c898744036f2fe53df",
+  "captures": [
+    "2026-10-16-profile-status-1280-800-1.png",
+    "2026-10-16-profile-status-960-640-2.png",
+    "2026-10-16-profile-status-960-640-1.png",
+    "2026-10-16-profile-settings-status-960-640-1.png",
+    "2026-10-16-profile-settings-status-960-640-2.png",
+    "2026-10-16-profile-settings-status-1280-800-1.png",
+    "2026-10-16-profile-popover-status-960-640-2.png",
+    "2026-10-16-profile-popover-status-960-640-1.png",
+    "2026-10-16-profile-popover-status-1280-800-1.png"
+  ],
+  "captureSha256": {
+    "2026-10-16-profile-status-1280-800-1.png": "ffd164b4c133a203c954acd6aa5e7e4a228037befc5029f64e6b15ac47ac0a64",
+    "2026-10-16-profile-status-960-640-2.png": "61140670842be4935afcf0dbaced04b7ca17fb3503a02347854497c8ffc7f3cb",
+    "2026-10-16-profile-status-960-640-1.png": "c8c5742f87b9e5eb0e91daac899a6904250209c0f15602553f68112ec9a6dcbe",
+    "2026-10-16-profile-settings-status-960-640-1.png": "62d9f90c9e7163d61726703c5e10abe6892da06a769dccca989d27cd2e964bcc",
+    "2026-10-16-profile-settings-status-960-640-2.png": "4b18374f396c78f4345a93b4ffbc7f0bafd6b90c80c5403288342f143459fcb0",
+    "2026-10-16-profile-settings-status-1280-800-1.png": "18cb9815fb5c25a3c2720e348d1dd8a024afdc0c16e34d8924deecfa3538473b",
+    "2026-10-16-profile-popover-status-960-640-2.png": "1dfc589786010afc3a7842ac244108217fae70a83c31dbdea24906b50cc1d17c",
+    "2026-10-16-profile-popover-status-960-640-1.png": "d652b895f78f60ab9756409f1d881c0b1b24534fa101572123917314211b54d7",
+    "2026-10-16-profile-popover-status-1280-800-1.png": "906341e0fd2ae3430cacd6eb0a0ffc2a8f53f14ea8d1bee3f888e379f5bbec88"
+  }
+}

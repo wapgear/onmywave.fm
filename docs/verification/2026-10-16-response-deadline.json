@@ -1,0 +1,77 @@
+{
+  "recordedDate": "2026-10-16",
+  "scope": "Controlled local complete-response deadline verification; dated snapshot, not whole-PRD acceptance or listener usability",
+  "before": {
+    "elapsedMilliseconds": 21205,
+    "signInPending": true,
+    "authenticationCalls": 0,
+    "partialInfoBody": true,
+    "laterBodyCompletionContinuedAuthentication": true
+  },
+  "afterProductionReproduction": {
+    "elapsedMilliseconds": 21207,
+    "settled": true,
+    "code": "timeout",
+    "authenticationCalls": 0
+  },
+  "actualServiceHttpMatrix": {
+    "passedCases": 23,
+    "fixtureDeadlineMilliseconds": 100,
+    "covers": [
+      "public-info/auth/library partial-body, absent-headers, truncated-body and malformed-document failures",
+      "playlist creation uncertain confirmation",
+      "rename/add/remove/move confirmed by status despite unused hanging body",
+      "superseded info/auth body deadlines",
+      "successful sign-in and 500-item page with 20000 total records"
+    ],
+    "fixtureCorrections": [
+      "await deliberately destroyed socket teardown between fault cases",
+      "explicit Content-Length distinguishes transport truncation from complete malformed JSON"
+    ]
+  },
+  "actualMainServiceStorageRegression": {
+    "passedCases": 12,
+    "covers": "delayed info/auth success/auth rejection/auth body across sign-out success, pause failure and credential-delete failure"
+  },
+  "native": {
+    "passedScenarios": 3,
+    "productionDeadlineMilliseconds": 20000,
+    "covers": [
+      "public-info body stall returns enabled sign-in, retained username, no committed connection",
+      "auth body stall returns enabled sign-in, retained username, no committed connection",
+      "library body stall through existing one-read retry retains playing queue/session; explicit Try again restores album and connected status"
+    ],
+    "observationCorrection": "28-second initial library observation was insufficient for existing single automatic read retry; final observation allows 50 seconds, with no product retry-policy change"
+  },
+  "checks": {
+    "buildWithTypeScript": "passed",
+    "fullEslint": "passed",
+    "gitDiffCheck": "passed"
+  },
+  "isolation": {
+    "realProviderRequests": 0,
+    "personalCredentialsUsed": false,
+    "servers": "owned localhost HTTP fixtures",
+    "storage": "disposable; crypto/shared-key substitutes do not prove OS credential behavior"
+  },
+  "review": {
+    "pair": [
+      "Boris",
+      "Nadia"
+    ],
+    "decision": "standard JSON consumption under shared deadline; no speculative streaming reader or size cap",
+    "actualCodeReview": "Nadia found no concrete blocker; her independent runtime bind was sandbox-denied, primary ran approved checks"
+  },
+  "remaining": [
+    "live Jellyfin server/codec combinations",
+    "full requirement denominator and acceptance",
+    "observed ordinary-listener usability",
+    "audible provider content quality"
+  ],
+  "sha256": {
+    "src/main/jellyfin.ts": "e17c24a469b3f7d61cb39a55df9edf761660ec28596050888a571284dd95e4a9",
+    "out/main/index.js": "568eacd971f993691a588a74b57fca82844f5f401f7c6694df26d87ebb6512fa",
+    "out/preload/index.cjs": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215",
+    "out/renderer/index.html": "432428cde8bfe3e6a28901ad454ea50da6975c8d118e8ac1c09c2b2ce6ade405"
+  }
+}

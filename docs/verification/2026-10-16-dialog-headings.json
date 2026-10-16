@@ -1,0 +1,432 @@
+{
+  "date": "2026-10-16",
+  "scope": "Long DJ/source deletion names and shared dialog heading, partial V07/R12 evidence",
+  "runtime": {
+    "platform": "macOS 27.2 arm64",
+    "electron": "43.7.0",
+    "nativeMainPreloadRenderer": true
+  },
+  "before": {
+    "dialogClientWidth": 438,
+    "dialogScrollWidth": 2231,
+    "zoom2ClientWidth": 422,
+    "zoom2ScrollWidth": 2231
+  },
+  "experiments": [
+    {
+      "name": "wrap-only",
+      "client": 422,
+      "scroll": 422,
+      "headingHeight": 254,
+      "dialogHeight": 240,
+      "cancelTop": 218.8984375,
+      "cancelBottom": 252.8984375,
+      "headingBottom": 228.8984375,
+      "buttonUncovered": false,
+      "verticalScroll": 193
+    },
+    {
+      "name": "wrap-static-header",
+      "client": 422,
+      "scroll": 422,
+      "headingHeight": 254,
+      "dialogHeight": 240,
+      "cancelTop": 218.8984375,
+      "cancelBottom": 252.8984375,
+      "headingBottom": 128,
+      "buttonUncovered": true,
+      "verticalScroll": 193
+    }
+  ],
+  "decision": {
+    "pair": "Steve and Elena independently proposed alternatives and challenged them before implementation",
+    "chosen": "Bound shared title to two visible lines, retain fixed Close, preserve full accessible title and repeat full deletion identity in wrapping body",
+    "review": "Elena reviewed final code without a concrete blocker"
+  },
+  "results": {
+    "observations": [
+      {
+        "kind": "dj",
+        "width": 960,
+        "height": 640,
+        "zoom": 1,
+        "client": 438,
+        "scroll": 438,
+        "scrollLeft": 0,
+        "heading": {
+          "top": 158.4375,
+          "bottom": 249.4375,
+          "left": 287,
+          "right": 673,
+          "height": 91
+        },
+        "title": {
+          "top": 176.4375,
+          "bottom": 231.4375,
+          "left": 287,
+          "right": 629,
+          "height": 55
+        },
+        "close": {
+          "top": 186.9375,
+          "bottom": 220.9375,
+          "left": 644,
+          "right": 678,
+          "height": 34
+        },
+        "dialog": {
+          "top": 131.4375,
+          "bottom": 508.5546875,
+          "left": 260,
+          "right": 700,
+          "height": 377.1171875
+        },
+        "clamp": "2",
+        "fullTitle": "Delete DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDBlue?",
+        "fullAccessibleTitle": true,
+        "bodyHasFullName": true,
+        "keyboardActionsUncovered": true
+      },
+      {
+        "kind": "dj",
+        "width": 1280,
+        "height": 800,
+        "zoom": 1,
+        "client": 438,
+        "scroll": 438,
+        "scrollLeft": 0,
+        "heading": {
+          "top": 238.4375,
+          "bottom": 329.4375,
+          "left": 447,
+          "right": 833,
+          "height": 91
+        },
+        "title": {
+          "top": 256.4375,
+          "bottom": 311.4375,
+          "left": 447,
+          "right": 789,
+          "height": 55
+        },
+        "close": {
+          "top": 266.9375,
+          "bottom": 300.9375,
+          "left": 804,
+          "right": 838,
+          "height": 34
+        },
+        "dialog": {
+          "top": 211.4375,
+          "bottom": 588.5546875,
+          "left": 420,
+          "right": 860,
+          "height": 377.1171875
+        },
+        "clamp": "2",
+        "fullTitle": "Delete DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDBlue?",
+        "fullAccessibleTitle": true,
+        "bodyHasFullName": true,
+        "keyboardActionsUncovered": true
+      },
+      {
+        "kind": "dj",
+        "width": 1600,
+        "height": 1000,
+        "zoom": 1,
+        "client": 438,
+        "scroll": 438,
+        "scrollLeft": 0,
+        "heading": {
+          "top": 338.4375,
+          "bottom": 429.4375,
+          "left": 607,
+          "right": 993,
+          "height": 91
+        },
+        "title": {
+          "top": 356.4375,
+          "bottom": 411.4375,
+          "left": 607,
+          "right": 949,
+          "height": 55
+        },
+        "close": {
+          "top": 366.9375,
+          "bottom": 400.9375,
+          "left": 964,
+          "right": 998,
+          "height": 34
+        },
+        "dialog": {
+          "top": 311.4375,
+          "bottom": 688.5546875,
+          "left": 580,
+          "right": 1020,
+          "height": 377.1171875
+        },
+        "clamp": "2",
+        "fullTitle": "Delete DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDBlue?",
+        "fullAccessibleTitle": true,
+        "bodyHasFullName": true,
+        "keyboardActionsUncovered": true
+      },
+      {
+        "kind": "dj",
+        "width": 960,
+        "height": 640,
+        "zoom": 2,
+        "client": 422,
+        "scroll": 422,
+        "scrollLeft": 0,
+        "heading": {
+          "top": 67,
+          "bottom": 157.5,
+          "left": 51,
+          "right": 421,
+          "height": 90.5
+        },
+        "title": {
+          "top": 85,
+          "bottom": 139.5,
+          "left": 51,
+          "right": 377,
+          "height": 54.5
+        },
+        "close": {
+          "top": 95.25,
+          "bottom": 129.25,
+          "left": 392,
+          "right": 426,
+          "height": 34
+        },
+        "dialog": {
+          "top": 40,
+          "bottom": 280,
+          "left": 24,
+          "right": 456,
+          "height": 240
+        },
+        "clamp": "2",
+        "fullTitle": "Delete DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDBlue?",
+        "fullAccessibleTitle": true,
+        "bodyHasFullName": true,
+        "keyboardActionsUncovered": true
+      },
+      {
+        "kind": "source",
+        "width": 960,
+        "height": 640,
+        "zoom": 1,
+        "client": 438,
+        "scroll": 438,
+        "scrollLeft": 0,
+        "heading": {
+          "top": 169.1640625,
+          "bottom": 260.1640625,
+          "left": 287,
+          "right": 673,
+          "height": 91
+        },
+        "title": {
+          "top": 187.1640625,
+          "bottom": 242.1640625,
+          "left": 287,
+          "right": 629,
+          "height": 55
+        },
+        "close": {
+          "top": 197.6640625,
+          "bottom": 231.6640625,
+          "left": 644,
+          "right": 678,
+          "height": 34
+        },
+        "dialog": {
+          "top": 142.1640625,
+          "bottom": 497.8359375,
+          "left": 260,
+          "right": 700,
+          "height": 355.671875
+        },
+        "clamp": "2",
+        "fullTitle": "Delete SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSBlue?",
+        "fullAccessibleTitle": true,
+        "bodyHasFullName": true,
+        "keyboardActionsUncovered": true
+      },
+      {
+        "kind": "source",
+        "width": 1280,
+        "height": 800,
+        "zoom": 1,
+        "client": 438,
+        "scroll": 438,
+        "scrollLeft": 0,
+        "heading": {
+          "top": 249.1640625,
+          "bottom": 340.1640625,
+          "left": 447,
+          "right": 833,
+          "height": 91
+        },
+        "title": {
+          "top": 267.1640625,
+          "bottom": 322.1640625,
+          "left": 447,
+          "right": 789,
+          "height": 55
+        },
+        "close": {
+          "top": 277.6640625,
+          "bottom": 311.6640625,
+          "left": 804,
+          "right": 838,
+          "height": 34
+        },
+        "dialog": {
+          "top": 222.1640625,
+          "bottom": 577.8359375,
+          "left": 420,
+          "right": 860,
+          "height": 355.671875
+        },
+        "clamp": "2",
+        "fullTitle": "Delete SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSBlue?",
+        "fullAccessibleTitle": true,
+        "bodyHasFullName": true,
+        "keyboardActionsUncovered": true
+      },
+      {
+        "kind": "source",
+        "width": 1600,
+        "height": 1000,
+        "zoom": 1,
+        "client": 438,
+        "scroll": 438,
+        "scrollLeft": 0,
+        "heading": {
+          "top": 349.1640625,
+          "bottom": 440.1640625,
+          "left": 607,
+          "right": 993,
+          "height": 91
+        },
+        "title": {
+          "top": 367.1640625,
+          "bottom": 422.1640625,
+          "left": 607,
+          "right": 949,
+          "height": 55
+        },
+        "close": {
+          "top": 377.6640625,
+          "bottom": 411.6640625,
+          "left": 964,
+          "right": 998,
+          "height": 34
+        },
+        "dialog": {
+          "top": 322.1640625,
+          "bottom": 677.8359375,
+          "left": 580,
+          "right": 1020,
+          "height": 355.671875
+        },
+        "clamp": "2",
+        "fullTitle": "Delete SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSBlue?",
+        "fullAccessibleTitle": true,
+        "bodyHasFullName": true,
+        "keyboardActionsUncovered": true
+      },
+      {
+        "kind": "source",
+        "width": 960,
+        "height": 640,
+        "zoom": 2,
+        "client": 422,
+        "scroll": 422,
+        "scrollLeft": 0,
+        "heading": {
+          "top": 67,
+          "bottom": 157.5,
+          "left": 51,
+          "right": 421,
+          "height": 90.5
+        },
+        "title": {
+          "top": 85,
+          "bottom": 139.5,
+          "left": 51,
+          "right": 377,
+          "height": 54.5
+        },
+        "close": {
+          "top": 95.25,
+          "bottom": 129.25,
+          "left": 392,
+          "right": 426,
+          "height": 34
+        },
+        "dialog": {
+          "top": 40,
+          "bottom": 280,
+          "left": 24,
+          "right": 456,
+          "height": 240
+        },
+        "clamp": "2",
+        "fullTitle": "Delete SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSBlue?",
+        "fullAccessibleTitle": true,
+        "bodyHasFullName": true,
+        "keyboardActionsUncovered": true
+      }
+    ],
+    "samePrefixIdentityReadAndCorrectDelete": true,
+    "normalCreateDialogs": true,
+    "providerCalls": 0
+  },
+  "screenshots": [
+    "2026-10-16-dialog-dj-top-200.png",
+    "2026-10-16-dialog-dj-identity-200.png",
+    "2026-10-16-dialog-source-top-200.png",
+    "2026-10-16-dialog-source-identity-200.png"
+  ],
+  "visuallyInspected": [
+    "dj-identity",
+    "source-identity"
+  ],
+  "checks": {
+    "buildWithTypeScript": "passed",
+    "eslint": "passed"
+  },
+  "isolation": {
+    "server": "controlled localhost fixture",
+    "credentials": "disposable fixture",
+    "sharedKeys": "null adapter",
+    "providerRequests": 0
+  },
+  "limits": [
+    "Does not prove all long metadata across every page",
+    "Chromium accessibility names verified, full VoiceOver interaction remains open",
+    "No observed listener usability or full desktop/display-scale claim"
+  ],
+  "sha256": {
+    "src/renderer/styles.css": "d2574b87ecdadde78394f477adf6b859905ac871acaeee90bdfbb811b537b61c",
+    "src/renderer/pages/DJs/DJs.page.tsx": "59edbcbd3f4e56834f4757910120b9d914bac36cda4311a5508b81ecb46e8e30",
+    "src/renderer/pages/Sources/Sources.page.tsx": "5ba788b023b3f207d37b36a2ff93e9e21fc3d3b0bf3916ccd1a972c54c4f6942",
+    "src/renderer/components/Shared.tsx": "303972b169cf42303085a3db1988c04899870a69a6e7591ee4292656785ed2af",
+    "src/main/index.ts": "9388633986fe655374126c8f0740ac6a94a6d1fb9ee300d76fc2b32ccf642c2a",
+    "src/main/jellyfin.ts": "e17c24a469b3f7d61cb39a55df9edf761660ec28596050888a571284dd95e4a9",
+    "src/main/storage.ts": "15a0f548f5362cbb8f2cfdb93d0d33b15bc007c75d581266f7a81da8d55c3100",
+    "out/main/index.js": "568eacd971f993691a588a74b57fca82844f5f401f7c6694df26d87ebb6512fa",
+    "out/preload/index.cjs": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215",
+    "out/renderer/index.html": "f4cc0837f996e186d071bcbca643afb5e34733d23d4f5123966a7326cb71fafa",
+    "out/renderer/assets/index-ZOgMZShw.css": "d8229b9932315a7d35fd286e73333f3c63eb5a2b0c08077751b537daa13118dd",
+    "out/renderer/assets/index-BwEJCjdB.js": "ad341e6ebcda958c38266dd27ef8edd9322f59f640d4a6504883f77776c52a0f"
+  },
+  "fixtureSha256": {
+    "experiments.cjs": "ff293860e2b73c7d10245b65b27e52e43621812c4c748c8b6fbc4c607c1d2591",
+    "final.cjs": "9dd786e561a16f87ee0ca7b72ab121cbb3d5e8cf549f78365fe26024d8e2d5a8"
+  }
+}

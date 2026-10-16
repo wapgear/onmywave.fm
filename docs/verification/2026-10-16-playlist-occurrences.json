@@ -1,0 +1,229 @@
+{
+  "date": "2026-10-16",
+  "scope": "Reproduced live ambiguous playlist entry IDs, independent occurrence selection/playback, safe per-row edits and recovery reservation session guard; P04/P19 remain Review",
+  "before": {
+    "rawEntryEquivalence": [
+      0,
+      1,
+      0,
+      3
+    ],
+    "rawSongEquivalence": [
+      0,
+      1,
+      0,
+      3
+    ],
+    "rawEntryTypes": [
+      "string",
+      "string",
+      "string",
+      "string"
+    ],
+    "nativeRows": 4,
+    "nativeKeyEquivalence": [
+      0,
+      1,
+      0,
+      3
+    ],
+    "afterSelectingFirst": [
+      true,
+      false,
+      true,
+      false
+    ],
+    "afterTogglingOther": [
+      false,
+      false,
+      false,
+      false
+    ],
+    "result": "reproduced",
+    "cleanup": [
+      {
+        "deletionStatus": 204,
+        "subsequentRead": 404
+      }
+    ],
+    "allTestPlaylistsAbsent": true
+  },
+  "liveAfter": {
+    "nativeOccurrenceKeysUnique": true,
+    "duplicateSelectionsIndependent": true,
+    "ambiguousEditsDisabledWithOtherActionsAvailable": true,
+    "noticeLayout": [
+      {
+        "width": 1280,
+        "height": 800,
+        "zoom": 1,
+        "wrappedWithoutHorizontalOverflow": true
+      },
+      {
+        "width": 960,
+        "height": 640,
+        "zoom": 1,
+        "wrappedWithoutHorizontalOverflow": true
+      },
+      {
+        "width": 960,
+        "height": 640,
+        "zoom": 2,
+        "wrappedWithoutHorizontalOverflow": true
+      }
+    ],
+    "fullPlaylistQueuePreservesDuplicatesAndOrder": true,
+    "decodedAudioMuted": true,
+    "selectedDistinctOccurrencesInDisplayOrder": true,
+    "pausedNextVisitsSecondIdenticalSongOccurrence": true,
+    "ambiguousIpcRejectedWithoutWriteOrRecoveryReservation": true,
+    "changedSnapshotClearsOnlyFallbackSelections": true,
+    "uniqueEntryMoveStillWorks": true,
+    "uniqueEntryRemoveStillWorks": true,
+    "existingQueueUnaffectedByPlaylistEdits": true,
+    "newPlayUsesEditedOrder": true,
+    "result": "passed",
+    "cleanup": [
+      {
+        "deletionStatus": 204,
+        "subsequentRead": 404
+      }
+    ],
+    "allTestPlaylistsAbsent": true
+  },
+  "controlledService": {
+    "cases": [
+      {
+        "name": "unique move",
+        "result": "passed",
+        "httpWrites": 1,
+        "targetReservations": 1
+      },
+      {
+        "name": "unique remove among duplicates",
+        "result": "passed",
+        "httpWrites": 1,
+        "targetReservations": 1
+      },
+      {
+        "name": "duplicate move",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "duplicate remove",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "missing handle",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "absent handle",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "out of range",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "repeated request handle",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "UUID aliases in server entries",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "UUID aliases in removal request",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "change-before-reserve",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "change-while-queued",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "failed preflight read",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "empty removal",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      }
+    ]
+  },
+  "decision": {
+    "Boris": "Support independent local row identity, stable raw keys for unique entries and per-row edit availability; no full-list replacement.",
+    "Nadia": "Support; raised queued reservation account check, then reviewed final wiring without blocker.",
+    "Elena": "Reviewed per-row controls/selection and final conditional render adjustment without blocker; full screen-reader interaction remains separate.",
+    "implementation": "Valid unique IDs retain stable selection/mutation keys. Ambiguous/missing/invalid IDs receive compact [rawId,songId,index] selection keys. New entries snapshots clear fallback selections while retaining stable keys. Backend rereads IDs/bounds before reserving, and recovery queue/dispatch recheck captured session."
+  },
+  "evidenceLimits": [
+    "Live server returns the same PlaylistItemId for repeated songs. There is no verified safe per-occurrence edit route for those positions; they remain selectable/playable with Move/Remove disabled. P04 is not marked complete.",
+    "P19 adds the explicit missing/invalid/repeated-ID contract; native missing/invalid-ID and wider fault variants remain under Review despite service coverage.",
+    "External clients can change server state between preflight and write; no conditional-write/transaction API was observed.",
+    "A crash after a durable reservation but before HTTP may conservatively require review, as expected for pre-dispatch journaling.",
+    "Fourteen controlled cases use actual service/recovery coordinator and local HTTP, with atomicWrite and Electron path stand-ins; they verify ordering/guards, not OS atomic durability.",
+    "Live native uses actual current main/preload/renderer and real protected profile; provider keys null and external networking blocked. Hidden/muted execution does not establish audible quality or human usability."
+  ],
+  "cleanup": "Every live test playlist was deleted with204, follow-up metadata404 and fresh-list absence. No existing playlist or music file was edited.",
+  "verificationCorrections": [
+    "ESLint rejected synchronous state adjustment in an effect; replaced with React conditional render adjustment keyed to changed entries, without suppressing the rule.",
+    "Controlled queue fixture initially observed an expected rejected promise too late; attached its rejection handler immediately. Final14 cases pass."
+  ],
+  "checks": {
+    "buildIncludingTypeScript": "passed",
+    "fullESLint": "passed",
+    "nativeLayout": "Notice wraps without horizontal overflow at1280x800/100%,960x640/100%,960x640/200%; native captures inspected.",
+    "whitespace": "passed"
+  },
+  "sourceReference": "https://raw.githubusercontent.com/jellyfin/jellyfin/master/Jellyfin.Api/Controllers/PlaylistsController.cs",
+  "sourceAndBundleSha256": {
+    "src/shared/playlist-entries.ts": "bb58ab3747844f5080fae78be9a9431bc9cb841fbbb704866cd7e064b5a1292c",
+    "src/main/jellyfin.ts": "c6476d68007d7f0784fe8dd8cb727a019d58b73e8eebf224b5df4fcfe1611d3d",
+    "src/main/playlist-recovery.ts": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+    "src/main/index.ts": "0178f81ae501df23ba8462e7810cdd4fa8438777ac424419cb52a5e8f7197e3c",
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "953613b0ae870f2160e465ccc820095ac1ddeaa95ff31d6a11fe0b47a44822ee",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "8bea51f6cb40f8b4ca0714e8af6b344b7e0a6e40278e018935b6a0d5e7f4e721",
+    "out/main/index.js": "a0b4e272dcb2d3efe430b73e86b79c99b01da21b95713db8e1e2890d549eed8b",
+    "out/preload/index.cjs": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215",
+    "out/renderer/assets/index-Dp_ujpwb.js": "471854df36510226e6199b3939ef356f53b5ac7310e3d435761ea140f294f973"
+  },
+  "reproductionScripts": [
+    "/private/tmp/live-radio-acceptance/occurrences-repro.cjs",
+    "/private/tmp/live-radio-acceptance/occurrences-after.cjs",
+    "/private/tmp/playlist-occurrence-guard/check.ts",
+    "/private/tmp/playlist-occurrence-guard/build.mjs"
+  ],
+  "nativeCapturesKeptOnlyInTemporaryWorkspace": [
+    "/private/tmp/live-radio-acceptance/occurrence-notice-1280-800-1.png",
+    "/private/tmp/live-radio-acceptance/occurrence-notice-960-640-2.png"
+  ]
+}

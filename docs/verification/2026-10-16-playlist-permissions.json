@@ -1,0 +1,318 @@
+{
+  "date": "2026-10-16",
+  "scope": "P05 permission tri-state and optional-lookup availability; controlled native/service evidence, not all live permission configurations",
+  "before": [
+    {
+      "name": "explicit true",
+      "canEdit": true,
+      "entries": 1,
+      "entryReads": 1
+    },
+    {
+      "name": "explicit false",
+      "canEdit": false,
+      "entries": 1,
+      "entryReads": 1
+    },
+    {
+      "name": "empty object",
+      "canEdit": false,
+      "entries": 1,
+      "entryReads": 1
+    },
+    {
+      "name": "null body",
+      "canEdit": false,
+      "entries": 1,
+      "entryReads": 1
+    },
+    {
+      "name": "nonboolean field",
+      "canEdit": false,
+      "entries": 1,
+      "entryReads": 1
+    },
+    {
+      "name": "unavailable 503",
+      "error": "server",
+      "entryReads": 0
+    },
+    {
+      "name": "malformed JSON",
+      "error": "server",
+      "entryReads": 0
+    }
+  ],
+  "afterBasicReplay": [
+    {
+      "name": "explicit true",
+      "canEdit": true,
+      "entries": 1,
+      "entryReads": 1
+    },
+    {
+      "name": "explicit false",
+      "canEdit": false,
+      "entries": 1,
+      "entryReads": 1
+    },
+    {
+      "name": "empty object",
+      "canEdit": null,
+      "entries": 1,
+      "entryReads": 1
+    },
+    {
+      "name": "null body",
+      "canEdit": null,
+      "entries": 1,
+      "entryReads": 1
+    },
+    {
+      "name": "nonboolean field",
+      "canEdit": null,
+      "entries": 1,
+      "entryReads": 1
+    },
+    {
+      "name": "unavailable 503",
+      "canEdit": null,
+      "entries": 1,
+      "entryReads": 1
+    },
+    {
+      "name": "malformed JSON",
+      "canEdit": null,
+      "entries": 1,
+      "entryReads": 1
+    }
+  ],
+  "service": {
+    "cases": [
+      {
+        "name": "true",
+        "result": "passed",
+        "canEdit": true,
+        "permissionReads": 1,
+        "entryReads": 1
+      },
+      {
+        "name": "false",
+        "result": "passed",
+        "canEdit": false,
+        "permissionReads": 1,
+        "entryReads": 1
+      },
+      {
+        "name": "missing",
+        "result": "passed",
+        "canEdit": null,
+        "permissionReads": 1,
+        "entryReads": 1
+      },
+      {
+        "name": "null root",
+        "result": "passed",
+        "canEdit": null,
+        "permissionReads": 1,
+        "entryReads": 1
+      },
+      {
+        "name": "string field",
+        "result": "passed",
+        "canEdit": null,
+        "permissionReads": 1,
+        "entryReads": 1
+      },
+      {
+        "name": "numeric field",
+        "result": "passed",
+        "canEdit": null,
+        "permissionReads": 1,
+        "entryReads": 1
+      },
+      {
+        "name": "null field",
+        "result": "passed",
+        "canEdit": null,
+        "permissionReads": 1,
+        "entryReads": 1
+      },
+      {
+        "name": "array root",
+        "result": "passed",
+        "canEdit": null,
+        "permissionReads": 1,
+        "entryReads": 1
+      },
+      {
+        "name": "403",
+        "result": "passed",
+        "canEdit": null,
+        "permissionReads": 1,
+        "entryReads": 1
+      },
+      {
+        "name": "404",
+        "result": "passed",
+        "canEdit": null,
+        "permissionReads": 1,
+        "entryReads": 1
+      },
+      {
+        "name": "405",
+        "result": "passed",
+        "canEdit": null,
+        "permissionReads": 1,
+        "entryReads": 1
+      },
+      {
+        "name": "500",
+        "result": "passed",
+        "canEdit": null,
+        "permissionReads": 1,
+        "entryReads": 1
+      },
+      {
+        "name": "503",
+        "result": "passed",
+        "canEdit": null,
+        "permissionReads": 1,
+        "entryReads": 1
+      },
+      {
+        "name": "malformed JSON",
+        "result": "passed",
+        "canEdit": null,
+        "permissionReads": 1,
+        "entryReads": 1
+      },
+      {
+        "name": "connection failure",
+        "result": "passed",
+        "canEdit": null,
+        "permissionReads": 1,
+        "entryReads": 1
+      },
+      {
+        "name": "partial-body timeout",
+        "result": "passed",
+        "canEdit": null,
+        "permissionReads": 1,
+        "entryReads": 1,
+        "fixtureDeadlineMs": 100,
+        "elapsedMs": 105
+      },
+      {
+        "name": "expired auth",
+        "result": "passed",
+        "error": "unauthorized",
+        "permissionReads": 1,
+        "entryReads": 0
+      },
+      {
+        "name": "metadata failure",
+        "result": "passed",
+        "error": "not-found",
+        "permissionReads": 0,
+        "entryReads": 0
+      },
+      {
+        "name": "entry failure",
+        "result": "passed",
+        "error": "server",
+        "permissionReads": 1,
+        "entryReads": 1
+      },
+      {
+        "name": "session changed after true",
+        "result": "passed",
+        "error": "invalid",
+        "permissionReads": 1,
+        "entryReads": 0
+      },
+      {
+        "name": "session changed after failure",
+        "result": "passed",
+        "error": "invalid",
+        "permissionReads": 1,
+        "entryReads": 0
+      }
+    ]
+  },
+  "native": {
+    "states": [
+      {
+        "mode": "readonly",
+        "renameAvailable": false,
+        "listenAvailable": true
+      },
+      {
+        "mode": "missing",
+        "renameAvailable": true,
+        "listenAvailable": true
+      },
+      {
+        "mode": "503",
+        "renameAvailable": true,
+        "listenAvailable": true
+      },
+      {
+        "mode": "malformed",
+        "renameAvailable": true,
+        "listenAvailable": true
+      }
+    ],
+    "deniedAttemptVisibleNoAutomaticRetry": true,
+    "serverAuthorizedUnknownPermissionAttempt": true,
+    "productionTimeout": {
+      "elapsedMs": 20539,
+      "attempts": 1,
+      "playlistReadable": true,
+      "musicContinues": true
+    },
+    "result": "passed"
+  },
+  "decision": {
+    "Boris": "Support boolean-only confirmation, narrow optional-read failure fallback and preserved auth/session/data errors.",
+    "Nadia": "Support same after independent proposal/challenge; actual two-line implementation reviewed without blocker."
+  },
+  "implementation": "Only literal CanEdit boolean confirms editability. Permission-only not-found/forbidden/unsupported/server/offline/timeout errors retain unknown and continue to entries. Auth expiry/invalid/unexpected errors propagate; metadata and entry failures remain outside fallback. No request retry was added.",
+  "nativeFixture": "Actual current main/preload/production renderer, isolated protected profile and local catalog server. Permission endpoint responses and rename authorization are controlled by a fetch adapter; no live user permissions or playlists changed. Null provider keys/external networking blocked. Hidden window and muted audio.",
+  "timeoutScope": "Native permission lookup uses production20-second timer against a real delayed local HTTP response; one attempt and advancing music verified. Service partial-body timeout uses100ms fixture-only timer.",
+  "checks": {
+    "buildIncludingTypeScript": "passed",
+    "fullESLint": "passed",
+    "serviceCases": 21,
+    "nativeStates": [
+      "read-only",
+      "missing field",
+      "503",
+      "malformed response",
+      "explicit denied rename",
+      "explicit accepted rename",
+      "production timeout with continuous music"
+    ],
+    "whitespace": "passed"
+  },
+  "limits": [
+    "P05 remains Review because controlled read-only/unavailable states do not prove all live server permission configurations. Prior live records cover the tested editable account.",
+    "No new VoiceOver, other OS/server, human usability or audible-quality acceptance.",
+    "Optional lookup fallback does not conceal failures to fetch actual playlist metadata/entries or expired authentication."
+  ],
+  "sourceAndBundleSha256": {
+    "src/main/jellyfin.ts": "f4d2e4d8ae75807447bd5b4f64b97938594f3935834932bb7d1bec43a8360448",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "8bea51f6cb40f8b4ca0714e8af6b344b7e0a6e40278e018935b6a0d5e7f4e721",
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "953613b0ae870f2160e465ccc820095ac1ddeaa95ff31d6a11fe0b47a44822ee",
+    "out/main/index.js": "dcb9a98af250c59f9ac2efe3299d44fe1bc3833a81e7e53be5c7ef01f49e41c2",
+    "out/preload/index.cjs": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215",
+    "out/renderer/assets/index-Dp_ujpwb.js": "471854df36510226e6199b3939ef356f53b5ac7310e3d435761ea140f294f973"
+  },
+  "reproductionScripts": [
+    "/private/tmp/playlist-permissions/repro.ts",
+    "/private/tmp/playlist-permissions/check.ts",
+    "/private/tmp/playlist-permissions/build-check.mjs",
+    "/private/tmp/playlist-permissions/native.cjs",
+    "/private/tmp/playlist-permissions/native-bootstrap.mjs"
+  ]
+}

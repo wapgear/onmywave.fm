@@ -1,6 +1,6 @@
 # News bucket workflows
 
-Status: DJ playback consumes saved news. A separate local news workflow prepares recordings on an hourly schedule. Morning weather remains future work.
+Current behavior, 16 October 2026. DJ playback consumes saved news. A separate local news workflow prepares recordings on an hourly schedule. The user-facing contract is [Personal radio experience](RADIO_EXPERIENCE.md); [REQUIREMENTS.md](../REQUIREMENTS.md) defines the broader player. Morning weather remains future work.
 
 ## News bucket and review history
 
@@ -12,7 +12,7 @@ There is no expiry or automatic re-review for a URL, even if interests change or
 
 ## Playback
 
-DJ playback uses the existing music queue and saved news pool. Only natural song completions count toward its song interval. At the interval, it claims a matching, fresh, available recording. An empty pool is skipped, with no generation request. A pending take waits for a suitable song ending. Manual take selection remains independent.
+DJ playback uses the existing music queue and saved news pool. Only natural song completions count toward its song interval. At the interval, it claims a matching, fresh, available recording. An empty pool is skipped, with no generation request. A pending take waits for a suitable song ending. Claims revalidate eligibility after audio I/O and recheck profile compatibility after the durable claim; an obsolete claim is released before returning it. Manual take selection remains independent.
 
 The main process serializes claims and records played takes. A take is marked played when speech starts, including an interrupted break. Known pre-playback cancellations release claims. App startup returns abandoned claims to the ready pool. A crash between voice start and persisting its played marker can replay that recording after restart.
 
@@ -20,76 +20,38 @@ Settings → General → DJ playback includes Keep the DJ when seeking or rewind
 
 ## Independent news preparation
 
-Each room has a separate News preparation switch in Listening Room → Preparation and Settings → Workflows. It defaults off. Enabling authorizes text and voice provider calls while the app process runs and the Mac is awake, even with DJ playback off or music paused. Closing the window can leave the app running; quitting or sleep prevents execution.
+Each room has a separate Automatically prepare news switch in News bucket → Settings. It defaults off. Enabling authorizes text and voice provider calls while the app process runs and the Mac is awake, even with DJ playback off or music paused. Closing the window can leave the app running; quitting or sleep prevents execution.
 
-Checks run every 1, 3, or 6 hours. The workflow reserves the next slot before generating, coalesces missed intervals into one fresh check, respects the daily recording cap, and bounds source assessments to 24 divided by the hourly interval per day. Source assessments can cost money without producing a recording. Major-only selection rejects minor updates and promotions. Previously prepared article URLs are excluded. No qualifying story creates a saved skipped outcome without speech. Provider failures pause preparation until Resume preparation is selected. A busy manual preparation finishes first. Disabling a room or its producer requests cancellation. An already-started run uses its saved configuration snapshot; edits affect future runs. A completed recording from the old configuration stays saved, counts toward the daily recording cap, and is excluded from automatic playback when it no longer matches.
+Checks run every 1, 3, or 6 hours. The workflow reserves the next slot before generating, coalesces missed intervals into one fresh check, respects the daily automatic recording cap, and bounds source assessments to 24 divided by the hourly interval per day. Scheduled checks can use paid text assessment without producing a recording. The counter records started checks, including checks that discover no new candidates; it is not a provider invoice. Manual text/audio preparation and voice-preview generation are separate explicit requests outside these scheduled limits. Their controls disclose the provider/cost scope; cached replay makes no request. Major-only selection rejects minor updates and promotions. Previously prepared article URLs are excluded. No qualifying story creates a saved skipped outcome without speech. Source failures with no eligible coverage and provider failures pause preparation until Resume preparation is selected. If readable fresh candidates remain, selection may proceed with named source warnings; a no-selection result retains those warnings. A busy manual preparation finishes first. Disabling a room or its producer requests cancellation. The serialized run reservation captures its profile, DJ and source snapshot before publishing the running marker; provider work uses that snapshot after ledger initialization. An identified automatic run permits setup edits and saves for future checks while profile switching and manual generation stay unavailable. Saving a new cadence while that run is active uses its start time plus the newly saved interval, including a save that started during the run but commits just after completion. It does not clear the next slot or create an extra immediate check. If a check were to outlast its new interval, the next tick can be due under the same start-to-start cadence. Idle setup edits retain their existing next-tick eligibility; turning preparation off clears the next slot. Edits affect future runs. A completed recording from the old configuration stays saved, counts toward the daily recording cap, and is excluded from automatic playback when it no longer matches.
 
 The producer saves scripts, audio, provenance, and request history in the existing prepared-news library. Playback never starts this producer or changes its cadence. Provider keys belong to Settings; they are unnecessary for playing an existing saved recording.
 
-## Follow-up workflow design
+## Durable preparation status
 
-The remaining plan below describes broader scheduling, budget, weather, and recovery work beyond the current bounded local news runner.
+Each profile stores its last scheduled request ID, start/finish times, outcome, and reason when available. The marker is persisted before dispatch. Outcomes are running, prepared, no-news, failed, and interrupted. Daily counters and next check remain separate. Reaching a cap does not erase the last actual preparation result.
 
-## Future timed workflows
+Only the matching running request can settle or increment a completed-recording count. A run uses a saved configuration snapshot. Edits preserve the in-progress marker so its result can settle without overwriting the newer settings; the UI identifies results from an earlier setup. A new profile copy starts with preparation off and without inherited run history/counters.
 
-The following design is for a future scheduler. Its preferences remain stored for compatibility but are not exposed as active settings. It must not be confused with the working song-based schedule.
+At startup, reconcile the marker against recovered prepared-news artifacts. A known completed result settles once. An unresolved/interrupted request pauses future dispatch until explicit Resume preparation. Never automatically retry an uncertain paid request. If the process stops before script or audio publication commits, a paid provider response may be lost; retain the interruption and require an explicit new attempt. Complete audio plus published recovery metadata can be reconciled into the library and settled once. Temporary uncommitted audio stays unavailable. Quitting, canceling, or losing a response cannot guarantee zero provider charges.
 
-## Background execution
+Preparation status is refreshed in News bucket and while the player popover is open. Shared status derivation distinguishes off, unavailable room, paused, checking, daily limit, and enabled/waiting. Daily counters use the Mac's local calendar day, and the UI labels their profile and scheduled-preparation scope. Paused failures retain their cause and explain that preparation stays paused until explicitly resumed in News settings. Retain last-known data after refresh failure and expose retry rather than pretending preparation is off.
 
-Use a durable, bounded TypeScript workflow in Electron's main process initially. A workflow is an explicit sequence of stored steps; it does not need a general autonomous agent. LangGraph is an option if branching, human review, and recovery grow beyond this small pipeline. Avoid adding it solely for an hourly timer.
+## Interaction and verification
 
-News pipeline:
+News bucket is the Listening Room destination and retains its existing name. It opens on saved news and preparation activity. Settings combines sources, interests, host, mood, and preparation; Saved audio remains reachable even with incomplete setup. Manual text/audio tools are collapsed. Their live request and recovery feedback survive music navigation, even before the disk request list refreshes. Cancel during setup save prevents provider dispatch; cancel after dispatch targets the exact request ID. Checking a saved result is reconciliation only, including when that ID was never registered. Retained errors name the original profile. Starting a new attempt requires the explicit generation action and a fresh request ID. After restart, the latest appended interrupted request gets a compact News bucket notice when it is not already represented by a profile’s scheduled-run marker or the live manual record. The notice uses generic previous text/audio wording because the request ledger does not retain its original profile. Review preparation history only opens Saved audio, expands history and focuses its summary. It never submits work. A newer request supersedes the compact notice; the old entry stays in history. Query failures hide cached recovery advice until a successful explicit refresh. Shared source/DJ/key management opens app Settings with a return path, preserving the combined setup/preparation draft. An explicit save commits the whole draft; profile switches guard every field with Save, Discard, or Cancel. Activation and Resume recheck prerequisites in both renderer and main process. Incomplete setup and disabling preparation remain saveable without provider keys. Leaving Saved audio stops audition rather than leaving hidden audio playing.
 
-1. Claim a due slot with a durable run ID and a configuration snapshot.
-2. Read only the selected RSS/Atom feeds. General web search is a future adapter, not an implied capability.
-3. Normalize article URLs, group duplicate stories across feeds, compare meaningful content hashes, and reject stale candidates. Keep evaluated stories separate from spoken stories so ignored items are not reassessed every hour. Reassess substantial updates.
-4. If no fresh candidates remain, save a successful no-new-stories outcome without an AI call.
-5. Assess new candidates for relevance, significance, freshness, and the listener's interests. Major-only should favor material developments over routine updates or promotions. Return a reason and either a specific qualifying article or nothing-important. The AI assessment can incur text-provider cost even when no audio is produced.
-6. Persist the decision and exact candidate snapshot before writing. Write a brief factual script from that same snapshot. Do not refetch and accidentally narrate a different article. Treat feed text as untrusted and retain source links and publication dates.
-7. Render finite audio using the chosen DJ. Store script, provider/voice settings, source references, decision reason, content timestamp, and validity period with the completed artifact.
-8. Publish to ready audio without starting playback or changing the listener's selected take. Unimportant stories create a history outcome, not a filler clip.
+The persistent player shows DJ breaks and a separate preparation summary for the selected playback profile. The profile being edited can differ. Identify that difference and explain which profile the News bucket destination currently shows before editing. Preparation does not start playback; enabling DJ breaks never starts generation.
 
-Morning pipeline:
+Use the STAR scenarios in [the radio PRD](RADIO_EXPERIENCE.md) for focused verification. Record actual results and limitations in [implementation notes](IMPLEMENTATION.md). Fixture-backed checks do not establish live provider quality or user comprehension. Routine verification does not package, sign, or publish the app.
 
-1. Claim one run per configured local calendar date and timezone after the chosen morning time.
-2. Resolve the saved city to confirmed coordinates and fetch a forecast from a selected weather provider. Store location, observation/forecast time, units, and attribution.
-3. Prepare a short start-of-day weather segment using only fresh supplied data. Skip unavailable or stale weather rather than inventing it. Weather does not need to pass the news importance gate.
-4. Save a complete artifact for later listening. Do not replay yesterday's greeting or weather after expiration. Calendar and reminder adapters can later add permitted day-ahead context to this pipeline.
+## Future extensions
 
-## Scheduling, limits, and recovery
+These are not working controls or promises in the current flow:
 
-Anton chose execution while the app is open. Initial deployment is local: app process running and Mac awake. Closing the macOS window can leave the process running; quitting or sleep prevents local execution. Startup and resume coalesce missed slots into at most one fresh check, never an hourly backlog. A morning brief is eligible only within a defined morning window, not as an evening catch-up. The final morning window and weather validity must be set before activation.
+- Weather briefings require a confirmed location, forecast provider and attribution, timezone/DST rules, a morning eligibility window, and expiration. Calendar and reminders require their own consent and data handling.
+- Content-change hashes could allow substantial updates at an existing URL to be reconsidered. The current global review ledger excludes a reviewed URL indefinitely, even if its content or interests change.
+- A currency budget needs actual provider accounting/pricing. The current guardrails bound checks and recording counts per profile; they are not an account-wide spend cap.
+- A general workflow engine is unnecessary for the current bounded TypeScript runner. Reconsider only when branching/recovery requirements justify it.
+- Mood-based song selection and continuous free-form hosting are separate product work. The current DJ uses the listener's chosen music queue and finite saved news.
 
-Default planned cadence is every three hours, major updates only, and at most three news audio clips per local day. Morning weather is one additional artifact. Clip caps do not cap text-assessment spend. Before activation, enforce both a maximum assessment count and a provider budget, display their limits, and stop when a limit is reached. Feed/network retries can be bounded; uncertain paid stages are not automatically resubmitted.
-
-Persist run state and request IDs before each paid stage. One run at a time shares the existing preparation lock. Configuration changes affect future runs; a run uses its claimed immutable snapshot. Existing code resolves some mutable state at each manual stage, so the unattended runner needs explicit snapshot-based service methods before activation. Reuse the existing durable audio/request store rather than duplicating media persistence.
-
-A restart can reconcile a completed artifact. Interrupted paid stages require explicit recovery or a new user-approved attempt. Record failed source checks separately from a genuine nothing-important decision. Show last outcome, reason, and next scheduled check only from real runner state. Pausing automation prevents future dispatch and requests cancellation of pending work; already-completed recordings remain available.
-
-## Listening
-
-Preparation and playback are separate. Initial delivery is prepare for review. Saved recordings can be auditioned and explicitly scheduled near track end using the existing player. No speech synthesis runs in the player. An optional later automatic delivery mode needs its own opt-in, an unplayed-ready inbox, freshness checks, and the existing pause/seek/cancel rules. It must not silently replace the manual favorite.
-
-## Future scheduler UI
-
-Use the three-step required setup wizard in Listening Room and keep configuration management in Settings. Show only the current step and preserve drafts during Settings visits. After setup, show a compact summary and the actual preparation tools. Keep saved takes accessible regardless of key or setup readiness. Move static explanations behind a few accessible info buttons; keep required labels, blockers, errors, and word limits visible.
-
-Keep optional future workflow preferences collapsed in Settings and label them Planned, not running. Never show a fake next run, last success, enabled state, or working calendar connection.
-
-## Future implementation stages and acceptance
-
-1. This phase: saved configuration and clear UI; preserve manual artifacts and verify restart persistence, validation, small-window layout, and no provider requests when saving.
-2. News runner: separate collect/assess/write, durable run ledger, scheduler/wake handling, limits, pause, statuses, dedupe, no-story outcome, and source failure handling.
-3. Morning weather: provider/location resolution, timezone/DST behavior, morning eligibility window, expiry and forecast attribution.
-4. Optional delivery and private day context: explicit automatic playback choice, then calendar/reminders after permissions and data handling are designed.
-
-Before calling automation operational, exercise fake-clock runs, duplicate feeds and article updates, no-new/low-importance outcomes, daily limits, offline/partial-source failure, sleep/resume, DST, changed configuration, interruption after each paid step, durable file recovery, and zero provider calls during playback. Verify live text and voice separately with explicitly enabled provider use.
-
-## Example day
-
-At 08:00, save a fresh weather briefing for the configured city. At 09:00, find no important new stories and generate no voice. At 12:00, a qualifying development produces one saved news clip. The listener auditions or schedules that recording later. If the Mac was asleep, do one fresh check after waking; do not replay all missed hours.
-
-## References
-
-- LangGraph workflow concepts: https://docs.langchain.com/oss/javascript/langgraph/thinking-in-langgraph
-- Electron power lifecycle: https://www.electronjs.org/docs/latest/api/power-monitor/
+Turning off automatic preparation uses a targeted profile operation, available while a check is running. It changes only that profile's enabled flag and next check time, preserves unsaved setup edits, and requests cancellation. A stop error names the profile and survives navigation until retry or a successful setup save. Cancel this check leaves the schedule enabled; Turn off automatic preparation disables it. Already dispatched provider work may complete.

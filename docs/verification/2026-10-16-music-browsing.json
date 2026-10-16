@@ -1,0 +1,163 @@
+{
+  "recordedDate": "2026-10-16",
+  "scope": "Controlled native B15,B16,B17 checks and M5 album-selection/focus correction, not complete M5 live search acceptance or an overall score",
+  "before": {
+    "album": "Album 0002",
+    "selectedTrack": "Song 00012",
+    "selectionRetainedAfterMusicNavigation": false,
+    "focusedAlbumAfterBackFollowingDetour": null
+  },
+  "after": {
+    "selectionRetainedAfterMusicNavigation": true,
+    "focusedAlbumAfterBackFollowingDetour": "000000000000000000000000000186a1"
+  },
+  "nativeFlows": {
+    "browsing": {
+      "data": "/private/tmp/native-music-browsing-OAaHdF",
+      "checks": [
+        "selection navigation",
+        "new and cleared search reset",
+        "next-page failure retains music and selection",
+        "explicit next-page retry",
+        "album Back focus",
+        "genre and tag selection reset",
+        "filtered navigation selection retention",
+        "album next-page failure and targeted retry",
+        "deep virtualized album focus after music detour"
+      ],
+      "providerCalls": ""
+    },
+    "albumLifetime": {
+      "data": "/private/tmp/native-music-browsing-0AoBQ3",
+      "checks": [
+        "music/news/settings navigation retention",
+        "reverse click order -> row-ordered paused queue",
+        "960x640 and200% retention/keyboard Back focus",
+        "explicit Back/reopen clear",
+        "Clear",
+        "different album clear",
+        "changed library selection resets",
+        "fresh-process restart clears",
+        "signout/different account clears"
+      ],
+      "providerCalls": ""
+    }
+  },
+  "fixture": {
+    "catalogSongs": 20000,
+    "catalogAlbums": 2000,
+    "selectedLibraries": "Archive only for80-song/48-album initial pages; library-reset case explicitly adds Recent",
+    "usesActual": "main/preload/production renderer/IPC/JellyfinService/HTTP/media/storage paths",
+    "substitutions": [
+      "disposable data",
+      "identity encryption",
+      "null shared-key adapter",
+      "owned local Jellyfin catalog and silent WAV"
+    ],
+    "faults": [
+      "song next-page503 after80 items",
+      "album next-page503 after48 items"
+    ],
+    "sizes": [
+      "1280x800",
+      "960x640 at200% zoom"
+    ],
+    "providerCalls": 0
+  },
+  "decision": {
+    "pair": [
+      "Steve",
+      "Elena"
+    ],
+    "independentProposals": "Both chose transient parent-owned album selection; no global/query/durable store",
+    "challenge": "Both accepted a single Map scoped by the current album, clearing on open/Back; setter guards captured album ID. Back derives focus target from the current album instead of relying on state lost during navigation.",
+    "owner": "Primary",
+    "actualCodeReview": "Elena: no blocker; review only, primary ran checks"
+  },
+  "fixtureCorrections": [
+    "Scope transport Play separately from the selected-song toolbar Play",
+    "A last-tile locator changed during automatic paging; final deep-focus flow moves by keyboard and pins the selected album ID",
+    "All IPC readback polls await results in Node; browser wait predicates are synchronous"
+  ],
+  "checks": {
+    "buildWithTypeScript": "passed",
+    "fullEslint": "passed",
+    "gitDiffCheck": "passed"
+  },
+  "limits": [
+    "Modeled local Jellyfin behavior is not connected-server compatibility proof",
+    "No complete subjective usability or live provider quality claim",
+    "This record does not prove every M5 search/library-size obligation or every display/OS combination"
+  ],
+  "sha256": {
+    "src/renderer/App.tsx": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+    "src/renderer/pages/Albums/Albums.page.tsx": "8abce67107438b4ed395443875aa920b6e71cbc968b3b834c9702ddd745f81ed",
+    "src/renderer/pages/Albums/VirtualAlbums.component.tsx": "a1685437270b676a8a58395b18068911dbf772a82e59cbdcc85be2f17287d62b",
+    "src/renderer/pages/Songs/Songs.page.tsx": "79b3115960d53568bac407d5754ff0996fee44ba895b222d99b4e0fb71e3007f",
+    "src/renderer/pages/Songs/VirtualSongs.component.tsx": "95ada95c0533bb1e462a818f6981c60d22cd4a9a8e4df27b8cea6cc3119606e4",
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "df34c595244bc9ef00519fbad74f09b370bee7a3d68777a1ba2c77f26e3c1053",
+    "src/main/jellyfin.ts": "e17c24a469b3f7d61cb39a55df9edf761660ec28596050888a571284dd95e4a9",
+    "out/main/index.js": "568eacd971f993691a588a74b57fca82844f5f401f7c6694df26d87ebb6512fa",
+    "out/preload/index.cjs": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215",
+    "out/renderer/assets/index-BINWh4K5.css": "b73ee4ff16afd06ee1bed417ebb094b102ad98eb9da69cd882838daec6b113e7",
+    "out/renderer/assets/index-pUXlVlNy.js": "98ca49803c84f414af9a34c36d799d8d7b2ca1282586ffeed9dd6c5fc04c03bf",
+    "out/renderer/assets/inter-cyrillic-400-normal-HOLc17fK.woff": "6e441a6c94788318fa02b6d0a633aa29eebe27b69c6567eb1e59b4edc68ed70e",
+    "out/renderer/assets/inter-cyrillic-400-normal-obahsSVq.woff2": "f0bb586459ce8f09b238285040f17e3e9e9538b2c5a7aae0775194e33c36c3c3",
+    "out/renderer/assets/inter-cyrillic-500-normal-BasfLYem.woff2": "b77a86ec16aadc157f4a99e8898d71cd75ea264753d9bdf13f962f8c3988cbb0",
+    "out/renderer/assets/inter-cyrillic-500-normal-CxZf_p3X.woff": "5be18e0345781cb882a267798518553c0e915174fc70731ab5f085ca64ba1ebc",
+    "out/renderer/assets/inter-cyrillic-ext-400-normal-BQZuk6qB.woff2": "ef572f9187a8be018d9d9c2c6b77c1f6cb2af4199f02fc16c292ea10ab25a2cc",
+    "out/renderer/assets/inter-cyrillic-ext-400-normal-DQukG94-.woff": "5cb2f1cc0936f89a42ceae34f5a5720248dc5b8114c12b1c33a7d2ef01a9b6b9",
+    "out/renderer/assets/inter-cyrillic-ext-500-normal-B0yAr1jD.woff2": "1c2db92d3cd9b237ca7c9c07af556d542f28ded1db54cd4382cf776501c5291f",
+    "out/renderer/assets/inter-cyrillic-ext-500-normal-BmqWE9Dz.woff": "e250c05aebcf49971e0b25f476992dd463c28c0292ebb204d9db542fb5066ca7",
+    "out/renderer/assets/inter-greek-400-normal-B4URO6DV.woff2": "c15ddd00a9927b56f5c655a41f976f79bd848a20cce91fc14227751872a1cc27",
+    "out/renderer/assets/inter-greek-400-normal-q2sYcFCs.woff": "bdae9d28729e8c68587d5d54e216d771a40d7a6800e824586a6e2f570c2f10df",
+    "out/renderer/assets/inter-greek-500-normal-BIZE56-Y.woff2": "cc197d79d33a3615a047baae85f4d1957f6f98b8898313658e160b1d519b1b6f",
+    "out/renderer/assets/inter-greek-500-normal-Xzm54t5V.woff": "86d55a4b1b9cbced7e61e76d5d44cf49d0bd1c814d3df2de67b7136ab4fdcece",
+    "out/renderer/assets/inter-greek-ext-400-normal-DGGRlc-M.woff2": "eadedd9e13c2582430a9fb1519eb86152fdabb483a6f66d90f8d8a52e977a1b7",
+    "out/renderer/assets/inter-greek-ext-400-normal-KugGGMne.woff": "4f2b6f92ddfece8812e79774d446218aa6e0773ff8c2d31130fe2bdc23bd22d0",
+    "out/renderer/assets/inter-greek-ext-500-normal-2j5mBUwD.woff": "c85d11bde719108cc9a4f6f5b008087f6c36493b47395580d4f5336182b0f0c7",
+    "out/renderer/assets/inter-greek-ext-500-normal-C4iEst2y.woff2": "75a9ec9383a3b7a7bf7cfb94f64edf38d9cfdc5f7ffa0cbed2733627a6e4426d",
+    "out/renderer/assets/inter-latin-400-normal-C38fXH4l.woff2": "8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc",
+    "out/renderer/assets/inter-latin-400-normal-CyCys3Eg.woff": "e20fa0b4fd2dd26e4d14b3ac3cc922509c3a63fa5e910e90c614544aa042dd45",
+    "out/renderer/assets/inter-latin-500-normal-BL9OpVg8.woff": "9b42c108da48b5ed55a3072e815ffee2d271562e6c0dd6998910e8f9c09e0a3d",
+    "out/renderer/assets/inter-latin-500-normal-Cerq10X2.woff2": "f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f",
+    "out/renderer/assets/inter-latin-ext-400-normal-77YHD8bZ.woff": "22ae8360fbad24d2af7c6c9898a346c881774dc87f7cf94bd262c48ad58d7116",
+    "out/renderer/assets/inter-latin-ext-400-normal-C1nco2VV.woff2": "6744a7f509ebc6ab220a6cd4ea77e898adf014f03d88dcda5d45d8a9feefb4e9",
+    "out/renderer/assets/inter-latin-ext-500-normal-BxGbmqWO.woff": "30d2903ce97f8a89ea0e9c083b42cb8bf97e7bbb5607e7f00352815f19cb0d5b",
+    "out/renderer/assets/inter-latin-ext-500-normal-CV4jyFjo.woff2": "2c6fbc42d315528beb06c1096df45487bf4186c4b78b8111d12c9c951f8acca2",
+    "out/renderer/assets/inter-vietnamese-400-normal-Bbgyi5SW.woff": "54aa42d325bcdfd623ecb9eac4a5e3c6420c63d7b86e9d8545fb479f653beb57",
+    "out/renderer/assets/inter-vietnamese-400-normal-DMkecbls.woff2": "547ad9fdaeb0ae43487f4b8a02e47c36553c0c0cb73c8aa98f93b7b615f6b55d",
+    "out/renderer/assets/inter-vietnamese-500-normal-DOriooB6.woff2": "44e36aa5a8f12130029a29bb0e6695d0262b67446ce321e878b1fb56162b5de6",
+    "out/renderer/assets/inter-vietnamese-500-normal-mJboJaSs.woff": "18a4a09f751671cd8929d7c66e8fe7d820b511c36e51cf6047ffceab88eec4a4",
+    "out/renderer/assets/manrope-cyrillic-600-normal-DvRl3Mj-.woff2": "80b86efbef1c9fb66557cc4cc7b6db42db2fd631f1a9b8735f3bbefbb5128799",
+    "out/renderer/assets/manrope-cyrillic-600-normal-It4mZcQk.woff": "716a12f36cf789e399e0ad0bd205e3d1c66e4de66fe0c7e94a59ab7f007fce89",
+    "out/renderer/assets/manrope-greek-600-normal-BoRV6lzK.woff2": "18d69aa241a76095c4c5f8c224abe6519ff60db3b4085e843d59fb4965a4eebd",
+    "out/renderer/assets/manrope-greek-600-normal-CF2i9ZRY.woff": "59fa49c299110657ee3dbc02beed32f5fda899423686058a0ce7e499851e6e7a",
+    "out/renderer/assets/manrope-latin-600-normal-4f0koTD-.woff2": "f7ac6258da20ab7541939b59851155753d1d24f1b30cbcb949077a3faa3d1593",
+    "out/renderer/assets/manrope-latin-600-normal-BqgrALkZ.woff": "8d1f509774bca963fa02faf674678ce9244474306361ca2798583fa600346df6",
+    "out/renderer/assets/manrope-latin-ext-600-normal-_gBojHdJ.woff2": "ff679412842fc3b5ce2dfad626db5261a4e663dcfd1bf1209bdfc61c2b2f37e6",
+    "out/renderer/assets/manrope-latin-ext-600-normal-u5Pl7hTU.woff": "80ff78480448f4c2c0f586cb016928554b8cd84b2b95dec5e5f7579274f757a0",
+    "out/renderer/assets/manrope-vietnamese-600-normal-C1J5PCl_.woff2": "bce46331a74572cd723ddb8200a11c00e71370fad490f045564989527469aa3d",
+    "out/renderer/assets/manrope-vietnamese-600-normal-lA7a_7Ok.woff": "628a1c849748530c6f7c02c18bdd3191bc19264e20ad2308a8a954605cdb620b",
+    "out/renderer/demo/news-break.json": "fad8cf445ffac400596faa134c1ca357b28a6de86dec5e8389597b1277050c46",
+    "out/renderer/demo/news-break.mp3": "718a35bc38f30397b7b43965db4a4bf5211d59c0a5f37c4e23ef38428a614f74",
+    "out/renderer/demo/transcript.md": "d64810c60028cc5d69ff10c156b07f8cf5d78cee42ae34e5e6cc0e6553f3fb44",
+    "out/renderer/index.html": "43da5cc77333fe7df53a7c71b397aa4b280dda4b89050d47b203465e1f6df343",
+    "out/renderer/voice-previews/EXAVITQu4vr4xnSDxMaL.mp3": "fef86e7100a94578dd2dcee7db9085fcf5c6f50b07aeceeabae05dd09b17a539",
+    "out/renderer/voice-previews/FGY2WhTYpPnrIDTdsKH5.mp3": "97fc724a7c41b0c02884aec975e2e4a749daabb1fc57a8229b34e8180e1fe418",
+    "out/renderer/voice-previews/JBFqnCBsd6RMkjVDRZzb.mp3": "ac1804ae2ee825f7414d819e2036369297bf9fc01a816b4f3d9c51e7357d32cf",
+    "out/renderer/voice-previews/TX3LPaxmHKxFdv7VOQHJ.mp3": "f8018932908f1c3cfaed40a94b13fe4d498489f3fd1d37d3fa86984af721e40c",
+    "out/renderer/voice-previews/cgSgspJ2msm6clMCkdW9.mp3": "addac5c0fecee048baed846784c7f599fa0bcce636556e7a6bc63daa43ffee9f",
+    "out/renderer/voice-previews/cjVigY5qzO86Huf0OWal.mp3": "3f485d54b0932999ab76225e4af338b37c2becac438c8595023bc13984bfc8e5",
+    "out/renderer/voice-previews/manifest.json": "15811b8afa01189660b5da6e6e0f54958a4889b644d9ef18d1474e10acead7dc",
+    "out/renderer/voice-previews/onwK4e9ZLuTAKqWW03F9.mp3": "9c91149960d8c492f19a7d53522af8a4597b490e90f0fe8dd7022653c9824c52"
+  },
+  "fixtureSha256": {
+    "isolatedMain": "a64fe97a35c52f7627589e271e122cd8d37feba6fb88463918f52e5ea8d969ee",
+    "bootstrap": "60ab7ac4d8b3569e2d2f142dc56066ee53f1cb914e0d5685331a52b0701bb754",
+    "browsingScript": "a8259f0bf43af1720d17d826ec5e0b6d8e2de9392d695e83ca66cc72b3f57179",
+    "albumLifetimeScript": "325a627e0e7e9696067e9afcdee53b7139f07805ce015f15cba608beefb9745a",
+    "catalogServer": "76d89294bc2d17c6502c8ce5286b559982aa4ac0fc2965216457f44f4befb98c"
+  },
+  "rendererSource": "Fixture renderer/preload directories symlink to the current production out/renderer and out/preload; main isolates keys/storage and hides its window."
+}

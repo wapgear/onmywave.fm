@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { ExternalLink, Newspaper, Radio } from 'lucide-react';
 import type { LocalState, NewsArticle, NewsBreak, PreparedNewsLibrary, PreparedNewsTake, PreparedNewsScript, ReviewedNewsArticle } from '../../../../shared/types';
 import { eligibleNewsTakes } from '../../../../shared/news-pool';
+import { newsPreparationStatus } from '../../../../shared/news-preparation-status';
 import { usePlayer } from '../../../player';
 import { ErrorNotice } from '../../../components/Shared';
 import './NewsBucket.styles.css';
@@ -15,10 +16,12 @@ type Automation = {
   songsUntilBreak: number;
 };
 
-export function NewsBucket({ library, localState, automation, openSource, openPreparation, openDraft }: {
+export function NewsBucket({ library, localState, automation, profileStatusUnknown, savedNewsStale, openSource, openPreparation, openDraft }: {
   library: PreparedNewsLibrary;
   localState: LocalState;
   automation: Automation;
+  profileStatusUnknown: boolean;
+  savedNewsStale: boolean;
   openSource: (url: string) => void;
   openPreparation: () => void;
   openDraft: (script: PreparedNewsScript) => void;
@@ -32,6 +35,9 @@ export function NewsBucket({ library, localState, automation, openSource, openPr
   const scheduled = player.newsPhase === 'waiting' && active ? active : null;
   const onAir = player.newsPhase === 'speaking' ? active : null;
   const runtimePending = automation.settings.enabled && automation.room && automation.pending && player.newsPhase === 'idle' ? automation.pending : null;
+  const preparation = pageProfile ? newsPreparationStatus(pageProfile) : null;
+  const lastRun = pageProfile?.workflowDraft.newsLastRun;
+  const lastLabels = { running: 'Check in progress', prepared: 'Recording saved', 'no-news': 'No qualifying story', failed: 'Check failed', interrupted: 'Check interrupted' };
   const pageDj = localState.djs.find(dj => dj.id === pageProfile?.room.djId);
   const pageSources = [...new Set(pageProfile?.room.sourceIds ?? [])].map(id => localState.sources.find(source => source.id === id)).filter((source): source is NonNullable<typeof source> => Boolean(source));
   const pageInterests = pageProfile?.workflowDraft.newsInterests ?? pageDj?.news?.interests ?? '';
@@ -57,7 +63,11 @@ export function NewsBucket({ library, localState, automation, openSource, openPr
   function articleSource(article: NewsArticle) {
     let domain = '';
     try { domain = new URL(article.url).hostname.replace(/^www\./u, ''); } catch { /* Some saved references may have an invalid URL. */ }
-    return <span>{article.source}{domain ? ` · ${domain}` : ''}{article.publishedAt ? ` · ${new Date(article.publishedAt).toLocaleDateString()}` : ''}</span>;
+    return <span>{article.source}{domain ? ` · ${domain}` : ''}{Number.isFinite(Date.parse(article.publishedAt ?? '')) ? ` · ${new Date(article.publishedAt!).toLocaleDateString()}` : ' · Date unavailable'}</span>;
+  }
+
+  function preparationNotes(warnings: string[]) {
+    return warnings.length ? <ul className="news-bucket-preparation-notes" aria-label="Preparation notes">{warnings.map((warning, index) => <li key={index}>{warning}</li>)}</ul> : null;
   }
 
   function story(take: NewsBreak) {
@@ -67,19 +77,21 @@ export function NewsBucket({ library, localState, automation, openSource, openPr
         <button onClick={() => openSource(article.url)}>{article.title}<ExternalLink size={13} aria-hidden="true" /></button>
         {articleSource(article)}
       </li>)}</ul> : <p className="news-bucket-muted">No source links were saved with this recording.</p>}
+      {preparationNotes(take.warnings)}
     </>;
   }
 
   function draft(script: PreparedNewsScript) {
     return <article className="news-bucket-draft" key={script.id}><p>{script.script}</p><div className="news-bucket-draft-meta"><span>Draft · {script.provenance.dj.name} · {new Date(script.createdAt).toLocaleDateString()} · audio not generated</span><button onClick={() => openDraft(script)}>Review draft</button></div>
       {script.articles.map(article => <p className="news-bucket-draft-source" key={`${article.id}-${article.url}`}><button onClick={() => openSource(article.url)}>{article.title}<ExternalLink size={13} aria-hidden="true" /></button>{articleSource(article)}</p>)}
+      {preparationNotes(script.warnings)}
     </article>;
   }
 
   return <section className="news-bucket" aria-labelledby="news-bucket-title">
     <header className="news-bucket-header">
-      <div><span className="eyebrow">Editorial inbox</span><h2 id="news-bucket-title">What your DJ will say</h2>
-        <p>Review the stories in the queue and see which articles have already been reviewed.</p></div>
+      <div><span className="eyebrow">Your radio</span><h2 id="news-bucket-title">What your DJ will say</h2>
+        <p>See what is ready to hear, what was prepared, and where each story came from.</p></div>
       <div className={`news-bucket-status ${onAir ? 'is-live' : ''}`} role="status"><span />{phaseLabel}</div>
     </header>
 
@@ -89,12 +101,30 @@ export function NewsBucket({ library, localState, automation, openSource, openPr
         ? <p><strong>Playback: {automation.room.name}</strong> · {runtimeDJ?.name ?? 'DJ not configured'} · Every {automation.settings.everySongs} songs{!runtimePending && !onAir && !scheduled ? ` · Next check in ${automation.songsUntilBreak} ${automation.songsUntilBreak === 1 ? 'song' : 'songs'}` : ''}</p>
         : <p><strong>Playback is off.</strong> The ready queue below remains available for this profile.</p>}
     </div>
-    <p className="news-bucket-muted" role="status">{pageProfile?.workflowDraft.newsWorkflowError ? `News preparation paused: ${pageProfile.workflowDraft.newsWorkflowError}` : pageProfile?.workflowDraft.newsEnabled ? `News preparation is on.${pageProfile.workflowDraft.nextNewsCheckAt ? ` Next check: ${new Date(pageProfile.workflowDraft.nextNewsCheckAt).toLocaleString()}.` : ' First check pending.'}` : 'Automatic news preparation is off.'} <button className="room-link" onClick={openPreparation}>News settings</button></p>
+    {pageProfile && preparation && <section className="news-bucket-preparation" aria-labelledby="news-preparation-title">
+      <div className="news-bucket-section-heading"><div><span className="eyebrow">{pageProfile.name}</span><h3 id="news-preparation-title">Automatic news preparation</h3></div><button onClick={openPreparation}>News settings</button></div>
+      <p className="news-bucket-muted" role="status">{profileStatusUnknown
+        ? <>Current automatic preparation status could not be confirmed. Last saved automatic setting: {pageProfile.workflowDraft.newsEnabled ? 'on' : 'off'}. Retry the failed status check above.</>
+        : <><strong>{preparation.label}.</strong> {preparation.detail}</>}</p>
+      {!profileStatusUnknown && <>
+      <dl className="news-bucket-counts" aria-label={`Preparation for ${pageProfile.name}`}>
+        <div><dt>Scheduled checks started today</dt><dd>{preparation.checks} / {preparation.checkLimit}</dd></div>
+        <div><dt>Automatic recordings saved today</dt><dd>{preparation.recordings} / {preparation.recordingLimit}</dd></div>
+        <div><dt>{savedNewsStale ? 'Last loaded ready recordings' : 'Ready for this profile'}</dt><dd>{eligible.length}</dd></div>
+      </dl>
+      <p className="news-bucket-muted">Only scheduled preparation is counted for this profile in your Mac's local day. Checks can use paid text generation even when no recording is made.</p>
+      {lastRun ? <div className="news-bucket-last-run"><h4>{lastLabels[lastRun.outcome]}</h4><time dateTime={lastRun.finishedAt ?? lastRun.startedAt}>{new Date(lastRun.finishedAt ?? lastRun.startedAt).toLocaleString()}</time>
+        {lastRun.message && <p>{lastRun.message}</p>}
+        {lastRun.setupChanged && <p>This check used an earlier setup. Its result stays saved; new settings apply to future checks.</p>}
+      </div> : <p className="news-bucket-muted">No scheduled check has been recorded for this profile yet.</p>}
+      </>}
+      {!pageProfile.room.djId || !pageProfile.room.sourceIds.length || !pageProfile.mood.trim() ? <p className="news-bucket-notice">Choose sources, a host, and a mood in News settings to finish setup. Music and saved audio remain available.</p> : null}
+    </section>}
     {automation.settings.enabled && automation.room && runtimeDiffersFromPage && <p className="news-bucket-notice">The DJ is using <strong>{automation.room.name}</strong>. This page shows the ready queue for <strong>{pageProfile?.name ?? 'the selected profile'}</strong>.</p>}
     <ErrorNotice error={automation.error ? new Error(automation.error) : null} />
 
     <section className="news-bucket-feature" aria-labelledby="news-bucket-up-next">
-      <div className="news-bucket-section-heading"><div><span className="eyebrow">Playback</span><h3 id="news-bucket-up-next">{onAir ? 'On air now' : scheduled ? 'Scheduled for this song' : 'Actual DJ queue'}</h3></div></div>
+      <div className="news-bucket-section-heading"><div><span className="eyebrow">Playback</span><h3 id="news-bucket-up-next">{onAir ? 'On air now' : scheduled ? 'Scheduled for this song' : 'Next DJ break'}</h3></div></div>
       {activeBreak ? <><p className="news-bucket-phase-note">{phaseLabel}</p><article className="news-bucket-story">{story(activeBreak)}</article></>
         : scheduled ? <article className="news-bucket-story">{story(scheduled)}</article>
           : runtimePending ? <article className="news-bucket-story">{story(runtimePending)}<p className="news-bucket-muted">Claimed for the DJ shown above. It waits until a song ending can fit the break.</p></article>
@@ -102,20 +132,20 @@ export function NewsBucket({ library, localState, automation, openSource, openPr
     </section>
 
     <section className="news-bucket-ready" aria-labelledby="news-bucket-ready-title">
-      <div className="news-bucket-section-heading"><div><span className="eyebrow">Eligible pool</span><h3 id="news-bucket-ready-title">Ready for {pageProfile?.name ?? 'this profile'}</h3></div><span>{eligible.length} {eligible.length === 1 ? 'recording' : 'recordings'}</span></div>
-      <p className="news-bucket-muted">These recordings match this profile and freshness rules. They are not scheduled until the DJ claims one.</p>
-      {!eligible.length ? <p className="news-bucket-history-empty">No fresh matching recordings are ready for this profile.</p> : <ol className="news-bucket-ready-list">{eligible.map((take, index) => <li key={take.id}><div className="news-bucket-ready-number">{index + 1}</div><div className="news-bucket-ready-body"><div className="news-bucket-ready-meta"><strong>{take.renderingDJ.name}</strong><span>Saved {new Date(take.createdAt).toLocaleDateString()}</span></div>{story(take)}</div></li>)}</ol>}
+      <div className="news-bucket-section-heading"><div><span className="eyebrow">{savedNewsStale ? 'Last loaded saved news' : 'Saved news'}</span><h3 id="news-bucket-ready-title">{savedNewsStale ? 'Last loaded matches for' : 'Ready for'} {pageProfile?.name ?? 'this profile'}</h3></div><span>{eligible.length} {eligible.length === 1 ? 'recording' : 'recordings'}</span></div>
+      <p className="news-bucket-muted">{savedNewsStale ? 'These are the last loaded matches for the saved setup. Refresh status to confirm which recordings are ready now.' : 'These recordings match your current setup and are fresh enough to play. Older and already heard stories stay out. The DJ chooses one when a break is due.'}</p>
+      {!eligible.length ? <p className="news-bucket-history-empty">{savedNewsStale ? 'No matching recordings were in the last loaded results.' : 'No fresh matching recordings are ready for this profile.'} <button className="room-link" onClick={openPreparation}>Set up news preparation</button></p> : <ol className="news-bucket-ready-list">{eligible.map((take, index) => <li key={take.id}><div className="news-bucket-ready-number">{index + 1}</div><div className="news-bucket-ready-body"><div className="news-bucket-ready-meta"><strong>{take.renderingDJ.name}</strong><span>Saved {new Date(take.createdAt).toLocaleDateString()}</span></div>{story(take)}</div></li>)}</ol>}
     </section>
 
     <section className="news-bucket-drafts" aria-labelledby="news-bucket-drafts-title">
-      <div className="news-bucket-section-heading"><div><span className="eyebrow">In preparation</span><h3 id="news-bucket-drafts-title">Drafts for {pageProfile?.name ?? 'this profile'}</h3></div><span>{pageDrafts.length}</span></div>
-      {!pageDrafts.length ? <div className="news-bucket-draft-empty"><p>No drafts are waiting for audio.</p></div> : <div className="news-bucket-draft-list">{pageDrafts.map(draft)}</div>}
+      <div className="news-bucket-section-heading"><div><span className="eyebrow">{savedNewsStale ? 'Last loaded drafts' : 'In preparation'}</span><h3 id="news-bucket-drafts-title">Drafts for {pageProfile?.name ?? 'this profile'}</h3></div><span>{pageDrafts.length}{savedNewsStale ? ' last loaded' : ''}</span></div>
+      {!pageDrafts.length ? <div className="news-bucket-draft-empty"><p>{savedNewsStale ? 'No drafts were waiting for audio when last loaded.' : 'No drafts are waiting for audio.'}</p></div> : <div className="news-bucket-draft-list">{pageDrafts.map(draft)}</div>}
     </section>
 
     <section className="news-bucket-history" aria-labelledby="news-bucket-history-title">
-      <div className="news-bucket-section-heading"><div><span className="eyebrow">Global review history</span><h3 id="news-bucket-history-title">Reviewed across all profiles</h3></div><span>{reviewed.length} {reviewed.length === 1 ? 'story' : 'stories'}</span></div>
+      <div className="news-bucket-section-heading"><div><span className="eyebrow">{savedNewsStale ? 'Last loaded article history' : 'Article history'}</span><h3 id="news-bucket-history-title">Reviewed across all profiles</h3></div><span>{reviewed.length} {reviewed.length === 1 ? 'story' : 'stories'}{savedNewsStale ? ' last loaded' : ''}</span></div>
       <p className="news-bucket-muted">Reviewed stories are excluded from future news selection in every profile.</p>
-      {!reviewed.length ? <p className="news-bucket-history-empty">No stories have been reviewed yet.</p> : <><ul className="news-bucket-reviewed">{visibleReviewed.map(article => <ReviewedRow key={`${article.canonicalUrl}-${article.requestId}`} article={article} openSource={openSource} />)}</ul>{reviewed.length > visibleReviewed.length && <button className="news-bucket-show-more" onClick={() => setHistoryLimit(limit => limit + 25)}>Show 25 more reviewed stories</button>}</>}
+      {!reviewed.length ? <p className="news-bucket-history-empty">{savedNewsStale ? 'No reviewed stories were in the last loaded history.' : 'No stories have been reviewed yet.'}</p> : <><ul className="news-bucket-reviewed">{visibleReviewed.map(article => <ReviewedRow key={`${article.canonicalUrl}-${article.requestId}`} article={article} openSource={openSource} />)}</ul>{reviewed.length > visibleReviewed.length && <button className="news-bucket-show-more" onClick={() => setHistoryLimit(limit => limit + 25)}>Show 25 more reviewed stories</button>}</>}
     </section>
   </section>;
 }
@@ -134,5 +164,5 @@ function ReviewedRow({ article, openSource }: { article: ReviewedNewsArticle; op
       : article.outcome === 'selected' ? 'Selected for a briefing' : 'Reviewed · not selected';
   let domain = '';
   try { domain = new URL(article.url).hostname.replace(/^www\./u, ''); } catch { /* Preserve saved source rows even when a reference is malformed. */ }
-  return <li className="news-bucket-reviewed-row"><div><button className="news-bucket-article-link" onClick={() => openSource(article.url)}>{article.title}<ExternalLink size={13} aria-hidden="true" /></button><span>{article.source}{domain ? ` · ${domain}` : ''}{article.publishedAt ? ` · Published ${new Date(article.publishedAt).toLocaleDateString()}` : ''}</span></div><div className="news-bucket-reviewed-meta"><span>{outcome}</span><time dateTime={article.reviewedAt}>{new Date(article.reviewedAt).toLocaleDateString()}</time></div></li>;
+  return <li className="news-bucket-reviewed-row"><div><button className="news-bucket-article-link" onClick={() => openSource(article.url)}>{article.title}<ExternalLink size={13} aria-hidden="true" /></button><span>{article.source}{domain ? ` · ${domain}` : ''}{Number.isFinite(Date.parse(article.publishedAt ?? '')) ? ` · Published ${new Date(article.publishedAt!).toLocaleDateString()}` : ' · Date unavailable'}</span></div><div className="news-bucket-reviewed-meta"><span>{outcome}</span><time dateTime={article.reviewedAt}>{new Date(article.reviewedAt).toLocaleDateString()}</time></div></li>;
 }

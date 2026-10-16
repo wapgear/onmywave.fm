@@ -57,7 +57,7 @@ export function FilterSelect({ label, value, choices, onChange, emptyLabel, sear
     <button className="filter-select-trigger" ref={trigger} popoverTarget={id} aria-haspopup="dialog" aria-expanded={open} disabled={disabled} aria-label={`${label}: ${selectedLabel || emptyLabel || 'Any'}`} onClick={() => { setSearch(''); position(); }}>
       <span className="filter-select-label">{label}</span><span className="filter-select-value">{selectedLabel || emptyLabel || 'Any'}</span><ChevronDown size={14} aria-hidden="true" />
     </button>
-    <div id={id} ref={popup} className="filter-select-popup" popover="auto" role="dialog" aria-label={`Choose ${label.toLowerCase()}`} onKeyDown={onKey} onToggle={event => {
+    <div id={id} ref={popup} className="filter-select-popup" popover="auto" role="dialog" aria-label={`Choose ${label.toLowerCase()}`} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) popup.current?.hidePopover(); }} onKeyDown={onKey} onToggle={event => {
       setOpen(event.newState === 'open');
       if (event.newState === 'open') { position(); if (searchable) searchInput.current?.focus({ preventScroll: true }); else (list.current?.querySelector<HTMLButtonElement>('[aria-selected="true"]') ?? list.current?.querySelector<HTMLButtonElement>('[role="option"]'))?.focus({ preventScroll: true }); }
       else if (popup.current?.contains(document.activeElement) || document.activeElement === document.body) trigger.current?.focus({ preventScroll: true });

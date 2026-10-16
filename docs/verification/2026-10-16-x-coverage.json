@@ -1,0 +1,359 @@
+{
+  "date": "2026-10-16",
+  "scope": "Focused S03/S07/A08 X response classification and native manual/automatic failure feedback",
+  "before": [
+    {
+      "name": "null envelope",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "empty object",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "wrong root array",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "null data",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "object data",
+      "warnings": [],
+      "providerCalls": 1
+    },
+    {
+      "name": "null post",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "missing text",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "numeric text",
+      "warnings": [],
+      "providerCalls": 1
+    },
+    {
+      "name": "missing timestamp",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "invalid identity",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "mixed coverage",
+      "warnings": [],
+      "providerCalls": 1
+    },
+    {
+      "name": "valid",
+      "warnings": [],
+      "providerCalls": 1
+    },
+    {
+      "name": "empty array",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "confirmed zero",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "missing positive results",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "normal old and future",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "partial provider errors",
+      "warnings": [
+        "Science search: Twitter returned only partial search results. Check the query and API access."
+      ],
+      "providerCalls": 1
+    },
+    {
+      "name": "provider error without results",
+      "error": "server",
+      "message": "Could not read Science search: Twitter returned a search error. Check the query and API access. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    }
+  ],
+  "serviceCases": [
+    {
+      "name": "null envelope",
+      "error": "server",
+      "message": "Science search: Twitter returned unreadable search results. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "empty object",
+      "error": "server",
+      "message": "Science search: Twitter returned unreadable search results. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "wrong root array",
+      "error": "server",
+      "message": "Science search: Twitter returned unreadable search results. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "null data",
+      "error": "server",
+      "message": "Science search: Twitter returned unreadable search results. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "object data",
+      "error": "server",
+      "message": "Science search: Twitter returned unreadable search results. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "null post",
+      "error": "server",
+      "message": "Science search: 1 Twitter post could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "missing text",
+      "error": "server",
+      "message": "Science search: 1 Twitter post could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "numeric text",
+      "error": "server",
+      "message": "Science search: 1 Twitter post could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "missing timestamp",
+      "error": "server",
+      "message": "Science search: 1 Twitter post could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "invalid identity",
+      "error": "server",
+      "message": "Science search: 1 Twitter post could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "mixed coverage",
+      "warnings": [
+        "Science search: 1 Twitter post could not be read. Coverage is incomplete."
+      ],
+      "providerCalls": 1
+    },
+    {
+      "name": "valid",
+      "warnings": [],
+      "providerCalls": 1
+    },
+    {
+      "name": "empty array",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "negative count",
+      "error": "server",
+      "message": "Science search: Twitter returned unreadable search results. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "string count",
+      "error": "server",
+      "message": "Science search: Twitter returned unreadable search results. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "mixed count mismatch",
+      "warnings": [
+        "Science search: Twitter returned unreadable search results. Coverage is incomplete."
+      ],
+      "providerCalls": 1
+    },
+    {
+      "name": "contradictory empty",
+      "error": "server",
+      "message": "Science search: Twitter returned unreadable search results. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "malformed errors with valid",
+      "warnings": [
+        "Science search: Twitter returned only partial search results. Check the query and API access."
+      ],
+      "providerCalls": 1
+    },
+    {
+      "name": "null errors with empty",
+      "error": "server",
+      "message": "Could not read Science search: Twitter returned a search error. Check the query and API access. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "empty errors with empty",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "malformed old post",
+      "error": "server",
+      "message": "Science search: 1 Twitter post could not be read. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "string zero without data",
+      "error": "server",
+      "message": "Science search: Twitter returned unreadable search results. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "confirmed zero",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "missing positive results",
+      "error": "server",
+      "message": "Science search: Twitter returned unreadable search results. Coverage is incomplete. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    },
+    {
+      "name": "normal old and future",
+      "error": "no-news",
+      "message": "No recent news. Music continues.",
+      "providerCalls": 0
+    },
+    {
+      "name": "partial provider errors",
+      "warnings": [
+        "Science search: Twitter returned only partial search results. Check the query and API access."
+      ],
+      "providerCalls": 1
+    },
+    {
+      "name": "provider error without results",
+      "error": "server",
+      "message": "Could not read Science search: Twitter returned a search error. Check the query and API access. News coverage is incomplete; try again.",
+      "providerCalls": 0
+    }
+  ],
+  "native": {
+    "allMalformedNamedIncompleteErrorAndNoTextDispatch": true,
+    "mixedPreservesStoryAndNamedWarning": true,
+    "tabs": [
+      "News bucket",
+      "Settings",
+      "Saved audio"
+    ],
+    "draftBucketWarningVisible": true,
+    "musicContinues": true,
+    "network": {
+      "substitutedTextCalls": 1,
+      "blockedExternalCalls": 0
+    },
+    "automaticUnreadableShowsErrorAndResumeWithoutTextDispatch": true,
+    "lastRun": {
+      "requestId": "072b10d8-4bae-43e1-9d8e-55537721915d",
+      "startedAt": "2026-10-16T12:52:58.173Z",
+      "outcome": "failed",
+      "roomName": "My room",
+      "finishedAt": "2026-10-16T12:52:58.180Z",
+      "message": "Science search: 1 Twitter post could not be read. Coverage is incomplete. News coverage is incomplete; try again."
+    },
+    "musicContinuesAfterAutomaticFailure": true,
+    "networkAfterAutomatic": {
+      "substitutedTextCalls": 1,
+      "blockedExternalCalls": 0
+    },
+    "result": "passed"
+  },
+  "environment": {
+    "runtime": "Actual native main/preload/production renderer, macOS27.2 arm64/Electron43.7.0",
+    "profile": "Fresh isolated encrypted connection and dummy provider keys; shared keychain adapter disabled; hidden muted window",
+    "network": "Owned localhost music/source servers; X/text responses controlled; all remaining external origins blocked",
+    "automaticTimer": "Unchanged production60-second interval"
+  },
+  "decisions": {
+    "Boris": "Supported explicit empty array or omitted data with zero count, generic malformed/partial warnings and strict core fields.",
+    "Nadia": "Supported source-specific validation; review identified supplied-count validation gap, corrected before final verification.",
+    "reservation": "Optional metadata beyond supplied result_count not schema-validated; explicit arrays remain sufficient when count absent.",
+    "owner": "Primary agent edited source branch and PRD; existing downstream state/UI reused."
+  },
+  "checks": {
+    "serviceCaseAssertions": 27,
+    "credentialOutputAssertion": "passed",
+    "nativeManualAndAutomatic": "passed",
+    "buildIncludingTypeScript": "passed",
+    "fullEslint": "passed",
+    "inventoryUniqueRequirements": 187,
+    "inventoryCounts": {
+      "Review": 144,
+      "Controlled": 11,
+      "External": 9,
+      "Dated": 13,
+      "Live": 5,
+      "Recorded": 5
+    }
+  },
+  "verificationCorrection": "First automatic native observation exited after10 seconds before the60-second tick; final fresh run awaited production interval and passed.",
+  "acceptance": {
+    "S03": "Review; no actual X access or live query relevance demonstrated.",
+    "S07": "Review; scoped manual draft/bucket warning feedback only.",
+    "A08": "Review; scoped manual and automatic X incomplete-source vs no-news behavior."
+  },
+  "limits": [
+    "No real X/text/voice request or paid provider work.",
+    "No actual generated audio, full screen-reader or regular-user usability exercise.",
+    "No overall acceptance percentage or completion claim."
+  ],
+  "reference": "https://docs.x.com/x-api/posts/search-recent-posts",
+  "capture": "2026-10-16-x-coverage.png",
+  "sha256": {
+    "src/main/news.ts": "772a9b50e5c569cd1139498854638866ea7e2d29eef335d05268b6cd6a96be27",
+    "src/main/prepared-news.ts": "f09a7fd83da395c8de08e1eab3b52f87454e80bbc36dcdad6d2fd1d21f229155",
+    "src/main/news-workflow.ts": "7cab5b92c6d4d1476526a75831069de80623ef5b6ca4686345bacfaf01103fb0",
+    "src/renderer/pages/Stations/components/NewsBucket.component.tsx": "a6aaf865c317b6e16b2e7c983e0a78936bd1e768b8a424482de083fe18b978c4",
+    "out/main/index.js": "5e640d063164ba11555a76b3f29b84be136599373e00088de33484ebb37ca7f8",
+    "out/preload/index.cjs": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215",
+    "out/renderer/assets/index-Dp_ujpwb.js": "471854df36510226e6199b3939ef356f53b5ac7310e3d435761ea140f294f973"
+  },
+  "nativeFixtureMainSha256": "33d3aa205e30246f2c9fe81d57b49c903aaf32161daa617cd65906727273eb94"
+}

@@ -56,7 +56,7 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
       const local = unwrap(await window.wave.getLocalState());
       const djs = local.djs.some(dj => dj.id === next.id) ? local.djs.map(dj => dj.id === next.id ? next : dj) : [...local.djs, next];
       unwrap(await window.wave.saveDjs(djs));
-      await client.invalidateQueries({ queryKey: ['localState'] });
+      await Promise.all([client.invalidateQueries({ queryKey: ['localState'] }), client.invalidateQueries({ queryKey: ['djVoicePreview', next.id] })]);
     },
     onSuccess: close,
   });
@@ -71,7 +71,7 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
       <div role="tabpanel" id={`${modeId}-panel-predefined`} aria-labelledby={`${modeId}-tab-predefined`} hidden={mode !== 'predefined'}>
         <div className="dj-preset-grid" role="group" aria-label="DJ personalities">{djPresets.map(item => <button key={item.id} type="button" aria-pressed={presetId === item.id} onClick={() => setPresetId(item.id)}><strong>{item.name}</strong><span>{item.description}</span></button>)}</div>
         <div className="dj-preset-footer"><div className="dj-gender" role="group" aria-label="Preset voice">{(['man', 'woman'] as const).map(option => <button type="button" key={option} aria-pressed={presetGender === option} onClick={() => setPresetGender(option)}>{option === 'man' ? 'Man' : 'Woman'}</button>)}</div><span className="form-hint">ElevenLabs · {preset[presetGender].name}</span><button type="button" className="primary" onClick={applyPreset}>Apply preset</button></div>
-        <VoicePreview key={preset[presetGender].id} voiceId={preset[presetGender].id} label={preset[presetGender].name} playbackId="dj-editor" activeId={previewingVoice} onStart={setPreviewingVoice} active={mode === 'predefined'} />
+        <VoicePreview key={preset[presetGender].id} resource={{ kind: 'voice', voiceId: preset[presetGender].id }} label={preset[presetGender].name} playbackId="dj-editor" activeId={previewingVoice} onStart={setPreviewingVoice} active={mode === 'predefined'} />
         <p className="form-hint">Applies the personality, description, voice and delivery. Voice access depends on your ElevenLabs account. You can listen after saving.</p>
       </div>
       <div role="tabpanel" id={`${modeId}-panel-simple`} aria-labelledby={`${modeId}-tab-simple`} hidden={mode !== 'simple'}>
@@ -79,7 +79,7 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
         <div className="dj-search-controls"><label>Voice preference<select value={gender} onChange={event => setGender(event.target.value as DJVoiceSearch['gender'])}><option value="any">Any voice</option><option value="male">Man</option><option value="female">Woman</option></select></label><button type="button" className="primary" disabled={!prompt.trim() || search.isFetching} onClick={findVoices}>{search.isFetching ? 'Searching…' : 'Find voices'}</button></div>
         {search.isFetching && <p role="status">Searching ElevenLabs…</p>}
         {currentResults && !search.isFetching && <><ErrorNotice error={search.error} />{search.data && <div className="dj-voice-results" role="group" aria-label="ElevenLabs voice results">{search.data.length ? search.data.map(voice => <button type="button" key={voice.id} aria-pressed={news.elevenVoiceId === voice.id} onClick={() => chooseVoice(voice)}><strong>{voice.name}</strong><span>{voice.description || 'ElevenLabs voice'}</span><small>{news.elevenVoiceId === voice.id ? 'Selected' : 'Use this voice'}</small></button>) : <p role="status">No voices found. Try fewer keywords, change the voice preference, or use a predefined host.</p>}</div>}</>}
-        {news.elevenVoiceId && <VoicePreview key={news.elevenVoiceId} voiceId={news.elevenVoiceId} label={selectedVoice?.name ?? `Voice ${news.elevenVoiceId}`} playbackId="dj-editor" activeId={previewingVoice} onStart={setPreviewingVoice} active={mode === 'simple'} />}
+        {news.elevenVoiceId && <VoicePreview key={news.elevenVoiceId} resource={{ kind: 'voice', voiceId: news.elevenVoiceId }} label={selectedVoice?.name ?? `Voice ${news.elevenVoiceId}`} playbackId="dj-editor" activeId={previewingVoice} onStart={setPreviewingVoice} active={mode === 'simple'} />}
       </div>
       {news.elevenVoiceId && mode !== 'advanced' && <p className="dj-selected-voice" role="status">{selectedVoice?.id === news.elevenVoiceId ? `Selected voice: ${selectedVoice.name}` : 'Your current voice is kept.'} You can tweak this DJ in Advanced.</p>}
 
@@ -89,7 +89,7 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
       {field('language', 'Language', 'English')}
       <section className="dj-profile-voice"><h3>Voice</h3><p className="form-hint">ElevenLabs · prepared speech</p>
         <label>ElevenLabs voice ID<input required={mode === 'advanced'} pattern="[a-zA-Z0-9_-]{1,128}" maxLength={128} value={news.elevenVoiceId ?? ''} placeholder="Voice ID from your ElevenLabs library" onChange={event => updateNews({ elevenVoiceId: event.target.value })} /><span className="form-hint">Find this ID in your ElevenLabs voice library. Your existing voice is kept when you edit this DJ.</span></label>
-        {!!news.elevenVoiceId && <VoicePreview key={news.elevenVoiceId} voiceId={news.elevenVoiceId} label={`Voice ${news.elevenVoiceId}`} playbackId="dj-editor" activeId={previewingVoice} onStart={setPreviewingVoice} active={mode === 'advanced'} />}
+        {!!news.elevenVoiceId && <VoicePreview key={news.elevenVoiceId} resource={{ kind: 'voice', voiceId: news.elevenVoiceId }} label={`Voice ${news.elevenVoiceId}`} playbackId="dj-editor" activeId={previewingVoice} onStart={setPreviewingVoice} active={mode === 'advanced'} />}
       </section>
       <section className="dj-profile-advanced"><h3>Host preferences</h3><div>
         {field('description', 'Short description', 'Optional description')}
@@ -100,7 +100,7 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
         <p className="form-hint">OpenAI · {NEWS_TEXT_MODEL} prepares stories from your sources. ElevenLabs generates the voice.</p>
         {news.speechEngine === 'elevenlabs-v4' && <label>Delivery tags<input value={news.elevenTags ?? ''} maxLength={200} placeholder="[excited]" onChange={event => updateNews({ elevenTags: event.target.value })} /><span className="form-hint">Optional bracketed tags supported by your voice provider.</span></label>}
         <label>Music level under the voice<div className="dj-profile-duck"><input type="range" min="0" max={Math.max(0.08, value.news?.duckVolume ?? 0.05)} step="0.01" value={news.duckVolume} onChange={event => updateNews({ duckVolume: Number(event.target.value) })} /><output>{Math.round(news.duckVolume * 100)}%</output></div><span className="form-hint">Applied when you schedule a saved take over music.{news.duckVolume > 0.08 && ' Your saved level is retained; the current player limits the music bed to 8%.'}</span></label>
-        <label>Speaking preference<select value={draft.speakingFrequency} onChange={event => { save.reset(); setDraft(old => ({ ...old, speakingFrequency: event.target.value as DJ['speakingFrequency'] })); }}><option value="never">Music only</option><option value="occasionally">Occasionally</option><option value="often">Often</option></select><span className="form-hint">Kept as a preference. Saved takes play only when you choose them.</span></label>
+        <p className="form-hint">Set how often you hear news in Settings → General → DJ playback.</p>
         {!!news.feedUrls.length && <p className="form-hint">Your {news.feedUrls.length} legacy {news.feedUrls.length === 1 ? 'feed URL is' : 'feed URLs are'} retained. Manage current news feeds in Sources.</p>}
       </div></section>
       </div>

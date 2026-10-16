@@ -2,25 +2,56 @@ import { defaultDJPlaybackSettings, normalizeDJPlaybackSettings } from '../share
 import { defaultNewsTransitionSettings, normalizeNewsTransitionSettings } from '../shared/news-transitions';
 import { NEWS_TEXT_MODEL } from '../shared/types';
 import { app, safeStorage } from 'electron';
-import { mkdir, readFile, rename, writeFile, unlink } from 'node:fs/promises';
+import { link, mkdir, readFile, rename, writeFile, unlink } from 'node:fs/promises';
+import { renameSync, unlinkSync } from 'node:fs';
 import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { defaultWorkflowDraft, isWorkflowDraft, normalizeWorkflowDraft } from '../shared/workflow';
 import type { LocalState, ListeningRoom, RoomProfile } from '../shared/types';
 import { readSharedProviderKey, writeSharedProviderKey } from './keychain';
+import { normalizePlaybackPreferences } from './playback-preferences';
 
 export type StoredConnection = {
   id: string; serverUrl: string; userId: string; userName: string; token: string;
   serverVersion: string; selectedLibraryIds: string[];
 };
-const emptyState = (): LocalState => ({ djPlayback: defaultDJPlaybackSettings(), roomProfiles: [{ enabled: true, id: 'default-room', name: 'My room', room: { djId: null, sourceIds: [] }, mood: '', workflowDraft: defaultWorkflowDraft() }], activeRoomProfileId: 'default-room', newsTransitions: defaultNewsTransitionSettings(), djs: [], vibe: '', playback: null, sources: [], listeningRoom: { djId: null, sourceIds: [] }, workflowDraft: defaultWorkflowDraft() });
+const emptyState = (): LocalState => ({ djPlayback: defaultDJPlaybackSettings(), roomProfiles: [{ enabled: true, id: 'default-room', name: 'My room', room: { djId: null, sourceIds: [] }, mood: '', workflowDraft: defaultWorkflowDraft() }], activeRoomProfileId: 'default-room', newsTransitions: defaultNewsTransitionSettings(), djs: [], vibe: '', playback: null, playbackPreferences: {}, sources: [], listeningRoom: { djId: null, sourceIds: [] }, workflowDraft: defaultWorkflowDraft() });
 let localState: LocalState | undefined;
 let writes = Promise.resolve();
 const location = (name: string) => join(app.getPath('userData'), name);
+let deviceIdentity: Promise<{ id: string; persistent: boolean }> | undefined;
+export function readDeviceIdentity() {
+  return deviceIdentity ??= (async () => {
+    const fallback = { id: randomUUID(), persistent: false };
+    const target = location('jellyfin-device-id');
+    const read = async () => {
+      const id = (await readFile(target, 'utf8')).trim();
+      if (!/^[a-f\d]{8}(?:-[a-f\d]{4}){3}-[a-f\d]{12}$/i.test(id)) throw new Error('Invalid local device identity.');
+      return { id, persistent: true };
+    };
+    try {
+      try { return await read(); }
+      catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; }
+      await mkdir(app.getPath('userData'), { recursive: true, mode: 0o700 });
+      const temp = location(`jellyfin-device-id.${randomUUID()}.tmp`);
+      try {
+        await writeFile(temp, fallback.id, { mode: 0o600 });
+        try { await link(temp, target); }
+        catch (error) { if ((error as NodeJS.ErrnoException).code !== 'EEXIST') throw error; }
+        return await read();
+      } finally { await unlink(temp).catch(() => {}); }
+    } catch { return fallback; }
+  })();
+}
 type KeyProvider = 'openai' | 'elevenlabs' | 'twitter';
 const providerKeys = new Map<KeyProvider, string | null>();
 const sessionOnlyKeys = new Set<KeyProvider>();
 let keyWrites = Promise.resolve();
+export function withProviderKeys<T>(operation: () => Promise<T>): Promise<T> {
+  const next = keyWrites.then(operation);
+  keyWrites = next.then(() => {}, () => {});
+  return next;
+}
 async function readProviderKey(provider: KeyProvider): Promise<string | null> {
   const shared = provider === 'twitter' ? null : await readSharedProviderKey(provider);
   if (shared) { providerKeys.set(provider, shared); sessionOnlyKeys.delete(provider); return shared; }
@@ -34,7 +65,7 @@ async function providerKeyStatus(provider: KeyProvider) {
   return { configured: Boolean(await readProviderKey(provider)), sessionOnly: sessionOnlyKeys.has(provider) };
 }
 function writeProviderKey(provider: KeyProvider, key: string | null) {
-  const next = keyWrites.then(async () => {
+  return withProviderKeys(async () => {
     if (provider !== 'twitter') await writeSharedProviderKey(provider, key);
     if (!key || !safeStorage.isEncryptionAvailable()) {
       await unlink(location(`${provider}-key.enc`)).catch((error: NodeJS.ErrnoException) => { if (error.code !== 'ENOENT') throw error; });
@@ -50,8 +81,6 @@ function writeProviderKey(provider: KeyProvider, key: string | null) {
     }
     return providerKeyStatus(provider);
   });
-  keyWrites = next.then(() => {}, () => {});
-  return next;
 }
 export const readOpenAIKey = () => readProviderKey('openai');
 export const openAIKeyStatus = () => providerKeyStatus('openai');
@@ -64,7 +93,7 @@ export const readTwitterKey = () => readProviderKey('twitter');
 export const twitterKeyStatus = () => providerKeyStatus('twitter');
 export const writeTwitterKey = (key: string | null) => writeProviderKey('twitter', key);
 
-async function atomicWrite(name: string, content: string) {
+export async function atomicWrite(name: string, content: string) {
   await mkdir(app.getPath('userData'), { recursive: true, mode: 0o700 });
   const target = location(name);
   const temp = `${target}.${randomUUID()}.tmp`;
@@ -84,19 +113,21 @@ export async function readConnection(): Promise<StoredConnection | null> {
   } catch { return null; }
 }
 
-export async function writeConnection(record: StoredConnection | null): Promise<boolean> {
-  if (!record) {
-    await unlink(location('connection.enc')).catch((error: NodeJS.ErrnoException) => {
-      if (error.code !== 'ENOENT') throw error;
+export async function writeConnection(record: StoredConnection | null, commit: (write: () => boolean) => boolean = write => write()): Promise<boolean> {
+  if (!record || !safeStorage.isEncryptionAvailable()) {
+    return commit(() => {
+      try { unlinkSync(location('connection.enc')); }
+      catch (error) { if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error; }
+      return record === null;
     });
-    return true;
   }
-  if (!safeStorage.isEncryptionAvailable()) return false;
   await mkdir(app.getPath('userData'), { recursive: true, mode: 0o700 });
   const temp = location(`connection.${randomUUID()}.enc.tmp`);
-  await writeFile(temp, safeStorage.encryptString(JSON.stringify(record)), { mode: 0o600 });
-  await rename(temp, location('connection.enc'));
-  return true;
+  try {
+    await writeFile(temp, safeStorage.encryptString(JSON.stringify(record)), { mode: 0o600 });
+    // Publish and promote the account in one turn so cancellation cannot split them.
+    return commit(() => { renameSync(temp, location('connection.enc')); return true; });
+  } finally { await unlink(temp).catch(() => {}); }
 }
 
 function validStoredProfile(value: unknown): value is RoomProfile {
@@ -131,7 +162,7 @@ export async function getLocalState(): Promise<LocalState> {
       const migrated = [...new Set<string>(djs.flatMap((dj: LocalState['djs'][number]) => dj.news?.feedUrls || []))].map((url, index) => ({ id: `legacy-source-${index + 1}`, name: url, url }));
       const sources = Array.isArray(value.sources) ? value.sources : migrated;
       const onlyDj = djs.length === 1 ? djs[0] : null;
-      const base: Omit<LocalState, 'roomProfiles' | 'activeRoomProfileId' | 'djPlayback'> = { newsTransitions: normalizeNewsTransitionSettings(value.newsTransitions), djs, vibe: typeof value.vibe === 'string' ? value.vibe : '', playback: value.playback ?? null, sources, workflowDraft: normalizeWorkflowDraft(value.workflowDraft),
+      const base: Omit<LocalState, 'roomProfiles' | 'activeRoomProfileId' | 'djPlayback'> = { newsTransitions: normalizeNewsTransitionSettings(value.newsTransitions), djs, vibe: typeof value.vibe === 'string' ? value.vibe : '', playback: value.playback ?? null, playbackPreferences: normalizePlaybackPreferences(value.playbackPreferences, value.playback ?? null), sources, workflowDraft: normalizeWorkflowDraft(value.workflowDraft),
         listeningRoom: value.listeningRoom && Array.isArray(value.listeningRoom.sourceIds) ? value.listeningRoom : { djId: onlyDj?.id ?? null, sourceIds: sources.filter((source: LocalState['sources'][number]) => onlyDj?.news?.feedUrls.includes(source.url)).map((source: LocalState['sources'][number]) => source.id) } };
       const profiles: RoomProfile[] = Array.isArray(value.roomProfiles) ? value.roomProfiles.filter(validStoredProfile).slice(0, 100).map((profile: RoomProfile) => ({ ...profile, enabled: profile.enabled !== false, name: profile.name.trim(), workflowDraft: normalizeWorkflowDraft(profile.workflowDraft) })) : [];
       const uniqueProfiles = profiles.filter((profile, index) => profiles.findIndex(other => other.id === profile.id) === index);

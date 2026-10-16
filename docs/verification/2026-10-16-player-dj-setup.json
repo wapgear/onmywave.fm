@@ -1,0 +1,102 @@
+{
+  "date": "2026-10-16",
+  "scope": "Focused player DJ first-use readiness and separate playback/preparation controls, R2/R7/R12, partial R02",
+  "runtime": {
+    "macOS": "27.2 arm64",
+    "electron": "43.7.0",
+    "server": "Controlled local Jellyfin fixture"
+  },
+  "before": {
+    "availableProfile": "My room",
+    "unselectedHintIncorrectlySaysMakeRoomAvailable": true,
+    "incompleteProfileOfferedEnable": true,
+    "enableReturned": "Choose an enabled Listening Room with a DJ, sources, and mood."
+  },
+  "after": {
+    "noSelectionGuidance": true,
+    "incompleteProfileExplainsAndBlocks": true,
+    "layout": [
+      {
+        "width": 1280,
+        "height": 800,
+        "zoom": 1,
+        "noHorizontalOverflow": true,
+        "keyboardSetupActionVisible": true,
+        "viewport": {
+          "width": 1280,
+          "height": 800,
+          "pixelRatio": 2
+        }
+      },
+      {
+        "width": 960,
+        "height": 640,
+        "zoom": 1,
+        "noHorizontalOverflow": true,
+        "keyboardSetupActionVisible": true,
+        "viewport": {
+          "width": 960,
+          "height": 640,
+          "pixelRatio": 2
+        }
+      },
+      {
+        "width": 960,
+        "height": 640,
+        "zoom": 2,
+        "noHorizontalOverflow": true,
+        "keyboardSetupActionVisible": true,
+        "viewport": {
+          "width": 480,
+          "height": 320,
+          "pixelRatio": 4
+        }
+      }
+    ],
+    "unsavedMoodRemainsDraft": true,
+    "musicContinuesThroughSetup": true,
+    "completeProfileEnablesWithoutKeysPreparationOrTake": true,
+    "explicitDisableWorks": true,
+    "exactMissingSource": true,
+    "editingProfileNotSilentlyChanged": true,
+    "noneAvailableGuidance": true,
+    "optInsRemainIndependent": true,
+    "externalFetchAttempts": 0
+  },
+  "checks": {
+    "buildIncludingTypeScript": "passed",
+    "fullESLint": "passed",
+    "nativeScreenshots": [
+      "2026-10-16-player-dj-1280-800-1.png",
+      "2026-10-16-player-dj-960-640-2.png"
+    ],
+    "providerKeys": "null fixture adapter",
+    "network": "all external fetches blocked; counter installed after native launch",
+    "keyboard": "Tab visibly reaches setup action; Escape restores player DJ trigger"
+  },
+  "team": {
+    "Steve": "Support final preflight; keep backend authoritative; no storage changes needed",
+    "Elena": "Support with destination-preserves-tab reservation; code review no blocker; explicit no-key playback copy added"
+  },
+  "limitations": [
+    "No live provider, audible quality, VoiceOver or observed listener acceptance in this round.",
+    "Incomplete profiles remain selectable; setup destination preserves editing tab and profile, explained by helper and named mismatch text.",
+    "R02 remains Review; 186-row inventory unchanged."
+  ],
+  "captureCorrection": "Initial Playwright screenshot clipped enlarged capture. Final images use Electron capturePage after two animation frames and paint delay; viewport and overflow checks pass.",
+  "sourceAndBundleSha256": {
+    "src/renderer/components/Player/DJPopover.component.tsx": "b9b93c8a2ba84cd8ad86da60740e06d3004cc0f04f86f29d29679aff0dd66dba",
+    "src/renderer/dj-playback.tsx": "31e217aa382a88dcfddbfb0b06b0294825d4acdb7a9bc0127dd8e367adf85c5f",
+    "src/main/index.ts": "104a29c622b56003a4ec249f3ad3ff97f42220e56f2001a2ece4b03da89f1603",
+    "src/main/storage.ts": "8c06bf1f1fd99f53d224a6ac61a61ea34e48426e3fa33ca276e9880e638c1e36",
+    "src/renderer/App.tsx": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+    "out/main/index.js": "b1b952808f79100f95178d295f74385d1f5227229e5b4b4ab4283441eda530a0",
+    "out/preload/index.cjs": "548a6efea1415306ea25669fdbfe0970c8185a241db79abb25993747c4c92215",
+    "out/renderer/assets/index-BelPLV-I.js": "41a8f17f81806ab80ee076101d11efd402cc667a132fc112b6cced0fc0af0e47"
+  },
+  "imageSha256": {
+    "2026-10-16-player-dj-1280-800-1.png": "285112efdd24a77a3f69433448b7441c8d1b8ca4807d31ecc9579cab1e3edab9",
+    "2026-10-16-player-dj-960-640-2.png": "97bf8891348be63a8761c42f16afc6bc567437375618a32d5d597802db2003a2"
+  },
+  "reproduction": "/private/tmp/native-first-radio/player-after.cjs"
+}
