@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import { useIsMutating, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Headphones, LoaderCircle, Newspaper } from 'lucide-react';
-import type { ApiError, ListeningRoom, NewsProgress, PreparedNewsTake } from '../../../shared/types';
+import type { ApiError, ListeningRoom, NewsProgress, PreparedNewsRequest, PreparedNewsTake } from '../../../shared/types';
 import { WaveError, unwrap } from '../../api';
 import { Dialog, ErrorNotice, PageHeading, errorMessage } from '../../components/Shared';
 import { FilterSelect } from '../../components/FilterSelect/FilterSelect.component';
@@ -19,10 +19,15 @@ export type RoomDraft = { scriptId: string; script: string } | null;
 type AudioCompletion = { requestId: string; takeId: string; reused: boolean; profileName?: string; reviewError?: string };
 export type RoomSetupDraft = { audioCompletion?: AudioCompletion; setup: ListeningRoom | null; moodDraft: string | null; newsInterests?: string; workflow?: { roomId: string; patch: Partial<WorkflowDraft> }; stopError?: string; operationError?: string; manualPreparation?: ManualPreparation; preparationCancelError?: string; tab?: string };
 type ScriptReplacement = { kind: 'load'; draft: NonNullable<RoomDraft>; reveal: boolean } | { kind: 'prepare' };
-type PreparationInput = { kind: 'script'; input: { requestId: string; djId: string; sourceIds: string[] } } | { kind: 'audio'; input: { requestId: string; scriptId: string; script: string; djId: string; newVariation?: boolean } };
+type PreparationInput = { kind: 'script'; input: { profileId?: string; requestId: string; djId: string; sourceIds: string[] } } | { kind: 'audio'; input: { profileId?: string; requestId: string; scriptId: string; script: string; djId: string; newVariation?: boolean } };
 type Preparation = PreparationInput & { reconcile?: boolean };
 type PreparationOperation = { request: Preparation; control: { controller: AbortController; dispatched: boolean } };
 type ManualPreparation = PreparationOperation & { pending: boolean; progress?: NewsProgress; error?: ApiError; cancelRequested?: boolean; profileName?: string };
+function preparationOrigin(request: PreparedNewsRequest) {
+  const origin = request.origin;
+  if (!origin) return 'Original profile and time not recorded';
+  return `${origin.kind === 'automatic' ? 'Automatic' : 'Manual'} · ${origin.profileName ?? 'Original profile unavailable'} · ${new Date(origin.startedAt).toLocaleString()}`;
+}
 export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, configureSources, configureDJ, configureSettings }: {
   draft: RoomDraft; setDraft: Dispatch<SetStateAction<RoomDraft>>; configDraft: RoomSetupDraft; setConfigDraft: Dispatch<SetStateAction<RoomSetupDraft>>; configureSources: () => void; configureDJ: () => void; configureSettings: () => void;
 }) {
@@ -207,7 +212,9 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   function startPreparation(request: Preparation) {
     if (manualPending || cancellationPending) return;
     ++audioReviewAttempt.current;
-    const operation = { request, control: { controller: new AbortController(), dispatched: false } };
+    const capturedRequest = structuredClone(request);
+    if (!request.reconcile) capturedRequest.input.profileId = activeProfile?.id;
+    const operation = { request: capturedRequest, control: { controller: new AbortController(), dispatched: false } };
     setConfigDraft(current => ({ ...current, audioCompletion: undefined, manualPreparation: { ...operation, pending: true, profileName: request.reconcile ? manual?.profileName : activeProfile?.name }, preparationCancelError: undefined }));
     prepare.mutate(operation);
   }
@@ -353,7 +360,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
       {profileNotice && <p className="form-hint room-profile-notice" role="status">{profileNotice}</p>}
       {!newProfileOpen && !switchTarget && <ErrorNotice error={configDraft.operationError ? new Error(configDraft.operationError) : null} />}
       <ConfigurationTabs id="room" label="News bucket and configuration" tabs={[{ id: 'bucket', label: 'News bucket' }, { id: 'settings', label: 'Settings' }, { id: 'saved', label: 'Saved audio' }]} value={tab} onChange={setTab} />
-      {restoredInterruption && tab !== 'saved' && <div className="notice"><span role="status"><strong>A previous {restoredInterruption.kind === 'script' ? 'text' : 'audio'} preparation did not finish.</strong> It was not restarted automatically. A provider request may have been charged. Review its saved status before starting a new attempt.</span><button aria-controls="preparation-history" onClick={reviewPreparationHistory}>Review preparation history</button></div>}
+      {restoredInterruption && tab !== 'saved' && <div className="notice"><span role="status"><strong>A previous {restoredInterruption.kind === 'script' ? 'text' : 'audio'} preparation did not finish.</strong> {preparationOrigin(restoredInterruption)}. It was not restarted automatically. A provider request may have been charged. Review its saved status before starting a new attempt.</span><button aria-controls="preparation-history" onClick={reviewPreparationHistory}>Review preparation history</button></div>}
       {setupDirty && tab !== 'settings' && <div className="room-unsaved"><p>Unsaved room and preparation settings.</p><button onClick={() => setTab('settings')}>Review settings</button></div>}
       </>}
       {state.data && <section id="room-panel-bucket" role="tabpanel" aria-labelledby="room-tab-bucket" hidden={tab !== 'bucket'} tabIndex={0}>
@@ -398,7 +405,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
         <ErrorNotice error={library.error} retry={() => void library.refetch()} />
       {library.isPending && <p className="loading" role="status">Opening saved audio…</p>}
       {library.data && <PreparedTakes active={tab === 'saved'} library={library.data} refresh={() => void refresh()} loadDraft={loadDraft} />}
-      {!!library.data?.requests.some(value => value.status !== 'complete') && <details id="preparation-history" className="room-request-history" ref={requestHistory}><summary>Preparation history</summary>{library.data.requests.filter(value => value.status !== 'complete').slice(-10).reverse().map(value => <p key={value.requestId}><strong>{value.kind === 'script' ? 'News text' : 'Audio take'} · {value.status === 'skipped' ? 'No relevant story' : value.status === 'partial-coverage' ? 'Incomplete source coverage' : value.status}</strong><span>{value.error || (value.status === 'skipped' ? 'No audio was generated for this attempt.' : 'No automatic provider retry. Completed results remain in saved audio.')}</span></p>)}</details>}
+      {!!library.data?.requests.some(value => value.status !== 'complete') && <details id="preparation-history" className="room-request-history" ref={requestHistory}><summary>Preparation history</summary>{library.data.requests.filter(value => value.status !== 'complete').slice(-10).reverse().map(value => <p key={value.requestId}><strong>{value.kind === 'script' ? 'News text' : 'Audio take'} · {value.status === 'skipped' ? 'No relevant story' : value.status === 'partial-coverage' ? 'Incomplete source coverage' : value.status}</strong><span>{preparationOrigin(value)}</span><span>{value.error || (value.status === 'skipped' ? 'No audio was generated for this attempt.' : 'No automatic provider retry. Completed results remain in saved audio.')}</span></p>)}</details>}
       </section>
     </div>
     {scriptReplacement && <Dialog title="Replace edited script?" close={() => setScriptReplacement(null)}>

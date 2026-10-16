@@ -104,7 +104,8 @@ export type RoomProfile = { enabled: boolean; id: string; name: string; room: Li
 export type PreparedNewsProvenance = { dj: DJ; mood: string; sources: NewsSource[]; newsInterests?: string; roomId?: string; roomName?: string };
 export type PreparedNewsScript = NewsScript & { id: string; createdAt: string; provenance: PreparedNewsProvenance };
 export type PreparedNewsTake = NewsBreak & { signature: string; provenance: PreparedNewsProvenance; renderingDJ: DJ; available: boolean; byteLength: number; model: string; voice: string; delivery: string; scriptId: string; deliveryState?: { status: 'ready' | 'claimed' | 'played'; claimedAt?: string; playedAt?: string } };
-export type PreparedNewsRequest = { requestId: string; kind: 'script' | 'audio'; inputHash: string; status: 'running' | 'complete' | 'failed' | 'interrupted' | 'skipped' | 'partial-coverage'; artifactId?: string; error?: string };
+export type PreparedNewsOrigin = { kind: 'manual' | 'automatic'; startedAt: string; profileId?: string; profileName?: string };
+export type PreparedNewsRequest = { origin?: PreparedNewsOrigin; requestId: string; kind: 'script' | 'audio'; inputHash: string; status: 'running' | 'complete' | 'failed' | 'interrupted' | 'skipped' | 'partial-coverage'; artifactId?: string; error?: string };
 export type PreparedNewsLibrary = { scripts: PreparedNewsScript[]; takes: PreparedNewsTake[]; selectedTakeId: string | null; requests: PreparedNewsRequest[]; reviewedArticles: ReviewedNewsArticle[] };
 export type LocalState = { djPlayback: DJPlaybackSettings; roomProfiles: RoomProfile[]; activeRoomProfileId: string; newsTransitions: NewsTransitionSettings; djs: DJ[]; vibe: string; playback: PlaybackSnapshot | null; playbackPreferences: Record<string, PlaybackPreferences>; sources: NewsSource[]; listeningRoom: ListeningRoom; workflowDraft: WorkflowDraft };
 export type PlaybackResource = { url: string; offsetSeconds: number; transcoded: boolean };
@@ -152,8 +153,8 @@ export interface WaveApi {
   releasePreparedNews(id: string): Promise<Result<void>>;
   markPreparedNewsPlayed(id: string): Promise<Result<void>>;
   getPreparedNews(): Promise<Result<PreparedNewsLibrary>>;
-  prepareNewsScript(input: { reconcileOnly?: boolean; requestId: string; djId: string; sourceIds: string[] }): Promise<Result<PreparedNewsScript>>;
-  renderNewsTake(input: { reconcileOnly?: boolean; requestId: string; scriptId: string; script: string; djId: string; newVariation?: boolean }): Promise<Result<PreparedNewsTake>>;
+  prepareNewsScript(input: { profileId?: string; reconcileOnly?: boolean; requestId: string; djId: string; sourceIds: string[] }): Promise<Result<PreparedNewsScript>>;
+  renderNewsTake(input: { profileId?: string; reconcileOnly?: boolean; requestId: string; scriptId: string; script: string; djId: string; newVariation?: boolean }): Promise<Result<PreparedNewsTake>>;
   selectNewsTake(takeId: string | null): Promise<Result<void>>;
   cancelPreparedNews(requestId: string): Promise<Result<void>>;
   getVoicePreview(voiceId: string): Promise<Result<DJVoicePreview>>;
