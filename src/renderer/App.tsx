@@ -10,6 +10,7 @@ import { AddPlaylist } from './components/AddPlaylist/AddPlaylist.component';
 import { Queue } from './components/Queue/Queue.component';
 import './components/Drawer/Drawer.styles.css';
 import { Inspector } from './components/Inspector/Inspector.component';
+import { LibrarySelectionProvider } from './components/LibrarySelection';
 import { ErrorNotice } from './components/Shared';
 import { ConnectionPage } from './pages/Connection/Connection.page';
 import { SongsPage, initialSongsView } from './pages/Songs/Songs.page';
@@ -24,12 +25,12 @@ export default function App() {
   const connectionQuery = useQuery({ queryKey: ['connection'], queryFn: async () => unwrap(await window.wave.getConnection()), retry: false });
   const [expired, setExpired] = useState(false);
   useEffect(() => { const expire = () => setExpired(true); window.addEventListener('wave:auth-expired', expire); return () => window.removeEventListener('wave:auth-expired', expire); }, []);
-  async function setConnection(connection: Connection | null) {
+  async function setConnection(connection: Connection | null, clearExpiry = true) {
     const accountData = { predicate: (query: { queryKey: readonly unknown[] }) => query.queryKey[0] !== 'connection' };
     await client.cancelQueries(accountData);
     client.removeQueries(accountData);
     client.setQueryData(['connection'], connection);
-    setExpired(false);
+    if (clearExpiry) setExpired(false);
   }
   const connection = connectionQuery.data ?? null;
   if (connectionQuery.isPending) return <main className="startup"><span className="wordmark">onmywave.fm</span><p role="status">Opening your library…</p></main>;
@@ -40,12 +41,14 @@ type RadioDrafts = {
   roomDraft: RoomDraft; setRoomDraft: Dispatch<SetStateAction<RoomDraft>>;
   roomSetupDraft: RoomSetupDraft; setRoomSetupDraft: Dispatch<SetStateAction<RoomSetupDraft>>;
 };
-function SessionContent({ connection, expired, setConnection }: { connection: Connection | null; expired: boolean; setConnection: (connection: Connection | null) => Promise<void> }) {
+function SessionContent({ connection, expired, setConnection }: { connection: Connection | null; expired: boolean; setConnection: (connection: Connection | null, clearExpiry?: boolean) => Promise<void> }) {
   const playlistRecovery = usePlaylistRecovery();
   const [roomDraft, setRoomDraft] = useState<RoomDraft>(null);
   const [roomSetupDraft, setRoomSetupDraft] = useState<RoomSetupDraft>({ setup: null, moodDraft: null });
-  if (!connection || expired || !connection.selectedLibraryIds.length) return <ConnectionPage key={`${connection?.id ?? 'new'}-${expired}`} connection={connection} expired={expired} connected={setConnection} librariesSelected={setConnection} />;
-  return <PlayerProvider key={connection.id} connection={connection}><DJPlaybackProvider><ReadyApp key={connection.id} connection={connection} update={setConnection} disconnected={() => setConnection(null)} playlistRecovery={playlistRecovery} roomDraft={roomDraft} setRoomDraft={setRoomDraft} roomSetupDraft={roomSetupDraft} setRoomSetupDraft={setRoomSetupDraft} /></DJPlaybackProvider></PlayerProvider>;
+  const librariesSelected = (value: Connection) => setConnection(value, false);
+  const content = !connection || expired || !connection.selectedLibraryIds.length ? <ConnectionPage key={`${connection?.id ?? 'new'}-${expired}`} connection={connection} expired={expired} connected={setConnection} librariesSelected={librariesSelected} />
+    : <PlayerProvider key={connection.id} connection={connection}><DJPlaybackProvider><ReadyApp key={connection.id} connection={connection} update={librariesSelected} disconnected={() => setConnection(null)} playlistRecovery={playlistRecovery} roomDraft={roomDraft} setRoomDraft={setRoomDraft} roomSetupDraft={roomSetupDraft} setRoomSetupDraft={setRoomSetupDraft} /></DJPlaybackProvider></PlayerProvider>;
+  return <LibrarySelectionProvider connection={connection} expired={expired}>{content}</LibrarySelectionProvider>;
 }
 function ReadyApp({ connection, update, disconnected, playlistRecovery, roomDraft, setRoomDraft, roomSetupDraft, setRoomSetupDraft }: { connection: Connection; update: (connection: Connection) => void; disconnected: () => void; playlistRecovery: ReturnType<typeof usePlaylistRecovery> } & RadioDrafts) {
   const active = useRef(false);
