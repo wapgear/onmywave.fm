@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 92 Review, 9 Dated, 4 Recorded, 59 Controlled, 12 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 90 Review, 8 Dated, 4 Recorded, 62 Controlled, 12 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -38,7 +38,7 @@ Source: REQUIREMENTS: Product scope, Visual design, Project folder and stack.
 | V06 | Sidebar, song table, artwork grid and persistent inset player follow the documented spacing and typography targets. | N+U | Review |
 | V07 | Long metadata truncates or wraps without moving or covering essential controls. | N | Review |
 | V08 | Hover, pressed, selected, disabled and keyboard focus states remain distinguishable and readable. | N | Review |
-| V09 | Motion respects reduced-motion preference. | N | Review |
+| V09 | Motion respects reduced-motion preference. | N | Controlled |
 | V10 | Native window chrome, traffic lights and titlebar behavior work in desktop context. | N+O | Review |
 | V11 | Actual fonts, translucency and text remain legible at standard and Retina display scales. | N+O | External |
 | V12 | Screenshots show implemented desktop context rather than implying a generated concept is the product. | N | Review |
@@ -134,7 +134,7 @@ Source: REQUIREMENTS: Playback; M1–M4,M8,M9.
 | M01 | Play/Pause, Previous/Next, seek, volume, shuffle and repeat operate from the persistent player. | N+L | Live |
 | M02 | Current artwork/title/artist, elapsed time and duration follow the actual playing occurrence. | N+L | Live |
 | M03 | Expandable queue shows intended upcoming order and supports occurrence-correct changes with duplicates. | N | Controlled |
-| M04 | Music continues across browsing/setup and while the app is in the background. | N+O | Review |
+| M04 | Music continues across browsing/setup and while the app is in the background. | N+O | Controlled |
 | M05 | Natural continuation follows repeat/shuffle and preserves converted mode and pause intent after DJ completion/failure/Stop. | N+S | Controlled |
 | M06 | Manual Next skips repeat-one; paused Next/Previous changes songs without starting playback. | N | Controlled |
 | M07 | Exact-end seek follows queue/repeat without a natural-completion or cadence count and preserves the current play/pause intent. | N | Controlled |
@@ -157,7 +157,7 @@ Source: REQUIREMENTS: Personal radio behavior, Settings and data; R1–R3,R8,R9,
 
 | ID | Observable result | Proof | Status |
 | --- | --- | --- | --- |
-| R01 | Music works with no AI keys, source requests or forced setup, and both opt-ins default off. | N | Dated |
+| R01 | Music works with no AI keys, source requests or forced setup, and both opt-ins default off. | N | Controlled |
 | R02 | Player DJ controls explain preparation separately, offer setup and never imply the edited profile controls another playback profile. | N+U | Review |
 | R03 | One explicit profile save covers sources, host, mood, interests and workflow preferences atomically. | N+S | Controlled |
 | R04 | All draft fields survive music/shared-management navigation and return with appropriate focus. | N | Controlled |
@@ -381,3 +381,5 @@ The [Add recovery-action record](verification/2026-10-16-playlist-add-review.jso
 The [current playlist-storage record](verification/2026-10-16-playlist-storage-current.json) establishes P15 and P17. Native corrupt-journal checks reject all five mutation types before HTTP dispatch while music progresses; explicit refresh restores editing after fixture repair. Eight response-body cases preserve confirmed writes despite hanging bodies or failed cancellation. Separate reserve/clear/account faults retain their exact dispatch/recovery boundaries. Physical disk failure and listener comprehension remain unverified.
 
 The [current catalog-union record](verification/2026-10-16-catalog-union-current.json) adds sampled live B02/B07 search, all1,311 live songs and1,157 albums paged, a paused1,311-song selection queue, and controlled B04 action order. B01 remains Review: its reproduced overlap/count defect is fixed with native partial/full overlap, alias, tie, end-page, refresh and race coverage, but live overlapping-root configuration was unavailable. Cold multi-root read latency remains explicit; warmed native paging is16–24ms in the fixture. B03/B05/B08 keep their broader review scope.
+
+The [long-text/native behavior record](verification/2026-10-16-long-text-layout.json) closes R01, M04 and V09 with fresh keyless listening, page navigation plus actual hidden-window playback, and native reduced-motion spinner evidence. It fixes DJ heading/preview-label and recovery-message overflow at1280×720. The18-case matrix predates only the final preview-label CSS fix, which has its own focused replay and inspected capture. V07/V13 retain their broader Review scope.

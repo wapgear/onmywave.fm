@@ -70,7 +70,7 @@ Use these initial design targets in logical points, adjusting only where actual 
 | Search and filter controls | 32 to 36 pt high |
 | Floating player | Approximately 72 pt high |
 
-Align text baselines, table columns, icons, control centers, and outer insets consistently. Keep icon stroke weights consistent, reserve adequate hit areas, and show hover, focus, pressed, selected, and disabled states. Long titles must truncate or wrap deliberately without moving adjacent controls.
+Align text baselines, table columns, icons, control centers, and outer insets consistently. Keep icon stroke weights consistent, reserve adequate hit areas, and show hover, focus, pressed, selected, and disabled states. Long titles must truncate or wrap deliberately without moving adjacent controls. Saved DJ names, preview labels and recovery messages must also handle long text without spaces while keeping actions reachable.
 
 ### macOS presentation
 
