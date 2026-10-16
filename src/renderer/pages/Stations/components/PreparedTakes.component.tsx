@@ -3,6 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { Check, ExternalLink, Headphones, LoaderCircle, Pause, Play, Radio, Square } from 'lucide-react';
 import type { PreparedNewsLibrary, PreparedNewsTake } from '../../../../shared/types';
 import { unwrap } from '../../../api';
+import { freshAudioUrl } from '../../../audio';
 import { usePlayer } from '../../../player';
 import { ErrorNotice, duration } from '../../../components/Shared';
 import './PreparedTakes.styles.css';
@@ -91,7 +92,7 @@ export function PreparedTakes({ library, refresh, loadDraft, active = true }: { 
     element.ontimeupdate = () => { if (token === operation.current) setAudition(old => old?.id === take.id ? { ...old, position: element.currentTime } : old); };
     element.onended = () => { if (token === operation.current) stop(); };
     element.onerror = () => { if (token === operation.current && command === player.getMusicCommandRevision()) { stop(); setAudioError('The saved audio could not be opened. Refresh saved takes to check the file.'); } };
-    element.src = take.audioUrl;
+    element.src = freshAudioUrl(take.audioUrl);
     const playToken = ++playGeneration.current;
     try { await element.play(); }
     catch { if (token === operation.current && playToken === playGeneration.current && command === player.getMusicCommandRevision()) { stop(); setAudioError('The saved audio could not play. Refresh saved takes, then try again.'); } }

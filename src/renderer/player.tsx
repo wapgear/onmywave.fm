@@ -5,6 +5,7 @@ import { defaultNewsTransitionSettings, normalizeNewsTransitionSettings } from '
 import type { NewsTransitionSettings } from '../shared/news-transitions';
 import type { Connection, NewsBreak, PlaybackSnapshot, PlaybackPreferences, Song } from '../shared/types';
 import { unwrap, WaveError } from './api';
+import { freshAudioUrl } from './audio';
 
 type HeardNews = { news: NewsBreak; startedAt: string; status: 'playing' | 'completed' | 'interrupted' };
 type NewsPhase = 'waiting' | 'fading' | 'lead-in' | 'speaking' | 'tail';
@@ -715,7 +716,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         element.addEventListener('loadedmetadata', ready);
         element.addEventListener('canplay', ready);
         element.addEventListener('error', failed);
-        element.src = news.audioUrl;
+        element.src = freshAudioUrl(news.audioUrl);
         element.load();
         ready();
       });

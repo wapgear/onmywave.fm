@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 90 Review, 8 Dated, 4 Recorded, 62 Controlled, 12 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 87 Review, 8 Dated, 4 Recorded, 65 Controlled, 12 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -236,9 +236,9 @@ Source: REQUIREMENTS: Personal radio behavior; R7,R8,R10,R11.
 | T10 | Missing/empty/truncated audio retains provenance/selection, disables play/use/schedule and offers explicit script-based replacement. | N+S | Controlled |
 | T11 | Saved audio plays without keys/provider calls; speech remains outside music playlists, favorites and music history. | N+S | Review |
 | T12 | Request IDs/attempts persist before dispatch; complete artifacts reconcile after interrupted manifest publication and uncertain work never retries automatically. | S | Controlled |
-| T13 | Audition pauses music; Pause/Resume retains position even during startup and rapid commands do not reset it or show false error. | N | Review |
-| T14 | Stop/leaving Saved audio/later music transport, including paused selection/seek/media Pause, ends audition and rejects stale callbacks. | N+S | Review |
-| T15 | Volume/shuffle/repeat preserve audition; failure remains visible for explicit retry and audition never changes selection/opt-ins. | N | Review |
+| T13 | Audition pauses music; Pause/Resume retains position even during startup and rapid commands do not reset it or show false error. | N | Controlled |
+| T14 | Stop/leaving Saved audio/later music transport, including paused selection/seek/media Pause, ends audition and rejects stale callbacks. | N+S | Controlled |
+| T15 | Volume/shuffle/repeat preserve audition; failure remains visible for explicit retry, repaired files reopen after Refresh/Listen or Schedule, and audition never changes selection/opt-ins. | N | Controlled |
 
 ## DJ playback, transitions and voice choice
 
@@ -383,3 +383,5 @@ The [current playlist-storage record](verification/2026-10-16-playlist-storage-c
 The [current catalog-union record](verification/2026-10-16-catalog-union-current.json) adds sampled live B02/B07 search, all1,311 live songs and1,157 albums paged, a paused1,311-song selection queue, and controlled B04 action order. B01 remains Review: its reproduced overlap/count defect is fixed with native partial/full overlap, alias, tie, end-page, refresh and race coverage, but live overlapping-root configuration was unavailable. Cold multi-root read latency remains explicit; warmed native paging is16–24ms in the fixture. B03/B05/B08 keep their broader review scope.
 
 The [long-text/native behavior record](verification/2026-10-16-long-text-layout.json) closes R01, M04 and V09 with fresh keyless listening, page navigation plus actual hidden-window playback, and native reduced-motion spinner evidence. It fixes DJ heading/preview-label and recovery-message overflow at1280×720. The18-case matrix predates only the final preview-label CSS fix, which has its own focused replay and inspected capture. V07/V13 retain their broader Review scope.
+
+The [saved-audio retry record](verification/2026-10-16-saved-audio-retry.json) establishes T13–T15 for the named native runtime with real muted MP3 playback, delayed play settlements, transport commands, explicit missing-file recovery and unchanged selection/opt-ins. T11 remains Review for its broader music playlist/favorites/history scope.
