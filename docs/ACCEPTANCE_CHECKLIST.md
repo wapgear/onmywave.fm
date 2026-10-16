@@ -230,7 +230,7 @@ Source: REQUIREMENTS: Personal radio behavior; R7,R8,R10,R11.
 | T04 | Checking a saved result reconciles only an existing request and never generates for an unknown ID. | S | Review |
 | T05 | After restart latest unlinked interruption has a named summary and focused expandable-history action; unknown profile is not guessed. | N+S | Review |
 | T06 | A newer request supersedes the compact summary while history remains; failed refresh/live error suppress duplicate or misleading summaries. | N+S | Review |
-| T07 | Scripts are editable and finite generation supports audition/comparison/explicit selection without silently replacing the selected take. | N+S | Review |
+| T07 | Scripts are editable; replacing edits through saved loads or new text requires confirmation, cancel prevents dispatch, and failure retains edits. Finite generation supports audition/comparison/explicit selection without silently replacing the selected take. | N+S | Review |
 | T08 | Normal generation reuses a valid matching recording including a later replacement; Generate another take explicitly requests variation. | S+N | Review |
 | T09 | Immutable script/source/mood/interests/rendering-DJ provenance and selected ID survive restart. | N+S | Controlled |
 | T10 | Missing/empty/truncated audio retains provenance/selection, disables play/use/schedule and offers explicit script-based replacement. | N+S | Controlled |
@@ -385,3 +385,5 @@ The [current catalog-union record](verification/2026-10-16-catalog-union-current
 The [long-text/native behavior record](verification/2026-10-16-long-text-layout.json) closes R01, M04 and V09 with fresh keyless listening, page navigation plus actual hidden-window playback, and native reduced-motion spinner evidence. It fixes DJ heading/preview-label and recovery-message overflow at1280×720. The18-case matrix predates only the final preview-label CSS fix, which has its own focused replay and inspected capture. V07/V13 retain their broader Review scope.
 
 The [saved-audio retry record](verification/2026-10-16-saved-audio-retry.json) establishes T13–T15 for the named native runtime with real muted MP3 playback, delayed play settlements, transport commands, explicit missing-file recovery and unchanged selection/opt-ins. T11 remains Review for its broader music playlist/favorites/history scope.
+
+The [script-replacement record](verification/2026-10-16-script-replacement.json) reproduces lost edited wording and verifies all three saved-load paths, guarded text preparation, cancel/no dispatch, failed preparation plus music navigation, focus restoration and direct clean preparation. T07 stays Review for its wider finite-generation/comparison scope; no inventory disposition changes follow from this narrower check.

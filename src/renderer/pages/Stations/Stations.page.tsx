@@ -17,6 +17,7 @@ import './Stations.styles.css';
 
 export type RoomDraft = { scriptId: string; script: string } | null;
 export type RoomSetupDraft = { setup: ListeningRoom | null; moodDraft: string | null; newsInterests?: string; workflow?: { roomId: string; patch: Partial<WorkflowDraft> }; stopError?: string; operationError?: string; manualPreparation?: ManualPreparation; preparationCancelError?: string; tab?: string };
+type ScriptReplacement = { kind: 'load'; draft: NonNullable<RoomDraft>; reveal: boolean } | { kind: 'prepare' };
 type PreparationInput = { kind: 'script'; input: { requestId: string; djId: string; sourceIds: string[] } } | { kind: 'audio'; input: { requestId: string; scriptId: string; script: string; djId: string; newVariation?: boolean } };
 type Preparation = PreparationInput & { reconcile?: boolean };
 type PreparationOperation = { request: Preparation; control: { controller: AbortController; dispatched: boolean } };
@@ -56,6 +57,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   const [profileName, setProfileName] = useState('');
   const [switchTarget, setSwitchTarget] = useState<string | null>(null);
   const [profileNotice, setProfileNotice] = useState('');
+  const [scriptReplacement, setScriptReplacement] = useState<ScriptReplacement | null>(null);
   useEffect(() => window.wave.onNewsProgress(value => {
     setConfigDraft(current => current.manualPreparation?.pending && current.manualPreparation.request.input.requestId === value.requestId
       ? { ...current, manualPreparation: { ...current.manualPreparation, progress: value } } : current);
@@ -82,6 +84,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   const latestScript = library.data?.scripts.at(-1);
   const editing = draft ?? (latestScript ? { scriptId: latestScript.id, script: latestScript.script } : null);
   const scriptRecord = library.data?.scripts.find(value => value.id === editing?.scriptId);
+  const scriptDirty = !!draft && (!scriptRecord || draft.script !== scriptRecord.script);
   const selectedTake = library.data?.takes.find(value => value.id === library.data?.selectedTakeId);
   const finite = dj?.news?.speechEngine === 'elevenlabs-v4';
   const words = editing?.script.trim().split(/\s+/u).filter(Boolean).length ?? 0;
@@ -257,8 +260,9 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
     if (setupDirty) setSwitchTarget(id);
     else profiles.mutate({ kind: 'switch', id, saveChanges: false });
   }
-  function prepareText() {
+  function prepareText(confirmed = false) {
     if (!ready || !room.djId || !textKeyReady) return;
+    if (scriptDirty && !confirmed) { setScriptReplacement({ kind: 'prepare' }); return; }
     cancel.reset();
     startPreparation({ kind: 'script', input: { requestId: crypto.randomUUID(), djId: room.djId, sourceIds: [...room.sourceIds] } });
   }
@@ -269,8 +273,24 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   }
   const sourceSnapshot = (values: typeof sources) => JSON.stringify([...values].sort((a, b) => a.id.localeCompare(b.id)));
   const differs = selectedTake && (selectedTake.script !== editing?.script || JSON.stringify(selectedTake.renderingDJ) !== JSON.stringify(dj) || selectedTake.provenance.mood !== mood || (selectedTake.provenance.newsInterests ?? selectedTake.provenance.dj.news?.interests ?? '') !== newsInterests || sourceSnapshot(selectedTake.provenance.sources) !== sourceSnapshot(chosenSources));
-  function loadDraft(take: PreparedNewsTake) { setTab('settings'); setDraft({ scriptId: take.scriptId, script: take.script }); requestAnimationFrame(() => { if (manualTools.current) manualTools.current.open = true; manualTools.current?.scrollIntoView({ block: 'start', behavior: 'auto' }); manualTools.current?.querySelector<HTMLTextAreaElement>('#news-draft')?.focus({ preventScroll: true }); }); }
-  function loadScriptDraft(script: { id: string; script: string }) { setTab('settings'); setDraft({ scriptId: script.id, script: script.script }); requestAnimationFrame(() => { if (manualTools.current) manualTools.current.open = true; manualTools.current?.scrollIntoView({ block: 'start', behavior: 'auto' }); manualTools.current?.querySelector<HTMLTextAreaElement>('#news-draft')?.focus({ preventScroll: true }); }); }
+  function revealScriptEditor() {
+    setTab('settings');
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      if (manualTools.current) manualTools.current.open = true;
+      manualTools.current?.scrollIntoView({ block: 'start', behavior: 'auto' });
+      manualTools.current?.querySelector<HTMLTextAreaElement>('#news-draft')?.focus({ preventScroll: true });
+    }));
+  }
+  function applyScript(next: NonNullable<RoomDraft>, reveal: boolean) {
+    setDraft(next);
+    if (reveal) revealScriptEditor();
+  }
+  function requestScript(next: NonNullable<RoomDraft>, reveal = true) {
+    if (scriptDirty && (editing?.scriptId !== next.scriptId || editing.script !== next.script)) setScriptReplacement({ kind: 'load', draft: next, reveal });
+    else applyScript(next, reveal);
+  }
+  function loadDraft(take: PreparedNewsTake) { requestScript({ scriptId: take.scriptId, script: take.script }); }
+  function loadScriptDraft(script: { id: string; script: string }) { requestScript({ scriptId: script.id, script: script.script }); }
   function openPreparation() { setTab('settings'); }
   function reviewPreparationHistory() {
     setTab('saved');
@@ -318,12 +338,12 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
       {setupDirty && <p className="form-hint">Save setup and preparation together to keep these choices in this room profile.</p>}
       {(!textKeyReady || !audioKeyReady) && <p className="form-hint">News preparation needs OpenAI and ElevenLabs keys. <button className="room-link" onClick={configureSettings}>Provider keys</button></p>}
       <details className="room-script room-testing-tools" ref={manualTools}><summary>Testing tools · Prepare a story manually</summary><div className="room-script-content" aria-labelledby="script-title"><div className="room-section-heading"><div><span className="eyebrow">Manual testing</span><h2 id="script-title">Prepare a story</h2></div><InfoHelp label="About manual preparation"><p>Use these tools to test a script or voice. Text and audio requests use your provider accounts and save completed results locally.</p><p>DJ playback only picks saved recordings. The news workflow prepares stories on its own schedule.</p></InfoHelp></div><p>Prepare text, review it, then generate an audio take.</p><p className="form-hint">Manual text preparation uses OpenAI outside automatic preparation limits. It can incur charges even when no recording is made.</p>
-        <button className="primary" disabled={busy || !ready || !textKeyReady} onClick={prepareText}>{manualPending && lastRequest?.kind === 'script' ? <LoaderCircle size={15} className="spinning" /> : <Newspaper size={15} />}{manualPending && lastRequest?.kind === 'script' ? 'Preparing text…' : 'Prepare news text'}</button>
+        <button className="primary" disabled={busy || !ready || !textKeyReady} onClick={() => prepareText()}>{manualPending && lastRequest?.kind === 'script' ? <LoaderCircle size={15} className="spinning" /> : <Newspaper size={15} />}{manualPending && lastRequest?.kind === 'script' ? 'Preparing text…' : 'Prepare news text'}</button>
         {!ready && <p className="form-hint">Choose sources and a DJ, and describe your station mood first.</p>}
         {ready && !textKeyReady && <p className="notice">{aiStatus.isPending ? 'Checking OpenAI key…' : aiStatus.error ? 'OpenAI key status unavailable.' : 'Add an OpenAI key to prepare text.'} <button className="room-link" onClick={configureSettings}>Open Settings</button></p>}
         <ErrorNotice error={aiStatus.error} retry={() => void aiStatus.refetch()} />{dj?.news?.speechEngine === 'elevenlabs-v4' && <ErrorNotice error={elevenStatus.error} retry={() => void elevenStatus.refetch()} />}
 
-        {!!library.data?.scripts.length && <div className="room-saved-script"><FilterSelect label="Saved draft" value={editing?.scriptId ?? ''} choices={library.data.scripts.map(value => ({ value: value.id, label: `${value.provenance.dj.name} · ${new Date(value.createdAt).toLocaleString()}` })).reverse()} onChange={id => { const saved = library.data?.scripts.find(value => value.id === id); if (saved) setDraft({ scriptId: saved.id, script: saved.script }); }} disabled={busy} /></div>}
+        {!!library.data?.scripts.length && <div className="room-saved-script"><FilterSelect label="Saved draft" value={editing?.scriptId ?? ''} choices={library.data.scripts.map(value => ({ value: value.id, label: `${value.provenance.dj.name} · ${new Date(value.createdAt).toLocaleString()}` })).reverse()} onChange={id => { const saved = library.data?.scripts.find(value => value.id === id); if (saved) requestScript({ scriptId: saved.id, script: saved.script }, false); }} disabled={busy} /></div>}
         {editing && <div className="room-script-editor"><label htmlFor="news-draft">Review the script</label><textarea id="news-draft" rows={5} maxLength={700} disabled={busy} value={editing.script} onChange={event => setDraft({ ...editing, script: event.target.value })} /><div className="room-script-meta"><span className={words > 55 ? 'danger' : ''}>{words} / 55 words</span><span>{scriptRecord ? new Date(scriptRecord.createdAt).toLocaleString() : 'Saved draft'}</span></div>{scriptRecord && <details><summary>Sources and preparation settings</summary><p className="form-hint">Prepared for {scriptRecord.provenance.dj.name} · {scriptRecord.provenance.mood}</p><p className="form-hint">News interests: {(scriptRecord.provenance.newsInterests ?? scriptRecord.provenance.dj.news?.interests) || 'Any topics from selected sources'}</p>{scriptRecord.articles.map(article => <p key={article.id} className="room-article"><button className="room-link" onClick={() => source.mutate(article.url)}>{article.title}</button><span>{article.source}{Number.isFinite(Date.parse(article.publishedAt ?? '')) ? ` · ${new Date(article.publishedAt!).toLocaleDateString()}` : ' · Date unavailable'}</span></p>)}{scriptRecord.warnings.map((warning, index) => <p className="form-hint" key={index}>{warning}</p>)}</details>}
           <div className="room-section-heading room-render-heading"><div><span className="eyebrow">Manual audio</span><h3>Generate a complete take</h3></div><Headphones size={19} /></div>{!finite && <p className="notice">Configure ElevenLabs in this DJ's voice settings. <button className="room-link" onClick={configureDJ}>Manage DJ in Settings</button></p>}
           {!audioKeyReady && <p className="notice">Add an ElevenLabs key before generating audio. <button className="room-link" onClick={configureSettings}>Open Settings</button></p>}
@@ -340,6 +360,15 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
       {!!library.data?.requests.some(value => value.status !== 'complete') && <details id="preparation-history" className="room-request-history" ref={requestHistory}><summary>Preparation history</summary>{library.data.requests.filter(value => value.status !== 'complete').slice(-10).reverse().map(value => <p key={value.requestId}><strong>{value.kind === 'script' ? 'News text' : 'Audio take'} · {value.status === 'skipped' ? 'No relevant story' : value.status === 'partial-coverage' ? 'Incomplete source coverage' : value.status}</strong><span>{value.error || (value.status === 'skipped' ? 'No audio was generated for this attempt.' : 'No automatic provider retry. Completed results remain in saved audio.')}</span></p>)}</details>}
       </section>
     </div>
+    {scriptReplacement && <Dialog title="Replace edited script?" close={() => setScriptReplacement(null)}>
+      <p>{scriptReplacement.kind === 'prepare' ? 'Preparing new text will replace your edited script if it succeeds. This request uses OpenAI outside automatic preparation limits and may incur charges. If preparation fails, your edited script stays here.' : 'Loading this saved script will replace your unsaved edits. Your saved scripts and recordings stay unchanged.'}</p>
+      <div className="modal-actions"><button onClick={() => { setScriptReplacement(null); revealScriptEditor(); }}>Keep editing</button><button className="primary" onClick={() => {
+        const replacement = scriptReplacement;
+        setScriptReplacement(null);
+        if (replacement.kind === 'prepare') prepareText(true);
+        else applyScript(replacement.draft, replacement.reveal);
+      }}>{scriptReplacement.kind === 'prepare' ? 'Prepare new text' : 'Replace draft'}</button></div>
+    </Dialog>}
     {newProfileOpen && <Dialog title="Save a new listening room" close={() => { if (!profiles.isPending) setNewProfileOpen(false); }}><form onSubmit={event => { event.preventDefault(); if (!profiles.isPending && profileName.trim()) profiles.mutate({ kind: 'copy' }); }}><fieldset disabled={profiles.isPending}><label>Name<input autoFocus required maxLength={80} value={profileName} onChange={event => { profiles.reset(); setProfileName(event.target.value); }} placeholder="Evening technology" /></label></fieldset><p className="form-hint">Copies your setup with automatic preparation off. Choose the new room, then make it available in Advanced room options before enabling preparation or DJ breaks. You can finish incomplete setup later.</p><ErrorNotice error={profiles.error} /><div className="modal-actions"><button type="button" disabled={profiles.isPending} onClick={() => setNewProfileOpen(false)}>Cancel</button><button className="primary" disabled={profiles.isPending || !profileName.trim()}>{profiles.isPending ? 'Saving…' : 'Save room'}</button></div></form></Dialog>}
     {switchTarget && <Dialog title="Switch listening rooms?" close={() => { if (!profiles.isPending) setSwitchTarget(null); }}><p>You have unsaved changes to {activeProfile?.name ?? 'your current room'}. Save them before switching, or discard them. Your script and selected audio stay unchanged.</p><ErrorNotice error={profiles.error} /><div className="modal-actions"><button disabled={profiles.isPending} onClick={() => setSwitchTarget(null)}>Cancel</button><button disabled={profiles.isPending} onClick={() => profiles.mutate({ kind: 'switch', id: switchTarget, saveChanges: false })}>Discard and switch</button><button className="primary" disabled={profiles.isPending} onClick={() => profiles.mutate({ kind: 'switch', id: switchTarget, saveChanges: true })}>{profiles.isPending ? 'Switching…' : 'Save and switch'}</button></div></Dialog>}
   </>;
