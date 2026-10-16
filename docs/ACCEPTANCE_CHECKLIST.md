@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 81 Review, 8 Dated, 4 Recorded, 71 Controlled, 12 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 80 Review, 8 Dated, 4 Recorded, 72 Controlled, 12 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -227,7 +227,7 @@ Source: REQUIREMENTS: Personal radio behavior; R7,R8,R10,R11.
 | T01 | Advanced manual text preparation stays collapsed by default and discloses provider/cost scope beside its action. | N+U | Review |
 | T02 | Manual progress, original profile, request/error/cancel state survive music navigation and later profile switches. | N+S | Review |
 | T03 | Cancel before dispatch prevents generation even while saving setup; after dispatch it targets the exact request. | N+S | Review |
-| T04 | Checking a saved result reconciles only an existing request and never generates for an unknown ID. | S | Review |
+| T04 | Checking a saved result reconciles only an existing request and never generates for an unknown ID; pending text/audio checks are named as checks with the original profile and no new provider request. | S+N | Controlled |
 | T05 | After restart latest unlinked interruption has a named summary and focused expandable-history action; unknown profile is not guessed. | N+S | Review |
 | T06 | A newer request supersedes the compact summary while history remains; failed refresh/live error suppress duplicate or misleading summaries. | N+S | Review |
 | T07 | Scripts are editable; replacing edits through saved loads or new text requires confirmation, cancel prevents dispatch, and failure retains edits. Finite generation reports its saved/reused result with focused review and supports audition/comparison/explicit selection without silently replacing the selected take. | N+S | Controlled |
@@ -393,3 +393,5 @@ The [manual-audio result record](verification/2026-10-16-manual-audio-result.jso
 The [current connection-recovery record](verification/2026-10-16-connection-recovery-current.json) establishes C03/C04 with native Back/failure draft preservation, focus restoration, repeated same-account reset and different-account fresh selection/save. C13 now has native pending/error/cancellation recovery with unsaved setup/script retention and no implicit save/redispatch. The controlled offline/401 cases add evidence for C12, which remains Review for live-server recovery.
 
 The [current account-boundary record](verification/2026-10-16-account-boundary-current.json) establishes C14 with independent native different-account, different-server and sign-out cases. It checks source/DJ/mood/interests/script clearing, old live feedback removal, a late old-account failure, sign-out Cancel preservation and saved-recording retention. It does not claim deletion of shared durable radio history or concurrent provider operation availability.
+
+The [saved-result check record](verification/2026-10-17-saved-result-check.json) establishes T04 with current native text/audio lookup labels, original-profile retention, known/unknown/mismatched requests, unavailable files, interrupted requests and both provider statuses unconfigured. The two explicit initial generations are the only provider calls; no check reserves or dispatches a new paid request.

@@ -1,0 +1,126 @@
+{
+  "date": "2026-10-17",
+  "base": "f019d98ad9ba9ae330fea625c446925eaacd8dd6",
+  "problem": "A read-only saved-result check was shown as Preparing audio and Generating audio, suggesting a fresh paid request.",
+  "before": {
+    "cases": [
+      {
+        "kind": "saved result checking label",
+        "result": "reproduced",
+        "actualProgress": "Preparing audio for Science room\u2026",
+        "button": "Generating audio\u2026",
+        "additionalVoiceCalls": 0
+      }
+    ],
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "result": "reproduced"
+  },
+  "after": {
+    "cases": [
+      {
+        "kind": "text result check label and navigation",
+        "result": "passed",
+        "checksNeverLabelledGeneration": true,
+        "navigationRetainsLookup": true,
+        "noNewTextRequest": true
+      },
+      {
+        "kind": "audio result check after profile switch without keys",
+        "result": "passed",
+        "originProfileRetained": true,
+        "bothProviderKeysAbsent": true,
+        "noNewVoiceRequest": true,
+        "sameSavedTake": true
+      },
+      {
+        "kind": "unknown checks never reserve or dispatch",
+        "result": "passed",
+        "unknownTextAndAudioReturnUncertain": true,
+        "requestsUnchanged": true,
+        "providerCallsUnchanged": true
+      },
+      {
+        "kind": "known request input mismatch",
+        "result": "passed",
+        "changedPayloadRejected": true
+      },
+      {
+        "kind": "known saved result missing file",
+        "result": "passed",
+        "sameArtifactMarkedUnavailable": true,
+        "noRegeneration": true
+      },
+      {
+        "kind": "interrupted request stays non-generating",
+        "result": "passed",
+        "missingKeyAttemptInterruptedBeforeDispatch": true,
+        "checkingDoesNotRetryIt": true
+      }
+    ],
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "invariants": {
+      "explicitSubstitutedTextCalls": 1,
+      "explicitSubstitutedVoiceCalls": 1,
+      "additionalProviderCallsFromChecks": 0,
+      "realProviderCalls": 0,
+      "selectionUnchanged": true,
+      "originalTakeUnchanged": true,
+      "profileSettingsUnchanged": true,
+      "rendererErrors": 0
+    },
+    "result": "passed"
+  },
+  "change": "During explicit reconciliation show Checking saved text/audio in the progress message and disabled action, keep the original profile name and state No new provider request. Ordinary generation labels remain tied to actual generation.",
+  "runtime": {
+    "macOS": "27.2 arm64",
+    "electron": "43.7.0",
+    "fixtureNode": "24.4.1",
+    "nativeWindow": {
+      "cssWidth": 1280,
+      "cssHeight": 720,
+      "zoomFactor": 1,
+      "hidden": true,
+      "muted": true
+    }
+  },
+  "scope": {
+    "actualMainPreloadProductionRendererAndSavedStore": true,
+    "localDummyJellyfinAndEncryptedDummyProviderKeys": true,
+    "sharedProviderKeys": "null adapter",
+    "providerNetwork": "substituted responses, external traffic blocked",
+    "controlledPerturbations": [
+      "lose a renderer reply after real text/audio publication",
+      "hold reconciliation IPC before the real existing-request lookup",
+      "remove dummy provider keys through supported null setters and verify both statuses unconfigured",
+      "move and restore the owned saved MP3"
+    ],
+    "observedProviderCalls": "One explicit substituted text call and one explicit substituted voice call. Checks generate no additional calls.",
+    "unitFrameworkAdded": false
+  },
+  "limitations": [
+    "Controlled recovery evidence, not a real provider charge or outage test.",
+    "The held lookup makes pending copy inspectable; normal local lookup is generally brief.",
+    "T02/T03/T05/T06 retain their broader pending/cancel/restart/history scope.",
+    "No observed listener, VoiceOver, other OS version, smaller-window or enlarged-zoom acceptance claimed.",
+    "Q10 remains unattributed/open."
+  ],
+  "sourceSha256": {
+    "src/renderer/pages/Stations/Stations.page.tsx": "35e193bc715d3e00d84512796259541dd4858e505a068455ebfe51c31ea32af3",
+    "src/main/prepared-news.ts": "c5f75f9818c3537fbf2cc177d5980328926b1d73202a3952f0da84258df11dd2",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68"
+  },
+  "fixtureSha256": {
+    "build.mjs": "4ae881e342b3f93b033edb2ddfa3aae9e86f23e809f888f22f95249f73768e76",
+    "bootstrap.mjs": "084467e78b690b98a090cfbfc5987fc37035dcc11ec5c0e56fc85d6eceb472a3",
+    "before.cjs": "5863dfa1d41e89f8dafcabdfc4acdff3a71759bf09689e05b6d2fa4ab8ffa4ff",
+    "after.cjs": "167c9ec7710673e254a61936eaa627777dbb25516ad747f23edeff3ffd6834fd"
+  }
+}
