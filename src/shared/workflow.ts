@@ -7,7 +7,7 @@ export type WorkflowDraft = {
   newsAssessmentsToday?: number;
   newsClipDate?: string;
   newsClipsToday?: number;
-  newsLastRun?: { requestId: string; startedAt: string; finishedAt?: string; outcome: 'running' | 'prepared' | 'no-news' | 'failed' | 'interrupted'; message?: string; roomName?: string; setupChanged?: boolean };
+  newsLastRun?: { requestId: string; startedAt: string; finishedAt?: string; outcome: 'running' | 'prepared' | 'no-news' | 'partial-coverage' | 'failed' | 'interrupted'; message?: string; roomName?: string; setupChanged?: boolean };
   newsWorkflowPaused?: boolean;
   everyHours: 1 | 3 | 6;
   importance: 'major' | 'relevant';
@@ -39,7 +39,7 @@ export function isWorkflowDraft(value: unknown): value is WorkflowDraft {
     || (value.newsLastRun !== undefined && (!record(value.newsLastRun) || typeof value.newsLastRun.requestId !== 'string' || !/^[a-zA-Z0-9-]{1,128}$/.test(value.newsLastRun.requestId)
       || typeof value.newsLastRun.startedAt !== 'string' || !Number.isFinite(Date.parse(value.newsLastRun.startedAt))
       || (value.newsLastRun.finishedAt !== undefined && (typeof value.newsLastRun.finishedAt !== 'string' || !Number.isFinite(Date.parse(value.newsLastRun.finishedAt))))
-      || !['running', 'prepared', 'no-news', 'failed', 'interrupted'].includes(String(value.newsLastRun.outcome))
+      || !['running', 'prepared', 'no-news', 'partial-coverage', 'failed', 'interrupted'].includes(String(value.newsLastRun.outcome))
       || (value.newsLastRun.message !== undefined && (typeof value.newsLastRun.message !== 'string' || value.newsLastRun.message.length > 2000))
       || (value.newsLastRun.roomName !== undefined && (typeof value.newsLastRun.roomName !== 'string' || value.newsLastRun.roomName.length > 80))
       || (value.newsLastRun.setupChanged !== undefined && typeof value.newsLastRun.setupChanged !== 'boolean')))

@@ -19,7 +19,7 @@ Evidence entry points are [the detailed audit](UX_ACCEPTANCE.md), [the corrected
 
 The inventory is provisional until every source paragraph and STAR result is reconciled against it. No overall percentage is calculated yet. Human usability and live/OS coverage remain separate from controlled engineering coverage. Every critical invariant must pass regardless of a future percentage.
 
-Current inventory: 187 rows. 112 Review, 11 Dated, 5 Recorded, 41 Controlled, 9 Live, 9 External. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows. 111 Review, 11 Dated, 5 Recorded, 42 Controlled, 9 Live, 9 External. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -180,8 +180,8 @@ Source: REQUIREMENTS: Personal radio behavior; R3,R5,R6,R9–R11,M15.
 | A04 | Independent DJ playback never invokes generation; preparation never starts music or replaces the selected take. | N+S | Review |
 | A05 | Due checks require the app running/Mac awake; return from sleep/quit coalesces missed slots rather than processing a backlog. | S+O | Review |
 | A06 | Last outcome/reason, timestamp, next check and daily attempt/recording counts derive from persisted state and name the correct profile. | N+S | Controlled |
-| A07 | Status distinguishes preparing, saved, no qualifying story, cap, failure, interruption and unavailable profile. | N+S | Controlled |
-| A08 | No-story results retain their actual reason and source-coverage failure is not reported as no news. | N+S | Review |
+| A07 | Status distinguishes preparing, saved, no qualifying story, incomplete coverage, cap, failure, interruption and unavailable profile. | N+S | Controlled |
+| A08 | No-story results retain their actual reason and source-coverage failure is not reported as no news. | N+S | Controlled |
 | A09 | Daily limits stop scheduled dispatch, explain which cap was hit and resume only when eligible after local midnight. | N+S | Controlled |
 | A10 | Failure/interruption preserves cause, avoids paid retry and requires a separate explicit Resume after repair/save. | N+S | Controlled |
 | A11 | Player shows named preparation context; News bucket shows detailed activity and global history is labeled global. | N+U | Review |
@@ -289,6 +289,7 @@ Source: REQUIREMENTS: Design acceptance, stack, settings, acceptance and release
 
 | Check | Reviewed evidence | Scope limit |
 | --- | --- | --- |
+| A08 | [Partial coverage record](verification/2026-10-16-partial-coverage.json):22 native outcomes, held-settlement quit/reopen, two restarts, same-ID automatic/manual replay, normal cadence continuation and three layout cases | Actual stores/IPC/services with substituted providers; physical crash/sleep, broader late cancellation, live quality and observed comprehension remain separate. |
 | A06,A07 | [News outcomes record](verification/2026-10-16-news-outcomes.json):22 native variants covering all named automatic states, persisted reason/time/cadence/counts, both named summaries and corrected key recovery; three layouts | Actual parsing/services/storage with substituted source/provider responses. A08 partial-coverage classification, live quality, audible continuity and observed comprehension remain separate. |
 | R10 | [Setup save-order record](verification/2026-10-16-setup-save-order.json): five native cases covering pending/error detours, success/failure versus newer fields, profile changes before entry/commit and sign-out/new-session isolation | Two production-renderer cases; three actual-source cases expose only the real root draft setter for controlled stress injection. No observed listener or live auth-failure claim. |
 | R06 | [Copied profiles record](verification/2026-10-16-copied-profiles.json): draft copy/cancel, restart, two opt-in gates, named edits/run, stale-target rejection, metadata reset, keyless incomplete copy and three dialog layouts | One controlled native runtime with source/provider substitutes; observed listener comprehension and broader historical/manual attribution remain separate. |

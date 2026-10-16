@@ -5,7 +5,7 @@ The Listening Room configures a music host and prepares news audio before it is 
 ## Language
 
 **Source**:
-A named RSS or Atom news feed chosen by the listener.
+A named RSS or Atom feed, Hacker News list, or X search chosen by the listener.
 
 **DJ**:
 A saved host identity with personality, language, instructions and voice preferences.
@@ -35,6 +35,10 @@ The listener's saved choices for what matters, who hosts, and when briefings sho
 
 **Workflow run**:
 One scheduled check that either finds no qualifying update, prepares a briefing, or records why it could not complete.
+
+**Incomplete source coverage**:
+A news check could not read all chosen sources. If readable stories were assessed but none was selected, this is a completed partial check, not a complete no-news result.
+_Avoid_: No news
 
 **Important update**:
 A fresh development significant enough for the listener's chosen news interests and importance setting. It is an editorial decision with a reason, not a promise that every major event will be found.

@@ -5,7 +5,7 @@ export type { DJPlaybackSettings } from './dj-playback';
 import type { WorkflowDraft } from './workflow';
 export type { WorkflowDraft } from './workflow';
 export type ApiError = {
-  code: 'offline' | 'timeout' | 'unauthorized' | 'forbidden' | 'not-found' | 'unsupported' | 'invalid' | 'server' | 'uncertain-write' | 'no-news';
+  code: 'offline' | 'timeout' | 'unauthorized' | 'forbidden' | 'not-found' | 'unsupported' | 'invalid' | 'server' | 'uncertain-write' | 'no-news' | 'partial-coverage';
   message: string;
 };
 export type Result<T> = { ok: true; value: T } | { ok: false; error: ApiError };
@@ -104,7 +104,7 @@ export type RoomProfile = { enabled: boolean; id: string; name: string; room: Li
 export type PreparedNewsProvenance = { dj: DJ; mood: string; sources: NewsSource[]; newsInterests?: string; roomId?: string; roomName?: string };
 export type PreparedNewsScript = NewsScript & { id: string; createdAt: string; provenance: PreparedNewsProvenance };
 export type PreparedNewsTake = NewsBreak & { signature: string; provenance: PreparedNewsProvenance; renderingDJ: DJ; available: boolean; byteLength: number; model: string; voice: string; delivery: string; scriptId: string; deliveryState?: { status: 'ready' | 'claimed' | 'played'; claimedAt?: string; playedAt?: string } };
-export type PreparedNewsRequest = { requestId: string; kind: 'script' | 'audio'; inputHash: string; status: 'running' | 'complete' | 'failed' | 'interrupted' | 'skipped'; artifactId?: string; error?: string };
+export type PreparedNewsRequest = { requestId: string; kind: 'script' | 'audio'; inputHash: string; status: 'running' | 'complete' | 'failed' | 'interrupted' | 'skipped' | 'partial-coverage'; artifactId?: string; error?: string };
 export type PreparedNewsLibrary = { scripts: PreparedNewsScript[]; takes: PreparedNewsTake[]; selectedTakeId: string | null; requests: PreparedNewsRequest[]; reviewedArticles: ReviewedNewsArticle[] };
 export type LocalState = { djPlayback: DJPlaybackSettings; roomProfiles: RoomProfile[]; activeRoomProfileId: string; newsTransitions: NewsTransitionSettings; djs: DJ[]; vibe: string; playback: PlaybackSnapshot | null; playbackPreferences: Record<string, PlaybackPreferences>; sources: NewsSource[]; listeningRoom: ListeningRoom; workflowDraft: WorkflowDraft };
 export type PlaybackResource = { url: string; offsetSeconds: number; transcoded: boolean };
