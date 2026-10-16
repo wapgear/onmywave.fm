@@ -1,0 +1,182 @@
+{
+  "date": "2026-10-17",
+  "base": "1e63cd1af0c097f3349fccb6078b4e870e913a07",
+  "productionChanges": false,
+  "scope": [
+    "P19"
+  ],
+  "native": {
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "cases": [
+      {
+        "kind": "missing,empty,invalid and repeated handles",
+        "result": "passed",
+        "distinctRowKeys": true,
+        "unsafeEditsDisabled": true,
+        "playQueueAddDetailsAvailable": true
+      },
+      {
+        "kind": "independent missing-handle selections",
+        "result": "passed",
+        "selectedPlaybackRetainsDuplicateSongsInDisplayOrder": true,
+        "nativeAudioAdvances": true
+      },
+      {
+        "kind": "unsafe direct IPC edits",
+        "result": "passed",
+        "eightRejections": true,
+        "noMutationDispatch": true,
+        "noRecoveryReservation": true
+      },
+      {
+        "kind": "fresh snapshot after safe native edit",
+        "result": "passed",
+        "uniqueEntryMoveWorks": true,
+        "onlyFallbackSelectionsReset": true,
+        "stableUniqueSelectionRetained": true
+      }
+    ],
+    "result": "passed",
+    "rendererErrors": [],
+    "providerCalls": 0,
+    "fatalFileAbsent": true
+  },
+  "service": {
+    "cases": [
+      {
+        "name": "unique move",
+        "result": "passed",
+        "httpWrites": 1,
+        "targetReservations": 1
+      },
+      {
+        "name": "unique remove among duplicates",
+        "result": "passed",
+        "httpWrites": 1,
+        "targetReservations": 1
+      },
+      {
+        "name": "duplicate move",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "duplicate remove",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "missing handle",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "absent handle",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "out of range",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "repeated request handle",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "UUID aliases in server entries",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "UUID aliases in removal request",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "change-before-reserve",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "change-while-queued",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "failed preflight read",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      },
+      {
+        "name": "empty removal",
+        "result": "passed",
+        "httpWrites": 0,
+        "targetReservations": 0
+      }
+    ]
+  },
+  "priorLiveEvidence": {
+    "record": "2026-10-16-playlist-occurrences.json",
+    "scope": "Actual Jellyfin duplicate entry IDs; independent occurrence selection, full and selected playback, ambiguous IPC rejection, safe unique edits, selection reset and stable selection preservation. Owned temporary playlists deleted with204 and subsequent404.",
+    "replayedToday": false,
+    "freshness": "Playlist methods from private playlistItem to class end are byte-identical to e2122c1. Shared identity, recovery and Playlists page are byte-identical. TrackTable changes only popover dismissal/focus; current native check exercises these menus. Main account/recovery gateway has separate current evidence in2026-10-17-playlist-boundaries.json and2026-10-17-playlist-creation-batches.json."
+  },
+  "disposition": {
+    "P19": "Live, combining prior real-server repeated-ID behavior with current native missing/invalid-ID and service preflight checks",
+    "P04": "Review, broader authorized edit and playback acceptance remains open; this record does not establish a safe server route for editing ambiguous occurrences",
+    "P05": "Review, real read-only and unavailable permission configurations remain unverified"
+  },
+  "limits": [
+    "Local responses deliberately supply missing, empty, invalid and repeated handles; these are controlled variants, not observations of those variants on the live server.",
+    "Muted advancing audio establishes decoding and playback order, not audible quality or regular-listener usability.",
+    "External clients can still change the server between preflight and write; no conditional server transaction is claimed.",
+    "The fourteen service cases use isolated Electron-path and atomic-write adapters; current native case uses actual main/preload/renderer and storage.",
+    "No deferred small-window or enlarged-zoom checks were run.",
+    "An initial service launch was denied localhost binding in the sandbox; the authorized isolated rerun passed all14 cases."
+  ],
+  "checks": {
+    "buildTypeLint": "Application sources unchanged from the preceding passing snapshot; not repeated",
+    "nativeScreenshot": "2026-10-17-playlist-identities.png, inspected at1280x720/100%, Retina capture2560x1440",
+    "rendererErrors": 0,
+    "fatalFileAbsent": true,
+    "providerCalls": 0
+  },
+  "sourceSha256": {
+    "src/shared/playlist-entries.ts": "bb58ab3747844f5080fae78be9a9431bc9cb841fbbb704866cd7e064b5a1292c",
+    "src/main/jellyfin.ts": "22f083327dfdcbb0952d9750662df95d13c31e09a83f628f8c1e3393072f90eb",
+    "src/main/playlist-recovery.ts": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "c6d1b4c4f94a8cc67f9c052526b054ad8b716fbb3ceb9f83e347946bd4ad3a63",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "8bea51f6cb40f8b4ca0714e8af6b344b7e0a6e40278e018935b6a0d5e7f4e721",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370"
+  },
+  "fixtureSha256": {
+    "/private/tmp/native-playlist-identities-current/build.mjs": "86c130db580ab57db8dd5667117a281fdfe5ad240b0ee6d64848719b485fbc42",
+    "/private/tmp/native-playlist-identities-current/bootstrap.mjs": "084467e78b690b98a090cfbfc5987fc37035dcc11ec5c0e56fc85d6eceb472a3",
+    "/private/tmp/native-playlist-identities-current/server.mjs": "cdd3466501d7c6a1f0a7a6ff4d6baba401a30672fd4e8589533abe9c9067a169",
+    "/private/tmp/native-playlist-identities-current/run.cjs": "b9e8cbec918283a1e32f8a79f02971f8c2ae7f9ae27520bc1248e200b694ed30",
+    "/private/tmp/native-playlist-identities-current/out/main/index.js": "ffd9358073f9b63ec3d13e584f1e22f172a81feae780b84e9bec077a53b12ea6"
+  },
+  "serviceFixtureSha256": {
+    "/private/tmp/playlist-occurrence-guard/check.ts": "b895e6f406f2437377316f664058f1822ef2a2f924db94642eaec3176980eee4",
+    "/private/tmp/playlist-occurrence-guard/build.mjs": "66cbe5d25837bc95022d10af711f6f43cab3338f21291b6789104ee04e19c376"
+  }
+}

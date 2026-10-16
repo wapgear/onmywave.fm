@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 64 Review, 8 Dated, 3 Recorded, 88 Controlled, 13 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 63 Review, 8 Dated, 3 Recorded, 88 Controlled, 14 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -123,7 +123,7 @@ Source: REQUIREMENTS: Playlists; M5,M6.
 | P16 | Account changes hide old feedback; returning restores that account's review, and late old results cannot alter the new account. | N+S | Controlled |
 | P17 | Successful status-only rename/add/remove/move stays confirmed despite a hanging unused body; failure to cancel that unused response body cannot undo confirmation. | S | Controlled |
 | P18 | Partial multi-batch changes report uncertainty and are not retried automatically. | S+L | Live |
-| P19 | Repeated/missing/invalid server entry IDs never merge occurrence selection or become unsafe Move/Remove requests; explain row restrictions, preserve safe actions/stable selections, and clear unreliable selections when entries change. Preflight rejects ambiguous/absent targets before reservation or dispatch. | N+S+L | Review |
+| P19 | Repeated/missing/invalid server entry IDs never merge occurrence selection or become unsafe Move/Remove requests; explain row restrictions, preserve safe actions/stable selections, and clear unreliable selections when entries change. Preflight rejects ambiguous/absent targets before reservation or dispatch. | N+S+L | Live |
 
 ## Music playback and listening-session persistence
 
@@ -407,3 +407,5 @@ A16/A18 evidence: [current sign-out record](verification/2026-10-17-signout-curr
 P07/P10/P13/P14/P16 evidence: [playlist-boundary record](verification/2026-10-17-playlist-boundaries.json). Native uncertain move/removal and definite rejection cover navigation, playlist switches, library saves and same-account sign-in. Restart retains tile/Add locks; failed detail reads cannot authorize acknowledgement; healthy sibling playlists remain usable. A late old-account mutation leaves the new account untouched and return restores the original review. Existing addition-restart and late-read evidence was reviewed against unchanged affected source methods.
 
 P08/P09/P11/P18 evidence: [creation and batch record](verification/2026-10-17-playlist-creation-batches.json). Four native creation-confirmation variants retain a global lock through restart and both entry points; a failed second list page cannot authorize acknowledgement. Actual on-disk account-owned markers precede create/add/reorder/remove dispatch and stay singular across100/100/50 batches. Local and live later-batch confirmation loss retain uncertainty and prevent blind replay. The one live private test playlist was deleted and its absence confirmed.
+
+Playlist identity acceptance,17 October2026: [current record](verification/2026-10-17-playlist-identities.json) closes P19 with current native missing/empty/invalid/repeated-ID controls, independent selections, decoded selected playback, eight pre-dispatch IPC rejections and stable-selection retention after a safe edit. Fourteen current service cases pass. The prior live repeated-ID record supplies the real-server branch; playlist method/helper/page freshness was checked explicitly, not inferred from whole-file hashes. P04 and P05 retain Review. Inventory:187 rows,185 active,2 Deferred;63 Review,8 Dated,3 Recorded,88 Controlled,14 Live,9 External.83 active checks remain.
