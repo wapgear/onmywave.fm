@@ -1,0 +1,149 @@
+{
+  "date": "2026-10-16",
+  "base": "54a9851eb2fa09e22005200f27e8080a33459c06",
+  "problem": "Loading a saved audio script replaced edited manual wording without confirmation. The same direct replacement existed in the saved-draft selector and bucket review; successful manual preparation also replaced pre-existing edits.",
+  "before": {
+    "cases": [
+      {
+        "kind": "load take replaces edited draft",
+        "expected": "My unsaved local wording must remain available.",
+        "actual": "Researchers opened an ocean observatory. This saved story was prepared with partial source coverage.",
+        "confirmationDialogs": 0
+      }
+    ],
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "result": "reproduced"
+  },
+  "after": {
+    "cases": [
+      {
+        "kind": "saved take escape",
+        "result": "passed",
+        "openerFocusRestored": true
+      },
+      {
+        "kind": "saved take keep and replace",
+        "result": "passed",
+        "keepPreservesEdits": true,
+        "replacementFocusesEditor": true
+      },
+      {
+        "kind": "saved draft selector",
+        "result": "passed",
+        "cancelKeepsEdits": true,
+        "confirmedTargetLoaded": true,
+        "cleanIdenticalTargetNoPrompt": true
+      },
+      {
+        "kind": "prepare cancel does not dispatch",
+        "result": "passed",
+        "providerCalls": 0
+      },
+      {
+        "kind": "confirmed preparation failure retains draft",
+        "result": "passed",
+        "failureAndDraftSurviveMusicNavigation": true,
+        "textDispatches": 1
+      },
+      {
+        "kind": "confirmed successful preparation",
+        "result": "passed",
+        "oneExplicitDispatch": true,
+        "resultLoadedAfterConfirmation": true
+      },
+      {
+        "kind": "bucket review replacement",
+        "result": "passed",
+        "keepPreservesEdits": true,
+        "confirmLoadsSavedText": true
+      }
+    ],
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "invariants": {
+      "selectedAudioUnchanged": true,
+      "savedTakesUnchanged": true,
+      "optInsUnchanged": true,
+      "musicQueueUnchanged": true,
+      "realProviderCalls": 0,
+      "substitutedTextCalls": 2,
+      "substitutedVoiceCalls": 0,
+      "rendererErrors": 0
+    },
+    "result": "passed"
+  },
+  "cleanPath": {
+    "cases": [
+      {
+        "kind": "clean preparation no prompt",
+        "result": "passed",
+        "oneSubstitutedTextCall": true,
+        "resultLoaded": true,
+        "selectionAndOptInsUnchanged": true
+      }
+    ],
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "result": "passed"
+  },
+  "change": "One dirty-draft gate covers saved draft, saved take and bucket review. Preparing new text asks before dispatch only when it would replace edits. Failures keep the edit; existing asynchronous draft identity protection remains. No prompt for a clean or identical draft. Missing source record is treated as edited.",
+  "decision": {
+    "coordinator": "Morgan/root",
+    "pair": "Steve and Elena, independent read-only proposals and one challenge/revision",
+    "initial": "Both recommended a shared conditional load guard; Steve initially preferred preserving edited text after generation, Elena initially preferred preflight confirmation.",
+    "revised": "Steve supported preflight confirmation to prevent dispatch on cancellation and avoid invisible results. Elena preferred preserving edited text after generation with a direct saved-result status/action.",
+    "chosen": "Preflight confirmation for dirty Prepare news text plus the shared explicit-load guard. It identifies the charge and replacement before dispatch and avoids a new persistent result-feedback state. Clean preparation stays direct.",
+    "reservation": "Elena preferred preserving edited text after generation to avoid another dialog. This preference is retained rather than reported as unanimous design agreement.",
+    "artifactReview": "Elena reviewed the actual implementation and returned no actionable findings."
+  },
+  "runtime": {
+    "macOS": "27.2 arm64",
+    "electron": "43.7.0",
+    "fixtureNode": "24.4.1",
+    "window": {
+      "cssWidth": 1280,
+      "cssHeight": 720,
+      "zoomFactor": 1,
+      "muted": true,
+      "hidden": true
+    }
+  },
+  "scope": {
+    "actualMainPreloadAndProductionRenderer": true,
+    "localDummyJellyfinAndEncryptedDummyKeys": true,
+    "textProvider": "substituted responses, including failure and success",
+    "externalNetwork": "blocked",
+    "noUnitFrameworkAdded": true
+  },
+  "limitations": [
+    "This is controlled engineering evidence, not an observed listener session.",
+    "T07 remains Review for its wider finite-audio generation and comparison scope.",
+    "Pending-provider and backend cancellation/reconciliation variants are outside this focused replacement check.",
+    "No smaller-window or enlarged-zoom checks ran.",
+    "Unsaved script drafts still do not survive quitting or explicit sign-out, as already documented."
+  ],
+  "sourceSha256": {
+    "src/renderer/pages/Stations/Stations.page.tsx": "0cf19990bdc722484d269a1077e3620b4d554d72fd845f83586f0763060a1755",
+    "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": "47911b90b37a4f0d72ea85529f3585546399c435f9bb8923981591fa13eba002",
+    "src/renderer/pages/Stations/components/NewsBucket.component.tsx": "de83e49585e17339bca32a0866b4c5126e95ceacb1cc4bf9e80d81a50221f5a7",
+    "src/renderer/components/Shared.tsx": "303972b169cf42303085a3db1988c04899870a69a6e7591ee4292656785ed2af",
+    "src/renderer/App.tsx": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf"
+  },
+  "fixtureSha256": {
+    "build.mjs": "1355c5662135e700596a8d3be0ece55aae1460c509efc7b9690d4de32be46881",
+    "bootstrap.mjs": "084467e78b690b98a090cfbfc5987fc37035dcc11ec5c0e56fc85d6eceb472a3",
+    "before.cjs": "0c7c591fc864dd281c9bcbc397716ac413a93751fea334994015271c569c5774",
+    "after.cjs": "8469242740723d8f3d08b89a07ba664ea524eec71c35b47b241e2f11d19920fd",
+    "clean.cjs": "f5bd5f6efab5787717c681f9586d80d07a37b3507cee5b6c40a4345b02e46ba1"
+  }
+}
