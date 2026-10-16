@@ -19,7 +19,7 @@ Evidence entry points are [the detailed audit](UX_ACCEPTANCE.md), [the corrected
 
 The inventory is provisional until every source paragraph and STAR result is reconciled against it. No overall percentage is calculated yet. Human usability and live/OS coverage remain separate from controlled engineering coverage. Every critical invariant must pass regardless of a future percentage.
 
-Current inventory: 187 rows. 111 Review, 11 Dated, 5 Recorded, 42 Controlled, 9 Live, 9 External. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows. 109 Review, 11 Dated, 5 Recorded, 44 Controlled, 9 Live, 9 External. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -192,7 +192,7 @@ Source: REQUIREMENTS: Personal radio behavior; R3,R5,R6,R9–R11,M15.
 | A16 | Sign-out pauses all enabled profiles durably through restart and completed-artifact recovery; reconnect requires per-profile Resume. | S+N | Review |
 | A17 | Pause-save failure retains the account; credential-delete failure restores it with recoverable feedback while preparation stays paused. | S+N | Recorded |
 | A18 | Delayed setup/Resume cannot clear a newer sign-out pause and signed-out startup makes no automatic dispatch. | S | Review |
-| A19 | Completed publication remains available and counted once despite late cancellation or restart reconciliation. | S | Review |
+| A19 | Completed publication remains available and counted once despite late cancellation or restart reconciliation. | S | Controlled |
 
 ## Sources, attribution and data boundaries
 
@@ -232,7 +232,7 @@ Source: REQUIREMENTS: Personal radio behavior; R7,R8,R10,R11.
 | T09 | Immutable script/source/mood/interests/rendering-DJ provenance and selected ID survive restart. | N+S | Review |
 | T10 | Missing/empty/truncated audio retains provenance/selection, disables play/use/schedule and offers explicit script-based replacement. | N+S | Review |
 | T11 | Saved audio plays without keys/provider calls; speech remains outside music playlists, favorites and music history. | N+S | Review |
-| T12 | Request IDs/attempts persist before dispatch; complete artifacts reconcile after interrupted manifest publication and uncertain work never retries automatically. | S | Review |
+| T12 | Request IDs/attempts persist before dispatch; complete artifacts reconcile after interrupted manifest publication and uncertain work never retries automatically. | S | Controlled |
 | T13 | Audition pauses music; Pause/Resume retains position even during startup and rapid commands do not reset it or show false error. | N | Review |
 | T14 | Stop/leaving Saved audio/later music transport, including paused selection/seek/media Pause, ends audition and rejects stale callbacks. | N+S | Review |
 | T15 | Volume/shuffle/repeat preserve audition; failure remains visible for explicit retry and audition never changes selection/opt-ins. | N | Review |
@@ -289,6 +289,7 @@ Source: REQUIREMENTS: Design acceptance, stack, settings, acceptance and release
 
 | Check | Reviewed evidence | Scope limit |
 | --- | --- | --- |
+| A19,T12 | [Recording recovery record](verification/2026-10-16-recording-recovery.json):12 native cases covering durable dispatch reservation, four publication/settlement boundaries, two restarts, late cancel/OFF/sign-out, incomplete-file rejection, manual replay and unknown-request reconciliation | Actual stores/IPC/services with substituted providers. Controlled quit/reopen and two incomplete-file variants do not establish arbitrary forced termination, power loss, disk faults or live billing. |
 | A08 | [Partial coverage record](verification/2026-10-16-partial-coverage.json):22 native outcomes, held-settlement quit/reopen, two restarts, same-ID automatic/manual replay, normal cadence continuation and three layout cases | Actual stores/IPC/services with substituted providers; physical crash/sleep, broader late cancellation, live quality and observed comprehension remain separate. |
 | A06,A07 | [News outcomes record](verification/2026-10-16-news-outcomes.json):22 native variants covering all named automatic states, persisted reason/time/cadence/counts, both named summaries and corrected key recovery; three layouts | Actual parsing/services/storage with substituted source/provider responses. A08 partial-coverage classification, live quality, audible continuity and observed comprehension remain separate. |
 | R10 | [Setup save-order record](verification/2026-10-16-setup-save-order.json): five native cases covering pending/error detours, success/failure versus newer fields, profile changes before entry/commit and sign-out/new-session isolation | Two production-renderer cases; three actual-source cases expose only the real root draft setter for controlled stress injection. No observed listener or live auth-failure claim. |

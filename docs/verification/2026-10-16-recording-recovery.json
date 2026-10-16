@@ -1,0 +1,214 @@
+{
+  "date": "2026-10-16",
+  "scope": "A19 completed recording publication and once-only count after cancellation/restart; T12 durable reservation, manifest reconciliation and no uncertain paid replay",
+  "mergedSource": "152ab7848c09b71255024400dae00e38386a1365",
+  "productionChanges": false,
+  "nativeAutomatic": {
+    "cases": [
+      {
+        "variant": "audio-temp",
+        "dispatchReservedBeforeProviders": true,
+        "completedRecordingRecovered": false,
+        "clipsAfterTwoRestarts": 0,
+        "noRestartDispatch": true,
+        "selectionAndQueueUnchanged": true,
+        "otherProfileUnchanged": true,
+        "result": "passed"
+      },
+      {
+        "variant": "sidecar",
+        "dispatchReservedBeforeProviders": true,
+        "completedRecordingRecovered": true,
+        "clipsAfterTwoRestarts": 1,
+        "noRestartDispatch": true,
+        "selectionAndQueueUnchanged": true,
+        "otherProfileUnchanged": true,
+        "result": "passed"
+      },
+      {
+        "variant": "audio-final",
+        "dispatchReservedBeforeProviders": true,
+        "completedRecordingRecovered": true,
+        "clipsAfterTwoRestarts": 1,
+        "noRestartDispatch": true,
+        "selectionAndQueueUnchanged": true,
+        "otherProfileUnchanged": true,
+        "result": "passed"
+      },
+      {
+        "variant": "settlement",
+        "dispatchReservedBeforeProviders": true,
+        "completedRecordingRecovered": true,
+        "clipsAfterTwoRestarts": 1,
+        "noRestartDispatch": true,
+        "selectionAndQueueUnchanged": true,
+        "otherProfileUnchanged": true,
+        "result": "passed"
+      },
+      {
+        "variant": "late-cancel",
+        "dispatchReservedBeforeProviders": true,
+        "completedRecordingRecovered": true,
+        "clipsAfterTwoRestarts": 1,
+        "noRestartDispatch": true,
+        "selectionAndQueueUnchanged": true,
+        "otherProfileUnchanged": true,
+        "result": "passed"
+      },
+      {
+        "variant": "turn-off",
+        "dispatchReservedBeforeProviders": true,
+        "completedRecordingRecovered": true,
+        "clipsAfterTwoRestarts": 1,
+        "noRestartDispatch": true,
+        "selectionAndQueueUnchanged": true,
+        "otherProfileUnchanged": true,
+        "result": "passed"
+      },
+      {
+        "variant": "truncated",
+        "dispatchReservedBeforeProviders": true,
+        "completedRecordingRecovered": false,
+        "clipsAfterTwoRestarts": 0,
+        "noRestartDispatch": true,
+        "selectionAndQueueUnchanged": true,
+        "otherProfileUnchanged": true,
+        "result": "passed"
+      },
+      {
+        "variant": "missing",
+        "dispatchReservedBeforeProviders": true,
+        "completedRecordingRecovered": false,
+        "clipsAfterTwoRestarts": 0,
+        "noRestartDispatch": true,
+        "selectionAndQueueUnchanged": true,
+        "otherProfileUnchanged": true,
+        "result": "passed"
+      }
+    ],
+    "result": "passed"
+  },
+  "manualAndUnknownReconciliation": {
+    "cases": [
+      {
+        "kind": "manual-sidecar-recovery",
+        "requestReservedBeforeVoice": true,
+        "twoRestartsOneAvailableTake": true,
+        "sameIdReconcileAndReplayNoDispatch": true,
+        "changedInputRejected": true,
+        "scheduledCountUnchanged": true,
+        "selectionUnchanged": true,
+        "result": "passed"
+      },
+      {
+        "kind": "unknown-request-reconcile-only",
+        "textAndAudioReturnUncertainWrite": true,
+        "noReservationOrProviderDispatch": true,
+        "result": "passed"
+      }
+    ],
+    "result": "passed"
+  },
+  "nativeSignout": {
+    "cases": [
+      {
+        "kind": "signout-during-publication",
+        "nativeConfirmation": true,
+        "completedRecordingPreserved": true,
+        "countedOnceAfterSignedOutRestart": true,
+        "allEnabledProfilesRemainPaused": true,
+        "selectionUnchanged": true,
+        "noRestartDispatch": true,
+        "result": "passed"
+      }
+    ],
+    "result": "passed"
+  },
+  "uncertainManualText": {
+    "cases": [
+      {
+        "kind": "interrupted-manual-text",
+        "requestReservedBeforeText": true,
+        "restartRetainsInterruption": true,
+        "sameIdReconcileAndReplayDoNotDispatch": true,
+        "noScriptOrRecordingCreated": true,
+        "preparationRemainsOff": true,
+        "result": "passed"
+      }
+    ],
+    "result": "passed"
+  },
+  "method": {
+    "runtime": {
+      "platform": "macOS 27.2 arm64",
+      "electron": "43.7.0"
+    },
+    "application": "Current production renderer/preload with actual source-bundled main, scheduler, services, protected storage and typed IPC. Fresh protected dummy-account profiles; native windows hidden and muted. Localhost catalog and valid saved MP3. Shared provider Keychain adapters and external feed/text/voice responses substituted; all other external requests blocked.",
+    "checkpoints": "Test-only await hooks immediately after actual audio temporary-file write, metadata sidecar rename, final audio rename, and before actual scheduler profile settlement. Quit at the known boundary and reopen the same profile with no store reseeding. Inspect the index directly before quitting so a getPreparedNews call cannot itself recover the held publication. This checks controlled native quit/reopen, not forced termination or power-loss durability.",
+    "reservation": "At each actual automatic text/voice dispatch, read the real disk index and profile state, confirming the same request is running with an input hash and the workflow run is reserved. Separate manual text and manual audio dispatches confirm their own durable request reservations. Manual audio does not increment the scheduled-recording counter.",
+    "publication": "Audio without a durable metadata sidecar remains interrupted and unavailable. A complete sidecar plus matching audio temporary file recovers through the real rename/index path; already-final audio also recovers before manifest publication. Existing complete index plus held profile settlement reconciles to prepared. Two restarts preserve exactly one take and one scheduled count.",
+    "lateCancellation": "CancelPreparedNews through actual typed IPC after the sidecar write, then release publication. The completed recording stays available and counted. Repeat with the actual named Turn off save; preparation remains off, no next check remains and the other profile stays unchanged.",
+    "signout": "Native Settings Sign out confirmation while sidecar publication is held. Release after the ordinary sign-in page appears. Completed audio remains saved and counted once; all enabled profiles remain paused. Signed-out reopen and an actual scheduler tick dispatch no request.",
+    "incompleteFiles": "After the sidecar write, deliberately truncate or remove the held audio temporary file. Restart exposes no new playable take, retains the saved script, reports interruption and makes no provider request. This is controlled incomplete-file rejection, not a general filesystem-corruption claim.",
+    "replay": "Actual automatic prepareRoomNews same-ID replay and typed manual renderNewsTake reconcileOnly true/false return the recovered artifact without dispatch; changed manual input is invalid. Unknown text/audio reconcileOnly IDs return uncertain-write with no new request reservation. Manual text quit while provider response is held stays interrupted; same-ID reconcile/replay never repeats paid work.",
+    "preservedState": "Automatic matrix retains the exact paused duplicate queue and player options, selectedTakeId and the second future profile. Completed publication neither selects its take nor enables DJ playback. The signout case intentionally applies its existing all-profile pause policy.",
+    "cleanup": "All four driver commands terminate zero. Each owned native close checks absence of a captured fatal file. Every owned localhost server is stopped and its control file reset. No per-Electron-process zero-exit claim."
+  },
+  "checks": {
+    "nativeCases": 12,
+    "newControlled": [
+      "A19",
+      "T12"
+    ],
+    "buildAndTypeScript": "No production source/bundle change; all recorded source and bundle hashes match the preceding passing build including TypeScript. No redundant build.",
+    "fullESLint": "Same source snapshot as preceding passing full ESLint. No production edits.",
+    "inventory": {
+      "total": 187,
+      "Review": 109,
+      "Dated": 11,
+      "Recorded": 5,
+      "Controlled": 44,
+      "Live": 9,
+      "External": 9
+    },
+    "starMappings": 27,
+    "overallPercentage": null,
+    "goalComplete": false
+  },
+  "limits": [
+    "Substituted providers and protected dummy accounts establish controlled engineering behavior only. No live billing, editorial quality, audible continuity or observed listener comprehension.",
+    "Controlled quit/reopen and two incomplete-file variants do not prove physical power loss, forced termination at arbitrary instructions, disk-full/permission failures, general corruption or OS sleep/wake behavior.",
+    "The earlier Q10 debugger-associated shutdown diagnostic remains unresolved and is not attributed or fixed by this record. Historical evidence keeps its original dated scope."
+  ],
+  "sha256": {
+    "src/main/news.ts": "9c2076bf3808221980dac5aa2befb9d5532278027ccdcc6197e8324930b6571e",
+    "src/main/prepared-news.ts": "c5f75f9818c3537fbf2cc177d5980328926b1d73202a3952f0da84258df11dd2",
+    "src/main/news-workflow.ts": "16e61a8e65a69bf97a59101befcd6a66e23cdb69350c9e2b854ed3e2772e11a2",
+    "src/main/storage.ts": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+    "src/shared/types.ts": "12c7b75803e661219ce729a9b6a20088c36cf13c9ba3face3ce73aa08ee9c3e1",
+    "src/shared/workflow.ts": "22bbb66493579cc57e09c69119943adec0fa2373d823820a2579bd4996e6cc77",
+    "src/shared/news-preparation-status.ts": "27803f7289d4cf64a0d350a361fe9682231e518e93bd4a71e3590a4df771eae9",
+    "src/renderer/pages/Stations/Stations.page.tsx": "9a0b361a10ee083c30d9197ff608d4e08f367700d32e4310f34eea12cdb00aa1",
+    "src/renderer/pages/Stations/components/NewsBucket.component.tsx": "de83e49585e17339bca32a0866b4c5126e95ceacb1cc4bf9e80d81a50221f5a7",
+    "src/renderer/components/Player/DJPopover.component.tsx": "6ffca314f80c990adb9c1fbf81f970560cd5d2debc786e855098f89551e2e4ec",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": "6f1c4fd3956da61639d94c430605bb321903da2ffac953894278a3c79c6ae2a9",
+    "out/main/index.js": "a9b553b2d478277d897ee492b4bb1acc2bc85edff8e08c399b10c0743e77022a",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+    "out/renderer/assets/index-ZOgMZShw.css": "d8229b9932315a7d35fd286e73333f3c63eb5a2b0c08077751b537daa13118dd",
+    "out/renderer/assets/index-BiujlJ_X.js": "dae277d3897d3c20025fc5e2b8ba6c8fe22d5f4ca02f37b4855ceda060a67013"
+  },
+  "fixtureReproducerSha256": {
+    "/private/tmp/native-recording-publication/build.mjs": "7d7a999d54e9492b4eff24b5137a9100d29c25f6a11f630c2e58980e186dc4d2",
+    "/private/tmp/native-recording-publication/bootstrap.mjs": "084467e78b690b98a090cfbfc5987fc37035dcc11ec5c0e56fc85d6eceb472a3",
+    "/private/tmp/native-recording-publication/out/main/index.js": "3a3472cfbdb810ce8fccce72513d60202e8ebd866ade43e64a131e61618c0346",
+    "/private/tmp/native-recording-publication/run.cjs": "974bc4c1145981e17ecf52c60657eace94d0b9da7d7ca8817b6aa4deb074815f",
+    "/private/tmp/native-recording-publication/run.json": "b11fcf6afaa786e791dce4dba1e6cd34439942c56dc8b1f7543541686f1c2b01",
+    "/private/tmp/native-recording-publication/manual.cjs": "00ea854e6adf622980fcd602646fe32d3f94809f655c001be7f8c1077ce4268a",
+    "/private/tmp/native-recording-publication/manual.json": "eb924a869e6dd28a5958445c0c9df9c29c8ec48dd5bf5197197684b3c9979402",
+    "/private/tmp/native-recording-publication/signout.cjs": "72f7a9294a6014823dd70e43a328708d3f95f73a6617c602eea8dbe9eacbf183",
+    "/private/tmp/native-recording-publication/signout.json": "f0cc9090e04c97beb5d73417ef854c1140eb2f5aa0ec156cc47f7db4f035ecb3",
+    "/private/tmp/native-recording-publication/uncertain.cjs": "e1089f001f10db6bd062469d69d22feec3a00cf992ff617ccf886f9dbf3bb5e5",
+    "/private/tmp/native-recording-publication/uncertain.json": "2044aa524a08a4b32f8fc14fd81d72439ab4ede7ac6b04e88fc44eeb51ccae9e"
+  },
+  "priorBuildEvidence": "2026-10-16-partial-coverage.json"
+}
