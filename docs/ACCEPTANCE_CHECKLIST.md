@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 47 Review, 8 Dated, 3 Recorded, 103 Controlled, 15 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 44 Review, 8 Dated, 3 Recorded, 106 Controlled, 15 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -249,12 +249,12 @@ Source: REQUIREMENTS: Personal radio behavior, Per-DJ voice previews; R4,R8,M3,M
 | D01 | Saved-DJ editor exposes name, personality, language, instructions, music preferences and supported voice/delivery choices. | N+S | Review |
 | D02 | Preset setup is generation-free and saving/testing a DJ never enables preparation or playback. | N+S | Dated |
 | D03 | Editor explains that the listener chooses music and playback frequency belongs to actual DJ playback settings. | N+U | Dated |
-| D04 | DJ defaults off/every 3 songs; natural completions count and skips do not. | N+S | Review |
+| D04 | DJ defaults off/every 3 songs; natural completions count and skips do not. | N+S | Controlled |
 | D05 | Fresh matching eligible recordings wait for suitable endings; empty or unsuitable endings keep music playing. | N+S+U | Review |
 | D06 | No duplicate queue advances, heard-news replay or obsolete placement occurs across pause, failure, late callbacks and interruptions. | N+S | Review |
 | D07 | Player shows selected profile/host/cadence/current-upcoming script/source references and last heard session status accurately. | N+S | Review |
-| D08 | Disable DJ stops its pending/active speech, preserves usable music and leaves preparation unchanged. | N+S | Review |
-| D09 | Music Pause pauses speech/timing; seeking follows Keep the DJ, enabled by default. | N+S | Review |
+| D08 | Disable DJ stops its pending/active speech, preserves usable music and leaves preparation unchanged. | N+S | Controlled |
+| D09 | Music Pause pauses speech/timing; seeking follows Keep the DJ, enabled by default. | N+S | Controlled |
 | D10 | Talkover/between-song transition settings use saved audio without regeneration and produce acceptable audible transitions. | N+L+U | External |
 | D11 | Preview transition uses bundled voice/sample music with no queue/key/provider requirement and never saves timings or starts music. | N+S | Controlled |
 | D12 | Preview own pause does not cancel itself; later transport wins; Stop/finish leaves music paused and volume/shuffle/repeat preserve preview. | N | Controlled |
@@ -419,3 +419,5 @@ D11–D13 evidence,17 October2026: [current transition demo](verification/2026-1
 S04/S05/S09/S10 evidence,17 October2026: [current source boundaries](verification/2026-10-17-source-boundaries.json). Actual service/store/pool checks verify safe redirects/entities, bounded text and voice request allowlists, fixed provider credential destinations, tracking aliases, historical migration and fresh-process assessment/playback deduplication. Seven native source-link cases reject unsafe URLs before a captured OS-open call; seven request/redirect cases pass. Native freshness/warning/date scope remains under S06–S08 Review. Inventory:187 rows,185 active,2 Deferred;50 Review,8 Dated,3 Recorded,100 Controlled,15 Live,9 External.70 active checks remain.
 
 S06–S08 evidence,17 October2026: [current source presentation](verification/2026-10-17-source-presentation.json). Eight native cases cover automatic stale/undated no-request reasons, ready/draft/scheduled/on-air named warnings, missing/invalid/valid dates in history and saved/manual provenance, original links and actual main/service warning persistence. A small configured-feed spacing fix passes a rebuilt native keyboard/spacing/overflow check. Build/TypeScript and full ESLint pass. Inventory:187 rows,185 active,2 Deferred;47 Review,8 Dated,3 Recorded,103 Controlled,15 Live,9 External.67 active checks remain.
+
+D04/D08/D09 evidence,17 October2026: [current DJ listening controls](verification/2026-10-17-dj-listening-controls.json).43 native cases cover defaults/countdown/natural completions, Disable with preparation on/off in both styles, retained or canceled seek behavior, heard-position resume, delayed callbacks and pause across transition phases. Prepared state, queue contents and selection remain correct; ended-song continuation follows normal intent. D05/D06/D07 and Q10 retain their wider open scope. Inventory:187 rows,185 active,2 Deferred;44 Review,8 Dated,3 Recorded,106 Controlled,15 Live,9 External.64 active checks remain.
