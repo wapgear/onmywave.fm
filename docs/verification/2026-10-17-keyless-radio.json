@@ -1,0 +1,128 @@
+{
+  "date": "2026-10-17",
+  "base": "62b02d4cdefc061418c0a3f18b5f68acd914fd81",
+  "productionChanges": false,
+  "scope": "A04 and T11, independent saved playback and preparation",
+  "savedPlayback": {
+    "keylessFreshProcess": true,
+    "manualMusicIsolation": {
+      "playlistUnchanged": true,
+      "jellyfinWrites": 0,
+      "sessionHistoryOrFavoriteRequests": 0,
+      "speechOutsideMusicQueue": true
+    },
+    "cases": [
+      {
+        "kind": "saved audition and pause/resume without provider keys",
+        "result": "passed",
+        "providerCalls": 0,
+        "musicQueueUnchanged": true,
+        "requestsUnchanged": true
+      },
+      {
+        "kind": "manual saved DJ break without provider keys",
+        "result": "passed",
+        "providerCalls": 0,
+        "musicQueueUnchanged": true,
+        "musicAdvancedOnce": true,
+        "preparationAndDJRemainOff": true
+      },
+      {
+        "kind": "automatic DJ playback from saved pool without provider keys",
+        "result": "passed",
+        "providerCalls": 0,
+        "recordingMarkedHeardOnlyInLocalNewsHistory": true,
+        "musicQueueUnchanged": true,
+        "musicAdvancedOnce": true,
+        "automaticPreparationRemainsOff": true
+      }
+    ],
+    "realProviderCalls": 0,
+    "jellyfinWritesAcrossBothSessions": 0,
+    "rendererErrors": 0,
+    "result": "passed",
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    }
+  },
+  "explicitPreparation": {
+    "result": "passed",
+    "explicitSubstitutedTextCalls": 1,
+    "explicitSubstitutedVoiceCalls": 1,
+    "realProviderCalls": 0,
+    "musicRemainsPaused": true,
+    "musicQueueAndOccurrenceAndPositionUnchanged": true,
+    "selectedTakeUnchanged": true,
+    "preparationAndDJChoicesUnchanged": true,
+    "manualToolsInitiallyCollapsed": true,
+    "rendererErrors": 0
+  },
+  "serverObservation": {
+    "methods": {
+      "GET": 54
+    },
+    "nonReadRequests": 0,
+    "sessionHistoryOrFavoriteRequests": 0,
+    "queryStringsAndCredentialsNotLogged": true
+  },
+  "runtime": {
+    "macOS": "27.2 arm64",
+    "electron": "43.7.0",
+    "fixtureNode": "24.4.1",
+    "cssViewport": [
+      1280,
+      720
+    ],
+    "zoomFactor": 1,
+    "hidden": true,
+    "muted": true
+  },
+  "method": {
+    "actualMainPreloadRendererStorageAndMediaHandlers": true,
+    "localJellyfin": "Owned isolated server with20,000 dummy songs and an editable playlist",
+    "keys": "Actual supported null setters and all three provider status reads; shared-provider-key null adapter",
+    "freshProcess": "Close after key removal, reopen same isolated app data with seeding disabled, confirm key statuses remain unconfigured",
+    "automaticSetup": "Actual saved-profile and DJ-playback APIs bind the pool to the saved recording and cadence one; native rendering/playback remains unchanged",
+    "mediaObservation": "Record Audio instances without replacing play/pause or events; advance native currentTime near finite endings",
+    "generation": "Separate explicit UI text/audio actions use dummy provider responses; unrelated external traffic blocked",
+    "actualProviderCalls": 0,
+    "sourceInspection": [
+      "PreparedTakes uses a separate local Audio instance for audition.",
+      "player.scheduleNews uses separate speech Audio and records only local prepared-news heard state.",
+      "dj-playback claims existing takes via nextRoomNews; no prepare/render API call.",
+      "preparedAudio and markPreparedNewsPlayed access the local prepared-news store.",
+      "The Jellyfin service has no speech favorites or history write path."
+    ]
+  },
+  "checks": {
+    "nativeSavedPlaybackExit": 0,
+    "nativeExplicitPreparationExit": 0,
+    "buildTypeScriptAndESLint": "Previously passed at identical application source in the preceding merged snapshot; not rerun for documentation-only changes",
+    "capturesVisuallyInspected": true
+  },
+  "limitations": [
+    "Controlled localhost server and muted actual MP3 playback, not a listener/audible-quality result.",
+    "Automatic playback cadence is set to one for this focused check; default cadence proof remains separate.",
+    "Actual server installations, live provider billing, OS media hardware and observed usability are outside this record.",
+    "Q10 remains open; no deferred viewport/zoom check ran."
+  ],
+  "sourceSha256": {
+    "src/renderer/player.tsx": "481d350ef35d5e11d77848f661419f5eea265cbf643db234c665174255ec562c",
+    "src/renderer/dj-playback.tsx": "31e217aa382a88dcfddbfb0b06b0294825d4acdb7a9bc0127dd8e367adf85c5f",
+    "src/renderer/pages/Stations/Stations.page.tsx": "83c78a0854859e81ea9ec21330f88e53ee6c30fe81651a1551d99d48d59fedff",
+    "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": "a089c86e2b2678ed77f2559648cdfeaca072ba6bb46453a2f4e8befb2f68e09e",
+    "src/main/prepared-news.ts": "0d0d40b27e899d04bea54d064d62017643c58211997f8c3e36f896b26c24bd2d",
+    "src/main/media.ts": "6768544bd3215e37187a12293571c894a1023619ebe8f09e25403bdec0bfb671",
+    "src/main/jellyfin.ts": "22f083327dfdcbb0952d9750662df95d13c31e09a83f628f8c1e3393072f90eb",
+    "src/shared/news-pool.ts": "2f8ac1bde20b4a9adfd3beedf015e2d7e843dda584e7713be29e1a4c7ad3fa77"
+  },
+  "fixtureSha256": {
+    "build.mjs": "d35916a0a1eae65dd612082eb44941256c50db7a4fa615ad2b6147b82ce91c25",
+    "bootstrap.mjs": "32f6d2bbaf688b091ea743e35ab64b678b166b83c0b8d015c89e829df957fea1",
+    "server.mjs": "5f3372336c06708183869f8ff249f86a3582dd649d53a0801163940d249a2c8f",
+    "run.cjs": "1413e4c42812a999396f7684cda53255f716e744ade9a768f512c0202726006b",
+    "preparation.cjs": "b590801d12436ac856cb9f77acd7ab3ab531c9dcd6c6c6292c672eb0273fce36"
+  }
+}
