@@ -60,6 +60,8 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   const preparationError = manual?.error ? new WaveError(manual.error) : null;
   const preparationStatusUnknown = library.isPending || !!library.error || state.isPending || !!state.error;
   const latestStoredRequest = library.data?.requests.at(-1);
+  const preparationHistory = library.data?.requests.filter(value => value.status !== 'complete') ?? [];
+  const [historyLimit, setHistoryLimit] = useState(10);
   const restoredInterruption = !preparationStatusUnknown && state.data && !manual && latestStoredRequest?.status === 'interrupted'
     && !state.data.roomProfiles.some(profile => profile.workflowDraft.newsLastRun?.requestId === latestStoredRequest.requestId) ? latestStoredRequest : null;
   const cancellationPending = useIsMutating({ mutationKey: ['newsCancellation'] }) > 0;
@@ -339,6 +341,15 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
       requestHistory.current.scrollIntoView({ block: 'start', behavior: 'auto' });
     });
   }
+  function showOlderPreparations() {
+    const firstOlder = preparationHistory.at(-historyLimit - 1);
+    setHistoryLimit(limit => limit + 10);
+    requestAnimationFrame(() => {
+      const row = firstOlder ? document.getElementById(`preparation-request-${firstOlder.requestId}`) : null;
+      row?.focus({ preventScroll: true });
+      row?.scrollIntoView({ block: 'center' });
+    });
+  }
   const audioCompletion = configDraft.audioCompletion;
   useEffect(() => {
     if (audioCompletion && !manualPending && tab === 'settings' && manualTools.current?.open) audioResultRef.current?.scrollIntoView({ block: 'nearest', behavior: 'auto' });
@@ -405,7 +416,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
         <ErrorNotice error={library.error} retry={() => void library.refetch()} />
       {library.isPending && <p className="loading" role="status">Opening saved audio…</p>}
       {library.data && <PreparedTakes active={tab === 'saved'} library={library.data} refresh={() => void refresh()} loadDraft={loadDraft} />}
-      {!!library.data?.requests.some(value => value.status !== 'complete') && <details id="preparation-history" className="room-request-history" ref={requestHistory}><summary>Preparation history</summary>{library.data.requests.filter(value => value.status !== 'complete').slice(-10).reverse().map(value => <p key={value.requestId}><strong>{value.kind === 'script' ? 'News text' : 'Audio take'} · {value.status === 'skipped' ? 'No relevant story' : value.status === 'partial-coverage' ? 'Incomplete source coverage' : value.status}</strong><span>{preparationOrigin(value)}</span><span>{value.error || (value.status === 'skipped' ? 'No audio was generated for this attempt.' : 'No automatic provider retry. Completed results remain in saved audio.')}</span></p>)}</details>}
+      {!!preparationHistory.length && <details id="preparation-history" className="room-request-history" ref={requestHistory}><summary>Preparation history</summary>{preparationHistory.slice(-historyLimit).reverse().map(value => <p key={value.requestId} id={`preparation-request-${value.requestId}`} tabIndex={-1}><strong>{value.kind === 'script' ? 'News text' : 'Audio take'} · {value.status === 'skipped' ? 'No relevant story' : value.status === 'partial-coverage' ? 'Incomplete source coverage' : value.status}</strong><span>{preparationOrigin(value)}</span><span>{value.error || (value.status === 'skipped' ? 'No audio was generated for this attempt.' : 'No automatic provider retry. Completed results remain in saved audio.')}</span></p>)}{preparationHistory.length > historyLimit && <button className="room-link" onClick={showOlderPreparations}>Show older preparations</button>}</details>}
       </section>
     </div>
     {scriptReplacement && <Dialog title="Replace edited script?" close={() => setScriptReplacement(null)}>
