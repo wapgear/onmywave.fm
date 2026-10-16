@@ -784,3 +784,8 @@ Renderer/IPC and account-bound media checks pass without a production change. Q0
 ## Filter focus correction and desktop baseline, 16 October 2026
 
 Fixed shared filter scroll dismissal stealing focus from the next Tab target. Native1280×720 normal-zoom keyboard recovery, build/TypeScript and full ESLint pass. Q07 is Controlled. Anton deferred smaller-window/enlarged-zoom verification; V14/V15 are Deferred and existing resize behavior stays. Current inventory has187 rows,185 active and2 Deferred, with104 Review,9 Dated,5 Recorded,49 Controlled,9 Live and9 External. See the [filter keyboard record](verification/2026-10-16-filter-keyboard.json) for reproduction, capture, methods and limitations.
+
+
+## Song action keyboard dismissal, 16 October 2026
+
+Fixed song actions staying open after Tab moves to the next row. Focus-leave and outside-scroll dismissal preserve the next target; Escape/action behavior remains intact. Four native1280×720 normal-zoom cases pass, including one paused queue append with exact order/current occurrence retained. Build/TypeScript/full ESLint pass. Q07 and R12 now explicitly include song actions; inventory stays187 rows,185 active and2 Deferred. See the [song actions record](verification/2026-10-16-song-actions.json). No deferred checks were run.

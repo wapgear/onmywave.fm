@@ -1,0 +1,101 @@
+{
+  "date": "2026-10-16",
+  "scope": "Ordinary song-action keyboard dismissal and queue action at1280\u00d7720 normal zoom",
+  "base": "d027ffbc1acb3f24ddb54302b8c906e6bfcb2d7e",
+  "before": {
+    "open": true,
+    "focusedTag": "TR",
+    "focusedRow": "00000000000000000000000000002af6",
+    "focusedInsideMenu": false
+  },
+  "after": {
+    "cases": [
+      {
+        "kind": "forward-tab",
+        "popupCloses": true,
+        "nextSongFocusPreserved": true,
+        "result": "passed"
+      },
+      {
+        "kind": "backward-tab",
+        "popupCloses": true,
+        "triggerFocused": true,
+        "result": "passed"
+      },
+      {
+        "kind": "escape-and-external-scroll",
+        "popupCloses": true,
+        "triggerRestoredWhenFocusWasInside": true,
+        "result": "passed"
+      },
+      {
+        "kind": "keyboard-queue-action",
+        "onlyRequestedSongAppended": true,
+        "queueOrderAndCurrentOccurrencePreserved": true,
+        "musicRemainsPaused": true,
+        "popupCloses": true,
+        "providerCalls": 0,
+        "result": "passed"
+      }
+    ],
+    "viewport": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "result": "passed"
+  },
+  "change": "Track menus dismiss when focus leaves them. Outside scrolling only hides a still-open menu, so it cannot unconditionally override focus on the next row/control. Explicit Escape and action selection retain opener restoration.",
+  "method": {
+    "runtime": "macOS27.2 arm64, Electron43.7.0",
+    "application": "Current production renderer/preload and actual source-bundled main/services/storage/HTTP/media with fresh protected dummy account and localhost catalog. Native window hidden/muted; shared Keychain/provider adapters substituted. No external or billed request.",
+    "before": "At1280\u00d7720, keyboard-open the first song actions, End to Song details, then Tab. Native focus moves to the next TR while the old popup stays open.",
+    "after": "Same forward Tab closes the popup and leaves focus on the exact next song. Shift+Tab from the first action closes to the trigger. Escape and external scrolling close and restore the trigger when focus was inside. ArrowDown/Enter on Add to queue appends only Song10000, retaining the prior duplicate queue/order/current index and paused intent.",
+    "sourceReview": "Searched all renderer scroll-dismiss listeners. FilterSelect already uses conditional native dismissal after the preceding fix; TrackMenu was the remaining listener that unconditionally refocused its trigger. No new abstraction or dependency.",
+    "cleanup": "Final native driver terminates zero, owned native close checks absence of captured fatal output, localhost server stops and control file resets. Zero provider calls.",
+    "baseline": "Only1280\u00d7720 at normal zoom. No deferred smaller-window or enlarged-zoom check."
+  },
+  "checks": {
+    "buildIncludingTypeScript": "passed",
+    "fullESLint": "passed",
+    "nativeCases": 4,
+    "inventory": {
+      "total": 187,
+      "active": 185,
+      "Review": 104,
+      "Dated": 9,
+      "Recorded": 5,
+      "Controlled": 49,
+      "Live": 9,
+      "External": 9,
+      "Deferred": 2
+    },
+    "starMappings": 27,
+    "overallPercentage": null,
+    "goalComplete": false
+  },
+  "limits": [
+    "This shared action-popup check does not establish full playlist permissions/mutations or all catalog-refresh behavior.",
+    "No VoiceOver, user-comprehension, live-provider or audible-quality claim. Earlier Q10 shutdown diagnostic remains open."
+  ],
+  "sha256": {
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "c6d1b4c4f94a8cc67f9c052526b054ad8b716fbb3ceb9f83e347946bd4ad3a63",
+    "src/renderer/components/FilterSelect/FilterSelect.component.tsx": "b6c4242190b3d107c5145f464db5f3b4912736c70c940a3344c73aa26463ec26",
+    "src/renderer/pages/Songs/VirtualSongs.component.tsx": "95ada95c0533bb1e462a818f6981c60d22cd4a9a8e4df27b8cea6cc3119606e4",
+    "src/renderer/player.tsx": "0d72985571ede7ae6562a95220c03bbdfec6f9367c0741e131a06481bd40e7f6",
+    "out/main/index.js": "a9b553b2d478277d897ee492b4bb1acc2bc85edff8e08c399b10c0743e77022a",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+    "out/renderer/assets/index-vmpY1ARA.js": "05bb4fdeebd8854d3bc4ce23959bcc4f415298b96fd212cd22eda6b44b8774e3",
+    "out/renderer/assets/index-ZOgMZShw.css": "d8229b9932315a7d35fd286e73333f3c63eb5a2b0c08077751b537daa13118dd"
+  },
+  "fixtureReproducerSha256": {
+    "/private/tmp/native-recording-publication/build.mjs": "7d7a999d54e9492b4eff24b5137a9100d29c25f6a11f630c2e58980e186dc4d2",
+    "/private/tmp/native-recording-publication/bootstrap.mjs": "084467e78b690b98a090cfbfc5987fc37035dcc11ec5c0e56fc85d6eceb472a3",
+    "/private/tmp/native-recording-publication/track-menu.cjs": "17b1cad52843f048d44a1e1f77b45f6377472a9678ffb0a5f3b50d4b9cf9490e",
+    "/private/tmp/native-recording-publication/track-menu-verified.cjs": "178be43e2c5e79fd06ce9579f26180e4342ad19f5e2984ce447144c45c29d8a1",
+    "/private/tmp/native-recording-publication/track-menu-verified.json": "21786d1fe7477f383236ed8a7b368a21151e7e7d49c924f1c4961d0a2d87b54b",
+    "/private/tmp/track-menu-before.json": "e6687d8df9008c8ef41a0f7ffd9050b989d5a91a9b66b27d14a5dce92c9a19f9",
+    "/private/tmp/song-action-build.log": "35cf46da6220c89694b57d4a6b7ec44b39c5039a6b3936de9be3512f93b3d2b9",
+    "/private/tmp/song-action-lint.log": "6f1680e0ff047e07a06dcf9afc079770fad3f871d47a52ee12dccaaa84366d63"
+  }
+}

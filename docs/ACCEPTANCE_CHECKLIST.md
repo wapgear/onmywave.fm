@@ -279,7 +279,7 @@ Source: REQUIREMENTS: Design acceptance, stack, settings, acceptance and release
 | Q04 | Media URLs/handles reject revoked/missing/cross-account resources and off-origin redirects without leaking tokens. | S+N | Controlled |
 | Q05 | Local secret/recovery files have appropriate private modes and no inspection/test touches personal entries. | I+S+O | Review |
 | Q06 | All essential controls have accessible names, visible focus and keyboard operation; source checkbox groups have names. | N+O | Review |
-| Q07 | Filter Tab/Escape, dialogs and setup detours restore logical focus, including removed-opener fallback to page heading. | N | Controlled |
+| Q07 | Filter/song-action Tab/Escape, dialogs and setup detours restore logical focus, including removed-opener fallback to page heading. | N | Controlled |
 | Q08 | Interactive recovery actions are outside live status/error announcements; loading/error/empty states remain actionable. | N+O | Review |
 | Q09 | Full VoiceOver interaction works through music, setup, pending/failure/recovery and dialogs. | N+O | External |
 | Q10 | Supported macOS/architecture/display combinations and hardware integration are explicitly verified. | O | External |
@@ -292,6 +292,7 @@ Source: REQUIREMENTS: Design acceptance, stack, settings, acceptance and release
 
 | Check | Reviewed evidence | Scope limit |
 | --- | --- | --- |
+| Q07 song actions | [Song actions record](verification/2026-10-16-song-actions.json):native forward/backward Tab, Escape, external scroll and explicit queue action at1280×720 normal zoom | Shared popup behavior only; broader catalog/playlist acceptance remains separate. |
 | Q07 | [Filter keyboard record](verification/2026-10-16-filter-keyboard.json):reproduced Tab focus rewind, shared-handler fix, native filter/scroll/selection, modal containment, removed-opener fallback and setup detours at1280×720 normal zoom | User deferred smaller/enlarged cases after earlier tests. This focused journey does not establish all controls, VoiceOver or observed usability. |
 | Q01,Q04 | [Trust-boundary record](verification/2026-10-16-trust-boundaries.json):actual native isolation/CSP/navigation, second-window IPC denial, eight malformed mutations, opaque range playback, redirect limits and revoked/cross-account handles | Dynamic media cases exercise music; artwork shares the inspected proxy. Local saved news remains shared by contract. Focused checks do not establish exhaustive fuzzing, OS Keychain or a penetration test. |
 | T09,T10 | [Listener journey record](verification/2026-10-16-listener-journey.json):native immutable writing/rendering provenance after setup edits/restart; missing, empty and truncated audio controls plus explicit replacement and durable selection | Includes a controlled full first-radio journey and two inspected captures. Provider responses are substituted; first sign-in, live quality, audible transitions and observed listener comprehension remain separate. |

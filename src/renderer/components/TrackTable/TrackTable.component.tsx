@@ -98,7 +98,9 @@ function TrackMenu({ name, children }: { name: string; children: ReactNode }) {
   const close = useCallback(() => { menu.current?.hidePopover(); trigger.current?.focus({ preventScroll: true }); }, []);
   useEffect(() => {
     if (!open) return;
-    const dismiss = (event: Event) => { if (!menu.current?.contains(event.target as Node)) close(); };
+    const dismiss = (event: Event) => {
+      if (menu.current?.matches(':popover-open') && !menu.current.contains(event.target as Node)) menu.current.hidePopover();
+    };
     document.addEventListener('scroll', dismiss, true);
     window.addEventListener('resize', close);
     return () => { document.removeEventListener('scroll', dismiss, true); window.removeEventListener('resize', close); };
@@ -109,7 +111,7 @@ function TrackMenu({ name, children }: { name: string; children: ReactNode }) {
     const height = node.getBoundingClientRect().height || 275;
     node.style.left = `${Math.max(8, Math.min(window.innerWidth - 218, rect.right - 205))}px`;
     node.style.top = `${Math.max(8, Math.min(rect.bottom + 4, window.innerHeight - height - 8))}px`;
-  }}>•••</button><div id={id} ref={menu} popover="auto" role="group" className="row-menu track-popover" aria-label={`Actions for ${name}`} onToggle={event => {
+  }}>•••</button><div id={id} ref={menu} popover="auto" role="group" className="row-menu track-popover" aria-label={`Actions for ${name}`} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) menu.current?.hidePopover(); }} onToggle={event => {
     setOpen(event.newState === 'open');
     if (event.newState === 'open') {
       const node = menu.current!;
