@@ -1,0 +1,251 @@
+{
+  "date": "2026-10-16",
+  "base": "9c0a9cec1dd8540ccfc1d946f30d18203e867cb4",
+  "problem": "A missing saved MP3 displayed an error, but restoring it and explicitly refreshing/listening could reuse the failed media result without another protocol request. Previously loaded audio could also mask a removed file.",
+  "before": {
+    "freshRendererMissingFileDetected": true,
+    "restoredFileExplicitRefreshListenFailed": true,
+    "preparedProtocolReads": [
+      {
+        "id": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "bytes": 0
+      }
+    ],
+    "explanation": "Only the initial missing-file read reached the prepared media handler. The retry reused the same URL."
+  },
+  "change": "New audition and scheduled-news attempts append a unique play query parameter through one renderer helper. Media routing still identifies the saved file by pathname. Pause/Resume retains the same element and URL. No provider dispatch, saved manifest change or automatic retry is added.",
+  "runtime": {
+    "macOS": "27.2 arm64",
+    "electron": "43.7.0",
+    "fixtureNode": "24.4.1",
+    "nativeWindow": {
+      "cssWidth": 1280,
+      "cssHeight": 720,
+      "zoomFactor": 1,
+      "muted": true,
+      "hidden": true
+    }
+  },
+  "verification": {
+    "auditionMatrix": {
+      "cases": [
+        {
+          "kind": "startup pause",
+          "result": "passed",
+          "lateRejectedStartDoesNotOverwritePause": true,
+          "rapidResumeRetainsPosition": true
+        },
+        {
+          "kind": "preferences",
+          "result": "passed",
+          "sameAudioContinues": true,
+          "actualVolume": 0.01,
+          "stopLeavesMusicPaused": true
+        },
+        {
+          "kind": "leave tab and page",
+          "result": "passed",
+          "noMusicAutoResume": true
+        },
+        {
+          "kind": "next",
+          "result": "passed",
+          "disposed": true,
+          "staleErrorIgnored": true,
+          "musicIntent": "paused"
+        },
+        {
+          "kind": "previous",
+          "result": "passed",
+          "disposed": true,
+          "staleErrorIgnored": true,
+          "musicIntent": "paused"
+        },
+        {
+          "kind": "seek",
+          "result": "passed",
+          "disposed": true,
+          "staleErrorIgnored": true,
+          "musicIntent": "paused"
+        },
+        {
+          "kind": "media-pause",
+          "result": "passed",
+          "disposed": true,
+          "staleErrorIgnored": true,
+          "musicIntent": "paused"
+        },
+        {
+          "kind": "music-play",
+          "result": "passed",
+          "disposed": true,
+          "staleErrorIgnored": true,
+          "musicIntent": "playing"
+        },
+        {
+          "kind": "cancel loading late rejection",
+          "result": "passed"
+        },
+        {
+          "kind": "missing file explicit retry",
+          "result": "passed",
+          "currentFailureVisible": true,
+          "explicitRefreshListenRecovers": true
+        },
+        {
+          "kind": "natural finish",
+          "result": "passed",
+          "musicRemainsPaused": true
+        }
+      ],
+      "baseline": {
+        "width": 1280,
+        "height": 720,
+        "zoom": 1
+      },
+      "invariants": {
+        "noProviderKeys": true,
+        "providerCalls": 0,
+        "selectionUnchanged": true,
+        "deliveryUnchanged": true,
+        "requestsUnchanged": true,
+        "optInsUnchanged": true,
+        "musicQueueIdsUnchanged": true,
+        "rendererErrors": 0
+      },
+      "result": "passed"
+    },
+    "breakRecovery": {
+      "cases": [
+        {
+          "kind": "audition from playing music",
+          "result": "passed",
+          "musicPausedWithoutSelfCancelling": true
+        },
+        {
+          "kind": "scheduled break repaired file",
+          "result": "passed",
+          "cachedSuccessNotReusedForMissingFile": true,
+          "explicitScheduleRetryRecovers": true,
+          "noSpeechStarted": true
+        }
+      ],
+      "baseline": {
+        "width": 1280,
+        "height": 720,
+        "zoom": 1
+      },
+      "protocolReads": [
+        {
+          "id": "d728d9c8-036f-4b36-b237-afc670cfd843",
+          "bytes": 222720
+        },
+        {
+          "id": "d728d9c8-036f-4b36-b237-afc670cfd843",
+          "bytes": 0
+        },
+        {
+          "id": "d728d9c8-036f-4b36-b237-afc670cfd843",
+          "bytes": 222720
+        }
+      ],
+      "invariants": {
+        "noProviderKeys": true,
+        "providerCalls": 0,
+        "selectionUnchanged": true,
+        "deliveryUnchanged": true,
+        "requestsUnchanged": true,
+        "optInsUnchanged": true,
+        "musicQueueIdsUnchanged": true,
+        "rendererErrors": 0
+      },
+      "result": "passed"
+    },
+    "lateAndSelection": {
+      "cases": [
+        {
+          "kind": "audition from playing music",
+          "result": "passed",
+          "musicPausedWithoutSelfCancelling": true
+        },
+        {
+          "kind": "held audition yields to next",
+          "result": "passed",
+          "latePlayRejectionAndErrorIgnored": true
+        },
+        {
+          "kind": "selected take retained",
+          "result": "passed"
+        }
+      ],
+      "baseline": {
+        "width": 1280,
+        "height": 720,
+        "zoom": 1
+      },
+      "protocolReads": [
+        {
+          "id": "d728d9c8-036f-4b36-b237-afc670cfd843",
+          "bytes": 222720
+        },
+        {
+          "id": "d728d9c8-036f-4b36-b237-afc670cfd843",
+          "bytes": 222720
+        },
+        {
+          "id": "d728d9c8-036f-4b36-b237-afc670cfd843",
+          "bytes": 222720
+        }
+      ],
+      "invariants": {
+        "noProviderKeys": true,
+        "providerCalls": 0,
+        "selectionUnchanged": true,
+        "deliveryUnchanged": true,
+        "requestsUnchanged": true,
+        "optInsUnchanged": true,
+        "musicQueueIdsUnchanged": true,
+        "rendererErrors": 0
+      },
+      "result": "passed"
+    }
+  },
+  "scope": {
+    "productionRendererAndPreload": true,
+    "actualMainMediaAndSavedStore": true,
+    "localDummyJellyfin": true,
+    "sharedProviderKeyAdapter": "returns null",
+    "providerFiles": "absent",
+    "providerNetwork": "blocked",
+    "nativeAudio": "real MP3 and WAV decoded, muted",
+    "controlledPerturbations": [
+      "delay/reject prepared audio play promises",
+      "invoke registered MediaSession Pause handler",
+      "invoke obsolete error callback",
+      "move and restore only the owned fixture MP3"
+    ],
+    "noUnitFrameworkAdded": true
+  },
+  "limitations": [
+    "Muted checks do not establish audible quality.",
+    "MediaSession Pause was invoked through its registered renderer handler, not a physical media key.",
+    "No live provider quality, VoiceOver, other macOS versions, smaller windows or enlarged zoom covered.",
+    "T11 stays Review because this round does not cover every playlist/favorites/history interaction.",
+    "The earlier Q10 shutdown diagnostic remains unattributed and open."
+  ],
+  "sourceSha256": {
+    "src/renderer/audio.ts": "48884e62f20bea6779e716f685407f780eaaca8a06b86006e686c4d4bdcdc0aa",
+    "src/renderer/player.tsx": "481d350ef35d5e11d77848f661419f5eea265cbf643db234c665174255ec562c",
+    "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": "47911b90b37a4f0d72ea85529f3585546399c435f9bb8923981591fa13eba002",
+    "src/main/media.ts": "6768544bd3215e37187a12293571c894a1023619ebe8f09e25403bdec0bfb671",
+    "src/main/prepared-news.ts": "c5f75f9818c3537fbf2cc177d5980328926b1d73202a3952f0da84258df11dd2"
+  },
+  "fixtureSha256": {
+    "build.mjs": "7ce2324724e03ba0dc75898380d36d019b2db4c010ab439eb523d648a4032675",
+    "bootstrap.mjs": "1056d35d640c6592a76168737990b7eec60be6a6034e2ce9ccbf7f6ee35bd927",
+    "run.cjs": "032acdcb08fb0f6cfb36bf9f47e4cdcf8eeb0aff7f91160b6ad7288a9de090c4",
+    "break.cjs": "cb7dc59350d92c446a6c54d2f90c08fc749a25420a9f05d4fde9c269014be482",
+    "late.cjs": "27ba07f4bd5979377fefcf31a14c3e48cf1f9298b76c7a8ebd27c1c3a84f7b65"
+  },
+  "sourceNote": "After the native matrices, only the freshAudioUrl import was moved beside the existing local api import in player.tsx. No executable statement changed."
+}
