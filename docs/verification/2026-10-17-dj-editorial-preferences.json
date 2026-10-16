@@ -1,0 +1,247 @@
+{
+  "date": "2026-10-17",
+  "base": "c5d18d4c0143587ae3f3116a0f934e09462fc227",
+  "scope": [
+    "D01",
+    "S09 request boundary revalidation"
+  ],
+  "productionChanges": true,
+  "problem": {
+    "result": "reproduced",
+    "savedExclusionsCharacters": 30,
+    "sentExclusions": false,
+    "savedInstructionsCharacters": 5000,
+    "sentInstructionsCharacters": 4000,
+    "savedMusicPreferencesCharacters": 2000
+  },
+  "decision": {
+    "behavior": "Use the full existing 20,000-character limit for each saved editorial field; validate before source reads, candidate reservation or provider dispatch. Do not rewrite stored text.",
+    "pairedReview": "Boris initially favored smaller dispatch limits with explicit errors. Nadia favored honoring the existing saved-field contract. After challenge both accepted complete bounded fields, with input-size, context and cost reservations. Nadia review caught nullish defaults hiding missing values; final raw-value validation removes them.",
+    "exclusions": "Separate host.exclusions guides selection and wording through provider instructions. Music preferences guide style and never choose the queue."
+  },
+  "service": {
+    "result": "passed",
+    "boundary": {
+      "instructions": 20000,
+      "musicPreferences": 20000,
+      "exclusions": 20000,
+      "totalEditorialCharacters": 60000
+    },
+    "cases": [
+      {
+        "kind": "full valid boundary request",
+        "result": "passed",
+        "allSavedTextSent": true
+      },
+      {
+        "kind": "over-limit instructions",
+        "result": "passed",
+        "noSourceOrProviderRequests": true,
+        "noReviewReservation": true
+      },
+      {
+        "kind": "over-limit musicPreferences",
+        "result": "passed",
+        "noSourceOrProviderRequests": true,
+        "noReviewReservation": true
+      },
+      {
+        "kind": "over-limit exclusions",
+        "result": "passed",
+        "noSourceOrProviderRequests": true,
+        "noReviewReservation": true
+      },
+      {
+        "kind": "invalid instructions undefined",
+        "result": "passed",
+        "noSourceOrProviderRequests": true,
+        "noReviewReservation": true
+      },
+      {
+        "kind": "invalid musicPreferences undefined",
+        "result": "passed",
+        "noSourceOrProviderRequests": true,
+        "noReviewReservation": true
+      },
+      {
+        "kind": "invalid exclusions undefined",
+        "result": "passed",
+        "noSourceOrProviderRequests": true,
+        "noReviewReservation": true
+      },
+      {
+        "kind": "invalid instructions null",
+        "result": "passed",
+        "noSourceOrProviderRequests": true,
+        "noReviewReservation": true
+      },
+      {
+        "kind": "invalid musicPreferences null",
+        "result": "passed",
+        "noSourceOrProviderRequests": true,
+        "noReviewReservation": true
+      },
+      {
+        "kind": "invalid exclusions null",
+        "result": "passed",
+        "noSourceOrProviderRequests": true,
+        "noReviewReservation": true
+      },
+      {
+        "kind": "invalid instructions 123",
+        "result": "passed",
+        "noSourceOrProviderRequests": true,
+        "noReviewReservation": true
+      },
+      {
+        "kind": "invalid musicPreferences 123",
+        "result": "passed",
+        "noSourceOrProviderRequests": true,
+        "noReviewReservation": true
+      },
+      {
+        "kind": "invalid exclusions 123",
+        "result": "passed",
+        "noSourceOrProviderRequests": true,
+        "noReviewReservation": true
+      }
+    ]
+  },
+  "requestBoundaries": {
+    "result": "passed",
+    "cases": [
+      {
+        "kind": "bounded text request allowlist",
+        "result": "passed",
+        "sourceRequests": 5,
+        "textRequests": 1,
+        "articles": 200,
+        "titleMaximum": 240,
+        "excerptMaximum": 1500,
+        "untrustedDataInstruction": true,
+        "noMusicFilesCatalogOrCredentialFields": true,
+        "credentialsOnlyInIntendedHeaders": true
+      },
+      {
+        "kind": "voice request allowlist",
+        "result": "passed",
+        "onlyIntendedScriptTagsAndDeliverySettings": true,
+        "noArticleMusicCatalogOrTextRequest": true,
+        "credentialsOnlyInIntendedHeader": true
+      },
+      {
+        "kind": "unsafe redirect file:",
+        "result": "passed",
+        "notFollowed": true,
+        "noProviderRequest": true
+      },
+      {
+        "kind": "unsafe redirect javascript:",
+        "result": "passed",
+        "notFollowed": true,
+        "noProviderRequest": true
+      },
+      {
+        "kind": "unsafe redirect https:",
+        "result": "passed",
+        "notFollowed": true,
+        "noProviderRequest": true
+      },
+      {
+        "kind": "unsafe article protocol",
+        "result": "passed",
+        "notSubmittedToProvider": true
+      },
+      {
+        "kind": "redirect hop ceiling",
+        "result": "passed",
+        "requests": 4,
+        "noProviderRequest": true
+      }
+    ]
+  },
+  "native": {
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "cases": [
+      {
+        "kind": "native saved host fields",
+        "result": "passed",
+        "allFieldsPersist": true,
+        "editorialLimitAndCostVisible": true,
+        "voiceAndDeliveryPersist": true,
+        "noGenerationOrOptInChange": true
+      },
+      {
+        "kind": "cancel and fresh-process restoration",
+        "result": "passed",
+        "cancelPreservesSavedData": true,
+        "allSavedFieldsRestored": true,
+        "noProviderRequest": true
+      },
+      {
+        "kind": "manual saved preferences request",
+        "result": "passed",
+        "instructionsCharacters": 20000,
+        "exclusionsCharacters": 20000,
+        "musicPreferencesCharacters": 20000,
+        "contextCharacters": 60531,
+        "noTruncation": true
+      },
+      {
+        "kind": "automatic saved preferences request",
+        "result": "passed",
+        "instructionsCharacters": 20000,
+        "exclusionsCharacters": 20000,
+        "musicPreferencesCharacters": 20000,
+        "contextCharacters": 60528,
+        "noTruncation": true,
+        "playbackAndSelectionUnchanged": true
+      }
+    ],
+    "result": "passed",
+    "rendererErrors": 0,
+    "fatalFileAbsent": true,
+    "controlledTextRequests": 2,
+    "controlledVoiceRequests": 1
+  },
+  "sourceIntegration": "Actual NewsService RSS/Atom/HN/X partial coverage, parsing, safe redirects and entity checks passed with the current required exclusions field.",
+  "checks": {
+    "buildTypeScript": "npm run build passed",
+    "lint": "npm run lint passed",
+    "nativeScreenshot": "2026-10-17-dj-editorial-preferences.png, inspected at 1280x720 and 100% app zoom; Retina capture is 2560x1440",
+    "driverCorrections": "Exact textarea label lookup included seeded textarea content. A broad Name lookup also matched a hidden descriptive field. Visible textbox role with anchored field name resolves the driver ambiguity; no application behavior changed for those failures."
+  },
+  "limits": [
+    "Source and provider replies are controlled; no paid provider requests were made. This establishes request construction, not actual model compliance, content quality, latency or billing.",
+    "Freeform exclusions are model-interpreted and are not a deterministic topic filter.",
+    "Maximum editorial input is 60,000 characters plus bounded source/music context; longer input may increase cost and consume context. Native manual and automatic payload sizes are recorded above.",
+    "D07 and all other open acceptance rows retain their broader scope.",
+    "No deferred viewport or enlarged-zoom checks ran."
+  ],
+  "sourceSha256": {
+    "src/main/news.ts": "a128b7671dd080df1cd8f87294633adc657e88ca63dfc1e8bf8bbb767c8c1ce9",
+    "src/renderer/pages/DJs/components/DJEditor.component.tsx": "4046217da52424c654bbf90aaae7d4aafea2cc71a649b409312c776c97614684",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/main/storage.ts": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+    "src/preload/index.ts": "0c7edf2153d5210b24a0fac9db667fd254e324366d4737653578ef067c1eac63",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370"
+  },
+  "fixtureSha256": {
+    "/private/tmp/dj-editorial-current/before.mjs": "0334ceb7025dab5c75af250315d8a504cd5c643540e52f4a19bd9d5e431f5adc",
+    "/private/tmp/dj-editorial-current/after.mjs": "3302f401b95dd65e1987705aabf73b961f85eaa4eff44607308b662fccda06cb",
+    "/private/tmp/dj-editorial-current/news-after.mjs": "68358de9bf35cdb396bdeb4ca3034b80a7ad295415288235e2decc43cff55638",
+    "/private/tmp/dj-editorial-current/requests.mjs": "0431ea0581ce4cfc2e274f88ed3275a2287bb23c161126a7e2ab7941c9ac0752",
+    "/private/tmp/dj-editorial-current/native.cjs": "59fe3302aae39ec266e693edb5bba4bd3d1e4e42c54e37dd5d5c46e45122d28d",
+    "/private/tmp/dj-editorial-current/bootstrap.mjs": "084467e78b690b98a090cfbfc5987fc37035dcc11ec5c0e56fc85d6eceb472a3",
+    "/private/tmp/dj-editorial-current/build.mjs": "20b19c1e8a1faee5fa47a2d279082b45edb66ccf5af2777919c4c876416da883",
+    "/private/tmp/dj-editorial-current/server.mjs": "000e5baf89e61cc578e6e4e2b109a2c412f836d6c1fe320e0ebc07c63187b084",
+    "/private/tmp/dj-editorial-current/sources.mjs": "184718b6a010e93f738cc0469ba8d4e3382204f29ebd566e63314e05103ea24c",
+    "/private/tmp/dj-editorial-current/sources-after.log": "bd9fc1fbd082e406fbf895f2d86664c5bd09598f9c7aaa224ca918a112d5a3a0",
+    "/private/tmp/dj-editorial-current/build.log": "74953aff2122bdb52ab10b300f0336af8c6fd6fc638c2989cb1d109f5d24108d",
+    "/private/tmp/dj-editorial-current/lint.log": "6f1680e0ff047e07a06dcf9afc079770fad3f871d47a52ee12dccaaa84366d63"
+  }
+}

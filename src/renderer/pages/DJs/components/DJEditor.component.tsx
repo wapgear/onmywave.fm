@@ -92,6 +92,7 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
         {!!news.elevenVoiceId && <VoicePreview key={news.elevenVoiceId} resource={{ kind: 'voice', voiceId: news.elevenVoiceId }} label={`Voice ${news.elevenVoiceId}`} playbackId="dj-editor" activeId={previewingVoice} onStart={setPreviewingVoice} active={mode === 'advanced'} />}
       </section>
       <section className="dj-profile-advanced"><h3>Host preferences</h3><div>
+        <p className="form-hint">Your full host instructions, music preferences and exclusions are sent to OpenAI for news preparation, up to 20,000 characters per field. Longer text can increase usage and cost. Music preferences guide the host’s style; you choose the music queue.</p>
         {field('description', 'Short description', 'Optional description')}
         {field('instructions', 'Host instructions', 'How should this host introduce a story?', true)}
         {field('musicPreferences', 'Music preferences', 'Style or artists to keep in mind when writing', true)}
