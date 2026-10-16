@@ -21,3 +21,5 @@
 .room-automatic .room-dj-schedule{margin-top:28px}.room-dj-schedule>h2{font-size:16px}.room-dj-schedule .settings-description,.room-dj-schedule .settings-footnote{font-size:12px;color:var(--muted);line-height:1.7;margin:8px 0 14px}.room-automatic>button{margin:12px 0}.room-dj-schedule .dj-song-interval{display:flex;align-items:center;gap:10px;font-size:12px}.room-dj-schedule input[type=number]{width:76px}
 
 .room-host-choice{display:flex;align-items:flex-end;gap:16px;margin-top:24px;flex-wrap:wrap}.room-host-choice .filter-select{flex:1;min-width:180px}.room-host-choice>button{font-size:12px}.room-preparation>.settings-workflow{margin-bottom:28px}
+
+.room-request-history p:focus-visible{outline:2px solid var(--accent);outline-offset:4px}

@@ -1,0 +1,149 @@
+{
+  "date": "2026-10-17",
+  "base": "c374ac50c55c23e0f65c663123d6af93b9ebedcf",
+  "problem": "Preparation history showed only ten unfinished requests with no route to older requests. Remaining recovery/status/cancel behavior also required direct native verification.",
+  "recovery": {
+    "cases": [
+      {
+        "kind": "cached saved-status failure and recovery",
+        "result": "passed",
+        "staleHistoryRetained": true,
+        "summarySuppressed": true,
+        "setupLockedUntilRetry": true
+      },
+      {
+        "kind": "cached profile-status failure and recovery",
+        "result": "passed",
+        "summarySuppressed": true,
+        "explicitRetryRestoresSummary": true
+      },
+      {
+        "kind": "new completed request supersedes compact summary",
+        "result": "passed",
+        "historyRetained": true,
+        "newRequestId": "84f34061-a17e-4168-82a7-ea18f4a35fe5"
+      },
+      {
+        "kind": "dispatched text cancel, navigation and later profile switch",
+        "result": "passed",
+        "requestId": "2b4c84db-0216-419b-8bc2-e2e96bcd2e42",
+        "originalProfileRetained": true,
+        "manualErrorSuppressesSummary": true
+      },
+      {
+        "kind": "cancel during setup save before provider dispatch",
+        "result": "passed",
+        "navigationRetainsCancel": true,
+        "noRequestReserved": true,
+        "noProviderDispatch": true
+      },
+      {
+        "kind": "dispatched audio cancellation through music navigation",
+        "result": "passed",
+        "requestId": "46208f50-f2dd-4358-8cd5-e6b3679f8e48",
+        "noTakePublished": true,
+        "originalProfileRetained": true
+      },
+      {
+        "kind": "automatic profile status suppresses duplicate restart summary",
+        "result": "passed",
+        "historyRetained": true,
+        "noProviderDispatch": true
+      }
+    ],
+    "providerCalls": [
+      "text",
+      "text",
+      "voice"
+    ],
+    "realProviderCalls": 0,
+    "originalSelectionUnchanged": true,
+    "result": "passed",
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    }
+  },
+  "historyBefore": {
+    "totalUnfinished": 13,
+    "initiallyVisible": 10,
+    "oldestVisible": false,
+    "result": "reproduced",
+    "providerCalls": 0
+  },
+  "historyAfter13": {
+    "totalUnfinished": 13,
+    "initiallyVisible": 10,
+    "oldestVisible": false,
+    "allHistoryAvailable": true,
+    "keyboardFocusRetained": true,
+    "result": "passed",
+    "providerCalls": 0
+  },
+  "historyAfter35": {
+    "totalUnfinished": 35,
+    "initiallyVisible": 10,
+    "oldestVisible": false,
+    "batches": 3,
+    "allHistoryAvailable": true,
+    "keyboardFocusRetained": true,
+    "result": "passed",
+    "oldestClearOfPlayer": true,
+    "providerCalls": 0
+  },
+  "runtime": {
+    "macOS": "27.2 arm64",
+    "electron": "43.7.0",
+    "fixtureNode": "24.4.1",
+    "cssViewport": [
+      1280,
+      720
+    ],
+    "zoomFactor": 1,
+    "hidden": true,
+    "muted": true
+  },
+  "method": {
+    "actualMainPreloadAndProductionRenderer": true,
+    "actualStoresAndRequestRecords": true,
+    "ownedLocalhostJellyfinServer": true,
+    "dummyKeys": "protected app-local credentials; shared-key null adapter",
+    "providerNetwork": "Substituted text and voice responses, unrelated external traffic blocked",
+    "controlledFaults": [
+      "Fail only getPreparedNews/getLocalState IPC reads while retaining actual cached data; restore and use real Try again actions.",
+      "Hold the actual saveWorkflowDraft IPC before its body, cancel in production UI, release and verify no preparation request or provider call.",
+      "Hold substituted text/voice provider responses, cancel the stored request through production UI and settle the same request.",
+      "Seed a persisted interrupted request linked to actual automatic profile status.",
+      "Seed13 and35 unfinished requests to exercise history pagination."
+    ],
+    "historyFocus": "Wait for the requestAnimationFrame update; assert the exact first newly revealed request ID after every keyboard activation.",
+    "shutdown": "Owned apps close; no fixture fatal log in manual, linked-status or final history runs."
+  },
+  "checks": {
+    "buildIncludingTypeScript": "passed",
+    "fullESLint": "passed",
+    "nativeRecoveryExit": 0,
+    "nativeHistoryExit": 0,
+    "capturesVisuallyInspected": true
+  },
+  "limitations": [
+    "Controlled status/IPC/provider faults, no live billed-provider or outage proof.",
+    "Cancel cannot undo a request already received by a provider; the UI retains that warning.",
+    "No observed listener, VoiceOver, other OS, deferred smaller-window or enlarged-zoom acceptance.",
+    "Q10 remains open."
+  ],
+  "sourceSha256": {
+    "src/renderer/pages/Stations/Stations.page.tsx": "83c78a0854859e81ea9ec21330f88e53ee6c30fe81651a1551d99d48d59fedff",
+    "src/renderer/pages/Stations/Stations.styles.css": "b56efd825637a40c24b09e936cc2897c080c073eb58b1dfddf9e88b29731921b",
+    "src/renderer/main.tsx": "863a6596bde95ba270f0d554a2ac2bd0c3819ca832f1bfd577d0edf9bb69a7cc",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/main/prepared-news.ts": "0d0d40b27e899d04bea54d064d62017643c58211997f8c3e36f896b26c24bd2d"
+  },
+  "fixtureSha256": {
+    "build.mjs": "2e9f152bacd811d3db2a897726daf0358d17ac29fc87bdaa9b7a3c3b424c9e19",
+    "bootstrap.mjs": "25a3eaaff37c2ff558f6828326fb52d87b742ddd199983b32aa2cb4008337330",
+    "run.cjs": "a7327288ba6a1922338752d697ef060673ac9da875fcdb46462f85f0fbbafd61",
+    "history.cjs": "082af79607c2d675f0c78490626a5e81e03bf1ec87b5fa69a00e64ab9553474e"
+  }
+}
