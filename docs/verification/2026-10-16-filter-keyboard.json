@@ -1,0 +1,129 @@
+{
+  "date": "2026-10-16",
+  "scope": "Shared filter Tab/scroll focus correction, Q07 keyboard recovery and explicit1280\u00d7720/normal-zoom acceptance baseline",
+  "base": "2cf06d7c800a9826dfd3f433e35a3365d6d23172",
+  "before": {
+    "kind": "filter-tab-at-200-percent",
+    "width": 960,
+    "height": 640,
+    "zoom": 2,
+    "observed": "Tab leaves the open filter, but focus returns to Genre: Any genre instead of continuing to Tag: Any tag.",
+    "error": {
+      "stage": "filter keyboard",
+      "errorType": "AssertionError",
+      "message": "The expression evaluated to a falsy value:\n\n  assert.ok(await fn())\n",
+      "stack": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert.ok(await fn())\n\n    at until (/private/tmp/native-recording-publication/keyboard-diagnostic.cjs:4:116)\n    at async focused (/private/tmp/native-recording-publication/keyboard-diagnostic.cjs:13:33)\n    at async /private/tmp/native-recording-publication/keyboard-diagnostic.cjs:19:1098",
+      "partial": {
+        "cases": []
+      }
+    },
+    "cause": "An external page-scroll event can run the still-registered onScroll close callback during popover blur/Tab exit. close unconditionally focuses the opener, so it overrides the newly focused next control."
+  },
+  "currentNativeBaseline": {
+    "cases": [
+      {
+        "width": 1280,
+        "height": 720,
+        "zoom": 1,
+        "filterArrowEndEscapeAndTabExit": true,
+        "outsideScrollDismissesAndRestoresOpener": true,
+        "choosingOptionReturnsToUpdatedTrigger": true,
+        "keyboardFocusVisible": true,
+        "queueEscapeRestoresOpener": true,
+        "radioTabsArrowNavigation": true,
+        "sourceAndDJDetoursRetainDraftAndRestoreFocus": true,
+        "nativeDialogKeepsTabFocusAndEscapeReturns": true,
+        "removedOpenerFallsBackToSourcesHeading": true,
+        "providerReturnUsesEnabledSetupTabFallback": true,
+        "setupSaveInViewportAndNoHorizontalOverflow": true,
+        "providerCalls": 0,
+        "capture": "docs/verification/2026-10-16-keyboard-setup-1280-720.png",
+        "result": "passed"
+      }
+    ],
+    "result": "passed"
+  },
+  "change": "Outside scroll now dismisses only a still-open popover without unconditionally focusing its trigger. The existing toggle handler restores the opener only when focus remains inside/body. Tab can keep focus on its next outside control; explicit Escape, option selection and resize retain their existing opener behavior.",
+  "userScopeDecision": {
+    "instruction": "Don't check200% zoom or windows below1280\u00d7720; do those later.",
+    "minimum": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "deferred": [
+      "V14 enlarged-zoom acceptance",
+      "V15 smaller-window replacement drawer acceptance"
+    ],
+    "existingBehaviorRetained": true,
+    "nativeMinimumWindowRestrictionChanged": false,
+    "historicalEvidence": "The four earlier-size keyboard journeys completed before this instruction. Their dated results remain private history; no smaller/enlarged check was rerun after the instruction. The current driver only runs1280\u00d7720 at normal zoom."
+  },
+  "method": {
+    "runtime": "macOS27.2 arm64, Electron43.7.0",
+    "application": "Current production renderer/preload plus actual source-bundled main/services/storage, protected dummy account, hidden muted native window. Shared Keychain/provider adapters substituted and external fetch blocked.",
+    "keyboard": "Keyboard Enter opens filters after focusing their named trigger. ArrowDown/End move among loaded choices; Escape restores visible trigger focus. External page scroll dismisses while focus is inside and restores the opener. Tab exits to Tag without jumping back to Genre. Search/Enter selects Jazz and focuses the updated trigger.",
+    "dialogsAndDetours": "Keyboard opens queue and Escape returns to its trigger. ArrowRight switches News bucket tabs. Source/DJ management and Back retain draft mood/interests and focus the relevant management button. Native DJ dialog retains focus through12 Tab presses and Escape returns to New DJ. Confirmed dummy-source deletion removes its opener and focuses Sources heading. Provider-key return uses the enabled Settings-tab fallback when preparation is disabled.",
+    "layout": "At1280\u00d7720 normal zoom, setup Save is focused and visible, with no horizontal document overflow. The settled native webContents capture was inspected; player controls remain visible below the scrolled setup. This is not an all-page/VoiceOver or user-comprehension claim.",
+    "cleanup": "Final baseline driver terminates zero; each owned native close checks absence of captured fatal output. Owned localhost server stops and its control file resets. Zero provider calls."
+  },
+  "fixtureCorrections": [
+    "Wait for the actual async Rock filter choice before End; initially the driver pressed End when only Any genre had loaded.",
+    "Wait for the native popover toggle/effect to settle before the deliberate external-scroll check. An immediate same-turn scroll could occur before its listener was installed. Neither correction changed production behavior."
+  ],
+  "checks": {
+    "buildIncludingTypeScript": "passed",
+    "fullESLint": "passed",
+    "currentNativeBaselineCases": 1,
+    "historicalPreDeferralCases": 4,
+    "newControlled": [
+      "Q07"
+    ],
+    "inventory": {
+      "total": 187,
+      "active": 185,
+      "Review": 104,
+      "Dated": 9,
+      "Recorded": 5,
+      "Controlled": 49,
+      "Live": 9,
+      "External": 9,
+      "Deferred": 2
+    },
+    "starMappings": 27,
+    "overallPercentage": null,
+    "goalComplete": false
+  },
+  "limits": [
+    "Current required baseline is1280\u00d7720 normal zoom. Smaller windows and enlarged zoom are deferred by explicit user instruction; historical evidence is retained, not promoted to a new acceptance requirement.",
+    "No VoiceOver, hardware controls, observed listener comprehension, live provider quality or audible transition claim. Q06 remains broader than this focused keyboard journey.",
+    "Earlier records keep their original source snapshots. The Q10 shutdown diagnostic remains open."
+  ],
+  "sha256": {
+    "src/renderer/components/FilterSelect/FilterSelect.component.tsx": "b6c4242190b3d107c5145f464db5f3b4912736c70c940a3344c73aa26463ec26",
+    "src/renderer/components/FilterSelect/FilterSelect.styles.css": "0b5fdd8572893b66491b254570073cffa6159c43c9994f5735620d9c8b20ecf5",
+    "src/renderer/components/Shared.tsx": "303972b169cf42303085a3db1988c04899870a69a6e7591ee4292656785ed2af",
+    "src/renderer/components/ConfigurationTabs/ConfigurationTabs.component.tsx": "96400645f0978e408da20c69ec9692250e7d58b4d6caec72afec7711f2c8a4b3",
+    "src/renderer/App.tsx": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+    "src/renderer/styles.css": "d2574b87ecdadde78394f477adf6b859905ac871acaeee90bdfbb811b537b61c",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/preload/index.ts": "0c7edf2153d5210b24a0fac9db667fd254e324366d4737653578ef067c1eac63",
+    "out/main/index.js": "a9b553b2d478277d897ee492b4bb1acc2bc85edff8e08c399b10c0743e77022a",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+    "out/renderer/assets/index-ZOgMZShw.css": "d8229b9932315a7d35fd286e73333f3c63eb5a2b0c08077751b537daa13118dd",
+    "out/renderer/assets/index-DoilbwlZ.js": "06d84b8880bff189a078358e75ca39c7393abff3ed3bc37c8812f3724111025a"
+  },
+  "captureSha256": {
+    "docs/verification/2026-10-16-keyboard-setup-1280-720.png": "599254cd0517233590c0ca9320d795f0c10478e4ef5a9af0ae010bd557bb5ed8"
+  },
+  "fixtureReproducerSha256": {
+    "/private/tmp/native-recording-publication/build.mjs": "7d7a999d54e9492b4eff24b5137a9100d29c25f6a11f630c2e58980e186dc4d2",
+    "/private/tmp/native-recording-publication/bootstrap.mjs": "084467e78b690b98a090cfbfc5987fc37035dcc11ec5c0e56fc85d6eceb472a3",
+    "/private/tmp/native-recording-publication/keyboard.cjs": "3921d07f7eca2b34f8c21f991db94287eceebb80bbdeeb0a1bf97f09ab3e3d5a",
+    "/private/tmp/native-recording-publication/keyboard.json": "468790279daa1027f037ef152f0187868261772bdf6f7df1f80af10e8db9bb12",
+    "/private/tmp/filter-keyboard-before.json": "cf80bb8b9c8f729b53554b948b25b458e95f1f710dc6d47e400a73d4473faa00",
+    "/private/tmp/filter-keyboard-earlier-sizes.json": "5103790418585da8cfa089718a65eeab11fff5b54d49390bde39374782a4608b",
+    "/private/tmp/filter-keyboard-build.log": "ef306c45c2b0f0dd8b321d073bb9a0cf3ccf91ba30efb9796b8f75e57f07fb66",
+    "/private/tmp/filter-keyboard-lint.log": "6f1680e0ff047e07a06dcf9afc079770fad3f871d47a52ee12dccaaa84366d63"
+  }
+}

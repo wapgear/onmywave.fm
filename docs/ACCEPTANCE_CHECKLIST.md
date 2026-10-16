@@ -11,6 +11,7 @@ Statuses:
 - **Recorded**: relevant controlled evidence exists in the response-deadline record or detailed acceptance audit, but additional row scope remains to review.
 - **Controlled**: the directly reviewed dated runtime evidence covers this row against its recorded source snapshot. This establishes controlled engineering behavior, not live-server or usability acceptance.
 - **Live**: the directly reviewed dated evidence covers this row on the named live server/runtime; other environments and listener usability require separate proof.
+- **Deferred**: Anton explicitly postponed this check; retain its contract and historical evidence for later, exclude it from current completion claims, and do not rerun it during this goal.
 - **External**: named live-server, OS/hardware or listener evidence is still required. Existing controlled evidence may cover a subset.
 
 Proof codes: I source/artifact inspection; N actual native renderer/main/preload interaction; S actual service/storage/fault integration; L connected live source/server/provider; O actual operating-system/hardware behavior; U observed listener or audible-quality session. Combined codes require each applicable kind; they are not interchangeable alternatives. Temporary fixtures stay outside the repository and add no unit-test requirement.
@@ -19,7 +20,9 @@ Evidence entry points are [the detailed audit](UX_ACCEPTANCE.md), [the corrected
 
 The inventory is provisional until every source paragraph and STAR result is reconciled against it. No overall percentage is calculated yet. Human usability and live/OS coverage remain separate from controlled engineering coverage. Every critical invariant must pass regardless of a future percentage.
 
-Current inventory: 187 rows. 105 Review, 11 Dated, 5 Recorded, 48 Controlled, 9 Live, 9 External. These are review dispositions, not an acceptance percentage.
+Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
+
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 104 Review, 9 Dated, 5 Recorded, 49 Controlled, 9 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -39,9 +42,9 @@ Source: REQUIREMENTS: Product scope, Visual design, Project folder and stack.
 | V10 | Native window chrome, traffic lights and titlebar behavior work in desktop context. | N+O | Review |
 | V11 | Actual fonts, translucency and text remain legible at standard and Retina display scales. | N+O | External |
 | V12 | Screenshots show implemented desktop context rather than implying a generated concept is the product. | N | Review |
-| V13 | Every page remains usable at 960×640,1280×800 and1600×1000, including long content and errors. | N | Review |
-| V14 | At 100–200% app zoom, navigation scrolls and volume, player and setup Save remain reachable. | N | Dated |
-| V15 | Narrow queue/details replace the main area; covered controls leave keyboard order and closing restores focus. | N | Dated |
+| V13 | Every page remains usable from1280×720 at normal zoom and ordinary larger desktop sizes, including long content and errors. | N | Review |
+| V14 | At 100–200% app zoom, navigation scrolls and volume, player and setup Save remain reachable. | N | Deferred |
+| V15 | Narrow queue/details replace the main area; covered controls leave keyboard order and closing restores focus. | N | Deferred |
 | V16 | Common actions are discoverable and optional radio setup does not obstruct ordinary listening. | N+U | Review |
 | V17 | Out-of-scope weather/calendar/song-selection/broadcast/release features do not appear as working controls. | I+N | Review |
 
@@ -276,7 +279,7 @@ Source: REQUIREMENTS: Design acceptance, stack, settings, acceptance and release
 | Q04 | Media URLs/handles reject revoked/missing/cross-account resources and off-origin redirects without leaking tokens. | S+N | Controlled |
 | Q05 | Local secret/recovery files have appropriate private modes and no inspection/test touches personal entries. | I+S+O | Review |
 | Q06 | All essential controls have accessible names, visible focus and keyboard operation; source checkbox groups have names. | N+O | Review |
-| Q07 | Filter Tab/Escape, dialogs and setup detours restore logical focus, including removed-opener fallback to page heading. | N | Review |
+| Q07 | Filter Tab/Escape, dialogs and setup detours restore logical focus, including removed-opener fallback to page heading. | N | Controlled |
 | Q08 | Interactive recovery actions are outside live status/error announcements; loading/error/empty states remain actionable. | N+O | Review |
 | Q09 | Full VoiceOver interaction works through music, setup, pending/failure/recovery and dialogs. | N+O | External |
 | Q10 | Supported macOS/architecture/display combinations and hardware integration are explicitly verified. | O | External |
@@ -289,6 +292,7 @@ Source: REQUIREMENTS: Design acceptance, stack, settings, acceptance and release
 
 | Check | Reviewed evidence | Scope limit |
 | --- | --- | --- |
+| Q07 | [Filter keyboard record](verification/2026-10-16-filter-keyboard.json):reproduced Tab focus rewind, shared-handler fix, native filter/scroll/selection, modal containment, removed-opener fallback and setup detours at1280×720 normal zoom | User deferred smaller/enlarged cases after earlier tests. This focused journey does not establish all controls, VoiceOver or observed usability. |
 | Q01,Q04 | [Trust-boundary record](verification/2026-10-16-trust-boundaries.json):actual native isolation/CSP/navigation, second-window IPC denial, eight malformed mutations, opaque range playback, redirect limits and revoked/cross-account handles | Dynamic media cases exercise music; artwork shares the inspected proxy. Local saved news remains shared by contract. Focused checks do not establish exhaustive fuzzing, OS Keychain or a penetration test. |
 | T09,T10 | [Listener journey record](verification/2026-10-16-listener-journey.json):native immutable writing/rendering provenance after setup edits/restart; missing, empty and truncated audio controls plus explicit replacement and durable selection | Includes a controlled full first-radio journey and two inspected captures. Provider responses are substituted; first sign-in, live quality, audible transitions and observed listener comprehension remain separate. |
 | A19,T12 | [Recording recovery record](verification/2026-10-16-recording-recovery.json):12 native cases covering durable dispatch reservation, four publication/settlement boundaries, two restarts, late cancel/OFF/sign-out, incomplete-file rejection, manual replay and unknown-request reconciliation | Actual stores/IPC/services with substituted providers. Controlled quit/reopen and two incomplete-file variants do not establish arbitrary forced termination, power loss, disk faults or live billing. |
@@ -319,7 +323,7 @@ P02 is Live after native create/rename, independent authenticated server reads b
 
 ## STAR traceability
 
-These links are navigation aids, not extra denominator rows. Each story requires all linked checks plus its exact STAR result in RADIO_EXPERIENCE. Cross-cutting accessibility, security and evidence obligations apply throughout.
+These links are navigation aids, not extra denominator rows. Each story requires all active linked checks plus its current exact STAR result in RADIO_EXPERIENCE. Cross-cutting accessibility, security and evidence obligations apply throughout.
 
 | Story | Main checks |
 | --- | --- |

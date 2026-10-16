@@ -21,7 +21,9 @@ export function FilterSelect({ label, value, choices, onChange, emptyLabel, sear
   const choose = (next: string) => { close(); onChange(next); };
   useEffect(() => {
     if (!open) return;
-    const onScroll = (event: Event) => { if (!popup.current?.contains(event.target as Node)) close(); };
+    const onScroll = (event: Event) => {
+      if (popup.current?.matches(':popover-open') && !popup.current.contains(event.target as Node)) popup.current.hidePopover();
+    };
     document.addEventListener('scroll', onScroll, true);
     window.addEventListener('resize', close);
     return () => { document.removeEventListener('scroll', onScroll, true); window.removeEventListener('resize', close); };

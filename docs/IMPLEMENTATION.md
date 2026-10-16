@@ -779,3 +779,8 @@ The full controlled native music → optional radio → independent stops → pa
 ## Native trust boundaries, 16 October 2026
 
 Renderer/IPC and account-bound media checks pass without a production change. Q01/Q04 are Controlled; inventory is187 rows with105 Review,11 Dated,5 Recorded,48 Controlled,9 Live and9 External, plus27 STAR mappings. Methods, seven native results, source hashes and limitations are in the [trust-boundary record](verification/2026-10-16-trust-boundaries.json). Actual Keychain, exhaustive security testing, broader OS coverage and Q10 remain separate.
+
+
+## Filter focus correction and desktop baseline, 16 October 2026
+
+Fixed shared filter scroll dismissal stealing focus from the next Tab target. Native1280×720 normal-zoom keyboard recovery, build/TypeScript and full ESLint pass. Q07 is Controlled. Anton deferred smaller-window/enlarged-zoom verification; V14/V15 are Deferred and existing resize behavior stays. Current inventory has187 rows,185 active and2 Deferred, with104 Review,9 Dated,5 Recorded,49 Controlled,9 Live and9 External. See the [filter keyboard record](verification/2026-10-16-filter-keyboard.json) for reproduction, capture, methods and limitations.
