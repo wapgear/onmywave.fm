@@ -1,0 +1,209 @@
+{
+  "date": "2026-10-17",
+  "base": "efe4f1640e16a772603220d6cfbb9fb124173fb1",
+  "productionChanges": false,
+  "scope": [
+    "S04",
+    "S05",
+    "S09",
+    "S10"
+  ],
+  "requestAndRedirectChecks": {
+    "result": "passed",
+    "cases": [
+      {
+        "kind": "bounded text request allowlist",
+        "result": "passed",
+        "sourceRequests": 5,
+        "textRequests": 1,
+        "articles": 200,
+        "titleMaximum": 240,
+        "excerptMaximum": 1500,
+        "untrustedDataInstruction": true,
+        "noMusicFilesCatalogOrCredentialFields": true,
+        "credentialsOnlyInIntendedHeaders": true
+      },
+      {
+        "kind": "voice request allowlist",
+        "result": "passed",
+        "onlyIntendedScriptTagsAndDeliverySettings": true,
+        "noArticleMusicCatalogOrTextRequest": true,
+        "credentialsOnlyInIntendedHeader": true
+      },
+      {
+        "kind": "unsafe redirect file:",
+        "result": "passed",
+        "notFollowed": true,
+        "noProviderRequest": true
+      },
+      {
+        "kind": "unsafe redirect javascript:",
+        "result": "passed",
+        "notFollowed": true,
+        "noProviderRequest": true
+      },
+      {
+        "kind": "unsafe redirect https:",
+        "result": "passed",
+        "notFollowed": true,
+        "noProviderRequest": true
+      },
+      {
+        "kind": "unsafe article protocol",
+        "result": "passed",
+        "notSubmittedToProvider": true
+      },
+      {
+        "kind": "redirect hop ceiling",
+        "result": "passed",
+        "requests": 4,
+        "noProviderRequest": true
+      }
+    ]
+  },
+  "nativeOpenSource": {
+    "cases": [
+      {
+        "kind": "rejected javascript",
+        "result": "passed",
+        "noExternalOpen": true
+      },
+      {
+        "kind": "rejected file",
+        "result": "passed",
+        "noExternalOpen": true
+      },
+      {
+        "kind": "rejected data",
+        "result": "passed",
+        "noExternalOpen": true
+      },
+      {
+        "kind": "rejected https",
+        "result": "passed",
+        "noExternalOpen": true
+      },
+      {
+        "kind": "rejected not a url",
+        "result": "passed",
+        "noExternalOpen": true
+      },
+      {
+        "kind": "rejected https",
+        "result": "passed",
+        "noExternalOpen": true
+      },
+      {
+        "kind": "valid HTTP and HTTPS source links",
+        "result": "passed",
+        "twoValidatedOsOpenCalls": true,
+        "originalQueryAndFragmentRetained": true
+      }
+    ],
+    "result": "passed",
+    "rendererErrors": 0,
+    "providerCalls": 0,
+    "fatalFileAbsent": true,
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    }
+  },
+  "sourceIntegration": {
+    "result": "passed",
+    "method": "Current actual NewsService source, controlled fetch replies and dummy keys. No provider or source network request is sent.",
+    "checks": [
+      "Hacker News partial results retain named coverage warnings; stale readable data plus failed items reports incomplete coverage without text dispatch",
+      "Undated automatic input explains unverifiable freshness without text dispatch",
+      "Malformed RSS entries warn by source and malformed-only feeds fail without text dispatch",
+      "Tracking URL variants deduplicate before assessment",
+      "Atom alternate relative links and dates are read",
+      "Allowed relative feed redirects retain HTTP boundaries and no authorization header",
+      "DOCTYPE and external entities are rejected before assessment",
+      "X partial-data responses survive with named warnings; raw error body/key text is omitted",
+      "X bearer headers target only the fixed api.x.com recent-search endpoint",
+      "Invalid HN IDs are skipped and reported; model no-selection retains named partial-coverage reason"
+    ],
+    "fixtureCorrection": "The old fixture expected no-news for partial-coverage model no-selection. Current intentional API code is partial-coverage; the replay expectation was updated, not production source."
+  },
+  "identityIntegration": {
+    "result": "passed",
+    "method": "Current NewsService, prepared-news store and eligibility pool; real owned temporary JSON/audio files, isolated Electron-path/storage adapters, substituted text response. Fresh Node processes read the persisted store.",
+    "checks": [
+      "Tracked/plain verified BBC article aliases become one assessment candidate while original feed URL is retained",
+      "Previously assessed alias excludes the next text request",
+      "Migration changes only derived canonical keys and preserves historical row count, titles, original links, request IDs, timestamps and outcomes",
+      "Submitting another alias adds no historical duplicate",
+      "Fresh process reads persisted canonical keys",
+      "Played alias excludes the ready alias in the actual eligibility pool",
+      "Fresh process reads actual persisted played/ready audio availability and excludes the alias without changing historical rows",
+      "Explicit review completion and release work across alias spellings",
+      "Semantic edition query remains; lookalike hosts, other hosts, out-of-scope paths and BBC.com routes retain their unverified parameters"
+    ]
+  },
+  "inspection": {
+    "S04": [
+      "Source/article protocol and credential validation, bounded manual redirect handling and XML DTD/entity rejection reside in actual NewsService",
+      "OpenSource repeats HTTP/HTTPS, credentials and length validation before shell.openExternal",
+      "Renderer source titles/warnings are React text; no dangerouslySetInnerHTML, eval or new Function is present in src",
+      "Native window denies new-window requests and prevents renderer navigation"
+    ],
+    "S09": [
+      "Text context is explicitly constructed from bounded music metadata, host fields, interests, mood and bounded articles",
+      "Request sample supplies extra credential/music-file/full-catalog fields at runtime and asserts none reach text JSON",
+      "Source and music content are explicitly described as untrusted data in provider instructions"
+    ],
+    "S10": [
+      "Speech JSON contains only model_id, intended tags/script text and voice_settings; article/warning/music fields are ignored",
+      "Keys are obtained only in main-side service/storage; preload exposes key setters and configured/sessionOnly status, no raw-key read endpoint",
+      "Provider credentials are in intended authorization headers and fixed destinations; redirects are rejected"
+    ]
+  },
+  "limits": [
+    "Provider and source responses are controlled. This proves data boundaries and validation, not live provider behavior, prompt-injection immunity, content relevance or billing.",
+    "The final OS browser-open call is captured in the native fixture; no actual external page is opened. Physical browser/OS behavior remains separate.",
+    "The alias rule is deliberately limited to verified tracking fields/routes; semantic-query and original provenance are preserved.",
+    "Store/path/key adapters isolate the identity integration; real native protected storage is covered in its own records.",
+    "S06/S07/S08 remain Review for their full native freshness/warning/date scope despite partial service evidence here.",
+    "No deferred viewport or zoom checks were run."
+  ],
+  "checks": {
+    "nativeLinkCases": 7,
+    "requestRedirectCases": 7,
+    "result": "passed",
+    "buildTypeLint": "Application source unchanged from preceding passing snapshot; not repeated",
+    "nativeRendererErrors": 0,
+    "nativeProviderCalls": 0,
+    "nativeFatalFileAbsent": true
+  },
+  "sourceSha256": {
+    "src/main/news.ts": "9c2076bf3808221980dac5aa2befb9d5532278027ccdcc6197e8324930b6571e",
+    "src/main/prepared-news.ts": "0d0d40b27e899d04bea54d064d62017643c58211997f8c3e36f896b26c24bd2d",
+    "src/shared/news-pool.ts": "2f8ac1bde20b4a9adfd3beedf015e2d7e843dda584e7713be29e1a4c7ad3fa77",
+    "src/shared/sources.ts": "1da2117a59995911c14d098c8c814811ec309fb0d81c2fbf24b53721404e8f18",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/main/storage.ts": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+    "src/preload/index.ts": "0c7edf2153d5210b24a0fac9db667fd254e324366d4737653578ef067c1eac63",
+    "src/shared/types.ts": "d67dcace88513b8ee42238aa512eb2c480ded9b1275977567e8b3d1cec62a652",
+    "src/renderer/components/Player/DJPopover.component.tsx": "6ffca314f80c990adb9c1fbf81f970560cd5d2debc786e855098f89551e2e4ec",
+    "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": "a089c86e2b2678ed77f2559648cdfeaca072ba6bb46453a2f4e8befb2f68e09e",
+    "src/renderer/pages/Stations/Stations.page.tsx": "83c78a0854859e81ea9ec21330f88e53ee6c30fe81651a1551d99d48d59fedff",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370"
+  },
+  "fixtureSha256": {
+    "/private/tmp/source-acceptance-current/sources.mjs": "614fc2c6445e51854e20791be2586bfb85fa81ebef78aa02de9df7e91bc8faff",
+    "/private/tmp/source-acceptance-current/source-built.mjs": "2467e947f18fff8749bb98bf36e1941888d47143ff0d19124b715514340f2155",
+    "/private/tmp/source-acceptance-current/sources.log": "bd9fc1fbd082e406fbf895f2d86664c5bd09598f9c7aaa224ca918a112d5a3a0",
+    "/private/tmp/source-acceptance-current/identity.mjs": "9690346aeb5b2e80174bd49347bbb7ab193c3774c3afb0eea9deb5c81d5350a7",
+    "/private/tmp/source-acceptance-current/identity.log": "87ac37035381da0d22c1d1793d7e6bf26cce327ce7b99fc61caace19c333f810",
+    "/private/tmp/source-acceptance-current/requests.mjs": "e98b09c2fb22ccce6dcdefd83a9178ec2a0bd129be32cf62d51355c91910b5e0",
+    "/private/tmp/source-acceptance-current/open-source.cjs": "ac1ee011f6c755204e2384e063da768ff4803ea5183b30a0228415bc729256c0"
+  },
+  "nativeFixtureSha256": {
+    "/private/tmp/native-transition-current/build.mjs": "cc8bb39362bc3470cf4841a666e10792e080ee180b763d3e4795618a1eb72e28",
+    "/private/tmp/native-transition-current/bootstrap.mjs": "4cc7f42acc8aca5bacc9ca07ce50d3dcb5a77c982dd06091ea1e6e6c5569cd0c",
+    "/private/tmp/native-transition-current/server.mjs": "c1fed0e863decdf20c6b4ac3670d29bf248943562dab860e4cfe35a0c083e09f",
+    "/private/tmp/native-transition-current/out/main/index.js": "ffd9358073f9b63ec3d13e584f1e22f172a81feae780b84e9bec077a53b12ea6"
+  }
+}
