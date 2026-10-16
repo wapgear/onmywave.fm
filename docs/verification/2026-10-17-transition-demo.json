@@ -1,0 +1,183 @@
+{
+  "date": "2026-10-17",
+  "base": "d53014e52c037ea012d299184cf77971ab74811f",
+  "productionChanges": false,
+  "scope": [
+    "D11",
+    "D12",
+    "D13"
+  ],
+  "native": {
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "cases": [
+      {
+        "kind": "over-music keyless natural completion",
+        "result": "passed",
+        "bundledAudioDecoded": true,
+        "previewOwnPauseDoesNotCancel": true,
+        "contextClosedAndVoiceReleased": true,
+        "musicStaysPaused": true,
+        "noTimingSave": true
+      },
+      {
+        "kind": "between-songs keyless natural completion",
+        "result": "passed",
+        "bundledAudioDecoded": true,
+        "previewOwnPauseDoesNotCancel": true,
+        "contextClosedAndVoiceReleased": true,
+        "musicStaysPaused": true,
+        "noTimingSave": true
+      },
+      {
+        "kind": "native later next",
+        "result": "passed",
+        "demoDisposed": true,
+        "newMusicIntentRetained": true
+      },
+      {
+        "kind": "native later seek",
+        "result": "passed",
+        "demoDisposed": true,
+        "newMusicIntentRetained": true
+      },
+      {
+        "kind": "native later play",
+        "result": "passed",
+        "demoDisposed": true,
+        "newMusicIntentRetained": true
+      },
+      {
+        "kind": "unsaved timing and navigation cleanup",
+        "result": "passed",
+        "timingChangeStopsDemo": true,
+        "leavingGeneralStopsDemo": true,
+        "persistedTimingsPreparationDjAndTakeUnchanged": true
+      },
+      {
+        "kind": "keyless empty queue",
+        "result": "passed",
+        "noQueueRequired": true,
+        "noQueueCreated": true,
+        "stopDisposesResources": true
+      }
+    ],
+    "result": "passed",
+    "rendererErrors": 0,
+    "providerRequests": 0,
+    "fatalFileAbsent": true
+  },
+  "renderer": {
+    "runtime": "Actual current production Vite renderer including App/PlayerProvider/NewsTransitions/NewsTransitionPreview, Chrome headless, controlled preload replies, real muted WebAudio and bundled MP3",
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "matrixCases": 24,
+    "finishCases": 4,
+    "recoveryCases": 4,
+    "totalCases": 32,
+    "results": {
+      "matrix": [
+        "over-music music demo yields to paused next",
+        "over-music music demo yields to paused previous",
+        "over-music music demo yields to paused seek",
+        "over-music music demo yields to paused media-pause",
+        "over-music voice demo yields to paused next",
+        "over-music voice demo yields to paused previous",
+        "over-music voice demo yields to paused seek",
+        "over-music voice demo yields to paused media-pause",
+        "between-songs music demo yields to paused next",
+        "between-songs music demo yields to paused previous",
+        "between-songs music demo yields to paused seek",
+        "between-songs music demo yields to paused media-pause",
+        "between-songs voice demo yields to paused next",
+        "between-songs voice demo yields to paused previous",
+        "between-songs voice demo yields to paused seek",
+        "between-songs voice demo yields to paused media-pause",
+        "over-music demo pauses playing music without self-cancel; volume/shuffle/repeat preserved; explicit music Play wins",
+        "between-songs demo pauses playing music without self-cancel; volume/shuffle/repeat preserved; explicit music Play wins",
+        "same-turn seek plus delayed context resolve and old audio error stay stopped without obsolete feedback",
+        "same-turn seek plus delayed context reject and old audio error stay stopped without obsolete feedback",
+        "current startup failure remains visible",
+        "leaving transition settings closes audio resources",
+        "preview remains usable without a music queue",
+        "obsolete play callback cannot stop a replacement preview",
+        "actual App/PlayerProvider demo matrix with real muted bundled audio and no runtime errors"
+      ],
+      "finish": [
+        "over-music natural saved-audio end and demo finish close context and leave music paused",
+        "over-music changing a draft timing stops demo without saving or starting another",
+        "between-songs natural saved-audio end and demo finish close context and leave music paused",
+        "between-songs changing a draft timing stops demo without saving or starting another"
+      ],
+      "recovery": [
+        "genuine startup failure supports explicit successful retry",
+        "active demo stops on unsaved mode change",
+        "active demo stops on unsaved preset change",
+        "old audio error and delayed rejected startup cannot affect replacement"
+      ]
+    },
+    "result": "passed",
+    "notes": [
+      "The matrix log includes one final overall PASS in addition to24 individual cases.",
+      "Both over-music and between-songs modes run all music/voice-phase transport combinations, rather than inferring coverage from one style.",
+      "Natural completion uses the real decoded voice ended event, with4x voice playback rate to shorten acceptance time; the normal completion handler and resource cleanup remain unchanged.",
+      "Native checks independently verify the same production preview through actual main/preload/storage.",
+      "Provider statuses are unconfigured; source/provider preparation endpoints are not part of the demo."
+    ]
+  },
+  "rowCoverage": {
+    "D11": "Native keys cleared, bundled decoded voice and synthesized local music with normal and empty queues; persisted timings/preparation/DJ/selected-take state unchanged",
+    "D12": "Both native styles pause music without self-cancel and naturally finish paused;32 renderer cases verify Stop, newer commands, current volume and shuffle/repeat preservation",
+    "D13": "Native timing edit/navigation cleanup; renderer active timing/mode/preset edits, delayed context resolve/reject, stale play/error callbacks against replacement, and visible current failure followed by explicit successful Retry"
+  },
+  "limits": [
+    "Audio is muted; audible transition quality and observed listener comprehension remain separate requirements.",
+    "MediaSession handler invocations are controlled callbacks, not physical hardware controls.",
+    "Renderer preload responses and native Jellyfin resources are fixtures; this demo requires no live provider/server output.",
+    "SIGKILL, sleep and physical audio devices are outside this demo-specific scope.",
+    "Native capture is app content, not desktop-context presentation acceptance.",
+    "No smaller-window or enlarged-zoom checks ran."
+  ],
+  "checks": {
+    "result": "passed",
+    "nativeCases": 7,
+    "rendererCases": 32,
+    "nativeProviderCalls": 0,
+    "rendererErrors": 0,
+    "fatalFileAbsent": true,
+    "buildTypeLint": "Application source unchanged from preceding passing snapshot; not repeated",
+    "screenshot": "2026-10-17-transition-demo.png, inspected"
+  },
+  "sourceAndBundleSha256": {
+    "src/renderer/pages/Settings/components/NewsTransitionPreview.component.tsx": "b44dc08192dd9d4a354a8f921c1b5e17c6a0cf2291b26b8aa3bd285d55b2ff31",
+    "src/renderer/pages/Settings/components/NewsTransitions.component.tsx": "6335bb50284506a95a0c89cef02b22aeed1e7b87d915800f44237b81899c19b4",
+    "src/renderer/player.tsx": "481d350ef35d5e11d77848f661419f5eea265cbf643db234c665174255ec562c",
+    "src/renderer/App.tsx": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+    "src/shared/news-transitions.ts": "dae2314678e39262b7e89986412320c33d96cf8af3dc841188fe5e604eda8c90",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/main/storage.ts": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+    "out/renderer/index.html": "21cf24b21fa2ef93bfa796e1196fc260f9e041d0331aeaeb4f359fd3f5ada5b6",
+    "out/renderer/demo/news-break.mp3": "718a35bc38f30397b7b43965db4a4bf5211d59c0a5f37c4e23ef38428a614f74",
+    "out/renderer/assets/index-BxtdeDIl.js": "bae33055f3b7664f775e85eabccc7d4fd61941e02eeede3e964fa632b52c29e4"
+  },
+  "fixtureSha256": {
+    "/private/tmp/native-transition-current/build.mjs": "cc8bb39362bc3470cf4841a666e10792e080ee180b763d3e4795618a1eb72e28",
+    "/private/tmp/native-transition-current/bootstrap.mjs": "4cc7f42acc8aca5bacc9ca07ce50d3dcb5a77c982dd06091ea1e6e6c5569cd0c",
+    "/private/tmp/native-transition-current/server.mjs": "c1fed0e863decdf20c6b4ac3670d29bf248943562dab860e4cfe35a0c083e09f",
+    "/private/tmp/native-transition-current/run.cjs": "10a91260770283141431c6e3ffd45b4050c3d2b5c1c0d92058830131427c42cb",
+    "/private/tmp/native-transition-current/transition-choice-matrix.cjs": "b18e02189da7904cc9c94788af00a2cddbd51721fb8c41767709f7c2b8ff4cd0",
+    "/private/tmp/native-transition-current/transition-finish.cjs": "3c9de0cfe3827a52c1f7e4d9833e0daaca7ca00f2cf662b4a3a1d1428b6035b7",
+    "/private/tmp/native-transition-current/transition-recovery.cjs": "c41e0679d7d0ffdc62e0a082741552c3bbbc19d69e9c2844d59ae02e07f57c8e",
+    "/private/tmp/native-transition-current/out/main/index.js": "ffd9358073f9b63ec3d13e584f1e22f172a81feae780b84e9bec077a53b12ea6",
+    "/private/tmp/native-transition-current/matrix.log": "c51f0c786a1ad5e6a5210ac1c14fc563468ca82c8651c68e94dc15ebcc58f829",
+    "/private/tmp/native-transition-current/finish.log": "3364d33cd3e2b689fb20dde30df5e95606d31ded68d832703dc0b72963b1eb71",
+    "/private/tmp/native-transition-current/recovery.log": "87259eb8dc05ba63e3777a136f17f76bf3d7fe3e8327ea1021491bcb4468fb88"
+  }
+}
