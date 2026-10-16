@@ -1,0 +1,137 @@
+{
+  "date": "2026-10-17",
+  "base": "905c175af7f89ddacfeb53b2e2478d804291a8ad",
+  "productionChanges": false,
+  "scope": [
+    "P07",
+    "P10",
+    "P13",
+    "P14",
+    "P16"
+  ],
+  "uncertainNative": {
+    "cases": [
+      {
+        "kind": "move uncertain recovery",
+        "result": "passed",
+        "reservedBeforeDispatch": true,
+        "navigationAndOtherPlaylistAndLibrarySaveAndSameAccountSignIn": true,
+        "restartTileAndAddLock": true,
+        "failedReadCannotAcknowledge": true,
+        "explicitFreshAcknowledgementClears": true,
+        "healthyPlaylistRenameAndAdditionAllowed": true,
+        "markerId": "d358dd54-5f7a-4f58-a99b-2d1034d923a5"
+      },
+      {
+        "kind": "remove uncertain recovery",
+        "result": "passed",
+        "reservedBeforeDispatch": true,
+        "navigationAndOtherPlaylistAndLibrarySaveAndSameAccountSignIn": true,
+        "restartTileAndAddLock": true,
+        "failedReadCannotAcknowledge": true,
+        "explicitFreshAcknowledgementClears": true,
+        "healthyPlaylistRenameAndAdditionAllowed": true,
+        "markerId": "31870a69-b1a9-4437-bdfc-08a36537463b"
+      }
+    ],
+    "rendererErrors": [],
+    "result": "passed",
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    }
+  },
+  "rejectionAndAccountNative": {
+    "cases": [
+      {
+        "kind": "definite rejection through navigation, playlist switch, library save and same-account sign-in",
+        "result": "passed",
+        "errorRetained": true,
+        "noFalseReviewLock": true,
+        "serverEntriesUnchanged": true
+      },
+      {
+        "kind": "old account mutation settles after new account is active",
+        "result": "passed",
+        "newAccountUsableAndNoOldFeedback": true,
+        "lateResultDoesNotAlterNewAccount": true,
+        "returnRestoresOriginalAccountReview": true,
+        "freshExplicitAcknowledgementClears": true
+      }
+    ],
+    "result": "passed",
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    }
+  },
+  "reusedEvidence": {
+    "addition": "2026-10-16-playlist-add-review.json, native uncertain addition survives restart, destination disabled and explicit acknowledgement unlocks",
+    "lateOldRead": "2026-10-16-playlist-recovery-current.json, old read/receipt rejected across account change",
+    "freshness": {
+      "AddPlaylistSourceExactMatch": true,
+      "playlistReadAndWriteMethodsExactMatchToPriorBase": "d6d1fcde17d7ebb9cfefb15bff1167445e9a30bc",
+      "playlistReadScopeSha256": "a8f38bfe5509caed574e4f83fbc33a2164fb2de0d4cc46d32acc360c36e317ac"
+    }
+  },
+  "runtime": {
+    "macOS": "27.2 arm64",
+    "electron": "43.7.0",
+    "fixtureNode": "24.4.1",
+    "cssViewport": [
+      1280,
+      720
+    ],
+    "zoomFactor": 1,
+    "hidden": true,
+    "muted": true
+  },
+  "method": {
+    "actualMainPreloadProductionRendererAndRecoveryStore": true,
+    "sessions": "Protected dummy Jellyfin credentials in separate disposable app data; shared keys null adapter and providers blocked/substituted",
+    "network": "Owned localhost catalog server with two editable playlists and dummy first/second accounts",
+    "uncertainty": "Apply mutation, hold response during navigation/sign-in, then destroy connection without confirmation",
+    "reauthentication": "Controlled auth-expired event plus actual password form, authentication HTTP response and library chooser; no live401 claim",
+    "lateSettlement": "Actual movePlaylistEntry completion observed with a test-only main finally counter after second account is active",
+    "historyLocks": "Server records on-disk marker snapshot before applying mutations; markers remain account-owned and private",
+    "noRealProviderCalls": true,
+    "nativeShutdown": "No fixture fatal log after all four successful cases."
+  },
+  "fixtureCorrections": [
+    "Use separate Settings navigation, current visible song row, native option attachment and exact403 text.",
+    "Expected net::ERR_ABORTED media-resource cancellations on connection replacement excluded from request diagnostics; actual page errors remain asserted empty.",
+    "An isolated empty-renderer launch timed out before the playlist journey with no fatal file; later early-instrumented launches passed. Cause remains unassigned.",
+    "Optional reject/settlement hooks added after initial two variants, inactive for those variants; application source unchanged."
+  ],
+  "checks": {
+    "uncertainNativeExit": 0,
+    "accountNativeExit": 0,
+    "buildTypeScriptAndESLint": "Identical application source to the preceding passing snapshot; not repeated for documentation-only changes."
+  },
+  "limits": [
+    "Controlled localhost uncertainty and account changes, not server-version/live failure proof.",
+    "Ordinary process restart, no forced termination or power-loss claim.",
+    "P08/P09/P11/P18/P19 remain at their existing review dispositions.",
+    "No observed listener, VoiceOver, other OS/hardware or deferred viewport/zoom checks.",
+    "Q10 and the isolated empty-launch observation remain unassigned."
+  ],
+  "sourceSha256": {
+    "src/main/playlist-recovery.ts": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+    "src/main/jellyfin.ts": "22f083327dfdcbb0952d9750662df95d13c31e09a83f628f8c1e3393072f90eb",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/main/storage.ts": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "8bea51f6cb40f8b4ca0714e8af6b344b7e0a6e40278e018935b6a0d5e7f4e721",
+    "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": "550356492cae38ab34925c91ad9cb5c1ab7c9a7685779e9202de297fc33915de",
+    "src/renderer/App.tsx": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+    "src/renderer/pages/Connection/Connection.page.tsx": "715243e30983a390744988b2f25c6ef4319898c88c3daf6db6a7c7f216ef2d09"
+  },
+  "fixtureSha256": {
+    "build.mjs": "8f87b89663642721c9d5f1120698a10244b165a3f354213d715b432eeb5f7f63",
+    "bootstrap.mjs": "084467e78b690b98a090cfbfc5987fc37035dcc11ec5c0e56fc85d6eceb472a3",
+    "server.mjs": "2909f8902ed41c6d4cd92a599f55bc4c430db4460522f22ca15336278fb494e3",
+    "run.cjs": "43128966912131bb45f50c81dc93eb20fd7c9b05f0d5138e669581d0ca42d0a8",
+    "accounts.cjs": "7534cf4b23d96b961c0c4bdda6570e8947662f3ba5b77fefe3bb7c774d8a7ffd"
+  }
+}
