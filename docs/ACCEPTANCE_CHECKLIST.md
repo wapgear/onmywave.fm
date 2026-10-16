@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 74 Review, 8 Dated, 4 Recorded, 78 Controlled, 12 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 72 Review, 8 Dated, 4 Recorded, 80 Controlled, 12 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -192,9 +192,9 @@ Source: REQUIREMENTS: Personal radio behavior; R3,R5,R6,R9–R11,M15.
 | A13 | Failed stop survives navigation with visible explicit retry; music pause and Disable DJ never imply preparation is off. | N+S+U | Review |
 | A14 | Sign-out confirmation accurately names draft loss, retained local data, paused preparation, cancellation and already-sent possible charges. | N+U | Review |
 | A15 | Confirming sign-out immediately closes generation, cancels pending manual/automatic/preview work and prevents late callbacks dispatching after quick reconnect. | S+N | Recorded |
-| A16 | Sign-out pauses all enabled profiles durably through restart and completed-artifact recovery; reconnect requires per-profile Resume. | S+N | Review |
+| A16 | Sign-out pauses all enabled profiles durably through restart and completed-artifact recovery; reconnect requires per-profile Resume. | S+N | Controlled |
 | A17 | Pause-save failure retains the account; credential-delete failure restores it with recoverable feedback while preparation stays paused. | S+N | Recorded |
-| A18 | Delayed setup/Resume cannot clear a newer sign-out pause and signed-out startup makes no automatic dispatch. | S | Review |
+| A18 | Delayed setup/Resume cannot clear a newer sign-out pause and signed-out startup makes no automatic dispatch. | S | Controlled |
 | A19 | Completed publication remains available and counted once despite late cancellation or restart reconciliation. | S | Controlled |
 
 ## Sources, attribution and data boundaries
@@ -401,3 +401,5 @@ T05 evidence: [request context record](verification/2026-10-17-request-context.j
 T02/T03/T06 evidence: [manual recovery record](verification/2026-10-17-manual-recovery.json). Seven native cases cover stale status suppression/retry, a newer completed request, manual text/audio cancellation and navigation, before-dispatch setup-save cancellation, and linked automatic-status suppression. Older-history checks reproduce the inaccessible eleventh attempt, then verify all35 entries across three keyboard-focused batches.
 
 A04/T11 evidence: [provider-free saved-radio record](verification/2026-10-17-keyless-radio.json). Native saved audition/resume, manual breaks and automatic DJ playback pass with all provider statuses unconfigured, including a fresh-process keyless restart. Speech stays outside the music queue and playlist, with zero Jellyfin writes or session/favorite/history requests. A separate explicit text/audio preparation leaves music paused, the selected take and opt-ins unchanged.
+
+A16/A18 evidence: [current sign-out record](verification/2026-10-17-signout-current.json). Native publication/sign-out, signed-out restart, reconnect and named per-profile Resume pass. Twenty-one actual-main/service/storage lifecycle cases cover stale setup/Resume, failure boundaries and automatic/manual/preview key/in-flight/publication checkpoints. No new provider dispatch follows the sign-out boundary or signed-out startup.
