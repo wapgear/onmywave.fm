@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 44 Review, 8 Dated, 3 Recorded, 106 Controlled, 15 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 43 Review, 8 Dated, 3 Recorded, 107 Controlled, 15 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -246,7 +246,7 @@ Source: REQUIREMENTS: Personal radio behavior, Per-DJ voice previews; R4,R8,M3,M
 
 | ID | Observable result | Proof | Status |
 | --- | --- | --- | --- |
-| D01 | Saved-DJ editor exposes name, personality, language, instructions, music preferences and supported voice/delivery choices. | N+S | Review |
+| D01 | Saved-DJ editor exposes name, personality, language, instructions, music preferences, exclusions and supported voice/delivery choices; full bounded editorial fields persist and reach preparation with a visible usage explanation. | N+S | Controlled |
 | D02 | Preset setup is generation-free and saving/testing a DJ never enables preparation or playback. | N+S | Dated |
 | D03 | Editor explains that the listener chooses music and playback frequency belongs to actual DJ playback settings. | N+U | Dated |
 | D04 | DJ defaults off/every 3 songs; natural completions count and skips do not. | N+S | Controlled |
@@ -421,3 +421,5 @@ S04/S05/S09/S10 evidence,17 October2026: [current source boundaries](verificatio
 S06–S08 evidence,17 October2026: [current source presentation](verification/2026-10-17-source-presentation.json). Eight native cases cover automatic stale/undated no-request reasons, ready/draft/scheduled/on-air named warnings, missing/invalid/valid dates in history and saved/manual provenance, original links and actual main/service warning persistence. A small configured-feed spacing fix passes a rebuilt native keyboard/spacing/overflow check. Build/TypeScript and full ESLint pass. Inventory:187 rows,185 active,2 Deferred;47 Review,8 Dated,3 Recorded,103 Controlled,15 Live,9 External.67 active checks remain.
 
 D04/D08/D09 evidence,17 October2026: [current DJ listening controls](verification/2026-10-17-dj-listening-controls.json).43 native cases cover defaults/countdown/natural completions, Disable with preparation on/off in both styles, retained or canceled seek behavior, heard-position resume, delayed callbacks and pause across transition phases. Prepared state, queue contents and selection remain correct; ended-song continuation follows normal intent. D05/D06/D07 and Q10 retain their wider open scope. Inventory:187 rows,185 active,2 Deferred;44 Review,8 Dated,3 Recorded,106 Controlled,15 Live,9 External.64 active checks remain.
+
+D01 evidence,17 October2026: [saved DJ editorial preferences](verification/2026-10-17-dj-editorial-preferences.json). Fixed omitted exclusions and silently truncated instructions/preferences.13 service cases verify complete bounded fields and pre-dispatch validation; four native cases cover save/cancel/restart and manual/automatic requests. Seven current request/redirect checks revalidate S09 privacy with the larger payload. Inventory:187 rows,185 active,2 Deferred;43 Review,8 Dated,3 Recorded,107 Controlled,15 Live,9 External.63 active checks remain. D07 remains Review; actual model adherence, latency and input cost are not established by controlled replies.
