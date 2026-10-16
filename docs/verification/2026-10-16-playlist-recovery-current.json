@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-16",
+  "base": "d6d1fcde17d7ebb9cfefb15bff1167445e9a30bc",
+  "scope": "Current native uncertain reorder navigation/restart and read-receipt/account boundaries",
+  "productionChanges": false,
+  "runtime": {
+    "platform": "macOS 27.2 arm64",
+    "electron": "43.7.0",
+    "viewport": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    }
+  },
+  "restartAndNavigation": {
+    "cases": [
+      {
+        "kind": "active-and-navigation",
+        "pendingCannotAcknowledge": true,
+        "navigationRetainsLock": true,
+        "tileShowsReview": true,
+        "privateJournal": true,
+        "result": "passed"
+      },
+      {
+        "kind": "restart-and-acknowledgement",
+        "oldReceiptRejected": true,
+        "fourMutationsBlocked": true,
+        "explicitAcknowledgementClears": true,
+        "result": "passed"
+      },
+      {
+        "kind": "third-launch",
+        "staysUnlocked": true,
+        "remoteMutations": 1,
+        "providerCalls": 0,
+        "result": "passed"
+      }
+    ],
+    "result": "passed"
+  },
+  "readAndAccountBoundaries": {
+    "result": "passed",
+    "cases": [
+      {
+        "kind": "read-started-during-write",
+        "finishesAfterWrite": true,
+        "receiptAbsent": true,
+        "result": "passed"
+      },
+      {
+        "kind": "account-isolation",
+        "lateOldReadRejected": true,
+        "samePlaylistOtherAccountEditable": true,
+        "originalMarkerRetained": true,
+        "oldAuthReceiptRejected": true,
+        "freshReceiptAcknowledges": true,
+        "result": "passed"
+      }
+    ],
+    "providerCalls": 0
+  },
+  "hashes": {
+    "src/main/playlist-recovery.ts": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/main/jellyfin.ts": "f4d2e4d8ae75807447bd5b4f64b97938594f3935834932bb7d1bec43a8360448",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "8bea51f6cb40f8b4ca0714e8af6b344b7e0a6e40278e018935b6a0d5e7f4e721",
+    "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": "7ec7af5dedfed6f3a29e6584c2b5b2559df4477682b1fcdd19d9ee7456e18d7c",
+    "out/renderer/index.html": "8afc20f328d8e8cda367bc8c5507b68f52b9775e046847700559938d6c440c8e"
+  },
+  "fixture": {
+    "actual": "Fresh source-bundled main, production preload and renderer, native Electron window, typed IPC, recovery storage and localhost HTTP service",
+    "substitutions": "Dummy encrypted Jellyfin credentials and provider keys; shared keychain adapter replaced; scheduler stopped; hidden window muted; providers blocked or substituted, no provider calls",
+    "privateReproducers": [
+      "/private/tmp/native-playlist-current/build.mjs",
+      "/private/tmp/native-playlist-current/bootstrap.mjs",
+      "/private/tmp/native-playlist-current/server.mjs",
+      "/private/tmp/native-playlist-current/run.cjs",
+      "/private/tmp/native-playlist-current/read.cjs"
+    ],
+    "driverCorrection": "Initial runner tried to size the window before creation. Waiting for firstWindow corrected the driver; the complete run then passed."
+  },
+  "limits": [
+    "Uncertain operation was reorder, not removal/create/add.",
+    "Restart check is ordinary process exit and fresh launch, not crash or power loss.",
+    "Account-boundary writes use the typed preload API, not the sign-in form.",
+    "No new storage-fault, multi-batch, Add-destination or observed-listener coverage.",
+    "Existing Q10 shutdown diagnostic remains unresolved."
+  ],
+  "checklist": {
+    "P12": "Controlled: read started while mutation pending finishes after terminal uncertainty without a receipt.",
+    "P07/P10/P13/P14/P16": "Partial current evidence only; full row scope remains Review."
+  },
+  "result": "passed"
+}
