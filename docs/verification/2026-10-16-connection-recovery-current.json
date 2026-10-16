@@ -1,0 +1,151 @@
+{
+  "date": "2026-10-16",
+  "base": "5024d47827be774c657aa8f50ee0b67b47cebe97",
+  "problem": "Successful authentication to the same Jellyfin account returned an empty committed library selection but retained pre-authentication checkbox edits in the mounted chooser.",
+  "before": {
+    "cases": [
+      {
+        "kind": "same-account fresh library choices",
+        "sameConnectionId": true,
+        "committedLibraryIds": [],
+        "staleDraftStillChecked": true
+      }
+    ],
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "result": "reproduced"
+  },
+  "chooserAfter": {
+    "cases": [
+      {
+        "kind": "Back retains draft and focus",
+        "result": "passed",
+        "addressRetainedCredentialsCleared": true
+      },
+      {
+        "kind": "failed replacement retains account and checkbox draft",
+        "result": "passed"
+      },
+      {
+        "kind": "same-account successful sign-in resets choices",
+        "result": "passed",
+        "explicitNewSelectionRequired": true
+      },
+      {
+        "kind": "second same-account sign-in resets again",
+        "result": "passed"
+      },
+      {
+        "kind": "different-account fresh discovery and save",
+        "result": "passed",
+        "freshChoiceCommitted": true
+      }
+    ],
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "invariants": {
+      "providerCalls": 0,
+      "rendererErrors": 0
+    },
+    "result": "passed"
+  },
+  "recovery": {
+    "cases": [
+      {
+        "kind": "offline retains session and buffered music",
+        "result": "passed",
+        "sameSession": true,
+        "bufferedMusicAdvanced": true,
+        "explicitRetryRecovers": true
+      },
+      {
+        "kind": "same-account pending request retained",
+        "result": "passed",
+        "prefilledServerUsernameEmptyPassword": true,
+        "musicRestoredPaused": true,
+        "unsavedSetupAndScriptRetained": true,
+        "noImplicitSaveOrRedispatch": true,
+        "lateProviderFailureRetained": true
+      },
+      {
+        "kind": "same-account cancellation state retained",
+        "result": "passed",
+        "exactCancellationStateRetained": true,
+        "noImplicitSaveOrRedispatch": true
+      }
+    ],
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "invariants": {
+      "newTakes": 0,
+      "selectionUnchanged": true,
+      "profileSettingsUnchanged": true,
+      "explicitSubstitutedVoiceAttempts": 2,
+      "additionalReauthenticationVoiceDispatches": 0,
+      "realProviderCalls": 0,
+      "rendererErrors": 0
+    },
+    "result": "passed"
+  },
+  "change": "Advance the chooser key only after a successful completed sign-in while the screen still owns the flow. Back and failed sign-in keep their checkbox draft; successful same-account or different-account sign-in starts fresh choices. No storage, token or backend changes.",
+  "runtime": {
+    "macOS": "27.2 arm64",
+    "electron": "43.7.0",
+    "fixtureNode": "24.4.1",
+    "window": {
+      "cssWidth": 1280,
+      "cssHeight": 720,
+      "zoomFactor": 1,
+      "hidden": true,
+      "muted": true
+    }
+  },
+  "scope": {
+    "actualMainPreloadProductionRenderer": true,
+    "credentialProtection": "real safeStorage with dummy local connection credentials",
+    "sharedProviderKeys": "null adapter",
+    "server": "owned localhost Jellyfin-shaped HTTP fixture",
+    "controlledPerturbations": [
+      "reject replacement authentication with401",
+      "return same or different dummy account identity",
+      "drop local server connections for offline reads",
+      "return401 for authenticated reads",
+      "hold substituted voice response across same-account reauthentication",
+      "return provider failure or finish a canceled attempt"
+    ],
+    "realProviderRequests": 0,
+    "unitFrameworkAdded": false
+  },
+  "limitations": [
+    "Not a live Jellyfin outage or real-account reauthentication proof. C12 stays Review for its live requirement.",
+    "No other OS/credential platform, physical media key, VoiceOver or observed-listener acceptance claimed.",
+    "Smaller windows and enlarged zoom remain deferred.",
+    "Separate account/sign-out draft-clearing and broader overlapping-save variants remain their existing review items.",
+    "Earlier Q10 shutdown diagnostic remains unattributed/open."
+  ],
+  "sourceSha256": {
+    "src/renderer/pages/Connection/Connection.page.tsx": "715243e30983a390744988b2f25c6ef4319898c88c3daf6db6a7c7f216ef2d09",
+    "src/renderer/components/LibraryChooser.tsx": "3a64a4447975c88150b7076c7e1e6bc8cee1e9396d61829f032c12624e0329d8",
+    "src/renderer/App.tsx": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+    "src/main/jellyfin.ts": "22f083327dfdcbb0952d9750662df95d13c31e09a83f628f8c1e3393072f90eb",
+    "src/renderer/pages/Stations/Stations.page.tsx": "2627f57cb89db0ac5ed73dc85f4bea39987387b07844f5f840e34de81b89fa92"
+  },
+  "fixtureSha256": {
+    "build.mjs": "b9d1b526a677e2a5297dd6958dc0b926d60f08b09c2095a7a85bee5848952aa4",
+    "bootstrap.mjs": "32f6d2bbaf688b091ea743e35ab64b678b166b83c0b8d015c89e829df957fea1",
+    "server.mjs": "131d1dc311e46f8455f2b8fd9f2ddb74db3a5a9743119d165c9fffc1666f8f4d",
+    "before.cjs": "4dce0d578fbba7f6f991327d09362d6a1024f915fd145ce5bc86277e0c61bd21",
+    "chooser-after.cjs": "6b3f63d41caab95c3727fbded94e7f0de26bd0b40fb224b6b8cb83dfb6cec2a0",
+    "recovery.cjs": "145b557dd01725c8a7dc047304d3a55389c7a5a070fd9e18339e9f542b4ed4b4"
+  },
+  "fixtureNote": "The voice-hold wrapper and whole-server offline flag were added after the chooser pass; they are inactive in that chooser scenario. App source hashes are current and identical across both final passes."
+}

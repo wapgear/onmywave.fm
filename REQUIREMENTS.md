@@ -129,7 +129,7 @@ Search and metadata filters belong within library pages. A separate full music d
 
 ## Jellyfin connection
 
-- Accept a server address and authenticate the listener. Initial library selection always offers Use another account or server, including while discovery is loading, empty or failed. Open a sign-in form with the current server filled and username/password cleared; preserve library checkbox choices for Back. Failed authentication retains the current account. Replace it only after successful authentication, refresh available libraries and return to selection even for the same account. Back returns keyboard focus to the account-switch action.
+- Accept a server address and authenticate the listener. Initial library selection always offers Use another account or server, including while discovery is loading, empty or failed. Open a sign-in form with the current server filled and username/password cleared; preserve library checkbox choices for Back. Failed authentication retains the current account. Replace it only after successful authentication, refresh available libraries and return to selection even for the same account. Successful authentication resets the checkbox draft and requires a fresh explicit library choice; only Back or a failed sign-in retains earlier checkbox edits. Back returns keyboard focus to the account-switch action.
 
 - Let the listener select the music libraries accessible to their account. Count and submit only libraries in the current accessible list. If a prior selection becomes unavailable, explain it and let the listener explicitly save an available replacement. When no music libraries are available, offer keyboard-accessible Try again after access changes, keep the selected count at zero and prevent an empty save.
 
