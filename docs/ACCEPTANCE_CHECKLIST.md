@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 50 Review, 8 Dated, 3 Recorded, 100 Controlled, 15 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 47 Review, 8 Dated, 3 Recorded, 103 Controlled, 15 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -208,9 +208,9 @@ Source: REQUIREMENTS: Personal radio behavior, Settings and data; R2,R5,R7,R11.
 | S03 | X recent search explains token/access requirements and retains useful partial results without leaking bearer credentials. | S+L | Review |
 | S04 | Source text is untrusted; unsafe links/redirects/entities cannot bypass the intended fetch/open boundaries. | I+S | Controlled |
 | S05 | Verified tracking aliases deduplicate assessment/playback across restart while semantic query fields and original historical links/outcomes remain intact. | S | Controlled |
-| S06 | Automatic checks skip undated/stale entries with a reason and never claim all news was discovered. | S+N | Review |
-| S07 | Ready/draft/current/scheduled stories retain named partial-source warnings in News bucket and player without requiring Saved audio. | N+S | Review |
-| S08 | Missing/invalid publication dates say Date unavailable in history and saved/manual provenance; valid dates and links remain. | N+S | Review |
+| S06 | Automatic checks skip undated/stale entries with a reason and never claim all news was discovered. | S+N | Controlled |
+| S07 | Ready/draft/current/scheduled stories retain named partial-source warnings in News bucket and player without requiring Saved audio. | N+S | Controlled |
+| S08 | Missing/invalid publication dates say Date unavailable in history and saved/manual provenance; valid dates and links remain. | N+S | Controlled |
 | S09 | Text requests send bounded excerpts, interests and host instructions, never music, Jellyfin secrets, keys as context or the full catalog. | I+S | Controlled |
 | S10 | Voice requests send only the intended script/delivery settings and provider credentials remain behind preload. | I+S | Controlled |
 | S11 | Source deletion removes active/inactive profile references coherently without losing other setup/history or enabling invalid playback. | N+S | Controlled |
@@ -417,3 +417,5 @@ D14–D18 evidence,17 October2026: [current DJ-preview lifecycle](verification/2
 D11–D13 evidence,17 October2026: [current transition demo](verification/2026-10-17-transition-demo.json). Seven native cases and32 current production-renderer cases cover keyless/empty-queue use, both styles, real decoded completion, paused state, newer transport, current volume and preferences, unchanged persisted settings, active timing/mode/preset changes, navigation cleanup, stale callbacks/errors and explicit failure/retry. Provider output and audio quality are not inferred from muted demo execution. Inventory:187 rows,185 active,2 Deferred;54 Review,8 Dated,3 Recorded,96 Controlled,15 Live,9 External.74 active checks remain.
 
 S04/S05/S09/S10 evidence,17 October2026: [current source boundaries](verification/2026-10-17-source-boundaries.json). Actual service/store/pool checks verify safe redirects/entities, bounded text and voice request allowlists, fixed provider credential destinations, tracking aliases, historical migration and fresh-process assessment/playback deduplication. Seven native source-link cases reject unsafe URLs before a captured OS-open call; seven request/redirect cases pass. Native freshness/warning/date scope remains under S06–S08 Review. Inventory:187 rows,185 active,2 Deferred;50 Review,8 Dated,3 Recorded,100 Controlled,15 Live,9 External.70 active checks remain.
+
+S06–S08 evidence,17 October2026: [current source presentation](verification/2026-10-17-source-presentation.json). Eight native cases cover automatic stale/undated no-request reasons, ready/draft/scheduled/on-air named warnings, missing/invalid/valid dates in history and saved/manual provenance, original links and actual main/service warning persistence. A small configured-feed spacing fix passes a rebuilt native keyboard/spacing/overflow check. Build/TypeScript and full ESLint pass. Inventory:187 rows,185 active,2 Deferred;47 Review,8 Dated,3 Recorded,103 Controlled,15 Live,9 External.67 active checks remain.
