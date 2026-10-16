@@ -1,0 +1,243 @@
+{
+  "date": "2026-10-17",
+  "base": "0dd89ef75d5c2e01a4a20acca2d3f489f22f557c",
+  "scope": [
+    "C02",
+    "C05",
+    "C07",
+    "C08",
+    "C15"
+  ],
+  "productionChanges": true,
+  "before": {
+    "oldSaveStillHeld": true,
+    "pendingLabelRetained": false,
+    "pendingSelectionRetained": false,
+    "checkboxDisabled": false,
+    "signOutDisabled": true,
+    "duplicateSaveEnabled": true
+  },
+  "fix": "One account-session controller owns library choices and the observed save mutation across music/Settings routes. It captures submitted IDs, blocks synchronous overlap, retains error/choices, and resets only after successful authentication. Separate library-save publication preserves expiry.",
+  "pairedDecision": {
+    "SteveInitial": "Use mutation cache for pending variables plus explicit account-keyed draft/error recovery; later considered a module map to avoid routing props.",
+    "ElenaInitial": "A single SessionContent-owned controller survives routes and expiry, avoids mutation-cache GC and provides explicit same-ID authentication reset.",
+    "challenge": "Both considered module-store lifecycle/eviction against bounded controlled-state plumbing, and the risk that a save success could clear expiry.",
+    "decision": "Morgan chose a small SessionContent-scoped context/controller. Steve supports it with the reservation that save publication must preserve expiry. Elena supports it; her final actual-diff review found no actionable issue.",
+    "expiryGuard": "Controller checks current expiry and account/revision/active ownership; library publication additionally calls setConnection with clearExpiry false so a later expiry cannot be reset during async cache cancellation.",
+    "finalPreservation": "The existing librarySelectionRevision remount/refetch after successful authentication remains; final native same-account sign-in changes Views access and confirms the former Archive option disappears and Recent is unchecked."
+  },
+  "native": {
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "cases": [
+      {
+        "kind": "account switch during loading",
+        "result": "passed",
+        "actionAvailable": true,
+        "serverRetainedCredentialsBlank": true
+      },
+      {
+        "kind": "account switch during empty",
+        "result": "passed",
+        "actionAvailable": true,
+        "serverRetainedCredentialsBlank": true
+      },
+      {
+        "kind": "account switch during failure",
+        "result": "passed",
+        "actionAvailable": true,
+        "serverRetainedCredentialsBlank": true
+      },
+      {
+        "kind": "unavailable saved library",
+        "result": "passed",
+        "zeroSelectedUntilAccessibleChoice": true,
+        "onlyAccessibleIdSaved": true
+      },
+      {
+        "kind": "pending save survives navigation and commits",
+        "result": "passed",
+        "submittedSnapshotVisible": true,
+        "duplicateSaveAndSignoutBlocked": true,
+        "latestCollectionPublished": true
+      },
+      {
+        "kind": "failed save survives navigation and explicit retry",
+        "result": "passed",
+        "draftAndErrorRetained": true,
+        "noImplicitRedispatch": true,
+        "retryCommits": true
+      },
+      {
+        "kind": "expiry while save succeeds",
+        "result": "passed",
+        "waitExplained": true,
+        "signinBlockedUntilSettlement": true,
+        "noExpiredScreenResurrection": true,
+        "originalIdentityAndBlankPassword": true
+      },
+      {
+        "kind": "expiry while save fails",
+        "result": "passed",
+        "waitExplained": true,
+        "signinBlockedUntilSettlement": true,
+        "noExpiredScreenResurrection": true,
+        "originalIdentityAndBlankPassword": true
+      },
+      {
+        "kind": "initial chooser save blocks account switch",
+        "result": "passed",
+        "noOverlappingSignIn": true
+      },
+      {
+        "kind": "failed login and same-account success boundaries",
+        "result": "passed",
+        "failedLoginAndBackKeepDraft": true,
+        "successfulLoginClearsOldDraftAndError": true,
+        "newAccessListFetched": true
+      }
+    ],
+    "result": "passed",
+    "rendererErrors": 0,
+    "fatalFileAbsent": true
+  },
+  "signinOrdering": {
+    "result": "passed",
+    "cases": [
+      {
+        "heldStage": "info",
+        "newerFailure": "info",
+        "result": "passed",
+        "olderSuperseded": true,
+        "originalAccountAndDiskRetained": true,
+        "noObsoleteCredentialWrite": true
+      },
+      {
+        "heldStage": "info",
+        "newerFailure": "auth",
+        "result": "passed",
+        "olderSuperseded": true,
+        "originalAccountAndDiskRetained": true,
+        "noObsoleteCredentialWrite": true
+      },
+      {
+        "heldStage": "info",
+        "newerFailure": "body",
+        "result": "passed",
+        "olderSuperseded": true,
+        "originalAccountAndDiskRetained": true,
+        "noObsoleteCredentialWrite": true
+      },
+      {
+        "heldStage": "auth",
+        "newerFailure": "info",
+        "result": "passed",
+        "olderSuperseded": true,
+        "originalAccountAndDiskRetained": true,
+        "noObsoleteCredentialWrite": true
+      },
+      {
+        "heldStage": "auth",
+        "newerFailure": "auth",
+        "result": "passed",
+        "olderSuperseded": true,
+        "originalAccountAndDiskRetained": true,
+        "noObsoleteCredentialWrite": true
+      },
+      {
+        "heldStage": "auth",
+        "newerFailure": "body",
+        "result": "passed",
+        "olderSuperseded": true,
+        "originalAccountAndDiskRetained": true,
+        "noObsoleteCredentialWrite": true
+      },
+      {
+        "heldStage": "body",
+        "newerFailure": "info",
+        "result": "passed",
+        "olderSuperseded": true,
+        "originalAccountAndDiskRetained": true,
+        "noObsoleteCredentialWrite": true
+      },
+      {
+        "heldStage": "body",
+        "newerFailure": "auth",
+        "result": "passed",
+        "olderSuperseded": true,
+        "originalAccountAndDiskRetained": true,
+        "noObsoleteCredentialWrite": true
+      },
+      {
+        "heldStage": "body",
+        "newerFailure": "body",
+        "result": "passed",
+        "olderSuperseded": true,
+        "originalAccountAndDiskRetained": true,
+        "noObsoleteCredentialWrite": true
+      }
+    ]
+  },
+  "rowCoverage": {
+    "C02": "Use another account/server is available during loading, empty and failed discovery; server retained and username/password blank.",
+    "C05": "Unavailable saved Archive ID contributes zero selected and cannot be saved; selecting accessible Recent saves only its ID through actual main/service/secure local connection persistence.",
+    "C07": "Submitted choices and Saving remain on Settings remount, choices and duplicate submission/sign-out are disabled; normal completion updates current collection. Failure and choices persist across navigation for explicit Save retry. Initial chooser also blocks account switch during save.",
+    "C08": "Actual renderer auth handling receives a controlled 401 during a held save. It explains waiting, disables sign-in/server fields, then allows sign-in after success or failure. The expired screen stays open, username retained and password empty.",
+    "C15": "Nine actual JellyfinService integrations cross an older held public-info/auth/body stage with a newer failing info/auth/body stage. Older response rejects as superseded; current account and disposable saved snapshot remain unchanged, with zero obsolete persistence calls."
+  },
+  "checks": {
+    "buildTypeScript": "npm run build passed after final source delta",
+    "lint": "npm run lint passed after final source delta",
+    "nativeScreenshot": "2026-10-17-library-save-navigation.png inspected at 1280x720 normal zoom, with submitted choices and disabled Saving visible above the player. Retina capture has 2560x1440 pixels.",
+    "rendererErrors": 0,
+    "fatalFileAbsent": true,
+    "fixtureCorrection": "The first after driver passed the controlled failure flag as the first app.evaluate argument, which is the Electron module. Corrected the callback to receive custom data in its second argument; success then returned the intended response. No app defect is attributed to that fixture failure.",
+    "nativeCases": 11,
+    "signinOrderingCases": 9
+  },
+  "limits": [
+    "Local dummy accounts and held/synthetic server responses establish controlled UI/service behavior, not arbitrary live-server permission changes, real outages or every OS secure-storage fallback.",
+    "Sign-in ordering uses a disposable snapshot adapter rather than the real OS credential store; C15 requires service evidence and separate secure-storage coverage remains in its own records.",
+    "Transient draft/error retention lasts for the active account session; this does not promise restoration of unsaved choices across quitting.",
+    "No personal session or provider is used; nonlocal/provider requests are blocked.",
+    "C06 and C12 retain their named live-server scope. No deferred viewport or zoom checks ran.",
+    "The overall goal remains open; no general usability or completion percentage is asserted."
+  ],
+  "sourceSha256": {
+    "src/renderer/components/LibrarySelection.tsx": "97db6216b4fada46621ce20658e1bc1d47b76fe0819a0db75e446ea82965e342",
+    "src/renderer/components/LibraryChooser.tsx": "18c22d71b890eae73fe8ef20241300dc55160e8372e6ac1ab9f5d998d301cf36",
+    "src/renderer/pages/Connection/Connection.page.tsx": "6a19c2827c5b0afde7b13eabd72b1431f6045db325a8fac1bbc8c35e25af965a",
+    "src/renderer/pages/Settings/Settings.page.tsx": "ce0c41cd58f82a801b651940cb641945c12ed4c83b765377f6be8d809d1e5d9f",
+    "src/renderer/App.tsx": "295282dd8549fec72a32bcf1b16cd4095f4a4c2e9baa41044dd0b65fc60d98ab",
+    "src/renderer/main.tsx": "863a6596bde95ba270f0d554a2ac2bd0c3819ca832f1bfd577d0edf9bb69a7cc",
+    "src/main/jellyfin.ts": "22f083327dfdcbb0952d9750662df95d13c31e09a83f628f8c1e3393072f90eb",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/main/storage.ts": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370"
+  },
+  "fixtureSha256": {
+    "/private/tmp/library-save-current/before.cjs": "304859ebd5cb2390a7310825cae0debbb12e83636cea0bf2f957b037aab61dfc",
+    "/private/tmp/library-save-current/after.cjs": "e6dcc3121d9074008a3c0c1f8a91b5412f452684155feb2b2160b843afc719e0",
+    "/private/tmp/library-save-current/build.mjs": "1a09f03dde74bdc1b1727f6984bb8128c8195a87bd97713ab61911497d0befb8",
+    "/private/tmp/library-save-current/bootstrap.mjs": "151294d15d5f31b7fdb22449bd91fc855100409780f654cf43020e3f66923945",
+    "/private/tmp/library-save-current/server.mjs": "d813396299eb53f27bcbc13107987aa07139aa12fe2b31324e8fc771e65cb94a",
+    "/private/tmp/library-save-current/signin.mjs": "9e87543e046d75f2a2acc1fac6261509169d9b7ce7745db6922ccec800703290",
+    "/private/tmp/library-save-current/jellyfin.mjs": "f588d7ea72767ce9c4d264e6894f8f5d33ce46aaf33917e42ab5080412cbdfbc",
+    "/private/tmp/library-save-current/out/main/index.js": "89cb7e9d1eb123f3631318d401a67d03ff0b75e86901d3c076ba937d27cacfe9",
+    "/private/tmp/library-save-current/build.log": "73662241366bc0942e48ce5f005ab48babab2ae589a72937842f379c127ac040",
+    "/private/tmp/library-save-current/lint.log": "6f1680e0ff047e07a06dcf9afc079770fad3f871d47a52ee12dccaaa84366d63",
+    "/private/tmp/library-save-current/music.cjs": "922896ef01a32be6e27efa5ce1fcda2c17e6c13532ff6f213701e49c4290732e",
+    "/private/tmp/library-save-current/music.json": "a6c119d2ae02deb2b81ea3e95b3630c5e0851f0edd8f0a92bb15574f9a4dacb4"
+  },
+  "nativeMusicContinuity": {
+    "result": "passed",
+    "playingThroughNavigationAndSave": true,
+    "positionAdvanced": true,
+    "queueContentsUnchanged": true,
+    "rendererErrors": 0,
+    "fatalFileAbsent": true
+  }
+}

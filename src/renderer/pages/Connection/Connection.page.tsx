@@ -5,11 +5,13 @@ import type { Connection } from '../../../shared/types';
 import { unwrap } from '../../api';
 import { ErrorNotice } from '../../components/Shared';
 import { LibraryChooser } from '../../components/LibraryChooser';
+import { useLibrarySelection } from '../../components/LibrarySelection';
 export function ConnectionPage({ connection, expired, connected, librariesSelected }: { connection: Connection | null; expired: boolean; connected: (value: Connection) => void | Promise<void>; librariesSelected: (value: Connection) => void }) {
   const [serverUrl, setServerUrl] = useState(connection?.serverUrl ?? '');
   const [username, setUsername] = useState(connection?.userName ?? '');
   const [password, setPassword] = useState('');
   const [changingAccount, setChangingAccount] = useState(false);
+  const selection = useLibrarySelection();
   const [librarySelectionRevision, setLibrarySelectionRevision] = useState(0);
   const active = useRef(false);
   const chooser = useRef<HTMLDivElement>(null);
@@ -24,6 +26,7 @@ export function ConnectionPage({ connection, expired, connected, librariesSelect
   const login = useMutation({ meta: { authAttempt: true }, mutationFn: async () => unwrap(await window.wave.connect({ serverUrl: serverUrl.trim(), username: username.trim(), password })), onSuccess: async value => {
     if (!active.current) return;
     setPassword('');
+    selection.reset(value);
     await connected(value);
     if (active.current) { setLibrarySelectionRevision(value => value + 1); setChangingAccount(false); }
   } });

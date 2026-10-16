@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 40 Review, 8 Dated, 3 Recorded, 109 Controlled, 15 Live, 10 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 39 Review, 5 Dated, 2 Recorded, 114 Controlled, 15 Live, 10 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -55,20 +55,20 @@ Source: REQUIREMENTS: Jellyfin connection; RADIO_EXPERIENCE: Entry and first use
 | ID | Observable result | Proof | Status |
 | --- | --- | --- | --- |
 | C01 | First launch accepts Jellyfin address and credentials, lists accessible music libraries and opens All songs. | N+L | Live |
-| C02 | Use another account/server remains available during loading, empty discovery and discovery failure. | N | Dated |
+| C02 | Use another account/server remains available during loading, empty discovery and discovery failure. | N | Controlled |
 | C03 | Account-switch form retains server, clears credentials and Back restores checkbox choices and focus. | N | Controlled |
 | C04 | Failed replacement authentication retains the committed account; successful authentication resets checkbox drafts and refreshes selection even for the same account. | N+S | Controlled |
-| C05 | Unavailable selected libraries are explained and excluded from saved IDs and selected counts. | N+S | Dated |
+| C05 | Unavailable selected libraries are explained and excluded from saved IDs and selected counts. | N+S | Controlled |
 | C06 | Empty access disables empty Save and Try again recovers after access is granted without reauthentication. | N+L | Dated |
-| C07 | Library saves cannot overlap account switching, sign-in or sign-out; pending state survives music navigation. | N+S | Dated |
-| C08 | Expiry during a library save explains the wait and enables sign-in only after that save settles. | N+S | Review |
+| C07 | Library saves cannot overlap account switching, sign-in or sign-out; submitted choices, pending state and save failures survive music navigation. | N+S | Controlled |
+| C08 | Expiry during a library save explains the wait and enables sign-in only after that save settles. | N+S | Controlled |
 | C09 | Older success/failure cannot replace a newer account or undo sign-out, including a held pause write, uncommitted credentials and failed sign-out. | N+S | Controlled |
 | C10 | Session-only account replacement removes older restorable credentials; restart requires sign-in. | N+S+O | Review |
 | C11 | Account/library snapshots and saved credentials become active together; asynchronous failure/cancellation keeps the latest committed account and choices across restart. | S+O | Controlled |
 | C12 | Offline reads preserve the session and offer explicit Retry;401 prefills server/username with empty password. | N+L | Review |
 | C13 | Same-account reauthentication retains unsaved radio/script/manual-operation state without saving or redispatch; music restores paused. | N+S | Controlled |
 | C14 | Different account/server and explicit sign-out clear unsaved radio/script drafts and hide old-account live feedback, including manual completion notices; saved local radio material remains. | N+S | Controlled |
-| C15 | A failed newer login supersedes older attempts while retaining the previously committed account. | S | Recorded |
+| C15 | A failed newer login supersedes older attempts while retaining the previously committed account. | S | Controlled |
 | C16 | Jellyfin sign-in JSON deadlines include stalled bodies; after 20 seconds the form is usable and no account is committed. | N+S | Controlled |
 | C17 | Library JSON requests time out through body consumption; the existing single read retry ends in useful error and explicit Retry restores data. | N+S | Controlled |
 | C18 | Malformed sign-in/library JSON is distinct from network timeout and sign-in errors never imply a saved playlist change. | S | Controlled |
@@ -427,3 +427,5 @@ D01 evidence,17 October2026: [saved DJ editorial preferences](verification/2026-
 D07 evidence,17 October2026: [current player DJ status](verification/2026-10-17-player-dj-status.json). Ten native cases verify selected-versus-edited profile attribution, host/cadence/preparation, upcoming/current script and source dates/warnings, actual heard/paused/completed/interrupted session state, profile switching, and pool failure/loading/retry. PRD clarifies the observed behavior. No production code change was needed. Inventory:187 rows,185 active,2 Deferred;42 Review,8 Dated,3 Recorded,108 Controlled,15 Live,9 External.62 active checks remain. Broader timing, audible and observed-user acceptance remain open.
 
 D05/D06 evidence,17 October2026: [current news eligibility and handoff](verification/2026-10-17-news-eligibility-handoff.json).26 real-file service cases,12 native placement cases and52 current native handoff cases pass. The prior43 pause/seek/late-callback cases retain exact player/controller source hashes. D06 is Controlled. D05 engineering behavior passes, but its observed-listener requirement remains External; it is not counted complete. PRD states freshness and deferred placement rules. Inventory:187 rows,185 active,2 Deferred;40 Review,8 Dated,3 Recorded,109 Controlled,15 Live,10 External.61 active checks remain; Q10 and wider live/OS/listener acceptance stay open.
+
+C02/C05/C07/C08/C15 evidence,17 October2026: [current library save navigation](verification/2026-10-17-library-save-navigation.json). Native reproduction found a lost Saving state and submitted selection on Settings remount, enabling a duplicate save. Account-session ownership now retains choices and errors, blocks overlap and preserves expiry. Ten final native flows, a playing-music continuity check and nine sign-in ordering integrations pass, including refreshed same-account access. PRD and M11 describe the recovery boundaries. Inventory:187 rows,185 active,2 Deferred;39 Review,5 Dated,2 Recorded,114 Controlled,15 Live,10 External.56 active checks remain. C06/C12 retain their wider live scope.
