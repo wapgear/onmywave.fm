@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 42 Review, 8 Dated, 3 Recorded, 108 Controlled, 15 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 40 Review, 8 Dated, 3 Recorded, 109 Controlled, 15 Live, 10 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -250,8 +250,8 @@ Source: REQUIREMENTS: Personal radio behavior, Per-DJ voice previews; R4,R8,M3,M
 | D02 | Preset setup is generation-free and saving/testing a DJ never enables preparation or playback. | N+S | Dated |
 | D03 | Editor explains that the listener chooses music and playback frequency belongs to actual DJ playback settings. | N+U | Dated |
 | D04 | DJ defaults off/every 3 songs; natural completions count and skips do not. | N+S | Controlled |
-| D05 | Fresh matching eligible recordings wait for suitable endings; empty or unsuitable endings keep music playing. | N+S+U | Review |
-| D06 | No duplicate queue advances, heard-news replay or obsolete placement occurs across pause, failure, late callbacks and interruptions. | N+S | Review |
+| D05 | Fresh matching eligible recordings wait for suitable endings; empty or unsuitable endings keep music playing. | N+S+U | External |
+| D06 | No duplicate queue advances, heard-news replay or obsolete placement occurs across pause, failure, late callbacks and interruptions. | N+S | Controlled |
 | D07 | Player shows selected profile/host/cadence/current-upcoming script/source references and last heard session status accurately. | N+S | Controlled |
 | D08 | Disable DJ stops its pending/active speech, preserves usable music and leaves preparation unchanged. | N+S | Controlled |
 | D09 | Music Pause pauses speech/timing; seeking follows Keep the DJ, enabled by default. | N+S | Controlled |
@@ -425,3 +425,5 @@ D04/D08/D09 evidence,17 October2026: [current DJ listening controls](verificatio
 D01 evidence,17 October2026: [saved DJ editorial preferences](verification/2026-10-17-dj-editorial-preferences.json). Fixed omitted exclusions and silently truncated instructions/preferences.13 service cases verify complete bounded fields and pre-dispatch validation; four native cases cover save/cancel/restart and manual/automatic requests. Seven current request/redirect checks revalidate S09 privacy with the larger payload. Inventory:187 rows,185 active,2 Deferred;43 Review,8 Dated,3 Recorded,107 Controlled,15 Live,9 External.63 active checks remain. D07 remains Review; actual model adherence, latency and input cost are not established by controlled replies.
 
 D07 evidence,17 October2026: [current player DJ status](verification/2026-10-17-player-dj-status.json). Ten native cases verify selected-versus-edited profile attribution, host/cadence/preparation, upcoming/current script and source dates/warnings, actual heard/paused/completed/interrupted session state, profile switching, and pool failure/loading/retry. PRD clarifies the observed behavior. No production code change was needed. Inventory:187 rows,185 active,2 Deferred;42 Review,8 Dated,3 Recorded,108 Controlled,15 Live,9 External.62 active checks remain. Broader timing, audible and observed-user acceptance remain open.
+
+D05/D06 evidence,17 October2026: [current news eligibility and handoff](verification/2026-10-17-news-eligibility-handoff.json).26 real-file service cases,12 native placement cases and52 current native handoff cases pass. The prior43 pause/seek/late-callback cases retain exact player/controller source hashes. D06 is Controlled. D05 engineering behavior passes, but its observed-listener requirement remains External; it is not counted complete. PRD states freshness and deferred placement rules. Inventory:187 rows,185 active,2 Deferred;40 Review,8 Dated,3 Recorded,109 Controlled,15 Live,10 External.61 active checks remain; Q10 and wider live/OS/listener acceptance stay open.
