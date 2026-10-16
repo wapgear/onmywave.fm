@@ -47,7 +47,7 @@ async function finishRun(profileId: string, requestId: string, outcome: NonNulla
     const workflowDraft: WorkflowDraft = { ...draft, newsLastRun: { ...run, outcome, finishedAt: new Date().toISOString(), ...(message ? { message: message.slice(0, 2000) } : {}) },
       ...(outcome === 'prepared' ? { newsClipDate: date, newsClipsToday: count + 1 } : {}),
       ...(outcome === 'interrupted' ? { newsWorkflowPaused: true } : {}),
-      ...(outcome === 'failed' ? { newsWorkflowError: message?.slice(0, 2000) } : outcome === 'prepared' || outcome === 'no-news' || outcome === 'interrupted' ? { newsWorkflowError: undefined } : {}) };
+      ...(outcome === 'failed' ? { newsWorkflowError: message?.slice(0, 2000) } : outcome === 'prepared' || outcome === 'no-news' || outcome === 'partial-coverage' || outcome === 'interrupted' ? { newsWorkflowError: undefined } : {}) };
     return { roomProfiles: state.roomProfiles.map(value => value.id === profileId ? { ...value, workflowDraft } : value), ...(state.activeRoomProfileId === profileId ? { workflowDraft } : {}) };
   });
 }
@@ -110,6 +110,7 @@ async function processProfile(news: NewsService, profile: RoomProfile) {
   } catch (error) {
     const message = error instanceof Error ? error.message : 'News preparation failed.';
     if (error instanceof ServiceError && error.code === 'no-news') { await finishRun(current.id, requestId, 'no-news', message); return; }
+    if (error instanceof ServiceError && error.code === 'partial-coverage') { await finishRun(current.id, requestId, 'partial-coverage', message); return; }
     if (/another preparation is running/i.test(message)) {
       const latest = await getLocalState();
       const after = latest.roomProfiles.find(value => value.id === current.id);
@@ -148,7 +149,7 @@ export async function startNewsWorkflow(news: NewsService, allowed = () => true)
       const run = profile.workflowDraft.newsLastRun;
       if (run?.outcome !== 'running') return profile;
       const request = requests.get(run.requestId);
-      const outcome: NonNullable<WorkflowDraft['newsLastRun']>['outcome'] = request?.status === 'complete' ? 'prepared' : request?.status === 'skipped' ? 'no-news' : 'interrupted';
+      const outcome: NonNullable<WorkflowDraft['newsLastRun']>['outcome'] = request?.status === 'complete' ? 'prepared' : request?.status === 'skipped' ? 'no-news' : request?.status === 'partial-coverage' ? 'partial-coverage' : 'interrupted';
       const message = outcome === 'interrupted' ? request?.error || 'The app stopped before this preparation completed.' : request?.error;
       const take = request?.status === 'complete' ? prepared.takes.find(value => value.id === request.artifactId) : undefined;
       const date = take?.createdAt ? dayKey(new Date(take.createdAt)) : dayKey(new Date(run.startedAt));

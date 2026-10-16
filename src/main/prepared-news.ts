@@ -253,6 +253,7 @@ async function execute<T extends PreparedNewsScript | PreparedNewsTake>(requestI
       if (old) {
         if (old.kind !== kind || old.inputHash !== inputHash) invalid('This request ID was already used for different input.');
         if (old.status === 'skipped') throw new ServiceError('no-news', old.error || 'No qualifying news. Music continues.');
+        if (old.status === 'partial-coverage') throw new ServiceError('partial-coverage', old.error || 'No story was selected because source coverage was incomplete.');
         if (old.status === 'complete') {
           const saved = kind === 'script' ? (await load()).scripts.find(item => item.id === old.artifactId) : (await load()).takes.find(item => item.id === old.artifactId);
           if (saved) return (kind === 'audio' ? { ...structuredClone(saved), available: Boolean(await preparedAudio(saved.id)) } : structuredClone(saved)) as T;
@@ -273,7 +274,7 @@ async function execute<T extends PreparedNewsScript | PreparedNewsTake>(requestI
     } catch (error) {
       const message = controller.signal.aborted ? 'Preparation stopped. A provider request may have been charged. Start an explicit new attempt to try again.' : error instanceof Error ? error.message : 'Preparation did not complete.';
       await change(current => ({ ...current,
-        requests: current.requests.map(item => item.requestId === requestId && item.status === 'running' ? { ...item, status: error instanceof ServiceError && error.code === 'no-news' ? 'skipped' : 'interrupted', error: message } : item),
+        requests: current.requests.map(item => item.requestId === requestId && item.status === 'running' ? { ...item, status: error instanceof ServiceError && error.code === 'partial-coverage' ? 'partial-coverage' : error instanceof ServiceError && error.code === 'no-news' ? 'skipped' : 'interrupted', error: message } : item),
         reviewedArticles: (current.reviewedArticles ?? []).map(article => article.requestId === requestId && article.status === 'submitted' ? { ...article, status: 'interrupted' } : article),
       }));
       if (controller.signal.aborted) throw new ServiceError('uncertain-write', message);

@@ -37,7 +37,7 @@ export function NewsBucket({ library, localState, automation, profileStatusUnkno
   const runtimePending = automation.settings.enabled && automation.room && automation.pending && player.newsPhase === 'idle' ? automation.pending : null;
   const preparation = pageProfile ? newsPreparationStatus(pageProfile) : null;
   const lastRun = pageProfile?.workflowDraft.newsLastRun;
-  const lastLabels = { running: 'Check in progress', prepared: 'Recording saved', 'no-news': 'No qualifying story', failed: 'Check failed', interrupted: 'Check interrupted' };
+  const lastLabels = { running: 'Check in progress', prepared: 'Recording saved', 'no-news': 'No qualifying story', 'partial-coverage': 'Incomplete source coverage', failed: 'Check failed', interrupted: 'Check interrupted' };
   const pageDj = localState.djs.find(dj => dj.id === pageProfile?.room.djId);
   const pageSources = [...new Set(pageProfile?.room.sourceIds ?? [])].map(id => localState.sources.find(source => source.id === id)).filter((source): source is NonNullable<typeof source> => Boolean(source));
   const pageInterests = pageProfile?.workflowDraft.newsInterests ?? pageDj?.news?.interests ?? '';

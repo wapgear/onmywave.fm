@@ -269,7 +269,11 @@ export class NewsService {
     const text = array(node(payload).output).flatMap(output => array(node(output).content)).filter(content => node(content).type === 'output_text').map(content => typeof node(content).text === 'string' ? node(content).text : '').join('');
     let bulletin: XmlNode;
     try { bulletin = node(JSON.parse(text)); } catch { throw new ServiceError('server', 'OpenAI did not return a complete news script.'); }
-    if (bulletin.articleId === null && bulletin.script === '') { await input.onReview?.(); throw new ServiceError('no-news', `No qualifying news. Music continues.${warnings.length ? ` ${warnings.join(' ')}` : ''}`); }
+    if (bulletin.articleId === null && bulletin.script === '') {
+      await input.onReview?.();
+      if (sourceFailure) throw new ServiceError('partial-coverage', `No story was selected from the sources that could be read. Coverage is incomplete. Music continues. ${warnings.join(' ')}`);
+      throw new ServiceError('no-news', `No qualifying news. Music continues.${warnings.length ? ` ${warnings.join(' ')}` : ''}`);
+    }
     const chosen = [bulletin.articleId];
     const script = typeof bulletin.script === 'string' ? bulletin.script.trim() : '';
     if (!script || script.length > 700 || script.split(/\s+/u).length > 55 || !candidates.some(article => article.id === bulletin.articleId)) throw new ServiceError('server', 'The DJ story was too long or had an invalid source. Generate another short segue.');
