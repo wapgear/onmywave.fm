@@ -145,7 +145,7 @@ Search and metadata filters belong within library pages. A separate full music d
 
 ## All songs
 
-- Show all songs in the selected music libraries.
+- Show all songs in the selected music libraries. A song or album shared by overlapping libraries appears once. Counts describe unique items, and page boundaries preserve the displayed order. Refresh library rereads current server contents.
 
 - Search by song title, artist, and album.
 

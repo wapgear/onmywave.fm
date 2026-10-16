@@ -21,6 +21,7 @@ type Item = {
 export const PLAYLIST_CREATION = 'playlist-creation';
 type Deps = { deviceId: string; imageUrl: (id: string, tag?: string) => string; onConnectionChanged?: () => void; persistConnection?: (session: Session | null, commit: (write: () => boolean) => boolean) => Promise<void>; playlistWrite?: (session: Session, id: string, reserve: boolean, operation: () => Promise<void>, canStart: () => boolean) => Promise<void> };
 const fields = 'Genres,Tags,MediaSources,MediaStreams,DateCreated,Overview,SortName,ParentId';
+const itemIdentity = (id: string) => id.replaceAll('-', '').toLowerCase();
 const validId = (value: unknown): string => {
   if (typeof value !== 'string' || !/^(?:[a-f\d]{32}|[a-f\d]{8}(?:-[a-f\d]{4}){3}-[a-f\d]{12})$/i.test(value)) throw new ServiceError('invalid', 'Invalid library item.');
   return value;
@@ -52,6 +53,7 @@ export class JellyfinService {
   private sessionRevision = 0;
   private connectionWrites = Promise.resolve();
   private writes = new Map<string, Promise<unknown>>();
+  private catalogSnapshots = new Map<string, { session: Session; items?: Item[] }>();
   constructor(private deps: Deps) {}
   connection(): Connection | null {
     const s = this.session;
@@ -63,6 +65,7 @@ export class JellyfinService {
     const restored = session ? { ...session, serverUrl: serverAddress(session.serverUrl), userId: validId(session.userId), selectedLibraryIds: ids(session.selectedLibraryIds) } : null;
     ++this.connectionIntent;
     this.session = restored;
+    this.catalogSnapshots.clear();
     ++this.sessionRevision;
     this.deps.onConnectionChanged?.();
   }
@@ -78,6 +81,7 @@ export class JellyfinService {
         if (!current()) throw superseded();
         const saved = publish();
         this.session = snapshot ? { ...snapshot, sessionOnly: !saved } : null;
+        this.catalogSnapshots.clear();
         committed = true;
         if (notify) this.deps.onConnectionChanged?.();
         return saved;
@@ -202,15 +206,37 @@ export class JellyfinService {
     if (!s.selectedLibraryIds.length) return { items: [], total: 0, start };
     if (query.search?.trim()) return this.searchCatalog(type, { ...query, search: query.search.trim() }, sort, start, limit);
     const multiple = s.selectedLibraryIds.length > 1;
+    const snapshotKey = JSON.stringify([type, query.genre || '', query.tag || '', query.sort || 'name', !!query.descending]);
+    const previous = this.catalogSnapshots.get(snapshotKey);
+    if (multiple && start > 0 && previous?.session === s && previous.items) {
+      this.catalogSnapshots.delete(snapshotKey);
+      this.catalogSnapshots.set(snapshotKey, previous);
+      return { items: previous.items.slice(start, start + limit), total: previous.items.length, start };
+    }
+    const snapshot = multiple ? { session: s, items: undefined as Item[] | undefined } : undefined;
+    if (snapshot) {
+      this.catalogSnapshots.delete(snapshotKey);
+      this.catalogSnapshots.set(snapshotKey, snapshot);
+      // ponytail: retain two query snapshots; page zero rebuilds and session/library changes clear them.
+      if (this.catalogSnapshots.size > 2) this.catalogSnapshots.delete(this.catalogSnapshots.keys().next().value!);
+    }
     const pages = await Promise.all(s.selectedLibraryIds.map(async parent => {
-      const params = new URLSearchParams({ ParentId: parent, Recursive: 'true', IncludeItemTypes: type, Fields: fields, StartIndex: String(multiple ? 0 : start), Limit: String(multiple ? start + limit : limit), SortBy: sort, SortOrder: query.descending ? 'Descending' : 'Ascending', EnableTotalRecordCount: 'true' });
+      const params = new URLSearchParams({ ParentId: parent, Recursive: 'true', IncludeItemTypes: type, Fields: fields, StartIndex: String(start), Limit: String(limit), SortBy: sort, SortOrder: query.descending ? 'Descending' : 'Ascending', EnableTotalRecordCount: 'true' });
       if (query.search) params.set('SearchTerm', query.search);
       if (query.genre) params.set('Genres', query.genre);
       if (query.tag) params.set('Tags', query.tag);
+      // Complete each root before merging: provider and app sort comparators can differ.
+      if (multiple) {
+        const items = await this.allItems(`/Users/${s.userId}/Items`, Object.fromEntries(params));
+        return { Items: items, TotalRecordCount: items.length };
+      }
       return this.json(`/Users/${s.userId}/Items?${params}`);
     }));
     let items: Item[] = pages.flatMap(page => page.Items || []);
     if (multiple) {
+      if (this.session !== s || this.catalogSnapshots.get(snapshotKey) !== snapshot) throw new ServiceError('invalid', 'The library changed. Refresh your collection.');
+      items = [...new Map(items.map(item => [itemIdentity(item.Id), item])).values()];
+      const total = items.length;
       const compareText = (a: unknown, b: unknown) => String(a || '').localeCompare(String(b || ''), undefined, { numeric: true, sensitivity: 'base' });
       items.sort((a, b) => {
         let value = 0;
@@ -218,10 +244,12 @@ export class JellyfinService {
         if (query.sort === 'year') value = (a.ProductionYear || 0) - (b.ProductionYear || 0);
         if (query.sort === 'artist') value = compareText(type === 'MusicAlbum' ? a.AlbumArtist || a.Artists?.[0] : a.Artists?.[0] || a.AlbumArtist, type === 'MusicAlbum' ? b.AlbumArtist || b.Artists?.[0] : b.Artists?.[0] || b.AlbumArtist);
         if (query.sort === 'album') value = type === 'MusicAlbum' ? compareText(a.SortName || a.Name, b.SortName || b.Name) : compareText(a.Album, b.Album) || (a.ParentIndexNumber || 0) - (b.ParentIndexNumber || 0) || (a.IndexNumber || 0) - (b.IndexNumber || 0);
-        value ||= compareText(a.SortName || a.Name, b.SortName || b.Name) || compareText(a.Id, b.Id);
+        value ||= compareText(a.SortName || a.Name, b.SortName || b.Name) || itemIdentity(a.Id).localeCompare(itemIdentity(b.Id));
         return query.descending ? -value : value;
       });
+      snapshot!.items = items;
       items = items.slice(start, start + limit);
+      return { items, total, start };
     }
     return { items, total: pages.reduce((sum, page) => sum + (page.TotalRecordCount || 0), 0), start };
   }
@@ -229,7 +257,6 @@ export class JellyfinService {
     const session = this.requireSession();
     const term = query.search!;
     const maximum = 10000;
-    const identity = (id: string) => id.replace(/-/g, '').toLowerCase();
     const matches = new Map<string, Item>();
     const bounded = async (path: string, parameters: Record<string, string>): Promise<Item[]> => {
       const result: Item[] = [];
@@ -245,7 +272,7 @@ export class JellyfinService {
       }
     };
     const add = (items: Item[]) => {
-      for (const item of items) matches.set(identity(item.Id), item);
+      for (const item of items) matches.set(itemIdentity(item.Id), item);
       if (matches.size > maximum) throw new ServiceError('unsupported', 'This search matches too much music. Enter a more specific title, artist, or album.');
     };
     const artists = await bounded(type === 'Audio' ? '/Artists' : '/Artists/AlbumArtists', { UserId: session.userId, SearchTerm: term });
@@ -262,10 +289,10 @@ export class JellyfinService {
       const albums = await bounded(`/Users/${session.userId}/Items`, { ParentId: library, Recursive: 'true', IncludeItemTypes: 'MusicAlbum', SearchTerm: term });
       for (let index = 0; index < albums.length; index += 100) {
         const albumIds = albums.slice(index, index + 100).map(item => validId(item.Id));
-        const wanted = new Set(albumIds.map(identity));
+        const wanted = new Set(albumIds.map(itemIdentity));
         // Jellyfin can also match other albums with the same title when AlbumIds is set.
         const songs = await bounded(`/Users/${session.userId}/Items`, { ...base, AlbumIds: albumIds.join(',') });
-        add(songs.filter(item => item.AlbumId && wanted.has(identity(item.AlbumId))));
+        add(songs.filter(item => item.AlbumId && wanted.has(itemIdentity(item.AlbumId))));
       }
     }
     const compareText = (a: unknown, b: unknown) => String(a || '').localeCompare(String(b || ''), undefined, { numeric: true, sensitivity: 'base' });
@@ -275,7 +302,7 @@ export class JellyfinService {
       if (query.sort === 'year') value = (a.ProductionYear || 0) - (b.ProductionYear || 0);
       if (query.sort === 'artist') value = compareText(type === 'MusicAlbum' ? a.AlbumArtist || a.Artists?.[0] : a.Artists?.[0] || a.AlbumArtist, type === 'MusicAlbum' ? b.AlbumArtist || b.Artists?.[0] : b.Artists?.[0] || b.AlbumArtist);
       if (query.sort === 'album') value = type === 'MusicAlbum' ? compareText(a.SortName || a.Name, b.SortName || b.Name) : compareText(a.Album, b.Album) || (a.ParentIndexNumber || 0) - (b.ParentIndexNumber || 0) || (a.IndexNumber || 0) - (b.IndexNumber || 0);
-      value ||= compareText(a.SortName || a.Name, b.SortName || b.Name) || compareText(a.Id, b.Id);
+      value ||= compareText(a.SortName || a.Name, b.SortName || b.Name) || itemIdentity(a.Id).localeCompare(itemIdentity(b.Id));
       return query.descending ? -value : value;
     });
     if (this.session !== session) throw new ServiceError('unauthorized', 'The connection changed. Search again.');

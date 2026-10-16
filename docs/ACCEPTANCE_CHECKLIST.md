@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 96 Review, 9 Dated, 4 Recorded, 58 Controlled, 9 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 92 Review, 9 Dated, 4 Recorded, 59 Controlled, 12 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -82,14 +82,14 @@ Source: REQUIREMENTS: All songs, Albums, Jellyfin connection; M1,M2,M8,M13.
 | ID | Observable result | Proof | Status |
 | --- | --- | --- | --- |
 | B01 | All songs includes music from every selected library without duplicated or missing visible selections. | N+L | Review |
-| B02 | Song search finds title, artist and album matches and respects selected libraries. | N+S+L | Review |
+| B02 | Song search finds title, artist and album matches and respects selected libraries. | N+S+L | Live |
 | B03 | Sort and genre/tag filters update the displayed rows and preserve coherent paging. | N+S | Review |
-| B04 | Single and multiple selection support Play, Queue and Add to playlist in displayed row order rather than click order. | N | Review |
+| B04 | Single and multiple selection support Play, Queue and Add to playlist in displayed row order rather than click order. | N | Controlled |
 | B05 | Song columns and details show available artwork, title, artist, album/album artist, duration, year, genres, tags and track metadata. | N+L | Review |
 | B06 | Untitled/Unknown artist and missing optional fields do not prevent browsing or playback. | N | Controlled |
-| B07 | Album search finds title and album-artist matches once within selected libraries; artwork and metadata open an ordered track list. | N+L | Review |
+| B07 | Album search finds title and album-artist matches once within selected libraries; artwork and metadata open an ordered track list. | N+L | Live |
 | B08 | Album Play, Queue, Add all and individual track selections use the intended ordered tracks. | N+L | Review |
-| B09 | Browsing/search/filtering remain responsive for the listener's actual library size, including paging and large selections. | N+L | Review |
+| B09 | Browsing/search/filtering remain responsive for the listener's actual library size, including paging and large selections. | N+L | Live |
 | B10 | Refresh library updates songs and genre/tag choices while retaining search, filters, selection and listening queue. | N+S | Controlled |
 | B11 | After refresh, song details, albums and playlists read fresh data when used. | N+S | Controlled |
 | B12 | Album metadata is fetched by ID even with no tracks; a metadata-only failure leaves available tracks playable. | N+S | Controlled |
@@ -379,3 +379,5 @@ The [current playlist-recovery record](verification/2026-10-16-playlist-recovery
 The [Add recovery-action record](verification/2026-10-16-playlist-add-review.json) adds current native uncertain-addition restart and direct keyboard review/acknowledgement evidence for M6/P13, plus a creation-path regression check for P11. The newly opened Add dialog now offers Review playlists for unavailable destinations. The existing creation message stays singular and healthy lists show no recovery hint. These are controlled variants; the wider playlist rows retain their existing dispositions.
 
 The [current playlist-storage record](verification/2026-10-16-playlist-storage-current.json) establishes P15 and P17. Native corrupt-journal checks reject all five mutation types before HTTP dispatch while music progresses; explicit refresh restores editing after fixture repair. Eight response-body cases preserve confirmed writes despite hanging bodies or failed cancellation. Separate reserve/clear/account faults retain their exact dispatch/recovery boundaries. Physical disk failure and listener comprehension remain unverified.
+
+The [current catalog-union record](verification/2026-10-16-catalog-union-current.json) adds sampled live B02/B07 search, all1,311 live songs and1,157 albums paged, a paused1,311-song selection queue, and controlled B04 action order. B01 remains Review: its reproduced overlap/count defect is fixed with native partial/full overlap, alias, tie, end-page, refresh and race coverage, but live overlapping-root configuration was unavailable. Cold multi-root read latency remains explicit; warmed native paging is16–24ms in the fixture. B03/B05/B08 keep their broader review scope.
