@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-17",
+  "base": "f2382a60ec184a053a0dd3308624d3c1f57dedf2",
+  "productionChanges": false,
+  "scope": [
+    "P04"
+  ],
+  "live": {
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "cases": [
+      {
+        "kind": "full playlist playback",
+        "result": "passed",
+        "duplicateOccurrencesRetainedInServerOrder": true,
+        "decodedNativeAudioAdvances": true
+      },
+      {
+        "kind": "selected occurrence playback",
+        "result": "passed",
+        "selectionClickOrderIgnoredInFavorOfDisplayOrder": true,
+        "bothCopiesKept": true,
+        "pausedNextVisitsSecondCopyWithoutUnpausing": true
+      },
+      {
+        "kind": "authorized native reorder",
+        "result": "passed",
+        "independentLiveReadConfirmsOrder": true,
+        "currentPausedQueueUnchanged": true
+      },
+      {
+        "kind": "authorized native removal",
+        "result": "passed",
+        "independentLiveReadConfirmsOnlyChosenEntryRemoved": true,
+        "currentPausedQueueUnchanged": true
+      },
+      {
+        "kind": "fresh playback after edits",
+        "result": "passed",
+        "editedServerOrderUsed": true,
+        "bothRepeatedPositionsRetained": true
+      }
+    ],
+    "rendererErrors": 0,
+    "providerRequests": 0,
+    "result": "passed",
+    "cleanup": {
+      "created": true,
+      "deleted": true,
+      "absenceStatus": 404
+    },
+    "fatalFileAbsent": true
+  },
+  "method": "Actual current main/preload/production renderer with protected acceptance session on the user-authorized Jellyfin server. One uniquely named private temporary playlist contains two copies of one song and two unique songs. Native UI controls perform playback, selection, reorder and removal; independent authenticated reads verify persisted changes.",
+  "contractInterpretation": "P04 covers authorized edits to safely identified entries and playlist/selected playback order. The unchanged PRD explicitly restricts Move/Remove for ambiguous handles; P19 separately verifies that restriction. P04 does not require guessing an ambiguous occurrence or whole-list replacement.",
+  "privacy": [
+    "Fresh isolated app data copies only the existing encrypted connection and device identity.",
+    "All non-acceptance origins are blocked; shared provider adapters return no keys and fresh local state contains no radio setup.",
+    "Mutation guard permits one exact temporary playlist name and item mutations only under its returned ID.",
+    "Cleanup independently checks exact name and Playlist type before deletion and confirms a404 afterward.",
+    "No existing playlist is edited. Credentials, raw track IDs and playlist IDs are omitted from this record."
+  ],
+  "limits": [
+    "One live Jellyfin server/runtime; no claim covers arbitrary server versions or cross-client transactions.",
+    "Native audio is muted; advancing audio establishes decoding and order, not audible quality or observed usability.",
+    "Ambiguous occurrence-specific editing remains unavailable by design when Jellyfin cannot identify that position.",
+    "P01 accessible-list coverage and P05 real read-only/unavailable permission configurations remain Review.",
+    "No smaller-window or enlarged-zoom checks were run."
+  ],
+  "checks": {
+    "nativeCases": 5,
+    "result": "passed",
+    "sourceChanges": false,
+    "buildTypeLint": "Previous passing source snapshot unchanged; not repeated"
+  },
+  "sourceSha256": {
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/main/jellyfin.ts": "22f083327dfdcbb0952d9750662df95d13c31e09a83f628f8c1e3393072f90eb",
+    "src/main/playlist-recovery.ts": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+    "src/shared/playlist-entries.ts": "bb58ab3747844f5080fae78be9a9431bc9cb841fbbb704866cd7e064b5a1292c",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "8bea51f6cb40f8b4ca0714e8af6b344b7e0a6e40278e018935b6a0d5e7f4e721",
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "c6d1b4c4f94a8cc67f9c052526b054ad8b716fbb3ceb9f83e347946bd4ad3a63",
+    "src/renderer/player.tsx": "481d350ef35d5e11d77848f661419f5eea265cbf643db234c665174255ec562c",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370"
+  },
+  "fixtureSha256": {
+    "/private/tmp/live-playlist-order-current/build.mjs": "0928b25ae7a70f6d41331d5a36d33fe5ecb8db76013d1839273ebe583b2c448b",
+    "/private/tmp/live-playlist-order-current/bootstrap.mjs": "ff56d8a954d96d1d6cddafb5a7d909299cfcee5ccbda9d52d9439f2fdf647fdf",
+    "/private/tmp/live-playlist-order-current/run.cjs": "697f22103b6e18f488c9cfde698cb6f54d2ff1ec253242a15c576c1cb2e7f969",
+    "/private/tmp/live-playlist-order-current/out/main/index.js": "1b047ced9b22508d7ea5dd1f974b311907f9251e02e4237685f78d51e012f937"
+  }
+}

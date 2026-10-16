@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 63 Review, 8 Dated, 3 Recorded, 88 Controlled, 14 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 62 Review, 8 Dated, 3 Recorded, 88 Controlled, 15 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -108,7 +108,7 @@ Source: REQUIREMENTS: Playlists; M5,M6.
 | P01 | List only the account's accessible music playlists and open their track lists. | N+L | Review |
 | P02 | Create/rename succeeds on Jellyfin and other clients can read the persisted result. | N+L | Live |
 | P03 | Add one song, selected songs and an entire album to an existing or newly created playlist. | N+L | Live |
-| P04 | Remove and reorder authorized entries; playback of playlist or selected entries preserves intended order. | N+L | Review |
+| P04 | Remove and reorder authorized entries; playback of playlist or selected entries preserves intended order. | N+L | Live |
 | P05 | Explicit read-only disables editing; unavailable permission lookup explains unknown permission and lets Jellyfin authorize attempts. | N+S+L | Review |
 | P06 | Skip existing tracks performs duplicate reads first, preserves chosen order and makes no write/recovery lock for an empty remainder. | N+S | Live |
 | P07 | Pending/failed/review state survives navigation, playlist switches, library saves and same-account sign-in. | N+S | Controlled |
@@ -409,3 +409,5 @@ P07/P10/P13/P14/P16 evidence: [playlist-boundary record](verification/2026-10-17
 P08/P09/P11/P18 evidence: [creation and batch record](verification/2026-10-17-playlist-creation-batches.json). Four native creation-confirmation variants retain a global lock through restart and both entry points; a failed second list page cannot authorize acknowledgement. Actual on-disk account-owned markers precede create/add/reorder/remove dispatch and stay singular across100/100/50 batches. Local and live later-batch confirmation loss retain uncertainty and prevent blind replay. The one live private test playlist was deleted and its absence confirmed.
 
 Playlist identity acceptance,17 October2026: [current record](verification/2026-10-17-playlist-identities.json) closes P19 with current native missing/empty/invalid/repeated-ID controls, independent selections, decoded selected playback, eight pre-dispatch IPC rejections and stable-selection retention after a safe edit. Fourteen current service cases pass. The prior live repeated-ID record supplies the real-server branch; playlist method/helper/page freshness was checked explicitly, not inferred from whole-file hashes. P04 and P05 retain Review. Inventory:187 rows,185 active,2 Deferred;63 Review,8 Dated,3 Recorded,88 Controlled,14 Live,9 External.83 active checks remain.
+
+P04 evidence,17 October2026: [fresh live playlist order](verification/2026-10-17-live-playlist-order.json). Five current native cases verify full playlist playback, selected duplicate occurrences in display order, paused Next to the second copy, persisted safe reorder/removal without changing the existing queue, and fresh playback in edited order. Independent live reads verify edits; guarded cleanup confirms deletion and404 absence. P04 covers safely identified entries under the existing PRD restriction; P19 separately proves ambiguous-handle behavior. P01/P05 remain Review. Inventory:187 rows,185 active,2 Deferred;62 Review,8 Dated,3 Recorded,88 Controlled,15 Live,9 External.82 active checks remain.
