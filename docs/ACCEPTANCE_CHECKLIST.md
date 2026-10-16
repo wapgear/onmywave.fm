@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 76 Review, 8 Dated, 4 Recorded, 76 Controlled, 12 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 74 Review, 8 Dated, 4 Recorded, 78 Controlled, 12 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -180,7 +180,7 @@ Source: REQUIREMENTS: Personal radio behavior; R3,R5,R6,R9–R11,M15.
 | A01 | Preparation defaults to every 3 hours, major stories and maximum 3 automatic recordings per local day, with bounded daily scheduled checks. | N+S | Controlled |
 | A02 | Before activation, text-assessment cost without audio, provider requirements and automatic-limit scope are visible. | N+U | Review |
 | A03 | Manual text/audio and voice preview remain explicit additional paid actions outside automatic limits. | N+S | Dated |
-| A04 | Independent DJ playback never invokes generation; preparation never starts music or replaces the selected take. | N+S | Review |
+| A04 | Independent DJ playback never invokes generation; preparation never starts music or replaces the selected take. | N+S | Controlled |
 | A05 | Due checks require the app running/Mac awake; return from sleep/quit coalesces missed slots rather than processing a backlog. | S+O | Review |
 | A06 | Last outcome/reason, timestamp, next check and daily attempt/recording counts derive from persisted state and name the correct profile. | N+S | Controlled |
 | A07 | Status distinguishes preparing, saved, no qualifying story, incomplete coverage, cap, failure, interruption and unavailable profile. | N+S | Controlled |
@@ -234,7 +234,7 @@ Source: REQUIREMENTS: Personal radio behavior; R7,R8,R10,R11.
 | T08 | Normal generation reuses a valid matching recording including a later replacement; Generate another take explicitly requests variation. | S+N | Controlled |
 | T09 | Immutable script/source/mood/interests/rendering-DJ provenance and selected ID survive restart. | N+S | Controlled |
 | T10 | Missing/empty/truncated audio retains provenance/selection, disables play/use/schedule and offers explicit script-based replacement. | N+S | Controlled |
-| T11 | Saved audio plays without keys/provider calls; speech remains outside music playlists, favorites and music history. | N+S | Review |
+| T11 | Saved audio plays without keys/provider calls; speech remains outside music playlists, favorites and music history. | N+S | Controlled |
 | T12 | Request IDs/attempts persist before dispatch; complete artifacts reconcile after interrupted manifest publication and uncertain work never retries automatically. | S | Controlled |
 | T13 | Audition pauses music; Pause/Resume retains position even during startup and rapid commands do not reset it or show false error. | N | Controlled |
 | T14 | Stop/leaving Saved audio/later music transport, including paused selection/seek/media Pause, ends audition and rejects stale callbacks. | N+S | Controlled |
@@ -399,3 +399,5 @@ The [saved-result check record](verification/2026-10-17-saved-result-check.json)
 T05 evidence: [request context record](verification/2026-10-17-request-context.json) and [restart summary](verification/2026-10-17-request-context-summary.png). Native restart, rename/profile switch, focused history, no-dispatch reconciliation, legacy/malformed metadata and long names pass. Automatic context uses the explicit profile and supplied snapshot, tested with pre-dispatch validation failures. T06's remaining suppression/refresh and older-history scope is covered by the manual recovery record below.
 
 T02/T03/T06 evidence: [manual recovery record](verification/2026-10-17-manual-recovery.json). Seven native cases cover stale status suppression/retry, a newer completed request, manual text/audio cancellation and navigation, before-dispatch setup-save cancellation, and linked automatic-status suppression. Older-history checks reproduce the inaccessible eleventh attempt, then verify all35 entries across three keyboard-focused batches.
+
+A04/T11 evidence: [provider-free saved-radio record](verification/2026-10-17-keyless-radio.json). Native saved audition/resume, manual breaks and automatic DJ playback pass with all provider statuses unconfigured, including a fresh-process keyless restart. Speech stays outside the music queue and playlist, with zero Jellyfin writes or session/favorite/history requests. A separate explicit text/audio preparation leaves music paused, the selected take and opt-ins unchanged.
