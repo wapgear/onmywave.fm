@@ -774,3 +774,8 @@ A19 and T12 are Controlled, and R10's STAR result now names the verified publica
 ## Complete listening journey and saved-audio recovery, 16 October 2026
 
 The full controlled native music → optional radio → independent stops → paused restart journey passes. Missing/empty/truncated audio replacement and immutable writing/rendering provenance after setup edits also pass. No production change was required. T09/T10 are Controlled; the187-row inventory has107 Review,11 Dated,5 Recorded,46 Controlled,9 Live and9 External, with27 STAR mappings. See the [listener journey record](verification/2026-10-16-listener-journey.json) and the detailed acceptance audit for methods, captures and review positions. Live quality, listener comprehension and Q10 remain open.
+
+
+## Native trust boundaries, 16 October 2026
+
+Renderer/IPC and account-bound media checks pass without a production change. Q01/Q04 are Controlled; inventory is187 rows with105 Review,11 Dated,5 Recorded,48 Controlled,9 Live and9 External, plus27 STAR mappings. Methods, seven native results, source hashes and limitations are in the [trust-boundary record](verification/2026-10-16-trust-boundaries.json). Actual Keychain, exhaustive security testing, broader OS coverage and Q10 remain separate.
