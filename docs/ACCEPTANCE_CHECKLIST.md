@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 97 Review, 9 Dated, 5 Recorded, 56 Controlled, 9 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 96 Review, 9 Dated, 4 Recorded, 58 Controlled, 9 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -119,9 +119,9 @@ Source: REQUIREMENTS: Playlists; M5,M6.
 | P12 | A read begun while the write was pending cannot authorize acknowledgement. | S | Controlled |
 | P13 | Unresolved edits survive process restart; affected tiles say Review needed and affected Add destinations are disabled. | N+S | Review |
 | P14 | Rename and additions respect affected locks while other playlists remain usable. | N+S | Review |
-| P15 | Unavailable recovery storage rejects edits before dispatch while listening remains available. | N+S | Review |
+| P15 | Unavailable recovery storage rejects edits before dispatch while listening remains available. | N+S | Controlled |
 | P16 | Account changes hide old feedback; returning restores that account's review, and late old results cannot alter the new account. | N+S | Review |
-| P17 | Successful status-only rename/add/remove/move stays confirmed despite a hanging unused body; failure to cancel that unused response body cannot undo confirmation. | S | Recorded |
+| P17 | Successful status-only rename/add/remove/move stays confirmed despite a hanging unused body; failure to cancel that unused response body cannot undo confirmation. | S | Controlled |
 | P18 | Partial multi-batch changes report uncertainty and are not retried automatically. | S+L | Review |
 | P19 | Repeated/missing/invalid server entry IDs never merge occurrence selection or become unsafe Move/Remove requests; explain row restrictions, preserve safe actions/stable selections, and clear unreliable selections when entries change. Preflight rejects ambiguous/absent targets before reservation or dispatch. | N+S+L | Review |
 
@@ -319,7 +319,7 @@ Source: REQUIREMENTS: Design acceptance, stack, settings, acceptance and release
 | D20 | DJ-recovery record: enabled/off/unrelated/unused cases, Cancel/readback, valid80-character profile name, three sizes/200% with screenshots | Idle preparation and disposable local server; running-work and artifact-provenance behavior remain separate. |
 | S14 | Source-setup record: RSS/X/HN saves, validation recovery, selected-source edit, explicit setup save and fresh-process persistence; zero external exercise fetches and empty preparation library | Preparation off; this does not establish live feed collection, X entitlement, provider quality or independently enabled profiles stopping. |
 
-P17 remains Recorded because the successful hanging-body variants passed, but a separately injected cancellation-cleanup failure is not runtime evidence in that record. Do not count the whole row as passed from code inspection alone.
+P17 initially remained Recorded because the earlier record lacked an injected cancellation-cleanup failure. The current playlist-storage record supplies all four operations in both modes and establishes Controlled coverage.
 
 P02 is Live after native create/rename, independent authenticated server reads bypassing application caches, and fresh-process reopen. The temporary playlist was deleted and its absence re-read. See the live-playlist record for the tested account/server scope and script corrections. P03 and P06 are also Live after the later additions record covers all six single/selection/album destination variants and mixed/all-present duplicate handling. P04/P05 remain Review because selected-entry playback, other order variants and read-only/unknown permissions still need acceptance.
 
@@ -377,3 +377,5 @@ P05 evidence update,16 October2026: the playlist-permission record covers21 actu
 The [current playlist-recovery record](verification/2026-10-16-playlist-recovery-current.json) covers P12 against the recorded source snapshot. It also rechecks uncertain reorder navigation, Review needed tiles, three launches with exactly one mutation, stale receipts, sibling edit guards and account isolation. P07/P10/P13/P14/P16 remain Review because their broader named variants are not all covered by this replay. P17 concerns cancellation of the unused HTTP response body. A failed durable-journal clear deliberately retains review and blocks another write even when Jellyfin confirmed the operation.
 
 The [Add recovery-action record](verification/2026-10-16-playlist-add-review.json) adds current native uncertain-addition restart and direct keyboard review/acknowledgement evidence for M6/P13, plus a creation-path regression check for P11. The newly opened Add dialog now offers Review playlists for unavailable destinations. The existing creation message stays singular and healthy lists show no recovery hint. These are controlled variants; the wider playlist rows retain their existing dispositions.
+
+The [current playlist-storage record](verification/2026-10-16-playlist-storage-current.json) establishes P15 and P17. Native corrupt-journal checks reject all five mutation types before HTTP dispatch while music progresses; explicit refresh restores editing after fixture repair. Eight response-body cases preserve confirmed writes despite hanging bodies or failed cancellation. Separate reserve/clear/account faults retain their exact dispatch/recovery boundaries. Physical disk failure and listener comprehension remain unverified.

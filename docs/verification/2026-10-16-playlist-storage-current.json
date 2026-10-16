@@ -1,0 +1,189 @@
+{
+  "date": "2026-10-16",
+  "base": "e017b496e900b4985112117bf71e77cb8df73026",
+  "scope": "P15 unavailable recovery storage and P17 unused HTTP response body cleanup",
+  "productionChanges": false,
+  "storageFaults": {
+    "cases": [
+      {
+        "kind": "reserve-failure",
+        "dispatchAndJournalAssertions": "passed",
+        "providerCalls": 0,
+        "result": "passed"
+      },
+      {
+        "kind": "clear-failure",
+        "dispatchAndJournalAssertions": "passed",
+        "providerCalls": 0,
+        "result": "passed"
+      },
+      {
+        "kind": "corrupt-ledger",
+        "dispatchAndJournalAssertions": "passed",
+        "providerCalls": 0,
+        "result": "passed"
+      },
+      {
+        "kind": "account-change-before-dispatch",
+        "dispatchAndJournalAssertions": "passed",
+        "providerCalls": 0,
+        "result": "passed"
+      }
+    ],
+    "result": "passed",
+    "viewport": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    }
+  },
+  "allWriteGuardsAndListening": {
+    "cases": [
+      {
+        "kind": "createPlaylist",
+        "unavailableStorageRejectsBeforeDispatch": true,
+        "result": "passed"
+      },
+      {
+        "kind": "renamePlaylist",
+        "unavailableStorageRejectsBeforeDispatch": true,
+        "result": "passed"
+      },
+      {
+        "kind": "addPlaylistItems",
+        "unavailableStorageRejectsBeforeDispatch": true,
+        "result": "passed"
+      },
+      {
+        "kind": "movePlaylistEntry",
+        "unavailableStorageRejectsBeforeDispatch": true,
+        "result": "passed"
+      },
+      {
+        "kind": "removePlaylistEntries",
+        "unavailableStorageRejectsBeforeDispatch": true,
+        "result": "passed"
+      }
+    ],
+    "listeningActuallyAdvances": true,
+    "corruptFileRetainedUntilFixtureRepair": true,
+    "explicitRefreshRecoversEditing": true,
+    "remoteMutations": 0,
+    "providerCalls": 0,
+    "viewport": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "result": "passed"
+  },
+  "unusedResponseBodies": {
+    "cases": [
+      {
+        "kind": "renamePlaylist",
+        "unusedResponseBody": "hang",
+        "confirmed": true,
+        "noReviewMarker": true,
+        "result": "passed"
+      },
+      {
+        "kind": "addPlaylistItems",
+        "unusedResponseBody": "hang",
+        "confirmed": true,
+        "noReviewMarker": true,
+        "result": "passed"
+      },
+      {
+        "kind": "movePlaylistEntry",
+        "unusedResponseBody": "hang",
+        "confirmed": true,
+        "noReviewMarker": true,
+        "result": "passed"
+      },
+      {
+        "kind": "removePlaylistEntries",
+        "unusedResponseBody": "hang",
+        "confirmed": true,
+        "noReviewMarker": true,
+        "result": "passed"
+      },
+      {
+        "kind": "renamePlaylist",
+        "unusedResponseBody": "fail",
+        "confirmed": true,
+        "noReviewMarker": true,
+        "result": "passed"
+      },
+      {
+        "kind": "addPlaylistItems",
+        "unusedResponseBody": "fail",
+        "confirmed": true,
+        "noReviewMarker": true,
+        "result": "passed"
+      },
+      {
+        "kind": "movePlaylistEntry",
+        "unusedResponseBody": "fail",
+        "confirmed": true,
+        "noReviewMarker": true,
+        "result": "passed"
+      },
+      {
+        "kind": "removePlaylistEntries",
+        "unusedResponseBody": "fail",
+        "confirmed": true,
+        "noReviewMarker": true,
+        "result": "passed"
+      }
+    ],
+    "result": "passed",
+    "remoteMutations": 8,
+    "providerCalls": 0
+  },
+  "hashes": {
+    "src/main/playlist-recovery.ts": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+    "src/main/jellyfin.ts": "f4d2e4d8ae75807447bd5b4f64b97938594f3935834932bb7d1bec43a8360448",
+    "src/main/storage.ts": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "8bea51f6cb40f8b4ca0714e8af6b344b7e0a6e40278e018935b6a0d5e7f4e721",
+    "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": "550356492cae38ab34925c91ad9cb5c1ab7c9a7685779e9202de297fc33915de",
+    "out/renderer/index.html": "169d435b2ccfeefc5667110e9a15566fc4531911b8a6155b648bcef73aa6db1a",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370"
+  },
+  "runtime": {
+    "platform": "macOS 27.2 arm64",
+    "electron": "43.7.0",
+    "viewport": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    }
+  },
+  "fixture": {
+    "actual": "Fresh source-bundled main, production preload/renderer, typed IPC, service and recovery storage, native muted audio and localhost HTTP server",
+    "faults": "Private bundle injects journal write failure before atomicWrite, pauses after reservation and before dispatch, or seeds malformed journal. Body fixture wraps successful actual HTTP responses in a nonclosing stream whose cancel succeeds or throws. No production hook added.",
+    "isolation": "Dummy encrypted account/keys, shared keychain adapter stub, scheduler stopped, external fetch blocked/substituted; no provider calls.",
+    "reproducerDirectories": [
+      "/private/tmp/native-playlist-storage-current",
+      "/private/tmp/native-playlist-body-current"
+    ],
+    "fatalCheck": "Each native process closes without fixture-uncaught.json."
+  },
+  "assertions": {
+    "reserveFailure": "Zero dispatch; retry after fixture repair confirms one write and clears journal.",
+    "clearFailure": "Remote confirmation plus failed journal clear retains review; acknowledgement fails until repair, later acknowledgement adds no mutation.",
+    "accountBeforeDispatch": "Old reserved action returns invalid with zero dispatch and no marker; replacement remains current.",
+    "corruption": "All five mutations reject before HTTP dispatch while native playback advances; corrupt file retained until fixture repair; explicit Try again restores editing while music continues.",
+    "bodies": "All four operations promptly confirm with hanging body or rejecting cancellation; no review markers; four cancel calls per mode; exactly eight writes."
+  },
+  "limits": [
+    "Controlled disk/network injection does not establish physical disk failure, power-loss durability or live Jellyfin fault behavior.",
+    "No human comprehension or audible-quality claim.",
+    "Earlier Q10 shutdown diagnostic remains unresolved."
+  ],
+  "checklistUpdates": {
+    "P15": "Controlled",
+    "P17": "Controlled"
+  },
+  "result": "passed"
+}
