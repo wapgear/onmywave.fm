@@ -1,0 +1,214 @@
+{
+  "date": "2026-10-16",
+  "base": "d418520c194bef06b977914e68e7b23a76beb0f6",
+  "problem": "An80-character unbroken saved DJ name expanded the page, a160-character recovery error overflowed its dialog, and visual inspection found the saved-DJ preview label painting over actions even after the heading wrapped.",
+  "before": {
+    "cases": [
+      {
+        "kind": "long-dj-name",
+        "mainOverflow": true,
+        "dialogOverflow": false,
+        "djNameOverflow": true
+      },
+      {
+        "kind": "long-delete-target",
+        "mainOverflow": true,
+        "dialogOverflow": false,
+        "djNameOverflow": true
+      },
+      {
+        "kind": "long-recovery-error",
+        "mainOverflow": false,
+        "dialogOverflow": true,
+        "djNameOverflow": false
+      }
+    ]
+  },
+  "pageAndBehaviorMatrix": {
+    "cases": [
+      {
+        "kind": "long-dj-name",
+        "noHorizontalOverflow": true,
+        "result": "passed"
+      },
+      {
+        "kind": "long-dj-delete-target",
+        "noHorizontalOverflow": true,
+        "result": "passed"
+      },
+      {
+        "kind": "long-recovery-error",
+        "noHorizontalOverflow": true,
+        "result": "passed"
+      },
+      {
+        "kind": "explicit-retry",
+        "sameSourceSavedAfterRecovery": true,
+        "result": "passed"
+      },
+      {
+        "kind": "sources",
+        "noHorizontalOverflow": true,
+        "result": "passed"
+      },
+      {
+        "kind": "provider-keys",
+        "noHorizontalOverflow": true,
+        "result": "passed"
+      },
+      {
+        "kind": "settings-general",
+        "noHorizontalOverflow": true,
+        "result": "passed"
+      },
+      {
+        "kind": "songs",
+        "noHorizontalOverflow": true,
+        "result": "passed"
+      },
+      {
+        "kind": "albums",
+        "noHorizontalOverflow": true,
+        "result": "passed"
+      },
+      {
+        "kind": "album-detail",
+        "noHorizontalOverflow": true,
+        "result": "passed"
+      },
+      {
+        "kind": "playlist-detail",
+        "noHorizontalOverflow": true,
+        "result": "passed"
+      },
+      {
+        "kind": "news-bucket",
+        "noHorizontalOverflow": true,
+        "result": "passed"
+      },
+      {
+        "kind": "saved-audio",
+        "noHorizontalOverflow": true,
+        "result": "passed"
+      },
+      {
+        "kind": "news-settings",
+        "noHorizontalOverflow": true,
+        "result": "passed"
+      },
+      {
+        "kind": "navigation-music",
+        "sameQueueAndPlayingIntentAcrossPages": true,
+        "result": "passed"
+      },
+      {
+        "kind": "native-hidden-background",
+        "visible": false,
+        "focused": false,
+        "clockAdvances": true,
+        "result": "passed"
+      },
+      {
+        "kind": "reduced-motion",
+        "actualLoadingSpinnerSuppressed": true,
+        "animation": "none",
+        "transition": "0s",
+        "matches": true,
+        "result": "passed"
+      },
+      {
+        "kind": "keyless-default-listening",
+        "noForcedSetup": true,
+        "bothOptInsOff": true,
+        "noSourceOrProviderCalls": true,
+        "nativeMusicAdvances": true,
+        "result": "passed"
+      }
+    ],
+    "viewport": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "result": "passed"
+  },
+  "finalPreviewLabel": {
+    "cases": [
+      {
+        "kind": "long-preview-label",
+        "labelWithinPreview": true,
+        "textWithinLabel": true,
+        "editDuplicateDeleteReachable": true,
+        "visibleEditorLabelBounded": true,
+        "saveRemainsReachable": true,
+        "providerCalls": 0,
+        "result": "passed"
+      }
+    ],
+    "result": "passed"
+  },
+  "matrixSourceSha256": {
+    "src/renderer/styles.css": "49c2b7e4fca94aa5efea18aa8e501cfb9c4aed91ec33d1d5b51afea3220dee50",
+    "src/renderer/pages/DJs/DJs.styles.css": "bec8215fa7ca6df2d24ba6fd468b56212680346ae4a1919c34ed74411b8d2df6",
+    "src/renderer/pages/DJs/components/VoicePreview.styles.css": "72330c31a16ed631f0864cb53ef89c4692144fb1807190fb959214e2d1e23ecd",
+    "src/renderer/App.tsx": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+    "src/renderer/player.tsx": "0d72985571ede7ae6562a95220c03bbdfec6f9367c0741e131a06481bd40e7f6",
+    "src/renderer/components/Shared.tsx": "303972b169cf42303085a3db1988c04899870a69a6e7591ee4292656785ed2af",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/main/storage.ts": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a"
+  },
+  "finalSha256": {
+    "src/renderer/styles.css": "49c2b7e4fca94aa5efea18aa8e501cfb9c4aed91ec33d1d5b51afea3220dee50",
+    "src/renderer/pages/DJs/DJs.styles.css": "bec8215fa7ca6df2d24ba6fd468b56212680346ae4a1919c34ed74411b8d2df6",
+    "src/renderer/pages/DJs/components/VoicePreview.styles.css": "ac8dce5a91c8037daf6f5d3f5ba0edbc951593fbef441ce1189e61adad1d3180",
+    "src/renderer/App.tsx": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+    "src/renderer/player.tsx": "0d72985571ede7ae6562a95220c03bbdfec6f9367c0741e131a06481bd40e7f6",
+    "src/renderer/components/Shared.tsx": "303972b169cf42303085a3db1988c04899870a69a6e7591ee4292656785ed2af",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/main/storage.ts": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+    "out/renderer/index.html": "af98abf3ee98a46ab2f8867de7f34fda1526c2bda2331900bbe24e7409fb37e9"
+  },
+  "sourceFreshness": "The18-case matrix ran after heading/error wrapping. Screenshot inspection exposed the remaining label collision. Only VoicePreview.styles.css changed afterward; the focused final-label replay checks real label bounds, action hit targets and visible Advanced editor preview/Save. The matrix source hashes retain that distinction.",
+  "change": "Wrap DJ headings, bound and wrap preview labels, and allow notice-message flex children to shrink and wrap. No business rule, data schema or provider behavior changed.",
+  "nativeRuntime": {
+    "macOS": "27.2 arm64",
+    "electron": "43.7.0",
+    "viewport": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    }
+  },
+  "fixture": {
+    "mainPreloadRenderer": "Fresh source-bundled main with production preload/renderer; hidden muted native window and disposable local HTTP Jellyfin server",
+    "data": "80-character DJ/profile names,160-character source/error strings; fake credential/key data only; preview and error captures show fixture text",
+    "error": "Private ipcMain adapter substitutes a failed getLocalState response for the source-save preflight, then is cleared for explicit successful retry. Normal typed IPC uses actual handlers.",
+    "keyless": "Before actual startup, remove local-state/prepared-news/provider-key fixture files; shared provider key adapter returns null. No actual personal keys/profile touched.",
+    "background": "Actual BrowserWindow.hide with visible=false/focused=false and advancing native playback position; navigation keeps queue/playing intent.",
+    "motion": "Native Chromium reduced-motion media emulation and computed styles of an actual busy Refresh spinner; source inspection finds no WAAPI/smooth-scroll override.",
+    "isolation": "Provider dispatch count remains zero. Audio is controlled muted WAV, so no audible-quality claim.",
+    "reproducerDirectory": "/private/tmp/native-layout-current"
+  },
+  "screenshots": [
+    "2026-10-16-long-text-layout-dj.png",
+    "2026-10-16-long-text-layout-recovery.png"
+  ],
+  "checks": {
+    "buildWithTypeScript": "passed",
+    "fullESLint": "passed",
+    "nativeScreenshotsInspected": "passed",
+    "whitespace": "passed"
+  },
+  "checklistUpdates": {
+    "R01": "Controlled, fresh keyless native default listening without setup/source/provider requests and both opt-ins off",
+    "M04": "Controlled, navigation and actual hidden/unfocused native window keep music advancing",
+    "V09": "Controlled, native reduced-motion spinner plus universal CSS reduction rule"
+  },
+  "limits": [
+    "V07 and V13 remain Review; these named page/text variants do not establish every metadata/error/dialog combination.",
+    "No new200% zoom or sub1280x720 check.",
+    "No audible-quality, sleep/power transition, hardware media keys, VoiceOver or real listener acceptance claim.",
+    "Q10 shutdown finding remains separate; owned fixture processes closed without fatal marker."
+  ],
+  "result": "passed"
+}
