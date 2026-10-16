@@ -19,7 +19,7 @@ Evidence entry points are [the detailed audit](UX_ACCEPTANCE.md), [the corrected
 
 The inventory is provisional until every source paragraph and STAR result is reconciled against it. No overall percentage is calculated yet. Human usability and live/OS coverage remain separate from controlled engineering coverage. Every critical invariant must pass regardless of a future percentage.
 
-Current inventory: 187 rows. 109 Review, 11 Dated, 5 Recorded, 44 Controlled, 9 Live, 9 External. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows. 107 Review, 11 Dated, 5 Recorded, 46 Controlled, 9 Live, 9 External. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -229,8 +229,8 @@ Source: REQUIREMENTS: Personal radio behavior; R7,R8,R10,R11.
 | T06 | A newer request supersedes the compact summary while history remains; failed refresh/live error suppress duplicate or misleading summaries. | N+S | Review |
 | T07 | Scripts are editable and finite generation supports audition/comparison/explicit selection without silently replacing the selected take. | N+S | Review |
 | T08 | Normal generation reuses a valid matching recording including a later replacement; Generate another take explicitly requests variation. | S+N | Review |
-| T09 | Immutable script/source/mood/interests/rendering-DJ provenance and selected ID survive restart. | N+S | Review |
-| T10 | Missing/empty/truncated audio retains provenance/selection, disables play/use/schedule and offers explicit script-based replacement. | N+S | Review |
+| T09 | Immutable script/source/mood/interests/rendering-DJ provenance and selected ID survive restart. | N+S | Controlled |
+| T10 | Missing/empty/truncated audio retains provenance/selection, disables play/use/schedule and offers explicit script-based replacement. | N+S | Controlled |
 | T11 | Saved audio plays without keys/provider calls; speech remains outside music playlists, favorites and music history. | N+S | Review |
 | T12 | Request IDs/attempts persist before dispatch; complete artifacts reconcile after interrupted manifest publication and uncertain work never retries automatically. | S | Controlled |
 | T13 | Audition pauses music; Pause/Resume retains position even during startup and rapid commands do not reset it or show false error. | N | Review |
@@ -289,6 +289,7 @@ Source: REQUIREMENTS: Design acceptance, stack, settings, acceptance and release
 
 | Check | Reviewed evidence | Scope limit |
 | --- | --- | --- |
+| T09,T10 | [Listener journey record](verification/2026-10-16-listener-journey.json):native immutable writing/rendering provenance after setup edits/restart; missing, empty and truncated audio controls plus explicit replacement and durable selection | Includes a controlled full first-radio journey and two inspected captures. Provider responses are substituted; first sign-in, live quality, audible transitions and observed listener comprehension remain separate. |
 | A19,T12 | [Recording recovery record](verification/2026-10-16-recording-recovery.json):12 native cases covering durable dispatch reservation, four publication/settlement boundaries, two restarts, late cancel/OFF/sign-out, incomplete-file rejection, manual replay and unknown-request reconciliation | Actual stores/IPC/services with substituted providers. Controlled quit/reopen and two incomplete-file variants do not establish arbitrary forced termination, power loss, disk faults or live billing. |
 | A08 | [Partial coverage record](verification/2026-10-16-partial-coverage.json):22 native outcomes, held-settlement quit/reopen, two restarts, same-ID automatic/manual replay, normal cadence continuation and three layout cases | Actual stores/IPC/services with substituted providers; physical crash/sleep, broader late cancellation, live quality and observed comprehension remain separate. |
 | A06,A07 | [News outcomes record](verification/2026-10-16-news-outcomes.json):22 native variants covering all named automatic states, persisted reason/time/cadence/counts, both named summaries and corrected key recovery; three layouts | Actual parsing/services/storage with substituted source/provider responses. A08 partial-coverage classification, live quality, audible continuity and observed comprehension remain separate. |

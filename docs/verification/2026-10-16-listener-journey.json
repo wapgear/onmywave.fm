@@ -1,0 +1,167 @@
+{
+  "date": "2026-10-16",
+  "scope": "Current first-listener music/radio/stop journey plus T09 immutable provenance and T10 missing audio replacement",
+  "mergedSource": "5b24ce8e6c6b07b697da92c776971af7e9d010db",
+  "productionChanges": false,
+  "firstListener": {
+    "cases": [
+      {
+        "kind": "first-listener-music-to-radio-to-stop",
+        "freshDefaultSetup": true,
+        "musicWithoutKeysOrRadio": true,
+        "sourcePresetHostAndDummyKeysCreatedThroughNativeUI": true,
+        "draftRetainedThroughManagement": true,
+        "explicitPreparationThenSeparateDJOptIn": true,
+        "oneTextAndOneVoiceCall": true,
+        "defaultThreeSongCadenceWithControlledNativeMediaPositions": true,
+        "realSavedMP3PlaysMuted": true,
+        "preparationExplicitlyStoppedSeparately": true,
+        "restartPausedWithSetupAndRecordingRetained": true,
+        "result": "passed",
+        "pauseResumeControlsAndDisableKeepPreparationEnabled": true
+      }
+    ],
+    "result": "passed"
+  },
+  "missingAudio": {
+    "cases": [
+      {
+        "variant": "missing",
+        "initialMatchingTakeClaimedThenReleased": true,
+        "invalidTakeExcludedFromClaims": true,
+        "playUseScheduleDisabled": true,
+        "scriptProvenanceAndSelectionRetainedAfterRestart": true,
+        "loadScriptRestoresExactTextAndFocus": true,
+        "noImplicitRegeneration": true,
+        "explicitReplacementVoiceCalls": 1,
+        "replacementSelectionExplicitAndDurable": true,
+        "result": "passed"
+      },
+      {
+        "variant": "empty",
+        "initialMatchingTakeClaimedThenReleased": true,
+        "invalidTakeExcludedFromClaims": true,
+        "playUseScheduleDisabled": true,
+        "scriptProvenanceAndSelectionRetainedAfterRestart": true,
+        "loadScriptRestoresExactTextAndFocus": true,
+        "noImplicitRegeneration": true,
+        "explicitReplacementVoiceCalls": 1,
+        "replacementSelectionExplicitAndDurable": true,
+        "result": "passed"
+      },
+      {
+        "variant": "truncated",
+        "initialMatchingTakeClaimedThenReleased": true,
+        "invalidTakeExcludedFromClaims": true,
+        "playUseScheduleDisabled": true,
+        "scriptProvenanceAndSelectionRetainedAfterRestart": true,
+        "loadScriptRestoresExactTextAndFocus": true,
+        "noImplicitRegeneration": true,
+        "explicitReplacementVoiceCalls": 1,
+        "replacementSelectionExplicitAndDurable": true,
+        "result": "passed"
+      }
+    ],
+    "result": "passed"
+  },
+  "immutableProvenance": {
+    "cases": [
+      {
+        "kind": "immutable-provenance",
+        "actualManualTextAndDistinctRenderingHost": true,
+        "originalScriptSourceMoodInterestsAndRenderingDJUnchangedByCurrentEdits": true,
+        "selectedTakePersistsAcrossRestart": true,
+        "nativeSavedDetailsShowOriginalData": true,
+        "loadedDraftShowsOriginalScriptAttribution": true,
+        "noReplayOrInspectionProviderDispatch": true,
+        "result": "passed"
+      }
+    ],
+    "result": "passed"
+  },
+  "method": {
+    "runtime": {
+      "platform": "macOS 27.2 arm64",
+      "electron": "43.7.0"
+    },
+    "application": "Current production renderer/preload and actual source-bundled main/services/storage/scheduler. Fresh protected dummy accounts, native hidden muted windows, localhost catalog and real saved MP3. Provider HTTP and shared Keychain adapters substituted; all other external fetches blocked.",
+    "firstUse": "Start with actual empty default local state, no DJs/sources/provider keys/recordings. The Jellyfin connection and music-library selection are preseeded, so this journey begins at All songs rather than claiming a fresh live sign-in. Click the first song in the actual default Date added ordering. Create RSS source, apply and save a preset host, select it, and save protected dummy keys through native forms. Mood/interests survive every Back to setup detour. Music remains active and no text/voice call occurs until preparation is explicitly enabled.",
+    "preparation": "After the explicit enabled save, call the actual scheduler tick through a test-only reference instead of waiting for its interval. Exactly one substituted text response and one substituted voice response save a complete recording; DJ playback remains off until separately selected/enabled in the persistent player.",
+    "playbackAndStop": "Default every-three-songs cadence. Retain native audio playback but move media positions near natural endings to avoid waiting full fixture songs; then move the third song while a break is scheduled to a point with enough time for the real saved MP3. Real native media starts saved speech. Pause/Resume controls work; Disable DJ stops speech/future DJ playback while preparation remains enabled. Turn off automatic preparation is then explicitly clicked in News settings. Saved audio stays, and restart restores both opt-ins off with queue/context paused and no provider dispatch. This is controlled timing, not a wall-clock three-song or audible-quality session.",
+    "missingAudio": "For missing, zero-byte and truncated files, first positively claim/release a matching available take through actual IPC. After controlled file loss, actual library refresh marks it unavailable while script/provenance/rendering DJ and selected ID remain intact. Native Listen/Schedule are disabled; after an explicit clear, Use is disabled too. Direct reselection rejects and automatic claim returns no take. Restart retains these results without provider work.",
+    "replacement": "Native Load script into draft restores exact text and keyboard focus. Only explicit Generate audio take sends one substituted voice request and no text request. Original broken take remains unavailable, replacement is available, and replacement selection happens only after explicit Use this take. A further restart preserves it without generation.",
+    "provenance": "Create actual manual script and render its audio using a different saved host. Then edit current writing/rendering hosts, source names/URL, mood and news interests via typed IPC. Complete saved script/provenance/rendering host and selected ID are unchanged before/after restart. Native Saved details show original mood, interests, writing host and source; loaded draft retains original text/attribution. Inspection makes no provider request.",
+    "captures": "Two settled native webContents captures inspected at1280x800 logical pixels/Retina. They show the actual scrolled setup and on-air player. They do not prove every page/zoom combination or user comprehension.",
+    "cleanup": "All three final driver commands terminate zero; each owned native close checks absence of captured fatal output, localhost server stops and control file resets."
+  },
+  "review": {
+    "process": "Independent read-only Steve/Elena proposals, one exchanged challenge round, root decision. No edits delegated.",
+    "initial": "Steve identified possible ambiguity that Disable DJ might be mistaken for stopping paid preparation. Elena found no supported blocker in the first-use or stop flow.",
+    "revised": "Steve revised to preserving the existing flow/copy without listener evidence. Elena supported only a short explanatory sentence with a reservation about extra copy, and opposed a duplicate profile-scoped stop action.",
+    "decision": "Preserve current controls and copy. Native behavior matches the independent-switch contract; no observed listener confusion supports adding controls or instructions now. Keep the two positions distinct; this is not unanimous usability validation."
+  },
+  "fixtureCorrections": [
+    "First driver assumed title sorting and could not find an old fixture song. The actual default is Date added newest first; select the first visible song instead.",
+    "The broad DJ button selector also matched the setup DJ selector after a host was chosen. Use the player button accessible name ending Open DJ controls. Neither issue required a production change.",
+    "The public result describes Pause/Resume and independent Disable effects precisely; the private raw result field named speechOnly did not mean music Pause leaves music playing."
+  ],
+  "checks": {
+    "nativeCases": 5,
+    "newControlled": [
+      "T09",
+      "T10"
+    ],
+    "sourceAndBundleMatchPriorBuildTypeScriptAndESLint": true,
+    "noRedundantProductionBuild": true,
+    "inventory": {
+      "total": 187,
+      "Review": 107,
+      "Dated": 11,
+      "Recorded": 5,
+      "Controlled": 46,
+      "Live": 9,
+      "External": 9
+    },
+    "starMappings": 27,
+    "overallPercentage": null,
+    "goalComplete": false
+  },
+  "limits": [
+    "One controlled native runtime with substituted provider responses and dummy credentials. No live provider editorial quality, billing, actual shared-Keychain integration or audible transition/voice-quality result.",
+    "The full main path is an engineering journey, not an observed regular-listener study or proof every STAR variant passed. First sign-in/library discovery is outside this journey.",
+    "Earlier Q10 debugger-associated shutdown diagnostic remains open; this record neither attributes nor fixes it. No whole-goal completion or overall acceptance percentage is claimed."
+  ],
+  "sha256": {
+    "src/main/news.ts": "9c2076bf3808221980dac5aa2befb9d5532278027ccdcc6197e8324930b6571e",
+    "src/main/prepared-news.ts": "c5f75f9818c3537fbf2cc177d5980328926b1d73202a3952f0da84258df11dd2",
+    "src/main/news-workflow.ts": "16e61a8e65a69bf97a59101befcd6a66e23cdb69350c9e2b854ed3e2772e11a2",
+    "src/main/storage.ts": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+    "src/shared/types.ts": "12c7b75803e661219ce729a9b6a20088c36cf13c9ba3face3ce73aa08ee9c3e1",
+    "src/shared/workflow.ts": "22bbb66493579cc57e09c69119943adec0fa2373d823820a2579bd4996e6cc77",
+    "src/shared/news-preparation-status.ts": "27803f7289d4cf64a0d350a361fe9682231e518e93bd4a71e3590a4df771eae9",
+    "src/renderer/pages/Stations/Stations.page.tsx": "9a0b361a10ee083c30d9197ff608d4e08f367700d32e4310f34eea12cdb00aa1",
+    "src/renderer/pages/Stations/components/NewsBucket.component.tsx": "de83e49585e17339bca32a0866b4c5126e95ceacb1cc4bf9e80d81a50221f5a7",
+    "src/renderer/components/Player/DJPopover.component.tsx": "6ffca314f80c990adb9c1fbf81f970560cd5d2debc786e855098f89551e2e4ec",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": "6f1c4fd3956da61639d94c430605bb321903da2ffac953894278a3c79c6ae2a9",
+    "out/main/index.js": "a9b553b2d478277d897ee492b4bb1acc2bc85edff8e08c399b10c0743e77022a",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+    "out/renderer/assets/index-ZOgMZShw.css": "d8229b9932315a7d35fd286e73333f3c63eb5a2b0c08077751b537daa13118dd",
+    "out/renderer/assets/index-BiujlJ_X.js": "dae277d3897d3c20025fc5e2b8ba6c8fe22d5f4ca02f37b4855ceda060a67013"
+  },
+  "captureSha256": {
+    "docs/verification/2026-10-16-first-radio-before-enable.png": "026f1171ef33290d842dfd37dfc9b124fd82ca7e124b804aee8f43648e8e12db",
+    "docs/verification/2026-10-16-first-radio-on-air.png": "cddc5bfacaf1d0ba8fa5e44292bf131e147e65010384b5ffd82280938df55782"
+  },
+  "fixtureReproducerSha256": {
+    "/private/tmp/native-recording-publication/build.mjs": "7d7a999d54e9492b4eff24b5137a9100d29c25f6a11f630c2e58980e186dc4d2",
+    "/private/tmp/native-recording-publication/bootstrap.mjs": "084467e78b690b98a090cfbfc5987fc37035dcc11ec5c0e56fc85d6eceb472a3",
+    "/private/tmp/native-recording-publication/missing.cjs": "8e448b7698dd63bbcfb9ec4bf333e75d5126f5a57a091987ebbc9d673702a08b",
+    "/private/tmp/native-recording-publication/missing.json": "fae70df84886bd4e341eec3d45fd1e8c8b79b20d4b0b2a245fdae4320f93a557",
+    "/private/tmp/native-recording-publication/provenance.cjs": "38a2373c372dd6fbabdd8ab2edc446e411d8d2479757eecbdcb63abfa76dddf4",
+    "/private/tmp/native-recording-publication/provenance.json": "fb3a1c16a092fd8fcf8447f1773946d5a9d688bee9301cd1dc82a383c93ae6f9",
+    "/private/tmp/native-first-radio/bootstrap.mjs": "8f14c6111c9264268d00c62754727b5e642448e80cd7d590b17800993f2bdf30",
+    "/private/tmp/native-first-radio/journey.cjs": "9d6395188c2f6bc271e43a43e8458508646939bdc9c63d4ffaf52fd033ce2678",
+    "/private/tmp/native-first-radio/journey.json": "038efcd36f4732caa2cd0627e819ff6fc5df0f0c18cedc847ca5aa2358acad54"
+  },
+  "priorBuildEvidence": "2026-10-16-partial-coverage.json"
+}
