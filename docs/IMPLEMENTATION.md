@@ -789,3 +789,8 @@ Fixed shared filter scroll dismissal stealing focus from the next Tab target. Na
 ## Song action keyboard dismissal, 16 October 2026
 
 Fixed song actions staying open after Tab moves to the next row. Focus-leave and outside-scroll dismissal preserve the next target; Escape/action behavior remains intact. Four native1280×720 normal-zoom cases pass, including one paused queue append with exact order/current occurrence retained. Build/TypeScript/full ESLint pass. Q07 and R12 now explicitly include song actions; inventory stays187 rows,185 active and2 Deferred. See the [song actions record](verification/2026-10-16-song-actions.json). No deferred checks were run.
+
+
+## Catalog refresh and read recovery, 16 October 2026
+
+Thirteen native 1280×720 normal-zoom cases pass fresh metadata/artwork, active-filter/selection retention, inactive song/album/playlist cache invalidation, empty album metadata, cached/uncached failures and explicit Retry. An album starts its ordered queue while metadata fails, including real playback of a sparse-metadata track with Untitled song/Unknown artist labels. No production fix was needed. B06/B10–B14 are Controlled. Inventory:187 rows,185 active;98 Review,9 Dated,5 Recorded,55 Controlled,9 Live,9 External,2 Deferred;27 STAR mappings. See the [catalog recovery record](verification/2026-10-16-catalog-recovery.json) for results, current hashes and scope limits.

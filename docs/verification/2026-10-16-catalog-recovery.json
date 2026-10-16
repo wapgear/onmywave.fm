@@ -1,0 +1,213 @@
+{
+  "date": "2026-10-16",
+  "scope": "B06 sparse catalog metadata and B10\u2013B14 current refresh, artwork, cache invalidation and read recovery",
+  "base": "285f34a6d7f5a7d5bd604ddaa9295bbe8dcacfee",
+  "productionChanges": false,
+  "refreshAndMetadata": {
+    "cases": [
+      {
+        "kind": "refresh-retains-context",
+        "freshSongAndFacets": true,
+        "searchAndSelectionRetained": true,
+        "playingQueueUnchanged": true,
+        "result": "passed"
+      },
+      {
+        "kind": "inactive-cache-invalidation",
+        "songAlbumPlaylistListAndDetailsFreshOnUse": true,
+        "directAndAlbumArtworkTagsUpdated": true,
+        "playingQueueUnchanged": true,
+        "result": "passed"
+      },
+      {
+        "kind": "artwork-revision-fallback",
+        "songOwnAndAlbumFallbackAndAlbumArtUseCurrentTags": true,
+        "actualNativeImagesDecode": true,
+        "result": "passed"
+      },
+      {
+        "kind": "failed-song-refresh",
+        "loadedSongSelectionAndPausedQueueRetained": true,
+        "explicitRetryRecovers": true,
+        "noRadioOptIn": true,
+        "result": "passed"
+      },
+      {
+        "kind": "failed-facet-refresh",
+        "cachedChoicesAndSongsRemainUsable": true,
+        "explicitRetryRecovers": true,
+        "queueAndRadioSettingsUnchanged": true,
+        "result": "passed"
+      },
+      {
+        "kind": "metadata-only-failure",
+        "availableTracksAndPlayRemain": true,
+        "explicitMetadataRetryRecovers": true,
+        "result": "passed"
+      },
+      {
+        "kind": "empty-album",
+        "metadataByIdReadDespiteNoTracks": true,
+        "albumMetadataRemainsVisible": true,
+        "emptyPlayDisabled": true,
+        "result": "passed"
+      }
+    ],
+    "viewport": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "result": "passed"
+  },
+  "activeFilters": {
+    "cases": [
+      {
+        "kind": "active-filter-refresh",
+        "genreTagAndSearchRetained": true,
+        "selectionRetained": true,
+        "updatedFacetObserved": true,
+        "filtersForwardedToActualHTTP": true,
+        "pausedQueueUnchanged": true,
+        "providerCalls": 0,
+        "result": "passed"
+      }
+    ],
+    "viewport": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "result": "passed"
+  },
+  "readRecoveryAndPlayback": {
+    "cases": [
+      {
+        "kind": "metadata-failure-play-and-missing-fields",
+        "fallbackTitleAndArtistVisible": true,
+        "missingOptionalFieldsDoNotPreventRealNativePlayback": true,
+        "albumPlayUsesOrderedTracksDespiteMetadataFailure": true,
+        "explicitMetadataRetryRecovers": true,
+        "result": "passed"
+      },
+      {
+        "kind": "cached-album-track-failure",
+        "loadedTracksAndPlayRemainAvailable": true,
+        "pausedQueueRetained": true,
+        "explicitRetryRecovers": true,
+        "result": "passed"
+      },
+      {
+        "kind": "cached-album-list-failure",
+        "loadedTileRetained": true,
+        "pausedQueueRetained": true,
+        "explicitRetryRecovers": true,
+        "result": "passed"
+      },
+      {
+        "kind": "uncached-albums-failure",
+        "failureNotPresentedAsEmpty": true,
+        "explicitRetryThenHonestEmptyState": true,
+        "queueAndRadioSettingsUnchanged": true,
+        "result": "passed"
+      },
+      {
+        "kind": "uncached-all-songs-failure",
+        "failureNotPresentedAsEmpty": true,
+        "explicitRetryThenHonestEmptyState": true,
+        "queueAndRadioSettingsUnchanged": true,
+        "result": "passed"
+      }
+    ],
+    "viewport": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "result": "passed"
+  },
+  "method": {
+    "runtime": "macOS 27.2 arm64, Electron 43.7.0",
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "application": "Current production renderer/preload and actual source-bundled main, JellyfinService, native media, protected storage and localhost HTTP. Fresh dummy-account profiles; hidden muted native windows. Shared Keychain/provider responses substituted, external fetch blocked and scheduled timer stopped after startup. Zero provider calls.",
+    "catalog": "Fixture has20,000 songs and2,000 albums with two libraries; this run selects Archive. It is a behavior check, not an actual-library performance benchmark. A single fixture playlist supplies read-only list/detail cache changes; no playlist mutation is performed.",
+    "refresh": "Prime song inspector, album metadata/tracks and playlist list/detail caches. Change controlled server song names, facets and image revisions plus album/playlist metadata. Actual Refresh library updates the visible song and facets while retaining search/selection and the playing duplicate queue. Revisiting song, album and playlist data reads the new values. A second journey preserves active Rock/Archive/search and selection, confirms new facet data and actual HTTP filter propagation, and retains its paused queue.",
+    "artwork": "Real native images decode using new own-art, album-art and song album-art fallback revision tags. Both old and new resource URLs are observed through the actual proxy/image path. No visual comparison of a live server cache is claimed.",
+    "failures": "Controlled503 reads cover song refresh, facet refresh, album metadata, cached album tracks, cached album list, and new uncached song/album queries. Loaded rows/tiles/facets and the paused queue remain available; completed read failures expose explicit Try again. Recovery reads succeed after removing the fault. An uncached failure is not mislabeled an empty library; a successful empty reply then shows the honest no-matching state. Normal read retry policy is unchanged.",
+    "albums": "Metadata is requested by ID even with no tracks. A metadata-only failure leaves tracks usable; native Play album actually starts the ordered ten-track queue. The first track lacks title, artist, duration and other optional metadata, shows Untitled song/Unknown artist in table/player and advances real native WAV playback. Its playback does not depend on successful album metadata. Empty tracks disable album Play while metadata remains visible.",
+    "state": "Refresh/read failures preserve the named active radio opt-ins, queue and playback intent. Music continues through healthy cache refresh; fault-recovery scenarios retain a deliberately paused queue. Only the explicit Play album action replaces the queue. No read/refresh initiates preparation.",
+    "cleanup": "All three final driver commands terminate zero; owned native closes check absence of captured fatal output. Every owned localhost server stops and its control file resets."
+  },
+  "fixtureCorrections": [
+    "The first driver used exact song-title button names, but their accessible names also contain the artist. Scope actual song-name buttons by visible title and artwork-bearing playlist tiles by their text. The corrected complete journey passes without a production change.",
+    "The owned catalog adapter includes the real AlbumArtists read route used by current album search, a read-only playlist response and explicit read faults. The original/base server is retained for the first two journeys; the extended server adds only flags used by the final read-recovery journey."
+  ],
+  "checks": {
+    "nativeCases": 13,
+    "newControlled": [
+      "B06",
+      "B10",
+      "B11",
+      "B12",
+      "B13",
+      "B14"
+    ],
+    "sourceAndBundlesMatchPriorPassingBuildTypeScriptAndESLint": true,
+    "noRedundantBuild": true,
+    "inventory": {
+      "total": 187,
+      "active": 185,
+      "Review": 98,
+      "Dated": 9,
+      "Recorded": 5,
+      "Controlled": 55,
+      "Live": 9,
+      "External": 9,
+      "Deferred": 2
+    },
+    "starMappings": 27,
+    "overallPercentage": null,
+    "goalComplete": false
+  },
+  "limits": [
+    "Controlled dummy account/server and muted native WAV. No live Jellyfin metadata/artwork timing or large-library performance claim.",
+    "Playlist results cover read-cache freshness only, not mutation permissions, cross-client writes or uncertain-write recovery.",
+    "No deferred smaller/enlarged checks. Observed listener comprehension, VoiceOver, audible quality, broader OS/hardware coverage and the earlier Q10 shutdown diagnostic remain open."
+  ],
+  "sha256": {
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "c6d1b4c4f94a8cc67f9c052526b054ad8b716fbb3ceb9f83e347946bd4ad3a63",
+    "src/renderer/components/FilterSelect/FilterSelect.component.tsx": "b6c4242190b3d107c5145f464db5f3b4912736c70c940a3344c73aa26463ec26",
+    "src/renderer/pages/Songs/VirtualSongs.component.tsx": "95ada95c0533bb1e462a818f6981c60d22cd4a9a8e4df27b8cea6cc3119606e4",
+    "src/renderer/player.tsx": "0d72985571ede7ae6562a95220c03bbdfec6f9367c0741e131a06481bd40e7f6",
+    "out/main/index.js": "a9b553b2d478277d897ee492b4bb1acc2bc85edff8e08c399b10c0743e77022a",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+    "out/renderer/assets/index-vmpY1ARA.js": "05bb4fdeebd8854d3bc4ce23959bcc4f415298b96fd212cd22eda6b44b8774e3",
+    "out/renderer/assets/index-ZOgMZShw.css": "d8229b9932315a7d35fd286e73333f3c63eb5a2b0c08077751b537daa13118dd",
+    "src/main/jellyfin.ts": "f4d2e4d8ae75807447bd5b4f64b97938594f3935834932bb7d1bec43a8360448",
+    "src/main/media.ts": "6768544bd3215e37187a12293571c894a1023619ebe8f09e25403bdec0bfb671",
+    "src/renderer/pages/Songs/Songs.page.tsx": "79b3115960d53568bac407d5754ff0996fee44ba895b222d99b4e0fb71e3007f",
+    "src/renderer/pages/Albums/Albums.page.tsx": "8abce67107438b4ed395443875aa920b6e71cbc968b3b834c9702ddd745f81ed",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "8bea51f6cb40f8b4ca0714e8af6b344b7e0a6e40278e018935b6a0d5e7f4e721",
+    "src/renderer/components/Inspector/Inspector.component.tsx": "39f001049a50433d0eb0bb16af4a8f51d00811e437c12e2145068e8b329dd893",
+    "src/renderer/main.tsx": "863a6596bde95ba270f0d554a2ac2bd0c3819ca832f1bfd577d0edf9bb69a7cc"
+  },
+  "fixtureReproducerSha256": {
+    "/private/tmp/native-catalog-refresh/server-base.mjs": "836ad06bf917eea9b5f2df1c1f00732e14253cab4b8169656979d960fd85c15e",
+    "/private/tmp/native-catalog-refresh/server.mjs": "8892f0b35b0e235e0390a5e965e78f8aca6f2c26b5108eaff7176a87c70184f7",
+    "/private/tmp/native-catalog-refresh/bootstrap.mjs": "084467e78b690b98a090cfbfc5987fc37035dcc11ec5c0e56fc85d6eceb472a3",
+    "/private/tmp/native-catalog-refresh/run.cjs": "5f3e88559778487742d9782f70dfeb96757b28a2fc270b75f1a942a8adf577ea",
+    "/private/tmp/native-catalog-refresh/run.json": "2cf2b24198c38b3d21faf32f0f4e7eaac854ed1be887fb20c673edeae7a0e297",
+    "/private/tmp/native-catalog-refresh/active-filters.cjs": "08a064d972f9013c86afdf07c8b7ce3df5bec9047262a92c9b68389bcbd1f777",
+    "/private/tmp/native-catalog-refresh/active-filters.json": "1fd30c20ccd55e9ee582d2c7520c9bfe3cef1ee59d2af889edf4df69cddb2815",
+    "/private/tmp/native-catalog-refresh/read-recovery.cjs": "f80bba76a2ff78ed51c18108fc8b474e67232e6813eb7b7eba2d4d1624168f02",
+    "/private/tmp/native-catalog-refresh/read-recovery.json": "b8c1da95bc570885a74a7ccc039876ba714a86022e8b5839fbff57730ca25826",
+    "/private/tmp/native-catalog-refresh/refresh-requests.jsonl": "44d2b345c537f9c4a4af6b44487dd78f022d52ebb23222927420449df4d1ffdc",
+    "/private/tmp/native-catalog-refresh/active-filter-requests.jsonl": "a4d3c46087aa1e82da0ab1b759117615dc7449b96e9ca52651375347a0cb9c69",
+    "/private/tmp/native-catalog-refresh/requests.jsonl": "5e57c458c14c78835757cd952b77a9840f717d1839c15dc0f4c87db19477e8d1"
+  },
+  "priorBuildEvidence": "2026-10-16-song-actions.json"
+}

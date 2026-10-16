@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 104 Review, 9 Dated, 5 Recorded, 49 Controlled, 9 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 98 Review, 9 Dated, 5 Recorded, 55 Controlled, 9 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -86,15 +86,15 @@ Source: REQUIREMENTS: All songs, Albums, Jellyfin connection; M1,M2,M8,M13.
 | B03 | Sort and genre/tag filters update the displayed rows and preserve coherent paging. | N+S | Review |
 | B04 | Single and multiple selection support Play, Queue and Add to playlist in displayed row order rather than click order. | N | Review |
 | B05 | Song columns and details show available artwork, title, artist, album/album artist, duration, year, genres, tags and track metadata. | N+L | Review |
-| B06 | Untitled/Unknown artist and missing optional fields do not prevent browsing or playback. | N | Review |
+| B06 | Untitled/Unknown artist and missing optional fields do not prevent browsing or playback. | N | Controlled |
 | B07 | Album search finds title and album-artist matches once within selected libraries; artwork and metadata open an ordered track list. | N+L | Review |
 | B08 | Album Play, Queue, Add all and individual track selections use the intended ordered tracks. | N+L | Review |
 | B09 | Browsing/search/filtering remain responsive for the listener's actual library size, including paging and large selections. | N+L | Review |
-| B10 | Refresh library updates songs and genre/tag choices while retaining search, filters, selection and listening queue. | N+S | Review |
-| B11 | After refresh, song details, albums and playlists read fresh data when used. | N+S | Review |
-| B12 | Album metadata is fetched by ID even with no tracks; a metadata-only failure leaves available tracks playable. | N+S | Review |
-| B13 | Current image revision tags update album/song artwork, including album-art fallback. | N+S | Review |
-| B14 | Read/refresh failure retains available data, offers Retry and never enables/prepares radio. | N+S | Review |
+| B10 | Refresh library updates songs and genre/tag choices while retaining search, filters, selection and listening queue. | N+S | Controlled |
+| B11 | After refresh, song details, albums and playlists read fresh data when used. | N+S | Controlled |
+| B12 | Album metadata is fetched by ID even with no tracks; a metadata-only failure leaves available tracks playable. | N+S | Controlled |
+| B13 | Current image revision tags update album/song artwork, including album-art fallback. | N+S | Controlled |
+| B14 | Read/refresh failure retains available data, offers Retry and never enables/prepares radio. | N+S | Controlled |
 | B15 | Changing song search/filter resets selection; ordinary navigation retains song selection and tracks selected in the same open album. Explicit album close/open, library/account changes and restart clear temporary album selection. | N | Controlled |
 | B16 | A failed next song/album page retains already loaded music and offers a targeted retry. | N | Controlled |
 | B17 | Opening an album and returning restores visible focus to that album, including a deep virtualized tile after a music detour. | N | Controlled |
@@ -292,6 +292,7 @@ Source: REQUIREMENTS: Design acceptance, stack, settings, acceptance and release
 
 | Check | Reviewed evidence | Scope limit |
 | --- | --- | --- |
+| B06,B10–B14 | [Catalog recovery record](verification/2026-10-16-catalog-recovery.json):13 native cases for sparse metadata playback, active-filter refresh, fresh song/album/playlist caches, revisioned artwork, empty albums and cached/uncached read recovery | Actual renderer/service/HTTP/native media with a controlled localhost catalog. No live metadata/cache timing, actual-library performance, playlist mutation or observed-listener claim. |
 | Q07 song actions | [Song actions record](verification/2026-10-16-song-actions.json):native forward/backward Tab, Escape, external scroll and explicit queue action at1280×720 normal zoom | Shared popup behavior only; broader catalog/playlist acceptance remains separate. |
 | Q07 | [Filter keyboard record](verification/2026-10-16-filter-keyboard.json):reproduced Tab focus rewind, shared-handler fix, native filter/scroll/selection, modal containment, removed-opener fallback and setup detours at1280×720 normal zoom | User deferred smaller/enlarged cases after earlier tests. This focused journey does not establish all controls, VoiceOver or observed usability. |
 | Q01,Q04 | [Trust-boundary record](verification/2026-10-16-trust-boundaries.json):actual native isolation/CSP/navigation, second-window IPC denial, eight malformed mutations, opaque range playback, redirect limits and revoked/cross-account handles | Dynamic media cases exercise music; artwork shares the inspected proxy. Local saved news remains shared by contract. Focused checks do not establish exhaustive fuzzing, OS Keychain or a penetration test. |
