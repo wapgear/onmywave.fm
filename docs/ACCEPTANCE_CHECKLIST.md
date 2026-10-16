@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 62 Review, 8 Dated, 3 Recorded, 88 Controlled, 15 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 57 Review, 8 Dated, 3 Recorded, 93 Controlled, 15 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -259,11 +259,11 @@ Source: REQUIREMENTS: Personal radio behavior, Per-DJ voice previews; R4,R8,M3,M
 | D11 | Preview transition uses bundled voice/sample music with no queue/key/provider requirement and never saves timings or starts music. | N+S | Review |
 | D12 | Preview own pause does not cancel itself; later transport wins; Stop/finish leaves music paused and volume/shuffle/repeat preserve preview. | N | Review |
 | D13 | Timing/style change or leaving General stops demo; stale callbacks/errors cannot affect a replacement and genuine failure is retryable. | N | Review |
-| D14 | Neutral editor sample and saved-DJ delivery preview are separate; generation discloses credits outside automatic limits. | N+S | Review |
-| D15 | First saved-DJ preview uses one fixed short ElevenLabs-only sample and persists locally; restart/no-key cached replay makes no request. | N+S | Review |
-| D16 | Saved voice/delivery changes mark preview Outdated; explicit failed regeneration retains the prior playable recording. | N+S | Review |
-| D17 | Concurrent DJ preview generation deduplicates and durable attempt marker requires explicit regeneration after failure/interruption/missing audio. | S | Review |
-| D18 | Preview playback is exclusive; delayed results respect later music commands, remain cached for explicit replay and use current volume. | N+S | Review |
+| D14 | Neutral editor sample and saved-DJ delivery preview are separate; generation discloses credits outside automatic limits. | N+S | Controlled |
+| D15 | First saved-DJ preview uses one fixed short ElevenLabs-only sample and persists locally; restart/no-key cached replay makes no request. | N+S | Controlled |
+| D16 | Saved voice/delivery changes mark preview Outdated; explicit failed regeneration retains the prior playable recording. | N+S | Controlled |
+| D17 | Concurrent DJ preview generation deduplicates and durable attempt marker requires explicit regeneration after failure/interruption/missing audio. | S | Controlled |
+| D18 | Preview playback is exclusive; delayed results respect later music commands, remain cached for explicit replay and use current volume. | N+S | Controlled |
 | D19 | Actual generated host delivery, pronunciation and perceived interruption quality satisfy observed listener sessions. | L+U | External |
 | D20 | DJ deletion names affected profiles, warns only when their enabled selected playback turns off, and Cancel preserves choices; long profile names wrap with reachable confirmation actions. | N | Controlled |
 
@@ -411,3 +411,5 @@ P08/P09/P11/P18 evidence: [creation and batch record](verification/2026-10-17-pl
 Playlist identity acceptance,17 October2026: [current record](verification/2026-10-17-playlist-identities.json) closes P19 with current native missing/empty/invalid/repeated-ID controls, independent selections, decoded selected playback, eight pre-dispatch IPC rejections and stable-selection retention after a safe edit. Fourteen current service cases pass. The prior live repeated-ID record supplies the real-server branch; playlist method/helper/page freshness was checked explicitly, not inferred from whole-file hashes. P04 and P05 retain Review. Inventory:187 rows,185 active,2 Deferred;63 Review,8 Dated,3 Recorded,88 Controlled,14 Live,9 External.83 active checks remain.
 
 P04 evidence,17 October2026: [fresh live playlist order](verification/2026-10-17-live-playlist-order.json). Five current native cases verify full playlist playback, selected duplicate occurrences in display order, paused Next to the second copy, persisted safe reorder/removal without changing the existing queue, and fresh playback in edited order. Independent live reads verify edits; guarded cleanup confirms deletion and404 absence. P04 covers safely identified entries under the existing PRD restriction; P19 separately proves ambiguous-handle behavior. P01/P05 remain Review. Inventory:187 rows,185 active,2 Deferred;62 Review,8 Dated,3 Recorded,88 Controlled,15 Live,9 External.82 active checks remain.
+
+D14–D18 evidence,17 October2026: [current DJ-preview lifecycle](verification/2026-10-17-dj-previews.json). Five native journeys cover first fixed-sample generation and cost disclosure, distinct neutral/saved identity, saved-delivery Outdated state, failed regeneration retaining audio, fresh-process no-key replay, SIGKILL after reservation with explicit-only retry, missing-file recovery and two-DJ exclusivity. Current actual-service integration adds concurrent deduplication, voice changes, corrupt-cache recovery and media ranges.28 actual-player cases cover delayed command precedence, cached replay, current volume and preview-preserving preferences. All providers are substituted and audio muted. Inventory:187 rows,185 active,2 Deferred;57 Review,8 Dated,3 Recorded,93 Controlled,15 Live,9 External.77 active checks remain.

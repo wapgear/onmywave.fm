@@ -1,0 +1,169 @@
+{
+  "date": "2026-10-17",
+  "base": "20c876098dba1c61f9014767cb638a672fa64372",
+  "scope": [
+    "D14",
+    "D15",
+    "D16",
+    "D17",
+    "D18"
+  ],
+  "productionChanges": false,
+  "native": {
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "cases": [
+      {
+        "kind": "first saved-DJ preview",
+        "result": "passed",
+        "oneFixedSampleElevenLabsRequest": true,
+        "durableMarkerBeforeDispatch": true,
+        "delayedResultRespectsPausedNext": true,
+        "cachedExplicitReplay": true,
+        "costScopeVisible": true
+      },
+      {
+        "kind": "saved delivery change and failed explicit regeneration",
+        "result": "passed",
+        "neutralEditorSampleSeparate": true,
+        "saveMakesNoProviderRequest": true,
+        "outdatedStateVisible": true,
+        "priorAudioStillPlayable": true
+      },
+      {
+        "kind": "fresh-process cached replay without key",
+        "result": "passed",
+        "sameImmutableLocalAudio": true,
+        "noProviderRequest": true
+      },
+      {
+        "kind": "process killed after durable preview reservation",
+        "result": "passed",
+        "restartRequiresExplicitRetry": true,
+        "implicitPrepareMakesNoRequest": true,
+        "explicitRetryGeneratesOnce": true
+      },
+      {
+        "kind": "missing saved preview audio after restart",
+        "result": "passed",
+        "noImplicitRegeneration": true,
+        "explicitRetryOffered": true,
+        "previewPlaybackExclusive": true
+      }
+    ],
+    "result": "passed",
+    "rendererErrors": 0,
+    "fatalFileAbsent": true
+  },
+  "service": {
+    "result": "passed",
+    "method": "Current actual dj-previews, NewsService and media source bundled with isolated Electron path/protocol and storage/key adapters. Only voice-provider HTTP replies are substituted. An OpenAI key getter throws if used.",
+    "checks": [
+      "Initial read does not generate; two concurrent saved-DJ requests generate once and return the same clip",
+      "Fixed shared sample text is sent only to ElevenLabs",
+      "A saved-DJ clip does not populate the neutral voice-ID sample cache",
+      "Replay with no key and after module reload makes no request",
+      "Changing saved voice marks stale; implicit replay retains old audio",
+      "Explicit regeneration creates a new immutable clip; old clip remains readable",
+      "Actual media handler serves a ten-byte206 range",
+      "Failed regeneration retains the previous playable clip and does not implicitly retry",
+      "Missing audio and first failed generation retain attempted state without implicit generation",
+      "Corrupt manifest preserves error until explicit regeneration repairs it",
+      "Invalid media paths are rejected"
+    ]
+  },
+  "playerMatrix": {
+    "result": "passed",
+    "runtime": "Current actual PlayerProvider and VoicePreview, browser audio and muted local WAV; substituted preload methods, Chrome headless",
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "delayedCommands": [
+      "Next",
+      "Previous",
+      "Seek",
+      "Remove current queue entry",
+      "Retry music",
+      "Choose queued entry",
+      "Play same songs explicitly",
+      "Pause",
+      "MediaSession Pause callback",
+      "MediaSession seek callback",
+      "Next at queue end"
+    ],
+    "resourceKinds": [
+      "saved DJ",
+      "neutral voice sample"
+    ],
+    "delayedCommandCases": 22,
+    "assertions": "Commands and generation resolution occur in the same JavaScript turn. Late previews stay paused, remain cached and play on explicit replay with only one generation.",
+    "preferenceCases": [
+      "Volume0.25 remains current when delayed preview starts",
+      "Repeat changes preserve preview",
+      "Shuffle changes preserve preview",
+      "Removing another queue entry preserves preview",
+      "Music continues during generation; preview pauses it only when audio starts"
+    ],
+    "activePreviewCases": [
+      "A playing preview stops on paused seek"
+    ],
+    "totalCases": 28,
+    "rendererErrors": 0
+  },
+  "rowCoverage": {
+    "D14": "Native saved-DJ disclosure and separate neutral editor sample; service cache identity isolation and no text request",
+    "D15": "Native first request and fixed sample, actual persisted encrypted-key fixture; fresh-process no-key cached replay with zero provider dispatch",
+    "D16": "Service voice change plus native saved delivery change, Outdated notice and failed explicit regeneration preserving playable original",
+    "D17": "Service concurrent single flight and durable failures/missing files; native SIGKILL after marker before reply, restart no implicit request, explicit Retry generates once",
+    "D18": "Native delayed Next, two-DJ exclusivity and cached replay;28 current actual-player cases cover later commands, cached results and current volume"
+  },
+  "limits": [
+    "All provider responses are substituted and audio is muted. No live ElevenLabs delivery, billing, audible pronunciation or listener comprehension is claimed.",
+    "The process kill establishes restart behavior after dispatch reservation, not machine power-loss durability.",
+    "MediaSession callback cases exercise the actual registered handlers, not physical hardware controls.",
+    "Service module reload is complemented by native fresh-process restart; neither alone is described as an OS-wide compatibility result.",
+    "The screenshot is a native app-content capture at1280x720/100%, not desktop-context presentation acceptance.",
+    "No deferred viewport or zoom checks ran."
+  ],
+  "fixtureCorrections": [
+    "The first native run selected hidden Predefined-tab sample text. The final run scopes the visible sample label.",
+    "The second run reacquired the Playwright process handle after killing the app. The final run stores the actual child handle before SIGKILL and waits for that same handle to exit.",
+    "Both issues were in the acceptance driver; no production correction is claimed."
+  ],
+  "checks": {
+    "buildTypeLint": "Application source unchanged from preceding passing snapshot; not repeated",
+    "nativeScreenshot": "2026-10-17-dj-previews.png, inspected",
+    "finalNativeResult": "passed",
+    "providerScope": "Only owned dummy keys and substituted replies; no paid requests or personal entries"
+  },
+  "sourceSha256": {
+    "src/main/dj-previews.ts": "56d36390dbf9ba2a3177c46ff2a20d4478fa20bc37d6220bc1459b6e592722b3",
+    "src/main/news.ts": "9c2076bf3808221980dac5aa2befb9d5532278027ccdcc6197e8324930b6571e",
+    "src/main/media.ts": "6768544bd3215e37187a12293571c894a1023619ebe8f09e25403bdec0bfb671",
+    "src/main/storage.ts": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/shared/voice-previews.ts": "4ebe9fe7dad73cc2195573ec729cb99440313fe8eea24e5b0201154cc8095bfe",
+    "src/renderer/player.tsx": "481d350ef35d5e11d77848f661419f5eea265cbf643db234c665174255ec562c",
+    "src/renderer/pages/DJs/components/VoicePreview.component.tsx": "b33006579294d0c1fc455f2be47478c6bea30140b7bcbb4ad926dc4c7c3ce81c",
+    "src/renderer/pages/DJs/components/DJPreview.component.tsx": "496eaaac54e8fedb02e33bd2c07b01bc5c4a0b23fcb57940729c32a5bd11c3b8",
+    "src/renderer/pages/DJs/components/DJEditor.component.tsx": "2c1260a44cc2fed82542972a9055f63b4d4890fe6232793eaa97a825898c4a7d",
+    "src/renderer/pages/DJs/DJs.page.tsx": "59edbcbd3f4e56834f4757910120b9d914bac36cda4311a5508b81ecb46e8e30",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370"
+  },
+  "fixtureSha256": {
+    "/private/tmp/native-dj-preview-current/build.mjs": "66a25b16fdaa7e02a8bcbea60e4fa5014d4289afba8e8608f9d3a92d65d12501",
+    "/private/tmp/native-dj-preview-current/bootstrap.mjs": "0977566aeda3913e9be5a92298784d7587c806f6863ec5892a812790ac8abf47",
+    "/private/tmp/native-dj-preview-current/server.mjs": "f9f7492bbe81f85e4246d3b6109d557e8641f4bc71056f61609df372f3685645",
+    "/private/tmp/native-dj-preview-current/run.cjs": "7644b0f701aad3e23be6ecff811abb62ef9a2f01f3f6a3ce996422400853273c",
+    "/private/tmp/native-dj-preview-current/service.mjs": "0eddafed9030245d9aad519f857859ce3f9a579b06d30865f6ebcad56237587d",
+    "/private/tmp/native-dj-preview-current/out/main/index.js": "ffd9358073f9b63ec3d13e584f1e22f172a81feae780b84e9bec077a53b12ea6",
+    "/private/tmp/native-dj-preview-current/choice/build.mjs": "51957f5767e91aea10626c479e238d55e054de091c0ef3e49e2cb9e0e9344a2d",
+    "/private/tmp/native-dj-preview-current/choice/run.cjs": "7eeda3ab77d669fe6123b76ea4dae2cfbcc4d0c1e49b702880c6d674a4eb3155",
+    "/private/tmp/native-dj-preview-current/choice/main.js": "4a1e279337e2e96e8e9649ac896fd7ad9123fc0194e90bcc531894b0b257e471"
+  }
+}
