@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 87 Review, 8 Dated, 4 Recorded, 65 Controlled, 12 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 85 Review, 8 Dated, 4 Recorded, 67 Controlled, 12 Live, 9 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -230,8 +230,8 @@ Source: REQUIREMENTS: Personal radio behavior; R7,R8,R10,R11.
 | T04 | Checking a saved result reconciles only an existing request and never generates for an unknown ID. | S | Review |
 | T05 | After restart latest unlinked interruption has a named summary and focused expandable-history action; unknown profile is not guessed. | N+S | Review |
 | T06 | A newer request supersedes the compact summary while history remains; failed refresh/live error suppress duplicate or misleading summaries. | N+S | Review |
-| T07 | Scripts are editable; replacing edits through saved loads or new text requires confirmation, cancel prevents dispatch, and failure retains edits. Finite generation supports audition/comparison/explicit selection without silently replacing the selected take. | N+S | Review |
-| T08 | Normal generation reuses a valid matching recording including a later replacement; Generate another take explicitly requests variation. | S+N | Review |
+| T07 | Scripts are editable; replacing edits through saved loads or new text requires confirmation, cancel prevents dispatch, and failure retains edits. Finite generation reports its saved/reused result with focused review and supports audition/comparison/explicit selection without silently replacing the selected take. | N+S | Controlled |
+| T08 | Normal generation reuses a valid matching recording including a later replacement; Generate another take explicitly requests variation. | S+N | Controlled |
 | T09 | Immutable script/source/mood/interests/rendering-DJ provenance and selected ID survive restart. | N+S | Controlled |
 | T10 | Missing/empty/truncated audio retains provenance/selection, disables play/use/schedule and offers explicit script-based replacement. | N+S | Controlled |
 | T11 | Saved audio plays without keys/provider calls; speech remains outside music playlists, favorites and music history. | N+S | Review |
@@ -386,4 +386,6 @@ The [long-text/native behavior record](verification/2026-10-16-long-text-layout.
 
 The [saved-audio retry record](verification/2026-10-16-saved-audio-retry.json) establishes T13–T15 for the named native runtime with real muted MP3 playback, delayed play settlements, transport commands, explicit missing-file recovery and unchanged selection/opt-ins. T11 remains Review for its broader music playlist/favorites/history scope.
 
-The [script-replacement record](verification/2026-10-16-script-replacement.json) reproduces lost edited wording and verifies all three saved-load paths, guarded text preparation, cancel/no dispatch, failed preparation plus music navigation, focus restoration and direct clean preparation. T07 stays Review for its wider finite-generation/comparison scope; no inventory disposition changes follow from this narrower check.
+The [script-replacement record](verification/2026-10-16-script-replacement.json) reproduces lost edited wording and verifies all three saved-load paths, guarded text preparation, cancel/no dispatch, failed preparation plus music navigation, focus restoration and direct clean preparation. That round left T07 in Review for its wider finite-generation/comparison scope; the later combined evidence below establishes the updated disposition.
+
+The [manual-audio result record](verification/2026-10-16-manual-audio-result.json) establishes native generation/comparison, explicit selection, normal reuse and variation, including a later valid matching take. Together with the [script-replacement record](verification/2026-10-16-script-replacement.json), T07/T08 are Controlled for the recorded runtime. It also verifies truthful completion, focused review, missing/read-failure recovery, and original-profile attribution through music navigation and completion while the page is unmounted.

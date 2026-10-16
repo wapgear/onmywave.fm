@@ -1,0 +1,185 @@
+{
+  "date": "2026-10-16",
+  "base": "dce80d63bb9d87f4203013163a21822c52f94b43",
+  "problem": "Manual audio saved successfully but its result was discarded by the Settings flow, leaving no completion message or direct review action.",
+  "before": {
+    "cases": [
+      {
+        "kind": "audio completion feedback",
+        "result": "reproduced",
+        "takeSaved": true,
+        "reviewAction": 0,
+        "settingsRemainsSelected": "true"
+      }
+    ],
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "result": "reproduced"
+  },
+  "presentationBefore": {
+    "top": 572.015625,
+    "bottom": 632.015625,
+    "playerTop": 616,
+    "visible": false
+  },
+  "after": {
+    "cases": [
+      {
+        "kind": "new audio result",
+        "result": "passed",
+        "exactResultFocused": true,
+        "noImplicitSelection": true
+      },
+      {
+        "kind": "normal reuse",
+        "result": "passed",
+        "voiceCallsUnchanged": 1,
+        "sameTakeFocused": true
+      },
+      {
+        "kind": "explicit variation",
+        "result": "passed",
+        "newTake": true,
+        "voiceCalls": 2
+      },
+      {
+        "kind": "reuse later valid replacement",
+        "result": "passed",
+        "laterValidTakeFocused": true,
+        "noVoiceDispatch": true
+      },
+      {
+        "kind": "missing audio remains reviewable",
+        "result": "passed",
+        "scriptAndMissingGuidanceReachable": true,
+        "noProviderCall": true
+      },
+      {
+        "kind": "failed review refresh",
+        "result": "passed",
+        "savedResultRetained": true,
+        "explicitRetryFocusesTake": true
+      },
+      {
+        "kind": "missing result identity",
+        "result": "passed",
+        "missingIdExplained": true,
+        "resultRetainedForRetry": true
+      },
+      {
+        "kind": "profile and music navigation",
+        "result": "passed",
+        "originalProfileRetained": true
+      },
+      {
+        "kind": "completion after leaving during dispatch",
+        "result": "passed",
+        "completedWhileUnmounted": true,
+        "newOriginalProfileShown": true,
+        "exactTakeFocused": true
+      }
+    ],
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "immediateCompletionVisible": true,
+    "focusIndicator": {
+      "visible": true,
+      "width": "2px",
+      "style": "solid"
+    },
+    "invariants": {
+      "selectedAudioUnchanged": true,
+      "originalTakeUnchanged": true,
+      "optInsUnchanged": true,
+      "musicQueueUnchanged": true,
+      "substitutedVoiceCalls": 3,
+      "textCalls": 0,
+      "realProviderCalls": 0,
+      "rendererErrors": 0
+    },
+    "result": "passed"
+  },
+  "comparison": {
+    "cases": [
+      {
+        "kind": "explicit selection and generated-take comparison",
+        "result": "passed",
+        "generationNeverReplacesSelectedTake": true,
+        "twoSavedMP3AuditionsAdvance": true,
+        "switchingAuditionDisposesPrevious": true,
+        "auditionNeverSelects": true,
+        "normalGenerationReusesVariationWithoutDispatch": true,
+        "substitutedVoiceCalls": 2,
+        "musicLeftPaused": true
+      }
+    ],
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "result": "passed"
+  },
+  "change": "Capture a separate parent-owned audio completion from the committed result. Keep its original profile and distinguish normal reuse. Explicit review refreshes the library, focuses the exact row including unavailable audio, and retains a retryable error on failed refresh/missing ID. A completed result survives page and profile navigation; next manual preparation replaces its summary. Reveal Settings completion above the player without moving focus and visibly outline the reviewed row. No audition, selection or scheduling starts automatically.",
+  "decision": {
+    "pair": "Steve and Elena, independent read-only proposals plus one challenge/revision",
+    "initial": "Steve proposed reusing manualPreparation for completion; Elena proposed a separate parent-owned record captured in mutationFn.",
+    "revised": "Both supported the separate record to preserve operation/interruption semantics and capture a result before refresh or page unmount. Both supported reviewing an unavailable take for its existing script/recovery guidance.",
+    "coordinator": "Root implemented the separate record. On failed refetch, remain in the current view with a retained result and retryable error; Steve had suggested navigating to Saved audio with a freshness warning instead.",
+    "review": "Elena found a missing focus-visible outline; it was fixed and verified natively. Her final artifact review found no new actionable issue.",
+    "querySemantics": "Local TanStack queryClient.ts catches ordinary default refetch errors. Existing mutation refresh/error lifecycle was retained; no hypothetical refresh-exception fix was added."
+  },
+  "runtime": {
+    "macOS": "27.2 arm64",
+    "electron": "43.7.0",
+    "fixtureNode": "24.4.1",
+    "nativeWindow": {
+      "cssWidth": 1280,
+      "cssHeight": 720,
+      "zoomFactor": 1,
+      "hidden": true,
+      "muted": true
+    }
+  },
+  "scope": {
+    "actualMainPreloadAndProductionRenderer": true,
+    "localDummyJellyfinAndEncryptedDummyProviderKeys": true,
+    "externalNetwork": "blocked",
+    "voiceOutput": "substituted with a real saved MP3",
+    "controlledFaults": [
+      "saved-library read failure",
+      "omitted result ID in read response",
+      "move/restore owned saved MP3",
+      "hold voice response during page unmount"
+    ],
+    "noUnitFrameworkAdded": true
+  },
+  "limitations": [
+    "Controlled engineering evidence, not observed listener usability or live voice quality.",
+    "Real MP3 clocks advanced while muted; no audible-quality claim follows.",
+    "No additional macOS versions, physical media keys, VoiceOver, smaller windows or enlarged zoom covered.",
+    "Earlier Q10 shutdown diagnostic remains unattributed/open.",
+    "T07 Controlled combines current generation/comparison with the dated script-replacement native record; it is not an overall UX acceptance percentage."
+  ],
+  "sourceSha256": {
+    "src/renderer/pages/Stations/Stations.page.tsx": "2627f57cb89db0ac5ed73dc85f4bea39987387b07844f5f840e34de81b89fa92",
+    "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": "a089c86e2b2678ed77f2559648cdfeaca072ba6bb46453a2f4e8befb2f68e09e",
+    "src/renderer/pages/Stations/components/PreparedTakes.styles.css": "5ea1b040c77198e9924a77cdb8ad463a899e71a23c05bf1248c12557e160df53",
+    "src/main/prepared-news.ts": "c5f75f9818c3537fbf2cc177d5980328926b1d73202a3952f0da84258df11dd2",
+    "src/renderer/App.tsx": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf"
+  },
+  "fixtureSha256": {
+    "build.mjs": "94983a7ee4fc7230cc2ce966f54ae9dbdedcabd713cd58af412f2e8515d72083",
+    "bootstrap.mjs": "a817fb9978ec7e3a54f029d534dbf7b084907201fd2afe820d362a55542e128b",
+    "before.cjs": "04c6e363571b5b023b56d931f98d4c8da67705aa2e0197e047b475d74a106a60",
+    "after.cjs": "6b1baf19603a35345ad281bc121d0bc51d99a844a4de78655d4969bc4a9c7b71",
+    "comparison.cjs": "cadda21f5006f796903dec9de6fad931dbfe3b27474af990eaa086cb1c4ca14a",
+    "visibility.cjs": "c21b8d62cec55d327719f9c504ccaf9faf0b2e57f7212eaf821892fc26dd8f8a"
+  }
+}

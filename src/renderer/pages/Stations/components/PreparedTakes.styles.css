@@ -41,3 +41,5 @@
 .prepared-warnings { padding-left: 18px; color: var(--muted); line-height: 1.7; }
 .prepared-take-footer { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 16px; }
 .prepared-take-footer > span { color: var(--muted); font-size: 10px; }
+
+.prepared-take:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }

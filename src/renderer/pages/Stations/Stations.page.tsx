@@ -16,7 +16,8 @@ import type { WorkflowDraft } from '../../../shared/workflow';
 import './Stations.styles.css';
 
 export type RoomDraft = { scriptId: string; script: string } | null;
-export type RoomSetupDraft = { setup: ListeningRoom | null; moodDraft: string | null; newsInterests?: string; workflow?: { roomId: string; patch: Partial<WorkflowDraft> }; stopError?: string; operationError?: string; manualPreparation?: ManualPreparation; preparationCancelError?: string; tab?: string };
+type AudioCompletion = { requestId: string; takeId: string; reused: boolean; profileName?: string; reviewError?: string };
+export type RoomSetupDraft = { audioCompletion?: AudioCompletion; setup: ListeningRoom | null; moodDraft: string | null; newsInterests?: string; workflow?: { roomId: string; patch: Partial<WorkflowDraft> }; stopError?: string; operationError?: string; manualPreparation?: ManualPreparation; preparationCancelError?: string; tab?: string };
 type ScriptReplacement = { kind: 'load'; draft: NonNullable<RoomDraft>; reveal: boolean } | { kind: 'prepare' };
 type PreparationInput = { kind: 'script'; input: { requestId: string; djId: string; sourceIds: string[] } } | { kind: 'audio'; input: { requestId: string; scriptId: string; script: string; djId: string; newVariation?: boolean } };
 type Preparation = PreparationInput & { reconcile?: boolean };
@@ -40,6 +41,9 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   const setMoodDraft = (moodDraft: string | null) => setConfigDraft(current => ({ ...current, moodDraft }));
   const manualTools = useRef<HTMLDetailsElement>(null);
   const requestHistory = useRef<HTMLDetailsElement>(null);
+  const audioReviewAttempt = useRef(0);
+  const audioResultRef = useRef<HTMLDivElement>(null);
+  useEffect(() => () => { ++audioReviewAttempt.current; }, []);
   const tab = ['news', 'host', 'prepare', 'settings'].includes(configDraft.tab ?? '') ? 'settings' : configDraft.tab === 'saved' ? 'saved' : 'bucket';
   const setTab = (tab: string) => setConfigDraft(current => ({ ...current, tab }));
   const aiStatus = useQuery({ queryKey: ['aiStatus'], meta: { aiOperation: true }, queryFn: async () => unwrap(await window.wave.getAiStatus()) });
@@ -187,7 +191,12 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
         if (request.kind === 'script') {
           const result = unwrap(await window.wave.prepareNewsScript({ ...request.input, reconcileOnly: request.reconcile === true }));
           setDraft(current => current === draftAtStart ? { scriptId: result.id, script: result.script } : current);
-        } else unwrap(await window.wave.renderNewsTake({ ...request.input, reconcileOnly: request.reconcile === true }));
+        } else {
+          const take = unwrap(await window.wave.renderNewsTake({ ...request.input, reconcileOnly: request.reconcile === true }));
+          setConfigDraft(current => current.manualPreparation?.control === control ? { ...current, audioCompletion: {
+            requestId: request.input.requestId, takeId: take.id, reused: take.requestId !== request.input.requestId, profileName: current.manualPreparation.profileName,
+          } } : current);
+        }
       } finally { await refresh(); }
     },
     onSuccess: (_result, { control }) => setConfigDraft(current => current.manualPreparation?.control === control ? { ...current, manualPreparation: undefined } : current),
@@ -196,8 +205,9 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   });
   function startPreparation(request: Preparation) {
     if (manualPending || cancellationPending) return;
+    ++audioReviewAttempt.current;
     const operation = { request, control: { controller: new AbortController(), dispatched: false } };
-    setConfigDraft(current => ({ ...current, manualPreparation: { ...operation, pending: true, profileName: request.reconcile ? manual?.profileName : activeProfile?.name }, preparationCancelError: undefined }));
+    setConfigDraft(current => ({ ...current, audioCompletion: undefined, manualPreparation: { ...operation, pending: true, profileName: request.reconcile ? manual?.profileName : activeProfile?.name }, preparationCancelError: undefined }));
     prepare.mutate(operation);
   }
   const noStory = preparationError?.code === 'no-news' || preparationError?.code === 'partial-coverage';
@@ -243,7 +253,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
       setNewProfileOpen(false); setProfileName('');
       setProfileNotice(`Saved ${profileName.trim()} with preparation off. Choose it from Setup profile, then use Review room options to make it available.`);
     } else {
-      setConfigDraft(current => ({ setup: null, moodDraft: null, tab: current.tab, manualPreparation: current.manualPreparation, preparationCancelError: current.preparationCancelError }));
+      setConfigDraft(current => ({ setup: null, moodDraft: null, tab: current.tab, audioCompletion: current.audioCompletion, manualPreparation: current.manualPreparation, preparationCancelError: current.preparationCancelError }));
       setSwitchTarget(null);
       setProfileNotice('Room switched. Your script and selected audio are unchanged.');
     }
@@ -291,6 +301,26 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   }
   function loadDraft(take: PreparedNewsTake) { requestScript({ scriptId: take.scriptId, script: take.script }); }
   function loadScriptDraft(script: { id: string; script: string }) { requestScript({ scriptId: script.id, script: script.script }); }
+  const reviewAudio = useMutation({
+    mutationFn: async (completion: AudioCompletion) => {
+      const attempt = ++audioReviewAttempt.current;
+      const result = await library.refetch();
+      if (attempt !== audioReviewAttempt.current) return;
+      if (result.error) throw new Error('Your audio result was saved, but saved takes could not be refreshed. Try reviewing it again.');
+      if (!result.data?.takes.some(take => take.id === completion.takeId)) throw new Error('The completed take could not be found in saved audio. Try reviewing it again.');
+      setTab('saved');
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        if (attempt !== audioReviewAttempt.current) return;
+        const target = document.getElementById(`prepared-take-${completion.takeId}`);
+        target?.scrollIntoView({ block: 'center', behavior: 'auto' });
+        target?.focus({ preventScroll: true });
+      }));
+    },
+    onMutate: completion => setConfigDraft(current => current.audioCompletion?.requestId === completion.requestId
+      ? { ...current, audioCompletion: { ...current.audioCompletion, reviewError: undefined } } : current),
+    onError: (error, completion) => setConfigDraft(current => current.audioCompletion?.requestId === completion.requestId
+      ? { ...current, audioCompletion: { ...current.audioCompletion, reviewError: errorMessage(error) } } : current),
+  });
   function openPreparation() { setTab('settings'); }
   function reviewPreparationHistory() {
     setTab('saved');
@@ -301,6 +331,14 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
       requestHistory.current.scrollIntoView({ block: 'start', behavior: 'auto' });
     });
   }
+  const audioCompletion = configDraft.audioCompletion;
+  useEffect(() => {
+    if (audioCompletion && !manualPending && tab === 'settings' && manualTools.current?.open) audioResultRef.current?.scrollIntoView({ block: 'nearest', behavior: 'auto' });
+  }, [audioCompletion, manualPending, tab]);
+  const audioResult = audioCompletion && !manualPending && <div className="room-audio-result" ref={audioResultRef}>
+    <div className="notice"><span role="status">{audioCompletion.reused ? 'Matching saved audio reused' : 'Audio take saved'} · {audioCompletion.profileName ?? 'Previous setup'}. Review it to listen or choose it for a DJ break.</span><button disabled={reviewAudio.isPending} onClick={() => reviewAudio.mutate(audioCompletion)}>{reviewAudio.isPending ? 'Opening saved take…' : 'Review saved take'}</button></div>
+    <ErrorNotice error={audioCompletion.reviewError ? new Error(audioCompletion.reviewError) : null} />
+  </div>;
   return <>
     <PageHeading title="News bucket" />
     <div className="listening-room">
@@ -330,6 +368,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
       {runningProfile && !preparationStatusUnknown && !manualPending && <p className="form-hint">This check keeps its original sources, host, mood and interests. Saved setup changes apply to future checks.</p>}
       {configDraft.preparationCancelError && <ErrorNotice error={new Error(configDraft.preparationCancelError)} />}
       {preparationError && <div className="room-background-error"><p className="form-hint">Manual preparation · {manual?.profileName ?? 'Previous setup'}</p>{noStory || (manual?.cancelRequested && !manual.control.dispatched) ? <p className="form-hint" role="status">{preparationError.message}</p> : <ErrorNotice error={preparationError} />}<div className="room-actions">{!noStory && lastRequest && manual?.control.dispatched && <button className="room-link" disabled={busy} onClick={() => startPreparation({ ...lastRequest, reconcile: true })}>Check saved result for this request</button>}<button className="room-link" onClick={() => { setTab('settings'); requestAnimationFrame(() => { if (manualTools.current) { manualTools.current.open = true; manualTools.current.querySelector('summary')?.focus(); manualTools.current.scrollIntoView({ block: 'start' }); } }); }}>Review preparation</button></div></div>}
+      {tab !== 'settings' && audioResult}
       <section id="room-panel-settings" role="tabpanel" aria-labelledby="room-tab-settings" hidden={tab !== 'settings'} tabIndex={0} className="room-preparation">
       <ErrorNotice error={library.error} retry={() => void library.refetch()} />
       {preparationStatusUnknown && <p className="form-hint" role="status">Preparation activity must be confirmed before editing setup. Wait for status to load, or retry the failed status check.</p>}
@@ -351,6 +390,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
         </div>}
         <ErrorNotice error={source.error} />
       </div></details>
+      {tab === 'settings' && audioResult}
       </section>
       <section id="room-panel-saved" role="tabpanel" aria-labelledby="room-tab-saved" hidden={tab !== 'saved'} tabIndex={0}>
       {differs && <p className="notice">Your draft or setup differs from the selected take. Your saved choice remains unchanged.</p>}
