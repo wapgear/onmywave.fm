@@ -1,0 +1,292 @@
+{
+  "date": "2026-10-17",
+  "sourceCommit": "23b9d7fba7be1973d7a71dcebd6bf46dcb4b6e7f",
+  "scope": [
+    "V10 partial only",
+    "V12 incomplete"
+  ],
+  "result": "partial; neither row accepted",
+  "environment": {
+    "windowContent": [
+      1280,
+      800
+    ],
+    "zoom": 1,
+    "audio": "muted",
+    "data": "disposable local fixture; dummy account and substituted catalog",
+    "providers": "blocked or substituted; zero observed calls"
+  },
+  "observations": {
+    "minimize": {
+      "result": "observed",
+      "action": "Actual macOS Window sharing menu Minimize through native computer control",
+      "window": {
+        "id": 1,
+        "title": "onmywave.fm",
+        "bounds": {
+          "x": 100,
+          "y": 110,
+          "width": 1280,
+          "height": 800
+        },
+        "content": {
+          "x": 100,
+          "y": 110,
+          "width": 1280,
+          "height": 800
+        },
+        "visible": false,
+        "minimized": true,
+        "fullScreen": false,
+        "focused": false,
+        "trafficLightPosition": {
+          "x": 20,
+          "y": 22
+        },
+        "resizable": true,
+        "minimizable": true,
+        "closable": true,
+        "zoom": 1
+      },
+      "events": [
+        {
+          "event": "move",
+          "at": 1792202753099
+        },
+        {
+          "event": "focus",
+          "at": 1792202753206
+        },
+        {
+          "event": "minimize",
+          "at": 1792202879952
+        },
+        {
+          "event": "blur",
+          "at": 1792202879960
+        }
+      ]
+    },
+    "restore": {
+      "result": "observed",
+      "action": "Native app keyboard routing activated and restored the minimized window",
+      "window": {
+        "id": 1,
+        "title": "onmywave.fm",
+        "bounds": {
+          "x": 100,
+          "y": 110,
+          "width": 1280,
+          "height": 800
+        },
+        "content": {
+          "x": 100,
+          "y": 110,
+          "width": 1280,
+          "height": 800
+        },
+        "visible": true,
+        "minimized": false,
+        "fullScreen": false,
+        "focused": true,
+        "trafficLightPosition": {
+          "x": 20,
+          "y": 22
+        },
+        "resizable": true,
+        "minimizable": true,
+        "closable": true,
+        "zoom": 1
+      },
+      "events": [
+        {
+          "event": "move",
+          "at": 1792202753099
+        },
+        {
+          "event": "focus",
+          "at": 1792202753206
+        },
+        {
+          "event": "minimize",
+          "at": 1792202879952
+        },
+        {
+          "event": "blur",
+          "at": 1792202879960
+        },
+        {
+          "event": "restore",
+          "at": 1792202902343
+        },
+        {
+          "event": "focus",
+          "at": 1792202902387
+        }
+      ]
+    },
+    "titlebarDrag": {
+      "result": "unverified",
+      "attempts": "Coordinate drags did not change native window bounds. Input routing is unresolved; this does not establish a product defect.",
+      "domInspection": {
+        "title": "onmywave.fm",
+        "viewport": [
+          1280,
+          800
+        ],
+        "dragNodes": [
+          {
+            "class": "traffic-light-space",
+            "rect": {
+              "x": 16,
+              "y": 0,
+              "width": 176,
+              "height": 52,
+              "top": 0,
+              "right": 192,
+              "bottom": 52,
+              "left": 16
+            },
+            "region": "drag",
+            "z": "auto"
+          },
+          {
+            "class": "titlebar-drag-region",
+            "rect": {
+              "x": 208,
+              "y": 0,
+              "width": 1072,
+              "height": 24,
+              "top": 0,
+              "right": 1280,
+              "bottom": 24,
+              "left": 208
+            },
+            "region": "drag",
+            "z": "3"
+          }
+        ],
+        "hitPoints": [
+          {
+            "x": 300,
+            "y": 6,
+            "elements": [
+              {
+                "class": "titlebar-drag-region",
+                "tag": "DIV",
+                "region": "drag"
+              },
+              {
+                "class": "page-content",
+                "tag": "DIV",
+                "region": "none"
+              },
+              {
+                "class": "main-content",
+                "tag": "MAIN",
+                "region": "none"
+              },
+              {
+                "class": "app-shell ",
+                "tag": "DIV",
+                "region": "none"
+              }
+            ]
+          },
+          {
+            "x": 500,
+            "y": 20,
+            "elements": [
+              {
+                "class": "titlebar-drag-region",
+                "tag": "DIV",
+                "region": "drag"
+              },
+              {
+                "class": "page-content",
+                "tag": "DIV",
+                "region": "none"
+              },
+              {
+                "class": "main-content",
+                "tag": "MAIN",
+                "region": "none"
+              },
+              {
+                "class": "app-shell ",
+                "tag": "DIV",
+                "region": "none"
+              }
+            ]
+          },
+          {
+            "x": 600,
+            "y": 12,
+            "elements": [
+              {
+                "class": "titlebar-drag-region",
+                "tag": "DIV",
+                "region": "drag"
+              },
+              {
+                "class": "page-content",
+                "tag": "DIV",
+                "region": "none"
+              },
+              {
+                "class": "main-content",
+                "tag": "MAIN",
+                "region": "none"
+              },
+              {
+                "class": "app-shell ",
+                "tag": "DIV",
+                "region": "none"
+              }
+            ]
+          }
+        ]
+      },
+      "rawSampleLabelCorrection": "The second raw sample is named Native titlebar drag. It records restoration and unchanged bounds, not a successful drag."
+    },
+    "desktopContextCapture": {
+      "result": "not obtained",
+      "reason": "Selecting Finder through computer control stalled for about 5 hours 28 minutes. The bounded native fixture exited normally during that call. No desktop screenshot was obtained."
+    }
+  },
+  "limits": [
+    "Native close, full-screen/zoom and complete traffic-light behavior were not verified.",
+    "The OS Window sharing badge over traffic lights is a screen-capture overlay, not app chrome.",
+    "No actual desktop-context screenshot, observed listener session, audible quality or broader OS compatibility claim.",
+    "Correct DOM drag hit regions do not prove native dragging.",
+    "No smaller-window or enlarged-zoom check was run.",
+    "No application source change; build and lint were not repeated for documentation-only work.",
+    "Q12/Q13 remain open; this record does not establish the complete evidence audit or a percentage."
+  ],
+  "fixtureSha256": {
+    "/private/tmp/native-desktop-chrome-current/run.cjs": "8d36155c30c3a34daf01262404af08e611e4218cf7f20668316fc1d73df63048",
+    "/private/tmp/native-desktop-chrome-current/samples.json": "f812095009665d48b171b53c84cafb002fab36c13fbee9a4132badd2a2edf073",
+    "/private/tmp/native-desktop-chrome-current/result.json": "2994aa9a972da7db0adb3803ab05e9a17603576fe21995543e4340373f769854",
+    "/private/tmp/native-desktop-chrome-current/drag-dom.json": "6323657c99dcbc52c08befa37d7783cb60c09568fbb4a9bc0c850c491097a59b",
+    "/private/tmp/native-desktop-chrome-current/build.mjs": "c87d387286680d9d09d682077ab88e002d87e9ffc057d2ecb0fcf4b91fec7f11",
+    "/private/tmp/native-desktop-chrome-current/bootstrap.mjs": "7e4a8ea2b41b06c1192aca346dab3b42725a776c1328ac6f002fa6da034cb596",
+    "/private/tmp/native-desktop-chrome-current/server.mjs": "75b62acb039f54fe55d34ba251721516dc6a6ac1c263cb5048fe51ca52ef086f"
+  },
+  "sourceSha256": {
+    "src/main/index.ts": "a5d1528149631987f30b25a6e296b60bc97b950a712280bf6f584cce13b1d320",
+    "src/renderer/styles.css": "e2662ee8478a6dde9d4fc98f866a5dd305514e660ce6656df1034ffffe17c11b",
+    "src/renderer/App.tsx": "9341e01ab161fec685239fb5e2841342e85df33016326744db1ade9fe20860e1"
+  },
+  "inventory": {
+    "total": 187,
+    "active": 185,
+    "review": 20,
+    "dated": 1,
+    "recorded": 0,
+    "controlled": 132,
+    "live": 21,
+    "external": 11,
+    "deferred": 2,
+    "activeRemaining": 32
+  }
+}

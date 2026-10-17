@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 23 Review, 1 Dated, 0 Recorded, 130 Controlled, 20 Live, 11 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 20 Review, 1 Dated, 0 Recorded, 132 Controlled, 21 Live, 11 External, 2 Deferred. 32 active checks remain. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -468,3 +468,5 @@ The [current interaction-state record](verification/2026-10-17-interaction-state
 
 
 The [current live connection-recovery record](verification/2026-10-17-live-connection-recovery.json) closes C12 as Live on the named Jellyfin12.2.0/runtime.4 catalog TCP connections to the real server are deliberately disconnected, producing ECONNRESET; bounded retries and explicit Retry retain the account/protected bytes and music, then load actual albums after transport restoration. A per-request invalid token receives a real401 and opens sign-in with saved server/username and an empty password. Original saved credentials remain valid and unchanged. This is controlled fault injection against a live server, not a whole-network outage or actual credential revocation. No application change, server mutation or provider call occurs. Inventory:187 rows,185 active,2 Deferred;20 Review,1 Dated,0 Recorded,132 Controlled,21 Live,11 External.32 active checks remain.
+
+Native desktop partial evidence, 17 October 2026: [the desktop-control record](verification/2026-10-17-native-desktop-partial.json) preserves actual macOS minimize and restore observations. Titlebar drag attempts did not move the window; DOM drag regions alone do not prove OS dragging. A computer-control call stalled before a desktop-context capture, while the bounded app fixture exited normally. V10/V12 remain Review. No row changes and no deferred size or zoom checks. The current inventory above is reconciled with all 187 row dispositions.
