@@ -1,0 +1,2965 @@
+{
+  "date": "2026-10-17",
+  "classification": "controlled native Electron with CUA-delivered input and read-only Playwright telemetry",
+  "baseCommit": "56236c2c2f8f0de64555c5ee0f895ae4bc7de0c4",
+  "scope": "Advertised Command-Left/Right after button interaction and configuration tabs; native control/overlay exclusions; paused/playing intent. Actual app renderer/preload/main/storage with isolated dummy connection and local silent WAV catalog. This is not live Jellyfin, audible quality, VoiceOver, physical media-key or listener-session evidence.",
+  "fixture": "Reuses catalog-retry-focus main bundler: protected disposable connection, restored A/B/A/C queue at occurrence2 and position12, safeStorage, null shared keychain adapter, blocked external/writing fetches, stopped automatic scheduler. Production renderer/preload untouched. Native input through exact owned Electron.app; observer reads state and captures delivered keys/defaultPrevented/focus.",
+  "before": [
+    {
+      "name": "command-right-after-play-unhandled",
+      "keyboard": [
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        }
+      ],
+      "player": {
+        "text": "Song 00002\nArtist 001\n0:15\n\u22129:44\nDJ\nOff",
+        "controls": [
+          {
+            "name": "Shuffle",
+            "value": ""
+          },
+          {
+            "name": "Previous track",
+            "value": ""
+          },
+          {
+            "name": "Pause",
+            "value": ""
+          },
+          {
+            "name": "Next track",
+            "value": ""
+          },
+          {
+            "name": "Repeat: off",
+            "value": ""
+          },
+          {
+            "name": "Playback position",
+            "value": "16"
+          },
+          {
+            "name": "DJ: Off. Open DJ controls",
+            "value": ""
+          },
+          {
+            "name": "Close DJ controls",
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": "Mute",
+            "value": ""
+          },
+          {
+            "name": "Volume",
+            "value": "0.42"
+          },
+          {
+            "name": "Show queue, 4 tracks",
+            "value": ""
+          }
+        ],
+        "focus": "<button class=\"player-play\" title=\"Pause (Space)\" aria-label=\"Pause\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"21\" height=\"21\" viewBox=\"0 0 24 24\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-pause\"><rect x=\"14\" y=\"4\" width=\"4\" height=\"16\" rx=\"1\"></rect><rect x=\""
+      },
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 15.689988,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "tabs": []
+    },
+    {
+      "name": "command-right-changes-tab",
+      "keyboard": [
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        }
+      ],
+      "player": {
+        "text": "Song 00002\nArtist 001\n0:34\n\u22129:25\nDJ\nOff",
+        "controls": [
+          {
+            "name": "Shuffle",
+            "value": ""
+          },
+          {
+            "name": "Previous track",
+            "value": ""
+          },
+          {
+            "name": "Play",
+            "value": ""
+          },
+          {
+            "name": "Next track",
+            "value": ""
+          },
+          {
+            "name": "Repeat: off",
+            "value": ""
+          },
+          {
+            "name": "Playback position",
+            "value": "34.1"
+          },
+          {
+            "name": "DJ: Off. Open DJ controls",
+            "value": ""
+          },
+          {
+            "name": "Close DJ controls",
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": "Mute",
+            "value": ""
+          },
+          {
+            "name": "Volume",
+            "value": "0.42"
+          },
+          {
+            "name": "Show queue, 4 tracks",
+            "value": ""
+          }
+        ],
+        "focus": "<button type=\"button\" role=\"tab\" id=\"room-tab-settings\" aria-controls=\"room-panel-settings\" aria-selected=\"true\" tabindex=\"0\">Settings</button>"
+      },
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 34.064109,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "tabs": [
+        {
+          "name": "News bucket",
+          "selected": "false"
+        },
+        {
+          "name": "Settings",
+          "selected": "true"
+        },
+        {
+          "name": "Saved audio",
+          "selected": "false"
+        }
+      ]
+    }
+  ],
+  "cases": [
+    {
+      "name": "after-command-right-playing",
+      "result": "pass",
+      "keyboard": [
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        }
+      ],
+      "player": {
+        "text": "Song 00004\nArtist 001\n0:05\n\u22129:54\nDJ\nOff",
+        "controls": [
+          {
+            "name": "Shuffle",
+            "value": ""
+          },
+          {
+            "name": "Previous track",
+            "value": ""
+          },
+          {
+            "name": "Pause",
+            "value": ""
+          },
+          {
+            "name": "Next track",
+            "value": ""
+          },
+          {
+            "name": "Repeat: off",
+            "value": ""
+          },
+          {
+            "name": "Playback position",
+            "value": "5.6"
+          },
+          {
+            "name": "DJ: Off. Open DJ controls",
+            "value": ""
+          },
+          {
+            "name": "Close DJ controls",
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": "Mute",
+            "value": ""
+          },
+          {
+            "name": "Volume",
+            "value": "0.42"
+          },
+          {
+            "name": "Show queue, 4 tracks",
+            "value": ""
+          }
+        ],
+        "focus": "<button class=\"player-play\" title=\"Pause (Space)\" aria-label=\"Pause\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"21\" height=\"21\" viewBox=\"0 0 24 24\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-pause\"><rect x=\"14\" y=\"4\" width=\"4\" height=\"16\" rx=\"1\"></rect><rect x=\""
+      },
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 3,
+        "position": 4.753635,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "tabs": [],
+      "viewport": {
+        "x": 100,
+        "y": 110,
+        "width": 1280,
+        "height": 720
+      },
+      "zoom": 1,
+      "providerCalls": 0
+    },
+    {
+      "name": "after-previous-paused",
+      "result": "pass",
+      "keyboard": [
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        }
+      ],
+      "player": {
+        "text": "Song 00002\nArtist 001\n0:00\n\u221210:00\nDJ\nOff",
+        "controls": [
+          {
+            "name": "Shuffle",
+            "value": ""
+          },
+          {
+            "name": "Previous track",
+            "value": ""
+          },
+          {
+            "name": "Play",
+            "value": ""
+          },
+          {
+            "name": "Next track",
+            "value": ""
+          },
+          {
+            "name": "Repeat: off",
+            "value": ""
+          },
+          {
+            "name": "Playback position",
+            "value": "0"
+          },
+          {
+            "name": "DJ: Off. Open DJ controls",
+            "value": ""
+          },
+          {
+            "name": "Close DJ controls",
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": "Mute",
+            "value": ""
+          },
+          {
+            "name": "Volume",
+            "value": "0.42"
+          },
+          {
+            "name": "Show queue, 4 tracks",
+            "value": ""
+          }
+        ],
+        "focus": "<button class=\"player-play\" title=\"Play (Space)\" aria-label=\"Play\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"21\" height=\"21\" viewBox=\"0 0 24 24\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-play\"><polygon points=\"6 3 20 12 6 21 6 3\"></polygon></svg></button>"
+      },
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 0,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "tabs": [],
+      "viewport": {
+        "x": 100,
+        "y": 110,
+        "width": 1280,
+        "height": 720
+      },
+      "zoom": 1,
+      "providerCalls": 0
+    },
+    {
+      "name": "after-next-paused",
+      "result": "pass",
+      "keyboard": [
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        }
+      ],
+      "player": {
+        "text": "Song 00004\nArtist 001\n0:00\n\u221210:00\nDJ\nOff",
+        "controls": [
+          {
+            "name": "Shuffle",
+            "value": ""
+          },
+          {
+            "name": "Previous track",
+            "value": ""
+          },
+          {
+            "name": "Play",
+            "value": ""
+          },
+          {
+            "name": "Next track",
+            "value": ""
+          },
+          {
+            "name": "Repeat: off",
+            "value": ""
+          },
+          {
+            "name": "Playback position",
+            "value": "0"
+          },
+          {
+            "name": "DJ: Off. Open DJ controls",
+            "value": ""
+          },
+          {
+            "name": "Close DJ controls",
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": "Mute",
+            "value": ""
+          },
+          {
+            "name": "Volume",
+            "value": "0.42"
+          },
+          {
+            "name": "Show queue, 4 tracks",
+            "value": ""
+          }
+        ],
+        "focus": "<button class=\"player-play\" title=\"Play (Space)\" aria-label=\"Play\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"21\" height=\"21\" viewBox=\"0 0 24 24\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-play\"><polygon points=\"6 3 20 12 6 21 6 3\"></polygon></svg></button>"
+      },
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 3,
+        "position": 0,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "tabs": [],
+      "viewport": {
+        "x": 100,
+        "y": 110,
+        "width": 1280,
+        "height": 720
+      },
+      "zoom": 1,
+      "providerCalls": 0
+    },
+    {
+      "name": "after-native-space",
+      "result": "pass",
+      "keyboard": [
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        }
+      ],
+      "player": {
+        "text": "Song 00004\nArtist 001\n0:02\n\u22129:57\nDJ\nOff",
+        "controls": [
+          {
+            "name": "Shuffle",
+            "value": ""
+          },
+          {
+            "name": "Previous track",
+            "value": ""
+          },
+          {
+            "name": "Pause",
+            "value": ""
+          },
+          {
+            "name": "Next track",
+            "value": ""
+          },
+          {
+            "name": "Repeat: off",
+            "value": ""
+          },
+          {
+            "name": "Playback position",
+            "value": "2.5"
+          },
+          {
+            "name": "DJ: Off. Open DJ controls",
+            "value": ""
+          },
+          {
+            "name": "Close DJ controls",
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": "Mute",
+            "value": ""
+          },
+          {
+            "name": "Volume",
+            "value": "0.42"
+          },
+          {
+            "name": "Show queue, 4 tracks",
+            "value": ""
+          }
+        ],
+        "focus": "<button class=\"player-play\" title=\"Pause (Space)\" aria-label=\"Pause\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"21\" height=\"21\" viewBox=\"0 0 24 24\" fill=\"currentColor\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-pause\"><rect x=\"14\" y=\"4\" width=\"4\" height=\"16\" rx=\"1\"></rect><rect x=\""
+      },
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 3,
+        "position": 0,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "tabs": [],
+      "viewport": {
+        "x": 100,
+        "y": 110,
+        "width": 1280,
+        "height": 720
+      },
+      "zoom": 1,
+      "providerCalls": 0
+    },
+    {
+      "name": "after-tab-command-left",
+      "result": "pass",
+      "keyboard": [
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        }
+      ],
+      "player": {
+        "text": "Song 00002\nArtist 001\n0:00\n\u221210:00\nDJ\nOff",
+        "controls": [
+          {
+            "name": "Shuffle",
+            "value": ""
+          },
+          {
+            "name": "Previous track",
+            "value": ""
+          },
+          {
+            "name": "Play",
+            "value": ""
+          },
+          {
+            "name": "Next track",
+            "value": ""
+          },
+          {
+            "name": "Repeat: off",
+            "value": ""
+          },
+          {
+            "name": "Playback position",
+            "value": "0"
+          },
+          {
+            "name": "DJ: Off. Open DJ controls",
+            "value": ""
+          },
+          {
+            "name": "Close DJ controls",
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": "Mute",
+            "value": ""
+          },
+          {
+            "name": "Volume",
+            "value": "0.42"
+          },
+          {
+            "name": "Show queue, 4 tracks",
+            "value": ""
+          }
+        ],
+        "focus": "<button type=\"button\" role=\"tab\" id=\"room-tab-bucket\" aria-controls=\"room-panel-bucket\" aria-selected=\"true\" tabindex=\"0\">News bucket</button>"
+      },
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 0,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "tabs": [
+        {
+          "name": "News bucket",
+          "selected": "true"
+        },
+        {
+          "name": "Settings",
+          "selected": "false"
+        },
+        {
+          "name": "Saved audio",
+          "selected": "false"
+        }
+      ],
+      "viewport": {
+        "x": 100,
+        "y": 110,
+        "width": 1280,
+        "height": 720
+      },
+      "zoom": 1,
+      "providerCalls": 0
+    },
+    {
+      "name": "after-tab-plain-right",
+      "result": "pass",
+      "keyboard": [
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        }
+      ],
+      "player": {
+        "text": "Song 00002\nArtist 001\n0:00\n\u221210:00\nDJ\nOff",
+        "controls": [
+          {
+            "name": "Shuffle",
+            "value": ""
+          },
+          {
+            "name": "Previous track",
+            "value": ""
+          },
+          {
+            "name": "Play",
+            "value": ""
+          },
+          {
+            "name": "Next track",
+            "value": ""
+          },
+          {
+            "name": "Repeat: off",
+            "value": ""
+          },
+          {
+            "name": "Playback position",
+            "value": "0"
+          },
+          {
+            "name": "DJ: Off. Open DJ controls",
+            "value": ""
+          },
+          {
+            "name": "Close DJ controls",
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": "Mute",
+            "value": ""
+          },
+          {
+            "name": "Volume",
+            "value": "0.42"
+          },
+          {
+            "name": "Show queue, 4 tracks",
+            "value": ""
+          }
+        ],
+        "focus": "<button type=\"button\" role=\"tab\" id=\"room-tab-settings\" aria-controls=\"room-panel-settings\" aria-selected=\"true\" tabindex=\"0\">Settings</button>"
+      },
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 0,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "tabs": [
+        {
+          "name": "News bucket",
+          "selected": "false"
+        },
+        {
+          "name": "Settings",
+          "selected": "true"
+        },
+        {
+          "name": "Saved audio",
+          "selected": "false"
+        }
+      ],
+      "viewport": {
+        "x": 100,
+        "y": 110,
+        "width": 1280,
+        "height": 720
+      },
+      "zoom": 1,
+      "providerCalls": 0
+    },
+    {
+      "name": "after-tab-modifiers",
+      "result": "pass",
+      "keyboard": [
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowUp",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false,
+          "focus": null,
+          "tag": "BUTTON"
+        }
+      ],
+      "player": {
+        "text": "Song 00002\nArtist 001\n0:00\n\u221210:00\nDJ\nOff",
+        "controls": [
+          {
+            "name": "Shuffle",
+            "value": ""
+          },
+          {
+            "name": "Previous track",
+            "value": ""
+          },
+          {
+            "name": "Play",
+            "value": ""
+          },
+          {
+            "name": "Next track",
+            "value": ""
+          },
+          {
+            "name": "Repeat: off",
+            "value": ""
+          },
+          {
+            "name": "Playback position",
+            "value": "0"
+          },
+          {
+            "name": "DJ: Off. Open DJ controls",
+            "value": ""
+          },
+          {
+            "name": "Close DJ controls",
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": "Mute",
+            "value": ""
+          },
+          {
+            "name": "Volume",
+            "value": "0.42"
+          },
+          {
+            "name": "Show queue, 4 tracks",
+            "value": ""
+          }
+        ],
+        "focus": "<button type=\"button\" role=\"tab\" id=\"room-tab-settings\" aria-controls=\"room-panel-settings\" aria-selected=\"true\" tabindex=\"0\">Settings</button>"
+      },
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 0,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "tabs": [
+        {
+          "name": "News bucket",
+          "selected": "false"
+        },
+        {
+          "name": "Settings",
+          "selected": "true"
+        },
+        {
+          "name": "Saved audio",
+          "selected": "false"
+        }
+      ],
+      "viewport": {
+        "x": 100,
+        "y": 110,
+        "width": 1280,
+        "height": 720
+      },
+      "zoom": 1,
+      "providerCalls": 0
+    },
+    {
+      "name": "after-input-command-left",
+      "result": "pass",
+      "keyboard": [
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowUp",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "f",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Search songs, artists and albums",
+          "tag": "INPUT"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Search songs, artists and albums",
+          "tag": "INPUT"
+        }
+      ],
+      "player": {
+        "text": "Song 00002\nArtist 001\n0:00\n\u221210:00\nDJ\nOff",
+        "controls": [
+          {
+            "name": "Shuffle",
+            "value": ""
+          },
+          {
+            "name": "Previous track",
+            "value": ""
+          },
+          {
+            "name": "Play",
+            "value": ""
+          },
+          {
+            "name": "Next track",
+            "value": ""
+          },
+          {
+            "name": "Repeat: off",
+            "value": ""
+          },
+          {
+            "name": "Playback position",
+            "value": "0"
+          },
+          {
+            "name": "DJ: Off. Open DJ controls",
+            "value": ""
+          },
+          {
+            "name": "Close DJ controls",
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": "Mute",
+            "value": ""
+          },
+          {
+            "name": "Volume",
+            "value": "0.42"
+          },
+          {
+            "name": "Show queue, 4 tracks",
+            "value": ""
+          }
+        ],
+        "focus": "<input aria-label=\"Search songs, artists and albums\" placeholder=\"Search your library\" value=\"\">"
+      },
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 0,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "tabs": [],
+      "viewport": {
+        "x": 100,
+        "y": 110,
+        "width": 1280,
+        "height": 720
+      },
+      "zoom": 1,
+      "providerCalls": 0
+    },
+    {
+      "name": "after-volume-command-right",
+      "result": "pass",
+      "keyboard": [
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowUp",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "f",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Search songs, artists and albums",
+          "tag": "INPUT"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Search songs, artists and albums",
+          "tag": "INPUT"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Volume",
+          "tag": "INPUT"
+        }
+      ],
+      "player": {
+        "text": "Song 00002\nArtist 001\n0:00\n\u221210:00\nDJ\nOff",
+        "controls": [
+          {
+            "name": "Shuffle",
+            "value": ""
+          },
+          {
+            "name": "Previous track",
+            "value": ""
+          },
+          {
+            "name": "Play",
+            "value": ""
+          },
+          {
+            "name": "Next track",
+            "value": ""
+          },
+          {
+            "name": "Repeat: off",
+            "value": ""
+          },
+          {
+            "name": "Playback position",
+            "value": "0"
+          },
+          {
+            "name": "DJ: Off. Open DJ controls",
+            "value": ""
+          },
+          {
+            "name": "Close DJ controls",
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": "Mute",
+            "value": ""
+          },
+          {
+            "name": "Volume",
+            "value": "0.51"
+          },
+          {
+            "name": "Show queue, 4 tracks",
+            "value": ""
+          }
+        ],
+        "focus": "<input class=\"player-volume\" min=\"0\" max=\"1\" step=\"0.01\" aria-label=\"Volume\" aria-valuetext=\"51 percent\" type=\"range\" value=\"0.51\" style=\"--range-fill: 51%;\">"
+      },
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 0,
+        "volume": 0.51,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "tabs": [],
+      "viewport": {
+        "x": 100,
+        "y": 110,
+        "width": 1280,
+        "height": 720
+      },
+      "zoom": 1,
+      "providerCalls": 0
+    },
+    {
+      "name": "after-popover-command-right",
+      "result": "pass",
+      "keyboard": [
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowUp",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "f",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Search songs, artists and albums",
+          "tag": "INPUT"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Search songs, artists and albums",
+          "tag": "INPUT"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Volume",
+          "tag": "INPUT"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Close DJ controls",
+          "tag": "BUTTON"
+        }
+      ],
+      "player": {
+        "text": "Song 00002\nArtist 001\n0:00\n\u221210:00\nDJ\nOff\nDJ breaks\nOff\nDJ schedule\n\nCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.\n\nEnable DJ\nAutomatic news preparation\n\nChoose a news profile below to see its preparation status.\n\nOpen News bucket\nQuick configuration\nNews profile\nChoose a news profile\nMy room\n\nChoose a news profile above for DJ breaks.\n\nDJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.\n\nUpcoming news\n\nEnable DJ to start your schedule.\n\nLast heard this session\n\nNo news has played in this session.\n\nNews bucket\nDJ settings",
+        "controls": [
+          {
+            "name": "Shuffle",
+            "value": ""
+          },
+          {
+            "name": "Previous track",
+            "value": ""
+          },
+          {
+            "name": "Play",
+            "value": ""
+          },
+          {
+            "name": "Next track",
+            "value": ""
+          },
+          {
+            "name": "Repeat: off",
+            "value": ""
+          },
+          {
+            "name": "Playback position",
+            "value": "0"
+          },
+          {
+            "name": "DJ: Off. Open DJ controls",
+            "value": ""
+          },
+          {
+            "name": "Close DJ controls",
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": "Mute",
+            "value": ""
+          },
+          {
+            "name": "Volume",
+            "value": "0.51"
+          },
+          {
+            "name": "Show queue, 4 tracks",
+            "value": ""
+          }
+        ],
+        "focus": "<button class=\"icon-button\" popovertarget=\"_r_3_\" popovertargetaction=\"hide\" aria-label=\"Close DJ controls\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-x\"><path d=\"M18 6 6 18\"></path><path d=\""
+      },
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 0,
+        "volume": 0.51,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "tabs": [],
+      "viewport": {
+        "x": 100,
+        "y": 110,
+        "width": 1280,
+        "height": 720
+      },
+      "zoom": 1,
+      "providerCalls": 0
+    },
+    {
+      "name": "after-dialog-command-right",
+      "result": "pass",
+      "keyboard": [
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowUp",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "f",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Search songs, artists and albums",
+          "tag": "INPUT"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Search songs, artists and albums",
+          "tag": "INPUT"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Volume",
+          "tag": "INPUT"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Close DJ controls",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "Escape",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "DJ: Off. Open DJ controls",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false,
+          "focus": "Close dialog",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Close dialog",
+          "tag": "BUTTON"
+        }
+      ],
+      "player": {
+        "text": "Song 00002\nArtist 001\n0:00\n\u221210:00\nDJ\nOff",
+        "controls": [
+          {
+            "name": "Shuffle",
+            "value": ""
+          },
+          {
+            "name": "Previous track",
+            "value": ""
+          },
+          {
+            "name": "Play",
+            "value": ""
+          },
+          {
+            "name": "Next track",
+            "value": ""
+          },
+          {
+            "name": "Repeat: off",
+            "value": ""
+          },
+          {
+            "name": "Playback position",
+            "value": "0"
+          },
+          {
+            "name": "DJ: Off. Open DJ controls",
+            "value": ""
+          },
+          {
+            "name": "Close DJ controls",
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": "Mute",
+            "value": ""
+          },
+          {
+            "name": "Volume",
+            "value": "0.51"
+          },
+          {
+            "name": "Show queue, 4 tracks",
+            "value": ""
+          }
+        ],
+        "focus": "<button class=\"icon-button\" aria-label=\"Close dialog\"><svg xmlns=\"http://www.w3.org/2000/svg\" width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" class=\"lucide lucide-x\"><path d=\"M18 6 6 18\"></path><path d=\"m6 6 12 12\"></path></svg></button>"
+      },
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 0,
+        "volume": 0.51,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "tabs": [],
+      "viewport": {
+        "x": 100,
+        "y": 110,
+        "width": 1280,
+        "height": 720
+      },
+      "zoom": 1,
+      "providerCalls": 0
+    },
+    {
+      "name": "after-page-space",
+      "result": "pass",
+      "keyboard": [
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowUp",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "f",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Search songs, artists and albums",
+          "tag": "INPUT"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Search songs, artists and albums",
+          "tag": "INPUT"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Volume",
+          "tag": "INPUT"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Close DJ controls",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "Escape",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "DJ: Off. Open DJ controls",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false,
+          "focus": "Close dialog",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Close dialog",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "Escape",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "H1"
+        }
+      ],
+      "player": {
+        "text": "Song 00002\nArtist 001\n0:03\n\u22129:56\nDJ\nOff",
+        "controls": [
+          {
+            "name": "Shuffle",
+            "value": ""
+          },
+          {
+            "name": "Previous track",
+            "value": ""
+          },
+          {
+            "name": "Pause",
+            "value": ""
+          },
+          {
+            "name": "Next track",
+            "value": ""
+          },
+          {
+            "name": "Repeat: off",
+            "value": ""
+          },
+          {
+            "name": "Playback position",
+            "value": "3.1"
+          },
+          {
+            "name": "DJ: Off. Open DJ controls",
+            "value": ""
+          },
+          {
+            "name": "Close DJ controls",
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": "Mute",
+            "value": ""
+          },
+          {
+            "name": "Volume",
+            "value": "0.51"
+          },
+          {
+            "name": "Show queue, 4 tracks",
+            "value": ""
+          }
+        ],
+        "focus": "<h1 tabindex=\"-1\">Playlists</h1>"
+      },
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 0,
+        "volume": 0.51,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "tabs": [],
+      "viewport": {
+        "x": 100,
+        "y": 110,
+        "width": 1280,
+        "height": 720
+      },
+      "zoom": 1,
+      "providerCalls": 0
+    },
+    {
+      "name": "after-page-volume",
+      "result": "pass",
+      "keyboard": [
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Pause",
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Play",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowUp",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": "f",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": "Search songs, artists and albums",
+          "tag": "INPUT"
+        },
+        {
+          "key": "ArrowLeft",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Search songs, artists and albums",
+          "tag": "INPUT"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Volume",
+          "tag": "INPUT"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Close DJ controls",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "Escape",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "DJ: Off. Open DJ controls",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false,
+          "focus": "Close dialog",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "ArrowRight",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": "Close dialog",
+          "tag": "BUTTON"
+        },
+        {
+          "key": "Escape",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false,
+          "focus": null,
+          "tag": "BUTTON"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "H1"
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "H1"
+        },
+        {
+          "key": "ArrowUp",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": true,
+          "focus": null,
+          "tag": "H1"
+        }
+      ],
+      "player": {
+        "text": "Song 00002\nArtist 001\n0:06\n\u22129:53\nDJ\nOff",
+        "controls": [
+          {
+            "name": "Shuffle",
+            "value": ""
+          },
+          {
+            "name": "Previous track",
+            "value": ""
+          },
+          {
+            "name": "Play",
+            "value": ""
+          },
+          {
+            "name": "Next track",
+            "value": ""
+          },
+          {
+            "name": "Repeat: off",
+            "value": ""
+          },
+          {
+            "name": "Playback position",
+            "value": "6.2"
+          },
+          {
+            "name": "DJ: Off. Open DJ controls",
+            "value": ""
+          },
+          {
+            "name": "Close DJ controls",
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": null,
+            "value": ""
+          },
+          {
+            "name": "Mute",
+            "value": ""
+          },
+          {
+            "name": "Volume",
+            "value": "0.56"
+          },
+          {
+            "name": "Show queue, 4 tracks",
+            "value": ""
+          }
+        ],
+        "focus": "<h1 tabindex=\"-1\">Playlists</h1>"
+      },
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 6.208479,
+        "volume": 0.56,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "tabs": [],
+      "viewport": {
+        "x": 100,
+        "y": 110,
+        "width": 1280,
+        "height": 720
+      },
+      "zoom": 1,
+      "providerCalls": 0
+    }
+  ],
+  "caseCount": 13,
+  "notes": [
+    "Previous initially restarts the current song when position exceeds its existing restart threshold; the next Command-Left selects the previous occurrence. Both are paused after explicit Pause.",
+    "Clicking the volume slider sets its native pointer value to0.51; Command-Right does not advance queue. Page Command-Up later sets0.56. This is not a claim that Command-Right is prevented by native slider.",
+    "Input guard check records unhandled Command-Left and unchanged paused queue. No claim about caret-position accuracy.",
+    "Native Space on focused Play has defaultPrevented=false and activates the button once; page-heading Space has defaultPrevented=true and invokes toggle.",
+    "No active DJ speech is synthesized in this fixture. Existing transport/toggle implementations are unchanged; their broader speech acceptance retains separate evidence."
+  ],
+  "decision": {
+    "proposals": "Steve and Elena independently support separate Space/transport guards; one challenge round completed.",
+    "reservation": "Elena objected to widening unadvertised Command-Up/Down onto ordinary buttons/tabs. Morgan retains the original non-interactive volume scope. Steve accepts with consistency/discoverability reservation.",
+    "review": "Elena reviewed actual app diff with no actionable issue; no independent checks claimed."
+  },
+  "checks": {
+    "productionBuildIncludingTypeScript": "pass",
+    "fullESLint": "pass",
+    "rendererErrors": [],
+    "providerCalls": 0,
+    "unitTests": "not run per preference",
+    "deferredViewportsZoom": "not run",
+    "remoteCI": "not configured; not a passing CI claim"
+  },
+  "sourceHashes": {
+    "src/renderer/player.tsx": "1a958a21936d3079f4a4d9c8e6987d47ffed8cf11cf6feee8cf4a4a7f2646f19",
+    "src/renderer/components/ConfigurationTabs/ConfigurationTabs.component.tsx": "20df1037126e5f9596bf917f3d5fbc455f41f236626bdbd9176fdc3ba4242a9f",
+    "REQUIREMENTS.md": "1225f234fc2489578c34fe5aa84c996a5a576336e4c9bf8a7b72c36a505e5f73",
+    "docs/RADIO_EXPERIENCE.md": "471f3939d691d0599416c1baa4b05471bc045cf0c9001e34af11092d831fbb44"
+  },
+  "fixtureHashes": {
+    "bootstrap.mjs": "874a57e3024a00d59ebf679827813e4ce7dc68a06b452935b0e18592293c48af",
+    "build.mjs": "fe9bdb7cb95c1ea1a66facb5af014ad107f21af5920bcfb5eab0cb09f6fa25c4",
+    "server.mjs": "4cc7093d1ce19137aeec35a0715ecc91a8a5041b225dc95cd5c48ece7e236567",
+    "native.cjs": "01c17ae71ba0fc9a4dea6c56cddd6a6964d61fb91046d6414ab9de0da50efa45"
+  },
+  "disposition": "Partial Q06/M2 evidence. No inventory row promotion;28 active checks remain."
+}

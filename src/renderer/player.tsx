@@ -642,14 +642,15 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   useEffect(() => {
     const handleKey = (event: KeyboardEvent) => {
       const target = event.target;
-      if (event.defaultPrevented || event.repeat || event.altKey || event.ctrlKey || document.querySelector('dialog[open]')
-        || (target instanceof Element && target.closest('input, textarea, select, button, a, summary, [role="button"], [role="checkbox"], [role="combobox"], [role="menu"], [role="menuitem"], [role="slider"], [contenteditable]:not([contenteditable="false"])'))) return;
-      if (event.code === 'Space' && !event.metaKey && !event.shiftKey && live.current.current) { event.preventDefault(); toggle(); }
-      else if (event.metaKey && !event.shiftKey) {
+      if (event.defaultPrevented || event.repeat || event.altKey || event.ctrlKey || event.shiftKey || document.querySelector('dialog[open], :popover-open')
+        || (target instanceof Element && target.closest('input, textarea, select, [role="checkbox"], [role="combobox"], [role="menu"], [role="menuitem"], [role="slider"], [contenteditable]:not([contenteditable="false"])'))) return;
+      const interactive = target instanceof Element && target.closest('button, a, summary, [role="button"], [role="tab"]');
+      if (event.code === 'Space' && !event.metaKey && !interactive && live.current.current) { event.preventDefault(); toggle(); }
+      else if (event.metaKey) {
         if (event.key === 'ArrowLeft' && live.current.current) { event.preventDefault(); previous(); }
         else if (event.key === 'ArrowRight' && live.current.current) { event.preventDefault(); skipNext(); }
-        else if (event.key === 'ArrowUp') { event.preventDefault(); setVolume(value => Math.min(1, value + 0.05)); }
-        else if (event.key === 'ArrowDown') { event.preventDefault(); setVolume(value => Math.max(0, value - 0.05)); }
+        else if (event.key === 'ArrowUp' && !interactive) { event.preventDefault(); setVolume(value => Math.min(1, value + 0.05)); }
+        else if (event.key === 'ArrowDown' && !interactive) { event.preventDefault(); setVolume(value => Math.max(0, value - 0.05)); }
       }
     };
     window.addEventListener('keydown', handleKey);
