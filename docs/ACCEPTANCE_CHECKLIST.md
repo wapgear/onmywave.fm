@@ -503,3 +503,6 @@ Q02/Q03/R9 regression evidence, 17 October 2026: [credential read ordering](veri
 
 
 Q08/R9/A14 partial evidence, 17 October 2026: [provider edit navigation](verification/2026-10-17-provider-edit-navigation.json). Fourteen controlled native snapshots verify retained masked drafts, pending state and late failures across music/Settings navigation, independent providers, removal and explicit retry, account-boundary draft clearing with an active device-wide write, shared success and suppressed old-session error, music startup without provider-status reads, and the conditional sign-out notice. Production build/TypeScript/full ESLint and paired review pass. This is not VoiceOver, live-provider or observed listener evidence. All 187 row dispositions and 28 remaining active checks stay unchanged.
+
+
+V12 partial evidence, 17 October 2026: [implemented desktop image](verification/2026-10-17-implemented-desktop.jpg) and [capture record](verification/2026-10-17-implemented-desktop.json) show current production UI on actual wallpaper under the macOS menu bar. Direct capture framing excludes unrelated desktop file icons; no generated/composited pixels are used. The Dock remains hidden, so V12 remains Review. Normal native chrome and physical display-scale checks remain V10/V11. No row dispositions change; 28 active checks remain.
