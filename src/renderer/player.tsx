@@ -28,6 +28,7 @@ type PlayerState = {
   scheduleNews(news: NewsBreak, duckVolume: number): Promise<void>; stopNews(): void;
 };
 const PlayerContext = createContext<PlayerState | null>(null);
+const trackLoadError = 'This track could not be played. Check your connection, then retry or skip.';
 export function usePlayer() {
   const value = useContext(PlayerContext);
   if (!value) throw new Error('Player requires PlayerProvider');
@@ -196,7 +197,8 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       if (cause instanceof DOMException && cause.name === 'AbortError') return;
       requestPlayback(false);
       setPlaying(false);
-      setError(cause instanceof Error ? cause.message : 'Playback could not start. Retry or skip this track.');
+      setError(cause instanceof DOMException && cause.name === 'NotSupportedError' ? trackLoadError
+        : cause instanceof Error ? cause.message : 'Playback could not start. Retry or skip this track.');
     }
   }, [requestPlayback]);
 
@@ -397,7 +399,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         requestPlayback(false);
         setBusy(false);
         setPlaying(false);
-        setError('This track could not be played. Check your connection, then retry or skip.');
+        setError(trackLoadError);
       }
     };
     return () => {
