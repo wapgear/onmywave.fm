@@ -1,0 +1,690 @@
+{
+  "date": "2026-10-17",
+  "baseCommit": "8c929f10089bb43d5215cf7acb73396a0873cc39",
+  "scope": "Q15 current native provider-status ownership after editor refactor: all three providers reject obsolete reads before successful save and begun during successful removal; OpenAI failed-confirmation path cancels old read and publishes a fresh status while retaining editable draft/error.",
+  "classification": "controlled native CUA and actual IPC/local safeStorage with substituted shared-key adapter; no live provider",
+  "environment": {
+    "macOS": "27.2",
+    "arch": "arm64",
+    "electron": "43.7.0",
+    "contentSize": [
+      1280,
+      720
+    ],
+    "zoom": 1
+  },
+  "appSourceChanged": false,
+  "method": [
+    "Disposable local catalog and protected app data. Only dummy key input is supplied through actual native secure fields. Never read personal credentials.",
+    "Actual production renderer/preload and bundled main/service/storage. The shared-key adapter returns null/no-op. All nonlocal provider requests and server writes are blocked; scheduler is stopped. Initial ready-to-show is suppressed only in the fixture, then the owned window is shown at the accepted baseline.",
+    "A snapshotHold gate executes a real status read after sender/input guards, then holds its old result. Native explicit Save commits each of three provider keys. Release original empty statuses only after all three Key saved states; none regresses.",
+    "Native explicit Remove starts all three held setters. General/Provider keys navigation mounts actual reads while removal remains pending; those reads retain old configured results. Release only setters, verify all No key configured states, then release obsolete configured reads and verify they cannot restore Remove actions.",
+    "For OpenAI, hold a save and start an old empty read during it. Release setter through a controlled commitFail gate: actual local save commits before modeled lost confirmation. The failure callback cancels the old query and reads current saved status, with entered draft/error/editability retained. Releasing the old result cannot replace the fresh status.",
+    "Native CUA supplies all Settings navigation, secure-field typing and Save/Remove. Playwright is launch/read-only observation; command files change only named fixture timing/fault gates. No key text, keypress stream, protected files or input lengths are included in this committed record."
+  ],
+  "cases": [
+    {
+      "name": "save-before-old-reads-release",
+      "snapshotSha256": "a54f672fc27284cdfa385506faea21b0e70fbd2ede55746292f4b841aa8a7172",
+      "statuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "held": [
+        "getAiStatus",
+        "getElevenLabsStatus",
+        "getTwitterStatus"
+      ],
+      "operationCounts": {
+        "getAiStatus": 1,
+        "getElevenLabsStatus": 1,
+        "getTwitterStatus": 1,
+        "setOpenAiKey": 1,
+        "setElevenLabsKey": 1,
+        "setTwitterKey": 1
+      },
+      "formSubmits": 0
+    },
+    {
+      "name": "save-after-old-reads-release",
+      "snapshotSha256": "463e4a818a3063cae4ec8cec7a8396e92da54dee85205df11331d4c2e3730f21",
+      "statuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "held": [],
+      "operationCounts": {
+        "getAiStatus": 1,
+        "getElevenLabsStatus": 1,
+        "getTwitterStatus": 1,
+        "setOpenAiKey": 1,
+        "setElevenLabsKey": 1,
+        "setTwitterKey": 1
+      },
+      "formSubmits": 0
+    },
+    {
+      "name": "remove-with-reads-during-write",
+      "snapshotSha256": "80f86956a3503473d41bbcdbe9664c3f05580f87154f80b0e6c8b897a1c1c82d",
+      "statuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "Checking key\u2026",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": false,
+          "buttons": [
+            {
+              "name": "Saving\u2026",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "Checking key\u2026",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": false,
+          "buttons": [
+            {
+              "name": "Saving\u2026",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "Checking key\u2026",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": false,
+          "buttons": [
+            {
+              "name": "Saving\u2026",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "held": [
+        "setOpenAiKey",
+        "setElevenLabsKey",
+        "setTwitterKey",
+        "getAiStatus",
+        "getElevenLabsStatus",
+        "getTwitterStatus"
+      ],
+      "operationCounts": {
+        "getAiStatus": 2,
+        "getElevenLabsStatus": 2,
+        "getTwitterStatus": 2,
+        "setOpenAiKey": 2,
+        "setElevenLabsKey": 2,
+        "setTwitterKey": 2
+      },
+      "formSubmits": 0
+    },
+    {
+      "name": "remove-before-old-reads-release",
+      "snapshotSha256": "c285c2718f5d884aaa9bae21beabd307458d199d0f9022e6d3ee1be676434749",
+      "statuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "held": [
+        "getAiStatus",
+        "getElevenLabsStatus",
+        "getTwitterStatus"
+      ],
+      "operationCounts": {
+        "getAiStatus": 2,
+        "getElevenLabsStatus": 2,
+        "getTwitterStatus": 2,
+        "setOpenAiKey": 2,
+        "setElevenLabsKey": 2,
+        "setTwitterKey": 2
+      },
+      "formSubmits": 0
+    },
+    {
+      "name": "remove-after-old-reads-release",
+      "snapshotSha256": "1526f2288ebf6b74114372aa60462ff95de4b3ec5c3e47055944b13d631d03bc",
+      "statuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "held": [],
+      "operationCounts": {
+        "getAiStatus": 2,
+        "getElevenLabsStatus": 2,
+        "getTwitterStatus": 2,
+        "setOpenAiKey": 2,
+        "setElevenLabsKey": 2,
+        "setTwitterKey": 2
+      },
+      "formSubmits": 0
+    },
+    {
+      "name": "failed-save-old-read-held",
+      "snapshotSha256": "88f5b8fd7786263a2e2f46a3b9969ce55cd7922da13d0813d237fd639c7bac37",
+      "statuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "Checking key\u2026",
+          "hasRemove": false,
+          "inputEmpty": false,
+          "inputEnabled": false,
+          "buttons": [
+            {
+              "name": "Saving\u2026",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "held": [
+        "setOpenAiKey",
+        "getAiStatus"
+      ],
+      "operationCounts": {
+        "getAiStatus": 3,
+        "getElevenLabsStatus": 3,
+        "getTwitterStatus": 3,
+        "setOpenAiKey": 3,
+        "setElevenLabsKey": 2,
+        "setTwitterKey": 2
+      },
+      "formSubmits": 0
+    },
+    {
+      "name": "failed-save-fresh-status",
+      "snapshotSha256": "ffdf83a88305a43f672fa9625f78dd9577700b9e91f3b70ffb92516e57f3d854",
+      "statuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": false,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": false
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [
+        {
+          "error": "setOpenAiKey confirmation unavailable.",
+          "button": null
+        }
+      ],
+      "held": [
+        "getAiStatus"
+      ],
+      "operationCounts": {
+        "getAiStatus": 4,
+        "getElevenLabsStatus": 3,
+        "getTwitterStatus": 3,
+        "setOpenAiKey": 3,
+        "setElevenLabsKey": 2,
+        "setTwitterKey": 2
+      },
+      "formSubmits": 0
+    },
+    {
+      "name": "failed-save-after-old-release",
+      "snapshotSha256": "1cf8ae4008682c2c8b9e042464abb72b87cb3c895b5703da8ea331989ee1d727",
+      "statuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": false,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": false
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [
+        {
+          "error": "setOpenAiKey confirmation unavailable.",
+          "button": null
+        }
+      ],
+      "held": [],
+      "operationCounts": {
+        "getAiStatus": 4,
+        "getElevenLabsStatus": 3,
+        "getTwitterStatus": 3,
+        "setOpenAiKey": 3,
+        "setElevenLabsKey": 2,
+        "setTwitterKey": 2
+      },
+      "formSubmits": 0
+    }
+  ],
+  "checks": {
+    "nativeSnapshots": 8,
+    "allProvidersSaveAndRemovalOrdering": true,
+    "freshFailedConfirmationRead": true,
+    "rendererErrors": [],
+    "providerRequests": 0,
+    "serverWrites": 0,
+    "formSubmits": 0,
+    "observerExit": 0,
+    "ownedServerExit": 143,
+    "productionBuildTypeScriptEslint": "unchanged app bytes from PR79; its successful build/type/lint validation retained without repetition",
+    "unitTests": "not run",
+    "packageRelease": "not run",
+    "deferredChecks": "not run"
+  },
+  "sourceAndBundleSha256": {
+    "src/main/index.ts": "e4ab045607c0e17eed5cdf82594fdedad4c84430f9e3f5eaa72cb84e9bb465c4",
+    "src/main/storage.ts": "79819d117064ff2284949b031af80761e3996f9ad236a13075e9341833c89f14",
+    "src/main/keychain.ts": "3d2dd986b94ab4b7dd7b59d96c1e64a9d6f563db4a6c19d6ac781fbb7d3200b5",
+    "src/renderer/App.tsx": "3286d6259addd3cd1030b30c1c34ba1362440449d5bc8fab9023f0bdfa277532",
+    "src/renderer/components/ProviderKeys/ProviderKeyEdits.tsx": "99b9e06d6c62a90d36195ef7ae832444dd64c7cad8153db4fd66fd7feefe04d2",
+    "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx": "c9291d31f6f3f606c39f55c88b0e84346f7e0dbb39c3de0ddf4d78d1a3f3d91e",
+    "src/renderer/pages/DJs/components/NewsTest.component.tsx": "347302ea66d6bbf27cf7417b170476e5d67c78f476a0b5db0cffaffe5d233be9",
+    "src/renderer/pages/Settings/Settings.page.tsx": "8845debd083583827cafa76205dc0498a3cc5af04acb701aa2ae1277b1465441",
+    "out/renderer/index.html": "42a5d5001ecf1d1801762a01cc04f25dba4e2f31ba5e8abdcf45d3fd683ac548",
+    "out/renderer/assets/index-CUgwj8xN.css": "8dedf91bec8e203b47c5630cbd8925f4f357523a53a65c6a66ba92b9ba0f19c4",
+    "out/renderer/assets/index-BOme4564.js": "35fa19bc8ce7bc3855f50b83bd497ba4cb15d5dedb65a3be261ae41c3044dee3",
+    "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb"
+  },
+  "fixtureSha256": {
+    "bootstrap.mjs": "243a98a9ff529d5ba6f2b67a1c4a8e3826945a1c6ddce7fa4d56137f95e75079",
+    "build.mjs": "8fd381a0b5371cb9dfa5122b011af7e93850e8c0d3e7d0592ca6324a3661d9a7",
+    "observe.cjs": "35e72af021f190a5f9f3000e6edf7dd5e6e29b567c8235a49ef6271023b9a121",
+    "server.mjs": "6a5935e651826f581b15081360980d8ec12ac4bb18df669ce0b0074481ff7e74",
+    "out/main/index.js": "3c7a2da52cba5e7ecf3b95d9fe9e1713daec189a3c27951b6445d94d48f5d4c8"
+  },
+  "reportSha256": "3d4d8324a20eac987ab98fbed03477b49626d8176c0e0c811312a90f94b449bc",
+  "limits": [
+    "All-three-provider success/removal cases and one-provider post-write-failure reread, not every provider/error/timing permutation. Earlier provider-status-order record retains its separately bounded seventeen states; no old hashes are refreshed.",
+    "A snapshotHold gate delays already-produced IPC replies; commitFail models a confirmation failure after a real disposable local write. It is not a live provider/network failure or Keychain outage.",
+    "The underlying committed credential-read ordering uses the separate actual-storage credential-read-order record; the actual shared-Keychain adapter has separate Q03 evidence. No OS adapter proof is inferred from this substituted race fixture.",
+    "Retained NewsTest has no render caller; its shared owner/source receives inspection, not a new native journey. Native current editor checks do not establish VoiceOver, audible quality, observed usability or whole-goal completion.",
+    "Current source audit adds explicit rows for already-required behaviors; source-line indexing does not establish a requirement acceptance percentage or close Q13. Outside the dated90-record provenance audit."
+  ]
+}

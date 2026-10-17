@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 15 Review, 1 Dated, 0 Recorded, 135 Controlled, 23 Live, 11 External, 2 Deferred. 27 active checks remain. These are review dispositions, not an acceptance percentage. Of those 27 open rows, 14 require observed listener evidence and 13 have other proof requirements. The [listener protocol](LISTENER_ACCEPTANCE.md) maps every open U row to uncoached tasks and lists the other evidence needed. Preparing the protocol changes no row disposition.
+Current inventory: 191 rows, 189 active and 2 explicitly deferred. 15 Review, 1 Dated, 0 Recorded, 139 Controlled, 23 Live, 11 External, 2 Deferred. 27 active checks remain. These are review dispositions, not an acceptance percentage. Of those 27 open rows, 14 require observed listener evidence and 13 have other proof requirements. The [listener protocol](LISTENER_ACCEPTANCE.md) maps every open U row to uncoached tasks and lists the other evidence needed. Preparing the protocol changes no row disposition.
 
 ## Platform, scope and presentation
 
@@ -72,7 +72,7 @@ Source: REQUIREMENTS: Jellyfin connection; RADIO_EXPERIENCE: Entry and first use
 | C16 | Jellyfin sign-in JSON deadlines include stalled bodies; after 20 seconds the form is usable and no account is committed. | N+S | Controlled |
 | C17 | Library JSON requests time out through body consumption; the existing single read retry ends in useful error and explicit Retry restores data. | N+S | Controlled |
 | C18 | Malformed sign-in/library JSON is distinct from network timeout and sign-in errors never imply a saved playlist change. | S | Controlled |
-| C19 | Credentials and tokens never appear in logs, renderer replies or externally opened URLs. | I+S+N | Controlled |
+| C19 | Credentials/tokens stay out of returned errors, preparation history, diagnostics/logs, media URLs, renderer replies and external links. | I+S+N | Controlled |
 | C20 | Separate installations use independent persistent Jellyfin identities for API/artwork/audio/transcode, retain them through account changes/sign-out/restart, and signing in from one leaves the other session usable. Unavailable identity storage keeps listening available with session-only replacement and no older-account resurrection. | N+S+L | Live |
 
 ## Catalog browsing and refresh
@@ -266,6 +266,8 @@ Source: REQUIREMENTS: Personal radio behavior, Per-DJ voice previews; R4,R8,M3,M
 | D18 | Preview playback is exclusive; delayed results respect later music commands, remain cached for explicit replay and use current volume. | N+S | Controlled |
 | D19 | Actual generated host delivery, pronunciation and perceived interruption quality satisfy observed listener sessions. | L+U | External |
 | D20 | DJ deletion names affected profiles, warns only when their enabled selected playback turns off, and Cancel preserves choices; long profile names wrap with reachable confirmation actions. | N | Controlled |
+| D21 | General playback/transition drafts, pending saves and failures survive music pages, Settings sections, account changes and window hiding; each form saves/retries only explicitly and blocks its own duplicates while the other form/music stay usable; Quit discards unsaved drafts. | N+S | Controlled |
+| D22 | Explicit DJ playback field patches merge against latest queued state: General preferences preserve newer profile/enable choices and player profile/enable changes preserve cadence, seeking and voice volume; invalid patches leave stored state unchanged. | S | Controlled |
 
 ## Trust, accessibility and final acceptance
 
@@ -287,6 +289,8 @@ Source: REQUIREMENTS: Design acceptance, stack, settings, acceptance and release
 | Q12 | Evidence distinguishes controlled fixtures, live provider/server output, audible quality and observed usability. | I | Controlled |
 | Q13 | The complete current requirement denominator and every critical invariant have individually reviewed evidence before completion or a90% claim. | I | Review |
 | Q14 | No routine verification packages, signs, notarizes or publishes the application. | I | Controlled |
+| Q15 | Successful provider-key replacement/removal supersedes older renderer status and main credential reads, including reads started during a write; a failed save refreshes only that provider without reusing stale status or preparing news. | N+S | Controlled |
+| Q16 | Masked key drafts, pending save/removal and errors survive music/Settings navigation; account changes/sign-out clear entered text and settled errors while an active device-wide write stays locked, its confirmed status stays global and its old-session failure stays hidden; sign-out explains the pending-write caveat and writes/retries remain explicit. | N+S | Controlled |
 
 ## Evidence ledger for controlled rows
 
@@ -330,32 +334,32 @@ These links are navigation aids, not extra denominator rows. Each story requires
 | Story | Main checks |
 | --- | --- |
 | R1 | C01,M01,B07,B08,R01 |
-| R2 | R03,R04,R06,R08,R09,D01,D02,S01–S03 |
+| R2 | R03,R04,R06,R08,R09,D01,D02,S01,S02,S03,V07 |
 | R3 | R07,R08,A01,A02,A04,A06 |
-| R4 | D04–D07,A04 |
+| R4 | D04,D05,D06,D07,D09,M08,A04,T11 |
 | R5 | A07,A08,S06 |
-| R6 | A01–A03,A07,A09,A10 |
+| R6 | A01,A02,A03,A07,A09,A10 |
 | R7 | A04,A13,D08,T11 |
-| R8 | S07,S08,T07,T09–T11,T13–T15 |
-| R9 | R02,R05,R10,R13,A06,A11,D07 |
-| R10 | A10,A19,T02–T06,T12,Q08 |
+| R8 | S07,S08,T07,T09,T10,T11,T13,T14,T15 |
+| R9 | R02,R05,R10,R13,A06,A11,D07,Q03,Q15,Q16 |
+| R10 | A10,A19,T02,T03,T04,T05,T06,T12,Q08,C19 |
 | R11 | R11,R12,A12,A19,D05,D20,T09 |
-| R12 | V07–V16,Q06–Q11 |
+| R12 | V07,V08,V09,V10,V11,V12,V13,V14,V15,V16,Q06,Q07,Q08,Q09,Q10,Q11,D21,D22 |
 | M1 | M03,M19 |
 | M2 | M06,D18 |
-| M3 | M01,M03,M05–M08,M18,D06,D09 |
+| M3 | M01,M03,M05,M06,M07,M08,M18,D06,D09 |
 | M4 | M14,M15,C12 |
-| M5 | B02–B04,B07,B09,B15–B17 |
-| M6 | P06–P19 |
-| M7 | C12–C14,T02 |
-| M8 | B06,M09,M10 |
-| M9 | M11–M13 |
-| M10 | C05,C06 |
-| M11 | C02–C08 |
-| M12 | C09–C11,C15,C16,C18,C20 |
-| M13 | B10–B14 |
-| M14 | D11–D13 |
-| M15 | A14–A19,C09,C14 |
+| M5 | B02,B03,B04,B07,B09,B15,B16,B17,Q06 |
+| M6 | P05,P06,P07,P08,P09,P10,P11,P12,P13,P14,P15,P16,P17,P18,P19 |
+| M7 | C12,C13,C14,T02 |
+| M8 | B06,M09,M10,M16,M17 |
+| M9 | V10,M04,M11,M12,M13 |
+| M10 | C05,C06,V07 |
+| M11 | C02,C03,C04,C05,C06,C07,C08 |
+| M12 | C09,C10,C11,C15,C16,C18,C20,Q02 |
+| M13 | B10,B11,B12,B13,B14,V07 |
+| M14 | D11,D12,D13 |
+| M15 | A14,A15,A16,A17,A18,A19,C09,C14 |
 
 ## Critical invariants
 
@@ -527,3 +531,10 @@ M17 partial evidence, 17 October 2026: the [live codec/seek record](verification
 
 
 V10/M9 scoped fix, 17 October 2026: the [window-session record](verification/2026-10-17-window-session-retention.json) reproduces unsaved cadence7 reverting to3 after native Close and app activation while the process stays alive. macOS Close now hides the same window, and activation restores/shows/focuses it; explicit Quit retains the existing stop/cancel/revoke path. Fifteen corrected native snapshots verify hidden audio progress, cadence/transition drafts, held-save failure, exactly one explicit retry, paused red-close, minimized restore and same-data Quit/restart. Five before-fix lifecycle snapshots and transcribed AX excerpts retain the reproduction. Build/TypeScript/full ESLint and both actual-diff reviews pass. Source product contract and M9 distinguish close/activation from quit/relaunch. Paid-provider continuation is source-reviewed, not exercised. Dragging and normal chrome capture remain unproved, so V10 stays Review and all dispositions remain unchanged: 27 active checks remain, 14 listener and 13 other-proof rows.
+
+
+Inventory reconciliation, 17 October 2026: the [source map](verification/2026-10-17-source-acceptance-map.csv) covers every nonblank line in current REQUIREMENTS and RADIO_EXPERIENCE, including all27 exact STAR results and7 parent criteria. D21/D22 and Q15/Q16 make four existing explicit promises independently reviewable; they do not add product scope. General form lifetime differs from profile setup and queued field merging. Key editor lifetime and stale-read suppression differ from the actual Keychain adapter Q03. Both independent reviewers support those separations. C19 names the existing secret sinks explicitly. STAR navigation now includes previously omitted Close/activation, General/key edits, permission and related exact-result links.
+
+The [source reconciliation record](verification/2026-10-17-source-reconciliation.json) maps the seven critical invariants and records evidence pointers/freshness. D21/D22 use the existing General settings and window-session records. Q16 uses provider-edit navigation with unchanged editor sources; Q15 combines unchanged credential-storage sources with eight [current native key-status states](verification/2026-10-17-current-key-status.json), closing the stale editor-owner evidence edge without rewriting old hashes. All three providers reject obsolete statuses before Save and begun during Remove; a failed-confirmation reread keeps its fresh result, draft and error. No provider/server request occurs.
+
+The four newly named rows are Controlled within those explicit scopes. Existing row dispositions do not change. Inventory becomes191 rows,189 active,2 Deferred:139 Controlled,23 Live,15 Review,1 Dated,11 External. The same27 active checks remain,14 listener and13 other-proof. Dated records retain their original inventories. The source map is navigation and gap inspection, not an atomic test denominator or proof that each nested clause/critical invariant passes. Q13 remains Review; no90% or goal-completion claim follows.

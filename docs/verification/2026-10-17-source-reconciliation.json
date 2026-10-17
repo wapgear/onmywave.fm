@@ -1,0 +1,504 @@
+{
+  "date": "2026-10-17",
+  "baseCommit": "8c929f10089bb43d5215cf7acb73396a0873cc39",
+  "scope": "Q13 source-to-check navigation reconciliation and four previously implicit settings/key invariants. No overall denominator completion, listener score or whole-goal pass.",
+  "appSourceChanged": false,
+  "sourceFiles": {
+    "REQUIREMENTS.md": "443687f2f6089274d5c8a41cd8c2ba2198ab9dab13f8971fb6c7298f1be18811",
+    "docs/RADIO_EXPERIENCE.md": "c45d8f48972859175ecc562b32198762abb6186adcf2fb686ea8c1d485082f57"
+  },
+  "sourceMap": {
+    "file": "2026-10-17-source-acceptance-map.csv",
+    "sha256": "2e9b70cee3428c89420a6d9a9841741fc91b1d2a63bdd2ca263da4d5ea5de092",
+    "nonblankLines": 273,
+    "classes": {
+      "structure": 46,
+      "reference": 15,
+      "contract": 181,
+      "exclusion": 4,
+      "STAR": 27
+    },
+    "STARResults": 27,
+    "parentCriteria": 7,
+    "uniqueChecksReferenced": 191,
+    "meaning": "Each nonblank line retains exact text/hash, source location, classification and navigation checks. Compound sentences/rows remain authoritative; one source line or check is not asserted to be one atomic metric. Structural rows are headings/table headers/separators, not discarded product behavior."
+  },
+  "findings": [
+    {
+      "gap": "M9 Close/activation omitted from main-check links",
+      "correction": "Add V10/M04 alongside restart rows; preserve full exact STAR result."
+    },
+    {
+      "gap": "General forms were referenced through profile/setup/transition/accessibility rows without named lifecycle and merge criteria",
+      "correction": "Add D21 N+S and D22 S; reviewed existing General/native window and actual storage evidence supports Controlled within these scopes."
+    },
+    {
+      "gap": "Key adapter Q03 did not name renderer status/main credential-read freshness or editor/account lifetime",
+      "correction": "Add Q15 N+S and Q16 N+S; retained storage/editor proof plus current eight-state status run supports Controlled. OS adapter scope stays Q03."
+    },
+    {
+      "gap": "Some source clauses had only broad STAR navigation, including permission/fallback and keyboard details",
+      "correction": "Reconcile all27 story navigation lists against exact current results; each still requires the exact source result, not just linked titles."
+    },
+    {
+      "gap": "Implementation file contains intentionally historical work, while current source asks for dated check/limit pointers there",
+      "correction": "Add a current dated entry with app revision, latest implementation/evidence links and remaining limits; preserve historical notes."
+    }
+  ],
+  "newRows": {
+    "D21": {
+      "status": "Controlled",
+      "proof": "N+S",
+      "evidence": [
+        {
+          "file": "2026-10-17-general-settings-navigation.json",
+          "pointers": [
+            "/afterNative",
+            "/verification",
+            "/fixture",
+            "/limits"
+          ]
+        },
+        {
+          "file": "2026-10-17-window-session-retention.json",
+          "pointers": [
+            "/cases",
+            "/quit",
+            "/limits"
+          ]
+        }
+      ]
+    },
+    "D22": {
+      "status": "Controlled",
+      "proof": "S",
+      "evidence": [
+        {
+          "file": "2026-10-17-general-settings-navigation.json",
+          "pointers": [
+            "/beforeConcurrency",
+            "/afterConcurrencyAndValidation",
+            "/enabledAndRecovery",
+            "/decision",
+            "/limits"
+          ]
+        }
+      ]
+    },
+    "Q15": {
+      "status": "Controlled",
+      "proof": "N+S",
+      "evidence": [
+        {
+          "file": "2026-10-17-current-key-status.json",
+          "pointers": [
+            "/cases",
+            "/checks",
+            "/limits"
+          ]
+        },
+        {
+          "file": "2026-10-17-credential-read-order.json",
+          "pointers": [
+            "/afterRemovals",
+            "/afterAdditionalCases",
+            "/contract",
+            "/limitations"
+          ]
+        },
+        {
+          "file": "2026-10-17-provider-status-order.json",
+          "pointers": [
+            "/nativeSnapshots",
+            "/freshness",
+            "/limitations"
+          ]
+        },
+        {
+          "file": "2026-10-17-provider-edit-navigation.json",
+          "pointers": [
+            "/after/1",
+            "/verification",
+            "/freshness",
+            "/limits"
+          ]
+        }
+      ],
+      "failureCoverage": "The current8-state run specifically models lost confirmation after a real local commit. The unchanged editor-owner provider-edit-navigation failure-section state separately covers a failed setter, retained draft/error/editability and an OpenAI-only status-read increment; together these support the row\u2019s broader failed-save branch without representing the current post-commit case as every failure."
+    },
+    "Q16": {
+      "status": "Controlled",
+      "proof": "N+S",
+      "evidence": [
+        {
+          "file": "2026-10-17-provider-edit-navigation.json",
+          "pointers": [
+            "/after",
+            "/verification",
+            "/freshness",
+            "/limits"
+          ]
+        },
+        {
+          "file": "2026-10-17-current-key-status.json",
+          "pointers": [
+            "/cases",
+            "/limits"
+          ]
+        }
+      ]
+    }
+  },
+  "freshness": {
+    "2026-10-17-general-settings-navigation.json": {
+      "recordSha256": "2fdec1dcf385cdae875b01adff8ef5df2925b36edb5cf5dc562df8fd300824a2",
+      "exactCurrentSourceMatches": [
+        "src/shared/types.ts",
+        "src/shared/dj-playback.ts",
+        "src/renderer/App.tsx",
+        "src/renderer/dj-playback.tsx",
+        "src/renderer/pages/Settings/SettingsEdits.tsx",
+        "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx",
+        "src/renderer/pages/Settings/components/NewsTransitions.component.tsx",
+        "src/renderer/pages/Settings/components/NewsTransitionPreview.component.tsx"
+      ],
+      "changedSources": [
+        "src/main/index.ts"
+      ],
+      "changedScopeReview": "git diff5e3e70f..8c929f1 src/main/index.ts contains only PR79 close/activate handlers. General write handler unchanged; eight renderer/shared files match. Current window retention proof supplies its changed lifetime."
+    },
+    "2026-10-17-window-session-retention.json": {
+      "recordSha256": "1a04b95be726aaca5ce25269b4fb8039a693380433eef211ccf30ce565989c23",
+      "exactCurrentSourceMatches": [
+        "src/main/index.ts",
+        "src/renderer/App.tsx",
+        "src/renderer/player.tsx",
+        "src/renderer/pages/Settings/SettingsEdits.tsx",
+        "src/renderer/styles.css"
+      ],
+      "changedSources": []
+    },
+    "2026-10-17-provider-status-order.json": {
+      "recordSha256": "1e77cf88f4c5e9a1b1d14551b76da640e52fa975e35ae0554a0cb8cdbab8bdc1",
+      "exactCurrentSourceMatches": [],
+      "changedSources": [
+        "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx",
+        "src/renderer/pages/DJs/components/NewsTest.component.tsx"
+      ],
+      "changedScopeReview": "Pre-refactor owner/component hashes differ. Do not infer a new native pass from these older17states. Current8state record reruns all-three-provider obsolete-read save/removal and one-provider failed-confirmation fresh-status behavior on current owner; source inspection retains exact per-provider cancellation at write/success/failure boundaries."
+    },
+    "2026-10-17-credential-read-order.json": {
+      "recordSha256": "36deb0de7d51da14bf901ebde36f5faec1ff2f33cf31abfb044822ec7b63b354",
+      "exactCurrentSourceMatches": [
+        "src/main/storage.ts",
+        "src/main/keychain.ts"
+      ],
+      "changedSources": [
+        "src/main/index.ts"
+      ],
+      "changedScopeReview": "storage.ts/keychain.ts match exactly. Main changes are General patch validation and later window lifetime, outside credential reads. Substituted shared adapter limits remain; actual OS adapter proof stays Q03."
+    },
+    "2026-10-17-provider-edit-navigation.json": {
+      "recordSha256": "63d51af7a41ac3229c0eec595b6354fda5fa774f1390a59b77a230b00bc1b896",
+      "exactCurrentSourceMatches": [
+        "src/renderer/components/ProviderKeys/ProviderKeyEdits.tsx",
+        "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx",
+        "src/renderer/pages/DJs/components/NewsTest.component.tsx",
+        "src/renderer/pages/Settings/Settings.page.tsx"
+      ],
+      "changedSources": [
+        "src/renderer/App.tsx"
+      ],
+      "changedScopeReview": "git diff965f4be..8c929f1 src/renderer/App.tsx adds only SettingsEditsProvider import/wrapper inside unchanged ProviderKeyEditsProvider. Four key editor source files match; provider owner and account boundary remain unchanged."
+    },
+    "2026-10-17-current-key-status.json": {
+      "recordSha256": "d4ca06f600306eb1923e3c5c602b171e2ce05ac3146ee7602c44f486daa283cf",
+      "exactCurrentSourceMatches": [
+        "src/main/index.ts",
+        "src/main/storage.ts",
+        "src/main/keychain.ts",
+        "src/renderer/App.tsx",
+        "src/renderer/components/ProviderKeys/ProviderKeyEdits.tsx",
+        "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx",
+        "src/renderer/pages/DJs/components/NewsTest.component.tsx",
+        "src/renderer/pages/Settings/Settings.page.tsx"
+      ],
+      "changedSources": []
+    },
+    "2026-10-17-secret-boundaries.json": {
+      "recordSha256": "726eb0d4ddab88f516794823076c067fefcf95cbc2e0e590ed9851d9f2dab970",
+      "exactCurrentSourceMatches": [
+        "src/main/news.ts",
+        "src/main/jellyfin.ts",
+        "src/main/keychain.ts",
+        "src/main/dj-voices.ts"
+      ],
+      "changedSources": [
+        "src/main/index.ts",
+        "src/main/media.ts",
+        "src/main/news-workflow.ts",
+        "src/main/prepared-news.ts",
+        "src/main/storage.ts",
+        "src/shared/types.ts",
+        "src/preload/index.ts"
+      ],
+      "changedScopeReview": "C19 label clarifies existing requirement sinks and retained record scope; no new runtime/current whole-source security pass is inferred from changed source hashes. Its exact dated migration/lifecycle and synthetic-input limits remain."
+    }
+  },
+  "criticalInvariants": [
+    {
+      "id": "CI1",
+      "requirement": "No lost committed or unsaved edits within documented lifetime",
+      "sources": [
+        "REQUIREMENTS.md:15",
+        "REQUIREMENTS.md:87",
+        "REQUIREMENTS.md:140",
+        "REQUIREMENTS.md:178",
+        "REQUIREMENTS.md:200",
+        "REQUIREMENTS.md:218",
+        "REQUIREMENTS.md:232",
+        "REQUIREMENTS.md:244",
+        "REQUIREMENTS.md:245",
+        "REQUIREMENTS.md:253",
+        "REQUIREMENTS.md:257"
+      ],
+      "checks": [
+        "V10",
+        "C07",
+        "C08",
+        "C13",
+        "C14",
+        "R04",
+        "R05",
+        "R10",
+        "T02",
+        "T07",
+        "T09",
+        "T10",
+        "T12",
+        "M11",
+        "M12",
+        "M13",
+        "P07",
+        "P08",
+        "P13",
+        "D21",
+        "D22",
+        "Q15",
+        "Q16"
+      ],
+      "remainingScope": "Named rows now expose General/editor lifetimes and merge ordering. Exact subclauses and cross-boundary combinations still require their own evidence; source coverage alone does not close this invariant.",
+      "wholeInvariantDisposition": "not independently closed by this source audit"
+    },
+    {
+      "id": "CI2",
+      "requirement": "No unrequested paid work",
+      "sources": [
+        "REQUIREMENTS.md:5",
+        "REQUIREMENTS.md:230",
+        "REQUIREMENTS.md:237",
+        "REQUIREMENTS.md:238",
+        "REQUIREMENTS.md:239",
+        "REQUIREMENTS.md:246",
+        "REQUIREMENTS.md:247",
+        "REQUIREMENTS.md:257"
+      ],
+      "checks": [
+        "R01",
+        "R07",
+        "R08",
+        "R09",
+        "A01",
+        "A02",
+        "A03",
+        "A04",
+        "A09",
+        "A10",
+        "A12",
+        "A13",
+        "A15",
+        "A16",
+        "A18",
+        "T03",
+        "T04",
+        "T12",
+        "D02",
+        "D14",
+        "D17",
+        "Q16"
+      ],
+      "remainingScope": "A02/A13 require observed cost/independence understanding. Engineering/fixture dispatch controls do not prove that listener requirement.",
+      "wholeInvariantDisposition": "not independently closed by this source audit"
+    },
+    {
+      "id": "CI3",
+      "requirement": "No credential exposure",
+      "sources": [
+        "REQUIREMENTS.md:124",
+        "REQUIREMENTS.md:148",
+        "REQUIREMENTS.md:253",
+        "REQUIREMENTS.md:261"
+      ],
+      "checks": [
+        "C19",
+        "Q01",
+        "Q02",
+        "Q03",
+        "Q04",
+        "Q05",
+        "Q15",
+        "Q16",
+        "S09",
+        "S10"
+      ],
+      "remainingScope": "Keep secret sink redaction, protected adapter, stale read integrity and transient editor lifetime distinct. Current key-status run uses dummy data and supplies no live credential or penetration-testing claim.",
+      "wholeInvariantDisposition": "not independently closed by this source audit"
+    },
+    {
+      "id": "CI4",
+      "requirement": "No silent selected-take replacement",
+      "sources": [
+        "REQUIREMENTS.md:244",
+        "REQUIREMENTS.md:245",
+        "docs/RADIO_EXPERIENCE.md:22",
+        "docs/RADIO_EXPERIENCE.md:52"
+      ],
+      "checks": [
+        "A04",
+        "R12",
+        "T07",
+        "T08",
+        "T09",
+        "T10",
+        "T11",
+        "T15",
+        "D06"
+      ],
+      "remainingScope": "Retained explicit selection/provenance and recovery records keep their exact dated limits; mappings do not replay them or close whole-story usability.",
+      "wholeInvariantDisposition": "not independently closed by this source audit"
+    },
+    {
+      "id": "CI5",
+      "requirement": "No automatic retry of uncertain paid work or playlist mutation",
+      "sources": [
+        "REQUIREMENTS.md:200",
+        "REQUIREMENTS.md:230",
+        "REQUIREMENTS.md:232",
+        "REQUIREMENTS.md:246"
+      ],
+      "checks": [
+        "P08",
+        "P09",
+        "P10",
+        "P11",
+        "P12",
+        "P13",
+        "P15",
+        "P17",
+        "P18",
+        "T03",
+        "T04",
+        "T12",
+        "A10",
+        "A18",
+        "A19",
+        "D17"
+      ],
+      "remainingScope": "Preserve request/intent reservation, uncertain outcome, fresh read/acknowledgement and account/restart boundaries as separate linked obligations.",
+      "wholeInvariantDisposition": "not independently closed by this source audit"
+    },
+    {
+      "id": "CI6",
+      "requirement": "No duplicate queue advance or heard-news replay",
+      "sources": [
+        "REQUIREMENTS.md:208",
+        "REQUIREMENTS.md:218",
+        "REQUIREMENTS.md:240",
+        "REQUIREMENTS.md:248",
+        "docs/RADIO_EXPERIENCE.md:148"
+      ],
+      "checks": [
+        "M03",
+        "M05",
+        "M06",
+        "M07",
+        "M08",
+        "M18",
+        "M19",
+        "D04",
+        "D05",
+        "D06",
+        "D09",
+        "D10"
+      ],
+      "remainingScope": "D05/D10 retain listener/audible acceptance gaps. Local muted-media state does not establish suitable perceived delivery or audible continuity.",
+      "wholeInvariantDisposition": "not independently closed by this source audit"
+    },
+    {
+      "id": "CI7",
+      "requirement": "Keyboard access to every essential action",
+      "sources": [
+        "REQUIREMENTS.md:45",
+        "REQUIREMENTS.md:89",
+        "REQUIREMENTS.md:91",
+        "REQUIREMENTS.md:276"
+      ],
+      "checks": [
+        "Q06",
+        "Q07",
+        "Q08",
+        "Q09",
+        "V07",
+        "V13"
+      ],
+      "remainingScope": "Q06 remains Review and full VoiceOver Q09 remains External. Family-specific keyboard/recovery passes do not prove every essential action.",
+      "wholeInvariantDisposition": "not independently closed by this source audit"
+    }
+  ],
+  "pairedDecision": {
+    "independentProposals": "Steve and Elena each found General draft/merge obligations only implicitly represented and favored two rows; both also identified separate key freshness/editor lifetime obligations.",
+    "challenge": "One broad settings row would reduce inventory churn but combine independent UI lifetime and queued-storage failure modes. Both retain separate rows. Old provider-status source hashes are stale after owner refactor; root runs current native old-read cases instead of claiming freshness from titles.",
+    "MorganDecision": "Add four explicit source-existing rows, retain all existing meanings/statuses and all historical record hashes/inventories; Controlled only for the scoped reviewed evidence. Keep Q13 and all remaining live/OS/listener gaps open.",
+    "finalArtifactReview": {
+      "Steve": "Supports four scoped Controlled rows and source reconciliation; confirms current status cases and provider-edit failed-setter/provider-only-refresh evidence cover Q15 together. No blocker.",
+      "Elena": "No blocker; supports distinct scope/evidence/counts. Reserves broad failed-save wording if based only on current post-commit case; root adds the explicit provider-edit failure-section evidence pointer and annotation. Source/no-provider claims retain their limits."
+    }
+  },
+  "inventory": {
+    "previousTotal": 187,
+    "total": 191,
+    "active": 189,
+    "deferred": 2,
+    "dispositions": {
+      "Controlled": 139,
+      "Live": 23,
+      "Review": 15,
+      "External": 11,
+      "Deferred": 2,
+      "Dated": 1
+    },
+    "remaining": 27,
+    "listener": 14,
+    "otherProof": 13,
+    "existingRowsPromoted": 0,
+    "newControlledRows": 4
+  },
+  "checks": {
+    "sourceLineCoverageAndHashes": "pass",
+    "allCheckIdsExistAndReverseMapped": "pass",
+    "STARNavigation": "27 complete links; exact results remain mandatory",
+    "JSONPointersAndRecordHashes": "verified before commit",
+    "nativeCurrentStatusSnapshots": 8,
+    "productionBuildTypeScriptEslint": "PR79 unchanged app bytes retained, not repeated",
+    "unitTests": "not run",
+    "deferredChecks": "not run",
+    "packagingRelease": "not run"
+  },
+  "limits": [
+    "This is a source-navigation and targeted gap audit. A long compound source paragraph can contain many independently testable clauses; this CSV is not an atomic requirement denominator or a pass for every clause. Q13 remains Review.",
+    "All seven parent criteria and exact27 STAR results remain mandatory. The189 active row count is an inventory count, not observed usability or a90% metric. No difficult source result is removed to improve a score.",
+    "Both source documents and all191 checklist row identifiers are represented; that structural completeness does not establish evidence sufficiency or current runtime coverage for all191 rows.",
+    "Live provider output, subjective audible quality, the14 observed-listener checks and13 other-proof checks remain required. Zero listener sessions have run.",
+    "Dated evidence is immutable. Old records keep their historical source/build hashes, counts and limitations, including the originally28-open listener-protocol record. Current documents distinguish those from the current27-open inventory."
+  ]
+}
