@@ -345,7 +345,7 @@ These links are navigation aids, not extra denominator rows. Each story requires
 | R10 | A10,A19,T02,T03,T04,T05,T06,T12,Q08,C19 |
 | R11 | R11,R12,A12,A19,D05,D20,T09 |
 | R12 | V07,V08,V09,V10,V11,V12,V13,V14,V15,V16,Q06,Q07,Q08,Q09,Q10,Q11,D21,D22 |
-| M1 | M03,M19 |
+| M1 | M03,M19,Q06 |
 | M2 | M06,D18 |
 | M3 | M01,M03,M05,M06,M07,M08,M18,D06,D09 |
 | M4 | M14,M15,C12 |
@@ -538,3 +538,8 @@ Inventory reconciliation, 17 October 2026: the [source map](verification/2026-10
 The [source reconciliation record](verification/2026-10-17-source-reconciliation.json) maps the seven critical invariants and records evidence pointers/freshness. D21/D22 use the existing General settings and window-session records. Q16 uses provider-edit navigation with unchanged editor sources; Q15 combines unchanged credential-storage sources with eight [current native key-status states](verification/2026-10-17-current-key-status.json), closing the stale editor-owner evidence edge without rewriting old hashes. All three providers reject obsolete statuses before Save and begun during Remove; a failed-confirmation reread keeps its fresh result, draft and error. No provider/server request occurs.
 
 The four newly named rows are Controlled within those explicit scopes. Existing row dispositions do not change. Inventory becomes191 rows,189 active,2 Deferred:139 Controlled,23 Live,15 Review,1 Dated,11 External. The same27 active checks remain,14 listener and13 other-proof. Dated records retain their original inventories. The source map is navigation and gap inspection, not an atomic test denominator or proof that each nested clause/critical invariant passes. Q13 remains Review; no90% or goal-completion claim follows.
+
+
+Q06/M03/M19 partial evidence, 17 October 2026: the [queue-removal focus record](verification/2026-10-17-queue-removal-focus.json) reproduces focus falling to page content after removing the sole Up Next row beside collapsed history. The handler now hands off only when the removed button owns focus. It chooses the next visible Remove action in DOM order, then the previous, or Close queue. Collapsed Earlier history is excluded. Occurrence keys preserve the other duplicate and current selection. Focus uses preventScroll followed by nearest reveal above the player; the queue toggle says 1 track for a single occurrence.
+
+Nine final-source native snapshots cover long-queue playback/scrolling, collapsed/open history, duplicate removal, shuffle, native pointer removal and final fallback. The inactive-trigger guard has source review. The edited requirements paragraph and M1 result have a source-trace supplement; the earlier CSV retains its dated text/hashes. Production build including TypeScript, full ESLint and both independent actual-diff reviews pass. All 191 row dispositions stay unchanged: 189 active, 2 Deferred and 27 remaining, 14 listener and 13 other-proof. Q06 remains Review for complete app-wide controls and conditional states. No VoiceOver, audible-quality, listener, unit, release or deferred viewport/zoom check runs.
