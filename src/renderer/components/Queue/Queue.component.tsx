@@ -9,16 +9,20 @@ export function Queue() {
   const index = player.queue.findIndex(item => item.key === player.currentKey);
   const current = player.queue[index];
   const remaining = Math.max(0, player.queue.length - (player.shuffle ? 1 : index + 1));
-  function remove(key: string) {
-    const buttons = [...(root.current?.querySelectorAll<HTMLButtonElement>('.queue-remove') ?? [])];
-    const at = buttons.findIndex(button => button.dataset.key === key);
-    (buttons[at + 1] ?? buttons[at - 1] ?? document.querySelector<HTMLButtonElement>('.drawer-heading button'))?.focus({ preventScroll: true });
+  function remove(key: string, trigger: HTMLButtonElement) {
+    if (document.activeElement === trigger) {
+      const buttons = [...(root.current?.querySelectorAll<HTMLButtonElement>('.queue-remove') ?? [])].filter(button => button.checkVisibility());
+      const at = buttons.indexOf(trigger);
+      const target = buttons[at + 1] ?? buttons[at - 1] ?? document.querySelector<HTMLButtonElement>('.drawer-heading button');
+      target?.focus({ preventScroll: true });
+      target?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }
     player.removeQueue(key);
   }
   function rows(items: typeof player.queue) {
     return <ol className="queue-list">{items.map(item => <li key={item.key}>
       <button className="queue-track" onClick={() => player.playQueueEntry(item.key)} aria-label={`Play ${item.song.name}`}><Artwork url={item.song.imageUrl} name={item.song.name} /><span><strong>{item.song.name}</strong><small>{item.song.artists.join(', ') || 'Unknown artist'}</small></span></button>
-      <span className="queue-time"><TrackDuration seconds={item.song.duration} /></span><button className="icon-button queue-remove" data-key={item.key} onClick={() => remove(item.key)} aria-label={`Remove ${item.song.name} from queue`}><X size={14} /></button>
+      <span className="queue-time"><TrackDuration seconds={item.song.duration} /></span><button className="icon-button queue-remove" onClick={event => remove(item.key, event.currentTarget)} aria-label={`Remove ${item.song.name} from queue`}><X size={14} /></button>
     </li>)}</ol>;
   }
   return <div ref={root} className="queue-content">

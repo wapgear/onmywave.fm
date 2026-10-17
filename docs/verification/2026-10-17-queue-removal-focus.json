@@ -1,0 +1,4716 @@
+{
+  "date": "2026-10-17",
+  "baseCommit": "84bd52486a63871e2313a1074a2825e9f779820c",
+  "scope": [
+    "Q06 partial queue keyboard focus",
+    "M03/M19 occurrence identity and paused playback",
+    "M1 STAR result and REQUIREMENTS keyboard focus"
+  ],
+  "classification": "Native CUA input and macOS AX inspection with read-only production renderer/main/preload/storage telemetry in a disposable controlled local fixture.",
+  "baseline": {
+    "contentSizePoints": [
+      1280,
+      720
+    ],
+    "appZoom": 1,
+    "runtime": "macOS27.2 arm64, Electron43.7.0, Retina display"
+  },
+  "reproduction": "With the current occurrence at index2 of [1001,1002,1001,1003], native Return removes the sole Up Next row. The previous candidate is inside collapsed Earlier history; focus fails and the removed trigger unmounts, leaving DOM BODY/native HTML content.",
+  "implementation": [
+    "Only hand off focus when the exact Remove button owns it. Capture the button directly, retain occurrence keys and remove only that occurrence.",
+    "Choose the next visible Remove action in global DOM order, then the previous, then Close queue. Exclude collapsed details children with the existing checkVisibility pattern. This is same-action order, not the literal next Tab stop.",
+    "Focus the surviving node synchronously without scrolling, then reveal it with native nearest scrolling. No delayed focus job, new state, dependency or transport command.",
+    "Queue toggle uses singular track for one occurrence."
+  ],
+  "pairedReview": {
+    "Steve": "Independent proposal/challenge and actual final source diff reviewed; no blocker. Initially proposed same-list/history-summary policy, revised to visible global Remove order and persistent Close fallback.",
+    "Elena": "Independent proposal/challenge and actual final source diff reviewed; no blocker. Native boundary confirmation was requested and is supplied by final E.",
+    "Morgan": "Use existing DOM ordering and browser visibility/scroll APIs. Both actual reviews support final source; neither claims full Q06 acceptance."
+  },
+  "fixture": {
+    "data": "Disposable synthetic local catalog and silent600s PCM WAV; actual production renderer/preload with instrumented actual main/storage, disposable safeStorage and null shared-key adapter. Scheduler stopped, external and non-GET/HEAD requests blocked.",
+    "input": "CUA only. Playwright launches and reads state; no Playwright UI actions.",
+    "limits": "Muted local media establishes timeline/intent only, not audible quality, real provider delivery or physical hardware behavior."
+  },
+  "sourcePhases": {
+    "before": "Recorded native reproduction against prior source at base commit. Before-fixture retains bootstrap/build/observer source and report, not the overwritten compiled output; no complete prior bundle hash is claimed.",
+    "intermediateA": "Selection/fallback fix before singular label and nearest-scroll refinement. Full renderer bundle hash was not captured before the subsequent overwrite; never claimed final-byte evidence.",
+    "intermediateBC": "Singular label plus focus selection/fallback, before nearest-scroll refinement.",
+    "intermediateD": "Default focus scroll centered the next target; retained pre-nearest bundle hashes establish this phase.",
+    "finalEFG": "All final app source, production build including TypeScript and full ESLint passed before these native cases. Only subsequent source change is requirements prose clarification."
+  },
+  "nativeCases": [
+    {
+      "name": "before-remove-focused",
+      "rawSha256": "20688101db1376b97ba6a2f940c08dae685e0b6785622eda8f557c147c7bb119",
+      "sourcePhase": "before",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Remove Song 00004 from queue",
+        "type": null,
+        "role": null
+      },
+      "queueHistory": {
+        "present": true,
+        "open": false
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "queueRows": [
+        {
+          "name": "Play Song 00004",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "name": "Play Song 00002",
+          "visible": false,
+          "removeVisible": false
+        },
+        {
+          "name": "Play Song 00003",
+          "visible": false,
+          "removeVisible": false
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "before-remove-lost-focus",
+      "rawSha256": "4d9173e2982950ea3d22a61353395a39fdcc043ae1d0b5d91341b86b904b64db",
+      "sourcePhase": "before",
+      "focus": {
+        "tag": "BODY",
+        "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedAll songsYour Jellyfin libraryGenreAny genreAny genreJazzRockTagAny tagAny tagArchiveLiveStudioSortDate addedDate addedTitleArtistAlbumYearNewest first#TitleAlbumActions1Song 10000Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details2Song 09999Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details3Song 09998Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details4Song 09997Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details5Song 09996Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details6Song 09995Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details7Song 09994Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details8Song 09993Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details9Song 09992Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details10Song 09991Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details11Song 09990Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details12Song 09989Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details13Song 09988Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details14Song 09987Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details15Song 09986Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details80 of 10,000 songs loadedLoad more songsPlaying Next\u00d7Now PlayingSong 00002Artist 001Up Next0 songsYou\u2019ve reached the end of the queue.Earlier in this queue \u00b7 2Song 00002Artist 00110:00Song 00003Artist 00110:00Song 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+        "type": null,
+        "role": null
+      },
+      "queueHistory": {
+        "present": true,
+        "open": false
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "queueRows": [
+        {
+          "name": "Play Song 00002",
+          "visible": false,
+          "removeVisible": false
+        },
+        {
+          "name": "Play Song 00003",
+          "visible": false,
+          "removeVisible": false
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "after-collapsed-last-upnext",
+      "rawSha256": "dc7bae12f310009923959e2c2ffd107e812c1fbf6485b168435ccce501d06650",
+      "sourcePhase": "intermediate",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1228,
+          "y": 30,
+          "width": 34,
+          "height": 34,
+          "top": 30,
+          "right": 1262,
+          "bottom": 64,
+          "left": 1228
+        },
+        "insideDrawer": true,
+        "name": "Close queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 0,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": true,
+        "open": false
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "queueRows": [
+        {
+          "activeRemove": false,
+          "name": "Play Song 00002",
+          "visible": false,
+          "removeVisible": false
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00003",
+          "visible": false,
+          "removeVisible": false
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "after-a-before-duplicate-history",
+      "rawSha256": "0d6c871a13a991c36c4f6458c2c28ab7d85a346dcf124d137eb7fb72b284bb7d",
+      "sourcePhase": "intermediate",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1226,
+          "y": 329.296875,
+          "width": 34,
+          "height": 34,
+          "top": 329.296875,
+          "right": 1260,
+          "bottom": 363.296875,
+          "left": 1226
+        },
+        "insideDrawer": true,
+        "name": "Remove Song 00002 from queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 0,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": true,
+        "open": true
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "queueRows": [
+        {
+          "activeRemove": true,
+          "name": "Play Song 00002",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00003",
+          "visible": true,
+          "removeVisible": true
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "after-a-duplicate-history-removed",
+      "rawSha256": "716b5241beb0471c8579ca13d41f2ca103f68626c7d87a3e496be0b4e04a098c",
+      "sourcePhase": "intermediate",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1226,
+          "y": 329.296875,
+          "width": 34,
+          "height": 34,
+          "top": 329.296875,
+          "right": 1260,
+          "bottom": 363.296875,
+          "left": 1226
+        },
+        "insideDrawer": true,
+        "name": "Remove Song 00003 from queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 0,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": true,
+        "open": true
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9"
+        ],
+        "currentIndex": 1,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "queueRows": [
+        {
+          "activeRemove": true,
+          "name": "Play Song 00003",
+          "visible": true,
+          "removeVisible": true
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "after-a-history-emptied",
+      "rawSha256": "c3b16ef9c0d1ac432f1df3d3cf048a9acbb2715749b9a13335530eae42942b2b",
+      "sourcePhase": "intermediate",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1228,
+          "y": 30,
+          "width": 34,
+          "height": 34,
+          "top": 30,
+          "right": 1262,
+          "bottom": 64,
+          "left": 1228
+        },
+        "insideDrawer": true,
+        "name": "Close queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 0,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": false
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9"
+        ],
+        "currentIndex": 0,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "queueRows": [],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "after-b-next-visible",
+      "rawSha256": "ba0af696c33b86914f8baf573cce134372e4ba61b7d68d8c511d84c043f04446",
+      "sourcePhase": "intermediate",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1226,
+          "y": 225,
+          "width": 34,
+          "height": 34,
+          "top": 225,
+          "right": 1260,
+          "bottom": 259,
+          "left": 1226
+        },
+        "insideDrawer": true,
+        "name": "Remove Song 00005 from queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 0,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": true,
+        "open": false
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ec",
+          "000000000000000000000000000003ed"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "queueRows": [
+        {
+          "activeRemove": true,
+          "name": "Play Song 00005",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00006",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00002",
+          "visible": false,
+          "removeVisible": false
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00003",
+          "visible": false,
+          "removeVisible": false
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "after-b-native-click-previous",
+      "rawSha256": "57a02748167131d76c35f78e9d915b3a48a4dfb94d11deacee06d45a65dbb221",
+      "sourcePhase": "intermediate",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1226,
+          "y": 225,
+          "width": 34,
+          "height": 34,
+          "top": 225,
+          "right": 1260,
+          "bottom": 259,
+          "left": 1226
+        },
+        "insideDrawer": true,
+        "name": "Remove Song 00005 from queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 0,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": true,
+        "open": false
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ec"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "queueRows": [
+        {
+          "activeRemove": true,
+          "name": "Play Song 00005",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00002",
+          "visible": false,
+          "removeVisible": false
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00003",
+          "visible": false,
+          "removeVisible": false
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "after-b-open-history-cross-group",
+      "rawSha256": "0ab6687af0673992a5f6cbe02e4fcd644ea08b644f3d6b10c5edc3f156d68c8f",
+      "sourcePhase": "intermediate",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1226,
+          "y": 329.296875,
+          "width": 34,
+          "height": 34,
+          "top": 329.296875,
+          "right": 1260,
+          "bottom": 363.296875,
+          "left": 1226
+        },
+        "insideDrawer": true,
+        "name": "Remove Song 00002 from queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 0,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": true,
+        "open": true
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "queueRows": [
+        {
+          "activeRemove": true,
+          "name": "Play Song 00002",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00003",
+          "visible": true,
+          "removeVisible": true
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "after-b-final-single-track",
+      "rawSha256": "74cf5b49a4cb04efdcd665caeb4e7ead72a9a028761aa5d72e7b61648f10d4d5",
+      "sourcePhase": "intermediate",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1228,
+          "y": 30,
+          "width": 34,
+          "height": 34,
+          "top": 30,
+          "right": 1262,
+          "bottom": 64,
+          "left": 1228
+        },
+        "insideDrawer": true,
+        "name": "Close queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 0,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": false
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9"
+        ],
+        "currentIndex": 0,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "queueRows": [],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "after-c-before-shuffle-duplicate",
+      "rawSha256": "5188f7244dc748062adaff1b7722ce0ba2e4661a59343679fb973aedb7205fef",
+      "sourcePhase": "intermediate",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1226,
+          "y": 276.796875,
+          "width": 34,
+          "height": 34,
+          "top": 276.796875,
+          "right": 1260,
+          "bottom": 310.796875,
+          "left": 1226
+        },
+        "insideDrawer": true,
+        "name": "Remove Song 00002 from queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 0,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": false
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": true,
+        "repeat": "off"
+      },
+      "queueInputEvents": [
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00002 from queue",
+          "active": "Remove Song 00002 from queue",
+          "owned": true,
+          "trusted": true
+        }
+      ],
+      "queueRows": [
+        {
+          "activeRemove": true,
+          "name": "Play Song 00002",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00003",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00004",
+          "visible": true,
+          "removeVisible": true
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "after-c-shuffle-duplicate-removed",
+      "rawSha256": "2e3706e08564352ca0a654d41ec6722257be7d69f20ad0d332a5589b53c71ab8",
+      "sourcePhase": "intermediate",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1226,
+          "y": 276.796875,
+          "width": 34,
+          "height": 34,
+          "top": 276.796875,
+          "right": 1260,
+          "bottom": 310.796875,
+          "left": 1226
+        },
+        "insideDrawer": true,
+        "name": "Remove Song 00003 from queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 0,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": false
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 1,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": true,
+        "repeat": "off"
+      },
+      "queueInputEvents": [
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00002 from queue",
+          "active": "Remove Song 00002 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 0,
+          "name": "Remove Song 00002 from queue",
+          "active": "Remove Song 00002 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        }
+      ],
+      "queueRows": [
+        {
+          "activeRemove": true,
+          "name": "Play Song 00003",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00004",
+          "visible": true,
+          "removeVisible": true
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "after-c-native-click-previous",
+      "rawSha256": "57291802b455cef12b00b1ac9d23618e9a578aba719b71745b62420737cb6fef",
+      "sourcePhase": "intermediate",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1226,
+          "y": 276.796875,
+          "width": 34,
+          "height": 34,
+          "top": 276.796875,
+          "right": 1260,
+          "bottom": 310.796875,
+          "left": 1226
+        },
+        "insideDrawer": true,
+        "name": "Remove Song 00003 from queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 0,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": false
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9"
+        ],
+        "currentIndex": 1,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": true,
+        "repeat": "off"
+      },
+      "queueInputEvents": [
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00002 from queue",
+          "active": "Remove Song 00002 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 0,
+          "name": "Remove Song 00002 from queue",
+          "active": "Remove Song 00002 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00004 from queue",
+          "active": "Remove Song 00004 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 1,
+          "name": "Remove Song 00004 from queue",
+          "active": "Remove Song 00004 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        }
+      ],
+      "queueRows": [
+        {
+          "activeRemove": true,
+          "name": "Play Song 00003",
+          "visible": true,
+          "removeVisible": true
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "after-c-shuffle-final",
+      "rawSha256": "bc7dfb436738716df3f5692c8d9716753f25082118517f3abe21d94b7b89fc69",
+      "sourcePhase": "intermediate",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1228,
+          "y": 30,
+          "width": 34,
+          "height": 34,
+          "top": 30,
+          "right": 1262,
+          "bottom": 64,
+          "left": 1228
+        },
+        "insideDrawer": true,
+        "name": "Close queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 0,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": false
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9"
+        ],
+        "currentIndex": 0,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": true,
+        "repeat": "off"
+      },
+      "queueInputEvents": [
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00002 from queue",
+          "active": "Remove Song 00002 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 0,
+          "name": "Remove Song 00002 from queue",
+          "active": "Remove Song 00002 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00004 from queue",
+          "active": "Remove Song 00004 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 1,
+          "name": "Remove Song 00004 from queue",
+          "active": "Remove Song 00004 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        }
+      ],
+      "queueRows": [],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "after-d-before-boundary-removal",
+      "rawSha256": "aff77c9ffb86efed35903e9d6aaac37752f1013b749015b028ce13d7e447d9c7",
+      "sourcePhase": "intermediate",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1218,
+          "y": 541,
+          "width": 34,
+          "height": 34,
+          "top": 541,
+          "right": 1252,
+          "bottom": 575,
+          "left": 1218
+        },
+        "insideDrawer": true,
+        "name": "Remove Song 00009 from queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 8,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": false
+      },
+      "player": "Song 00002",
+      "transport": "Pause",
+      "position": 18.6,
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003eb",
+          "000000000000000000000000000003ec",
+          "000000000000000000000000000003ed",
+          "000000000000000000000000000003ee",
+          "000000000000000000000000000003ef",
+          "000000000000000000000000000003f0",
+          "000000000000000000000000000003f1",
+          "000000000000000000000000000003f2",
+          "000000000000000000000000000003f3",
+          "000000000000000000000000000003f4",
+          "000000000000000000000000000003f5",
+          "000000000000000000000000000003f6",
+          "000000000000000000000000000003f7",
+          "000000000000000000000000000003f8",
+          "000000000000000000000000000003f9",
+          "000000000000000000000000000003fa",
+          "000000000000000000000000000003fb",
+          "000000000000000000000000000003fc",
+          "000000000000000000000000000003fd",
+          "000000000000000000000000000003fe",
+          "000000000000000000000000000003ff",
+          "00000000000000000000000000000400",
+          "00000000000000000000000000000401",
+          "00000000000000000000000000000402",
+          "00000000000000000000000000000403",
+          "00000000000000000000000000000404",
+          "00000000000000000000000000000405",
+          "00000000000000000000000000000406"
+        ],
+        "currentIndex": 0,
+        "position": 15.403337,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "queueInputEvents": [
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Pause Song 00002",
+          "active": "Pause Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00003",
+          "active": "Play Song 00003",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00004",
+          "active": "Play Song 00004",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00004 from queue",
+          "active": "Remove Song 00004 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00005",
+          "active": "Play Song 00005",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00005 from queue",
+          "active": "Remove Song 00005 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00006",
+          "active": "Play Song 00006",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00006 from queue",
+          "active": "Remove Song 00006 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00007",
+          "active": "Play Song 00007",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00007 from queue",
+          "active": "Remove Song 00007 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00008",
+          "active": "Play Song 00008",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00008 from queue",
+          "active": "Remove Song 00008 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00009",
+          "active": "Play Song 00009",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00009 from queue",
+          "active": "Remove Song 00009 from queue",
+          "owned": true,
+          "trusted": true
+        }
+      ],
+      "queueRows": [
+        {
+          "activeRemove": false,
+          "name": "Play Song 00003",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00004",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00005",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00006",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00007",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00008",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": true,
+          "name": "Play Song 00009",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00010",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00011",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00012",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00013",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00014",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00015",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00016",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00017",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00018",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00019",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00020",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00021",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00022",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00023",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00024",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00025",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00026",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00027",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00028",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00029",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00030",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00031",
+          "visible": true,
+          "removeVisible": true
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "after-d-boundary-removal",
+      "rawSha256": "bc22876f75687593361f526c945e90364f4cd684cf248ed9f4cd8531e255ea96",
+      "sourcePhase": "intermediate",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1218,
+          "y": 265,
+          "width": 34,
+          "height": 34,
+          "top": 265,
+          "right": 1252,
+          "bottom": 299,
+          "left": 1218
+        },
+        "insideDrawer": true,
+        "name": "Remove Song 00010 from queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 284,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": false
+      },
+      "player": "Song 00002",
+      "transport": "Pause",
+      "position": 29.5,
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003eb",
+          "000000000000000000000000000003ec",
+          "000000000000000000000000000003ed",
+          "000000000000000000000000000003ee",
+          "000000000000000000000000000003ef",
+          "000000000000000000000000000003f1",
+          "000000000000000000000000000003f2",
+          "000000000000000000000000000003f3",
+          "000000000000000000000000000003f4",
+          "000000000000000000000000000003f5",
+          "000000000000000000000000000003f6",
+          "000000000000000000000000000003f7",
+          "000000000000000000000000000003f8",
+          "000000000000000000000000000003f9",
+          "000000000000000000000000000003fa",
+          "000000000000000000000000000003fb",
+          "000000000000000000000000000003fc",
+          "000000000000000000000000000003fd",
+          "000000000000000000000000000003fe",
+          "000000000000000000000000000003ff",
+          "00000000000000000000000000000400",
+          "00000000000000000000000000000401",
+          "00000000000000000000000000000402",
+          "00000000000000000000000000000403",
+          "00000000000000000000000000000404",
+          "00000000000000000000000000000405",
+          "00000000000000000000000000000406"
+        ],
+        "currentIndex": 0,
+        "position": 28.15472,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "queueInputEvents": [
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Pause Song 00002",
+          "active": "Pause Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00003",
+          "active": "Play Song 00003",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00004",
+          "active": "Play Song 00004",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00004 from queue",
+          "active": "Remove Song 00004 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00005",
+          "active": "Play Song 00005",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00005 from queue",
+          "active": "Remove Song 00005 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00006",
+          "active": "Play Song 00006",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00006 from queue",
+          "active": "Remove Song 00006 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00007",
+          "active": "Play Song 00007",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00007 from queue",
+          "active": "Remove Song 00007 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00008",
+          "active": "Play Song 00008",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00008 from queue",
+          "active": "Remove Song 00008 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00009",
+          "active": "Play Song 00009",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00009 from queue",
+          "active": "Remove Song 00009 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 0,
+          "name": "Remove Song 00009 from queue",
+          "active": "Remove Song 00009 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00010 from queue",
+          "active": "Remove Song 00010 from queue",
+          "owned": true,
+          "trusted": true
+        }
+      ],
+      "queueRows": [
+        {
+          "activeRemove": false,
+          "name": "Play Song 00003",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00004",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00005",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00006",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00007",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00008",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": true,
+          "name": "Play Song 00010",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00011",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00012",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00013",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00014",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00015",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00016",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00017",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00018",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00019",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00020",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00021",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00022",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00023",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00024",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00025",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00026",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00027",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00028",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00029",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00030",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00031",
+          "visible": true,
+          "removeVisible": true
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "after-d-passive-playback",
+      "rawSha256": "016384a57967c0d56980fb00baaba4d67174fc9e0620a7c9a93a3a4d9d0f3c80",
+      "sourcePhase": "intermediate",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1218,
+          "y": 265,
+          "width": 34,
+          "height": 34,
+          "top": 265,
+          "right": 1252,
+          "bottom": 299,
+          "left": 1218
+        },
+        "insideDrawer": true,
+        "name": "Remove Song 00010 from queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 284,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": false
+      },
+      "player": "Song 00002",
+      "transport": "Pause",
+      "position": 57.9,
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003eb",
+          "000000000000000000000000000003ec",
+          "000000000000000000000000000003ed",
+          "000000000000000000000000000003ee",
+          "000000000000000000000000000003ef",
+          "000000000000000000000000000003f1",
+          "000000000000000000000000000003f2",
+          "000000000000000000000000000003f3",
+          "000000000000000000000000000003f4",
+          "000000000000000000000000000003f5",
+          "000000000000000000000000000003f6",
+          "000000000000000000000000000003f7",
+          "000000000000000000000000000003f8",
+          "000000000000000000000000000003f9",
+          "000000000000000000000000000003fa",
+          "000000000000000000000000000003fb",
+          "000000000000000000000000000003fc",
+          "000000000000000000000000000003fd",
+          "000000000000000000000000000003fe",
+          "000000000000000000000000000003ff",
+          "00000000000000000000000000000400",
+          "00000000000000000000000000000401",
+          "00000000000000000000000000000402",
+          "00000000000000000000000000000403",
+          "00000000000000000000000000000404",
+          "00000000000000000000000000000405",
+          "00000000000000000000000000000406"
+        ],
+        "currentIndex": 0,
+        "position": 53.12762,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "queueInputEvents": [
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Pause Song 00002",
+          "active": "Pause Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00003",
+          "active": "Play Song 00003",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00004",
+          "active": "Play Song 00004",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00004 from queue",
+          "active": "Remove Song 00004 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00005",
+          "active": "Play Song 00005",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00005 from queue",
+          "active": "Remove Song 00005 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00006",
+          "active": "Play Song 00006",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00006 from queue",
+          "active": "Remove Song 00006 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00007",
+          "active": "Play Song 00007",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00007 from queue",
+          "active": "Remove Song 00007 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00008",
+          "active": "Play Song 00008",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00008 from queue",
+          "active": "Remove Song 00008 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00009",
+          "active": "Play Song 00009",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00009 from queue",
+          "active": "Remove Song 00009 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 0,
+          "name": "Remove Song 00009 from queue",
+          "active": "Remove Song 00009 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00010 from queue",
+          "active": "Remove Song 00010 from queue",
+          "owned": true,
+          "trusted": true
+        }
+      ],
+      "queueRows": [
+        {
+          "activeRemove": false,
+          "name": "Play Song 00003",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00004",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00005",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00006",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00007",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00008",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": true,
+          "name": "Play Song 00010",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00011",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00012",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00013",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00014",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00015",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00016",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00017",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00018",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00019",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00020",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00021",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00022",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00023",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00024",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00025",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00026",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00027",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00028",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00029",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00030",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00031",
+          "visible": true,
+          "removeVisible": true
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "final-e-before-boundary-removal",
+      "rawSha256": "28d45cc2a03066acbfe36b7c2d15d65c98c0086b74047fef789cca9463d5bcb5",
+      "sourcePhase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1218,
+          "y": 541,
+          "width": 34,
+          "height": 34,
+          "top": 541,
+          "right": 1252,
+          "bottom": 575,
+          "left": 1218
+        },
+        "insideDrawer": true,
+        "name": "Remove Song 00009 from queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 8,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": false
+      },
+      "player": "Song 00002",
+      "transport": "Pause",
+      "position": 21.5,
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003eb",
+          "000000000000000000000000000003ec",
+          "000000000000000000000000000003ed",
+          "000000000000000000000000000003ee",
+          "000000000000000000000000000003ef",
+          "000000000000000000000000000003f0",
+          "000000000000000000000000000003f1",
+          "000000000000000000000000000003f2",
+          "000000000000000000000000000003f3",
+          "000000000000000000000000000003f4",
+          "000000000000000000000000000003f5",
+          "000000000000000000000000000003f6",
+          "000000000000000000000000000003f7",
+          "000000000000000000000000000003f8",
+          "000000000000000000000000000003f9",
+          "000000000000000000000000000003fa",
+          "000000000000000000000000000003fb",
+          "000000000000000000000000000003fc",
+          "000000000000000000000000000003fd",
+          "000000000000000000000000000003fe",
+          "000000000000000000000000000003ff",
+          "00000000000000000000000000000400",
+          "00000000000000000000000000000401",
+          "00000000000000000000000000000402",
+          "00000000000000000000000000000403",
+          "00000000000000000000000000000404",
+          "00000000000000000000000000000405",
+          "00000000000000000000000000000406"
+        ],
+        "currentIndex": 0,
+        "position": 21.252112,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "queueInputEvents": [
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Pause Song 00002",
+          "active": "Pause Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00003",
+          "active": "Play Song 00003",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00004",
+          "active": "Play Song 00004",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00004 from queue",
+          "active": "Remove Song 00004 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00005",
+          "active": "Play Song 00005",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00005 from queue",
+          "active": "Remove Song 00005 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00006",
+          "active": "Play Song 00006",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00006 from queue",
+          "active": "Remove Song 00006 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00007",
+          "active": "Play Song 00007",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00007 from queue",
+          "active": "Remove Song 00007 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00008",
+          "active": "Play Song 00008",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00008 from queue",
+          "active": "Remove Song 00008 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00009",
+          "active": "Play Song 00009",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00009 from queue",
+          "active": "Remove Song 00009 from queue",
+          "owned": true,
+          "trusted": true
+        }
+      ],
+      "queueRows": [
+        {
+          "activeRemove": false,
+          "name": "Play Song 00003",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00004",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00005",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00006",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00007",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00008",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": true,
+          "name": "Play Song 00009",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00010",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00011",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00012",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00013",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00014",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00015",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00016",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00017",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00018",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00019",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00020",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00021",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00022",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00023",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00024",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00025",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00026",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00027",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00028",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00029",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00030",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00031",
+          "visible": true,
+          "removeVisible": true
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "final-e-boundary-removal",
+      "rawSha256": "e1bfc1fafc0759f754bbfc977cc450601a185814b257cd6903747e91c7562271",
+      "sourcePhase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1218,
+          "y": 492,
+          "width": 34,
+          "height": 34,
+          "top": 492,
+          "right": 1252,
+          "bottom": 526,
+          "left": 1218
+        },
+        "insideDrawer": true,
+        "name": "Remove Song 00010 from queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 57,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": false
+      },
+      "player": "Song 00002",
+      "transport": "Pause",
+      "position": 128.3,
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003eb",
+          "000000000000000000000000000003ec",
+          "000000000000000000000000000003ed",
+          "000000000000000000000000000003ee",
+          "000000000000000000000000000003ef",
+          "000000000000000000000000000003f1",
+          "000000000000000000000000000003f2",
+          "000000000000000000000000000003f3",
+          "000000000000000000000000000003f4",
+          "000000000000000000000000000003f5",
+          "000000000000000000000000000003f6",
+          "000000000000000000000000000003f7",
+          "000000000000000000000000000003f8",
+          "000000000000000000000000000003f9",
+          "000000000000000000000000000003fa",
+          "000000000000000000000000000003fb",
+          "000000000000000000000000000003fc",
+          "000000000000000000000000000003fd",
+          "000000000000000000000000000003fe",
+          "000000000000000000000000000003ff",
+          "00000000000000000000000000000400",
+          "00000000000000000000000000000401",
+          "00000000000000000000000000000402",
+          "00000000000000000000000000000403",
+          "00000000000000000000000000000404",
+          "00000000000000000000000000000405",
+          "00000000000000000000000000000406"
+        ],
+        "currentIndex": 0,
+        "position": 123.52023,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "queueInputEvents": [
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Pause Song 00002",
+          "active": "Pause Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00003",
+          "active": "Play Song 00003",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00004",
+          "active": "Play Song 00004",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00004 from queue",
+          "active": "Remove Song 00004 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00005",
+          "active": "Play Song 00005",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00005 from queue",
+          "active": "Remove Song 00005 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00006",
+          "active": "Play Song 00006",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00006 from queue",
+          "active": "Remove Song 00006 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00007",
+          "active": "Play Song 00007",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00007 from queue",
+          "active": "Remove Song 00007 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00008",
+          "active": "Play Song 00008",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00008 from queue",
+          "active": "Remove Song 00008 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00009",
+          "active": "Play Song 00009",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00009 from queue",
+          "active": "Remove Song 00009 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 0,
+          "name": "Remove Song 00009 from queue",
+          "active": "Remove Song 00009 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00010 from queue",
+          "active": "Remove Song 00010 from queue",
+          "owned": true,
+          "trusted": true
+        }
+      ],
+      "queueRows": [
+        {
+          "activeRemove": false,
+          "name": "Play Song 00003",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00004",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00005",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00006",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00007",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00008",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": true,
+          "name": "Play Song 00010",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00011",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00012",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00013",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00014",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00015",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00016",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00017",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00018",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00019",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00020",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00021",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00022",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00023",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00024",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00025",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00026",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00027",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00028",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00029",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00030",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00031",
+          "visible": true,
+          "removeVisible": true
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "final-e-passive-playback",
+      "rawSha256": "2971ca5bd7ae20fd17bae3f82e8a7fba907413b20ccd0955e93005e9baf2b6f7",
+      "sourcePhase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1218,
+          "y": 492,
+          "width": 34,
+          "height": 34,
+          "top": 492,
+          "right": 1252,
+          "bottom": 526,
+          "left": 1218
+        },
+        "insideDrawer": true,
+        "name": "Remove Song 00010 from queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 57,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": false
+      },
+      "player": "Song 00002",
+      "transport": "Pause",
+      "position": 133.1,
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003eb",
+          "000000000000000000000000000003ec",
+          "000000000000000000000000000003ed",
+          "000000000000000000000000000003ee",
+          "000000000000000000000000000003ef",
+          "000000000000000000000000000003f1",
+          "000000000000000000000000000003f2",
+          "000000000000000000000000000003f3",
+          "000000000000000000000000000003f4",
+          "000000000000000000000000000003f5",
+          "000000000000000000000000000003f6",
+          "000000000000000000000000000003f7",
+          "000000000000000000000000000003f8",
+          "000000000000000000000000000003f9",
+          "000000000000000000000000000003fa",
+          "000000000000000000000000000003fb",
+          "000000000000000000000000000003fc",
+          "000000000000000000000000000003fd",
+          "000000000000000000000000000003fe",
+          "000000000000000000000000000003ff",
+          "00000000000000000000000000000400",
+          "00000000000000000000000000000401",
+          "00000000000000000000000000000402",
+          "00000000000000000000000000000403",
+          "00000000000000000000000000000404",
+          "00000000000000000000000000000405",
+          "00000000000000000000000000000406"
+        ],
+        "currentIndex": 0,
+        "position": 128.299447,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "queueInputEvents": [
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Pause Song 00002",
+          "active": "Pause Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00003",
+          "active": "Play Song 00003",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00004",
+          "active": "Play Song 00004",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00004 from queue",
+          "active": "Remove Song 00004 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00005",
+          "active": "Play Song 00005",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00005 from queue",
+          "active": "Remove Song 00005 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00006",
+          "active": "Play Song 00006",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00006 from queue",
+          "active": "Remove Song 00006 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00007",
+          "active": "Play Song 00007",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00007 from queue",
+          "active": "Remove Song 00007 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00008",
+          "active": "Play Song 00008",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00008 from queue",
+          "active": "Remove Song 00008 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00009",
+          "active": "Play Song 00009",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00009 from queue",
+          "active": "Remove Song 00009 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 0,
+          "name": "Remove Song 00009 from queue",
+          "active": "Remove Song 00009 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00010 from queue",
+          "active": "Remove Song 00010 from queue",
+          "owned": true,
+          "trusted": true
+        }
+      ],
+      "queueRows": [
+        {
+          "activeRemove": false,
+          "name": "Play Song 00003",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00004",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00005",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00006",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00007",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00008",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": true,
+          "name": "Play Song 00010",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00011",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00012",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00013",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00014",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00015",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00016",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00017",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00018",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00019",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00020",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00021",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00022",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00023",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00024",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00025",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00026",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00027",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00028",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00029",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00030",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00031",
+          "visible": true,
+          "removeVisible": true
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "final-f-collapsed-fallback",
+      "rawSha256": "7e78f8f30c7e53f84c5fd4bc4a1f06956ab28ccebde89ca8f3bf894f92fe842d",
+      "sourcePhase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1228,
+          "y": 30,
+          "width": 34,
+          "height": 34,
+          "top": 30,
+          "right": 1262,
+          "bottom": 64,
+          "left": 1228
+        },
+        "insideDrawer": true,
+        "name": "Close queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 0,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": true,
+        "open": false
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "queueInputEvents": [
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00004",
+          "active": "Play Song 00004",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00004 from queue",
+          "active": "Remove Song 00004 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 0,
+          "name": "Remove Song 00004 from queue",
+          "active": "Remove Song 00004 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        }
+      ],
+      "queueRows": [
+        {
+          "activeRemove": false,
+          "name": "Play Song 00002",
+          "visible": false,
+          "removeVisible": false
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00003",
+          "visible": false,
+          "removeVisible": false
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "final-f-duplicate-removed",
+      "rawSha256": "1115598bd69c37fe6e9102cd082bdcb2aab1d63ace148733d576fc8bcd5d3aad",
+      "sourcePhase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1226,
+          "y": 329.296875,
+          "width": 34,
+          "height": 34,
+          "top": 329.296875,
+          "right": 1260,
+          "bottom": 363.296875,
+          "left": 1226
+        },
+        "insideDrawer": true,
+        "name": "Remove Song 00003 from queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 0,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": true,
+        "open": true
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9"
+        ],
+        "currentIndex": 1,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "queueInputEvents": [
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00004",
+          "active": "Play Song 00004",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00004 from queue",
+          "active": "Remove Song 00004 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 0,
+          "name": "Remove Song 00004 from queue",
+          "active": "Remove Song 00004 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00002 from queue",
+          "active": "Remove Song 00002 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 0,
+          "name": "Remove Song 00002 from queue",
+          "active": "Remove Song 00002 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        }
+      ],
+      "queueRows": [
+        {
+          "activeRemove": true,
+          "name": "Play Song 00003",
+          "visible": true,
+          "removeVisible": true
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "final-f-empty-history",
+      "rawSha256": "ab1df624a58f9efef55f513ea3dfbe7b4339da1fb48f84afaf9d38f0d7b17585",
+      "sourcePhase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1228,
+          "y": 30,
+          "width": 34,
+          "height": 34,
+          "top": 30,
+          "right": 1262,
+          "bottom": 64,
+          "left": 1228
+        },
+        "insideDrawer": true,
+        "name": "Close queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 0,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": false
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9"
+        ],
+        "currentIndex": 0,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "queueInputEvents": [
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00004",
+          "active": "Play Song 00004",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00004 from queue",
+          "active": "Remove Song 00004 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 0,
+          "name": "Remove Song 00004 from queue",
+          "active": "Remove Song 00004 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00002 from queue",
+          "active": "Remove Song 00002 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 0,
+          "name": "Remove Song 00002 from queue",
+          "active": "Remove Song 00002 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        }
+      ],
+      "queueRows": [],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "final-g-duplicate-removed",
+      "rawSha256": "d602d2cbda62a41f7a2bdee21d4d922e041d468cde4c1954a87219841643ac5b",
+      "sourcePhase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1226,
+          "y": 276.796875,
+          "width": 34,
+          "height": 34,
+          "top": 276.796875,
+          "right": 1260,
+          "bottom": 310.796875,
+          "left": 1226
+        },
+        "insideDrawer": true,
+        "name": "Remove Song 00003 from queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 0,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": false
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 1,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": true,
+        "repeat": "off"
+      },
+      "queueInputEvents": [
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00002 from queue",
+          "active": "Remove Song 00002 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 0,
+          "name": "Remove Song 00002 from queue",
+          "active": "Remove Song 00002 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        }
+      ],
+      "queueRows": [
+        {
+          "activeRemove": true,
+          "name": "Play Song 00003",
+          "visible": true,
+          "removeVisible": true
+        },
+        {
+          "activeRemove": false,
+          "name": "Play Song 00004",
+          "visible": true,
+          "removeVisible": true
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "final-g-pointer-previous",
+      "rawSha256": "bb2a4672204471360ffca8046a6f33af51d1f5470dab1ce3873b20b3cbfdfff4",
+      "sourcePhase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1226,
+          "y": 276.796875,
+          "width": 34,
+          "height": 34,
+          "top": 276.796875,
+          "right": 1260,
+          "bottom": 310.796875,
+          "left": 1226
+        },
+        "insideDrawer": true,
+        "name": "Remove Song 00003 from queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 0,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": false
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9"
+        ],
+        "currentIndex": 1,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": true,
+        "repeat": "off"
+      },
+      "queueInputEvents": [
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00002 from queue",
+          "active": "Remove Song 00002 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 0,
+          "name": "Remove Song 00002 from queue",
+          "active": "Remove Song 00002 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00004 from queue",
+          "active": "Remove Song 00004 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 1,
+          "name": "Remove Song 00004 from queue",
+          "active": "Remove Song 00004 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        }
+      ],
+      "queueRows": [
+        {
+          "activeRemove": true,
+          "name": "Play Song 00003",
+          "visible": true,
+          "removeVisible": true
+        }
+      ],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    },
+    {
+      "name": "final-g-single-track",
+      "rawSha256": "411e29d8f5ab5f9d9aa5ecc95c24bc846000c8a4ac8d2f72060aade95425b725",
+      "sourcePhase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1228,
+          "y": 30,
+          "width": 34,
+          "height": 34,
+          "top": 30,
+          "right": 1262,
+          "bottom": 64,
+          "left": 1228
+        },
+        "insideDrawer": true,
+        "name": "Close queue",
+        "type": null,
+        "role": null
+      },
+      "drawer": {
+        "rect": {
+          "x": 977,
+          "y": 76,
+          "width": 303,
+          "height": 644,
+          "top": 76,
+          "right": 1280,
+          "bottom": 720,
+          "left": 977
+        },
+        "scrollTop": 0,
+        "playerTop": 616
+      },
+      "queueHistory": {
+        "present": false
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9"
+        ],
+        "currentIndex": 0,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": true,
+        "repeat": "off"
+      },
+      "queueInputEvents": [
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Play Song 00002",
+          "active": "Play Song 00002",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00002 from queue",
+          "active": "Remove Song 00002 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 0,
+          "name": "Remove Song 00002 from queue",
+          "active": "Remove Song 00002 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00004 from queue",
+          "active": "Remove Song 00004 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 1,
+          "name": "Remove Song 00004 from queue",
+          "active": "Remove Song 00004 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "click",
+          "detail": 0,
+          "name": "Remove Song 00003 from queue",
+          "active": "Remove Song 00003 from queue",
+          "owned": true,
+          "trusted": true
+        },
+        {
+          "type": "focusin",
+          "detail": 0,
+          "name": "Close queue",
+          "active": "Close queue",
+          "owned": true,
+          "trusted": true
+        }
+      ],
+      "queueRows": [],
+      "sideEffects": {
+        "providers": 0,
+        "writes": 0
+      },
+      "formSubmissions": 0
+    }
+  ],
+  "nativeAxExcerpts": {
+    "before": "Relevant native macOS AX excerpts transcribed from CUA output; unrelated siblings omitted.\nBefore native Return:\nThe focused UI element is 375 button Remove Song 00004 from queue\nAfter native Return:\nThe focused UI element is 3 HTML content onmywave.fm, URL: wave-app://bundle/index.html\n",
+    "final": [
+      "E: The focused UI element is 394 button Remove Song 00010 from queue",
+      "F collapsed fallback: The focused UI element is 356 button Close queue",
+      "F duplicate: The focused UI element is 400 button Remove Song 00003 from queue",
+      "F final: Hide queue, 1 track; The focused UI element is 356 button Close queue",
+      "G duplicate: The focused UI element is 383 button Remove Song 00003 from queue",
+      "G pointer previous: The focused UI element is 339 button Remove Song 00003 from queue",
+      "G final: Hide queue, 1 track; The focused UI element is 320 button Close queue"
+    ]
+  },
+  "scrollComparison": {
+    "intermediateD": {
+      "before": 8,
+      "after": 284
+    },
+    "finalE": {
+      "before": 8,
+      "after": 57
+    },
+    "interpretation": "Same30-occurrence queue and boundary removal, different elapsed times. Final native nearest scroll moves49px rather than276px. Focus remains above player; timeline continues. This is a measured comparison, not a guarantee of the same delta for all row geometries."
+  },
+  "verification": {
+    "productionBuildIncludingTypeScript": {
+      "result": "passed",
+      "terminalSession": 51739,
+      "logSha256": "21c2da3b8012acba2e0015930068db98edf1f35aafe1a5bb0b43348dec044bd9"
+    },
+    "fullEslint": {
+      "result": "passed",
+      "terminalSession": 64693
+    },
+    "nativeFinalReports": {
+      "after-e": {
+        "sha256": "1ff9d5c0c75142e4abd2e94df69f49a4b125bf08eab7ec82041d06825f220b7e",
+        "result": "observed",
+        "rendererErrors": 0
+      },
+      "final-f": {
+        "sha256": "708f91cd383b12a5420adc35b7bcb249209703d12934801cb06536436f3874ec",
+        "result": "observed",
+        "rendererErrors": 0
+      },
+      "final-g": {
+        "sha256": "bb3db1b1939976c54ad9415140cd2298e1e5c482b3e6ade538970cd123e107ba",
+        "result": "observed",
+        "rendererErrors": 0
+      }
+    },
+    "processCleanup": "All native observer sessions ended exit0; owned local server92462 verified by exact command and stopped, server session34428 exit143.",
+    "limitations": [
+      "Unfocused-trigger guard is source reviewed; no separate synthetic unfocused-click case. Native pointer case records trusted clickdetail1 with owned focus.",
+      "Intermediate B supplies expanded-history cross-group evidence; final F repeats history, duplicates and fallback, G repeats shuffle/previous pointer, E repeats long-scroll next target.",
+      "Initial final-F sandbox launch failed terminal1 before Electron started; retry with approved native execution succeeded. A prior build tool call lost its session handle; process state was checked and a logged build rerun completed. No app build failure was observed.",
+      "No unit, release, smaller-window, enlarged-zoom, VoiceOver or listener checks run."
+    ]
+  },
+  "sourceTraceSupplement": [
+    {
+      "path": "REQUIREMENTS.md",
+      "line": 89,
+      "text": "Keyboard focus must remain visible. When removing a queue occurrence whose Remove button owns focus, move to the next visible Remove action, then the previous visible one, or Close queue if none remain. Skip collapsed Earlier history and reveal only the needed distance above the player; removing a repeated song must remove only that occurrence. Leave focus elsewhere untouched. In All songs, albums and playlists, keep the focused song row and its checkbox, artwork, title and actions clear of the sticky heading, selection toolbar, player and changing playback notices. Arrow navigation follows each key press, including quick repeats. Reveal only the needed distance; pointer selection and passive updates must not scroll the list or take focus from a dialog or menu. Keyboard focus must leave filter popups and song action menus naturally with Tab, return after dialogs, and return to the relevant setup control after managing sources, DJs, or provider keys without losing the draft. Opening a playlist name, source name, or new listening-room name form puts focus in its name field so typing works immediately. The Add to playlist form initially focuses the new-playlist name, and choosing Create a new playlist again focuses its newly shown name field. Editing values, changing source type, or background refreshes must not move focus back. Help and confirmation dialogs start on a safe non-destructive target. Escape, Cancel, Close and backdrop dismissal return focus to the opening control when it remains available. If a dialog removes its opening control, focus the current page heading. Keep long dialog titles compact so Close and keyboard actions remain reachable at the current acceptance baseline. Preserve the full accessible title. For DJ and source deletion, show the complete target name in wrapping body text so similarly named items remain distinguishable before confirmation. Give related source checkboxes a group name and keep interactive recovery controls outside live status/error announcements.",
+      "sha256": "e7db0f5ca36ef1b4ac63543140555126d136956584c4aea238b22600fefc6aed",
+      "checks": [
+        "Q06",
+        "M03",
+        "M19"
+      ],
+      "historicalMap": "2026-10-17-source-acceptance-map.csv retains original dated hashes and text."
+    },
+    {
+      "path": "docs/RADIO_EXPERIENCE.md",
+      "line": 132,
+      "text": "| M1 | I can manage repeated songs individually | I queued a favorite twice and want to remove one occurrence | Open the queue, select or remove that occurrence | The other copy remains; removing an earlier entry does not change the current occurrence; paused music stays paused; removing a focused occurrence moves focus to the next visible Remove action, then the previous, or Close queue when none remain; collapsed Earlier history is skipped and other focus is left alone |",
+      "sha256": "c103fd1d3864f24fcf16ffcf5bcfdd4299eee2c7130156d8d4a69ef6b6e6a4f0",
+      "checks": [
+        "Q06",
+        "M03",
+        "M19"
+      ],
+      "historicalMap": "2026-10-17-source-acceptance-map.csv retains original dated hashes and text."
+    }
+  ],
+  "sourceHashes": {
+    "src/renderer/components/Queue/Queue.component.tsx": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082",
+    "src/renderer/components/Player/Player.component.tsx": "8ee20d8917df31c5b880d850d0445a3cf9610969885844b7c67e3e50eb3d65c2",
+    "src/renderer/player.tsx": "1a958a21936d3079f4a4d9c8e6987d47ffed8cf11cf6feee8cf4a4a7f2646f19",
+    "src/renderer/styles.css": "5a235c72cbcbff30bf790e1fa7044ea6a9abc9727ecbda08389d9a059a196d32",
+    "REQUIREMENTS.md": "e7db0f5ca36ef1b4ac63543140555126d136956584c4aea238b22600fefc6aed",
+    "docs/RADIO_EXPERIENCE.md": "c103fd1d3864f24fcf16ffcf5bcfdd4299eee2c7130156d8d4a69ef6b6e6a4f0",
+    "out/renderer/index.html": "67453dc3e3a5e129d23ddb8692e4ea8bb81d69cff49711441e0eba958dd54f91",
+    "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2",
+    "out/renderer/assets/index-B4wWoq7R.js": "385f7364004ec49aff751122afa420ae72b7b6527f7aa567fdbf5f34947d91da",
+    "out/renderer/assets/index-CUgwj8xN.css": "8dedf91bec8e203b47c5630cbd8925f4f357523a53a65c6a66ba92b9ba0f19c4",
+    "src/renderer/components/Drawer/Drawer.styles.css": "f6a585dbc6dd4070b31efd16762d9a79c77ffa46388f79ae8bc8f4a99264d292",
+    "src/renderer/components/Player/Player.styles.css": "c14c24b2b563243706fd7deecf0e7e1307965a3830d6208d313b8d0ac25d8114"
+  },
+  "fixtureHashes": {
+    "bootstrap.mjs": "bb28f04a2b9debd9ee96acf7f1bdd893c58bc7b1c065e03744bfe17e21129051",
+    "build.mjs": "9251c5c3175b3bbd0848d3b7d90f72f3ccf7d235eb54e47392b3f0426d2e5809",
+    "observe.cjs": "43ee7bd23359a3b7caf41e23424ad224ec9e9d26ea40f684e05c311638cb5cea",
+    "server.mjs": "96dac9ac3e5922dc122b523116ae27a131b3f5a2b46f851210cf93df3c3f0e8d",
+    "before-native-ax.txt": "c188115e30370ecc07b0b2917d5fa2cbc89ccc5fc386e3402a1ab81125b28bc0",
+    "nearest-production-build.log": "21c2da3b8012acba2e0015930068db98edf1f35aafe1a5bb0b43348dec044bd9",
+    "pre-nearest-bundle-hashes.json": "4332ddc65e15499484e6f93bc7eb8e5553fb67b90bbbf5c0ede32e025e43a1df",
+    "out/main/index.js": "240381787b22b70b634044bbf0980445f9b4154cdca31b42c2d56f935594a4be",
+    "before-fixture/build.mjs": "9251c5c3175b3bbd0848d3b7d90f72f3ccf7d235eb54e47392b3f0426d2e5809"
+  },
+  "acceptance": {
+    "rows": 191,
+    "active": 189,
+    "deferred": 2,
+    "remaining": 27,
+    "listenerRemaining": 14,
+    "otherRemaining": 13,
+    "statusChanges": [],
+    "Q06": "Review; partial queue focus evidence does not prove every essential control or conditional state.",
+    "goal": "active; no overall percentage or usability claim"
+  }
+}
