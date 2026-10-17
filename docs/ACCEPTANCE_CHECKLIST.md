@@ -37,7 +37,7 @@ Source: REQUIREMENTS: Product scope, Visual design, Project folder and stack.
 | V05 | Bundled Manrope 600 headings and Inter 400/500 interface text render without font network requests. | I+N | Controlled |
 | V06 | Sidebar, song table, artwork grid and persistent inset player follow the documented spacing and typography targets. | N+U | Review |
 | V07 | Long metadata truncates or wraps without moving or covering essential controls. | N | Controlled |
-| V08 | Hover, pressed, selected, disabled and keyboard focus states remain distinguishable and readable. | N | Review |
+| V08 | Hover, pressed, selected, disabled and keyboard focus states remain distinguishable and readable. | N | Controlled |
 | V09 | Motion respects reduced-motion preference. | N | Controlled |
 | V10 | Native window chrome, traffic lights and titlebar behavior work in desktop context. | N+O | Review |
 | V11 | Actual fonts, translucency and text remain legible at standard and Retina display scales. | N+O | External |
@@ -462,3 +462,6 @@ The [dialog form-focus record](verification/2026-10-17-dialog-form-focus.json) f
 
 
 The [current long-metadata record](verification/2026-10-17-long-metadata.json) closes V07 as Controlled. It reproduces and fixes Inspector artist/tag overflow, collection subtitle overflow, long profile text in DJ controls, expanded saved-source/notes overflow, scheduled-story source links, and a collection title hiding initial actions.44 native states at1280×720 and1600×1000 have no horizontal overflow or covered sampled controls. Short titles have no disclosure; clipped album and playlist titles expose exact full text with the keyboard. Native muted music advances then pauses; no provider call or renderer/fatal error occurs. Broader V13/Q06 and listener/OS checks stay open. Inventory:187 rows,185 active,2 Deferred;22 Review,1 Dated,0 Recorded,131 Controlled,20 Live,11 External.34 active checks remain.
+
+
+The [current interaction-state record](verification/2026-10-17-interaction-states.json) closes V08 as Controlled. Primary, navigation and player controls reproduced identical hover/held appearance. The shared enabled-button active rule now supplies an immediate1px press offset without changing colors or dimensions.23 native control families,13 focus cases and6 selected-state cases pass, including keyboard Space, artwork clipping, disabled Tab skipping and reduced motion. Sampled text-button foreground contrast is at least4.77:1 and focus checks exceed3:1 against surrounding surfaces. Q06/Q09 and observed usability remain separate. Inventory:187 rows,185 active,2 Deferred;21 Review,1 Dated,0 Recorded,132 Controlled,20 Live,11 External.33 active checks remain.

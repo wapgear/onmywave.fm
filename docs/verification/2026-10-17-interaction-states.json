@@ -1,0 +1,4790 @@
+{
+  "date": "2026-10-17",
+  "sourceCommit": "51d2b9d879787c0a3bcd6ea4b872862c556b36df",
+  "scope": [
+    "V08"
+  ],
+  "result": "passed within recorded native runtime",
+  "before": {
+    "cases": [
+      {
+        "name": "Primary action",
+        "normal": {
+          "background": "rgb(201, 40, 67)",
+          "color": "rgb(255, 255, 255)",
+          "outline": "rgb(255, 255, 255) none 3px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false
+        },
+        "hover": {
+          "background": "rgb(181, 34, 58)",
+          "color": "rgb(255, 255, 255)",
+          "outline": "rgb(255, 255, 255) none 3px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false
+        },
+        "pressed": {
+          "background": "rgb(181, 34, 58)",
+          "color": "rgb(255, 255, 255)",
+          "outline": "rgb(255, 255, 255) none 3px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false
+        },
+        "pressedDiffers": false
+      },
+      {
+        "name": "Unselected navigation",
+        "normal": {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(32, 32, 36)",
+          "outline": "rgb(32, 32, 36) none 3px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false
+        },
+        "hover": {
+          "background": "rgb(225, 226, 230)",
+          "color": "rgb(32, 32, 36)",
+          "outline": "rgb(32, 32, 36) none 3px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false
+        },
+        "pressed": {
+          "background": "rgb(225, 226, 230)",
+          "color": "rgb(32, 32, 36)",
+          "outline": "rgb(32, 32, 36) none 3px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false
+        },
+        "pressedDiffers": false
+      },
+      {
+        "name": "Player icon",
+        "normal": {
+          "background": "rgba(0, 0, 0, 0)",
+          "color": "rgb(62, 65, 74)",
+          "outline": "rgb(62, 65, 74) none 3px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false
+        },
+        "hover": {
+          "background": "rgba(0, 0, 0, 0.06)",
+          "color": "rgb(62, 65, 74)",
+          "outline": "rgb(62, 65, 74) none 3px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false
+        },
+        "pressed": {
+          "background": "rgba(0, 0, 0, 0.06)",
+          "color": "rgb(62, 65, 74)",
+          "outline": "rgb(62, 65, 74) none 3px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false
+        },
+        "pressedDiffers": false
+      }
+    ],
+    "errors": [],
+    "providerCalls": 0,
+    "result": "observed"
+  },
+  "change": "Add translate:0 1px only to shared enabled button :active. All other stylesheet bytes and all other application source/configuration are unchanged. Existing component hover/selected colors and focus/disabled behavior stay intact; translation composes with player hover scale.",
+  "decision": {
+    "SteveInitial": "Shared1px translation; weakness subtle small-icon cue.",
+    "ElenaInitial": "Shared inset shadow and slight brightness filter; weakness contrast effects.",
+    "challenge": "Steve preferred inset without filter, reserving artwork coverage; Elena supported translation without filter, reserving subtle icons.",
+    "Morgan": "Use one1px translation; no color/filter/shadow change. Native geometry, artwork/player captures and keyboard state verify the chosen cue.",
+    "implementation": "Steve, shared styles.css declaration only",
+    "review": "Elena, no actionable issue; requested artwork coverage included."
+  },
+  "native": {
+    "cases": [
+      {
+        "name": "Primary action",
+        "normal": {
+          "background": "rgb(201, 40, 67)",
+          "effectiveBackground": [
+            201,
+            40,
+            67
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(255, 255, 255)",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 1116.8359375,
+            "y": 62,
+            "width": 133.1640625,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "hover": {
+          "background": "rgb(181, 34, 58)",
+          "effectiveBackground": [
+            181,
+            34,
+            58
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(255, 255, 255)",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 1116.8359375,
+            "y": 62,
+            "width": 133.1640625,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "pressed": {
+          "background": "rgb(181, 34, 58)",
+          "effectiveBackground": [
+            181,
+            34,
+            58
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(255, 255, 255)",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 1116.8359375,
+            "y": 63,
+            "width": 133.1640625,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "released": {
+          "background": "rgb(181, 34, 58)",
+          "effectiveBackground": [
+            181,
+            34,
+            58
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(255, 255, 255)",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 1116.8359375,
+            "y": 62,
+            "width": 133.1640625,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "icon": false,
+        "contrast": [
+          5.429067339411902,
+          6.452286756332349,
+          6.452286756332349
+        ]
+      },
+      {
+        "name": "Disabled primary",
+        "normal": {
+          "background": "rgb(240, 240, 242)",
+          "effectiveBackground": [
+            240,
+            240,
+            242
+          ],
+          "outsideBackground": [
+            253,
+            253,
+            254
+          ],
+          "color": "rgb(98, 102, 116)",
+          "outlineColor": "rgb(98, 102, 116)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": true,
+          "rect": {
+            "x": 734.1640625,
+            "y": 429,
+            "width": 98.8359375,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "hover": {
+          "background": "rgb(240, 240, 242)",
+          "effectiveBackground": [
+            240,
+            240,
+            242
+          ],
+          "outsideBackground": [
+            253,
+            253,
+            254
+          ],
+          "color": "rgb(98, 102, 116)",
+          "outlineColor": "rgb(98, 102, 116)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": true,
+          "rect": {
+            "x": 734.1640625,
+            "y": 429,
+            "width": 98.8359375,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "pressed": {
+          "background": "rgb(240, 240, 242)",
+          "effectiveBackground": [
+            240,
+            240,
+            242
+          ],
+          "outsideBackground": [
+            253,
+            253,
+            254
+          ],
+          "color": "rgb(98, 102, 116)",
+          "outlineColor": "rgb(98, 102, 116)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": true,
+          "rect": {
+            "x": 734.1640625,
+            "y": 429,
+            "width": 98.8359375,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "released": {
+          "background": "rgb(240, 240, 242)",
+          "effectiveBackground": [
+            240,
+            240,
+            242
+          ],
+          "outsideBackground": [
+            253,
+            253,
+            254
+          ],
+          "color": "rgb(98, 102, 116)",
+          "outlineColor": "rgb(98, 102, 116)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": true,
+          "rect": {
+            "x": 734.1640625,
+            "y": 429,
+            "width": 98.8359375,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "icon": false,
+        "contrast": [
+          5.024749597052871,
+          5.024749597052871,
+          5.024749597052871
+        ]
+      },
+      {
+        "name": "Neutral action",
+        "normal": {
+          "background": "rgb(239, 239, 241)",
+          "effectiveBackground": [
+            239,
+            239,
+            241
+          ],
+          "outsideBackground": [
+            253,
+            253,
+            254
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 658.8125,
+            "y": 429,
+            "width": 67.3515625,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "hover": {
+          "background": "rgb(230, 230, 233)",
+          "effectiveBackground": [
+            230,
+            230,
+            233
+          ],
+          "outsideBackground": [
+            253,
+            253,
+            254
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 658.8125,
+            "y": 429,
+            "width": 67.3515625,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "pressed": {
+          "background": "rgb(220, 220, 225)",
+          "effectiveBackground": [
+            220,
+            220,
+            225
+          ],
+          "outsideBackground": [
+            253,
+            253,
+            254
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 658.8125,
+            "y": 430,
+            "width": 67.3515625,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "released": {
+          "background": "rgb(220, 220, 225)",
+          "effectiveBackground": [
+            220,
+            220,
+            225
+          ],
+          "outsideBackground": [
+            253,
+            253,
+            254
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 658.8125,
+            "y": 429,
+            "width": 67.3515625,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "icon": false,
+        "contrast": [
+          14.137604540376888,
+          13.034425150746046,
+          11.88072456495437
+        ]
+      },
+      {
+        "name": "Icon close",
+        "normal": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            253,
+            253,
+            254
+          ],
+          "outsideBackground": [
+            253,
+            253,
+            254
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 804,
+            "y": 271.75,
+            "width": 34,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "hover": {
+          "background": "rgb(233, 233, 236)",
+          "effectiveBackground": [
+            233,
+            233,
+            236
+          ],
+          "outsideBackground": [
+            253,
+            253,
+            254
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 804,
+            "y": 271.75,
+            "width": 34,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "pressed": {
+          "background": "rgb(233, 233, 236)",
+          "effectiveBackground": [
+            233,
+            233,
+            236
+          ],
+          "outsideBackground": [
+            253,
+            253,
+            254
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 804,
+            "y": 272.75,
+            "width": 34,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "released": {
+          "background": "rgb(232, 232, 235)",
+          "effectiveBackground": [
+            232,
+            232,
+            235
+          ],
+          "outsideBackground": [
+            253,
+            253,
+            254
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 804,
+            "y": 271.75,
+            "width": 34,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "icon": true,
+        "contrast": [
+          15.970524457968084,
+          13.39898454703304,
+          13.39898454703304
+        ]
+      },
+      {
+        "name": "Unselected navigation",
+        "normal": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            240,
+            240,
+            243
+          ],
+          "outsideBackground": [
+            240,
+            240,
+            243
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 16,
+            "y": 159.5,
+            "width": 176,
+            "height": 44
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "hover": {
+          "background": "rgb(225, 226, 230)",
+          "effectiveBackground": [
+            225,
+            226,
+            230
+          ],
+          "outsideBackground": [
+            240,
+            240,
+            243
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 16,
+            "y": 159.5,
+            "width": 176,
+            "height": 44
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "pressed": {
+          "background": "rgb(225, 226, 230)",
+          "effectiveBackground": [
+            225,
+            226,
+            230
+          ],
+          "outsideBackground": [
+            240,
+            240,
+            243
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 16,
+            "y": 160.5,
+            "width": 176,
+            "height": 44
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "released": {
+          "background": "rgb(225, 226, 230)",
+          "effectiveBackground": [
+            225,
+            226,
+            230
+          ],
+          "outsideBackground": [
+            240,
+            240,
+            243
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 16,
+            "y": 159.5,
+            "width": 176,
+            "height": 44
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "icon": false,
+        "contrast": [
+          14.273964730245638,
+          12.541747550747662,
+          12.541747550747662
+        ]
+      },
+      {
+        "name": "Selected navigation",
+        "normal": {
+          "background": "rgb(225, 225, 230)",
+          "effectiveBackground": [
+            225,
+            225,
+            230
+          ],
+          "outsideBackground": [
+            240,
+            240,
+            243
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 16,
+            "y": 107.5,
+            "width": 176,
+            "height": 44
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "hover": {
+          "background": "rgb(225, 226, 230)",
+          "effectiveBackground": [
+            225,
+            226,
+            230
+          ],
+          "outsideBackground": [
+            240,
+            240,
+            243
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 16,
+            "y": 107.5,
+            "width": 176,
+            "height": 44
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "pressed": {
+          "background": "rgb(225, 226, 230)",
+          "effectiveBackground": [
+            225,
+            226,
+            230
+          ],
+          "outsideBackground": [
+            240,
+            240,
+            243
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 16,
+            "y": 108.5,
+            "width": 176,
+            "height": 44
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "released": {
+          "background": "rgb(225, 226, 230)",
+          "effectiveBackground": [
+            225,
+            226,
+            230
+          ],
+          "outsideBackground": [
+            240,
+            240,
+            243
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 16,
+            "y": 107.5,
+            "width": 176,
+            "height": 44
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "icon": false,
+        "contrast": [
+          12.457899487321333,
+          12.541747550747662,
+          12.541747550747662
+        ]
+      },
+      {
+        "name": "Player icon",
+        "normal": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            254.76,
+            254.76,
+            254.82
+          ],
+          "outsideBackground": [
+            254.76,
+            254.76,
+            254.82
+          ],
+          "color": "rgb(62, 65, 74)",
+          "outlineColor": "rgb(62, 65, 74)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 537.9921875,
+            "y": 630.5,
+            "width": 32,
+            "height": 32
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "hover": {
+          "background": "rgba(0, 0, 0, 0.06)",
+          "effectiveBackground": [
+            239.47439999999997,
+            239.47439999999997,
+            239.53079999999997
+          ],
+          "outsideBackground": [
+            254.76,
+            254.76,
+            254.82
+          ],
+          "color": "rgb(62, 65, 74)",
+          "outlineColor": "rgb(62, 65, 74)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 537.9921875,
+            "y": 630.5,
+            "width": 32,
+            "height": 32
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "pressed": {
+          "background": "rgba(0, 0, 0, 0.06)",
+          "effectiveBackground": [
+            239.47439999999997,
+            239.47439999999997,
+            239.53079999999997
+          ],
+          "outsideBackground": [
+            254.76,
+            254.76,
+            254.82
+          ],
+          "color": "rgb(62, 65, 74)",
+          "outlineColor": "rgb(62, 65, 74)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 537.9921875,
+            "y": 631.5,
+            "width": 32,
+            "height": 32
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "released": {
+          "background": "rgba(0, 0, 0, 0.06)",
+          "effectiveBackground": [
+            239.47439999999997,
+            239.47439999999997,
+            239.53079999999997
+          ],
+          "outsideBackground": [
+            254.76,
+            254.76,
+            254.82
+          ],
+          "color": "rgb(62, 65, 74)",
+          "outlineColor": "rgb(62, 65, 74)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 537.9921875,
+            "y": 630.5,
+            "width": 32,
+            "height": 32
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "icon": true,
+        "contrast": [
+          10.174626167814303,
+          8.904431587510604,
+          8.904431587510604
+        ]
+      },
+      {
+        "name": "Selected player icon",
+        "normal": {
+          "background": "rgb(251, 236, 239)",
+          "effectiveBackground": [
+            251,
+            236,
+            239
+          ],
+          "outsideBackground": [
+            254.76,
+            254.76,
+            254.82
+          ],
+          "color": "rgb(201, 40, 67)",
+          "outlineColor": "rgb(201, 40, 67)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 537.9921875,
+            "y": 630.5,
+            "width": 32,
+            "height": 32
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "hover": {
+          "background": "rgba(0, 0, 0, 0.06)",
+          "effectiveBackground": [
+            239.47439999999997,
+            239.47439999999997,
+            239.53079999999997
+          ],
+          "outsideBackground": [
+            254.76,
+            254.76,
+            254.82
+          ],
+          "color": "rgb(201, 40, 67)",
+          "outlineColor": "rgb(201, 40, 67)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 537.9921875,
+            "y": 630.5,
+            "width": 32,
+            "height": 32
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "pressed": {
+          "background": "rgba(0, 0, 0, 0.06)",
+          "effectiveBackground": [
+            239.47439999999997,
+            239.47439999999997,
+            239.53079999999997
+          ],
+          "outsideBackground": [
+            254.76,
+            254.76,
+            254.82
+          ],
+          "color": "rgb(201, 40, 67)",
+          "outlineColor": "rgb(201, 40, 67)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 537.9921875,
+            "y": 631.5,
+            "width": 32,
+            "height": 32
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "released": {
+          "background": "rgba(121, 114, 115, 0.11)",
+          "effectiveBackground": [
+            240.0464,
+            239.2764,
+            239.4398
+          ],
+          "outsideBackground": [
+            254.76,
+            254.76,
+            254.82
+          ],
+          "color": "rgb(201, 40, 67)",
+          "outlineColor": "rgb(201, 40, 67)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 537.9921875,
+            "y": 630.5,
+            "width": 32,
+            "height": 32
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "icon": true,
+        "contrast": [
+          4.743046772632212,
+          4.741797943377239,
+          4.741797943377239
+        ]
+      },
+      {
+        "name": "Play transport",
+        "normal": {
+          "background": "rgb(48, 48, 54)",
+          "effectiveBackground": [
+            48,
+            48,
+            54
+          ],
+          "outsideBackground": [
+            254.76,
+            254.76,
+            254.82
+          ],
+          "color": "rgb(255, 255, 255)",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 621.9921875,
+            "y": 628.5,
+            "width": 36,
+            "height": 36
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "hover": {
+          "background": "rgb(65, 69, 80)",
+          "effectiveBackground": [
+            65,
+            69,
+            80
+          ],
+          "outsideBackground": [
+            254.76,
+            254.76,
+            254.82
+          ],
+          "color": "rgb(255, 255, 255)",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "matrix(1.04, 0, 0, 1.04, 0, 0)",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 621.272216796875,
+            "y": 627.780029296875,
+            "width": 37.43994140625,
+            "height": 37.43994140625
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "pressed": {
+          "background": "rgb(65, 69, 80)",
+          "effectiveBackground": [
+            65,
+            69,
+            80
+          ],
+          "outsideBackground": [
+            254.76,
+            254.76,
+            254.82
+          ],
+          "color": "rgb(255, 255, 255)",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "matrix(1.04, 0, 0, 1.04, 0, 0)",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 621.272216796875,
+            "y": 628.780029296875,
+            "width": 37.43994140625,
+            "height": 37.43994140625
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "released": {
+          "background": "rgb(65, 69, 80)",
+          "effectiveBackground": [
+            65,
+            69,
+            80
+          ],
+          "outsideBackground": [
+            254.76,
+            254.76,
+            254.82
+          ],
+          "color": "rgb(255, 255, 255)",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "matrix(1.04, 0, 0, 1.04, 0, 0)",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 621.272216796875,
+            "y": 627.780029296875,
+            "width": 37.43994140625,
+            "height": 37.43994140625
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "icon": true,
+        "contrast": [
+          13.110864961735597,
+          9.580949164646878,
+          9.580949164646878
+        ]
+      },
+      {
+        "name": "Song title",
+        "normal": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            251,
+            251,
+            252
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 352,
+            "y": 245.5,
+            "width": 74.5546875,
+            "height": 36
+          },
+          "childStates": [
+            {
+              "tag": "SPAN",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "SMALL",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "hover": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            240,
+            240,
+            243
+          ],
+          "outsideBackground": [
+            240,
+            240,
+            243
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 352,
+            "y": 245.5,
+            "width": 74.5546875,
+            "height": 36
+          },
+          "childStates": [
+            {
+              "tag": "SPAN",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "SMALL",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "pressed": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            240,
+            240,
+            243
+          ],
+          "outsideBackground": [
+            240,
+            240,
+            243
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 352,
+            "y": 246.5,
+            "width": 74.5546875,
+            "height": 36
+          },
+          "childStates": [
+            {
+              "tag": "SPAN",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "SMALL",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "released": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            251,
+            251,
+            252
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 352,
+            "y": 245.5,
+            "width": 74.5546875,
+            "height": 36
+          },
+          "childStates": [
+            {
+              "tag": "SPAN",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "SMALL",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "icon": false,
+        "contrast": [
+          15.698842201639899,
+          14.273964730245638,
+          14.273964730245638
+        ]
+      },
+      {
+        "name": "Artwork play",
+        "normal": {
+          "background": "rgb(239, 239, 241)",
+          "effectiveBackground": [
+            239,
+            239,
+            241
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 304,
+            "y": 245.5,
+            "width": 36,
+            "height": 36
+          },
+          "childStates": [
+            {
+              "tag": "DIV",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "SPAN",
+              "background": "rgba(0, 0, 0, 0.4)",
+              "transform": "none"
+            }
+          ]
+        },
+        "hover": {
+          "background": "rgb(230, 230, 233)",
+          "effectiveBackground": [
+            230,
+            230,
+            233
+          ],
+          "outsideBackground": [
+            240,
+            240,
+            243
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 304,
+            "y": 245.5,
+            "width": 36,
+            "height": 36
+          },
+          "childStates": [
+            {
+              "tag": "DIV",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "SPAN",
+              "background": "rgba(0, 0, 0, 0.4)",
+              "transform": "none"
+            }
+          ]
+        },
+        "pressed": {
+          "background": "rgb(220, 220, 225)",
+          "effectiveBackground": [
+            220,
+            220,
+            225
+          ],
+          "outsideBackground": [
+            240,
+            240,
+            243
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 304,
+            "y": 246.5,
+            "width": 36,
+            "height": 36
+          },
+          "childStates": [
+            {
+              "tag": "DIV",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "SPAN",
+              "background": "rgba(0, 0, 0, 0.4)",
+              "transform": "none"
+            }
+          ]
+        },
+        "released": {
+          "background": "rgb(220, 220, 225)",
+          "effectiveBackground": [
+            220,
+            220,
+            225
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 304,
+            "y": 245.5,
+            "width": 36,
+            "height": 36
+          },
+          "childStates": [
+            {
+              "tag": "DIV",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "SPAN",
+              "background": "rgba(0, 0, 0, 0.4)",
+              "transform": "none"
+            }
+          ]
+        },
+        "icon": true,
+        "contrast": [
+          14.137604540376888,
+          13.034425150746046,
+          11.88072456495437
+        ]
+      },
+      {
+        "name": "Track menu trigger",
+        "normal": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            251,
+            251,
+            252
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 1214,
+            "y": 248.5,
+            "width": 28,
+            "height": 30
+          },
+          "childStates": []
+        },
+        "hover": {
+          "background": "rgb(230, 230, 233)",
+          "effectiveBackground": [
+            230,
+            230,
+            233
+          ],
+          "outsideBackground": [
+            240,
+            240,
+            243
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 1214,
+            "y": 248.5,
+            "width": 28,
+            "height": 30
+          },
+          "childStates": []
+        },
+        "pressed": {
+          "background": "rgb(220, 220, 225)",
+          "effectiveBackground": [
+            220,
+            220,
+            225
+          ],
+          "outsideBackground": [
+            240,
+            240,
+            243
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 1214,
+            "y": 249.5,
+            "width": 28,
+            "height": 30
+          },
+          "childStates": []
+        },
+        "released": {
+          "background": "rgb(220, 220, 225)",
+          "effectiveBackground": [
+            220,
+            220,
+            225
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 1214,
+            "y": 248.5,
+            "width": 28,
+            "height": 30
+          },
+          "childStates": []
+        },
+        "icon": true,
+        "contrast": [
+          15.698842201639899,
+          13.034425150746046,
+          11.88072456495437
+        ]
+      },
+      {
+        "name": "Song action menu item",
+        "normal": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            255,
+            255,
+            255
+          ],
+          "outsideBackground": [
+            255,
+            255,
+            255
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 1044,
+            "y": 391.5,
+            "width": 191,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "hover": {
+          "background": "rgb(242, 242, 245)",
+          "effectiveBackground": [
+            242,
+            242,
+            245
+          ],
+          "outsideBackground": [
+            255,
+            255,
+            255
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 1044,
+            "y": 391.5,
+            "width": 191,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "pressed": {
+          "background": "rgb(242, 242, 245)",
+          "effectiveBackground": [
+            242,
+            242,
+            245
+          ],
+          "outsideBackground": [
+            255,
+            255,
+            255
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 1044,
+            "y": 392.5,
+            "width": 191,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "released": {
+          "background": "rgb(242, 242, 245)",
+          "effectiveBackground": [
+            242,
+            242,
+            245
+          ],
+          "outsideBackground": [
+            255,
+            255,
+            255
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 1044,
+            "y": 391.5,
+            "width": 191,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "icon": false,
+        "contrast": [
+          16.235084718802778,
+          14.530258440558931,
+          14.530258440558931
+        ]
+      },
+      {
+        "name": "Filter option",
+        "normal": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            255,
+            255,
+            255
+          ],
+          "outsideBackground": [
+            255,
+            255,
+            255
+          ],
+          "color": "rgb(201, 40, 67)",
+          "outlineColor": "rgb(201, 40, 67)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 245,
+            "y": 231,
+            "width": 262,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "SPAN",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "hover": {
+          "background": "rgb(240, 240, 242)",
+          "effectiveBackground": [
+            240,
+            240,
+            242
+          ],
+          "outsideBackground": [
+            255,
+            255,
+            255
+          ],
+          "color": "rgb(201, 40, 67)",
+          "outlineColor": "rgb(201, 40, 67)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 245,
+            "y": 231,
+            "width": 262,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "SPAN",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "pressed": {
+          "background": "rgb(240, 240, 242)",
+          "effectiveBackground": [
+            240,
+            240,
+            242
+          ],
+          "outsideBackground": [
+            255,
+            255,
+            255
+          ],
+          "color": "rgb(201, 40, 67)",
+          "outlineColor": "rgb(201, 40, 67)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 245,
+            "y": 232,
+            "width": 262,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "SPAN",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "released": {
+          "background": "rgb(240, 240, 242)",
+          "effectiveBackground": [
+            240,
+            240,
+            242
+          ],
+          "outsideBackground": [
+            255,
+            255,
+            255
+          ],
+          "color": "rgb(201, 40, 67)",
+          "outlineColor": "rgb(201, 40, 67)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 245,
+            "y": 231,
+            "width": 262,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "SPAN",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "icon": false,
+        "contrast": [
+          5.429067339411902,
+          4.770146412057676,
+          4.770146412057676
+        ]
+      },
+      {
+        "name": "Album tile",
+        "normal": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            251,
+            251,
+            252
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 238,
+            "y": 134,
+            "width": 183.1953125,
+            "height": 251.1953125
+          },
+          "childStates": [
+            {
+              "tag": "DIV",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "STRONG",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "hover": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            251,
+            251,
+            252
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 238,
+            "y": 134,
+            "width": 183.1953125,
+            "height": 251.1953125
+          },
+          "childStates": [
+            {
+              "tag": "DIV",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "matrix(1, 0, 0, 1, 0, -3)"
+            },
+            {
+              "tag": "STRONG",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "pressed": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            251,
+            251,
+            252
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 238,
+            "y": 135,
+            "width": 183.1953125,
+            "height": 251.1953125
+          },
+          "childStates": [
+            {
+              "tag": "DIV",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "matrix(1, 0, 0, 1, 0, -3)"
+            },
+            {
+              "tag": "STRONG",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "released": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            251,
+            251,
+            252
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 238,
+            "y": 134,
+            "width": 183.1953125,
+            "height": 251.1953125
+          },
+          "childStates": [
+            {
+              "tag": "DIV",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "matrix(1, 0, 0, 1, 0, -3)"
+            },
+            {
+              "tag": "STRONG",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "icon": false,
+        "contrast": [
+          15.698842201639899,
+          15.698842201639899,
+          15.698842201639899
+        ]
+      },
+      {
+        "name": "Playlist tile",
+        "normal": {
+          "background": "rgb(241, 241, 244)",
+          "effectiveBackground": [
+            241,
+            241,
+            244
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 238,
+            "y": 134,
+            "width": 329.328125,
+            "height": 86
+          },
+          "childStates": [
+            {
+              "tag": "DIV",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "DIV",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "hover": {
+          "background": "rgb(230, 230, 233)",
+          "effectiveBackground": [
+            230,
+            230,
+            233
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 238,
+            "y": 134,
+            "width": 329.328125,
+            "height": 86
+          },
+          "childStates": [
+            {
+              "tag": "DIV",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "DIV",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "pressed": {
+          "background": "rgb(220, 220, 225)",
+          "effectiveBackground": [
+            220,
+            220,
+            225
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 238,
+            "y": 135,
+            "width": 329.328125,
+            "height": 86
+          },
+          "childStates": [
+            {
+              "tag": "DIV",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "DIV",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "released": {
+          "background": "rgb(220, 220, 225)",
+          "effectiveBackground": [
+            220,
+            220,
+            225
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 238,
+            "y": 134,
+            "width": 329.328125,
+            "height": 86
+          },
+          "childStates": [
+            {
+              "tag": "DIV",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "DIV",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "icon": false,
+        "contrast": [
+          14.401760144604578,
+          13.034425150746046,
+          11.88072456495437
+        ]
+      },
+      {
+        "name": "Queue track",
+        "normal": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            247,
+            247,
+            249
+          ],
+          "outsideBackground": [
+            247,
+            247,
+            249
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 997,
+            "y": 116.5,
+            "width": 117.234375,
+            "height": 44
+          },
+          "childStates": [
+            {
+              "tag": "DIV",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "SPAN",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "hover": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            247,
+            247,
+            249
+          ],
+          "outsideBackground": [
+            247,
+            247,
+            249
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 997,
+            "y": 116.5,
+            "width": 117.234375,
+            "height": 44
+          },
+          "childStates": [
+            {
+              "tag": "DIV",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "SPAN",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "pressed": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            247,
+            247,
+            249
+          ],
+          "outsideBackground": [
+            247,
+            247,
+            249
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 997,
+            "y": 117.5,
+            "width": 117.234375,
+            "height": 44
+          },
+          "childStates": [
+            {
+              "tag": "DIV",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "SPAN",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "released": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            247,
+            247,
+            249
+          ],
+          "outsideBackground": [
+            247,
+            247,
+            249
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 997,
+            "y": 116.5,
+            "width": 117.234375,
+            "height": 44
+          },
+          "childStates": [
+            {
+              "tag": "DIV",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "SPAN",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "icon": false,
+        "contrast": [
+          15.173656315655121,
+          15.173656315655121,
+          15.173656315655121
+        ]
+      },
+      {
+        "name": "Queue remove",
+        "normal": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            247,
+            247,
+            249
+          ],
+          "outsideBackground": [
+            247,
+            247,
+            249
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(201, 40, 67)",
+          "outlineWidth": "1px",
+          "outlineStyle": "solid",
+          "outlineOffset": "2px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": true,
+          "disabled": false,
+          "rect": {
+            "x": 1226,
+            "y": 225,
+            "width": 34,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "hover": {
+          "background": "rgb(233, 233, 236)",
+          "effectiveBackground": [
+            233,
+            233,
+            236
+          ],
+          "outsideBackground": [
+            237,
+            237,
+            240
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(201, 40, 67)",
+          "outlineWidth": "1px",
+          "outlineStyle": "solid",
+          "outlineOffset": "2px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": true,
+          "disabled": false,
+          "rect": {
+            "x": 1226,
+            "y": 225,
+            "width": 34,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "pressed": {
+          "background": "rgb(233, 233, 236)",
+          "effectiveBackground": [
+            233,
+            233,
+            236
+          ],
+          "outsideBackground": [
+            237,
+            237,
+            240
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(201, 40, 67)",
+          "outlineWidth": "1px",
+          "outlineStyle": "solid",
+          "outlineOffset": "2px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": true,
+          "disabled": false,
+          "rect": {
+            "x": 1226,
+            "y": 226,
+            "width": 34,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "released": {
+          "background": "rgb(233, 233, 236)",
+          "effectiveBackground": [
+            233,
+            233,
+            236
+          ],
+          "outsideBackground": [
+            247,
+            247,
+            249
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(201, 40, 67)",
+          "outlineWidth": "1px",
+          "outlineStyle": "solid",
+          "outlineOffset": "2px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": true,
+          "disabled": false,
+          "rect": {
+            "x": 1226,
+            "y": 225,
+            "width": 34,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "icon": true,
+        "contrast": [
+          15.173656315655121,
+          13.39898454703304,
+          13.39898454703304
+        ]
+      },
+      {
+        "name": "Configuration tab",
+        "normal": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            251,
+            251,
+            252
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(98, 102, 116)",
+          "outlineColor": "rgb(98, 102, 116)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 354.8984375,
+            "y": 266.6953125,
+            "width": 78.09375,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "hover": {
+          "background": "rgb(237, 237, 240)",
+          "effectiveBackground": [
+            237,
+            237,
+            240
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 354.8984375,
+            "y": 266.6953125,
+            "width": 78.09375,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "pressed": {
+          "background": "rgb(237, 237, 240)",
+          "effectiveBackground": [
+            237,
+            237,
+            240
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 354.8984375,
+            "y": 267.6953125,
+            "width": 78.09375,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "released": {
+          "background": "rgb(237, 237, 240)",
+          "effectiveBackground": [
+            237,
+            237,
+            240
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(98, 102, 116)",
+          "outlineColor": "rgb(98, 102, 116)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 354.8984375,
+            "y": 266.6953125,
+            "width": 78.09375,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "icon": false,
+        "contrast": [
+          5.5299474992332165,
+          13.894784735486995,
+          13.894784735486995
+        ]
+      },
+      {
+        "name": "DJ popup action",
+        "normal": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            255,
+            255,
+            255
+          ],
+          "outsideBackground": [
+            255,
+            255,
+            255
+          ],
+          "color": "rgb(201, 40, 67)",
+          "outlineColor": "rgb(201, 40, 67)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 736.9921875,
+            "y": 282.96875,
+            "width": 98.8828125,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "hover": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            255,
+            255,
+            255
+          ],
+          "outsideBackground": [
+            255,
+            255,
+            255
+          ],
+          "color": "rgb(201, 40, 67)",
+          "outlineColor": "rgb(201, 40, 67)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 736.9921875,
+            "y": 282.96875,
+            "width": 98.8828125,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "pressed": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            255,
+            255,
+            255
+          ],
+          "outsideBackground": [
+            255,
+            255,
+            255
+          ],
+          "color": "rgb(201, 40, 67)",
+          "outlineColor": "rgb(201, 40, 67)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 736.9921875,
+            "y": 283.96875,
+            "width": 98.8828125,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "released": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            255,
+            255,
+            255
+          ],
+          "outsideBackground": [
+            255,
+            255,
+            255
+          ],
+          "color": "rgb(201, 40, 67)",
+          "outlineColor": "rgb(201, 40, 67)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 736.9921875,
+            "y": 282.96875,
+            "width": 98.8828125,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "icon": false,
+        "contrast": [
+          5.429067339411902,
+          5.429067339411902,
+          5.429067339411902
+        ]
+      },
+      {
+        "name": "Settings section",
+        "normal": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            251,
+            251,
+            252
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(98, 102, 116)",
+          "outlineColor": "rgb(98, 102, 116)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 312.203125,
+            "y": 134,
+            "width": 100.9921875,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "hover": {
+          "background": "rgb(240, 240, 242)",
+          "effectiveBackground": [
+            240,
+            240,
+            242
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 312.203125,
+            "y": 134,
+            "width": 100.9921875,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "pressed": {
+          "background": "rgb(240, 240, 242)",
+          "effectiveBackground": [
+            240,
+            240,
+            242
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 312.203125,
+            "y": 135,
+            "width": 100.9921875,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "released": {
+          "background": "rgb(240, 240, 242)",
+          "effectiveBackground": [
+            240,
+            240,
+            242
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(98, 102, 116)",
+          "outlineColor": "rgb(98, 102, 116)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 312.203125,
+            "y": 134,
+            "width": 100.9921875,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "icon": false,
+        "contrast": [
+          5.5299474992332165,
+          14.264647365607827,
+          14.264647365607827
+        ]
+      },
+      {
+        "name": "Destructive action",
+        "normal": {
+          "background": "rgb(182, 49, 49)",
+          "effectiveBackground": [
+            182,
+            49,
+            49
+          ],
+          "outsideBackground": [
+            253,
+            253,
+            254
+          ],
+          "color": "rgb(255, 255, 255)",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 726.4609375,
+            "y": 441.640625,
+            "width": 106.5390625,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "hover": {
+          "background": "rgb(182, 49, 49)",
+          "effectiveBackground": [
+            182,
+            49,
+            49
+          ],
+          "outsideBackground": [
+            253,
+            253,
+            254
+          ],
+          "color": "rgb(255, 255, 255)",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 726.4609375,
+            "y": 441.640625,
+            "width": 106.5390625,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "pressed": {
+          "background": "rgb(182, 49, 49)",
+          "effectiveBackground": [
+            182,
+            49,
+            49
+          ],
+          "outsideBackground": [
+            253,
+            253,
+            254
+          ],
+          "color": "rgb(255, 255, 255)",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 726.4609375,
+            "y": 442.640625,
+            "width": 106.5390625,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "released": {
+          "background": "rgb(182, 49, 49)",
+          "effectiveBackground": [
+            182,
+            49,
+            49
+          ],
+          "outsideBackground": [
+            253,
+            253,
+            254
+          ],
+          "color": "rgb(255, 255, 255)",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 726.4609375,
+            "y": 441.640625,
+            "width": 106.5390625,
+            "height": 34
+          },
+          "childStates": []
+        },
+        "icon": false,
+        "contrast": [
+          6.04718181788977,
+          6.04718181788977,
+          6.04718181788977
+        ]
+      },
+      {
+        "name": "Reduced motion primary",
+        "normal": {
+          "background": "rgb(201, 40, 67)",
+          "effectiveBackground": [
+            201,
+            40,
+            67
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(255, 255, 255)",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 1116.8359375,
+            "y": 62,
+            "width": 133.1640625,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "hover": {
+          "background": "rgb(181, 34, 58)",
+          "effectiveBackground": [
+            181,
+            34,
+            58
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(255, 255, 255)",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 1116.8359375,
+            "y": 62,
+            "width": 133.1640625,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "pressed": {
+          "background": "rgb(181, 34, 58)",
+          "effectiveBackground": [
+            181,
+            34,
+            58
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(255, 255, 255)",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "0px 1px",
+          "filter": "none",
+          "opacity": "1",
+          "active": true,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 1116.8359375,
+            "y": 63,
+            "width": 133.1640625,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "released": {
+          "background": "rgb(201, 40, 67)",
+          "effectiveBackground": [
+            201,
+            40,
+            67
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(255, 255, 255)",
+          "outlineColor": "rgb(255, 255, 255)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 1116.8359375,
+            "y": 62,
+            "width": 133.1640625,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "icon": false,
+        "contrast": [
+          5.429067339411902,
+          6.452286756332349,
+          6.452286756332349
+        ]
+      }
+    ],
+    "errors": [],
+    "focus": [
+      {
+        "name": "Primary action",
+        "background": "rgb(183, 35, 59)",
+        "effectiveBackground": [
+          183,
+          35,
+          59
+        ],
+        "outsideBackground": [
+          251,
+          251,
+          252
+        ],
+        "color": "rgb(255, 255, 255)",
+        "outlineColor": "rgb(201, 40, 67)",
+        "outlineWidth": "1px",
+        "outlineStyle": "solid",
+        "outlineOffset": "2px",
+        "shadow": "none",
+        "transform": "none",
+        "translate": "none",
+        "filter": "none",
+        "opacity": "1",
+        "active": false,
+        "focusVisible": true,
+        "disabled": false,
+        "rect": {
+          "x": 1116.8359375,
+          "y": 62,
+          "width": 133.1640625,
+          "height": 34
+        },
+        "childStates": [
+          {
+            "tag": "svg",
+            "background": "rgba(0, 0, 0, 0)",
+            "transform": "none"
+          }
+        ]
+      },
+      {
+        "name": "Dialog input",
+        "background": "rgb(243, 243, 245)",
+        "effectiveBackground": [
+          243,
+          243,
+          245
+        ],
+        "outsideBackground": [
+          253,
+          253,
+          254
+        ],
+        "color": "rgb(32, 32, 36)",
+        "outlineColor": "rgb(201, 40, 67)",
+        "outlineWidth": "1px",
+        "outlineStyle": "solid",
+        "outlineOffset": "2px",
+        "shadow": "none",
+        "transform": "none",
+        "translate": "none",
+        "filter": "none",
+        "opacity": "1",
+        "active": false,
+        "focusVisible": true,
+        "disabled": false,
+        "rect": {
+          "x": 447,
+          "y": 367,
+          "width": 386,
+          "height": 38
+        },
+        "childStates": []
+      },
+      {
+        "name": "Player icon",
+        "background": "rgba(0, 0, 0, 0)",
+        "effectiveBackground": [
+          254.76,
+          254.76,
+          254.82
+        ],
+        "outsideBackground": [
+          254.76,
+          254.76,
+          254.82
+        ],
+        "color": "rgb(62, 65, 74)",
+        "outlineColor": "rgb(201, 40, 67)",
+        "outlineWidth": "1px",
+        "outlineStyle": "solid",
+        "outlineOffset": "2px",
+        "shadow": "none",
+        "transform": "none",
+        "translate": "none",
+        "filter": "none",
+        "opacity": "1",
+        "active": false,
+        "focusVisible": true,
+        "disabled": false,
+        "rect": {
+          "x": 537.9921875,
+          "y": 630.5,
+          "width": 32,
+          "height": 32
+        },
+        "childStates": [
+          {
+            "tag": "svg",
+            "background": "rgba(0, 0, 0, 0)",
+            "transform": "none"
+          }
+        ]
+      },
+      {
+        "name": "Player volume",
+        "background": "rgba(0, 0, 0, 0)",
+        "effectiveBackground": [
+          254.76,
+          254.76,
+          254.82
+        ],
+        "outsideBackground": [
+          254.76,
+          254.76,
+          254.82
+        ],
+        "color": "rgb(32, 32, 36)",
+        "outlineColor": "rgb(201, 40, 67)",
+        "outlineWidth": "1px",
+        "outlineStyle": "solid",
+        "outlineOffset": "1px",
+        "shadow": "none",
+        "transform": "none",
+        "translate": "none",
+        "filter": "none",
+        "opacity": "1",
+        "active": false,
+        "focusVisible": true,
+        "disabled": false,
+        "rect": {
+          "x": 1121.9921875,
+          "y": 650,
+          "width": 84,
+          "height": 20
+        },
+        "childStates": []
+      },
+      {
+        "name": "Search input",
+        "background": "rgba(0, 0, 0, 0)",
+        "effectiveBackground": [
+          237,
+          237,
+          240
+        ],
+        "outsideBackground": [
+          237,
+          237,
+          240
+        ],
+        "color": "rgb(32, 32, 36)",
+        "outlineColor": "rgb(201, 40, 67)",
+        "outlineWidth": "1px",
+        "outlineStyle": "solid",
+        "outlineOffset": "5px",
+        "shadow": "none",
+        "transform": "none",
+        "translate": "none",
+        "filter": "none",
+        "opacity": "1",
+        "active": false,
+        "focusVisible": true,
+        "disabled": false,
+        "rect": {
+          "x": 1000.3046875,
+          "y": 60,
+          "width": 228.6953125,
+          "height": 38
+        },
+        "childStates": []
+      },
+      {
+        "name": "Song checkbox",
+        "background": "rgb(243, 243, 245)",
+        "effectiveBackground": [
+          243,
+          243,
+          245
+        ],
+        "outsideBackground": [
+          237,
+          237,
+          241
+        ],
+        "color": "rgb(32, 32, 36)",
+        "outlineColor": "rgb(201, 40, 67)",
+        "outlineWidth": "1px",
+        "outlineStyle": "solid",
+        "outlineOffset": "2px",
+        "shadow": "none",
+        "transform": "none",
+        "translate": "none",
+        "filter": "none",
+        "opacity": "1",
+        "active": false,
+        "focusVisible": true,
+        "disabled": false,
+        "rect": {
+          "x": 246,
+          "y": 256.7265625,
+          "width": 15,
+          "height": 15
+        },
+        "childStates": []
+      },
+      {
+        "name": "Filter option",
+        "background": "rgba(240, 240, 242, 0.953)",
+        "effectiveBackground": [
+          240.705,
+          240.705,
+          242.611
+        ],
+        "outsideBackground": [
+          255,
+          255,
+          255
+        ],
+        "color": "rgb(201, 40, 67)",
+        "outlineColor": "rgb(201, 40, 67)",
+        "outlineWidth": "1px",
+        "outlineStyle": "solid",
+        "outlineOffset": "2px",
+        "shadow": "none",
+        "transform": "none",
+        "translate": "none",
+        "filter": "none",
+        "opacity": "1",
+        "active": false,
+        "focusVisible": true,
+        "disabled": false,
+        "rect": {
+          "x": 245,
+          "y": 231,
+          "width": 262,
+          "height": 34
+        },
+        "childStates": [
+          {
+            "tag": "SPAN",
+            "background": "rgba(0, 0, 0, 0)",
+            "transform": "none"
+          },
+          {
+            "tag": "svg",
+            "background": "rgba(0, 0, 0, 0)",
+            "transform": "none"
+          }
+        ]
+      },
+      {
+        "name": "Album tile",
+        "background": "rgba(0, 0, 0, 0)",
+        "effectiveBackground": [
+          251,
+          251,
+          252
+        ],
+        "outsideBackground": [
+          251,
+          251,
+          252
+        ],
+        "color": "rgb(32, 32, 36)",
+        "outlineColor": "rgb(201, 40, 67)",
+        "outlineWidth": "1px",
+        "outlineStyle": "solid",
+        "outlineOffset": "2px",
+        "shadow": "none",
+        "transform": "none",
+        "translate": "none",
+        "filter": "none",
+        "opacity": "1",
+        "active": false,
+        "focusVisible": true,
+        "disabled": false,
+        "rect": {
+          "x": 238,
+          "y": 134,
+          "width": 183.1953125,
+          "height": 251.1953125
+        },
+        "childStates": [
+          {
+            "tag": "DIV",
+            "background": "rgba(0, 0, 0, 0)",
+            "transform": "matrix(1, 0, 0, 1, 0, -2.90238)"
+          },
+          {
+            "tag": "STRONG",
+            "background": "rgba(0, 0, 0, 0)",
+            "transform": "none"
+          }
+        ]
+      },
+      {
+        "name": "Queue remove",
+        "background": "rgba(0, 0, 0, 0)",
+        "effectiveBackground": [
+          247,
+          247,
+          249
+        ],
+        "outsideBackground": [
+          247,
+          247,
+          249
+        ],
+        "color": "rgb(32, 32, 36)",
+        "outlineColor": "rgb(201, 40, 67)",
+        "outlineWidth": "1px",
+        "outlineStyle": "solid",
+        "outlineOffset": "2px",
+        "shadow": "none",
+        "transform": "none",
+        "translate": "none",
+        "filter": "none",
+        "opacity": "1",
+        "active": false,
+        "focusVisible": true,
+        "disabled": false,
+        "rect": {
+          "x": 1226,
+          "y": 225,
+          "width": 34,
+          "height": 34
+        },
+        "childStates": [
+          {
+            "tag": "svg",
+            "background": "rgba(0, 0, 0, 0)",
+            "transform": "none"
+          }
+        ]
+      },
+      {
+        "name": "Configuration tab",
+        "background": "rgba(237, 237, 240, 0.69)",
+        "effectiveBackground": [
+          241.34000000000003,
+          241.34000000000003,
+          243.72000000000003
+        ],
+        "outsideBackground": [
+          251,
+          251,
+          252
+        ],
+        "color": "rgb(32, 32, 36)",
+        "outlineColor": "rgb(201, 40, 67)",
+        "outlineWidth": "1px",
+        "outlineStyle": "solid",
+        "outlineOffset": "2px",
+        "shadow": "none",
+        "transform": "none",
+        "translate": "none",
+        "filter": "none",
+        "opacity": "1",
+        "active": false,
+        "focusVisible": true,
+        "disabled": false,
+        "rect": {
+          "x": 354.046875,
+          "y": 266.6953125,
+          "width": 78.9921875,
+          "height": 34
+        },
+        "childStates": []
+      },
+      {
+        "name": "Help close",
+        "background": "rgba(0, 0, 0, 0)",
+        "effectiveBackground": [
+          253,
+          253,
+          254
+        ],
+        "outsideBackground": [
+          253,
+          253,
+          254
+        ],
+        "color": "rgb(32, 32, 36)",
+        "outlineColor": "rgb(201, 40, 67)",
+        "outlineWidth": "1px",
+        "outlineStyle": "solid",
+        "outlineOffset": "2px",
+        "shadow": "none",
+        "transform": "none",
+        "translate": "none",
+        "filter": "none",
+        "opacity": "1",
+        "active": false,
+        "focusVisible": true,
+        "disabled": false,
+        "rect": {
+          "x": 804,
+          "y": 271.3828125,
+          "width": 34,
+          "height": 34
+        },
+        "childStates": [
+          {
+            "tag": "svg",
+            "background": "rgba(0, 0, 0, 0)",
+            "transform": "none"
+          }
+        ]
+      },
+      {
+        "name": "DJ popup close",
+        "background": "rgba(0, 0, 0, 0)",
+        "effectiveBackground": [
+          255,
+          255,
+          255
+        ],
+        "outsideBackground": [
+          255,
+          255,
+          255
+        ],
+        "color": "rgb(32, 32, 36)",
+        "outlineColor": "rgb(201, 40, 67)",
+        "outlineWidth": "2px",
+        "outlineStyle": "solid",
+        "outlineOffset": "2px",
+        "shadow": "none",
+        "transform": "none",
+        "translate": "none",
+        "filter": "none",
+        "opacity": "1",
+        "active": false,
+        "focusVisible": true,
+        "disabled": false,
+        "rect": {
+          "x": 1012.9921875,
+          "y": 39.75,
+          "width": 34,
+          "height": 34
+        },
+        "childStates": [
+          {
+            "tag": "svg",
+            "background": "rgba(0, 0, 0, 0)",
+            "transform": "none"
+          }
+        ]
+      },
+      {
+        "name": "Library checkbox",
+        "background": "rgb(243, 243, 245)",
+        "effectiveBackground": [
+          243,
+          243,
+          245
+        ],
+        "outsideBackground": [
+          251,
+          251,
+          252
+        ],
+        "color": "rgb(32, 32, 36)",
+        "outlineColor": "rgb(201, 40, 67)",
+        "outlineWidth": "1px",
+        "outlineStyle": "solid",
+        "outlineOffset": "2px",
+        "shadow": "none",
+        "transform": "none",
+        "translate": "none",
+        "filter": "none",
+        "opacity": "1",
+        "active": false,
+        "focusVisible": true,
+        "disabled": false,
+        "rect": {
+          "x": 240,
+          "y": 545.484375,
+          "width": 16,
+          "height": 16
+        },
+        "childStates": []
+      }
+    ],
+    "selected": [
+      {
+        "name": "Navigation",
+        "style": {
+          "background": "rgb(225, 226, 230)",
+          "effectiveBackground": [
+            225,
+            226,
+            230
+          ],
+          "outsideBackground": [
+            240,
+            240,
+            243
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 16,
+            "y": 107.5,
+            "width": 176,
+            "height": 44
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        },
+        "icon": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            225,
+            226,
+            230
+          ],
+          "outsideBackground": [
+            225,
+            226,
+            230
+          ],
+          "color": "rgb(201, 40, 67)",
+          "outlineColor": "rgb(201, 40, 67)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 30,
+            "y": 119,
+            "width": 21,
+            "height": 21
+          },
+          "childStates": [
+            {
+              "tag": "circle",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "path",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Shuffle on",
+        "style": {
+          "background": "rgba(187, 176, 178, 0.196)",
+          "effectiveBackground": [
+            241.47904,
+            239.32304000000002,
+            239.76328
+          ],
+          "outsideBackground": [
+            254.76,
+            254.76,
+            254.82
+          ],
+          "color": "rgb(201, 40, 67)",
+          "outlineColor": "rgb(201, 40, 67)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 537.9921875,
+            "y": 630.5,
+            "width": 32,
+            "height": 32
+          },
+          "childStates": [
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Song row",
+        "checked": true,
+        "color": "rgb(237, 237, 241)"
+      },
+      {
+        "name": "Filter option",
+        "aria": "true",
+        "style": {
+          "background": "rgba(240, 240, 242, 0.953)",
+          "effectiveBackground": [
+            240.705,
+            240.705,
+            242.611
+          ],
+          "outsideBackground": [
+            255,
+            255,
+            255
+          ],
+          "color": "rgb(201, 40, 67)",
+          "outlineColor": "rgb(201, 40, 67)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 245,
+            "y": 231,
+            "width": 262,
+            "height": 34
+          },
+          "childStates": [
+            {
+              "tag": "SPAN",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            },
+            {
+              "tag": "svg",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        }
+      },
+      {
+        "name": "Configuration tab",
+        "aria": "true",
+        "style": {
+          "background": "rgba(237, 237, 240, 0.667)",
+          "effectiveBackground": [
+            241.66199999999998,
+            241.66199999999998,
+            243.996
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 354.046875,
+            "y": 266.6953125,
+            "width": 78.9921875,
+            "height": 34
+          },
+          "childStates": []
+        }
+      },
+      {
+        "name": "Library choice",
+        "checked": true,
+        "style": {
+          "background": "rgba(0, 0, 0, 0)",
+          "effectiveBackground": [
+            251,
+            251,
+            252
+          ],
+          "outsideBackground": [
+            251,
+            251,
+            252
+          ],
+          "color": "rgb(32, 32, 36)",
+          "outlineColor": "rgb(32, 32, 36)",
+          "outlineWidth": "3px",
+          "outlineStyle": "none",
+          "outlineOffset": "0px",
+          "shadow": "none",
+          "transform": "none",
+          "translate": "none",
+          "filter": "none",
+          "opacity": "1",
+          "active": false,
+          "focusVisible": false,
+          "disabled": false,
+          "rect": {
+            "x": 238,
+            "y": 532.484375,
+            "width": 720,
+            "height": 43
+          },
+          "childStates": [
+            {
+              "tag": "INPUT",
+              "background": "rgb(243, 243, 245)",
+              "transform": "none"
+            },
+            {
+              "tag": "SPAN",
+              "background": "rgba(0, 0, 0, 0)",
+              "transform": "none"
+            }
+          ]
+        }
+      }
+    ],
+    "disabledSkippedByTab": true,
+    "keyboardPressed": {
+      "background": "rgba(0, 0, 0, 0)",
+      "effectiveBackground": [
+        254.76,
+        254.76,
+        254.82
+      ],
+      "outsideBackground": [
+        254.76,
+        254.76,
+        254.82
+      ],
+      "color": "rgb(62, 65, 74)",
+      "outlineColor": "rgb(201, 40, 67)",
+      "outlineWidth": "1px",
+      "outlineStyle": "solid",
+      "outlineOffset": "2px",
+      "shadow": "none",
+      "transform": "none",
+      "translate": "0px 1px",
+      "filter": "none",
+      "opacity": "1",
+      "active": true,
+      "focusVisible": true,
+      "disabled": false,
+      "rect": {
+        "x": 537.9921875,
+        "y": 631.5,
+        "width": 32,
+        "height": 32
+      },
+      "childStates": [
+        {
+          "tag": "svg",
+          "background": "rgba(0, 0, 0, 0)",
+          "transform": "none"
+        }
+      ]
+    },
+    "reducedMotion": {
+      "transition": "0s",
+      "animation": "none"
+    },
+    "providerCalls": 0,
+    "runtime": {
+      "electron": "43.7.0",
+      "chrome": "150.0.7871.250",
+      "platform": "darwin",
+      "arch": "arm64"
+    },
+    "result": "passed"
+  },
+  "metrics": {
+    "minimumComputedTextButtonForegroundContrast": 4.770146412057676,
+    "minimumComputedIconControlForegroundContrast": 4.741797943377239,
+    "focusChecks": 13,
+    "selectedChecks": 6,
+    "enabledPressOffsetPixels": 1
+  },
+  "screenshotsReviewed": [
+    "2026-10-17-interaction-primary-action.png",
+    "2026-10-17-interaction-player-icon.png",
+    "2026-10-17-interaction-artwork-play.png"
+  ],
+  "baseline": {
+    "contentSize": [
+      1280,
+      720
+    ],
+    "zoomFactor": 1,
+    "data": "Disposable localhost catalog and local dummy account/news fixtures. Shared provider keys disabled, nonlocal requests blocked or substituted; scheduler stopped after explicitly awaited ready status. Production renderer/preload and current main sources with isolated seed/network hooks.",
+    "activation": "Presses release on a blank area to cancel activation. Only local navigation, Shuffle, checkbox selection and popup/dialog state change. No playlist mutation or provider work."
+  },
+  "checks": {
+    "build": "npm run build passed after CSS change, including TypeScript",
+    "lint": "Not repeated: all non-CSS source and built renderer JS are byte-identical to PR53, whose full ESLint passed. ESLint does not inspect CSS.",
+    "stylesheetOnlyExpectedDeclarationChanged": true,
+    "unitTests": "not run",
+    "fixtureCorrections": [
+      "Focus outline contrast compares against the surrounding surface because the outline has a positive offset, rather than the button fill.",
+      "Canceled presses release inside blank overlay padding to preserve the current dialog/popover for subsequent checks.",
+      "Compare renderer JS content hashes rather than Vite-generated filenames; the filename changed with the CSS build while content stayed byte-identical."
+    ],
+    "noApplicationChangesAfterChecks": true,
+    "rendererJsContentMatchesPriorPass": true,
+    "rendererJsSha256": "7b08f0c9d3ecc2ea92f499b411b756a4015614430f44ffa9375286e26a79bdcb"
+  },
+  "limits": [
+    "Controlled interaction-state acceptance on the named runtime; no observed listener clarity or full OS/display-scale/VoiceOver claim.",
+    "Computed foreground ratios describe sampled CSS control colors; the artwork overlay glyph is visually reviewed rather than a pixel-level contrast measurement.",
+    "The press offset is immediate and unanimated, including reduced motion; physical hit boxes shift1px while held without changing dimensions.",
+    "Q06 broader keyboard/names and Q09 assistive technology remain open.",
+    "No unit, packaging/release, live server mutation or deferred smaller-window/enlarged-zoom check."
+  ],
+  "sourceAndArtifactSha256": {
+    "src/renderer/styles.css": "e2662ee8478a6dde9d4fc98f866a5dd305514e660ce6656df1034ffffe17c11b",
+    "out/main/index.js": "526face554d7c70d9393eef2180cebba54efd984c85fe00bf744f86a1ddece01",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/assets/index-RcXGSQUQ.js": "7b08f0c9d3ecc2ea92f499b411b756a4015614430f44ffa9375286e26a79bdcb",
+    "out/renderer/assets/index-DlTbFxsk.css": "87512ba61dd82ab70117dda2c82895b8296bb1338ab38a6e6719ab1f4d3f4484"
+  },
+  "fixtureSha256": {
+    "build.mjs": "3e893714b5d893fad8dab1ceb0313f0b83d823c52e25f518cd7a45556cdabaa3",
+    "bootstrap.mjs": "7e4a8ea2b41b06c1192aca346dab3b42725a776c1328ac6f002fa6da034cb596",
+    "server.mjs": "2af4665804de90e0c615ffe51d393352a921d1c5e018e252c0c314b40ab5e00c",
+    "before.cjs": "c6c4f7fa0150833bcacfa39b2d3eb474f88135e52305cbcd8e2f61813fcb3404",
+    "native.cjs": "199ed2701ffb2cb75b084c09c0bcade69af687e3b7f6355be06ec0b7401bc583",
+    "before.json": "78b07faa5f38b44d084b1d23af897f3e7bccf89c0f9ec65b4442ee6765cf3fcb",
+    "native.json": "5529c2e7c5b3680f62b66e9e17f725105e5c98600400c2660e0954ea98d88b4f"
+  },
+  "inventory": {
+    "total": 187,
+    "active": 185,
+    "deferred": 2,
+    "Review": 21,
+    "Dated": 1,
+    "Controlled": 132,
+    "Live": 20,
+    "External": 11,
+    "remainingActive": 33
+  }
+}
