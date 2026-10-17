@@ -581,6 +581,12 @@ async function createWindow() {
   window.webContents.on('will-navigate', event => event.preventDefault());
   window.webContents.on('will-attach-webview', event => event.preventDefault());
   window.once('ready-to-show', () => window?.show());
+  window.on('close', event => {
+    if (process.platform === 'darwin' && !closing) {
+      event.preventDefault();
+      window?.hide();
+    }
+  });
   window.on('closed', () => { cancelNews(); window = null; });
   const devUrl = process.env.ELECTRON_RENDERER_URL;
   if (devUrl) await window.loadURL(devUrl);
@@ -617,7 +623,14 @@ app.whenReady().then(async () => {
   registerIpc();
   await createWindow();
   void recoverNews();
-  app.on('activate', () => { if (!window) void createWindow(); });
+  app.on('activate', () => {
+    if (!window) void createWindow();
+    else {
+      if (window.isMinimized()) window.restore();
+      window.show();
+      window.focus();
+    }
+  });
 }).catch(() => { app.quit(); });
 app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit(); });
 app.on('before-quit', () => { closing = true; ++newsRecoveryEpoch; stopNewsWorkflow(); cancelNews(); revokeMedia(); });

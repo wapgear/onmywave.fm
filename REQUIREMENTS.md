@@ -12,6 +12,8 @@ Support macOS and Jellyfin only in the first version. Jellyfin remains the sourc
 
 The interface should expose the agreed functions directly, with sensible defaults and few customization settings.
 
+On macOS, the red close control and Close Window (⌘W) hide the window while the app keeps running. Keep the same music session, current page, unsaved drafts and pending operations in memory. Closing does not save edits, authorize or retry preparation, or cancel previously authorized work. Activating the app shows the same window and restores it if minimized. Quit (⌘Q) stops playback and preparation through the existing shutdown path and discards unsaved drafts. Launching again restores the saved music session paused.
+
 ## Visual design
 
 Use Apple Music and Yandex Music as visual references for a light, simple macOS interface. Aim for a contemporary 2026 feel with more generous whitespace, softer rounded forms, light controls, and a continuous composition. Keep onmywave.fm's own identity. Avoid chopping the interface into dense rectangular panels.
