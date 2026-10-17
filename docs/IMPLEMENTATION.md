@@ -1,6 +1,8 @@
-# Implementation and verification
+# Historical implementation and verification notes
 
-Updated 15 October 2026.
+These dated notes preserve earlier work and evidence. They are not the current feature contract or acceptance status. Use [REQUIREMENTS](../REQUIREMENTS.md), [the radio PRD and STAR stories](RADIO_EXPERIENCE.md), and [the acceptance checklist](ACCEPTANCE_CHECKLIST.md) for the current application. Earlier speech-engine, station-placeholder, packaging and verification descriptions below retain their historical scope. Routine verification now uses development or production-preview Electron and never packages, signs, notarizes or publishes the app.
+
+Initial notes, 15 October 2026.
 
 The app lives in `desktop-light/` and uses Electron, Vite, React, and TanStack Query. The existing desktop app informed Jellyfin integration and playlist behavior. The approved v4 concept guides the light interface, bundled Inter and Manrope fonts, native title bar, and inset player.
 

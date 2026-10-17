@@ -9,7 +9,7 @@ Statuses:
 - **Review**: inspect the existing implementation and evidence, then replay missing or stale behavior. This does not assert the behavior is absent.
 - **Dated**: a specific controlled result is in the state-polling record; confirm its exact scope and affected-source freshness before assigning acceptance.
 - **Recorded**: relevant controlled evidence exists in the response-deadline record or detailed acceptance audit, but additional row scope remains to review.
-- **Controlled**: the directly reviewed dated runtime evidence covers this row against its recorded source snapshot. This establishes controlled engineering behavior, not live-server or usability acceptance.
+- **Controlled**: the directly reviewed dated evidence of the required proof kinds covers this row against its recorded source snapshot. I-only structural rows use source/artifact inspection; N, S, L, O and U requirements still require their named evidence. This establishes controlled engineering behavior, not live-server or usability acceptance.
 - **Live**: the directly reviewed dated evidence covers this row on the named live server/runtime; other environments and listener usability require separate proof.
 - **Deferred**: Anton explicitly postponed this check; retain its contract and historical evidence for later, exclude it from current completion claims, and do not rerun it during this goal.
 - **External**: named live-server, OS/hardware or listener evidence is still required. Existing controlled evidence may cover a subset.
@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 31 Review, 1 Dated, 0 Recorded, 124 Controlled, 18 Live, 11 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 28 Review, 1 Dated, 0 Recorded, 127 Controlled, 18 Live, 11 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -30,9 +30,9 @@ Source: REQUIREMENTS: Product scope, Visual design, Project folder and stack.
 
 | ID | Observable result | Proof | Status |
 | --- | --- | --- | --- |
-| V01 | macOS Electron app in desktop-light remains separate from desktop and ios. | I | Review |
+| V01 | macOS Electron app in desktop-light remains separate from desktop and ios. | I | Controlled |
 | V02 | Jellyfin provides existing music, permissions and playlists without a new upload/import step. | N+L | Review |
-| V03 | Production uses Vite and TanStack Query, with editable drafts separate from server caches. | I | Review |
+| V03 | Production uses Vite and TanStack Query, with editable drafts separate from server caches. | I | Controlled |
 | V04 | Implemented neutral/rose palette matches the documented tokens in default, selected, disabled and focus states. | N | Review |
 | V05 | Bundled Manrope 600 headings and Inter 400/500 interface text render without font network requests. | I+N | Controlled |
 | V06 | Sidebar, song table, artwork grid and persistent inset player follow the documented spacing and typography targets. | N+U | Review |
@@ -286,7 +286,7 @@ Source: REQUIREMENTS: Design acceptance, stack, settings, acceptance and release
 | Q11 | Ordinary listeners complete first music, optional radio setup, understanding both opt-ins and stop/recovery without coaching. | U | External |
 | Q12 | Evidence distinguishes controlled fixtures, live provider/server output, audible quality and observed usability. | I | Review |
 | Q13 | The complete current requirement denominator and every critical invariant have individually reviewed evidence before completion or a90% claim. | I | Review |
-| Q14 | No routine verification packages, signs, notarizes or publishes the application. | I | Review |
+| Q14 | No routine verification packages, signs, notarizes or publishes the application. | I | Controlled |
 
 ## Evidence ledger for controlled rows
 
@@ -444,3 +444,6 @@ C19 evidence, 17 October 2026: [current credential boundaries](verification/2026
 
 
 Q08/R10 partial evidence, 17 October 2026: [current news startup recovery](verification/2026-10-17-news-startup-recovery.json). A reproduced silent exit on news migration failure is fixed by opening music before independent recovery. Sixteen native journeys cover five startup store failures, decoded music, explicit request-free retry, durable preparation pause before ready, pending/failure/navigation/focus, runtime media permission failure, concurrent/stale retries, claim persistence, signed-out recovery, healthy due-now work and preserved paused speech. Twenty-one current lifecycle cases plus production build/TypeScript and full ESLint pass. PRD and R10 describe the contract. Q08 stays Review for its wider interaction inventory; Q10 remains External. Inventory remains187 rows,185 active,2 Deferred;31 Review,1 Dated,0 Recorded,124 Controlled,18 Live,11 External.43 active checks remain; the goal stays open.
+
+
+V01/V03/Q14 evidence, 17 October 2026: [current application architecture](verification/2026-10-17-app-architecture.json). Independent repository/app identities,284 static relative import boundaries, actual Vite/Electron/TanStack Query entries, five committed-result cache writes and separate editable draft owners satisfy these I-only contracts. The current production build/artifact snapshot matches PR47. README separates release packaging from routine checks, and earlier implementation notes now identify their historical scope. No application change, new UI/unit test, release action or deferred check runs. Q12/Q13 remain open. Inventory:187 rows,185 active,2 Deferred;28 Review,1 Dated,0 Recorded,127 Controlled,18 Live,11 External.40 active checks remain; the goal stays open.

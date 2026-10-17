@@ -13,16 +13,19 @@ npm run dev
 
 Enter the Jellyfin server address and sign in inside the app, then choose accessible music libraries. Credentials are not part of the project. The token is encrypted using Electron safeStorage and stored in the app's separate `onmywave-light` data directory. If protected storage is unavailable, sign-in lasts for the current app session only.
 
-## Checks and local packaging
+## Checks
 
 ```sh
 npm run typecheck
 npm run lint
 npm run build
-npm run package:mac
 ```
 
-For local testing use `npm run dev` or `npm run preview`; packaging, signing, and publishing are not part of the test workflow. The optional packaging command creates a local macOS application under `release/`. Signing, notarization, distribution, and automatic updates require a separate release setup.
+For local testing use `npm run dev` or `npm run preview`. Routine verification does not package, sign, notarize or publish the app.
+
+## Separate release work
+
+`npm run package:mac` is an optional local packaging command for an explicitly requested release task. It creates a macOS application under `release/` and is not part of the checks above. Signing, notarization, distribution and automatic updates require a separate release setup.
 
 ## Listening session
 
