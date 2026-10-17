@@ -1,0 +1,148 @@
+Transcribed macOS CUA AX excerpts. Unrelated sibling content and menu-bar branches omitted. IDs and indentation are retained for the shown nodes. Native AX flattens ignored DOM wrappers; DOM/source identify the separate alert/status text.
+
+=== library-error ===
+Window: "onmywave.fm", App: Electron.
+0 standard window onmywave.fm, Secondary Actions: Raise
+	1 container onmywave.fm
+		2 container
+			3 HTML content onmywave.fm, URL: wave-app://bundle/index.html
+				4 container
+					10 container
+						13 text libraries unavailable.
+						14 button Try again
+						16 button (disabled) Save libraries
+The focused UI element is 14 button Try again
+
+=== library-cold-busy ===
+Window: "onmywave.fm", App: Electron.
+0 standard window onmywave.fm, Secondary Actions: Raise
+	1 container onmywave.fm
+		2 container
+			3 HTML content onmywave.fm, URL: wave-app://bundle/index.html
+				4 container
+					10 container
+						13 text Loading music libraries… 0 libraries  selected
+						14 button (disabled) Save libraries
+						15 button Use another account or server
+The focused UI element is 3 HTML content onmywave.fm, URL: wave-app://bundle/index.html
+
+=== library-failed-again ===
+Window: "onmywave.fm", App: Electron.
+0 standard window onmywave.fm, Secondary Actions: Raise
+	1 container onmywave.fm
+		2 container
+			3 HTML content onmywave.fm, URL: wave-app://bundle/index.html
+				4 container
+					10 container
+						13 text libraries unavailable.
+						14 button Try again
+						16 button (disabled) Save libraries
+The focused UI element is 14 button Try again
+
+=== library-empty ===
+Window: "onmywave.fm", App: Electron.
+0 standard window onmywave.fm, Secondary Actions: Raise
+	1 container onmywave.fm
+		2 container
+			3 HTML content onmywave.fm, URL: wave-app://bundle/index.html
+				4 container
+					10 container
+						14 heading No music libraries available, Value: 2
+						16 text Ask your Jellyfin administrator for access to a music library, then try again.
+						17 button Try again
+						19 button (disabled) Save libraries
+The focused UI element is 17 button Try again
+
+=== library-empty-busy ===
+Window: "onmywave.fm", App: Electron.
+0 standard window onmywave.fm, Secondary Actions: Raise
+	1 container onmywave.fm
+		2 container
+			3 HTML content onmywave.fm, URL: wave-app://bundle/index.html
+				4 container
+					10 container
+						14 heading No music libraries available, Value: 2
+						16 text Ask your Jellyfin administrator for access to a music library, then try again.
+						17 button (disabled) Checking libraries…
+						19 button (disabled) Save libraries
+The focused UI element is 17 button (disabled) Checking libraries…
+
+=== library-recovered ===
+Window: "onmywave.fm", App: Electron.
+0 standard window onmywave.fm, Secondary Actions: Raise
+	1 container onmywave.fm
+		2 container
+			3 HTML content onmywave.fm, URL: wave-app://bundle/index.html
+				4 container
+					10 container
+						11 container Music libraries
+							13 container
+								14 checkbox Archive music, Value: 0
+								15 text Archive music
+The focused UI element is 14 checkbox Archive music, Value: 0
+
+=== playlist-error ===
+Window: "onmywave.fm", App: Electron.
+0 standard window onmywave.fm, Secondary Actions: Raise
+	1 container onmywave.fm
+		2 container
+			3 HTML content onmywave.fm, URL: wave-app://bundle/index.html
+				4 container
+					28 heading Fixture editable, Value: 1
+					30 button Play playlist
+					105 text playlist unavailable.
+					106 button Try again
+The focused UI element is 106 button Try again
+
+=== playlist-both-busy ===
+Window: "onmywave.fm", App: Electron.
+0 standard window onmywave.fm, Secondary Actions: Raise
+	1 container onmywave.fm
+		2 container
+			3 HTML content onmywave.fm, URL: wave-app://bundle/index.html
+				4 container
+					28 heading Fixture editable, Value: 1
+					30 button Play playlist
+					105 text playlist unavailable.
+					106 text Retrying…
+					107 button (disabled) Retrying…
+The focused UI element is 107 button (disabled) Retrying…
+
+=== playlist-list-only-busy ===
+Window: "onmywave.fm", App: Electron.
+0 standard window onmywave.fm, Secondary Actions: Raise
+	1 container onmywave.fm
+		2 container
+			3 HTML content onmywave.fm, URL: wave-app://bundle/index.html
+				4 container
+					28 heading Fixture editable, Value: 1
+					30 button Play playlist
+					105 text playlist unavailable.
+					106 text Retrying…
+					107 button (disabled) Retrying…
+The focused UI element is 107 button (disabled) Retrying…
+
+=== playlist-failed-ready ===
+Window: "onmywave.fm", App: Electron.
+0 standard window onmywave.fm, Secondary Actions: Raise
+	1 container onmywave.fm
+		2 container
+			3 HTML content onmywave.fm, URL: wave-app://bundle/index.html
+				4 container
+					28 heading Fixture editable, Value: 1
+					30 button Play playlist
+					105 text playlist unavailable.
+					106 button Try again
+The focused UI element is 106 button Try again
+
+=== playlist-recovered ===
+Window: "onmywave.fm", App: Electron.
+0 standard window onmywave.fm, Secondary Actions: Raise
+	1 container onmywave.fm
+		2 container
+			3 HTML content onmywave.fm, URL: wave-app://bundle/index.html
+				4 container
+					28 heading Fixture editable, Value: 1
+					30 button Play playlist
+					36 button Rename
+The focused UI element is 3 HTML content onmywave.fm, URL: wave-app://bundle/index.html

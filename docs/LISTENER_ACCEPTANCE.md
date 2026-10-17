@@ -1,6 +1,6 @@
 # Listener acceptance sessions
 
-Use these sessions to check whether a first-time listener can use the music player and optional radio without coaching. Fourteen open inventory rows require observed listener evidence. The other fourteen require engineering, live-service or device evidence. This protocol prepares those observations; no listener session has been run or passed.
+Use these sessions to check whether a first-time listener can use the music player and optional radio without coaching. Fourteen open inventory rows require observed listener evidence. The other thirteen require engineering, live-service or device evidence. This protocol prepares those observations; no listener session has been run or passed.
 
 The original protocol baseline is merged main commit `93fcb02f700ffc103bdc0422b80378e455e9ba84`, including the player-shortcut and library-retry fixes. The 17 October provider-edit revision adds the conditional pending-key case to Task 10 before any cohort has started. Record the actual app revision in each session. Use at least 1280×720 at 100% app zoom. Smaller windows and enlarged zoom remain deferred.
 
@@ -69,7 +69,7 @@ After a session, link evidence to each relevant inventory row and retain its nam
 
 ## Other evidence still required
 
-These fourteen open checks do not contain a U proof requirement. Several still need a human operator, real service or device. No app change is presumed from an unverified check.
+These thirteen open checks do not contain a U proof requirement. Several still need a human operator, real service or device. No app change is presumed from an unverified check.
 
 | Check | Evidence that would close the gap |
 | --- | --- |
@@ -83,9 +83,11 @@ These fourteen open checks do not contain a U proof requirement. Several still n
 | A05 | Actual sleep/quit/return behavior and one coalesced due check, with dispatch/history evidence and no backlog |
 | S03 | Actual entitled X recent-search delivery and useful partial results, with bearer secrecy retained |
 | Q06 | Complete essential-control names, visible focus and keyboard operation, including pending/failure states and source groups |
-| Q08 | Actual recovery actions outside live status/error announcements and usable loading/error/empty states across the required flows |
 | Q09 | VoiceOver operation through music, setup, pending/failure/recovery and dialogs |
 | Q10 | Explicitly named supported macOS/architecture/display combinations and actual hardware integration |
 | Q13 | Current source-to-inventory completeness and individually reviewed critical-invariant evidence before any completion or overall percentage claim |
 
 The [acceptance checklist](ACCEPTANCE_CHECKLIST.md) remains authoritative for all 187 rows, including the two deferred checks. This guide does not promote any row or replace the 27 STAR stories, seven parent gates or original requirement denominator.
+
+
+Q08 was closed separately on 17 October 2026 using the [source/native macOS recovery audit](verification/2026-10-17-recovery-accessibility-audit.json). It is no longer in the open non-listener list. Q09 VoiceOver and all fourteen observed-listener rows remain open; no listener session or protocol score changes.
