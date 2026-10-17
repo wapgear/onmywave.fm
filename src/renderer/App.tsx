@@ -115,7 +115,7 @@ function ReadyApp({ connection, update, disconnected, playlistRecovery, roomDraf
   useEffect(() => {
     const shortcut = (event: KeyboardEvent) => {
       if (event.defaultPrevented || document.querySelector('dialog[open]') || document.querySelector(':popover-open')) return;
-      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'f') { const input = main.current?.querySelector<HTMLInputElement>('.search-field input'); if (input) { event.preventDefault(); input.focus(); input.select(); } }
+      if (event.metaKey && !event.ctrlKey && !event.altKey && !event.shiftKey && event.key.toLowerCase() === 'f') { const input = main.current?.querySelector<HTMLInputElement>('.search-field input'); if (input) { event.preventDefault(); input.focus(); input.select(); } }
       if (event.key === 'Escape') closeDrawerRef.current();
     };
     window.addEventListener('keydown', shortcut);

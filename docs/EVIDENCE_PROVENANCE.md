@@ -37,3 +37,6 @@ New verification records must state the actual application/runtime, data and pro
 Use source/artifact inspection, native interaction, service/storage integration, live upstream, OS/hardware and observed listener/audible proof only for what each establishes. A partial result remains partial even when its narrower checks pass. Count a requirement only after every proof kind and variant it names is covered.
 
 Q12 is Controlled after this inspection. Q13 remains Review for the complete source-requirement denominator and every critical invariant. The 187-row inventory has 185 active checks, 2 deferred, and 29 remaining. No overall percentage or goal completion is claimed.
+
+
+The later [native shortcut/chrome record](verification/2026-10-17-native-shortcut-chrome.json) adds controlled native key/focus observations and actual OS menu full-screen transitions. It preserves unverified dragging and the failed desktop-capture tool call. It is outside the earlier 90-record snapshot and makes no live provider, audible-quality or listener claim.

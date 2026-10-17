@@ -40,7 +40,7 @@ Use Apple Music and Yandex Music as visual references for a light, simple macOS 
 
 - Use generous padding and row spacing, clear typography, softly rounded window corners and artwork, pill-shaped search and filter controls, and rounded selection states. Prefer whitespace and subtle surface changes to hard borders.
 
-- Follow familiar macOS window and interaction conventions, including keyboard navigation and visible focus states.
+- Follow familiar macOS window and interaction conventions, including keyboard navigation and visible focus states. Command-F focuses the current music search. Additional modifiers and Control-F retain their native behavior instead of redirecting focus to library search.
 
 - Keep common actions easy to find. Reveal secondary actions through row menus or contextual controls.
 

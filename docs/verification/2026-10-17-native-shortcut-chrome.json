@@ -1,0 +1,358 @@
+{
+  "date": "2026-10-17",
+  "baseCommit": "101d47184d71c72788a9b853f585ea152d037f95",
+  "scope": [
+    "V10 partial",
+    "V12 incomplete",
+    "Q06 shortcut partial",
+    "M5 exact music search shortcut"
+  ],
+  "result": "focused shortcut fix passed; broader rows remain open",
+  "origin": "Controlled native keyboard/catalog check plus actual OS full-screen observations. No live provider/server or observed listener claim.",
+  "runtime": {
+    "macOS": "27.2",
+    "arch": "arm64",
+    "Electron": "43.7.0",
+    "baselineCSS": [
+      1280,
+      800
+    ],
+    "zoom": 1,
+    "data": "Disposable protected dummy account/local20k-song catalog; shared provider keys disabled; nonlocal fetch and writes blocked.",
+    "audio": "muted"
+  },
+  "beforeNativeKey": {
+    "key": "f",
+    "meta": true,
+    "ctrl": true,
+    "alt": false,
+    "shift": false,
+    "prevented": true,
+    "focus": "Search songs, artists and albums",
+    "tag": "INPUT"
+  },
+  "change": "Only plain Command-F invokes catalog search. Control, Shift or Option modifiers and Control-F no longer redirect search focus. Existing dialog/popover/defaultPrevented gates remain.",
+  "afterNativeKeys": {
+    "result": "passed",
+    "nativeKeys": [
+      {
+        "key": "f",
+        "meta": true,
+        "ctrl": true,
+        "alt": false,
+        "shift": false,
+        "prevented": false,
+        "focus": null,
+        "tag": "BUTTON"
+      },
+      {
+        "key": "\u0192",
+        "meta": true,
+        "ctrl": false,
+        "alt": true,
+        "shift": false,
+        "prevented": false,
+        "focus": null,
+        "tag": "BUTTON"
+      },
+      {
+        "key": "f",
+        "meta": true,
+        "ctrl": false,
+        "alt": false,
+        "shift": true,
+        "prevented": false,
+        "focus": null,
+        "tag": "BUTTON"
+      },
+      {
+        "key": "f",
+        "meta": false,
+        "ctrl": true,
+        "alt": false,
+        "shift": false,
+        "prevented": false,
+        "focus": null,
+        "tag": "BUTTON"
+      },
+      {
+        "key": "f",
+        "meta": false,
+        "ctrl": false,
+        "alt": false,
+        "shift": false,
+        "prevented": false,
+        "focus": null,
+        "tag": "BUTTON"
+      },
+      {
+        "key": "f",
+        "meta": true,
+        "ctrl": false,
+        "alt": false,
+        "shift": false,
+        "prevented": true,
+        "focus": "Search songs, artists and albums",
+        "tag": "INPUT"
+      },
+      {
+        "key": "f",
+        "meta": true,
+        "ctrl": false,
+        "alt": false,
+        "shift": false,
+        "prevented": true,
+        "focus": "Search albums",
+        "tag": "INPUT"
+      },
+      {
+        "key": "f",
+        "meta": true,
+        "ctrl": false,
+        "alt": false,
+        "shift": false,
+        "prevented": false,
+        "focus": null,
+        "tag": "BUTTON"
+      }
+    ],
+    "externalRequests": 0
+  },
+  "method": [
+    "Native CUA actions target the exact owned Electron.app instance; renderer capture listener records real delivered modifier flags and defaultPrevented after the application handler.",
+    "Five negative combinations, plain Command-F on both catalog pages, and a no-search Settings page form eight focused cases.",
+    "Fullscreen uses the macOS Window-sharing Entire Screen command; exit uses View > Toggle Full Screen. Actual BrowserWindow events and bounds independently record the transition.",
+    "Observer telemetry does not invoke full-screen or synthesize keyboard events. Initial fixture setup only positions/shows the window and mutes audio."
+  ],
+  "osSamples": [
+    {
+      "name": "after-titlebar-drag",
+      "windows": [
+        {
+          "id": 1,
+          "title": "onmywave.fm",
+          "bounds": {
+            "x": 100,
+            "y": 110,
+            "width": 1280,
+            "height": 800
+          },
+          "content": {
+            "x": 100,
+            "y": 110,
+            "width": 1280,
+            "height": 800
+          },
+          "visible": true,
+          "minimized": false,
+          "fullScreen": false,
+          "focused": true,
+          "trafficLightPosition": {
+            "x": 20,
+            "y": 22
+          },
+          "resizable": true,
+          "minimizable": true,
+          "closable": true,
+          "zoom": 1
+        }
+      ],
+      "events": [
+        {
+          "event": "move",
+          "at": 1792226154962
+        },
+        {
+          "event": "focus",
+          "at": 1792226155030
+        }
+      ],
+      "externalRequests": 0
+    },
+    {
+      "name": "native-full-screen",
+      "windows": [
+        {
+          "id": 1,
+          "title": "onmywave.fm",
+          "bounds": {
+            "x": 0,
+            "y": 0,
+            "width": 3008,
+            "height": 1692
+          },
+          "content": {
+            "x": 0,
+            "y": 0,
+            "width": 3008,
+            "height": 1692
+          },
+          "visible": true,
+          "minimized": false,
+          "fullScreen": true,
+          "focused": true,
+          "trafficLightPosition": {
+            "x": 20,
+            "y": 22
+          },
+          "resizable": false,
+          "minimizable": true,
+          "closable": true,
+          "zoom": 1
+        }
+      ],
+      "events": [
+        {
+          "event": "move",
+          "at": 1792226154962
+        },
+        {
+          "event": "focus",
+          "at": 1792226155030
+        },
+        {
+          "event": "resize",
+          "at": 1792226234589
+        },
+        {
+          "event": "enter-full-screen",
+          "at": 1792226235259
+        }
+      ],
+      "externalRequests": 0
+    },
+    {
+      "name": "native-exit-full-screen",
+      "windows": [
+        {
+          "id": 1,
+          "title": "onmywave.fm",
+          "bounds": {
+            "x": 100,
+            "y": 110,
+            "width": 1280,
+            "height": 800
+          },
+          "content": {
+            "x": 100,
+            "y": 110,
+            "width": 1280,
+            "height": 800
+          },
+          "visible": true,
+          "minimized": false,
+          "fullScreen": false,
+          "focused": true,
+          "trafficLightPosition": {
+            "x": 20,
+            "y": 22
+          },
+          "resizable": true,
+          "minimizable": true,
+          "closable": true,
+          "zoom": 1
+        }
+      ],
+      "events": [
+        {
+          "event": "move",
+          "at": 1792226154962
+        },
+        {
+          "event": "focus",
+          "at": 1792226155030
+        },
+        {
+          "event": "resize",
+          "at": 1792226234589
+        },
+        {
+          "event": "enter-full-screen",
+          "at": 1792226235259
+        },
+        {
+          "event": "resize",
+          "at": 1792226251893
+        },
+        {
+          "event": "leave-full-screen",
+          "at": 1792226252480
+        }
+      ],
+      "externalRequests": 0
+    }
+  ],
+  "desktopContext": {
+    "result": "unverified",
+    "attempt": "Native Screenshot.app selection through CUA",
+    "toolResult": "Computer Use server error -10005: timeoutReached",
+    "elapsedSeconds": 19512.4001,
+    "captureProduced": false,
+    "scope": "Tool-side timeout is not evidence of an application crash or desktop screenshot. No further Screenshot/Finder calls are used."
+  },
+  "titlebarDrag": {
+    "result": "unverified",
+    "attempts": [
+      [
+        600,
+        10,
+        740,
+        70
+      ],
+      [
+        700,
+        120,
+        820,
+        180
+      ]
+    ],
+    "boundsMoved": false,
+    "note": "Second routing probe selected text. Correct CSS drag regions and failed routing do not prove either native drag support or an app defect."
+  },
+  "verification": {
+    "productionBuildIncludingTypeScript": "passed",
+    "fullESLint": "passed",
+    "whitespace": "passed",
+    "nativeKeyboardCases": 8,
+    "rendererErrors": [],
+    "beforeAndAfterOwnedProcesses": "terminal exit0",
+    "externalProviderRequests": 0
+  },
+  "limits": [
+    "This proves application shortcut handling, not that CUA delivers every global OS accelerator. Native full-screen was verified separately through OS menu actions.",
+    "The native Window-sharing badge overlays traffic lights on this captured session. Complete traffic-light, drag and desktop-context acceptance remains unverified. V10/V12 stay Review.",
+    "No full VoiceOver, physical hardware controls, audible quality, live providers, uncoached listeners, other macOS/display combinations or goal completion claim.",
+    "No unit, release, below1280x720 or enlarged-zoom checks. Q06 remains Review.",
+    "The initial native controller finished its bounded session normally while the separate Screenshot control call stalled. It was not restarted merely because observation timed out."
+  ],
+  "inventory": {
+    "rows": 187,
+    "active": 185,
+    "Deferred": 2,
+    "Review": 17,
+    "Dated": 1,
+    "Controlled": 133,
+    "Live": 23,
+    "External": 11,
+    "remaining": 29
+  },
+  "sha256": {
+    "src/renderer/App.tsx": "51b713192fb6c3a8df2506bef70d37ee7e8142e2927f71a1089c213e502fc7cb",
+    "REQUIREMENTS.md": "d0f79a5c15ed3bd1eb410e8d21b772c6677cf1809d31b5c5f4fec9a1a1b7c283",
+    "docs/RADIO_EXPERIENCE.md": "6d724233b964bd5bc5c04ab3b6e420b377c7cc07440a903b7ef606d6b0e18555",
+    "out/main/index.js": "c4a5aac8a832c60ee462ac467630ecbf38891cbb3b0a0bd51d10e1d2cb1cadb6",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/assets/index-BCH2TdH2.css": "09d70be95859a7392bf2943d2ac0cb59a37786b068940590691b8ec4218ea0e7",
+    "out/renderer/assets/index-CAsutW58.js": "939c1878474b294a741fb0a31fd239eb0f3eaa049dce3583e65651c5f65aae0a",
+    "/private/tmp/native-desktop-controls-final/run.cjs": "45b37662f1c599116a3b836e034569412d1601235b11902eae5d9d227f228091",
+    "/private/tmp/native-desktop-controls-final/keys-before.cjs": "33788bca1ac823d11a02eae51a9c844e4f181d4677254fd6261d7b79f3cd7b98",
+    "/private/tmp/native-desktop-controls-final/keys-after.cjs": "eafca00c6fec72564eb3d533c4801d4af52760df7140b375c8b1b95a426e6cd3",
+    "/private/tmp/native-desktop-controls-final/build.mjs": "a210b09d23e163123b50ac4f15f9438c6560b796c3786d24a7372145f0790db4",
+    "/private/tmp/native-desktop-controls-final/bootstrap.mjs": "0b99a74688fc2ae0f1ac440b7529716bf054266dfa0c559e82dbfbd8556ee744",
+    "/private/tmp/native-desktop-controls-final/server.mjs": "8c31ede6cb894c03520a57f1381daf38efacca0829887fee8839eba191655d51",
+    "/private/tmp/native-desktop-controls-final/result.json": "bb2d17c1ed911a14ebebe457d47a5e527223e13313be69cd85c6661883170cbb",
+    "/private/tmp/native-desktop-controls-final/keyboard-before.json": "98357641abb58c0f4228efc538141a411f1fb0d53b5711d6a1e1a2c23611b1e6",
+    "/private/tmp/native-desktop-controls-final/keyboard-after.json": "5e6a5fa769e42b0bf26d1a5f806bf18e4083084e3799ab2a6f829f3fba8a148c",
+    "/private/tmp/native-desktop-controls-final/keyboard-verified.json": "a40e9ad8184382a70c7e913e29fdbbbc83ead2931859f160535badda53b7d421"
+  }
+}
