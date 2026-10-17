@@ -1,24 +1,26 @@
 import { useEffect, useRef, useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { ExternalLink, KeyRound, LoaderCircle, Play, Radio, Square, WandSparkles } from 'lucide-react';
 import type { DJ, NewsProgress } from '../../../../shared/types';
 import { unwrap } from '../../../api';
 import { usePlayer } from '../../../player';
 import { ErrorNotice } from '../../../components/Shared';
 import { useNewsRecovery } from '../../../NewsRecovery';
+import { useProviderKeyEdit } from '../../../components/ProviderKeys/ProviderKeyEdits';
 
 export function NewsTest({ dj, hasFeeds, saveDraft, setBusy }: {
   dj: DJ; hasFeeds: boolean; saveDraft: () => Promise<DJ>; setBusy: (busy: boolean) => void;
 }) {
-  const client = useQueryClient();
   const player = usePlayer();
   const recovery = useNewsRecovery();
   const recoveryReady = recovery.status.phase === 'ready';
   const breakStatus = { idle: '', waiting: 'DJ break scheduled for the end of this song.', fading: 'Lowering the music for your DJ.', 'lead-in': 'Your DJ starts shortly.', speaking: 'Your DJ is on air.', tail: 'Finishing the break before the next song.', paused: 'DJ break paused. Use the player to resume.' }[player.newsPhase];
   const { current: currentSong, currentKey } = player;
   const ai = useQuery({ queryKey: ['aiStatus'], meta: { aiOperation: true }, queryFn: async () => unwrap(await window.wave.getAiStatus()) });
-  const [key, setKey] = useState('');
-  const [elevenKey, setElevenKey] = useState('');
+  const keyEdit = useProviderKeyEdit('openai');
+  const elevenKeyEdit = useProviderKeyEdit('elevenlabs');
+  const key = keyEdit.draft;
+  const elevenKey = elevenKeyEdit.draft;
   const usesEleven = dj.news?.speechEngine === 'elevenlabs-v4';
   const eleven = useQuery({ queryKey: ['elevenLabsStatus'], enabled: usesEleven, meta: { aiOperation: true }, queryFn: async () => unwrap(await window.wave.getElevenLabsStatus()) });
   const [progress, setProgress] = useState<NewsProgress | null>(null);
@@ -26,16 +28,6 @@ export function NewsTest({ dj, hasFeeds, saveDraft, setBusy }: {
   const request = useRef<string | null>(null);
   const track = useRef({ key: currentKey, song: currentSong });
   const lifecycle = useRef({ mounted: false, operation: 0 });
-  const keySave = useMutation({ meta: { aiOperation: true }, mutationFn: async (value: string | null) => unwrap(await window.wave.setOpenAiKey(value)), onMutate: () => client.cancelQueries({ queryKey: ['aiStatus'], exact: true }), onSuccess: async status => {
-    await client.cancelQueries({ queryKey: ['aiStatus'], exact: true });
-    client.setQueryData(['aiStatus'], status);
-    if (lifecycle.current.mounted) setKey('');
-  }, onError: () => { void client.cancelQueries({ queryKey: ['aiStatus'], exact: true }).then(() => client.invalidateQueries({ queryKey: ['aiStatus'], exact: true })); } });
-  const elevenKeySave = useMutation({ meta: { aiOperation: true }, mutationFn: async (value: string | null) => unwrap(await window.wave.setElevenLabsKey(value)), onMutate: () => client.cancelQueries({ queryKey: ['elevenLabsStatus'], exact: true }), onSuccess: async status => {
-    await client.cancelQueries({ queryKey: ['elevenLabsStatus'], exact: true });
-    client.setQueryData(['elevenLabsStatus'], status);
-    if (lifecycle.current.mounted) setElevenKey('');
-  }, onError: () => { void client.cancelQueries({ queryKey: ['elevenLabsStatus'], exact: true }).then(() => client.invalidateQueries({ queryKey: ['elevenLabsStatus'], exact: true })); } });
   useEffect(() => {
     lifecycle.current.mounted = true;
     const unsubscribe = window.wave.onNewsProgress(update => {
@@ -124,18 +116,18 @@ export function NewsTest({ dj, hasFeeds, saveDraft, setBusy }: {
   const previewMatchesTrack = !!news && news.trackKey === player.currentKey;
   return <section className="dj-news-test"><div className="section-heading"><Radio size={19} /><div><h3>Test a DJ break</h3><p>One short story, scheduled for the end of the current song.</p></div></div>
     <div className="ai-key-settings"><div className="key-status"><KeyRound size={17} /><span>{ai.isFetching || ai.isPending ? 'Checking API key…' : ai.error ? 'OpenAI key status unavailable' : ai.data?.configured ? 'OpenAI key configured' : 'OpenAI key required'}</span>{ai.data?.configured && <span className="pill">{ai.data.sessionOnly ? 'This session only' : 'Protected storage'}</span>}</div>
-      <label>OpenAI API key<div className="key-input-row"><input type="password" autoComplete="off" spellCheck={false} value={key} placeholder={ai.data?.configured ? 'Enter a replacement key' : 'Enter your API key'} onChange={event => { setKey(event.target.value); keySave.reset(); }} /><button disabled={!key.trim() || keySave.isPending || busy} onClick={() => keySave.mutate(key.trim())}>{keySave.isPending ? 'Saving…' : 'Save key'}</button></div></label>
+      <label>OpenAI API key<div className="key-input-row"><input type="password" autoComplete="off" spellCheck={false} disabled={keyEdit.pending} value={key} placeholder={ai.data?.configured ? 'Enter a replacement key' : 'Enter your API key'} onChange={event => { keyEdit.setDraft(event.target.value); }} /><button disabled={!key.trim() || keyEdit.pending || busy} onClick={() => keyEdit.submit(key.trim())}>{keyEdit.pending ? 'Saving…' : 'Save key'}</button></div></label>
       <p className="form-hint">The key is stored through macOS protected storage when available and never shown after saving.</p>
       {ai.data?.sessionOnly && <p className="form-hint">Protected storage is unavailable. Re-enter the key after quitting the app.</p>}
-      {ai.data?.configured && <button className="text-button" disabled={keySave.isPending || busy} onClick={() => keySave.mutate(null)}>Remove saved key</button>}
-      <ErrorNotice error={ai.error} retrying={ai.isFetching} retry={() => ai.refetch()} /><ErrorNotice error={keySave.error} />
+      {ai.data?.configured && <button className="text-button" disabled={keyEdit.pending || busy} onClick={() => keyEdit.submit(null)}>Remove saved key</button>}
+      <ErrorNotice error={ai.error} retrying={ai.isFetching} retry={() => ai.refetch()} /><ErrorNotice error={keyEdit.error} />
     </div>
     {usesEleven && <div className="ai-key-settings"><div className="key-status"><KeyRound size={17} /><span>{eleven.isFetching || eleven.isPending ? 'Checking ElevenLabs key…' : eleven.error ? 'ElevenLabs key status unavailable' : eleven.data?.configured ? 'ElevenLabs key configured' : 'ElevenLabs key required'}</span>{eleven.data?.configured && <span className="pill">{eleven.data.sessionOnly ? 'This session only' : 'Protected storage'}</span>}</div>
-      <label>ElevenLabs API key<div className="key-input-row"><input type="password" autoComplete="off" spellCheck={false} value={elevenKey} placeholder={eleven.data?.configured ? 'Enter a replacement ElevenLabs key' : 'Enter your ElevenLabs API key'} onChange={event => { setElevenKey(event.target.value); elevenKeySave.reset(); }} /><button disabled={!elevenKey.trim() || elevenKeySave.isPending || busy} onClick={() => elevenKeySave.mutate(elevenKey.trim())}>{elevenKeySave.isPending ? 'Saving…' : 'Save ElevenLabs key'}</button></div></label>
+      <label>ElevenLabs API key<div className="key-input-row"><input type="password" autoComplete="off" spellCheck={false} disabled={elevenKeyEdit.pending} value={elevenKey} placeholder={eleven.data?.configured ? 'Enter a replacement ElevenLabs key' : 'Enter your ElevenLabs API key'} onChange={event => { elevenKeyEdit.setDraft(event.target.value); }} /><button disabled={!elevenKey.trim() || elevenKeyEdit.pending || busy} onClick={() => elevenKeyEdit.submit(elevenKey.trim())}>{elevenKeyEdit.pending ? 'Saving…' : 'Save ElevenLabs key'}</button></div></label>
       <p className="form-hint">Stored separately using macOS protected storage. Your key stays in the app's main process after saving. An OpenAI key above is also needed to write the story.</p>
       {eleven.data?.sessionOnly && <p className="form-hint">Protected storage is unavailable. Re-enter the ElevenLabs key after quitting the app.</p>}
-      {eleven.data?.configured && <button className="text-button" disabled={elevenKeySave.isPending || busy} onClick={() => elevenKeySave.mutate(null)}>Remove saved ElevenLabs key</button>}
-      <ErrorNotice error={eleven.error} retrying={eleven.isFetching} retry={() => eleven.refetch()} /><ErrorNotice error={elevenKeySave.error} />
+      {eleven.data?.configured && <button className="text-button" disabled={elevenKeyEdit.pending || busy} onClick={() => elevenKeyEdit.submit(null)}>Remove saved ElevenLabs key</button>}
+      <ErrorNotice error={eleven.error} retrying={eleven.isFetching} retry={() => eleven.refetch()} /><ErrorNotice error={elevenKeyEdit.error} />
     </div>}
     <p className="news-data-disclosure">Generate preview sends relevant feed text, news interests, DJ instructions, and the current song's title, artists, album, genres, and tags to OpenAI. The DJ uses that metadata and your music preferences to follow the music's mood. {usesEleven && ' The generated script and delivery tags are then sent to ElevenLabs to synthesize speech with Eleven v4.'} This uses your selected providers' API accounts. Saving settings alone sends nothing to either provider.</p>
     {!recoveryReady && <p className="notice">News data is unavailable while recovering. You can keep listening to music; generation and DJ scheduling are paused.</p>}

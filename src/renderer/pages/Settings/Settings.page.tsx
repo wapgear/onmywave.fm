@@ -16,6 +16,7 @@ export function SettingsPage({ connection, update, disconnected, section, onSect
   const [confirm, setConfirm] = useState(false);
   const [localSection, setLocalSection] = useState<SettingsSection>('general');
   const activeSection = section ?? localSection;
+  const savingProviderKey = useIsMutating({ mutationKey: ['providerKey'] }) > 0;
   const savingLibraries = useIsMutating({ mutationKey: ['selectLibraries', connection.id] }) > 0;
   const disconnect = useMutation({ mutationFn: async () => unwrap(await window.wave.disconnect()), onSuccess: disconnected });
   return <><PageHeading title="Settings">{returnToSetup && <button onClick={returnToSetup}>Back to setup</button>}</PageHeading>
@@ -29,5 +30,5 @@ export function SettingsPage({ connection, update, disconnected, section, onSect
     <DJPlaybackSettings />
     <NewsTransitions />
     <section><h2>About</h2><p className="settings-description">onmywave.fm Light for macOS</p></section>
-  </div>}{confirm && <Dialog title="Sign out of Jellyfin?" close={() => { if (!disconnect.isPending) setConfirm(false); }}><p>Playback will stop and unsaved news setup and script edits will be discarded. Your saved profiles, DJs, provider keys and recordings stay on this Mac.</p><p>Signing out pauses automatic news preparation and stops in-progress news and voice generation. A request already sent may still finish or incur a charge. After signing in, resume automatic preparation in News bucket → Settings.</p><ErrorNotice error={disconnect.error} /><div className="modal-actions"><button disabled={disconnect.isPending} onClick={() => setConfirm(false)}>Cancel</button><button className="primary" disabled={disconnect.isPending || savingLibraries} onClick={() => { if (!savingLibraries && !disconnect.isPending) disconnect.mutate(); }}>{disconnect.isPending ? 'Signing out…' : 'Sign out'}</button></div></Dialog>}</>;
+  </div>}{confirm && <Dialog title="Sign out of Jellyfin?" close={() => { if (!disconnect.isPending) setConfirm(false); }}><p>Playback will stop and unsaved news setup and script edits will be discarded. Your saved profiles, DJs, provider keys and recordings stay on this Mac.</p>{savingProviderKey && <p>A provider key change is still saving. That change can finish after you sign out.</p>}<p>Signing out pauses automatic news preparation and stops in-progress news and voice generation. A request already sent may still finish or incur a charge. After signing in, resume automatic preparation in News bucket → Settings.</p><ErrorNotice error={disconnect.error} /><div className="modal-actions"><button disabled={disconnect.isPending} onClick={() => setConfirm(false)}>Cancel</button><button className="primary" disabled={disconnect.isPending || savingLibraries} onClick={() => { if (!savingLibraries && !disconnect.isPending) disconnect.mutate(); }}>{disconnect.isPending ? 'Signing out…' : 'Sign out'}</button></div></Dialog>}</>;
 }
