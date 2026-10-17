@@ -1,0 +1,521 @@
+{
+  "date": "2026-10-17",
+  "baseCommit": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e",
+  "classification": "controlled native Electron, CUA keyboard input, local server fault/delay controls and read-only telemetry",
+  "scope": "Initial chooser and General settings library-read recovery at1280x720 and normal zoom. No live library grants, VoiceOver, physical keys or listener-comprehension claim.",
+  "method": "Actual production renderer/preload/main/Jellyfin service/storage with disposable safeStorage connection, local dummy catalog and external/write fetch blocking. Views endpoint returns empty,503,normal and delayed results. User interactions use CUA; fixture observes focus/checkboxes/text and separately reads server request log. Scheduler stopped; shared Keychain adapter null. No personal credentials.",
+  "before": {
+    "focus": {
+      "tag": "BODY",
+      "name": "\n    onmywave.fmYour music, on your waveChoose your librariesSigned in as Fixture listener. Choose the Jellyfin music libraries you'd like to listen to.Music librariesArchive musicRecent music0 libraries selectedSave librariesUse another account or serverYour library stays on your Jellyfin server.\n  \n\n",
+      "type": null
+    },
+    "libraries": [
+      {
+        "name": "Archive music",
+        "checked": false
+      },
+      {
+        "name": "Recent music",
+        "checked": false
+      }
+    ],
+    "keys": [
+      {
+        "key": "Tab",
+        "meta": false,
+        "ctrl": false,
+        "alt": false,
+        "shift": false,
+        "prevented": false
+      },
+      {
+        "key": "Enter",
+        "meta": false,
+        "ctrl": false,
+        "alt": false,
+        "shift": false,
+        "prevented": false
+      }
+    ],
+    "text": "Music libraries\nArchive music\nRecent music\n0 libraries selected\nSave libraries\nUse another account or server",
+    "buttons": [
+      {
+        "name": "Save libraries",
+        "disabled": true
+      },
+      {
+        "name": "Use another account or server",
+        "disabled": false
+      }
+    ],
+    "providerCalls": 0
+  },
+  "settledCases": [
+    {
+      "name": "still-empty",
+      "result": "pass",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Try again",
+        "type": "button"
+      },
+      "libraries": [],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "text": "Music libraries\nNo music libraries available\n\nAsk your Jellyfin administrator for access to a music library, then try again.\nTry again\n\n0 libraries selected\nSave libraries\nUse another account or server",
+      "buttons": [
+        {
+          "name": "Try again",
+          "disabled": false
+        },
+        {
+          "name": "Save libraries",
+          "disabled": true
+        },
+        {
+          "name": "Use another account or server",
+          "disabled": false
+        }
+      ],
+      "providerCalls": 0
+    },
+    {
+      "name": "recovered-initial",
+      "result": "pass",
+      "focus": {
+        "tag": "INPUT",
+        "name": "",
+        "type": "checkbox",
+        "label": "Archive music"
+      },
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": false
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "text": "Music libraries\nArchive music\nRecent music\n0 libraries selected\nSave libraries\nUse another account or server",
+      "buttons": [
+        {
+          "name": "Save libraries",
+          "disabled": true
+        },
+        {
+          "name": "Use another account or server",
+          "disabled": false
+        }
+      ],
+      "providerCalls": 0
+    },
+    {
+      "name": "general-failed",
+      "result": "pass",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Try again",
+        "type": null
+      },
+      "libraries": [],
+      "text": "Music libraries\nJellyfin could not complete the request (503).\nTry again\n0 libraries selected\nSave libraries",
+      "buttons": [
+        {
+          "name": "Try again",
+          "disabled": false
+        },
+        {
+          "name": "Save libraries",
+          "disabled": true
+        }
+      ],
+      "providerCalls": 0
+    },
+    {
+      "name": "general-failed-again",
+      "result": "pass",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Try again",
+        "type": null
+      },
+      "libraries": [],
+      "text": "Music libraries\nJellyfin could not complete the request (503).\nTry again\n0 libraries selected\nSave libraries",
+      "buttons": [
+        {
+          "name": "Try again",
+          "disabled": false
+        },
+        {
+          "name": "Save libraries",
+          "disabled": true
+        }
+      ],
+      "providerCalls": 0
+    },
+    {
+      "name": "general-error-to-empty",
+      "result": "pass",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Try again",
+        "type": "button"
+      },
+      "libraries": [],
+      "text": "Music libraries\nNo music libraries available\n\nAsk your Jellyfin administrator for access to a music library, then try again.\nTry again\n\nSome previously selected libraries are no longer available. Choose available libraries and save to update your collection.\n\n0 libraries selected\nSave libraries",
+      "buttons": [
+        {
+          "name": "Try again",
+          "disabled": false
+        },
+        {
+          "name": "Save libraries",
+          "disabled": true
+        }
+      ],
+      "providerCalls": 0
+    },
+    {
+      "name": "general-tab-away",
+      "result": "pass",
+      "focus": {
+        "tag": "INPUT",
+        "name": "",
+        "type": "number",
+        "label": "Check news everysongs"
+      },
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": true
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "text": "Music libraries\nArchive music\nRecent music\n1 library selected\nSave libraries",
+      "buttons": [
+        {
+          "name": "Save libraries",
+          "disabled": true
+        }
+      ],
+      "providerCalls": 0
+    },
+    {
+      "name": "general-recovered",
+      "result": "pass",
+      "focus": {
+        "tag": "INPUT",
+        "name": "",
+        "type": "checkbox",
+        "label": "Archive music"
+      },
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": true
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "text": "Music libraries\nArchive music\nRecent music\n1 library selected\nSave libraries",
+      "buttons": [
+        {
+          "name": "Save libraries",
+          "disabled": true
+        }
+      ],
+      "providerCalls": 0
+    },
+    {
+      "name": "final-recovered",
+      "result": "pass",
+      "focus": {
+        "tag": "INPUT",
+        "name": "",
+        "type": "checkbox",
+        "label": "Archive music"
+      },
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": false
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "text": "Music libraries\nArchive music\nRecent music\n0 libraries selected\nSave libraries\nUse another account or server",
+      "buttons": [
+        {
+          "name": "Save libraries",
+          "disabled": true,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false,
+          "translate": "none"
+        },
+        {
+          "name": "Use another account or server",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false,
+          "translate": "none"
+        }
+      ],
+      "providerCalls": 0
+    }
+  ],
+  "settledCaseCount": 8,
+  "pendingObservations": {
+    "busy": {
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Checking libraries\u2026",
+        "type": "button"
+      },
+      "libraries": [],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "text": "Music libraries\nNo music libraries available\n\nAsk your Jellyfin administrator for access to a music library, then try again.\nChecking libraries\u2026\n\n0 libraries selected\nSave libraries\nUse another account or server",
+      "buttons": [
+        {
+          "name": "Checking libraries\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": false,
+          "translate": "none"
+        },
+        {
+          "name": "Save libraries",
+          "disabled": true,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false,
+          "translate": "none"
+        },
+        {
+          "name": "Use another account or server",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false,
+          "translate": "none"
+        }
+      ]
+    },
+    "heldBusy": {
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Checking libraries\u2026",
+        "type": "button"
+      },
+      "libraries": [],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "text": "Music libraries\nNo music libraries available\n\nAsk your Jellyfin administrator for access to a music library, then try again.\nChecking libraries\u2026\n\n0 libraries selected\nSave libraries\nUse another account or server",
+      "buttons": [
+        {
+          "name": "Checking libraries\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "translate": "0px"
+        },
+        {
+          "name": "Save libraries",
+          "disabled": true,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false,
+          "translate": "none"
+        },
+        {
+          "name": "Use another account or server",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false,
+          "translate": "none"
+        }
+      ]
+    }
+  },
+  "requestGuard": {
+    "actions": "Return,Return,Tab while a4000ms empty-list retry is pending",
+    "viewsBefore": 14,
+    "viewsAfter": 15,
+    "delta": 1,
+    "result": "one request; focus stays on the cadence number input after libraries return"
+  },
+  "decision": {
+    "independentProposals": "Both recommend reuse of the existing owner/attempt/navigation guarded hook and first enabled checkbox without selection. Steve initially stable aria-disabled button; Elena initially detach and status.",
+    "challenge": "Steve preferred detached status after exchange. Elena accepted stable aria-disabled with guarded handler and visible busy state.",
+    "rootDecision": "Retain stable busy button, matching NewsRecoveryNotice and avoiding layout/focus loss. Shared useRetryFocus untouched. Steve alternative is a reversible presentation preference, not a blocking defect.",
+    "review": "Elena found busy CSS overrode transform while global press uses translate. Corrected to translate:0 0, rebuilt and natively sampled held active busy button at0px. No ref/operation issue found."
+  },
+  "checks": {
+    "buildIncludingTypeScript": "pass",
+    "fullESLint": "pass after moving visibility read from canFocusSuccess to target resolver; no rule suppression",
+    "rendererErrors": [],
+    "providers": 0,
+    "unitTests": "not run per preference",
+    "remoteCI": "not configured",
+    "deferredViewportsZoom": "not run"
+  },
+  "freshness": "First7 settled cases predate only the pressed CSS correction. LibraryChooser.tsx and shared hook bytes are unchanged. Final recovered and both pending observations use final rebuilt CSS; held observation directly verifies the corrected property.",
+  "limitations": [
+    "CUA native reload resets the renderer key observer; General snapshots prove focus/state and CUA actions but do not include the earlier key log.",
+    "Initial lint rejected a ref read in the canFocusSuccess predicate. Moving visibility resolution into the target callback passed lint without changing focus ownership or disabling a rule.",
+    "A build output wrapper omitted a session handle; the final tracked build exits0. No result is inferred from the omitted output.",
+    "C06 remains Dated because a controlled local Views response is not an actual live administrator permission grant. Q06/Q08 stay Review. No inventory status changes;28 active checks remain."
+  ],
+  "sourceHashes": {
+    "src/renderer/components/LibraryChooser.tsx": "4fb7c7cdb22445a056d309130dab7eb25488471263719ddf410ae53b3472369b",
+    "src/renderer/components/LibraryChooser.styles.css": "b05f57996e775054bc54f07001ad08c6eb75fffe0aed22bad8072bab8c7750e8",
+    "src/renderer/useRetryFocus.ts": "4c95b9a6e946ceebbc395af42567757605db526e4503e073a1d81a0825b048fc",
+    "REQUIREMENTS.md": "60f5ca063fd0508c0ac1b93746cbfa30f980b42e76f4740fe30b66f06264ad81",
+    "docs/RADIO_EXPERIENCE.md": "272a246be8c3b34d87a24007d03764e048e0c6057aa750ebc55b7b03f2d30427"
+  },
+  "fixtureHashes": {
+    "native.cjs": "a5cc81b382ca0f96355ce1f33c191f177b03ced40cfc23f7cc580c4be4a419f7",
+    "bootstrap.mjs": "a3cfc62fc751e3633226c2978e56496b5e4d48f673c5033cfd49d43000c2c075",
+    "build.mjs": "320ebe71300f0410a6a4ba08c3489652f1256c2c22d0b3fc305d0c99ae0f039e",
+    "server.mjs": "7ef0f161ac78dd0433c3dbe85431d663dd27d1deb31c80624134c9e0eb8c2394"
+  }
+}

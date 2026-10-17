@@ -12,3 +12,6 @@
 .library-chooser .library-choice-retry { display:block; margin:16px auto 0; }
 
 .library-change-account { margin-top:20px; white-space:normal; }
+
+.library-choice-retry[aria-disabled="true"] { cursor:progress; color:var(--muted); }
+.library-choice-retry[aria-disabled="true"]:active { translate:0 0; }
