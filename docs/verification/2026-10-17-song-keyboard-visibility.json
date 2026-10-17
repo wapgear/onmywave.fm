@@ -1,0 +1,2588 @@
+{
+  "date": "2026-10-17",
+  "baseCommit": "d2f6321616f23510170fa897394ba51e5cb53df5",
+  "classification": "controlled native macOS input and inspected screenshots/accessibility state, with read-only DOM geometry; partial Q06/R12/M5 evidence",
+  "baseline": {
+    "contentSizePoints": [
+      1280,
+      720
+    ],
+    "largerSizePoints": [
+      1600,
+      1000
+    ],
+    "appZoom": 1,
+    "runtime": "macOS 27.2 arm64, Electron 43.7.0, one Retina display"
+  },
+  "reproduction": {
+    "procedure": "Select the first All songs checkbox, Shift-Tab to its row, then twenty native Down keys. The focused/selected row is index20.",
+    "beforeRowEvents": [
+      {
+        "index": -1,
+        "count": 87,
+        "rowIndex": 0,
+        "rowKey": "00000000000000000000000000002af7",
+        "tag": "TR",
+        "type": null,
+        "name": "1Song 10000Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 236,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 87,
+        "rowIndex": 1,
+        "rowKey": "00000000000000000000000000002af6",
+        "tag": "TR",
+        "type": null,
+        "name": "2Song 09999Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 292,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 87,
+        "rowIndex": 2,
+        "rowKey": "00000000000000000000000000002af5",
+        "tag": "TR",
+        "type": null,
+        "name": "3Song 09998Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 348,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 87,
+        "rowIndex": 3,
+        "rowKey": "00000000000000000000000000002af4",
+        "tag": "TR",
+        "type": null,
+        "name": "4Song 09997Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 404,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 87,
+        "rowIndex": 4,
+        "rowKey": "00000000000000000000000000002af3",
+        "tag": "TR",
+        "type": null,
+        "name": "5Song 09996Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 460,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 87,
+        "rowIndex": 5,
+        "rowKey": "00000000000000000000000000002af2",
+        "tag": "TR",
+        "type": null,
+        "name": "6Song 09995Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": false,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 516,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "selection-toolbar",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 91,
+        "rowIndex": 6,
+        "rowKey": "00000000000000000000000000002af1",
+        "tag": "TR",
+        "type": null,
+        "name": "7Song 09994Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": false,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 524,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "BUTTON",
+        "hitClass": "icon-button",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 95,
+        "rowIndex": 7,
+        "rowKey": "00000000000000000000000000002af0",
+        "tag": "TR",
+        "type": null,
+        "name": "8Song 09993Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": false,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 524,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "BUTTON",
+        "hitClass": "icon-button",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 99,
+        "rowIndex": 8,
+        "rowKey": "00000000000000000000000000002aef",
+        "tag": "TR",
+        "type": null,
+        "name": "9Song 09992Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": false,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 524,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "BUTTON",
+        "hitClass": "icon-button",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 103,
+        "rowIndex": 9,
+        "rowKey": "00000000000000000000000000002aee",
+        "tag": "TR",
+        "type": null,
+        "name": "10Song 09991Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": false,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 524,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "BUTTON",
+        "hitClass": "icon-button",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 107,
+        "rowIndex": 10,
+        "rowKey": "00000000000000000000000000002aed",
+        "tag": "TR",
+        "type": null,
+        "name": "11Song 09990Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": false,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 524,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "BUTTON",
+        "hitClass": "icon-button",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 111,
+        "rowIndex": 11,
+        "rowKey": "00000000000000000000000000002aec",
+        "tag": "TR",
+        "type": null,
+        "name": "12Song 09989Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": false,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 524,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "BUTTON",
+        "hitClass": "icon-button",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 115,
+        "rowIndex": 12,
+        "rowKey": "00000000000000000000000000002aeb",
+        "tag": "TR",
+        "type": null,
+        "name": "13Song 09988Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": false,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 524,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "BUTTON",
+        "hitClass": "icon-button",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 119,
+        "rowIndex": 13,
+        "rowKey": "00000000000000000000000000002aea",
+        "tag": "TR",
+        "type": null,
+        "name": "14Song 09987Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": false,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 524,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "BUTTON",
+        "hitClass": "icon-button",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 123,
+        "rowIndex": 14,
+        "rowKey": "00000000000000000000000000002ae9",
+        "tag": "TR",
+        "type": null,
+        "name": "15Song 09986Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": false,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 524,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "BUTTON",
+        "hitClass": "icon-button",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 127,
+        "rowIndex": 15,
+        "rowKey": "00000000000000000000000000002ae8",
+        "tag": "TR",
+        "type": null,
+        "name": "16Song 09985Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": false,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 524,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "BUTTON",
+        "hitClass": "icon-button",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 131,
+        "rowIndex": 16,
+        "rowKey": "00000000000000000000000000002ae7",
+        "tag": "TR",
+        "type": null,
+        "name": "17Song 09984Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": false,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 524,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "BUTTON",
+        "hitClass": "icon-button",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 131,
+        "rowIndex": 17,
+        "rowKey": "00000000000000000000000000002ae6",
+        "tag": "TR",
+        "type": null,
+        "name": "18Song 09983Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": false,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 524,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "BUTTON",
+        "hitClass": "icon-button",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 131,
+        "rowIndex": 18,
+        "rowKey": "00000000000000000000000000002ae5",
+        "tag": "TR",
+        "type": null,
+        "name": "19Song 09982Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": false,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 524,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "BUTTON",
+        "hitClass": "icon-button",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 131,
+        "rowIndex": 19,
+        "rowKey": "00000000000000000000000000002ae4",
+        "tag": "TR",
+        "type": null,
+        "name": "20Song 09981Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": false,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 524,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "BUTTON",
+        "hitClass": "icon-button",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 131,
+        "rowIndex": 20,
+        "rowKey": "00000000000000000000000000002ae3",
+        "tag": "TR",
+        "type": null,
+        "name": "21Song 09980Artist 100Album 099810:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": false,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 524,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "BUTTON",
+        "hitClass": "icon-button",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      }
+    ],
+    "beforeReportSha256": "cf7d297eb1f907eee7bf0f22bd475e29cea5dd2db0c77c32ecfdc224e44e08de",
+    "failure": "Focused wide-row centers from index5 are covered by the floating selection toolbar. The short title child on the left was uncovered; no short-title failure is claimed.",
+    "rapidFailure": "After the TrackTable fix, a separate native 20-key rapid burst from row0 reaches row15 because VirtualSongs defers all focus by RAF. The later final app reaches row20 with exactly20 Down events."
+  },
+  "implementation": [
+    "TrackTable reveals only an active keyboard-visible row and its children, using actual header/main scroll padding, selection toolbar, player and notice bounds. Layout observers account for toolbar/notice/viewport changes. No focus or selection is assigned by this effect.",
+    "VirtualSongs focuses a mounted target immediately. Its absent-target RAF fallback checks the connected originating focus and matching row key, and cancels on a newer request or unmount."
+  ],
+  "pairedDecision": {
+    "Steve": "Revised to shared TrackTable geometry after challenge of toolbar CSS measurement timing. Keyboard-only reveal; inspect long metadata and ordinary tables.",
+    "Elena": "Supports shared actual geometry after challenge; actual TrackTable diff reviewed without actionable finding. Later synchronous mounted-row focus accepted with guarded fallback, and actual VirtualSongs diff reviewed without actionable finding.",
+    "Morgan": "Use the existing shared table and DOM geometry; no global CSS or new dependency. The rapid-repeat correction follows native reproduction."
+  },
+  "settledTraversal": {
+    "rows": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "all25RowOrChildFocusEventsUncovered": true,
+    "focusEvents": [
+      {
+        "index": 12,
+        "count": 83,
+        "rowIndex": 0,
+        "rowKey": "00000000000000000000000000002af7",
+        "tag": "INPUT",
+        "type": "checkbox",
+        "name": "Select Song 10000",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 246,
+          "y": 256.7265625,
+          "width": 15,
+          "height": 15
+        },
+        "hitTag": "INPUT",
+        "hitClass": "",
+        "outline": {
+          "width": "3px",
+          "style": "none",
+          "color": "rgb(32, 32, 36)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 87,
+        "rowIndex": 0,
+        "rowKey": "00000000000000000000000000002af7",
+        "tag": "TR",
+        "type": null,
+        "name": "1Song 10000Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 236,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 87,
+        "rowIndex": 1,
+        "rowKey": "00000000000000000000000000002af6",
+        "tag": "TR",
+        "type": null,
+        "name": "2Song 09999Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 292,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 87,
+        "rowIndex": 2,
+        "rowKey": "00000000000000000000000000002af5",
+        "tag": "TR",
+        "type": null,
+        "name": "3Song 09998Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 348,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 87,
+        "rowIndex": 3,
+        "rowKey": "00000000000000000000000000002af4",
+        "tag": "TR",
+        "type": null,
+        "name": "4Song 09997Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 404,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 87,
+        "rowIndex": 4,
+        "rowKey": "00000000000000000000000000002af3",
+        "tag": "TR",
+        "type": null,
+        "name": "5Song 09996Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 460,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 91,
+        "rowIndex": 5,
+        "rowKey": "00000000000000000000000000002af2",
+        "tag": "TR",
+        "type": null,
+        "name": "6Song 09995Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 95,
+        "rowIndex": 6,
+        "rowKey": "00000000000000000000000000002af1",
+        "tag": "TR",
+        "type": null,
+        "name": "7Song 09994Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 99,
+        "rowIndex": 7,
+        "rowKey": "00000000000000000000000000002af0",
+        "tag": "TR",
+        "type": null,
+        "name": "8Song 09993Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 103,
+        "rowIndex": 8,
+        "rowKey": "00000000000000000000000000002aef",
+        "tag": "TR",
+        "type": null,
+        "name": "9Song 09992Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 107,
+        "rowIndex": 9,
+        "rowKey": "00000000000000000000000000002aee",
+        "tag": "TR",
+        "type": null,
+        "name": "10Song 09991Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 111,
+        "rowIndex": 10,
+        "rowKey": "00000000000000000000000000002aed",
+        "tag": "TR",
+        "type": null,
+        "name": "11Song 09990Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 115,
+        "rowIndex": 11,
+        "rowKey": "00000000000000000000000000002aec",
+        "tag": "TR",
+        "type": null,
+        "name": "12Song 09989Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 119,
+        "rowIndex": 12,
+        "rowKey": "00000000000000000000000000002aeb",
+        "tag": "TR",
+        "type": null,
+        "name": "13Song 09988Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 123,
+        "rowIndex": 13,
+        "rowKey": "00000000000000000000000000002aea",
+        "tag": "TR",
+        "type": null,
+        "name": "14Song 09987Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 127,
+        "rowIndex": 14,
+        "rowKey": "00000000000000000000000000002ae9",
+        "tag": "TR",
+        "type": null,
+        "name": "15Song 09986Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 131,
+        "rowIndex": 15,
+        "rowKey": "00000000000000000000000000002ae8",
+        "tag": "TR",
+        "type": null,
+        "name": "16Song 09985Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 131,
+        "rowIndex": 16,
+        "rowKey": "00000000000000000000000000002ae7",
+        "tag": "TR",
+        "type": null,
+        "name": "17Song 09984Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 131,
+        "rowIndex": 17,
+        "rowKey": "00000000000000000000000000002ae6",
+        "tag": "TR",
+        "type": null,
+        "name": "18Song 09983Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 131,
+        "rowIndex": 18,
+        "rowKey": "00000000000000000000000000002ae5",
+        "tag": "TR",
+        "type": null,
+        "name": "19Song 09982Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 131,
+        "rowIndex": 19,
+        "rowKey": "00000000000000000000000000002ae4",
+        "tag": "TR",
+        "type": null,
+        "name": "20Song 09981Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": -1,
+        "count": 131,
+        "rowIndex": 20,
+        "rowKey": "00000000000000000000000000002ae3",
+        "tag": "TR",
+        "type": null,
+        "name": "21Song 09980Artist 100Album 099810:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56
+        },
+        "hitTag": "DIV",
+        "hitClass": "song-title-cell",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": 72,
+        "count": 131,
+        "rowIndex": 20,
+        "rowKey": "00000000000000000000000000002ae3",
+        "tag": "INPUT",
+        "type": "checkbox",
+        "name": "Select Song 09980",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 246,
+          "y": 498.7265625,
+          "width": 15,
+          "height": 15
+        },
+        "hitTag": "INPUT",
+        "hitClass": "",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": 73,
+        "count": 131,
+        "rowIndex": 20,
+        "rowKey": "00000000000000000000000000002ae3",
+        "tag": "BUTTON",
+        "type": null,
+        "name": "Play Song 09980",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 304,
+          "y": 487.5,
+          "width": 36,
+          "height": 36
+        },
+        "hitTag": "polygon",
+        "hitClass": {},
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      },
+      {
+        "index": 74,
+        "count": 131,
+        "rowIndex": 20,
+        "rowKey": "00000000000000000000000000002ae3",
+        "tag": "BUTTON",
+        "type": null,
+        "name": "Song 09980Artist 100",
+        "visible": true,
+        "insideViewport": true,
+        "centerUncovered": true,
+        "playerTop": 616,
+        "rect": {
+          "x": 352,
+          "y": 487.5,
+          "width": 76.9375,
+          "height": 36
+        },
+        "hitTag": "BUTTON",
+        "hitClass": "song-name",
+        "outline": {
+          "width": "1px",
+          "style": "solid",
+          "color": "rgb(201, 40, 67)"
+        }
+      }
+    ]
+  },
+  "nativeCases": [
+    {
+      "snapshot": "music-keyboard-settled-children",
+      "stage": "TrackTable final; VirtualSongs predates synchronous focus",
+      "rawSha256": "9062965c20d9c49bc7c82bac10b4ad890746446b4b4e77c8918a934929ee935d",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Song 09980Artist 100",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56,
+          "bottom": 534,
+          "top": 478
+        },
+        "target": {
+          "x": 352,
+          "y": 487.5,
+          "width": 76.9375,
+          "height": 36,
+          "bottom": 523.5,
+          "top": 487.5
+        },
+        "rowIndex": "20",
+        "scrollTop": 878,
+        "keyboard": true,
+        "toolbar": {
+          "x": 527.0703125,
+          "y": 542,
+          "width": 425.8515625,
+          "height": 50,
+          "bottom": 592,
+          "top": 542
+        },
+        "header": {
+          "x": 238,
+          "y": -690,
+          "width": 1004,
+          "height": 48,
+          "bottom": -642,
+          "top": -690
+        },
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0,
+          "top": 0
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "selectedRows": [
+        20
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "providerCalls": 0,
+      "serverWrites": 0,
+      "nativeKeyCounts": {
+        "ArrowDown": 20,
+        "Tab": 4
+      }
+    },
+    {
+      "snapshot": "music-keyboard-toolbar-off",
+      "stage": "TrackTable final; VirtualSongs predates synchronous focus",
+      "rawSha256": "1264573031a4ce27ff884fa0d2d138c96db55e92b2323e9188f7680f7718466c",
+      "focus": {
+        "tag": "INPUT",
+        "name": "Select Song 09980",
+        "type": "checkbox",
+        "role": null
+      },
+      "geometry": {
+        "row": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56,
+          "bottom": 534,
+          "top": 478
+        },
+        "target": {
+          "x": 246,
+          "y": 498.7265625,
+          "width": 15,
+          "height": 15,
+          "bottom": 513.7265625,
+          "top": 498.7265625
+        },
+        "rowIndex": "20",
+        "scrollTop": 878,
+        "keyboard": true,
+        "toolbar": null,
+        "header": {
+          "x": 238,
+          "y": -690,
+          "width": 1004,
+          "height": 48,
+          "bottom": -642,
+          "top": -690
+        },
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0,
+          "top": 0
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "selectedRows": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "providerCalls": 0,
+      "serverWrites": 0,
+      "nativeKeyCounts": {
+        " ": 1,
+        "ArrowDown": 20,
+        "Tab": 6
+      }
+    },
+    {
+      "snapshot": "music-keyboard-range",
+      "stage": "TrackTable final; VirtualSongs predates synchronous focus",
+      "rawSha256": "af8ce27775018449fb4ad8aab121c070fca357f34a800efcfbb5b95b25bfd251",
+      "focus": {
+        "tag": "TR",
+        "name": "18Song 09983Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": {
+          "x": 238,
+          "y": 310,
+          "width": 1004,
+          "height": 56,
+          "bottom": 366,
+          "top": 310
+        },
+        "target": {
+          "x": 238,
+          "y": 310,
+          "width": 1004,
+          "height": 56,
+          "bottom": 366,
+          "top": 310
+        },
+        "rowIndex": "17",
+        "scrollTop": 878,
+        "keyboard": true,
+        "toolbar": {
+          "x": 525.6328125,
+          "y": 542,
+          "width": 428.7265625,
+          "height": 50,
+          "bottom": 592,
+          "top": 542
+        },
+        "header": {
+          "x": 238,
+          "y": -690,
+          "width": 1004,
+          "height": 48,
+          "bottom": -642,
+          "top": -690
+        },
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0,
+          "top": 0
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "selectedRows": [
+        17,
+        18,
+        19,
+        20
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "providerCalls": 0,
+      "serverWrites": 0,
+      "nativeKeyCounts": {
+        " ": 2,
+        "ArrowDown": 20,
+        "ArrowUp": 3,
+        "Tab": 7
+      }
+    },
+    {
+      "snapshot": "music-keyboard-first-row",
+      "stage": "TrackTable final; VirtualSongs predates synchronous focus",
+      "rawSha256": "2c249cb318222c3ec8a77e7bb05eec45e0bdd278a7c13459557f34da783b4f90",
+      "focus": {
+        "tag": "TR",
+        "name": "1Song 10000Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": {
+          "x": 238,
+          "y": 72,
+          "width": 1004,
+          "height": 56,
+          "bottom": 128,
+          "top": 72
+        },
+        "target": {
+          "x": 238,
+          "y": 72,
+          "width": 1004,
+          "height": 56,
+          "bottom": 128,
+          "top": 72
+        },
+        "rowIndex": "0",
+        "scrollTop": 164,
+        "keyboard": true,
+        "toolbar": {
+          "x": 527.0703125,
+          "y": 542,
+          "width": 425.8515625,
+          "height": 50,
+          "bottom": 592,
+          "top": 542
+        },
+        "header": {
+          "x": 238,
+          "y": 24,
+          "width": 1004,
+          "height": 48,
+          "bottom": 72,
+          "top": 24
+        },
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0,
+          "top": 0
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "selectedRows": [
+        0
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "providerCalls": 0,
+      "serverWrites": 0,
+      "nativeKeyCounts": {
+        " ": 2,
+        "ArrowDown": 20,
+        "ArrowUp": 20,
+        "Tab": 7
+      }
+    },
+    {
+      "snapshot": "music-keyboard-notice",
+      "stage": "TrackTable final; VirtualSongs predates synchronous focus",
+      "rawSha256": "116be9c7f35ce7fc3afbe725eb418b74e4d8e754fed93b938e1074ddb43c0e31",
+      "focus": {
+        "tag": "TR",
+        "name": "\u266bSong 09985Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": {
+          "x": 238,
+          "y": 430,
+          "width": 1004,
+          "height": 56,
+          "bottom": 486,
+          "top": 430
+        },
+        "target": {
+          "x": 238,
+          "y": 430,
+          "width": 1004,
+          "height": 56,
+          "bottom": 486,
+          "top": 430
+        },
+        "rowIndex": "15",
+        "scrollTop": 646,
+        "keyboard": true,
+        "toolbar": {
+          "x": 527.0703125,
+          "y": 494,
+          "width": 425.8515625,
+          "height": 50,
+          "bottom": 544,
+          "top": 494
+        },
+        "header": {
+          "x": 238,
+          "y": -458,
+          "width": 1004,
+          "height": 48,
+          "bottom": -410,
+          "top": -458
+        },
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 232,
+          "y": 556,
+          "width": 1024,
+          "height": 48,
+          "bottom": 604,
+          "top": 556
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "selectedRows": [
+        15
+      ],
+      "player": "Song 09985",
+      "transport": "Play",
+      "providerCalls": 0,
+      "serverWrites": 0,
+      "nativeKeyCounts": {
+        " ": 2,
+        "ArrowDown": 40,
+        "ArrowUp": 20,
+        "Enter": 1,
+        "Tab": 7
+      }
+    },
+    {
+      "snapshot": "music-keyboard-album",
+      "stage": "TrackTable final; VirtualSongs predates synchronous focus",
+      "rawSha256": "4e836a2f361d9f95dd9bb0bb6901cdd33e500bbe4cb3bd216a55618aec543735",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Song 00010Artist 001",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": {
+          "x": 238,
+          "y": 430,
+          "width": 1004,
+          "height": 56,
+          "bottom": 486,
+          "top": 430
+        },
+        "target": {
+          "x": 352,
+          "y": 439.5,
+          "width": 74.5546875,
+          "height": 36,
+          "bottom": 475.5,
+          "top": 439.5
+        },
+        "rowIndex": "9",
+        "scrollTop": 394,
+        "keyboard": true,
+        "toolbar": {
+          "x": 527.0703125,
+          "y": 494,
+          "width": 425.8515625,
+          "height": 50,
+          "bottom": 544,
+          "top": 494
+        },
+        "header": {
+          "x": 238,
+          "y": -122,
+          "width": 1004,
+          "height": 48,
+          "bottom": -74,
+          "top": -122
+        },
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 232,
+          "y": 556,
+          "width": 1024,
+          "height": 48,
+          "bottom": 604,
+          "top": 556
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "selectedRows": [
+        9
+      ],
+      "player": "Song 09985",
+      "transport": "Play",
+      "providerCalls": 0,
+      "serverWrites": 0,
+      "nativeKeyCounts": {
+        " ": 2,
+        "ArrowDown": 49,
+        "ArrowUp": 20,
+        "Enter": 1,
+        "Tab": 11
+      }
+    },
+    {
+      "snapshot": "music-keyboard-large",
+      "stage": "TrackTable final; VirtualSongs predates synchronous focus",
+      "rawSha256": "17487dcaee9eeac2c5ee86170b17e4c55ae4b7dc6752f5fa85544fe5a011bb6b",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Actions for Song 00010",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": {
+          "x": 244,
+          "y": 676,
+          "width": 1312,
+          "height": 56,
+          "bottom": 732,
+          "top": 676
+        },
+        "target": {
+          "x": 1528,
+          "y": 688.5,
+          "width": 28,
+          "height": 30,
+          "bottom": 718.5,
+          "top": 688.5
+        },
+        "rowIndex": "9",
+        "scrollTop": 148,
+        "keyboard": true,
+        "toolbar": {
+          "x": 687.0703125,
+          "y": 754,
+          "width": 425.8515625,
+          "height": 50,
+          "bottom": 804,
+          "top": 754
+        },
+        "header": {
+          "x": 244,
+          "y": 124,
+          "width": 1312,
+          "height": 48,
+          "bottom": 172,
+          "top": 124
+        },
+        "player": {
+          "x": 16,
+          "y": 896,
+          "width": 1568,
+          "height": 88,
+          "bottom": 984,
+          "top": 896
+        },
+        "notices": {
+          "x": 232,
+          "y": 836,
+          "width": 1344,
+          "height": 48,
+          "bottom": 884,
+          "top": 836
+        },
+        "viewport": {
+          "width": 1600,
+          "height": 1000
+        }
+      },
+      "selectedRows": [
+        9
+      ],
+      "player": "Song 09985",
+      "transport": "Play",
+      "providerCalls": 0,
+      "serverWrites": 0,
+      "nativeKeyCounts": {
+        " ": 2,
+        "ArrowDown": 49,
+        "ArrowUp": 20,
+        "Enter": 1,
+        "Tab": 12
+      }
+    },
+    {
+      "snapshot": "music-keyboard-open-menu",
+      "stage": "TrackTable final; VirtualSongs predates synchronous focus",
+      "rawSha256": "7ed80fd7e92594de9ff59a37872342dbc09e728a1fdd4ff97db7d3a621d950d7",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Play song",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": {
+          "x": 244,
+          "y": 676,
+          "width": 1312,
+          "height": 56,
+          "bottom": 732,
+          "top": 676
+        },
+        "target": {
+          "x": 1358,
+          "y": 729.5,
+          "width": 191,
+          "height": 34,
+          "bottom": 763.5,
+          "top": 729.5
+        },
+        "rowIndex": "9",
+        "scrollTop": 148,
+        "keyboard": true,
+        "toolbar": {
+          "x": 687.0703125,
+          "y": 754,
+          "width": 425.8515625,
+          "height": 50,
+          "bottom": 804,
+          "top": 754
+        },
+        "header": {
+          "x": 244,
+          "y": 124,
+          "width": 1312,
+          "height": 48,
+          "bottom": 172,
+          "top": 124
+        },
+        "player": {
+          "x": 16,
+          "y": 896,
+          "width": 1568,
+          "height": 88,
+          "bottom": 984,
+          "top": 896
+        },
+        "notices": {
+          "x": 232,
+          "y": 836,
+          "width": 1344,
+          "height": 48,
+          "bottom": 884,
+          "top": 836
+        },
+        "viewport": {
+          "width": 1600,
+          "height": 1000
+        }
+      },
+      "selectedRows": [
+        9
+      ],
+      "player": "Song 09985",
+      "transport": "Play",
+      "providerCalls": 0,
+      "serverWrites": 0,
+      "nativeKeyCounts": {
+        " ": 2,
+        "ArrowDown": 49,
+        "ArrowUp": 20,
+        "Enter": 2,
+        "Tab": 12
+      }
+    },
+    {
+      "snapshot": "music-keyboard-resized",
+      "stage": "TrackTable final; VirtualSongs predates synchronous focus",
+      "rawSha256": "3abafa50ea40f3c386b65a466383d3d5f997e51a48d67cf00986e3df48918e81",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Actions for Song 00010",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": {
+          "x": 238,
+          "y": 430,
+          "width": 1004,
+          "height": 56,
+          "bottom": 486,
+          "top": 430
+        },
+        "target": {
+          "x": 1214,
+          "y": 442.5,
+          "width": 28,
+          "height": 30,
+          "bottom": 472.5,
+          "top": 442.5
+        },
+        "rowIndex": "9",
+        "scrollTop": 394,
+        "keyboard": true,
+        "toolbar": {
+          "x": 527.0703125,
+          "y": 494,
+          "width": 425.8515625,
+          "height": 50,
+          "bottom": 544,
+          "top": 494
+        },
+        "header": {
+          "x": 238,
+          "y": -122,
+          "width": 1004,
+          "height": 48,
+          "bottom": -74,
+          "top": -122
+        },
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 232,
+          "y": 556,
+          "width": 1024,
+          "height": 48,
+          "bottom": 604,
+          "top": 556
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "selectedRows": [
+        9
+      ],
+      "player": "Song 09985",
+      "transport": "Play",
+      "providerCalls": 0,
+      "serverWrites": 0,
+      "nativeKeyCounts": {
+        " ": 2,
+        "ArrowDown": 49,
+        "ArrowUp": 20,
+        "Enter": 2,
+        "Escape": 1,
+        "Tab": 12
+      }
+    },
+    {
+      "snapshot": "music-keyboard-final-rapid",
+      "stage": "final app source",
+      "rawSha256": "7d28bf376d91fd5ca6caacc97e31df9651a35f6dbfef3990ebf4de67a3f10a14",
+      "focus": {
+        "tag": "TR",
+        "name": "21Song 09980 A long radio archive recording with detailed artist credits and a complete concert title for keyboard visibility verificationArtist 100Album 099810:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56,
+          "bottom": 534,
+          "top": 478
+        },
+        "target": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56,
+          "bottom": 534,
+          "top": 478
+        },
+        "rowIndex": "20",
+        "scrollTop": 878,
+        "keyboard": true,
+        "toolbar": {
+          "x": 527.0703125,
+          "y": 542,
+          "width": 425.8515625,
+          "height": 50,
+          "bottom": 592,
+          "top": 542
+        },
+        "header": {
+          "x": 238,
+          "y": -690,
+          "width": 1004,
+          "height": 48,
+          "bottom": -642,
+          "top": -690
+        },
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0,
+          "top": 0
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "selectedRows": [
+        20
+      ],
+      "player": "Song 00002 A long radio archive recording with detailed artist credits and a complete concert title for keyboard visibility verification",
+      "transport": "Play",
+      "providerCalls": 0,
+      "serverWrites": 0,
+      "nativeKeyCounts": {
+        "ArrowDown": 20,
+        "Tab": 1
+      }
+    },
+    {
+      "snapshot": "music-keyboard-final-long-title",
+      "stage": "final app source",
+      "rawSha256": "78dab530f03b08e61275ab56aac2b10f620ac7b868ae93814739efd72167634a",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Song 09980 A long radio archive recording with detailed artist credits and a complete concert title for keyboard visibility verificationArtist 100",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56,
+          "bottom": 534,
+          "top": 478
+        },
+        "target": {
+          "x": 352,
+          "y": 487.5,
+          "width": 547.046875,
+          "height": 36,
+          "bottom": 523.5,
+          "top": 487.5
+        },
+        "rowIndex": "20",
+        "scrollTop": 878,
+        "keyboard": true,
+        "toolbar": {
+          "x": 527.0703125,
+          "y": 542,
+          "width": 425.8515625,
+          "height": 50,
+          "bottom": 592,
+          "top": 542
+        },
+        "header": {
+          "x": 238,
+          "y": -690,
+          "width": 1004,
+          "height": 48,
+          "bottom": -642,
+          "top": -690
+        },
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0,
+          "top": 0
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "selectedRows": [
+        20
+      ],
+      "player": "Song 00002 A long radio archive recording with detailed artist credits and a complete concert title for keyboard visibility verification",
+      "transport": "Play",
+      "providerCalls": 0,
+      "serverWrites": 0,
+      "nativeKeyCounts": {
+        "ArrowDown": 20,
+        "Tab": 4
+      }
+    },
+    {
+      "snapshot": "music-keyboard-final-pointer-checkbox",
+      "stage": "final app source",
+      "rawSha256": "7447520b29418c263ae3a048ffb854498b1ac179f519d6d5b2450b3cc5d3ce2c",
+      "focus": {
+        "tag": "INPUT",
+        "name": "Select Song 09979 A long radio archive recording with detailed artist credits and a complete concert title for keyboard visibility verification",
+        "type": "checkbox",
+        "role": null
+      },
+      "geometry": {
+        "row": {
+          "x": 238,
+          "y": 534,
+          "width": 1004,
+          "height": 56,
+          "bottom": 590,
+          "top": 534
+        },
+        "target": {
+          "x": 246,
+          "y": 554.7265625,
+          "width": 15,
+          "height": 15,
+          "bottom": 569.7265625,
+          "top": 554.7265625
+        },
+        "rowIndex": "21",
+        "scrollTop": 878,
+        "keyboard": false,
+        "toolbar": {
+          "x": 525.8515625,
+          "y": 542,
+          "width": 428.2890625,
+          "height": 50,
+          "bottom": 592,
+          "top": 542
+        },
+        "header": {
+          "x": 238,
+          "y": -690,
+          "width": 1004,
+          "height": 48,
+          "bottom": -642,
+          "top": -690
+        },
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0,
+          "top": 0
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "selectedRows": [
+        20,
+        21
+      ],
+      "player": "Song 00002 A long radio archive recording with detailed artist credits and a complete concert title for keyboard visibility verification",
+      "transport": "Play",
+      "providerCalls": 0,
+      "serverWrites": 0,
+      "nativeKeyCounts": {
+        "ArrowDown": 20,
+        "Tab": 4
+      }
+    },
+    {
+      "snapshot": "music-keyboard-final-playlist",
+      "stage": "final app source",
+      "rawSha256": "000fca7d792d5cd153ee564c20e3e688722eec0edfe323b7232340674653eaa1",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Song 00022 A long radio archive recording with detailed artist credits and a complete concert title for keyboard visibility verificationArtist 001",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": {
+          "x": 238,
+          "y": 298,
+          "width": 1004,
+          "height": 56,
+          "bottom": 354,
+          "top": 298
+        },
+        "target": {
+          "x": 352,
+          "y": 307.5,
+          "width": 547.046875,
+          "height": 36,
+          "bottom": 343.5,
+          "top": 307.5
+        },
+        "rowIndex": "20",
+        "scrollTop": 1142,
+        "keyboard": true,
+        "toolbar": {
+          "x": 527.0703125,
+          "y": 542,
+          "width": 425.8515625,
+          "height": 50,
+          "bottom": 592,
+          "top": 542
+        },
+        "header": {
+          "x": 238,
+          "y": -870,
+          "width": 1004,
+          "height": 48,
+          "bottom": -822,
+          "top": -870
+        },
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0,
+          "top": 0
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "selectedRows": [
+        20
+      ],
+      "player": "Song 00002 A long radio archive recording with detailed artist credits and a complete concert title for keyboard visibility verification",
+      "transport": "Play",
+      "providerCalls": 0,
+      "serverWrites": 0,
+      "nativeKeyCounts": {
+        "ArrowDown": 40,
+        "Tab": 9
+      }
+    },
+    {
+      "snapshot": "music-keyboard-final-playlist-large",
+      "stage": "final app source",
+      "rawSha256": "6a23aec41fcd4c55715873bab66ac72c58cc1d1730aa5a6ce73bb76bfbe08fcc",
+      "focus": {
+        "tag": "TR",
+        "name": "30Song 00031 A long radio archive recording with detailed artist credits and a complete concert title for keyboard visibility verificationArtist 001Album 000410:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong detailsMove upMove downRemove from playlist",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": {
+          "x": 244,
+          "y": 758,
+          "width": 1312,
+          "height": 56,
+          "bottom": 814,
+          "top": 758
+        },
+        "target": {
+          "x": 244,
+          "y": 758,
+          "width": 1312,
+          "height": 56,
+          "bottom": 814,
+          "top": 758
+        },
+        "rowIndex": "29",
+        "scrollTop": 1186,
+        "keyboard": true,
+        "toolbar": {
+          "x": 687.0703125,
+          "y": 822,
+          "width": 425.8515625,
+          "height": 50,
+          "bottom": 872,
+          "top": 822
+        },
+        "header": {
+          "x": 244,
+          "y": -914,
+          "width": 1312,
+          "height": 48,
+          "bottom": -866,
+          "top": -914
+        },
+        "player": {
+          "x": 16,
+          "y": 896,
+          "width": 1568,
+          "height": 88,
+          "bottom": 984,
+          "top": 896
+        },
+        "notices": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0,
+          "top": 0
+        },
+        "viewport": {
+          "width": 1600,
+          "height": 1000
+        }
+      },
+      "selectedRows": [
+        29
+      ],
+      "player": "Song 00002 A long radio archive recording with detailed artist credits and a complete concert title for keyboard visibility verification",
+      "transport": "Play",
+      "providerCalls": 0,
+      "serverWrites": 0,
+      "nativeKeyCounts": {
+        "ArrowDown": 49,
+        "Tab": 12
+      }
+    },
+    {
+      "snapshot": "music-keyboard-final-playlist-resize",
+      "stage": "final app source",
+      "rawSha256": "42875db84ab2e6bf9567d355a4023f859d47313b51fb3d3cd129d2bec4a2a03b",
+      "focus": {
+        "tag": "TR",
+        "name": "30Song 00031 A long radio archive recording with detailed artist credits and a complete concert title for keyboard visibility verificationArtist 001Album 000410:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong detailsMove upMove downRemove from playlist",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56,
+          "bottom": 534,
+          "top": 478
+        },
+        "target": {
+          "x": 238,
+          "y": 478,
+          "width": 1004,
+          "height": 56,
+          "bottom": 534,
+          "top": 478
+        },
+        "rowIndex": "29",
+        "scrollTop": 1466,
+        "keyboard": true,
+        "toolbar": {
+          "x": 527.0703125,
+          "y": 542,
+          "width": 425.8515625,
+          "height": 50,
+          "bottom": 592,
+          "top": 542
+        },
+        "header": {
+          "x": 238,
+          "y": -1194,
+          "width": 1004,
+          "height": 48,
+          "bottom": -1146,
+          "top": -1194
+        },
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0,
+          "top": 0
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "selectedRows": [
+        29
+      ],
+      "player": "Song 00002 A long radio archive recording with detailed artist credits and a complete concert title for keyboard visibility verification",
+      "transport": "Play",
+      "providerCalls": 0,
+      "serverWrites": 0,
+      "nativeKeyCounts": {
+        "ArrowDown": 49,
+        "Tab": 12
+      }
+    },
+    {
+      "snapshot": "music-keyboard-final-notice",
+      "stage": "final app source",
+      "rawSha256": "b159302794d02b32c7ee6a80250b3d445d940abfbb07c21769a138b76dbd8235",
+      "focus": {
+        "tag": "TR",
+        "name": "\u266bSong 00031 A long radio archive recording with detailed artist credits and a complete concert title for keyboard visibility verificationArtist 001Album 000410:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong detailsMove upMove downRemove from playlist",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": {
+          "x": 238,
+          "y": 430,
+          "width": 1004,
+          "height": 56,
+          "bottom": 486,
+          "top": 430
+        },
+        "target": {
+          "x": 238,
+          "y": 430,
+          "width": 1004,
+          "height": 56,
+          "bottom": 486,
+          "top": 430
+        },
+        "rowIndex": "29",
+        "scrollTop": 1514,
+        "keyboard": true,
+        "toolbar": {
+          "x": 527.0703125,
+          "y": 494,
+          "width": 425.8515625,
+          "height": 50,
+          "bottom": 544,
+          "top": 494
+        },
+        "header": {
+          "x": 238,
+          "y": -1242,
+          "width": 1004,
+          "height": 48,
+          "bottom": -1194,
+          "top": -1242
+        },
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 232,
+          "y": 556,
+          "width": 1024,
+          "height": 48,
+          "bottom": 604,
+          "top": 556
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "selectedRows": [
+        29
+      ],
+      "player": "Song 00031 A long radio archive recording with detailed artist credits and a complete concert title for keyboard visibility verification",
+      "transport": "Play",
+      "providerCalls": 0,
+      "serverWrites": 0,
+      "nativeKeyCounts": {
+        "ArrowDown": 49,
+        "Enter": 1,
+        "Tab": 12
+      }
+    }
+  ],
+  "fixture": {
+    "network": "Only local127.0.0.1:5191 catalog. Nonlocal requests blocked; mutation guard permits only fixture sign-in. No real credentials or provider requests.",
+    "storage": "Actual isolated safeStorage and main services; shared Keychain adapter returns null. Scheduler stopped and silent local audio muted.",
+    "mainInstrumentation": "Read-state faults after sender/input guards; a previously added recovery-phase setter is inactive here. Playback notice is an intentional preparePlayback fail, not a real service failure.",
+    "data": "20,000 songs,2,000 albums,two libraries. Initial cases use short metadata and default3-song playlists. Final cases use long synthetic song names and30-song fixture playlists.",
+    "ownedProcesses": "All four observer runs exited0; original and long-metadata local servers stopped after verification.",
+    "hashes": {
+      "observe-music-keyboard.cjs": "0271bc6b2c8184aa3c93786331c9041bed94abfba9f49dc5171edbf4d473c795",
+      "bootstrap.mjs": "243a98a9ff529d5ba6f2b67a1c4a8e3826945a1c6ddce7fa4d56137f95e75079",
+      "server.mjs": "e5ad2ac7ee103d80a6131080a1545050cba15441f871909381e71c6bba488820",
+      "server-keyboard.mjs": "16e7756fa26c1039fb79cd5951b3521664504b7223f95cae7e8b94cc4df0c190"
+    }
+  },
+  "measurementCorrections": [
+    "Initial one-RAF focus telemetry ran before the reveal callback and reported pre-correction coverage, despite the inspected native screenshot showing a clear row. Preserve that result as timing-only; corrected observer uses two RAFs plus settled100ms current geometry.",
+    "Two-RAF telemetry intentionally omits targets that have already lost focus during a rapid burst. Rapid correctness uses native key counts and settled final row/selection, not a claim that every transient target was sampled.",
+    "A native accessibility click on album text did not select a row and focused the document. It is excluded as a pointer-selection pass. The subsequent real checkbox click selected index21 in addition to20 and kept scrollTop878."
+  ],
+  "freshness": "Nine intermediate cases have the final TrackTable bytes and predate only the VirtualSongs mounted-focus correction. Seven later cases use both final source files. Final build includes TypeScript and full ESLint, both exit0.",
+  "checks": {
+    "buildIncludingTypeScript": "pass",
+    "fullEslint": "pass",
+    "nativeCaseSnapshots": 16,
+    "rendererErrors": 0,
+    "providerCalls": 0,
+    "serverWrites": 0,
+    "unitTests": "not run",
+    "releasePackage": "not run"
+  },
+  "sourceAndBundleSha256": {
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "7eaa496b789e8068a9722726f96eef6710acbf113dd0bbbc15272834d74ddc6e",
+    "src/renderer/pages/Songs/VirtualSongs.component.tsx": "9f7ca712d88fbdd65dabcd8d95bf96c13c49b6c6ea988726378b4e8ebc23e6ae",
+    "src/renderer/components/TrackTable/TrackTable.styles.css": "bff832f10f28bbb8518a60ea5b2a87ed7706609efb2d68473f6f4bef36d4531b",
+    "src/renderer/styles.css": "5a235c72cbcbff30bf790e1fa7044ea6a9abc9727ecbda08389d9a059a196d32",
+    "out/renderer/index.html": "ab2d1951e380ff0d77e049fc894290f615f319e973832ba2846cb7611fec8915",
+    "out/renderer/assets/index-C8fC4lZB.js": "0823af19ec83454c6764ed3bc996c13aeb7c189319a6355422bb5b48b2a80e2d",
+    "out/renderer/assets/index-CUgwj8xN.css": "8dedf91bec8e203b47c5630cbd8925f4f357523a53a65c6a66ba92b9ba0f19c4",
+    "out/main/index.js": "be2b4baff3c4577a06efadbdf021d8cda9b6319cb3d9157be5f238469c457fbd",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb"
+  },
+  "limitations": [
+    "Q06 remains Review for app-wide control/conditional-state reconciliation. These local checks do not prove VoiceOver, uncoached usability, physical media keys, display-scale combinations, live provider behavior or audible quality.",
+    "Overlay and background guards are source-reviewed; opening/dismissing a menu is observed, but no separate held-background-refresh overlay stress pass is claimed.",
+    "Native screenshots were inspected inline; no new screenshot file is attached.",
+    "Smaller-than1280\u00d7720 and enlarged app zoom remain deferred.",
+    "All187 row dispositions and28 active remaining checks stay unchanged. Outside the dated90-record provenance audit."
+  ]
+}

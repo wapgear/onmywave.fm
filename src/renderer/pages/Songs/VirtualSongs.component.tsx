@@ -17,6 +17,8 @@ export function VirtualSongs({ total, hasNext, fetching, nextError, loadNext, re
   const [focusedKey, setFocusedKey] = useState<string | null>(null);
   const [recoveryIndex, setRecoveryIndex] = useState<number | null>(null);
   const recoveryToken = useRef(0);
+  const focusFrame = useRef(0);
+  useEffect(() => () => cancelAnimationFrame(focusFrame.current), []);
   const focusedIndex = table.rows.findIndex(row => row.key === focusedKey);
   const getScrollElement = useCallback(() => root.current?.closest<HTMLElement>('.main-content') ?? null, []);
   // eslint-disable-next-line react-hooks/incompatible-library
@@ -61,9 +63,19 @@ export function VirtualSongs({ total, hasNext, fetching, nextError, loadNext, re
     if (hasNext && !fetching && !nextError && lastVisible >= table.rows.length - 12) void loadNext();
   }, [hasNext, fetching, nextError, lastVisible, table.rows.length, loadNext]);
   function focusRow(index: number) {
-    setFocusedKey(table.rows[index].key);
+    cancelAnimationFrame(focusFrame.current);
+    const key = table.rows[index]?.key;
+    if (!key) return;
+    const origin = document.activeElement;
+    const target = () => root.current?.querySelector<HTMLElement>(`[data-track-index="${index}"]`);
+    setFocusedKey(key);
     virtualizer.scrollToIndex(index, { align: 'auto' });
-    requestAnimationFrame(() => root.current?.querySelector<HTMLElement>(`[data-track-index="${index}"]`)?.focus({ preventScroll: true }));
+    const mounted = target();
+    if (mounted?.dataset.trackKey === key) mounted.focus({ preventScroll: true });
+    else focusFrame.current = requestAnimationFrame(() => {
+      const row = target();
+      if (origin?.isConnected && document.activeElement === origin && row?.dataset.trackKey === key) row.focus({ preventScroll: true });
+    });
   }
   function retryNextPage() {
     const button = retryFocus.retryRef.current;
