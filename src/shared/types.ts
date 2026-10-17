@@ -106,8 +106,8 @@ export type PreparedNewsScript = NewsScript & { id: string; createdAt: string; p
 export type PreparedNewsTake = NewsBreak & { signature: string; provenance: PreparedNewsProvenance; renderingDJ: DJ; available: boolean; byteLength: number; model: string; voice: string; delivery: string; scriptId: string; deliveryState?: { status: 'ready' | 'claimed' | 'played'; claimedAt?: string; playedAt?: string } };
 export type PreparedNewsOrigin = { kind: 'manual' | 'automatic'; startedAt: string; profileId?: string; profileName?: string };
 export type PreparedNewsRequest = { origin?: PreparedNewsOrigin; requestId: string; kind: 'script' | 'audio'; inputHash: string; status: 'running' | 'complete' | 'failed' | 'interrupted' | 'skipped' | 'partial-coverage'; artifactId?: string; error?: string };
-export type PreparedNewsLibrary = { scripts: PreparedNewsScript[]; takes: PreparedNewsTake[]; selectedTakeId: string | null; requests: PreparedNewsRequest[]; reviewedArticles: ReviewedNewsArticle[] };
-export type LocalState = { djPlayback: DJPlaybackSettings; roomProfiles: RoomProfile[]; activeRoomProfileId: string; newsTransitions: NewsTransitionSettings; djs: DJ[]; vibe: string; playback: PlaybackSnapshot | null; playbackPreferences: Record<string, PlaybackPreferences>; sources: NewsSource[]; listeningRoom: ListeningRoom; workflowDraft: WorkflowDraft };
+export type PreparedNewsLibrary = { preparationErrorVersion?: 1; scripts: PreparedNewsScript[]; takes: PreparedNewsTake[]; selectedTakeId: string | null; requests: PreparedNewsRequest[]; reviewedArticles: ReviewedNewsArticle[] };
+export type LocalState = { preparationErrorVersion?: 1; djPlayback: DJPlaybackSettings; roomProfiles: RoomProfile[]; activeRoomProfileId: string; newsTransitions: NewsTransitionSettings; djs: DJ[]; vibe: string; playback: PlaybackSnapshot | null; playbackPreferences: Record<string, PlaybackPreferences>; sources: NewsSource[]; listeningRoom: ListeningRoom; workflowDraft: WorkflowDraft };
 export type PlaybackResource = { url: string; offsetSeconds: number; transcoded: boolean };
 export interface WaveApi {
   getConnection(): Promise<Result<Connection | null>>;

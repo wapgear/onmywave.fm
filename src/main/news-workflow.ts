@@ -108,10 +108,10 @@ async function processProfile(news: NewsService, profile: RoomProfile) {
     await prepareRoomNews(news, { requestId, roomId: current.id }, snapshot);
     await finishRun(current.id, requestId, 'prepared');
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'News preparation failed.';
+    const message = error instanceof ServiceError ? error.message : 'Could not prepare the news break. Check the connection and try again.';
     if (error instanceof ServiceError && error.code === 'no-news') { await finishRun(current.id, requestId, 'no-news', message); return; }
     if (error instanceof ServiceError && error.code === 'partial-coverage') { await finishRun(current.id, requestId, 'partial-coverage', message); return; }
-    if (/another preparation is running/i.test(message)) {
+    if (error instanceof ServiceError && /another preparation is running/i.test(message)) {
       const latest = await getLocalState();
       const after = latest.roomProfiles.find(value => value.id === current.id);
       if (after) await replaceWorkflow(after, { ...after.workflowDraft, nextNewsCheckAt: new Date(Date.now() + 60_000).toISOString(), newsAssessmentDate: date, newsAssessmentsToday: assessments,
@@ -160,8 +160,8 @@ export async function startNewsWorkflow(news: NewsService, allowed = () => true)
     });
     return { roomProfiles: changed, ...(state.activeRoomProfileId ? { workflowDraft: changed.find(profile => profile.id === state.activeRoomProfileId)?.workflowDraft } : {}) };
   });
-  timer = setInterval(() => { void tick(news).catch(error => console.error('News workflow tick failed.', error)); }, TICK_MS);
-  void tick(news).catch(error => console.error('News workflow tick failed.', error));
+  timer = setInterval(() => { void tick(news).catch(() => console.error('News workflow tick failed. Check preparation status and try again.')); }, TICK_MS);
+  void tick(news).catch(() => console.error('News workflow tick failed. Check preparation status and try again.'));
 }
 
 export function stopNewsWorkflow() {
