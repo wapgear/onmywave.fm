@@ -1,0 +1,188 @@
+{
+  "date": "2026-10-17",
+  "sourceCommit": "9bd4469915ed112ea92fb616b4ccc84d48ac345c",
+  "scope": [
+    "C12"
+  ],
+  "result": "passed on named live server with controlled per-request transport/auth faults",
+  "applicationChange": "None. Current implementation already satisfies the observed recovery contract.",
+  "native": {
+    "cases": [
+      {
+        "kind": "catalog transport disconnect against live server",
+        "connectedSockets": 2,
+        "actualSocketError": "ECONNRESET",
+        "sessionRetained": true,
+        "protectedConnectionBytesUnchanged": true,
+        "boundedReadRetry": true,
+        "explicitRetryFailedWithoutSignIn": true,
+        "nativeMusicContinuesDuringCatalogFailure": true
+      },
+      {
+        "kind": "explicit Retry reads real live album data after restoring transport",
+        "nativeAlbumTiles": true,
+        "errorCleared": true,
+        "connectionIndicatorRecovered": true,
+        "sameSessionAndProtectedBytes": true,
+        "noAuthenticationRequest": true
+      },
+      {
+        "kind": "real Jellyfin401 from invalid per-request token",
+        "serverActuallyReturned401": true,
+        "prefilledServerMatchesSaved": true,
+        "prefilledUsernameMatchesSaved": true,
+        "passwordEmpty": true,
+        "expiryExplanationVisible": true,
+        "protectedConnectionBytesUnchanged": true,
+        "originalSavedTokenStillAcceptedByIndependentLiveRead": true
+      }
+    ],
+    "errors": [],
+    "serverVersion": "12.2.0",
+    "baselineLiveMusicDecoded": true,
+    "transport": {
+      "forcedDisconnects": 4,
+      "connectedSockets": 4,
+      "networkErrors": [
+        "ECONNRESET",
+        "ECONNRESET",
+        "ECONNRESET",
+        "ECONNRESET"
+      ],
+      "authResponses": [
+        401
+      ],
+      "onlineStatuses": [
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        206,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200,
+        200
+      ]
+    },
+    "network": {
+      "reads": 52,
+      "blockedWrites": 0,
+      "blockedExternal": 0
+    },
+    "serverMutations": 0,
+    "providerRequests": 0,
+    "runtime": {
+      "electron": "43.7.0",
+      "chrome": "150.0.7871.250",
+      "platform": "darwin",
+      "arch": "arm64"
+    },
+    "result": "passed",
+    "fatalFileAbsent": true
+  },
+  "baseline": {
+    "contentSize": [
+      1280,
+      720
+    ],
+    "zoomFactor": 1,
+    "server": "Authorized Jellyfin12.2.0 at192.168.1.139:8096",
+    "session": "Existing protected device/session restored only into disposable isolated appData. No password or token written to fixture source, reports or screenshots.",
+    "main": "Current source bundled with isolated seed/shared-key/network guards; production renderer/preload unchanged.",
+    "audio": "Actual live Jellyfin music decodes muted and continues advancing while catalog requests fail."
+  },
+  "faultMethod": {
+    "offline": "Only catalog-read requests use a request-owned HTTP socket which is destroyed after connecting to the actual authorized server. All4 sockets connected and produced real ECONNRESET errors. No synthetic HTTP response, global network change or server setting change.",
+    "unauthorized": "A catalog GET substitutes an invalid token only in that outgoing request. The actual Jellyfin server returns401. Original protected session bytes/token remain intact; an independent live GET with the original token succeeds.",
+    "bounds": "GET/HEAD only against authorized origin. Shared provider keys disabled, news defaults off, scheduler stopped after readiness. No login, logout, credential revocation, library mutation or server administration action."
+  },
+  "screenshotsReviewed": [
+    "2026-10-17-live-connection-offline.png",
+    "2026-10-17-live-connection-expired.png"
+  ],
+  "checks": {
+    "native": "3 live journeys passed on current sources/artifacts",
+    "buildTypeLint": "Not repeated: no application/configuration change and every recorded PR54 production artifact/source hash remains identical to the snapshot with passing build/TypeScript and prior unchanged-source lint.",
+    "unitTests": "not run",
+    "rendererErrors": 0,
+    "fatalFileAbsent": true,
+    "serverMutations": 0,
+    "providerRequests": 0
+  },
+  "limits": [
+    "The outage is forced per catalog-read socket while Jellyfin remains online; this does not prove a whole-device offline/sleep or server-shutdown scenario.",
+    "The401 is genuine but induced by a per-request invalid token; no actual saved credential is revoked, and no new real-account sign-in is attempted.",
+    "No live reauthentication/draft scope claim beyond the existing C13 controlled evidence.",
+    "Muted decode does not establish audible quality. Other server/OS/display combinations and observed listeners remain separate.",
+    "No packaging/release, unit or deferred smaller-window/enlarged-zoom check."
+  ],
+  "sourceAndArtifactSha256": {
+    "src/main/jellyfin.ts": "4daf9866e8034ca89ffd209035b1b8795f5127082bcea0fa825182b66d103483",
+    "src/main/index.ts": "a5d1528149631987f30b25a6e296b60bc97b950a712280bf6f584cce13b1d320",
+    "src/main/storage.ts": "7df3fcda71eaeb8faaa42f24c70336949fb00e494a29ecfb293c93ac61825418",
+    "src/renderer/App.tsx": "9341e01ab161fec685239fb5e2841342e85df33016326744db1ade9fe20860e1",
+    "src/renderer/main.tsx": "863a6596bde95ba270f0d554a2ac2bd0c3819ca832f1bfd577d0edf9bb69a7cc",
+    "src/renderer/pages/Connection/Connection.page.tsx": "1256fee7c558c4840e6b400d6990d5b5f7a7c5afcc9f1bd7fa6171e2a5007d5e",
+    "src/renderer/pages/Albums/Albums.page.tsx": "4eb745b4fbff557ad1061561971b8da4a0b67f5214af82998c0f9555e59a4fac",
+    "src/renderer/components/Shared.tsx": "99ec26c7b0043ff4f1d0b9c7db3b5eb7d88a06a328f2aff468cd9c9e4fe22e90",
+    "src/renderer/styles.css": "e2662ee8478a6dde9d4fc98f866a5dd305514e660ce6656df1034ffffe17c11b",
+    "out/main/index.js": "526face554d7c70d9393eef2180cebba54efd984c85fe00bf744f86a1ddece01",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/assets/index-RcXGSQUQ.js": "7b08f0c9d3ecc2ea92f499b411b756a4015614430f44ffa9375286e26a79bdcb",
+    "out/renderer/assets/index-DlTbFxsk.css": "87512ba61dd82ab70117dda2c82895b8296bb1338ab38a6e6719ab1f4d3f4484"
+  },
+  "fixtureSha256": {
+    "build.mjs": "53c0fa0690fa9104f2882d61ce3c83a92e276d4e8c20a371d43f91989af2c546",
+    "bootstrap.mjs": "f993dd066e80a5a10e6f453405088a743db120a15ce3f9366bb78aee253e49b9",
+    "run.cjs": "e243c80e54ab22dbfde26b4ba4ec18d65c89a064438a15d29208d56eeb30cec0",
+    "result.json": "6bd246548d8e2d3d943bf2cc2a04b5595019890b4acb6da006df6e9b790cb4d2"
+  },
+  "inventory": {
+    "total": 187,
+    "active": 185,
+    "deferred": 2,
+    "Review": 20,
+    "Dated": 1,
+    "Controlled": 132,
+    "Live": 21,
+    "External": 11,
+    "remainingActive": 32
+  }
+}
