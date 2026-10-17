@@ -269,7 +269,7 @@ The [observable acceptance checklist](docs/ACCEPTANCE_CHECKLIST.md) breaks these
 3. Keep playback through navigation; restore queue, song, position, volume, shuffle, and repeat paused after relaunch.
 4. Complete the [radio user stories and STAR scenarios](docs/RADIO_EXPERIENCE.md), including independent preparation/playback opt-ins, profile attribution, no-story outcomes, limits, and recovery.
 5. Retain scripts, recordings, selected take, and provider-free playback across restart.
-6. Check keyboard access, focus return, loading/error/empty states, and a minimum window of 1280×720 at normal zoom and ordinary larger desktop windows.
+6. Check keyboard access, focus return, loading/error/empty states, and a minimum window of 1280×720 at normal zoom and ordinary larger desktop windows. After an explicit keyboard retry in All songs or Albums, return focus to recovered results, or the page heading for an empty result. Keep the retry action focused after another failure. A recovered page of results starts at its first new item and stays visible above the player. Later focus changes, navigation, dialogs and window changes take priority; background refreshes do not move focus.
 7. Distinguish fixture-backed flow checks from live provider output and subjective listening quality. Do not claim user validation from an engineering review.
 
 ## Release verification still needed

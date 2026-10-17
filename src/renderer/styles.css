@@ -62,3 +62,5 @@ input[type=checkbox]{accent-color:var(--accent)}
 .collection-title-details { margin-top: 8px; }
 .collection-title-details summary { color: var(--accent); cursor: pointer; font-size: 11px; }
 .collection-title-details p { margin-top: 6px; font-size: 12px; line-height: 1.6; }
+
+.page-heading h1:focus-visible,.collection-heading h1:focus-visible,.song-load-status>span:focus-visible,.album-load-status>span:focus-visible{outline:1px solid var(--focus);outline-offset:2px;border-radius:4px}

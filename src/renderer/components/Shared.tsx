@@ -1,10 +1,10 @@
-import { useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+import { useId, useLayoutEffect, useRef, useState, type ReactNode, type RefObject } from 'react';
 import { AlertCircle, Music2, X } from 'lucide-react';
 
 export const errorMessage = (error: unknown) => error instanceof Error ? error.message : 'Something went wrong. Please try again.';
-export function ErrorNotice({ error, retry }: { error: unknown; retry?: () => void }) {
+export function ErrorNotice({ error, retry, retryRef }: { error: unknown; retry?: () => void; retryRef?: RefObject<HTMLButtonElement | null> }) {
   if (!error) return null;
-  return <div className="notice error"><AlertCircle size={18} aria-hidden="true" /><span role="alert">{errorMessage(error)}</span>{retry && <button onClick={retry}>Try again</button>}</div>;
+  return <div className="notice error"><AlertCircle size={18} aria-hidden="true" /><span role="alert">{errorMessage(error)}</span>{retry && <button ref={retryRef} onClick={retry}>Try again</button>}</div>;
 }
 export function Empty({ title, children }: { title: string; children?: ReactNode }) {
   return <div className="empty"><Music2 size={30} strokeWidth={1.4} /><h2>{title}</h2>{children && <p>{children}</p>}</div>;
@@ -38,8 +38,8 @@ export function Dialog({ title, children, close, wide = false, initialFocusRef }
   }, [initialFocusRef]);
   return <dialog ref={ref} aria-labelledby={titleId} className={wide ? 'modal modal-wide' : 'modal'} onCancel={(event) => { event.preventDefault(); close(); }} onClick={(event) => { if (event.target !== event.currentTarget) return; const rect = event.currentTarget.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) close(); }}><div className="modal-heading"><h2 id={titleId}>{title}</h2><button className="icon-button" onClick={close} aria-label="Close dialog"><X size={20} /></button></div>{children}</dialog>;
 }
-export function PageHeading({ title, subtitle, children }: { title: string; subtitle?: string; children?: ReactNode }) {
-  return <header className="page-heading"><div><h1 tabIndex={-1}>{title}</h1>{subtitle && <p>{subtitle}</p>}</div>{children}</header>;
+export function PageHeading({ title, subtitle, children, headingRef }: { title: string; subtitle?: string; children?: ReactNode; headingRef?: RefObject<HTMLHeadingElement | null> }) {
+  return <header className="page-heading"><div><h1 ref={headingRef} tabIndex={-1}>{title}</h1>{subtitle && <p>{subtitle}</p>}</div>{children}</header>;
 }
 export function duration(seconds: number) { const safe = Number.isFinite(seconds) ? Math.max(0, seconds) : 0; return `${Math.floor(safe / 60)}:${String(Math.floor(safe % 60)).padStart(2, '0')}`; }
 export function TrackDuration({ seconds }: { seconds: number }) {

@@ -1,0 +1,365 @@
+{
+  "date": "2026-10-17",
+  "scope": [
+    "Q06 partial",
+    "Q08 partial",
+    "M5 keyboard recovery"
+  ],
+  "result": "passed",
+  "runtime": {
+    "os": "macOS 27.2",
+    "arch": "arm64",
+    "electron": "43.7.0",
+    "viewportCSS": [
+      1280,
+      720
+    ],
+    "zoom": 1,
+    "audio": "muted native decoding, advancing position"
+  },
+  "before": {
+    "cases": [],
+    "errors": [],
+    "serverVersion": "12.2.0",
+    "baselineLiveMusicDecoded": true,
+    "afterRecovery": {
+      "tag": "BODY",
+      "body": true,
+      "label": null,
+      "text": null
+    },
+    "nextTab": {
+      "tag": "BUTTON",
+      "label": null,
+      "text": "#3The Script \u00b7 2012"
+    },
+    "network": {
+      "reads": 48,
+      "blockedWrites": 0,
+      "blockedExternal": 0
+    },
+    "result": "observed"
+  },
+  "nativeControlled": {
+    "cases": [
+      {
+        "kind": "album successful keyboard retry",
+        "focus": {
+          "documentFocused": true,
+          "visibility": "visible",
+          "tag": "H1",
+          "body": false,
+          "cls": "",
+          "label": null,
+          "text": "Albums",
+          "outline": "solid",
+          "width": "1px",
+          "uncovered": true,
+          "visible": true
+        },
+        "nativeMutedMusicContinues": true
+      },
+      {
+        "kind": "failed retry retains action focus",
+        "focus": {
+          "documentFocused": true,
+          "visibility": "visible",
+          "tag": "BUTTON",
+          "body": false,
+          "cls": "",
+          "label": null,
+          "text": "Try again",
+          "outline": "solid",
+          "width": "1px",
+          "uncovered": true,
+          "visible": true
+        }
+      },
+      {
+        "kind": "held retry respects search",
+        "focus": {
+          "documentFocused": true,
+          "visibility": "visible",
+          "tag": "INPUT",
+          "body": false,
+          "cls": "",
+          "label": "Search albums",
+          "text": null,
+          "outline": "solid",
+          "width": "1px",
+          "uncovered": true,
+          "visible": true
+        }
+      },
+      {
+        "kind": "held retry respects navigation",
+        "focus": {
+          "documentFocused": true,
+          "visibility": "visible",
+          "tag": "BUTTON",
+          "body": false,
+          "cls": "active",
+          "label": null,
+          "text": "All songs",
+          "outline": "none",
+          "width": "3px",
+          "uncovered": true,
+          "visible": true
+        }
+      },
+      {
+        "kind": "held retry respects blur",
+        "focus": {
+          "documentFocused": true,
+          "visibility": "visible",
+          "tag": "BODY",
+          "body": true,
+          "cls": "",
+          "label": null,
+          "text": null,
+          "outline": "none",
+          "width": "3px",
+          "uncovered": true,
+          "visible": true
+        }
+      },
+      {
+        "kind": "held retry respects popover",
+        "focus": {
+          "documentFocused": true,
+          "visibility": "visible",
+          "tag": "BUTTON",
+          "body": false,
+          "cls": "icon-button",
+          "label": "Close DJ controls",
+          "text": "",
+          "outline": "none",
+          "width": "3px",
+          "uncovered": true,
+          "visible": true
+        }
+      },
+      {
+        "kind": "songs initial retry focus",
+        "focus": {
+          "documentFocused": true,
+          "visibility": "visible",
+          "tag": "TR",
+          "body": false,
+          "cls": " ",
+          "label": null,
+          "text": null,
+          "outline": "solid",
+          "width": "1px",
+          "uncovered": true,
+          "visible": true
+        }
+      },
+      {
+        "kind": "filters initial retry focus",
+        "focus": {
+          "documentFocused": true,
+          "visibility": "visible",
+          "tag": "TR",
+          "body": false,
+          "cls": " ",
+          "label": null,
+          "text": null,
+          "outline": "solid",
+          "width": "1px",
+          "uncovered": true,
+          "visible": true
+        }
+      },
+      {
+        "kind": "album metadata retry respects open dialog",
+        "focus": {
+          "documentFocused": true,
+          "visibility": "visible",
+          "tag": "INPUT",
+          "body": false,
+          "cls": "",
+          "label": null,
+          "text": null,
+          "outline": "solid",
+          "width": "1px",
+          "uncovered": true,
+          "visible": true
+        }
+      },
+      {
+        "kind": "empty album recovery",
+        "focus": {
+          "documentFocused": true,
+          "visibility": "visible",
+          "tag": "H1",
+          "body": false,
+          "cls": "",
+          "label": null,
+          "text": "Albums",
+          "outline": "solid",
+          "width": "1px",
+          "uncovered": true,
+          "visible": true
+        }
+      },
+      {
+        "kind": "albums pagination keyboard recovery",
+        "focus": {
+          "documentFocused": true,
+          "visibility": "visible",
+          "tag": "BUTTON",
+          "body": false,
+          "cls": "album-tile",
+          "label": null,
+          "text": "Album 0049Artist 005 \u00b7 2020",
+          "outline": "solid",
+          "width": "1px",
+          "uncovered": true,
+          "visible": true
+        }
+      },
+      {
+        "kind": "songs pagination keyboard recovery",
+        "focus": {
+          "documentFocused": true,
+          "visibility": "visible",
+          "tag": "TR",
+          "body": false,
+          "cls": " ",
+          "label": null,
+          "text": null,
+          "outline": "solid",
+          "width": "1px",
+          "uncovered": true,
+          "visible": true
+        }
+      },
+      {
+        "kind": "canceled pagination releases virtual row",
+        "focus": {
+          "documentFocused": true,
+          "visibility": "visible",
+          "tag": "INPUT",
+          "body": false,
+          "cls": "",
+          "label": "Search albums",
+          "text": null,
+          "outline": "solid",
+          "width": "1px",
+          "uncovered": true,
+          "visible": true
+        },
+        "canceledPinReleased": true
+      },
+      {
+        "kind": "background recovery does not move focus",
+        "focus": {
+          "documentFocused": true,
+          "visibility": "visible",
+          "tag": "INPUT",
+          "body": false,
+          "cls": "",
+          "label": "Search albums",
+          "text": null,
+          "outline": "solid",
+          "width": "1px",
+          "uncovered": true,
+          "visible": true
+        }
+      },
+      {
+        "kind": "older retry cannot cancel newer focus return",
+        "focus": {
+          "documentFocused": true,
+          "visibility": "visible",
+          "tag": "BUTTON",
+          "body": false,
+          "cls": "album-tile",
+          "label": null,
+          "text": "Album 0001Artist 001 \u00b7 2020",
+          "outline": "solid",
+          "width": "1px",
+          "uncovered": true,
+          "visible": true
+        }
+      }
+    ],
+    "errors": [],
+    "lastNetwork": {
+      "writes": 0,
+      "external": 0
+    },
+    "result": "passed"
+  },
+  "sourceAnnouncementAudit": {
+    "tsxFiles": 42,
+    "regions": 61,
+    "directOrKnownInteractiveDescendants": 0,
+    "method": "TypeScript AST, literal role=alert/status or aria-live; direct HTML controls and ErrorNotice/FilterSelect/Dialog descendants",
+    "limitation": "Static JSX evidence does not expand every custom component or establish screen-reader behavior"
+  },
+  "implementation": [
+    "Explicit retry owners provide result/heading targets; failed requests retain their action.",
+    "First new pagination item is pinned until the committed focus decision and scrolled above the player. Token-owned cleanup releases canceled pins.",
+    "Captured action, owner identity, current attempt and user/window/dialog state guard focus. Background query recovery does not call the handoff.",
+    "Stale promises cannot overwrite the current completion, including silently replaced query requests that resolve together. Returned query outcomes determine success; sibling errors remain gates."
+  ],
+  "reproducedAndFixed": [
+    "Live initial Albums retry removed its action and left focus on BODY.",
+    "Empty success initially ran before React committed the target. Completion now runs from a layout effect.",
+    "Songs pagination initially focused a count below the player; it now focuses the visible first new row.",
+    "The final overlapping native retry exposed stale completion state overwriting newer success. Pre-setCompletion identity guard fixes it."
+  ],
+  "fixtureCorrections": [
+    "Seed account requires its connection id.",
+    "Songs failure also affected IncludeItemTypes=Audio filter calls; tests now distinguish and recover both notices.",
+    "Native app is explicitly shown/focused and document.hasFocus checked.",
+    "Pagination faults start only after initial results load.",
+    "Manual async polling awaits IPC and query completion instead of treating Promise objects as readiness."
+  ],
+  "team": {
+    "decision": "Steve and Elena independently proposed owner-controlled targets, challenged early/unmounted notices, and supported guarded owner completion. Morgan selected this approach.",
+    "implementation": "Steve",
+    "review": "Elena, final review recorded in UX acceptance after response"
+  },
+  "checks": {
+    "productionBuildIncludingTypeScript": "passed",
+    "fullESLint": "passed",
+    "diffCheck": "passed",
+    "nativeCases": 15,
+    "rendererErrors": [],
+    "serverWrites": 0,
+    "externalRequests": 0,
+    "screenshots": "Initial success and both pagination captures inspected"
+  },
+  "limitations": [
+    "Native outcomes use a controlled local Jellyfin-compatible catalog and injected read failures; only the before reproduction used the authorized live server.",
+    "The blur case dispatches a window blur event; it is not an OS app-switch proof.",
+    "No VoiceOver, exhaustive keyboard inventory, audible-quality, observed listener or full OS/display proof.",
+    "No checks below1280x720 or enlarged zoom, no unit tests, provider requests or live mutations.",
+    "Q06 and Q08 remain Review. Inventory stays187 rows,185 active,2 Deferred;18 Review,1 Dated,132 Controlled,23 Live,11 External.30 active checks remain."
+  ],
+  "sha256": {
+    "src/renderer/useRetryFocus.ts": "4c95b9a6e946ceebbc395af42567757605db526e4503e073a1d81a0825b048fc",
+    "src/renderer/components/Shared.tsx": "eade3d1a8935082f3a7fdc2dcaa52d5a6caa0a520dd7f602143e7af4a045b092",
+    "src/renderer/pages/Songs/Songs.page.tsx": "4ddfa44ad7cc1a51666408631f1c3021a7a4f6d98ecd6b2ef071b55850df5ae1",
+    "src/renderer/pages/Songs/VirtualSongs.component.tsx": "b40cbc3d42cc464ef62e940f28dc2200f81333dd5aa0da20b0ca501dff26b0e8",
+    "src/renderer/pages/Albums/Albums.page.tsx": "d619c7885b38edc1eb40973c24fe62eceb123ba91d83caab15c916328b04e100",
+    "src/renderer/pages/Albums/VirtualAlbums.component.tsx": "97da552065b9bd0af3c8927425c99319cf8eba08291de38c6eaa95854bfa97d0",
+    "src/renderer/styles.css": "d7287df329b3985ab0eb2d3900593b888559e83b79ae2a178d50631ea5039658",
+    "REQUIREMENTS.md": "e882b093704e028cd5447c7035cdaec97688e19f7e481e0819518b8c296c84c9",
+    "docs/RADIO_EXPERIENCE.md": "d3307838e63300b41ef06ebc3aa8aa4a6b92abf17601832f4f95c305092c0410",
+    "out/main/index.js": "c4a5aac8a832c60ee462ac467630ecbf38891cbb3b0a0bd51d10e1d2cb1cadb6",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/assets/index-BCH2TdH2.css": "09d70be95859a7392bf2943d2ac0cb59a37786b068940590691b8ec4218ea0e7",
+    "out/renderer/assets/index-DXWTjduE.js": "88a371ea816374dafe4949a26eb225cde77d06cea2987d3870bfe92a9395502b",
+    "docs/verification/2026-10-17-keyboard-recovery-focus-initial.png": "874a8b86ef062de19538722732edbf46ebe677078561e3a16bed0762174cabe1",
+    "docs/verification/2026-10-17-keyboard-recovery-focus-albums.png": "9d50c8e96a0602ae2c425921c3133ee2b94d71e9e2e15d23c173a41bf3261ca4",
+    "docs/verification/2026-10-17-keyboard-recovery-focus-songs.png": "160a31138eb9708b76798d064dfc384ee165d36101e2caa5d0d99c00bc2272a1",
+    "/private/tmp/catalog-retry-focus-current/run.cjs": "f3c0c00d445a81135c60724fd5208c5f177d656ac5dce57e271c6c4044d162f0",
+    "/private/tmp/catalog-retry-focus-current/build.mjs": "036b54db32d6f5bab89893d69b91a510b6de5a3b36168c74cb02526ddff54dca",
+    "/private/tmp/catalog-retry-focus-current/bootstrap.mjs": "0b99a74688fc2ae0f1ac440b7529716bf054266dfa0c559e82dbfbd8556ee744",
+    "/private/tmp/catalog-retry-focus-current/server.mjs": "29691e12eea325b2cdf0427b7116cb3247a84d9c2a86f27908d28c6fdea3d147"
+  }
+}
