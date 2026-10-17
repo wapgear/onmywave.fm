@@ -1,0 +1,3635 @@
+{
+  "date": "2026-10-17",
+  "baseCommit": "1b1d0471eb85b6966fcbaf25a9a0d30ccd8a2d76",
+  "scope": "Refresh library focus/busy/repeat behavior, partial Q06 and M5; existing B10/B11 refresh semantics preserved",
+  "baseline": {
+    "contentSizePoints": [
+      1280,
+      720
+    ],
+    "appZoom": 1,
+    "runtime": "macOS27.2 arm64, Electron43.7.0, Retina display"
+  },
+  "reproduction": "Native click Search then five Tabs focuses Refresh. Return starts two held reads, sets native disabled on that focused control, and native AX/DOM both become HTML content/BODY. Releasing successful reads re-enables Refresh but leaves BODY focus.",
+  "change": [
+    "Use aria-disabled and aria-busy while retaining the native button in Tab order. No forced focus handoff.",
+    "Guard refresh immediately with an in-flight ref and keep operation-pending state through the complete existing invalidation Promise, in addition to song/filter fetching. Preserve the existing eight query-family predicate.",
+    "Keep spinner and muted progress cursor while pending, with no pressed translation; type=button prevents form submission.",
+    "State the focused-refresh and later-navigation behavior in REQUIREMENTS and M5."
+  ],
+  "decision": "Mechanical correction follows the existing focused busy Retry button pattern. Root implements/reviews locally; no paired design or independent-review claim.",
+  "snapshots": [
+    {
+      "name": "before-focused",
+      "rawSha256": "cadf5dc8df5268d72f6d43ba220e492a459cc477ab7f126e4763b3d8e2cdf349",
+      "observedAt": 1792266746964,
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "insideDrawer": false,
+        "name": "Refresh library",
+        "type": null,
+        "role": null
+      },
+      "refreshControl": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "busy": "false",
+        "active": true,
+        "visible": true,
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "classes": "lucide lucide-refresh-cw"
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [],
+      "held": [],
+      "readCalls": [
+        {
+          "name": "songs",
+          "at": 1792266724526,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266724530,
+          "mode": "normal"
+        }
+      ],
+      "focusEvents": [
+        {
+          "at": 1792266739944,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Genre: Any genre",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266739944,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Genre: Any genre",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Tag: Any tag",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266739944,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Tag: Any tag",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266739964,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Tag: Any tag",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266739964,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Tag: Any tag",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266739964,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266739987,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266739987,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266739987,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266740035,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266740035,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266740036,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        }
+      ],
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "submits": 0,
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "before-held-body",
+      "rawSha256": "37bd903613111c23ebf4bf9440206c7e9f101e6dbebe0cb6d31762582cbb26c0",
+      "observedAt": 1792266758634,
+      "focus": {
+        "tag": "BODY",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "top": 0,
+          "right": 1280,
+          "bottom": 720,
+          "left": 0
+        },
+        "insideDrawer": false,
+        "name": "document body",
+        "type": null,
+        "role": null
+      },
+      "refreshControl": {
+        "disabled": true,
+        "ariaDisabled": null,
+        "busy": "true",
+        "active": false,
+        "visible": true,
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "classes": "lucide lucide-refresh-cw spinning"
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [],
+      "held": [
+        "songs",
+        "libraryFilters"
+      ],
+      "readCalls": [
+        {
+          "name": "songs",
+          "at": 1792266724526,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266724530,
+          "mode": "normal"
+        },
+        {
+          "name": "songs",
+          "at": 1792266749594,
+          "mode": "hold"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266749594,
+          "mode": "hold"
+        }
+      ],
+      "focusEvents": [
+        {
+          "at": 1792266739964,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Tag: Any tag",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266739964,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Tag: Any tag",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266739964,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266739987,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266739987,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266739987,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266740035,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266740035,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266740036,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266749535,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266749538,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": true
+          },
+          "related": {}
+        },
+        {
+          "at": 1792266749538,
+          "event": "focused-node-unavailable",
+          "previous": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": true
+          },
+          "active": {
+            "tag": "BODY",
+            "name": "document body",
+            "connected": true,
+            "disabled": false
+          }
+        }
+      ],
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "submits": 0,
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "before-success-body",
+      "rawSha256": "6b3282c7d53f2b0aab513ddbfa44382ccb63a89b49e4033e72291edf6288bbc0",
+      "observedAt": 1792266765610,
+      "focus": {
+        "tag": "BODY",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "top": 0,
+          "right": 1280,
+          "bottom": 720,
+          "left": 0
+        },
+        "insideDrawer": false,
+        "name": "document body",
+        "type": null,
+        "role": null
+      },
+      "refreshControl": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "busy": "false",
+        "active": false,
+        "visible": true,
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "classes": "lucide lucide-refresh-cw"
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [],
+      "held": [],
+      "readCalls": [
+        {
+          "name": "songs",
+          "at": 1792266724526,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266724530,
+          "mode": "normal"
+        },
+        {
+          "name": "songs",
+          "at": 1792266749594,
+          "mode": "hold"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266749594,
+          "mode": "hold"
+        }
+      ],
+      "focusEvents": [
+        {
+          "at": 1792266739964,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Tag: Any tag",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266739964,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Tag: Any tag",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266739964,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266739987,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266739987,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266739987,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266740035,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266740035,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266740036,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266749535,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266749538,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": true
+          },
+          "related": {}
+        },
+        {
+          "at": 1792266749538,
+          "event": "focused-node-unavailable",
+          "previous": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": true
+          },
+          "active": {
+            "tag": "BODY",
+            "name": "document body",
+            "connected": true,
+            "disabled": false
+          }
+        }
+      ],
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "submits": 0,
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "after-focused",
+      "rawSha256": "cf08beef4315c7d49a1f34140e316f6c51f9ab70cda3b6579a94f7bfc738fe32",
+      "observedAt": 1792266810844,
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "insideDrawer": false,
+        "name": "Refresh library",
+        "type": "button",
+        "role": null
+      },
+      "refreshControl": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "busy": "false",
+        "active": true,
+        "visible": true,
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "classes": "lucide lucide-refresh-cw"
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [],
+      "held": [],
+      "readCalls": [
+        {
+          "name": "songs",
+          "at": 1792266801241,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266801245,
+          "mode": "normal"
+        }
+      ],
+      "focusEvents": [
+        {
+          "at": 1792266807411,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Genre: Any genre",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807411,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Genre: Any genre",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Tag: Any tag",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807412,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Tag: Any tag",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807412,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Tag: Any tag",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807412,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Tag: Any tag",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807412,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807419,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807420,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807420,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807428,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807428,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807428,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        }
+      ],
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "submits": 0,
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "after-held-repeat",
+      "rawSha256": "73db7bffbf7b8e55cd03d0ce4f6bcb509424e04fdeccd868bb5e4a6c8092d943",
+      "observedAt": 1792266829351,
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "insideDrawer": false,
+        "name": "Refresh library",
+        "type": "button",
+        "role": null
+      },
+      "refreshControl": {
+        "disabled": false,
+        "ariaDisabled": "true",
+        "busy": "true",
+        "active": true,
+        "visible": true,
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "classes": "lucide lucide-refresh-cw spinning"
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [],
+      "held": [
+        "songs",
+        "libraryFilters"
+      ],
+      "readCalls": [
+        {
+          "name": "songs",
+          "at": 1792266801241,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266801245,
+          "mode": "normal"
+        },
+        {
+          "name": "songs",
+          "at": 1792266814656,
+          "mode": "hold"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266814656,
+          "mode": "hold"
+        }
+      ],
+      "focusEvents": [
+        {
+          "at": 1792266807412,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Tag: Any tag",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807412,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Tag: Any tag",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807412,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807419,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807420,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807420,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807428,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807428,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807428,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266814621,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266819820,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266819828,
+          "event": "keydown",
+          "key": " ",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        }
+      ],
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "submits": 0,
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "after-partial-held",
+      "rawSha256": "93fe59030245364cc72711675634e2a5b30b0733c7b462d1cf1cc9f894af67e9",
+      "observedAt": 1792266834136,
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "insideDrawer": false,
+        "name": "Refresh library",
+        "type": "button",
+        "role": null
+      },
+      "refreshControl": {
+        "disabled": false,
+        "ariaDisabled": "true",
+        "busy": "true",
+        "active": true,
+        "visible": true,
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "classes": "lucide lucide-refresh-cw spinning"
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [],
+      "held": [
+        "libraryFilters"
+      ],
+      "readCalls": [
+        {
+          "name": "songs",
+          "at": 1792266801241,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266801245,
+          "mode": "normal"
+        },
+        {
+          "name": "songs",
+          "at": 1792266814656,
+          "mode": "hold"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266814656,
+          "mode": "hold"
+        }
+      ],
+      "focusEvents": [
+        {
+          "at": 1792266807412,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Tag: Any tag",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807412,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Tag: Any tag",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807412,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807419,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807420,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807420,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807428,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807428,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807428,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266814621,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266819820,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266819828,
+          "event": "keydown",
+          "key": " ",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        }
+      ],
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "submits": 0,
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "after-tab-detour",
+      "rawSha256": "d741cad0d1cff100fd34ed04f26de1e99305de467218e116b7f1c590d6d55590",
+      "observedAt": 1792266850112,
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 246,
+          "y": 204,
+          "width": 15,
+          "height": 15,
+          "top": 204,
+          "right": 261,
+          "bottom": 219,
+          "left": 246
+        },
+        "insideDrawer": false,
+        "name": "Select loaded songs",
+        "type": "checkbox",
+        "role": null
+      },
+      "refreshControl": {
+        "disabled": false,
+        "ariaDisabled": "true",
+        "busy": "true",
+        "active": false,
+        "visible": true,
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "classes": "lucide lucide-refresh-cw spinning"
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [],
+      "held": [
+        "libraryFilters"
+      ],
+      "readCalls": [
+        {
+          "name": "songs",
+          "at": 1792266801241,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266801245,
+          "mode": "normal"
+        },
+        {
+          "name": "songs",
+          "at": 1792266814656,
+          "mode": "hold"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266814656,
+          "mode": "hold"
+        }
+      ],
+      "focusEvents": [
+        {
+          "at": 1792266807419,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807420,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort: Date added",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807420,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807428,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807428,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807428,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266814621,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266819820,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266819828,
+          "event": "keydown",
+          "key": " ",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "focusin",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        }
+      ],
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "submits": 0,
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "after-ready-returned",
+      "rawSha256": "a71784c2cbc485ddef7c9eea3c498940c981911919f6d8a31197dcc7da76c49f",
+      "observedAt": 1792266860929,
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "insideDrawer": false,
+        "name": "Refresh library",
+        "type": "button",
+        "role": null
+      },
+      "refreshControl": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "busy": "false",
+        "active": true,
+        "visible": true,
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "classes": "lucide lucide-refresh-cw"
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [],
+      "held": [],
+      "readCalls": [
+        {
+          "name": "songs",
+          "at": 1792266801241,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266801245,
+          "mode": "normal"
+        },
+        {
+          "name": "songs",
+          "at": 1792266814656,
+          "mode": "hold"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266814656,
+          "mode": "hold"
+        }
+      ],
+      "focusEvents": [
+        {
+          "at": 1792266807428,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807428,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807428,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266814621,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266819820,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266819828,
+          "event": "keydown",
+          "key": " ",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "focusin",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "focusout",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        }
+      ],
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "submits": 0,
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "after-unheld-success",
+      "rawSha256": "1c485b912f10c3400ca20449838b0684ff56c22ba06cd35efd161a7b826e9bdf",
+      "observedAt": 1792266870821,
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "insideDrawer": false,
+        "name": "Refresh library",
+        "type": "button",
+        "role": null
+      },
+      "refreshControl": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "busy": "false",
+        "active": true,
+        "visible": true,
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "classes": "lucide lucide-refresh-cw"
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [],
+      "held": [],
+      "readCalls": [
+        {
+          "name": "songs",
+          "at": 1792266801241,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266801245,
+          "mode": "normal"
+        },
+        {
+          "name": "songs",
+          "at": 1792266814656,
+          "mode": "hold"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266814656,
+          "mode": "hold"
+        },
+        {
+          "name": "songs",
+          "at": 1792266864321,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266864322,
+          "mode": "normal"
+        }
+      ],
+      "focusEvents": [
+        {
+          "at": 1792266807428,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Sort ascending",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266807428,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266814621,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266819820,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266819828,
+          "event": "keydown",
+          "key": " ",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "focusin",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "focusout",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266864321,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        }
+      ],
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "submits": 0,
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "after-pointer-repeat",
+      "rawSha256": "076ac3b2ecde19e735d5469e94436f547372107cfb855e1e240ea6a8858e4664",
+      "observedAt": 1792266890394,
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "insideDrawer": false,
+        "name": "Refresh library",
+        "type": "button",
+        "role": null
+      },
+      "refreshControl": {
+        "disabled": false,
+        "ariaDisabled": "true",
+        "busy": "true",
+        "active": true,
+        "visible": true,
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "classes": "lucide lucide-refresh-cw spinning"
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [],
+      "held": [
+        "songs",
+        "libraryFilters"
+      ],
+      "readCalls": [
+        {
+          "name": "songs",
+          "at": 1792266801241,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266801245,
+          "mode": "normal"
+        },
+        {
+          "name": "songs",
+          "at": 1792266814656,
+          "mode": "hold"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266814656,
+          "mode": "hold"
+        },
+        {
+          "name": "songs",
+          "at": 1792266864321,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266864322,
+          "mode": "normal"
+        },
+        {
+          "name": "songs",
+          "at": 1792266876081,
+          "mode": "hold"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266876081,
+          "mode": "hold"
+        }
+      ],
+      "focusEvents": [
+        {
+          "at": 1792266807428,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266814621,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266819820,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266819828,
+          "event": "keydown",
+          "key": " ",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "focusin",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "focusout",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266864321,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266876081,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        }
+      ],
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "submits": 0,
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "after-failure",
+      "rawSha256": "b87b06bf2f7bb1792f049b8e35aa5f7aa99ca096d239c44097d05888c65ab153",
+      "observedAt": 1792266902265,
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "insideDrawer": false,
+        "name": "Refresh library",
+        "type": "button",
+        "role": null
+      },
+      "refreshControl": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "busy": "false",
+        "active": true,
+        "visible": true,
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "classes": "lucide lucide-refresh-cw"
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [
+        {
+          "error": "libraryFilters unavailable.",
+          "status": "",
+          "button": {
+            "name": "Try again",
+            "disabled": false,
+            "busy": null,
+            "ariaDisabled": null,
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        },
+        {
+          "error": "songs unavailable.",
+          "status": "",
+          "button": {
+            "name": "Try again",
+            "disabled": false,
+            "busy": null,
+            "ariaDisabled": null,
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "held": [],
+      "readCalls": [
+        {
+          "name": "songs",
+          "at": 1792266801241,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266801245,
+          "mode": "normal"
+        },
+        {
+          "name": "songs",
+          "at": 1792266814656,
+          "mode": "hold"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266814656,
+          "mode": "hold"
+        },
+        {
+          "name": "songs",
+          "at": 1792266864321,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266864322,
+          "mode": "normal"
+        },
+        {
+          "name": "songs",
+          "at": 1792266876081,
+          "mode": "hold"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266876081,
+          "mode": "hold"
+        },
+        {
+          "name": "songs",
+          "at": 1792266891518,
+          "mode": "fail"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266891518,
+          "mode": "fail"
+        }
+      ],
+      "focusEvents": [
+        {
+          "at": 1792266807428,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266814621,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266819820,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266819828,
+          "event": "keydown",
+          "key": " ",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "focusin",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "focusout",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266864321,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266876081,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        }
+      ],
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "submits": 0,
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "after-recovery",
+      "rawSha256": "b2a616403b990d058f01dbae8b69551ed04e656fcbd9b797052a5d08e0b8af9c",
+      "observedAt": 1792266915574,
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "insideDrawer": false,
+        "name": "Refresh library",
+        "type": "button",
+        "role": null
+      },
+      "refreshControl": {
+        "disabled": false,
+        "ariaDisabled": null,
+        "busy": "false",
+        "active": true,
+        "visible": true,
+        "rect": {
+          "x": 1208,
+          "y": 134,
+          "width": 34,
+          "height": 34,
+          "top": 134,
+          "right": 1242,
+          "bottom": 168,
+          "left": 1208
+        },
+        "classes": "lucide lucide-refresh-cw"
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [],
+      "held": [],
+      "readCalls": [
+        {
+          "name": "songs",
+          "at": 1792266801241,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266801245,
+          "mode": "normal"
+        },
+        {
+          "name": "songs",
+          "at": 1792266814656,
+          "mode": "hold"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266814656,
+          "mode": "hold"
+        },
+        {
+          "name": "songs",
+          "at": 1792266864321,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266864322,
+          "mode": "normal"
+        },
+        {
+          "name": "songs",
+          "at": 1792266876081,
+          "mode": "hold"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266876081,
+          "mode": "hold"
+        },
+        {
+          "name": "songs",
+          "at": 1792266891518,
+          "mode": "fail"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266891518,
+          "mode": "fail"
+        },
+        {
+          "name": "songs",
+          "at": 1792266905480,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266905480,
+          "mode": "normal"
+        }
+      ],
+      "focusEvents": [
+        {
+          "at": 1792266814621,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266819820,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266819828,
+          "event": "keydown",
+          "key": " ",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "focusin",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "focusout",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266864321,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266876081,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266905479,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        }
+      ],
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "submits": 0,
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "after-albums",
+      "rawSha256": "02c4e617094fe839815d3f397197cacc70a4d1559a33d3b4fa9b20896cb7fde0",
+      "observedAt": 1792266923357,
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 159.5,
+          "width": 176,
+          "height": 44,
+          "top": 159.5,
+          "right": 192,
+          "bottom": 203.5,
+          "left": 16
+        },
+        "insideDrawer": false,
+        "name": "Albums",
+        "type": null,
+        "role": null
+      },
+      "refreshControl": null,
+      "headings": [
+        "Albums"
+      ],
+      "notices": [],
+      "held": [],
+      "readCalls": [
+        {
+          "name": "songs",
+          "at": 1792266801241,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266801245,
+          "mode": "normal"
+        },
+        {
+          "name": "songs",
+          "at": 1792266814656,
+          "mode": "hold"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266814656,
+          "mode": "hold"
+        },
+        {
+          "name": "songs",
+          "at": 1792266864321,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266864322,
+          "mode": "normal"
+        },
+        {
+          "name": "songs",
+          "at": 1792266876081,
+          "mode": "hold"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266876081,
+          "mode": "hold"
+        },
+        {
+          "name": "songs",
+          "at": 1792266891518,
+          "mode": "fail"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266891518,
+          "mode": "fail"
+        },
+        {
+          "name": "songs",
+          "at": 1792266905480,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266905480,
+          "mode": "normal"
+        },
+        {
+          "name": "albums",
+          "at": 1792266919916,
+          "mode": "normal"
+        }
+      ],
+      "focusEvents": [
+        {
+          "at": 1792266819828,
+          "event": "keydown",
+          "key": " ",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "focusin",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "focusout",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266864321,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266876081,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266905479,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266919863,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Albums",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266919863,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Albums",
+            "connected": true,
+            "disabled": false
+          }
+        }
+      ],
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "submits": 0,
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "after-playlists",
+      "rawSha256": "42821f2511f617a14c6d70def36c5722b4754f5583c7e01f596b097785a84e16",
+      "observedAt": 1792266930971,
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 211.5,
+          "width": 176,
+          "height": 44,
+          "top": 211.5,
+          "right": 192,
+          "bottom": 255.5,
+          "left": 16
+        },
+        "insideDrawer": false,
+        "name": "Playlists",
+        "type": null,
+        "role": null
+      },
+      "refreshControl": null,
+      "headings": [
+        "Playlists"
+      ],
+      "notices": [],
+      "held": [],
+      "readCalls": [
+        {
+          "name": "songs",
+          "at": 1792266801241,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266801245,
+          "mode": "normal"
+        },
+        {
+          "name": "songs",
+          "at": 1792266814656,
+          "mode": "hold"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266814656,
+          "mode": "hold"
+        },
+        {
+          "name": "songs",
+          "at": 1792266864321,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266864322,
+          "mode": "normal"
+        },
+        {
+          "name": "songs",
+          "at": 1792266876081,
+          "mode": "hold"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266876081,
+          "mode": "hold"
+        },
+        {
+          "name": "songs",
+          "at": 1792266891518,
+          "mode": "fail"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266891518,
+          "mode": "fail"
+        },
+        {
+          "name": "songs",
+          "at": 1792266905480,
+          "mode": "normal"
+        },
+        {
+          "name": "libraryFilters",
+          "at": 1792266905480,
+          "mode": "normal"
+        },
+        {
+          "name": "albums",
+          "at": 1792266919916,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792266927357,
+          "mode": "normal"
+        }
+      ],
+      "focusEvents": [
+        {
+          "at": 1792266841031,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266841031,
+          "event": "focusin",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "keydown",
+          "key": "Tab",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "focusout",
+          "target": {
+            "tag": "INPUT",
+            "name": "Select loaded songs",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266854179,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266864321,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266876081,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266905479,
+          "event": "keydown",
+          "key": "Enter",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266919863,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Refresh library",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Albums",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266919863,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Albums",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266927305,
+          "event": "focusout",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Albums",
+            "connected": true,
+            "disabled": false
+          },
+          "related": {
+            "tag": "BUTTON",
+            "name": "Playlists",
+            "connected": true,
+            "disabled": false
+          }
+        },
+        {
+          "at": 1792266927305,
+          "event": "focusin",
+          "target": {
+            "tag": "BUTTON",
+            "name": "Playlists",
+            "connected": true,
+            "disabled": false
+          }
+        }
+      ],
+      "playbackSnapshot": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "submits": 0,
+      "serverWrites": 0,
+      "externalRequests": 0
+    }
+  ],
+  "nativeAX": "Before: held and successful refresh both report HTML content. Final: held Refresh reports disabled accessibly while remaining DOM enabled and focused. Return/Space and a later pointer repeat leave one held call per family. Tab reaches Select loaded songs. After completion native AX still reports that checkbox; Shift-Tab then returns to the enabled Refresh control. Normal success, two-read failure and later recovery retain Refresh. Albums and Playlists open normally.",
+  "checks": {
+    "build": "npm run build, including TypeScript, session75849 exit0",
+    "lint": "npm run lint, session82535 exit0",
+    "predicates": "This recorder asserts raw before/final focus, pending/partial state, initial repeat call counts, Tab destination, failure/recovery, navigation, zero external/write/form operations and exact saved playback snapshot retention.",
+    "readCounts": {
+      "after-focused": {
+        "songs": 1,
+        "libraryFilters": 1
+      },
+      "after-held-repeat": {
+        "songs": 2,
+        "libraryFilters": 2
+      },
+      "after-unheld-success": {
+        "songs": 3,
+        "libraryFilters": 3
+      },
+      "after-pointer-repeat": {
+        "songs": 4,
+        "libraryFilters": 4
+      },
+      "after-failure": {
+        "songs": 5,
+        "libraryFilters": 5
+      },
+      "after-recovery": {
+        "songs": 6,
+        "libraryFilters": 6
+      }
+    },
+    "runtimeReports": {
+      "before": {
+        "result": "observed",
+        "errors": []
+      },
+      "after": {
+        "result": "observed",
+        "errors": []
+      }
+    },
+    "processes": "Before38878 and final52932 exited0. Exact owned localhost server38530 stopped, exit143."
+  },
+  "fixture": {
+    "description": "Production renderer/preload and copied instrumented actual main/storage; disposable safeStorage and synthetic localhost catalog, null shared-key adapter and stopped scheduler. External requests and non-GET/HEAD fetches blocked. Read holds/faults occur after IPC validation. Playback is muted and restored paused; no audible proof.",
+    "input": "All native input through CUA; Playwright only launches and observes. Read-only DOM/main/file telemetry, no focus overrides.",
+    "sha256": {
+      "bootstrap.mjs": "22ecaa84097c13cf54e14ecc95194f3f761236d9840c86bba7c318ab5678b805",
+      "build.mjs": "97bbe354b8aed5ce96fad18a382c180cb6da4fb3ee7760059a55788d7ca58797",
+      "observe.cjs": "3fb466ba876ed77f75bdc8e95ef808e4f131cba5fdcbf56c325da12bd7ebc864",
+      "server.mjs": "5be16cf64da1e692732157389bf18dd1efe739ed3785ec1f591787723423884b"
+    }
+  },
+  "beforeBundleHashes": {
+    "out/renderer/assets/index-C4s5nSCv.js": "977c2bc1c1dc3c0861d84cf15014bf0be6b7de6ee2a8154205af85d202c95e74",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2"
+  },
+  "finalBundleHashes": {
+    "out/renderer/assets/index-Dhy0gs4Q.js": "2586516bf35475eb8fb2ac5f00870693fee2862a354ab8fd5af00f2603544d2e",
+    "out/renderer/assets/index-BHmJUhyG.css": "46f10bddc5a016924819dd8e8fb31bc8181cfd1ebd2cd0bdacd21bd9f1509096",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2"
+  },
+  "sourceHashes": {
+    "src/renderer/pages/Songs/Songs.page.tsx": "a15a3adc08b8ebb2bd4d96b00c8462d94922bef67eb2fad655c6c428af0eb942",
+    "src/renderer/styles.css": "63ad98d90efa9001367ad21946ef972b1f3c6f53d422e621bcd45664b9e87f47"
+  },
+  "sourceTraceSupplement": [
+    {
+      "file": "REQUIREMENTS.md",
+      "line": 142,
+      "sha256": "bfba2bfd4c68cd2053b3f040cc5302360f33d32077c903e08b9e46d0c544496e",
+      "text": "- Load catalog information and artwork from Jellyfin. Concurrent sort/filter reads for an unchanged selection must not report that the library changed merely because another view was read or cached results were evicted. Changing the actual account or selected libraries still rejects obsolete reads; a later explicit refresh reads the server again. Refresh library updates current songs and genre/tag choices, and marks cached song details, album views and playlists for a fresh read when used. Keep search, filters, selection and the listening queue during refresh. Keep the Refresh action focused while it is busy and after success or failure, unless the listener moves elsewhere. Show busy feedback, ignore repeat activation until the refresh settles, and allow Tab to continue normally. Show read failures with Retry while retaining available data. An open album reads its current title, artist, year and artwork by ID, even if it has no tracks; a metadata-only failure must leave available tracks playable. Use Jellyfin’s image revision tags for current artwork, including a song’s album-art fallback. Refreshing the collection never prepares news or enables radio.",
+      "acceptanceIds": [
+        "B10",
+        "Q06",
+        "M5"
+      ]
+    },
+    {
+      "file": "docs/RADIO_EXPERIENCE.md",
+      "line": 136,
+      "sha256": "ef5f03a522fb961b1dee1da927badb3d8e7eacef47dcc512b58976d6fafd4e08",
+      "text": "| M5 | I can find music and recover from a failed page | I am browsing a growing library or narrowing it by artist, album, genre or tag | Use Command-F to search, filter, select songs, open an album and return; Retry if the next page fails | Keep keyboard-focused rows/controls visible above the selection toolbar and player in songs, albums and playlists; quick arrow presses retain every move; show each song/album once across overlapping selected libraries, with unique totals and coherent pages; concurrent sort/filter reads of an unchanged selection do not falsely claim the library changed; Refresh rereads the server after a completed read, retains its focused action through busy/success/failure, ignores repeated activation while busy and leaves later Tab navigation in place; reset selection for a different search/filter; retain song selection and the same open album's track selection through ordinary page navigation; Back closes the album, clears its selection and restores its tile focus even after a page detour; opening from the list starts fresh, and library/account changes or restart clear temporary album selection; keep loaded songs/albums visible during a paging failure with explicit Retry; keyboard recovery focuses visible recovered results, the first new item after paging, or the heading of an empty page; failed retry retains its action, while later focus/navigation wins and background refreshes keep focus |",
+      "acceptanceIds": [
+        "B10",
+        "Q06",
+        "M5"
+      ]
+    }
+  ],
+  "acceptance": {
+    "rows": 191,
+    "active": 189,
+    "Deferred": 2,
+    "remaining": 27,
+    "listener": 14,
+    "otherProof": 13,
+    "statusChanges": 0,
+    "Q06": "Review",
+    "dispositions": {
+      "Controlled": 139,
+      "Live": 23,
+      "Review": 15,
+      "External": 11,
+      "Deferred": 2,
+      "Dated": 1
+    }
+  },
+  "limits": [
+    "Album/playlist navigation after refresh is a smoke check, not a new changed-server-data or permission pass. Existing invalidation predicate, rendering/selection and B10/B11 records retain their original scope.",
+    "Native AX exposes aria-disabled as disabled; DOM proves native disabled=false and native Tab proves the action remains in sequential navigation.",
+    "Later-navigation completion is observed in native AX before Shift-Tab; its named settled snapshot is captured after Shift-Tab returns to Refresh.",
+    "Busy icon spinning class and focus geometry/styles are read-only observations. No separate screenshot or complete theme/accessibility audit is claimed.",
+    "No unit, VoiceOver, listener, live-provider/server, audible-quality, platform-matrix, release/package or deferred smaller-window/enlarged-zoom check. Cold detail-entry and complete app-wide controls remain Q06 work."
+  ]
+}
