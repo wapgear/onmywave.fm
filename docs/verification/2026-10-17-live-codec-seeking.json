@@ -1,0 +1,1210 @@
+{
+  "date": "2026-10-17",
+  "baseCommit": "0d511953327c87e1c64a06932849379f8f80d41a",
+  "scope": "M17 live converted-codec playback and native paused/playing seeks for all five codec/container groups present in the selected authorized library; Q10 broader platform matrix and audible quality separate",
+  "appSourceChanged": false,
+  "runtime": {
+    "serverVersion": "12.2.0",
+    "electron": "43.7.0",
+    "chromium": "150.0.7871.250",
+    "macOS": "27.2",
+    "architecture": "arm64",
+    "contentSizePoints": [
+      1280,
+      720
+    ],
+    "appZoom": 1,
+    "audioOutput": "muted"
+  },
+  "inventory": {
+    "serverVersion": "12.2.0",
+    "totalReported": 1328,
+    "returned": 1328,
+    "groups": [
+      {
+        "codec": "mp3",
+        "container": "mp3",
+        "count": 215,
+        "duration": 275.342222,
+        "sampleRate": 44100
+      },
+      {
+        "codec": "flac",
+        "container": "flac",
+        "count": 1086,
+        "duration": 170.811791,
+        "sampleRate": 44100
+      },
+      {
+        "codec": "aac",
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "count": 19,
+        "duration": 187.477914,
+        "sampleRate": 44100
+      },
+      {
+        "codec": "alac",
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "count": 5,
+        "duration": 216.613333,
+        "sampleRate": 48000
+      },
+      {
+        "codec": "flac",
+        "container": "mov,mp4,m4a,3gp,3g2,mj2",
+        "count": 3,
+        "duration": 173.333356,
+        "sampleRate": 44100
+      }
+    ]
+  },
+  "sampling": "One representative per codec/container group, not all1328 files. Input codec/container/rate come from actual server MediaStreams/MediaSources metadata. Source metadata/durations are unaltered. MP4-family is the server-reported format string, not a claim that each extension was tested.",
+  "method": [
+    "Copy the already-authorized isolated protected connection/device identity into disposable app data. Read only the named authorized Jellyfin origin; block all non-GET/HEAD and nonlocal-provider origins. Do not sign in again or mutate the server.",
+    "The fixture reports502 for direct media attempts only, routing the actual production one-time fallback into the server universal endpoint. The conversion response, codec request, time offset, bytes and native decoding are real; no fake audio/metadata/duration is supplied. This does not claim these sources naturally fail direct decoding.",
+    "The production unbuffered response passes through a TransformStream that forwards every byte unchanged and retains only the first128KiB for codec inspection. It does not add Content-Length or buffer the whole recording.",
+    "Native CUA Command-R installs a passive Audio-constructor observer before React creates its actual media elements. The observer retains actual instances without replacing media methods or duration getters. All Play/Pause/Next/Tab/PageUp/PageDown input is native CUA. Playwright is launch/read-only telemetry only.",
+    "For each representative: start converted playback and observe actual native media progress, pause and keyboard-seek forward, then resume and keyboard-seek backward. Actual server startTimeTicks matches the requested offset. Paused seeks stay paused; playing seeks continue decoding and advancing. The finite catalog duration keeps the slider usable despite native progressive duration Infinity.",
+    "ffprobe independently parses the sampled real output bytes as MP3 for every playback/seek offset. No media bytes, song titles, item IDs, tokens or credential files are committed."
+  ],
+  "cases": [
+    {
+      "sample": 0,
+      "inputCodec": "mp3",
+      "inputContainer": "mp3",
+      "sourceSampleRate": 44100,
+      "phase": "playing",
+      "snapshotSha256": "60a8a4139cb642978c28bd6e1d998e1f39a09f09e6a4ccbf879255601a3efcf1",
+      "audio": {
+        "duration": "Infinity",
+        "position": 5.543684,
+        "paused": false,
+        "ready": 4,
+        "error": null,
+        "opaqueResource": true
+      },
+      "slider": {
+        "value": 17.5,
+        "max": 275.342222,
+        "disabled": false
+      },
+      "transport": "Pause",
+      "request": {
+        "route": "conversion",
+        "offsetTicks": 120000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 0,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-0-120000000.bin"
+      },
+      "keyboardKeys": [],
+      "queueCount": 5,
+      "rendererError": false
+    },
+    {
+      "sample": 0,
+      "inputCodec": "mp3",
+      "inputContainer": "mp3",
+      "sourceSampleRate": 44100,
+      "phase": "paused-seek",
+      "snapshotSha256": "2d9316b5e0c7088a1f6557e1f9d0d147e39d83abc00634adb267148b6ccd7581",
+      "audio": {
+        "duration": "Infinity",
+        "position": 0,
+        "paused": true,
+        "ready": 4,
+        "error": null,
+        "opaqueResource": true
+      },
+      "slider": {
+        "value": 49.7,
+        "max": 275.342222,
+        "disabled": false
+      },
+      "transport": "Play",
+      "request": {
+        "route": "conversion",
+        "offsetTicks": 497000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 0,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-0-497000000.bin"
+      },
+      "keyboardKeys": [
+        "PageUp"
+      ],
+      "queueCount": 5,
+      "rendererError": false
+    },
+    {
+      "sample": 0,
+      "inputCodec": "mp3",
+      "inputContainer": "mp3",
+      "sourceSampleRate": 44100,
+      "phase": "playing-seek",
+      "snapshotSha256": "3f340a1b5c560d21f6b2cc2cbb97dd80154713ebd4090f3864419a7730148f20",
+      "audio": {
+        "duration": "Infinity",
+        "position": 5.969366,
+        "paused": false,
+        "ready": 4,
+        "error": null,
+        "opaqueResource": true
+      },
+      "slider": {
+        "value": 30.6,
+        "max": 275.342222,
+        "disabled": false
+      },
+      "transport": "Pause",
+      "request": {
+        "route": "conversion",
+        "offsetTicks": 248000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 0,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-0-248000000.bin"
+      },
+      "keyboardKeys": [
+        "PageUp",
+        "PageDown"
+      ],
+      "queueCount": 5,
+      "rendererError": false
+    },
+    {
+      "sample": 1,
+      "inputCodec": "flac",
+      "inputContainer": "flac",
+      "sourceSampleRate": 44100,
+      "phase": "playing",
+      "snapshotSha256": "344fea7eb20f7baaddf1d248fa3dd74d253b34167344571fa87a8743fddf7afe",
+      "audio": {
+        "duration": "Infinity",
+        "position": 8.370116,
+        "paused": false,
+        "ready": 4,
+        "error": null,
+        "opaqueResource": true
+      },
+      "slider": {
+        "value": 8.1,
+        "max": 170.811791,
+        "disabled": false
+      },
+      "transport": "Pause",
+      "request": {
+        "route": "conversion",
+        "offsetTicks": 0,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 1,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-1-0.bin"
+      },
+      "keyboardKeys": [
+        "PageUp",
+        "PageDown"
+      ],
+      "queueCount": 5,
+      "rendererError": false
+    },
+    {
+      "sample": 1,
+      "inputCodec": "flac",
+      "inputContainer": "flac",
+      "sourceSampleRate": 44100,
+      "phase": "paused-seek",
+      "snapshotSha256": "d57683417a7080b20f1a4ba9443b62f4adb8c319f3055f8ef760a14028ed001f",
+      "audio": {
+        "duration": "Infinity",
+        "position": 0,
+        "paused": true,
+        "ready": 4,
+        "error": null,
+        "opaqueResource": true
+      },
+      "slider": {
+        "value": 33.2,
+        "max": 170.811791,
+        "disabled": false
+      },
+      "transport": "Play",
+      "request": {
+        "route": "conversion",
+        "offsetTicks": 332000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 1,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-1-332000000.bin"
+      },
+      "keyboardKeys": [
+        "PageUp",
+        "PageDown",
+        "PageUp"
+      ],
+      "queueCount": 5,
+      "rendererError": false
+    },
+    {
+      "sample": 1,
+      "inputCodec": "flac",
+      "inputContainer": "flac",
+      "sourceSampleRate": 44100,
+      "phase": "playing-seek",
+      "snapshotSha256": "6de045c3a5115652c374e48e3e69e48f3fb75252ef00c343479ef62c03dd657b",
+      "audio": {
+        "duration": "Infinity",
+        "position": 2.564216,
+        "paused": false,
+        "ready": 4,
+        "error": null,
+        "opaqueResource": true
+      },
+      "slider": {
+        "value": 21,
+        "max": 170.811791,
+        "disabled": false
+      },
+      "transport": "Pause",
+      "request": {
+        "route": "conversion",
+        "offsetTicks": 184000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 1,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-1-184000000.bin"
+      },
+      "keyboardKeys": [
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown"
+      ],
+      "queueCount": 5,
+      "rendererError": false
+    },
+    {
+      "sample": 2,
+      "inputCodec": "aac",
+      "inputContainer": "mov,mp4,m4a,3gp,3g2,mj2",
+      "sourceSampleRate": 44100,
+      "phase": "playing",
+      "snapshotSha256": "a94c9e9df2bcedc671364357ffd12174c3f71f9376e0ec7359aaa72fdac6efc6",
+      "audio": {
+        "duration": "Infinity",
+        "position": 6.027866,
+        "paused": false,
+        "ready": 4,
+        "error": null,
+        "opaqueResource": true
+      },
+      "slider": {
+        "value": 6,
+        "max": 187.477914,
+        "disabled": false
+      },
+      "transport": "Pause",
+      "request": {
+        "route": "conversion",
+        "offsetTicks": 0,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 2,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-2-0.bin"
+      },
+      "keyboardKeys": [
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown"
+      ],
+      "queueCount": 5,
+      "rendererError": false
+    },
+    {
+      "sample": 2,
+      "inputCodec": "aac",
+      "inputContainer": "mov,mp4,m4a,3gp,3g2,mj2",
+      "sourceSampleRate": 44100,
+      "phase": "paused-seek",
+      "snapshotSha256": "68918d37912b1f2e8c28fdfb8d06ee1234e6446f3654421326d4198babbebaf8",
+      "audio": {
+        "duration": "Infinity",
+        "position": 0,
+        "paused": true,
+        "ready": 4,
+        "error": null,
+        "opaqueResource": true
+      },
+      "slider": {
+        "value": 28.9,
+        "max": 187.477914,
+        "disabled": false
+      },
+      "transport": "Play",
+      "request": {
+        "route": "conversion",
+        "offsetTicks": 289000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 2,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-2-289000000.bin"
+      },
+      "keyboardKeys": [
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown",
+        "PageUp"
+      ],
+      "queueCount": 5,
+      "rendererError": false
+    },
+    {
+      "sample": 2,
+      "inputCodec": "aac",
+      "inputContainer": "mov,mp4,m4a,3gp,3g2,mj2",
+      "sourceSampleRate": 44100,
+      "phase": "playing-seek",
+      "snapshotSha256": "7d8a287ebec512bec5835c1d98c9e5158f4ca2191a645e18b43cb46133949b22",
+      "audio": {
+        "duration": "Infinity",
+        "position": 3.348719,
+        "paused": false,
+        "ready": 4,
+        "error": null,
+        "opaqueResource": true
+      },
+      "slider": {
+        "value": 14.8,
+        "max": 187.477914,
+        "disabled": false
+      },
+      "transport": "Pause",
+      "request": {
+        "route": "conversion",
+        "offsetTicks": 117000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 2,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-2-117000000.bin"
+      },
+      "keyboardKeys": [
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown"
+      ],
+      "queueCount": 5,
+      "rendererError": false
+    },
+    {
+      "sample": 3,
+      "inputCodec": "alac",
+      "inputContainer": "mov,mp4,m4a,3gp,3g2,mj2",
+      "sourceSampleRate": 48000,
+      "phase": "playing",
+      "snapshotSha256": "3cc02284f3f035a157fda1998bd1f4db1564571a6d8544f1104e5952eb88f9a2",
+      "audio": {
+        "duration": "Infinity",
+        "position": 3.95691,
+        "paused": false,
+        "ready": 4,
+        "error": null,
+        "opaqueResource": true
+      },
+      "slider": {
+        "value": 3.9,
+        "max": 216.613333,
+        "disabled": false
+      },
+      "transport": "Pause",
+      "request": {
+        "route": "conversion",
+        "offsetTicks": 0,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 3,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-3-0.bin"
+      },
+      "keyboardKeys": [
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown"
+      ],
+      "queueCount": 5,
+      "rendererError": false
+    },
+    {
+      "sample": 3,
+      "inputCodec": "alac",
+      "inputContainer": "mov,mp4,m4a,3gp,3g2,mj2",
+      "sourceSampleRate": 48000,
+      "phase": "paused-seek",
+      "snapshotSha256": "7b08316d1250078ca7bc428ba42d7d40bd8c34c9b93b049ce0f6740f19c6cbd5",
+      "audio": {
+        "duration": "Infinity",
+        "position": 0,
+        "paused": true,
+        "ready": 4,
+        "error": null,
+        "opaqueResource": true
+      },
+      "slider": {
+        "value": 30.8,
+        "max": 216.613333,
+        "disabled": false
+      },
+      "transport": "Play",
+      "request": {
+        "route": "conversion",
+        "offsetTicks": 308000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 3,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-3-308000000.bin"
+      },
+      "keyboardKeys": [
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown",
+        "PageUp"
+      ],
+      "queueCount": 5,
+      "rendererError": false
+    },
+    {
+      "sample": 3,
+      "inputCodec": "alac",
+      "inputContainer": "mov,mp4,m4a,3gp,3g2,mj2",
+      "sourceSampleRate": 48000,
+      "phase": "playing-seek",
+      "snapshotSha256": "4d35ac3f96ad78e4925b7108f2be1943ce16626f2e6478626fa139ec16d54020",
+      "audio": {
+        "duration": "Infinity",
+        "position": 3.037169,
+        "paused": false,
+        "ready": 4,
+        "error": null,
+        "opaqueResource": true
+      },
+      "slider": {
+        "value": 14.6,
+        "max": 216.613333,
+        "disabled": false
+      },
+      "transport": "Pause",
+      "request": {
+        "route": "conversion",
+        "offsetTicks": 117000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 3,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-3-117000000.bin"
+      },
+      "keyboardKeys": [
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown"
+      ],
+      "queueCount": 5,
+      "rendererError": false
+    },
+    {
+      "sample": 4,
+      "inputCodec": "flac",
+      "inputContainer": "mov,mp4,m4a,3gp,3g2,mj2",
+      "sourceSampleRate": 44100,
+      "phase": "playing",
+      "snapshotSha256": "d3fc858b5c1d18dc4a7d9b4ff6b6e33f0e6acb59023472748d7f0163064fb087",
+      "audio": {
+        "duration": "Infinity",
+        "position": 6.801292,
+        "paused": false,
+        "ready": 4,
+        "error": null,
+        "opaqueResource": true
+      },
+      "slider": {
+        "value": 6.6,
+        "max": 173.333356,
+        "disabled": false
+      },
+      "transport": "Pause",
+      "request": {
+        "route": "conversion",
+        "offsetTicks": 0,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 4,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-4-0.bin"
+      },
+      "keyboardKeys": [
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown"
+      ],
+      "queueCount": 5,
+      "rendererError": false
+    },
+    {
+      "sample": 4,
+      "inputCodec": "flac",
+      "inputContainer": "mov,mp4,m4a,3gp,3g2,mj2",
+      "sourceSampleRate": 44100,
+      "phase": "paused-seek",
+      "snapshotSha256": "5c88ab5940b31e60e1100e1704b5a75131c653e659cc4f8e477700e6fc39054a",
+      "audio": {
+        "duration": "Infinity",
+        "position": 0,
+        "paused": true,
+        "ready": 4,
+        "error": null,
+        "opaqueResource": true
+      },
+      "slider": {
+        "value": 28.7,
+        "max": 173.333356,
+        "disabled": false
+      },
+      "transport": "Play",
+      "request": {
+        "route": "conversion",
+        "offsetTicks": 287000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 4,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-4-287000000.bin"
+      },
+      "keyboardKeys": [
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown",
+        "PageUp"
+      ],
+      "queueCount": 5,
+      "rendererError": false
+    },
+    {
+      "sample": 4,
+      "inputCodec": "flac",
+      "inputContainer": "mov,mp4,m4a,3gp,3g2,mj2",
+      "sourceSampleRate": 44100,
+      "phase": "playing-seek",
+      "snapshotSha256": "176a2e465fc5182cc1448ae452df7a26f22c0adec24277c6697a72e2c26128ed",
+      "audio": {
+        "duration": "Infinity",
+        "position": 2.81668,
+        "paused": false,
+        "ready": 4,
+        "error": null,
+        "opaqueResource": true
+      },
+      "slider": {
+        "value": 16.6,
+        "max": 173.333356,
+        "disabled": false
+      },
+      "transport": "Pause",
+      "request": {
+        "route": "conversion",
+        "offsetTicks": 140000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 4,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-4-140000000.bin"
+      },
+      "keyboardKeys": [
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown",
+        "PageUp",
+        "PageDown"
+      ],
+      "queueCount": 5,
+      "rendererError": false
+    }
+  ],
+  "outputInspection": {
+    "tool": "ffprobe version 9.0.2 Copyright (c) 2007-2026 the FFmpeg developers",
+    "method": "Read local first128KiB prefixes of actual universal output, show stream codec_name/sample_rate/channels. Partial prefixes are not a full-file integrity or audible-quality test.",
+    "prefixes": [
+      {
+        "file": "converted-0-120000000.bin",
+        "sha256": "2be3f75d5e54bfbb2efa2a52e22593a563c50ee299a9aba570fe63f8fde7ef75",
+        "bytes": 131072,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ]
+      },
+      {
+        "file": "converted-0-248000000.bin",
+        "sha256": "957c69ecc66472c7d79347af0841574b35f0f4ba7afb6da378ae546dfd951d83",
+        "bytes": 131072,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ]
+      },
+      {
+        "file": "converted-0-497000000.bin",
+        "sha256": "4425abab3615f7f01b5bb956b0b81f385a5e0fff54e3f2eb279be85d625f95b6",
+        "bytes": 131072,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ]
+      },
+      {
+        "file": "converted-1-0.bin",
+        "sha256": "dd849efd973061c5d01d7ade70cb55e361fdd02798a5c62287e44506c8d3a1db",
+        "bytes": 131072,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "48000",
+            "channels": 2,
+            "side_data_list": [
+              {}
+            ]
+          }
+        ]
+      },
+      {
+        "file": "converted-1-184000000.bin",
+        "sha256": "4be830d458eb1681615c2a5222832bfa174d53218edf978f3d6ffcb87ddbb53e",
+        "bytes": 131072,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "48000",
+            "channels": 2,
+            "side_data_list": [
+              {}
+            ]
+          }
+        ]
+      },
+      {
+        "file": "converted-1-332000000.bin",
+        "sha256": "d25ce8ca76615eb02c1cff7b72461391121474a4e30d604ef650838d05e69506",
+        "bytes": 131072,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "48000",
+            "channels": 2,
+            "side_data_list": [
+              {}
+            ]
+          }
+        ]
+      },
+      {
+        "file": "converted-2-0.bin",
+        "sha256": "f0b7ce71cb015af6697f3d9d27ac72a1af0b2c175bd8eee04cc5ff579e8a346a",
+        "bytes": 131072,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ]
+      },
+      {
+        "file": "converted-2-117000000.bin",
+        "sha256": "7371cb0acd67f9a981e82ff3bd3477e1d3d437022af32afabe79b8d812a0cf06",
+        "bytes": 131072,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ]
+      },
+      {
+        "file": "converted-2-289000000.bin",
+        "sha256": "55803903fed76b6bb4a7963e82e1cceefbd0b39ae2edda09183c11cc929716f9",
+        "bytes": 131072,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ]
+      },
+      {
+        "file": "converted-3-0.bin",
+        "sha256": "e9741e4b7f6d96062a2f604c827d669f1c137f4b3c32f64797cbaaa53789a30e",
+        "bytes": 131072,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ]
+      },
+      {
+        "file": "converted-3-117000000.bin",
+        "sha256": "3440582ae7a168bf5c7793cba0aa90e49591dc076519be1938db921fd931df5b",
+        "bytes": 131072,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ]
+      },
+      {
+        "file": "converted-3-308000000.bin",
+        "sha256": "c551d02d5a5477ef2ac0ecb1894a694d5809412052e8732a530ff4a49631eed8",
+        "bytes": 131072,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ]
+      },
+      {
+        "file": "converted-4-0.bin",
+        "sha256": "2b6e2afbbd46105efa3f070baae5ecfb9ac3565ca13bb5dc4fca0cc9cc445a58",
+        "bytes": 131072,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ]
+      },
+      {
+        "file": "converted-4-140000000.bin",
+        "sha256": "3c4c9bd5c8a1735fdbcdd94b769fae30f04536abed078269d2a29d041ede256f",
+        "bytes": 131072,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ]
+      },
+      {
+        "file": "converted-4-287000000.bin",
+        "sha256": "cb5b9a62a878ed9560b8b325158c6aac38d9535446b1031bff361760e9f846b5",
+        "bytes": 131072,
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "48000",
+            "channels": 2
+          }
+        ]
+      }
+    ]
+  },
+  "network": {
+    "counts": {
+      "reads": 76,
+      "blockedWrites": 0,
+      "blockedExternal": 0
+    },
+    "mediaRequests": [
+      {
+        "route": "direct",
+        "offsetTicks": 0,
+        "status": 502,
+        "mime": null
+      },
+      {
+        "route": "conversion",
+        "offsetTicks": 120000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 0,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-0-120000000.bin"
+      },
+      {
+        "route": "direct",
+        "offsetTicks": 0,
+        "status": 502,
+        "mime": null
+      },
+      {
+        "route": "conversion",
+        "offsetTicks": 120000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 0,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-0-120000000.bin"
+      },
+      {
+        "route": "conversion",
+        "offsetTicks": 497000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 0,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-0-497000000.bin"
+      },
+      {
+        "route": "conversion",
+        "offsetTicks": 248000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 0,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-0-248000000.bin"
+      },
+      {
+        "route": "direct",
+        "offsetTicks": 0,
+        "status": 502,
+        "mime": null
+      },
+      {
+        "route": "conversion",
+        "offsetTicks": 0,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 1,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-1-0.bin"
+      },
+      {
+        "route": "conversion",
+        "offsetTicks": 332000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 1,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-1-332000000.bin"
+      },
+      {
+        "route": "conversion",
+        "offsetTicks": 184000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 1,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-1-184000000.bin"
+      },
+      {
+        "route": "direct",
+        "offsetTicks": 0,
+        "status": 502,
+        "mime": null
+      },
+      {
+        "route": "conversion",
+        "offsetTicks": 0,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 2,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-2-0.bin"
+      },
+      {
+        "route": "conversion",
+        "offsetTicks": 289000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 2,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-2-289000000.bin"
+      },
+      {
+        "route": "conversion",
+        "offsetTicks": 117000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 2,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-2-117000000.bin"
+      },
+      {
+        "route": "direct",
+        "offsetTicks": 0,
+        "status": 502,
+        "mime": null
+      },
+      {
+        "route": "conversion",
+        "offsetTicks": 0,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 3,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-3-0.bin"
+      },
+      {
+        "route": "conversion",
+        "offsetTicks": 308000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 3,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-3-308000000.bin"
+      },
+      {
+        "route": "conversion",
+        "offsetTicks": 117000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 3,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-3-117000000.bin"
+      },
+      {
+        "route": "direct",
+        "offsetTicks": 0,
+        "status": 502,
+        "mime": null
+      },
+      {
+        "route": "conversion",
+        "offsetTicks": 0,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 4,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-4-0.bin"
+      },
+      {
+        "route": "conversion",
+        "offsetTicks": 287000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 4,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-4-287000000.bin"
+      },
+      {
+        "route": "conversion",
+        "offsetTicks": 140000000,
+        "status": 200,
+        "mime": "audio/mpeg",
+        "slot": 4,
+        "prefixBytes": 131072,
+        "prefixFile": "converted-4-140000000.bin"
+      }
+    ],
+    "prepareCalls": [
+      {
+        "transcode": false,
+        "offsetSeconds": 12
+      },
+      {
+        "transcode": true,
+        "offsetSeconds": 12
+      },
+      {
+        "transcode": false,
+        "offsetSeconds": 12
+      },
+      {
+        "transcode": true,
+        "offsetSeconds": 12
+      },
+      {
+        "transcode": true,
+        "offsetSeconds": 49.7
+      },
+      {
+        "transcode": true,
+        "offsetSeconds": 24.8
+      },
+      {
+        "transcode": false,
+        "offsetSeconds": 0
+      },
+      {
+        "transcode": true,
+        "offsetSeconds": 0
+      },
+      {
+        "transcode": true,
+        "offsetSeconds": 33.2
+      },
+      {
+        "transcode": true,
+        "offsetSeconds": 18.4
+      },
+      {
+        "transcode": false,
+        "offsetSeconds": 0
+      },
+      {
+        "transcode": true,
+        "offsetSeconds": 0
+      },
+      {
+        "transcode": true,
+        "offsetSeconds": 28.9
+      },
+      {
+        "transcode": true,
+        "offsetSeconds": 11.7
+      },
+      {
+        "transcode": false,
+        "offsetSeconds": 0
+      },
+      {
+        "transcode": true,
+        "offsetSeconds": 0
+      },
+      {
+        "transcode": true,
+        "offsetSeconds": 30.8
+      },
+      {
+        "transcode": true,
+        "offsetSeconds": 11.7
+      },
+      {
+        "transcode": false,
+        "offsetSeconds": 0
+      },
+      {
+        "transcode": true,
+        "offsetSeconds": 0
+      },
+      {
+        "transcode": true,
+        "offsetSeconds": 28.7
+      },
+      {
+        "transcode": true,
+        "offsetSeconds": 14
+      }
+    ],
+    "copiedProtectedBytesMatchOriginalAtFinish": {
+      "connection.enc": true,
+      "jellyfin-device-id": true
+    },
+    "providerRequests": 0,
+    "serverWrites": 0
+  },
+  "checks": {
+    "nativeSnapshots": 15,
+    "formats": 5,
+    "rendererErrors": [],
+    "nativeObserverExit": 0,
+    "inventoryProbeExit": 0,
+    "productionBuildTypeScriptEslint": "retained unchanged PR76 validation; docs-only PR77 changes no app bytes",
+    "unitTests": "not run",
+    "packageRelease": "not run",
+    "artifactValidation": "12 source/bundle hashes, 6 fixture hashes, 15 native snapshot hashes and case predicates, 15 output-prefix hashes, linked artifacts and whitespace verified",
+    "inventoryValidation": "187 distinct disposition rows, 27 open. Initial broad regex also matched supplemental evidence rows; corrected parser restricts the final column to declared disposition labels."
+  },
+  "sourceAndBundleSha256": {
+    "src/main/index.ts": "3ffef8d8f579c3ecfe4675c92805b2831b67b3c0a7021a23a409e0c24a6d27bb",
+    "src/main/media.ts": "d3abe363979e9953edb6cb279b777183c184cd27d027ed7584788a1b94ac0e0e",
+    "src/main/jellyfin.ts": "4daf9866e8034ca89ffd209035b1b8795f5127082bcea0fa825182b66d103483",
+    "src/renderer/player.tsx": "1a958a21936d3079f4a4d9c8e6987d47ffed8cf11cf6feee8cf4a4a7f2646f19",
+    "src/renderer/components/Player/Player.component.tsx": "3d8d1f7f1be1a1fc42f93db2dd6376f42acd6338b02991600ac7ce9aa28257f4",
+    "src/renderer/components/Player/Player.styles.css": "c14c24b2b563243706fd7deecf0e7e1307965a3830d6208d313b8d0ac25d8114",
+    "src/preload/index.ts": "041f6e536c7d0c09f0dffc870c150b10affa44da0e7862de21dce8397ebacb10",
+    "out/renderer/index.html": "42a5d5001ecf1d1801762a01cc04f25dba4e2f31ba5e8abdcf45d3fd683ac548",
+    "out/renderer/assets/index-CUgwj8xN.css": "8dedf91bec8e203b47c5630cbd8925f4f357523a53a65c6a66ba92b9ba0f19c4",
+    "out/renderer/assets/index-BOme4564.js": "35fa19bc8ce7bc3855f50b83bd497ba4cb15d5dedb65a3be261ae41c3044dee3",
+    "out/main/index.js": "be2b4baff3c4577a06efadbdf021d8cda9b6319cb3d9157be5f238469c457fbd",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb"
+  },
+  "fixtureSha256": {
+    "bootstrap.mjs": "3808dcf4e79dbad21f6e97c4a40da4d3351abaa02de6d785bc84af8860b56c7b",
+    "build.mjs": "174e9cc634fd026e0c3b602af8a0fa52abe3247d2ddf4a758d12dc3e86174fa9",
+    "observe.cjs": "2091cebe75ec9bcc00407bc814d9011a8ff670983a841a4dd6b56b2b1a6232a4",
+    "inventory.cjs": "183d91ba20a99e3a124eeb37dea840c987ae5130a4a4aeb6efa09464221e850b",
+    "snapshot.py": "aa9f3aed69390db98273560228d94e6d379385b53b2a2dbc3d30c65ee2b75f96",
+    "out/main/index.js": "461e8be2bb10881f104d8a37812ba7f8233a6ef435e573f1460f4ba0ff2ad05c"
+  },
+  "limits": [
+    "Only the named server/macOS/Electron/architecture and five sampled codec/container combinations are measured. No claim covers every library file, bitrate/channel/sample-rate variant, other server version, Intel Mac, OS version, hardware controls or display configuration.",
+    "Input codec labels are server metadata, independently inspected output is actual MP3. The MP3-source representative tests real universal output/seek behavior; the other four groups have a different input codec from the output.",
+    "Direct failure is intentionally substituted to select the fallback path; server outages and natural unsupported-codec errors are outside this run. Existing live playback-recovery evidence retains its separate scope.",
+    "Progressive response duration stays Infinity. Finite catalog metadata supplies the total; no finite-conversion buffering workaround is used.",
+    "Seek evidence establishes requested server offsets, successful decoding and consistent app/global positions. Output prefixes are independently identified as MP3; no waveform alignment or independent content-position analysis establishes that returned samples correspond acoustically to each requested position.",
+    "Muted native decoding/progress proves app transport state and seek-request handling, not audible content position, transitions, pronunciation, fidelity or listener comprehension.",
+    "App source is unchanged and the native observer closes successfully. No personal credentials, paid provider requests, server mutations, package/release or deferred viewport/zoom checks occur.",
+    "No overall acceptance percentage or whole-goal completion claim. Broader Q10 support-matrix proof remains required. Outside the dated90-record provenance audit."
+  ],
+  "disposition": {
+    "row": "M17",
+    "status": "External",
+    "proofEstablished": "N+L for the named samples and runtime",
+    "proofRemaining": "O: a distinct OS-mediated seek/control action against converted audio, with before/after position and retained play/pause intent; existing native CUA PageUp/PageDown is app input, not separate system-control proof",
+    "activeChecksRemaining": 27,
+    "listenerChecksRemaining": 14,
+    "otherChecksRemaining": 13
+  },
+  "review": {
+    "Boris": "Keep External: runtime metadata, native app input, decoding progress and AX readback do not independently establish O. A source-backed proof-code correction is an alternative if requirements do not intend system behavior; it is not new runtime proof.",
+    "Nadia": "Initially supported Live on the named tuple; after the challenge agrees to External because N and O must remain distinct. Credit the five groups as N+L partial evidence.",
+    "MorganDecision": "Keep the existing N+L+O contract and External disposition. Preserve the measured native/live progress without claiming system-control, audible-quality or broader platform completion. No proof-code relaxation or count reduction.",
+    "finalArtifactReview": "Boris inspected finalized JSON, appended acceptance/provenance/UX text and raw native snapshots/output prefixes/fixture; supports the record with no blocking factual defects. Five groups x three phases, hashes/lengths, source metadata counts, offsets/intent/totals, MP3 inspection and read-only/forced-fallback boundaries agree."
+  }
+}
