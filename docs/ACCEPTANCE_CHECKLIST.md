@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 38 Review, 5 Dated, 2 Recorded, 115 Controlled, 15 Live, 10 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 35 Review, 5 Dated, 2 Recorded, 115 Controlled, 18 Live, 10 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -81,14 +81,14 @@ Source: REQUIREMENTS: All songs, Albums, Jellyfin connection; M1,M2,M8,M13.
 
 | ID | Observable result | Proof | Status |
 | --- | --- | --- | --- |
-| B01 | All songs includes music from every selected library without duplicated or missing visible selections. | N+L | Review |
+| B01 | All songs includes music from every selected library without duplicated or missing visible selections. | N+L | Live |
 | B02 | Song search finds title, artist and album matches and respects selected libraries. | N+S+L | Live |
 | B03 | Sort and genre/tag filters update the displayed rows and preserve coherent paging. | N+S | Controlled |
 | B04 | Single and multiple selection support Play, Queue and Add to playlist in displayed row order rather than click order. | N | Controlled |
-| B05 | Song columns and details show available artwork, title, artist, album/album artist, duration, year, genres, tags and track metadata. | N+L | Review |
+| B05 | Song columns and details show available artwork, title, artist, album/album artist, duration, year, genres, tags and track metadata. | N+L | Live |
 | B06 | Untitled/Unknown artist and missing optional fields do not prevent browsing or playback. | N | Controlled |
 | B07 | Album search finds title and album-artist matches once within selected libraries; artwork and metadata open an ordered track list. | N+L | Live |
-| B08 | Album Play, Queue, Add all and individual track selections use the intended ordered tracks. | N+L | Review |
+| B08 | Album Play, Queue, Add all and individual track selections use the intended ordered tracks. | N+L | Live |
 | B09 | Browsing/search/filtering remain responsive for the listener's actual library size, including paging and large selections. | N+L | Live |
 | B10 | Refresh library updates songs and genre/tag choices while retaining search, filters, selection and listening queue. | N+S | Controlled |
 | B11 | After refresh, song details, albums and playlists read fresh data when used. | N+S | Controlled |
@@ -431,3 +431,5 @@ D05/D06 evidence,17 October2026: [current news eligibility and handoff](verifica
 C02/C05/C07/C08/C15 evidence,17 October2026: [current library save navigation](verification/2026-10-17-library-save-navigation.json). Native reproduction found a lost Saving state and submitted selection on Settings remount, enabling a duplicate save. Account-session ownership now retains choices and errors, blocks overlap and preserves expiry. Ten final native flows, a playing-music continuity check and nine sign-in ordering integrations pass, including refreshed same-account access. PRD and M11 describe the recovery boundaries. Inventory:187 rows,185 active,2 Deferred;39 Review,5 Dated,2 Recorded,114 Controlled,15 Live,10 External.56 active checks remain. C06/C12 retain their wider live scope.
 
 B03 evidence,17 October2026: [current catalog view concurrency](verification/2026-10-17-catalog-view-concurrency.json). Fixed false library-change errors when an active view was replaced/evicted from the paging cache. Eight service cases cover shared reads, ranges, refresh, session changes, failed persistence, retry, server paging and a finite sixteen-view burst. Ten native cases cross all five sort modes/directions with combined filters, independent expected ordering and at least160 loaded rows. PRD/M5 clarify unchanged-view concurrency. Inventory:187 rows,185 active,2 Deferred;38 Review,5 Dated,2 Recorded,115 Controlled,15 Live,10 External.55 active checks remain. Live catalog/album coverage and general transient-load bounds remain separate.
+
+B01/B05/B08 evidence, 17 October 2026: [current live catalog and album actions](verification/2026-10-17-live-catalog-album-actions.json). The authorized server exposes one accessible selected root with 1,317 songs. Its complete independent per-root union matches the combined catalog, and native selection queues the exact set in order without starting playback. Table columns and available Inspector fields match server data; a current controlled sample covers genres, tags, track/disc and missing metadata/artwork. A six-track live album passes full and selected Play/Queue, individual row start, Add all and selected append. Independent server reads confirm the temporary private playlist order, and deletion is followed by verified 404 absence. Live overlapping roots remain unavailable; existing controlled overlap and current two-root paging evidence retain that distinction. Application source is unchanged. Inventory: 187 rows, 185 active, 2 Deferred; 35 Review, 5 Dated, 2 Recorded, 115 Controlled, 18 Live, 10 External. 52 active checks remain; no overall acceptance percentage is claimed.
