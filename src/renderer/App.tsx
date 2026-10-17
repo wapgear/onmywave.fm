@@ -37,7 +37,7 @@ export default function App() {
   return <NewsRecoveryProvider>{connectionQuery.isPending
     ? <main className="startup"><span className="wordmark">onmywave.fm</span><p role="status">Opening your library…</p><NewsRecoveryNotice /></main>
     : connectionQuery.error
-      ? <main className="startup"><span className="wordmark">onmywave.fm</span><ErrorNotice error={connectionQuery.error} retry={() => void connectionQuery.refetch()} /><NewsRecoveryNotice /></main>
+      ? <main className="startup"><span className="wordmark">onmywave.fm</span><ErrorNotice error={connectionQuery.error} retrying={connectionQuery.isFetching} retry={() => connectionQuery.refetch()} /><NewsRecoveryNotice /></main>
       : <SessionContent key={connection?.id ?? 'signed-out'} connection={connection} expired={expired && !!connection} setConnection={setConnection} />}</NewsRecoveryProvider>;
 }
 type RadioDrafts = {

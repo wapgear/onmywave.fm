@@ -1,0 +1,2309 @@
+{
+  "date": "2026-10-17",
+  "classification": "controlled native Electron with CUA input and read-only telemetry; service read-fault/hold adapter after sender/input guards",
+  "baseCommit": "3f00bbbc0fa13922f3596eaf5f2b55b8156b92ee",
+  "before": {
+    "focus": {
+      "tag": "BUTTON",
+      "name": "Try again",
+      "type": null
+    },
+    "libraries": [],
+    "keys": [
+      {
+        "key": "Tab",
+        "meta": false,
+        "ctrl": false,
+        "alt": false,
+        "shift": false,
+        "prevented": false
+      },
+      {
+        "key": "Enter",
+        "meta": false,
+        "ctrl": false,
+        "alt": false,
+        "shift": false,
+        "prevented": false
+      },
+      {
+        "key": "Enter",
+        "meta": false,
+        "ctrl": false,
+        "alt": false,
+        "shift": false,
+        "prevented": false
+      }
+    ],
+    "text": "Music libraries\nJellyfin could not complete the request (503).\nTry again\n0 libraries selected\nSave libraries\nUse another account or server",
+    "buttons": [
+      {
+        "name": "Try again",
+        "disabled": false,
+        "ariaDisabled": null,
+        "busy": null,
+        "active": false,
+        "translate": "none"
+      },
+      {
+        "name": "Save libraries",
+        "disabled": true,
+        "ariaDisabled": null,
+        "busy": null,
+        "active": false,
+        "translate": "none"
+      },
+      {
+        "name": "Use another account or server",
+        "disabled": false,
+        "ariaDisabled": null,
+        "busy": null,
+        "active": false,
+        "translate": "none"
+      }
+    ],
+    "providerCalls": 0
+  },
+  "nativeSnapshots": [
+    {
+      "name": "library-busy",
+      "result": "pass",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "headings": [
+        "Choose your libraries"
+      ],
+      "notices": [
+        {
+          "error": "libraries unavailable.",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "libraries": [],
+      "submits": 0,
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 45,
+          "getConnection": 1,
+          "libraries": 4
+        },
+        "held": [
+          "libraries"
+        ],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "library-failed-again",
+      "result": "pass",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Try again",
+        "type": "button",
+        "role": null
+      },
+      "headings": [
+        "Choose your libraries"
+      ],
+      "notices": [
+        {
+          "error": "libraries unavailable.",
+          "status": "",
+          "button": {
+            "name": "Try again",
+            "disabled": false,
+            "busy": null,
+            "ariaDisabled": null,
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "libraries": [],
+      "submits": 0,
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 52,
+          "getConnection": 1,
+          "libraries": 5
+        },
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "library-error-to-empty",
+      "result": "pass",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Try again",
+        "type": "button",
+        "role": null
+      },
+      "headings": [
+        "Choose your libraries",
+        "No music libraries available"
+      ],
+      "notices": [],
+      "libraries": [],
+      "submits": 0,
+      "keys": [
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 71,
+          "getConnection": 1,
+          "libraries": 6
+        },
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "library-recovered",
+      "result": "pass",
+      "focus": {
+        "tag": "INPUT",
+        "name": "",
+        "type": "checkbox",
+        "label": "Archive music",
+        "role": null
+      },
+      "headings": [
+        "Choose your libraries"
+      ],
+      "notices": [],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": false
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "submits": 0,
+      "keys": [
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 84,
+          "getConnection": 1,
+          "libraries": 7
+        },
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "catalog-sibling-busy",
+      "result": "pass",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [
+        {
+          "error": "libraryFilters unavailable.",
+          "status": "",
+          "button": {
+            "name": "Try again",
+            "disabled": false,
+            "busy": null,
+            "ariaDisabled": null,
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        },
+        {
+          "error": "songs unavailable.",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "libraries": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "submits": 0,
+      "keys": [
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 104,
+          "getConnection": 1,
+          "songs": 6,
+          "libraryFilters": 9,
+          "getLocalState": 2,
+          "getPlaybackPreferences": 1,
+          "song": 4,
+          "preparePlayback": 1,
+          "savePlayback": 21,
+          "albums": 1
+        },
+        "held": [
+          "songs"
+        ],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "catalog-one-recovered",
+      "result": "pass",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Try again",
+        "type": "button",
+        "role": null
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [
+        {
+          "error": "libraryFilters unavailable.",
+          "status": "",
+          "button": {
+            "name": "Try again",
+            "disabled": false,
+            "busy": null,
+            "ariaDisabled": null,
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "libraries": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "submits": 0,
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 120,
+          "getConnection": 1,
+          "songs": 6,
+          "libraryFilters": 9,
+          "getLocalState": 2,
+          "getPlaybackPreferences": 1,
+          "song": 4,
+          "preparePlayback": 1,
+          "savePlayback": 24,
+          "albums": 1
+        },
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "filters-busy",
+      "result": "pass",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [
+        {
+          "error": "libraryFilters unavailable.",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "libraries": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "submits": 0,
+      "keys": [
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 135,
+          "getConnection": 1,
+          "songs": 6,
+          "libraryFilters": 10,
+          "getLocalState": 2,
+          "getPlaybackPreferences": 1,
+          "song": 4,
+          "preparePlayback": 1,
+          "savePlayback": 27,
+          "albums": 1
+        },
+        "held": [
+          "libraryFilters"
+        ],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "filters-recovered",
+      "result": "pass",
+      "focus": {
+        "tag": "TR",
+        "name": "1Song 10000Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "type": null,
+        "role": null
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [],
+      "libraries": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "submits": 0,
+      "keys": [
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 145,
+          "getConnection": 1,
+          "songs": 6,
+          "libraryFilters": 10,
+          "getLocalState": 2,
+          "getPlaybackPreferences": 1,
+          "song": 4,
+          "preparePlayback": 1,
+          "savePlayback": 29,
+          "albums": 1
+        },
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "provider-pending-focus",
+      "result": "pass",
+      "focus": {
+        "tag": "INPUT",
+        "name": "",
+        "type": "password",
+        "label": "ElevenLabs \u00b7 voice API key",
+        "role": null
+      },
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "notices": [],
+      "libraries": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "submits": 0,
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 207,
+          "getConnection": 1,
+          "songs": 6,
+          "libraryFilters": 10,
+          "getLocalState": 3,
+          "getPlaybackPreferences": 1,
+          "song": 4,
+          "preparePlayback": 1,
+          "savePlayback": 42,
+          "albums": 1,
+          "libraries": 1,
+          "getAiStatus": 3,
+          "getElevenLabsStatus": 1,
+          "getTwitterStatus": 1
+        },
+        "held": [
+          "getAiStatus"
+        ],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "provider-recovered",
+      "result": "pass",
+      "focus": {
+        "tag": "INPUT",
+        "name": "",
+        "type": "password",
+        "label": "ElevenLabs \u00b7 voice API key",
+        "role": null
+      },
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "notices": [],
+      "libraries": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "submits": 0,
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 214,
+          "getConnection": 1,
+          "songs": 6,
+          "libraryFilters": 10,
+          "getLocalState": 3,
+          "getPlaybackPreferences": 1,
+          "song": 4,
+          "preparePlayback": 1,
+          "savePlayback": 43,
+          "albums": 1,
+          "libraries": 1,
+          "getAiStatus": 3,
+          "getElevenLabsStatus": 1,
+          "getTwitterStatus": 1
+        },
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "song-page-busy",
+      "result": "pass",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [
+        {
+          "error": "Jellyfin could not complete the request (503).",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "libraries": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "submits": 0,
+      "keys": [
+        {
+          "key": "End",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 100,
+          "getConnection": 1,
+          "songs": 6,
+          "libraryFilters": 1,
+          "getLocalState": 2,
+          "getPlaybackPreferences": 1,
+          "song": 4,
+          "preparePlayback": 1,
+          "savePlayback": 20
+        },
+        "held": [
+          "songs"
+        ],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "song-page-recovered",
+      "result": "pass",
+      "focus": {
+        "tag": "TR",
+        "name": "81Song 09920Artist 100Album 099210:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details",
+        "type": null,
+        "role": null
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [],
+      "libraries": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "submits": 0,
+      "keys": [
+        {
+          "key": "End",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 115,
+          "getConnection": 1,
+          "songs": 6,
+          "libraryFilters": 1,
+          "getLocalState": 2,
+          "getPlaybackPreferences": 1,
+          "song": 4,
+          "preparePlayback": 1,
+          "savePlayback": 23
+        },
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "album-page-busy",
+      "result": "pass",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "headings": [
+        "Albums"
+      ],
+      "notices": [
+        {
+          "error": "Jellyfin could not complete the request (503).",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "libraries": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "submits": 0,
+      "keys": [
+        {
+          "key": "End",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 168,
+          "getConnection": 1,
+          "songs": 6,
+          "libraryFilters": 1,
+          "getLocalState": 2,
+          "getPlaybackPreferences": 1,
+          "song": 4,
+          "preparePlayback": 1,
+          "savePlayback": 34,
+          "albums": 4
+        },
+        "held": [
+          "albums"
+        ],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "album-page-recovered",
+      "result": "pass",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Album 0049Artist 005 \u00b7 2020",
+        "type": null,
+        "role": null
+      },
+      "headings": [
+        "Albums"
+      ],
+      "notices": [],
+      "libraries": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "submits": 0,
+      "keys": [
+        {
+          "key": "End",
+          "meta": true,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 180,
+          "getConnection": 1,
+          "songs": 6,
+          "libraryFilters": 1,
+          "getLocalState": 2,
+          "getPlaybackPreferences": 1,
+          "song": 4,
+          "preparePlayback": 1,
+          "savePlayback": 36,
+          "albums": 4
+        },
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "playlist-both-busy",
+      "result": "pass",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "headings": [
+        "Fixture editable"
+      ],
+      "notices": [
+        {
+          "error": "playlist unavailable.",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "libraries": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "submits": 0,
+      "keys": [
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 100,
+          "getConnection": 1,
+          "songs": 2,
+          "libraryFilters": 3,
+          "getLocalState": 2,
+          "getPlaybackPreferences": 1,
+          "song": 4,
+          "preparePlayback": 1,
+          "savePlayback": 20,
+          "playlists": 3,
+          "playlist": 4
+        },
+        "held": [
+          "playlist",
+          "playlists"
+        ],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "playlist-list-only-busy",
+      "result": "pass",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "headings": [
+        "Fixture editable"
+      ],
+      "notices": [
+        {
+          "error": "playlist unavailable.",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "libraries": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "submits": 0,
+      "keys": [
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 177,
+          "getConnection": 1,
+          "songs": 2,
+          "libraryFilters": 3,
+          "getLocalState": 2,
+          "getPlaybackPreferences": 1,
+          "song": 4,
+          "preparePlayback": 1,
+          "savePlayback": 36,
+          "playlists": 3,
+          "playlist": 5
+        },
+        "held": [
+          "playlists"
+        ],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "playlist-failed-ready",
+      "result": "pass",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Try again",
+        "type": "button",
+        "role": null
+      },
+      "headings": [
+        "Fixture editable"
+      ],
+      "notices": [
+        {
+          "error": "playlist unavailable.",
+          "status": "",
+          "button": {
+            "name": "Try again",
+            "disabled": false,
+            "busy": null,
+            "ariaDisabled": null,
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "libraries": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "submits": 0,
+      "keys": [
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 192,
+          "getConnection": 1,
+          "songs": 2,
+          "libraryFilters": 3,
+          "getLocalState": 2,
+          "getPlaybackPreferences": 1,
+          "song": 4,
+          "preparePlayback": 1,
+          "savePlayback": 38,
+          "playlists": 3,
+          "playlist": 5
+        },
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "playlist-recovered",
+      "result": "pass",
+      "focus": {
+        "tag": "BODY",
+        "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedPlaylistsPlaylist \u00b7 3 songsFixture editablePlay playlistQueueRename#TitleAlbumActions\u266bSong 00002Artist 001Album 000110:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong detailsMove upMove downRemove from playlist2Song 00003Artist 001Album 000110:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong detailsMove upMove downRemove from playlist3Song 00004Artist 001Album 000110:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong detailsMove upMove downRemove from playlistSong 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+        "type": null,
+        "role": null
+      },
+      "headings": [
+        "Fixture editable"
+      ],
+      "notices": [],
+      "libraries": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "submits": 0,
+      "keys": [
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 203,
+          "getConnection": 1,
+          "songs": 2,
+          "libraryFilters": 3,
+          "getLocalState": 2,
+          "getPlaybackPreferences": 1,
+          "song": 4,
+          "preparePlayback": 1,
+          "savePlayback": 41,
+          "playlists": 4,
+          "playlist": 6
+        },
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    }
+  ],
+  "nativeSnapshotCount": 18,
+  "readNoticeWiring": [
+    {
+      "file": "App.tsx",
+      "error": "connectionQuery.error",
+      "retrying": "connectionQuery.isFetching",
+      "retry": "() => connectionQuery.refetch()"
+    },
+    {
+      "file": "components/AddPlaylist/AddPlaylist.component.tsx",
+      "error": "playlists.error",
+      "retrying": "playlists.isFetching",
+      "retry": "() => playlists.refetch()"
+    },
+    {
+      "file": "components/Inspector/Inspector.component.tsx",
+      "error": "detail.error",
+      "retrying": "detail.isFetching",
+      "retry": "() => detail.refetch()"
+    },
+    {
+      "file": "components/LibraryChooser.tsx",
+      "error": "libraries.error",
+      "retryRef": "retryRef",
+      "retrying": "libraries.isFetching",
+      "retry": "disabled || selection.pending ? undefined : retryLibraries"
+    },
+    {
+      "file": "components/Player/DJPopover.component.tsx",
+      "error": "automation.state.error",
+      "retrying": "automation.state.isFetching",
+      "retry": "() => automation.state.refetch()"
+    },
+    {
+      "file": "components/ProviderKeys/ProviderKeys.component.tsx",
+      "error": "status.error",
+      "retrying": "status.isFetching",
+      "retry": "() => status.refetch()"
+    },
+    {
+      "file": "pages/Albums/Albums.page.tsx",
+      "key": "`error:${search}`",
+      "error": "albums.error",
+      "retryRef": "retryFocus.retryRef",
+      "retrying": "albums.isFetching",
+      "retry": "() => retryFocus.retry(() => albums.refetch())"
+    },
+    {
+      "file": "pages/Albums/Albums.page.tsx",
+      "error": "detail.error",
+      "retryRef": "detailRetryFocus.retryRef",
+      "retrying": "detail.isFetching",
+      "retry": "() => detailRetryFocus.retry(() => detail.refetch())"
+    },
+    {
+      "file": "pages/Albums/Albums.page.tsx",
+      "error": "tracks.error",
+      "retryRef": "tracksRetryFocus.retryRef",
+      "retrying": "tracks.isFetching",
+      "retry": "() => tracksRetryFocus.retry(() => tracks.refetch())"
+    },
+    {
+      "file": "pages/Albums/VirtualAlbums.component.tsx",
+      "error": "nextError",
+      "retryRef": "retryFocus.retryRef",
+      "retrying": "fetching",
+      "retry": "retryNextPage"
+    },
+    {
+      "file": "pages/DJs/DJs.page.tsx",
+      "error": "state.error",
+      "retrying": "state.isFetching",
+      "retry": "() => state.refetch()"
+    },
+    {
+      "file": "pages/DJs/components/NewsTest.component.tsx",
+      "error": "ai.error",
+      "retrying": "ai.isFetching",
+      "retry": "() => ai.refetch()"
+    },
+    {
+      "file": "pages/DJs/components/NewsTest.component.tsx",
+      "error": "eleven.error",
+      "retrying": "eleven.isFetching",
+      "retry": "() => eleven.refetch()"
+    },
+    {
+      "file": "pages/DJs/components/VoicePreview.component.tsx",
+      "key": "identity",
+      "error": "preview.error",
+      "retrying": "preview.isFetching",
+      "retry": "() => preview.refetch()"
+    },
+    {
+      "file": "pages/Playlists/Playlists.page.tsx",
+      "error": "playlists.error",
+      "retrying": "playlists.isFetching",
+      "retry": "() => playlists.refetch()"
+    },
+    {
+      "file": "pages/Playlists/Playlists.page.tsx",
+      "error": "new Error('Playlist creation recovery is unavailable. You can still open and play your playlists. Refresh before creating another.')",
+      "retrying": "playlists.isFetching",
+      "retry": "() => playlists.refetch()"
+    },
+    {
+      "file": "pages/Playlists/Playlists.page.tsx",
+      "error": "new Error('Playlist editing recovery is unavailable. You can still play or queue its songs. Refresh before editing again.')",
+      "retrying": "playlist.isFetching || listFetching",
+      "retry": "() => refresh()"
+    },
+    {
+      "file": "pages/Playlists/Playlists.page.tsx",
+      "error": "playlist.error",
+      "retrying": "playlist.isFetching || listFetching",
+      "retry": "() => refresh().then(reviewReady => recovery.update(id, { reviewReady }))"
+    },
+    {
+      "file": "pages/Settings/components/DJPlaybackSettings.component.tsx",
+      "error": "state.error",
+      "retrying": "state.isFetching",
+      "retry": "() => state.refetch()"
+    },
+    {
+      "file": "pages/Settings/components/NewsTransitions.component.tsx",
+      "error": "state.error",
+      "retrying": "state.isFetching",
+      "retry": "() => state.refetch()"
+    },
+    {
+      "file": "pages/Songs/Songs.page.tsx",
+      "error": "filters.error",
+      "retryRef": "filtersRetryFocus.retryRef",
+      "retrying": "filters.isFetching",
+      "retry": "() => filtersRetryFocus.retry(() => filters.refetch())"
+    },
+    {
+      "file": "pages/Songs/Songs.page.tsx",
+      "key": "`error:${JSON.stringify(catalog)}`",
+      "error": "songs.error",
+      "retryRef": "songsRetryFocus.retryRef",
+      "retrying": "songs.isFetching",
+      "retry": "() => songsRetryFocus.retry(() => songs.refetch())"
+    },
+    {
+      "file": "pages/Songs/VirtualSongs.component.tsx",
+      "error": "nextError",
+      "retryRef": "retryFocus.retryRef",
+      "retrying": "fetching",
+      "retry": "retryNextPage"
+    },
+    {
+      "file": "pages/Sources/Sources.page.tsx",
+      "error": "state.error",
+      "retrying": "state.isFetching",
+      "retry": "() => state.refetch()"
+    },
+    {
+      "file": "pages/Stations/Stations.page.tsx",
+      "error": "state.error",
+      "retrying": "state.isFetching",
+      "retry": "() => state.refetch()"
+    },
+    {
+      "file": "pages/Stations/Stations.page.tsx",
+      "error": "library.error",
+      "retrying": "library.isFetching",
+      "retry": "() => library.refetch()"
+    },
+    {
+      "file": "pages/Stations/Stations.page.tsx",
+      "error": "library.error",
+      "retrying": "library.isFetching",
+      "retry": "() => library.refetch()"
+    },
+    {
+      "file": "pages/Stations/Stations.page.tsx",
+      "error": "aiStatus.error",
+      "retrying": "aiStatus.isFetching",
+      "retry": "() => aiStatus.refetch()"
+    },
+    {
+      "file": "pages/Stations/Stations.page.tsx",
+      "error": "elevenStatus.error",
+      "retrying": "elevenStatus.isFetching",
+      "retry": "() => elevenStatus.refetch()"
+    },
+    {
+      "file": "pages/Stations/Stations.page.tsx",
+      "error": "library.error",
+      "retrying": "library.isFetching",
+      "retry": "() => library.refetch()"
+    }
+  ],
+  "readNoticeCount": 30,
+  "exception": {
+    "reason": "Existing automation retry synchronously clears its failure. Its unchanged100ms tick owns checking/deduplication; it is not an awaitable query refetch.",
+    "file": "components/Player/DJPopover.component.tsx",
+    "error": "automation.error ? new Error(automation.error) : null",
+    "retry": "automation.error && automation.room ? automation.retry : undefined"
+  },
+  "heldBusyObservation": {
+    "focus": {
+      "tag": "BUTTON",
+      "name": "Retrying\u2026",
+      "type": "button",
+      "role": null
+    },
+    "headings": [
+      "Choose your libraries"
+    ],
+    "notices": [
+      {
+        "error": "libraries unavailable.",
+        "status": "Retrying\u2026",
+        "button": {
+          "name": "Retrying\u2026",
+          "disabled": false,
+          "busy": "true",
+          "ariaDisabled": "true",
+          "type": "button",
+          "active": true,
+          "translate": "0px",
+          "insideLiveRegion": false
+        }
+      }
+    ],
+    "libraries": [],
+    "submits": 0,
+    "keys": [
+      {
+        "key": "Tab",
+        "meta": false,
+        "ctrl": false,
+        "alt": false,
+        "shift": false,
+        "prevented": false
+      },
+      {
+        "key": "Enter",
+        "meta": false,
+        "ctrl": false,
+        "alt": false,
+        "shift": false,
+        "prevented": false
+      },
+      {
+        "key": "Enter",
+        "meta": false,
+        "ctrl": false,
+        "alt": false,
+        "shift": false,
+        "prevented": false
+      },
+      {
+        "key": "Enter",
+        "meta": false,
+        "ctrl": false,
+        "alt": false,
+        "shift": false,
+        "prevented": false
+      },
+      {
+        "key": " ",
+        "meta": false,
+        "ctrl": false,
+        "alt": false,
+        "shift": false,
+        "prevented": false
+      }
+    ],
+    "main": {
+      "methodCounts": {
+        "getNewsRecoveryStatus": 34,
+        "getConnection": 1,
+        "libraries": 4
+      },
+      "held": [
+        "libraries"
+      ],
+      "providers": 0,
+      "writes": 0
+    }
+  },
+  "scope": "1280x720/100%, actual renderer/preload/main/service/storage with disposable data and local silent catalog. No live provider, audible quality, VoiceOver or uncoached listener proof.",
+  "decision": {
+    "pair": "Steve/Elena independently proposed shared busy affordance/ref lock and returned promises. After one challenge both support authoritative owner fetching state without a duplicate local pending state.",
+    "root": "Use per-query isFetching plus a synchronous promise-held lock. Preserve page-specific focus hook and existing read/write/paid-work boundaries.",
+    "review": "Steve found the compound playlist refresh needed the list query too; useIsFetching for that owned list was added without changing refresh ordering, then both/detail/list-only/ready/success boundaries were observed. A subsequent native search-switch reproduction exposed a stale lock. Parameterized notice/component identity keys now reset it with its query owner. Steve reviewed all remaining retry owners and found no missing identity boundary; his second review confirmed the corrected sibling keys are distinct."
+  },
+  "checks": {
+    "productionBuildIncludingTypeScript": "pass",
+    "fullESLint": "pass",
+    "rendererErrors": [],
+    "providers": 0,
+    "serverWrites": 0,
+    "nativeRetryFormSubmits": 0,
+    "unitReleaseDeferredChecks": "not run",
+    "remoteCI": "not configured"
+  },
+  "freshness": "The first14 core snapshots predate only the PlaylistDetail compound fetching correction; final4 core playlist snapshots include it. Four ownership snapshots use the final build including the identity keys. Prior core owner behavior is unchanged except that changing a query owner now remounts its notice.",
+  "limitations": [
+    "Cold queries without prior data can replace the error with their existing loading presentation. The provider status case verifies that path and preservation of later field focus; it does not claim the notice remains mounted.",
+    "One early catalog probe had no cached filter data. The cached sibling case was staged only after a successful filter read; no app fix was inferred from that fixture state.",
+    "The catalog fixture initially consumed an older quit command and exited0. That terminal run is excluded; the command was cleared before the new run. The paging controller was also terminal before adding selective rule release.",
+    "An offscreen native Load more click returned elementHasNoFrame and a later stale target required refreshing the AX state. Subsequent visible paging recovery completed; these are tool-routing observations, not app failures.",
+    "During the compound list-only wait, CUA AX snapshots reported HTML-content focus while renderer telemetry still reported the Retrying button. The native tree exposed the busy button, but this does not prove OS/VoiceOver focus behavior. Q06/Q08/Q09 remain open.",
+    "A first compound assertion compared all IPC calls and caught normal news-status polling/local playback saves. The corrected assertion compares only the two owned playlist reads; local state persistence is not a server write.",
+    "The initial refs lint finding was fixed by destructuring the existing LibraryChooser hook result. No rule was suppressed or shared focus logic changed.",
+    "Anton chose to continue engineering checks first. Listener sessions remain pending; no usability score or inventory promotion follows from these states.",
+    "The ownership case uses a cold new search, so its retry replaces the error with the existing loading screen. An intermediate identity-key fix reused the virtual-list sibling key and left stale error markup, caught by the recovery assertion. Error keys now use an error prefix. The final run verifies no stale notice during current loading or after recovery, and playback stays paused. An intermediate batched Space after control unmount activated the existing page shortcut and was restored; that intermediate run is not counted as a final snapshot."
+  ],
+  "sourceHashes": {
+    "src/renderer/App.tsx": "9bae3a6b1896f8908e1e7a124259b0cdadbf8da717ab4b18bd741ebe06ea5b8e",
+    "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": "6eff978dd2fedbe18571b295dfa85b05a1b09722ab8d4008b9ea5fe9c1acad1e",
+    "src/renderer/components/Inspector/Inspector.component.tsx": "633fc6611c13f94c030c1a31dc3e8460de8445bca2100dda6c758ee985a17997",
+    "src/renderer/components/LibraryChooser.tsx": "45edf88fe61942234b625fb6864539de8d722bb400b416a8ef65a075689227fc",
+    "src/renderer/components/Player/DJPopover.component.tsx": "921f0dab0b2bf8eee284808faeb78102630e31fd8ff85f13d8385839518cb655",
+    "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx": "03434e49acabff9fbef378227001fcc0875521467c7e843bd9e9e687b19dc12d",
+    "src/renderer/components/Shared.tsx": "4e88294c5a87a241fdf7f79f1d28a9562b47dd98efa61cee431c142e52bbb31b",
+    "src/renderer/pages/Albums/Albums.page.tsx": "563aa70555f626489ef9ebcf2e3394af7223b8145a5de38a144fa729ab5dbe32",
+    "src/renderer/pages/Albums/VirtualAlbums.component.tsx": "4ef3a50f9c9e95b234909ebef41779f3453914e6486fce5c7fb5efd1601249f8",
+    "src/renderer/pages/DJs/DJs.page.tsx": "bb0ce200e5efdd6b2e57f8db1fdd822b07cd4974e8c2d93b902353dcafaa36ea",
+    "src/renderer/pages/DJs/components/NewsTest.component.tsx": "e798d010cf7efaccf45d3cbb5439995d0298c9c16db7070ba03bed64eb57e9c3",
+    "src/renderer/pages/DJs/components/VoicePreview.component.tsx": "d191f11d0a10f162e501956d6e8d0de5da7597baa088210e804e084232711b84",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "91f301b61895ce7bb26caebeb42a823bd0604b67a39fa6715cd9ca5a70bd372a",
+    "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx": "59f8ae32e4c3ec3e153a293f4b92b8edc085c53c762f04f9c3d18101d3e49b55",
+    "src/renderer/pages/Settings/components/NewsTransitions.component.tsx": "a9898bc7eac9591cd1684c51659066d50ff2d5ec23ebeac9bb944855b40d1e83",
+    "src/renderer/pages/Songs/Songs.page.tsx": "a327fe944d2dbd81961bad2edae226b2d5762ee0b663964b29a265c6355c577b",
+    "src/renderer/pages/Songs/VirtualSongs.component.tsx": "b7b34d79988e5a1d81aaf88e1f60809032f182d5db6d7b485597470439075aff",
+    "src/renderer/pages/Sources/Sources.page.tsx": "cd45ffd6adafb03bb1a10bbb146e0d41aea2bc975fd1bde3b20b038c90ec1577",
+    "src/renderer/pages/Stations/Stations.page.tsx": "4b005d8f4dfbeef404c92fe6dc9f901c0bfcef0a4f5ae134bdee6d34e33970d5",
+    "src/renderer/styles.css": "5a235c72cbcbff30bf790e1fa7044ea6a9abc9727ecbda08389d9a059a196d32",
+    "src/renderer/useRetryFocus.ts": "4c95b9a6e946ceebbc395af42567757605db526e4503e073a1d81a0825b048fc",
+    "REQUIREMENTS.md": "9a4420258fdbebd8bf2f1294c5960d1bd447883437db2ebd22f5e736c62422c6",
+    "docs/RADIO_EXPERIENCE.md": "295e6953284fffc5eaec82de96ec1cf04bab876d532ce90e17106210907b4083"
+  },
+  "fixtureHashes": {
+    "observe.cjs": "e5d7d7a0b03233a857e10bf8fd71ff21169e2364d0301adb1179f34021047910",
+    "bootstrap.mjs": "7950f5b1b3b7f1d31e1127ef5ae88613c8911ee62bd2d0139bbfbf3eb8e38cec",
+    "build.mjs": "8610a002200197370c2c546358bde1dab7befe9ab68a2987aeb2a77abf4f39d8",
+    "server.mjs": "b42c870fa8dd2171ca64f28bd36fcf7a2f1354a4e29831c6ffc9ac112794b22f"
+  },
+  "buildHashes": {
+    "out/renderer/index.html": "1f543c86021fac0d6ced1edb7a50ecca33d72dd4d8c60944dd2d95602bce42a0",
+    "out/renderer/assets/index-CqFPlsiu.js": "d6d35e533bb01b7f699bc9f4507c6b83a1ed71b4854d0b79bd04e6274a387368",
+    "out/renderer/assets/index-CUgwj8xN.css": "8dedf91bec8e203b47c5630cbd8925f4f357523a53a65c6a66ba92b9ba0f19c4"
+  },
+  "disposition": "Partial Q06/Q08 evidence. All187 row dispositions unchanged;28 active checks remain.",
+  "ownershipReproduction": {
+    "beforeNewError": {
+      "focus": {
+        "tag": "INPUT",
+        "name": "Search songs, artists and albums",
+        "type": null,
+        "role": null
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [
+        {
+          "error": "songs unavailable.",
+          "status": "",
+          "button": {
+            "name": "Try again",
+            "disabled": false,
+            "busy": null,
+            "ariaDisabled": null,
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "libraries": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "submits": 0,
+      "keys": [
+        {
+          "key": "n",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "g",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "0",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "0",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 37,
+          "getConnection": 1,
+          "songs": 6,
+          "libraryFilters": 2,
+          "getLocalState": 2,
+          "getPlaybackPreferences": 1,
+          "song": 4,
+          "preparePlayback": 1,
+          "savePlayback": 7
+        },
+        "held": [
+          "songs"
+        ],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    "blockedAfterNativeClickAndEnter": {
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Try again",
+        "type": "button",
+        "role": null
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [
+        {
+          "error": "songs unavailable.",
+          "status": "",
+          "button": {
+            "name": "Try again",
+            "disabled": false,
+            "busy": null,
+            "ariaDisabled": null,
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "libraries": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "submits": 0,
+      "keys": [
+        {
+          "key": "g",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "0",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "0",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 45,
+          "getConnection": 1,
+          "songs": 6,
+          "libraryFilters": 2,
+          "getLocalState": 2,
+          "getPlaybackPreferences": 1,
+          "song": 4,
+          "preparePlayback": 1,
+          "savePlayback": 9
+        },
+        "held": [
+          "songs"
+        ],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    "result": "Confirmed before identity keys: new search Try again dispatched no new read while original request remained held."
+  },
+  "ownershipSnapshots": [
+    {
+      "name": "owner-after-held",
+      "result": "pass",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [
+        {
+          "error": "songs unavailable.",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "libraries": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "submits": 0,
+      "keys": [],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 29,
+          "getConnection": 1,
+          "songs": 4,
+          "libraryFilters": 2,
+          "getLocalState": 2,
+          "getPlaybackPreferences": 1,
+          "song": 4,
+          "preparePlayback": 1,
+          "savePlayback": 6
+        },
+        "held": [
+          "songs"
+        ],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "owner-after-new-error",
+      "result": "pass",
+      "focus": {
+        "tag": "INPUT",
+        "name": "Search songs, artists and albums",
+        "type": null,
+        "role": null
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [
+        {
+          "error": "songs unavailable.",
+          "status": "",
+          "button": {
+            "name": "Try again",
+            "disabled": false,
+            "busy": null,
+            "ariaDisabled": null,
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "libraries": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "submits": 0,
+      "keys": [
+        {
+          "key": "n",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "g",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "0",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "0",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 36,
+          "getConnection": 1,
+          "songs": 6,
+          "libraryFilters": 2,
+          "getLocalState": 2,
+          "getPlaybackPreferences": 1,
+          "song": 4,
+          "preparePlayback": 1,
+          "savePlayback": 7
+        },
+        "held": [
+          "songs"
+        ],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "owner-after-current-held",
+      "result": "pass",
+      "focus": {
+        "tag": "BODY",
+        "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedAll songsYour Jellyfin libraryGenreAny genreAny genreJazzRockTagAny tagAny tagArchiveLiveStudioSortDate addedDate addedTitleArtistAlbumYearNewest firstLoading your songs\u2026Song 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+        "type": null,
+        "role": null
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [],
+      "libraries": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "submits": 0,
+      "keys": [
+        {
+          "key": "n",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "g",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "0",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "0",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 47,
+          "getConnection": 1,
+          "songs": 7,
+          "libraryFilters": 2,
+          "getLocalState": 2,
+          "getPlaybackPreferences": 1,
+          "song": 4,
+          "preparePlayback": 1,
+          "savePlayback": 10
+        },
+        "held": [
+          "songs",
+          "songs"
+        ],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "owner-after-recovered",
+      "result": "pass",
+      "focus": {
+        "tag": "H1",
+        "name": "All songs",
+        "type": null,
+        "role": null
+      },
+      "headings": [
+        "All songs"
+      ],
+      "notices": [],
+      "libraries": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "submits": 0,
+      "keys": [
+        {
+          "key": "n",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "g",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "0",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "0",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "methodCounts": {
+          "getNewsRecoveryStatus": 65,
+          "getConnection": 1,
+          "songs": 7,
+          "libraryFilters": 2,
+          "getLocalState": 2,
+          "getPlaybackPreferences": 1,
+          "song": 4,
+          "preparePlayback": 1,
+          "savePlayback": 13
+        },
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    }
+  ]
+}

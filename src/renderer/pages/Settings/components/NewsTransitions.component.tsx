@@ -36,7 +36,7 @@ export function NewsTransitions() {
   return <section className="news-transition-settings" aria-labelledby="news-transitions-title">
     <h2 id="news-transitions-title">DJ transitions</h2>
     <p className="settings-description">Give news breaks room to breathe. Saved changes apply to the next break you schedule.</p>
-    <ErrorNotice error={state.error} retry={() => void state.refetch()} />
+    <ErrorNotice error={state.error} retrying={state.isFetching} retry={() => state.refetch()} />
     {state.isPending && <p role="status">Loading transition settings…</p>}
     <form onSubmit={event => { event.preventDefault(); if (!save.isPending) save.mutate(); }}>
       <fieldset disabled={!state.data || save.isPending}>

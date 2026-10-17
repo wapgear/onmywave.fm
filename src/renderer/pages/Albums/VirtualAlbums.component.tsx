@@ -141,11 +141,11 @@ export function VirtualAlbums({ albums, total, hasNext, fetching, nextError, loa
   }
   function retryNextPage() {
     const button = retryFocus.retryRef.current;
-    if (document.activeElement !== button) { void loadNext(); return; }
+    if (document.activeElement !== button) return loadNext();
     const startIndex = albums.length;
     const token = ++recoveryToken.current;
     setRecoveryIndex(startIndex);
-    void retryFocus.retry(() => {
+    return retryFocus.retry(() => {
       const request = loadNext();
       void request.then(result => { if (result.isError && recoveryToken.current === token) setRecoveryIndex(null); }, () => { if (recoveryToken.current === token) setRecoveryIndex(null); });
       return request;
@@ -170,6 +170,6 @@ export function VirtualAlbums({ albums, total, hasNext, fetching, nextError, loa
         {albums.slice(row.index * layout.columns, (row.index + 1) * layout.columns).map((item, column) => <button className="album-tile" key={item.id} data-album-id={item.id} data-album-index={row.index * layout.columns + column} onFocus={() => setFocusedId(item.id)} onKeyDown={event => keyboard(event, row.index * layout.columns + column)} onClick={() => open(item)} title={`${item.name} · ${item.artist || 'Unknown artist'}`}><Artwork url={item.imageUrl} name={item.name} /><strong>{item.name || 'Untitled album'}</strong><span>{item.artist || 'Unknown artist'}{item.year ? ` · ${item.year}` : ''}</span></button>)}
       </div>)}
     </div>
-    <div className="album-load-status"><span ref={status} tabIndex={-1}>{albums.length.toLocaleString()} of {total.toLocaleString()} albums</span>{fetching && <span role="status">Loading albums…</span>}{nextError ? <ErrorNotice error={nextError} retryRef={retryFocus.retryRef} retry={retryNextPage} /> : hasNext && !fetching && <button onClick={() => void loadNext()}>Load more albums</button>}</div>
+    <div className="album-load-status"><span ref={status} tabIndex={-1}>{albums.length.toLocaleString()} of {total.toLocaleString()} albums</span>{fetching && <span role="status">Loading albums…</span>}{nextError ? <ErrorNotice error={nextError} retryRef={retryFocus.retryRef} retrying={fetching} retry={retryNextPage} /> : hasNext && !fetching && <button onClick={() => void loadNext()}>Load more albums</button>}</div>
   </section>;
 }

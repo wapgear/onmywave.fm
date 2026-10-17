@@ -2,9 +2,16 @@ import { useId, useLayoutEffect, useRef, useState, type ReactNode, type RefObjec
 import { AlertCircle, Music2, X } from 'lucide-react';
 
 export const errorMessage = (error: unknown) => error instanceof Error ? error.message : 'Something went wrong. Please try again.';
-export function ErrorNotice({ error, retry, retryRef }: { error: unknown; retry?: () => void; retryRef?: RefObject<HTMLButtonElement | null> }) {
+export function ErrorNotice({ error, retry, retryRef, retrying = false }: { error: unknown; retry?: () => void | Promise<unknown>; retryRef?: RefObject<HTMLButtonElement | null>; retrying?: boolean }) {
+  const inFlight = useRef(false);
   if (!error) return null;
-  return <div className="notice error"><AlertCircle size={18} aria-hidden="true" /><span role="alert">{errorMessage(error)}</span>{retry && <button ref={retryRef} onClick={retry}>Try again</button>}</div>;
+  async function retryOnce() {
+    if (!retry || retrying || inFlight.current) return;
+    inFlight.current = true;
+    try { await retry(); } catch { /* The owner retains the request's error and recovery state. */ }
+    finally { inFlight.current = false; }
+  }
+  return <div className="notice error"><AlertCircle size={18} aria-hidden="true" /><span role="alert">{errorMessage(error)}</span>{retry && <><span className="sr-only" role="status">{retrying ? 'Retrying…' : ''}</span><button type="button" ref={retryRef} aria-disabled={retrying || undefined} aria-busy={retrying || undefined} onClick={() => void retryOnce()}>{retrying ? 'Retrying…' : 'Try again'}</button></>}</div>;
 }
 export function Empty({ title, children }: { title: string; children?: ReactNode }) {
   return <div className="empty"><Music2 size={30} strokeWidth={1.4} /><h2>{title}</h2>{children && <p>{children}</p>}</div>;
