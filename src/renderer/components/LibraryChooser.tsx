@@ -13,7 +13,7 @@ export function LibraryChooser({ connection, done, onChangeAccount, disabled = f
   const { retryRef, retry: retryWithFocus } = useRetryFocus({
     ownerKey: connection.id,
     target: () => form.current?.checkVisibility() ? form.current.querySelector<HTMLElement>('.library-choice-row input:not(:disabled), button.library-choice-retry:not(:disabled)') : null,
-    canFocusSuccess: () => !disabled && !selection.pending && !libraries.error,
+    canFocusSuccess: () => !disabled && !selection.pending && libraries.isSuccess && !libraries.isFetching,
   });
   const retryLibraries = () => { if (!disabled && !selection.pending && !libraries.isFetching) return retryWithFocus(() => libraries.refetch()); };
   const selectedIds = (libraries.data ?? []).filter(library => selection.selected.includes(library.id)).map(library => library.id);

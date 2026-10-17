@@ -11,7 +11,7 @@ export function AddPlaylist({ songs, close, checkPlaylists }: { songs: Song[]; c
   const destinationInput = useRef<HTMLSelectElement>(null);
   useLayoutEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
   const playlists = useQuery({ queryKey: ['playlists'], queryFn: async () => unwrap(await window.wave.playlists()) });
-  const retryFocus = useRetryFocus({ ownerKey: 'add-playlist:destinations', target: () => destinationInput.current, canFocusSuccess: () => true });
+  const retryFocus = useRetryFocus({ ownerKey: 'add-playlist:destinations', target: () => destinationInput.current, canFocusSuccess: () => playlists.isSuccess && !playlists.isFetching });
   const [destination, setDestination] = useState('new');
   const [name, setName] = useState('');
   const [skipExisting, setSkipExisting] = useState(true);

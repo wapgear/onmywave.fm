@@ -39,7 +39,7 @@ export function VoicePreview({ resource, label, playbackId, activeId, onStart, a
   const queryKey = resource.kind === 'dj' ? ['djVoicePreview', resource.djId, voiceId, resource.delivery] : ['voicePreview', voiceId];
   const valid = validVoiceId(voiceId);
   const preview = useQuery({ queryKey, enabled: active && valid && recoveryReady, queryFn: async () => unwrap(await (resource.kind === 'dj' ? window.wave.getDJVoicePreview(resource.djId) : window.wave.getVoicePreview(voiceId))), retry: false, refetchOnWindowFocus: false, refetchOnReconnect: false });
-  const retryFocus = useRetryFocus({ ownerKey: identity, target: () => previewLabel.current, canFocusSuccess: () => active && recoveryReady });
+  const retryFocus = useRetryFocus({ ownerKey: identity, target: () => previewLabel.current, canFocusSuccess: () => active && recoveryReady && preview.isSuccess && !preview.isFetching });
   const shared = preview.data;
   const playable = shared?.available && shared.audioUrl ? shared : null;
   const playing = playingVoiceId === voiceId;

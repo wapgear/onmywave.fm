@@ -6,12 +6,12 @@ import { useRetryFocus } from '../../useRetryFocus';
 import './VirtualSongs.styles.css';
 
 const ROW_HEIGHT = 56;
-export function VirtualSongs({ total, hasNext, fetching, nextError, loadNext, retryEligible = true, onResultsElement, ...table }: TrackTableProps & {
-  total: number; hasNext: boolean; fetching: boolean; nextError: unknown; loadNext: () => Promise<{ isError: boolean }>; retryEligible?: boolean; onResultsElement?: (node: HTMLDivElement | null) => void;
+export function VirtualSongs({ total, hasNext, fetching, nextError, loadNext, onResultsElement, ...table }: TrackTableProps & {
+  total: number; hasNext: boolean; fetching: boolean; nextError: unknown; loadNext: () => Promise<{ isError: boolean }>; onResultsElement?: (node: HTMLDivElement | null) => void;
 }) {
   const root = useRef<HTMLDivElement>(null);
   const status = useRef<HTMLSpanElement>(null);
-  const retryFocus = useRetryFocus({ ownerKey: 'songs-next-page', target: () => status.current, canFocusSuccess: () => retryEligible });
+  const retryFocus = useRetryFocus({ ownerKey: 'songs-next-page', target: () => status.current, canFocusSuccess: () => !fetching && !nextError });
   const [paddingEnd, setPaddingEnd] = useState(140);
   const [offset, setOffset] = useState(0);
   const [focusedKey, setFocusedKey] = useState<string | null>(null);

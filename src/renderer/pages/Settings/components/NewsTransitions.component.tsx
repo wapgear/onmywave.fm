@@ -23,10 +23,11 @@ const fields = [
 
 export function NewsTransitions() {
   const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()) });
+  const heading = useRef<HTMLHeadingElement>(null);
   const transitionStyle = useRef<HTMLSelectElement>(null);
   const retryFocus = useRetryFocus({
     ownerKey: 'settings:general:news-transitions',
-    target: () => transitionStyle.current,
+    target: () => transitionStyle.current && !transitionStyle.current.matches(':disabled') ? transitionStyle.current : heading.current,
     canFocusSuccess: () => !state.isError && !state.isFetching && !!state.data,
   });
   const edit = useGeneralSettingsEdits().transitions;
@@ -35,7 +36,7 @@ export function NewsTransitions() {
   const preset = presets.find(item => Object.entries(item.settings).every(([key, value]) => settings[key as keyof NewsTransitionSettings] === value));
   function change(patch: Partial<NewsTransitionSettings>) { edit.change({ ...settings, ...patch }); }
   return <section className="news-transition-settings" aria-labelledby="news-transitions-title">
-    <h2 id="news-transitions-title">DJ transitions</h2>
+    <h2 ref={heading} tabIndex={-1} id="news-transitions-title">DJ transitions</h2>
     <p className="settings-description">Give news breaks room to breathe. Saved changes apply to the next break you schedule.</p>
     <ErrorNotice error={state.error} retryRef={retryFocus.retryRef} retrying={state.isFetching} retry={() => retryFocus.retry(() => state.refetch())} />
     {state.isPending && <p role="status">Loading transition settings…</p>}

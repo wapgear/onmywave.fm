@@ -27,7 +27,7 @@ const navigation = [{ id: 'songs', name: 'All songs', icon: Music2 }, { id: 'alb
 export default function App() {
   const client = useQueryClient();
   const connectionQuery = useQuery({ queryKey: ['connection'], queryFn: async () => unwrap(await window.wave.getConnection()), retry: false });
-  const connectionRetryFocus = useRetryFocus({ ownerKey: 'connection-startup', target: () => document.querySelector<HTMLElement>('.page-heading h1, .connection-card h1'), canFocusSuccess: () => true });
+  const connectionRetryFocus = useRetryFocus({ ownerKey: 'connection-startup', target: () => document.querySelector<HTMLElement>('.page-heading h1, .connection-card h1'), canFocusSuccess: () => connectionQuery.isSuccess && !connectionQuery.isFetching });
   const [expired, setExpired] = useState(false);
   useEffect(() => { const expire = () => setExpired(true); window.addEventListener('wave:auth-expired', expire); return () => window.removeEventListener('wave:auth-expired', expire); }, []);
   async function setConnection(connection: Connection | null, clearExpiry = true) {
