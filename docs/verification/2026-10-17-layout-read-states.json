@@ -1,0 +1,1127 @@
+{
+  "date": "2026-10-17",
+  "baseCommit": "d88a76c17855e3b5ae42cb8f094cbd0368228eda",
+  "scope": [
+    "V13",
+    "V07 connection identity follow-up",
+    "M10 layout detail"
+  ],
+  "proofKind": "N+I, controlled native layout plus scoped source freshness inspection",
+  "result": "passed",
+  "baseline": {
+    "CSSWindows": [
+      [
+        1280,
+        720
+      ],
+      [
+        1600,
+        1000
+      ]
+    ],
+    "zoom": 1,
+    "runtime": "macOS27.2 arm64/Electron43.7.0",
+    "data": "Disposable dummy connection, long account/library/music/source/DJ/profile metadata, actual local HTTP catalog and copied owned saved MP3 fixtures.",
+    "network": "Shared personal Keychain adapter disabled. Feed/text/voice responses are substituted or blocked; no provider call in these runs. No live Jellyfin or personal data used."
+  },
+  "reproduction": {
+    "accountNameCharacters": 219,
+    "actualBefore": {
+      "name": "1280 connection chooser normal",
+      "overflow": [
+        {
+          "selector": ".connection-page",
+          "width": 1272,
+          "scroll": 2014
+        },
+        {
+          "selector": ".connection-card",
+          "width": 440,
+          "scroll": 1598
+        }
+      ],
+      "controls": [
+        {
+          "name": "Library MetadataWithoutSpacesMetadataWithoutSpacesMetadataWithout",
+          "inside": true,
+          "uncovered": true,
+          "width": 16
+        },
+        {
+          "name": "Library MetadataWithoutSpacesMetadataWithoutSpacesMetadataWithout",
+          "inside": true,
+          "uncovered": true,
+          "width": 16
+        },
+        {
+          "name": "Use another account or server",
+          "inside": true,
+          "uncovered": true,
+          "width": 229.65625
+        }
+      ],
+      "failures": []
+    },
+    "capture": "2026-10-17-layout-read-states-before.png"
+  },
+  "change": "Add overflow-wrap:anywhere to connection-card identity/instruction paragraphs. Preserve the full account name and vertical scrolling. No new layout abstraction, truncation, viewport or configuration.",
+  "nativeMethod": [
+    "Actual current production renderer/preload and source-bundled main in native Electron. Handler fault gate runs after sender/input/readiness guards.",
+    "Controlled read modes hold a reply, return a known long ServiceError, or replace a successful read with an empty shape. Healthy operations use actual service/storage. These are layout inputs, not a real server/disk fault claim.",
+    "Measure horizontal scrollWidth versus clientWidth in document, page, player, drawer, modal, provider/settings and connection containers where present.",
+    "Scroll enabled visible controls into view and assert nonzero in-viewport geometry and unobstructed center hit target. Modal audits scope the top dialog. Virtual row/grid controls are excluded from this generic scan and retain the explicit earlier row/artwork/queue checks.",
+    "Both current paging recoveries at1600 additionally assert the first new item is focused, fully above the player and unobstructed. PR59 retains corresponding1280 recovery coverage.",
+    "Library selection checks make Save enabled and assert it remains visible/uncovered below long library names without submitting. No provider or server mutation action is performed.",
+    "Read-state and detail-prefix results are retained across fixture-only selector corrections. The56 read-state cases ran before the isolated connection paragraph CSS fix; that selector is absent from those views. All remaining connection/detail/form/paging checks ran after it."
+  ],
+  "nativeRuns": {
+    "read-states": {
+      "result": "passed",
+      "caseCount": 56,
+      "providerCalls": 0,
+      "rendererErrors": [],
+      "cases": [
+        {
+          "name": "1280 songs hold",
+          "controlsMeasured": 20,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 songs fail",
+          "controlsMeasured": 22,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 songs empty",
+          "controlsMeasured": 21,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 albums hold",
+          "controlsMeasured": 16,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 albums fail",
+          "controlsMeasured": 17,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 albums empty",
+          "controlsMeasured": 16,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 playlists hold",
+          "controlsMeasured": 15,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 playlists fail",
+          "controlsMeasured": 16,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 playlists empty",
+          "controlsMeasured": 16,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 sources hold",
+          "controlsMeasured": 15,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 sources fail",
+          "controlsMeasured": 17,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 sources empty",
+          "controlsMeasured": 20,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 DJs hold",
+          "controlsMeasured": 15,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 DJs fail",
+          "controlsMeasured": 17,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 DJs empty",
+          "controlsMeasured": 20,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 news bucket hold",
+          "controlsMeasured": 19,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 news bucket fail",
+          "controlsMeasured": 20,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 news bucket empty",
+          "controlsMeasured": 23,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 news settings hold",
+          "controlsMeasured": 11,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 news settings fail",
+          "controlsMeasured": 13,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 saved audio hold",
+          "controlsMeasured": 19,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 saved audio fail",
+          "controlsMeasured": 20,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 saved audio empty",
+          "controlsMeasured": 22,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 general libraries hold",
+          "controlsMeasured": 30,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 general libraries fail",
+          "controlsMeasured": 31,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 general libraries empty",
+          "controlsMeasured": 31,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 provider keys hold",
+          "controlsMeasured": 24,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 provider keys fail",
+          "controlsMeasured": 27,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 songs hold",
+          "controlsMeasured": 20,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 songs fail",
+          "controlsMeasured": 22,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 songs empty",
+          "controlsMeasured": 21,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 albums hold",
+          "controlsMeasured": 16,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 albums fail",
+          "controlsMeasured": 17,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 albums empty",
+          "controlsMeasured": 16,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 playlists hold",
+          "controlsMeasured": 15,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 playlists fail",
+          "controlsMeasured": 16,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 playlists empty",
+          "controlsMeasured": 16,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 sources hold",
+          "controlsMeasured": 15,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 sources fail",
+          "controlsMeasured": 17,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 sources empty",
+          "controlsMeasured": 20,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 DJs hold",
+          "controlsMeasured": 15,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 DJs fail",
+          "controlsMeasured": 17,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 DJs empty",
+          "controlsMeasured": 20,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 news bucket hold",
+          "controlsMeasured": 19,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 news bucket fail",
+          "controlsMeasured": 20,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 news bucket empty",
+          "controlsMeasured": 23,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 news settings hold",
+          "controlsMeasured": 11,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 news settings fail",
+          "controlsMeasured": 13,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 saved audio hold",
+          "controlsMeasured": 19,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 saved audio fail",
+          "controlsMeasured": 20,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 saved audio empty",
+          "controlsMeasured": 22,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 general libraries hold",
+          "controlsMeasured": 30,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 general libraries fail",
+          "controlsMeasured": 31,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 general libraries empty",
+          "controlsMeasured": 31,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 provider keys hold",
+          "controlsMeasured": 24,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 provider keys fail",
+          "controlsMeasured": 27,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        }
+      ]
+    },
+    "supplement": {
+      "result": "passed",
+      "caseCount": 14,
+      "providerCalls": 0,
+      "rendererErrors": [],
+      "cases": [
+        {
+          "name": "1280 startup hold",
+          "controlsMeasured": 0,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 startup fail",
+          "controlsMeasured": 1,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 startup empty",
+          "controlsMeasured": 3,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 connection chooser normal",
+          "controlsMeasured": 3,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 connection chooser hold",
+          "controlsMeasured": 1,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 connection chooser fail",
+          "controlsMeasured": 2,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 connection chooser empty",
+          "controlsMeasured": 2,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 startup hold",
+          "controlsMeasured": 0,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 startup fail",
+          "controlsMeasured": 1,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 startup empty",
+          "controlsMeasured": 3,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 connection chooser normal",
+          "controlsMeasured": 3,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 connection chooser hold",
+          "controlsMeasured": 1,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 connection chooser fail",
+          "controlsMeasured": 2,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 connection chooser empty",
+          "controlsMeasured": 2,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        }
+      ]
+    },
+    "details-forms": {
+      "result": "passed",
+      "caseCount": 38,
+      "providerCalls": 0,
+      "rendererErrors": [],
+      "cases": [
+        {
+          "name": "1280 album detail hold",
+          "controlsMeasured": 16,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 album detail fail",
+          "controlsMeasured": 18,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 album detail empty",
+          "controlsMeasured": 16,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 playlist detail hold",
+          "controlsMeasured": 16,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 playlist detail fail",
+          "controlsMeasured": 17,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 playlist detail empty",
+          "controlsMeasured": 18,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 new playlist form",
+          "controlsMeasured": 3,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "originRun": "prefix"
+        },
+        {
+          "name": "1280 add new playlist form",
+          "controlsMeasured": 4,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 add existing playlist form",
+          "controlsMeasured": 5,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 source rss form",
+          "controlsMeasured": 5,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 source twitter form",
+          "controlsMeasured": 6,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 source hacker-news form",
+          "controlsMeasured": 5,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 DJ Predefined editor",
+          "controlsMeasured": 16,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 DJ Simple editor",
+          "controlsMeasured": 10,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 DJ Advanced editor",
+          "controlsMeasured": 18,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 expanded manual draft and setup",
+          "controlsMeasured": 41,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 new profile form",
+          "controlsMeasured": 3,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 signout confirmation",
+          "controlsMeasured": 3,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 provider help",
+          "controlsMeasured": 1,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 album detail hold",
+          "controlsMeasured": 16,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 album detail fail",
+          "controlsMeasured": 18,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 album detail empty",
+          "controlsMeasured": 16,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 playlist detail hold",
+          "controlsMeasured": 16,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 playlist detail fail",
+          "controlsMeasured": 17,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 playlist detail empty",
+          "controlsMeasured": 18,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 new playlist form",
+          "controlsMeasured": 3,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 add new playlist form",
+          "controlsMeasured": 4,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 add existing playlist form",
+          "controlsMeasured": 5,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 source rss form",
+          "controlsMeasured": 5,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 source twitter form",
+          "controlsMeasured": 6,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 source hacker-news form",
+          "controlsMeasured": 5,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 DJ Predefined editor",
+          "controlsMeasured": 16,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 DJ Simple editor",
+          "controlsMeasured": 10,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 DJ Advanced editor",
+          "controlsMeasured": 18,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 expanded manual draft and setup",
+          "controlsMeasured": 41,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 new profile form",
+          "controlsMeasured": 3,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 signout confirmation",
+          "controlsMeasured": 3,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 provider help",
+          "controlsMeasured": 1,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        }
+      ]
+    },
+    "paging": {
+      "result": "passed",
+      "caseCount": 4,
+      "providerCalls": 0,
+      "rendererErrors": [],
+      "cases": [
+        {
+          "name": "1600 songs pagination error",
+          "controlsMeasured": 23,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 songs pagination recovery",
+          "controlsMeasured": 23,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "focused": {
+            "tag": "TR",
+            "abovePlayer": true,
+            "uncovered": true,
+            "visible": true
+          }
+        },
+        {
+          "name": "1600 albums pagination error",
+          "controlsMeasured": 17,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 albums pagination recovery",
+          "controlsMeasured": 17,
+          "horizontalOverflow": [],
+          "blockedControls": [],
+          "focused": {
+            "tag": "BUTTON",
+            "abovePlayer": true,
+            "uncovered": true,
+            "visible": true
+          }
+        }
+      ]
+    },
+    "radio-dialogs": {
+      "result": "passed",
+      "caseCount": 4,
+      "providerCalls": 0,
+      "rendererErrors": [],
+      "cases": [
+        {
+          "name": "1280 switch profile with unsaved changes",
+          "controlsMeasured": 4,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1280 replace unsaved script confirmation",
+          "controlsMeasured": 3,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 switch profile with unsaved changes",
+          "controlsMeasured": 4,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 replace unsaved script confirmation",
+          "controlsMeasured": 3,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        }
+      ]
+    },
+    "chooser-selected": {
+      "result": "passed",
+      "caseCount": 2,
+      "providerCalls": 0,
+      "rendererErrors": [],
+      "cases": [
+        {
+          "name": "1280 connection chooser selected Save",
+          "controlsMeasured": 4,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        },
+        {
+          "name": "1600 connection chooser selected Save",
+          "controlsMeasured": 4,
+          "horizontalOverflow": [],
+          "blockedControls": []
+        }
+      ]
+    }
+  },
+  "priorHealthyEvidence": {
+    "record": "2026-10-17-long-metadata.json",
+    "sourceSnapshotCommit": "51d2b9d879787c0a3bcd6ea4b872862c556b36df",
+    "cases": 44,
+    "replayed": false,
+    "caseNames": [
+      "1280-songs",
+      "1280-inspector",
+      "1280-queue",
+      "1280-album-grid",
+      "1280-short-album",
+      "1280-album-initial",
+      "1280-full-title",
+      "1280-album-detail",
+      "1280-playlist-grid",
+      "1280-playlist-detail",
+      "1280-rename-dialog",
+      "1280-news-settings",
+      "1280-saved-audio",
+      "1280-saved-provenance",
+      "1280-dj-popover",
+      "1280-scheduled-story",
+      "1280-general",
+      "1280-sources",
+      "1280-source-edit",
+      "1280-source-delete",
+      "1280-djs",
+      "1280-dj-delete",
+      "1600-songs",
+      "1600-inspector",
+      "1600-queue",
+      "1600-album-grid",
+      "1600-short-album",
+      "1600-album-initial",
+      "1600-full-title",
+      "1600-album-detail",
+      "1600-playlist-grid",
+      "1600-playlist-detail",
+      "1600-rename-dialog",
+      "1600-news-settings",
+      "1600-saved-audio",
+      "1600-saved-provenance",
+      "1600-dj-popover",
+      "1600-scheduled-story",
+      "1600-general",
+      "1600-sources",
+      "1600-source-edit",
+      "1600-source-delete",
+      "1600-djs",
+      "1600-dj-delete"
+    ],
+    "freshness": "Reviewed every application-source diff since the snapshot that added this record. Source/DJ/setup/saved/playlist/detail-heading/drawer layout components and their styles are unchanged. Later query refs/focus ownership, duration markers/singular copy and playback error copy are scoped below; current missing states and larger paging were replayed."
+  },
+  "sourceFreshness": {
+    "globalCSSExactReconstruction": true,
+    "changesSinceHealthySnapshot": [
+      "Immediate1px pressed translation, separately verified in interaction-states.",
+      "Visible focus outlines on existing headings/counts, without box-size changes.",
+      "Current connection identity paragraph wrapping, covered by14 chooser/startup plus2 enabled-Save cases."
+    ],
+    "otherRendererChanges": [
+      "App search modifier guard changes only shortcut handling.",
+      "ErrorNotice/PageHeading accept refs without changing structure; catalog owners add guarded retry handoff.",
+      "Virtual catalogs add index attributes and a temporary recovery row pin; both larger paging errors/recoveries are newly verified.",
+      "TrackTable/Queue use a named unavailable-duration marker in existing fixed cells, and singular song copy. Existing named-marker/live-duration records cover the changed values.",
+      "Player uses the same plain-language load error on both failure routes. Existing live playback recovery retains its scope."
+    ]
+  },
+  "pageCoverage": [
+    {
+      "family": "startup, sign-in, library chooser",
+      "evidence": "New supplement and enabled-Save runs, both sizes; actual account-name overflow reproduced/fixed."
+    },
+    {
+      "family": "songs, selection, row actions",
+      "evidence": "Prior healthy songs/inspector, current cold read states, new/existing Add dialog and current larger paging."
+    },
+    {
+      "family": "albums grid, detail, full title",
+      "evidence": "Prior healthy grid/short title/full title/detail; current cold grid/detail states and larger paging."
+    },
+    {
+      "family": "playlist grid, detail, create/add/rename",
+      "evidence": "Prior healthy grid/detail/rename; current cold reads and new/add forms."
+    },
+    {
+      "family": "persistent player, queue, song inspector",
+      "evidence": "Prior healthy geometry; fixed-cell duration/copy changes reviewed and separately verified by the live-duration record. New page controls stay unobstructed by the persistent player."
+    },
+    {
+      "family": "News bucket overview and scheduled story",
+      "evidence": "Prior scheduled-story capture/controls; current prepared-library hold/fail/empty."
+    },
+    {
+      "family": "news setup, manual editor, profile forms",
+      "evidence": "Prior long setup; current shared cold profile read states, expanded editor/advanced options, copy, dirty-switch and replace-draft confirmations."
+    },
+    {
+      "family": "saved audio, provenance, history",
+      "evidence": "Prior saved/provenance geometry; current library hold/fail/empty, loading saved text and returning to its editor; unchanged history layout reviewed."
+    },
+    {
+      "family": "general settings and library selection",
+      "evidence": "Prior long account/general; current library hold/fail/empty, enabled chooser Save and sign-out confirmation."
+    },
+    {
+      "family": "provider keys and help",
+      "evidence": "Current pending/failure key statuses and shared provider help dialog; healthy status removes those larger error blocks."
+    },
+    {
+      "family": "source list, RSS/X/HN editors, delete",
+      "evidence": "Prior long list/edit/delete; current cold reads and all three editor modes."
+    },
+    {
+      "family": "DJ list, three editor modes, preview/delete",
+      "evidence": "Prior long list/preview/delete; current cold reads and Predefined/Simple/Advanced editors. Voice-preview layout source remains unchanged."
+    }
+  ],
+  "fixtureCorrections": [
+    "Settings is outside the Main navigation group; the fixture now uses sidebar scope.",
+    "News setup tabs require profile data. Cold profile-read loading/failure is the shared News bucket root; no hidden setup panel is claimed as visible.",
+    "Native select label text includes option text in the selector helper; use the observed select element rather than an exact literal-label match. The dialog options were present.",
+    "Passing18 read-state and7 detail/form prefix cases were kept with originRun metadata rather than replayed. Failures and raw reports are retained in temporary files."
+  ],
+  "verification": {
+    "newNativeStates": 118,
+    "newControlsMeasured": 1674,
+    "horizontalOverflowAfterFix": 0,
+    "coveredMeasuredControls": 0,
+    "rendererErrors": [],
+    "providerCalls": 0,
+    "productionBuildIncludingTypeScript": "passed",
+    "ESLint": "Not repeated: the only changed application file is CSS, which ESLint does not inspect. PR61 full ESLint covered the byte-identical TypeScript/TSX sources.",
+    "whitespace": "passed",
+    "captures": "Native before/after identity captures inspected. App content only."
+  },
+  "limits": [
+    "Controlled layout acceptance covers the current page families and named content/read/form states at the two approved sizes. It does not establish arbitrary future content/feature combinations or broad server/OS support.",
+    "This is scroll/geometry/hit-target evidence, not a full keyboard traversal, VoiceOver, typography/usability judgment or observed uncoached listener session. Q06/Q08/Q09 and U requirements keep their scope.",
+    "Muted local resources do not establish live provider quality, audible mixing or physical media-key behavior.",
+    "The news setup cold-read state has no setup tabs until profile data arrives; that shared loading/error root is explicitly recorded.",
+    "No unit framework, release, desktop-context capture, below1280x720 or enlarged-zoom check.",
+    "Only V13 is promoted. V07 gains connection-identity evidence without changing its disposition. Q13 and overall completion remain unproven."
+  ],
+  "inventoryAfter": {
+    "rows": 187,
+    "active": 185,
+    "Deferred": 2,
+    "Review": 16,
+    "Dated": 1,
+    "Recorded": 0,
+    "Controlled": 134,
+    "Live": 23,
+    "External": 11,
+    "remaining": 28
+  },
+  "sha256": {
+    "docs/verification/2026-10-17-layout-read-states-before.png": "65228aa9b1630dcd1e14084f2bf465f9f7e1eedbac588096a4672d479bdffe42",
+    "docs/verification/2026-10-17-layout-read-states-after.png": "cdd57644e407529fa15ffb1c37e0a5c4617fdc64989dd4661104f9ccda18bc61",
+    "src/renderer/styles.css": "179a4d5cff1df19cb48c8b93af351180323ac45298efe2c98e4b2a41a8b901f3",
+    "REQUIREMENTS.md": "f72d3c6e1f672e6f363a93cce86fd03a788b6fb78df8bb679c2022a68344cbe8",
+    "docs/RADIO_EXPERIENCE.md": "0e594c491503a1f0cc44b330764df73a5d4045bc520a7b9888b540a2cef67ac9",
+    "docs/verification/2026-10-17-long-metadata.json": "3cfe605e3717a1936d7e934931f2073cf88e1b51cc02fa7ca154f677631a4dc0",
+    "out/main/index.js": "c4a5aac8a832c60ee462ac467630ecbf38891cbb3b0a0bd51d10e1d2cb1cadb6",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "src/renderer/App.tsx": "51b713192fb6c3a8df2506bef70d37ee7e8142e2927f71a1089c213e502fc7cb",
+    "src/renderer/dj-playback.tsx": "14509ac179ff63c45530e74fd38f81b9cc3ce0cb08e7804f17ce1f0939304d85",
+    "src/renderer/main.tsx": "863a6596bde95ba270f0d554a2ac2bd0c3819ca832f1bfd577d0edf9bb69a7cc",
+    "src/renderer/NewsRecovery.tsx": "0041da77053a53592d90f9fb0e1bf86c7868c48bd7bd5567118df605550fb35d",
+    "src/renderer/player.tsx": "7b43bb2c3f336f71c753a242693ee833318d53b09519a88e28f44ce0a6e90f4e",
+    "src/renderer/components/Shared.tsx": "eade3d1a8935082f3a7fdc2dcaa52d5a6caa0a520dd7f602143e7af4a045b092",
+    "src/renderer/components/LibrarySelection.tsx": "97db6216b4fada46621ce20658e1bc1d47b76fe0819a0db75e446ea82965e342",
+    "src/renderer/components/LibraryChooser.tsx": "18c22d71b890eae73fe8ef20241300dc55160e8372e6ac1ab9f5d998d301cf36",
+    "src/renderer/components/FilterSelect/FilterSelect.component.tsx": "b6c4242190b3d107c5145f464db5f3b4912736c70c940a3344c73aa26463ec26",
+    "src/renderer/components/ConfigurationTabs/ConfigurationTabs.component.tsx": "96400645f0978e408da20c69ec9692250e7d58b4d6caec72afec7711f2c8a4b3",
+    "src/renderer/components/Inspector/Inspector.component.tsx": "39f001049a50433d0eb0bb16af4a8f51d00811e437c12e2145068e8b329dd893",
+    "src/renderer/components/CollectionHeading/CollectionHeading.component.tsx": "3a055f26b529958fd7a010c1318de66c54e4c6c77118207b3eed745c020e5548",
+    "src/renderer/components/ProviderKeys/TwitterSetupHelp.component.tsx": "49a4b7bd305c502937618daa3acb00fc85100267a60df492cac37efb13254317",
+    "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx": "bbded7b5200757a132f24dd5d2b56edd644c4741e2e26da2d4f2d23c62323f6e",
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "9563223e9360042d9e93133f9a99e2cd1db2435a7f73df2645d8280d0a917923",
+    "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": "ebfe4319bef020e669f96e523e8a63553731a8d1d31ea0b9674f8e311fb5eede",
+    "src/renderer/components/InfoHelp/InfoHelp.component.tsx": "be2433410cfe2387f36bae23bc6e993a3f54942e9f7979c1854908a83b508cc8",
+    "src/renderer/components/Queue/Queue.component.tsx": "4bf608d628f7f631b0d27982a1f43b99c0e0b367cfb06c3d30e55e1f1dca8111",
+    "src/renderer/components/Player/DJPopover.component.tsx": "3847eb12f2b0bfe36654a93a56ae8c0278b0509c90e255c23634acb4c8c20b34",
+    "src/renderer/components/Player/Player.component.tsx": "3d8d1f7f1be1a1fc42f93db2dd6376f42acd6338b02991600ac7ce9aa28257f4",
+    "src/renderer/pages/Stations/Stations.page.tsx": "13389317744d7d717d412967f91ef4ef906ee0e9b55d9fec25d18a53ebe1ec5b",
+    "src/renderer/pages/Stations/components/RoomSetup.component.tsx": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330",
+    "src/renderer/pages/Stations/components/NewsBucket.component.tsx": "de83e49585e17339bca32a0866b4c5126e95ceacb1cc4bf9e80d81a50221f5a7",
+    "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": "a089c86e2b2678ed77f2559648cdfeaca072ba6bb46453a2f4e8befb2f68e09e",
+    "src/renderer/pages/Songs/Songs.page.tsx": "4ddfa44ad7cc1a51666408631f1c3021a7a4f6d98ecd6b2ef071b55850df5ae1",
+    "src/renderer/pages/Songs/VirtualSongs.component.tsx": "b40cbc3d42cc464ef62e940f28dc2200f81333dd5aa0da20b0ca501dff26b0e8",
+    "src/renderer/pages/Settings/Settings.page.tsx": "ce0c41cd58f82a801b651940cb641945c12ed4c83b765377f6be8d809d1e5d9f",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": "b75be2cedea89bd799b2cfa4d33dab3186607e57aaf7b7f7c8e43b6e5e189e53",
+    "src/renderer/pages/Settings/components/NewsTransitions.component.tsx": "6335bb50284506a95a0c89cef02b22aeed1e7b87d915800f44237b81899c19b4",
+    "src/renderer/pages/Settings/components/NewsTransitionPreview.component.tsx": "b44dc08192dd9d4a354a8f921c1b5e17c6a0cf2291b26b8aa3bd285d55b2ff31",
+    "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx": "e1625bd30f4abed982787a9b09016c8440d0a1b8fbe691b255c7eba19f16cc02",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "eeb4be9a0e0798810cbe03e2c73ce9744d8b3b97f387fab7d3cece2162e04e7d",
+    "src/renderer/pages/Connection/Connection.page.tsx": "1256fee7c558c4840e6b400d6990d5b5f7a7c5afcc9f1bd7fa6171e2a5007d5e",
+    "src/renderer/pages/DJs/DJs.page.tsx": "59edbcbd3f4e56834f4757910120b9d914bac36cda4311a5508b81ecb46e8e30",
+    "src/renderer/pages/DJs/components/DJEditor.component.tsx": "4046217da52424c654bbf90aaae7d4aafea2cc71a649b409312c776c97614684",
+    "src/renderer/pages/DJs/components/VoicePreview.component.tsx": "deb7e7e57fc15450e5fccc52c74e0b1bbae113ad9d2574f77cb825c9087c706c",
+    "src/renderer/pages/DJs/components/NewsDemo.component.tsx": "32c3c7403ed5fc3cb5bfa8841e53650e20eab85e866021d5130af1059e2da8bb",
+    "src/renderer/pages/DJs/components/DJPreview.component.tsx": "496eaaac54e8fedb02e33bd2c07b01bc5c4a0b23fcb57940729c32a5bd11c3b8",
+    "src/renderer/pages/DJs/components/NewsTest.component.tsx": "e95a07d7576b06808101081e09c74c39d396cbde2cd8bcd04ef3aeb61271909d",
+    "src/renderer/pages/Sources/Sources.page.tsx": "847de7b4bccaaed00a6ccb735a15051676646073382db8a4e2862cde52afbab2",
+    "src/renderer/pages/Albums/VirtualAlbums.component.tsx": "97da552065b9bd0af3c8927425c99319cf8eba08291de38c6eaa95854bfa97d0",
+    "src/renderer/pages/Albums/Albums.page.tsx": "d619c7885b38edc1eb40973c24fe62eceb123ba91d83caab15c916328b04e100",
+    "src/renderer/NewsRecovery.styles.css": "4aa850e4684653eab4623aa2f0f622c8f01bc24c046003be5ef174b2e6a59464",
+    "src/renderer/components/LibraryChooser.styles.css": "f6179de164b95ac12688d0315e1fcbe6bb88d99e05c8f456686e685ba8070b4d",
+    "src/renderer/components/Drawer/Drawer.styles.css": "f6a585dbc6dd4070b31efd16762d9a79c77ffa46388f79ae8bc8f4a99264d292",
+    "src/renderer/components/FilterSelect/FilterSelect.styles.css": "0b5fdd8572893b66491b254570073cffa6159c43c9994f5735620d9c8b20ecf5",
+    "src/renderer/components/ConfigurationTabs/ConfigurationTabs.styles.css": "37c975396e44e614cbdc4a93c754811a3354de480368110b669de0f22e4b7aac",
+    "src/renderer/components/ProviderKeys/TwitterSetupHelp.styles.css": "903f3e8e1a8b28bed66ea43215ea748e882d86ca84af10d2aff90ceee5343372",
+    "src/renderer/components/ProviderKeys/ProviderKeys.styles.css": "a5c4591adee99b2d12a3cbcbd217a237a5c63d1a400c561f6d5f7b34a70a7eef",
+    "src/renderer/components/TrackTable/TrackTable.styles.css": "bff832f10f28bbb8518a60ea5b2a87ed7706609efb2d68473f6f4bef36d4531b",
+    "src/renderer/components/InfoHelp/InfoHelp.styles.css": "11ead1741c69a410363a03a2f2b0d35c5af343194af07d279f4a4cb4e6e457dd",
+    "src/renderer/components/Player/DJPopover.styles.css": "1abac821de5de33243d834f582b9491a1ee50d9e39e25ac546e4ddef5e54ab35",
+    "src/renderer/components/Player/Player.styles.css": "c14c24b2b563243706fd7deecf0e7e1307965a3830d6208d313b8d0ac25d8114",
+    "src/renderer/pages/Stations/Stations.styles.css": "b56efd825637a40c24b09e936cc2897c080c073eb58b1dfddf9e88b29731921b",
+    "src/renderer/pages/Stations/components/NewsBucket.styles.css": "975d6f4e3c669e413a61426385a0dc913e8d9bf5b9fde94cb9e865496bc93f6b",
+    "src/renderer/pages/Stations/components/PreparedTakes.styles.css": "25cf96866d2181cd64542b83c86531168583a2c8d9316e5d4dc4e295543585b4",
+    "src/renderer/pages/Songs/VirtualSongs.styles.css": "519f4e3dd502c1d1fb90edf70f7cede0753be941954b5bc405e889cf19558792",
+    "src/renderer/pages/Settings/Settings.styles.css": "3dee7bb24d07bfdd2bde886d5939346242a601cabb49e6133042e9bb2c29abd8",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.styles.css": "f0c2acdbd464220ecc5a396e99d3d2f670da8115fe6a5fbb7efa11ca82db250b",
+    "src/renderer/pages/Settings/components/NewsTransitions.styles.css": "c754457c4e14e987ef9b10e4d08b05bea0fbdf60cdcfee552efae28f550519e2",
+    "src/renderer/pages/DJs/DJs.styles.css": "bec8215fa7ca6df2d24ba6fd468b56212680346ae4a1919c34ed74411b8d2df6",
+    "src/renderer/pages/DJs/components/VoicePreview.styles.css": "ac8dce5a91c8037daf6f5d3f5ba0edbc951593fbef441ce1189e61adad1d3180",
+    "src/renderer/pages/DJs/components/DJEditor.styles.css": "ae4d6645080ff472534359c69e085afe541ac958aa0baaf586deeaf647a63307",
+    "src/renderer/pages/Sources/Sources.styles.css": "e83a0ebcf841578e24c3f0accc40e5f8f977f6d27fcdf23198faf2400f2793c7",
+    "src/renderer/pages/Albums/Albums.styles.css": "303df2716fabb9f24cc9dfa5bd8cf2e41c34d6b5e2ab0ac0d4d16d698bfc677f",
+    "out/renderer/assets/index-BdXlfSMN.js": "939c1878474b294a741fb0a31fd239eb0f3eaa049dce3583e65651c5f65aae0a",
+    "out/renderer/assets/index-BTVPy0IM.css": "0c72b1d971d5471696ec9efa219676eb7c72bf695639e622c38a448a87bac51b",
+    "/private/tmp/layout-states-current/build.mjs": "1d2d44b845ec3e49f8f82a30b737b8ad0c8928df1a317bbd1f036ca36414407e",
+    "/private/tmp/layout-states-current/bootstrap.mjs": "99e4c285afdea77559d3b1cee9b7ec66c8809946ea8ed9f42684e35259df6496",
+    "/private/tmp/layout-states-current/server.mjs": "882a3cb1b9a019dae20bb99fa81b5bb2d6fb62073290b2d415718b80b7a5ca74",
+    "/private/tmp/layout-states-current/read-states.cjs": "37d3e0fe4bb160e5effbba40b13cffdca26137189c4746f553071234cfa3bad7",
+    "/private/tmp/layout-states-current/supplement.cjs": "1f264a33633e760790bec31bfe6a6dbb67a9dfa5b62c48aaa34aa4c679099b1d",
+    "/private/tmp/layout-states-current/details-forms.cjs": "b40f20149dc1a49fee54bd85047e7a5b5cb380ba949d6ff70611c504c87d691d",
+    "/private/tmp/layout-states-current/paging.cjs": "98d7cf4abb7b7bff86d22f6e68a20faceefa6afbeb4a64d5dca8ddfc15b37a0c",
+    "/private/tmp/layout-states-current/radio-dialogs.cjs": "7e60c57a3cbe428c41e7fae477d847b17e9a3373c84d3f24e9b6c9a323be71c5",
+    "/private/tmp/layout-states-current/chooser-selected.cjs": "6c625f1b58dd045d0d4a91b0306c85e34ebe1cad458e7ecf43a52109cd5c189f",
+    "/private/tmp/layout-states-current/read-states-prefix.json": "71f21202ef71824a8f3317b16650bf9eef9354e13c1e93b7515da43bd29b3909",
+    "/private/tmp/layout-states-current/details-prefix.json": "dde8afe542a34988ce94c214d8813b613dbd763c0e0876fca9f6d17ff84d6c5c",
+    "/private/tmp/layout-states-current/fixture-nav-failure.json": "181b467aa559cf0cb7075fe54314f2d599e1a6f6e886e86c855f4ea43bff7e8d",
+    "/private/tmp/layout-states-current/fixture-tab-failure.json": "3492e9172c41cc892b4ecd747e10f5c305b5200965ec9a54694222433e0ee054",
+    "/private/tmp/layout-states-current/fixture-label-failure.json": "56f2f53821a9706bd428a685e0c4d4440e5908b264a3f5b057ddf19114823cdf",
+    "/private/tmp/layout-states-current/connection-before.json": "fbb2182e2f1b5f4d8fd13cd58912c3168187a9f41ea42dd137b56a923ce257da",
+    "/private/tmp/layout-states-current/style-freshness.json": "10e4c9e3b2d2c0c56f0754941ca75dd49c8cebf2fa88fb5feeb7781591462957",
+    "/private/tmp/layout-states-current/read-states.json": "937b7a9ac56b54b2658ecbcea8fc1a6066476788e6cc6ca68a3a8ec07384e5e8",
+    "/private/tmp/layout-states-current/supplement.json": "d6bfbebe635761dd584c11777b582bd2d5471a3f6064abc9879023682c57c738",
+    "/private/tmp/layout-states-current/details-forms.json": "c15524d386b0d4dfe2b69ebba1c9f9a1be548e794ceed58a34e32016880b2ef8",
+    "/private/tmp/layout-states-current/paging.json": "36378a0f063d6c063981131926585d344e8f235dd8af60a733eed2177ae85aae",
+    "/private/tmp/layout-states-current/radio-dialogs.json": "a4882566f0cf338e89589ab1a968cc0143ec290d65c9c75bec4bcac64a5fda02",
+    "/private/tmp/layout-states-current/chooser-selected.json": "011c5145152636bcc8406996bcc91d38b2f46be7f40786d400b2623bc984f36f"
+  }
+}

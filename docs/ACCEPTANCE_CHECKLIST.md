@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 17 Review, 1 Dated, 0 Recorded, 133 Controlled, 23 Live, 11 External, 2 Deferred. 29 active checks remain. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 16 Review, 1 Dated, 0 Recorded, 134 Controlled, 23 Live, 11 External, 2 Deferred. 28 active checks remain. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -42,7 +42,7 @@ Source: REQUIREMENTS: Product scope, Visual design, Project folder and stack.
 | V10 | Native window chrome, traffic lights and titlebar behavior work in desktop context. | N+O | Review |
 | V11 | Actual fonts, translucency and text remain legible at standard and Retina display scales. | N+O | External |
 | V12 | Screenshots show implemented desktop context rather than implying a generated concept is the product. | N | Review |
-| V13 | Every page remains usable from1280×720 at normal zoom and ordinary larger desktop sizes, including long content and errors. | N | Review |
+| V13 | Every page remains usable from1280×720 at normal zoom and ordinary larger desktop sizes, including long content and errors. | N | Controlled |
 | V14 | At 100–200% app zoom, navigation scrolls and volume, player and setup Save remain reachable. | N | Deferred |
 | V15 | Narrow queue/details replace the main area; covered controls leave keyboard order and closing restores focus. | N | Deferred |
 | V16 | Common actions are discoverable and optional radio setup does not obstruct ordinary listening. | N+U | Review |
@@ -483,3 +483,6 @@ Q12 evidence, 17 October 2026: the [provenance guide](EVIDENCE_PROVENANCE.md) an
 
 
 V10/Q06 partial evidence, 17 October 2026: [native shortcuts and chrome](verification/2026-10-17-native-shortcut-chrome.json) records actual OS full-screen entry/exit and fixes library search consuming Control-Command-F. Only plain Command-F now focuses current music search; eight native modifier/page cases pass. The PRD and M5 action name the contract. Build/TypeScript/full ESLint pass. Titlebar dragging and desktop-context capture remain unverified; the native Screenshot tool timed out while the bounded app controller completed normally. V10/V12/Q06 stay Review. No deferred viewport/zoom or unit check. Inventory remains 187 rows, 185 active, 2 Deferred; 17 Review, 1 Dated, 0 Recorded, 133 Controlled, 23 Live, 11 External. 29 active checks remain.
+
+
+V13 evidence, 17 October 2026: [current layout/read-state record](verification/2026-10-17-layout-read-states.json) closes the desktop page-layout review. 118 new controlled native states cover cold loading/long errors/empty reads, connection, collection details, music/radio forms, shared settings, confirmations and larger paging. A reproduced 219-character account identity caused horizontal chooser overflow; one paragraph wrapping rule fixes it, with enabled Save and choices reachable at both sizes. The prior 44 healthy long-metadata states are retained after explicit source/global-CSS freshness review. No new measured overflow or covered control remains. Build/TypeScript, JSON, hashes, links, inventory and whitespace pass; unchanged TS lint evidence is retained. V06/V10/V11/V12, broader accessibility and observed listeners remain separate. Inventory: 187 rows, 185 active, 2 Deferred; 16 Review, 1 Dated, 0 Recorded, 134 Controlled, 23 Live, 11 External. 28 active checks remain.
