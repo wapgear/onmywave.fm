@@ -9,7 +9,7 @@ The denominator is the full set of current requirements in `REQUIREMENTS.md`, in
 For the requested 90% target, report two separate results:
 
 - Engineering acceptance coverage: verified observable acceptance checks divided by all current checks in this audit. Source inspection alone establishes implementation, not a passed interaction check. A missing or contradicted result is not a pass.
-- Usability: completion without help, error recovery, perceived clarity, and audible quality require observed listener sessions. Do not infer a usability percentage from internal code review or fixture checks.
+- Usability: completion without help, error recovery, perceived clarity, and audible quality require observed listener sessions. Do not infer a usability percentage from internal code review or fixture checks. The [listener session protocol](LISTENER_ACCEPTANCE.md) defines ten uncoached tasks, a separate pilot, a planned five-person validation cohort and a 45-of-50 observed-task milestone with mandatory critical checks. That cohort score is separate from engineering coverage and does not replace the full requirement denominator. No session has been run.
 
 Every critical invariant must pass regardless of percentage: no lost edits, no unrequested paid work, no credential exposure, no silent overwrite of a selected recording, no automatic retry of uncertain paid work, no duplicate advancement/replayed speech, and working keyboard access to essential controls. Completion requires all current requirements to be implemented and verified; 90% is a progress milestone, not permission to leave a critical flaw.
 

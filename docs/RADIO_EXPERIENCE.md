@@ -149,3 +149,8 @@ Automatic song and DJ-break continuation retains existing playback intent. After
 Deferred smaller-window behavior retained for later verification: at narrow effective widths, the player uses two rows to keep volume, seeking, transport, DJ and queue controls usable. In short windows, the sidebar scrolls without collapsing navigation under Settings. A compact queue or song-details drawer temporarily replaces the main content area above the player. Covered page controls and notices leave keyboard navigation until the drawer closes; closing restores them and returns focus to its opener. The sidebar and player remain available. Enlarging the app does not authorize preparation or change the music session.
 
 Album search finds titles and album artists within the chosen music libraries. An album matching both appears once; later pages preserve the same combined order. This is part of the ordinary music-browsing flow in M5.
+
+
+## Observed listener acceptance
+
+The [listener session protocol](LISTENER_ACCEPTANCE.md) checks music-first discovery, optional setup, the two opt-ins and costs, named profile activity, independent stops, saved-news listening and sign-out without coaching. Use a separate pilot before the planned five-listener validation cohort. Ten first-attempt tasks per listener give 50 observations; at least 45 must succeed unaided, and every critical invariant and cost/opt-in comprehension check must pass. A passing cohort score describes those observed sessions. It does not substitute for live source/provider, VoiceOver, device or full requirement acceptance. No listener result is claimed yet.

@@ -1,0 +1,120 @@
+{
+  "date": "2026-10-17",
+  "classification": "documentation and acceptance preparation; no observed listener or new runtime proof",
+  "appBaseline": "93fcb02f700ffc103bdc0422b80378e455e9ba84",
+  "inventory": {
+    "total": 187,
+    "active": 185,
+    "deferred": 2,
+    "open": 28,
+    "listenerRequired": [
+      "A02",
+      "A11",
+      "A13",
+      "A14",
+      "D03",
+      "D05",
+      "D10",
+      "D19",
+      "Q11",
+      "R02",
+      "S12",
+      "T01",
+      "V06",
+      "V16"
+    ],
+    "otherEvidenceRequired": [
+      "A05",
+      "C06",
+      "M16",
+      "M17",
+      "P05",
+      "Q06",
+      "Q08",
+      "Q09",
+      "Q10",
+      "Q13",
+      "S03",
+      "V10",
+      "V11",
+      "V12"
+    ]
+  },
+  "taskMapping": {
+    "1": [
+      "V06",
+      "V16",
+      "Q11"
+    ],
+    "2": [
+      "V06",
+      "V16",
+      "T01",
+      "Q11"
+    ],
+    "3": [
+      "A02",
+      "D03",
+      "R02",
+      "Q11"
+    ],
+    "4": [
+      "R02",
+      "D05",
+      "Q11"
+    ],
+    "5": [
+      "A13",
+      "R02",
+      "Q11"
+    ],
+    "6": [
+      "A13",
+      "Q11"
+    ],
+    "7": [
+      "A11",
+      "R02",
+      "S12"
+    ],
+    "8": [
+      "T01",
+      "A02",
+      "V16"
+    ],
+    "9": [
+      "S12",
+      "D05",
+      "D10",
+      "D19"
+    ],
+    "10": [
+      "A14",
+      "Q11"
+    ]
+  },
+  "plannedMetric": {
+    "pilot": "separate, excluded",
+    "validationListeners": 5,
+    "tasksEach": 10,
+    "denominator": 50,
+    "minimumUnassisted": 45,
+    "criticalFailuresAllowed": 0,
+    "sessionsActuallyRun": 0
+  },
+  "checks": {
+    "allOpenUChecksMapped": "pass",
+    "allOtherOpenChecksListed": "pass",
+    "all187RowDispositionsUnchanged": "pass",
+    "newLocalLinks": "pass",
+    "runtimeSourceDependenciesResourcesUnchanged": "pass",
+    "buildTypeLint": "not repeated for documentation-only changes",
+    "unitReleaseDeferredChecks": "not run"
+  },
+  "sourceHashes": {
+    "docs/LISTENER_ACCEPTANCE.md": "c3e853b3eeee0b73c9adc54c9e28e5e148f5194fdb7f25283a759acd190d0890",
+    "docs/ACCEPTANCE_CHECKLIST.md": "9c88b0eed6bc1c247f164d3ef2c22fbdbbc3d48b772387fc5c56e2fe2a901955",
+    "docs/UX_ACCEPTANCE.md": "9034c717014d91a0b89bcb2e0cf07bf497d850636a4438a998c0d47076fc7b84",
+    "docs/RADIO_EXPERIENCE.md": "6f94712c45f227b3151d67410d186fda4e6601fc14d3b558eaa0c6ef1941b53c"
+  }
+}
