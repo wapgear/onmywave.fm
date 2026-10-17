@@ -33,7 +33,7 @@
     "unmounted": 2,
     "unwiredReachable": 0,
     "artifact": "2026-10-17-read-retry-focus-owners.csv",
-    "sha256": "aa222dad5e56230782c9495679b159e5a981fa113e042f539a662bd5db3d7508",
+    "sha256": "97cda60447a01928f46ef9249bd06138106521b69e93c6564d0b6fcafeecab0a",
     "method": "TypeScript AST records all ErrorNotice definitions with retrying, attributes and source hashes. This is wiring inspection, not native execution of all28.",
     "nativeFamilies": "Playlist list/detail/compound, AddPlaylist, libraries, all3 providers, General playback, startup, DJ popover and in-editor saved-preview read. Other targets/paging permutations receive source review and scoped prior evidence."
   },
@@ -2231,7 +2231,8 @@
       "listener",
       "live providers",
       "deferred viewport/zoom"
-    ]
+    ],
+    "artifactWhitespace": "Initial staged check exposed CRLF CSV endings; commit command continued because the shell sequence did not gate it. Follow-up commit normalizes only CSV line endings, updates its hash and preserves parsed rows; full branch whitespace is checked before push."
   },
   "sourceHashes": {
     "src/renderer/App.tsx": "0ee1e6d44f3549e5c4bafd6244c3bf4e3c619c30674f9d2e186f7b97f4b3f888",
