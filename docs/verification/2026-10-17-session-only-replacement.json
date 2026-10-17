@@ -1,0 +1,120 @@
+{
+  "date": "2026-10-17",
+  "scope": [
+    "C10"
+  ],
+  "result": "passed",
+  "sourceCommit": "417aec1054a11f5d1d9680580e6475ce4f1d6066",
+  "productionChanges": false,
+  "runtime": {
+    "macOS": "27.2",
+    "architecture": "arm64",
+    "Electron": "43.7.0",
+    "width": 1280,
+    "height": 720,
+    "zoom": 1
+  },
+  "native": {
+    "cases": [
+      {
+        "mode": "protected-storage-loss",
+        "result": "passed",
+        "originalEncryptedByActualSafeStorage": true,
+        "originalMusicDecoded": true,
+        "pendingClearRetainsCommittedAccountAndFile": true,
+        "failedClearKeepsOriginalBytes": true,
+        "failedClearRestartRestoresOriginal": true,
+        "explicitRetryAcceptsDistinctSessionOnlyAccount": true,
+        "successfulReplacementRemovesOldFile": true,
+        "sessionOnlyWarningVisible": true,
+        "replacementMusicDecoded": true,
+        "restoredEncryptionRestartRequiresSignIn": true,
+        "noAutomaticAuthenticationOnRestart": true,
+        "authenticationRequests": 2,
+        "providerRequests": 0
+      },
+      {
+        "mode": "identity-storage-loss",
+        "result": "passed",
+        "originalEncryptedByActualSafeStorage": true,
+        "originalMusicDecoded": true,
+        "pendingClearRetainsCommittedAccountAndFile": true,
+        "failedClearKeepsOriginalBytes": true,
+        "failedClearRestartRestoresOriginal": true,
+        "explicitRetryAcceptsDistinctSessionOnlyAccount": true,
+        "successfulReplacementRemovesOldFile": true,
+        "sessionOnlyWarningVisible": true,
+        "replacementMusicDecoded": true,
+        "restoredEncryptionRestartRequiresSignIn": true,
+        "noAutomaticAuthenticationOnRestart": true,
+        "authenticationRequests": 2,
+        "providerRequests": 0
+      }
+    ],
+    "rendererErrors": [],
+    "result": "passed"
+  },
+  "method": {
+    "processes": 6,
+    "journeys": 2,
+    "main": "Current main/service/storage code bundled with only isolated provider adapter, dummy seed, hidden-window and explicit persistence fault hooks. Current production preload and renderer are reused.",
+    "credentials": "Each disposable profile starts with a dummy original-account record encrypted by actual Electron safeStorage. Reports contain no password, token, ciphertext or raw account identifier.",
+    "fallbacks": [
+      "Protected-storage availability is modeled unavailable at writeConnection after the original account has loaded, while native crypto remains available for seed/restart verification.",
+      "A damaged owned device-identity file exercises actual nonpersistent-identity fallback; a successful account replacement must clear the old protected record."
+    ],
+    "failure": "A held clear observes the original account and byte-identical canonical file while the form is pending. An injected deletion failure rejects the replacement. A fresh process restores the original account before a new explicit attempt succeeds.",
+    "success": "The new distinct account is session-only, old encrypted connection.enc is absent, the warning is visible, and actual replacement music decodes. On a fresh process with protected storage available, no account or authentication request returns.",
+    "isolation": "Owned localhost catalog only, dummy encrypted credentials, no shared provider key access or non-local network; server terminated after completion."
+  },
+  "checks": {
+    "productionBuildTypeScriptAndFullLint": "PR47 passed. Every recorded app/source/artifact hash still matches that snapshot; no application/configuration change, so not repeated.",
+    "rendererErrors": 0,
+    "newUnitTests": false,
+    "packagingSigningNotarizationPublishing": false,
+    "deferredSizeOrZoom": false
+  },
+  "limits": [
+    "Availability and deletion failure are controlled fault conditions, not an actual macOS protected-store outage or locked-Keychain prompt. Encryption/decryption, protected-file retention/removal, native UI, decoded music and fresh-process restart use the actual OS.",
+    "One Mac/runtime and substituted Jellyfin account responses; no claim about arbitrary OS/server/permission combinations, hardware controls or observed listener clarity.",
+    "This proves session-only account replacement. Playlist-access coverage and live read-only permission configurations retain their separate requirements."
+  ],
+  "inventory": {
+    "total": 187,
+    "active": 185,
+    "review": 27,
+    "dated": 1,
+    "recorded": 0,
+    "controlled": 128,
+    "live": 18,
+    "external": 11,
+    "deferred": 2,
+    "activeRemaining": 39
+  },
+  "sourceSha256": {
+    "src/main/index.ts": "a5d1528149631987f30b25a6e296b60bc97b950a712280bf6f584cce13b1d320",
+    "src/main/jellyfin.ts": "4daf9866e8034ca89ffd209035b1b8795f5127082bcea0fa825182b66d103483",
+    "src/main/storage.ts": "7df3fcda71eaeb8faaa42f24c70336949fb00e494a29ecfb293c93ac61825418",
+    "src/preload/index.ts": "041f6e536c7d0c09f0dffc870c150b10affa44da0e7862de21dce8397ebacb10",
+    "src/renderer/App.tsx": "9341e01ab161fec685239fb5e2841342e85df33016326744db1ade9fe20860e1",
+    "src/renderer/pages/Connection/Connection.page.tsx": "1256fee7c558c4840e6b400d6990d5b5f7a7c5afcc9f1bd7fa6171e2a5007d5e",
+    "src/renderer/pages/Settings/Settings.page.tsx": "ce0c41cd58f82a801b651940cb641945c12ed4c83b765377f6be8d809d1e5d9f",
+    "src/renderer/components/LibraryChooser.tsx": "18c22d71b890eae73fe8ef20241300dc55160e8372e6ac1ab9f5d998d301cf36",
+    "src/renderer/components/LibrarySelection.tsx": "97db6216b4fada46621ce20658e1bc1d47b76fe0819a0db75e446ea82965e342",
+    "out/main/index.js": "526face554d7c70d9393eef2180cebba54efd984c85fe00bf744f86a1ddece01",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/assets/index-DqhDR8yx.css": "b48358ab7ef51cf5b6d49486f8fead4a4e165741cd745a9491649fe11cf31587",
+    "out/renderer/assets/index-CslZSoen.js": "610a778d9c91748e881cde52e372d8f2448fc3c8036e78a10ad17f8f400f1516"
+  },
+  "fixtureSha256": {
+    "/private/tmp/session-only-current/build.mjs": "17c5098ad03a1bcb382678e00a57f0bf71653fcc030a051189ebbb85871442db",
+    "/private/tmp/session-only-current/bootstrap.mjs": "8e393a7a6fb477e6fc3e5348bb2da18978a85ef661ff29146caf46947f74db4c",
+    "/private/tmp/session-only-current/server.mjs": "5f39c1035547a6b572ee5a040074b143fbedc43999a69be99772469c722c40dd",
+    "/private/tmp/session-only-current/native.cjs": "d1776a551d2620ca8b25557c25f035ec1c76511ce7cdba4d67f1d30af1a91a2c",
+    "/private/tmp/session-only-current/native.log": "b3d0522e3cbfe7e179aa2d8424dd8396456aab9d6d12afbb0468fae6a2ba40ee",
+    "/private/tmp/session-only-current/native.json": "88fbc18878ed9f1386a55ab015d2ad572723f23b62f3d7ae950ebca373de1b9c",
+    "/private/tmp/session-only-current/out/main/index.js": "a47359717d002d291c00ace2724bf7d5d2e71be7ce0aa306d85e1a353d6ba1ed",
+    "/private/tmp/session-only-current/protected-storage-loss.png": "240ef69314ca5422891f27695d0228a6778329ea5b6b53c54f3d5fadd641beac",
+    "/private/tmp/session-only-current/identity-storage-loss.png": "2c4b62c59825c5028cd3074b594f1acced8fa8606e72904a1e4b7f467a1bd6e0"
+  }
+}
