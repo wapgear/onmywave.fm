@@ -11,10 +11,11 @@ export function DJPlaybackSettings() {
   const recovery = useNewsRecovery();
   const recoveryReady = recovery.status.phase === 'ready';
   const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()), enabled: recoveryReady });
+  const heading = useRef<HTMLHeadingElement>(null);
   const intervalInput = useRef<HTMLInputElement>(null);
   const retryFocus = useRetryFocus({
     ownerKey: 'settings:general:dj-playback',
-    target: () => intervalInput.current,
+    target: () => intervalInput.current && !intervalInput.current.matches(':disabled') ? intervalInput.current : heading.current,
     canFocusSuccess: () => recoveryReady && !state.isError && !state.isFetching && !!state.data,
   });
   const edit = useGeneralSettingsEdits().playback;
@@ -22,7 +23,7 @@ export function DJPlaybackSettings() {
   const settings = draft ?? state.data?.djPlayback ?? defaultDJPlaybackSettings();
   function change(patch: Partial<Settings>) { edit.change({ everySongs: settings.everySongs, keepOnSeek: settings.keepOnSeek, voiceVolume: settings.voiceVolume, ...patch }); }
   return <section className="room-dj-schedule" aria-labelledby="dj-playback-title">
-    <h2 id="dj-playback-title">DJ playback</h2>
+    <h2 ref={heading} tabIndex={-1} id="dj-playback-title">DJ playback</h2>
     <p className="settings-description">Choose how often the DJ checks saved news and how its voice plays.</p>
     {!recoveryReady && <p className="notice">DJ playback settings are unavailable until news data recovery completes. Existing music playback remains available.</p>}
     <ErrorNotice error={state.error} retryRef={retryFocus.retryRef} retrying={state.isFetching} retry={() => retryFocus.retry(() => state.refetch())} />

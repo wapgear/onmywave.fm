@@ -56,12 +56,12 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   const tab = ['news', 'host', 'prepare', 'settings'].includes(configDraft.tab ?? '') ? 'settings' : configDraft.tab === 'saved' ? 'saved' : 'bucket';
   const setTab = (tab: string) => setConfigDraft(current => ({ ...current, tab }));
   const heading = useRef<HTMLHeadingElement>(null);
-  const stateRetryFocus = useRetryFocus({ ownerKey: 'room:localState', target: () => heading.current, canFocusSuccess: () => newsRecoveryReady });
-  const bucketRetryFocus = useRetryFocus({ ownerKey: `room:news:${tab}`, target: () => document.getElementById('room-panel-bucket'), canFocusSuccess: () => newsRecoveryReady && tab === 'bucket' });
-  const settingsRetryFocus = useRetryFocus({ ownerKey: `room:settings-news:${tab}`, target: () => document.getElementById('room-panel-settings'), canFocusSuccess: () => newsRecoveryReady && tab === 'settings' });
-  const savedRetryFocus = useRetryFocus({ ownerKey: `room:saved-news:${tab}`, target: () => document.getElementById('room-panel-saved'), canFocusSuccess: () => newsRecoveryReady && tab === 'saved' });
-  const aiRetryFocus = useRetryFocus({ ownerKey: `room:ai-status:${tab}`, target: () => manualTools.current?.querySelector('summary') ?? null, canFocusSuccess: () => newsRecoveryReady && tab === 'settings' });
-  const elevenRetryFocus = useRetryFocus({ ownerKey: `room:voice-status:${tab}`, target: () => manualTools.current?.querySelector('summary') ?? null, canFocusSuccess: () => newsRecoveryReady && tab === 'settings' });
+  const stateRetryFocus = useRetryFocus({ ownerKey: 'room:localState', target: () => heading.current, canFocusSuccess: () => newsRecoveryReady && state.isSuccess && !state.isFetching });
+  const bucketRetryFocus = useRetryFocus({ ownerKey: `room:news:${tab}`, target: () => document.getElementById('room-panel-bucket'), canFocusSuccess: () => newsRecoveryReady && tab === 'bucket' && library.isSuccess && !library.isFetching });
+  const settingsRetryFocus = useRetryFocus({ ownerKey: `room:settings-news:${tab}`, target: () => document.getElementById('room-panel-settings'), canFocusSuccess: () => newsRecoveryReady && tab === 'settings' && library.isSuccess && !library.isFetching });
+  const savedRetryFocus = useRetryFocus({ ownerKey: `room:saved-news:${tab}`, target: () => document.getElementById('room-panel-saved'), canFocusSuccess: () => newsRecoveryReady && tab === 'saved' && library.isSuccess && !library.isFetching });
+  const aiRetryFocus = useRetryFocus({ ownerKey: `room:ai-status:${tab}`, target: () => manualTools.current?.querySelector('summary') ?? null, canFocusSuccess: () => newsRecoveryReady && tab === 'settings' && aiStatus.isSuccess && !aiStatus.isFetching });
+  const elevenRetryFocus = useRetryFocus({ ownerKey: `room:voice-status:${tab}`, target: () => manualTools.current?.querySelector('summary') ?? null, canFocusSuccess: () => newsRecoveryReady && tab === 'settings' && elevenStatus.isSuccess && !elevenStatus.isFetching });
   const aiStatus = useQuery({ queryKey: ['aiStatus'], meta: { aiOperation: true }, queryFn: async () => unwrap(await window.wave.getAiStatus()), enabled: newsRecoveryReady });
   const elevenStatus = useQuery({ queryKey: ['elevenLabsStatus'], meta: { aiOperation: true }, queryFn: async () => unwrap(await window.wave.getElevenLabsStatus()), enabled: newsRecoveryReady });
   const manual = configDraft.manualPreparation;

@@ -21,7 +21,7 @@ export function DJPopover({ openRoom, openSettings }: { openRoom: () => void; op
   const popup = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const profileInput = useRef<HTMLSelectElement>(null);
-  const retryFocus = useRetryFocus({ ownerKey: `dj-controls:${open}:${recoveryReady}`, target: () => profileInput.current, canFocusSuccess: () => open && recoveryReady });
+  const retryFocus = useRetryFocus({ ownerKey: `dj-controls:${open}:${recoveryReady}`, target: () => profileInput.current, canFocusSuccess: () => open && recoveryReady && automation.state.isSuccess && !automation.state.isFetching });
   const preparationState = useQuery({
     queryKey: ['localState'],
     queryFn: async () => unwrap(await window.wave.getLocalState()),
@@ -74,7 +74,7 @@ export function DJPopover({ openRoom, openSettings }: { openRoom: () => void; op
     <div id={id} ref={popup} className="dj-popover" popover="auto" role="dialog" aria-label="DJ controls" onToggle={event => {
       const opening = event.newState === 'open';
       setOpen(opening);
-      if (opening) { position(); popup.current?.querySelector<HTMLButtonElement>('button')?.focus({ preventScroll: true }); }
+      if (opening) { position(); popup.current?.scrollTo({ top: 0, left: 0, behavior: 'instant' }); popup.current?.querySelector<HTMLButtonElement>('button')?.focus({ preventScroll: true }); }
       else if (popup.current?.contains(document.activeElement) || document.activeElement === document.body) trigger.current?.focus({ preventScroll: true });
     }}>
       <header><div><h2>DJ breaks</h2><span className={`dj-status ${active ? 'is-active' : ''}`}>{status === 'Scheduled' ? 'Scheduled near track end' : status === 'Loading' ? 'Loading news audio…' : status}</span></div><button className="icon-button" popoverTarget={id} popoverTargetAction="hide" aria-label="Close DJ controls"><X size={18} /></button></header>

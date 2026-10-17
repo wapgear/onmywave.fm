@@ -27,7 +27,7 @@ export function AlbumsPage({ add, details, view, setView }: { view: AlbumsView; 
     staleTime: 60_000,
     gcTime: 10 * 60_000,
   });
-  const retryFocus = useRetryFocus({ ownerKey: `albums:${album?.id ?? 'browse'}:${search}`, target: () => resultsRef.current?.querySelector<HTMLElement>('[data-album-id]') ?? headingRef.current, canFocusSuccess: () => !albums.isFetchNextPageError });
+  const retryFocus = useRetryFocus({ ownerKey: `albums:${album?.id ?? 'browse'}:${search}`, target: () => resultsRef.current?.querySelector<HTMLElement>('[data-album-id]') ?? headingRef.current, canFocusSuccess: () => albums.isSuccess && !albums.isFetching });
   const items = [...new Map(albums.data?.pages.flatMap(page => page.items).map(item => [item.id, item])).values()];
   if (album) return <AlbumDetail key={album.id} album={album} selected={selected} select={selected => setView(old => old.album?.id === album.id ? { ...old, selected } : old)} back={() => { setReturnFocus(album.id); setView(old => ({ ...old, album: null, selected: new Map() })); }} add={add} details={details} />;
   return <><PageHeading headingRef={headingRef} title="Albums" subtitle="A closer listen"><div className="search-field"><Search size={17} /><input placeholder="Search albums" aria-label="Search albums" value={draft} onChange={event => setView(old => ({ ...old, draft: event.target.value }))} /></div></PageHeading>
@@ -40,8 +40,8 @@ function AlbumDetail({ album, selected, select, back, add, details }: { album: A
   const detail = useQuery({ queryKey: ['album', album.id], queryFn: async () => unwrap(await window.wave.album(album.id)) });
   const metadata = detail.data ?? album;
   const tracks = useQuery({ queryKey: ['albumTracks', album.id], queryFn: async () => unwrap(await window.wave.albumTracks(album.id)) });
-  const detailRetryFocus = useRetryFocus({ ownerKey: `album:${album.id}:metadata`, target: () => backRef.current, canFocusSuccess: () => !tracks.isError });
-  const tracksRetryFocus = useRetryFocus({ ownerKey: `album:${album.id}:tracks`, target: () => backRef.current, canFocusSuccess: () => !detail.isError });
+  const detailRetryFocus = useRetryFocus({ ownerKey: `album:${album.id}:metadata`, target: () => backRef.current, canFocusSuccess: () => detail.isSuccess && !detail.isFetching });
+  const tracksRetryFocus = useRetryFocus({ ownerKey: `album:${album.id}:tracks`, target: () => backRef.current, canFocusSuccess: () => tracks.isSuccess && !tracks.isFetching });
   const player = usePlayer();
   return <><button ref={backRef} className="back-button" onClick={back}><ArrowLeft size={17} />Albums</button><CollectionHeading artwork={metadata.imageUrl} eyebrow="Album" title={metadata.name} subtitle={<>{metadata.artist || 'Unknown artist'}{metadata.year ? ` · ${metadata.year}` : ''}</>}><button className="primary" disabled={!tracks.data?.length} onClick={() => player.play(tracks.data!)}><Play size={16} fill="currentColor" />Play album</button><button disabled={!tracks.data?.length} onClick={() => player.enqueue(tracks.data!)}><ListPlus size={17} />Queue</button><button disabled={!tracks.data?.length} onClick={() => add(tracks.data!)}><Plus size={17} />Add to playlist</button></CollectionHeading><ErrorNotice error={detail.error} retryRef={detailRetryFocus.retryRef} retrying={detail.isFetching} retry={() => detailRetryFocus.retry(() => detail.refetch())} /><ErrorNotice error={tracks.error} retryRef={tracksRetryFocus.retryRef} retrying={tracks.isFetching} retry={() => tracksRetryFocus.retry(() => tracks.refetch())} />
     {tracks.isPending ? <p className="loading" role="status">Loading album tracks…</p> : tracks.data?.length ? <TrackTable rows={songRows(tracks.data)} selected={selected} select={select} play={player.play} queue={player.enqueue} add={add} details={details} currentId={player.current?.id} /> : !tracks.error && <Empty title="No tracks available">This album has no accessible music tracks.</Empty>}

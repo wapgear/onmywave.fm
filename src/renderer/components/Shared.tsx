@@ -4,20 +4,27 @@ import { AlertCircle, Music2, X } from 'lucide-react';
 export const errorMessage = (error: unknown) => error instanceof Error ? error.message : 'Something went wrong. Please try again.';
 export function ErrorNotice({ error, retry, retryRef, retrying = false }: { error: unknown; retry?: () => void | Promise<unknown>; retryRef?: RefObject<HTMLButtonElement | null>; retrying?: boolean }) {
   const inFlight = useRef(false);
+  const [ownsRetryFocus, setOwnsRetryFocus] = useState(false);
   const [attemptPending, setAttemptPending] = useState(false);
   const [attemptError, setAttemptError] = useState<unknown>(null);
-  const visibleError = error ?? (attemptPending ? attemptError : null);
+  const [retainedError, setRetainedError] = useState<unknown>(null);
+  if (error && retainedError !== error) setRetainedError(error);
+  else if (!error && !retrying && !attemptPending && retainedError !== null) setRetainedError(null);
+  const visibleError = error
+    ?? (attemptPending ? attemptError : null)
+    ?? (retrying && ownsRetryFocus ? retainedError : null);
   if (!visibleError) return null;
   async function retryOnce() {
     if (!retry || retrying || attemptPending || inFlight.current) return;
     inFlight.current = true;
-    setAttemptError(error);
+    setAttemptError(visibleError);
     setAttemptPending(true);
     try { await retry(); } catch { /* The owner retains the request's error and recovery state. */ }
     finally { inFlight.current = false; setAttemptPending(false); setAttemptError(null); }
   }
   const busy = retrying || attemptPending;
-  return <div className="notice error"><AlertCircle size={18} aria-hidden="true" /><span role="alert">{errorMessage(visibleError)}</span>{retry && <><span className="sr-only" role="status">{busy ? 'Retrying…' : ''}</span><button type="button" ref={retryRef} aria-disabled={busy || undefined} aria-busy={busy || undefined} onClick={() => void retryOnce()}>{busy ? 'Retrying…' : 'Try again'}</button></>}</div>;
+  const busyLabel = attemptPending ? 'Retrying…' : 'Checking…';
+  return <div className="notice error"><AlertCircle size={18} aria-hidden="true" /><span role="alert">{errorMessage(visibleError)}</span>{retry && <><span className="sr-only" role="status">{busy ? busyLabel : ''}</span><button type="button" ref={retryRef} aria-disabled={busy || undefined} aria-busy={busy || undefined} onFocus={() => { setOwnsRetryFocus(true); setRetainedError(error ?? visibleError); }} onBlur={() => setOwnsRetryFocus(false)} onClick={() => void retryOnce()}>{busy ? busyLabel : 'Try again'}</button></>}</div>;
 }
 export function Empty({ title, children }: { title: string; children?: ReactNode }) {
   return <div className="empty"><Music2 size={30} strokeWidth={1.4} /><h2>{title}</h2>{children && <p>{children}</p>}</div>;

@@ -7,6 +7,7 @@ type RetryFocusOptions = {
   canFocusSuccess: () => boolean;
 };
 type Attempt = { ownerKey: string; button: HTMLButtonElement; cancelled: boolean };
+type PassiveFocus = { ownerKey: string; button: HTMLButtonElement; scope: HTMLElement | null; scopes: HTMLElement[]; cancelled: boolean };
 
 const focusScopeSelector = 'dialog[open], [popover]:popover-open, [role="dialog"][aria-modal="true"]';
 
@@ -35,6 +36,8 @@ export function useRetryFocus(options: RetryFocusOptions) {
   const ownerKey = useRef(options.ownerKey);
   const attempt = useRef<FocusAttempt | null>(null);
   const removeListeners = useRef<() => void>(() => {});
+  const passiveFocus = useRef<PassiveFocus | null>(null);
+  const removePassiveListeners = useRef<() => void>(() => {});
   const [completion, setCompletion] = useState<{ attempt: FocusAttempt; failed: boolean; target?: () => HTMLElement | null; onComplete?: () => void } | null>(null);
 
   const cancel = useCallback(() => {
@@ -42,7 +45,79 @@ export function useRetryFocus(options: RetryFocusOptions) {
     attempt.current = null;
     removeListeners.current();
     removeListeners.current = () => {};
+    if (passiveFocus.current) passiveFocus.current.cancelled = true;
+    passiveFocus.current = null;
+    removePassiveListeners.current();
+    removePassiveListeners.current = () => {};
   }, []);
+
+  const clearPassiveFocus = useCallback((current: PassiveFocus) => {
+    if (passiveFocus.current !== current) return;
+    passiveFocus.current = null;
+    removePassiveListeners.current();
+    removePassiveListeners.current = () => {};
+  }, []);
+
+  const armPassiveFocus = useCallback((button: HTMLButtonElement) => {
+    if (attempt.current || retryRef.current !== button || document.activeElement !== button
+      || document.visibilityState !== 'visible' || !document.hasFocus()) return;
+    removePassiveListeners.current();
+    const scopes = openFocusScopes();
+    const scope = button.closest<HTMLElement>(focusScopeSelector);
+    if (scopes.length && (!scope || scopes.some(openScope => !openScope.contains(button)))) return;
+    const current: PassiveFocus = { ownerKey: latest.current.ownerKey, button, scope, scopes, cancelled: false };
+    passiveFocus.current = current;
+    const cancelIfScopeChanged = () => {
+      if (!sameScopes(current.scopes, openFocusScopes())) clearPassiveFocus(current);
+    };
+    const cancelOnFocusTakeover = (focusEvent: FocusEvent) => {
+      if (focusEvent.target !== button && (focusEvent.target !== document.body || button.isConnected)) clearPassiveFocus(current);
+    };
+    const cancelOnTab = (keyEvent: KeyboardEvent) => { if (keyEvent.key === 'Tab') clearPassiveFocus(current); };
+    const cancel = () => clearPassiveFocus(current);
+    const scopeObserver = new MutationObserver(cancelIfScopeChanged);
+    scopeObserver.observe(document.documentElement, { subtree: true, attributes: true, attributeFilter: ['open', 'popover', 'role', 'aria-modal'] });
+    document.addEventListener('focusin', cancelOnFocusTakeover, true);
+    document.addEventListener('pointerdown', cancel, true);
+    document.addEventListener('keydown', cancelOnTab, true);
+    document.addEventListener('toggle', cancelIfScopeChanged, true);
+    document.addEventListener('close', cancelIfScopeChanged, true);
+    document.addEventListener('visibilitychange', cancel);
+    window.addEventListener('blur', cancel);
+    removePassiveListeners.current = () => {
+      scopeObserver.disconnect();
+      document.removeEventListener('focusin', cancelOnFocusTakeover, true);
+      document.removeEventListener('pointerdown', cancel, true);
+      document.removeEventListener('keydown', cancelOnTab, true);
+      document.removeEventListener('toggle', cancelIfScopeChanged, true);
+      document.removeEventListener('close', cancelIfScopeChanged, true);
+      document.removeEventListener('visibilitychange', cancel);
+      window.removeEventListener('blur', cancel);
+    };
+  }, [clearPassiveFocus]);
+
+  const ownsPassiveFocus = useCallback((current: PassiveFocus) => {
+    const active = document.activeElement;
+    return passiveFocus.current === current
+      && !current.cancelled
+      && current.ownerKey === latest.current.ownerKey
+      && (active === current.button || (active === document.body && !current.button.isConnected))
+      && document.visibilityState === 'visible'
+      && document.hasFocus()
+      && sameScopes(current.scopes, openFocusScopes())
+      && (!current.scope || current.scope.isConnected);
+  }, []);
+
+  // Capture focus synchronously: a cached refetch may finish and remove the
+  // focused Retry button before React commits an isFetching render.
+  useEffect(() => {
+    const onFocusIn = (event: FocusEvent) => {
+      const button = retryRef.current;
+      if (event.target === button && button) armPassiveFocus(button);
+    };
+    document.addEventListener('focusin', onFocusIn, true);
+    return () => document.removeEventListener('focusin', onFocusIn, true);
+  }, [armPassiveFocus]);
 
   useLayoutEffect(() => {
     latest.current = options;
@@ -50,7 +125,15 @@ export function useRetryFocus(options: RetryFocusOptions) {
       ownerKey.current = options.ownerKey;
       cancel();
     }
-  }, [cancel, options]);
+    const pendingPassive = passiveFocus.current;
+    if (pendingPassive && !pendingPassive.button.isConnected && ownsPassiveFocus(pendingPassive) && latest.current.canFocusSuccess()) {
+      const target = latest.current.target();
+      if (focusableTarget(target, pendingPassive.scope)) {
+        focusAndReveal(target);
+        clearPassiveFocus(pendingPassive);
+      }
+    }
+  }, [cancel, clearPassiveFocus, options, ownsPassiveFocus]);
 
   useEffect(() => cancel, [cancel]);
 
@@ -76,9 +159,19 @@ export function useRetryFocus(options: RetryFocusOptions) {
       }
     } finally {
       completion.onComplete?.();
-      if (attempt.current === completedAttempt) cancel();
+      if (attempt.current === completedAttempt) {
+        attempt.current = null;
+        removeListeners.current();
+        removeListeners.current = () => {};
+        const retryButton = retryRef.current;
+        const stillOwnsRetry = failed && !completedAttempt.cancelled
+          && completedAttempt.ownerKey === latest.current.ownerKey
+          && sameScopes(completedAttempt.scopes, openFocusScopes())
+          && (!completedAttempt.scope || completedAttempt.scope.isConnected);
+        if (stillOwnsRetry && retryButton) armPassiveFocus(retryButton);
+      }
     }
-  }, [cancel, completion]);
+  }, [armPassiveFocus, completion]);
 
   const retry = useCallback(async (operation: () => Promise<RetryResult>, target?: () => HTMLElement | null, onComplete?: () => void) => {
     const button = retryRef.current;
@@ -109,7 +202,7 @@ export function useRetryFocus(options: RetryFocusOptions) {
       if (!sameScopes(currentAttempt.scopes, openFocusScopes())) cancelAttempt();
     };
     const onFocusIn = (event: FocusEvent) => {
-      if (event.target !== button && event.target !== document.body) cancelAttempt();
+      if (event.target !== button && (event.target !== document.body || button.isConnected)) cancelAttempt();
     };
     const onKeyDown = (event: KeyboardEvent) => { if (event.key === 'Tab') cancelAttempt(); };
     const scopeObserver = new MutationObserver(cancelIfScopeChanged);

@@ -12,7 +12,7 @@ export function VirtualAlbums({ albums, total, hasNext, fetching, nextError, loa
 }) {
   const grid = useRef<HTMLDivElement>(null);
   const status = useRef<HTMLSpanElement>(null);
-  const retryFocus = useRetryFocus({ ownerKey: 'albums-next-page', target: () => status.current, canFocusSuccess: () => true });
+  const retryFocus = useRetryFocus({ ownerKey: 'albums-next-page', target: () => status.current, canFocusSuccess: () => !fetching && !nextError });
   const [paddingEnd, setPaddingEnd] = useState(140);
   const [layout, setLayout] = useState({ columns: 1, rowHeight: 246, offset: 0 });
   const [recoveryIndex, setRecoveryIndex] = useState<number | null>(null);
