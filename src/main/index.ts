@@ -117,11 +117,15 @@ function registerIpc() {
       cancelActivePreparedNews();
       news.cancelGeneration();
       try {
-        await updateLocalState(state => {
-          const roomProfiles = state.roomProfiles.map(profile => profile.workflowDraft.newsEnabled
-            ? { ...profile, workflowDraft: { ...profile.workflowDraft, newsWorkflowPaused: true, nextNewsCheckAt: undefined } } : profile);
-          return { roomProfiles, workflowDraft: roomProfiles.find(profile => profile.id === state.activeRoomProfileId)!.workflowDraft };
-        });
+        try {
+          await updateLocalState(state => {
+            const roomProfiles = state.roomProfiles.map(profile => profile.workflowDraft.newsEnabled
+              ? { ...profile, workflowDraft: { ...profile.workflowDraft, newsWorkflowPaused: true, nextNewsCheckAt: undefined } } : profile);
+            return { roomProfiles, workflowDraft: roomProfiles.find(profile => profile.id === state.activeRoomProfileId)!.workflowDraft };
+          });
+        } catch {
+          throw new ServiceError('server', 'Automatic preparation could not be paused. You are still signed in. Try signing out again.');
+        }
         try { await service.disconnect(); }
         catch {
           throw new ServiceError('server', 'Sign-out could not finish. You are still signed in. Try again.');

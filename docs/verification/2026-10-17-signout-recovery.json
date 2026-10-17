@@ -1,0 +1,138 @@
+{
+  "date": "2026-10-17",
+  "base": "7d4b9d1dda992f4aca64ab2661a44fc4d447f37c",
+  "scope": [
+    "A15",
+    "A17"
+  ],
+  "productionChanges": true,
+  "before": {
+    "nativeResult": "reproduced",
+    "pauseWriteFailure": "Account and canonical encrypted credential remain available, but the dialog displays only The operation could not be completed. Please try again.",
+    "serviceCasesPassed": 21
+  },
+  "fix": "Catch the preparation-pause persistence failure at the disconnect operation and return a safe specific ServiceError: Automatic preparation could not be paused. You are still signed in. Try signing out again. Keep account and credential removal ordering, cancellation and generation-gate cleanup unchanged.",
+  "native": {
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "cases": [
+      {
+        "kind": "native pause failure and explicit retry",
+        "result": "passed",
+        "accountAndEncryptedCredentialRetained": true,
+        "restartRestoresOriginalAccount": true,
+        "preparationPauseSurvivesDeleteFailure": false,
+        "visibleRecoverableError": true,
+        "explicitRetryDisconnects": true,
+        "noProviderRequests": true
+      },
+      {
+        "kind": "native delete failure and explicit retry",
+        "result": "passed",
+        "accountAndEncryptedCredentialRetained": true,
+        "restartRestoresOriginalAccount": true,
+        "preparationPauseSurvivesDeleteFailure": true,
+        "visibleRecoverableError": true,
+        "explicitRetryDisconnects": true,
+        "noProviderRequests": true
+      },
+      {
+        "kind": "native manual request canceled across quick reconnect",
+        "result": "passed",
+        "providerIgnoredAbort": true,
+        "noLateVoiceDispatch": true,
+        "noOldScriptOrTakePublished": true,
+        "allPreparationRemainsPaused": true,
+        "newExplicitRequestSucceeds": true
+      }
+    ],
+    "result": "passed",
+    "rendererErrors": 0,
+    "fatalFileAbsent": true
+  },
+  "actualMainServiceStorage": {
+    "result": "passed",
+    "caseCount": 21,
+    "cases": [
+      "PASS idle",
+      "PASS pause-failure",
+      "PASS delete-failure",
+      "PASS reconcile-complete",
+      "PASS stale-resume",
+      "PASS stale-setup",
+      "PASS auto-reserved {\"text\":0,\"voice\":0}",
+      "PASS auto-text-key {\"text\":0,\"voice\":0}",
+      "PASS auto-text-flight {\"text\":1,\"voice\":0}",
+      "PASS auto-voice-key {\"text\":1,\"voice\":0}",
+      "PASS auto-voice-flight {\"text\":1,\"voice\":1}",
+      "PASS auto-publication {\"text\":1,\"voice\":1}",
+      "PASS manual-text-key {\"text\":0,\"voice\":0}",
+      "PASS manual-text-flight {\"text\":1,\"voice\":0}",
+      "PASS audio-voice-key {\"text\":0,\"voice\":0}",
+      "PASS audio-voice-flight {\"text\":0,\"voice\":1}",
+      "PASS preview-voice-key {\"text\":0,\"voice\":0}",
+      "PASS preview-voice-flight {\"text\":0,\"voice\":1}",
+      "PASS neutral-voice-key {\"text\":0,\"voice\":0}",
+      "PASS neutral-voice-flight {\"text\":0,\"voice\":1}",
+      "PASS preview-publication {\"text\":0,\"voice\":1}"
+    ],
+    "boundary": "Held automatic reservation, text/voice key reads and flights, manual text/audio, neutral/saved-DJ preview and publication operations record provider counts at sign-out. Reconnect happens before releasing old callbacks; counts must not increase. Also covers stale setup/Resume, completed reconciliation and pause/delete failures."
+  },
+  "method": {
+    "native": "Actual main/preload/production renderer with OS safeStorage on dummy session and local provider keys; isolated localhost Jellyfin, substituted provider responses and null shared-key adapter. Both failure branches compare canonical encrypted credential bytes before and after failure and through fresh-process restart, then explicitly retry sign-out.",
+    "lateCallback": "Native manual text response deliberately ignores abort and is released only after reconnect. No old script/take appears, no voice dispatch follows, preparation stays paused and a new explicit request succeeds.",
+    "faults": "Native fixture injects a local-state atomic-rename failure or connection-delete failure; real UI/main/service paths are exercised. These failures model storage faults, not their real-world frequency.",
+    "matrix": "Actual current main/service/storage modules with isolated Electron/encryption adapters and independent disposable data per case. No real provider requests or personal credentials."
+  },
+  "checks": {
+    "nativeCases": 3,
+    "serviceCases": 21,
+    "productionBuildTypeScript": "npm run build passed after source change",
+    "eslint": "npm run lint passed after source change",
+    "rendererErrors": 0,
+    "fatalFileAbsent": true,
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "deferredChecksRun": false
+  },
+  "limits": [
+    "Actual OS encryption evidence is limited to native disposable session/key files; the service matrix substitutes encryption.",
+    "Provider responses and storage faults are controlled; real billing, physical power loss and audible quality are not established.",
+    "A14 listener understanding, platform/VoiceOver and broader usability proof remain separate.",
+    "No smaller than 1280x720 or enlarged-zoom checks ran. The overall goal remains open."
+  ],
+  "sourceSha256": {
+    "src/main/index.ts": "735adf81f2a16d626b87c7a4d0db5a205d70347fcf460145c87e7a58bbe954fc",
+    "src/main/storage.ts": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+    "src/main/jellyfin.ts": "4daf9866e8034ca89ffd209035b1b8795f5127082bcea0fa825182b66d103483",
+    "src/main/news.ts": "a128b7671dd080df1cd8f87294633adc657e88ca63dfc1e8bf8bbb767c8c1ce9",
+    "src/main/news-workflow.ts": "16e61a8e65a69bf97a59101befcd6a66e23cdb69350c9e2b854ed3e2772e11a2",
+    "src/main/prepared-news.ts": "0d0d40b27e899d04bea54d064d62017643c58211997f8c3e36f896b26c24bd2d",
+    "src/main/dj-previews.ts": "56d36390dbf9ba2a3177c46ff2a20d4478fa20bc37d6220bc1459b6e592722b3",
+    "src/renderer/pages/Settings/Settings.page.tsx": "ce0c41cd58f82a801b651940cb641945c12ed4c83b765377f6be8d809d1e5d9f",
+    "src/renderer/App.tsx": "295282dd8549fec72a32bcf1b16cd4095f4a4c2e9baa41044dd0b65fc60d98ab",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370"
+  },
+  "fixtureSha256": {
+    "/private/tmp/signout-recovery-native/build.mjs": "4e6a08feb20b0b3629d44e15caffc9f12f5c5fc5ae1381d8f1790f786b7a1d42",
+    "/private/tmp/signout-recovery-native/bootstrap.mjs": "1836e6f9dbae905fc4bb24a58aeda5c26c4f4d41a09e7ea135a92d05b98065b6",
+    "/private/tmp/signout-recovery-native/server.mjs": "e046331898e8530233ef3597173e53f67303dc65bcbf18e77e3ce9e778492347",
+    "/private/tmp/signout-recovery-native/native.cjs": "3b8a370d15a91ee3f58bfce641a5aa9c28ddeecd1c556db8e7ad8b5703ffa861",
+    "/private/tmp/signout-recovery-native/native.json": "363ecc73e09b286156257c76a9387cde341e0682069ee49326d3d43560b4e6c9",
+    "/private/tmp/signout-recovery-native/out/main/index.js": "d1c015311d9035ad0b6c24a6a0694c20309c4faa257d785e990753812c1ff5dd",
+    "/private/tmp/signout-recovery-native/build.log": "9511bfd866cbaf2a6462b39ac627846725248532b9a33dec3ca3833696f2ab1c",
+    "/private/tmp/signout-recovery-native/lint.log": "6f1680e0ff047e07a06dcf9afc079770fad3f871d47a52ee12dccaaa84366d63",
+    "/private/tmp/signout-recovery-matrix/build.mjs": "25c694121be773e4b152f37ad7180d3abe91db61523739f32f89cef505e10633",
+    "/private/tmp/signout-recovery-matrix/check.ts": "36d5c6ce8893e7a8cec80ce08ea51c87805a33c00a1194d959aeee2e127bc9e7",
+    "/private/tmp/signout-recovery-matrix/run.mjs": "570bbdf928ee62ad6e0169dd076f935c3f9af970ba7ed8796fde9705623809f1",
+    "/private/tmp/signout-recovery-matrix/built.mjs": "64d1f1bfebe51bed6177bdfe5c1cc825284b64e411377f59189f2d9ce3055859",
+    "/private/tmp/signout-recovery-matrix/run.log": "ce1f9907673669cb6378a9e948fa925b07a7f7721e34b3c2aee4589e9447871e",
+    "/private/tmp/signout-recovery-matrix/after.log": "e8a76ae011c37e9f312262395c71549d02adf39c022baaf9e1f394028efa8e22"
+  }
+}
