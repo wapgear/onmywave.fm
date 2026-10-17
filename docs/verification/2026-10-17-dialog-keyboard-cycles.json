@@ -1282,7 +1282,8 @@
     "Predefined controller did not recognize the repeated Save focus from AX selected-text output; DOM telemetry shows two full 15-step cycles. One complete final cycle is accepted.",
     "Space with capital S is rejected by native key parser; lowercase space opens the Twitter disclosure. No app input is inferred from the rejected key.",
     "Native preset application filled the DJ name before later typing appended fixture text. It remains a valid unsaved fixture name; no write or name-quality claim follows.",
-    "A shallow current source scan matches the earlier 232 definitions; it is an inventory refresh after two state-only owner additions, not a new acceptance pass for every control."
+    "A shallow current source scan matches the earlier 232 definitions; it is an inventory refresh after two state-only owner additions, not a new acceptance pass for every control.",
+    "The first CSV export used CRLF and failed git whitespace checking. It was regenerated with LF and the matching hash refreshed before pushing; final whitespace checks pass."
   ],
   "freshness": "No app source/bundle changes from PR73. Build including TypeScript/full ESLint retain PR73 validation; no duplicate build/test run for documentation/evidence-only work.",
   "limits": [
@@ -1299,7 +1300,7 @@
     "dispositionsChanged": false
   },
   "sha256": {
-    "docs/verification/2026-10-17-keyboard-controls.csv": "a37aa03e07a12aacc5bf38c83ec8444a662be9c1bb75359d67d06426cd7c0762",
+    "docs/verification/2026-10-17-keyboard-controls.csv": "813712cf7d8cabeed2d389909f9a08bd4636311323ba53d78b281e58bf6f3918",
     "src/renderer/App.tsx": "3286d6259addd3cd1030b30c1c34ba1362440449d5bc8fab9023f0bdfa277532",
     "src/renderer/dj-playback.tsx": "1bc155fb425d6c48181a847e9bf1d6b0fccdb9296b60d48ee99d732fe6e0904f",
     "src/renderer/main.tsx": "863a6596bde95ba270f0d554a2ac2bd0c3819ca832f1bfd577d0edf9bb69a7cc",
