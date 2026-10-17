@@ -1,0 +1,129 @@
+{
+  "date": "2026-10-17",
+  "base": "240b062d5e62fc15a177ab4e5909e0909036090d",
+  "productionChanges": false,
+  "scope": {
+    "R09": "Controlled",
+    "A03": "Controlled",
+    "D02": "Controlled",
+    "D03": "External, wording present but observed listener understanding remains unverified"
+  },
+  "native": {
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "cases": [
+      {
+        "kind": "ten preset personality and gender choices",
+        "result": "passed",
+        "noGenerationOrOptInChange": true
+      },
+      {
+        "kind": "editor music and frequency guidance present",
+        "result": "passed",
+        "listenerUnderstandingNotTested": true
+      },
+      {
+        "kind": "save DJ leaves opt-ins queue and take unchanged",
+        "result": "passed"
+      },
+      {
+        "kind": "ordinary room setup save keeps both opt-ins off",
+        "result": "passed"
+      },
+      {
+        "kind": "checked unsaved activation survives navigation while preparation stays off",
+        "result": "passed"
+      },
+      {
+        "kind": "explicit saved activation and explicit stop independent of playback",
+        "result": "passed"
+      },
+      {
+        "kind": "explicit manual text and audio work at automatic limits",
+        "result": "passed",
+        "textRequests": 1,
+        "voiceRequests": 1,
+        "automaticChecks": 8,
+        "automaticClips": 3,
+        "optInsAndSelectionUnchanged": true
+      },
+      {
+        "kind": "explicit saved DJ preview outside automatic limits",
+        "result": "passed",
+        "viewingMakesNoRequest": true,
+        "firstGenerationVoiceRequests": 1,
+        "replayRequests": 0,
+        "optInsAndCountersUnchanged": true
+      },
+      {
+        "kind": "fresh process retains saved host and off opt-ins without provider request",
+        "result": "passed"
+      }
+    ],
+    "result": "passed",
+    "rendererErrors": 0,
+    "fatalFileAbsent": true
+  },
+  "setup": {
+    "account": "Disposable localhost fixture account; no personal credentials.",
+    "provider": "Text and speech responses substituted; only localhost traffic permitted outside intercepted provider destinations. Shared-key adapter disabled.",
+    "caps": {
+      "automaticChecksToday": 8,
+      "automaticRecordingsToday": 3,
+      "recordingLimit": 3,
+      "checkIntervalHours": 3
+    },
+    "transport": "Muted actual native Electron main/preload/production renderer at 1280x720 and 100% zoom. Automatic runner stopped through a fixture hook for deterministic saved-state checks.",
+    "seed": "Two named test profiles start with both preparation settings and DJ playback off. A prepared audio fixture exists with no selected take."
+  },
+  "review": {
+    "R09": "Ordinary mood save keeps preparation/playback off. Unsaved activation has explicit stays-off text, persists through navigation and does not change saved flags. Explicit enable changes saved preparation only, shows Daily recording limit reached, and explicit stop returns to visible Preparation off.",
+    "A03": "Costs/provider scope visible beside manual text, audio and saved-DJ preview. At both automatic caps, explicit manual text+audio generates one recording and exactly one request to each substituted provider; counters, selected take and opt-ins stay unchanged. Explicit saved-DJ preview generates one additional voice request; cached replay generates none. Viewing controls dispatches nothing.",
+    "D02": "All five predefined personalities and two genders apply without provider dispatch or opt-in changes. Saved custom host leaves queue/take unchanged. Explicit preview and restart preserve both off flags. Prior current transition-demo evidence separately covers provider-free timing tests.",
+    "D03": "Advanced editor says the listener chooses the queue and points frequency to Settings / General / DJ playback. This proves wording exists, not that an ordinary listener understands it. The required U proof remains External."
+  },
+  "driverCorrections": [
+    "Exact Mood label did not match the seeded textarea label; use the observed station-mood field ID.",
+    "Saved preparation status appears in the player, settings and News bucket. Scope assertions to preparation settings rather than a global duplicate text lookup."
+  ],
+  "checks": {
+    "nativeCases": 9,
+    "presetVariants": 10,
+    "rendererErrors": 0,
+    "fatalFileAbsent": true,
+    "buildTypeScriptLint": "No application source changed from PR41 passing snapshot; not repeated.",
+    "deferredChecksRun": false
+  },
+  "limits": [
+    "Substituted provider responses establish dispatch/count boundaries, not real provider costs, entitlement or audio quality.",
+    "The runner is stopped for deterministic activation checks; this record does not establish physical sleep/quit/coalescing behavior.",
+    "D03 retains observed-listener scope as External. No overall completion or percentage is claimed.",
+    "No smaller than 1280x720 or enlarged-zoom checks ran."
+  ],
+  "sourceSha256": {
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/main/storage.ts": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+    "src/main/news.ts": "a128b7671dd080df1cd8f87294633adc657e88ca63dfc1e8bf8bbb767c8c1ce9",
+    "src/main/news-workflow.ts": "16e61a8e65a69bf97a59101befcd6a66e23cdb69350c9e2b854ed3e2772e11a2",
+    "src/main/dj-previews.ts": "56d36390dbf9ba2a3177c46ff2a20d4478fa20bc37d6220bc1459b6e592722b3",
+    "src/renderer/pages/DJs/components/DJEditor.component.tsx": "4046217da52424c654bbf90aaae7d4aafea2cc71a649b409312c776c97614684",
+    "src/renderer/pages/DJs/components/DJEditor.presets.ts": "1994c54feef51b032cfb15038b9422f3fcb6243a7bf6df1a453ccf3db597ed5a",
+    "src/renderer/pages/DJs/components/VoicePreview.component.tsx": "b33006579294d0c1fc455f2be47478c6bea30140b7bcbb4ad926dc4c7c3ce81c",
+    "src/renderer/pages/Stations/Stations.page.tsx": "83c78a0854859e81ea9ec21330f88e53ee6c30fe81651a1551d99d48d59fedff",
+    "src/renderer/pages/Stations/components/RoomSetup.component.tsx": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": "6f1c4fd3956da61639d94c430605bb321903da2ffac953894278a3c79c6ae2a9",
+    "src/shared/news-preparation-status.ts": "27803f7289d4cf64a0d350a361fe9682231e518e93bd4a71e3590a4df771eae9",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370"
+  },
+  "fixtureSha256": {
+    "/private/tmp/radio-opt-ins-current/build.mjs": "c5312410d2ee0f60b46a5c50fc45ba3c616a8e642192aad90ab0836a2e8953b6",
+    "/private/tmp/radio-opt-ins-current/bootstrap.mjs": "f25fb5647f5b68949f0b19efe86550be802431cd64b3979ac0d86642acfbf659",
+    "/private/tmp/radio-opt-ins-current/server.mjs": "7e4d907a9ef45bed4216f4aad24be040609b12befed6232acc21a4c0530fe0c9",
+    "/private/tmp/radio-opt-ins-current/native.cjs": "9d6776600bd51515870e2e3cf682b94580631c819a941c1f0dc31e262e0bad98",
+    "/private/tmp/radio-opt-ins-current/native.json": "71e382a78d291295218ce5c5faf07aed18a873b8da6435a818265da8e5294001",
+    "/private/tmp/radio-opt-ins-current/out/main/index.js": "b2f0ce60937d6d10c402293c084c55f694d10a222ad207d3ede70eaf4fba074f"
+  }
+}
