@@ -79,7 +79,7 @@ These thirteen open checks do not contain a U proof requirement. Several still n
 | C06 | Empty access followed by a real Jellyfin access grant, with Retry recovering without reauthentication |
 | P05 | Live read-only permission behavior and the unknown-lookup branch, matched with the existing controlled permission evidence |
 | M16 | Physical media controls on the actual paused/playing music and active-speech session |
-| M17 | Actual supported Jellyfin conversion/codec playback and seeking, with the tested combination named |
+| M17 | Distinct OS-mediated seek/control proof for live converted audio; five named codec/container groups already have native/live partial evidence in the [codec record](verification/2026-10-17-live-codec-seeking.json) |
 | A05 | Actual sleep/quit/return behavior and one coalesced due check, with dispatch/history evidence and no backlog |
 | S03 | Actual entitled X recent-search delivery and useful partial results, with bearer secrecy retained |
 | Q06 | Complete essential-control names, visible focus and keyboard operation, including pending/failure states and source groups |
