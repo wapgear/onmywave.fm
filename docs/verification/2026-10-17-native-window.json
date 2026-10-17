@@ -1,0 +1,715 @@
+{
+  "date": "2026-10-17",
+  "baseCommit": "95c485f4c929127430061d56b9e53614389a6754",
+  "scope": "Partial V10/V12 actual macOS native-window evidence. No app source changes.",
+  "environment": {
+    "platform": "darwin",
+    "arch": "arm64",
+    "os": "27.2.0",
+    "electron": "43.7.0",
+    "displays": [
+      {
+        "bounds": {
+          "x": 0,
+          "y": 0,
+          "width": 3008,
+          "height": 1692
+        },
+        "workArea": {
+          "x": 0,
+          "y": 30,
+          "width": 3008,
+          "height": 1662
+        },
+        "scaleFactor": 2
+      }
+    ]
+  },
+  "snapshots": [
+    {
+      "name": "baseline",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 864,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "contentBounds": {
+          "x": 864,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "visible": true,
+        "minimized": false,
+        "maximized": false,
+        "fullScreen": false,
+        "focused": false,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 2
+          },
+          "headings": [
+            "All songs"
+          ],
+          "player": "Song 00002",
+          "transport": "Play",
+          "titlebar": [
+            {
+              "class": "traffic-light-space",
+              "bounds": {
+                "x": 16,
+                "y": 0,
+                "width": 176,
+                "height": 52,
+                "top": 0,
+                "right": 192,
+                "bottom": 52,
+                "left": 16
+              },
+              "region": "drag"
+            },
+            {
+              "class": "titlebar-drag-region",
+              "bounds": {
+                "x": 208,
+                "y": 0,
+                "width": 1072,
+                "height": 24,
+                "top": 0,
+                "right": 1280,
+                "bottom": 24,
+                "left": 208
+              },
+              "region": "drag"
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": []
+    },
+    {
+      "name": "full-screen",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 0,
+          "y": 0,
+          "width": 3008,
+          "height": 1692
+        },
+        "contentBounds": {
+          "x": 0,
+          "y": 0,
+          "width": 3008,
+          "height": 1692
+        },
+        "visible": true,
+        "minimized": false,
+        "maximized": false,
+        "fullScreen": true,
+        "focused": true,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 3008,
+            "height": 1692,
+            "dpr": 2
+          },
+          "headings": [
+            "All songs"
+          ],
+          "player": "Song 00002",
+          "transport": "Play",
+          "titlebar": [
+            {
+              "class": "traffic-light-space",
+              "bounds": {
+                "x": 16,
+                "y": 0,
+                "width": 176,
+                "height": 52,
+                "top": 0,
+                "right": 192,
+                "bottom": 52,
+                "left": 16
+              },
+              "region": "drag"
+            },
+            {
+              "class": "titlebar-drag-region",
+              "bounds": {
+                "x": 208,
+                "y": 0,
+                "width": 2800,
+                "height": 24,
+                "top": 0,
+                "right": 3008,
+                "bottom": 24,
+                "left": 208
+              },
+              "region": "drag"
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": [
+        {
+          "id": 1,
+          "name": "resize"
+        },
+        {
+          "id": 1,
+          "name": "enter-full-screen"
+        }
+      ]
+    },
+    {
+      "name": "full-screen-restored",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 865,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "contentBounds": {
+          "x": 865,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "visible": true,
+        "minimized": false,
+        "maximized": false,
+        "fullScreen": false,
+        "focused": true,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 2
+          },
+          "headings": [
+            "All songs"
+          ],
+          "player": "Song 00002",
+          "transport": "Play",
+          "titlebar": [
+            {
+              "class": "traffic-light-space",
+              "bounds": {
+                "x": 16,
+                "y": 0,
+                "width": 176,
+                "height": 52,
+                "top": 0,
+                "right": 192,
+                "bottom": 52,
+                "left": 16
+              },
+              "region": "drag"
+            },
+            {
+              "class": "titlebar-drag-region",
+              "bounds": {
+                "x": 208,
+                "y": 0,
+                "width": 1072,
+                "height": 24,
+                "top": 0,
+                "right": 1280,
+                "bottom": 24,
+                "left": 208
+              },
+              "region": "drag"
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": [
+        {
+          "id": 1,
+          "name": "resize"
+        },
+        {
+          "id": 1,
+          "name": "enter-full-screen"
+        },
+        {
+          "id": 1,
+          "name": "resize"
+        },
+        {
+          "id": 1,
+          "name": "leave-full-screen"
+        },
+        {
+          "id": 1,
+          "name": "move"
+        }
+      ]
+    },
+    {
+      "name": "native-window-enlarged",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 0,
+          "y": 30,
+          "width": 3008,
+          "height": 1662
+        },
+        "contentBounds": {
+          "x": 0,
+          "y": 30,
+          "width": 3008,
+          "height": 1662
+        },
+        "visible": true,
+        "minimized": false,
+        "maximized": true,
+        "fullScreen": false,
+        "focused": false,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 3008,
+            "height": 1662,
+            "dpr": 2
+          },
+          "headings": [
+            "All songs"
+          ],
+          "player": "Song 00002",
+          "transport": "Play",
+          "titlebar": [
+            {
+              "class": "traffic-light-space",
+              "bounds": {
+                "x": 16,
+                "y": 0,
+                "width": 176,
+                "height": 52,
+                "top": 0,
+                "right": 192,
+                "bottom": 52,
+                "left": 16
+              },
+              "region": "drag"
+            },
+            {
+              "class": "titlebar-drag-region",
+              "bounds": {
+                "x": 208,
+                "y": 0,
+                "width": 2800,
+                "height": 24,
+                "top": 0,
+                "right": 3008,
+                "bottom": 24,
+                "left": 208
+              },
+              "region": "drag"
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": [
+        {
+          "id": 1,
+          "name": "resize"
+        },
+        {
+          "id": 1,
+          "name": "enter-full-screen"
+        },
+        {
+          "id": 1,
+          "name": "resize"
+        },
+        {
+          "id": 1,
+          "name": "leave-full-screen"
+        },
+        {
+          "id": 1,
+          "name": "move"
+        },
+        {
+          "id": 1,
+          "name": "resize"
+        }
+      ]
+    },
+    {
+      "name": "native-window-size-restored",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 865,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "contentBounds": {
+          "x": 865,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "visible": true,
+        "minimized": false,
+        "maximized": false,
+        "fullScreen": false,
+        "focused": false,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 2
+          },
+          "headings": [
+            "All songs"
+          ],
+          "player": "Song 00002",
+          "transport": "Play",
+          "titlebar": [
+            {
+              "class": "traffic-light-space",
+              "bounds": {
+                "x": 16,
+                "y": 0,
+                "width": 176,
+                "height": 52,
+                "top": 0,
+                "right": 192,
+                "bottom": 52,
+                "left": 16
+              },
+              "region": "drag"
+            },
+            {
+              "class": "titlebar-drag-region",
+              "bounds": {
+                "x": 208,
+                "y": 0,
+                "width": 1072,
+                "height": 24,
+                "top": 0,
+                "right": 1280,
+                "bottom": 24,
+                "left": 208
+              },
+              "region": "drag"
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": [
+        {
+          "id": 1,
+          "name": "resize"
+        },
+        {
+          "id": 1,
+          "name": "enter-full-screen"
+        },
+        {
+          "id": 1,
+          "name": "resize"
+        },
+        {
+          "id": 1,
+          "name": "leave-full-screen"
+        },
+        {
+          "id": 1,
+          "name": "move"
+        },
+        {
+          "id": 1,
+          "name": "resize"
+        },
+        {
+          "id": 1,
+          "name": "resize"
+        }
+      ]
+    },
+    {
+      "name": "minimize-shortcut-observed",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 865,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "contentBounds": {
+          "x": 865,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "visible": false,
+        "minimized": true,
+        "maximized": false,
+        "fullScreen": false,
+        "focused": false,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 2
+          },
+          "headings": [
+            "All songs"
+          ],
+          "player": "Song 00002",
+          "transport": "Play",
+          "titlebar": [
+            {
+              "class": "traffic-light-space",
+              "bounds": {
+                "x": 16,
+                "y": 0,
+                "width": 176,
+                "height": 52,
+                "top": 0,
+                "right": 192,
+                "bottom": 52,
+                "left": 16
+              },
+              "region": "drag"
+            },
+            {
+              "class": "titlebar-drag-region",
+              "bounds": {
+                "x": 208,
+                "y": 0,
+                "width": 1072,
+                "height": 24,
+                "top": 0,
+                "right": 1280,
+                "bottom": 24,
+                "left": 208
+              },
+              "region": "drag"
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": [
+        {
+          "id": 1,
+          "name": "resize"
+        },
+        {
+          "id": 1,
+          "name": "enter-full-screen"
+        },
+        {
+          "id": 1,
+          "name": "resize"
+        },
+        {
+          "id": 1,
+          "name": "leave-full-screen"
+        },
+        {
+          "id": 1,
+          "name": "move"
+        },
+        {
+          "id": 1,
+          "name": "resize"
+        },
+        {
+          "id": 1,
+          "name": "resize"
+        },
+        {
+          "id": 1,
+          "name": "minimize"
+        },
+        {
+          "id": 1,
+          "name": "restore"
+        },
+        {
+          "id": 1,
+          "name": "minimize"
+        }
+      ]
+    },
+    {
+      "name": "after-app-reselection",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 865,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "contentBounds": {
+          "x": 865,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "visible": true,
+        "minimized": false,
+        "maximized": false,
+        "fullScreen": false,
+        "focused": false,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 2
+          },
+          "headings": [
+            "All songs"
+          ],
+          "player": "Song 00002",
+          "transport": "Play",
+          "titlebar": [
+            {
+              "class": "traffic-light-space",
+              "bounds": {
+                "x": 16,
+                "y": 0,
+                "width": 176,
+                "height": 52,
+                "top": 0,
+                "right": 192,
+                "bottom": 52,
+                "left": 16
+              },
+              "region": "drag"
+            },
+            {
+              "class": "titlebar-drag-region",
+              "bounds": {
+                "x": 208,
+                "y": 0,
+                "width": 1072,
+                "height": 24,
+                "top": 0,
+                "right": 1280,
+                "bottom": 24,
+                "left": 208
+              },
+              "region": "drag"
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": [
+        {
+          "id": 1,
+          "name": "resize"
+        },
+        {
+          "id": 1,
+          "name": "enter-full-screen"
+        },
+        {
+          "id": 1,
+          "name": "resize"
+        },
+        {
+          "id": 1,
+          "name": "leave-full-screen"
+        },
+        {
+          "id": 1,
+          "name": "move"
+        },
+        {
+          "id": 1,
+          "name": "resize"
+        },
+        {
+          "id": 1,
+          "name": "resize"
+        },
+        {
+          "id": 1,
+          "name": "minimize"
+        },
+        {
+          "id": 1,
+          "name": "restore"
+        },
+        {
+          "id": 1,
+          "name": "minimize"
+        },
+        {
+          "id": 1,
+          "name": "restore"
+        }
+      ]
+    }
+  ],
+  "nativeActions": {
+    "fullScreen": "CUA green native control enters; Control-Command-F returns to1280x720",
+    "windowEnlargement": "CUA native green-control secondary action zoom the window enlarges to work area and restores baseline; this is window sizing, app zoom stays1",
+    "minimize": "CUA Command-M yields minimized=true on the owned BrowserWindow; app reselection yields restore event and minimized=false",
+    "titlebar": "Actual computed drag regions inspected; pointer dragging not established",
+    "close": "Command-W did not produce a closed event in the owned-window observer; no successful close is claimed"
+  },
+  "limits": [
+    "CUA coordinate drag returned noWindowsAvailable despite a freshly updating owned-window observer and successful app-window screenshots. Native accessibility actions and menu shortcuts supplied the successful OS cases.",
+    "The first yellow-control sequence produced minimize and restore events before observation; later CUA calls timed out. That sequence is not used as stable minimized-state proof. The standard shortcut snapshot directly records minimized=true.",
+    "A window screenshot was visually inspected in the tool. It is cropped to the app and does not include wallpaper, system menu bar and Dock. No full desktop capture is claimed.",
+    "The screenshot shortcut produced no recent image in Desktop or the configured screenshot directory. No screenshot settings were changed or historical capture files read.",
+    "No smaller window or enlarged app zoom was tested. Retina scaleFactor2 is OS pixel density, not200% app zoom.",
+    "No cross-device, full screen-reader, audible-quality or listener-comprehension pass. No packaging, signing, notarization or publication."
+  ],
+  "checks": {
+    "windowSnapshotAssertions": "pass",
+    "providers": 0,
+    "serverWrites": 0,
+    "rendererOverflow": false,
+    "applicationSourceChanged": false,
+    "buildTypeLint": "not repeated; application source and current built artifacts unchanged from PR68",
+    "remoteCI": "not configured"
+  },
+  "disposition": "V10/V12 remain Review;28 active checks remain. Partial proof does not close either row.",
+  "sha256": {
+    "src/main/index.ts": "a5d1528149631987f30b25a6e296b60bc97b950a712280bf6f584cce13b1d320",
+    "src/renderer/App.tsx": "9bae3a6b1896f8908e1e7a124259b0cdadbf8da717ab4b18bd741ebe06ea5b8e",
+    "src/renderer/styles.css": "5a235c72cbcbff30bf790e1fa7044ea6a9abc9727ecbda08389d9a059a196d32",
+    "out/main/index.js": "c4a5aac8a832c60ee462ac467630ecbf38891cbb3b0a0bd51d10e1d2cb1cadb6",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/index.html": "59349c2ef023f60a05ad54605ce43282835fa6502fdef5bfcb7aecfd5f3756e1"
+  },
+  "fixtureHashes": {
+    "observe.cjs": "a3c4f6fcf03089b9d98f577718206a7911ab290eeb3c292c6dbcc387a2cb7f02",
+    "bootstrap.mjs": "7950f5b1b3b7f1d31e1127ef5ae88613c8911ee62bd2d0139bbfbf3eb8e38cec",
+    "build.mjs": "74339a11bd766db78edd2a2068663e6ea542a4b4382e5b69b22c14ff7dd609b3",
+    "server.mjs": "61857a49d5e17c615c62091399aa49bf8fc99ccc3691ae9554aca473b925c279"
+  }
+}
