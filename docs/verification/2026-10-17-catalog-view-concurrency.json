@@ -1,0 +1,284 @@
+{
+  "date": "2026-10-17",
+  "base": "95ea99574f471e5a4414e71588705e982eb66b23",
+  "scope": [
+    "B03"
+  ],
+  "productionChanges": true,
+  "before": {
+    "result": "reproduced",
+    "cases": [
+      {
+        "kind": "replacement",
+        "result": "reproduced",
+        "error": {
+          "code": "invalid",
+          "message": "The library changed. Refresh your collection."
+        },
+        "unchangedSession": true
+      },
+      {
+        "kind": "eviction",
+        "result": "reproduced",
+        "error": {
+          "code": "invalid",
+          "message": "The library changed. Refresh your collection."
+        },
+        "unchangedSession": true
+      }
+    ]
+  },
+  "nativeBefore": "Initial native sort validation concurrently requested the same view as the renderer. The valid earlier scan failed with The library changed while the session was unchanged. Direct service integration then reproduced both same-key replacement and pending-view eviction by two other views. This is not claimed as a separate observed user session.",
+  "fix": "Separate in-flight view scans from the completed two-entry LRU. Same-view callers share a full scan and receive their own requested ranges. Completed eviction cannot invalidate an active read. Real session-object replacement still invalidates owner and joiners; a page-zero after settlement reads fresh. Only the owning current-session flight publishes a completed snapshot and removes its flight entry.",
+  "pairedDecision": {
+    "Boris": "Supports separate in-flight/coalesced reads and completed LRU; captured session identity tracks committed account/libraries.",
+    "Nadia": "Initially proposed sessionRevision but accepted session identity after challenge: revision advances before persistence commit and could cause false invalidation after a failed save. Supports separate loads/completed LRU and same-key coalescing.",
+    "Morgan": "Use session-object identity, preserve fresh page-zero after settlement, coalesce active same-view reads and keep completed cache bounded to two. Do not add busy errors or snapshot-token plumbing without a demonstrated requirement.",
+    "actualReview": "Nadia found no stale-session, joiner-range, ownership, cleanup or single-root defect. She retained an operability reservation about concurrent distinct scans.",
+    "reservations": [
+      "Distinct in-flight scans have no fixed concurrency cap. This does not add scans beyond the prior per-call behavior and same-key coalescing reduces duplicate work, but it is not a general memory bound. A sixteen-view controlled burst drains all active entries and leaves two completed snapshots.",
+      "The offset-only API cannot guarantee one immutable catalog version after a completed snapshot is evicted and the remote catalog independently changes. Existing rebuild-on-miss behavior remains; no strict snapshot-token contract is claimed."
+    ]
+  },
+  "service": {
+    "result": "passed",
+    "cases": [
+      {
+        "kind": "same-view concurrent first/later pages",
+        "result": "passed",
+        "oneRootScan": true,
+        "callerRangesHonored": true,
+        "laterPageZeroRefreshes": true,
+        "completedPageReused": true
+      },
+      {
+        "kind": "pending view completes after two other views",
+        "result": "passed",
+        "validReadNotEvicted": true,
+        "completedCacheBounded": true,
+        "ownedSnapshotUsedForNextPage": true
+      },
+      {
+        "kind": "committed account change",
+        "result": "passed",
+        "oldOwnerAndJoinedReadRejected": true,
+        "newSessionReadUnaffected": true
+      },
+      {
+        "kind": "committed libraries change",
+        "result": "passed",
+        "oldOwnerAndJoinedReadRejected": true,
+        "newSessionReadUnaffected": true
+      },
+      {
+        "kind": "failed persistence without committed library change",
+        "result": "passed",
+        "originalSessionAndReadRemainValid": true
+      },
+      {
+        "kind": "failed shared scan then explicit retry",
+        "result": "passed",
+        "failurePropagatesToBoth": true,
+        "failedFlightReleased": true,
+        "retryReadsAgain": true
+      },
+      {
+        "kind": "single-library server paging",
+        "result": "passed",
+        "offsetAndLimitPreserved": true
+      },
+      {
+        "kind": "finite burst of sixteen distinct views",
+        "result": "passed",
+        "peakDistinctLoads": 16,
+        "allValidReadsReturn": true,
+        "loadsDrainToZero": true,
+        "completedSnapshots": 2
+      }
+    ]
+  },
+  "native": {
+    "cases": [
+      {
+        "kind": "filtered native sort and paging",
+        "sort": "dateAdded",
+        "descending": false,
+        "loadedAtLeast": 160,
+        "uniquePageItems": 240,
+        "total": 6664,
+        "visibleRanksMatch": true,
+        "genreAndTagApplied": true,
+        "result": "passed"
+      },
+      {
+        "kind": "filtered native sort and paging",
+        "sort": "dateAdded",
+        "descending": true,
+        "loadedAtLeast": 160,
+        "uniquePageItems": 240,
+        "total": 6664,
+        "visibleRanksMatch": true,
+        "genreAndTagApplied": true,
+        "result": "passed"
+      },
+      {
+        "kind": "filtered native sort and paging",
+        "sort": "name",
+        "descending": false,
+        "loadedAtLeast": 160,
+        "uniquePageItems": 240,
+        "total": 6664,
+        "visibleRanksMatch": true,
+        "genreAndTagApplied": true,
+        "result": "passed"
+      },
+      {
+        "kind": "filtered native sort and paging",
+        "sort": "name",
+        "descending": true,
+        "loadedAtLeast": 160,
+        "uniquePageItems": 240,
+        "total": 6664,
+        "visibleRanksMatch": true,
+        "genreAndTagApplied": true,
+        "result": "passed"
+      },
+      {
+        "kind": "filtered native sort and paging",
+        "sort": "artist",
+        "descending": false,
+        "loadedAtLeast": 160,
+        "uniquePageItems": 240,
+        "total": 6664,
+        "visibleRanksMatch": true,
+        "genreAndTagApplied": true,
+        "result": "passed"
+      },
+      {
+        "kind": "filtered native sort and paging",
+        "sort": "artist",
+        "descending": true,
+        "loadedAtLeast": 160,
+        "uniquePageItems": 240,
+        "total": 6664,
+        "visibleRanksMatch": true,
+        "genreAndTagApplied": true,
+        "result": "passed"
+      },
+      {
+        "kind": "filtered native sort and paging",
+        "sort": "album",
+        "descending": false,
+        "loadedAtLeast": 160,
+        "uniquePageItems": 240,
+        "total": 6664,
+        "visibleRanksMatch": true,
+        "genreAndTagApplied": true,
+        "result": "passed"
+      },
+      {
+        "kind": "filtered native sort and paging",
+        "sort": "album",
+        "descending": true,
+        "loadedAtLeast": 160,
+        "uniquePageItems": 240,
+        "total": 6664,
+        "visibleRanksMatch": true,
+        "genreAndTagApplied": true,
+        "result": "passed"
+      },
+      {
+        "kind": "filtered native sort and paging",
+        "sort": "year",
+        "descending": false,
+        "loadedAtLeast": 160,
+        "uniquePageItems": 240,
+        "total": 6664,
+        "visibleRanksMatch": true,
+        "genreAndTagApplied": true,
+        "result": "passed"
+      },
+      {
+        "kind": "filtered native sort and paging",
+        "sort": "year",
+        "descending": true,
+        "loadedAtLeast": 160,
+        "uniquePageItems": 240,
+        "total": 6664,
+        "visibleRanksMatch": true,
+        "genreAndTagApplied": true,
+        "result": "passed"
+      }
+    ],
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "result": "passed",
+    "rendererErrors": 0,
+    "fatalFileAbsent": true
+  },
+  "nativeData": {
+    "songs": 20000,
+    "libraries": 2,
+    "combinedFilter": {
+      "genre": "Jazz",
+      "tag": "Studio",
+      "eligibleSongs": 6664
+    },
+    "sorts": [
+      "Date added",
+      "Title",
+      "Artist",
+      "Album",
+      "Year"
+    ],
+    "directions": [
+      "ascending",
+      "descending"
+    ],
+    "distinctOrdering": "Fixture artist and album names use reverse group order; year cycles separately. Expected IDs are derived independently from fixture indices, then all first240 service IDs and visible native row ranks are checked. Each native sort loads at least160 rows.",
+    "providerTraffic": "Blocked; local dummy account only."
+  },
+  "checks": {
+    "nativeCases": 10,
+    "serviceCases": 8,
+    "buildTypeScript": "npm run build passed after final source change",
+    "lint": "npm run lint passed after final source change",
+    "rendererErrors": 0,
+    "fatalFileAbsent": true,
+    "whitespace": "git diff --check passed"
+  },
+  "limits": [
+    "No live-server catalog, album action, artwork or remote playlist acceptance is claimed by this record; B01/B05/B08 retain their wider open scope.",
+    "Native data and fault responses are controlled; no audible quality, human comprehension or real concurrent server-mutation acceptance is established.",
+    "No deferred size or enlarged-zoom checks ran.",
+    "The overall goal remains open."
+  ],
+  "sourceSha256": {
+    "src/main/jellyfin.ts": "4daf9866e8034ca89ffd209035b1b8795f5127082bcea0fa825182b66d103483",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/renderer/pages/Songs/Songs.page.tsx": "79b3115960d53568bac407d5754ff0996fee44ba895b222d99b4e0fb71e3007f",
+    "src/renderer/pages/Songs/VirtualSongs.component.tsx": "95ada95c0533bb1e462a818f6981c60d22cd4a9a8e4df27b8cea6cc3119606e4",
+    "src/renderer/components/FilterSelect/FilterSelect.component.tsx": "b6c4242190b3d107c5145f464db5f3b4912736c70c940a3344c73aa26463ec26",
+    "src/renderer/pages/Albums/Albums.page.tsx": "8abce67107438b4ed395443875aa920b6e71cbc968b3b834c9702ddd745f81ed",
+    "src/renderer/App.tsx": "295282dd8549fec72a32bcf1b16cd4095f4a4c2e9baa41044dd0b65fc60d98ab",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370"
+  },
+  "fixtureSha256": {
+    "/private/tmp/catalog-browsing-current/build.mjs": "ffab531d783239c589573b8a04e27c8508c4aa8ec12cd9b1b8a6898219d0a8e0",
+    "/private/tmp/catalog-browsing-current/bootstrap.mjs": "151294d15d5f31b7fdb22449bd91fc855100409780f654cf43020e3f66923945",
+    "/private/tmp/catalog-browsing-current/server.mjs": "9ccf916c6cb6a95ffdc15969fd1a0b1f01ad1d2efc5c98d276a2352f77063457",
+    "/private/tmp/catalog-browsing-current/sort.cjs": "1f48e2f4a808392a272b6e82664e038080fa0c829244fe2f77d3e5bae15f5be9",
+    "/private/tmp/catalog-browsing-current/sort.json": "0c75f379ad512165ae3ab96d62c3ab48ac6a182959625e775d30997df453b4be",
+    "/private/tmp/catalog-browsing-current/race.mjs": "291f2699ceff8ad500902468b8ca1c27e78a3c7e341244ed7c29bf95d2ce029f",
+    "/private/tmp/catalog-browsing-current/race-after.mjs": "26537a511c1e76e268a4ff94649e644b1ea1a020cc6b48206f7501025cda063f",
+    "/private/tmp/catalog-browsing-current/jellyfin-before.mjs": "f588d7ea72767ce9c4d264e6894f8f5d33ce46aaf33917e42ab5080412cbdfbc",
+    "/private/tmp/catalog-browsing-current/jellyfin-after.mjs": "612427127242ba0e7bf4099267d1eb84c7aeb5081af61befec196824fa87eec4",
+    "/private/tmp/catalog-browsing-current/race-after.json": "59c5724333e6525f56290e8cf6f9def7b393d44a87a827e06da1f0b62f083ef1",
+    "/private/tmp/catalog-browsing-current/out/main/index.js": "b2f0ce60937d6d10c402293c084c55f694d10a222ad207d3ede70eaf4fba074f",
+    "/private/tmp/catalog-browsing-current/build.log": "0ca9707fc911f437102f504f3dce88732201dc2308cb00a34b67c75c71c009e5",
+    "/private/tmp/catalog-browsing-current/lint.log": "6f1680e0ff047e07a06dcf9afc079770fad3f871d47a52ee12dccaaa84366d63"
+  }
+}
