@@ -64,8 +64,9 @@ export function preparePlayback(session: Session | null, input: { id: string; tr
   const transcode = input.transcode === true;
   const offsetSeconds = transcode ? input.offsetSeconds ?? 0 : 0;
   const handle = randomUUID();
+  // Do not advertise a direct-play container: Jellyfin may then serve the source unchanged and ignore startTimeTicks.
   const query = new URLSearchParams(transcode ? {
-    userId: session.userId, deviceId, container: 'mp3', audioCodec: 'mp3',
+    userId: session.userId, deviceId, audioCodec: 'mp3',
     transcodingContainer: 'mp3', transcodingProtocol: 'http', maxAudioSampleRate: '48000',
     startTimeTicks: String(Math.round(offsetSeconds * 10_000_000)), enableRedirection: 'false', playSessionId: handle,
   } : { static: 'true' });
