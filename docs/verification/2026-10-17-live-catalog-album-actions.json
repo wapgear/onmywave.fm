@@ -1,0 +1,205 @@
+{
+  "date": "2026-10-17",
+  "base": "cf3dd08f870bcc64fa5d476d1c3bd714d560e40b",
+  "scope": [
+    "B01",
+    "B05",
+    "B08"
+  ],
+  "productionChanges": false,
+  "live": {
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "cases": [
+      {
+        "kind": "all selected live libraries appear once",
+        "result": "passed",
+        "selectedLibraryCount": 1,
+        "totalSongs": 1317,
+        "independentPerRootUnionMatches": true,
+        "allLoadedNativeSelectionMatchesOrder": true,
+        "selectionSha256": "041925e4308cc1c318c7040ad73484cff7b4b36a6e785f367ae51c76c6b8a2bf",
+        "queueRemainsPaused": true
+      },
+      {
+        "kind": "live song metadata and details",
+        "result": "passed",
+        "rawServerFieldsMatch": true,
+        "availableDetailsMatch": true,
+        "availableFields": [
+          "Album",
+          "Album artist",
+          "Year",
+          "Duration",
+          "Format",
+          "Codec",
+          "Bitrate",
+          "Sample rate",
+          "File size"
+        ],
+        "tagCount": 0,
+        "artworkDecodedOrExplicitlyUnavailable": true
+      },
+      {
+        "kind": "live album play order",
+        "result": "passed",
+        "allOrderedTracksUsed": true,
+        "trackCount": 6
+      },
+      {
+        "kind": "live album queue order",
+        "result": "passed",
+        "orderedAlbumAppendedWithoutStartingMusic": true
+      },
+      {
+        "kind": "live album selected play and queue",
+        "result": "passed",
+        "reverseClickOrderUsesDisplayOrder": true,
+        "onlySelectedTracksUsed": true,
+        "pausedQueueAppend": true
+      },
+      {
+        "kind": "live album individual row start",
+        "result": "passed",
+        "rowStartsAtItsAlbumPosition": true,
+        "albumOrderRetained": true
+      },
+      {
+        "kind": "live album add all",
+        "result": "passed",
+        "temporaryPrivatePlaylistContainsAlbumInOrder": true
+      },
+      {
+        "kind": "live album add selection",
+        "result": "passed",
+        "temporaryPlaylistAppendsOnlySelectedTracksInDisplayOrder": true
+      }
+    ],
+    "serverVersion": "12.2.0",
+    "albumTrackCount": 6,
+    "result": "passed",
+    "rendererErrors": 0,
+    "providerRequests": 0,
+    "cleanup": {
+      "created": true,
+      "deleted": true,
+      "absenceStatus": 404
+    },
+    "fatalFileAbsent": true
+  },
+  "columns": {
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "cases": [
+      {
+        "kind": "all selected live libraries appear once",
+        "result": "passed",
+        "selectedLibraryCount": 1,
+        "totalSongs": 1317,
+        "independentPerRootUnionMatches": true,
+        "allLoadedNativeSelectionMatchesOrder": true,
+        "selectionSha256": "041925e4308cc1c318c7040ad73484cff7b4b36a6e785f367ae51c76c6b8a2bf",
+        "queueRemainsPaused": true
+      },
+      {
+        "kind": "live song table columns",
+        "result": "passed",
+        "titleArtistAlbumDurationMatch": true
+      },
+      {
+        "kind": "live song metadata and details",
+        "result": "passed",
+        "rawServerFieldsMatch": true,
+        "availableDetailsMatch": true,
+        "availableFields": [
+          "Album",
+          "Album artist",
+          "Year",
+          "Duration",
+          "Format",
+          "Codec",
+          "Bitrate",
+          "Sample rate",
+          "File size"
+        ],
+        "tagCount": 0,
+        "artworkDecodedOrExplicitlyUnavailable": true
+      }
+    ],
+    "serverVersion": "12.2.0",
+    "result": "passed",
+    "rendererErrors": 0,
+    "cleanup": {
+      "created": false
+    },
+    "fatalFileAbsent": true
+  },
+  "controlledMetadata": {
+    "result": "passed",
+    "allPopulatedMetadataFieldsMatchKnownFixture": true,
+    "genreYearTagsTrackDiscVisible": true,
+    "codecAndAudioFieldsVisible": true,
+    "missingSizeAndArtworkExplicit": true,
+    "rendererErrors": 0,
+    "fatalFileAbsent": true,
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    }
+  },
+  "method": "Current main, preload and production renderer through native Electron interactions. Isolated account-local data copies only the protected saved connection and device identity. DJ automation is stopped and provider network destinations are blocked. Live server reads and writes use the actual service; independent direct server reads confirm raw metadata and playlist order. Album rows and playback queues are compared with the complete ordered albumTracks service result; the service requests disc, track and sort-name order.",
+  "mutationBoundary": "Only one uniquely named temporary private playlist per run. No mutation to an existing personal playlist is permitted. Cleanup verifies exact owned identity/name, deletes that playlist and confirms 404 absence. The earlier selector-failure run also deleted its temporary playlist and verified 404.",
+  "driverCorrections": [
+    "Wait for virtual row zero after scrolling before capturing its identity.",
+    "Artwork fallback is an image role with a descriptive accessible name.",
+    "Choose a live multi-track album from actual song album IDs, since album ChildCount was absent. The final sample has six tracks.",
+    "Select the destination by its combobox role; the wrapping label includes option text and did not match the earlier exact-label locator. No app defect is attributed to these driver mistakes."
+  ],
+  "priorEvidence": {
+    "overlap": "2026-10-16-catalog-union-current.json contains controlled partial/full overlap and alias coverage. Current catalog concurrency and two-root paging are covered by 2026-10-17-catalog-view-concurrency.json.",
+    "sourceFreshness": "No application source changed after cf3dd08f. Current native fixture builds actual main with only scheduler/test hooks, hidden initial window, protected connection seeding and shared-key lookup disabled. Renderer and preload use the existing production build.",
+    "richMetadata": "The current native controlled sample additionally exercises genres, tags, track/disc, codec and audio fields absent from the live sample."
+  },
+  "checks": {
+    "liveCases": 8,
+    "additionalTableColumnCase": 1,
+    "controlledMetadataCase": 1,
+    "buildTypeScriptLint": "Application source unchanged from PR41 passing build/TypeScript/full ESLint; not repeated.",
+    "deferredChecksRun": false
+  },
+  "limits": [
+    "The authorized live server exposes one accessible music root with 1317 songs. Live overlapping roots cannot be claimed; overlap coverage is controlled.",
+    "Live metadata is sampled, with missing rich fields covered by the controlled native fixture. This is not an exhaustive audit of every personal media file.",
+    "The live six-track album and guarded playlist writes establish ordered actions on this server/runtime; other server versions need separate evidence.",
+    "Muted playback does not establish audible quality or listener comprehension.",
+    "No smaller than 1280x720 or enlarged-zoom checks ran. The overall goal remains open."
+  ],
+  "sourceSha256": {
+    "src/main/jellyfin.ts": "4daf9866e8034ca89ffd209035b1b8795f5127082bcea0fa825182b66d103483",
+    "src/main/index.ts": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+    "src/renderer/pages/Albums/Albums.page.tsx": "8abce67107438b4ed395443875aa920b6e71cbc968b3b834c9702ddd745f81ed",
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "c6d1b4c4f94a8cc67f9c052526b054ad8b716fbb3ceb9f83e347946bd4ad3a63",
+    "src/renderer/components/Inspector/Inspector.component.tsx": "39f001049a50433d0eb0bb16af4a8f51d00811e437c12e2145068e8b329dd893",
+    "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": "550356492cae38ab34925c91ad9cb5c1ab7c9a7685779e9202de297fc33915de",
+    "src/renderer/pages/Songs/Songs.page.tsx": "79b3115960d53568bac407d5754ff0996fee44ba895b222d99b4e0fb71e3007f",
+    "out/preload/index.cjs": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370"
+  },
+  "fixtureSha256": {
+    "/private/tmp/live-catalog-albums-current/build.mjs": "8b96c8372dda94f1adec10942bec60936e6348ce65f18da71f065ad1ff8bf9f7",
+    "/private/tmp/live-catalog-albums-current/bootstrap.mjs": "90f986e080134ae7b359048cbd4601fafdf53eba1ba89cd98314d0ceab4896be",
+    "/private/tmp/live-catalog-albums-current/run.cjs": "a8a4256957a9ed5cda611478ae8c03c2266c7db33d2629a08d2cf4c554ba2cc0",
+    "/private/tmp/live-catalog-albums-current/result.json": "e074cfa3f61d651f58278363894412c84be7b02c28e2b3c3b0f8320b2ef95ba6",
+    "/private/tmp/live-catalog-albums-current/columns.cjs": "0ee5cbb0afc28ef550207c4f482b2de907c8c6bfb526aaa699a864d4c97e48e8",
+    "/private/tmp/live-catalog-albums-current/columns-result.json": "8f4fbc6f99c883c9c9d10abf02047c6179379ebeb50c1c1dbf758ab8045c5700",
+    "/private/tmp/live-catalog-albums-current/metadata-controlled.cjs": "b9c2e47a189303499b66cd523bf9c6a3f3637673483d472737a083f9e774066e",
+    "/private/tmp/live-catalog-albums-current/metadata-controlled.json": "37553389b77bc171e305ae940ae2a5a28f17ba66ea1e0e043c342a34cc5c1b51",
+    "/private/tmp/live-catalog-albums-current/out/main/index.js": "ffad7437c8a3386ec45af8917f55380b2fb93b69cae663eff1535b7a33acfa93"
+  }
+}
