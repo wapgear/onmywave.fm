@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 20 Review, 1 Dated, 0 Recorded, 132 Controlled, 21 Live, 11 External, 2 Deferred. 32 active checks remain. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 19 Review, 1 Dated, 0 Recorded, 132 Controlled, 22 Live, 11 External, 2 Deferred. 31 active checks remain. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -144,7 +144,7 @@ Source: REQUIREMENTS: Playback; M1–M4,M8,M9.
 | M11 | Restart restores queue order, duplicate occurrence, song, position, volume, shuffle and repeat paused without a prompt. | N+S | Controlled |
 | M12 | Options survive an empty queue, delayed startup and failed-restoration quit/reopen; restore failure explains the retained queue and offers explicit Retry; an options-save failure has its own retry without starting music. | N+S | Controlled |
 | M13 | Opening another account alone does not overwrite the saved listening queue; each server/account keeps its player options across restart, and returning to the queue owner restores its own options paused. | N+S | Controlled |
-| M14 | Track load failures preserve the song/queue, try supported conversion once, then expose Retry/Skip without an endless loop. | N+L | Review |
+| M14 | Track load failures preserve the song/queue, try supported conversion once, then expose Retry/Skip without an endless loop. | N+L | Live |
 | M15 | Late load results cannot replace a newer choice or produce stale errors. | N+S | Controlled |
 | M16 | macOS hardware/media controls operate the actual session, including paused commands and active speech. | N+O | External |
 | M17 | Converted-codec playback and seeking work against supported live Jellyfin combinations. | N+L+O | External |
@@ -470,3 +470,5 @@ The [current interaction-state record](verification/2026-10-17-interaction-state
 The [current live connection-recovery record](verification/2026-10-17-live-connection-recovery.json) closes C12 as Live on the named Jellyfin12.2.0/runtime.4 catalog TCP connections to the real server are deliberately disconnected, producing ECONNRESET; bounded retries and explicit Retry retain the account/protected bytes and music, then load actual albums after transport restoration. A per-request invalid token receives a real401 and opens sign-in with saved server/username and an empty password. Original saved credentials remain valid and unchanged. This is controlled fault injection against a live server, not a whole-network outage or actual credential revocation. No application change, server mutation or provider call occurs. Inventory:187 rows,185 active,2 Deferred;20 Review,1 Dated,0 Recorded,132 Controlled,21 Live,11 External.32 active checks remain.
 
 Native desktop partial evidence, 17 October 2026: [the desktop-control record](verification/2026-10-17-native-desktop-partial.json) preserves actual macOS minimize and restore observations. Titlebar drag attempts did not move the window; DOM drag regions alone do not prove OS dragging. A computer-control call stalled before a desktop-context capture, while the bounded app fixture exited normally. V10/V12 remain Review. No row changes and no deferred size or zoom checks. The current inventory above is reconciled with all 187 row dispositions.
+
+M14 evidence, 17 October 2026: [current live playback recovery](verification/2026-10-17-live-playback-recovery.json) reproduces Chromium replacing actionable load guidance with a technical source error. Both paths now retain the same plain-language explanation. Four native live cases cover failed direct and universal audio reads, exactly one conversion preparation, retained queue/occurrence, bounded failure, explicit Retry decoding real universal-endpoint audio, paused Skip, and direct-only failure recovering through the live universal endpoint. Request-owned TCP disconnects are injected against the real server; no actual server outage or transcoder-process claim is made. Production build/TypeScript and full ESLint pass. M09/M17 and observed usability remain separate. Inventory:187 rows,185 active,2 Deferred;19 Review,1 Dated,0 Recorded,132 Controlled,22 Live,11 External.31 active checks remain.

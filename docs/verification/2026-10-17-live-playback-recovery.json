@@ -1,0 +1,197 @@
+{
+  "date": "2026-10-17",
+  "sourceBaseCommit": "6f265a839f61755c1d918c51d7d1419769e74b25",
+  "scope": "M14 current native live audio load recovery; M09/M17 not accepted",
+  "result": "passed",
+  "reproduction": {
+    "before": "Actual direct and universal audio transport disconnects produce Chromium NotSupportedError. The rejected play promise overwrote the existing useful failure message with Failed to load because no supported source was found.",
+    "after": "NotSupportedError uses the same plain-language explanation as the exhausted media-error path. Typed service errors and AbortError handling remain intact.",
+    "beforeFixtureResult": {
+      "cases": [],
+      "errors": [],
+      "serverVersion": "12.2.0",
+      "baselineLiveMusicDecoded": true,
+      "result": "failed",
+      "stage": "native and conversion audio transport failure",
+      "errorType": "TimeoutError",
+      "diagnostic": {
+        "media": [
+          {
+            "route": "direct",
+            "mode": "fail-both",
+            "offsetTicks": 0,
+            "error": "ECONNRESET"
+          },
+          {
+            "route": "conversion",
+            "mode": "fail-both",
+            "offsetTicks": 0,
+            "error": "ECONNRESET"
+          }
+        ],
+        "notices": [
+          "Failed to load because no supported source was found. RetrySkip track"
+        ],
+        "loading": 0
+      },
+      "fatalFileAbsent": true
+    }
+  },
+  "native": {
+    "cases": [
+      {
+        "kind": "live audio transport disconnected for direct and conversion",
+        "queueUnchanged": true,
+        "currentOccurrencePreserved": true,
+        "explicitRetryAndSkipEnabled": true,
+        "noAutomaticLoop": true,
+        "requests": [
+          {
+            "route": "direct",
+            "mode": "fail-both",
+            "offsetTicks": 0,
+            "error": "ECONNRESET"
+          },
+          {
+            "route": "conversion",
+            "mode": "fail-both",
+            "offsetTicks": 0,
+            "error": "ECONNRESET"
+          }
+        ],
+        "prepareCalls": [
+          {
+            "transcode": false,
+            "offsetSeconds": 0
+          },
+          {
+            "transcode": true,
+            "offsetSeconds": 0
+          }
+        ]
+      },
+      {
+        "kind": "explicit Retry after transport recovery",
+        "realConvertedAudioDecoded": true,
+        "sameOccurrenceAndQueue": true,
+        "requests": [
+          {
+            "route": "conversion",
+            "mode": "online",
+            "offsetTicks": 0
+          }
+        ]
+      },
+      {
+        "kind": "Skip track after exhausted fallback",
+        "nextOccurrence": true,
+        "queueUnchanged": true,
+        "pausedIntentRetained": true
+      },
+      {
+        "kind": "failed direct audio automatically falls back to real server conversion",
+        "realConvertedAudioDecoded": true,
+        "requests": [
+          {
+            "route": "direct",
+            "mode": "fail-direct",
+            "offsetTicks": 0,
+            "error": "ECONNRESET"
+          },
+          {
+            "route": "conversion",
+            "mode": "fail-direct",
+            "offsetTicks": 0
+          }
+        ],
+        "prepareCalls": [
+          {
+            "transcode": false,
+            "offsetSeconds": 0
+          },
+          {
+            "transcode": true,
+            "offsetSeconds": 0
+          }
+        ]
+      }
+    ],
+    "errors": [],
+    "serverVersion": "12.2.0",
+    "baselineLiveMusicDecoded": true,
+    "network": {
+      "reads": 26,
+      "blockedWrites": 0,
+      "blockedExternal": 0
+    },
+    "runtime": {
+      "electron": "43.7.0",
+      "chrome": "150.0.7871.250",
+      "platform": "darwin",
+      "arch": "arm64"
+    },
+    "result": "passed",
+    "fatalFileAbsent": true
+  },
+  "method": {
+    "environment": "Actual Electron main/preload and built production renderer; isolated app data with a copy of the already-authorized protected Jellyfin connection. Native1280\u00d7720/100%, muted audio. Shared provider Keychain adapter disabled.",
+    "fault": "Audio requests establish request-owned TCP connections to the real server, then deliberately destroy the sockets. Actual ECONNRESET propagates through the media protocol. It is controlled per-request fault injection, not an actual server or whole-network outage.",
+    "recovery": "Restore normal read transport; actual universal endpoint supplies native decodable audio. Preparation telemetry records false,true exactly once for initial fallback and successful direct-only fallback.",
+    "queue": "Compare exact saved trackIds and currentIndex after failed load, Retry and Skip; native player controls supply all commands.",
+    "safety": "GET/HEAD only. No login, server/library mutation or provider request. Protected connection bytes match before/after. Driver closes the app in finally."
+  },
+  "fixtureCorrections": [
+    "Persisted queue field is currentIndex; an initial assertion incorrectly used index.",
+    "Preparation counters must reset between independent cases; the original final assertion included earlier cases.",
+    "Wait for the actual universal request before assessing that fallback. These fixture corrections did not change application behavior."
+  ],
+  "validation": {
+    "productionBuildAndTypeScript": "passed",
+    "fullEslint": "passed",
+    "rendererErrors": 0,
+    "fatalFileAbsent": true,
+    "unitTests": "none",
+    "deferredSizesOrZoom": "not run",
+    "releaseWork": "not run"
+  },
+  "limits": [
+    "Actual universal endpoint playback proves supported server-route recovery. It does not prove a specific transcoder process ran or every codec combination. M17 stays External.",
+    "Native audio muted; no audible-quality or observed listener-usability claim.",
+    "No broad hardware/OS compatibility or complete accessibility/layout acceptance.",
+    "No overall percentage; Q12/Q13 remain Review."
+  ],
+  "screenshots": [
+    "2026-10-17-live-playback-failed.png",
+    "2026-10-17-live-playback-recovered.png"
+  ],
+  "sourceSha256": {
+    "src/renderer/player.tsx": "7b43bb2c3f336f71c753a242693ee833318d53b09519a88e28f44ce0a6e90f4e",
+    "src/main/media.ts": "19252d91dd9b85a1a322f174446ebd6a34d72b77f0ab7a8a1db693d47424259e",
+    "src/main/index.ts": "a5d1528149631987f30b25a6e296b60bc97b950a712280bf6f584cce13b1d320",
+    "src/preload/index.ts": "041f6e536c7d0c09f0dffc870c150b10affa44da0e7862de21dce8397ebacb10",
+    "src/renderer/components/Player/Player.component.tsx": "3d8d1f7f1be1a1fc42f93db2dd6376f42acd6338b02991600ac7ce9aa28257f4",
+    "REQUIREMENTS.md": "707b5705ed36cc2a1f124c9b1257b53ae5b5262fa044d5e63775d58c30679bb6",
+    "out/main/index.js": "526face554d7c70d9393eef2180cebba54efd984c85fe00bf744f86a1ddece01",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/assets/index-MfACIGPR.js": "e3a84661007433b54bf4aa4c2550a0fdb8f1eeeeedaed557d2a96beb0278cbf1"
+  },
+  "fixtureSha256": {
+    "/private/tmp/live-playback-recovery-current/build.mjs": "4ba6d672db3cecb4f8b92651503c8aadd8ae29505e7c7f132462caab0e74e2ff",
+    "/private/tmp/live-playback-recovery-current/bootstrap.mjs": "b6935f44c389fb0df286893e22515fb3319d697677fe2e774f427af4007a30f2",
+    "/private/tmp/live-playback-recovery-current/run.cjs": "90e52b4f01a7f7ef7e41605010d8e39515d8a0506b4fc26784e34b6a7bf2e38c",
+    "/private/tmp/live-playback-recovery-current/result.json": "fa5dc81f391e9f5799a683d68457c6f0f8134d60b9b7379fccc9f85d679d1395",
+    "/private/tmp/live-playback-recovery-current/out/main/index.js": "ef353562808c21fa854ca5b346816488a889e09cedeb349b3d667517a25b75ac"
+  },
+  "inventory": {
+    "total": 187,
+    "active": 185,
+    "review": 19,
+    "dated": 1,
+    "recorded": 0,
+    "controlled": 132,
+    "live": 22,
+    "external": 11,
+    "deferred": 2,
+    "activeRemaining": 31
+  }
+}
