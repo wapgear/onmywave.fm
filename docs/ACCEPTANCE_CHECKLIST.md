@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 16 Review, 1 Dated, 0 Recorded, 134 Controlled, 23 Live, 11 External, 2 Deferred. 28 active checks remain. These are review dispositions, not an acceptance percentage. Of those 28 open rows, 14 require observed listener evidence and 14 have other proof requirements. The [listener protocol](LISTENER_ACCEPTANCE.md) maps every open U row to uncoached tasks and lists the other evidence needed. Preparing the protocol changes no row disposition.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 15 Review, 1 Dated, 0 Recorded, 135 Controlled, 23 Live, 11 External, 2 Deferred. 27 active checks remain. These are review dispositions, not an acceptance percentage. Of those 27 open rows, 14 require observed listener evidence and 13 have other proof requirements. The [listener protocol](LISTENER_ACCEPTANCE.md) maps every open U row to uncoached tasks and lists the other evidence needed. Preparing the protocol changes no row disposition.
 
 ## Platform, scope and presentation
 
@@ -280,7 +280,7 @@ Source: REQUIREMENTS: Design acceptance, stack, settings, acceptance and release
 | Q05 | Local secret/recovery files have appropriate private modes and no inspection/test touches personal entries. | I+S+O | Controlled |
 | Q06 | All essential controls have accessible names, visible focus and keyboard operation; source checkbox groups have names. | N+O | Review |
 | Q07 | Filter/song-action Tab/Escape, dialogs and setup detours restore logical focus, including removed-opener fallback to page heading. | N | Controlled |
-| Q08 | Interactive recovery actions are outside live status/error announcements; loading/error/empty states remain actionable. | N+O | Review |
+| Q08 | Interactive recovery actions are outside live status/error announcements; loading/error/empty states remain actionable. | N+O | Controlled |
 | Q09 | Full VoiceOver interaction works through music, setup, pending/failure/recovery and dialogs. | N+O | External |
 | Q10 | Supported macOS/architecture/display combinations and hardware integration are explicitly verified. | O | External |
 | Q11 | Ordinary listeners complete first music, optional radio setup, understanding both opt-ins and stop/recovery without coaching. | U | External |
@@ -518,3 +518,6 @@ Q06/R12/M5 partial evidence, 17 October 2026: [song keyboard visibility](verific
 
 
 Q06/R12 partial evidence, 17 October 2026: [reviewed-history focus](verification/2026-10-17-reviewed-history-focus.json) reproduces final-batch body focus and first-batch reading-position loss. Six corrected native snapshots verify first/final keyboard handoff, following Tab, pointer expansion and accurate plural/singular batch labels with 55/26 synthetic stories. Build/TypeScript/full ESLint and actual paired review pass. Concurrency/overlay guards are source-reviewed; no VoiceOver or listener promotion follows. All 187 row dispositions and 28 remaining active checks stay unchanged.
+
+
+Q08 closure, 17 October 2026: the [complete recovery audit](verification/2026-10-17-recovery-accessibility-audit.json), [147-entry source inventory](verification/2026-10-17-recovery-owners.csv) and [native macOS AX hierarchy excerpts](verification/2026-10-17-recovery-native-ax.txt) reconcile all recovery families. Current source has 62 live regions, 77 ErrorNotice owners and 8 Empty uses, with no interactive live descendants; retained unmounted NewsTest/NewsDemo receive source review only. Eleven new native states confirm separate error/status text and actionable controls through failed/busy/empty/recovered libraries and cached compound playlist reads. The exact list-only wait now agrees between AX and DOM on focused Retrying. Both independent reviewers endorse N+O completion for this row. Cold-loading and settled-success body focus remain explicit Q06 scope; VoiceOver speech/timing remains Q09. Existing native family evidence retains its named limits and is hash-reconciled. No app source changes or repeated build/unit/release/deferred checks. Inventory is 187 rows, 185 active, 2 Deferred; 15 Review, 1 Dated, 0 Recorded, 135 Controlled, 23 Live, 11 External. 27 active checks remain: 14 listener and 13 other-proof rows.
