@@ -1,0 +1,430 @@
+{
+  "date": "2026-10-17",
+  "sourceCommit": "36c269ba9a84dd7c4d06a14ac7491869c1f3b690",
+  "scope": [
+    "V04",
+    "V17"
+  ],
+  "result": "passed",
+  "before": {
+    "documentedPrimary": "#202024",
+    "observed": {
+      "rootPrimary": "rgb(32, 32, 36)",
+      "sharedTextToken": "#171923",
+      "searchFieldText": "rgb(23, 25, 35)"
+    },
+    "matchesDocumentedToken": false
+  },
+  "productionChange": "Unify shared --text from #171923 to documented #202024. The rest of styles.css is byte-identical; no other application source/configuration changes.",
+  "native": {
+    "screens": [
+      {
+        "name": "All songs",
+        "visibleControls": 83,
+        "enabledControls": 83,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "Song selection and bulk actions",
+        "visibleControls": 87,
+        "enabledControls": 87,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "Song secondary actions",
+        "visibleControls": 87,
+        "enabledControls": 87,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "Song inspector",
+        "visibleControls": 84,
+        "enabledControls": 84,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "Albums",
+        "visibleControls": 47,
+        "enabledControls": 47,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "Album detail",
+        "visibleControls": 19,
+        "enabledControls": 16,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "Playlists",
+        "visibleControls": 18,
+        "enabledControls": 18,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "New playlist dialog",
+        "visibleControls": 22,
+        "enabledControls": 21,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "Playlist detail",
+        "visibleControls": 32,
+        "enabledControls": 32,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "News bucket",
+        "visibleControls": 26,
+        "enabledControls": 26,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "News setup and automatic preferences",
+        "visibleControls": 34,
+        "enabledControls": 33,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "Advanced manual preparation",
+        "visibleControls": 41,
+        "enabledControls": 40,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "Profile availability options",
+        "visibleControls": 42,
+        "enabledControls": 41,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "Saved recordings",
+        "visibleControls": 27,
+        "enabledControls": 27,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "General settings",
+        "visibleControls": 35,
+        "enabledControls": 32,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "Provider keys",
+        "visibleControls": 29,
+        "enabledControls": 26,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "Sources",
+        "visibleControls": 24,
+        "enabledControls": 24,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "Source editor rss",
+        "visibleControls": 30,
+        "enabledControls": 29,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "Source editor twitter",
+        "visibleControls": 31,
+        "enabledControls": 30,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "Source editor hacker-news",
+        "visibleControls": 30,
+        "enabledControls": 29,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "Saved DJs",
+        "visibleControls": 28,
+        "enabledControls": 28,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "DJ editor Predefined",
+        "visibleControls": 44,
+        "enabledControls": 43,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "DJ editor Simple",
+        "visibleControls": 38,
+        "enabledControls": 36,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "DJ editor Advanced",
+        "visibleControls": 45,
+        "enabledControls": 44,
+        "noFutureFeatureControl": true
+      },
+      {
+        "name": "Player DJ controls",
+        "visibleControls": 34,
+        "enabledControls": 34,
+        "noFutureFeatureControl": true
+      }
+    ],
+    "palette": {
+      "root": {
+        "rootColor": "rgb(32, 32, 36)",
+        "rootBackground": "rgb(251, 251, 252)",
+        "tokens": {
+          "--text": "#202024",
+          "--muted": "#626674",
+          "--accent": "#c92843",
+          "--accent-soft": "#fbecef",
+          "--accent-hover": "#b5223a",
+          "--panel": "#f7f7f9",
+          "--separator": "#e6e6ea",
+          "--focus": "#c92843"
+        },
+        "sidebar": "rgb(240, 240, 243)"
+      },
+      "input": {
+        "color": "rgb(32, 32, 36)",
+        "background": "rgba(0, 0, 0, 0)",
+        "outlineColor": "rgb(32, 32, 36)",
+        "outlineWidth": "3px",
+        "opacity": "1",
+        "accentColor": "auto",
+        "focusVisible": false
+      },
+      "selectedNavigation": {
+        "color": "rgb(32, 32, 36)",
+        "background": "rgb(225, 225, 230)",
+        "outlineColor": "rgb(32, 32, 36)",
+        "outlineWidth": "3px",
+        "opacity": "1",
+        "accentColor": "auto",
+        "focusVisible": false
+      },
+      "selectedNavigationIcon": {
+        "color": "rgb(201, 40, 67)",
+        "background": "rgba(0, 0, 0, 0)",
+        "outlineColor": "rgb(201, 40, 67)",
+        "outlineWidth": "3px",
+        "opacity": "1",
+        "accentColor": "auto",
+        "focusVisible": false
+      },
+      "selectedRow": {
+        "color": "rgb(32, 32, 36)",
+        "background": "rgba(0, 0, 0, 0)",
+        "outlineColor": "rgb(32, 32, 36)",
+        "outlineWidth": "3px",
+        "opacity": "1",
+        "accentColor": "auto",
+        "focusVisible": false
+      },
+      "checkbox": {
+        "color": "rgb(32, 32, 36)",
+        "background": "rgb(243, 243, 245)",
+        "outlineColor": "rgb(32, 32, 36)",
+        "outlineWidth": "3px",
+        "opacity": "1",
+        "accentColor": "rgb(201, 40, 67)",
+        "focusVisible": false
+      },
+      "primaryDefault": {
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(201, 40, 67)",
+        "outlineColor": "rgb(255, 255, 255)",
+        "outlineWidth": "3px",
+        "opacity": "1",
+        "accentColor": "auto",
+        "focusVisible": false
+      },
+      "primaryHover": {
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(181, 34, 58)",
+        "outlineColor": "rgb(255, 255, 255)",
+        "outlineWidth": "3px",
+        "opacity": "1",
+        "accentColor": "auto",
+        "focusVisible": false
+      },
+      "keyboardFocus": {
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(181, 34, 58)",
+        "outlineColor": "rgb(201, 40, 67)",
+        "outlineWidth": "1px",
+        "opacity": "1",
+        "accentColor": "auto",
+        "focusVisible": true
+      },
+      "disabledPrimary": {
+        "color": "rgb(98, 102, 116)",
+        "background": "rgb(240, 240, 242)",
+        "outlineColor": "rgb(98, 102, 116)",
+        "outlineWidth": "3px",
+        "opacity": "1",
+        "accentColor": "auto",
+        "focusVisible": false
+      },
+      "modalInput": {
+        "color": "rgb(32, 32, 36)",
+        "background": "rgb(243, 243, 245)",
+        "outlineColor": "rgb(32, 32, 36)",
+        "outlineWidth": "3px",
+        "opacity": "1",
+        "accentColor": "auto",
+        "focusVisible": false
+      },
+      "contrast": {
+        "primary": 5.429067339411902,
+        "hover": 6.452286756332349,
+        "disabled": 5.024749597052871,
+        "primaryTextOnMain": 15.698842201639899,
+        "focusOnMain": 5.249746024718591
+      }
+    },
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "result": "passed",
+    "rendererErrors": 0,
+    "providerRequests": 0,
+    "fatalFileAbsent": true
+  },
+  "sourceInspection": {
+    "result": "passed",
+    "rendererTSXFiles": 41,
+    "staticStringLiterals": 2733,
+    "jsxTextNodes": 999,
+    "unsupportedFeatureLabels": [],
+    "waveApiMembers": 63,
+    "unsupportedFeatureApiMembers": [],
+    "legacyMorningFieldsNotReadByWorkflow": true,
+    "notes": [
+      "Dormant morning/weather fields remain in the saved shared workflow schema for compatibility. They have no rendered editor and are not read by the scheduled news runner.",
+      "Static labels and API inspection corroborate the native page/editor/control walk. They do not establish observed user comprehension or exhaustive arbitrary server-supplied text."
+    ]
+  },
+  "method": {
+    "palette": "Actual production renderer computed styles and native interaction verify root background/text, neutral sidebar, documented tokens, input/modal text, selected navigation/icon/checkbox, enabled primary, settled hover, keyboard focus and disabled primary.",
+    "contrast": "Ratios are computed from the measured opaque text/surface pairs. They cover only the named palette samples, not every widget, state or OS overlay.",
+    "scope": "25 native locations span music browsing/detail/actions, playlist dialog/detail, News bucket/setup/manual/saved/profile options, all shared Settings sections, RSS/X/HN source modes, all three DJ editor modes and player DJ controls. No forbidden future-feature control appears.",
+    "source": "AST inspection covers all41 renderer TSX files and all63 preload API members. Dormant morning/weather storage fields remain compatible but have no rendered editor and are not read by the scheduled news runner.",
+    "isolation": "Owned localhost catalog and disposable dummy profiles/keys. Shared provider adapter is disabled, external network blocked, scheduler stopped after real readiness, no generation control is activated."
+  },
+  "verification": {
+    "productionBuildTypeScript": "npm run build passed after the CSS change",
+    "fullLint": "npm run lint passed",
+    "nativeSurfaces": 25,
+    "rendererErrors": 0,
+    "providerRequests": 0,
+    "fatalFileAbsent": true,
+    "visual": "Inspected native disabled-primary dialog capture at1280\u00d7720 and100% zoom",
+    "unitTests": false,
+    "deferredSizeOrZoom": false,
+    "packagingSigningNotarizationPublishing": false,
+    "runtime": {
+      "macOS": "27.2",
+      "architecture": "arm64",
+      "Electron": "43.7.0"
+    }
+  },
+  "fixtureCorrections": [
+    "Wait for the playlist query to enable New playlist, then wait for its background transition to settle before measuring its default color.",
+    "Use the observed implicit source-type label rather than requiring exact label text that includes select-option contents."
+  ],
+  "limits": [
+    "The native palette samples establish the documented token/state contract, not exhaustive contrast, VoiceOver, all long/error states or every display scale. V08/Q06/Q09 and wider layout/platform acceptance remain separate.",
+    "Scope labels/API inspection and native controls do not constitute observed listener comprehension or arbitrary server-supplied-text validation.",
+    "The legacy morning/weather data shape is retained; no weather/calendar/music-selection/broadcast/release feature is added.",
+    "This controlled local environment makes no live source/provider, audible-quality or overall completion claim.",
+    "The screenshot is a native content capture; full desktop wallpaper/menu/Dock context is not established by it."
+  ],
+  "inventory": {
+    "total": 187,
+    "active": 185,
+    "review": 23,
+    "dated": 1,
+    "recorded": 0,
+    "controlled": 130,
+    "live": 20,
+    "external": 11,
+    "deferred": 2,
+    "activeRemaining": 35
+  },
+  "sourceSha256": {
+    "REQUIREMENTS.md": "c589feab10aac0296277fab26e351a18837c4be7a2adcb677cf88606cc749a6a",
+    "out/main/index.js": "526face554d7c70d9393eef2180cebba54efd984c85fe00bf744f86a1ddece01",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/assets/index-BaOnYJLf.css": "a302ffe6728fc1c054681e821c3cf60a5da43c5bcab7a8da9249f20d5a88122b",
+    "out/renderer/assets/index-DyDp7blI.js": "610a778d9c91748e881cde52e372d8f2448fc3c8036e78a10ad17f8f400f1516",
+    "src/main/index.ts": "a5d1528149631987f30b25a6e296b60bc97b950a712280bf6f584cce13b1d320",
+    "src/main/news-workflow.ts": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+    "src/preload/index.ts": "041f6e536c7d0c09f0dffc870c150b10affa44da0e7862de21dce8397ebacb10",
+    "src/renderer/App.tsx": "9341e01ab161fec685239fb5e2841342e85df33016326744db1ade9fe20860e1",
+    "src/renderer/NewsRecovery.tsx": "0041da77053a53592d90f9fb0e1bf86c7868c48bd7bd5567118df605550fb35d",
+    "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": "550356492cae38ab34925c91ad9cb5c1ab7c9a7685779e9202de297fc33915de",
+    "src/renderer/components/ConfigurationTabs/ConfigurationTabs.component.tsx": "96400645f0978e408da20c69ec9692250e7d58b4d6caec72afec7711f2c8a4b3",
+    "src/renderer/components/FilterSelect/FilterSelect.component.tsx": "b6c4242190b3d107c5145f464db5f3b4912736c70c940a3344c73aa26463ec26",
+    "src/renderer/components/InfoHelp/InfoHelp.component.tsx": "be2433410cfe2387f36bae23bc6e993a3f54942e9f7979c1854908a83b508cc8",
+    "src/renderer/components/Inspector/Inspector.component.tsx": "39f001049a50433d0eb0bb16af4a8f51d00811e437c12e2145068e8b329dd893",
+    "src/renderer/components/LibraryChooser.tsx": "18c22d71b890eae73fe8ef20241300dc55160e8372e6ac1ab9f5d998d301cf36",
+    "src/renderer/components/LibrarySelection.tsx": "97db6216b4fada46621ce20658e1bc1d47b76fe0819a0db75e446ea82965e342",
+    "src/renderer/components/Player/DJPopover.component.tsx": "661f74ca6054421a797e6c70de5f22b2437169fb4dd59dcd55b254856351b096",
+    "src/renderer/components/Player/Player.component.tsx": "3d8d1f7f1be1a1fc42f93db2dd6376f42acd6338b02991600ac7ce9aa28257f4",
+    "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx": "bbded7b5200757a132f24dd5d2b56edd644c4741e2e26da2d4f2d23c62323f6e",
+    "src/renderer/components/ProviderKeys/TwitterSetupHelp.component.tsx": "49a4b7bd305c502937618daa3acb00fc85100267a60df492cac37efb13254317",
+    "src/renderer/components/Queue/Queue.component.tsx": "4938e07285b9188b3d9105556ed2ebbed3b20951d4b094b079f27a14d113c1a5",
+    "src/renderer/components/Shared.tsx": "303972b169cf42303085a3db1988c04899870a69a6e7591ee4292656785ed2af",
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "c6d1b4c4f94a8cc67f9c052526b054ad8b716fbb3ceb9f83e347946bd4ad3a63",
+    "src/renderer/dj-playback.tsx": "14509ac179ff63c45530e74fd38f81b9cc3ce0cb08e7804f17ce1f0939304d85",
+    "src/renderer/main.tsx": "863a6596bde95ba270f0d554a2ac2bd0c3819ca832f1bfd577d0edf9bb69a7cc",
+    "src/renderer/pages/Albums/Albums.page.tsx": "8abce67107438b4ed395443875aa920b6e71cbc968b3b834c9702ddd745f81ed",
+    "src/renderer/pages/Albums/VirtualAlbums.component.tsx": "a1685437270b676a8a58395b18068911dbf772a82e59cbdcc85be2f17287d62b",
+    "src/renderer/pages/Connection/Connection.page.tsx": "1256fee7c558c4840e6b400d6990d5b5f7a7c5afcc9f1bd7fa6171e2a5007d5e",
+    "src/renderer/pages/DJs/DJs.page.tsx": "59edbcbd3f4e56834f4757910120b9d914bac36cda4311a5508b81ecb46e8e30",
+    "src/renderer/pages/DJs/components/DJEditor.component.tsx": "4046217da52424c654bbf90aaae7d4aafea2cc71a649b409312c776c97614684",
+    "src/renderer/pages/DJs/components/DJPreview.component.tsx": "496eaaac54e8fedb02e33bd2c07b01bc5c4a0b23fcb57940729c32a5bd11c3b8",
+    "src/renderer/pages/DJs/components/NewsDemo.component.tsx": "32c3c7403ed5fc3cb5bfa8841e53650e20eab85e866021d5130af1059e2da8bb",
+    "src/renderer/pages/DJs/components/NewsTest.component.tsx": "e95a07d7576b06808101081e09c74c39d396cbde2cd8bcd04ef3aeb61271909d",
+    "src/renderer/pages/DJs/components/VoicePreview.component.tsx": "deb7e7e57fc15450e5fccc52c74e0b1bbae113ad9d2574f77cb825c9087c706c",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "8bea51f6cb40f8b4ca0714e8af6b344b7e0a6e40278e018935b6a0d5e7f4e721",
+    "src/renderer/pages/Settings/Settings.page.tsx": "ce0c41cd58f82a801b651940cb641945c12ed4c83b765377f6be8d809d1e5d9f",
+    "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx": "e1625bd30f4abed982787a9b09016c8440d0a1b8fbe691b255c7eba19f16cc02",
+    "src/renderer/pages/Settings/components/NewsTransitionPreview.component.tsx": "b44dc08192dd9d4a354a8f921c1b5e17c6a0cf2291b26b8aa3bd285d55b2ff31",
+    "src/renderer/pages/Settings/components/NewsTransitions.component.tsx": "6335bb50284506a95a0c89cef02b22aeed1e7b87d915800f44237b81899c19b4",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": "b75be2cedea89bd799b2cfa4d33dab3186607e57aaf7b7f7c8e43b6e5e189e53",
+    "src/renderer/pages/Songs/Songs.page.tsx": "79b3115960d53568bac407d5754ff0996fee44ba895b222d99b4e0fb71e3007f",
+    "src/renderer/pages/Songs/VirtualSongs.component.tsx": "95ada95c0533bb1e462a818f6981c60d22cd4a9a8e4df27b8cea6cc3119606e4",
+    "src/renderer/pages/Sources/Sources.page.tsx": "ca6d1678a1c72dbf57e184f109e86449e4f2d2c90214fe46be49466e39039d09",
+    "src/renderer/pages/Stations/Stations.page.tsx": "2de48a1beddc6b79a4684fa97ec103044b73d5ea82d635221c65c610e0bb3720",
+    "src/renderer/pages/Stations/components/NewsBucket.component.tsx": "de83e49585e17339bca32a0866b4c5126e95ceacb1cc4bf9e80d81a50221f5a7",
+    "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": "a089c86e2b2678ed77f2559648cdfeaca072ba6bb46453a2f4e8befb2f68e09e",
+    "src/renderer/pages/Stations/components/RoomSetup.component.tsx": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330",
+    "src/renderer/player.tsx": "e1e24a0c3c370ebfd152b80bbcba6d1d5199e53264009eecd605c395c9c9b72b",
+    "src/renderer/styles.css": "770ab50d076e6416811f64300e745a92cdb10fdc2b6f7f9028f0d5c5ef742e3b",
+    "src/shared/types.ts": "a07f8788eb73f9579d69a94c4fc6b77602b135c690cdf617b021616ce54e36ff",
+    "src/shared/workflow.ts": "22bbb66493579cc57e09c69119943adec0fa2373d823820a2579bd4996e6cc77"
+  },
+  "fixtureSha256": {
+    "/private/tmp/scope-palette-current/build.mjs": "b500384f9c29e94fe2163cb3677d4eebf32d174e73827fa2563cfd4aa4d54373",
+    "/private/tmp/scope-palette-current/bootstrap.mjs": "7e4a8ea2b41b06c1192aca346dab3b42725a776c1328ac6f002fa6da034cb596",
+    "/private/tmp/scope-palette-current/server.mjs": "d493896d58a822c247d9938d347e99bec32b1d8ae2698b680d28161c2a2a59cc",
+    "/private/tmp/scope-palette-current/before.cjs": "55de7f5423240baa46e5d9e1183462a2c4e45ccc7365200192e4423e30e5e4a7",
+    "/private/tmp/scope-palette-current/before.json": "8c218d61605a79826beee6a7633a7d641b2c4521030bb296bea56bd44017e5c7",
+    "/private/tmp/scope-palette-current/native.cjs": "001d509563231f7f27f329cb24ad832e1c24679882e4c213535f84131448a94c",
+    "/private/tmp/scope-palette-current/native.json": "d5cdb64c6892d7b1ecdf14325fe9d7ea7426e0e39b1bb35e852cd81a8c73539c",
+    "/private/tmp/scope-palette-current/native.log": "92093a9a14eab1d3c648a0314bdaf4200f940fc6b9afd9c2cd2e3a81af8ac0a0",
+    "/private/tmp/scope-palette-current/source-audit.mjs": "bb52798c9a3e98e41b61309ad9ce647fbb78ef740d83190d97f4cd40d0c5b1a1",
+    "/private/tmp/scope-palette-current/source-audit.json": "26eee0cee50ebac721df49e5ea76359fb9cd00b51c2da13c7d98cda8a6e8b39e",
+    "/private/tmp/scope-palette-current/build.log": "17fc86b9f02410df9007b16a5e8fa7b1034b3dc996023e650d678476f17e3409",
+    "/private/tmp/scope-palette-current/lint.log": "6f1680e0ff047e07a06dcf9afc079770fad3f871d47a52ee12dccaaa84366d63",
+    "/private/tmp/scope-palette-current/disabled.png": "db31d840641c5ceabdd1fcdc722e971a4df38f9685c82747bd6177b250458f2e",
+    "/private/tmp/scope-palette-current/out/main/index.js": "5025f855d68f00fed711ae0656b3815689d5ec406cfb08faedf8aa455087d3a4"
+  },
+  "nextReview": {
+    "Q06": "The native New playlist capture places initial focus on Close despite the form input requesting autoFocus. Review form initial-focus behavior separately; this record only accepts focus appearance, not every dialog focus policy."
+  }
+}

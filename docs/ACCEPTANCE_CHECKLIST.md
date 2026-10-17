@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 25 Review, 1 Dated, 0 Recorded, 128 Controlled, 20 Live, 11 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 23 Review, 1 Dated, 0 Recorded, 130 Controlled, 20 Live, 11 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -33,7 +33,7 @@ Source: REQUIREMENTS: Product scope, Visual design, Project folder and stack.
 | V01 | macOS Electron app in desktop-light remains separate from desktop and ios. | I | Controlled |
 | V02 | Jellyfin provides existing music, permissions and playlists without a new upload/import step. | N+L | Live |
 | V03 | Production uses Vite and TanStack Query, with editable drafts separate from server caches. | I | Controlled |
-| V04 | Implemented neutral/rose palette matches the documented tokens in default, selected, disabled and focus states. | N | Review |
+| V04 | Implemented neutral/rose palette matches the documented tokens in default, selected, disabled and focus states. | N | Controlled |
 | V05 | Bundled Manrope 600 headings and Inter 400/500 interface text render without font network requests. | I+N | Controlled |
 | V06 | Sidebar, song table, artwork grid and persistent inset player follow the documented spacing and typography targets. | N+U | Review |
 | V07 | Long metadata truncates or wraps without moving or covering essential controls. | N | Review |
@@ -46,7 +46,7 @@ Source: REQUIREMENTS: Product scope, Visual design, Project folder and stack.
 | V14 | At 100–200% app zoom, navigation scrolls and volume, player and setup Save remain reachable. | N | Deferred |
 | V15 | Narrow queue/details replace the main area; covered controls leave keyboard order and closing restores focus. | N | Deferred |
 | V16 | Common actions are discoverable and optional radio setup does not obstruct ordinary listening. | N+U | Review |
-| V17 | Out-of-scope weather/calendar/song-selection/broadcast/release features do not appear as working controls. | I+N | Review |
+| V17 | Out-of-scope weather/calendar/song-selection/broadcast/release features do not appear as working controls. | I+N | Controlled |
 
 ## Connection and accessible libraries
 
@@ -453,3 +453,6 @@ C10 evidence, 17 October 2026: [current session-only replacement](verification/2
 
 
 V02/P01 evidence, 17 October 2026: [current live playlist entry](verification/2026-10-17-live-playlist-entry.json). Three native live cases compare the existing music-library set, decoded playback, complete account music-playlist list and every ordered playlist entry with independent server reads. Jellyfin12.2.0 exposes1,318 songs and one editable300-entry playlist; every tile/title/entry matches and no upload/import step or server mutation occurs. A separate controlled native journey verifies explicit Video/Photo exclusion, older untyped/empty compatibility and clearing old-account tiles/entries on UI account replacement. P05 retains its live permission variants. Current source/build artifacts match PR47; no code or repeated build/lint change. Inventory:187 rows,185 active,2 Deferred;25 Review,1 Dated,0 Recorded,128 Controlled,20 Live,11 External.37 active checks remain; the goal stays open.
+
+
+V04/V17 evidence, 17 October 2026: [current scope and palette](verification/2026-10-17-scope-palette.json). Native computed styles reproduced a second shared near-black token in inputs despite the documented primary color. Unifying --text to#202024 fixes it. Default, selected, hover, disabled and keyboard-focus palette samples pass, with measured named text/surface contrast at least5.02:1. A25-location native walkthrough plus AST inspection of all41 renderer TSX files and63 preload API members finds no working controls for excluded future features. Dormant weather data remains unexposed and unused by the news runner. Build/TypeScript/full ESLint, JSON, hashes, links, inventory and whitespace pass. Broader contrast, accessibility, layout and desktop-context checks remain separate. Inventory:187 rows,185 active,2 Deferred;23 Review,1 Dated,0 Recorded,130 Controlled,20 Live,11 External.35 active checks remain; the goal stays open.
