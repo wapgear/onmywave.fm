@@ -42,3 +42,6 @@ export function PageHeading({ title, subtitle, children }: { title: string; subt
   return <header className="page-heading"><div><h1 tabIndex={-1}>{title}</h1>{subtitle && <p>{subtitle}</p>}</div>{children}</header>;
 }
 export function duration(seconds: number) { const safe = Number.isFinite(seconds) ? Math.max(0, seconds) : 0; return `${Math.floor(safe / 60)}:${String(Math.floor(safe % 60)).padStart(2, '0')}`; }
+export function TrackDuration({ seconds }: { seconds: number }) {
+  return Number.isFinite(seconds) && seconds > 0 ? duration(seconds) : <span role="img" aria-label="Duration unavailable">—</span>;
+}

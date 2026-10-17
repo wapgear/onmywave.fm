@@ -1,0 +1,883 @@
+{
+  "date": "2026-10-17",
+  "sourceBaseCommit": "0908b7c6d16e027237c1564ccf912a8c2ae62aad",
+  "scope": "M09 native live duration recovery and actual conversion offsets, plus unavailable-duration presentation",
+  "result": "passed",
+  "reproduction": {
+    "beforeNative": {
+      "cases": [
+        {
+          "metadata": "missing",
+          "conversion": false,
+          "learnedTotal": 275.342222,
+          "nativeResourceDuration": 275.342222,
+          "resourceOffset": 0,
+          "pausedRestore": true,
+          "duplicateUnchangedUntilSelected": true,
+          "staleHandlerIgnored": true,
+          "catalogDurationUnchanged": true,
+          "requests": [
+            {
+              "route": "direct",
+              "mode": "online",
+              "offsetTicks": 0
+            },
+            {
+              "route": "direct",
+              "mode": "online",
+              "offsetTicks": 0
+            }
+          ],
+          "network": {
+            "reads": 34,
+            "blockedWrites": 0,
+            "blockedExternal": 0
+          },
+          "metadataFieldsAltered": 170
+        },
+        {
+          "metadata": "missing",
+          "conversion": true,
+          "learnedTotal": 287.342222,
+          "nativeResourceDuration": 275.342222,
+          "resourceOffset": 12,
+          "pausedRestore": true,
+          "duplicateUnchangedUntilSelected": true,
+          "staleHandlerIgnored": true,
+          "catalogDurationUnchanged": true,
+          "requests": [
+            {
+              "route": "direct",
+              "mode": "fail-direct",
+              "offsetTicks": 0,
+              "error": "ECONNRESET"
+            },
+            {
+              "route": "conversion",
+              "mode": "fail-direct",
+              "offsetTicks": 120000000
+            },
+            {
+              "route": "direct",
+              "mode": "fail-direct",
+              "offsetTicks": 0,
+              "error": "ECONNRESET"
+            },
+            {
+              "route": "conversion",
+              "mode": "fail-direct",
+              "offsetTicks": 0
+            }
+          ],
+          "network": {
+            "reads": 36,
+            "blockedWrites": 0,
+            "blockedExternal": 0
+          },
+          "metadataFieldsAltered": 170
+        },
+        {
+          "metadata": "negative",
+          "conversion": false,
+          "learnedTotal": 275.342222,
+          "nativeResourceDuration": 275.342222,
+          "resourceOffset": 0,
+          "pausedRestore": true,
+          "duplicateUnchangedUntilSelected": true,
+          "staleHandlerIgnored": true,
+          "catalogDurationUnchanged": true,
+          "requests": [
+            {
+              "route": "direct",
+              "mode": "online",
+              "offsetTicks": 0
+            },
+            {
+              "route": "direct",
+              "mode": "online",
+              "offsetTicks": 0
+            }
+          ],
+          "network": {
+            "reads": 34,
+            "blockedWrites": 0,
+            "blockedExternal": 0
+          },
+          "metadataFieldsAltered": 170
+        },
+        {
+          "metadata": "negative",
+          "conversion": true,
+          "learnedTotal": 287.342222,
+          "nativeResourceDuration": 275.342222,
+          "resourceOffset": 12,
+          "pausedRestore": true,
+          "duplicateUnchangedUntilSelected": true,
+          "staleHandlerIgnored": true,
+          "catalogDurationUnchanged": true,
+          "requests": [
+            {
+              "route": "direct",
+              "mode": "fail-direct",
+              "offsetTicks": 0,
+              "error": "ECONNRESET"
+            },
+            {
+              "route": "conversion",
+              "mode": "fail-direct",
+              "offsetTicks": 120000000
+            },
+            {
+              "route": "direct",
+              "mode": "fail-direct",
+              "offsetTicks": 0,
+              "error": "ECONNRESET"
+            },
+            {
+              "route": "conversion",
+              "mode": "fail-direct",
+              "offsetTicks": 0
+            }
+          ],
+          "network": {
+            "reads": 36,
+            "blockedWrites": 0,
+            "blockedExternal": 0
+          },
+          "metadataFieldsAltered": 170
+        },
+        {
+          "metadata": "invalid",
+          "conversion": false,
+          "learnedTotal": 275.342222,
+          "nativeResourceDuration": 275.342222,
+          "resourceOffset": 0,
+          "pausedRestore": true,
+          "duplicateUnchangedUntilSelected": true,
+          "staleHandlerIgnored": true,
+          "catalogDurationUnchanged": true,
+          "requests": [
+            {
+              "route": "direct",
+              "mode": "online",
+              "offsetTicks": 0
+            },
+            {
+              "route": "direct",
+              "mode": "online",
+              "offsetTicks": 0
+            }
+          ],
+          "network": {
+            "reads": 34,
+            "blockedWrites": 0,
+            "blockedExternal": 0
+          },
+          "metadataFieldsAltered": 170
+        },
+        {
+          "metadata": "invalid",
+          "conversion": true,
+          "learnedTotal": 287.342222,
+          "nativeResourceDuration": 275.342222,
+          "resourceOffset": 12,
+          "pausedRestore": true,
+          "duplicateUnchangedUntilSelected": true,
+          "staleHandlerIgnored": true,
+          "catalogDurationUnchanged": true,
+          "requests": [
+            {
+              "route": "direct",
+              "mode": "fail-direct",
+              "offsetTicks": 0,
+              "error": "ECONNRESET"
+            },
+            {
+              "route": "conversion",
+              "mode": "fail-direct",
+              "offsetTicks": 120000000
+            },
+            {
+              "route": "direct",
+              "mode": "fail-direct",
+              "offsetTicks": 0,
+              "error": "ECONNRESET"
+            },
+            {
+              "route": "conversion",
+              "mode": "fail-direct",
+              "offsetTicks": 0
+            }
+          ],
+          "network": {
+            "reads": 36,
+            "blockedWrites": 0,
+            "blockedExternal": 0
+          },
+          "metadataFieldsAltered": 170
+        }
+      ],
+      "errors": [],
+      "result": "passed"
+    },
+    "qualification": "The initial arithmetic checks passed, but semantic verification contradicted acceptance: converted offset12 had full native duration275.342222 and wrongly produced total287.342222. These initial results are superseded.",
+    "sameFileAtDifferentOffsets": {
+      "sameBytes": true,
+      "values": [
+        {
+          "offset": 0,
+          "status": 206,
+          "length": 65536,
+          "contentRange": "bytes 0-65535/4572860",
+          "sha256": "6e27610df99a50b83ebbd733bd3f8476e9912bf5a7df1027d6cf49c49b1ded5b"
+        },
+        {
+          "offset": 12,
+          "status": 206,
+          "length": 65536,
+          "contentRange": "bytes 0-65535/4572860",
+          "sha256": "6e27610df99a50b83ebbd733bd3f8476e9912bf5a7df1027d6cf49c49b1ded5b"
+        }
+      ],
+      "originalDuration": 275.342222
+    },
+    "fixedActualConversion": {
+      "sameBytes": false,
+      "values": [
+        {
+          "offset": 0,
+          "status": 200,
+          "length": 8822052,
+          "contentRange": null,
+          "sha256": "65f9ebcc82183ab3756e06c069415ec295129a7e5309df9feacc56575cac8ccc"
+        },
+        {
+          "offset": 12,
+          "status": 200,
+          "length": 8438365,
+          "contentRange": null,
+          "sha256": "b4a3f4c8c6095432a52fc4ae75e882ee167f852fee82791178dcd0fa818a89e2"
+        }
+      ],
+      "originalDuration": 275.342222
+    },
+    "independentEncodedMediaInspection": [
+      {
+        "offset": 0,
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100"
+          }
+        ],
+        "format": {
+          "duration": "275.386844"
+        }
+      },
+      {
+        "offset": 12,
+        "programs": [],
+        "stream_groups": [],
+        "streams": [
+          {
+            "codec_name": "mp3",
+            "sample_rate": "44100"
+          }
+        ],
+        "format": {
+          "duration": "263.396625"
+        }
+      }
+    ]
+  },
+  "change": [
+    "Omit the universal endpoint direct-play container profile. Retain MP3 output settings, startTimeTicks, play session, authenticated same-origin proxy and opaque session-bound resources.",
+    "Show unavailable track durations with a named dash symbol in tables and queue; preserve the elapsed-time formatter used by auditions.",
+    "Use singular song when one queue entry remains.",
+    "Clarify actual position and unavailable-length expectations in REQUIREMENTS and M8 STAR story."
+  ],
+  "nativeMatrix": {
+    "cases": [
+      {
+        "metadata": "missing",
+        "conversion": false,
+        "bufferedFiniteConversion": false,
+        "learnedTotal": 275.342222,
+        "nativeResourceDuration": 275.342222,
+        "resourceOffset": 0,
+        "pausedRestore": true,
+        "duplicateUnchangedUntilSelected": true,
+        "staleHandlerIgnored": true,
+        "catalogDurationUnchanged": true,
+        "requests": [
+          {
+            "route": "direct",
+            "mode": "online",
+            "offsetTicks": 0
+          },
+          {
+            "route": "direct",
+            "mode": "online",
+            "offsetTicks": 0
+          }
+        ],
+        "network": {
+          "reads": 34,
+          "blockedWrites": 0,
+          "blockedExternal": 0
+        },
+        "metadataFieldsAltered": 170
+      },
+      {
+        "metadata": "missing",
+        "conversion": true,
+        "bufferedFiniteConversion": true,
+        "learnedTotal": 275.38,
+        "nativeResourceDuration": 263.38,
+        "resourceOffset": 12,
+        "pausedRestore": true,
+        "duplicateUnchangedUntilSelected": true,
+        "staleHandlerIgnored": true,
+        "catalogDurationUnchanged": true,
+        "requests": [
+          {
+            "route": "direct",
+            "mode": "fail-direct",
+            "offsetTicks": 0,
+            "error": "ECONNRESET"
+          },
+          {
+            "route": "conversion",
+            "mode": "fail-direct",
+            "offsetTicks": 120000000
+          },
+          {
+            "route": "direct",
+            "mode": "fail-direct",
+            "offsetTicks": 0,
+            "error": "ECONNRESET"
+          },
+          {
+            "route": "conversion",
+            "mode": "fail-direct",
+            "offsetTicks": 0
+          }
+        ],
+        "network": {
+          "reads": 36,
+          "blockedWrites": 0,
+          "blockedExternal": 0
+        },
+        "metadataFieldsAltered": 170
+      },
+      {
+        "metadata": "negative",
+        "conversion": false,
+        "bufferedFiniteConversion": false,
+        "learnedTotal": 275.342222,
+        "nativeResourceDuration": 275.342222,
+        "resourceOffset": 0,
+        "pausedRestore": true,
+        "duplicateUnchangedUntilSelected": true,
+        "staleHandlerIgnored": true,
+        "catalogDurationUnchanged": true,
+        "requests": [
+          {
+            "route": "direct",
+            "mode": "online",
+            "offsetTicks": 0
+          },
+          {
+            "route": "direct",
+            "mode": "online",
+            "offsetTicks": 0
+          }
+        ],
+        "network": {
+          "reads": 34,
+          "blockedWrites": 0,
+          "blockedExternal": 0
+        },
+        "metadataFieldsAltered": 170
+      },
+      {
+        "metadata": "negative",
+        "conversion": true,
+        "bufferedFiniteConversion": true,
+        "learnedTotal": 275.38,
+        "nativeResourceDuration": 263.38,
+        "resourceOffset": 12,
+        "pausedRestore": true,
+        "duplicateUnchangedUntilSelected": true,
+        "staleHandlerIgnored": true,
+        "catalogDurationUnchanged": true,
+        "requests": [
+          {
+            "route": "direct",
+            "mode": "fail-direct",
+            "offsetTicks": 0,
+            "error": "ECONNRESET"
+          },
+          {
+            "route": "conversion",
+            "mode": "fail-direct",
+            "offsetTicks": 120000000
+          },
+          {
+            "route": "direct",
+            "mode": "fail-direct",
+            "offsetTicks": 0,
+            "error": "ECONNRESET"
+          },
+          {
+            "route": "conversion",
+            "mode": "fail-direct",
+            "offsetTicks": 0
+          }
+        ],
+        "network": {
+          "reads": 36,
+          "blockedWrites": 0,
+          "blockedExternal": 0
+        },
+        "metadataFieldsAltered": 170
+      },
+      {
+        "metadata": "invalid",
+        "conversion": false,
+        "bufferedFiniteConversion": false,
+        "learnedTotal": 275.342222,
+        "nativeResourceDuration": 275.342222,
+        "resourceOffset": 0,
+        "pausedRestore": true,
+        "duplicateUnchangedUntilSelected": true,
+        "staleHandlerIgnored": true,
+        "catalogDurationUnchanged": true,
+        "requests": [
+          {
+            "route": "direct",
+            "mode": "online",
+            "offsetTicks": 0
+          },
+          {
+            "route": "direct",
+            "mode": "online",
+            "offsetTicks": 0
+          },
+          {
+            "route": "direct",
+            "mode": "online",
+            "offsetTicks": 0
+          }
+        ],
+        "network": {
+          "reads": 35,
+          "blockedWrites": 0,
+          "blockedExternal": 0
+        },
+        "metadataFieldsAltered": 170
+      },
+      {
+        "metadata": "invalid",
+        "conversion": true,
+        "bufferedFiniteConversion": true,
+        "learnedTotal": 275.38,
+        "nativeResourceDuration": 263.38,
+        "resourceOffset": 12,
+        "pausedRestore": true,
+        "duplicateUnchangedUntilSelected": true,
+        "staleHandlerIgnored": true,
+        "catalogDurationUnchanged": true,
+        "requests": [
+          {
+            "route": "direct",
+            "mode": "fail-direct",
+            "offsetTicks": 0,
+            "error": "ECONNRESET"
+          },
+          {
+            "route": "conversion",
+            "mode": "fail-direct",
+            "offsetTicks": 120000000
+          },
+          {
+            "route": "direct",
+            "mode": "fail-direct",
+            "offsetTicks": 0,
+            "error": "ECONNRESET"
+          },
+          {
+            "route": "conversion",
+            "mode": "fail-direct",
+            "offsetTicks": 0
+          }
+        ],
+        "network": {
+          "reads": 36,
+          "blockedWrites": 0,
+          "blockedExternal": 0
+        },
+        "metadataFieldsAltered": 170
+      },
+      {
+        "metadata": "missing",
+        "conversion": true,
+        "bufferedFiniteConversion": false,
+        "learnedTotal": 1,
+        "nativeResourceDuration": "Infinity",
+        "resourceOffset": 12,
+        "pausedRestore": true,
+        "duplicateUnchangedUntilSelected": true,
+        "staleHandlerIgnored": true,
+        "catalogDurationUnchanged": true,
+        "requests": [
+          {
+            "route": "direct",
+            "mode": "fail-direct",
+            "offsetTicks": 0,
+            "error": "ECONNRESET"
+          },
+          {
+            "route": "conversion",
+            "mode": "fail-direct",
+            "offsetTicks": 120000000
+          },
+          {
+            "route": "direct",
+            "mode": "fail-direct",
+            "offsetTicks": 0,
+            "error": "ECONNRESET"
+          },
+          {
+            "route": "conversion",
+            "mode": "fail-direct",
+            "offsetTicks": 0
+          }
+        ],
+        "network": {
+          "reads": 36,
+          "blockedWrites": 0,
+          "blockedExternal": 0
+        },
+        "metadataFieldsAltered": 170
+      },
+      {
+        "metadata": "valid",
+        "conversion": false,
+        "bufferedFiniteConversion": false,
+        "learnedTotal": 275.342222,
+        "nativeResourceDuration": 275.342222,
+        "resourceOffset": 0,
+        "pausedRestore": true,
+        "duplicateUnchangedUntilSelected": true,
+        "staleHandlerIgnored": true,
+        "catalogDurationUnchanged": true,
+        "requests": [
+          {
+            "route": "direct",
+            "mode": "online",
+            "offsetTicks": 0
+          },
+          {
+            "route": "direct",
+            "mode": "online",
+            "offsetTicks": 0
+          }
+        ],
+        "network": {
+          "reads": 34,
+          "blockedWrites": 0,
+          "blockedExternal": 0
+        },
+        "metadataFieldsAltered": 0
+      },
+      {
+        "metadata": "valid",
+        "conversion": true,
+        "bufferedFiniteConversion": false,
+        "learnedTotal": 275.342222,
+        "nativeResourceDuration": "Infinity",
+        "resourceOffset": 12,
+        "pausedRestore": true,
+        "duplicateUnchangedUntilSelected": true,
+        "staleHandlerIgnored": true,
+        "catalogDurationUnchanged": true,
+        "requests": [
+          {
+            "route": "direct",
+            "mode": "fail-direct",
+            "offsetTicks": 0,
+            "error": "ECONNRESET"
+          },
+          {
+            "route": "conversion",
+            "mode": "fail-direct",
+            "offsetTicks": 120000000
+          },
+          {
+            "route": "direct",
+            "mode": "fail-direct",
+            "offsetTicks": 0,
+            "error": "ECONNRESET"
+          },
+          {
+            "route": "conversion",
+            "mode": "fail-direct",
+            "offsetTicks": 0
+          }
+        ],
+        "network": {
+          "reads": 36,
+          "blockedWrites": 0,
+          "blockedExternal": 0
+        },
+        "metadataFieldsAltered": 0
+      }
+    ],
+    "errors": [],
+    "result": "passed"
+  },
+  "finalAccessibleMarkers": {
+    "cases": [
+      {
+        "metadata": "missing",
+        "conversion": true,
+        "bufferedFiniteConversion": false,
+        "learnedTotal": 1,
+        "nativeResourceDuration": "Infinity",
+        "resourceOffset": 12,
+        "pausedRestore": true,
+        "duplicateUnchangedUntilSelected": true,
+        "staleHandlerIgnored": true,
+        "catalogDurationUnchanged": true,
+        "requests": [
+          {
+            "route": "direct",
+            "mode": "fail-direct",
+            "offsetTicks": 0,
+            "error": "ECONNRESET"
+          },
+          {
+            "route": "conversion",
+            "mode": "fail-direct",
+            "offsetTicks": 120000000
+          },
+          {
+            "route": "direct",
+            "mode": "fail-direct",
+            "offsetTicks": 0,
+            "error": "ECONNRESET"
+          },
+          {
+            "route": "conversion",
+            "mode": "fail-direct",
+            "offsetTicks": 0
+          }
+        ],
+        "network": {
+          "reads": 36,
+          "blockedWrites": 0,
+          "blockedExternal": 0
+        },
+        "metadataFieldsAltered": 170
+      }
+    ],
+    "errors": [],
+    "result": "passed"
+  },
+  "retrySkipRegression": {
+    "cases": [
+      {
+        "kind": "live audio transport disconnected for direct and conversion",
+        "queueUnchanged": true,
+        "currentOccurrencePreserved": true,
+        "explicitRetryAndSkipEnabled": true,
+        "noAutomaticLoop": true,
+        "requests": [
+          {
+            "route": "direct",
+            "mode": "fail-both",
+            "offsetTicks": 0,
+            "error": "ECONNRESET"
+          },
+          {
+            "route": "conversion",
+            "mode": "fail-both",
+            "offsetTicks": 0,
+            "error": "ECONNRESET"
+          }
+        ],
+        "prepareCalls": [
+          {
+            "transcode": false,
+            "offsetSeconds": 0
+          },
+          {
+            "transcode": true,
+            "offsetSeconds": 0
+          }
+        ]
+      },
+      {
+        "kind": "explicit Retry after transport recovery",
+        "realConvertedAudioDecoded": true,
+        "sameOccurrenceAndQueue": true,
+        "requests": [
+          {
+            "route": "conversion",
+            "mode": "online",
+            "offsetTicks": 0
+          }
+        ]
+      },
+      {
+        "kind": "Skip track after exhausted fallback",
+        "nextOccurrence": true,
+        "queueUnchanged": true,
+        "pausedIntentRetained": true
+      },
+      {
+        "kind": "failed direct audio automatically falls back to real server conversion",
+        "realConvertedAudioDecoded": true,
+        "requests": [
+          {
+            "route": "direct",
+            "mode": "fail-direct",
+            "offsetTicks": 0,
+            "error": "ECONNRESET"
+          },
+          {
+            "route": "conversion",
+            "mode": "fail-direct",
+            "offsetTicks": 0
+          }
+        ],
+        "prepareCalls": [
+          {
+            "transcode": false,
+            "offsetSeconds": 0
+          },
+          {
+            "transcode": true,
+            "offsetSeconds": 0
+          }
+        ]
+      }
+    ],
+    "errors": [],
+    "serverVersion": "12.2.0",
+    "baselineLiveMusicDecoded": true,
+    "network": {
+      "reads": 26,
+      "blockedWrites": 0,
+      "blockedExternal": 0
+    },
+    "runtime": {
+      "electron": "43.7.0",
+      "chrome": "150.0.7871.250",
+      "platform": "darwin",
+      "arch": "arm64"
+    },
+    "result": "passed",
+    "fatalFileAbsent": true
+  },
+  "method": {
+    "runtime": {
+      "electron": "43.7.0",
+      "chrome": "150.0.7871.250",
+      "platform": "darwin",
+      "arch": "arm64"
+    },
+    "serverVersion": "12.2.0",
+    "baseline": "Native1280\u00d7720 at100% zoom, muted audio, disposable app data. Authorized protected connection copied without exposing credential material. Provider Keychain adapter disabled; main network guard allows only GET/HEAD at the authorized server.",
+    "metadata": "Alter only Audio RunTimeTicks in client HTTP responses: omit, negative, invalid string, or leave valid. Actual service mapping and IPC remain in use. No server metadata changes.",
+    "finiteConversion": "For the three finite converted cases, buffer actual live universal-endpoint bytes and supply their Content-Length to the native renderer. No synthetic audio or duration getter. The real MP3 length is263.38s; offset12 yields275.38s. Buffering is a fixture transport substitution, not production behavior.",
+    "progressiveConversion": "Two cases preserve the real unbuffered streaming response. Native durationInfinity leaves unknown catalog duration unavailable with seeking disabled; valid catalog duration stays authoritative.",
+    "occurrences": "A,B,A,C saved at first occurrence/position12. Read unchanged service duration, verify unselected duplicate stays unknown, start that duplicate, wait until its actual resource is ready and advances beyond0.5s, then invoke the captured obsolete duration callback and verify current total unchanged.",
+    "freshness": "The nine-case matrix includes final duration/copy behavior before the last role=img attribute. A focused native run against the final production artifact verifies named image roles, actual progressive audio, stale callback handling and singular queue copy. No playback logic changed after the matrix.",
+    "review": "Nadia implemented the backend field removal. Boris reviewed the actual diff and accepted it, reserving verification of progressive unknown totals and valid catalog durations; those native cases pass."
+  },
+  "decision": {
+    "alternatives": [
+      "Universal from zero with browser seeking for both static and transcoded streams.",
+      "Omit direct-play profile while retaining offset-relative conversion."
+    ],
+    "selection": "Morgan chose profile omission after actual encoded lengths demonstrated correct offset trimming. This avoids depending on browser range-seeking through a from-zero progressive encode.",
+    "positions": "Boris supported omission pending experiment and accepted the implemented diff after results. Nadia initially proposed omission, supported the time-zero alternative in challenge with a seekability reservation, then implemented the experiment-backed coordinator decision.",
+    "remainingCompatibilityLimit": "Only the named Jellyfin/runtime combination is established; broad codec and OS compatibility stay under M17."
+  },
+  "primarySources": [
+    {
+      "url": "https://github.com/jellyfin/jellyfin/blob/master/Jellyfin.Api/Controllers/UniversalAudioController.cs",
+      "usedFor": "Direct-play profiles derive from container; SupportsDirectStream selects static response. Actual local server behavior is separately measured."
+    }
+  ],
+  "fixtureCorrections": [
+    "Wait for initial renderer navigation before installing the native Audio observer and reloading.",
+    "Initial duplicate expectation used an unavailable symbol before that UI improvement existed.",
+    "Wait for the new occurrence to be ready and advancing before stale-callback verification.",
+    "Accessible role queries exclude closed Earlier queue entries; only one named queue marker is visible in the final focused case."
+  ],
+  "validation": {
+    "productionBuildIncludingTypeScript": "passed after final source changes",
+    "fullEslint": "passed after final source changes",
+    "nativeDurationCases": 9,
+    "finalNativeAccessibilityCase": 1,
+    "nativeRetrySkipCases": 4,
+    "screenshots": "Finite/unknown native captures visually inspected",
+    "unitTests": "none",
+    "releaseWork": "none",
+    "deferredSizeZoom": "not run"
+  },
+  "limits": [
+    "Controlled metadata and transport faults against a live server, not naturally malformed server metadata or whole-network failure.",
+    "Finite converted cases buffer real output; actual progressive streaming may keep an unknown duration.",
+    "Muted media; no audible quality, physical OS control, listener usability, broad codec acceptance or overall percentage.",
+    "M17/Q06/Q12/Q13 and broader open rows remain unaccepted."
+  ],
+  "screenshots": [
+    "2026-10-17-live-duration-converted.png",
+    "2026-10-17-live-duration-unknown.png"
+  ],
+  "sourceSha256": {
+    "src/main/media.ts": "d3abe363979e9953edb6cb279b777183c184cd27d027ed7584788a1b94ac0e0e",
+    "src/main/jellyfin.ts": "4daf9866e8034ca89ffd209035b1b8795f5127082bcea0fa825182b66d103483",
+    "src/renderer/player.tsx": "7b43bb2c3f336f71c753a242693ee833318d53b09519a88e28f44ce0a6e90f4e",
+    "src/renderer/components/Shared.tsx": "5793ae1a38deec754cf3a48aeb2dfe0b246e20d9525faa9deb8ab73e1d17cc48",
+    "src/renderer/components/Queue/Queue.component.tsx": "4bf608d628f7f631b0d27982a1f43b99c0e0b367cfb06c3d30e55e1f1dca8111",
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "9563223e9360042d9e93133f9a99e2cd1db2435a7f73df2645d8280d0a917923",
+    "REQUIREMENTS.md": "86799f32ed2244407fd3b646072c9f0dbc9486517b74d45f0d359005b2be24cc",
+    "docs/RADIO_EXPERIENCE.md": "ca791fff8090a9c303f29a3ce58060b244140b7ec23121ac86da0ac10a1ed2db",
+    "out/main/index.js": "c4a5aac8a832c60ee462ac467630ecbf38891cbb3b0a0bd51d10e1d2cb1cadb6",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/assets/index-BP3DX5wv.js": "765e332a033e5e25fee3d81e879c25b9d36f0ff54aa6092ce3baa7cc3e72f231"
+  },
+  "fixtureSha256": {
+    "/private/tmp/live-duration-recovery-current/build.mjs": "2208acb9b802f1b9ff4c2baebd8c00794722ad3c0344481cd439b19b8fa231f6",
+    "/private/tmp/live-duration-recovery-current/bootstrap.mjs": "cdafd0710119edbca2d9a960785576bb8aa21b00ce48ae532f6ca25de4b1f54a",
+    "/private/tmp/live-duration-recovery-current/run.cjs": "5611d301770297cf2ed60139eebcfea633af85fd0ed66522c7d6734baa246038",
+    "/private/tmp/live-duration-recovery-current/native-matrix.json": "83d4a875515a0bfc4638c1934ec30c54e7d135951d0f0ca4798710df51bb4c0d",
+    "/private/tmp/live-duration-recovery-current/accessible-labels.cjs": "e445689c683c8e8e44c978789540015e31971d00dea86f574aa5774451188c23",
+    "/private/tmp/live-duration-recovery-current/accessible-labels.json": "d77f5dc8c7c159f47a299dbe70d3ac94b09a2904cfe17c0e06481437577cebc5",
+    "/private/tmp/live-duration-recovery-current/probe.cjs": "46608b79326d871a1126c78052391a420f3e860e0963db78f378d71d527f33e9",
+    "/private/tmp/live-duration-recovery-current/byte-comparison.json": "be295807458ae0634cbda78c55a0a25bb2b5308fb78449a4bb368f6e14e80b45",
+    "/private/tmp/live-duration-recovery-current/conversion-probe.cjs": "365279d48151f7322789cb9775bfb8b582cbd35c09cb131b5e413e7ee4b93222",
+    "/private/tmp/live-duration-recovery-current/conversion-probe.json": "87a0b60cf14993ae7a4d293eb57b75118c93bcc9125bdff0c90d478302a2428b",
+    "/private/tmp/live-duration-recovery-current/ffprobe.json": "a92a537b27d24caaada2fad68730a5e79ce9efeb032f1e1a8d3c7f1171ed72aa",
+    "/private/tmp/live-duration-recovery-current/out/main/index.js": "ca967321a8855ed1691c5679da33bb9c02904321b25d5644befd4310ac454e4e"
+  },
+  "inventory": {
+    "total": 187,
+    "active": 185,
+    "review": 18,
+    "dated": 1,
+    "recorded": 0,
+    "controlled": 132,
+    "live": 23,
+    "external": 11,
+    "deferred": 2,
+    "activeRemaining": 30
+  }
+}
