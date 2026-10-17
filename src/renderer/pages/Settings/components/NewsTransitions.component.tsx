@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import type { NewsTransitionSettings } from '../../../../shared/types';
-import { defaultNewsTransitionSettings, isNewsTransitionSettings } from '../../../../shared/news-transitions';
+import { defaultNewsTransitionSettings } from '../../../../shared/news-transitions';
 import { unwrap } from '../../../api';
 import { ErrorNotice } from '../../../components/Shared';
+import { useGeneralSettingsEdits } from '../SettingsEdits';
 import { NewsTransitionPreview } from './NewsTransitionPreview.component';
 import './NewsTransitions.styles.css';
 
@@ -20,25 +20,18 @@ const fields = [
 ] as const;
 
 export function NewsTransitions() {
-  const client = useQueryClient();
   const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()) });
-  const [draft, setDraft] = useState<NewsTransitionSettings | null>(null);
+  const edit = useGeneralSettingsEdits().transitions;
+  const { draft, save } = edit;
   const settings = draft ?? state.data?.newsTransitions ?? defaultNewsTransitionSettings();
-  const save = useMutation({ mutationFn: async () => {
-    if (!isNewsTransitionSettings(settings)) throw new Error('Choose fade times from 0 to 5 seconds and pauses from 0 to 3 seconds.');
-    return unwrap(await window.wave.saveNewsTransitions(settings));
-  }, onSuccess: async () => {
-    await client.invalidateQueries({ queryKey: ['localState'] });
-    setDraft(null);
-  } });
   const preset = presets.find(item => Object.entries(item.settings).every(([key, value]) => settings[key as keyof NewsTransitionSettings] === value));
-  function change(patch: Partial<NewsTransitionSettings>) { save.reset(); setDraft({ ...settings, ...patch }); }
+  function change(patch: Partial<NewsTransitionSettings>) { edit.change({ ...settings, ...patch }); }
   return <section className="news-transition-settings" aria-labelledby="news-transitions-title">
     <h2 id="news-transitions-title">DJ transitions</h2>
     <p className="settings-description">Give news breaks room to breathe. Saved changes apply to the next break you schedule.</p>
     <ErrorNotice error={state.error} retrying={state.isFetching} retry={() => state.refetch()} />
     {state.isPending && <p role="status">Loading transition settings…</p>}
-    <form onSubmit={event => { event.preventDefault(); if (!save.isPending) save.mutate(); }}>
+    <form onSubmit={event => { event.preventDefault(); if (!save.isPending) edit.submit(); }}>
       <fieldset disabled={!state.data || save.isPending}>
         <div className="news-transition-grid">
           <label>Transition style<select value={preset?.id ?? 'custom'} onChange={event => {

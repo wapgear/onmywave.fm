@@ -506,3 +506,6 @@ Q08/R9/A14 partial evidence, 17 October 2026: [provider edit navigation](verific
 
 
 V12 partial evidence, 17 October 2026: [implemented desktop image](verification/2026-10-17-implemented-desktop.jpg) and [capture record](verification/2026-10-17-implemented-desktop.json) show current production UI on actual wallpaper under the macOS menu bar. Direct capture framing excludes unrelated desktop file icons; no generated/composited pixels are used. The Dock remains hidden, so V12 remains Review. Normal native chrome and physical display-scale checks remain V10/V11. No row dispositions change; 28 active checks remain.
+
+
+Q08/R12/D08/D10 scoped evidence, 17 October 2026: [General settings navigation and field updates](verification/2026-10-17-general-settings-navigation.json). Ten native snapshots retain drafts/pending/errors across music/Settings/account changes and verify independent save outcomes and explicit retry. Actual IPC/storage reproduces and fixes two disjoint-field overwrite races; fourteen invalid patches leave storage unchanged, and four enabled/recovery cases preserve a newer OFF and keep OFF available. Production build/TypeScript/full ESLint and both paired reviews pass. No broader VoiceOver, audible, live-provider or listener promotion follows. All 187 row dispositions and 28 remaining active checks stay unchanged.

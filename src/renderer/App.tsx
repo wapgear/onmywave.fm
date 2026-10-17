@@ -11,6 +11,7 @@ import { Queue } from './components/Queue/Queue.component';
 import './components/Drawer/Drawer.styles.css';
 import { Inspector } from './components/Inspector/Inspector.component';
 import { LibrarySelectionProvider } from './components/LibrarySelection';
+import { SettingsEditsProvider } from './pages/Settings/SettingsEdits';
 import { ProviderKeyEditsProvider } from './components/ProviderKeys/ProviderKeyEdits';
 import { ErrorNotice } from './components/Shared';
 import { ConnectionPage } from './pages/Connection/Connection.page';
@@ -35,11 +36,11 @@ export default function App() {
     if (clearExpiry) setExpired(false);
   }
   const connection = connectionQuery.data ?? null;
-  return <ProviderKeyEditsProvider sessionId={connection?.id ?? null}><NewsRecoveryProvider>{connectionQuery.isPending
+  return <ProviderKeyEditsProvider sessionId={connection?.id ?? null}><NewsRecoveryProvider><SettingsEditsProvider>{connectionQuery.isPending
     ? <main className="startup"><span className="wordmark">onmywave.fm</span><p role="status">Opening your library…</p><NewsRecoveryNotice /></main>
     : connectionQuery.error
       ? <main className="startup"><span className="wordmark">onmywave.fm</span><ErrorNotice error={connectionQuery.error} retrying={connectionQuery.isFetching} retry={() => connectionQuery.refetch()} /><NewsRecoveryNotice /></main>
-      : <SessionContent key={connection?.id ?? 'signed-out'} connection={connection} expired={expired && !!connection} setConnection={setConnection} />}</NewsRecoveryProvider></ProviderKeyEditsProvider>;
+      : <SessionContent key={connection?.id ?? 'signed-out'} connection={connection} expired={expired && !!connection} setConnection={setConnection} />}</SettingsEditsProvider></NewsRecoveryProvider></ProviderKeyEditsProvider>;
 }
 type RadioDrafts = {
   roomDraft: RoomDraft; setRoomDraft: Dispatch<SetStateAction<RoomDraft>>;
