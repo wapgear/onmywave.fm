@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 39 Review, 5 Dated, 2 Recorded, 114 Controlled, 15 Live, 10 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 38 Review, 5 Dated, 2 Recorded, 115 Controlled, 15 Live, 10 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -83,7 +83,7 @@ Source: REQUIREMENTS: All songs, Albums, Jellyfin connection; M1,M2,M8,M13.
 | --- | --- | --- | --- |
 | B01 | All songs includes music from every selected library without duplicated or missing visible selections. | N+L | Review |
 | B02 | Song search finds title, artist and album matches and respects selected libraries. | N+S+L | Live |
-| B03 | Sort and genre/tag filters update the displayed rows and preserve coherent paging. | N+S | Review |
+| B03 | Sort and genre/tag filters update the displayed rows and preserve coherent paging. | N+S | Controlled |
 | B04 | Single and multiple selection support Play, Queue and Add to playlist in displayed row order rather than click order. | N | Controlled |
 | B05 | Song columns and details show available artwork, title, artist, album/album artist, duration, year, genres, tags and track metadata. | N+L | Review |
 | B06 | Untitled/Unknown artist and missing optional fields do not prevent browsing or playback. | N | Controlled |
@@ -429,3 +429,5 @@ D07 evidence,17 October2026: [current player DJ status](verification/2026-10-17-
 D05/D06 evidence,17 October2026: [current news eligibility and handoff](verification/2026-10-17-news-eligibility-handoff.json).26 real-file service cases,12 native placement cases and52 current native handoff cases pass. The prior43 pause/seek/late-callback cases retain exact player/controller source hashes. D06 is Controlled. D05 engineering behavior passes, but its observed-listener requirement remains External; it is not counted complete. PRD states freshness and deferred placement rules. Inventory:187 rows,185 active,2 Deferred;40 Review,8 Dated,3 Recorded,109 Controlled,15 Live,10 External.61 active checks remain; Q10 and wider live/OS/listener acceptance stay open.
 
 C02/C05/C07/C08/C15 evidence,17 October2026: [current library save navigation](verification/2026-10-17-library-save-navigation.json). Native reproduction found a lost Saving state and submitted selection on Settings remount, enabling a duplicate save. Account-session ownership now retains choices and errors, blocks overlap and preserves expiry. Ten final native flows, a playing-music continuity check and nine sign-in ordering integrations pass, including refreshed same-account access. PRD and M11 describe the recovery boundaries. Inventory:187 rows,185 active,2 Deferred;39 Review,5 Dated,2 Recorded,114 Controlled,15 Live,10 External.56 active checks remain. C06/C12 retain their wider live scope.
+
+B03 evidence,17 October2026: [current catalog view concurrency](verification/2026-10-17-catalog-view-concurrency.json). Fixed false library-change errors when an active view was replaced/evicted from the paging cache. Eight service cases cover shared reads, ranges, refresh, session changes, failed persistence, retry, server paging and a finite sixteen-view burst. Ten native cases cross all five sort modes/directions with combined filters, independent expected ordering and at least160 loaded rows. PRD/M5 clarify unchanged-view concurrency. Inventory:187 rows,185 active,2 Deferred;38 Review,5 Dated,2 Recorded,115 Controlled,15 Live,10 External.55 active checks remain. Live catalog/album coverage and general transient-load bounds remain separate.

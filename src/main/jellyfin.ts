@@ -53,7 +53,8 @@ export class JellyfinService {
   private sessionRevision = 0;
   private connectionWrites = Promise.resolve();
   private writes = new Map<string, Promise<unknown>>();
-  private catalogSnapshots = new Map<string, { session: Session; items?: Item[] }>();
+  private catalogSnapshots = new Map<string, { session: Session; items: Item[] }>();
+  private catalogLoads = new Map<string, { session: Session; promise: Promise<Page<Item>> }>();
   constructor(private deps: Deps) {}
   connection(): Connection | null {
     const s = this.session;
@@ -66,6 +67,7 @@ export class JellyfinService {
     ++this.connectionIntent;
     this.session = restored;
     this.catalogSnapshots.clear();
+    this.catalogLoads.clear();
     ++this.sessionRevision;
     this.deps.onConnectionChanged?.();
   }
@@ -82,6 +84,7 @@ export class JellyfinService {
         const saved = publish();
         this.session = snapshot ? { ...snapshot, sessionOnly: !saved } : null;
         this.catalogSnapshots.clear();
+        this.catalogLoads.clear();
         committed = true;
         if (notify) this.deps.onConnectionChanged?.();
         return saved;
@@ -207,51 +210,66 @@ export class JellyfinService {
     if (query.search?.trim()) return this.searchCatalog(type, { ...query, search: query.search.trim() }, sort, start, limit);
     const multiple = s.selectedLibraryIds.length > 1;
     const snapshotKey = JSON.stringify([type, query.genre || '', query.tag || '', query.sort || 'name', !!query.descending]);
+    const loading = this.catalogLoads.get(snapshotKey);
+    if (multiple && loading?.session === s) {
+      const page = await loading.promise;
+      if (this.session !== s) throw new ServiceError('invalid', 'The library changed. Refresh your collection.');
+      return { items: page.items.slice(start, start + limit), total: page.total, start };
+    }
     const previous = this.catalogSnapshots.get(snapshotKey);
-    if (multiple && start > 0 && previous?.session === s && previous.items) {
+    if (multiple && start > 0 && previous?.session === s) {
       this.catalogSnapshots.delete(snapshotKey);
       this.catalogSnapshots.set(snapshotKey, previous);
       return { items: previous.items.slice(start, start + limit), total: previous.items.length, start };
     }
-    const snapshot = multiple ? { session: s, items: undefined as Item[] | undefined } : undefined;
-    if (snapshot) {
-      this.catalogSnapshots.delete(snapshotKey);
-      this.catalogSnapshots.set(snapshotKey, snapshot);
-      // ponytail: retain two query snapshots; page zero rebuilds and session/library changes clear them.
-      if (this.catalogSnapshots.size > 2) this.catalogSnapshots.delete(this.catalogSnapshots.keys().next().value!);
-    }
-    const pages = await Promise.all(s.selectedLibraryIds.map(async parent => {
-      const params = new URLSearchParams({ ParentId: parent, Recursive: 'true', IncludeItemTypes: type, Fields: fields, StartIndex: String(start), Limit: String(limit), SortBy: sort, SortOrder: query.descending ? 'Descending' : 'Ascending', EnableTotalRecordCount: 'true' });
-      if (query.search) params.set('SearchTerm', query.search);
-      if (query.genre) params.set('Genres', query.genre);
-      if (query.tag) params.set('Tags', query.tag);
-      // Complete each root before merging: provider and app sort comparators can differ.
+    const read = async () => {
+      const pages = await Promise.all(s.selectedLibraryIds.map(async parent => {
+        const params = new URLSearchParams({ ParentId: parent, Recursive: 'true', IncludeItemTypes: type, Fields: fields, StartIndex: String(start), Limit: String(limit), SortBy: sort, SortOrder: query.descending ? 'Descending' : 'Ascending', EnableTotalRecordCount: 'true' });
+        if (query.search) params.set('SearchTerm', query.search);
+        if (query.genre) params.set('Genres', query.genre);
+        if (query.tag) params.set('Tags', query.tag);
+        // Complete each root before merging: provider and app sort comparators can differ.
+        if (multiple) {
+          const items = await this.allItems(`/Users/${s.userId}/Items`, Object.fromEntries(params));
+          return { Items: items, TotalRecordCount: items.length };
+        }
+        return this.json(`/Users/${s.userId}/Items?${params}`);
+      }));
+      let items: Item[] = pages.flatMap(page => page.Items || []);
       if (multiple) {
-        const items = await this.allItems(`/Users/${s.userId}/Items`, Object.fromEntries(params));
-        return { Items: items, TotalRecordCount: items.length };
+        if (this.session !== s) throw new ServiceError('invalid', 'The library changed. Refresh your collection.');
+        items = [...new Map(items.map(item => [itemIdentity(item.Id), item])).values()];
+        const total = items.length;
+        const compareText = (a: unknown, b: unknown) => String(a || '').localeCompare(String(b || ''), undefined, { numeric: true, sensitivity: 'base' });
+        items.sort((a, b) => {
+          let value = 0;
+          if (query.sort === 'dateAdded') value = (Date.parse(a.DateCreated || '') || 0) - (Date.parse(b.DateCreated || '') || 0);
+          if (query.sort === 'year') value = (a.ProductionYear || 0) - (b.ProductionYear || 0);
+          if (query.sort === 'artist') value = compareText(type === 'MusicAlbum' ? a.AlbumArtist || a.Artists?.[0] : a.Artists?.[0] || a.AlbumArtist, type === 'MusicAlbum' ? b.AlbumArtist || b.Artists?.[0] : b.Artists?.[0] || b.AlbumArtist);
+          if (query.sort === 'album') value = type === 'MusicAlbum' ? compareText(a.SortName || a.Name, b.SortName || b.Name) : compareText(a.Album, b.Album) || (a.ParentIndexNumber || 0) - (b.ParentIndexNumber || 0) || (a.IndexNumber || 0) - (b.IndexNumber || 0);
+          value ||= compareText(a.SortName || a.Name, b.SortName || b.Name) || itemIdentity(a.Id).localeCompare(itemIdentity(b.Id));
+          return query.descending ? -value : value;
+        });
+        return { items, total, start };
       }
-      return this.json(`/Users/${s.userId}/Items?${params}`);
-    }));
-    let items: Item[] = pages.flatMap(page => page.Items || []);
-    if (multiple) {
-      if (this.session !== s || this.catalogSnapshots.get(snapshotKey) !== snapshot) throw new ServiceError('invalid', 'The library changed. Refresh your collection.');
-      items = [...new Map(items.map(item => [itemIdentity(item.Id), item])).values()];
-      const total = items.length;
-      const compareText = (a: unknown, b: unknown) => String(a || '').localeCompare(String(b || ''), undefined, { numeric: true, sensitivity: 'base' });
-      items.sort((a, b) => {
-        let value = 0;
-        if (query.sort === 'dateAdded') value = (Date.parse(a.DateCreated || '') || 0) - (Date.parse(b.DateCreated || '') || 0);
-        if (query.sort === 'year') value = (a.ProductionYear || 0) - (b.ProductionYear || 0);
-        if (query.sort === 'artist') value = compareText(type === 'MusicAlbum' ? a.AlbumArtist || a.Artists?.[0] : a.Artists?.[0] || a.AlbumArtist, type === 'MusicAlbum' ? b.AlbumArtist || b.Artists?.[0] : b.Artists?.[0] || b.AlbumArtist);
-        if (query.sort === 'album') value = type === 'MusicAlbum' ? compareText(a.SortName || a.Name, b.SortName || b.Name) : compareText(a.Album, b.Album) || (a.ParentIndexNumber || 0) - (b.ParentIndexNumber || 0) || (a.IndexNumber || 0) - (b.IndexNumber || 0);
-        value ||= compareText(a.SortName || a.Name, b.SortName || b.Name) || itemIdentity(a.Id).localeCompare(itemIdentity(b.Id));
-        return query.descending ? -value : value;
-      });
-      snapshot!.items = items;
-      items = items.slice(start, start + limit);
-      return { items, total, start };
+      return { items, total: pages.reduce((sum, page) => sum + (page.TotalRecordCount || 0), 0), start };
+    };
+    if (!multiple) return read();
+    const load = { session: s, promise: read() };
+    this.catalogLoads.set(snapshotKey, load);
+    try {
+      const page = await load.promise;
+      if (this.session !== s) throw new ServiceError('invalid', 'The library changed. Refresh your collection.');
+      if (this.catalogLoads.get(snapshotKey) === load) {
+        this.catalogSnapshots.delete(snapshotKey);
+        this.catalogSnapshots.set(snapshotKey, { session: s, items: page.items });
+        // ponytail: retain two completed views; an evicted view is rebuilt on its next page.
+        if (this.catalogSnapshots.size > 2) this.catalogSnapshots.delete(this.catalogSnapshots.keys().next().value!);
+      }
+      return { items: page.items.slice(start, start + limit), total: page.total, start };
+    } finally {
+      if (this.catalogLoads.get(snapshotKey) === load) this.catalogLoads.delete(snapshotKey);
     }
-    return { items, total: pages.reduce((sum, page) => sum + (page.TotalRecordCount || 0), 0), start };
   }
   private async searchCatalog(type: 'Audio' | 'MusicAlbum', query: CatalogQuery, sort: string, start: number, limit: number): Promise<Page<Item>> {
     const session = this.requireSession();
