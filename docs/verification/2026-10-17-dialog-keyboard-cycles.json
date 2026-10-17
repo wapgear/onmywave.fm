@@ -1,0 +1,1362 @@
+{
+  "date": "2026-10-17",
+  "appCommit": "5e3e70fa22252040b89bd02dc87b542c853a8104",
+  "classification": "controlled native macOS keyboard input with read-only renderer focus telemetry and inspected native accessibility trees; no VoiceOver, live-provider or observed-listener claim",
+  "scope": [
+    "Q06 partial: complete enabled-control traversal of six source/DJ editor configurations",
+    "R12 dialog focus/keyboard behavior"
+  ],
+  "baseline": {
+    "contentSizePoints": [
+      1280,
+      720
+    ],
+    "appZoom": 1,
+    "runtime": "macOS 27.2 arm64, Electron 43.7.0, one Retina display"
+  },
+  "controlInventory": {
+    "file": "2026-10-17-keyboard-controls.csv",
+    "sourceFiles": 44,
+    "controlDefinitions": 232,
+    "countsByTag": {
+      "button": 174,
+      "select": 10,
+      "input": 33,
+      "summary": 9,
+      "textarea": 6
+    },
+    "countsByFile": {
+      "src/renderer/App.tsx": 3,
+      "src/renderer/NewsRecovery.tsx": 1,
+      "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": 7,
+      "src/renderer/components/CollectionHeading/CollectionHeading.component.tsx": 1,
+      "src/renderer/components/ConfigurationTabs/ConfigurationTabs.component.tsx": 1,
+      "src/renderer/components/FilterSelect/FilterSelect.component.tsx": 5,
+      "src/renderer/components/InfoHelp/InfoHelp.component.tsx": 1,
+      "src/renderer/components/LibraryChooser.tsx": 4,
+      "src/renderer/components/Player/DJPopover.component.tsx": 8,
+      "src/renderer/components/Player/Player.component.tsx": 14,
+      "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx": 3,
+      "src/renderer/components/ProviderKeys/TwitterSetupHelp.component.tsx": 4,
+      "src/renderer/components/Queue/Queue.component.tsx": 4,
+      "src/renderer/components/Shared.tsx": 2,
+      "src/renderer/components/TrackTable/TrackTable.component.tsx": 16,
+      "src/renderer/pages/Albums/Albums.page.tsx": 5,
+      "src/renderer/pages/Albums/VirtualAlbums.component.tsx": 2,
+      "src/renderer/pages/Connection/Connection.page.tsx": 5,
+      "src/renderer/pages/DJs/DJs.page.tsx": 6,
+      "src/renderer/pages/DJs/components/DJEditor.component.tsx": 15,
+      "src/renderer/pages/DJs/components/NewsDemo.component.tsx": 4,
+      "src/renderer/pages/DJs/components/NewsTest.component.tsx": 11,
+      "src/renderer/pages/DJs/components/VoicePreview.component.tsx": 2,
+      "src/renderer/pages/Playlists/Playlists.page.tsx": 13,
+      "src/renderer/pages/Settings/Settings.page.tsx": 5,
+      "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx": 4,
+      "src/renderer/pages/Settings/components/NewsTransitionPreview.component.tsx": 1,
+      "src/renderer/pages/Settings/components/NewsTransitions.component.tsx": 4,
+      "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": 10,
+      "src/renderer/pages/Songs/Songs.page.tsx": 3,
+      "src/renderer/pages/Songs/VirtualSongs.component.tsx": 1,
+      "src/renderer/pages/Sources/Sources.page.tsx": 12,
+      "src/renderer/pages/Stations/Stations.page.tsx": 32,
+      "src/renderer/pages/Stations/components/NewsBucket.component.tsx": 7,
+      "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": 11,
+      "src/renderer/pages/Stations/components/RoomSetup.component.tsx": 5
+    },
+    "limitations": "Static JSX definitions, not runtime instances or computed accessible names. Wrapped children and expressions need native/source inspection; custom-component nesting is not expanded. Retained unmounted NewsTest/NewsDemo definitions are not native acceptance.",
+    "review": "Nine shallow icon-only candidates contain wrapped descendant text; reviewed source has a name expression in each. No source input candidate lacks an enclosing label, aria name or associated id. Ten implicit buttons inside forms are intended submit actions with no click handler. These observations do not prove every runtime label branch."
+  },
+  "nativeCases": [
+    {
+      "name": "RSS source",
+      "enabledControlCount": 6,
+      "nativeTabStepsInAcceptedCycle": 6,
+      "includesScrollableDialogStop": false,
+      "orderedFocus": [
+        {
+          "index": 4,
+          "count": 6,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "Cancel",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 5,
+          "count": 6,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Save source",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 0,
+          "count": 6,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Close dialog",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 1,
+          "count": 6,
+          "tag": "INPUT",
+          "type": null,
+          "name": "Name",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 2,
+          "count": 6,
+          "tag": "SELECT",
+          "type": null,
+          "name": "Source typeRSS / AtomTwitter / XHacker News",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 3,
+          "count": 6,
+          "tag": "INPUT",
+          "type": "url",
+          "name": "RSS or Atom URL",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        }
+      ],
+      "snapshotSha256": "8377f8d54af024b5c4082b80a068580ba8603958e7eedfd2836a274bc70bbbc4",
+      "formSubmissions": 0,
+      "providerFetches": 0,
+      "serverMutations": 0,
+      "methodCounts": {
+        "getNewsRecoveryStatus": 22,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 1,
+        "getLocalState": 2,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 5,
+        "libraries": 1
+      }
+    },
+    {
+      "name": "Twitter source with expanded token guidance",
+      "enabledControlCount": 10,
+      "nativeTabStepsInAcceptedCycle": 11,
+      "includesScrollableDialogStop": true,
+      "orderedFocus": [
+        {
+          "index": 5,
+          "count": 10,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "X developer console",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 6,
+          "count": 10,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "Official token guide \u2197",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 7,
+          "count": 10,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "API pricing \u2197",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 8,
+          "count": 10,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "Cancel",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 9,
+          "count": 10,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Save source",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": -1,
+          "count": 10,
+          "tag": "DIALOG",
+          "type": null,
+          "name": "Add sourceNameSource typeRSS / AtomTwitter / XHacker NewsSearch queryUses your Twitter / X bearer token from Provider keys. Your API access must support recent search.How do I get a Twitter / X token?",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "auto",
+            "color": "rgb(229, 151, 0)"
+          }
+        },
+        {
+          "index": 0,
+          "count": 10,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Close dialog",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 1,
+          "count": 10,
+          "tag": "INPUT",
+          "type": null,
+          "name": "Name",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 2,
+          "count": 10,
+          "tag": "SELECT",
+          "type": null,
+          "name": "Source typeRSS / AtomTwitter / XHacker News",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 3,
+          "count": 10,
+          "tag": "INPUT",
+          "type": null,
+          "name": "Search query",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 4,
+          "count": 10,
+          "tag": "SUMMARY",
+          "type": null,
+          "name": "How do I get a Twitter / X token?",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        }
+      ],
+      "snapshotSha256": "a8f796fb59de814b85cca1da834c87441ea2fcee50212e7a07958dbe8a9e5ac8",
+      "formSubmissions": 0,
+      "providerFetches": 0,
+      "serverMutations": 0,
+      "methodCounts": {
+        "getNewsRecoveryStatus": 78,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 1,
+        "getLocalState": 2,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 16,
+        "libraries": 1
+      }
+    },
+    {
+      "name": "Hacker News source",
+      "enabledControlCount": 6,
+      "nativeTabStepsInAcceptedCycle": 6,
+      "includesScrollableDialogStop": false,
+      "orderedFocus": [
+        {
+          "index": 3,
+          "count": 6,
+          "tag": "SELECT",
+          "type": null,
+          "name": "StoriesTop storiesNew storiesBest stories",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 4,
+          "count": 6,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "Cancel",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 5,
+          "count": 6,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Save source",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 0,
+          "count": 6,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Close dialog",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 1,
+          "count": 6,
+          "tag": "INPUT",
+          "type": null,
+          "name": "Name",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 2,
+          "count": 6,
+          "tag": "SELECT",
+          "type": null,
+          "name": "Source typeRSS / AtomTwitter / XHacker News",
+          "dialog": "Add source",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        }
+      ],
+      "snapshotSha256": "9244c1553b5324f64b5b1a1d204d82ab9aa0d8b8e853c28b90e70df527ff4e8c",
+      "formSubmissions": 0,
+      "providerFetches": 0,
+      "serverMutations": 0,
+      "methodCounts": {
+        "getNewsRecoveryStatus": 102,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 1,
+        "getLocalState": 3,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 21,
+        "libraries": 1
+      }
+    },
+    {
+      "name": "Predefined DJ",
+      "enabledControlCount": 14,
+      "nativeTabStepsInAcceptedCycle": 15,
+      "includesScrollableDialogStop": true,
+      "orderedFocus": [
+        {
+          "index": -1,
+          "count": 14,
+          "tag": "DIALOG",
+          "type": null,
+          "name": "Create a DJPredefinedSimpleAdvancedStart with a ready-made personality and voice.EnthusiasticCurious, upbeat, delighted to share.EnergeticFast, punchy, ready to turn it up.Quiet & warmSoft, unhurried,",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "auto",
+            "color": "rgb(229, 151, 0)"
+          }
+        },
+        {
+          "index": 0,
+          "count": 14,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Close dialog",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 1,
+          "count": 14,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "Predefined",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 2,
+          "count": 14,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "EnthusiasticCurious, upbeat, delighted to share.",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 3,
+          "count": 14,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "EnergeticFast, punchy, ready to turn it up.",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 4,
+          "count": 14,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "Quiet & warmSoft, unhurried, easy company.",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 5,
+          "count": 14,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "ProfessorThoughtful context, clearly explained.",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 6,
+          "count": 14,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "NerdyDeep cuts, details, a little dry wit.",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 7,
+          "count": 14,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "Man",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 8,
+          "count": 14,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "Woman",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 9,
+          "count": 14,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "Apply preset",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 10,
+          "count": 14,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "Preview voice for Sarah",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 11,
+          "count": 14,
+          "tag": "INPUT",
+          "type": null,
+          "name": "Name",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 12,
+          "count": 14,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "Cancel",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 13,
+          "count": 14,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Save DJ",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        }
+      ],
+      "snapshotSha256": "9113241ccc2689f50b784bb67741bc581dcc9ff701790974cac878f02b6d8199",
+      "formSubmissions": 0,
+      "providerFetches": 0,
+      "serverMutations": 0,
+      "methodCounts": {
+        "getNewsRecoveryStatus": 165,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 1,
+        "getLocalState": 3,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 33,
+        "libraries": 1,
+        "getVoicePreview": 1
+      }
+    },
+    {
+      "name": "Simple DJ with search enabled",
+      "enabledControlCount": 9,
+      "nativeTabStepsInAcceptedCycle": 10,
+      "includesScrollableDialogStop": true,
+      "orderedFocus": [
+        {
+          "index": 3,
+          "count": 9,
+          "tag": "SELECT",
+          "type": null,
+          "name": "Voice preferenceAny voiceManWoman",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 4,
+          "count": 9,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "Find voices",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 5,
+          "count": 9,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "Preview voice for Sarah",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 6,
+          "count": 9,
+          "tag": "INPUT",
+          "type": null,
+          "name": "Name",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 7,
+          "count": 9,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "Cancel",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 8,
+          "count": 9,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Save DJ",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": -1,
+          "count": 9,
+          "tag": "DIALOG",
+          "type": null,
+          "name": "Create a DJPredefinedSimpleAdvancedDescribe your host and find a voice in ElevenLabs.EnthusiasticCurious, upbeat, delighted to share.EnergeticFast, punchy, ready to turn it up.Quiet & warmSoft, unhurr",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "auto",
+            "color": "rgb(229, 151, 0)"
+          }
+        },
+        {
+          "index": 0,
+          "count": 9,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Close dialog",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 1,
+          "count": 9,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "Simple",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 2,
+          "count": 9,
+          "tag": "TEXTAREA",
+          "type": null,
+          "name": "Describe your DJcalmUse short descriptive keywords. Searches the names, descriptions and labels of voices available to your ElevenLabs account.",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        }
+      ],
+      "snapshotSha256": "b82656d23fc75ec774919cd744bea39b20dda2ab20eee7e9444ec73c7e02ff90",
+      "formSubmissions": 0,
+      "providerFetches": 0,
+      "serverMutations": 0,
+      "methodCounts": {
+        "getNewsRecoveryStatus": 219,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 1,
+        "getLocalState": 3,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 44,
+        "libraries": 1,
+        "getVoicePreview": 2
+      }
+    },
+    {
+      "name": "Advanced DJ",
+      "enabledControlCount": 16,
+      "nativeTabStepsInAcceptedCycle": 17,
+      "includesScrollableDialogStop": true,
+      "orderedFocus": [
+        {
+          "index": 2,
+          "count": 16,
+          "tag": "INPUT",
+          "type": null,
+          "name": "Name",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 3,
+          "count": 16,
+          "tag": "TEXTAREA",
+          "type": null,
+          "name": "PersonalityA quiet, warm companion. Speak gently and without rushing. Keep commentary brief, thoughtful and relaxed, leaving plenty of space for the music.",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 4,
+          "count": 16,
+          "tag": "INPUT",
+          "type": null,
+          "name": "Language",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 5,
+          "count": 16,
+          "tag": "INPUT",
+          "type": null,
+          "name": "ElevenLabs voice IDFind this ID in your ElevenLabs voice library. Your existing voice is kept when you edit this DJ.",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 6,
+          "count": 16,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "Preview voice for Voice EXAVITQu4vr4xnSDxMaL",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 7,
+          "count": 16,
+          "tag": "INPUT",
+          "type": null,
+          "name": "Short description",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 8,
+          "count": 16,
+          "tag": "TEXTAREA",
+          "type": null,
+          "name": "Host instructions",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 9,
+          "count": 16,
+          "tag": "TEXTAREA",
+          "type": null,
+          "name": "Music preferences",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 10,
+          "count": 16,
+          "tag": "TEXTAREA",
+          "type": null,
+          "name": "Exclusions",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 11,
+          "count": 16,
+          "tag": "TEXTAREA",
+          "type": null,
+          "name": "News interests",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 12,
+          "count": 16,
+          "tag": "INPUT",
+          "type": null,
+          "name": "Delivery tagsOptional bracketed tags supported by your voice provider.",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 13,
+          "count": 16,
+          "tag": "INPUT",
+          "type": "range",
+          "name": "Music level under the voice5%Applied when you schedule a saved take over music.",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 14,
+          "count": 16,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "Cancel",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 15,
+          "count": 16,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Save DJ",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": -1,
+          "count": 16,
+          "tag": "DIALOG",
+          "type": null,
+          "name": "Create a DJPredefinedSimpleAdvancedFine-tune your host, voice and delivery yourself.EnthusiasticCurious, upbeat, delighted to share.EnergeticFast, punchy, ready to turn it up.Quiet & warmSoft, unhurri",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "auto",
+            "color": "rgb(229, 151, 0)"
+          }
+        },
+        {
+          "index": 0,
+          "count": 16,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Close dialog",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 1,
+          "count": 16,
+          "tag": "BUTTON",
+          "type": "button",
+          "name": "Advanced",
+          "dialog": "Create a DJ",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        }
+      ],
+      "snapshotSha256": "f92ba9378384e4df9063790282f49c64eb1d6f20634660ef89bbd84158440e4d",
+      "formSubmissions": 0,
+      "providerFetches": 0,
+      "serverMutations": 0,
+      "methodCounts": {
+        "getNewsRecoveryStatus": 255,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 1,
+        "getLocalState": 3,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 51,
+        "libraries": 1,
+        "getVoicePreview": 3
+      }
+    }
+  ],
+  "aggregate": {
+    "configurations": 6,
+    "enabledControlOccurrencesAcrossConfigurations": 61,
+    "nativeTabStepsInAcceptedCycles": 65,
+    "allEnumeratedControlsReached": true,
+    "focusedControlsVisibleUnobscuredAndOutlined": true,
+    "formSubmissions": 0,
+    "providerFetches": 0,
+    "serverMutations": 0,
+    "sourceAndGenerationActions": 0,
+    "escapeRestoresDJOpener": true
+  },
+  "method": {
+    "input": "CUA native app clicks/typing/Tab/Shift-Tab/arrows/Enter/Space/Escape; no DOM actions or synthetic input events",
+    "observation": "native AX trees establish exposed labels/state; read-only focusin handlers record stable focus targets, enabled control index, geometry, center hit test and computed outline on next animation frame",
+    "fixture": "actual current production renderer/preload, instrumented actual main/storage, disposable safeStorage/local silent catalog and null/no-op shared-key adapter. Native controllers stop scheduler; no personal server or key used.",
+    "drafts": "unsaved valid source and DJ drafts only; Apply preset is local. No Save, search, provider preview or external source action activated. Escape discards drafts.",
+    "terminalObserver": "observed",
+    "rendererErrors": []
+  },
+  "toolingCorrections": [
+    "Mac AX tool sometimes reports selected text instead of a focused-element line. Read-only DOM focus events verify actual native Tab transitions; no VoiceOver focus inference.",
+    "Initial observer lacked focus-event recording and was terminal before adding it; its partial AX trace is not the accepted cycle telemetry.",
+    "Scrollable dialogs add a focus stop on the dialog itself. It is retained in cycle counts rather than mistaken for a missing control or escape.",
+    "Predefined controller did not recognize the repeated Save focus from AX selected-text output; DOM telemetry shows two full 15-step cycles. One complete final cycle is accepted.",
+    "Space with capital S is rejected by native key parser; lowercase space opens the Twitter disclosure. No app input is inferred from the rejected key.",
+    "Native preset application filled the DJ name before later typing appended fixture text. It remains a valid unsaved fixture name; no write or name-quality claim follows.",
+    "A shallow current source scan matches the earlier 232 definitions; it is an inventory refresh after two state-only owner additions, not a new acceptance pass for every control.",
+    "The first CSV export used CRLF and failed git whitespace checking. It was regenerated with LF and the matching hash refreshed before pushing; final whitespace checks pass."
+  ],
+  "freshness": "No app source/bundle changes from PR73. Build including TypeScript/full ESLint retain PR73 validation; no duplicate build/test run for documentation/evidence-only work.",
+  "limits": [
+    "Q06 remains Review: music rows, other dialogs, all conditional busy/error branches and full app keyboard coverage still require their own scoped reconciliation.",
+    "Q08/Q09 and native assistive technology are not promoted. Computed outline presence is not a new contrast or listener-legibility result.",
+    "No live provider/music quality, physical media keys, OS/display matrix, sleep/wake or uncoached listener pass.",
+    "No unit, release, sub1280x720 or enlarged app zoom checks."
+  ],
+  "inventory": {
+    "total": 187,
+    "active": 185,
+    "deferred": 2,
+    "remaining": 28,
+    "dispositionsChanged": false
+  },
+  "sha256": {
+    "docs/verification/2026-10-17-keyboard-controls.csv": "813712cf7d8cabeed2d389909f9a08bd4636311323ba53d78b281e58bf6f3918",
+    "src/renderer/App.tsx": "3286d6259addd3cd1030b30c1c34ba1362440449d5bc8fab9023f0bdfa277532",
+    "src/renderer/dj-playback.tsx": "1bc155fb425d6c48181a847e9bf1d6b0fccdb9296b60d48ee99d732fe6e0904f",
+    "src/renderer/main.tsx": "863a6596bde95ba270f0d554a2ac2bd0c3819ca832f1bfd577d0edf9bb69a7cc",
+    "src/renderer/NewsRecovery.tsx": "0041da77053a53592d90f9fb0e1bf86c7868c48bd7bd5567118df605550fb35d",
+    "src/renderer/player.tsx": "1a958a21936d3079f4a4d9c8e6987d47ffed8cf11cf6feee8cf4a4a7f2646f19",
+    "src/renderer/components/Shared.tsx": "4e88294c5a87a241fdf7f79f1d28a9562b47dd98efa61cee431c142e52bbb31b",
+    "src/renderer/components/LibrarySelection.tsx": "97db6216b4fada46621ce20658e1bc1d47b76fe0819a0db75e446ea82965e342",
+    "src/renderer/components/LibraryChooser.tsx": "45edf88fe61942234b625fb6864539de8d722bb400b416a8ef65a075689227fc",
+    "src/renderer/components/FilterSelect/FilterSelect.component.tsx": "b6c4242190b3d107c5145f464db5f3b4912736c70c940a3344c73aa26463ec26",
+    "src/renderer/components/ConfigurationTabs/ConfigurationTabs.component.tsx": "20df1037126e5f9596bf917f3d5fbc455f41f236626bdbd9176fdc3ba4242a9f",
+    "src/renderer/components/Inspector/Inspector.component.tsx": "633fc6611c13f94c030c1a31dc3e8460de8445bca2100dda6c758ee985a17997",
+    "src/renderer/components/CollectionHeading/CollectionHeading.component.tsx": "3a055f26b529958fd7a010c1318de66c54e4c6c77118207b3eed745c020e5548",
+    "src/renderer/components/ProviderKeys/TwitterSetupHelp.component.tsx": "49a4b7bd305c502937618daa3acb00fc85100267a60df492cac37efb13254317",
+    "src/renderer/components/ProviderKeys/ProviderKeyEdits.tsx": "99b9e06d6c62a90d36195ef7ae832444dd64c7cad8153db4fd66fd7feefe04d2",
+    "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx": "c9291d31f6f3f606c39f55c88b0e84346f7e0dbb39c3de0ddf4d78d1a3f3d91e",
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "9563223e9360042d9e93133f9a99e2cd1db2435a7f73df2645d8280d0a917923",
+    "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": "6eff978dd2fedbe18571b295dfa85b05a1b09722ab8d4008b9ea5fe9c1acad1e",
+    "src/renderer/components/InfoHelp/InfoHelp.component.tsx": "be2433410cfe2387f36bae23bc6e993a3f54942e9f7979c1854908a83b508cc8",
+    "src/renderer/components/Queue/Queue.component.tsx": "4bf608d628f7f631b0d27982a1f43b99c0e0b367cfb06c3d30e55e1f1dca8111",
+    "src/renderer/components/Player/DJPopover.component.tsx": "921f0dab0b2bf8eee284808faeb78102630e31fd8ff85f13d8385839518cb655",
+    "src/renderer/components/Player/Player.component.tsx": "3d8d1f7f1be1a1fc42f93db2dd6376f42acd6338b02991600ac7ce9aa28257f4",
+    "src/renderer/pages/Stations/Stations.page.tsx": "4b005d8f4dfbeef404c92fe6dc9f901c0bfcef0a4f5ae134bdee6d34e33970d5",
+    "src/renderer/pages/Stations/components/RoomSetup.component.tsx": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330",
+    "src/renderer/pages/Stations/components/NewsBucket.component.tsx": "de83e49585e17339bca32a0866b4c5126e95ceacb1cc4bf9e80d81a50221f5a7",
+    "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": "a089c86e2b2678ed77f2559648cdfeaca072ba6bb46453a2f4e8befb2f68e09e",
+    "src/renderer/pages/Songs/Songs.page.tsx": "a327fe944d2dbd81961bad2edae226b2d5762ee0b663964b29a265c6355c577b",
+    "src/renderer/pages/Songs/VirtualSongs.component.tsx": "b7b34d79988e5a1d81aaf88e1f60809032f182d5db6d7b485597470439075aff",
+    "src/renderer/pages/Settings/Settings.page.tsx": "8845debd083583827cafa76205dc0498a3cc5af04acb701aa2ae1277b1465441",
+    "src/renderer/pages/Settings/SettingsEdits.tsx": "44e576f60c8a96d9fcc00df839244beefd8144215e0801b03803c20d9b34d56e",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": "b75be2cedea89bd799b2cfa4d33dab3186607e57aaf7b7f7c8e43b6e5e189e53",
+    "src/renderer/pages/Settings/components/NewsTransitions.component.tsx": "33f3798d7812323e1d997a98f760bbdb344ce0dd0ae7c8b8a0cc8d1d61766e0e",
+    "src/renderer/pages/Settings/components/NewsTransitionPreview.component.tsx": "b44dc08192dd9d4a354a8f921c1b5e17c6a0cf2291b26b8aa3bd285d55b2ff31",
+    "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx": "25cd14a23388f356f2bc10d36266ffed46ab7c6638785e844c82dd2d9478e0e5",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "91f301b61895ce7bb26caebeb42a823bd0604b67a39fa6715cd9ca5a70bd372a",
+    "src/renderer/pages/Connection/Connection.page.tsx": "1256fee7c558c4840e6b400d6990d5b5f7a7c5afcc9f1bd7fa6171e2a5007d5e",
+    "src/renderer/pages/DJs/DJs.page.tsx": "bb0ce200e5efdd6b2e57f8db1fdd822b07cd4974e8c2d93b902353dcafaa36ea",
+    "src/renderer/pages/DJs/components/DJEditor.component.tsx": "4046217da52424c654bbf90aaae7d4aafea2cc71a649b409312c776c97614684",
+    "src/renderer/pages/DJs/components/VoicePreview.component.tsx": "d191f11d0a10f162e501956d6e8d0de5da7597baa088210e804e084232711b84",
+    "src/renderer/pages/DJs/components/NewsDemo.component.tsx": "32c3c7403ed5fc3cb5bfa8841e53650e20eab85e866021d5130af1059e2da8bb",
+    "src/renderer/pages/DJs/components/DJPreview.component.tsx": "496eaaac54e8fedb02e33bd2c07b01bc5c4a0b23fcb57940729c32a5bd11c3b8",
+    "src/renderer/pages/DJs/components/NewsTest.component.tsx": "347302ea66d6bbf27cf7417b170476e5d67c78f476a0b5db0cffaffe5d233be9",
+    "src/renderer/pages/Sources/Sources.page.tsx": "cd45ffd6adafb03bb1a10bbb146e0d41aea2bc975fd1bde3b20b038c90ec1577",
+    "src/renderer/pages/Albums/VirtualAlbums.component.tsx": "4ef3a50f9c9e95b234909ebef41779f3453914e6486fce5c7fb5efd1601249f8",
+    "src/renderer/pages/Albums/Albums.page.tsx": "563aa70555f626489ef9ebcf2e3394af7223b8145a5de38a144fa729ab5dbe32",
+    "src/renderer/styles.css": "5a235c72cbcbff30bf790e1fa7044ea6a9abc9727ecbda08389d9a059a196d32",
+    "src/main/index.ts": "3ffef8d8f579c3ecfe4675c92805b2831b67b3c0a7021a23a409e0c24a6d27bb",
+    "out/main/index.js": "be2b4baff3c4577a06efadbdf021d8cda9b6319cb3d9157be5f238469c457fbd",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/assets/index-CUgwj8xN.css": "8dedf91bec8e203b47c5630cbd8925f4f357523a53a65c6a66ba92b9ba0f19c4",
+    "out/renderer/assets/index-DesZQ2LC.js": "51dc22afa3607cbadfc0ef996e33ce568c424a5a0d2ec709b1b631033d1be878"
+  },
+  "fixtureSha256": {
+    "/private/tmp/keyboard-control-inventory/audit.cjs": "3887d56fcb644c2403785e0e8ac42facccd9ce48f0d03a4c0eeeb89872ee1621",
+    "/private/tmp/provider-key-status-race/observe-keyboard-focus.cjs": "e1becd642f52cd587b1c391de31a72d1ee45bac25f95fa0f6167922fa503302d",
+    "/private/tmp/provider-key-status-race/bootstrap.mjs": "243a98a9ff529d5ba6f2b67a1c4a8e3826945a1c6ddce7fa4d56137f95e75079",
+    "/private/tmp/provider-key-status-race/out/main/index.js": "8847c3a6959c0513757fc9846a2b30d4f0c7eabc091347297ef5956960684863",
+    "/private/tmp/provider-key-status-race/dialog-keyboard-focus-current.json": "9432ac6ed664cf7e2af7c17a93efae3717820c3949611cc101b0798b79511a5e"
+  }
+}
