@@ -64,6 +64,12 @@ function ReadyApp({ connection, update, disconnected, playlistRecovery, roomDraf
   const main = useRef<HTMLElement>(null);
   const content = useRef<HTMLDivElement>(null);
   const scrollPositions = useRef(new Map<string, number>());
+  const collectionFocus = useRef<{ location: string; origin: HTMLElement; playlistId?: string } | null>(null);
+  function requestCollectionFocus(location: string, origin: HTMLButtonElement, playlistId?: string) {
+    collectionFocus.current = document.activeElement === origin && main.current?.contains(origin)
+      && origin.matches(playlistId ? '.back-button' : '.album-tile, .playlist-tile')
+      ? { location, origin, playlistId } : null;
+  }
   const [page, setPage] = useState<PageName>('songs');
   const [settingsSection, setSettingsSection] = useState<SettingsSection>('general');
   const [returnToSetup, setReturnToSetup] = useState(false);
@@ -96,7 +102,13 @@ function ReadyApp({ connection, update, disconnected, playlistRecovery, roomDraf
     const node = main.current;
     if (!node || !content.current) return;
     const positions = scrollPositions.current;
-    const target = positions.get(location) ?? 0;
+    const entry = collectionFocus.current;
+    collectionFocus.current = null;
+    const ownsCollectionFocus = entry?.location === location
+      && (document.activeElement === entry.origin || document.activeElement === document.body)
+      && document.visibilityState === 'visible' && document.hasFocus()
+      && !document.querySelector('dialog[open], :popover-open');
+    const target = ownsCollectionFocus && !entry.playlistId ? 0 : positions.get(location) ?? 0;
     let restoring = true;
     const observer = new ResizeObserver(restore);
     function restore() {
@@ -106,6 +118,15 @@ function ReadyApp({ connection, update, disconnected, playlistRecovery, roomDraf
     }
     observer.observe(content.current);
     restore();
+    if (ownsCollectionFocus) {
+      restoring = false;
+      observer.disconnect();
+      const focusTarget = entry.playlistId
+        ? [...node.querySelectorAll<HTMLElement>('[data-playlist-id]')].find(tile => tile.dataset.playlistId === entry.playlistId) ?? node.querySelector<HTMLElement>('.page-heading h1')
+        : node.querySelector<HTMLButtonElement>('.back-button');
+      focusTarget?.focus({ preventScroll: true });
+      if (entry.playlistId) focusTarget?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    }
     const save = () => { if (!restoring) positions.set(location, node.scrollTop); };
     const stop = () => { restoring = false; observer.disconnect(); };
     node.addEventListener('scroll', save, { passive: true });
@@ -145,7 +166,7 @@ function ReadyApp({ connection, update, disconnected, playlistRecovery, roomDraf
   }, [page]);
 
   return <div className={`app-shell ${drawer ? 'has-drawer' : ''}`}><aside className="sidebar"><div className="traffic-light-space" /><div className="wordmark">onmywave.fm</div><nav aria-label="Main navigation">{navigation.map(item => <button key={item.id} className={page === item.id ? 'active' : ''} aria-current={page === item.id ? 'page' : undefined} onClick={() => navigate(item.id)}><item.icon size={21} strokeWidth={1.7} />{item.name}</button>)}</nav><div className="sidebar-bottom"><button className={`settings-nav ${page === 'settings' ? 'active' : ''}`} onClick={() => navigate('settings')} aria-current={page === 'settings' ? 'page' : undefined}><Settings size={20} strokeWidth={1.7} />Settings</button><p className={`connection-status ${networkError ? 'unreachable' : ''}`}><span />{networkError ? 'Server unreachable' : 'Jellyfin connected'}</p></div></aside>
-    <div className="titlebar-drag-region" /><main ref={main} className="main-content" id="main-content"><div ref={content} className="page-content"><NewsRecoveryNotice onOpenSettings={openNewsSettings} />{page === 'songs' && <SongsPage view={songsView} setView={setSongsView} add={setAdding} details={openDrawer} />}{page === 'albums' && <AlbumsPage view={albumsView} setView={setAlbumsView} add={setAdding} details={openDrawer} />}{page === 'playlists' && <PlaylistsPage recovery={playlistRecovery} id={playlistId} setId={setPlaylistId} add={setAdding} details={openDrawer} />}{page === 'stations' && <StationsPage draft={roomDraft} setDraft={setRoomDraft} configDraft={roomSetupDraft} setConfigDraft={setRoomSetupDraft} configureSources={() => configureRoom('sources')} configureDJ={() => configureRoom('djs')} configureSettings={() => configureRoom('keys')} />}{page === 'settings' && <SettingsPage section={settingsSection} onSectionChange={setSettingsSection} returnToSetup={returnToSetup ? () => { restoreSetupFocus.current = true; setRoomSetupDraft(current => ({ ...current, tab: 'settings' })); setPage('stations'); setReturnToSetup(false); } : undefined} connection={connection} update={updateLibraries} disconnected={() => { if (active.current) disconnected(); }} />}</div></main>
+    <div className="titlebar-drag-region" /><main ref={main} className="main-content" id="main-content"><div ref={content} className="page-content"><NewsRecoveryNotice onOpenSettings={openNewsSettings} />{page === 'songs' && <SongsPage view={songsView} setView={setSongsView} add={setAdding} details={openDrawer} />}{page === 'albums' && <AlbumsPage onOpenDetail={(id, origin) => requestCollectionFocus(`albums-${id}`, origin)} view={albumsView} setView={setAlbumsView} add={setAdding} details={openDrawer} />}{page === 'playlists' && <PlaylistsPage onReturnFromDetail={(id, origin) => requestCollectionFocus('playlists-list', origin, id)} onOpenDetail={(id, origin) => requestCollectionFocus(`playlists-${id}`, origin)} recovery={playlistRecovery} id={playlistId} setId={setPlaylistId} add={setAdding} details={openDrawer} />}{page === 'stations' && <StationsPage draft={roomDraft} setDraft={setRoomDraft} configDraft={roomSetupDraft} setConfigDraft={setRoomSetupDraft} configureSources={() => configureRoom('sources')} configureDJ={() => configureRoom('djs')} configureSettings={() => configureRoom('keys')} />}{page === 'settings' && <SettingsPage section={settingsSection} onSectionChange={setSettingsSection} returnToSetup={returnToSetup ? () => { restoreSetupFocus.current = true; setRoomSetupDraft(current => ({ ...current, tab: 'settings' })); setPage('stations'); setReturnToSetup(false); } : undefined} connection={connection} update={updateLibraries} disconnected={() => { if (active.current) disconnected(); }} />}</div></main>
     {drawer && <aside id="listening-drawer" className="side-drawer" aria-labelledby="drawer-title"><header className="drawer-heading"><h2 id="drawer-title">{drawer === 'queue' ? 'Playing Next' : 'Song details'}</h2><button ref={drawerClose} className="icon-button" onClick={closeDrawer} aria-label={drawer === 'queue' ? 'Close queue' : 'Close song details'}><span aria-hidden="true">×</span></button></header><div key={drawer === 'queue' ? 'queue' : drawer.id} className="drawer-body">{drawer === 'queue' ? <Queue /> : <Inspector key={drawer.id} song={drawer} />}</div></aside>}<Player openRoom={() => navigate('stations')} openSettings={() => configureRoom('general')} queueOpen={drawer === 'queue'} toggleQueue={() => drawer === 'queue' ? closeDrawer() : openDrawer('queue')} />{adding && <AddPlaylist songs={adding} close={() => setAdding(null)} checkPlaylists={() => { setAdding(null); setPlaylistId(null); navigate('playlists'); }} />}
   </div>;
 }

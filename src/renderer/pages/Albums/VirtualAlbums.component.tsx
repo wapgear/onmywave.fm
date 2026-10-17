@@ -8,7 +8,7 @@ import './Albums.styles.css';
 const GAP = 22;
 export function VirtualAlbums({ albums, total, hasNext, fetching, nextError, loadNext, open, returnFocus, focused, onResultsElement }: {
   albums: Album[]; total: number; hasNext: boolean; fetching: boolean; nextError: unknown;
-  loadNext: () => Promise<{ isError: boolean }>; open: (album: Album) => void; returnFocus: string | null; focused: () => void; onResultsElement?: (node: HTMLElement | null) => void;
+  loadNext: () => Promise<{ isError: boolean }>; open: (album: Album, origin: HTMLButtonElement) => void; returnFocus: string | null; focused: () => void; onResultsElement?: (node: HTMLElement | null) => void;
 }) {
   const grid = useRef<HTMLDivElement>(null);
   const status = useRef<HTMLSpanElement>(null);
@@ -167,7 +167,7 @@ export function VirtualAlbums({ albums, total, hasNext, fetching, nextError, loa
   return <section ref={onResultsElement} aria-label="Album collection" className="virtual-albums">
     <div ref={grid} className="virtual-album-grid" style={{ height: virtualizer.getTotalSize() }} onBlur={event => { if (!pendingLayout.current?.focusId && !event.currentTarget.contains(event.relatedTarget)) setFocusedId(null); }}>
       {visible.map(row => <div className="virtual-album-row" key={row.key} style={{ height: layout.rowHeight, gridTemplateColumns: `repeat(${layout.columns}, minmax(0, 1fr))`, transform: `translateY(${row.start - layout.offset}px)` }}>
-        {albums.slice(row.index * layout.columns, (row.index + 1) * layout.columns).map((item, column) => <button className="album-tile" key={item.id} data-album-id={item.id} data-album-index={row.index * layout.columns + column} onFocus={() => setFocusedId(item.id)} onKeyDown={event => keyboard(event, row.index * layout.columns + column)} onClick={() => open(item)} title={`${item.name} · ${item.artist || 'Unknown artist'}`}><Artwork url={item.imageUrl} name={item.name} /><strong>{item.name || 'Untitled album'}</strong><span>{item.artist || 'Unknown artist'}{item.year ? ` · ${item.year}` : ''}</span></button>)}
+        {albums.slice(row.index * layout.columns, (row.index + 1) * layout.columns).map((item, column) => <button className="album-tile" key={item.id} data-album-id={item.id} data-album-index={row.index * layout.columns + column} onFocus={() => setFocusedId(item.id)} onKeyDown={event => keyboard(event, row.index * layout.columns + column)} onClick={event => open(item, event.currentTarget)} title={`${item.name} · ${item.artist || 'Unknown artist'}`}><Artwork url={item.imageUrl} name={item.name} /><strong>{item.name || 'Untitled album'}</strong><span>{item.artist || 'Unknown artist'}{item.year ? ` · ${item.year}` : ''}</span></button>)}
       </div>)}
     </div>
     <div className="album-load-status"><span ref={status} tabIndex={-1}>{albums.length.toLocaleString()} of {total.toLocaleString()} albums</span>{fetching && <span role="status">Loading albums…</span>}<ErrorNotice error={nextError} retryRef={retryFocus.retryRef} retrying={fetching} retry={retryNextPage} />{!nextError && hasNext && !fetching && <button onClick={() => void loadNext()}>Load more albums</button>}</div>
