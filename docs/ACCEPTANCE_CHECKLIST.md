@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 27 Review, 1 Dated, 0 Recorded, 128 Controlled, 18 Live, 11 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 25 Review, 1 Dated, 0 Recorded, 128 Controlled, 20 Live, 11 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -31,7 +31,7 @@ Source: REQUIREMENTS: Product scope, Visual design, Project folder and stack.
 | ID | Observable result | Proof | Status |
 | --- | --- | --- | --- |
 | V01 | macOS Electron app in desktop-light remains separate from desktop and ios. | I | Controlled |
-| V02 | Jellyfin provides existing music, permissions and playlists without a new upload/import step. | N+L | Review |
+| V02 | Jellyfin provides existing music, permissions and playlists without a new upload/import step. | N+L | Live |
 | V03 | Production uses Vite and TanStack Query, with editable drafts separate from server caches. | I | Controlled |
 | V04 | Implemented neutral/rose palette matches the documented tokens in default, selected, disabled and focus states. | N | Review |
 | V05 | Bundled Manrope 600 headings and Inter 400/500 interface text render without font network requests. | I+N | Controlled |
@@ -105,7 +105,7 @@ Source: REQUIREMENTS: Playlists; M5,M6.
 
 | ID | Observable result | Proof | Status |
 | --- | --- | --- | --- |
-| P01 | List only the account's accessible music playlists and open their track lists. | N+L | Review |
+| P01 | List only the account's accessible music playlists and open their track lists. | N+L | Live |
 | P02 | Create/rename succeeds on Jellyfin and other clients can read the persisted result. | N+L | Live |
 | P03 | Add one song, selected songs and an entire album to an existing or newly created playlist. | N+L | Live |
 | P04 | Remove and reorder authorized entries; playback of playlist or selected entries preserves intended order. | N+L | Live |
@@ -450,3 +450,6 @@ V01/V03/Q14 evidence, 17 October 2026: [current application architecture](verifi
 
 
 C10 evidence, 17 October 2026: [current session-only replacement](verification/2026-10-17-session-only-replacement.json). Two native journeys across six processes cover modeled protected-storage loss and actual damaged-identity fallback. A held or failed credential clear retains the original account and encrypted bytes, including restart after failure. Explicit retry accepts a distinct session-only account, removes the old protected record, shows its storage warning and decodes music. The next process requires sign-in with no automatic authentication or older-account restoration. Actual safeStorage, native UI, service/storage and disk operations are used; availability/deletion faults and Jellyfin responses are controlled. Application source/artifacts match PR47; no code or repeated build/lint change. Inventory:187 rows,185 active,2 Deferred;27 Review,1 Dated,0 Recorded,128 Controlled,18 Live,11 External.39 active checks remain; the goal stays open.
+
+
+V02/P01 evidence, 17 October 2026: [current live playlist entry](verification/2026-10-17-live-playlist-entry.json). Three native live cases compare the existing music-library set, decoded playback, complete account music-playlist list and every ordered playlist entry with independent server reads. Jellyfin12.2.0 exposes1,318 songs and one editable300-entry playlist; every tile/title/entry matches and no upload/import step or server mutation occurs. A separate controlled native journey verifies explicit Video/Photo exclusion, older untyped/empty compatibility and clearing old-account tiles/entries on UI account replacement. P05 retains its live permission variants. Current source/build artifacts match PR47; no code or repeated build/lint change. Inventory:187 rows,185 active,2 Deferred;25 Review,1 Dated,0 Recorded,128 Controlled,20 Live,11 External.37 active checks remain; the goal stays open.
