@@ -65,7 +65,7 @@ Source: REQUIREMENTS: Jellyfin connection; RADIO_EXPERIENCE: Entry and first use
 | C09 | Older success/failure cannot replace a newer account or undo sign-out, including a held pause write, uncommitted credentials and failed sign-out. | N+S | Controlled |
 | C10 | Session-only account replacement removes older restorable credentials; restart requires sign-in. | N+S+O | Controlled |
 | C11 | Account/library snapshots and saved credentials become active together; asynchronous failure/cancellation keeps the latest committed account and choices across restart. | S+O | Controlled |
-| C12 | Offline reads preserve the session and offer explicit Retry;401 prefills server/username with empty password. | N+L | Review |
+| C12 | Offline reads preserve the session and offer explicit Retry;401 prefills server/username with empty password. | N+L | Live |
 | C13 | Same-account reauthentication retains unsaved radio/script/manual-operation state without saving or redispatch; music restores paused. | N+S | Controlled |
 | C14 | Different account/server and explicit sign-out clear unsaved radio/script drafts and hide old-account live feedback, including manual completion notices; saved local radio material remains. | N+S | Controlled |
 | C15 | A failed newer login supersedes older attempts while retaining the previously committed account. | S | Controlled |
@@ -465,3 +465,6 @@ The [current long-metadata record](verification/2026-10-17-long-metadata.json) c
 
 
 The [current interaction-state record](verification/2026-10-17-interaction-states.json) closes V08 as Controlled. Primary, navigation and player controls reproduced identical hover/held appearance. The shared enabled-button active rule now supplies an immediate1px press offset without changing colors or dimensions.23 native control families,13 focus cases and6 selected-state cases pass, including keyboard Space, artwork clipping, disabled Tab skipping and reduced motion. Sampled text-button foreground contrast is at least4.77:1 and focus checks exceed3:1 against surrounding surfaces. Q06/Q09 and observed usability remain separate. Inventory:187 rows,185 active,2 Deferred;21 Review,1 Dated,0 Recorded,132 Controlled,20 Live,11 External.33 active checks remain.
+
+
+The [current live connection-recovery record](verification/2026-10-17-live-connection-recovery.json) closes C12 as Live on the named Jellyfin12.2.0/runtime.4 catalog TCP connections to the real server are deliberately disconnected, producing ECONNRESET; bounded retries and explicit Retry retain the account/protected bytes and music, then load actual albums after transport restoration. A per-request invalid token receives a real401 and opens sign-in with saved server/username and an empty password. Original saved credentials remain valid and unchanged. This is controlled fault injection against a live server, not a whole-network outage or actual credential revocation. No application change, server mutation or provider call occurs. Inventory:187 rows,185 active,2 Deferred;20 Review,1 Dated,0 Recorded,132 Controlled,21 Live,11 External.32 active checks remain.
