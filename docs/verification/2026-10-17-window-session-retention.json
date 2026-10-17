@@ -1,0 +1,3115 @@
+{
+  "date": "2026-10-17",
+  "baseCommit": "8caed6d8d9a6d62189619cb8c549e68d3a0aaba4",
+  "scope": "V10/M9 macOS Close Window retains one live renderer/session; explicit Quit remains the discard/shutdown boundary. V10 stays Review for titlebar dragging and remaining chrome proof.",
+  "environment": {
+    "macOS": "27.2",
+    "arch": "arm64",
+    "electron": "43.7.0",
+    "chromium": "150.0.7871.250",
+    "contentSize": [
+      1280,
+      720
+    ],
+    "appZoom": 1,
+    "displayScale": 2,
+    "output": "muted local silent PCM WAV,600seconds",
+    "appliesTo": "The fifteen corrected snapshots. Historical before-fix recreated windows retain their original1280\u00d7800 bounds and viewport, visible in each embedded snapshot."
+  },
+  "reproduction": {
+    "action": "General cadence draft3\u21927, Save DJ playback enabled; native CmdW destroys last BrowserWindow while process remains alive; native activation creates a new window, Settings shows3 and Save disabled",
+    "nativeAXExcerpts": "Relevant native macOS AX excerpts transcribed from CUA output; unrelated siblings omitted.\nBefore close:\n429 stepper (settable, float) Check news every songs, Value: 7\n435 button Save DJ playback\nAfter native CmdW, app activation and opening Settings:\n429 stepper (settable, float) Check news every songs, Value: 3\n435 button (disabled) Save DJ playback\n",
+    "snapshots": [
+      {
+        "name": "red-close-reactivation",
+        "snapshotSha256": "88675c797421af8869c25eb12f8b384b56ed688e9c0e6a1803e7aff51ebbb256",
+        "windows": [
+          {
+            "id": 2,
+            "bounds": {
+              "x": 864,
+              "y": 382,
+              "width": 1280,
+              "height": 800
+            },
+            "contentBounds": {
+              "x": 864,
+              "y": 382,
+              "width": 1280,
+              "height": 800
+            },
+            "visible": true,
+            "minimized": false,
+            "maximized": false,
+            "fullScreen": false,
+            "focused": true,
+            "zoom": 1,
+            "page": {
+              "viewport": {
+                "width": 1280,
+                "height": 800,
+                "dpr": 2
+              },
+              "headings": [
+                "All songs"
+              ],
+              "player": "Song 00002",
+              "transport": "Play",
+              "titlebar": [
+                {
+                  "class": "traffic-light-space",
+                  "bounds": {
+                    "x": 16,
+                    "y": 0,
+                    "width": 176,
+                    "height": 52,
+                    "top": 0,
+                    "right": 192,
+                    "bottom": 52,
+                    "left": 16
+                  },
+                  "region": "drag"
+                },
+                {
+                  "class": "titlebar-drag-region",
+                  "bounds": {
+                    "x": 208,
+                    "y": 0,
+                    "width": 1072,
+                    "height": 24,
+                    "top": 0,
+                    "right": 1280,
+                    "bottom": 24,
+                    "left": 208
+                  },
+                  "region": "drag"
+                }
+              ],
+              "overflow": false
+            }
+          }
+        ],
+        "events": [
+          {
+            "id": 1,
+            "name": "closed"
+          },
+          {
+            "id": 2,
+            "name": "created"
+          },
+          {
+            "name": "app-activate"
+          },
+          {
+            "id": 2,
+            "name": "show"
+          }
+        ]
+      },
+      {
+        "name": "command-w",
+        "snapshotSha256": "6686689ac64c9f11c90f4ff7400c8af8fdacd303f44395dfaf273fe8975d16d3",
+        "windows": [],
+        "events": [
+          {
+            "id": 1,
+            "name": "closed"
+          },
+          {
+            "id": 2,
+            "name": "created"
+          },
+          {
+            "name": "app-activate"
+          },
+          {
+            "id": 2,
+            "name": "show"
+          },
+          {
+            "id": 2,
+            "name": "closed"
+          }
+        ]
+      },
+      {
+        "name": "reactivated-after-command-w",
+        "snapshotSha256": "0d9f63037b73a35ec2445b1bacf861bba4a8068c06cc4f3a3487fd1a50cd042c",
+        "windows": [
+          {
+            "id": 3,
+            "bounds": {
+              "x": 864,
+              "y": 382,
+              "width": 1280,
+              "height": 800
+            },
+            "contentBounds": {
+              "x": 864,
+              "y": 382,
+              "width": 1280,
+              "height": 800
+            },
+            "visible": true,
+            "minimized": false,
+            "maximized": false,
+            "fullScreen": false,
+            "focused": true,
+            "zoom": 1,
+            "page": {
+              "viewport": {
+                "width": 1280,
+                "height": 800,
+                "dpr": 2
+              },
+              "headings": [
+                "All songs"
+              ],
+              "player": "Song 00002",
+              "transport": "Play",
+              "titlebar": [
+                {
+                  "class": "traffic-light-space",
+                  "bounds": {
+                    "x": 16,
+                    "y": 0,
+                    "width": 176,
+                    "height": 52,
+                    "top": 0,
+                    "right": 192,
+                    "bottom": 52,
+                    "left": 16
+                  },
+                  "region": "drag"
+                },
+                {
+                  "class": "titlebar-drag-region",
+                  "bounds": {
+                    "x": 208,
+                    "y": 0,
+                    "width": 1072,
+                    "height": 24,
+                    "top": 0,
+                    "right": 1280,
+                    "bottom": 24,
+                    "left": 208
+                  },
+                  "region": "drag"
+                }
+              ],
+              "overflow": false
+            }
+          }
+        ],
+        "events": [
+          {
+            "id": 1,
+            "name": "closed"
+          },
+          {
+            "id": 2,
+            "name": "created"
+          },
+          {
+            "name": "app-activate"
+          },
+          {
+            "id": 2,
+            "name": "show"
+          },
+          {
+            "id": 2,
+            "name": "closed"
+          },
+          {
+            "id": 3,
+            "name": "created"
+          },
+          {
+            "name": "app-activate"
+          },
+          {
+            "id": 3,
+            "name": "show"
+          }
+        ]
+      },
+      {
+        "name": "unsaved-draft-window-closed",
+        "snapshotSha256": "e00388b77da260f8732c98ad443cc19e080e4a73a72c062aa06c59675615881d",
+        "windows": [],
+        "events": [
+          {
+            "id": 1,
+            "name": "closed"
+          },
+          {
+            "id": 2,
+            "name": "created"
+          },
+          {
+            "name": "app-activate"
+          },
+          {
+            "id": 2,
+            "name": "show"
+          },
+          {
+            "id": 2,
+            "name": "closed"
+          },
+          {
+            "id": 3,
+            "name": "created"
+          },
+          {
+            "name": "app-activate"
+          },
+          {
+            "id": 3,
+            "name": "show"
+          },
+          {
+            "id": 3,
+            "name": "closed"
+          }
+        ]
+      },
+      {
+        "name": "draft-loss-after-reopen",
+        "snapshotSha256": "cbee3f1ac3244d1c368d0d476629cc529f1723d963b8754dc6a56d04a48efa44",
+        "windows": [
+          {
+            "id": 4,
+            "bounds": {
+              "x": 864,
+              "y": 382,
+              "width": 1280,
+              "height": 800
+            },
+            "contentBounds": {
+              "x": 864,
+              "y": 382,
+              "width": 1280,
+              "height": 800
+            },
+            "visible": true,
+            "minimized": false,
+            "maximized": false,
+            "fullScreen": false,
+            "focused": true,
+            "zoom": 1,
+            "page": {
+              "viewport": {
+                "width": 1280,
+                "height": 800,
+                "dpr": 2
+              },
+              "headings": [
+                "Settings"
+              ],
+              "player": "Song 00002",
+              "transport": "Play",
+              "titlebar": [
+                {
+                  "class": "traffic-light-space",
+                  "bounds": {
+                    "x": 16,
+                    "y": 0,
+                    "width": 176,
+                    "height": 52,
+                    "top": 0,
+                    "right": 192,
+                    "bottom": 52,
+                    "left": 16
+                  },
+                  "region": "drag"
+                },
+                {
+                  "class": "titlebar-drag-region",
+                  "bounds": {
+                    "x": 208,
+                    "y": 0,
+                    "width": 1072,
+                    "height": 24,
+                    "top": 0,
+                    "right": 1280,
+                    "bottom": 24,
+                    "left": 208
+                  },
+                  "region": "drag"
+                }
+              ],
+              "overflow": false
+            }
+          }
+        ],
+        "events": [
+          {
+            "id": 1,
+            "name": "closed"
+          },
+          {
+            "id": 2,
+            "name": "created"
+          },
+          {
+            "name": "app-activate"
+          },
+          {
+            "id": 2,
+            "name": "show"
+          },
+          {
+            "id": 2,
+            "name": "closed"
+          },
+          {
+            "id": 3,
+            "name": "created"
+          },
+          {
+            "name": "app-activate"
+          },
+          {
+            "id": 3,
+            "name": "show"
+          },
+          {
+            "id": 3,
+            "name": "closed"
+          },
+          {
+            "id": 4,
+            "name": "created"
+          },
+          {
+            "name": "app-activate"
+          },
+          {
+            "id": 4,
+            "name": "show"
+          }
+        ]
+      }
+    ],
+    "baseMainSha256": "3ffef8d8f579c3ecfe4675c92805b2831b67b3c0a7021a23a409e0c24a6d27bb"
+  },
+  "decision": {
+    "Steve": "Supports hide-on-close; existing renderer avoids a second transient state store; after challenge agrees hiding does not cancel prior authorization. Explicit Pause/Cancel and Quit stop their activities.",
+    "Elena": "Supports hide-on-close; source requirements originally left close vs quit implicit. After challenge rejects adding stop/cancel to close; exact semantics are now explicit. No blocking actual-diff findings.",
+    "Morgan": "Intercept macOS close only while not quitting, hide same window, restore/show/focus it on activation. Preserve existing actual-destruction and before-quit cleanup. Do not save drafts, dispatch or retry operations on hide/show.",
+    "tradeoff": "Music and authorized work continue while app is hidden. Quit remains explicit. Avoid renderer-state mirroring or secret draft persistence."
+  },
+  "method": [
+    "Current production renderer/preload with bundled actual main/services; disposable synthetic catalog, actual local safeStorage and null shared-key adapter. Initial fixture show suppression was removed before accepted close/reopen runs; current production ready-to-show remains unchanged.",
+    "Native CUA supplies all field edits, settings Save, Play/Pause, red close, CmdW, CmdM, app activation and CmdQ. Playwright launches and reads telemetry only.",
+    "Native Command-R installs a passive Audio-constructor observer retaining actual native Audio instances. No audio methods, duration getters or UI actions are substituted. Native window properties/events and renderer readback identify hidden and shown state.",
+    "To preserve a hidden observation, native Close is followed by read-only observer snapshots before the next AX read. AX reads can reactivate the app. An early combined Close/AX sequence records hide+show, not a stable hidden interval.",
+    "A controlled saveDJPlayback gate after sender/input guards holds one explicit settings submission and releases it as a failure. No server/provider mutation occurs. The second explicit Save succeeds through actual IPC/local storage.",
+    "Native CmdQ exits0. A second process reuses exactly the same disposable data; bootstrap skips seeding. Native Settings reads distinguish persisted cadence7 from discarded draft8 and persisted fade1.5 from discarded draft2.7. The queue restores paused."
+  ],
+  "cases": [
+    {
+      "name": "drafts-playing-before-hide",
+      "snapshotSha256": "86c3ace60b50ba00c05b1d6b264c8c0daf4a27825d4ef1fb19852721cfd26d87",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 864,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "visible": true,
+        "minimized": false,
+        "focused": true,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 2
+          },
+          "headings": [
+            "Settings"
+          ],
+          "player": "Song 00002",
+          "transport": "Pause",
+          "audio": {
+            "position": 15.806614,
+            "paused": false,
+            "ready": 4,
+            "error": null
+          },
+          "position": "15.7",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "2.7",
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "disabled": false
+            }
+          ],
+          "saveButtons": [
+            {
+              "label": "Save DJ playback",
+              "disabled": false
+            },
+            {
+              "label": "Save DJ transitions",
+              "disabled": false
+            }
+          ],
+          "notices": [],
+          "dialogs": [],
+          "queueCount": 4,
+          "savedCadence": 3,
+          "keys": [
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "2",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": ".",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": [],
+      "held": [],
+      "saveDJPlaybackCalls": 0,
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "cmd-w-playing-after",
+      "snapshotSha256": "4542d206b07b2a6be895e5093a31d0d4ad8bd59f836a6bc760cbbf4d0b529385",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 864,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "visible": true,
+        "minimized": false,
+        "focused": true,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 2
+          },
+          "headings": [
+            "Settings"
+          ],
+          "player": "Song 00002",
+          "transport": "Pause",
+          "audio": {
+            "position": 26.061677,
+            "paused": false,
+            "ready": 4,
+            "error": null
+          },
+          "position": "26.1",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "2.7",
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "disabled": false
+            }
+          ],
+          "saveButtons": [
+            {
+              "label": "Save DJ playback",
+              "disabled": false
+            },
+            {
+              "label": "Save DJ transitions",
+              "disabled": false
+            }
+          ],
+          "notices": [],
+          "dialogs": [],
+          "queueCount": 4,
+          "savedCadence": 3,
+          "keys": [
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "2",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": ".",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": [
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        }
+      ],
+      "held": [],
+      "saveDJPlaybackCalls": 0,
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "hidden-playing",
+      "snapshotSha256": "45771f390c42aa37ebeeee7d94e0ec1292e48efb91e705fdc882baa6d691bb28",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 864,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "visible": false,
+        "minimized": false,
+        "focused": false,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 2
+          },
+          "headings": [
+            "Settings"
+          ],
+          "player": "Song 00002",
+          "transport": "Pause",
+          "audio": {
+            "position": 41.40037,
+            "paused": false,
+            "ready": 4,
+            "error": null
+          },
+          "position": "41.2",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "2.7",
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "disabled": false
+            }
+          ],
+          "saveButtons": [
+            {
+              "label": "Save DJ playback",
+              "disabled": false
+            },
+            {
+              "label": "Save DJ transitions",
+              "disabled": false
+            }
+          ],
+          "notices": [],
+          "dialogs": [],
+          "queueCount": 4,
+          "savedCadence": 3,
+          "keys": [
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "2",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": ".",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": [
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        }
+      ],
+      "held": [],
+      "saveDJPlaybackCalls": 0,
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "hidden-playing-progress",
+      "snapshotSha256": "3a179dcf6b8d7da69ee83c9164839015c643798ef836bde89d80722b8bf7bb69",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 864,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "visible": false,
+        "minimized": false,
+        "focused": false,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 2
+          },
+          "headings": [
+            "Settings"
+          ],
+          "player": "Song 00002",
+          "transport": "Pause",
+          "audio": {
+            "position": 48.515173,
+            "paused": false,
+            "ready": 4,
+            "error": null
+          },
+          "position": "48.4",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "2.7",
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "disabled": false
+            }
+          ],
+          "saveButtons": [
+            {
+              "label": "Save DJ playback",
+              "disabled": false
+            },
+            {
+              "label": "Save DJ transitions",
+              "disabled": false
+            }
+          ],
+          "notices": [],
+          "dialogs": [],
+          "queueCount": 4,
+          "savedCadence": 3,
+          "keys": [
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "2",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": ".",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": [
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        }
+      ],
+      "held": [],
+      "saveDJPlaybackCalls": 0,
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "shown-drafts-playing",
+      "snapshotSha256": "088566b5ef5e9302acadd25c84e127bd4128d97c1aabb28f027791b0c9e47572",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 864,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "visible": true,
+        "minimized": false,
+        "focused": true,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 2
+          },
+          "headings": [
+            "Settings"
+          ],
+          "player": "Song 00002",
+          "transport": "Pause",
+          "audio": {
+            "position": 67.526498,
+            "paused": false,
+            "ready": 4,
+            "error": null
+          },
+          "position": "67.5",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "2.7",
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "disabled": false
+            }
+          ],
+          "saveButtons": [
+            {
+              "label": "Save DJ playback",
+              "disabled": false
+            },
+            {
+              "label": "Save DJ transitions",
+              "disabled": false
+            }
+          ],
+          "notices": [],
+          "dialogs": [],
+          "queueCount": 4,
+          "savedCadence": 3,
+          "keys": [
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "2",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": ".",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": [
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        }
+      ],
+      "held": [],
+      "saveDJPlaybackCalls": 0,
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "hidden-pending-save",
+      "snapshotSha256": "160963ee8aea4f834cb6e33d97bb5bde0e412967db037118474cb0bee547f273",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 864,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "visible": false,
+        "minimized": false,
+        "focused": false,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 2
+          },
+          "headings": [
+            "Settings"
+          ],
+          "player": "Song 00002",
+          "transport": "Pause",
+          "audio": {
+            "position": 83.488154,
+            "paused": false,
+            "ready": 4,
+            "error": null
+          },
+          "position": "83.4",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "2.7",
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "disabled": false
+            }
+          ],
+          "saveButtons": [
+            {
+              "label": "Saving\u2026",
+              "disabled": true
+            },
+            {
+              "label": "Save DJ transitions",
+              "disabled": false
+            }
+          ],
+          "notices": [],
+          "dialogs": [],
+          "queueCount": 4,
+          "savedCadence": 3,
+          "keys": [
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "2",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": ".",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": [
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        }
+      ],
+      "held": [
+        "saveDJPlayback"
+      ],
+      "saveDJPlaybackCalls": 1,
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "hidden-save-failed",
+      "snapshotSha256": "7321342a1558c7cbb7cd866d9859641fe91560a075f9184ea1a7d622a9199556",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 864,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "visible": false,
+        "minimized": false,
+        "focused": false,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 2
+          },
+          "headings": [
+            "Settings"
+          ],
+          "player": "Song 00002",
+          "transport": "Pause",
+          "audio": {
+            "position": 87.905992,
+            "paused": false,
+            "ready": 4,
+            "error": null
+          },
+          "position": "87.7",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "2.7",
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "disabled": false
+            }
+          ],
+          "saveButtons": [
+            {
+              "label": "Save DJ playback",
+              "disabled": false
+            },
+            {
+              "label": "Save DJ transitions",
+              "disabled": false
+            }
+          ],
+          "notices": [
+            "saveDJPlayback unavailable."
+          ],
+          "dialogs": [],
+          "queueCount": 4,
+          "savedCadence": 3,
+          "keys": [
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "2",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": ".",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": [
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        }
+      ],
+      "held": [],
+      "saveDJPlaybackCalls": 1,
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "shown-save-failed",
+      "snapshotSha256": "f62697ec661ff4a9337696abd84326f6d42575eff62e5270df262a83d6976338",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 864,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "visible": true,
+        "minimized": false,
+        "focused": true,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 2
+          },
+          "headings": [
+            "Settings"
+          ],
+          "player": "Song 00002",
+          "transport": "Pause",
+          "audio": {
+            "position": 103.509515,
+            "paused": false,
+            "ready": 4,
+            "error": null
+          },
+          "position": "103.4",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "2.7",
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "disabled": false
+            }
+          ],
+          "saveButtons": [
+            {
+              "label": "Save DJ playback",
+              "disabled": false
+            },
+            {
+              "label": "Save DJ transitions",
+              "disabled": false
+            }
+          ],
+          "notices": [
+            "saveDJPlayback unavailable."
+          ],
+          "dialogs": [],
+          "queueCount": 4,
+          "savedCadence": 3,
+          "keys": [
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "2",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": ".",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": [
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        }
+      ],
+      "held": [],
+      "saveDJPlaybackCalls": 1,
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "explicit-retry-saved",
+      "snapshotSha256": "4da5103a00805e5cfff80cef9216a3df0d07f14394cf8cadbddc4cf06b35c344",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 864,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "visible": true,
+        "minimized": false,
+        "focused": true,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 2
+          },
+          "headings": [
+            "Settings"
+          ],
+          "player": "Song 00002",
+          "transport": "Pause",
+          "audio": {
+            "position": 110.770046,
+            "paused": false,
+            "ready": 4,
+            "error": null
+          },
+          "position": "110.5",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "2.7",
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "disabled": false
+            }
+          ],
+          "saveButtons": [
+            {
+              "label": "Save DJ playback",
+              "disabled": true
+            },
+            {
+              "label": "Save DJ transitions",
+              "disabled": false
+            }
+          ],
+          "notices": [],
+          "dialogs": [],
+          "queueCount": 4,
+          "savedCadence": 7,
+          "keys": [
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "2",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": ".",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": [
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        }
+      ],
+      "held": [],
+      "saveDJPlaybackCalls": 2,
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "paused-before-red-close",
+      "snapshotSha256": "70bb7e9bccd9bd2c18811f00de9078ff751f24eaf6625fb79375bfb1d9cf162f",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 864,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "visible": true,
+        "minimized": false,
+        "focused": true,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 2
+          },
+          "headings": [
+            "Settings"
+          ],
+          "player": "Song 00002",
+          "transport": "Play",
+          "audio": {
+            "position": 115.257961,
+            "paused": true,
+            "ready": 4,
+            "error": null
+          },
+          "position": "115.3",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "2.7",
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "disabled": false
+            }
+          ],
+          "saveButtons": [
+            {
+              "label": "Save DJ playback",
+              "disabled": true
+            },
+            {
+              "label": "Save DJ transitions",
+              "disabled": false
+            }
+          ],
+          "notices": [],
+          "dialogs": [],
+          "queueCount": 4,
+          "savedCadence": 7,
+          "keys": [
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "2",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": ".",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": [
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        }
+      ],
+      "held": [],
+      "saveDJPlaybackCalls": 2,
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "red-close-hidden-paused",
+      "snapshotSha256": "12b33b8f055929e2b7f2e87c2846e83c298bfac10e40e12f5fc514628821767f",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 864,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "visible": false,
+        "minimized": false,
+        "focused": false,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 2
+          },
+          "headings": [
+            "Settings"
+          ],
+          "player": "Song 00002",
+          "transport": "Play",
+          "audio": {
+            "position": 115.257961,
+            "paused": true,
+            "ready": 4,
+            "error": null
+          },
+          "position": "115.3",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "2.7",
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "disabled": false
+            }
+          ],
+          "saveButtons": [
+            {
+              "label": "Save DJ playback",
+              "disabled": true
+            },
+            {
+              "label": "Save DJ transitions",
+              "disabled": false
+            }
+          ],
+          "notices": [],
+          "dialogs": [],
+          "queueCount": 4,
+          "savedCadence": 7,
+          "keys": [
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "2",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": ".",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": [
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        }
+      ],
+      "held": [],
+      "saveDJPlaybackCalls": 2,
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "minimized-same-session",
+      "snapshotSha256": "dea518b1c8c5d1bf48e495cef9c4cc94e7f1613b3e5fde1df71b9e8491c1373a",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 864,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "visible": false,
+        "minimized": true,
+        "focused": false,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 2
+          },
+          "headings": [
+            "Settings"
+          ],
+          "player": "Song 00002",
+          "transport": "Play",
+          "audio": {
+            "position": 115.257961,
+            "paused": true,
+            "ready": 4,
+            "error": null
+          },
+          "position": "115.3",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "2.7",
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "disabled": false
+            }
+          ],
+          "saveButtons": [
+            {
+              "label": "Save DJ playback",
+              "disabled": true
+            },
+            {
+              "label": "Save DJ transitions",
+              "disabled": false
+            }
+          ],
+          "notices": [],
+          "dialogs": [],
+          "queueCount": 4,
+          "savedCadence": 7,
+          "keys": [
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "2",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": ".",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "m",
+              "meta": true,
+              "ctrl": false
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": [
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "minimize"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        }
+      ],
+      "held": [],
+      "saveDJPlaybackCalls": 2,
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "restored-minimized-session",
+      "snapshotSha256": "a8bf0752411152ce2a5200bacd06acd7462ebaef6d26adbbf9d815c2119e37ce",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 864,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "visible": true,
+        "minimized": false,
+        "focused": true,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 2
+          },
+          "headings": [
+            "Settings"
+          ],
+          "player": "Song 00002",
+          "transport": "Play",
+          "audio": {
+            "position": 115.257961,
+            "paused": true,
+            "ready": 4,
+            "error": null
+          },
+          "position": "115.3",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "2.7",
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "disabled": false
+            }
+          ],
+          "saveButtons": [
+            {
+              "label": "Save DJ playback",
+              "disabled": true
+            },
+            {
+              "label": "Save DJ transitions",
+              "disabled": false
+            }
+          ],
+          "notices": [],
+          "dialogs": [],
+          "queueCount": 4,
+          "savedCadence": 7,
+          "keys": [
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "2",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": ".",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "m",
+              "meta": true,
+              "ctrl": false
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": [
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "minimize"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "id": 1,
+          "name": "restore"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        }
+      ],
+      "held": [],
+      "saveDJPlaybackCalls": 2,
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "before-native-quit",
+      "snapshotSha256": "09264d79d7b0ba754d7011535bf3d65fd3a7fd812f01d0f7d14a57e79764ae99",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 864,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "visible": true,
+        "minimized": false,
+        "focused": true,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 2
+          },
+          "headings": [
+            "Settings"
+          ],
+          "player": "Song 00002",
+          "transport": "Play",
+          "audio": {
+            "position": 115.257961,
+            "paused": true,
+            "ready": 4,
+            "error": null
+          },
+          "position": "115.3",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "8",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "2.7",
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "disabled": false
+            }
+          ],
+          "saveButtons": [
+            {
+              "label": "Save DJ playback",
+              "disabled": false
+            },
+            {
+              "label": "Save DJ transitions",
+              "disabled": false
+            }
+          ],
+          "notices": [],
+          "dialogs": [],
+          "queueCount": 4,
+          "savedCadence": 7,
+          "keys": [
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "2",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": ".",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "7",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "w",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "m",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "a",
+              "meta": true,
+              "ctrl": false
+            },
+            {
+              "key": "8",
+              "meta": false,
+              "ctrl": false
+            },
+            {
+              "key": "Tab",
+              "meta": false,
+              "ctrl": false
+            }
+          ],
+          "overflow": false
+        }
+      },
+      "events": [
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "close"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        },
+        {
+          "id": 1,
+          "name": "minimize"
+        },
+        {
+          "id": 1,
+          "name": "hide"
+        },
+        {
+          "id": 1,
+          "name": "restore"
+        },
+        {
+          "name": "app-activate"
+        },
+        {
+          "id": 1,
+          "name": "show"
+        }
+      ],
+      "held": [],
+      "saveDJPlaybackCalls": 2,
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "after-native-quit-restart",
+      "snapshotSha256": "6d3df006e008511056551c18501946602c59185a01de1bc6ef22482c7378a6c2",
+      "window": {
+        "id": 1,
+        "bounds": {
+          "x": 864,
+          "y": 382,
+          "width": 1280,
+          "height": 720
+        },
+        "visible": true,
+        "minimized": false,
+        "focused": true,
+        "zoom": 1,
+        "page": {
+          "viewport": {
+            "width": 1280,
+            "height": 720,
+            "dpr": 2
+          },
+          "headings": [
+            "Settings"
+          ],
+          "player": "Song 00002",
+          "transport": "Play",
+          "audio": null,
+          "position": "115.3",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "1.5",
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "disabled": false
+            }
+          ],
+          "saveButtons": [
+            {
+              "label": "Save DJ playback",
+              "disabled": true
+            },
+            {
+              "label": "Save DJ transitions",
+              "disabled": true
+            }
+          ],
+          "notices": [],
+          "dialogs": [],
+          "queueCount": 4,
+          "savedCadence": 7,
+          "overflow": false
+        }
+      },
+      "events": [],
+      "held": [],
+      "saveDJPlaybackCalls": 0,
+      "providers": 0,
+      "serverWrites": 0
+    }
+  ],
+  "quit": {
+    "result": "native-quit",
+    "nativeExitCode": 0,
+    "reportSha256": "bff1d413dc41cd7c5a108c6ee4b3ff0410d1214a392e029f98f0b5c64531e2fc",
+    "restartSameData": true,
+    "restartObserverExit": 0,
+    "restartReportSha256": "deb80bd2e64b0e8561e6f7ba141b6a53e913f74d9a89224e7f179139c7b7aac9"
+  },
+  "checks": {
+    "nativeCorrectedSnapshots": 15,
+    "nativeBeforeSnapshots": 5,
+    "productionBuildIncludingTypeScript": "pass",
+    "fullEslint": "pass",
+    "sourceAndNativePredicates": "pass",
+    "independentActualDiffReview": {
+      "Steve": "support; no blocker; paid-provider continuation is source-inferred",
+      "Elena": "support; no blocking source/doc issue"
+    },
+    "ownedServerExit": 143,
+    "ownedNativeObserverExits": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "providerRequests": 0,
+    "serverWrites": 0,
+    "unitTests": "not run",
+    "packageRelease": "not run",
+    "deferredChecks": "not run",
+    "finalArtifactReview": "Elena inspected final record, documentation and retained fixture states; no blocking issue. Her minor environment ambiguity is corrected by explicitly scoping1280\u00d7720 to the fifteen corrected snapshots and preserving historical1280\u00d7800 values."
+  },
+  "sourceAndBundleSha256": {
+    "src/main/index.ts": "e4ab045607c0e17eed5cdf82594fdedad4c84430f9e3f5eaa72cb84e9bb465c4",
+    "src/renderer/App.tsx": "3286d6259addd3cd1030b30c1c34ba1362440449d5bc8fab9023f0bdfa277532",
+    "src/renderer/player.tsx": "1a958a21936d3079f4a4d9c8e6987d47ffed8cf11cf6feee8cf4a4a7f2646f19",
+    "src/renderer/pages/Settings/SettingsEdits.tsx": "44e576f60c8a96d9fcc00df839244beefd8144215e0801b03803c20d9b34d56e",
+    "src/renderer/styles.css": "5a235c72cbcbff30bf790e1fa7044ea6a9abc9727ecbda08389d9a059a196d32",
+    "out/renderer/index.html": "42a5d5001ecf1d1801762a01cc04f25dba4e2f31ba5e8abdcf45d3fd683ac548",
+    "out/renderer/assets/index-CUgwj8xN.css": "8dedf91bec8e203b47c5630cbd8925f4f357523a53a65c6a66ba92b9ba0f19c4",
+    "out/renderer/assets/index-BOme4564.js": "35fa19bc8ce7bc3855f50b83bd497ba4cb15d5dedb65a3be261ae41c3044dee3",
+    "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb"
+  },
+  "fixtureSha256": {
+    "bootstrap.mjs": "466bcd7807d0564771b79a1614cfb9f7019225b6addfc93e68df1566e298f958",
+    "build.mjs": "398d605c478f29c01edfba9e856196e384e28b8a19fdb08d5024aa4114dbb035",
+    "observe.cjs": "6b3d8c5f511337b6d002345af7c7f1473615ef17148f078ae5b63ea072464ee9",
+    "server.mjs": "2187da09588550e42ae1049b0b2dd5cc6e14e89f553c8a6c7f270dd0a7465b5b",
+    "restart.cjs": "ec05ce7b277d464e73e34d859417c6dfb53876965bfcb267bc549b0c1a04fbfb",
+    "out/main/index.js": "240381787b22b70b634044bbf0980445f9b4154cdca31b42c2d56f935594a4be",
+    "before-fix/build.mjs": "398d605c478f29c01edfba9e856196e384e28b8a19fdb08d5024aa4114dbb035",
+    "before-fix/observe.cjs": "994c0dab22402ed2bcc907e4b06aa79459ee0493e4895ad5e6b860c399ac874a",
+    "initial-adapter/build.mjs": "6b1d618a268a14f2991c21ffa3fa867e98288aa87c91ba97cf7a58c3bf3047ff",
+    "initial-adapter/observe.cjs": "d95de8b7b88809ffcadf6576aa8d99c995ee5cc3583ed321f0954ec4f8c40d68"
+  },
+  "limits": [
+    "Same renderer identity establishes continued state ownership; native draft cases cover General cadence/transition settings, pending failure/retry and local silent audio, not every radio/provider form or concurrent operation.",
+    "Actual paid-provider continuation while hidden and cancellation during real provider work on Quit are source-reviewed, not billed runtime tests. The fixture scheduler is stopped; no live provider or server is contacted.",
+    "The first lifecycle fixture suppressed ready-to-show and reopened hidden. It is preserved as an adapter limitation, not a production failure. Accepted close/reopen cases remove that substitution.",
+    "Pointer dragging produced no move event in three attempts. One attempt selected content, so coordinate/capture ambiguity remains; no app drag defect or pass is inferred. A screenshot activated macOS window-sharing chrome; normal traffic-light appearance and full desktop imagery remain separate.",
+    "CUA reported timeout/noWindowsAvailable after some successful pre-fix closes. Actual closed events, no-window state and continuing owned observer distinguish successful close from process failure.",
+    "Quit exit0 is directly observed; the final polling snapshot can predate before-quit, so no saved event-log proof of shutdown cleanup is claimed. Cleanup follows source review and prior integration evidence.",
+    "No VoiceOver, audible-quality, uncoached-listener, Intel/other-macOS/display, signed package or whole-goal acceptance pass. Outside the dated90-record provenance audit."
+  ],
+  "disposition": {
+    "V10": "Review",
+    "activeChecksRemaining": 27,
+    "listenerChecksRemaining": 14,
+    "otherChecksRemaining": 13,
+    "noOverallPercentage": true
+  }
+}
