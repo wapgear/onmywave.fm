@@ -4,20 +4,23 @@ import type { DJ, DJPlaybackSettings, NewsSource, PreparedNewsTake, RoomProfile 
 import { defaultDJPlaybackSettings } from '../shared/dj-playback';
 import { unwrap } from './api';
 import { usePlayer } from './player';
+import { useNewsRecovery } from './NewsRecovery';
 
 type PlaybackView = { configKey: string; pending: PreparedNewsTake | null; preparing: boolean; placing: boolean; waiting: boolean; failure: string | null; baseline: number };
 function useDJPlaybackController() {
   const player = usePlayer();
+  const recovery = useNewsRecovery();
+  const recoveryReady = recovery.status.phase === 'ready';
   const client = useQueryClient();
-  const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()) });
+  const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()), enabled: recoveryReady });
   const settings = state.data?.djPlayback ?? defaultDJPlaybackSettings();
   const rooms = state.data?.roomProfiles.filter(room => room.enabled) ?? [];
   const room = rooms.find(room => room.id === settings.roomId);
   const dj = state.data?.djs.find(dj => dj.id === room?.room.djId);
   const sources = state.data?.sources.filter(source => room?.room.sourceIds.includes(source.id)) ?? [];
   const configKey = JSON.stringify([{ enabled: settings.enabled, roomId: settings.roomId, everySongs: settings.everySongs }, room ? { id: room.id, room: room.room, mood: room.mood, newsInterests: room.workflowDraft.newsInterests } : null, dj ?? null, sources]);
-  const live = useRef({ player, queryError: state.error });
-  useLayoutEffect(() => { live.current = { player, queryError: state.error }; });
+  const live = useRef({ player, queryError: state.error, recoveryReady });
+  useLayoutEffect(() => { live.current = { player, queryError: state.error, recoveryReady }; });
   const retry = useRef<() => void>(() => {});
   const [view, setView] = useState<PlaybackView | null>(null);
   useEffect(() => {
@@ -30,12 +33,30 @@ function useDJPlaybackController() {
     let skipped = false;
     let published = false;
     const attempted = new Set<string>();
+    let recoveryBlocked = false;
     const cycle: PlaybackView = { configKey, baseline: live.current.player.completedSongs, pending: null, preparing: false, placing: false, waiting: false, failure: null };
     const publish = () => { if (!cancelled) setView({ ...cycle }); };
     retry.current = () => { cycle.failure = null; attempted.clear(); publish(); };
     const tick = () => {
       if (!published) { published = true; publish(); }
       const p = live.current.player;
+      if (!live.current.recoveryReady) {
+        const knownSpeech = p.activeNews && p.lastNews?.news.id === p.activeNews.id && (
+          p.newsPhase === 'speaking' || p.newsPhase === 'paused' ||
+          (p.newsPhase === 'tail' && p.lastNews.status === 'completed')
+        );
+        // Keep an already-started take intact through recovery. A paused take
+        // remains user-paused, and a completed take may still be in its music
+        // return tail; both are released only after the player clears it.
+        if (knownSpeech) return;
+        if (p.newsPhase !== 'idle' && !recoveryBlocked) p.stopNews();
+        if (cycle.pending && ownedNews) void window.wave.releasePreparedNews(ownedNews).then(unwrap).catch(() => {});
+        cycle.pending = null; ownedNews = null; cycle.preparing = false; cycle.placing = false;
+        recoveryBlocked = true;
+        publish();
+        return;
+      }
+      recoveryBlocked = false;
       if (!config.enabled || !profile || live.current.queryError || cycle.failure) return;
       if (!heard && cycle.pending && p.lastNews?.news.id === cycle.pending.id) {
         heard = true;
@@ -79,6 +100,10 @@ function useDJPlaybackController() {
           if (take) void window.wave.releasePreparedNews(take.id).then(unwrap).catch(() => {});
           return;
         }
+        if (!live.current.recoveryReady) {
+          if (take) void window.wave.releasePreparedNews(take.id).then(unwrap).catch(() => {});
+          return;
+        }
         cycle.pending = take;
         ownedNews = take?.id ?? null;
         if (!take) { cycle.baseline = live.current.player.completedSongs; skipped = true; }
@@ -97,14 +122,15 @@ function useDJPlaybackController() {
   const current = view?.configKey === configKey ? view : null;
   const completed = Math.max(0, player.completedSongs - (current?.baseline ?? player.completedSongs));
   const update = useMutation({ mutationFn: async (patch: Partial<DJPlaybackSettings>) => {
+    if (!live.current.recoveryReady) throw new Error('News data is unavailable. Recover it before changing DJ playback.');
     const latest = unwrap(await window.wave.getLocalState());
     unwrap(await window.wave.saveDJPlayback({ ...latest.djPlayback, ...patch }));
     await client.invalidateQueries({ queryKey: ['localState'] });
     if (patch.enabled === false) live.current.player.stopNews();
   } });
   const error = current?.failure ?? (settings.enabled && !room ? 'Choose an available News bucket.' : null);
-  return { state, settings, rooms, room, sources, pending: current?.pending ?? null, preparing: current?.preparing ?? false, placing: current?.placing ?? false, waitingForPreparation: current?.waiting ?? false,
-    error, update, songsUntilBreak: Math.max(1, settings.everySongs - completed), retry: () => retry.current() };
+  return { state, settings, rooms, room, sources, pending: recoveryReady ? current?.pending ?? null : null, preparing: recoveryReady && (current?.preparing ?? false), placing: recoveryReady && (current?.placing ?? false), waitingForPreparation: recoveryReady && (current?.waiting ?? false),
+    error: recoveryReady ? error : null, update, songsUntilBreak: Math.max(1, settings.everySongs - completed), retry: () => { if (recoveryReady) retry.current(); }, recoveryStatus: recovery.status.phase };
 }
 const DJPlaybackContext = createContext<ReturnType<typeof useDJPlaybackController> | null>(null);
 export function DJPlaybackProvider({ children }: { children: ReactNode }) {

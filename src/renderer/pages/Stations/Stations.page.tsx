@@ -13,6 +13,7 @@ import { useDJPlayback } from '../../dj-playback';
 import { WorkflowPreferences, type PreparationIssue } from '../Settings/components/WorkflowPreferences.component';
 import { NewsBucket } from './components/NewsBucket.component';
 import type { WorkflowDraft } from '../../../shared/workflow';
+import { NewsRecoveryPanel, useNewsRecovery } from '../../NewsRecovery';
 import './Stations.styles.css';
 
 export type RoomDraft = { scriptId: string; script: string } | null;
@@ -31,6 +32,8 @@ function preparationOrigin(request: PreparedNewsRequest) {
 export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, configureSources, configureDJ, configureSettings }: {
   draft: RoomDraft; setDraft: Dispatch<SetStateAction<RoomDraft>>; configDraft: RoomSetupDraft; setConfigDraft: Dispatch<SetStateAction<RoomSetupDraft>>; configureSources: () => void; configureDJ: () => void; configureSettings: () => void;
 }) {
+  const newsRecovery = useNewsRecovery();
+  const newsRecoveryReady = newsRecovery.status.phase === 'ready';
   const client = useQueryClient();
   const configurationPending = useIsMutating({ mutationKey: ['roomConfiguration'] }) > 0;
   const configurationMutation = {
@@ -39,8 +42,8 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
     onError: (error: unknown) => setConfigDraft(current => ({ ...current, operationError: errorMessage(error) })),
   };
   const automation = useDJPlayback();
-  const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()), refetchInterval: 10000 });
-  const library = useQuery({ queryKey: ['preparedNews'], queryFn: async () => unwrap(await window.wave.getPreparedNews()), refetchInterval: query => query.state.data?.requests.some(value => value.status === 'running') ? 1000 : 10000 });
+  const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()), enabled: newsRecoveryReady, refetchInterval: newsRecoveryReady ? 10000 : false });
+  const library = useQuery({ queryKey: ['preparedNews'], queryFn: async () => unwrap(await window.wave.getPreparedNews()), enabled: newsRecoveryReady, refetchInterval: query => newsRecoveryReady && query.state.data?.requests.some(value => value.status === 'running') ? 1000 : newsRecoveryReady ? 10000 : false });
   const { setup, moodDraft } = configDraft;
   const setSetup = (setup: ListeningRoom | null) => setConfigDraft(current => ({ ...current, setup }));
   const setMoodDraft = (moodDraft: string | null) => setConfigDraft(current => ({ ...current, moodDraft }));
@@ -51,8 +54,8 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   useEffect(() => () => { ++audioReviewAttempt.current; }, []);
   const tab = ['news', 'host', 'prepare', 'settings'].includes(configDraft.tab ?? '') ? 'settings' : configDraft.tab === 'saved' ? 'saved' : 'bucket';
   const setTab = (tab: string) => setConfigDraft(current => ({ ...current, tab }));
-  const aiStatus = useQuery({ queryKey: ['aiStatus'], meta: { aiOperation: true }, queryFn: async () => unwrap(await window.wave.getAiStatus()) });
-  const elevenStatus = useQuery({ queryKey: ['elevenLabsStatus'], meta: { aiOperation: true }, queryFn: async () => unwrap(await window.wave.getElevenLabsStatus()) });
+  const aiStatus = useQuery({ queryKey: ['aiStatus'], meta: { aiOperation: true }, queryFn: async () => unwrap(await window.wave.getAiStatus()), enabled: newsRecoveryReady });
+  const elevenStatus = useQuery({ queryKey: ['elevenLabsStatus'], meta: { aiOperation: true }, queryFn: async () => unwrap(await window.wave.getElevenLabsStatus()), enabled: newsRecoveryReady });
   const manual = configDraft.manualPreparation;
   const manualPending = manual?.pending === true;
   const lastRequest = manual?.request;
@@ -190,6 +193,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   const prepare = useMutation({
     meta: { aiOperation: true },
     mutationFn: async ({ request, control }: PreparationOperation) => {
+      if (!newsRecoveryReady) throw new Error('News data is unavailable. Recover it before starting preparation.');
       const draftAtStart = draft;
       try {
         if (request.kind === 'script' && !request.reconcile) await persistSetup();
@@ -212,7 +216,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
       error: { code: error instanceof WaveError ? error.code : 'server', message: errorMessage(error) } } } : current),
   });
   function startPreparation(request: Preparation) {
-    if (manualPending || cancellationPending) return;
+    if (!newsRecoveryReady || manualPending || cancellationPending) return;
     ++audioReviewAttempt.current;
     const capturedRequest = structuredClone(request);
     if (!request.reconcile) capturedRequest.input.profileId = activeProfile?.id;
@@ -360,6 +364,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   </div>;
   return <>
     <PageHeading title="News bucket" />
+    {newsRecovery.status.phase !== 'ready' ? <NewsRecoveryPanel /> : <>
     <div className="listening-room">
       {state.isPending && <p className="loading" role="status">Opening your room…</p>}
       <ErrorNotice error={state.error} retry={() => void state.refetch()} />
@@ -430,5 +435,6 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
     </Dialog>}
     {newProfileOpen && <Dialog title="Save a new listening room" close={() => { if (!profiles.isPending) setNewProfileOpen(false); }}><form onSubmit={event => { event.preventDefault(); if (!profiles.isPending && profileName.trim()) profiles.mutate({ kind: 'copy' }); }}><fieldset disabled={profiles.isPending}><label>Name<input autoFocus required maxLength={80} value={profileName} onChange={event => { profiles.reset(); setProfileName(event.target.value); }} placeholder="Evening technology" /></label></fieldset><p className="form-hint">Copies your setup with automatic preparation off. Choose the new room, then make it available in Advanced room options before enabling preparation or DJ breaks. You can finish incomplete setup later.</p><ErrorNotice error={profiles.error} /><div className="modal-actions"><button type="button" disabled={profiles.isPending} onClick={() => setNewProfileOpen(false)}>Cancel</button><button className="primary" disabled={profiles.isPending || !profileName.trim()}>{profiles.isPending ? 'Saving…' : 'Save room'}</button></div></form></Dialog>}
     {switchTarget && <Dialog title="Switch listening rooms?" close={() => { if (!profiles.isPending) setSwitchTarget(null); }}><p>You have unsaved changes to {activeProfile?.name ?? 'your current room'}. Save them before switching, or discard them. Your script and selected audio stay unchanged.</p><ErrorNotice error={profiles.error} /><div className="modal-actions"><button disabled={profiles.isPending} onClick={() => setSwitchTarget(null)}>Cancel</button><button disabled={profiles.isPending} onClick={() => profiles.mutate({ kind: 'switch', id: switchTarget, saveChanges: false })}>Discard and switch</button><button className="primary" disabled={profiles.isPending} onClick={() => profiles.mutate({ kind: 'switch', id: switchTarget, saveChanges: true })}>{profiles.isPending ? 'Switching…' : 'Save and switch'}</button></div></Dialog>}
+    </>}
   </>;
 }

@@ -1,6 +1,7 @@
 import { djPreviewAudio, bundledVoiceAudio } from './dj-previews';
 import { protocol } from 'electron';
 import { ServiceError } from './jellyfin';
+import { StorageError } from './storage-error';
 import { preparedAudio } from './prepared-news';
 import { randomUUID } from 'node:crypto';
 import type { PlaybackResource } from '../shared/types';
@@ -74,7 +75,7 @@ export function preparePlayback(session: Session | null, input: { id: string; tr
   return { url: `wave-media://audio/${handle}`, offsetSeconds, transcoded: transcode };
 }
 
-export function registerMedia(getSession: () => Session | null, deviceId: string) {
+export function registerMedia(getSession: () => Session | null, deviceId: string, onStorageFailure?: () => void) {
   protocol.handle('wave-media', async (request) => {
     if (request.method !== 'GET' && request.method !== 'HEAD') return new Response(null, { status: 405 });
     const url = new URL(request.url);
@@ -91,9 +92,14 @@ export function registerMedia(getSession: () => Session | null, deviceId: string
       return bytes ? clipResponse(request, { bytes, mime: 'audio/mpeg' }) : new Response(null, { status: 404 });
     }
     if (url.hostname === 'prepared') {
-      const bytes = await preparedAudio(id);
-      if (!bytes) return new Response(null, { status: 404 });
-      return clipResponse(request, { bytes, mime: 'audio/mpeg' });
+      try {
+        const bytes = await preparedAudio(id);
+        if (!bytes) return new Response(null, { status: 404 });
+        return clipResponse(request, { bytes, mime: 'audio/mpeg' });
+      } catch (error) {
+        if (error instanceof StorageError) { onStorageFailure?.(); return new Response(null, { status: 503 }); }
+        throw error;
+      }
     }
     const session = getSession();
     if (!session) return new Response(null, { status: 401 });

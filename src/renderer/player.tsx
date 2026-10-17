@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { normalizeDJPlaybackSettings } from '../shared/dj-playback';
 import { defaultNewsTransitionSettings, normalizeNewsTransitionSettings } from '../shared/news-transitions';
@@ -6,6 +6,7 @@ import type { NewsTransitionSettings } from '../shared/news-transitions';
 import type { Connection, NewsBreak, PlaybackSnapshot, PlaybackPreferences, Song } from '../shared/types';
 import { unwrap, WaveError } from './api';
 import { freshAudioUrl } from './audio';
+import { useNewsRecovery } from './NewsRecovery';
 
 type HeardNews = { news: NewsBreak; startedAt: string; status: 'playing' | 'completed' | 'interrupted' };
 type NewsPhase = 'waiting' | 'fading' | 'lead-in' | 'speaking' | 'tail';
@@ -35,6 +36,8 @@ export function usePlayer() {
 const entries = (songs: Song[]): QueueEntry[] => songs.map(song => ({ key: crypto.randomUUID(), song }));
 
 export function PlayerProvider({ connection, children }: { connection: Connection | null; children: ReactNode }) {
+  const recovery = useNewsRecovery();
+  const recoveryReady = recovery.status.phase === 'ready';
   const preferences = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()) });
   const djSettings = normalizeDJPlaybackSettings(preferences.data?.djPlayback);
   const [queue, setQueue] = useState<QueueEntry[]>([]);
@@ -90,8 +93,8 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const current = queue[index]?.song;
   const currentKey = queue[index]?.key;
   const duration = current && Number.isFinite(current.duration) && current.duration > 0 ? current.duration : 0;
-  const live = useRef({ queue, index, current, repeat, shuffle, position, volume });
-  useEffect(() => { live.current = { queue, index, current, repeat, shuffle, position, volume }; }, [queue, index, current, repeat, shuffle, position, volume]);
+  const live = useRef({ queue, index, current, repeat, shuffle, position, volume, recoveryReady });
+  useLayoutEffect(() => { live.current = { queue, index, current, repeat, shuffle, position, volume, recoveryReady }; }, [queue, index, current, repeat, shuffle, position, volume, recoveryReady]);
 
   const fadeMusic = useCallback((to: number, seconds = 1, followPlayback = false): Promise<boolean> => {
     cancelAnimationFrame(fadeFrame.current);
@@ -139,6 +142,14 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     setLastNews(value => value?.status === 'playing' ? { ...value, status: 'interrupted' } : value);
     setActiveNewsId(undefined);
   }, [fadeMusic]);
+
+  useEffect(() => {
+    const knownSpeech = activeNews && lastNews?.news.id === activeNews.id && (newsPhase === 'speaking' || newsPhase === 'paused' || (newsPhase === 'tail' && lastNews.status === 'completed'));
+    if (!recoveryReady && newsPhase !== 'idle' && !knownSpeech) {
+      const timer = window.setTimeout(stopNews, 0);
+      return () => window.clearTimeout(timer);
+    }
+  }, [activeNews, lastNews, newsPhase, recoveryReady, stopNews]);
 
   const load = useCallback(async (song: Song, transcode = false, start = 0) => {
     const token = ++generation.current;
@@ -679,6 +690,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     setReadyConnection(connection?.id ?? null);
   };
   const scheduleNews = async (news: NewsBreak, duckVolume = 0.05) => {
+    if (!live.current.recoveryReady) throw new Error('News data is unavailable. Recover it before scheduling a DJ break.');
     const state = live.current;
     const key = state.queue[state.index]?.key;
     if (!state.current || !key || !audio.current?.src || !Number.isFinite(state.current.duration) || state.current.duration <= 0) {
@@ -695,7 +707,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     speech.current = element;
     try {
       const saved = unwrap(await window.wave.getLocalState());
-      if (token !== newsGeneration.current) throw new Error('The scheduled news break was cancelled.');
+      if (token !== newsGeneration.current || !live.current.recoveryReady) throw new Error('The scheduled news break was cancelled because news data is unavailable.');
       const settings = normalizeNewsTransitionSettings(saved.newsTransitions);
       transitionSettings.current = settings;
       await new Promise<void>((resolve, reject) => {
@@ -720,7 +732,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         element.load();
         ready();
       });
-      if (token !== newsGeneration.current || live.current.queue[live.current.index]?.key !== key) throw new Error('The song changed before the news break was ready.');
+      if (token !== newsGeneration.current || !live.current.recoveryReady || live.current.queue[live.current.index]?.key !== key) throw new Error('The song changed or news data became unavailable before the break was ready.');
       const songDuration = live.current.current!.duration;
       const budget = settings.fadeOutSeconds + settings.leadInSeconds + element.duration + settings.postSpeechSeconds + 0.3;
       const scheduledAt = songDuration - budget;

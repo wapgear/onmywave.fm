@@ -7,6 +7,7 @@ import { canonicalArticleUrl, eligibleNewsTakes, matchesNewsRoom } from '../shar
 import { getLocalState, readOpenAIKey, readElevenLabsKey, readTwitterKey } from './storage';
 import { NewsService, validateNewsSettings } from './news';
 import { ServiceError } from './jellyfin';
+import { StorageError } from './storage-error';
 
 const hash = (value: unknown) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const validId = (value: unknown): value is string => typeof value === 'string' && /^[a-zA-Z0-9-]{1,128}$/.test(value);
@@ -31,6 +32,7 @@ async function load() {
   if (initialization) return initialization;
   initialization = (async () => {
   let indexRead = false;
+  let restored: PreparedNewsLibrary;
   try {
     const content = await readFile(join(root(), 'index.json'), 'utf8');
     indexRead = true;
@@ -76,22 +78,23 @@ async function load() {
       await writeFile(temp, JSON.stringify(migrated), { mode: 0o600 });
       await rename(temp, join(root(), 'index.json'));
     }
-    library = migrated;
+    restored = migrated;
   } catch (error) {
-    if (indexRead || (error as NodeJS.ErrnoException).code !== 'ENOENT') throw new ServiceError('server', 'The prepared news library could not be read. Existing files were preserved.');
-    library = { preparationErrorVersion: 1, scripts: [], takes: [], requests: [], selectedTakeId: null, reviewedArticles: [] };
+    if (indexRead || (error as NodeJS.ErrnoException).code !== 'ENOENT') throw new StorageError('The prepared news library could not be read. Existing files were preserved.');
+    restored = { preparationErrorVersion: 1, scripts: [], takes: [], requests: [], selectedTakeId: null, reviewedArticles: [] };
   }
   let interrupted = false;
-  library!.requests = library!.requests.map(request => request.status === 'running' ? (interrupted = true, { ...request, status: 'interrupted', error: 'The app stopped before this request completed. Start an explicit new attempt.' }) : request);
-  library!.reviewedArticles = (library!.reviewedArticles ?? []).map(article => article.status === 'submitted' && !library!.requests.some(request => request.requestId === article.requestId && request.status === 'running') ? (interrupted = true, { ...article, status: 'interrupted' }) : article);
+  restored.requests = restored.requests.map(request => request.status === 'running' ? (interrupted = true, { ...request, status: 'interrupted', error: 'The app stopped before this request completed. Start an explicit new attempt.' }) : request);
+  restored.reviewedArticles = (restored.reviewedArticles ?? []).map(article => article.status === 'submitted' && !restored.requests.some(request => request.requestId === article.requestId && request.status === 'running') ? (interrupted = true, { ...article, status: 'interrupted' }) : article);
   if (interrupted) {
     await mkdir(root(), { recursive: true, mode: 0o700 });
     const temp = join(root(), `index.${randomUUID()}.tmp`);
-    await writeFile(temp, JSON.stringify(library), { mode: 0o600 });
+    await writeFile(temp, JSON.stringify(restored), { mode: 0o600 });
     await rename(temp, join(root(), 'index.json'));
   }
-  return library!;
-  })().catch(error => { initialization = undefined; throw error; });
+  library = restored;
+  return library;
+  })().catch(error => { initialization = undefined; throw error instanceof StorageError ? error : new StorageError(); });
   return initialization;
 }
 
@@ -129,10 +132,12 @@ export async function reviewedArticleUrls() {
 async function change(update: (current: PreparedNewsLibrary) => PreparedNewsLibrary) {
   const task = writes.then(async () => {
     const next = update(structuredClone(await load()));
-    await mkdir(root(), { recursive: true, mode: 0o700 });
-    const temp = join(root(), `index.${randomUUID()}.tmp`);
-    await writeFile(temp, JSON.stringify(next), { mode: 0o600 });
-    await rename(temp, join(root(), 'index.json'));
+    try {
+      await mkdir(root(), { recursive: true, mode: 0o700 });
+      const temp = join(root(), `index.${randomUUID()}.tmp`);
+      await writeFile(temp, JSON.stringify(next), { mode: 0o600 });
+      await rename(temp, join(root(), 'index.json'));
+    } catch { throw new StorageError(); }
     library = next;
   });
   writes = task.catch(() => {});
@@ -140,7 +145,7 @@ async function change(update: (current: PreparedNewsLibrary) => PreparedNewsLibr
 }
 async function recoverCompletedAudio() {
   const current = await load();
-  const files = await readdir(root()).catch((error: NodeJS.ErrnoException) => { if (error.code === 'ENOENT') return []; throw error; });
+  const files = await readdir(root()).catch((error: NodeJS.ErrnoException) => { if (error.code === 'ENOENT') return []; throw new StorageError(); });
   const recovered: { take: PreparedNewsTake; request: PreparedNewsRequest }[] = [];
   for (const file of files.filter(name => /^[a-zA-Z0-9-]+\.take\.json$/.test(name))) {
     const id = file.slice(0, -10);
@@ -151,7 +156,7 @@ async function recoverCompletedAudio() {
       let audio;
       try { audio = await stat(audioPath(id)); }
       catch (error) {
-        if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw error;
+        if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw new StorageError();
         if (active && active.id === value.take.requestId && active.publishing) continue;
         audio = await stat(`${audioPath(id)}.tmp`);
         if (!audio.isFile() || audio.size !== value.take.byteLength) continue;
@@ -160,7 +165,11 @@ async function recoverCompletedAudio() {
       if (!audio.isFile() || audio.size !== value.take.byteLength) continue;
       if (!validOrigin(value.request.origin)) delete value.request.origin;
       recovered.push(value);
-    } catch { /* Incomplete publications are never exposed as playable takes. */ }
+    } catch (error) {
+      if (error instanceof StorageError) throw error;
+      if ((error as NodeJS.ErrnoException).code && (error as NodeJS.ErrnoException).code !== 'ENOENT') throw new StorageError();
+      // Incomplete publications are never exposed as playable takes.
+    }
   }
   if (!recovered.length) return;
   await change(state => {
@@ -178,13 +187,13 @@ export async function preparedAudio(id: string): Promise<Buffer | null> {
   if (!validId(id)) return null;
   const take = (await load()).takes.find(value => value.id === id);
   if (!take || !Number.isSafeInteger(take.byteLength) || take.byteLength <= 0) return null;
-  try { const audio = await readFile(audioPath(id)); return audio.length === take.byteLength ? audio : null; } catch { return null; }
+  try { const audio = await readFile(audioPath(id)); return audio.length === take.byteLength ? audio : null; } catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') return null; throw new StorageError(); }
 }
 export async function getPreparedNews(): Promise<PreparedNewsLibrary> {
   await writes;
   await recoverCompletedAudio();
   const snapshot = structuredClone(await load());
-  snapshot.takes = await Promise.all(snapshot.takes.map(async take => ({ ...take, available: await stat(audioPath(take.id)).then(info => info.isFile() && Number.isSafeInteger(take.byteLength) && take.byteLength > 0 && info.size === take.byteLength, () => false) })));
+  snapshot.takes = await Promise.all(snapshot.takes.map(async take => ({ ...take, available: await stat(audioPath(take.id)).then(info => info.isFile() && Number.isSafeInteger(take.byteLength) && take.byteLength > 0 && info.size === take.byteLength, (error: NodeJS.ErrnoException) => { if (error.code === 'ENOENT') return false; throw new StorageError(); }) })));
   return snapshot;
 }
 export async function reconcilePreparedNews() {
@@ -193,7 +202,7 @@ export async function reconcilePreparedNews() {
   await change(current => ({ ...current, takes: current.takes.map(take => take.deliveryState?.status === 'claimed'
     ? { ...take, deliveryState: { status: 'ready' as const } } : take) }));
 }
-export async function nextRoomNews(input: { roomId: string; excludedIds: string[] }): Promise<PreparedNewsTake | null> {
+export async function nextRoomNews(input: { roomId: string; excludedIds: string[] }, canClaim = () => true): Promise<PreparedNewsTake | null> {
   if (!input || !validId(input.roomId) || !Array.isArray(input.excludedIds) || input.excludedIds.length > 500 || input.excludedIds.some(id => !validId(id))) invalid();
   await writes;
   await recoverCompletedAudio();
@@ -206,6 +215,7 @@ export async function nextRoomNews(input: { roomId: string; excludedIds: string[
   const snapshot = await getPreparedNews();
   const candidates = eligibleNewsTakes(snapshot.takes, state, input.roomId).filter(take => !excluded.has(take.id));
   for (const candidate of candidates) {
+    if (!canClaim()) return null;
     if (!(await preparedAudio(candidate.id))?.length) continue;
     const latestState = await getLocalState();
     const latestNews = await getPreparedNews();
@@ -213,7 +223,7 @@ export async function nextRoomNews(input: { roomId: string; excludedIds: string[
     let claimed = false;
     await change(current => {
       const take = current.takes.find(value => value.id === candidate.id);
-      if (!take || (take.deliveryState && take.deliveryState.status !== 'ready')) return current;
+      if (!canClaim() || !take || (take.deliveryState && take.deliveryState.status !== 'ready')) return current;
       take.deliveryState = { status: 'claimed', claimedAt: new Date().toISOString() };
       claimed = true;
       return current;
@@ -222,7 +232,7 @@ export async function nextRoomNews(input: { roomId: string; excludedIds: string[
       const finalState = await getLocalState();
       const finalProfile = finalState.roomProfiles.find(value => value.id === input.roomId);
       const finalTake = (await getPreparedNews()).takes.find(value => value.id === candidate.id);
-      if (finalProfile?.enabled && finalTake?.available && matchesNewsRoom(finalTake, finalState, input.roomId)) return { ...finalTake, available: true, deliveryState: { status: 'claimed', claimedAt: new Date().toISOString() } };
+      if (canClaim() && finalProfile?.enabled && finalTake?.available && matchesNewsRoom(finalTake, finalState, input.roomId)) return { ...finalTake, available: true, deliveryState: { status: 'claimed', claimedAt: new Date().toISOString() } };
       await releasePreparedNews(candidate.id);
       return null;
     }
@@ -358,14 +368,16 @@ export async function renderNewsTake(news: NewsService, input: { profileId?: str
 
 async function publishTake(take: PreparedNewsTake, audio: Buffer) {
   if (active?.id === take.requestId) active.publishing = true;
-  await mkdir(root(), { recursive: true, mode: 0o700 });
-  const temp = `${audioPath(take.id)}.tmp`;
-  await writeFile(temp, audio, { mode: 0o600 });
-  const sidecar = join(root(), `${take.id}.take.json`);
-  const request = (await load()).requests.find(item => item.requestId === take.requestId)!;
-  await writeFile(`${sidecar}.tmp`, JSON.stringify({ take, request }), { mode: 0o600 });
-  await rename(`${sidecar}.tmp`, sidecar);
-  await rename(temp, audioPath(take.id));
+  try {
+    await mkdir(root(), { recursive: true, mode: 0o700 });
+    const temp = `${audioPath(take.id)}.tmp`;
+    await writeFile(temp, audio, { mode: 0o600 });
+    const sidecar = join(root(), `${take.id}.take.json`);
+    const request = (await load()).requests.find(item => item.requestId === take.requestId)!;
+    await writeFile(`${sidecar}.tmp`, JSON.stringify({ take, request }), { mode: 0o600 });
+    await rename(`${sidecar}.tmp`, sidecar);
+    await rename(temp, audioPath(take.id));
+  } catch { throw new StorageError(); }
 }
 
 export async function prepareRoomNews(news: NewsService, input: { requestId: string; roomId: string }, snapshot?: Pick<LocalState, 'roomProfiles' | 'djs' | 'sources'>): Promise<PreparedNewsTake> {

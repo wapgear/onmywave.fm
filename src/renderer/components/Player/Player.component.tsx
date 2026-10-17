@@ -1,6 +1,7 @@
 import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { ListMusic, Pause, Play, Repeat, Repeat1, Shuffle, SkipBack, SkipForward, Volume1, Volume2, VolumeX, RotateCw, LoaderCircle } from 'lucide-react';
 import { usePlayer } from '../../player';
+import { useNewsRecovery } from '../../NewsRecovery';
 import { Artwork } from '../Shared';
 import { DJPopover } from './DJPopover.component';
 import './Player.styles.css';
@@ -13,6 +14,9 @@ const fill = (percent: number): CSSProperties => ({ '--range-fill': `${Math.max(
 
 export function Player({ queueOpen, toggleQueue, openRoom, openSettings }: { queueOpen: boolean; toggleQueue: () => void; openRoom: () => void; openSettings: () => void }) {
   const player = usePlayer();
+  const recovery = useNewsRecovery();
+  const knownSpeech = !!player.activeNews && player.lastNews?.news.id === player.activeNews.id && (player.newsPhase === 'speaking' || player.newsPhase === 'paused' || (player.newsPhase === 'tail' && player.lastNews.status === 'completed'));
+  const showNewsControls = recovery.status.phase === 'ready' || knownSpeech;
   const breakStatus = { idle: '', waiting: 'DJ break scheduled for the end of this song.', fading: 'Lowering the music for your DJ.', 'lead-in': 'Your DJ starts shortly.', speaking: 'Your DJ is on air.', tail: 'Your DJ has finished.', paused: 'DJ break paused. Use the player to resume.' }[player.newsPhase];
   const notices = useRef<HTMLDivElement>(null);
   useLayoutEffect(() => {
@@ -34,7 +38,7 @@ export function Player({ queueOpen, toggleQueue, openRoom, openSettings }: { que
   function commitSeek() { if (draftSeek !== undefined) player.seek(draftSeek); setSeekDraft(null); }
   return <>
     <div ref={notices} className="player-notices">
-      {player.newsPhase !== 'idle' && <div className="radio-speaking"><span role="status">{breakStatus}</span><button onClick={player.toggle}>{player.newsPhase === 'paused' || (player.newsPhase === 'waiting' && !player.requestedPlaying) ? 'Resume' : 'Pause'}</button><button onClick={player.stopNews}>{player.newsPhase === 'waiting' ? 'Cancel break' : 'Stop DJ'}</button></div>}
+      {showNewsControls && player.newsPhase !== 'idle' && <div className="radio-speaking"><span role="status">{breakStatus}</span><button onClick={player.toggle}>{player.newsPhase === 'paused' || (player.newsPhase === 'waiting' && !player.requestedPlaying) ? 'Resume' : 'Pause'}</button><button onClick={player.stopNews}>{player.newsPhase === 'waiting' ? 'Cancel break' : 'Stop DJ'}</button></div>}
       {player.error && <div className="playback-error"><span role="alert">{player.error}</span><button onClick={player.retry} disabled={player.busy || !player.canRetry}><RotateCw size={14} /> Retry</button><button onClick={player.next} disabled={!player.current}>Skip track</button></div>}
       {player.optionsError && <div className="playback-error player-options-error"><span role="alert">{player.optionsError}</span><button onClick={player.retryOptions}><RotateCw size={14} /> Retry saving options</button></div>}
     </div>
