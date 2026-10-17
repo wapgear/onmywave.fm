@@ -56,3 +56,9 @@ input[type=checkbox]{accent-color:var(--accent)}
 .connection-back { margin-top:12px; white-space:normal; }
 
 .playlist-recovery{flex-wrap:wrap}.playlist-recovery>span{flex-basis:100%}
+
+.collection-heading h1 { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
+.collection-heading p { min-width: 0; overflow-wrap: anywhere; }
+.collection-title-details { margin-top: 8px; }
+.collection-title-details summary { color: var(--accent); cursor: pointer; font-size: 11px; }
+.collection-title-details p { margin-top: 6px; font-size: 12px; line-height: 1.6; }

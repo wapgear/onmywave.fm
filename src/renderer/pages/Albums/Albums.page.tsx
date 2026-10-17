@@ -4,7 +4,8 @@ import { ArrowLeft, ListPlus, Play, Plus, Search } from 'lucide-react';
 import type { Album, Song } from '../../../shared/types';
 import { unwrap } from '../../api';
 import { usePlayer } from '../../player';
-import { Artwork, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
+import { Empty, ErrorNotice, PageHeading } from '../../components/Shared';
+import { CollectionHeading } from '../../components/CollectionHeading/CollectionHeading.component';
 import { songRows, TrackTable } from '../../components/TrackTable/TrackTable.component';
 import { VirtualAlbums } from './VirtualAlbums.component';
 export type AlbumsView = { album: Album | null; draft: string; selected: Map<string, Song> };
@@ -35,7 +36,7 @@ function AlbumDetail({ album, selected, select, back, add, details }: { album: A
   const metadata = detail.data ?? album;
   const tracks = useQuery({ queryKey: ['albumTracks', album.id], queryFn: async () => unwrap(await window.wave.albumTracks(album.id)) });
   const player = usePlayer();
-  return <><button className="back-button" onClick={back}><ArrowLeft size={17} />Albums</button><div className="collection-heading"><Artwork url={metadata.imageUrl} name={metadata.name} /><div><span className="eyebrow">Album</span><h1>{metadata.name}</h1><p>{metadata.artist || 'Unknown artist'}{metadata.year ? ` · ${metadata.year}` : ''}</p><div className="action-group"><button className="primary" disabled={!tracks.data?.length} onClick={() => player.play(tracks.data!)}><Play size={16} fill="currentColor" />Play album</button><button disabled={!tracks.data?.length} onClick={() => player.enqueue(tracks.data!)}><ListPlus size={17} />Queue</button><button disabled={!tracks.data?.length} onClick={() => add(tracks.data!)}><Plus size={17} />Add to playlist</button></div></div></div><ErrorNotice error={detail.error} retry={() => void detail.refetch()} /><ErrorNotice error={tracks.error} retry={() => void tracks.refetch()} />
+  return <><button className="back-button" onClick={back}><ArrowLeft size={17} />Albums</button><CollectionHeading artwork={metadata.imageUrl} eyebrow="Album" title={metadata.name} subtitle={<>{metadata.artist || 'Unknown artist'}{metadata.year ? ` · ${metadata.year}` : ''}</>}><button className="primary" disabled={!tracks.data?.length} onClick={() => player.play(tracks.data!)}><Play size={16} fill="currentColor" />Play album</button><button disabled={!tracks.data?.length} onClick={() => player.enqueue(tracks.data!)}><ListPlus size={17} />Queue</button><button disabled={!tracks.data?.length} onClick={() => add(tracks.data!)}><Plus size={17} />Add to playlist</button></CollectionHeading><ErrorNotice error={detail.error} retry={() => void detail.refetch()} /><ErrorNotice error={tracks.error} retry={() => void tracks.refetch()} />
     {tracks.isPending ? <p className="loading" role="status">Loading album tracks…</p> : tracks.data?.length ? <TrackTable rows={songRows(tracks.data)} selected={selected} select={select} play={player.play} queue={player.enqueue} add={add} details={details} currentId={player.current?.id} /> : !tracks.error && <Empty title="No tracks available">This album has no accessible music tracks.</Empty>}
   </>;
 }

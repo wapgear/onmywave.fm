@@ -1,0 +1,5418 @@
+{
+  "date": "2026-10-17",
+  "sourceCommit": "2f1a58ef08037ea22a3aa6d99eab75e27dbb7027",
+  "scope": [
+    "V07"
+  ],
+  "result": "passed within recorded native runtime",
+  "before": {
+    "validSeedProbe": [
+      {
+        "name": "song-inspector",
+        "snapshot": [
+          {
+            "selector": "html",
+            "clientWidth": 1280,
+            "scrollWidth": 1280,
+            "overflow": false,
+            "wrap": "normal"
+          },
+          {
+            "selector": ".page-content",
+            "clientWidth": 768,
+            "scrollWidth": 768,
+            "overflow": false,
+            "wrap": "normal"
+          },
+          {
+            "selector": ".drawer-body",
+            "clientWidth": 295,
+            "scrollWidth": 3907,
+            "overflow": true,
+            "wrap": "normal"
+          },
+          {
+            "selector": ".player-bar",
+            "clientWidth": 1248,
+            "scrollWidth": 1248,
+            "overflow": false,
+            "wrap": "normal"
+          },
+          {
+            "selector": ".song-inspector",
+            "clientWidth": 255,
+            "scrollWidth": 3887,
+            "overflow": true,
+            "wrap": "normal"
+          },
+          {
+            "selector": ".inspector-artist",
+            "clientWidth": 255,
+            "scrollWidth": 3887,
+            "overflow": true,
+            "wrap": "normal"
+          },
+          {
+            "selector": ".tag-list",
+            "clientWidth": 255,
+            "scrollWidth": 3097,
+            "overflow": true,
+            "wrap": "normal"
+          }
+        ]
+      },
+      {
+        "name": "album-heading",
+        "snapshot": [
+          {
+            "selector": "html",
+            "clientWidth": 1280,
+            "scrollWidth": 1280,
+            "overflow": false,
+            "wrap": "normal"
+          },
+          {
+            "selector": ".page-content",
+            "clientWidth": 1064,
+            "scrollWidth": 3883,
+            "overflow": true,
+            "wrap": "normal"
+          },
+          {
+            "selector": ".player-bar",
+            "clientWidth": 1248,
+            "scrollWidth": 1248,
+            "overflow": false,
+            "wrap": "normal"
+          },
+          {
+            "selector": ".collection-heading",
+            "clientWidth": 1004,
+            "scrollWidth": 3853,
+            "overflow": true,
+            "wrap": "normal"
+          }
+        ]
+      }
+    ],
+    "nativeStatesRecorded": 34,
+    "failures": [
+      {
+        "name": "1280-inspector",
+        "overflow": [
+          {
+            "selector": ".drawer-body",
+            "client": 295,
+            "scroll": 3907,
+            "overflow": true
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".tag-list .pill",
+            "inside": false,
+            "uncovered": false,
+            "width": 3097.140625,
+            "height": 25
+          }
+        ]
+      },
+      {
+        "name": "1280-album-detail",
+        "overflow": [
+          {
+            "selector": ".page-content",
+            "client": 1064,
+            "scroll": 3883,
+            "overflow": true
+          }
+        ],
+        "controls": []
+      },
+      {
+        "name": "1280-dj-popover",
+        "overflow": [
+          {
+            "selector": ".dj-popover:popover-open",
+            "client": 350,
+            "scroll": 592,
+            "overflow": true
+          }
+        ],
+        "controls": []
+      },
+      {
+        "name": "1600-inspector",
+        "overflow": [
+          {
+            "selector": ".drawer-body",
+            "client": 311,
+            "scroll": 3907,
+            "overflow": true
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".tag-list .pill",
+            "inside": false,
+            "uncovered": false,
+            "width": 3097.140625,
+            "height": 25
+          }
+        ]
+      },
+      {
+        "name": "1600-album-detail",
+        "overflow": [
+          {
+            "selector": ".page-content",
+            "client": 1384,
+            "scroll": 3889,
+            "overflow": true
+          }
+        ],
+        "controls": []
+      },
+      {
+        "name": "1600-dj-popover",
+        "overflow": [
+          {
+            "selector": ".dj-popover:popover-open",
+            "client": 358,
+            "scroll": 592,
+            "overflow": true
+          }
+        ],
+        "controls": []
+      }
+    ],
+    "providerCalls": 0,
+    "note": "Before walkthrough completed its34 measurements; a dynamic-import telemetry collector then failed outside app code. Final collector uses host fs and passes."
+  },
+  "intermediate": {
+    "statesRecorded": 30,
+    "newlyRevealedFailures": [
+      {
+        "name": "1280-saved-provenance",
+        "overflow": [
+          {
+            "selector": ".page-content",
+            "client": 1064,
+            "scroll": 2991,
+            "overflow": true
+          }
+        ],
+        "controls": []
+      },
+      {
+        "name": "1280-dj-popover",
+        "overflow": [
+          {
+            "selector": ".page-content",
+            "client": 1064,
+            "scroll": 2991,
+            "overflow": true
+          }
+        ],
+        "controls": []
+      },
+      {
+        "name": "1280-scheduled-story",
+        "overflow": [
+          {
+            "selector": ".page-content",
+            "client": 1064,
+            "scroll": 5200,
+            "overflow": true
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".news-bucket-feature button",
+            "inside": false,
+            "uncovered": false,
+            "width": 5169.7421875,
+            "height": 43.390625
+          }
+        ]
+      },
+      {
+        "name": "1600-saved-provenance",
+        "overflow": [
+          {
+            "selector": ".page-content",
+            "client": 1384,
+            "scroll": 2997,
+            "overflow": true
+          }
+        ],
+        "controls": []
+      }
+    ],
+    "note": "First surgical wrapping fix removed inspector/header overflow. Expanded source metadata and initial collection screenshot justified the final source-wrap and bounded-heading changes. A second-width selector expected an unselected take; final reuses existing selection."
+  },
+  "implementation": [
+    "Keep existing compact table/tile/queue/player truncation.",
+    "Wrap full inspector artists/tags and collection subtitles.",
+    "Share album/playlist CollectionHeading; clamp h1 to2 lines and detect actual clipping with ResizeObserver and font-ready measurement. Offer native keyboard Show full title disclosure after actions only when needed. Preserve full heading DOM text.",
+    "Wrap and constrain News bucket source buttons/labels, saved provenance source paragraphs/warnings, and DJ popup profile/source metadata."
+  ],
+  "decision": {
+    "independentProposals": "Steve and Elena both preserve compact ellipses and wrap reading surfaces. Initial narrow CSS plan was reopened when native screenshots showed tall title hiding initial actions and expanded source overflow. Both then supported bounded titles plus explicit native disclosure, rather than relying on hover-only title.",
+    "implementation": "Steve; root fixtures, product requirements and evidence",
+    "review": "Elena. Initially raised direct-feed max-width plus12px margin. Native measurements prove948+12=960 with no parent overflow, so the concern was withdrawn; no remaining actionable finding."
+  },
+  "native": {
+    "cases": [
+      {
+        "name": "1280-songs",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1064,
+            "scroll": 1064,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".track-menu-trigger",
+            "inside": true,
+            "uncovered": true,
+            "width": 28,
+            "height": 30
+          },
+          {
+            "selector": ".song-table tbody input[type=checkbox]",
+            "inside": true,
+            "uncovered": true,
+            "width": 15,
+            "height": 15
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          },
+          {
+            "selector": ".player-volume",
+            "inside": true,
+            "uncovered": true,
+            "width": 84,
+            "height": 20
+          }
+        ],
+        "player": {
+          "client": 1248,
+          "scroll": 1248
+        },
+        "metadata": [
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1280-inspector",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 768,
+            "scroll": 768,
+            "overflow": false
+          },
+          {
+            "selector": ".drawer-body",
+            "client": 295,
+            "scroll": 295,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".drawer-heading button",
+            "inside": true,
+            "uncovered": true,
+            "width": 34,
+            "height": 34
+          },
+          {
+            "selector": ".inspector-artist",
+            "inside": true,
+            "uncovered": true,
+            "width": 255,
+            "height": 392.59375
+          },
+          {
+            "selector": ".tag-list .pill",
+            "inside": true,
+            "uncovered": true,
+            "width": 255,
+            "height": 194
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1248,
+          "scroll": 1248
+        },
+        "metadata": [
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "H2",
+            "length": 509
+          },
+          {
+            "tag": "P",
+            "length": 511
+          },
+          {
+            "tag": "DD",
+            "length": 510
+          },
+          {
+            "tag": "DD",
+            "length": 515
+          },
+          {
+            "tag": "DD",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 507
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1280-queue",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 768,
+            "scroll": 768,
+            "overflow": false
+          },
+          {
+            "selector": ".drawer-body",
+            "client": 303,
+            "scroll": 303,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".drawer-heading button",
+            "inside": true,
+            "uncovered": true,
+            "width": 34,
+            "height": 34
+          },
+          {
+            "selector": ".queue-remove",
+            "inside": true,
+            "uncovered": true,
+            "width": 34,
+            "height": 34
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1248,
+          "scroll": 1248
+        },
+        "metadata": [
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 322,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1280-album-grid",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1064,
+            "scroll": 1064,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".album-tile",
+            "inside": true,
+            "uncovered": true,
+            "width": 183.1953125,
+            "height": 251.1953125
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1248,
+          "scroll": 1248
+        },
+        "metadata": [
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 11,
+            "client": 75,
+            "scroll": 75,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 183,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 183,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 183,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 183,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 183,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 183,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 183,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 183,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 183,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 183,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 183,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          }
+        ]
+      },
+      {
+        "name": "1280-short-album",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1072,
+            "scroll": 1072,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".collection-heading .primary",
+            "inside": true,
+            "uncovered": true,
+            "width": 113.8515625,
+            "height": 34
+          }
+        ],
+        "player": {
+          "client": 1248,
+          "scroll": 1248
+        },
+        "metadata": [
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 298,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1280-album-initial",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1072,
+            "scroll": 1072,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".collection-heading .primary",
+            "inside": true,
+            "uncovered": true,
+            "width": 113.8515625,
+            "height": 34
+          }
+        ],
+        "player": {
+          "client": 1248,
+          "scroll": 1248
+        },
+        "metadata": [
+          {
+            "tag": "H1",
+            "length": 510
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 298,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1280-full-title",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1064,
+            "scroll": 1064,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".collection-title-details summary",
+            "inside": true,
+            "uncovered": true,
+            "width": 832,
+            "height": 13
+          },
+          {
+            "selector": ".collection-heading .primary",
+            "inside": true,
+            "uncovered": true,
+            "width": 113.8515625,
+            "height": 34
+          }
+        ],
+        "player": {
+          "client": 1248,
+          "scroll": 1248
+        },
+        "metadata": [
+          {
+            "tag": "H1",
+            "length": 510
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 298,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1280-album-detail",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1064,
+            "scroll": 1064,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".collection-heading .primary",
+            "inside": true,
+            "uncovered": true,
+            "width": 113.8515625,
+            "height": 34
+          },
+          {
+            "selector": ".collection-heading .action-group button:last-child",
+            "inside": true,
+            "uncovered": true,
+            "width": 133.421875,
+            "height": 34
+          },
+          {
+            "selector": ".back-button",
+            "inside": true,
+            "uncovered": true,
+            "width": 81.4765625,
+            "height": 34
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1248,
+          "scroll": 1248
+        },
+        "metadata": [
+          {
+            "tag": "H1",
+            "length": 510
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 547,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 298,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1280-playlist-grid",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1072,
+            "scroll": 1072,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".playlist-tile",
+            "inside": true,
+            "uncovered": true,
+            "width": 329.328125,
+            "height": 86
+          },
+          {
+            "selector": ".page-heading .primary",
+            "inside": true,
+            "uncovered": true,
+            "width": 133.1640625,
+            "height": 34
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1248,
+          "scroll": 1248
+        },
+        "metadata": [
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 513,
+            "client": 227,
+            "scroll": 3714,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 513,
+            "client": 227,
+            "scroll": 3714,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 298,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1280-playlist-detail",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1072,
+            "scroll": 1072,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".collection-heading .primary",
+            "inside": true,
+            "uncovered": true,
+            "width": 118.9453125,
+            "height": 34
+          },
+          {
+            "selector": ".collection-heading .action-group button:last-child",
+            "inside": true,
+            "uncovered": true,
+            "width": 96.8828125,
+            "height": 34
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1248,
+          "scroll": 1248
+        },
+        "metadata": [
+          {
+            "tag": "H1",
+            "length": 513
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 10,
+            "client": 77,
+            "scroll": 77,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 10,
+            "client": 77,
+            "scroll": 77,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 10,
+            "client": 78,
+            "scroll": 78,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 298,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1280-rename-dialog",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1072,
+            "scroll": 1072,
+            "overflow": false
+          },
+          {
+            "selector": "dialog[open]",
+            "client": 438,
+            "scroll": 438,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": "dialog .icon-button",
+            "inside": true,
+            "uncovered": true,
+            "width": 34,
+            "height": 34
+          },
+          {
+            "selector": "dialog input",
+            "inside": true,
+            "uncovered": true,
+            "width": 386,
+            "height": 38
+          },
+          {
+            "selector": "dialog .modal-actions button:first-child",
+            "inside": true,
+            "uncovered": true,
+            "width": 67.3515625,
+            "height": 34
+          }
+        ],
+        "player": null,
+        "metadata": [
+          {
+            "tag": "H1",
+            "length": 513
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 10,
+            "client": 77,
+            "scroll": 77,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 10,
+            "client": 77,
+            "scroll": 77,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 10,
+            "client": 78,
+            "scroll": 78,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 298,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1280-news-settings",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1064,
+            "scroll": 1064,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": "#room-profile",
+            "inside": true,
+            "uncovered": true,
+            "width": 440,
+            "height": 38.5
+          },
+          {
+            "selector": "#manage-room-djs",
+            "inside": true,
+            "uncovered": true,
+            "width": 98.984375,
+            "height": 34
+          },
+          {
+            "selector": ".settings-workflow button.primary",
+            "inside": true,
+            "uncovered": true,
+            "width": 101.3203125,
+            "height": 34
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1248,
+          "scroll": 1248
+        },
+        "metadata": [
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 298,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1280-saved-audio",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1064,
+            "scroll": 1064,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".prepared-take button",
+            "inside": true,
+            "uncovered": true,
+            "width": 84.921875,
+            "height": 34
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1248,
+          "scroll": 1248
+        },
+        "metadata": [
+          {
+            "tag": "P",
+            "length": 638
+          },
+          {
+            "tag": "DD",
+            "length": 144
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 298,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1280-saved-provenance",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1064,
+            "scroll": 1064,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".prepared-source-links button",
+            "inside": true,
+            "uncovered": true,
+            "width": 948,
+            "height": 37
+          },
+          {
+            "selector": ".prepared-take-footer button",
+            "inside": true,
+            "uncovered": true,
+            "width": 145.875,
+            "height": 34
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1248,
+          "scroll": 1248
+        },
+        "metadata": [
+          {
+            "tag": "P",
+            "length": 638
+          },
+          {
+            "tag": "DD",
+            "length": 144
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 298,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1280-dj-popover",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1064,
+            "scroll": 1064,
+            "overflow": false
+          },
+          {
+            "selector": ".dj-popover:popover-open",
+            "client": 350,
+            "scroll": 350,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".dj-popover button",
+            "inside": true,
+            "uncovered": true,
+            "width": 34,
+            "height": 34
+          }
+        ],
+        "player": {
+          "client": 1248,
+          "scroll": 1248
+        },
+        "metadata": [
+          {
+            "tag": "P",
+            "length": 638
+          },
+          {
+            "tag": "DD",
+            "length": 144
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          },
+          {
+            "tag": "H3",
+            "length": 109
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 298,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1280-scheduled-story",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1064,
+            "scroll": 1064,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".news-bucket-feature button",
+            "inside": true,
+            "uncovered": true,
+            "width": 740,
+            "height": 195.2578125
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1248,
+          "scroll": 1248
+        },
+        "metadata": [
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 298,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1280-general",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1064,
+            "scroll": 1064,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".library-choice-row input",
+            "inside": true,
+            "uncovered": true,
+            "width": 16,
+            "height": 16
+          },
+          {
+            "selector": ".library-choice-footer button",
+            "inside": true,
+            "uncovered": true,
+            "width": 104.4296875,
+            "height": 34
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1248,
+          "scroll": 1248
+        },
+        "metadata": [
+          {
+            "tag": "DD",
+            "length": 219
+          },
+          {
+            "tag": "SPAN",
+            "length": 512
+          },
+          {
+            "tag": "SPAN",
+            "length": 512
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 298,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1280-sources",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1064,
+            "scroll": 1064,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".source-row button",
+            "inside": true,
+            "uncovered": true,
+            "width": 34,
+            "height": 34
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1248,
+          "scroll": 1248
+        },
+        "metadata": [
+          {
+            "tag": "H2",
+            "length": 210
+          },
+          {
+            "tag": "P",
+            "length": 652
+          },
+          {
+            "tag": "H2",
+            "length": 210
+          },
+          {
+            "tag": "P",
+            "length": 652
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 298,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1280-source-edit",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1064,
+            "scroll": 1064,
+            "overflow": false
+          },
+          {
+            "selector": "dialog[open]",
+            "client": 438,
+            "scroll": 438,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": "dialog .icon-button",
+            "inside": true,
+            "uncovered": true,
+            "width": 34,
+            "height": 34
+          },
+          {
+            "selector": "dialog .modal-actions button:first-child",
+            "inside": true,
+            "uncovered": true,
+            "width": 67.3515625,
+            "height": 34
+          }
+        ],
+        "player": null,
+        "metadata": [
+          {
+            "tag": "H2",
+            "length": 210
+          },
+          {
+            "tag": "P",
+            "length": 652
+          },
+          {
+            "tag": "H2",
+            "length": 210
+          },
+          {
+            "tag": "P",
+            "length": 652
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 298,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1280-source-delete",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1064,
+            "scroll": 1064,
+            "overflow": false
+          },
+          {
+            "selector": "dialog[open]",
+            "client": 438,
+            "scroll": 438,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": "dialog .icon-button",
+            "inside": true,
+            "uncovered": true,
+            "width": 34,
+            "height": 34
+          },
+          {
+            "selector": "dialog .modal-actions button:first-child",
+            "inside": true,
+            "uncovered": true,
+            "width": 67.3515625,
+            "height": 34
+          }
+        ],
+        "player": null,
+        "metadata": [
+          {
+            "tag": "H2",
+            "length": 210
+          },
+          {
+            "tag": "P",
+            "length": 652
+          },
+          {
+            "tag": "H2",
+            "length": 210
+          },
+          {
+            "tag": "P",
+            "length": 652
+          },
+          {
+            "tag": "H2",
+            "length": 218
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 298,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1280-djs",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1064,
+            "scroll": 1064,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".dj-row button",
+            "inside": true,
+            "uncovered": true,
+            "width": 161.0390625,
+            "height": 30
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1248,
+          "scroll": 1248
+        },
+        "metadata": [
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 298,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1280-dj-delete",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1280,
+            "scroll": 1280,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1064,
+            "scroll": 1064,
+            "overflow": false
+          },
+          {
+            "selector": "dialog[open]",
+            "client": 438,
+            "scroll": 438,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": "dialog .icon-button",
+            "inside": true,
+            "uncovered": true,
+            "width": 34,
+            "height": 34
+          },
+          {
+            "selector": "dialog .modal-actions button:first-child",
+            "inside": true,
+            "uncovered": true,
+            "width": 67.3515625,
+            "height": 34
+          }
+        ],
+        "player": null,
+        "metadata": [
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 298,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-songs",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1384,
+            "scroll": 1384,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".track-menu-trigger",
+            "inside": true,
+            "uncovered": true,
+            "width": 28,
+            "height": 30
+          },
+          {
+            "selector": ".song-table tbody input[type=checkbox]",
+            "inside": true,
+            "uncovered": true,
+            "width": 15,
+            "height": 15
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          },
+          {
+            "selector": ".player-volume",
+            "inside": true,
+            "uncovered": true,
+            "width": 84,
+            "height": 20
+          }
+        ],
+        "player": {
+          "client": 1568,
+          "scroll": 1568
+        },
+        "metadata": [
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-inspector",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1072,
+            "scroll": 1072,
+            "overflow": false
+          },
+          {
+            "selector": ".drawer-body",
+            "client": 311,
+            "scroll": 311,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".drawer-heading button",
+            "inside": true,
+            "uncovered": true,
+            "width": 34,
+            "height": 34
+          },
+          {
+            "selector": ".inspector-artist",
+            "inside": true,
+            "uncovered": true,
+            "width": 271,
+            "height": 369.5
+          },
+          {
+            "selector": ".tag-list .pill",
+            "inside": true,
+            "uncovered": true,
+            "width": 271,
+            "height": 181
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1568,
+          "scroll": 1568
+        },
+        "metadata": [
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "H2",
+            "length": 509
+          },
+          {
+            "tag": "P",
+            "length": 511
+          },
+          {
+            "tag": "DD",
+            "length": 510
+          },
+          {
+            "tag": "DD",
+            "length": 515
+          },
+          {
+            "tag": "DD",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 507
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-queue",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1072,
+            "scroll": 1072,
+            "overflow": false
+          },
+          {
+            "selector": ".drawer-body",
+            "client": 319,
+            "scroll": 319,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".drawer-heading button",
+            "inside": true,
+            "uncovered": true,
+            "width": 34,
+            "height": 34
+          },
+          {
+            "selector": ".queue-remove",
+            "inside": true,
+            "uncovered": true,
+            "width": 34,
+            "height": 34
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1568,
+          "scroll": 1568
+        },
+        "metadata": [
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 544,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-album-grid",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1384,
+            "scroll": 1384,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".album-tile",
+            "inside": true,
+            "uncovered": true,
+            "width": 200.328125,
+            "height": 268.328125
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1568,
+          "scroll": 1568
+        },
+        "metadata": [
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 11,
+            "client": 75,
+            "scroll": 75,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 200,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 200,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 200,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 200,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 200,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 200,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 200,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 200,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 200,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 200,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          },
+          {
+            "length": 510,
+            "client": 200,
+            "scroll": 3666,
+            "overflow": "hidden",
+            "ellipsis": "clip",
+            "lineClamp": "2"
+          }
+        ]
+      },
+      {
+        "name": "1600-short-album",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1384,
+            "scroll": 1384,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".collection-heading .primary",
+            "inside": true,
+            "uncovered": true,
+            "width": 113.8515625,
+            "height": 34
+          }
+        ],
+        "player": {
+          "client": 1568,
+          "scroll": 1568
+        },
+        "metadata": [
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 397,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-album-initial",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1384,
+            "scroll": 1384,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".collection-heading .primary",
+            "inside": true,
+            "uncovered": true,
+            "width": 113.8515625,
+            "height": 34
+          }
+        ],
+        "player": {
+          "client": 1568,
+          "scroll": 1568
+        },
+        "metadata": [
+          {
+            "tag": "H1",
+            "length": 510
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 397,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-full-title",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1384,
+            "scroll": 1384,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".collection-title-details summary",
+            "inside": true,
+            "uncovered": true,
+            "width": 1140,
+            "height": 13
+          },
+          {
+            "selector": ".collection-heading .primary",
+            "inside": true,
+            "uncovered": true,
+            "width": 113.8515625,
+            "height": 34
+          }
+        ],
+        "player": {
+          "client": 1568,
+          "scroll": 1568
+        },
+        "metadata": [
+          {
+            "tag": "H1",
+            "length": 510
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 397,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-album-detail",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1384,
+            "scroll": 1384,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".collection-heading .primary",
+            "inside": true,
+            "uncovered": true,
+            "width": 113.8515625,
+            "height": 34
+          },
+          {
+            "selector": ".collection-heading .action-group button:last-child",
+            "inside": true,
+            "uncovered": true,
+            "width": 133.421875,
+            "height": 34
+          },
+          {
+            "selector": ".back-button",
+            "inside": true,
+            "uncovered": true,
+            "width": 81.4765625,
+            "height": 34
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1568,
+          "scroll": 1568
+        },
+        "metadata": [
+          {
+            "tag": "H1",
+            "length": 510
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "SPAN",
+            "length": 509
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 781,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 397,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-playlist-grid",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1392,
+            "scroll": 1392,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".playlist-tile",
+            "inside": true,
+            "uncovered": true,
+            "width": 254.3984375,
+            "height": 86
+          },
+          {
+            "selector": ".page-heading .primary",
+            "inside": true,
+            "uncovered": true,
+            "width": 133.1640625,
+            "height": 34
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1568,
+          "scroll": 1568
+        },
+        "metadata": [
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 513,
+            "client": 152,
+            "scroll": 3714,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 513,
+            "client": 152,
+            "scroll": 3714,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 397,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-playlist-detail",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1392,
+            "scroll": 1392,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".collection-heading .primary",
+            "inside": true,
+            "uncovered": true,
+            "width": 118.9453125,
+            "height": 34
+          },
+          {
+            "selector": ".collection-heading .action-group button:last-child",
+            "inside": true,
+            "uncovered": true,
+            "width": 96.8828125,
+            "height": 34
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1568,
+          "scroll": 1568
+        },
+        "metadata": [
+          {
+            "tag": "H1",
+            "length": 513
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 10,
+            "client": 77,
+            "scroll": 77,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 10,
+            "client": 77,
+            "scroll": 77,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 10,
+            "client": 78,
+            "scroll": 78,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 397,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-rename-dialog",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1392,
+            "scroll": 1392,
+            "overflow": false
+          },
+          {
+            "selector": "dialog[open]",
+            "client": 438,
+            "scroll": 438,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": "dialog .icon-button",
+            "inside": true,
+            "uncovered": true,
+            "width": 34,
+            "height": 34
+          },
+          {
+            "selector": "dialog input",
+            "inside": true,
+            "uncovered": true,
+            "width": 386,
+            "height": 38
+          },
+          {
+            "selector": "dialog .modal-actions button:first-child",
+            "inside": true,
+            "uncovered": true,
+            "width": 67.3515625,
+            "height": 34
+          }
+        ],
+        "player": null,
+        "metadata": [
+          {
+            "tag": "H1",
+            "length": 513
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 10,
+            "client": 77,
+            "scroll": 77,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 10,
+            "client": 77,
+            "scroll": 77,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 10,
+            "client": 78,
+            "scroll": 78,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          },
+          {
+            "length": 509,
+            "client": 397,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-news-settings",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1384,
+            "scroll": 1384,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": "#room-profile",
+            "inside": true,
+            "uncovered": true,
+            "width": 440,
+            "height": 38.5
+          },
+          {
+            "selector": "#manage-room-djs",
+            "inside": true,
+            "uncovered": true,
+            "width": 98.984375,
+            "height": 34
+          },
+          {
+            "selector": ".settings-workflow button.primary",
+            "inside": true,
+            "uncovered": true,
+            "width": 101.3203125,
+            "height": 34
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1568,
+          "scroll": 1568
+        },
+        "metadata": [
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 397,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-saved-audio",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1384,
+            "scroll": 1384,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".prepared-take button",
+            "inside": true,
+            "uncovered": true,
+            "width": 84.921875,
+            "height": 34
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1568,
+          "scroll": 1568
+        },
+        "metadata": [
+          {
+            "tag": "P",
+            "length": 638
+          },
+          {
+            "tag": "DD",
+            "length": 144
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 397,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-saved-provenance",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1384,
+            "scroll": 1384,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".prepared-source-links button",
+            "inside": true,
+            "uncovered": true,
+            "width": 948,
+            "height": 37
+          },
+          {
+            "selector": ".prepared-take-footer button",
+            "inside": true,
+            "uncovered": true,
+            "width": 145.875,
+            "height": 34
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1568,
+          "scroll": 1568
+        },
+        "metadata": [
+          {
+            "tag": "P",
+            "length": 638
+          },
+          {
+            "tag": "DD",
+            "length": 144
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 397,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-dj-popover",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1384,
+            "scroll": 1384,
+            "overflow": false
+          },
+          {
+            "selector": ".dj-popover:popover-open",
+            "client": 350,
+            "scroll": 350,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".dj-popover button",
+            "inside": true,
+            "uncovered": true,
+            "width": 34,
+            "height": 34
+          }
+        ],
+        "player": {
+          "client": 1568,
+          "scroll": 1568
+        },
+        "metadata": [
+          {
+            "tag": "P",
+            "length": 638
+          },
+          {
+            "tag": "DD",
+            "length": 144
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          },
+          {
+            "tag": "H3",
+            "length": 109
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 397,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-scheduled-story",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1384,
+            "scroll": 1384,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".news-bucket-feature button",
+            "inside": true,
+            "uncovered": true,
+            "width": 740,
+            "height": 195.2578125
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1568,
+          "scroll": 1568
+        },
+        "metadata": [
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 397,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-general",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1384,
+            "scroll": 1384,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".library-choice-row input",
+            "inside": true,
+            "uncovered": true,
+            "width": 16,
+            "height": 16
+          },
+          {
+            "selector": ".library-choice-footer button",
+            "inside": true,
+            "uncovered": true,
+            "width": 104.4296875,
+            "height": 34
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1568,
+          "scroll": 1568
+        },
+        "metadata": [
+          {
+            "tag": "DD",
+            "length": 219
+          },
+          {
+            "tag": "SPAN",
+            "length": 512
+          },
+          {
+            "tag": "SPAN",
+            "length": 512
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 397,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-sources",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1384,
+            "scroll": 1384,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".source-row button",
+            "inside": true,
+            "uncovered": true,
+            "width": 34,
+            "height": 34
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1568,
+          "scroll": 1568
+        },
+        "metadata": [
+          {
+            "tag": "H2",
+            "length": 210
+          },
+          {
+            "tag": "P",
+            "length": 652
+          },
+          {
+            "tag": "H2",
+            "length": 210
+          },
+          {
+            "tag": "P",
+            "length": 652
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 397,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-source-edit",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1384,
+            "scroll": 1384,
+            "overflow": false
+          },
+          {
+            "selector": "dialog[open]",
+            "client": 438,
+            "scroll": 438,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": "dialog .icon-button",
+            "inside": true,
+            "uncovered": true,
+            "width": 34,
+            "height": 34
+          },
+          {
+            "selector": "dialog .modal-actions button:first-child",
+            "inside": true,
+            "uncovered": true,
+            "width": 67.3515625,
+            "height": 34
+          }
+        ],
+        "player": null,
+        "metadata": [
+          {
+            "tag": "H2",
+            "length": 210
+          },
+          {
+            "tag": "P",
+            "length": 652
+          },
+          {
+            "tag": "H2",
+            "length": 210
+          },
+          {
+            "tag": "P",
+            "length": 652
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 397,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-source-delete",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1384,
+            "scroll": 1384,
+            "overflow": false
+          },
+          {
+            "selector": "dialog[open]",
+            "client": 438,
+            "scroll": 438,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": "dialog .icon-button",
+            "inside": true,
+            "uncovered": true,
+            "width": 34,
+            "height": 34
+          },
+          {
+            "selector": "dialog .modal-actions button:first-child",
+            "inside": true,
+            "uncovered": true,
+            "width": 67.3515625,
+            "height": 34
+          }
+        ],
+        "player": null,
+        "metadata": [
+          {
+            "tag": "H2",
+            "length": 210
+          },
+          {
+            "tag": "P",
+            "length": 652
+          },
+          {
+            "tag": "H2",
+            "length": 210
+          },
+          {
+            "tag": "P",
+            "length": 652
+          },
+          {
+            "tag": "H2",
+            "length": 218
+          },
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 397,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-djs",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1392,
+            "scroll": 1392,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": ".dj-row button",
+            "inside": true,
+            "uncovered": true,
+            "width": 161.0390625,
+            "height": 30
+          },
+          {
+            "selector": ".player-play",
+            "inside": true,
+            "uncovered": true,
+            "width": 36,
+            "height": 36
+          }
+        ],
+        "player": {
+          "client": 1568,
+          "scroll": 1568
+        },
+        "metadata": [
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 397,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      },
+      {
+        "name": "1600-dj-delete",
+        "snapshots": [
+          {
+            "selector": "html",
+            "client": 1600,
+            "scroll": 1600,
+            "overflow": false
+          },
+          {
+            "selector": ".page-content",
+            "client": 1392,
+            "scroll": 1392,
+            "overflow": false
+          },
+          {
+            "selector": "dialog[open]",
+            "client": 438,
+            "scroll": 438,
+            "overflow": false
+          }
+        ],
+        "controls": [
+          {
+            "selector": "dialog .icon-button",
+            "inside": true,
+            "uncovered": true,
+            "width": 34,
+            "height": 34
+          },
+          {
+            "selector": "dialog .modal-actions button:first-child",
+            "inside": true,
+            "uncovered": true,
+            "width": 67.3515625,
+            "height": 34
+          }
+        ],
+        "player": null,
+        "metadata": [
+          {
+            "tag": "STRONG",
+            "length": 509
+          }
+        ],
+        "compact": [
+          {
+            "length": 509,
+            "client": 397,
+            "scroll": 3702,
+            "overflow": "hidden",
+            "ellipsis": "ellipsis",
+            "lineClamp": "none"
+          }
+        ]
+      }
+    ],
+    "errors": [],
+    "decodedMusicAdvancedAndPaused": true,
+    "providerCalls": 0,
+    "fatalFiles": [],
+    "runtime": {
+      "electron": "43.7.0",
+      "chrome": "150.0.7871.250",
+      "platform": "darwin",
+      "arch": "arm64"
+    },
+    "failures": [],
+    "result": "passed"
+  },
+  "targeted": {
+    "cases": [],
+    "errors": [],
+    "playlistKeyboardFullTitle": true,
+    "marginMeasurements": [
+      {
+        "button": 948,
+        "margin": 12,
+        "parent": 960,
+        "scroll": 960
+      },
+      {
+        "button": 948,
+        "margin": 12,
+        "parent": 960,
+        "scroll": 960
+      }
+    ],
+    "providerCalls": 0,
+    "result": "passed"
+  },
+  "screenshots": {
+    "collection": "2026-10-17-long-metadata-collection.png",
+    "provenance": "2026-10-17-long-metadata-provenance.png",
+    "dj-controls": "2026-10-17-long-metadata-dj-controls.png",
+    "inspector": "2026-10-17-long-metadata-inspector.png",
+    "scheduled-story": "2026-10-17-long-metadata-scheduled-story.png"
+  },
+  "screenshotsReviewed": [
+    "collection",
+    "provenance",
+    "inspector",
+    "scheduled-story",
+    "dj-controls"
+  ],
+  "baseline": {
+    "windows": [
+      [
+        1280,
+        720
+      ],
+      [
+        1600,
+        1000
+      ]
+    ],
+    "zoomFactor": 1,
+    "data": "Disposable localhost catalog and local dummy source/DJ/profile/saved-audio fixtures. About500-character unbroken music metadata,80-character room/DJ names,210-character source names,638-character story/title strings and long URLs/notes. One ordinary short album as a regression control.",
+    "isolation": "Shared key adapter disabled; providers substituted/external network blocked. All profile preparation disabled and scheduler stopped after explicitly awaited ready status. No live server mutation or provider dispatch. Saved take selected/scheduled/canceled locally; music WAV decoded muted."
+  },
+  "checks": {
+    "build": "npm run build passed after final source changes, including TypeScript",
+    "lint": "npm run lint passed after final source changes",
+    "unitTests": "not run",
+    "fixtureCorrections": [
+      "Correct initial84-character room seed to allowed80 before before-walk/final acceptance.",
+      "Await actual readiness replies explicitly rather than relying on an async polling predicate.",
+      "Use actual queue label, page Back/General navigation, and existing selected take on second width.",
+      "Read fatal-file directory with host fs instead of dynamic import in Electron evaluate.",
+      "Settled captures wait for image completion and primary transition before visual review."
+    ],
+    "noSourceChangesAfterChecks": true
+  },
+  "limits": [
+    "Controlled metadata acceptance on the recorded macOS arm64/Electron runtime, not listener usability or all OS/display combinations.",
+    "V13 broader error/loading/every-page acceptance, Q06 full keyboard/assistive-technology and other open rows remain separate.",
+    "Very long detail text intentionally adds vertical scrolling; the title disclosure reveals it only on request.",
+    "No packaging/release, live provider, audible quality or deferred below1280\u00d7720/enlarged-zoom check."
+  ],
+  "sourceAndArtifactSha256": {
+    "src/renderer/components/Drawer/Drawer.styles.css": "f6a585dbc6dd4070b31efd16762d9a79c77ffa46388f79ae8bc8f4a99264d292",
+    "src/renderer/components/Player/DJPopover.component.tsx": "3847eb12f2b0bfe36654a93a56ae8c0278b0509c90e255c23634acb4c8c20b34",
+    "src/renderer/components/Player/DJPopover.styles.css": "1abac821de5de33243d834f582b9491a1ee50d9e39e25ac546e4ddef5e54ab35",
+    "src/renderer/pages/Albums/Albums.page.tsx": "4eb745b4fbff557ad1061561971b8da4a0b67f5214af82998c0f9555e59a4fac",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "eeb4be9a0e0798810cbe03e2c73ce9744d8b3b97f387fab7d3cece2162e04e7d",
+    "src/renderer/pages/Stations/components/NewsBucket.styles.css": "975d6f4e3c669e413a61426385a0dc913e8d9bf5b9fde94cb9e865496bc93f6b",
+    "src/renderer/pages/Stations/components/PreparedTakes.styles.css": "25cf96866d2181cd64542b83c86531168583a2c8d9316e5d4dc4e295543585b4",
+    "src/renderer/styles.css": "dd388c674bfa152dc7f3af4fd79dc15a541f1769216d7cb868eb1d1bcc5461b5",
+    "src/renderer/components/CollectionHeading/CollectionHeading.component.tsx": "3a055f26b529958fd7a010c1318de66c54e4c6c77118207b3eed745c020e5548",
+    "out/main/index.js": "526face554d7c70d9393eef2180cebba54efd984c85fe00bf744f86a1ddece01",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/assets/index-DfqGukD5.js": "7b08f0c9d3ecc2ea92f499b411b756a4015614430f44ffa9375286e26a79bdcb",
+    "out/renderer/assets/index-Dlzuu43I.css": "8ab74f7fcd46c03320d653125bd31a13649472c90f19aa5dc10df53b06d2df43"
+  },
+  "fixtureSha256": {
+    "build.mjs": "d4c25bbf9e994ab51c29a7464334493d65b43b43ccd45dc678eac44c2dcd1aef",
+    "bootstrap.mjs": "e271e8852e207da959015c48fb560aaab7f5c8cce73ee310ba3c60016f094748",
+    "server.mjs": "62a6711b33be70309017f537794466d95c032e5b6250b3684e812941f193f897",
+    "probe.cjs": "36aaa9ff2efb7c6acccd6a43bb0f7cf7aa9f59c147c1e2288476273ccf8e2335",
+    "walk.cjs": "8a3a6de6fd064856a1671c47ed1bbe9873f6b5a31233fe2660bbd670f9e832b8",
+    "targeted.cjs": "b5cb31672c22eaf01f036e53fdb7ca7824d6bcfd24e308b8024ace6def4fbf5c",
+    "before.json": "9ca80c5c0bddfbd06e6557f7f15b796cf95f9d5c0e81410c81bf6bce0865cd4f",
+    "intermediate.json": "0d8c3c6cad058243980b4d1f33e4800cda998d5d2e8c2d2cd8cfb3377c3b92a3",
+    "final.json": "8d4513ee9feb7c7e38496a04a27d5955ba154866c6a677be4af7e50fe4c0a59d",
+    "targeted.json": "d07173dee72fbc426a4a7b6cf73aef761bd082cd6c0793dfd5feedc19ac3ae15"
+  },
+  "inventory": {
+    "total": 187,
+    "active": 185,
+    "deferred": 2,
+    "Review": 22,
+    "Dated": 1,
+    "Controlled": 131,
+    "Live": 20,
+    "External": 11,
+    "remainingActive": 34
+  }
+}

@@ -5,11 +5,12 @@
 .drawer-body { flex: 1; min-height: 0; overflow: auto; overscroll-behavior: contain; padding: 12px 20px calc(var(--player-clearance) + 24px); scroll-padding-block: 16px calc(var(--player-clearance) + 24px); }
 .song-inspector .inspector-art { width: 100%; border-radius: 10px; margin-bottom: 20px; }
 .song-inspector h2 { font-size: 23px; line-height: 1.3; overflow-wrap: anywhere; }
-.song-inspector .inspector-artist { font-size: 14px; margin: 6px 0 24px; color: var(--muted); }
+.song-inspector .inspector-artist { min-width: 0; overflow-wrap: anywhere; font-size: 14px; margin: 6px 0 24px; color: var(--muted); }
 .song-inspector dl { margin: 0; font-size: 12px; }
 .song-inspector dl > div { display: grid; grid-template-columns: 82px minmax(0,1fr); gap: 10px; margin-bottom: 16px; }
 .song-inspector dt { color: var(--muted); }
 .song-inspector dd { margin: 0; overflow-wrap: anywhere; }
+.song-inspector .tag-list .pill { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
 .queue-content h3 { font-size: 12px; font-weight: 600; letter-spacing: 0; }
 .queue-now { margin-bottom: 28px; }
 .queue-now h3 { color: var(--muted); margin-bottom: 12px; }
