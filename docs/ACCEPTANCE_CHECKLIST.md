@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 35 Review, 1 Dated, 0 Recorded, 120 Controlled, 18 Live, 11 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 32 Review, 1 Dated, 0 Recorded, 123 Controlled, 18 Live, 11 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -274,10 +274,10 @@ Source: REQUIREMENTS: Design acceptance, stack, settings, acceptance and release
 | ID | Observable result | Proof | Status |
 | --- | --- | --- | --- |
 | Q01 | Context isolation and disabled renderer Node integration accompany a narrow validated sender/frame-aware preload/IPC boundary. | I+S+N | Controlled |
-| Q02 | Actual OS protected connection/local-key encryption decrypts in a fresh process and clearing/corrupt/unavailable paths are honest. | S+O | Review |
-| Q03 | Actual shared-provider Keychain adapter supports isolated read/write/independent clear without exposing secrets to renderer. | S+O | Review |
+| Q02 | Actual OS protected connection/local-key encryption decrypts in a fresh process and clearing/corrupt/unavailable paths are honest. | S+O | Controlled |
+| Q03 | Actual shared-provider Keychain adapter supports isolated read/write/independent clear without exposing secrets to renderer. | S+O | Controlled |
 | Q04 | Media URLs/handles reject revoked/missing/cross-account resources and off-origin redirects without leaking tokens. | S+N | Controlled |
-| Q05 | Local secret/recovery files have appropriate private modes and no inspection/test touches personal entries. | I+S+O | Review |
+| Q05 | Local secret/recovery files have appropriate private modes and no inspection/test touches personal entries. | I+S+O | Controlled |
 | Q06 | All essential controls have accessible names, visible focus and keyboard operation; source checkbox groups have names. | N+O | Review |
 | Q07 | Filter/song-action Tab/Escape, dialogs and setup detours restore logical focus, including removed-opener fallback to page heading. | N | Controlled |
 | Q08 | Interactive recovery actions are outside live status/error announcements; loading/error/empty states remain actionable. | N+O | Review |
@@ -437,3 +437,5 @@ B01/B05/B08 evidence, 17 October 2026: [current live catalog and album actions](
 R09/A03/D02 evidence, 17 October 2026: [current radio opt-in contracts](verification/2026-10-17-radio-opt-in-contracts.json). Nine native cases cover all ten preset/gender choices without generation, saved DJ/setup preserving both opt-ins, visible unsaved activation through navigation, saved activation/limit status and explicit stop, manual text/audio at both automatic caps, explicit saved-DJ preview, request-free replay and fresh-process restoration. Main/service handlers and actual local persistence are used with substituted providers. D03 moves to External: queue/frequency guidance is visible, but its U proof remains missing. Source is unchanged. Inventory: 187 rows, 185 active, 2 Deferred; 35 Review, 1 Dated, 2 Recorded, 118 Controlled, 18 Live, 11 External. 49 active checks remain; the overall goal stays open.
 
 A15/A17 evidence, 17 October 2026: [current sign-out recovery](verification/2026-10-17-signout-recovery.json). Native pause-save failure exposed generic feedback despite retaining the account. The disconnect operation now explains that preparation could not be paused, the listener remains signed in and sign-out can be retried. Three native cases verify pause/delete failures, byte-identical credential retention across restart, explicit retry and an abort-ignoring old text response released after reconnect without publication or voice dispatch. Twenty-one rebuilt actual-main/service/storage cases cover the full generation boundaries, stale setup/Resume and completed publication. Production build/TypeScript and ESLint pass. Inventory: 187 rows, 185 active, 2 Deferred; 35 Review, 1 Dated, 0 Recorded, 120 Controlled, 18 Live, 11 External. 47 active checks remain; the overall goal stays open.
+
+Q02/Q03/Q05 evidence, 17 October 2026: [current private credential storage](verification/2026-10-17-private-credentials.json). Actual native safeStorage encrypts dummy connection/local keys, restores them in a fresh process, rejects corrupt ciphertext and clears the files. Controlled unavailable encryption removes an older connection and keeps keys session-only across the current process only. The actual shared-provider Keychain adapter writes/reads two isolated UUID-service entries, restores them and independently clears both, with confirmed absence after cleanup. Current native artifact writers produce private 0600 files and 0700 directories with matching ownership. No production service name or personal entry is used. C19 remains Review for its broader logs/URLs/replies audit. Source is unchanged. Inventory: 187 rows, 185 active, 2 Deferred; 32 Review, 1 Dated, 0 Recorded, 123 Controlled, 18 Live, 11 External. 44 active checks remain; the goal stays open.
