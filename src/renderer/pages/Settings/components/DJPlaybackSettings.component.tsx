@@ -1,33 +1,25 @@
-import { useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { defaultDJPlaybackSettings, type DJPlaybackSettings as Settings } from '../../../../shared/dj-playback';
 import { unwrap } from '../../../api';
 import { ErrorNotice } from '../../../components/Shared';
 import { useNewsRecovery } from '../../../NewsRecovery';
+import { useGeneralSettingsEdits } from '../SettingsEdits';
 
 export function DJPlaybackSettings() {
   const recovery = useNewsRecovery();
   const recoveryReady = recovery.status.phase === 'ready';
-  const client = useQueryClient();
   const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()), enabled: recoveryReady });
-  const [draft, setDraft] = useState<Settings | null>(null);
+  const edit = useGeneralSettingsEdits().playback;
+  const { draft, save } = edit;
   const settings = draft ?? state.data?.djPlayback ?? defaultDJPlaybackSettings();
-  function change(patch: Partial<Settings>) { save.reset(); setDraft({ ...settings, ...patch }); }
-  const save = useMutation({ mutationFn: async () => {
-    if (!recoveryReady) throw new Error('News data is unavailable. Recover it before changing DJ playback.');
-    const count = Number(settings.everySongs);
-    if (!Number.isInteger(count) || count < 1 || count > 100) throw new Error('Choose a whole number from 1 to 100 songs.');
-    const latest = unwrap(await window.wave.getLocalState());
-    unwrap(await window.wave.saveDJPlayback({ ...latest.djPlayback, everySongs: count, keepOnSeek: settings.keepOnSeek, voiceVolume: settings.voiceVolume }));
-    await client.invalidateQueries({ queryKey: ['localState'] });
-  }, onSuccess: () => setDraft(null) });
+  function change(patch: Partial<Settings>) { edit.change({ everySongs: settings.everySongs, keepOnSeek: settings.keepOnSeek, voiceVolume: settings.voiceVolume, ...patch }); }
   return <section className="room-dj-schedule" aria-labelledby="dj-playback-title">
     <h2 id="dj-playback-title">DJ playback</h2>
     <p className="settings-description">Choose how often the DJ checks saved news and how its voice plays.</p>
     {!recoveryReady && <p className="notice">DJ playback settings are unavailable until news data recovery completes. Existing music playback remains available.</p>}
     <ErrorNotice error={state.error} retrying={state.isFetching} retry={() => state.refetch()} />
     {state.isPending && <p role="status">Loading DJ schedule…</p>}
-    <form onSubmit={event => { event.preventDefault(); if (!save.isPending) save.mutate(); }}>
+    <form onSubmit={event => { event.preventDefault(); if (!save.isPending) edit.submit(); }}>
       <fieldset disabled={!recoveryReady || !state.data || save.isPending}>
         <label className="dj-song-interval">Check news every<input type="number" min={1} max={100} step={1} required value={Number.isNaN(settings.everySongs) ? '' : settings.everySongs} aria-describedby="dj-interval-help" onChange={event => change({ everySongs: event.target.value === '' ? NaN : Number(event.target.value) })} /><span>{settings.everySongs === 1 ? 'song' : 'songs'}</span></label>
         <p id="dj-interval-help" className="settings-footnote">Only finished songs count. Choose 1 for testing. Empty news pools are skipped without generating anything.</p>

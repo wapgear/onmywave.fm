@@ -123,8 +123,7 @@ function useDJPlaybackController() {
   const completed = Math.max(0, player.completedSongs - (current?.baseline ?? player.completedSongs));
   const update = useMutation({ mutationFn: async (patch: Partial<DJPlaybackSettings>) => {
     if (!live.current.recoveryReady) throw new Error('News data is unavailable. Recover it before changing DJ playback.');
-    const latest = unwrap(await window.wave.getLocalState());
-    unwrap(await window.wave.saveDJPlayback({ ...latest.djPlayback, ...patch }));
+    unwrap(await window.wave.saveDJPlayback(patch));
     await client.invalidateQueries({ queryKey: ['localState'] });
     if (patch.enabled === false) live.current.player.stopNews();
   } });

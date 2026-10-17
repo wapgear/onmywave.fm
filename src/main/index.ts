@@ -1,5 +1,5 @@
-import { isDJPlaybackSettings, normalizeDJPlaybackSettings } from '../shared/dj-playback';
-import type { DJPlaybackSettings } from '../shared/dj-playback';
+import { isDJPlaybackSettings, isDJPlaybackSettingsPatch, normalizeDJPlaybackSettings } from '../shared/dj-playback';
+import type { DJPlaybackSettingsPatch } from '../shared/dj-playback';
 import { normalizeNewsSource } from '../shared/sources';
 import { readTwitterKey, twitterKeyStatus, writeTwitterKey } from './storage';
 import { getDJVoicePreview, prepareDJVoicePreview, getVoicePreview, prepareVoicePreview } from './dj-previews';
@@ -452,16 +452,20 @@ function registerIpc() {
       });
       if (!input.enabled) pauseNewsWorkflow(input.id);
     },
-    saveDJPlayback: async (input: DJPlaybackSettings) => {
-      if (!isDJPlaybackSettings(input)) invalid();
+    saveDJPlayback: async (input: DJPlaybackSettingsPatch) => {
+      if (!isDJPlaybackSettingsPatch(input)) invalid();
       await updateLocalState(state => {
-        const profile = state.roomProfiles.find(value => value.id === input.roomId);
-        if (input.roomId !== null && !profile) throw new ServiceError('invalid', 'Choose a saved Listening Room.');
-        if (input.enabled) {
+        const merged = { ...state.djPlayback, ...input };
+        if (!isDJPlaybackSettings(merged)) invalid();
+        const settings = normalizeDJPlaybackSettings(merged);
+        if (settings.enabled) requireNewsReady();
+        const profile = state.roomProfiles.find(value => value.id === settings.roomId);
+        if (settings.roomId !== null && !profile) throw new ServiceError('invalid', 'Choose a saved Listening Room.');
+        if (settings.enabled) {
           if (!profile?.enabled || !profile.room.djId || !profile.room.sourceIds.length || !profile.mood.trim()) throw new ServiceError('invalid', 'Choose an enabled Listening Room with a DJ, sources, and mood.');
           validateRoomReferences(profile.room, state);
         }
-        return { djPlayback: normalizeDJPlaybackSettings(input) };
+        return { djPlayback: settings };
       });
     },
     nextRoomNews: input => {

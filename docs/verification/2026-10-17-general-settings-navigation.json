@@ -1,0 +1,2032 @@
+{
+  "date": "2026-10-17",
+  "baseCommit": "123b2d00d0450476db34335f2dd062cffb54c02c",
+  "classification": "controlled native production-renderer navigation and actual preload IPC/queued-storage integration; disposable data/catalog, no live-provider/audible/listener claim",
+  "beforeNative": [
+    {
+      "name": "general-before-draft",
+      "sha256": "7b0661c92b8aecf3af30dbddb59f52e35b393a180d731dad7128a864306c0f69",
+      "headings": [
+        "Settings",
+        "Account",
+        "Music libraries",
+        "DJ playback",
+        "DJ transitions",
+        "About"
+      ],
+      "generalSettings": [
+        {
+          "heading": "DJ playback",
+          "fields": [
+            {
+              "label": "Check news everysongs",
+              "type": "number",
+              "value": "9",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "type": "checkbox",
+              "value": "on",
+              "checked": true,
+              "disabled": false
+            },
+            {
+              "label": "DJ voice volume70%",
+              "type": "range",
+              "value": "0.7",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Save DJ playback",
+              "disabled": false
+            }
+          ],
+          "notices": []
+        },
+        {
+          "heading": "DJ transitions",
+          "fields": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "type": "select-one",
+              "value": "natural",
+              "disabled": false
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "type": "select-one",
+              "value": "over-music",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "type": "number",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "type": "number",
+              "value": "0.8",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "type": "number",
+              "value": "0.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "type": "number",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false
+            },
+            {
+              "name": "Save DJ transitions",
+              "disabled": true
+            }
+          ],
+          "notices": [
+            "Ready to preview."
+          ]
+        }
+      ],
+      "notices": [],
+      "transport": "Play",
+      "formSubmissions": 0,
+      "held": [],
+      "providerFetches": 0,
+      "serverMutations": 0,
+      "methodCounts": {
+        "getNewsRecoveryStatus": 22,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 1,
+        "getLocalState": 2,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 5,
+        "libraries": 1
+      }
+    },
+    {
+      "name": "general-before-pending",
+      "sha256": "5f79084ba886e6711dbf3f3c4659362c5cadfe60ece24b480f3e9a74a980f14a",
+      "headings": [
+        "Settings",
+        "Account",
+        "Music libraries",
+        "DJ playback",
+        "DJ transitions",
+        "About"
+      ],
+      "generalSettings": [
+        {
+          "heading": "DJ playback",
+          "fields": [
+            {
+              "label": "Check news everysongs",
+              "type": "number",
+              "value": "9",
+              "checked": false,
+              "disabled": true
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "type": "checkbox",
+              "value": "on",
+              "checked": true,
+              "disabled": true
+            },
+            {
+              "label": "DJ voice volume70%",
+              "type": "range",
+              "value": "0.7",
+              "checked": false,
+              "disabled": true
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Saving\u2026",
+              "disabled": true
+            }
+          ],
+          "notices": []
+        },
+        {
+          "heading": "DJ transitions",
+          "fields": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "type": "select-one",
+              "value": "natural",
+              "disabled": false
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "type": "select-one",
+              "value": "over-music",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "type": "number",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "type": "number",
+              "value": "0.8",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "type": "number",
+              "value": "0.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "type": "number",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false
+            },
+            {
+              "name": "Save DJ transitions",
+              "disabled": true
+            }
+          ],
+          "notices": [
+            "Ready to preview."
+          ]
+        }
+      ],
+      "notices": [],
+      "transport": "Play",
+      "formSubmissions": 1,
+      "held": [
+        "saveDJPlayback"
+      ],
+      "providerFetches": 0,
+      "serverMutations": 0,
+      "methodCounts": {
+        "getNewsRecoveryStatus": 44,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 1,
+        "getLocalState": 3,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 9,
+        "libraries": 1,
+        "saveDJPlayback": 1
+      }
+    },
+    {
+      "name": "general-before-returned",
+      "sha256": "7f338eb517a39b50a6d4fb9f6b621d3caf15f2652e206d4e6dc88bbb9cb2329b",
+      "headings": [
+        "Settings",
+        "Account",
+        "Music libraries",
+        "DJ playback",
+        "DJ transitions",
+        "About"
+      ],
+      "generalSettings": [
+        {
+          "heading": "DJ playback",
+          "fields": [
+            {
+              "label": "Check news everysongs",
+              "type": "number",
+              "value": "3",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "type": "checkbox",
+              "value": "on",
+              "checked": true,
+              "disabled": false
+            },
+            {
+              "label": "DJ voice volume70%",
+              "type": "range",
+              "value": "0.7",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Save DJ playback",
+              "disabled": true
+            }
+          ],
+          "notices": []
+        },
+        {
+          "heading": "DJ transitions",
+          "fields": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "type": "select-one",
+              "value": "natural",
+              "disabled": false
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "type": "select-one",
+              "value": "over-music",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "type": "number",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "type": "number",
+              "value": "0.8",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "type": "number",
+              "value": "0.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "type": "number",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false
+            },
+            {
+              "name": "Save DJ transitions",
+              "disabled": true
+            }
+          ],
+          "notices": [
+            "Ready to preview."
+          ]
+        }
+      ],
+      "notices": [],
+      "transport": "Play",
+      "formSubmissions": 1,
+      "held": [
+        "saveDJPlayback"
+      ],
+      "providerFetches": 0,
+      "serverMutations": 0,
+      "methodCounts": {
+        "getNewsRecoveryStatus": 55,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 2,
+        "getLocalState": 4,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 11,
+        "libraries": 2,
+        "saveDJPlayback": 1
+      }
+    },
+    {
+      "name": "general-before-failure",
+      "sha256": "b30a4386cd9db4955a4ceb8cb5453079e5a2cb755a22b4df954d009d21bfee0b",
+      "headings": [
+        "Settings",
+        "Account",
+        "Music libraries",
+        "DJ playback",
+        "DJ transitions",
+        "About"
+      ],
+      "generalSettings": [
+        {
+          "heading": "DJ playback",
+          "fields": [
+            {
+              "label": "Check news everysongs",
+              "type": "number",
+              "value": "3",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "type": "checkbox",
+              "value": "on",
+              "checked": true,
+              "disabled": false
+            },
+            {
+              "label": "DJ voice volume70%",
+              "type": "range",
+              "value": "0.7",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Save DJ playback",
+              "disabled": true
+            }
+          ],
+          "notices": []
+        },
+        {
+          "heading": "DJ transitions",
+          "fields": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "type": "select-one",
+              "value": "natural",
+              "disabled": false
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "type": "select-one",
+              "value": "over-music",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "type": "number",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "type": "number",
+              "value": "0.8",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "type": "number",
+              "value": "0.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "type": "number",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false
+            },
+            {
+              "name": "Save DJ transitions",
+              "disabled": true
+            }
+          ],
+          "notices": [
+            "Ready to preview."
+          ]
+        }
+      ],
+      "notices": [],
+      "transport": "Play",
+      "formSubmissions": 1,
+      "held": [],
+      "providerFetches": 0,
+      "serverMutations": 0,
+      "methodCounts": {
+        "getNewsRecoveryStatus": 67,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 2,
+        "getLocalState": 4,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 14,
+        "libraries": 2,
+        "saveDJPlayback": 1
+      }
+    }
+  ],
+  "afterNative": [
+    {
+      "name": "general-after-drafts",
+      "sha256": "f837e04669bee15042e4956bcdf3c5e73dd23d41322d6df56be8ab31f7167607",
+      "headings": [
+        "Settings",
+        "Account",
+        "Music libraries",
+        "DJ playback",
+        "DJ transitions",
+        "About"
+      ],
+      "generalSettings": [
+        {
+          "heading": "DJ playback",
+          "fields": [
+            {
+              "label": "Check news everysongs",
+              "type": "number",
+              "value": "9",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "type": "checkbox",
+              "value": "on",
+              "checked": true,
+              "disabled": false
+            },
+            {
+              "label": "DJ voice volume70%",
+              "type": "range",
+              "value": "0.7",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Save DJ playback",
+              "disabled": false
+            }
+          ],
+          "notices": []
+        },
+        {
+          "heading": "DJ transitions",
+          "fields": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "type": "select-one",
+              "value": "custom",
+              "disabled": false
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "type": "select-one",
+              "value": "over-music",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "type": "number",
+              "value": "2",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "type": "number",
+              "value": "0.8",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "type": "number",
+              "value": "0.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "type": "number",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false
+            },
+            {
+              "name": "Save DJ transitions",
+              "disabled": false
+            }
+          ],
+          "notices": [
+            "Ready to preview."
+          ]
+        }
+      ],
+      "notices": [],
+      "transport": "Play",
+      "formSubmissions": 0,
+      "held": [],
+      "providerFetches": 0,
+      "serverMutations": 0,
+      "methodCounts": {
+        "getNewsRecoveryStatus": 85,
+        "getConnection": 1,
+        "songs": 2,
+        "libraryFilters": 2,
+        "getLocalState": 4,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 17,
+        "libraries": 2,
+        "getAiStatus": 1,
+        "getElevenLabsStatus": 1,
+        "getTwitterStatus": 1
+      }
+    },
+    {
+      "name": "general-after-playback-pending",
+      "sha256": "68d6930923b638f52763aec0ada45abcf4fe43cd5bc28d0870047eea6fc493ca",
+      "headings": [
+        "Settings",
+        "Account",
+        "Music libraries",
+        "DJ playback",
+        "DJ transitions",
+        "About"
+      ],
+      "generalSettings": [
+        {
+          "heading": "DJ playback",
+          "fields": [
+            {
+              "label": "Check news everysongs",
+              "type": "number",
+              "value": "9",
+              "checked": false,
+              "disabled": true
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "type": "checkbox",
+              "value": "on",
+              "checked": true,
+              "disabled": true
+            },
+            {
+              "label": "DJ voice volume70%",
+              "type": "range",
+              "value": "0.7",
+              "checked": false,
+              "disabled": true
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Saving\u2026",
+              "disabled": true
+            }
+          ],
+          "notices": []
+        },
+        {
+          "heading": "DJ transitions",
+          "fields": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "type": "select-one",
+              "value": "custom",
+              "disabled": false
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "type": "select-one",
+              "value": "over-music",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "type": "number",
+              "value": "2",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "type": "number",
+              "value": "0.8",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "type": "number",
+              "value": "0.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "type": "number",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false
+            },
+            {
+              "name": "Save DJ transitions",
+              "disabled": false
+            }
+          ],
+          "notices": [
+            "Ready to preview."
+          ]
+        }
+      ],
+      "notices": [],
+      "transport": "Play",
+      "formSubmissions": 1,
+      "held": [
+        "saveDJPlayback"
+      ],
+      "providerFetches": 0,
+      "serverMutations": 0,
+      "methodCounts": {
+        "getNewsRecoveryStatus": 95,
+        "getConnection": 1,
+        "songs": 2,
+        "libraryFilters": 2,
+        "getLocalState": 4,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 19,
+        "libraries": 2,
+        "getAiStatus": 1,
+        "getElevenLabsStatus": 1,
+        "getTwitterStatus": 1,
+        "saveDJPlayback": 1
+      }
+    },
+    {
+      "name": "general-after-playback-failure",
+      "sha256": "3921d911934cbef77ab5a12db6f3118a1d5f03602f02f7381187f47b8a2e633e",
+      "headings": [
+        "Settings",
+        "Account",
+        "Music libraries",
+        "DJ playback",
+        "DJ transitions",
+        "About"
+      ],
+      "generalSettings": [
+        {
+          "heading": "DJ playback",
+          "fields": [
+            {
+              "label": "Check news everysongs",
+              "type": "number",
+              "value": "9",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "type": "checkbox",
+              "value": "on",
+              "checked": true,
+              "disabled": false
+            },
+            {
+              "label": "DJ voice volume70%",
+              "type": "range",
+              "value": "0.7",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Save DJ playback",
+              "disabled": false
+            }
+          ],
+          "notices": [
+            "saveDJPlayback unavailable."
+          ]
+        },
+        {
+          "heading": "DJ transitions",
+          "fields": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "type": "select-one",
+              "value": "custom",
+              "disabled": false
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "type": "select-one",
+              "value": "over-music",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "type": "number",
+              "value": "2",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "type": "number",
+              "value": "0.8",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "type": "number",
+              "value": "0.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "type": "number",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false
+            },
+            {
+              "name": "Save DJ transitions",
+              "disabled": false
+            }
+          ],
+          "notices": [
+            "Ready to preview."
+          ]
+        }
+      ],
+      "notices": [
+        {
+          "error": "saveDJPlayback unavailable.",
+          "button": null
+        }
+      ],
+      "transport": "Play",
+      "formSubmissions": 1,
+      "held": [],
+      "providerFetches": 0,
+      "serverMutations": 0,
+      "methodCounts": {
+        "getNewsRecoveryStatus": 106,
+        "getConnection": 1,
+        "songs": 2,
+        "libraryFilters": 2,
+        "getLocalState": 4,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 21,
+        "libraries": 2,
+        "getAiStatus": 2,
+        "getElevenLabsStatus": 2,
+        "getTwitterStatus": 2,
+        "saveDJPlayback": 1
+      }
+    },
+    {
+      "name": "general-after-music-two-pending",
+      "sha256": "11392111f1f47d5ec46b4afe768e51f84fea5f999f4cc435d9bf0c679c83671c",
+      "headings": [
+        "All songs"
+      ],
+      "generalSettings": [],
+      "notices": [],
+      "transport": "Play",
+      "formSubmissions": 3,
+      "held": [
+        "saveDJPlayback",
+        "saveNewsTransitions"
+      ],
+      "providerFetches": 0,
+      "serverMutations": 0,
+      "methodCounts": {
+        "getNewsRecoveryStatus": 116,
+        "getConnection": 1,
+        "songs": 2,
+        "libraryFilters": 3,
+        "getLocalState": 4,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 23,
+        "libraries": 2,
+        "getAiStatus": 2,
+        "getElevenLabsStatus": 2,
+        "getTwitterStatus": 2,
+        "saveDJPlayback": 2,
+        "saveNewsTransitions": 1
+      }
+    },
+    {
+      "name": "general-after-independent-results",
+      "sha256": "65e2480018e81472d0ece76693b5bb7ff0b907a66b116740ebb53772fb23061c",
+      "headings": [
+        "Settings",
+        "Account",
+        "Music libraries",
+        "DJ playback",
+        "DJ transitions",
+        "About"
+      ],
+      "generalSettings": [
+        {
+          "heading": "DJ playback",
+          "fields": [
+            {
+              "label": "Check news everysongs",
+              "type": "number",
+              "value": "9",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "type": "checkbox",
+              "value": "on",
+              "checked": true,
+              "disabled": false
+            },
+            {
+              "label": "DJ voice volume70%",
+              "type": "range",
+              "value": "0.7",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Save DJ playback",
+              "disabled": true
+            }
+          ],
+          "notices": [
+            "DJ playback saved."
+          ]
+        },
+        {
+          "heading": "DJ transitions",
+          "fields": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "type": "select-one",
+              "value": "custom",
+              "disabled": false
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "type": "select-one",
+              "value": "over-music",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "type": "number",
+              "value": "2",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "type": "number",
+              "value": "0.8",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "type": "number",
+              "value": "0.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "type": "number",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false
+            },
+            {
+              "name": "Save DJ transitions",
+              "disabled": false
+            }
+          ],
+          "notices": [
+            "Ready to preview.",
+            "saveNewsTransitions unavailable."
+          ]
+        }
+      ],
+      "notices": [
+        {
+          "error": "saveNewsTransitions unavailable.",
+          "button": null
+        }
+      ],
+      "transport": "Play",
+      "formSubmissions": 3,
+      "held": [],
+      "providerFetches": 0,
+      "serverMutations": 0,
+      "methodCounts": {
+        "getNewsRecoveryStatus": 128,
+        "getConnection": 1,
+        "songs": 2,
+        "libraryFilters": 3,
+        "getLocalState": 5,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 26,
+        "libraries": 3,
+        "getAiStatus": 2,
+        "getElevenLabsStatus": 2,
+        "getTwitterStatus": 2,
+        "saveDJPlayback": 2,
+        "saveNewsTransitions": 1
+      }
+    },
+    {
+      "name": "general-after-transition-pending",
+      "sha256": "9e27714157ff31eb60c3f17f4ff1e07a84a1a83bc136b686b196e91dc8a38c01",
+      "headings": [
+        "Settings",
+        "Account",
+        "Music libraries",
+        "DJ playback",
+        "DJ transitions",
+        "About"
+      ],
+      "generalSettings": [
+        {
+          "heading": "DJ playback",
+          "fields": [
+            {
+              "label": "Check news everysongs",
+              "type": "number",
+              "value": "9",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "type": "checkbox",
+              "value": "on",
+              "checked": true,
+              "disabled": false
+            },
+            {
+              "label": "DJ voice volume70%",
+              "type": "range",
+              "value": "0.7",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Save DJ playback",
+              "disabled": true
+            }
+          ],
+          "notices": [
+            "DJ playback saved."
+          ]
+        },
+        {
+          "heading": "DJ transitions",
+          "fields": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "type": "select-one",
+              "value": "custom",
+              "disabled": true
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "type": "select-one",
+              "value": "over-music",
+              "disabled": true
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "type": "number",
+              "value": "2",
+              "checked": false,
+              "disabled": true
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "type": "number",
+              "value": "0.8",
+              "checked": false,
+              "disabled": true
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "type": "number",
+              "value": "0.5",
+              "checked": false,
+              "disabled": true
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "type": "number",
+              "value": "1.5",
+              "checked": false,
+              "disabled": true
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": true
+            },
+            {
+              "name": "Saving\u2026",
+              "disabled": true
+            }
+          ],
+          "notices": [
+            "Ready to preview."
+          ]
+        }
+      ],
+      "notices": [],
+      "transport": "Play",
+      "formSubmissions": 4,
+      "held": [
+        "saveNewsTransitions"
+      ],
+      "providerFetches": 0,
+      "serverMutations": 0,
+      "methodCounts": {
+        "getNewsRecoveryStatus": 139,
+        "getConnection": 1,
+        "songs": 2,
+        "libraryFilters": 3,
+        "getLocalState": 5,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 28,
+        "libraries": 3,
+        "getAiStatus": 3,
+        "getElevenLabsStatus": 3,
+        "getTwitterStatus": 3,
+        "saveDJPlayback": 2,
+        "saveNewsTransitions": 2
+      }
+    },
+    {
+      "name": "general-after-transition-success",
+      "sha256": "3d3b14aebbe3680b474d8797654a293c280c3d918d02119a1c73b940ac3ce249",
+      "headings": [
+        "Settings",
+        "Account",
+        "Music libraries",
+        "DJ playback",
+        "DJ transitions",
+        "About"
+      ],
+      "generalSettings": [
+        {
+          "heading": "DJ playback",
+          "fields": [
+            {
+              "label": "Check news everysongs",
+              "type": "number",
+              "value": "9",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "type": "checkbox",
+              "value": "on",
+              "checked": true,
+              "disabled": false
+            },
+            {
+              "label": "DJ voice volume70%",
+              "type": "range",
+              "value": "0.7",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Save DJ playback",
+              "disabled": true
+            }
+          ],
+          "notices": [
+            "DJ playback saved."
+          ]
+        },
+        {
+          "heading": "DJ transitions",
+          "fields": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "type": "select-one",
+              "value": "custom",
+              "disabled": false
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "type": "select-one",
+              "value": "over-music",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "type": "number",
+              "value": "2",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "type": "number",
+              "value": "0.8",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "type": "number",
+              "value": "0.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "type": "number",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false
+            },
+            {
+              "name": "Save DJ transitions",
+              "disabled": true
+            }
+          ],
+          "notices": [
+            "Ready to preview.",
+            "DJ transitions saved."
+          ]
+        }
+      ],
+      "notices": [],
+      "transport": "Play",
+      "formSubmissions": 4,
+      "held": [],
+      "providerFetches": 0,
+      "serverMutations": 0,
+      "methodCounts": {
+        "getNewsRecoveryStatus": 159,
+        "getConnection": 1,
+        "songs": 2,
+        "libraryFilters": 3,
+        "getLocalState": 6,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 32,
+        "libraries": 3,
+        "getAiStatus": 3,
+        "getElevenLabsStatus": 3,
+        "getTwitterStatus": 3,
+        "saveDJPlayback": 2,
+        "saveNewsTransitions": 2
+      }
+    },
+    {
+      "name": "general-after-account-pending",
+      "sha256": "8644ec5b2d5ca371a4369b54be8d5de8aeb57dc9e055b4219e3e2f218b9733fb",
+      "headings": [
+        "Settings",
+        "Account",
+        "Music libraries",
+        "DJ playback",
+        "DJ transitions",
+        "About"
+      ],
+      "generalSettings": [
+        {
+          "heading": "DJ playback",
+          "fields": [
+            {
+              "label": "Check news everysongs",
+              "type": "number",
+              "value": "11",
+              "checked": false,
+              "disabled": true
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "type": "checkbox",
+              "value": "on",
+              "checked": true,
+              "disabled": true
+            },
+            {
+              "label": "DJ voice volume70%",
+              "type": "range",
+              "value": "0.7",
+              "checked": false,
+              "disabled": true
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Saving\u2026",
+              "disabled": true
+            }
+          ],
+          "notices": []
+        },
+        {
+          "heading": "DJ transitions",
+          "fields": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "type": "select-one",
+              "value": "custom",
+              "disabled": false
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "type": "select-one",
+              "value": "over-music",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "type": "number",
+              "value": "2",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "type": "number",
+              "value": "0.8",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "type": "number",
+              "value": "0.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "type": "number",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false
+            },
+            {
+              "name": "Save DJ transitions",
+              "disabled": true
+            }
+          ],
+          "notices": [
+            "Ready to preview.",
+            "DJ transitions saved."
+          ]
+        }
+      ],
+      "notices": [],
+      "transport": "Play",
+      "formSubmissions": 7,
+      "held": [
+        "saveDJPlayback"
+      ],
+      "providerFetches": 0,
+      "serverMutations": 0,
+      "methodCounts": {
+        "getNewsRecoveryStatus": 203,
+        "getConnection": 1,
+        "songs": 3,
+        "libraryFilters": 4,
+        "getLocalState": 9,
+        "getPlaybackPreferences": 2,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 37,
+        "libraries": 6,
+        "getAiStatus": 3,
+        "getElevenLabsStatus": 3,
+        "getTwitterStatus": 3,
+        "saveDJPlayback": 3,
+        "saveNewsTransitions": 2,
+        "disconnect": 1,
+        "connect": 1,
+        "selectLibraries": 1
+      }
+    },
+    {
+      "name": "general-after-account-failure",
+      "sha256": "fbb9aa255a62f9f3b87eb7610ede54728bb63838b2510cf402bd16617c638d4b",
+      "headings": [
+        "Settings",
+        "Account",
+        "Music libraries",
+        "DJ playback",
+        "DJ transitions",
+        "About"
+      ],
+      "generalSettings": [
+        {
+          "heading": "DJ playback",
+          "fields": [
+            {
+              "label": "Check news everysongs",
+              "type": "number",
+              "value": "11",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "type": "checkbox",
+              "value": "on",
+              "checked": true,
+              "disabled": false
+            },
+            {
+              "label": "DJ voice volume70%",
+              "type": "range",
+              "value": "0.7",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Save DJ playback",
+              "disabled": false
+            }
+          ],
+          "notices": [
+            "saveDJPlayback unavailable."
+          ]
+        },
+        {
+          "heading": "DJ transitions",
+          "fields": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "type": "select-one",
+              "value": "custom",
+              "disabled": false
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "type": "select-one",
+              "value": "over-music",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "type": "number",
+              "value": "2",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "type": "number",
+              "value": "0.8",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "type": "number",
+              "value": "0.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "type": "number",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false
+            },
+            {
+              "name": "Save DJ transitions",
+              "disabled": true
+            }
+          ],
+          "notices": [
+            "Ready to preview.",
+            "DJ transitions saved."
+          ]
+        }
+      ],
+      "notices": [
+        {
+          "error": "saveDJPlayback unavailable.",
+          "button": null
+        }
+      ],
+      "transport": "Play",
+      "formSubmissions": 7,
+      "held": [],
+      "providerFetches": 0,
+      "serverMutations": 0,
+      "methodCounts": {
+        "getNewsRecoveryStatus": 212,
+        "getConnection": 1,
+        "songs": 3,
+        "libraryFilters": 4,
+        "getLocalState": 9,
+        "getPlaybackPreferences": 2,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 39,
+        "libraries": 6,
+        "getAiStatus": 3,
+        "getElevenLabsStatus": 3,
+        "getTwitterStatus": 3,
+        "saveDJPlayback": 3,
+        "saveNewsTransitions": 2,
+        "disconnect": 1,
+        "connect": 1,
+        "selectLibraries": 1
+      }
+    },
+    {
+      "name": "general-after-account-success",
+      "sha256": "4a28dc1b0452fe4e3ef550273d22c70d894ecd851190f5b8b8ed7be2185f82a9",
+      "headings": [
+        "Settings",
+        "Account",
+        "Music libraries",
+        "DJ playback",
+        "DJ transitions",
+        "About"
+      ],
+      "generalSettings": [
+        {
+          "heading": "DJ playback",
+          "fields": [
+            {
+              "label": "Check news everysongs",
+              "type": "number",
+              "value": "11",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "type": "checkbox",
+              "value": "on",
+              "checked": true,
+              "disabled": false
+            },
+            {
+              "label": "DJ voice volume70%",
+              "type": "range",
+              "value": "0.7",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Save DJ playback",
+              "disabled": true
+            }
+          ],
+          "notices": [
+            "DJ playback saved."
+          ]
+        },
+        {
+          "heading": "DJ transitions",
+          "fields": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "type": "select-one",
+              "value": "custom",
+              "disabled": false
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "type": "select-one",
+              "value": "over-music",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "type": "number",
+              "value": "2",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "type": "number",
+              "value": "0.8",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "type": "number",
+              "value": "0.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "type": "number",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false
+            },
+            {
+              "name": "Save DJ transitions",
+              "disabled": true
+            }
+          ],
+          "notices": [
+            "Ready to preview.",
+            "DJ transitions saved."
+          ]
+        }
+      ],
+      "notices": [],
+      "transport": "Play",
+      "formSubmissions": 8,
+      "held": [],
+      "providerFetches": 0,
+      "serverMutations": 0,
+      "methodCounts": {
+        "getNewsRecoveryStatus": 235,
+        "getConnection": 1,
+        "songs": 3,
+        "libraryFilters": 4,
+        "getLocalState": 10,
+        "getPlaybackPreferences": 2,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 43,
+        "libraries": 6,
+        "getAiStatus": 3,
+        "getElevenLabsStatus": 3,
+        "getTwitterStatus": 3,
+        "saveDJPlayback": 4,
+        "saveNewsTransitions": 2,
+        "disconnect": 1,
+        "connect": 1,
+        "selectLibraries": 1
+      }
+    }
+  ],
+  "nativeSnapshotCount": 10,
+  "nativeReports": {
+    "general-navigation-before": {
+      "result": "observed",
+      "rendererErrors": [],
+      "sha256": "e6f83dff0f41f823c7730e5be0f553da34dc1938e935de54ea70adcc69da3b56"
+    },
+    "general-navigation-after": {
+      "result": "observed",
+      "rendererErrors": [],
+      "sha256": "2109d2939d182823cf1ac344b1c967baaadc355412b9260e5f336c8c18652746"
+    }
+  },
+  "beforeConcurrency": {
+    "errors": [],
+    "patch": false,
+    "cases": [
+      {
+        "name": "late General save after newer room selection",
+        "newer": {
+          "enabled": false,
+          "roomId": "default-room",
+          "everySongs": 3,
+          "keepOnSeek": true,
+          "voiceVolume": 0.7
+        },
+        "final": {
+          "enabled": false,
+          "roomId": null,
+          "everySongs": 9,
+          "keepOnSeek": false,
+          "voiceVolume": 0.4
+        },
+        "untouchedRoomPreserved": false
+      },
+      {
+        "name": "late player room change after newer General save",
+        "final": {
+          "enabled": false,
+          "roomId": "default-room",
+          "everySongs": 3,
+          "keepOnSeek": true,
+          "voiceVolume": 0.7
+        },
+        "untouchedPreferencesPreserved": false
+      }
+    ],
+    "counts": {
+      "writes": 0,
+      "external": 0
+    },
+    "result": "observed"
+  },
+  "afterConcurrencyAndValidation": {
+    "errors": [],
+    "patch": true,
+    "cases": [
+      {
+        "name": "late General save after newer room selection",
+        "newer": {
+          "enabled": false,
+          "roomId": "default-room",
+          "everySongs": 3,
+          "keepOnSeek": true,
+          "voiceVolume": 0.7
+        },
+        "final": {
+          "enabled": false,
+          "roomId": "default-room",
+          "everySongs": 9,
+          "keepOnSeek": false,
+          "voiceVolume": 0.4
+        },
+        "untouchedRoomPreserved": true
+      },
+      {
+        "name": "late player room change after newer General save",
+        "final": {
+          "enabled": false,
+          "roomId": "default-room",
+          "everySongs": 11,
+          "keepOnSeek": false,
+          "voiceVolume": 0.3
+        },
+        "untouchedPreferencesPreserved": true
+      }
+    ],
+    "rejections": [
+      {
+        "keys": [],
+        "rejected": true,
+        "unchanged": true
+      },
+      {
+        "keys": "null",
+        "rejected": true,
+        "unchanged": true
+      },
+      {
+        "keys": [],
+        "rejected": true,
+        "unchanged": true
+      },
+      {
+        "keys": [
+          "unknown"
+        ],
+        "rejected": true,
+        "unchanged": true
+      },
+      {
+        "keys": [
+          "everySongs"
+        ],
+        "rejected": true,
+        "unchanged": true
+      },
+      {
+        "keys": [
+          "everySongs"
+        ],
+        "rejected": true,
+        "unchanged": true
+      },
+      {
+        "keys": [
+          "everySongs"
+        ],
+        "rejected": true,
+        "unchanged": true
+      },
+      {
+        "keys": [
+          "voiceVolume"
+        ],
+        "rejected": true,
+        "unchanged": true
+      },
+      {
+        "keys": [
+          "voiceVolume"
+        ],
+        "rejected": true,
+        "unchanged": true
+      },
+      {
+        "keys": [
+          "keepOnSeek"
+        ],
+        "rejected": true,
+        "unchanged": true
+      },
+      {
+        "keys": [
+          "roomId"
+        ],
+        "rejected": true,
+        "unchanged": true
+      },
+      {
+        "keys": [
+          "enabled"
+        ],
+        "rejected": true,
+        "unchanged": true
+      },
+      {
+        "keys": [
+          "enabled",
+          "roomId"
+        ],
+        "rejected": true,
+        "unchanged": true
+      },
+      {
+        "keys": [
+          "enabled",
+          "roomId"
+        ],
+        "rejected": true,
+        "unchanged": true
+      }
+    ],
+    "counts": {
+      "writes": 0,
+      "external": 0
+    },
+    "result": "observed"
+  },
+  "enabledAndRecovery": {
+    "errors": [],
+    "patch": true,
+    "cases": [
+      {
+        "name": "valid enabled profile",
+        "final": {
+          "enabled": true,
+          "roomId": "default-room",
+          "everySongs": 3,
+          "keepOnSeek": true,
+          "voiceVolume": 0.7
+        }
+      },
+      {
+        "name": "newer OFF survives delayed General save",
+        "final": {
+          "enabled": false,
+          "roomId": "default-room",
+          "everySongs": 8,
+          "keepOnSeek": false,
+          "voiceVolume": 0.4
+        }
+      },
+      {
+        "name": "unavailable recovery rejects patch retaining enabled",
+        "rejected": true,
+        "unchanged": true
+      },
+      {
+        "name": "OFF remains available during recovery",
+        "final": {
+          "enabled": false,
+          "roomId": "default-room",
+          "everySongs": 8,
+          "keepOnSeek": false,
+          "voiceVolume": 0.4
+        }
+      }
+    ],
+    "counts": {
+      "writes": 0,
+      "external": 0
+    },
+    "result": "observed"
+  },
+  "decision": {
+    "frontend": "Steve/Elena independent proposals supported state-only app owner inside NewsRecovery above session/page routing, device-local drafts across accounts, conditional preview unmount and independent pending guards. Elena identified full-object write race.",
+    "backend": "Boris/Nadia independent proposals supported strict partial IPC merged in existing storage callback queue. Challenge retained plain/nonempty/known/defined field validation, reused ranges and effective-enabled queued readiness check.",
+    "ownership": "Boris implemented backend/shared files; Morgan implemented owner/forms/caller integration. Nadia reviewed backend and Elena frontend without actionable findings.",
+    "limits": "Same-field updates are last queued write wins; recovery can change during later disk I/O. No added rollback guarantee."
+  },
+  "verification": {
+    "productionBuildIncludingTypeScript": "pass",
+    "fullESLint": "pass",
+    "evidenceAssertions": "ten native states, two before/after races, fourteen invalid patches, four enable/recovery cases and zero external/server dispatch pass",
+    "previewLifecycle": "Component source unchanged; conditional form mount and keyed preview wiring retained and reviewed against earlier transition-demo evidence. No fresh audible claim."
+  },
+  "fixture": {
+    "data": "fresh private temporary app data; actual safeStorage; null/no-op shared-key adapter",
+    "catalog": "127.0.0.1:5191 local catalog and silent WAV, no personal server/provider access",
+    "nativeInput": "CUA. Read-only DOM/main observer and post-sender/input-guard held/failed IPC responses.",
+    "integration": "actual app preload IPC and queued storage. Fixture DJ/source/profile saves are disposable; preparation remains off.",
+    "formSubmissions": "Exact count preserved per snapshot. General saves submit their own forms; last three snapshots add normal fixture sign-in/library submissions.",
+    "inputCorrection": "Batched native typing appended 9 to 3; accessibility setValue cleared it. Explicit focus then native typing established intended value9 before accepted snapshots; intermediate inputs excluded.",
+    "recoveryAdapter": "Final four integration cases add a fixture-only recovery-phase setter; not a real OS/disk outage. Native and earlier integration runs predate only that adapter.",
+    "mainSha256BeforeRecoveryAdapter": "a01d38802a7b37bdc9da55dd7df504fa7d245f0178cb00f7f5ae998e82301139"
+  },
+  "freshness": "All after-native and corrected IPC cases use final production renderer and app-source bytes. Final four cases add only named fixture setter. No source changes after verification.",
+  "limits": [
+    "Q06/Q08 and full D10 scope remain unproved; no row promotion.",
+    "No actual VoiceOver/hardware media key/display/sleep, live source/provider or observed listener proof.",
+    "No unit framework, package/release, sub1280x720 or enlarged app zoom checks."
+  ],
+  "inventory": {
+    "total": 187,
+    "active": 185,
+    "deferred": 2,
+    "remaining": 28,
+    "dispositionsChanged": false
+  },
+  "sourceSha256": {
+    "src/main/index.ts": "3ffef8d8f579c3ecfe4675c92805b2831b67b3c0a7021a23a409e0c24a6d27bb",
+    "src/shared/types.ts": "f98356fc4473975a77f5f8d0afbe3278bd623e9d94e5c8de85f3db1cd65e2e05",
+    "src/shared/dj-playback.ts": "7e807ff052f50332ff9c78b083c450a9f5c116f68fc36de93480165ec1e6e55b",
+    "src/renderer/App.tsx": "3286d6259addd3cd1030b30c1c34ba1362440449d5bc8fab9023f0bdfa277532",
+    "src/renderer/dj-playback.tsx": "1bc155fb425d6c48181a847e9bf1d6b0fccdb9296b60d48ee99d732fe6e0904f",
+    "src/renderer/pages/Settings/SettingsEdits.tsx": "44e576f60c8a96d9fcc00df839244beefd8144215e0801b03803c20d9b34d56e",
+    "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx": "25cd14a23388f356f2bc10d36266ffed46ab7c6638785e844c82dd2d9478e0e5",
+    "src/renderer/pages/Settings/components/NewsTransitions.component.tsx": "33f3798d7812323e1d997a98f760bbdb344ce0dd0ae7c8b8a0cc8d1d61766e0e",
+    "src/renderer/pages/Settings/components/NewsTransitionPreview.component.tsx": "b44dc08192dd9d4a354a8f921c1b5e17c6a0cf2291b26b8aa3bd285d55b2ff31"
+  },
+  "buildSha256": {
+    "out/main/index.js": "be2b4baff3c4577a06efadbdf021d8cda9b6319cb3d9157be5f238469c457fbd",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/assets/index-CUgwj8xN.css": "8dedf91bec8e203b47c5630cbd8925f4f357523a53a65c6a66ba92b9ba0f19c4",
+    "out/renderer/assets/index-DesZQ2LC.js": "51dc22afa3607cbadfc0ef996e33ce568c424a5a0d2ec709b1b631033d1be878"
+  },
+  "fixtureSha256": {
+    "bootstrap.mjs": "243a98a9ff529d5ba6f2b67a1c4a8e3826945a1c6ddce7fa4d56137f95e75079",
+    "build.mjs": "8c9023f0370da1aede9e33d89e8e30866854124ea47124c643c7105315e13e55",
+    "observe-general.cjs": "146ccd85d862a5573dfa2f123c07bdf3c3cfdb53f31da68bda8a98bd1901a099",
+    "general-merge.cjs": "250f9aea5b0ac2bee94283d303466a3eaeb6795f9f1c34c1253ad11edc82928e",
+    "general-enabled-merge.cjs": "e0904260673a30deee7d5d123746595a0337159fa8754172b5975628e2904d20",
+    "out/main/index.js": "8847c3a6959c0513757fc9846a2b30d4f0c7eabc091347297ef5956960684863"
+  }
+}

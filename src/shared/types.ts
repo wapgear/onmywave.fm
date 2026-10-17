@@ -1,7 +1,7 @@
 export const NEWS_TEXT_MODEL = 'gpt-6-luna';
 
-import type { DJPlaybackSettings } from './dj-playback';
-export type { DJPlaybackSettings } from './dj-playback';
+import type { DJPlaybackSettings, DJPlaybackSettingsPatch } from './dj-playback';
+export type { DJPlaybackSettings, DJPlaybackSettingsPatch } from './dj-playback';
 import type { WorkflowDraft } from './workflow';
 export type { WorkflowDraft } from './workflow';
 export type ApiError = {
@@ -151,7 +151,7 @@ export interface WaveApi {
   saveNewsSources(sources: NewsSource[]): Promise<Result<void>>;
   saveListeningRoom(room: ListeningRoom): Promise<Result<void>>;
   setRoomProfileEnabled(input: { id: string; enabled: boolean }): Promise<Result<void>>;
-  saveDJPlayback(settings: DJPlaybackSettings): Promise<Result<void>>;
+  saveDJPlayback(settings: DJPlaybackSettingsPatch): Promise<Result<void>>;
   nextRoomNews(input: { roomId: string; excludedIds: string[] }): Promise<Result<PreparedNewsTake | null>>;
   releasePreparedNews(id: string): Promise<Result<void>>;
   markPreparedNewsPlayed(id: string): Promise<Result<void>>;
