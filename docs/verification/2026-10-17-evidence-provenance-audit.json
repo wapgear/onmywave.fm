@@ -1,0 +1,1009 @@
+{
+  "date": "2026-10-17",
+  "baseCommit": "35c39c676b115e271393dbc21a7b220040bc30ee",
+  "scope": "Q12 only, inspection of all90 pre-existing verification JSON records and acceptance entry points; no interaction replay or current-state pass inferred from a dated result",
+  "proofKind": "I",
+  "result": "passed",
+  "method": [
+    "Enumerated every JSON verification record on the recorded main snapshot; parsed all90 and confirmed each is linked from UX_ACCEPTANCE or ACCEPTANCE_CHECKLIST.",
+    "Reviewed origin/scope/method/isolation and boundary statements, including mixed live/controlled sections rather than relying on filenames.",
+    "Inspected the native Keychain/safeStorage, partial desktop, MediaSession, muted audio, live transport/conversion, source and provider substitutions separately.",
+    "Recorded immutable file hashes and JSON pointers for each classification. Historical limitations/statuses stay dated; the current inventory alone supplies current dispositions.",
+    "Validated the current187 unique rows and27 STAR mappings without promoting any other row. All parent gates and exact source contracts retain independent completion scope."
+  ],
+  "inputRecordCounts": {
+    "controlled": 70,
+    "mixed-jellyfin": 17,
+    "mixed-public-sources": 1,
+    "inspection": 1,
+    "partial-os": 1
+  },
+  "records": [
+    {
+      "file": "2026-10-16-account-boundary-current.json",
+      "sha256": "55835a34bffcfcbc49a25f6f33cefeaef190e223714ef2b521372c9a6cec0e36",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limitations"
+      ],
+      "boundaryPointer": "/limitations"
+    },
+    {
+      "file": "2026-10-16-account-player-options.json",
+      "sha256": "117fab1d65e98105168034fa066da7bee1af9907e1def21189a743437a50997d",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/environment",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-activation-keys.json",
+      "sha256": "6fda038ff88fc827908302be0d20938b2ee4eecfe779481a7560dfba2bb99d34",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-album-artist-search.json",
+      "sha256": "4945058eb2531997af793d4f08a5a9d947c9f4689fe248697c5a4c17b8ede74f",
+      "origin": "mixed-jellyfin",
+      "provenancePointers": [
+        "/finalLiveBrowsing",
+        "/finalLiveMultiTrack"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-automatic-controls.json",
+      "sha256": "4312cb9aabca9d2881b4269ea9126dc51ad1a1966010c3821403df9703a355b6",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-catalog-recovery.json",
+      "sha256": "ca6a50b91e961a21327c8b8ba6f59aa1d7cfe9d06184d0cea15a2e34aa4afa9d",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-catalog-union-current.json",
+      "sha256": "7b9eb8bbad9881ad1b50808fa5c7118772373e0dd7598fe17ec1160e553f1575",
+      "origin": "mixed-jellyfin",
+      "provenancePointers": [
+        "/liveBrowsingBeforeFix",
+        "/liveSearchAfterFix"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-connection-publication.json",
+      "sha256": "3ab22109fdec2889716f4402e540b0681fb1af047fba1255088205709ec3a0cc",
+      "origin": "mixed-jellyfin",
+      "provenancePointers": [
+        "/liveSessionAndLibrarySave",
+        "/liveIndependentInstallations"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-connection-recovery-current.json",
+      "sha256": "f676bc55085f2c7176b4a5dab71761dffc1f98cb1a1c15f9c07640f8df519c03",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limitations"
+      ],
+      "boundaryPointer": "/limitations"
+    },
+    {
+      "file": "2026-10-16-copied-profiles.json",
+      "sha256": "f400791c348418bdf334d3858af56c406c92f66c27206c3e4ad259093060c06f",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-device-identity.json",
+      "sha256": "8a391b48bce3bc34d54f3fbcbfbb3f4128586c045a04012d4e936b3f70f27ce5",
+      "origin": "mixed-jellyfin",
+      "provenancePointers": [
+        "/liveSeparateInstallations"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-dialog-headings.json",
+      "sha256": "eed79e26555016e48a1a921ba724f2c2e550f7b2f7fe4b9c0ce948f56a60e32b",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/isolation",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-dj-handoff.json",
+      "sha256": "f1d24e6504d2e29269b6dff6d8fadf2dfc31999fcde407209079abeaca5e8026",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-dj-recovery.json",
+      "sha256": "4f635f8a726a618fba132ea07ef26d7724b5150c39e80de2b34b709a086fa55a",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/isolation",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-endpoint-cadence.json",
+      "sha256": "3bf5528243624d36a5356f5195c1cbbb473df303f606f03bec65ba9afe4128a9",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-filter-keyboard.json",
+      "sha256": "d8235d547e20cc501bc3465a5b64bd3407eccef07be55fa7a4829a00a0a0cc8a",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-first-dj-setup.json",
+      "sha256": "b6728a84924b53017d4a6c4002dfe40217b61f573be76a0fdc431672a3b83b5d",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-hn-coverage.json",
+      "sha256": "f616c8dfdb82ec21b6f6937e0313420ce1f0ed31dd09de86165897b84750cc54",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/environment",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-listener-journey.json",
+      "sha256": "08ab07d769ff01106bd24990d087a5c94c095ed86d1645f1ceb821f2af047fef",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-listening-controls.json",
+      "sha256": "e097b09a3be742ec30a5ad7016098ea16340ac8abf0183234c52002540ce1af5",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/environment",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-live-jellyfin.json",
+      "sha256": "d637bfa513cf876c240cb361ee95822ebb3b1ee556f46795e2376d890c6d91a6",
+      "origin": "mixed-jellyfin",
+      "provenancePointers": [
+        "/initial",
+        "/restart",
+        "/isolation"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-live-news-sources.json",
+      "sha256": "430190fbda59f02a63060672da2c6282ad068a6406df0f4e55e6927a90b5454e",
+      "origin": "mixed-public-sources",
+      "provenancePointers": [
+        "/live",
+        "/controlled",
+        "/environment"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-live-player-current.json",
+      "sha256": "c3b7899e62df5e55f3c8be6cdd54a9667fc493a36f1063e87c9da5e7e0871760",
+      "origin": "mixed-jellyfin",
+      "provenancePointers": [
+        "/result",
+        "/method"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-live-playlist-additions.json",
+      "sha256": "ab8116e35e24cfe7859cd38c2dc45320466ac194aad1a0626996e91b9bf00771",
+      "origin": "mixed-jellyfin",
+      "provenancePointers": [
+        "/sixVariants",
+        "/environment",
+        "/acceptance"
+      ],
+      "boundaryPointer": "/acceptance"
+    },
+    {
+      "file": "2026-10-16-live-playlists.json",
+      "sha256": "7fc4e2cc228b93a2dd50f9b40e7c0613ec93109556e166842997dd9993744194",
+      "origin": "mixed-jellyfin",
+      "provenancePointers": [
+        "/finalNativeResult",
+        "/environment",
+        "/acceptance"
+      ],
+      "boundaryPointer": "/acceptance"
+    },
+    {
+      "file": "2026-10-16-long-text-layout.json",
+      "sha256": "11e8eebebe0950211ea62aadeaca9486c0d41a37f6bc6ad5794929f8ad1e5f66",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/fixture",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-manual-audio-result.json",
+      "sha256": "d1b9319ee995fd7811225935658f21b268975609de800bc66821583d94ef8c7d",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limitations"
+      ],
+      "boundaryPointer": "/limitations"
+    },
+    {
+      "file": "2026-10-16-music-browsing.json",
+      "sha256": "87bfd15c8b149055c0d4693ff9b0538e48bc11348060b09411500c79319d1ef6",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/fixture",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-native-fonts.json",
+      "sha256": "c11750bb31f9df5dd44d75860a2799d6faeb12dfaa7b01ba09c9d85628e01235",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/isolation",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-news-outcomes.json",
+      "sha256": "717ab701f010f116b539650b4b110f018b49acca3f97b94940dd1c44bad69a76",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-partial-coverage.json",
+      "sha256": "ae37bce518a9776e4009a8b908579c77a1fb099b6620133984a0e6ec9173456c",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-playback-load-recovery.json",
+      "sha256": "c37356c2f5421179aff54a7869059a5ec13da332700c8a84a96d8f0ef6196bf3",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-player-dj-setup.json",
+      "sha256": "ccc026b3af868eead1020d28e86d6d50bda55191b235b52ced82d062f36b5b18",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limitations"
+      ],
+      "boundaryPointer": "/limitations"
+    },
+    {
+      "file": "2026-10-16-playlist-add-review.json",
+      "sha256": "58811b75e930752eb7f1e3d15e254f968bc0aa6890b8fb2f467dcec48b4a23f8",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-playlist-occurrences.json",
+      "sha256": "1e9e2369c8cc65fa1cc4e6184045baa2588f67c4924a040c2a2d53a0b2a487b5",
+      "origin": "mixed-jellyfin",
+      "provenancePointers": [
+        "/liveAfter",
+        "/controlledService",
+        "/evidenceLimits"
+      ],
+      "boundaryPointer": "/evidenceLimits"
+    },
+    {
+      "file": "2026-10-16-playlist-permissions.json",
+      "sha256": "9d7d664dcaa6ca5c529b686b8799007bff071ce619b4acb7ecb8cd288da25c0c",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/nativeFixture",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-playlist-recovery-current.json",
+      "sha256": "583b0918ffb177f773c3d811b64dea370169a429cd563da0629c7671c527afd2",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/fixture",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-playlist-storage-current.json",
+      "sha256": "7aeee1107aefce64ba6107ea50670ad6b77f719e61c688a5a96206122a04f93e",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/fixture",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-profile-drafts-status.json",
+      "sha256": "0deb53d61ef6854305b33c0a328cf148e4abfe69441c9e0546a39822bb5e81fc",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-recording-recovery.json",
+      "sha256": "c899bc13e8cda82e3883bda47524e57051d45403a2631405ab530d683051ff6a",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-response-deadline.json",
+      "sha256": "9e68d4fa3b751726b0d0b3d290032ccb72ed3a53bd4fa540650ecc725b37ff96",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/isolation"
+      ],
+      "boundaryPointer": "/remaining"
+    },
+    {
+      "file": "2026-10-16-restore-options.json",
+      "sha256": "d06f66a0a63ac06df3e82b7e95736039e56ebcc21306710eb9da4833b20e4f86",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/environment",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-retained-dj-break.json",
+      "sha256": "b5371a1d1bc7827e87755cdd97228cae26c6ed67838ae3f121160a38333322db",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-saved-audio-retry.json",
+      "sha256": "136e210a4acecb5d0e5e681ffe0df0b6a0e19ec1ad4756e81b7c9340ec7579fb",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limitations"
+      ],
+      "boundaryPointer": "/limitations"
+    },
+    {
+      "file": "2026-10-16-script-replacement.json",
+      "sha256": "02ee4e2f5b7d771f2cca6cacd2aebdb5375626fdff4f1b18514cfb6eabedfacb",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limitations"
+      ],
+      "boundaryPointer": "/limitations"
+    },
+    {
+      "file": "2026-10-16-setup-save-order.json",
+      "sha256": "40cf2f7feb487ba2d2eeea997962576afc8484d06049922ed54cc721669cb301",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-song-actions.json",
+      "sha256": "375dc481d764bdd60947a7fbbadd8f9e2072db611145f44d8a979b6352d2c0d0",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-source-deletion.json",
+      "sha256": "cf60843c1d2e3a1927d34357af1fa8881866cedcab2828f245e5b08add3bd241",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/environment",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-source-setup.json",
+      "sha256": "1bd071b56b7891c300a82fb7d34a1c2eb3c9edf6dfae458a7d50400a76fa78f5",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/environment",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-state-polling.json",
+      "sha256": "76d6c9fc19334455ac6473a26c3382a1cf5210143a22b5e4af29de81309d6fdd",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-trust-boundaries.json",
+      "sha256": "88bde2588bdd8b60b4724033e3167889e82e4ac00ca345ab2b5f248f857ae6a0",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-unknown-duration.json",
+      "sha256": "96ac3283401f7fe371bcf496c7cec8d1b1ddb4a42e1b1961a31fb177bdcaa1ab",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-16-x-coverage.json",
+      "sha256": "f755a09295ca4bdd14c2a116486bb75d46bcc20db38c5e948de29ea1415f0449",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/environment",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-app-architecture.json",
+      "sha256": "58483befcec09f54fb098dc7bf89fd4ceb7dcfea624cf261b98f8a9d6d6fd731",
+      "origin": "inspection",
+      "provenancePointers": [
+        "/proofKind",
+        "/requiredEvidence"
+      ],
+      "boundaryPointer": "/requiredEvidence"
+    },
+    {
+      "file": "2026-10-17-catalog-view-concurrency.json",
+      "sha256": "0436fb76a7d88770d71ac6428849b8cbb429a159e9a6d715e3fee054dfe56b3a",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-dialog-form-focus.json",
+      "sha256": "0474706378374538877bbee57a14b81d23c15d94d6b85e416d6febc63fa33d7d",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/baseline",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-dj-editorial-preferences.json",
+      "sha256": "152493cfd525739d78a75a91de285904302c8a62d00d5103341ec05d90f8a8ca",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-dj-listening-controls.json",
+      "sha256": "2b58b54f0fb10ec5726cfd9813f2160fa46086ecf8e096f9107606bd2f821186",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-dj-previews.json",
+      "sha256": "ac2c669a4b82066a6b977cf9a3c594fcfedb7263816ea9b3a9c479f5a308df86",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-interaction-states.json",
+      "sha256": "5b8427d33864b5e736b63bb81cad72ede95ed27483a882909f90ccaec6376f8c",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/baseline",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-keyboard-recovery-focus.json",
+      "sha256": "e91e0cf38910bc20ac6126f0efb30fab8cb6454aef882992c9e159b12f3d4942",
+      "origin": "mixed-jellyfin",
+      "provenancePointers": [
+        "/before",
+        "/nativeControlled",
+        "/limitations"
+      ],
+      "boundaryPointer": "/limitations"
+    },
+    {
+      "file": "2026-10-17-keyless-radio.json",
+      "sha256": "4b2b78eb3d70dd78747acd7ba32200e31fa2c5e94d0f77dc635eb1c576da0ed6",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limitations"
+      ],
+      "boundaryPointer": "/limitations"
+    },
+    {
+      "file": "2026-10-17-library-save-navigation.json",
+      "sha256": "30f3fde2d49b6dd4ccca9095fb923d5eaac0ba9ed5ab386ddc0000f00f3dd1ad",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-live-catalog-album-actions.json",
+      "sha256": "19a39ea36078c9d88f99517e64bb6276b69dfe7b88e24251c34681b7a7102198",
+      "origin": "mixed-jellyfin",
+      "provenancePointers": [
+        "/live",
+        "/controlledMetadata",
+        "/method"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-live-connection-recovery.json",
+      "sha256": "c06a5cb864b6b9104ba54fa85dc22154bff05f0fb7dcd77c5c456869faa23b04",
+      "origin": "mixed-jellyfin",
+      "provenancePointers": [
+        "/native",
+        "/faultMethod",
+        "/baseline"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-live-duration-recovery.json",
+      "sha256": "8ea810f9427f6142125a3f01dfdc294daf1de2042a4e4af6d3238a9c8c458331",
+      "origin": "mixed-jellyfin",
+      "provenancePointers": [
+        "/nativeMatrix",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-live-playback-recovery.json",
+      "sha256": "ada1b02607ee8d732bbce68af7e32e33177e73735321840d9c6584c8f3d83337",
+      "origin": "mixed-jellyfin",
+      "provenancePointers": [
+        "/native",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-live-playlist-entry.json",
+      "sha256": "91e94c5c6d8c5d904ed8d8208f6f2f75a98d3cd90dbe5b20f1a8a672ddbd6520",
+      "origin": "mixed-jellyfin",
+      "provenancePointers": [
+        "/live",
+        "/controlled",
+        "/method"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-live-playlist-order.json",
+      "sha256": "8a4d71c283d681d7c3820748fa02c1a256a5f99a6af3fe4ee556c6d4ab260427",
+      "origin": "mixed-jellyfin",
+      "provenancePointers": [
+        "/live",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-long-metadata.json",
+      "sha256": "3cfe605e3717a1936d7e934931f2073cf88e1b51cc02fa7ca154f677631a4dc0",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/baseline",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-manual-recovery.json",
+      "sha256": "d9135d5d79e39515088abc68c27afc3d8855ab5705efd47425002376c1351f5f",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/method",
+        "/limitations"
+      ],
+      "boundaryPointer": "/limitations"
+    },
+    {
+      "file": "2026-10-17-native-desktop-partial.json",
+      "sha256": "6bf3c7cf9b1c612adbb41bc350b989594bac397e5057d2fac070bc376a64a6fb",
+      "origin": "partial-os",
+      "provenancePointers": [
+        "/observations",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-news-eligibility-handoff.json",
+      "sha256": "e2654ce7d117c5225ebf6392fcf2bc346619931e9c574fa18aa22671f4474465",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-news-startup-recovery.json",
+      "sha256": "4fbc5ed26b4baf09abd2f14af23c8899f0dd7b9b6c61e19603f749337d881d3c",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-player-dj-status.json",
+      "sha256": "d981b98e4d6656934c2eb41eb53abbaaeb7da01800f8ff87240a700013a4d34d",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-playlist-boundaries.json",
+      "sha256": "79afbd4e117323ffd5d85d2ec18d3c51c1f2c9226645fed4de7bdc6203347835",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-playlist-creation-batches.json",
+      "sha256": "b203fbbe981935553b7157bf3cd0986ac5cc34fb20bfb93930e082251c5d8606",
+      "origin": "mixed-jellyfin",
+      "provenancePointers": [
+        "/liveBatches",
+        "/localBatches",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-playlist-identities.json",
+      "sha256": "a16a4b476b8a42759119350b49ff26ee81c25a561edff09c5b575212aa9e212a",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-private-credentials.json",
+      "sha256": "708ba22947a39c41d995457e05de4f1048481717970614de76b8887d7c583fe7",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-radio-opt-in-contracts.json",
+      "sha256": "c54ad7b4ca22909587981486baef916b0d1a894b11d1f48a04f4ef44f854c5e5",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-request-context.json",
+      "sha256": "87a5325942552deb35b36a4fbb3e988cd4b270185b1ec1ca109e99b081589f25",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/method",
+        "/limitations"
+      ],
+      "boundaryPointer": "/limitations"
+    },
+    {
+      "file": "2026-10-17-saved-result-check.json",
+      "sha256": "1b9d48bbd94e616d76526d76db8c13c7a40893a9de1b8766bd01d9f28206b112",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limitations"
+      ],
+      "boundaryPointer": "/limitations"
+    },
+    {
+      "file": "2026-10-17-scope-palette.json",
+      "sha256": "4a0031156595d2ac68d7e9ef6fcc2030ebd2cd6b29dcbae70c00ff4f74b94628",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-secret-boundaries.json",
+      "sha256": "726eb0d4ddab88f516794823076c067fefcf95cbc2e0e590ed9851d9f2dab970",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-session-only-replacement.json",
+      "sha256": "64dae181283c9b8cfd196bc33322a5251386eb5bcef19169add1a6bec463c65f",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-signout-current.json",
+      "sha256": "a90a01db1ead57cd1e77b17e5f997ac40ee2ed012bebfdc751d8e1a5503e1767",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-signout-recovery.json",
+      "sha256": "a610da5b9d6cdb00ba7078da4c3cfefe5beb36988de49adecdb07e530f4f6bc9",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-source-boundaries.json",
+      "sha256": "50e10d6ea3df586a71a329094b5cefd5873571008654b249bb4dfa163895f883",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-source-presentation.json",
+      "sha256": "15b1f3fb1d1cbe9417d830ad04019368e2163d5e771db7ada657dd5aac01eeec",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/method",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    },
+    {
+      "file": "2026-10-17-transition-demo.json",
+      "sha256": "f393f4057b1d3ee1abf5b4433d1704266670794d4a1051ebfc01a7bf0524b7f6",
+      "origin": "controlled",
+      "provenancePointers": [
+        "/scope",
+        "/limits"
+      ],
+      "boundaryPointer": "/limits"
+    }
+  ],
+  "decisions": {
+    "liveUpstream": "17 records contain some actual Jellyfin work; one contains live HN/RSS/Atom collection. Mixed labels do not accept the whole record as live. The keyboard-focus live section is only its before reproduction.",
+    "providers": "No input record establishes live generated text/voice output or paid billing. Controlled provider responses and saved bundled audio stay separate from generated-output quality.",
+    "audio": "Muted native decoding/time/seek/placement establishes the named technical behavior only. No input record establishes an audible-quality or pronunciation session.",
+    "people": "No input record establishes observed uncoached ordinary-listener usability. Q11 and other U requirements retain their status.",
+    "os": "The desktop record observes minimize/restore only; drag/context remain unverified. Private-credential records establish named OS storage operations with dummy entries, not broad OS acceptance. MediaSession callbacks, synthetic blur and Date/scheduler adapters are not physical hardware/app-switch/sleep evidence.",
+    "freshness": "Hashes identify dated snapshots, not current passing sources. Later repairs can supersede older passes; universal-route success alone did not prove the conversion offset, which PR58 subsequently corrected. Historical smaller/zoom observations remain deferred.",
+    "disposition": "Q12 becomes Controlled for evidence provenance only. Q13 remains Review; no denominator completeness, all-invariant completion,90% or whole-goal claim follows."
+  },
+  "verification": {
+    "allInputsLinked": true,
+    "allInputsParse": true,
+    "allInputBoundariesPresent": true,
+    "allPointersResolve": true,
+    "allInputHashesMatch": true,
+    "appCodeChanged": false,
+    "newNativeOrLiveChecks": false,
+    "unitBuildLintRepeated": false
+  },
+  "inventoryAfter": {
+    "rows": 187,
+    "active": 185,
+    "Deferred": 2,
+    "Review": 17,
+    "Dated": 1,
+    "Recorded": 0,
+    "Controlled": 133,
+    "Live": 23,
+    "External": 11,
+    "remaining": 29
+  }
+}
