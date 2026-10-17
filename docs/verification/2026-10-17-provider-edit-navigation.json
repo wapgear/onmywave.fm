@@ -1,0 +1,1397 @@
+{
+  "date": "2026-10-17",
+  "baseCommit": "0cf09ed08004bc8ddacc6ce25f8bf316bafe2254",
+  "classification": "controlled native Electron production-app UI with disposable local catalog/storage, shared-key adapter substitute and held/failed post-guard IPC; no live-provider or listener claim",
+  "before": [
+    {
+      "case": "pending",
+      "snapshotSha256": "990295557b64565f9414b000f7382603f4e991deb96c43c8d0126c1aa5a86cc4",
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": false,
+          "inputEnabled": false,
+          "buttons": [
+            {
+              "name": "Saving\u2026",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "dialogs": [],
+      "transport": "Play",
+      "formSubmissions": 0,
+      "held": [
+        "setOpenAiKey"
+      ],
+      "methodCounts": {
+        "getNewsRecoveryStatus": 28,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 1,
+        "getLocalState": 2,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 6,
+        "libraries": 1,
+        "getAiStatus": 1,
+        "getElevenLabsStatus": 1,
+        "getTwitterStatus": 1,
+        "setOpenAiKey": 1
+      },
+      "providerFetches": 0,
+      "serverMutations": 0
+    },
+    {
+      "case": "returned",
+      "snapshotSha256": "f5048aa31c1f86f4e4e9f4a44d4d54f9ce3b91dae7f5449b24f53238bf4e1165",
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "dialogs": [],
+      "transport": "Play",
+      "formSubmissions": 0,
+      "held": [
+        "setOpenAiKey"
+      ],
+      "methodCounts": {
+        "getNewsRecoveryStatus": 37,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 2,
+        "getLocalState": 2,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 8,
+        "libraries": 1,
+        "getAiStatus": 1,
+        "getElevenLabsStatus": 1,
+        "getTwitterStatus": 1,
+        "setOpenAiKey": 1
+      },
+      "providerFetches": 0,
+      "serverMutations": 0
+    },
+    {
+      "case": "late-failure",
+      "snapshotSha256": "639f3c20c2bdb7c217d07e56cf178c452d181fa358525fed7a9eb246f6ed7db5",
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "dialogs": [],
+      "transport": "Play",
+      "formSubmissions": 0,
+      "held": [],
+      "methodCounts": {
+        "getNewsRecoveryStatus": 46,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 2,
+        "getLocalState": 2,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 9,
+        "libraries": 1,
+        "getAiStatus": 2,
+        "getElevenLabsStatus": 1,
+        "getTwitterStatus": 1,
+        "setOpenAiKey": 1
+      },
+      "providerFetches": 0,
+      "serverMutations": 0
+    }
+  ],
+  "after": [
+    {
+      "case": "return-pending",
+      "snapshotSha256": "cb19483700e6625035237986971610ac208b6fff3c395dbd30c581f41ea93c9a",
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": false,
+          "inputEnabled": false,
+          "buttons": [
+            {
+              "name": "Saving\u2026",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": false,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": false
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "dialogs": [],
+      "transport": "Play",
+      "formSubmissions": 0,
+      "held": [
+        "setOpenAiKey"
+      ],
+      "methodCounts": {
+        "getNewsRecoveryStatus": 24,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 1,
+        "getLocalState": 2,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 5,
+        "libraries": 1,
+        "getAiStatus": 1,
+        "getElevenLabsStatus": 1,
+        "getTwitterStatus": 1,
+        "setOpenAiKey": 1
+      },
+      "providerFetches": 0,
+      "serverMutations": 0
+    },
+    {
+      "case": "failure-section",
+      "snapshotSha256": "98195c1b7e8e39d47d917067627f71cf0deda5e25337ee6d3120c06cbfeb1570",
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": false,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": false,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": false
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [
+        {
+          "error": "setOpenAiKey unavailable.",
+          "button": null
+        }
+      ],
+      "dialogs": [],
+      "transport": "Play",
+      "formSubmissions": 0,
+      "held": [],
+      "methodCounts": {
+        "getNewsRecoveryStatus": 32,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 1,
+        "getLocalState": 2,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 7,
+        "libraries": 1,
+        "getAiStatus": 2,
+        "getElevenLabsStatus": 1,
+        "getTwitterStatus": 1,
+        "setOpenAiKey": 1
+      },
+      "providerFetches": 0,
+      "serverMutations": 0
+    },
+    {
+      "case": "music-pending",
+      "snapshotSha256": "fdd8d97d3a7f5098b9752fce97df0e8bb785be6cc84eb6bf3b191ea8260aa74c",
+      "headings": [
+        "All songs"
+      ],
+      "providerStatuses": [],
+      "notices": [],
+      "dialogs": [],
+      "transport": "Play",
+      "formSubmissions": 0,
+      "held": [
+        "setOpenAiKey"
+      ],
+      "methodCounts": {
+        "getNewsRecoveryStatus": 44,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 2,
+        "getLocalState": 2,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 9,
+        "libraries": 1,
+        "getAiStatus": 2,
+        "getElevenLabsStatus": 1,
+        "getTwitterStatus": 1,
+        "setOpenAiKey": 2
+      },
+      "providerFetches": 0,
+      "serverMutations": 0
+    },
+    {
+      "case": "save-success",
+      "snapshotSha256": "de2e3d6b70930c2375a7d7f7e56d501ecc83358386cf6b2c11afb43f5a94b381",
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": false,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": false
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "dialogs": [],
+      "transport": "Play",
+      "formSubmissions": 0,
+      "held": [],
+      "methodCounts": {
+        "getNewsRecoveryStatus": 55,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 2,
+        "getLocalState": 2,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 11,
+        "libraries": 1,
+        "getAiStatus": 2,
+        "getElevenLabsStatus": 2,
+        "getTwitterStatus": 2,
+        "setOpenAiKey": 2
+      },
+      "providerFetches": 0,
+      "serverMutations": 0
+    },
+    {
+      "case": "remove-pending",
+      "snapshotSha256": "b25bbd3b2b358fd5b7daed4a884509ebb168f88dec531bccddf0d342e02ad811",
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": false,
+          "buttons": [
+            {
+              "name": "Saving\u2026",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": false,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": false
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "dialogs": [],
+      "transport": "Play",
+      "formSubmissions": 0,
+      "held": [
+        "setOpenAiKey"
+      ],
+      "methodCounts": {
+        "getNewsRecoveryStatus": 66,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 2,
+        "getLocalState": 2,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 13,
+        "libraries": 1,
+        "getAiStatus": 2,
+        "getElevenLabsStatus": 2,
+        "getTwitterStatus": 2,
+        "setOpenAiKey": 3
+      },
+      "providerFetches": 0,
+      "serverMutations": 0
+    },
+    {
+      "case": "remove-failure",
+      "snapshotSha256": "bb01d9ea2096aa6298c3c134ebee5b6b83cb38cabcbe1150f1d663ade8b8ad72",
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": false,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": false
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [
+        {
+          "error": "setOpenAiKey unavailable.",
+          "button": null
+        }
+      ],
+      "dialogs": [],
+      "transport": "Play",
+      "formSubmissions": 0,
+      "held": [],
+      "methodCounts": {
+        "getNewsRecoveryStatus": 73,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 2,
+        "getLocalState": 2,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 15,
+        "libraries": 1,
+        "getAiStatus": 3,
+        "getElevenLabsStatus": 2,
+        "getTwitterStatus": 2,
+        "setOpenAiKey": 3
+      },
+      "providerFetches": 0,
+      "serverMutations": 0
+    },
+    {
+      "case": "remove-success",
+      "snapshotSha256": "91583177529d1fdfc31faa84563de7319689646682cd3ebb3912232dd67b0a71",
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": false,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": false
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "dialogs": [],
+      "transport": "Play",
+      "formSubmissions": 0,
+      "held": [],
+      "methodCounts": {
+        "getNewsRecoveryStatus": 95,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 2,
+        "getLocalState": 2,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 19,
+        "libraries": 1,
+        "getAiStatus": 3,
+        "getElevenLabsStatus": 2,
+        "getTwitterStatus": 2,
+        "setOpenAiKey": 4
+      },
+      "providerFetches": 0,
+      "serverMutations": 0
+    },
+    {
+      "case": "new-account-pending",
+      "snapshotSha256": "f64a9545de70cf340623c7c5e224b22ae388f2f21cd75e958b70a1f1d168f1e3",
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": false,
+          "buttons": [
+            {
+              "name": "Saving\u2026",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "dialogs": [],
+      "transport": "Play",
+      "formSubmissions": 2,
+      "held": [
+        "setTwitterKey"
+      ],
+      "methodCounts": {
+        "getNewsRecoveryStatus": 43,
+        "getConnection": 1,
+        "songs": 2,
+        "libraryFilters": 2,
+        "getLocalState": 5,
+        "getPlaybackPreferences": 2,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 6,
+        "libraries": 4,
+        "getAiStatus": 2,
+        "getElevenLabsStatus": 2,
+        "getTwitterStatus": 2,
+        "setTwitterKey": 1,
+        "disconnect": 1,
+        "connect": 1,
+        "selectLibraries": 1
+      },
+      "providerFetches": 0,
+      "serverMutations": 0
+    },
+    {
+      "case": "old-success",
+      "snapshotSha256": "8fc50a4022c0883be6e3c7298a981e604dd4a5609a279226f4d590faf12d1cc4",
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "dialogs": [],
+      "transport": "Play",
+      "formSubmissions": 2,
+      "held": [],
+      "methodCounts": {
+        "getNewsRecoveryStatus": 57,
+        "getConnection": 1,
+        "songs": 2,
+        "libraryFilters": 2,
+        "getLocalState": 5,
+        "getPlaybackPreferences": 2,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 9,
+        "libraries": 4,
+        "getAiStatus": 2,
+        "getElevenLabsStatus": 2,
+        "getTwitterStatus": 2,
+        "setTwitterKey": 1,
+        "disconnect": 1,
+        "connect": 1,
+        "selectLibraries": 1
+      },
+      "providerFetches": 0,
+      "serverMutations": 0
+    },
+    {
+      "case": "new-account-second-pending",
+      "snapshotSha256": "013b2555cde8d04f063681fb3cd7a15c6bb34fa0718d4c64dc2cff1667e65d4b",
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": false,
+          "buttons": [
+            {
+              "name": "Saving\u2026",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "dialogs": [],
+      "transport": "Play",
+      "formSubmissions": 4,
+      "held": [
+        "setElevenLabsKey"
+      ],
+      "methodCounts": {
+        "getNewsRecoveryStatus": 86,
+        "getConnection": 1,
+        "songs": 3,
+        "libraryFilters": 3,
+        "getLocalState": 9,
+        "getPlaybackPreferences": 3,
+        "song": 8,
+        "preparePlayback": 2,
+        "savePlayback": 13,
+        "libraries": 8,
+        "getAiStatus": 3,
+        "getElevenLabsStatus": 3,
+        "getTwitterStatus": 3,
+        "setTwitterKey": 1,
+        "disconnect": 2,
+        "connect": 2,
+        "selectLibraries": 2,
+        "setElevenLabsKey": 1
+      },
+      "providerFetches": 0,
+      "serverMutations": 0
+    },
+    {
+      "case": "old-failure",
+      "snapshotSha256": "7ee886489653bdae28a8b2607de4105ad0937578aac00a0952a2958b82827ad1",
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "dialogs": [],
+      "transport": "Play",
+      "formSubmissions": 4,
+      "held": [],
+      "methodCounts": {
+        "getNewsRecoveryStatus": 124,
+        "getConnection": 1,
+        "songs": 3,
+        "libraryFilters": 3,
+        "getLocalState": 9,
+        "getPlaybackPreferences": 3,
+        "song": 8,
+        "preparePlayback": 2,
+        "savePlayback": 20,
+        "libraries": 8,
+        "getAiStatus": 3,
+        "getElevenLabsStatus": 4,
+        "getTwitterStatus": 3,
+        "setTwitterKey": 1,
+        "disconnect": 2,
+        "connect": 2,
+        "selectLibraries": 2,
+        "setElevenLabsKey": 1
+      },
+      "providerFetches": 0,
+      "serverMutations": 0
+    },
+    {
+      "case": "final-music-idle",
+      "snapshotSha256": "7bdb2a3ced5a69c3398f04978b36a23e5d640dcbc0850a706a2c01920199afa2",
+      "headings": [
+        "All songs"
+      ],
+      "providerStatuses": [],
+      "notices": [],
+      "dialogs": [],
+      "transport": "Play",
+      "formSubmissions": 0,
+      "held": [],
+      "methodCounts": {
+        "getNewsRecoveryStatus": 6,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 1,
+        "getLocalState": 2,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 1
+      },
+      "providerFetches": 0,
+      "serverMutations": 0
+    },
+    {
+      "case": "final-pending-signout",
+      "snapshotSha256": "0097f54324d60d21e2d8476c33f69906e89aa1bbbffacd7b285616bd41a4012d",
+      "headings": [
+        "Settings",
+        "Account",
+        "Music libraries",
+        "DJ playback",
+        "DJ transitions",
+        "About",
+        "Sign out of Jellyfin?"
+      ],
+      "providerStatuses": [],
+      "notices": [],
+      "dialogs": [
+        {
+          "title": "Sign out of Jellyfin?",
+          "paragraphs": [
+            "Playback will stop and unsaved news setup and script edits will be discarded. Your saved profiles, DJs, provider keys and recordings stay on this Mac.",
+            "A provider key change is still saving. That change can finish after you sign out.",
+            "Signing out pauses automatic news preparation and stops in-progress news and voice generation. A request already sent may still finish or incur a charge. After signing in, resume automatic preparation in News bucket \u2192 Settings."
+          ]
+        }
+      ],
+      "transport": "Play",
+      "formSubmissions": 0,
+      "held": [
+        "setOpenAiKey"
+      ],
+      "methodCounts": {
+        "getNewsRecoveryStatus": 20,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 1,
+        "getLocalState": 2,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 4,
+        "libraries": 1,
+        "getAiStatus": 1,
+        "getElevenLabsStatus": 1,
+        "getTwitterStatus": 1,
+        "setOpenAiKey": 1
+      },
+      "providerFetches": 0,
+      "serverMutations": 0
+    },
+    {
+      "case": "final-idle-signout",
+      "snapshotSha256": "1d95a6f1613aca9e5b712cbed38b0a197b8078addbf7f4ca8d8ec72a2601d97e",
+      "headings": [
+        "Settings",
+        "Account",
+        "Music libraries",
+        "DJ playback",
+        "DJ transitions",
+        "About",
+        "Sign out of Jellyfin?"
+      ],
+      "providerStatuses": [],
+      "notices": [],
+      "dialogs": [
+        {
+          "title": "Sign out of Jellyfin?",
+          "paragraphs": [
+            "Playback will stop and unsaved news setup and script edits will be discarded. Your saved profiles, DJs, provider keys and recordings stay on this Mac.",
+            "Signing out pauses automatic news preparation and stops in-progress news and voice generation. A request already sent may still finish or incur a charge. After signing in, resume automatic preparation in News bucket \u2192 Settings."
+          ]
+        }
+      ],
+      "transport": "Play",
+      "formSubmissions": 0,
+      "held": [],
+      "methodCounts": {
+        "getNewsRecoveryStatus": 27,
+        "getConnection": 1,
+        "songs": 1,
+        "libraryFilters": 1,
+        "getLocalState": 2,
+        "getPlaybackPreferences": 1,
+        "song": 4,
+        "preparePlayback": 1,
+        "savePlayback": 5,
+        "libraries": 1,
+        "getAiStatus": 1,
+        "getElevenLabsStatus": 1,
+        "getTwitterStatus": 1,
+        "setOpenAiKey": 1
+      },
+      "providerFetches": 0,
+      "serverMutations": 0
+    }
+  ],
+  "reports": {
+    "navigation-before": {
+      "result": "observed",
+      "errors": [],
+      "sha256": "6ca341cb8c79af4d4c70d069abbd508d3eae60a8ebe5ba7d5ac59d20ca6b4318"
+    },
+    "navigation-after": {
+      "result": "observed",
+      "errors": [],
+      "sha256": "864942f1a7647da55b75ef34d3d111bc8043a5955bc716e6f9df8f23a48fe7dd"
+    },
+    "navigation-account-after": {
+      "result": "observed",
+      "errors": [],
+      "sha256": "a4022d8117c3c86b207486ccc11b68f6c1745725717067f843f334d98afcfb78"
+    },
+    "navigation-copy-after": {
+      "result": "observed",
+      "errors": [],
+      "sha256": "49ab7110cb5676e33fe89ddf45804ede90d329206949cb8a635cacbe3fda6106"
+    }
+  },
+  "verification": {
+    "nativeSnapshots": 14,
+    "buildIncludingTypeScript": "pass",
+    "fullESLint": "pass; initial exhaustive-deps warning fixed with stable reset destructuring, no suppression",
+    "assertions": "snapshot predicates in record generation pass",
+    "review": "Steve/Elena independent proposals and challenge supported app-root transient owner; Elena reviewed implementation and final copy without actionable findings",
+    "sourceInspection": [
+      "Mutation variables are void and onMutate context is revision-only; key text is kept in transient draft/submission ref, not mutation variables.",
+      "Active submission ref clears on settlement.",
+      "Exact provider status cancellation before write and before success publication retained; failure cancels then invalidates.",
+      "Shared ProviderKeys and retained NewsTest use one owner per provider.",
+      "No provider status query is mounted at music startup."
+    ]
+  },
+  "freshness": {
+    "coreSevenAndAccountFour": "same owner logic as final build; precede only final help text and conditional sign-out notice",
+    "finalThree": "final production bundle including help and sign-out note",
+    "main": "unchanged from base commit"
+  },
+  "fixture": {
+    "path": "/private/tmp/provider-key-status-race",
+    "uiInput": "native CUA",
+    "telemetry": "read-only Playwright observer; published snapshots omit key events and values",
+    "credentials": "disposable fixture text only; actual safeStorage/private files, null/no-op shared Keychain substitute",
+    "faults": "hold/fail after sender and input guards",
+    "authentication": "only exact local /Users/AuthenticateByName POST permitted; normal fixture sign-in and library selection",
+    "excludedAttempt": "initial fixture blocked its own authentication POST; incomplete account attempt excluded",
+    "reportScope": "core after-report later contains that blocked auth attempt; zero provider/server-mutation claims apply to accepted snapshots, not every event in its whole report",
+    "formSubmissions": "core seven and final three zero; account snapshots count 2,2,4,4 from deliberate sign-in/library forms"
+  },
+  "limits": [
+    "NewsTest has no render caller: source/build review only.",
+    "No personal Keychain or real provider delivery.",
+    "No durable secret-draft storage or renderer diagnostic key text added.",
+    "Not a VoiceOver, listener, audible-quality, full OS-key-store or cross-platform acceptance pass.",
+    "No unit, package/release, sub1280x720 or enlarged app zoom checks."
+  ],
+  "inventory": {
+    "total": 187,
+    "active": 185,
+    "deferred": 2,
+    "remaining": 28,
+    "dispositionsChanged": false
+  },
+  "sourceSha256": {
+    "src/renderer/App.tsx": "668a4ed0d7c49132608b91bb899085cd78b6b631cadfd5c3bd2c92d0dc75936c",
+    "src/renderer/components/ProviderKeys/ProviderKeyEdits.tsx": "99b9e06d6c62a90d36195ef7ae832444dd64c7cad8153db4fd66fd7feefe04d2",
+    "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx": "c9291d31f6f3f606c39f55c88b0e84346f7e0dbb39c3de0ddf4d78d1a3f3d91e",
+    "src/renderer/pages/DJs/components/NewsTest.component.tsx": "347302ea66d6bbf27cf7417b170476e5d67c78f476a0b5db0cffaffe5d233be9",
+    "src/renderer/pages/Settings/Settings.page.tsx": "8845debd083583827cafa76205dc0498a3cc5af04acb701aa2ae1277b1465441"
+  },
+  "artifactSha256": {
+    "out/renderer/assets/index-DsUdFBDh.js": "35f2d4952896dde89c7e1e8f32d206905ecaf57fb961d42ddbb570ce1d6e0ea7",
+    "out/renderer/assets/index-CUgwj8xN.css": "8dedf91bec8e203b47c5630cbd8925f4f357523a53a65c6a66ba92b9ba0f19c4",
+    "out/main/index.js": "3518de98aeddf74d4a86e19016186b9513ed546086a688d8a82e4e10d01b4db0"
+  },
+  "fixtureSha256": {
+    "/private/tmp/provider-key-status-race/bootstrap.mjs": "243a98a9ff529d5ba6f2b67a1c4a8e3826945a1c6ddce7fa4d56137f95e75079",
+    "/private/tmp/provider-key-status-race/build.mjs": "8c9023f0370da1aede9e33d89e8e30866854124ea47124c643c7105315e13e55",
+    "/private/tmp/provider-key-status-race/server.mjs": "e5ad2ac7ee103d80a6131080a1545050cba15441f871909381e71c6bba488820",
+    "/private/tmp/provider-key-status-race/observe.cjs": "0c04d826626a1561387b38bdba77d1aa64fe4f40aba1a62a4f22f573397ea4c7"
+  }
+}
