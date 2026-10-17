@@ -3,6 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Disc3, ListMusic, Music2, Radio, Settings } from 'lucide-react';
 import type { Connection, Song } from '../shared/types';
 import { unwrap } from './api';
+import { useRetryFocus } from './useRetryFocus';
 import { PlayerProvider } from './player';
 import { DJPlaybackProvider } from './dj-playback';
 import { Player } from './components/Player/Player.component';
@@ -26,6 +27,7 @@ const navigation = [{ id: 'songs', name: 'All songs', icon: Music2 }, { id: 'alb
 export default function App() {
   const client = useQueryClient();
   const connectionQuery = useQuery({ queryKey: ['connection'], queryFn: async () => unwrap(await window.wave.getConnection()), retry: false });
+  const connectionRetryFocus = useRetryFocus({ ownerKey: 'connection-startup', target: () => document.querySelector<HTMLElement>('.page-heading h1, .connection-card h1'), canFocusSuccess: () => true });
   const [expired, setExpired] = useState(false);
   useEffect(() => { const expire = () => setExpired(true); window.addEventListener('wave:auth-expired', expire); return () => window.removeEventListener('wave:auth-expired', expire); }, []);
   async function setConnection(connection: Connection | null, clearExpiry = true) {
@@ -36,10 +38,8 @@ export default function App() {
     if (clearExpiry) setExpired(false);
   }
   const connection = connectionQuery.data ?? null;
-  return <ProviderKeyEditsProvider sessionId={connection?.id ?? null}><NewsRecoveryProvider><SettingsEditsProvider>{connectionQuery.isPending
-    ? <main className="startup"><span className="wordmark">onmywave.fm</span><p role="status">Opening your library…</p><NewsRecoveryNotice /></main>
-    : connectionQuery.error
-      ? <main className="startup"><span className="wordmark">onmywave.fm</span><ErrorNotice error={connectionQuery.error} retrying={connectionQuery.isFetching} retry={() => connectionQuery.refetch()} /><NewsRecoveryNotice /></main>
+  return <ProviderKeyEditsProvider sessionId={connection?.id ?? null}><NewsRecoveryProvider><SettingsEditsProvider>{connectionQuery.isPending || connectionQuery.error
+      ? <main className="startup"><span className="wordmark">onmywave.fm</span>{connectionQuery.isPending && <p role="status">Opening your library…</p>}<ErrorNotice error={connectionQuery.error} retryRef={connectionRetryFocus.retryRef} retrying={connectionQuery.isFetching} retry={() => connectionRetryFocus.retry(() => connectionQuery.refetch())} /><NewsRecoveryNotice /></main>
       : <SessionContent key={connection?.id ?? 'signed-out'} connection={connection} expired={expired && !!connection} setConnection={setConnection} />}</SettingsEditsProvider></NewsRecoveryProvider></ProviderKeyEditsProvider>;
 }
 type RadioDrafts = {

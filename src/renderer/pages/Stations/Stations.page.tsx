@@ -10,6 +10,7 @@ import { ConfigurationTabs } from '../../components/ConfigurationTabs/Configurat
 import { RoomSetup } from './components/RoomSetup.component';
 import { PreparedTakes } from './components/PreparedTakes.component';
 import { useDJPlayback } from '../../dj-playback';
+import { useRetryFocus } from '../../useRetryFocus';
 import { WorkflowPreferences, type PreparationIssue } from '../Settings/components/WorkflowPreferences.component';
 import { NewsBucket } from './components/NewsBucket.component';
 import type { WorkflowDraft } from '../../../shared/workflow';
@@ -54,6 +55,13 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   useEffect(() => () => { ++audioReviewAttempt.current; }, []);
   const tab = ['news', 'host', 'prepare', 'settings'].includes(configDraft.tab ?? '') ? 'settings' : configDraft.tab === 'saved' ? 'saved' : 'bucket';
   const setTab = (tab: string) => setConfigDraft(current => ({ ...current, tab }));
+  const heading = useRef<HTMLHeadingElement>(null);
+  const stateRetryFocus = useRetryFocus({ ownerKey: 'room:localState', target: () => heading.current, canFocusSuccess: () => newsRecoveryReady });
+  const bucketRetryFocus = useRetryFocus({ ownerKey: `room:news:${tab}`, target: () => document.getElementById('room-panel-bucket'), canFocusSuccess: () => newsRecoveryReady && tab === 'bucket' });
+  const settingsRetryFocus = useRetryFocus({ ownerKey: `room:settings-news:${tab}`, target: () => document.getElementById('room-panel-settings'), canFocusSuccess: () => newsRecoveryReady && tab === 'settings' });
+  const savedRetryFocus = useRetryFocus({ ownerKey: `room:saved-news:${tab}`, target: () => document.getElementById('room-panel-saved'), canFocusSuccess: () => newsRecoveryReady && tab === 'saved' });
+  const aiRetryFocus = useRetryFocus({ ownerKey: `room:ai-status:${tab}`, target: () => manualTools.current?.querySelector('summary') ?? null, canFocusSuccess: () => newsRecoveryReady && tab === 'settings' });
+  const elevenRetryFocus = useRetryFocus({ ownerKey: `room:voice-status:${tab}`, target: () => manualTools.current?.querySelector('summary') ?? null, canFocusSuccess: () => newsRecoveryReady && tab === 'settings' });
   const aiStatus = useQuery({ queryKey: ['aiStatus'], meta: { aiOperation: true }, queryFn: async () => unwrap(await window.wave.getAiStatus()), enabled: newsRecoveryReady });
   const elevenStatus = useQuery({ queryKey: ['elevenLabsStatus'], meta: { aiOperation: true }, queryFn: async () => unwrap(await window.wave.getElevenLabsStatus()), enabled: newsRecoveryReady });
   const manual = configDraft.manualPreparation;
@@ -364,11 +372,11 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
     <ErrorNotice error={audioCompletion.reviewError ? new Error(audioCompletion.reviewError) : null} />
   </div>;
   return <>
-    <PageHeading title="News bucket" />
+    <PageHeading headingRef={heading} title="News bucket" />
     {newsRecovery.status.phase !== 'ready' ? <NewsRecoveryPanel /> : <>
     <div className="listening-room">
       {state.isPending && <p className="loading" role="status">Opening your room…</p>}
-      <ErrorNotice error={state.error} retrying={state.isFetching} retry={() => state.refetch()} />
+      <ErrorNotice error={state.error} retryRef={stateRetryFocus.retryRef} retrying={state.isFetching} retry={() => stateRetryFocus.retry(() => state.refetch())} />
       {state.data && <><div className="room-profile-bar"><label htmlFor="room-profile">Setup profile<select id="room-profile" value={state.data.activeRoomProfileId} disabled={busy} onChange={event => chooseProfile(event.target.value)}>{state.data.roomProfiles.map(value => <option key={value.id} value={value.id}>{value.name}{value.id === state.data?.activeRoomProfileId ? ' · Active' : ''}</option>)}</select></label><button disabled={busy} onClick={() => { profiles.reset(); setProfileName(''); setNewProfileOpen(true); }}>Save as new</button></div>
       {activeProfile && <details className="room-advanced"><summary>Advanced room options</summary><label className="room-dj-enabled"><input type="checkbox" checked={activeProfile.enabled} disabled={busy} onChange={event => enableProfile.mutate({ id: activeProfile.id, enabled: event.target.checked })} />Make this profile available for DJ playback and preparation</label></details>}
       {configurationPending && <p className="form-hint" role="status">Updating room settings… You can keep browsing and listening.</p>}
@@ -381,7 +389,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
       {setupDirty && tab !== 'settings' && <div className="room-unsaved"><p>Unsaved room and preparation settings.</p><button onClick={() => setTab('settings')}>Review settings</button></div>}
       </>}
       {state.data && <section id="room-panel-bucket" role="tabpanel" aria-labelledby="room-tab-bucket" hidden={tab !== 'bucket'} tabIndex={0}>
-        <ErrorNotice error={library.error} retrying={library.isFetching} retry={() => library.refetch()} />
+        <ErrorNotice error={library.error} retryRef={bucketRetryFocus.retryRef} retrying={library.isFetching} retry={() => bucketRetryFocus.retry(() => library.refetch())} />
         {library.isPending && <p className="loading" role="status">Opening the news bucket…</p>}
         {library.data && preparationStatusUnknown && <p className="form-hint" role="status">{library.isPending || library.error
           ? 'Saved news and manual preparation activity could not be confirmed. Showing the last loaded recordings, drafts and article history.'
@@ -395,7 +403,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
       {preparationError && <div className="room-background-error"><p className="form-hint">Manual preparation · {manual?.profileName ?? 'Previous setup'}</p>{noStory || (manual?.cancelRequested && !manual.control.dispatched) ? <p className="form-hint" role="status">{preparationError.message}</p> : <ErrorNotice error={preparationError} />}<div className="room-actions">{!noStory && lastRequest && manual?.control.dispatched && <button className="room-link" disabled={busy} onClick={() => startPreparation({ ...lastRequest, reconcile: true })}>Check saved result for this request</button>}<button className="room-link" onClick={() => { setTab('settings'); requestAnimationFrame(() => { if (manualTools.current) { manualTools.current.open = true; manualTools.current.querySelector('summary')?.focus(); manualTools.current.scrollIntoView({ block: 'start' }); } }); }}>Review preparation</button></div></div>}
       {tab !== 'settings' && audioResult}
       <section id="room-panel-settings" role="tabpanel" aria-labelledby="room-tab-settings" hidden={tab !== 'settings'} tabIndex={0} className="room-preparation">
-      <ErrorNotice error={library.error} retrying={library.isFetching} retry={() => library.refetch()} />
+      <ErrorNotice error={library.error} retryRef={settingsRetryFocus.retryRef} retrying={library.isFetching} retry={() => settingsRetryFocus.retry(() => library.refetch())} />
       {preparationStatusUnknown && <p className="form-hint" role="status">Preparation activity must be confirmed before editing setup. Wait for status to load, or retry the failed status check.</p>}
       {state.data && <RoomSetup sources={sources} djs={state.data.djs} room={room} mood={mood} newsInterests={newsInterests} busy={setupBusy} setSetup={setSetup} setMoodDraft={setMoodDraft} setNewsInterests={setNewsInterests} configureSources={configureSources} configureDJ={configureDJ} />}
       {activeProfile && <WorkflowPreferences room={activeProfile} value={workflowDraft as WorkflowDraft} dirty={setupDirty} disabled={setupBusy} saving={save.isPending} saveError={null} activationReady={workflowReady} statusLoading={workflowStatusLoading} statusError={workflowStatusError} profileStatusUnknown={state.isPending || !!state.error} issues={preparationIssues} onChange={updateWorkflow} onSave={() => save.mutate()} onResume={() => resume.mutate()} onTurnOff={() => turnOff.mutate({ roomId: activeProfile.id, name: activeProfile.name, workflow: configDraft.workflow })} stopping={turnOff.isPending} stopDisabled={configurationPending} onRetryStatus={() => { void aiStatus.refetch(); void elevenStatus.refetch(); if (xKeyRequired) void xStatus.refetch(); }} />}
@@ -405,7 +413,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
         <button className="primary" disabled={busy || !ready || !textKeyReady} onClick={() => prepareText()}>{manualPending && lastRequest?.kind === 'script' ? <LoaderCircle size={15} className="spinning" /> : <Newspaper size={15} />}{manualPending && lastRequest?.kind === 'script' ? checkingSavedResult ? 'Checking saved text…' : 'Preparing text…' : 'Prepare news text'}</button>
         {!ready && <p className="form-hint">Choose sources and a DJ, and describe your station mood first.</p>}
         {ready && !textKeyReady && <p className="notice">{aiStatus.isPending ? 'Checking OpenAI key…' : aiStatus.error ? 'OpenAI key status unavailable.' : 'Add an OpenAI key to prepare text.'} <button className="room-link" onClick={configureSettings}>Open Settings</button></p>}
-        <ErrorNotice error={aiStatus.error} retrying={aiStatus.isFetching} retry={() => aiStatus.refetch()} />{dj?.news?.speechEngine === 'elevenlabs-v4' && <ErrorNotice error={elevenStatus.error} retrying={elevenStatus.isFetching} retry={() => elevenStatus.refetch()} />}
+        <ErrorNotice error={aiStatus.error} retryRef={aiRetryFocus.retryRef} retrying={aiStatus.isFetching} retry={() => aiRetryFocus.retry(() => aiStatus.refetch())} />{dj?.news?.speechEngine === 'elevenlabs-v4' && <ErrorNotice error={elevenStatus.error} retryRef={elevenRetryFocus.retryRef} retrying={elevenStatus.isFetching} retry={() => elevenRetryFocus.retry(() => elevenStatus.refetch())} />}
 
         {!!library.data?.scripts.length && <div className="room-saved-script"><FilterSelect label="Saved draft" value={editing?.scriptId ?? ''} choices={library.data.scripts.map(value => ({ value: value.id, label: `${value.provenance.dj.name} · ${new Date(value.createdAt).toLocaleString()}` })).reverse()} onChange={id => { const saved = library.data?.scripts.find(value => value.id === id); if (saved) requestScript({ scriptId: saved.id, script: saved.script }, false); }} disabled={busy} /></div>}
         {editing && <div className="room-script-editor"><label htmlFor="news-draft">Review the script</label><textarea id="news-draft" rows={5} maxLength={700} disabled={busy} value={editing.script} onChange={event => setDraft({ ...editing, script: event.target.value })} /><div className="room-script-meta"><span className={words > 55 ? 'danger' : ''}>{words} / 55 words</span><span>{scriptRecord ? new Date(scriptRecord.createdAt).toLocaleString() : 'Saved draft'}</span></div>{scriptRecord && <details><summary>Sources and preparation settings</summary><p className="form-hint">Prepared for {scriptRecord.provenance.dj.name} · {scriptRecord.provenance.mood}</p><p className="form-hint">News interests: {(scriptRecord.provenance.newsInterests ?? scriptRecord.provenance.dj.news?.interests) || 'Any topics from selected sources'}</p>{scriptRecord.articles.map(article => <p key={article.id} className="room-article"><button className="room-link" onClick={() => source.mutate(article.url)}>{article.title}</button><span>{article.source}{Number.isFinite(Date.parse(article.publishedAt ?? '')) ? ` · ${new Date(article.publishedAt!).toLocaleDateString()}` : ' · Date unavailable'}</span></p>)}{scriptRecord.warnings.map((warning, index) => <p className="form-hint" key={index}>{warning}</p>)}</details>}
@@ -419,7 +427,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
       </section>
       <section id="room-panel-saved" role="tabpanel" aria-labelledby="room-tab-saved" hidden={tab !== 'saved'} tabIndex={0}>
       {differs && <p className="notice">Your draft or setup differs from the selected take. Your saved choice remains unchanged.</p>}
-        <ErrorNotice error={library.error} retrying={library.isFetching} retry={() => library.refetch()} />
+        <ErrorNotice error={library.error} retryRef={savedRetryFocus.retryRef} retrying={library.isFetching} retry={() => savedRetryFocus.retry(() => library.refetch())} />
       {library.isPending && <p className="loading" role="status">Opening saved audio…</p>}
       {library.data && <PreparedTakes active={tab === 'saved'} library={library.data} refresh={() => void refresh()} loadDraft={loadDraft} />}
       {!!preparationHistory.length && <details id="preparation-history" className="room-request-history" ref={requestHistory}><summary>Preparation history</summary>{preparationHistory.slice(-historyLimit).reverse().map(value => <p key={value.requestId} id={`preparation-request-${value.requestId}`} tabIndex={-1}><strong>{value.kind === 'script' ? 'News text' : 'Audio take'} · {value.status === 'skipped' ? 'No relevant story' : value.status === 'partial-coverage' ? 'Incomplete source coverage' : value.status}</strong><span>{preparationOrigin(value)}</span><span>{value.error || (value.status === 'skipped' ? 'No audio was generated for this attempt.' : 'No automatic provider retry. Completed results remain in saved audio.')}</span></p>)}{preparationHistory.length > historyLimit && <button className="room-link" onClick={showOlderPreparations}>Show older preparations</button>}</details>}

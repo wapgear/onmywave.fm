@@ -1,0 +1,2312 @@
+{
+  "date": "2026-10-17",
+  "baseCommit": "2b0c4bc57147abf0b3239430ab80bc7faf5798e2",
+  "scope": [
+    "Q06 partial explicit read-retry focus",
+    "Q08 pending explanation and action retention",
+    "R12 original-overlay boundaries",
+    "Playlist compound recovery"
+  ],
+  "baseline": {
+    "contentSizePoints": [
+      1280,
+      720
+    ],
+    "appZoom": 1,
+    "runtime": "macOS27.2 arm64, Electron43.7.0, Retina display"
+  },
+  "reproduction": "Current base production hashes match PR81. Native Tab/Return on playlist-list Try again restores tiles but leaves DOM BODY/native HTML content focused.",
+  "implementation": [
+    "Keep explicit retry explanation and non-native-disabled busy action mounted through a cold reset, with immediate duplicate guard; retain startup/pagination hosts.",
+    "Use explicit owner targets for28 reachable read-query notices, excluding2 unmounted NewsTest definitions. No mutation/automation retries or cold-route/background handoff.",
+    "Capture original overlay identities, constrain targets to the same open scope, and preserve user/owner/window takeover cancellation. Reveal visible targets nearest with keyboard outlines for tabindex anchors.",
+    "Await and inspect both exact playlist detail/list query states. Keep list-only errors actionable and preserve reviewReady without replaying writes."
+  ],
+  "pairedDecision": {
+    "Steve": "Independent proposal/challenge supports explicit owner targets, retained explanation, origin scope and verified compound reads. Implements playlist/source/DJ/General owners; actual review identifies missing status-heading outline.",
+    "Elena": "Independent proposal/challenge withdraws stale-alert suppression to retain the required explanation. Implements shared guards/notice/pagination; actual owner review identifies disabled Sources fallback.",
+    "Morgan": "Integrates other owners and stable startup host, adds shared tabindex focus ring and disabled-aware Sources fallback; verifies native scope and preserves broader Q06 gaps."
+  },
+  "ownerAudit": {
+    "definitions": 30,
+    "reachable": 28,
+    "unmounted": 2,
+    "unwiredReachable": 0,
+    "artifact": "2026-10-17-read-retry-focus-owners.csv",
+    "sha256": "97cda60447a01928f46ef9249bd06138106521b69e93c6564d0b6fcafeecab0a",
+    "method": "TypeScript AST records all ErrorNotice definitions with retrying, attributes and source hashes. This is wiring inspection, not native execution of all28.",
+    "nativeFamilies": "Playlist list/detail/compound, AddPlaylist, libraries, all3 providers, General playback, startup, DJ popover and in-editor saved-preview read. Other targets/paging permutations receive source review and scoped prior evidence."
+  },
+  "fixture": {
+    "data": "Disposable synthetic catalog, actual production renderer/preload, copied instrumented actual main/storage, safeStorage, null shared-key adapter, stopped scheduler, blocked external/non-GET/HEAD requests.",
+    "input": "CUA only; Playwright launches and reads telemetry without UI actions.",
+    "telemetry": "Before/intermediate and final-list/settings observe playback via actual getLocalState IPC. Later processes read actual disposable local-state.json so held UI localState reads cannot block observer commands. Focus/status remain read-only DOM/main observations.",
+    "limits": "Muted/synthetic checks do not prove live-provider/server, audible quality, VoiceOver or hardware. Initial localState failure truthfully shows a session-restore error; that process is not a restored-playback pass."
+  },
+  "sourcePhases": {
+    "before": "Two snapshots and AX excerpts, production bundle hashes exactly match base/PR81. Original observer later gains read-only metadata; no complete original observer hash claimed.",
+    "intermediate": "First build/type/lint passed. Two snapshots show cold retention and first-tile success. Final changes refine disabled target fallbacks and tabindex focus styling; these are not final-byte snapshots.",
+    "final": "Final build/type/full lint passed after ownership freeze.28 final snapshots, including a disclosed background-cold BODY observation outside explicit retry. Observer telemetry changes between process groups as above."
+  },
+  "nativeCases": [
+    {
+      "name": "before-focused",
+      "rawSha256": "45823ccf8a8043db8279bbe3b6b004e627dcdfdca3bcca8cbbff06ff9b5708ee",
+      "phase": "before",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1153.2734375,
+          "y": 147,
+          "width": 80.7265625,
+          "height": 34,
+          "top": 147,
+          "right": 1234,
+          "bottom": 181,
+          "left": 1153.2734375
+        },
+        "insideDrawer": false,
+        "name": "Try again",
+        "type": "button",
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "notices": [
+        {
+          "error": "playlists unavailable.",
+          "status": "",
+          "button": {
+            "name": "Try again",
+            "disabled": false,
+            "busy": null,
+            "ariaDisabled": null,
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": []
+    },
+    {
+      "name": "before-lost-focus",
+      "rawSha256": "7a7b68e70fbffea8fb4f2a4d305e7ab43a406e75de871c8c9e97728c639f768a",
+      "phase": "before",
+      "focus": {
+        "tag": "BODY",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "top": 0,
+          "right": 1280,
+          "bottom": 720,
+          "left": 0
+        },
+        "insideDrawer": false,
+        "type": null,
+        "role": null,
+        "bodyTextOmitted": true
+      },
+      "input": "keyboard",
+      "heldReads": [],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "notices": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": []
+    },
+    {
+      "name": "after-list-cold-held",
+      "rawSha256": "8073a7dd6dac1b5bd5fc0dbea4946d0307a8249eb04e99950bf1b929a4e1b51f",
+      "phase": "intermediate",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1148.3515625,
+          "y": 147,
+          "width": 85.6484375,
+          "height": 34,
+          "top": 147,
+          "right": 1234,
+          "bottom": 181,
+          "left": 1148.3515625
+        },
+        "insideDrawer": false,
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [
+        "playlists"
+      ],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [
+        {
+          "error": "playlists unavailable.",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": []
+    },
+    {
+      "name": "after-list-first-success",
+      "rawSha256": "d6a34fb45d3c5b6464ad29f09ee7358957cf099e6b3af8e56adbf913c76c7105",
+      "phase": "intermediate",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 134,
+          "width": 329.328125,
+          "height": 86,
+          "top": 134,
+          "right": 567.328125,
+          "bottom": 220,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Fixture editable3 songs",
+        "type": null,
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-detail-both-held",
+      "rawSha256": "fdfff4588b835160237be65d9b97e9e931c2106422e8fd83836e37fe67c9106f",
+      "phase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1148.3515625,
+          "y": 244.09375,
+          "width": 85.6484375,
+          "height": 34,
+          "top": 244.09375,
+          "right": 1234,
+          "bottom": 278.09375,
+          "left": 1148.3515625
+        },
+        "insideDrawer": false,
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "input": "pointer",
+      "heldReads": [
+        "playlist",
+        "playlists"
+      ],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [
+        {
+          "error": "playlist unavailable.",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-detail-list-only-failed",
+      "rawSha256": "ec2e86365d18ec8046b8d4e04c00bddf0e3f2389cf9e9aa816df45004cb35221",
+      "phase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1145.2734375,
+          "y": 513,
+          "width": 80.7265625,
+          "height": 34,
+          "top": 513,
+          "right": 1226,
+          "bottom": 547,
+          "left": 1145.2734375
+        },
+        "insideDrawer": false,
+        "name": "Try again",
+        "type": "button",
+        "role": null
+      },
+      "input": "pointer",
+      "heldReads": [],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [
+        {
+          "error": "playlists unavailable.",
+          "status": "",
+          "button": {
+            "name": "Try again",
+            "disabled": false,
+            "busy": null,
+            "ariaDisabled": null,
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-detail-list-only-held",
+      "rawSha256": "792bdd35ea580ac3afd96e56789cf23764cb52794a3d5a8785a0473fbc566551",
+      "phase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1140.3515625,
+          "y": 513,
+          "width": 85.6484375,
+          "height": 34,
+          "top": 513,
+          "right": 1226,
+          "bottom": 547,
+          "left": 1140.3515625
+        },
+        "insideDrawer": false,
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "input": "pointer",
+      "heldReads": [
+        "playlists"
+      ],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [
+        {
+          "error": "playlist unavailable.",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-detail-success",
+      "rawSha256": "6ad48d179d81ef66d24d85f94a003f4efddc222f68869e2a803e5b94f1d6a20f",
+      "phase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 46,
+          "width": 85.2265625,
+          "height": 34,
+          "top": 46,
+          "right": 323.2265625,
+          "bottom": 80,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Playlists",
+        "type": null,
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-general-retry-failed",
+      "rawSha256": "8dd057b726334312a253d3f093c48e2c99d22cda71a6f67f47bea258b3c1aa97",
+      "phase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 861.2734375,
+          "y": 309.078125,
+          "width": 80.7265625,
+          "height": 34,
+          "top": 309.078125,
+          "right": 942,
+          "bottom": 343.078125,
+          "left": 861.2734375
+        },
+        "insideDrawer": false,
+        "name": "Try again",
+        "type": "button",
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [
+        {
+          "error": "getLocalState unavailable.",
+          "status": "",
+          "button": {
+            "name": "Try again",
+            "disabled": false,
+            "busy": null,
+            "ariaDisabled": null,
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        },
+        {
+          "error": "getLocalState unavailable.",
+          "status": "",
+          "button": {
+            "name": "Try again",
+            "disabled": false,
+            "busy": null,
+            "ariaDisabled": null,
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-general-success",
+      "rawSha256": "225cc27495cd96df31def873db34c6453b14fa5e22e0c1b2f6367fac3264b576",
+      "phase": "final",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 353.8515625,
+          "y": 296.078125,
+          "width": 76,
+          "height": 38,
+          "top": 296.078125,
+          "right": 429.8515625,
+          "bottom": 334.078125,
+          "left": 353.8515625
+        },
+        "insideDrawer": false,
+        "name": "",
+        "type": "number",
+        "label": "Check news everysongs",
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-library-cold-held",
+      "rawSha256": "d13b63925ca77a6e4a4741b4dfa1a686a8f6ec9505a6cfeb4898ed0481a08637",
+      "phase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 856.3515625,
+          "y": 569.078125,
+          "width": 85.6484375,
+          "height": 34,
+          "top": 569.078125,
+          "right": 942,
+          "bottom": 603.078125,
+          "left": 856.3515625
+        },
+        "insideDrawer": false,
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [
+        "libraries"
+      ],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [
+        {
+          "error": "libraries unavailable.",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-library-success",
+      "rawSha256": "babd79a67435deb98f7638a9667aac40bf98815be3ad8b4f3c51c2d5e2923ebc",
+      "phase": "final",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 240,
+          "y": 533.984375,
+          "width": 16,
+          "height": 16,
+          "top": 533.984375,
+          "right": 256,
+          "bottom": 549.984375,
+          "left": 240
+        },
+        "insideDrawer": false,
+        "name": "",
+        "type": "checkbox",
+        "label": "Archive music",
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-list-cold-held-repeat",
+      "rawSha256": "1d911737a6ad37599009d6f27ea0abe7a99a6786948a6127f0f68f6a7a1f31c6",
+      "phase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1148.3515625,
+          "y": 147,
+          "width": 85.6484375,
+          "height": 34,
+          "top": 147,
+          "right": 1234,
+          "bottom": 181,
+          "left": 1148.3515625
+        },
+        "insideDrawer": false,
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [
+        "playlists"
+      ],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [
+        {
+          "error": "playlists unavailable.",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": [],
+      "playlistReadModes": [
+        "fail",
+        "fail",
+        "hold"
+      ]
+    },
+    {
+      "name": "final-list-tab-takeover",
+      "rawSha256": "015447044500026db6da4ed332e446b9ceb9b6b0070335e6dddd6823bcfdb1c0",
+      "phase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 537.9921875,
+          "y": 630.5,
+          "width": 32,
+          "height": 32,
+          "top": 630.5,
+          "right": 569.9921875,
+          "bottom": 662.5,
+          "left": 537.9921875
+        },
+        "insideDrawer": false,
+        "name": "Shuffle",
+        "type": null,
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-modal-before-close",
+      "rawSha256": "05590cfda3ad28d1e46da097da514f234b5228ce2860dcb9678d6d269b39870f",
+      "phase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 731.3515625,
+          "y": 461.1953125,
+          "width": 85.6484375,
+          "height": 34,
+          "top": 461.1953125,
+          "right": 817,
+          "bottom": 495.1953125,
+          "left": 731.3515625
+        },
+        "insideDrawer": false,
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [
+        "playlists"
+      ],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": "Add song to playlist",
+      "overlays": [
+        {
+          "tag": "DIALOG",
+          "name": "Add song to playlist"
+        }
+      ],
+      "notices": [
+        {
+          "error": "playlists unavailable.",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-modal-close-settled",
+      "rawSha256": "0cf75a491e2622cdd385059f9a86aea39b4d314d156a6518f480df5f07aaee33",
+      "phase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 767.453125,
+          "y": 551,
+          "width": 108.421875,
+          "height": 32,
+          "top": 551,
+          "right": 875.875,
+          "bottom": 583,
+          "left": 767.453125
+        },
+        "insideDrawer": false,
+        "name": "Add to playlist",
+        "type": null,
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-modal-closed-held",
+      "rawSha256": "fc64ca0ba3d5e8c969374b53445e2daefe4b0131d9e2428dacb732491a711f86",
+      "phase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 767.453125,
+          "y": 551,
+          "width": 108.421875,
+          "height": 32,
+          "top": 551,
+          "right": 875.875,
+          "bottom": 583,
+          "left": 767.453125
+        },
+        "insideDrawer": false,
+        "name": "Add to playlist",
+        "type": null,
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [
+        "playlists"
+      ],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-modal-held",
+      "rawSha256": "0ee31b382b66f650a5670cceefd9a6c13b37c3432b2c60e38a8e172067254f1d",
+      "phase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 731.3515625,
+          "y": 461.1953125,
+          "width": 85.6484375,
+          "height": 34,
+          "top": 461.1953125,
+          "right": 817,
+          "bottom": 495.1953125,
+          "left": 731.3515625
+        },
+        "insideDrawer": false,
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [
+        "playlists"
+      ],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": "Add song to playlist",
+      "overlays": [
+        {
+          "tag": "DIALOG",
+          "name": "Add song to playlist"
+        }
+      ],
+      "notices": [
+        {
+          "error": "playlists unavailable.",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        },
+        {
+          "error": "playlists unavailable.",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-modal-success",
+      "rawSha256": "1d24ef62c076535bc7b57db847591391c73260a58f2edec41b863c25088d43df",
+      "phase": "final",
+      "focus": {
+        "tag": "SELECT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 447,
+          "y": 299.8046875,
+          "width": 386,
+          "height": 38.5,
+          "top": 299.8046875,
+          "right": 833,
+          "bottom": 338.3046875,
+          "left": 447
+        },
+        "insideDrawer": false,
+        "name": "Create a new playlistFixture editableOther collection",
+        "type": null,
+        "label": "PlaylistCreate a new playlistFixture editableOther collection",
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": "Add song to playlist",
+      "overlays": [
+        {
+          "tag": "DIALOG",
+          "name": "Add song to playlist"
+        }
+      ],
+      "notices": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-popover-background-cold-body",
+      "rawSha256": "945fbbda9c42632104093b9602c55055c028cc7df3693e9e2bf1b6b4e7ba2606",
+      "phase": "final",
+      "focus": {
+        "tag": "BODY",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "top": 0,
+          "right": 1280,
+          "bottom": 720,
+          "left": 0
+        },
+        "insideDrawer": false,
+        "type": null,
+        "role": null,
+        "bodyTextOmitted": true
+      },
+      "input": "keyboard",
+      "heldReads": [
+        "getLocalState"
+      ],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [
+        {
+          "tag": "DIV",
+          "name": "DJ controls"
+        }
+      ],
+      "notices": [
+        {
+          "error": "Your previous listening session could not be restored.",
+          "button": null
+        }
+      ],
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-popover-explicit-failed",
+      "rawSha256": "37aa5def16447403aa186451cdc609d607cbe345528575b534e3ef8d2b4db107",
+      "phase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 950.265625,
+          "y": 523.5625,
+          "width": 80.7265625,
+          "height": 34,
+          "top": 523.5625,
+          "right": 1030.9921875,
+          "bottom": 557.5625,
+          "left": 950.265625
+        },
+        "insideDrawer": false,
+        "name": "Try again",
+        "type": "button",
+        "role": null
+      },
+      "input": "pointer",
+      "heldReads": [],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": "DJ controls",
+      "overlays": [
+        {
+          "tag": "DIV",
+          "name": "DJ controls"
+        }
+      ],
+      "notices": [
+        {
+          "error": "Your previous listening session could not be restored.",
+          "button": null
+        },
+        {
+          "error": "getLocalState unavailable.",
+          "status": "",
+          "button": {
+            "name": "Try again",
+            "disabled": false,
+            "busy": null,
+            "ariaDisabled": null,
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-popover-explicit-success",
+      "rawSha256": "a7e637d7199b0c9cfc9c3833f3a6c610ae3c91c4fe041e83e571c7ff300bd0c1",
+      "phase": "final",
+      "focus": {
+        "tag": "SELECT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 736.9921875,
+          "y": 442.46875,
+          "width": 310,
+          "height": 38.5,
+          "top": 442.46875,
+          "right": 1046.9921875,
+          "bottom": 480.96875,
+          "left": 736.9921875
+        },
+        "insideDrawer": false,
+        "name": "Choose a news profileMy room",
+        "type": null,
+        "label": "News profile",
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": "DJ controls",
+      "overlays": [
+        {
+          "tag": "DIV",
+          "name": "DJ controls"
+        }
+      ],
+      "notices": [
+        {
+          "error": "Your previous listening session could not be restored.",
+          "button": null
+        }
+      ],
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-preview-modal-held",
+      "rawSha256": "37936620ee6bc2187f9c200cdc968b1d8d39f3f94a4e81c0d03b14336f5c22a7",
+      "phase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 795.3515625,
+          "y": 638.46875,
+          "width": 85.6484375,
+          "height": 34,
+          "top": 638.46875,
+          "right": 881,
+          "bottom": 672.46875,
+          "left": 795.3515625
+        },
+        "insideDrawer": false,
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [
+        "getVoicePreview"
+      ],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": "Create a DJ",
+      "overlays": [
+        {
+          "tag": "DIALOG",
+          "name": "Create a DJ"
+        }
+      ],
+      "notices": [
+        {
+          "error": "getVoicePreview unavailable.",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-preview-modal-success",
+      "rawSha256": "6f6c8d0fb02b3f10ad80f640652c97452ae38fecca0dead322c1fe519aa569c5",
+      "phase": "final",
+      "focus": {
+        "tag": "SPAN",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 465.8359375,
+          "y": 558.375,
+          "width": 107.875,
+          "height": 13,
+          "top": 558.375,
+          "right": 573.7109375,
+          "bottom": 571.375,
+          "left": 465.8359375
+        },
+        "insideDrawer": false,
+        "name": "Sarah \u00b7 voice sample",
+        "type": null,
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": "Create a DJ",
+      "overlays": [
+        {
+          "tag": "DIALOG",
+          "name": "Create a DJ"
+        }
+      ],
+      "notices": [],
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-provider-ai-held",
+      "rawSha256": "0b423aa839bab82deddd54d3845a0a096dc71b146113417496cae5271e51c7ac",
+      "phase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 656.3515625,
+          "y": 398,
+          "width": 85.6484375,
+          "height": 34,
+          "top": 398,
+          "right": 742,
+          "bottom": 432,
+          "left": 656.3515625
+        },
+        "insideDrawer": false,
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [
+        "getAiStatus"
+      ],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [
+        {
+          "error": "getAiStatus unavailable.",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        },
+        {
+          "error": "getElevenLabsStatus unavailable.",
+          "status": "",
+          "button": {
+            "name": "Try again",
+            "disabled": false,
+            "busy": null,
+            "ariaDisabled": null,
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        },
+        {
+          "error": "getTwitterStatus unavailable.",
+          "status": "",
+          "button": {
+            "name": "Try again",
+            "disabled": false,
+            "busy": null,
+            "ariaDisabled": null,
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "Checking key\u2026",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Retrying\u2026",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "Key status unavailable",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Try again",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "Key status unavailable",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            },
+            {
+              "name": "Try again",
+              "disabled": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "final-provider-ai-success",
+      "rawSha256": "22070e2aa0c553fb5c281ef944fb2a31a50fd49381a94381333168f35302a03e",
+      "phase": "final",
+      "focus": {
+        "tag": "STRONG",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 242,
+          "width": 212.3203125,
+          "height": 14.5,
+          "top": 242,
+          "right": 450.3203125,
+          "bottom": 256.5,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "OpenAI \u00b7 information and preparation",
+        "type": null,
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [
+        {
+          "error": "getElevenLabsStatus unavailable.",
+          "status": "",
+          "button": {
+            "name": "Try again",
+            "disabled": false,
+            "busy": null,
+            "ariaDisabled": null,
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        },
+        {
+          "error": "getTwitterStatus unavailable.",
+          "status": "",
+          "button": {
+            "name": "Try again",
+            "disabled": false,
+            "busy": null,
+            "ariaDisabled": null,
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "Key status unavailable",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Try again",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "Key status unavailable",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            },
+            {
+              "name": "Try again",
+              "disabled": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "final-provider-eleven-held",
+      "rawSha256": "25841d3a502a600db10fc711f18450232968b068a81e5d2041f4b69dc865e76a",
+      "phase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 656.3515625,
+          "y": 309,
+          "width": 85.6484375,
+          "height": 34,
+          "top": 309,
+          "right": 742,
+          "bottom": 343,
+          "left": 656.3515625
+        },
+        "insideDrawer": false,
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [
+        "getElevenLabsStatus"
+      ],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [
+        {
+          "error": "getElevenLabsStatus unavailable.",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        },
+        {
+          "error": "getTwitterStatus unavailable.",
+          "status": "",
+          "button": {
+            "name": "Try again",
+            "disabled": false,
+            "busy": null,
+            "ariaDisabled": null,
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "Checking key\u2026",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Retrying\u2026",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "Key status unavailable",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            },
+            {
+              "name": "Try again",
+              "disabled": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "final-provider-eleven-success",
+      "rawSha256": "c57322eadf560753a41c0ef32e3a73cf7cb7ea0fda4149227cb263f3b2ecab8b",
+      "phase": "final",
+      "focus": {
+        "tag": "STRONG",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 153,
+          "width": 106.453125,
+          "height": 14.5,
+          "top": 153,
+          "right": 344.453125,
+          "bottom": 167.5,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "ElevenLabs \u00b7 voice",
+        "type": null,
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [
+        {
+          "error": "getTwitterStatus unavailable.",
+          "status": "",
+          "button": {
+            "name": "Try again",
+            "disabled": false,
+            "busy": null,
+            "ariaDisabled": null,
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "Key status unavailable",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            },
+            {
+              "name": "Try again",
+              "disabled": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "final-provider-twitter-held",
+      "rawSha256": "06f96355b083ab4a5c6f02c2299a6a9d0f4ad760b2a5ab83ee88c3b81bc8f080",
+      "phase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 656.3515625,
+          "y": 529.796875,
+          "width": 85.6484375,
+          "height": 34,
+          "top": 529.796875,
+          "right": 742,
+          "bottom": 563.796875,
+          "left": 656.3515625
+        },
+        "insideDrawer": false,
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [
+        "getTwitterStatus"
+      ],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [
+        {
+          "error": "getTwitterStatus unavailable.",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "Checking key\u2026",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            },
+            {
+              "name": "Retrying\u2026",
+              "disabled": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "final-provider-twitter-success",
+      "rawSha256": "81f65aa9b23cb16563079a4ac708f128b3a8ed76d996eb938f5eed1db715e72a",
+      "phase": "final",
+      "focus": {
+        "tag": "STRONG",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 347,
+          "width": 147.9765625,
+          "height": 14.5,
+          "top": 347,
+          "right": 385.9765625,
+          "bottom": 361.5,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Twitter / X \u00b7 recent search",
+        "type": null,
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "final-startup-held",
+      "rawSha256": "d68228df60d387103448a8740a0d209a7e273a98e30a543122e559f7b2a77f50",
+      "phase": "final",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 693.2734375,
+          "y": 386.796875,
+          "width": 85.6484375,
+          "height": 34,
+          "top": 386.796875,
+          "right": 778.921875,
+          "bottom": 420.796875,
+          "left": 693.2734375
+        },
+        "insideDrawer": false,
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [
+        "getConnection"
+      ],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [
+        {
+          "error": "getConnection unavailable.",
+          "status": "Retrying\u2026",
+          "button": {
+            "name": "Retrying\u2026",
+            "disabled": false,
+            "busy": "true",
+            "ariaDisabled": "true",
+            "type": "button",
+            "active": false,
+            "translate": "none",
+            "insideLiveRegion": false
+          }
+        }
+      ],
+      "position": null,
+      "providerStatuses": []
+    },
+    {
+      "name": "final-startup-success",
+      "rawSha256": "a574a1f8c6b486cebd2c743c3a6830e84034220d1159cf3d12a0b87f602e7a9a",
+      "phase": "final",
+      "focus": {
+        "tag": "H1",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 48.078125,
+          "width": 118.8671875,
+          "height": 36.3984375,
+          "top": 48.078125,
+          "right": 356.8671875,
+          "bottom": 84.4765625,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "All songs",
+        "type": null,
+        "role": null
+      },
+      "input": "keyboard",
+      "heldReads": [],
+      "providerRequests": 0,
+      "serverWriteAttempts": 0,
+      "formSubmissions": 0,
+      "documentFocus": true,
+      "visibility": "visible",
+      "focusScope": null,
+      "overlays": [],
+      "notices": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "providerStatuses": []
+    }
+  ],
+  "nativeAxExcerpts": {
+    "before": "Native CUA AX relevant excerpts; unrelated siblings omitted.\nBefore Return: The focused UI element is 362 button Try again\nAfter Return: The focused UI element is 3 HTML content onmywave.fm, URL: wave-app://bundle/index.html\n",
+    "final": [
+      "Cold list: focused362 button (disabled) Retrying\u2026; after Tab/recovery focused320 Shuffle",
+      "Compound: focused78 Retrying\u2026 through both/list-only hold; focused78 Try again after list-only failure; focused74 Playlists after full recovery",
+      "Add dialog: focused147 Playlist selector after recovery",
+      "Library: focused444 Archive music checkbox after recovery",
+      "Provider headings: native named containers agree with DOM STRONG and1px outline",
+      "General: focused119 Check news every stepper after recovery",
+      "DJ popover: focused363 News profile selector after recovery",
+      "Preview: focused392 Sarah \u00b7 voice sample within Create a DJ",
+      "Startup: focused37 All songs heading after recovery",
+      "Dialog closure: focused732 Add to playlist before and after late read completion"
+    ]
+  },
+  "remainingObservation": {
+    "case": "final-popover-background-cold-body",
+    "observed": "During a cold background status refresh in the open DJ popover, two native Tab steps end at BODY while the retry disappears, with no explicit retry in flight. The intermediate focused node between those steps was not captured; exact removal trigger remains unproved.",
+    "next": "Reproduce with a captured pre-refresh focus owner; resolve passive cold/status focus and cold detail entry under Q06. Do not promote explicit-retry evidence to those behaviors."
+  },
+  "verification": {
+    "initialBuildType": {
+      "result": "passed",
+      "session": 25770,
+      "logSha256": "66a7d7a0729d0f4ef7c479cce0545755cce4102c50c84800c27bbc88a0b8c43d"
+    },
+    "initialEslint": {
+      "result": "passed",
+      "session": 64124
+    },
+    "finalBuildType": {
+      "result": "passed",
+      "session": 9256,
+      "logSha256": "b6ec9ca397b61b3da395d91c1c20bb38403b713c674f5eccd46b03ee7281c578"
+    },
+    "finalEslint": {
+      "result": "passed",
+      "session": 27836
+    },
+    "nativeReports": {
+      "before": {
+        "sha256": "fe2dda377dad3271a472db4ea18a8a6c47958e23aef3463dd83bfe9d044c153f",
+        "result": "observed",
+        "rendererErrors": 0
+      },
+      "after-list": {
+        "sha256": "3855d2dc5332cb6c12c2a6f0f0238071de48dbb082bb2cb625e86597c4d00c3e",
+        "result": "observed",
+        "rendererErrors": 0
+      },
+      "final-list": {
+        "sha256": "67e6e96cbb42e336312a25b553e533a22c7012c38497a8cea9c8eed2933e5f47",
+        "result": "observed",
+        "rendererErrors": 0
+      },
+      "final-settings": {
+        "sha256": "54740f03c76b9a1fb406809f81c88ed9b3d366c537449598a4d204da2de88023",
+        "result": "observed",
+        "rendererErrors": 0
+      },
+      "final-overlays": {
+        "sha256": "5cb989e87151b41106150ed0269f0631f95aa8174b8aff49b2d9be7ccff16b0e",
+        "result": "observed",
+        "rendererErrors": 0
+      },
+      "final-startup": {
+        "sha256": "805cf51029f7b6c3788863857b0e61132c7ed555b80df25b17237ed6de968be2",
+        "result": "observed",
+        "rendererErrors": 0
+      }
+    },
+    "cleanup": "All6 observer phases exit0; owned server94814 exact-command verified and stopped, session67554 exits143.",
+    "limits": [
+      "First AddPlaylist opening used fresh30s cache, so no failing-read claim for that opening; reopening after staleness supplies the modal case.",
+      "One native element ID became invalid during background refresh; no action occurred. A fresh AX lookup supplies the later explicit popover failure/success.",
+      "Pointer-origin states may lack a keyboard ring; the record labels them.",
+      "New-overlay/hidden-window takeover and other owner/paging permutations remain source-reviewed or scoped prior evidence, not new exhaustive native tests."
+    ],
+    "notRun": [
+      "unit",
+      "release/package/sign/notarize/publish",
+      "VoiceOver",
+      "listener",
+      "live providers",
+      "deferred viewport/zoom"
+    ],
+    "artifactWhitespace": "Initial staged check exposed CRLF CSV endings; commit command continued because the shell sequence did not gate it. Follow-up commit normalizes only CSV line endings, updates its hash and preserves parsed rows; full branch whitespace is checked before push."
+  },
+  "sourceHashes": {
+    "src/renderer/App.tsx": "0ee1e6d44f3549e5c4bafd6244c3bf4e3c619c30674f9d2e186f7b97f4b3f888",
+    "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": "5ba409728ae250cb95b7480c11c04020e9045521239a020148317b8646795561",
+    "src/renderer/components/Inspector/Inspector.component.tsx": "c39a90e5128fe54c4bf4fe028267a2bee6fa16d167fc7f8b485dbb827b57960a",
+    "src/renderer/components/Player/DJPopover.component.tsx": "f2d4b5baa97be682310435f47af800dcd55b5af23aab78dc7afc7b2faadd3400",
+    "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx": "8ad06c2512c2d8a20c151760268a6ea6c136da7925948f9ecbda504e28e6722d",
+    "src/renderer/components/Shared.tsx": "37dabf70d6c1c7a9e7c22e5b21d59e1e0dc55a2169602eb9d06b9d6611e7552b",
+    "src/renderer/pages/Albums/VirtualAlbums.component.tsx": "6d3a420e3cae5d7805ad264d8347f71824525fb01e59e02c67f3e6af16c980a1",
+    "src/renderer/pages/Connection/Connection.page.tsx": "6136e0df35aacd3f100e54b94b6b5f5641eda872fb6a6667cc0ecbe6882f480b",
+    "src/renderer/pages/DJs/DJs.page.tsx": "c76e0219e39e89a10d412a47eaaeea70bb866f04cd01b4cc7dfc9fdf7c4f694c",
+    "src/renderer/pages/DJs/components/VoicePreview.component.tsx": "b605c4cbb734e4a25cc073f9388c4ac6e72cc43364dc34eec2f06e70e3e285f5",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "e7c5f7f8d9bc5abb383fb339e338af9942d678aadb5d13b6b93068cea0d15807",
+    "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx": "cc527cb1e42d7b76d920d1ec218e9ac94b3059919ebbd49d8175059ca54c4bc7",
+    "src/renderer/pages/Settings/components/NewsTransitions.component.tsx": "f26ee3936e4b2a7059a4b212d8e224c6b9e6342672bd097a391c45151c379edc",
+    "src/renderer/pages/Songs/VirtualSongs.component.tsx": "9056d55e9b6712fc1df215c6648ba83b5203b9c2126d484eda7cfe5067dde1e2",
+    "src/renderer/pages/Sources/Sources.page.tsx": "ce9ad2dcb77ebe4e94a07d6245f7942fb35455d1f3753adcf9042de8ae5de529",
+    "src/renderer/pages/Stations/Stations.page.tsx": "e228eb2a8f4a4b28cf3d767b3165748efcc96ddc604ca0f2f3b4cdf4a766e3d7",
+    "src/renderer/styles.css": "ab95554b14c0401d7a3ca2f39526fa504fe3c53f1c999d1ff7494b2febba99b5",
+    "src/renderer/useRetryFocus.ts": "de8358717a386c203e3718b73369eee135f7db9b6c97fd981bf4841ad902c2c6",
+    "REQUIREMENTS.md": "270ea612b4de851d2a04c5b589c8c67fe2fdbab89b2cefc93f93e5c5ecaf617a",
+    "docs/RADIO_EXPERIENCE.md": "4105a8a041170c0b6db29a372023e77d9c98ad9bc30a38fd97c156d4a0f9d000",
+    "out/renderer/index.html": "2c30d3bebf1b980e8420cc9fd98fcd4a618bec731338691749165057a200f597",
+    "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2",
+    "out/renderer/assets/index-BwsA0ggl.js": "e6eb29fbba900a8cc8a9c1807918868e4ab03eb14dfd274e2a5b283e41425a73",
+    "out/renderer/assets/index-CxGK5EKG.css": "5835fc24436e98e6822f6c6f02415432e27932fdd903d63fa2dd4e251c35ce17"
+  },
+  "fixtureHashes": {
+    "bootstrap.mjs": "bb28f04a2b9debd9ee96acf7f1bdd893c58bc7b1c065e03744bfe17e21129051",
+    "build.mjs": "598987f14ce2fb987363b9c91108052c88c52169f52200fc275abaf241a4472d",
+    "out/main/index.js": "240381787b22b70b634044bbf0980445f9b4154cdca31b42c2d56f935594a4be",
+    "observe.cjs": "1ae0289792673675c1753f83c128562d6d7ff3de4d34e6b69bb81d212289ede7",
+    "observe-before-storage-telemetry.cjs": "23038452b0c4d7d7e8160189815792aed0b86282459568bb508d57adc53c4f1a",
+    "server.mjs": "864056c3b08b666ed1bc61a82fd18a009bf1d4e37346c24503d767a67eb6c197",
+    "audit-read-owners.cjs": "f337e84896084887aca1174fc03e2c59b96c8f2f952f44e2a5d86102950d1f7f",
+    "read-owners.json": "7594b261bbe37cd8a54961040880f6af578c3d828b69fa1171cf9c971c27a507",
+    "before-production-bundle-hashes.json": "86ef5e378ea43bdaf63e4e0748c51c3f856cab871bb094a4e3a5bf2a01e58013",
+    "intermediate-bundle-hashes.json": "1eb0cbcfe9c8cb1ccdb1d4f6aa4829ec4480061ae52cefc4fd4d7204d2541fa1"
+  },
+  "sourceTraceSupplement": [
+    {
+      "path": "REQUIREMENTS.md",
+      "line": 91,
+      "text": "An explicitly activated read-error retry keeps its action and error explanation visible even when the query resets to Loading. Show Retrying and an accessible busy state, keep keyboard focus, ignore repeat activation, and keep unrelated recovery actions usable. Failure restores Try again. After success, move focus to that screen\u2019s relevant result, control or heading only if the same retry still owns focus. Tab, pointer activity, navigation, resource changes, a new overlay or window hiding cancel this focus handoff while the read continues. A retry inside a dialog or popover stays within that same still-open overlay. Initial loads and background refreshes do not arm a focus handoff. A compound playlist refresh stays busy through both its detail and playlist-list reads; a failure in either keeps an actionable retry. Changing the search or resource leaves the obsolete retry behind and keeps the new resource's retry usable. Retry starts only the stated read operation and cannot submit a form. Existing page-specific focus handoffs still apply when recovery removes an error.",
+      "sha256": "270ea612b4de851d2a04c5b589c8c67fe2fdbab89b2cefc93f93e5c5ecaf617a",
+      "checks": [
+        "Q06",
+        "Q08",
+        "Q07"
+      ],
+      "historicalMap": "Prior source CSV retains its dated text/hashes."
+    },
+    {
+      "path": "docs/RADIO_EXPERIENCE.md",
+      "line": 102,
+      "text": "| R12 | As a keyboard user, I can reach the radio controls | Desktop window of at least 1280\u00d7720 at normal zoom; I use keyboard navigation | Open player DJ controls, song actions and filters, tab through actions, dismiss; manage sources/DJs/keys and return to setup | Controls remain visible/reachable; reviewed-history expansion names its next batch size and moves keyboard focus to the first new title without opening its source, including after the expansion button disappears; song rows and their focused child controls stay clear of the sticky heading, selection toolbar, player and changing notices, with one move per arrow press including quick repeats; pointer selection and passive updates do not reveal an old row or take focus from an overlay; an explicit read-error retry retains its explanation and focused busy action through Loading, blocks repeat activation and leaves sibling recovery usable; failure restores Try again, success moves to that screen\u2019s relevant result/control/heading only while the retry still owns focus, and changing search/resource keeps its new retry usable; navigation, Tab, pointer activity, another overlay or window hiding prevent a late focus return; in-dialog/popover recovery stays inside its original open overlay and background reads do not move focus; held pointer or Space presses have visible feedback without obscuring keyboard focus, while disabled buttons stay inactive; opening a playlist-name, source-name or new-room-name form accepts typing immediately in its name field, and returning to a new-playlist destination focuses its newly shown name; later updates leave focus where I put it; confirmations/help start on a safe target; dialogs restore their opener or the page heading if it disappears; management returns to the relevant setup control with the draft intact; readable text and no horizontal overflow; essential player controls and setup Save remain usable at the current desktop baseline; General DJ playback/transition drafts, pending saves and failures survive music/Settings navigation and music-account changes as device-local preferences; explicit retry retains the failed values, each form blocks its own duplicate save, and a delayed save cannot reverse a newer DJ-off choice, profile selection or independent preferences |",
+      "sha256": "4105a8a041170c0b6db29a372023e77d9c98ad9bc30a38fd97c156d4a0f9d000",
+      "checks": [
+        "Q06",
+        "Q08",
+        "Q07"
+      ],
+      "historicalMap": "Prior source CSV retains its dated text/hashes."
+    }
+  ],
+  "acceptance": {
+    "rows": 191,
+    "active": 189,
+    "deferred": 2,
+    "remaining": 27,
+    "listenerRemaining": 14,
+    "otherRemaining": 13,
+    "statusChanges": [],
+    "Q06": "Review; scoped explicit-retry evidence does not establish all-control or passive/route focus acceptance.",
+    "goal": "active; no percentage or usability claim"
+  }
+}
