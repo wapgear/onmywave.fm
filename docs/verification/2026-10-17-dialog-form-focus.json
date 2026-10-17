@@ -1,0 +1,191 @@
+{
+  "date": "2026-10-17",
+  "sourceCommit": "ff6b79aef1333ee1d37c0de0311bcd34a410048c",
+  "scope": [
+    "Q06 partial"
+  ],
+  "result": "passed within recorded scope",
+  "before": {
+    "cases": [
+      {
+        "name": "new playlist",
+        "focused": false,
+        "autofocusAttribute": false,
+        "activeTag": "BUTTON",
+        "activeLabel": "Close dialog",
+        "initialValue": "",
+        "afterTyping": ""
+      },
+      {
+        "name": "new profile",
+        "focused": false,
+        "autofocusAttribute": false,
+        "activeTag": "BUTTON",
+        "activeLabel": "Close dialog",
+        "initialValue": "",
+        "afterTyping": ""
+      },
+      {
+        "name": "new source",
+        "focused": false,
+        "autofocusAttribute": false,
+        "activeTag": "BUTTON",
+        "activeLabel": "Close dialog",
+        "initialValue": "",
+        "afterTyping": ""
+      }
+    ]
+  },
+  "productionChange": "Dialog opens in a layout effect, then focuses an explicit stable initialFocusRef for the four typing-first form sites. Opener is captured before descendant commit-time autofocus. Native fallback and AddPlaylist conditional autoFocus remain.",
+  "decision": {
+    "independentProposals": {
+      "Steve": "Explicit marker and one-time layout effect; precommit opener; inert title fallback.",
+      "Elena": "Explicit initialFocusRef, native safe Close fallback, precommit opener."
+    },
+    "challenge": {
+      "Steve": "Accepts explicit ref and native Close; withdraws title fallback without demonstrated defect.",
+      "Elena": "Supports marker/layout effect and accepts title fallback with extra-Tab reservation."
+    },
+    "Morgan": "Use explicit ref plus layout effect, preserve native Close fallback. Explicit intent and proven behavior fix avoid an unverified change in confirmation/help semantics.",
+    "implementation": "Elena, five renderer files",
+    "review": "Steve, no actionable finding; native verification owned by root"
+  },
+  "native": {
+    "cases": [
+      {
+        "name": "New playlist",
+        "initialFieldFocused": true,
+        "keyboardTyping": true,
+        "tabInside": true,
+        "close": "Escape",
+        "returnToTrigger": true
+      },
+      {
+        "name": "Rename playlist",
+        "initialFieldFocused": true,
+        "keyboardTyping": true,
+        "tabInside": true,
+        "close": "Close dialog",
+        "returnToTrigger": true
+      },
+      {
+        "name": "Add selected song",
+        "initialFieldFocused": true,
+        "keyboardTyping": true,
+        "tabInside": true,
+        "close": "backdrop",
+        "returnToTrigger": true
+      },
+      {
+        "name": "Add existing-to-new destination",
+        "dynamicNameFocused": true,
+        "keyboardTyping": true,
+        "noLaterRefocus": true
+      },
+      {
+        "name": "Save new listening room",
+        "initialFieldFocused": true,
+        "keyboardTyping": true,
+        "tabInside": true,
+        "close": "Escape",
+        "returnToTrigger": true
+      },
+      {
+        "name": "Help",
+        "safeCloseFocused": true,
+        "returnToTrigger": true
+      },
+      {
+        "name": "Add source",
+        "initialFieldFocused": true,
+        "keyboardTyping": true,
+        "tabInside": true,
+        "close": "Escape",
+        "returnToTrigger": true
+      },
+      {
+        "name": "Edit source",
+        "initialFieldFocused": true,
+        "keyboardTyping": true,
+        "tabInside": true,
+        "close": "Cancel",
+        "returnToTrigger": true
+      },
+      {
+        "name": "Source type changes",
+        "noLaterRefocus": true,
+        "queryTyping": true
+      },
+      {
+        "name": "Delete confirmation",
+        "safeCloseFocused": true,
+        "EnterClosesWithoutDeletion": true,
+        "returnToTrigger": true
+      },
+      {
+        "name": "Deleted opener",
+        "headingFallback": true
+      }
+    ],
+    "errors": [],
+    "result": "passed",
+    "runtime": {
+      "electron": "43.7.0",
+      "chrome": "150.0.7871.250",
+      "platform": "darwin",
+      "arch": "arm64"
+    }
+  },
+  "baseline": {
+    "contentSize": [
+      1280,
+      720
+    ],
+    "zoomFactor": 1,
+    "audioMuted": true,
+    "data": "Disposable local dummy account/source/news/catalog. Shared provider keys disabled, nonlocal requests blocked or substituted; scheduler stopped after ready. Production preload/renderer; main built from same current sources with isolated seed/network hooks.",
+    "screenshot": "2026-10-17-dialog-form-focus.png",
+    "screenshotReviewed": true
+  },
+  "verification": {
+    "build": "npm run build passed, including tsc --noEmit",
+    "lint": "npm run lint passed",
+    "unitTests": "not run",
+    "nativeErrors": 0,
+    "fixtureCorrections": [
+      "Selected the first currently rendered track rather than assuming ascending catalog order.",
+      "Focused native selects before changing their values.",
+      "Opened the News Settings tab before opening its collapsed manual-help section."
+    ],
+    "codeChangesAfterChecks": false
+  },
+  "limits": [
+    "Q06 remains Review: this does not prove every essential control, native assistive technology, complete focus trap traversal or OS combinations.",
+    "Only the local source-deletion path was confirmed; no live server mutation was performed.",
+    "No provider quality, audible listening or ordinary-listener comprehension claim.",
+    "No deferred size below1280\u00d7720 or enlarged-zoom check."
+  ],
+  "sourceAndArtifactSha256": {
+    "src/renderer/components/Shared.tsx": "99ec26c7b0043ff4f1d0b9c7db3b5eb7d88a06a328f2aff468cd9c9e4fe22e90",
+    "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": "ebfe4319bef020e669f96e523e8a63553731a8d1d31ea0b9674f8e311fb5eede",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "8f65bef66a76da3a056859c144275e048e538abac8eb2e0d67dd845a3f86a958",
+    "src/renderer/pages/Sources/Sources.page.tsx": "847de7b4bccaaed00a6ccb735a15051676646073382db8a4e2862cde52afbab2",
+    "src/renderer/pages/Stations/Stations.page.tsx": "13389317744d7d717d412967f91ef4ef906ee0e9b55d9fec25d18a53ebe1ec5b",
+    "out/main/index.js": "526face554d7c70d9393eef2180cebba54efd984c85fe00bf744f86a1ddece01",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/assets/index-DNamR8PR.js": "bf4d3f01a7cc3b3195f5bbdc2fa7a6c914267fea45c9075c8563e3561122d904"
+  },
+  "fixtureSha256": {
+    "build.mjs": "b49dcba20e629609b0cca90d5018c106c6e347cdaf14eabae22438c03fbe013f",
+    "bootstrap.mjs": "7e4a8ea2b41b06c1192aca346dab3b42725a776c1328ac6f002fa6da034cb596",
+    "server.mjs": "b246149fa6db7a20c674202f10f2715ab2599f8bf186c9715d87dfd6f6968739",
+    "before.cjs": "a2f63159806ab187db31a1e025a1fdf4e49130dca41c57dbec37372fbccc2667",
+    "after.cjs": "3377b8a91581609978fcc8a7a5d22f74451c07a62f7cf646f753fd0c576db726"
+  },
+  "inventory": {
+    "total": 187,
+    "active": 185,
+    "deferred": 2,
+    "remainingActive": 35
+  }
+}

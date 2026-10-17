@@ -6,6 +6,7 @@ import { Dialog, ErrorNotice } from '../Shared';
 export function AddPlaylist({ songs, close, checkPlaylists }: { songs: Song[]; close: () => void; checkPlaylists: () => void }) {
   const client = useQueryClient();
   const mounted = useRef(true);
+  const nameInput = useRef<HTMLInputElement>(null);
   useLayoutEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
   const playlists = useQuery({ queryKey: ['playlists'], queryFn: async () => unwrap(await window.wave.playlists()) });
   const [destination, setDestination] = useState('new');
@@ -21,9 +22,9 @@ export function AddPlaylist({ songs, close, checkPlaylists }: { songs: Song[]; c
   const additionBlocked = destination !== 'new' && !!playlists.data?.items.find(item => item.id === destination)?.recoveryStatus;
   const blockedPlaylists = playlists.data?.items.some(item => !!item.recoveryStatus);
   const uncertain = save.error instanceof WaveError && save.error.code === 'uncertain-write';
-  return <Dialog title={`Add ${songs.length === 1 ? 'song' : `${songs.length} songs`} to playlist`} close={() => { if (!save.isPending) close(); }}><form onSubmit={event => { event.preventDefault(); if (!uncertain && !save.isPending && !additionBlocked && (destination !== 'new' || !creationBlocked)) save.mutate(); }}>
+  return <Dialog title={`Add ${songs.length === 1 ? 'song' : `${songs.length} songs`} to playlist`} close={() => { if (!save.isPending) close(); }} initialFocusRef={nameInput}><form onSubmit={event => { event.preventDefault(); if (!uncertain && !save.isPending && !additionBlocked && (destination !== 'new' || !creationBlocked)) save.mutate(); }}>
     <label>Playlist<select disabled={save.isPending || uncertain} value={destination} onChange={event => setDestination(event.target.value)}><option value="new" disabled={creationBlocked}>Create a new playlist</option>{playlists.data?.items.map(item => <option key={item.id} value={item.id} disabled={!!item.recoveryStatus}>{item.name}{item.recoveryStatus ? item.recoveryStatus === 'review' ? ' · Review needed' : ' · Editing unavailable' : ''}</option>)}</select></label>
-    {destination === 'new' && <label>Playlist name<input autoFocus required maxLength={160} disabled={save.isPending || uncertain} value={name} onChange={event => setName(event.target.value)} placeholder="A name for your collection" /></label>}
+    {destination === 'new' && <label>Playlist name<input ref={nameInput} autoFocus required maxLength={160} disabled={save.isPending || uncertain} value={name} onChange={event => setName(event.target.value)} placeholder="A name for your collection" /></label>}
     {destination !== 'new' && <label className="checkbox-label"><input type="checkbox" disabled={save.isPending || uncertain} checked={skipExisting} onChange={event => setSkipExisting(event.target.checked)} />Skip songs already in this playlist</label>}
     <p className="form-hint">Changes are saved to Jellyfin. Your account must have permission to edit the selected playlist.</p>
     {blockedPlaylists && !creation && <p className="form-hint">Some playlists need review before you can add songs. <button type="button" className="room-link" onClick={checkPlaylists}>Review playlists</button></p>}

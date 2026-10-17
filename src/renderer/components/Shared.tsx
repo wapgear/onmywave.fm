@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
+import { useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { AlertCircle, Music2, X } from 'lucide-react';
 
 export const errorMessage = (error: unknown) => error instanceof Error ? error.message : 'Something went wrong. Please try again.';
@@ -16,22 +16,26 @@ function ArtworkImage({ url, name, className = '' }: { url?: string; name: strin
   const [failed, setFailed] = useState(false);
   return url && !failed ? <img className={`artwork ${className}`} src={url} alt={name} loading="lazy" onError={() => setFailed(true)} /> : <div className={`artwork artwork-fallback ${className}`} role="img" aria-label={`No artwork for ${name}`}><Music2 size={24} strokeWidth={1.4} /></div>;
 }
-export function Dialog({ title, children, close, wide = false }: { title: string; children: ReactNode; close: () => void; wide?: boolean }) {
+export function Dialog({ title, children, close, wide = false, initialFocusRef }: { title: string; children: ReactNode; close: () => void; wide?: boolean; initialFocusRef?: { readonly current: HTMLElement | null } }) {
   const ref = useRef<HTMLDialogElement>(null);
   const titleId = useId();
-  useEffect(() => {
+  const opener = useRef<HTMLElement | null>(null);
+  if (opener.current === null) opener.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+  useLayoutEffect(() => {
     const node = ref.current;
-    const opener = document.activeElement instanceof HTMLElement ? document.activeElement : null;
-    node?.showModal();
+    if (!node) return;
+    node.showModal();
+    const initialFocus = initialFocusRef?.current;
+    if (initialFocus && node.contains(initialFocus) && !initialFocus.matches(':disabled')) initialFocus.focus({ preventScroll: true });
     return () => {
       node?.close();
       requestAnimationFrame(() => {
         if (document.querySelector('dialog[open]')) return;
-        const target = opener?.isConnected && opener !== document.body && !opener.matches(':disabled') ? opener : Array.from(document.querySelectorAll<HTMLElement>('.page-heading h1')).at(-1);
+        const target = opener.current?.isConnected && opener.current !== document.body && !opener.current.matches(':disabled') ? opener.current : Array.from(document.querySelectorAll<HTMLElement>('.page-heading h1')).at(-1);
         target?.focus({ preventScroll: true });
       });
     };
-  }, []);
+  }, [initialFocusRef]);
   return <dialog ref={ref} aria-labelledby={titleId} className={wide ? 'modal modal-wide' : 'modal'} onCancel={(event) => { event.preventDefault(); close(); }} onClick={(event) => { if (event.target !== event.currentTarget) return; const rect = event.currentTarget.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) close(); }}><div className="modal-heading"><h2 id={titleId}>{title}</h2><button className="icon-button" onClick={close} aria-label="Close dialog"><X size={20} /></button></div>{children}</dialog>;
 }
 export function PageHeading({ title, subtitle, children }: { title: string; subtitle?: string; children?: ReactNode }) {
