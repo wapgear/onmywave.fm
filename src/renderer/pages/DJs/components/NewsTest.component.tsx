@@ -128,14 +128,14 @@ export function NewsTest({ dj, hasFeeds, saveDraft, setBusy }: {
       <p className="form-hint">The key is stored through macOS protected storage when available and never shown after saving.</p>
       {ai.data?.sessionOnly && <p className="form-hint">Protected storage is unavailable. Re-enter the key after quitting the app.</p>}
       {ai.data?.configured && <button className="text-button" disabled={keySave.isPending || busy} onClick={() => keySave.mutate(null)}>Remove saved key</button>}
-      <ErrorNotice error={ai.error} retry={() => void ai.refetch()} /><ErrorNotice error={keySave.error} />
+      <ErrorNotice error={ai.error} retrying={ai.isFetching} retry={() => ai.refetch()} /><ErrorNotice error={keySave.error} />
     </div>
     {usesEleven && <div className="ai-key-settings"><div className="key-status"><KeyRound size={17} /><span>{eleven.isPending ? 'Checking ElevenLabs key…' : eleven.data?.configured ? 'ElevenLabs key configured' : 'ElevenLabs key required'}</span>{eleven.data?.configured && <span className="pill">{eleven.data.sessionOnly ? 'This session only' : 'Protected storage'}</span>}</div>
       <label>ElevenLabs API key<div className="key-input-row"><input type="password" autoComplete="off" spellCheck={false} value={elevenKey} placeholder={eleven.data?.configured ? 'Enter a replacement ElevenLabs key' : 'Enter your ElevenLabs API key'} onChange={event => { setElevenKey(event.target.value); elevenKeySave.reset(); }} /><button disabled={!elevenKey.trim() || elevenKeySave.isPending || busy} onClick={() => elevenKeySave.mutate(elevenKey.trim())}>{elevenKeySave.isPending ? 'Saving…' : 'Save ElevenLabs key'}</button></div></label>
       <p className="form-hint">Stored separately using macOS protected storage. Your key stays in the app's main process after saving. An OpenAI key above is also needed to write the story.</p>
       {eleven.data?.sessionOnly && <p className="form-hint">Protected storage is unavailable. Re-enter the ElevenLabs key after quitting the app.</p>}
       {eleven.data?.configured && <button className="text-button" disabled={elevenKeySave.isPending || busy} onClick={() => elevenKeySave.mutate(null)}>Remove saved ElevenLabs key</button>}
-      <ErrorNotice error={eleven.error} retry={() => void eleven.refetch()} /><ErrorNotice error={elevenKeySave.error} />
+      <ErrorNotice error={eleven.error} retrying={eleven.isFetching} retry={() => eleven.refetch()} /><ErrorNotice error={elevenKeySave.error} />
     </div>}
     <p className="news-data-disclosure">Generate preview sends relevant feed text, news interests, DJ instructions, and the current song's title, artists, album, genres, and tags to OpenAI. The DJ uses that metadata and your music preferences to follow the music's mood. {usesEleven && ' The generated script and delivery tags are then sent to ElevenLabs to synthesize speech with Eleven v4.'} This uses your selected providers' API accounts. Saving settings alone sends nothing to either provider.</p>
     {!recoveryReady && <p className="notice">News data is unavailable while recovering. You can keep listening to music; generation and DJ scheduling are paused.</p>}

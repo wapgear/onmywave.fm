@@ -25,7 +25,7 @@ export function DJPlaybackSettings() {
     <h2 id="dj-playback-title">DJ playback</h2>
     <p className="settings-description">Choose how often the DJ checks saved news and how its voice plays.</p>
     {!recoveryReady && <p className="notice">DJ playback settings are unavailable until news data recovery completes. Existing music playback remains available.</p>}
-    <ErrorNotice error={state.error} retry={() => void state.refetch()} />
+    <ErrorNotice error={state.error} retrying={state.isFetching} retry={() => state.refetch()} />
     {state.isPending && <p role="status">Loading DJ schedule…</p>}
     <form onSubmit={event => { event.preventDefault(); if (!save.isPending) save.mutate(); }}>
       <fieldset disabled={!recoveryReady || !state.data || save.isPending}>

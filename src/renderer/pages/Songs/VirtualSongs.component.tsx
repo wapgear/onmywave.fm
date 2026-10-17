@@ -67,11 +67,11 @@ export function VirtualSongs({ total, hasNext, fetching, nextError, loadNext, re
   }
   function retryNextPage() {
     const button = retryFocus.retryRef.current;
-    if (document.activeElement !== button) { void loadNext(); return; }
+    if (document.activeElement !== button) return loadNext();
     const startIndex = table.rows.length;
     const token = ++recoveryToken.current;
     setRecoveryIndex(startIndex);
-    void retryFocus.retry(() => {
+    return retryFocus.retry(() => {
       const request = loadNext();
       void request.then(result => { if (result.isError && recoveryToken.current === token) setRecoveryIndex(null); }, () => { if (recoveryToken.current === token) setRecoveryIndex(null); });
       return request;
@@ -95,6 +95,6 @@ export function VirtualSongs({ total, hasNext, fetching, nextError, loadNext, re
     if (row) setFocusedKey(row.dataset.trackKey ?? null);
   }} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocusedKey(null); }}>
     <TrackTable {...table} rowWindow={{ indices: visible.map(row => row.index), rowHeight: ROW_HEIGHT, focusRow }} />
-    <div className="song-load-status"><span ref={status} tabIndex={-1}>{table.rows.length.toLocaleString()} of {total.toLocaleString()} songs loaded</span>{fetching && <span role="status">Loading songs…</span>}{nextError ? <ErrorNotice error={nextError} retryRef={retryFocus.retryRef} retry={retryNextPage} /> : hasNext && !fetching && <button onClick={() => void loadNext()}>Load more songs</button>}</div>
+    <div className="song-load-status"><span ref={status} tabIndex={-1}>{table.rows.length.toLocaleString()} of {total.toLocaleString()} songs loaded</span>{fetching && <span role="status">Loading songs…</span>}{nextError ? <ErrorNotice error={nextError} retryRef={retryFocus.retryRef} retrying={fetching} retry={retryNextPage} /> : hasNext && !fetching && <button onClick={() => void loadNext()}>Load more songs</button>}</div>
   </div>;
 }

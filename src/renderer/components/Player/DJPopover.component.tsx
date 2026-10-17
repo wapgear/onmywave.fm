@@ -98,7 +98,7 @@ export function DJPopover({ openRoom, openSettings }: { openRoom: () => void; op
       </section>
       <section><h3>Quick configuration</h3><label className="dj-take-label" htmlFor={`${id}-room`}>News profile</label><select id={`${id}-room`} value={automation.room?.id ?? ''} disabled={!recoveryReady || automation.update.isPending || !automation.state.data} onChange={event => automation.update.mutate({ roomId: event.target.value || null })}><option value="">Choose a news profile</option>{automation.rooms.map(room => <option key={room.id} value={room.id}>{room.name}</option>)}</select>
         {recoveryReady && automation.state.isPending && <p className="dj-hint" role="status">Loading news profiles…</p>}
-        {recoveryReady && <ErrorNotice error={automation.state.error} retry={() => void automation.state.refetch()} />}
+        {recoveryReady && <ErrorNotice error={automation.state.error} retrying={automation.state.isFetching} retry={() => automation.state.refetch()} />}
         {recoveryReady && automation.room ? <p className="dj-hint">{automation.state.data?.djs.find(dj => dj.id === automation.room?.room.djId)?.name ?? 'Choose a host in the News bucket'} · {automation.sources.map(value => value.name).join(', ') || 'No sources selected'}</p> : recoveryReady && automation.state.data && <p className="dj-hint">{automation.rooms.length ? 'Choose a news profile above for DJ breaks.' : 'No news profiles are available. Make a profile available in News bucket → Advanced room options.'}</p>}
         <p className="dj-hint">DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket → Settings and uses provider credits.</p>
       </section>
