@@ -13,6 +13,7 @@ export function ConfigurationTabs({ id, label = 'Configuration sections', tabs, 
     {tabs.map((tab, index) => <button key={tab.id} type="button" role="tab" id={`${id}-tab-${tab.id}`}
       aria-controls={`${id}-panel-${tab.id}`} aria-selected={value === tab.id} tabIndex={value === tab.id ? 0 : -1}
       onClick={() => onChange(tab.id)} onKeyDown={event => {
+        if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
         let next: number;
         if (event.key === 'ArrowRight') next = (index + 1) % tabs.length;
         else if (event.key === 'ArrowLeft') next = (index + tabs.length - 1) % tabs.length;

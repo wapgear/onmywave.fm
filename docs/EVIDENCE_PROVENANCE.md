@@ -43,3 +43,5 @@ The later [native shortcut/chrome record](verification/2026-10-17-native-shortcu
 
 
 The [later desktop layout record](verification/2026-10-17-layout-read-states.json) adds 118 controlled native states and an explicit freshness review of 44 earlier healthy states. Read faults, dummy accounts and long metadata are fixture inputs; no live provider, OS display-scale or listener result is implied. The narrow connection CSS fix is verified separately from the unaffected earlier read-state runs.
+
+The later [player shortcut focus record](verification/2026-10-17-player-command-focus.json) contains two native reproductions and thirteen controlled snapshots with CUA-delivered keys and read-only runtime telemetry. It uses disposable connection/storage and silent local WAV audio. It is outside the dated 90-record audit and makes no live provider, audible-quality, physical media-key, VoiceOver or listener claim.
