@@ -49,6 +49,7 @@ export function readDeviceIdentity() {
 }
 type KeyProvider = 'openai' | 'elevenlabs' | 'twitter';
 const providerKeys = new Map<KeyProvider, string | null>();
+const providerKeyRevisions = new Map<KeyProvider, number>();
 const sessionOnlyKeys = new Set<KeyProvider>();
 let keyWrites = Promise.resolve();
 export function withProviderKeys<T>(operation: () => Promise<T>): Promise<T> {
@@ -57,11 +58,14 @@ export function withProviderKeys<T>(operation: () => Promise<T>): Promise<T> {
   return next;
 }
 async function readProviderKey(provider: KeyProvider): Promise<string | null> {
+  const revision = providerKeyRevisions.get(provider);
   const shared = provider === 'twitter' ? null : await readSharedProviderKey(provider);
+  if (providerKeyRevisions.get(provider) !== revision && providerKeys.has(provider)) return providerKeys.get(provider)!;
   if (shared) { providerKeys.set(provider, shared); sessionOnlyKeys.delete(provider); return shared; }
   if (providerKeys.has(provider)) return providerKeys.get(provider)!;
   let key: string | null = null;
   try { if (safeStorage.isEncryptionAvailable()) key = safeStorage.decryptString(await readFile(location(`${provider}-key.enc`))); } catch { /* No saved key. */ }
+  if (providerKeyRevisions.get(provider) !== revision && providerKeys.has(provider)) return providerKeys.get(provider)!;
   providerKeys.set(provider, key);
   return key;
 }
@@ -83,6 +87,7 @@ function writeProviderKey(provider: KeyProvider, key: string | null) {
       providerKeys.set(provider, key);
       sessionOnlyKeys.delete(provider);
     }
+    providerKeyRevisions.set(provider, (providerKeyRevisions.get(provider) ?? 0) + 1);
     return providerKeyStatus(provider);
   });
 }
