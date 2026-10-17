@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 35 Review, 5 Dated, 2 Recorded, 115 Controlled, 18 Live, 10 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 35 Review, 1 Dated, 2 Recorded, 118 Controlled, 18 Live, 11 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -165,7 +165,7 @@ Source: REQUIREMENTS: Personal radio behavior, Settings and data; R1–R3,R8,R9,
 | R06 | Copied profiles do not prepare until made available and explicitly enabled; named profile edits stay correctly attributed. | N+S | Controlled |
 | R07 | Preparation activation rechecks saved sources, host/voice, mood and OpenAI/ElevenLabs keys; X token is required only for selected X sources. | N+S | Controlled |
 | R08 | Missing prerequisites have direct setup actions; incomplete setup and turning off remain saveable without keys. | N+S | Controlled |
-| R09 | Draft activation and saved running state remain visibly distinct and saving ordinary setup never silently enables either opt-in. | N+S | Dated |
+| R09 | Draft activation and saved running state remain visibly distinct and saving ordinary setup never silently enables either opt-in. | N+S | Controlled |
 | R10 | Pending setup writes retain locks/errors across navigation and cannot save to a newer active profile or erase newer drafts. | N+S | Controlled |
 | R11 | An identified automatic run allows future setup editing while profile switching and manual generation stay unavailable. | N+S | Controlled |
 | R12 | A run uses its reserved source/host/profile snapshot; cadence edits anchor to its start even if saving finishes after the run. | S | Controlled |
@@ -179,7 +179,7 @@ Source: REQUIREMENTS: Personal radio behavior; R3,R5,R6,R9–R11,M15.
 | --- | --- | --- | --- |
 | A01 | Preparation defaults to every 3 hours, major stories and maximum 3 automatic recordings per local day, with bounded daily scheduled checks. | N+S | Controlled |
 | A02 | Before activation, text-assessment cost without audio, provider requirements and automatic-limit scope are visible. | N+U | Review |
-| A03 | Manual text/audio and voice preview remain explicit additional paid actions outside automatic limits. | N+S | Dated |
+| A03 | Manual text/audio and voice preview remain explicit additional paid actions outside automatic limits. | N+S | Controlled |
 | A04 | Independent DJ playback never invokes generation; preparation never starts music or replaces the selected take. | N+S | Controlled |
 | A05 | Due checks require the app running/Mac awake; return from sleep/quit coalesces missed slots rather than processing a backlog. | S+O | Review |
 | A06 | Last outcome/reason, timestamp, next check and daily attempt/recording counts derive from persisted state and name the correct profile. | N+S | Controlled |
@@ -247,8 +247,8 @@ Source: REQUIREMENTS: Personal radio behavior, Per-DJ voice previews; R4,R8,M3,M
 | ID | Observable result | Proof | Status |
 | --- | --- | --- | --- |
 | D01 | Saved-DJ editor exposes name, personality, language, instructions, music preferences, exclusions and supported voice/delivery choices; full bounded editorial fields persist and reach preparation with a visible usage explanation. | N+S | Controlled |
-| D02 | Preset setup is generation-free and saving/testing a DJ never enables preparation or playback. | N+S | Dated |
-| D03 | Editor explains that the listener chooses music and playback frequency belongs to actual DJ playback settings. | N+U | Dated |
+| D02 | Preset setup is generation-free and saving/testing a DJ never enables preparation or playback. | N+S | Controlled |
+| D03 | Editor explains that the listener chooses music and playback frequency belongs to actual DJ playback settings. | N+U | External |
 | D04 | DJ defaults off/every 3 songs; natural completions count and skips do not. | N+S | Controlled |
 | D05 | Fresh matching eligible recordings wait for suitable endings; empty or unsuitable endings keep music playing. | N+S+U | External |
 | D06 | No duplicate queue advances, heard-news replay or obsolete placement occurs across pause, failure, late callbacks and interruptions. | N+S | Controlled |
@@ -433,3 +433,5 @@ C02/C05/C07/C08/C15 evidence,17 October2026: [current library save navigation](v
 B03 evidence,17 October2026: [current catalog view concurrency](verification/2026-10-17-catalog-view-concurrency.json). Fixed false library-change errors when an active view was replaced/evicted from the paging cache. Eight service cases cover shared reads, ranges, refresh, session changes, failed persistence, retry, server paging and a finite sixteen-view burst. Ten native cases cross all five sort modes/directions with combined filters, independent expected ordering and at least160 loaded rows. PRD/M5 clarify unchanged-view concurrency. Inventory:187 rows,185 active,2 Deferred;38 Review,5 Dated,2 Recorded,115 Controlled,15 Live,10 External.55 active checks remain. Live catalog/album coverage and general transient-load bounds remain separate.
 
 B01/B05/B08 evidence, 17 October 2026: [current live catalog and album actions](verification/2026-10-17-live-catalog-album-actions.json). The authorized server exposes one accessible selected root with 1,317 songs. Its complete independent per-root union matches the combined catalog, and native selection queues the exact set in order without starting playback. Table columns and available Inspector fields match server data; a current controlled sample covers genres, tags, track/disc and missing metadata/artwork. A six-track live album passes full and selected Play/Queue, individual row start, Add all and selected append. Independent server reads confirm the temporary private playlist order, and deletion is followed by verified 404 absence. Live overlapping roots remain unavailable; existing controlled overlap and current two-root paging evidence retain that distinction. Application source is unchanged. Inventory: 187 rows, 185 active, 2 Deferred; 35 Review, 5 Dated, 2 Recorded, 115 Controlled, 18 Live, 10 External. 52 active checks remain; no overall acceptance percentage is claimed.
+
+R09/A03/D02 evidence, 17 October 2026: [current radio opt-in contracts](verification/2026-10-17-radio-opt-in-contracts.json). Nine native cases cover all ten preset/gender choices without generation, saved DJ/setup preserving both opt-ins, visible unsaved activation through navigation, saved activation/limit status and explicit stop, manual text/audio at both automatic caps, explicit saved-DJ preview, request-free replay and fresh-process restoration. Main/service handlers and actual local persistence are used with substituted providers. D03 moves to External: queue/frequency guidance is visible, but its U proof remains missing. Source is unchanged. Inventory: 187 rows, 185 active, 2 Deferred; 35 Review, 1 Dated, 2 Recorded, 118 Controlled, 18 Live, 11 External. 49 active checks remain; the overall goal stays open.
