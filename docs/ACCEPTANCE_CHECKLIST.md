@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 187 rows, 185 active and 2 explicitly deferred. 28 Review, 1 Dated, 0 Recorded, 127 Controlled, 18 Live, 11 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
+Current inventory: 187 rows, 185 active and 2 explicitly deferred. 27 Review, 1 Dated, 0 Recorded, 128 Controlled, 18 Live, 11 External, 2 Deferred. These are review dispositions, not an acceptance percentage.
 
 ## Platform, scope and presentation
 
@@ -63,7 +63,7 @@ Source: REQUIREMENTS: Jellyfin connection; RADIO_EXPERIENCE: Entry and first use
 | C07 | Library saves cannot overlap account switching, sign-in or sign-out; submitted choices, pending state and save failures survive music navigation. | N+S | Controlled |
 | C08 | Expiry during a library save explains the wait and enables sign-in only after that save settles. | N+S | Controlled |
 | C09 | Older success/failure cannot replace a newer account or undo sign-out, including a held pause write, uncommitted credentials and failed sign-out. | N+S | Controlled |
-| C10 | Session-only account replacement removes older restorable credentials; restart requires sign-in. | N+S+O | Review |
+| C10 | Session-only account replacement removes older restorable credentials; restart requires sign-in. | N+S+O | Controlled |
 | C11 | Account/library snapshots and saved credentials become active together; asynchronous failure/cancellation keeps the latest committed account and choices across restart. | S+O | Controlled |
 | C12 | Offline reads preserve the session and offer explicit Retry;401 prefills server/username with empty password. | N+L | Review |
 | C13 | Same-account reauthentication retains unsaved radio/script/manual-operation state without saving or redispatch; music restores paused. | N+S | Controlled |
@@ -447,3 +447,6 @@ Q08/R10 partial evidence, 17 October 2026: [current news startup recovery](verif
 
 
 V01/V03/Q14 evidence, 17 October 2026: [current application architecture](verification/2026-10-17-app-architecture.json). Independent repository/app identities,284 static relative import boundaries, actual Vite/Electron/TanStack Query entries, five committed-result cache writes and separate editable draft owners satisfy these I-only contracts. The current production build/artifact snapshot matches PR47. README separates release packaging from routine checks, and earlier implementation notes now identify their historical scope. No application change, new UI/unit test, release action or deferred check runs. Q12/Q13 remain open. Inventory:187 rows,185 active,2 Deferred;28 Review,1 Dated,0 Recorded,127 Controlled,18 Live,11 External.40 active checks remain; the goal stays open.
+
+
+C10 evidence, 17 October 2026: [current session-only replacement](verification/2026-10-17-session-only-replacement.json). Two native journeys across six processes cover modeled protected-storage loss and actual damaged-identity fallback. A held or failed credential clear retains the original account and encrypted bytes, including restart after failure. Explicit retry accepts a distinct session-only account, removes the old protected record, shows its storage warning and decodes music. The next process requires sign-in with no automatic authentication or older-account restoration. Actual safeStorage, native UI, service/storage and disk operations are used; availability/deletion faults and Jellyfin responses are controlled. Application source/artifacts match PR47; no code or repeated build/lint change. Inventory:187 rows,185 active,2 Deferred;27 Review,1 Dated,0 Recorded,128 Controlled,18 Live,11 External.39 active checks remain; the goal stays open.
