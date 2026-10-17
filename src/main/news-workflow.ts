@@ -1,3 +1,4 @@
+import { StorageError } from './storage-error';
 import { randomUUID } from 'node:crypto';
 import type { LocalState, RoomProfile, WorkflowDraft } from '../shared/types';
 import { getLocalState, updateLocalState } from './storage';
@@ -108,6 +109,7 @@ async function processProfile(news: NewsService, profile: RoomProfile) {
     await prepareRoomNews(news, { requestId, roomId: current.id }, snapshot);
     await finishRun(current.id, requestId, 'prepared');
   } catch (error) {
+    if (error instanceof StorageError) throw error;
     const message = error instanceof ServiceError ? error.message : 'Could not prepare the news break. Check the connection and try again.';
     if (error instanceof ServiceError && error.code === 'no-news') { await finishRun(current.id, requestId, 'no-news', message); return; }
     if (error instanceof ServiceError && error.code === 'partial-coverage') { await finishRun(current.id, requestId, 'partial-coverage', message); return; }
@@ -139,7 +141,7 @@ async function tick(news: NewsService) {
   } finally { busy = false; }
 }
 
-export async function startNewsWorkflow(news: NewsService, allowed = () => true) {
+export async function startNewsWorkflow(news: NewsService, allowed = () => true, options: { immediate?: boolean; canStart?: () => boolean; onError?: (error: unknown) => void } = {}) {
   canRun = allowed;
   if (timer) return;
   const prepared = await getPreparedNews();
@@ -160,9 +162,13 @@ export async function startNewsWorkflow(news: NewsService, allowed = () => true)
     });
     return { roomProfiles: changed, ...(state.activeRoomProfileId ? { workflowDraft: changed.find(profile => profile.id === state.activeRoomProfileId)?.workflowDraft } : {}) };
   });
-  timer = setInterval(() => { void tick(news).catch(() => console.error('News workflow tick failed. Check preparation status and try again.')); }, TICK_MS);
-  void tick(news).catch(() => console.error('News workflow tick failed. Check preparation status and try again.'));
+  if (options.canStart?.() === false) return;
+  const failed = (error: unknown) => { options.onError?.(error); console.error('News workflow tick failed. Check preparation status and try again.'); };
+  timer = setInterval(() => { void tick(news).catch(failed); }, TICK_MS);
+  if (options.immediate !== false) void tick(news).catch(failed);
 }
+
+export async function checkNewsWorkflow(news: NewsService) { await tick(news); }
 
 export function stopNewsWorkflow() {
   if (timer) clearInterval(timer);

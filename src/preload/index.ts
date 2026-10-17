@@ -2,6 +2,8 @@ import { contextBridge, ipcRenderer } from 'electron';
 import type { NewsProgress, WaveApi } from '../shared/types';
 
 const api: WaveApi = {
+  getNewsRecoveryStatus: () => ipcRenderer.invoke('wave:getNewsRecoveryStatus'),
+  retryNewsRecovery: () => ipcRenderer.invoke('wave:retryNewsRecovery'),
   getConnection: () => ipcRenderer.invoke('wave:getConnection'),
   connect: (input) => ipcRenderer.invoke('wave:connect', input),
   disconnect: () => ipcRenderer.invoke('wave:disconnect'),

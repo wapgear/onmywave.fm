@@ -1,0 +1,237 @@
+{
+  "date": "2026-10-17",
+  "scope": "News startup and runtime storage recovery; partial Q08/R10 evidence. Q08 and Q10 retain broader acceptance scope.",
+  "result": "passed",
+  "baseCommit": "e16267e135879bb175c19536feda9963b858a1bc",
+  "before": {
+    "exited": true,
+    "exitCode": 0,
+    "windowOpened": false
+  },
+  "decision": {
+    "backend": "Open the music shell before independent news recovery. Typed store faults close generation, scheduler and claim gates; retry is single-flight and stale attempts settle before replacement. Publish restored interrupted-request state only after durable write.",
+    "cost": "Healthy startup retains its due-now check. After a detected failure, explicit recovery durably pauses enabled preparation before ready. Existing Resume is the only preparation reauthorization.",
+    "frontend": "One app-level live notice and focus-preserving explicit Retry, with a non-live News explanation and readiness-gated controls. Preserve already-started speaking/paused audio and completed tail; release waiting claims.",
+    "review": "Boris reviewed actual backend changes and corrections; Elena reviewed actual renderer changes and paused-speech correction. Both reported no remaining actionable blocker in their reviewed scope."
+  },
+  "nativeCases": 16,
+  "startupCases": [
+    {
+      "fault": "prepared",
+      "opened": true,
+      "musicDecoded": true,
+      "blockedNewsOperations": 3,
+      "canonicalPreserved": true,
+      "retryFocusPreserved": true,
+      "enabledPreparationPaused": true,
+      "paidCalls": 0,
+      "profiles": 2,
+      "takes": 1,
+      "attempts": 2
+    },
+    {
+      "fault": "local",
+      "opened": true,
+      "musicDecoded": true,
+      "blockedNewsOperations": 3,
+      "canonicalPreserved": true,
+      "retryFocusPreserved": true,
+      "enabledPreparationPaused": true,
+      "paidCalls": 0,
+      "profiles": 2,
+      "takes": 1,
+      "attempts": 2
+    },
+    {
+      "fault": "corrupt-prepared",
+      "opened": true,
+      "musicDecoded": true,
+      "blockedNewsOperations": 3,
+      "canonicalPreserved": true,
+      "retryFocusPreserved": true,
+      "enabledPreparationPaused": true,
+      "paidCalls": 0,
+      "profiles": 2,
+      "takes": 1,
+      "attempts": 2
+    },
+    {
+      "fault": "corrupt-local",
+      "opened": true,
+      "musicDecoded": true,
+      "blockedNewsOperations": 3,
+      "canonicalPreserved": true,
+      "retryFocusPreserved": true,
+      "enabledPreparationPaused": true,
+      "paidCalls": 0,
+      "profiles": 2,
+      "takes": 1,
+      "attempts": 2
+    },
+    {
+      "fault": "interrupted",
+      "opened": true,
+      "musicDecoded": true,
+      "blockedNewsOperations": 3,
+      "canonicalPreserved": true,
+      "retryFocusPreserved": true,
+      "enabledPreparationPaused": true,
+      "paidCalls": 0,
+      "profiles": 2,
+      "takes": 1,
+      "attempts": 2
+    }
+  ],
+  "runtimeCases": [
+    {
+      "name": "healthy startup ready without recovery notice",
+      "result": "passed"
+    },
+    {
+      "name": "actual prepared-audio permission failure closes gate while music plays",
+      "result": "passed"
+    },
+    {
+      "name": "three concurrent retries coalesce and block DJ claims",
+      "result": "passed"
+    },
+    {
+      "name": "retry during invalidated attempt waits then starts fresh attempt",
+      "result": "passed"
+    },
+    {
+      "name": "fault during claim persistence returns no take and releases claim",
+      "result": "passed"
+    },
+    {
+      "name": "provider failure stays local to preparation rather than storage recovery",
+      "result": "passed"
+    },
+    {
+      "name": "missing audio stays a local 404 without global recovery",
+      "result": "passed"
+    },
+    {
+      "name": "sign-out during recovery keeps enabled preparation paused",
+      "result": "passed"
+    },
+    {
+      "name": "healthy due-now startup still prepares exactly one recording",
+      "result": "passed"
+    }
+  ],
+  "pausedSpeechCases": [
+    {
+      "name": "automatic already-started paused speech survives storage recovery loss",
+      "result": "passed",
+      "sameRecording": true,
+      "samePosition": true,
+      "stillPaused": true
+    }
+  ],
+  "recoveryInteraction": {
+    "result": "passed",
+    "pendingFocusRetained": true,
+    "pendingActionAriaDisabled": true,
+    "actionOutsideLiveRegion": true,
+    "oneRetryOwner": true,
+    "nonLiveLocalPanel": true,
+    "failedRetryPreservesCanonical": true,
+    "navigationKeepsMusic": true,
+    "retrySuccessPreservesFocus": true,
+    "paidCalls": 0
+  },
+  "lifecycleCases": 21,
+  "verification": {
+    "productionBuildAndTypeScript": "npm run build passed",
+    "fullLint": "npm run lint passed",
+    "window": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "deferredChecksRun": false,
+    "providers": "Substituted text/speech, dummy locally encrypted keys, shared Keychain adapter disabled, non-local catalog/source network blocked. Actual Electron renderer/main/preload, disk, protocol, native music/speech decoding and OS encryption.",
+    "storageFaults": "Injected I/O failures at actual persistence boundaries, corrupt owned JSON, and actual chmod 000 prepared-audio read failure with mode restored in finally.",
+    "visual": "Inspected native recovery notice screenshot at supported baseline.",
+    "environment": {
+      "macOS": "27.2",
+      "architecture": "arm64",
+      "Electron": "43.7.0"
+    }
+  },
+  "fixtureCorrections": [
+    "Tracked real detached Audio objects through a constructor proxy rather than searching DOM audio elements.",
+    "Waited for initial navigation before fixture-only renderer reload.",
+    "Used actual Electron net.fetch for the registered media protocol because renderer fetch CSP intentionally blocks this route.",
+    "Paused-speech assertion follows the existing played-at-start delivery contract.",
+    "The isolated lifecycle harness explicitly seeds readiness because it does not run app startup; pause-write failure now asserts unavailable until explicit recovery. Native startup cases exercise the real initializer without this bypass."
+  ],
+  "limits": [
+    "Controlled storage/provider failures and this Mac only; no live provider/billing, full VoiceOver, hardware matrix, audible-quality or observed-listener claim.",
+    "If storage refuses every write, a pause cannot be made durable. Until a successful recovery writes it, process-local failure state does not promise persistence through forced termination and later external repair. Healthy next-process startup honors its previously saved opt-ins.",
+    "One-second renderer status polling can leave a short visible delay; main gates close synchronously on detected failure.",
+    "A claim invalidated during disk commit is not returned and is released; if release itself cannot persist, successful reconciliation resets the stored claim before readiness.",
+    "This closes the reproduced startup defect and its scoped runtime paths, not every Q08 loading/error/empty branch or Q10 OS/display/hardware case. Inventory dispositions remain unchanged."
+  ],
+  "inventory": {
+    "total": 187,
+    "active": 185,
+    "review": 31,
+    "dated": 1,
+    "recorded": 0,
+    "controlled": 124,
+    "live": 18,
+    "external": 11,
+    "deferred": 2,
+    "activeRemaining": 43
+  },
+  "sourceSha256": {
+    "out/main/index.js": "526face554d7c70d9393eef2180cebba54efd984c85fe00bf744f86a1ddece01",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/assets/index-CslZSoen.js": "610a778d9c91748e881cde52e372d8f2448fc3c8036e78a10ad17f8f400f1516",
+    "out/renderer/assets/index-DqhDR8yx.css": "b48358ab7ef51cf5b6d49486f8fead4a4e165741cd745a9491649fe11cf31587",
+    "src/main/index.ts": "a5d1528149631987f30b25a6e296b60bc97b950a712280bf6f584cce13b1d320",
+    "src/main/media.ts": "19252d91dd9b85a1a322f174446ebd6a34d72b77f0ab7a8a1db693d47424259e",
+    "src/main/news-workflow.ts": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+    "src/main/prepared-news.ts": "c437802be1bedd736f3a5e4de15966c319a6250a00090f4877e66b7c65a5be6b",
+    "src/main/storage-error.ts": "334c68f8564ecd79b1d39453f87b228cad575271cb90645588ea9c85f067cc9d",
+    "src/main/storage.ts": "7df3fcda71eaeb8faaa42f24c70336949fb00e494a29ecfb293c93ac61825418",
+    "src/preload/index.ts": "041f6e536c7d0c09f0dffc870c150b10affa44da0e7862de21dce8397ebacb10",
+    "src/renderer/App.tsx": "9341e01ab161fec685239fb5e2841342e85df33016326744db1ade9fe20860e1",
+    "src/renderer/NewsRecovery.styles.css": "4aa850e4684653eab4623aa2f0f622c8f01bc24c046003be5ef174b2e6a59464",
+    "src/renderer/NewsRecovery.tsx": "0041da77053a53592d90f9fb0e1bf86c7868c48bd7bd5567118df605550fb35d",
+    "src/renderer/components/Player/DJPopover.component.tsx": "661f74ca6054421a797e6c70de5f22b2437169fb4dd59dcd55b254856351b096",
+    "src/renderer/components/Player/Player.component.tsx": "3d8d1f7f1be1a1fc42f93db2dd6376f42acd6338b02991600ac7ce9aa28257f4",
+    "src/renderer/dj-playback.tsx": "14509ac179ff63c45530e74fd38f81b9cc3ce0cb08e7804f17ce1f0939304d85",
+    "src/renderer/pages/Connection/Connection.page.tsx": "1256fee7c558c4840e6b400d6990d5b5f7a7c5afcc9f1bd7fa6171e2a5007d5e",
+    "src/renderer/pages/DJs/components/NewsTest.component.tsx": "e95a07d7576b06808101081e09c74c39d396cbde2cd8bcd04ef3aeb61271909d",
+    "src/renderer/pages/DJs/components/VoicePreview.component.tsx": "deb7e7e57fc15450e5fccc52c74e0b1bbae113ad9d2574f77cb825c9087c706c",
+    "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx": "e1625bd30f4abed982787a9b09016c8440d0a1b8fbe691b255c7eba19f16cc02",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": "b75be2cedea89bd799b2cfa4d33dab3186607e57aaf7b7f7c8e43b6e5e189e53",
+    "src/renderer/pages/Stations/Stations.page.tsx": "2de48a1beddc6b79a4684fa97ec103044b73d5ea82d635221c65c610e0bb3720",
+    "src/renderer/player.tsx": "e1e24a0c3c370ebfd152b80bbcba6d1d5199e53264009eecd605c395c9c9b72b",
+    "src/shared/types.ts": "a07f8788eb73f9579d69a94c4fc6b77602b135c690cdf617b021616ce54e36ff"
+  },
+  "fixtureSha256": {
+    "/private/tmp/startup-recovery-current/build.mjs": "a2fe93abfacee31218d2cef9e6605bb11869dac925b66f961f6db4bc6a56ae10",
+    "/private/tmp/startup-recovery-current/bootstrap.mjs": "7e4a8ea2b41b06c1192aca346dab3b42725a776c1328ac6f002fa6da034cb596",
+    "/private/tmp/startup-recovery-current/server.mjs": "784af5611df41e2dfec0e62e9f3a3948d459e6d2967dadabfc583ed9f7d65530",
+    "/private/tmp/startup-recovery-current/after.cjs": "9182cc85a00848e237db0f6ada8598b97692d8b3658a6e33145080b7d63fade7",
+    "/private/tmp/startup-recovery-current/runtime.cjs": "a7c69e33129d9e98e55b8acfc44909d16280595e45d950dc92b5b0c9255b18a6",
+    "/private/tmp/startup-recovery-current/speech.cjs": "f13ddfaa12ce1f9a0bca58c1b50a228435739761e5bfc08750e8e4d661fc7bc1",
+    "/private/tmp/startup-recovery-current/ui.cjs": "c22b81f9d982a80b4c994c9bd97a57ab6fd9b3b70cf9a94b376eed88bb8aca41",
+    "/private/tmp/startup-recovery-current/before.json": "fe245c7c3f18dd8dea4272255bd133e53cd8f2d34fc500f1ced965aca546056d",
+    "/private/tmp/startup-recovery-current/after.json": "a6fbc8d08d831d03b90345cdea6a01838a8b4d40f9b63e6198b403c9c385f16b",
+    "/private/tmp/startup-recovery-current/runtime.json": "e2c1c0cf245e9ee26c59b7436618173f764000589b001451f74305fcd59cb6f4",
+    "/private/tmp/startup-recovery-current/speech.json": "ddd5b72dd5bb47ea474dabd0748775c5c81272eb821e7d7927f4a82c44e548d9",
+    "/private/tmp/startup-recovery-current/ui.json": "e5788d8fcaaff6415739bb6f48902cede00803385dbffcf6840e0873bcaf8a0f",
+    "/private/tmp/startup-recovery-current/build.log": "9a49b43b2cfdba33c43cb08d94323c90213545bc1fb3e2889429ec73e737dd3e",
+    "/private/tmp/startup-recovery-current/lint.log": "6f1680e0ff047e07a06dcf9afc079770fad3f871d47a52ee12dccaaa84366d63",
+    "/private/tmp/startup-recovery-current/lifecycle.log": "760d1c97c7a0d319cf22b519bd1c8afc5620d68f61c44a78e2db1881e932bf03",
+    "/private/tmp/startup-recovery-current/lifecycle/build.mjs": "8ca4ff4399a129797e4aff3a510d8c0266879c7d608db34f8df96a5d40f35eca",
+    "/private/tmp/startup-recovery-current/lifecycle/check.ts": "7f2829c8ef82526bea78d97aadde4cdf33fd31be079d98586c025a88e79b8f80",
+    "/private/tmp/startup-recovery-current/lifecycle/run.mjs": "c03cf49f2f74a61b81126980b8b854b535d82e2e888088f13fc4b4b9e520e4b9",
+    "/private/tmp/startup-recovery-current/out/main/index.js": "5fa3e69cdc1e88894b4b17e06a7d085008735bd9a0fdd063adc15d09140c7418"
+  }
+}

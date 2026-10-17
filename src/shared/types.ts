@@ -85,6 +85,7 @@ export type NewsBreak = NewsScript & { id: string; audioUrl: string; engine: New
 export type DJVoicePreview = { audioUrl: string | null; createdAt: string | null; available: boolean; stale: boolean; attempted: boolean };
 export type DJVoice = { id: string; name: string; description: string };
 export type DJVoiceSearch = { prompt: string; gender: 'any' | 'male' | 'female' };
+export type NewsRecoveryStatus = { phase: 'recovering' | 'ready' | 'unavailable' };
 export type AiStatus = { configured: boolean; sessionOnly: boolean };
 export type NewsProgress = { requestId: string; phase: 'feeds' | 'writing' | 'speech' | 'live-recording'; message: string; transcript?: string };
 export type PlaybackSnapshot = {
@@ -110,6 +111,8 @@ export type PreparedNewsLibrary = { preparationErrorVersion?: 1; scripts: Prepar
 export type LocalState = { preparationErrorVersion?: 1; djPlayback: DJPlaybackSettings; roomProfiles: RoomProfile[]; activeRoomProfileId: string; newsTransitions: NewsTransitionSettings; djs: DJ[]; vibe: string; playback: PlaybackSnapshot | null; playbackPreferences: Record<string, PlaybackPreferences>; sources: NewsSource[]; listeningRoom: ListeningRoom; workflowDraft: WorkflowDraft };
 export type PlaybackResource = { url: string; offsetSeconds: number; transcoded: boolean };
 export interface WaveApi {
+  getNewsRecoveryStatus(): Promise<Result<NewsRecoveryStatus>>;
+  retryNewsRecovery(): Promise<Result<NewsRecoveryStatus>>;
   getConnection(): Promise<Result<Connection | null>>;
   connect(input: { serverUrl: string; username: string; password: string }): Promise<Result<Connection>>;
   disconnect(): Promise<Result<void>>;

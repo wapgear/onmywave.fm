@@ -14,12 +14,14 @@ import { getLocalState, openAIKeyStatus, readDeviceIdentity, readConnection, rea
 import { preparePlayback, registerMedia, registerSpeechAudio, revokeMedia, revokeSpeechAudio } from './media';
 import { NewsService, validateNewsSettings } from './news';
 import { getPreparedNews, prepareNewsScript, renderNewsTake, selectNewsTake, cancelPreparedNews, cancelActivePreparedNews, isPreparedNewsActive, nextRoomNews, releasePreparedNews, markPreparedNewsPlayed, reconcilePreparedNews, submitReviewedCandidates, completeReviewedCandidates, interruptReviewedCandidates, releaseReviewedCandidates, savePreparedScript, reviewedArticleUrls } from './prepared-news';
-import { pauseNewsWorkflow, startNewsWorkflow, stopNewsWorkflow, invalidateNewsWorkflow } from './news-workflow';
+import { pauseNewsWorkflow, startNewsWorkflow, stopNewsWorkflow, invalidateNewsWorkflow, checkNewsWorkflow } from './news-workflow';
 import { isNewsTransitionSettings, normalizeNewsTransitionSettings } from '../shared/news-transitions';
 import { isWorkflowDraft, normalizeWorkflowDraft } from '../shared/workflow';
 import type { WorkflowDraft } from '../shared/workflow';
 import type { ApiError, DJ, NewsBreak, NewsProgress, PlaybackSnapshot, PlaybackPreferences, NewsSource, ListeningRoom, LocalState } from '../shared/types';
 import { defaultPlaybackPreferences, playbackPreferenceKey } from './playback-preferences';
+import { StorageError } from './storage-error';
+import type { NewsRecoveryStatus } from '../shared/types';
 
 app.setName('onmywave.fm Light');
 app.setPath('userData', join(app.getPath('appData'), 'onmywave-light'));
@@ -31,7 +33,13 @@ const directory = dirname(fileURLToPath(import.meta.url));
 let window: BrowserWindow | null = null;
 let signingOut = false;
 let preparationEpoch = 0;
-const news = new NewsService({ canGenerate: () => !signingOut && !!service.connection(), getApiKey: readOpenAIKey, getTwitterKey: readTwitterKey, getElevenApiKey: readElevenLabsKey, onProgress: value => {
+let newsRecoveryStatus: NewsRecoveryStatus = { phase: 'recovering' };
+let newsRecoveryAttempt: Promise<NewsRecoveryStatus> | null = null;
+let newsRecoveryAttemptEpoch = 0;
+let newsRecoveryEpoch = 0;
+let newsRecoveryFailed = false;
+let closing = false;
+const news = new NewsService({ canGenerate: () => !closing && newsRecoveryStatus.phase === 'ready' && !signingOut && !!service.connection(), getApiKey: readOpenAIKey, getTwitterKey: readTwitterKey, getElevenApiKey: readElevenLabsKey, onProgress: value => {
   if ((activeNews === value.requestId || isPreparedNewsActive(value.requestId)) && window && !window.isDestroyed()) window.webContents.send('wave:newsProgress', value);
 } });
 let activeNews: string | null = null;
@@ -98,14 +106,66 @@ function validatePlayback(value: unknown): asserts value is PlaybackSnapshot | n
 }
 
 
+function newsUnavailable() {
+  if (closing) return;
+  ++newsRecoveryEpoch;
+  newsRecoveryFailed = true;
+  newsRecoveryStatus = { phase: 'unavailable' };
+  ++preparationEpoch;
+  invalidateNewsWorkflow();
+  stopNewsWorkflow();
+  cancelActivePreparedNews();
+  news.cancelGeneration();
+}
+function requireNewsReady() {
+  if (newsRecoveryStatus.phase !== 'ready') throw new ServiceError('invalid', 'News data is unavailable. Retry news recovery before using news or DJ features.');
+}
+function recoverNews(): Promise<NewsRecoveryStatus> {
+  if (newsRecoveryAttempt) return newsRecoveryAttemptEpoch === newsRecoveryEpoch
+    ? newsRecoveryAttempt : newsRecoveryAttempt.then(() => recoverNews());
+  if (closing || newsRecoveryStatus.phase === 'ready') return Promise.resolve({ ...newsRecoveryStatus });
+  const epoch = newsRecoveryEpoch;
+  newsRecoveryAttemptEpoch = epoch;
+  const current = () => !closing && epoch === newsRecoveryEpoch;
+  newsRecoveryStatus = { phase: 'recovering' };
+  newsRecoveryAttempt = (async () => {
+    try {
+      await reconcilePreparedNews();
+      if (!current()) return { ...newsRecoveryStatus };
+      await getLocalState();
+      if (!current()) return { ...newsRecoveryStatus };
+      if (newsRecoveryFailed) {
+        await updateLocalState(state => {
+          const roomProfiles = state.roomProfiles.map(profile => profile.workflowDraft.newsEnabled
+            ? { ...profile, workflowDraft: { ...profile.workflowDraft, newsWorkflowPaused: true } } : profile);
+          return { roomProfiles, workflowDraft: roomProfiles.find(profile => profile.id === state.activeRoomProfileId)!.workflowDraft };
+        });
+      }
+      if (!current()) return { ...newsRecoveryStatus };
+      await startNewsWorkflow(news, () => !closing && newsRecoveryStatus.phase === 'ready' && !signingOut && !!service.connection(), { immediate: false, canStart: current, onError: newsUnavailable });
+      if (!current()) return { ...newsRecoveryStatus };
+      newsRecoveryStatus = { phase: 'ready' };
+      if (!signingOut && service.connection()) news.resumeGeneration();
+      if (!newsRecoveryFailed) void checkNewsWorkflow(news).catch(newsUnavailable);
+    } catch {
+      if (current()) newsUnavailable();
+    }
+    return { ...newsRecoveryStatus };
+  })().finally(() => { newsRecoveryAttempt = null; });
+  return newsRecoveryAttempt;
+}
+const newsOperations = new Set(['getPreparedNews', 'nextRoomNews', 'selectNewsTake', 'prepareNewsScript', 'renderNewsTake', 'prepareNewsBreak', 'prepareDJVoicePreview', 'prepareVoicePreview', 'searchDJVoices']);
+
 function registerIpc() {
   const operations: Record<string, (input: never) => unknown> = {
+    getNewsRecoveryStatus: () => ({ ...newsRecoveryStatus }),
+    retryNewsRecovery: () => recoverNews(),
     getConnection: () => service.connection(),
     connect: async (input: { serverUrl: string; username: string; password: string }) => {
       if (!isRecord(input) || !text(input.serverUrl, 2048) || !text(input.username, 256) || !text(input.password, 4096)) invalid();
       if (signingOut) throw new ServiceError('invalid', 'Wait for sign-out to finish before signing in.');
       await service.connect(input);
-      if (service.connection() && !signingOut) news.resumeGeneration();
+      if (service.connection() && !signingOut && newsRecoveryStatus.phase === 'ready') news.resumeGeneration();
       return service.connection();
     },
     disconnect: async () => {
@@ -123,7 +183,8 @@ function registerIpc() {
               ? { ...profile, workflowDraft: { ...profile.workflowDraft, newsWorkflowPaused: true, nextNewsCheckAt: undefined } } : profile);
             return { roomProfiles, workflowDraft: roomProfiles.find(profile => profile.id === state.activeRoomProfileId)!.workflowDraft };
           });
-        } catch {
+        } catch (error) {
+          if (error instanceof StorageError) newsUnavailable();
           throw new ServiceError('server', 'Automatic preparation could not be paused. You are still signed in. Try signing out again.');
         }
         try { await service.disconnect(); }
@@ -403,7 +464,10 @@ function registerIpc() {
         return { djPlayback: normalizeDJPlaybackSettings(input) };
       });
     },
-    nextRoomNews: input => nextRoomNews(input),
+    nextRoomNews: input => {
+      const epoch = newsRecoveryEpoch;
+      return nextRoomNews(input, () => !closing && newsRecoveryStatus.phase === 'ready' && epoch === newsRecoveryEpoch);
+    },
     releasePreparedNews: input => releasePreparedNews(input),
     markPreparedNewsPlayed: input => markPreparedNewsPlayed(input),
     getPreparedNews: () => getPreparedNews(),
@@ -490,8 +554,10 @@ function registerIpc() {
         if (!window || event.sender !== window.webContents || event.senderFrame !== window.webContents.mainFrame) throw new ServiceError('forbidden', 'Request denied.');
         if (input !== undefined && JSON.stringify(input).length > 8_000_000) invalid();
         if (input !== undefined && ['songs', 'albums', 'connect', 'createPlaylist', 'renamePlaylist', 'addPlaylistItems', 'removePlaylistEntries', 'movePlaylistEntry', 'preparePlayback'].includes(name) && !isRecord(input)) invalid();
+        if (newsOperations.has(name) || (name === 'saveWorkflowDraft' && isRecord(input) && isRecord(input.workflowDraft) && input.workflowDraft.newsEnabled) || (name === 'saveDJPlayback' && isRecord(input) && input.enabled)) requireNewsReady();
         return { ok: true, value: await operation(input as never) };
       } catch (error) {
+        if (error instanceof StorageError) newsUnavailable();
         const known = error instanceof ServiceError;
         const safeError: ApiError = known ? { code: error.code, message: error.message }
           : { code: 'server', message: 'The operation could not be completed. Please try again.' };
@@ -543,12 +609,11 @@ app.whenReady().then(async () => {
   registerMedia(() => {
     const current = service.exportSession();
     return current ? { ...current, id: service.connection()!.id } : null;
-  }, deviceId);
+  }, deviceId, newsUnavailable);
   registerIpc();
-  await reconcilePreparedNews();
-  await startNewsWorkflow(news, () => !signingOut && !!service.connection());
   await createWindow();
+  void recoverNews();
   app.on('activate', () => { if (!window) void createWindow(); });
 }).catch(() => { app.quit(); });
 app.on('window-all-closed', () => { if (process.platform !== 'darwin') app.quit(); });
-app.on('before-quit', () => { stopNewsWorkflow(); cancelNews(); revokeMedia(); });
+app.on('before-quit', () => { closing = true; ++newsRecoveryEpoch; stopNewsWorkflow(); cancelNews(); revokeMedia(); });

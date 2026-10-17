@@ -10,6 +10,7 @@ import { defaultWorkflowDraft, isWorkflowDraft, normalizeWorkflowDraft } from '.
 import type { LocalState, ListeningRoom, RoomProfile } from '../shared/types';
 import { readSharedProviderKey, writeSharedProviderKey } from './keychain';
 import { normalizePlaybackPreferences } from './playback-preferences';
+import { StorageError } from './storage-error';
 
 export type StoredConnection = {
   id: string; serverUrl: string; userId: string; userName: string; token: string;
@@ -161,7 +162,13 @@ export async function getLocalState(): Promise<LocalState> {
   if (!localState) {
     localStateLoading ??= (async () => {
     try {
-      const value = JSON.parse(await readFile(location('local-state.json'), 'utf8'));
+      let content: string;
+      try { content = await readFile(location('local-state.json'), 'utf8'); }
+      catch (error) { if ((error as NodeJS.ErrnoException).code === 'ENOENT') { localState = emptyState(); return; } throw error; }
+      const value = JSON.parse(content);
+      if (!value || typeof value !== 'object' || Array.isArray(value)
+        || (value.djs !== undefined && !Array.isArray(value.djs)) || (value.sources !== undefined && !Array.isArray(value.sources))
+        || (value.roomProfiles !== undefined && (!Array.isArray(value.roomProfiles) || value.roomProfiles.some((profile: unknown) => !validStoredProfile(profile))))) throw new StorageError();
       const workflow = (draft: unknown) => {
         const result = normalizeWorkflowDraft(draft);
         if (value.preparationErrorVersion !== 1) {
@@ -184,12 +191,12 @@ export async function getLocalState(): Promise<LocalState> {
       const djPlayback = normalizeDJPlaybackSettings(value.djPlayback);
       localState = synchronizeRoomProfiles({ ...base, djPlayback, roomProfiles: uniqueProfiles, activeRoomProfileId: active.id, listeningRoom: active.room, vibe: active.mood, workflowDraft: active.workflowDraft });
       localStateMigrationPending = value.preparationErrorVersion !== 1;
-    } catch { localState = emptyState(); }
+    } catch { throw new StorageError('Local settings could not be opened. Your existing settings were preserved.'); }
     })().finally(() => { localStateLoading = undefined; });
     await localStateLoading;
   }
   if (localStateMigrationPending) {
-    localStateMigration ??= atomicWrite('local-state.json', JSON.stringify(localState)).then(() => { localStateMigrationPending = false; }).finally(() => { localStateMigration = undefined; });
+    localStateMigration ??= atomicWrite('local-state.json', JSON.stringify(localState)).catch(() => { throw new StorageError('Local settings could not be saved. Your existing settings were preserved.'); }).then(() => { localStateMigrationPending = false; }).finally(() => { localStateMigration = undefined; });
     await localStateMigration;
   }
   return structuredClone(localState!);
@@ -199,7 +206,8 @@ export function updateLocalState(patch: Partial<LocalState> | ((state: LocalStat
   const next = writes.then(async () => {
     const current = await getLocalState();
     const state = synchronizeRoomProfiles({ ...current, ...(typeof patch === 'function' ? patch(current) : patch) });
-    await atomicWrite('local-state.json', JSON.stringify(state));
+    try { await atomicWrite('local-state.json', JSON.stringify(state)); }
+    catch { throw new StorageError('Local settings could not be saved. Your existing settings were preserved.'); }
     localState = state;
   });
   writes = next.catch(() => {});
