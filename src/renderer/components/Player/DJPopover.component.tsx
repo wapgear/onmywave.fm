@@ -7,6 +7,7 @@ import { unwrap } from '../../api';
 import { usePlayer } from '../../player';
 import { useDJPlayback } from '../../dj-playback';
 import { useNewsRecovery } from '../../NewsRecovery';
+import { useRetryFocus } from '../../useRetryFocus';
 import { ErrorNotice } from '../Shared';
 import './DJPopover.styles.css';
 
@@ -19,6 +20,8 @@ export function DJPopover({ openRoom, openSettings }: { openRoom: () => void; op
   const trigger = useRef<HTMLButtonElement>(null);
   const popup = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
+  const profileInput = useRef<HTMLSelectElement>(null);
+  const retryFocus = useRetryFocus({ ownerKey: `dj-controls:${open}:${recoveryReady}`, target: () => profileInput.current, canFocusSuccess: () => open && recoveryReady });
   const preparationState = useQuery({
     queryKey: ['localState'],
     queryFn: async () => unwrap(await window.wave.getLocalState()),
@@ -96,9 +99,9 @@ export function DJPopover({ openRoom, openSettings }: { openRoom: () => void; op
         {preparationRoom && editingRoom && preparationRoom.id !== editingRoom.id && <p className="dj-hint">News bucket currently shows {editingRoom.name}. Choose {preparationRoom.name} in its Setup profile menu to edit the preparation shown here.</p>}
         <button className="dj-preparation-link" onClick={() => navigate(openRoom)}>Open News bucket</button>
       </section>
-      <section><h3>Quick configuration</h3><label className="dj-take-label" htmlFor={`${id}-room`}>News profile</label><select id={`${id}-room`} value={automation.room?.id ?? ''} disabled={!recoveryReady || automation.update.isPending || !automation.state.data} onChange={event => automation.update.mutate({ roomId: event.target.value || null })}><option value="">Choose a news profile</option>{automation.rooms.map(room => <option key={room.id} value={room.id}>{room.name}</option>)}</select>
+      <section><h3>Quick configuration</h3><label className="dj-take-label" htmlFor={`${id}-room`}>News profile</label><select ref={profileInput} id={`${id}-room`} value={automation.room?.id ?? ''} disabled={!recoveryReady || automation.update.isPending || !automation.state.data} onChange={event => automation.update.mutate({ roomId: event.target.value || null })}><option value="">Choose a news profile</option>{automation.rooms.map(room => <option key={room.id} value={room.id}>{room.name}</option>)}</select>
         {recoveryReady && automation.state.isPending && <p className="dj-hint" role="status">Loading news profiles…</p>}
-        {recoveryReady && <ErrorNotice error={automation.state.error} retrying={automation.state.isFetching} retry={() => automation.state.refetch()} />}
+        {recoveryReady && <ErrorNotice error={automation.state.error} retryRef={retryFocus.retryRef} retrying={automation.state.isFetching} retry={() => retryFocus.retry(() => automation.state.refetch())} />}
         {recoveryReady && automation.room ? <p className="dj-hint">{automation.state.data?.djs.find(dj => dj.id === automation.room?.room.djId)?.name ?? 'Choose a host in the News bucket'} · {automation.sources.map(value => value.name).join(', ') || 'No sources selected'}</p> : recoveryReady && automation.state.data && <p className="dj-hint">{automation.rooms.length ? 'Choose a news profile above for DJ breaks.' : 'No news profiles are available. Make a profile available in News bucket → Advanced room options.'}</p>}
         <p className="dj-hint">DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket → Settings and uses provider credits.</p>
       </section>

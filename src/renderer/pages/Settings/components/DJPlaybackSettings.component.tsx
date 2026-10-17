@@ -1,14 +1,22 @@
+import { useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { defaultDJPlaybackSettings, type DJPlaybackSettings as Settings } from '../../../../shared/dj-playback';
 import { unwrap } from '../../../api';
 import { ErrorNotice } from '../../../components/Shared';
 import { useNewsRecovery } from '../../../NewsRecovery';
 import { useGeneralSettingsEdits } from '../SettingsEdits';
+import { useRetryFocus } from '../../../useRetryFocus';
 
 export function DJPlaybackSettings() {
   const recovery = useNewsRecovery();
   const recoveryReady = recovery.status.phase === 'ready';
   const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()), enabled: recoveryReady });
+  const intervalInput = useRef<HTMLInputElement>(null);
+  const retryFocus = useRetryFocus({
+    ownerKey: 'settings:general:dj-playback',
+    target: () => intervalInput.current,
+    canFocusSuccess: () => recoveryReady && !state.isError && !state.isFetching && !!state.data,
+  });
   const edit = useGeneralSettingsEdits().playback;
   const { draft, save } = edit;
   const settings = draft ?? state.data?.djPlayback ?? defaultDJPlaybackSettings();
@@ -17,11 +25,11 @@ export function DJPlaybackSettings() {
     <h2 id="dj-playback-title">DJ playback</h2>
     <p className="settings-description">Choose how often the DJ checks saved news and how its voice plays.</p>
     {!recoveryReady && <p className="notice">DJ playback settings are unavailable until news data recovery completes. Existing music playback remains available.</p>}
-    <ErrorNotice error={state.error} retrying={state.isFetching} retry={() => state.refetch()} />
+    <ErrorNotice error={state.error} retryRef={retryFocus.retryRef} retrying={state.isFetching} retry={() => retryFocus.retry(() => state.refetch())} />
     {state.isPending && <p role="status">Loading DJ schedule…</p>}
     <form onSubmit={event => { event.preventDefault(); if (!save.isPending) edit.submit(); }}>
       <fieldset disabled={!recoveryReady || !state.data || save.isPending}>
-        <label className="dj-song-interval">Check news every<input type="number" min={1} max={100} step={1} required value={Number.isNaN(settings.everySongs) ? '' : settings.everySongs} aria-describedby="dj-interval-help" onChange={event => change({ everySongs: event.target.value === '' ? NaN : Number(event.target.value) })} /><span>{settings.everySongs === 1 ? 'song' : 'songs'}</span></label>
+        <label className="dj-song-interval">Check news every<input ref={intervalInput} type="number" min={1} max={100} step={1} required value={Number.isNaN(settings.everySongs) ? '' : settings.everySongs} aria-describedby="dj-interval-help" onChange={event => change({ everySongs: event.target.value === '' ? NaN : Number(event.target.value) })} /><span>{settings.everySongs === 1 ? 'song' : 'songs'}</span></label>
         <p id="dj-interval-help" className="settings-footnote">Only finished songs count. Choose 1 for testing. Empty news pools are skipped without generating anything.</p>
         <label className="dj-song-interval"><input type="checkbox" checked={settings.keepOnSeek} onChange={event => change({ keepOnSeek: event.target.checked })} />Keep the DJ when seeking or rewinding</label>
         <p className="settings-footnote">Keeps the break when you seek. Speech waits for the next suitable ending and resumes where it paused.</p>

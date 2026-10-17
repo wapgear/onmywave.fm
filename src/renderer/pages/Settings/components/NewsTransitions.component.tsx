@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import type { NewsTransitionSettings } from '../../../../shared/types';
 import { defaultNewsTransitionSettings } from '../../../../shared/news-transitions';
@@ -5,6 +6,7 @@ import { unwrap } from '../../../api';
 import { ErrorNotice } from '../../../components/Shared';
 import { useGeneralSettingsEdits } from '../SettingsEdits';
 import { NewsTransitionPreview } from './NewsTransitionPreview.component';
+import { useRetryFocus } from '../../../useRetryFocus';
 import './NewsTransitions.styles.css';
 
 const presets: { id: string; name: string; settings: NewsTransitionSettings }[] = [
@@ -21,6 +23,12 @@ const fields = [
 
 export function NewsTransitions() {
   const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()) });
+  const transitionStyle = useRef<HTMLSelectElement>(null);
+  const retryFocus = useRetryFocus({
+    ownerKey: 'settings:general:news-transitions',
+    target: () => transitionStyle.current,
+    canFocusSuccess: () => !state.isError && !state.isFetching && !!state.data,
+  });
   const edit = useGeneralSettingsEdits().transitions;
   const { draft, save } = edit;
   const settings = draft ?? state.data?.newsTransitions ?? defaultNewsTransitionSettings();
@@ -29,12 +37,12 @@ export function NewsTransitions() {
   return <section className="news-transition-settings" aria-labelledby="news-transitions-title">
     <h2 id="news-transitions-title">DJ transitions</h2>
     <p className="settings-description">Give news breaks room to breathe. Saved changes apply to the next break you schedule.</p>
-    <ErrorNotice error={state.error} retrying={state.isFetching} retry={() => state.refetch()} />
+    <ErrorNotice error={state.error} retryRef={retryFocus.retryRef} retrying={state.isFetching} retry={() => retryFocus.retry(() => state.refetch())} />
     {state.isPending && <p role="status">Loading transition settings…</p>}
     <form onSubmit={event => { event.preventDefault(); if (!save.isPending) edit.submit(); }}>
       <fieldset disabled={!state.data || save.isPending}>
         <div className="news-transition-grid">
-          <label>Transition style<select value={preset?.id ?? 'custom'} onChange={event => {
+          <label>Transition style<select ref={transitionStyle} value={preset?.id ?? 'custom'} onChange={event => {
             const selected = presets.find(item => item.id === event.target.value);
             if (selected) change(selected.settings);
           }}><option value="custom" disabled>Custom</option>{presets.map(item => <option key={item.id} value={item.id}>{item.name}</option>)}</select><span className="form-hint">Start with a style, then adjust the timing below.</span></label>
