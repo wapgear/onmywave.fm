@@ -1,0 +1,148 @@
+{
+  "date": "2026-10-17",
+  "sourceCommit": "b551e051f6f33b9fb3f6b2e4772507ccf7fb91d6",
+  "scope": [
+    "V02",
+    "P01"
+  ],
+  "productionChanges": false,
+  "result": "passed",
+  "live": {
+    "cases": [
+      {
+        "kind": "existing live Jellyfin collection",
+        "result": "passed",
+        "accessibleMusicLibraries": 1,
+        "musicCatalogTotal": 1318,
+        "independentMusicLibrarySetMatches": true,
+        "nativeMusicDecoded": true,
+        "noUploadImportStep": true
+      },
+      {
+        "kind": "complete account-scoped music playlist list",
+        "result": "passed",
+        "independentPagedListMatches": true,
+        "nativeTilesMatchEveryPlaylist": true,
+        "noDuplicateTiles": true,
+        "accessiblePlaylists": 1
+      },
+      {
+        "kind": "every accessible live playlist opens its ordered track list",
+        "result": "passed",
+        "playlistsOpened": 1,
+        "totalEntriesCompared": 300,
+        "independentMetadataAndFullEntryOrderMatch": true,
+        "nativeRowsMatchEveryEntry": true,
+        "detailCounts": [
+          {
+            "entries": 300,
+            "permission": "editable"
+          }
+        ]
+      }
+    ],
+    "baseline": {
+      "width": 1280,
+      "height": 720,
+      "zoom": 1
+    },
+    "serverVersion": "12.2.0",
+    "rawPlaylistCount": 1,
+    "accessibleMusicPlaylistCount": 1,
+    "explicitNonMusicPlaylistCount": 0,
+    "playlistListSha256": "9df31cea8666d849d36386ee2fe6222934f70a99eae5e95cb9edf65f5c9aaa64",
+    "network": {
+      "reads": 59,
+      "blockedWrites": 0,
+      "blockedExternal": 0
+    },
+    "rendererErrors": 0,
+    "providerRequests": 0,
+    "serverMutations": 0,
+    "result": "passed",
+    "fatalFileAbsent": true
+  },
+  "controlled": {
+    "result": "passed",
+    "explicitVideoAndPhotoExcluded": true,
+    "untypedOlderPlaylistRemainsAccessible": true,
+    "emptyPlaylistExplained": true,
+    "firstAccountOrderMatches": true,
+    "accountSwitchClearsOldTilesAndEntries": true,
+    "secondAccountOrderMatches": true,
+    "realServerRequests": 0,
+    "providerRequests": 0
+  },
+  "method": {
+    "live": "Current native main/preload/production renderer restores the authorized protected acceptance session. Fresh app data copies only the encrypted connection and persistent device identity. Shared provider adapters return no keys; non-acceptance origins and all non-GET/HEAD app requests are blocked before dispatch.",
+    "independent": "A separate authenticated HTTP reader compares the complete paged account playlist set, each full ordered entry set and playlist metadata without using service or renderer caches. The existing accessible music-library set is also compared with server Views.",
+    "native": "All songs opens directly from the existing collection and real native music time advances. Every accessible playlist tile is checked, then each playlist is opened and every displayed title is compared with independent entries in order.",
+    "permissions": "The tested live playlist is editable. Synthetic server responses separately verify exclusion of explicit Video/Photo playlists, compatibility with an older untyped empty playlist, empty-state guidance and old-account tile/entry removal after actual UI sign-in and library selection for another account.",
+    "networkCounters": "The live reads counter counts app fetches, including media/artwork; independent comparison reads are additional. Neither path dispatches a write or provider request.",
+    "visual": "Native Playlists capture inspected at1280\u00d7720 and100% zoom."
+  },
+  "privacy": [
+    "No password, token, protected session contents, raw account/playlist/song ID or raw track list is included in this record.",
+    "No existing playlist or music file was changed. The live guard forbids writes, and independent readers only use GET.",
+    "Controlled account-switch responses use encrypted dummy credentials and no real server connection.",
+    "All Electron processes close after verification; no packaging or release action occurs."
+  ],
+  "fixtureCorrections": [
+    "The first live row-text assertion included the artist sublabel. The final assertion compares the actual title span; the product was unchanged and the final complete live run passes."
+  ],
+  "checks": {
+    "nativeLiveCases": 3,
+    "controlledNativeJourneys": 1,
+    "productionBuildTypeScriptAndFullLint": "PR47 passed; every recorded source/artifact hash in that snapshot still matches the unchanged current application, so not repeated for an evidence-only update.",
+    "unitTests": false,
+    "deferredSizeOrZoom": false
+  },
+  "limits": [
+    "One user-authorized Jellyfin12.2.0 server/account on macOS27.2 arm64/Electron43.7.0; live set contains one music library and one editable playlist with300 entries.",
+    "The live server exposes no explicit non-music playlist or read-only/unavailable permission configuration; media filtering, empty/untyped compatibility and account isolation are controlled. P05 retains its separate live permission scope.",
+    "Missing MediaType remains compatible with older server playlist responses; this does not prove arbitrary incorrectly labeled server content is music.",
+    "Muted advancing playback proves native decoding, not audible quality, codec coverage, hardware controls or observed-listener comprehension.",
+    "This is scoped V02/P01 evidence, not completeness of the entire catalog/playlist/permission contract or an overall acceptance percentage."
+  ],
+  "inventory": {
+    "total": 187,
+    "active": 185,
+    "review": 25,
+    "dated": 1,
+    "recorded": 0,
+    "controlled": 128,
+    "live": 20,
+    "external": 11,
+    "deferred": 2,
+    "activeRemaining": 37
+  },
+  "sourceSha256": {
+    "src/main/index.ts": "a5d1528149631987f30b25a6e296b60bc97b950a712280bf6f584cce13b1d320",
+    "src/main/jellyfin.ts": "4daf9866e8034ca89ffd209035b1b8795f5127082bcea0fa825182b66d103483",
+    "src/main/media.ts": "19252d91dd9b85a1a322f174446ebd6a34d72b77f0ab7a8a1db693d47424259e",
+    "src/main/storage.ts": "7df3fcda71eaeb8faaa42f24c70336949fb00e494a29ecfb293c93ac61825418",
+    "src/preload/index.ts": "041f6e536c7d0c09f0dffc870c150b10affa44da0e7862de21dce8397ebacb10",
+    "src/renderer/App.tsx": "9341e01ab161fec685239fb5e2841342e85df33016326744db1ade9fe20860e1",
+    "src/renderer/pages/Connection/Connection.page.tsx": "1256fee7c558c4840e6b400d6990d5b5f7a7c5afcc9f1bd7fa6171e2a5007d5e",
+    "src/renderer/pages/Songs/Songs.page.tsx": "79b3115960d53568bac407d5754ff0996fee44ba895b222d99b4e0fb71e3007f",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "8bea51f6cb40f8b4ca0714e8af6b344b7e0a6e40278e018935b6a0d5e7f4e721",
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "c6d1b4c4f94a8cc67f9c052526b054ad8b716fbb3ceb9f83e347946bd4ad3a63",
+    "out/main/index.js": "526face554d7c70d9393eef2180cebba54efd984c85fe00bf744f86a1ddece01",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/assets/index-DqhDR8yx.css": "b48358ab7ef51cf5b6d49486f8fead4a4e165741cd745a9491649fe11cf31587",
+    "out/renderer/assets/index-CslZSoen.js": "610a778d9c91748e881cde52e372d8f2448fc3c8036e78a10ad17f8f400f1516"
+  },
+  "fixtureSha256": {
+    "/private/tmp/live-playlist-entry-current/build.mjs": "c197efc9f8f2a86a1ca892ad95f4150656f572e9828bd154a34fb82cd762acea",
+    "/private/tmp/live-playlist-entry-current/bootstrap.mjs": "fc1b5120b332c93829fe60ca5c58ab93b1a69ba9ce112ea139b36c24f9608527",
+    "/private/tmp/live-playlist-entry-current/run.cjs": "b299c2dc45a2478264d18856312a3908a31055def5715c89af827d158385840d",
+    "/private/tmp/live-playlist-entry-current/run.log": "332ee9e4319dc5547ecd4cbaa3d867192db1b2466bac18c3e04ddd8f29b3df0f",
+    "/private/tmp/live-playlist-entry-current/result.json": "af9086c3a6da2e97c0a3dcb60b3dd43c68fd2d9a2dce0f814a7579c76744963b",
+    "/private/tmp/live-playlist-entry-current/controlled-bootstrap.mjs": "6f41fb1535e6731ed5838cb9d58b37fdfb921afb1d6141364af110280f1a387a",
+    "/private/tmp/live-playlist-entry-current/controlled.cjs": "7850e419acc9cb113d8a04382e4632d49dbdd088ac4e697df2fa1b8b91493db3",
+    "/private/tmp/live-playlist-entry-current/controlled.log": "c5132127eb581bd788cc975b1056ce2f93fe4f2a173f956fab695f6880df6c53",
+    "/private/tmp/live-playlist-entry-current/controlled.json": "3da9c5f5aa562871f7a2ab967d3188696f9496a06a94196463951e4111113181",
+    "/private/tmp/live-playlist-entry-current/out/main/index.js": "d40f3584d56132cde44723af11355e97f7818e67d58628a7f684ac2623e152c2",
+    "/private/tmp/live-playlist-entry-current/playlists.png": "c6fb20f38cc740afb93fa3bb419b24ec272412b78cb2e0f8d60ba5c74eba0114"
+  }
+}
