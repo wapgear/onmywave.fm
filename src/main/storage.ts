@@ -15,8 +15,11 @@ export type StoredConnection = {
   id: string; serverUrl: string; userId: string; userName: string; token: string;
   serverVersion: string; selectedLibraryIds: string[];
 };
-const emptyState = (): LocalState => ({ djPlayback: defaultDJPlaybackSettings(), roomProfiles: [{ enabled: true, id: 'default-room', name: 'My room', room: { djId: null, sourceIds: [] }, mood: '', workflowDraft: defaultWorkflowDraft() }], activeRoomProfileId: 'default-room', newsTransitions: defaultNewsTransitionSettings(), djs: [], vibe: '', playback: null, playbackPreferences: {}, sources: [], listeningRoom: { djId: null, sourceIds: [] }, workflowDraft: defaultWorkflowDraft() });
+const emptyState = (): LocalState => ({ preparationErrorVersion: 1, djPlayback: defaultDJPlaybackSettings(), roomProfiles: [{ enabled: true, id: 'default-room', name: 'My room', room: { djId: null, sourceIds: [] }, mood: '', workflowDraft: defaultWorkflowDraft() }], activeRoomProfileId: 'default-room', newsTransitions: defaultNewsTransitionSettings(), djs: [], vibe: '', playback: null, playbackPreferences: {}, sources: [], listeningRoom: { djId: null, sourceIds: [] }, workflowDraft: defaultWorkflowDraft() });
 let localState: LocalState | undefined;
+let localStateLoading: Promise<void> | undefined;
+let localStateMigrationPending = false;
+let localStateMigration: Promise<void> | undefined;
 let writes = Promise.resolve();
 const location = (name: string) => join(app.getPath('userData'), name);
 let deviceIdentity: Promise<{ id: string; persistent: boolean }> | undefined;
@@ -156,21 +159,38 @@ function synchronizeRoomProfiles(state: LocalState): LocalState {
 
 export async function getLocalState(): Promise<LocalState> {
   if (!localState) {
+    localStateLoading ??= (async () => {
     try {
       const value = JSON.parse(await readFile(location('local-state.json'), 'utf8'));
+      const workflow = (draft: unknown) => {
+        const result = normalizeWorkflowDraft(draft);
+        if (value.preparationErrorVersion !== 1) {
+          const message = 'Earlier preparation details are unavailable. Review the setup before retrying.';
+          if (result.newsWorkflowError) result.newsWorkflowError = message;
+          if (result.newsLastRun?.message && !['no-news', 'partial-coverage'].includes(result.newsLastRun.outcome)) result.newsLastRun.message = message;
+        }
+        return result;
+      };
       const djs: LocalState['djs'] = Array.isArray(value.djs) ? value.djs.map((dj: LocalState['djs'][number]) => ({ ...dj, news: dj.news ? { ...dj.news, speechEngine: 'elevenlabs-v4', textModel: NEWS_TEXT_MODEL } : undefined })) : [];
       const migrated = [...new Set<string>(djs.flatMap((dj: LocalState['djs'][number]) => dj.news?.feedUrls || []))].map((url, index) => ({ id: `legacy-source-${index + 1}`, name: url, url }));
       const sources = Array.isArray(value.sources) ? value.sources : migrated;
       const onlyDj = djs.length === 1 ? djs[0] : null;
-      const base: Omit<LocalState, 'roomProfiles' | 'activeRoomProfileId' | 'djPlayback'> = { newsTransitions: normalizeNewsTransitionSettings(value.newsTransitions), djs, vibe: typeof value.vibe === 'string' ? value.vibe : '', playback: value.playback ?? null, playbackPreferences: normalizePlaybackPreferences(value.playbackPreferences, value.playback ?? null), sources, workflowDraft: normalizeWorkflowDraft(value.workflowDraft),
+      const base: Omit<LocalState, 'roomProfiles' | 'activeRoomProfileId' | 'djPlayback'> = { preparationErrorVersion: 1, newsTransitions: normalizeNewsTransitionSettings(value.newsTransitions), djs, vibe: typeof value.vibe === 'string' ? value.vibe : '', playback: value.playback ?? null, playbackPreferences: normalizePlaybackPreferences(value.playbackPreferences, value.playback ?? null), sources, workflowDraft: workflow(value.workflowDraft),
         listeningRoom: value.listeningRoom && Array.isArray(value.listeningRoom.sourceIds) ? value.listeningRoom : { djId: onlyDj?.id ?? null, sourceIds: sources.filter((source: LocalState['sources'][number]) => onlyDj?.news?.feedUrls.includes(source.url)).map((source: LocalState['sources'][number]) => source.id) } };
-      const profiles: RoomProfile[] = Array.isArray(value.roomProfiles) ? value.roomProfiles.filter(validStoredProfile).slice(0, 100).map((profile: RoomProfile) => ({ ...profile, enabled: profile.enabled !== false, name: profile.name.trim(), workflowDraft: normalizeWorkflowDraft(profile.workflowDraft) })) : [];
+      const profiles: RoomProfile[] = Array.isArray(value.roomProfiles) ? value.roomProfiles.filter(validStoredProfile).slice(0, 100).map((profile: RoomProfile) => ({ ...profile, enabled: profile.enabled !== false, name: profile.name.trim(), workflowDraft: workflow(profile.workflowDraft) })) : [];
       const uniqueProfiles = profiles.filter((profile, index) => profiles.findIndex(other => other.id === profile.id) === index);
       if (!uniqueProfiles.length) uniqueProfiles.push({ enabled: true, id: 'default-room', name: 'My room', room: base.listeningRoom, mood: base.vibe, workflowDraft: base.workflowDraft });
       const active = uniqueProfiles.find(profile => profile.id === value.activeRoomProfileId) ?? uniqueProfiles[0];
       const djPlayback = normalizeDJPlaybackSettings(value.djPlayback);
       localState = synchronizeRoomProfiles({ ...base, djPlayback, roomProfiles: uniqueProfiles, activeRoomProfileId: active.id, listeningRoom: active.room, vibe: active.mood, workflowDraft: active.workflowDraft });
+      localStateMigrationPending = value.preparationErrorVersion !== 1;
     } catch { localState = emptyState(); }
+    })().finally(() => { localStateLoading = undefined; });
+    await localStateLoading;
+  }
+  if (localStateMigrationPending) {
+    localStateMigration ??= atomicWrite('local-state.json', JSON.stringify(localState)).then(() => { localStateMigrationPending = false; }).finally(() => { localStateMigration = undefined; });
+    await localStateMigration;
   }
   return structuredClone(localState!);
 }

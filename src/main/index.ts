@@ -493,9 +493,7 @@ function registerIpc() {
         return { ok: true, value: await operation(input as never) };
       } catch (error) {
         const known = error instanceof ServiceError;
-        const mediaError = isRecord(error) && ['unauthorized', 'invalid'].includes(String(error.code));
         const safeError: ApiError = known ? { code: error.code, message: error.message }
-          : mediaError ? { code: error.code as ApiError['code'], message: String(error.message) }
           : { code: 'server', message: 'The operation could not be completed. Please try again.' };
         return { ok: false, error: safeError };
       }

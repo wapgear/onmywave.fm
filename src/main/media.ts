@@ -1,5 +1,6 @@
 import { djPreviewAudio, bundledVoiceAudio } from './dj-previews';
 import { protocol } from 'electron';
+import { ServiceError } from './jellyfin';
 import { preparedAudio } from './prepared-news';
 import { randomUUID } from 'node:crypto';
 import type { PlaybackResource } from '../shared/types';
@@ -19,7 +20,7 @@ export function revokeMedia() {
 }
 
 export function registerSpeechAudio(bytes: Buffer, mime: string): string {
-  if (!bytes.length || bytes.length > 32 * 1024 * 1024 || !['audio/mpeg', 'audio/wav'].includes(mime)) throw { code: 'invalid', message: 'Speech audio is empty or exceeds the size limit.' };
+  if (!bytes.length || bytes.length > 32 * 1024 * 1024 || !['audio/mpeg', 'audio/wav'].includes(mime)) throw new ServiceError('invalid', 'Speech audio is empty or exceeds the size limit.');
   speechClips.clear();
   const id = randomUUID();
   speechClips.set(id, { bytes, mime });
@@ -55,9 +56,9 @@ function clipResponse(request: Request, clip: { bytes: Buffer; mime: string }): 
 }
 
 export function preparePlayback(session: Session | null, input: { id: string; transcode?: boolean; offsetSeconds?: number }, deviceId: string): PlaybackResource {
-  if (!session) throw { code: 'unauthorized', message: 'Sign in to play music.' };
+  if (!session) throw new ServiceError('unauthorized', 'Sign in to play music.');
   if (!itemId(input.id) || (input.offsetSeconds !== undefined && (!Number.isFinite(input.offsetSeconds) || input.offsetSeconds < 0))) {
-    throw { code: 'invalid', message: 'Invalid playback request.' };
+    throw new ServiceError('invalid', 'Invalid playback request.');
   }
   const transcode = input.transcode === true;
   const offsetSeconds = transcode ? input.offsetSeconds ?? 0 : 0;

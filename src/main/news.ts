@@ -308,6 +308,8 @@ export class NewsService {
     if ([403, 404, 422].includes(response.status)) throw new ServiceError('unsupported', 'Eleven v4 or this voice is unavailable for your key. Check model access, voice ID, and text-to-speech permission.');
     if (response.status === 429) throw new ServiceError('server', 'ElevenLabs rate or credit limits prevented this DJ clip.');
     if (!response.ok) throw new ServiceError('server', `ElevenLabs could not render the clip (${response.status}).`);
+    const contentType = response.headers.get('content-type')?.split(';')[0].trim().toLowerCase();
+    if (contentType && !contentType.startsWith('audio/') && contentType !== 'application/octet-stream') throw new ServiceError('server', 'ElevenLabs did not return audio. Check the provider status and try again.');
     const audio = await boundedBytes(response, 24 * 1024 * 1024, signal);
     if (audio.length < 100) throw new ServiceError('server', 'ElevenLabs returned an empty speech clip.');
     signal.throwIfAborted();

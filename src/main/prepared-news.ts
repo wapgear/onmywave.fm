@@ -30,12 +30,18 @@ async function load() {
   if (library) return library;
   if (initialization) return initialization;
   initialization = (async () => {
+  let indexRead = false;
   try {
-    const value = JSON.parse(await readFile(join(root(), 'index.json'), 'utf8'));
+    const content = await readFile(join(root(), 'index.json'), 'utf8');
+    indexRead = true;
+    const value = JSON.parse(content);
     if (!Array.isArray(value.scripts) || !Array.isArray(value.takes) || !Array.isArray(value.requests)) throw new Error('Invalid prepared news index');
-    const migrated: PreparedNewsLibrary = { ...value, reviewedArticles: Array.isArray(value.reviewedArticles) ? value.reviewedArticles : [] };
-    let shouldPersist = !Array.isArray(value.reviewedArticles);
+    const migrated: PreparedNewsLibrary = { ...value, preparationErrorVersion: 1, reviewedArticles: Array.isArray(value.reviewedArticles) ? value.reviewedArticles : [] };
+    let shouldPersist = !Array.isArray(value.reviewedArticles) || value.preparationErrorVersion !== 1;
     for (const request of migrated.requests) {
+      if (value.preparationErrorVersion !== 1 && request.error && !['skipped', 'partial-coverage'].includes(request.status)) {
+        request.error = 'Earlier preparation details are unavailable. Review the setup before retrying.';
+      }
       if (request.origin !== undefined && !validOrigin(request.origin)) {
         delete request.origin;
         shouldPersist = true;
@@ -64,16 +70,16 @@ async function load() {
       const request = migrated.requests.find(item => item.requestId === article.requestId);
       return article.status === 'submitted' && request?.status === 'interrupted' ? { ...article, status: 'interrupted' as const } : article;
     });
-    library = migrated;
     if (shouldPersist) {
       await mkdir(root(), { recursive: true, mode: 0o700 });
       const temp = join(root(), `index.${randomUUID()}.tmp`);
       await writeFile(temp, JSON.stringify(migrated), { mode: 0o600 });
       await rename(temp, join(root(), 'index.json'));
     }
+    library = migrated;
   } catch (error) {
-    if ((error as NodeJS.ErrnoException).code !== 'ENOENT') throw new ServiceError('server', 'The prepared news library could not be read. Existing files were preserved.');
-    library = { scripts: [], takes: [], requests: [], selectedTakeId: null, reviewedArticles: [] };
+    if (indexRead || (error as NodeJS.ErrnoException).code !== 'ENOENT') throw new ServiceError('server', 'The prepared news library could not be read. Existing files were preserved.');
+    library = { preparationErrorVersion: 1, scripts: [], takes: [], requests: [], selectedTakeId: null, reviewedArticles: [] };
   }
   let interrupted = false;
   library!.requests = library!.requests.map(request => request.status === 'running' ? (interrupted = true, { ...request, status: 'interrupted', error: 'The app stopped before this request completed. Start an explicit new attempt.' }) : request);
@@ -85,7 +91,7 @@ async function load() {
     await rename(temp, join(root(), 'index.json'));
   }
   return library!;
-  })();
+  })().catch(error => { initialization = undefined; throw error; });
   return initialization;
 }
 
@@ -290,13 +296,14 @@ async function execute<T extends PreparedNewsScript | PreparedNewsTake>(requestI
       }));
       return result;
     } catch (error) {
-      const message = controller.signal.aborted ? 'Preparation stopped. A provider request may have been charged. Start an explicit new attempt to try again.' : error instanceof Error ? error.message : 'Preparation did not complete.';
+      const failure = error instanceof ServiceError ? error : new ServiceError('server', 'Could not prepare the news break. Check the connection and try again.');
+      const message = controller.signal.aborted ? 'Preparation stopped. A provider request may have been charged. Start an explicit new attempt to try again.' : failure.message;
       await change(current => ({ ...current,
         requests: current.requests.map(item => item.requestId === requestId && item.status === 'running' ? { ...item, status: error instanceof ServiceError && error.code === 'partial-coverage' ? 'partial-coverage' : error instanceof ServiceError && error.code === 'no-news' ? 'skipped' : 'interrupted', error: message } : item),
         reviewedArticles: (current.reviewedArticles ?? []).map(article => article.requestId === requestId && article.status === 'submitted' ? { ...article, status: 'interrupted' } : article),
       }));
       if (controller.signal.aborted) throw new ServiceError('uncertain-write', message);
-      throw error;
+      throw failure;
     } finally { if (active === operation) active = null; }
   })();
   return operation.promise;
