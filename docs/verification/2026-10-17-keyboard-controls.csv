@@ -1,0 +1,233 @@
+file,line,tag,role,name_source,content_source,inside_label,inside_form
+src/renderer/App.tsx,147,button,,descendant content,<item.icon/> {item.name},False,False
+src/renderer/App.tsx,147,button,,descendant content,<Settings/> Settings,False,False
+src/renderer/App.tsx,149,button,,{drawer === 'queue' ? 'Close queue' : 'Close song details'},<span>,False,False
+src/renderer/NewsRecovery.tsx,97,button,,descendant content,"{checking ? <LoaderCircle size={14} className=""spinning"" aria-hidden=""true"" /> : success && onOpenSettings ? null : <RotateCw size={14} aria-hidden=""true"" />} {action}",False,False
+src/renderer/components/AddPlaylist/AddPlaylist.component.tsx,26,select,,enclosing label,<option> {playlists.data?.items.map(item => <option key={item.id} value={item.id} disabled={!!item.recoveryStatus}>{item.name}{item.recoveryStatus ? item.recoveryStatus === 'review' ? ' · Review needed' : ' · Editing unavailable' : ''}</option>)},True,True
+src/renderer/components/AddPlaylist/AddPlaylist.component.tsx,27,input,,enclosing label,,True,True
+src/renderer/components/AddPlaylist/AddPlaylist.component.tsx,28,input,,enclosing label,,True,True
+src/renderer/components/AddPlaylist/AddPlaylist.component.tsx,30,button,,descendant content,Review playlists,False,True
+src/renderer/components/AddPlaylist/AddPlaylist.component.tsx,31,button,,descendant content,Review playlists,False,True
+src/renderer/components/AddPlaylist/AddPlaylist.component.tsx,33,button,,descendant content,{uncertain ? 'Close and check playlists' : 'Cancel'},False,True
+src/renderer/components/AddPlaylist/AddPlaylist.component.tsx,33,button,,descendant content,{save.isPending ? 'Saving…' : destination === 'new' ? 'Create playlist' : 'Add songs'},False,True
+src/renderer/components/CollectionHeading/CollectionHeading.component.tsx,34,summary,,descendant content,Show full title,False,False
+src/renderer/components/ConfigurationTabs/ConfigurationTabs.component.tsx,13,button,"""tab""",associated id {`${id}-tab-${tab.id}`},{tab.label},False,False
+src/renderer/components/FilterSelect/FilterSelect.component.tsx,59,button,,{`${label}: ${selectedLabel || emptyLabel || 'Any'}`},<span> <span> <ChevronDown/>,False,False
+src/renderer/components/FilterSelect/FilterSelect.component.tsx,67,input,,{`Search ${label.toLowerCase()}`},,True,False
+src/renderer/components/FilterSelect/FilterSelect.component.tsx,69,button,"""option""",descendant content,<span> {!value && <Check size={15} />},False,False
+src/renderer/components/FilterSelect/FilterSelect.component.tsx,70,button,"""option""",descendant content,<span> {choice.value === value && <Check size={15} />},False,False
+src/renderer/components/FilterSelect/FilterSelect.component.tsx,71,button,"""option""",descendant content,<span>,False,False
+src/renderer/components/InfoHelp/InfoHelp.component.tsx,10,button,,{label},<Info/>,False,False
+src/renderer/components/LibraryChooser.tsx,24,input,,enclosing label,,True,True
+src/renderer/components/LibraryChooser.tsx,25,button,,descendant content,{libraries.isFetching ? 'Checking libraries…' : 'Try again'},False,True
+src/renderer/components/LibraryChooser.tsx,28,button,,descendant content,{selection.pending ? 'Saving…' : 'Save libraries'},False,True
+src/renderer/components/LibraryChooser.tsx,29,button,,descendant content,Use another account or server,False,True
+src/renderer/components/Player/DJPopover.component.tsx,67,button,,descendant content,<span> <ExternalLink/>,False,False
+src/renderer/components/Player/DJPopover.component.tsx,70,button,,{`DJ: ${status}. Open DJ controls`},<Radio/> <span> <span>,False,False
+src/renderer/components/Player/DJPopover.component.tsx,77,button,,"""Close DJ controls""",<X/>,False,False
+src/renderer/components/Player/DJPopover.component.tsx,79,button,,descendant content,{automation.settings.enabled ? 'Disable DJ' : 'Enable DJ'},False,False
+src/renderer/components/Player/DJPopover.component.tsx,97,button,,descendant content,Open News bucket,False,False
+src/renderer/components/Player/DJPopover.component.tsx,99,select,,associated id {`${id}-room`},<option> {automation.rooms.map(room => <option key={room.id} value={room.id}>{room.name}</option>)},False,False
+src/renderer/components/Player/DJPopover.component.tsx,108,button,,descendant content,<Radio/> News bucket,False,False
+src/renderer/components/Player/DJPopover.component.tsx,108,button,,descendant content,<Settings/> DJ settings,False,False
+src/renderer/components/Player/Player.component.tsx,41,button,,descendant content,{player.newsPhase === 'paused' || (player.newsPhase === 'waiting' && !player.requestedPlaying) ? 'Resume' : 'Pause'},False,False
+src/renderer/components/Player/Player.component.tsx,41,button,,descendant content,{player.newsPhase === 'waiting' ? 'Cancel break' : 'Stop DJ'},False,False
+src/renderer/components/Player/Player.component.tsx,42,button,,descendant content,<RotateCw/> Retry,False,False
+src/renderer/components/Player/Player.component.tsx,42,button,,descendant content,Skip track,False,False
+src/renderer/components/Player/Player.component.tsx,43,button,,descendant content,<RotateCw/> Retry saving options,False,False
+src/renderer/components/Player/Player.component.tsx,49,button,,"""Shuffle""",<Shuffle/>,False,False
+src/renderer/components/Player/Player.component.tsx,50,button,,"""Previous track""",<SkipBack/>,False,False
+src/renderer/components/Player/Player.component.tsx,51,button,,{player.requestedPlaying ? 'Pause' : 'Play'},"{player.requestedPlaying ? <Pause size={21} fill=""currentColor"" /> : <Play size={21} fill=""currentColor"" />}",False,False
+src/renderer/components/Player/Player.component.tsx,52,button,,"""Next track""",<SkipForward/>,False,False
+src/renderer/components/Player/Player.component.tsx,53,button,,{`Repeat: ${player.repeat}`},{player.repeat === 'one' ? <Repeat1 size={16} /> : <Repeat size={16} />},False,False
+src/renderer/components/Player/Player.component.tsx,55,input,,"""Playback position""",,False,False
+src/renderer/components/Player/Player.component.tsx,57,button,,{player.volume ? 'Mute' : 'Unmute'},<Volume/>,False,False
+src/renderer/components/Player/Player.component.tsx,57,input,,"""Volume""",,False,False
+src/renderer/components/Player/Player.component.tsx,57,button,,"{`${queueOpen ? 'Hide' : 'Show'} queue, ${player.queue.length} tracks`}",<ListMusic/>,False,False
+src/renderer/components/ProviderKeys/ProviderKeys.component.tsx,18,input,,enclosing label,,True,False
+src/renderer/components/ProviderKeys/ProviderKeys.component.tsx,18,button,,descendant content,{edit.pending ? 'Saving…' : 'Save key'},False,False
+src/renderer/components/ProviderKeys/ProviderKeys.component.tsx,18,button,,descendant content,Remove key,False,False
+src/renderer/components/ProviderKeys/TwitterSetupHelp.component.tsx,14,summary,,descendant content,How do I get a Twitter / X token?,False,False
+src/renderer/components/ProviderKeys/TwitterSetupHelp.component.tsx,17,button,,descendant content,X developer console,False,False
+src/renderer/components/ProviderKeys/TwitterSetupHelp.component.tsx,23,button,,descendant content,Official token guide ↗,False,False
+src/renderer/components/ProviderKeys/TwitterSetupHelp.component.tsx,23,button,,descendant content,API pricing ↗,False,False
+src/renderer/components/Queue/Queue.component.tsx,20,button,,{`Play ${item.song.name}`},<Artwork/> <span>,False,False
+src/renderer/components/Queue/Queue.component.tsx,21,button,,{`Remove ${item.song.name} from queue`},<X/>,False,False
+src/renderer/components/Queue/Queue.component.tsx,26,button,,{`${player.requestedPlaying ? 'Pause' : 'Play'} ${current.song.name}`},<Artwork/> <span>,False,False
+src/renderer/components/Queue/Queue.component.tsx,28,summary,,descendant content,Earlier in this queue · {index},False,False
+src/renderer/components/Shared.tsx,14,button,,descendant content,{retrying ? 'Retrying…' : 'Try again'},False,False
+src/renderer/components/Shared.tsx,46,button,,"""Close dialog""",<X/>,False,False
+src/renderer/components/TrackTable/TrackTable.component.tsx,81,input,,"""Select loaded songs""",,False,False
+src/renderer/components/TrackTable/TrackTable.component.tsx,82,input,,{`Select ${row.song.name}`},,False,False
+src/renderer/components/TrackTable/TrackTable.component.tsx,83,button,,{`Play ${row.song.name}`},<Artwork/> <span>,False,False
+src/renderer/components/TrackTable/TrackTable.component.tsx,83,button,,descendant content,<span> <small>,False,False
+src/renderer/components/TrackTable/TrackTable.component.tsx,86,button,,descendant content,<Play/> Play song,False,False
+src/renderer/components/TrackTable/TrackTable.component.tsx,86,button,,descendant content,<ListPlus/> Add to queue,False,False
+src/renderer/components/TrackTable/TrackTable.component.tsx,86,button,,descendant content,<Plus/> Add to playlist,False,False
+src/renderer/components/TrackTable/TrackTable.component.tsx,86,button,,descendant content,<Info/> Song details,False,False
+src/renderer/components/TrackTable/TrackTable.component.tsx,86,button,,descendant content,<ArrowUp/> Move up,False,False
+src/renderer/components/TrackTable/TrackTable.component.tsx,86,button,,descendant content,<ArrowDown/> Move down,False,False
+src/renderer/components/TrackTable/TrackTable.component.tsx,86,button,,descendant content,<Trash2/> Remove from playlist,False,False
+src/renderer/components/TrackTable/TrackTable.component.tsx,89,button,,descendant content,<Play/> Play,False,False
+src/renderer/components/TrackTable/TrackTable.component.tsx,89,button,,"""Add selected songs to queue""",<ListPlus/>,False,False
+src/renderer/components/TrackTable/TrackTable.component.tsx,89,button,,descendant content,Add to playlist,False,False
+src/renderer/components/TrackTable/TrackTable.component.tsx,89,button,,descendant content,Clear,False,False
+src/renderer/components/TrackTable/TrackTable.component.tsx,108,button,,{`Actions for ${name}`},•••,False,False
+src/renderer/pages/Albums/Albums.page.tsx,33,input,,"""Search albums""",,False,False
+src/renderer/pages/Albums/Albums.page.tsx,46,button,,descendant content,<ArrowLeft/> Albums,False,False
+src/renderer/pages/Albums/Albums.page.tsx,46,button,,descendant content,<Play/> Play album,False,False
+src/renderer/pages/Albums/Albums.page.tsx,46,button,,descendant content,<ListPlus/> Queue,False,False
+src/renderer/pages/Albums/Albums.page.tsx,46,button,,descendant content,<Plus/> Add to playlist,False,False
+src/renderer/pages/Albums/VirtualAlbums.component.tsx,170,button,,{`${item.name} · ${item.artist || 'Unknown artist'}`},<Artwork/> <strong> <span>,False,False
+src/renderer/pages/Albums/VirtualAlbums.component.tsx,173,button,,descendant content,Load more albums,False,False
+src/renderer/pages/Connection/Connection.page.tsx,40,input,,enclosing label,,True,True
+src/renderer/pages/Connection/Connection.page.tsx,40,input,,enclosing label,,True,True
+src/renderer/pages/Connection/Connection.page.tsx,40,input,,enclosing label,,True,True
+src/renderer/pages/Connection/Connection.page.tsx,40,button,,descendant content,{login.isPending ? 'Connecting…' : 'Connect to Jellyfin'} <ArrowRight/>,False,True
+src/renderer/pages/Connection/Connection.page.tsx,40,button,,descendant content,Back to library selection,False,True
+src/renderer/pages/DJs/DJs.page.tsx,22,button,,descendant content,<Plus/> New DJ,False,False
+src/renderer/pages/DJs/DJs.page.tsx,23,button,,{`Edit ${dj.name}`},<Pencil/>,False,False
+src/renderer/pages/DJs/DJs.page.tsx,23,button,,{`Duplicate ${dj.name}`},<Copy/>,False,False
+src/renderer/pages/DJs/DJs.page.tsx,23,button,,{`Delete ${dj.name}`},<Trash2/>,False,False
+src/renderer/pages/DJs/DJs.page.tsx,25,button,,descendant content,Cancel,False,False
+src/renderer/pages/DJs/DJs.page.tsx,25,button,,descendant content,{save.isPending ? 'Deleting…' : 'Delete DJ'},False,False
+src/renderer/pages/DJs/components/DJEditor.component.tsx,65,textarea,,enclosing label,,True,False
+src/renderer/pages/DJs/components/DJEditor.component.tsx,66,input,,enclosing label,,True,False
+src/renderer/pages/DJs/components/DJEditor.component.tsx,72,button,,descendant content,<strong> <span>,False,True
+src/renderer/pages/DJs/components/DJEditor.component.tsx,73,button,,descendant content,{option === 'man' ? 'Man' : 'Woman'},False,True
+src/renderer/pages/DJs/components/DJEditor.component.tsx,73,button,,descendant content,Apply preset,False,True
+src/renderer/pages/DJs/components/DJEditor.component.tsx,78,textarea,,enclosing label,,True,True
+src/renderer/pages/DJs/components/DJEditor.component.tsx,79,select,,enclosing label,<option> <option> <option>,True,True
+src/renderer/pages/DJs/components/DJEditor.component.tsx,79,button,,descendant content,{search.isFetching ? 'Searching…' : 'Find voices'},False,True
+src/renderer/pages/DJs/components/DJEditor.component.tsx,81,button,,descendant content,<strong> <span> <small>,False,True
+src/renderer/pages/DJs/components/DJEditor.component.tsx,91,input,,enclosing label,,True,True
+src/renderer/pages/DJs/components/DJEditor.component.tsx,100,textarea,,enclosing label,,True,True
+src/renderer/pages/DJs/components/DJEditor.component.tsx,102,input,,enclosing label,,True,True
+src/renderer/pages/DJs/components/DJEditor.component.tsx,103,input,,enclosing label,,True,True
+src/renderer/pages/DJs/components/DJEditor.component.tsx,109,button,,descendant content,Cancel,False,True
+src/renderer/pages/DJs/components/DJEditor.component.tsx,109,button,,descendant content,{save.isPending ? 'Saving…' : 'Save DJ'},False,True
+src/renderer/pages/DJs/components/NewsDemo.component.tsx,19,button,,descendant content,<Play/> {playback.isPending ? 'Scheduling…' : active ? player.newsPhase === 'waiting' ? 'Demo scheduled' : player.newsPhase === 'paused' ? 'Demo paused' : 'Demo active' : 'Schedule DJ break'},False,False
+src/renderer/pages/DJs/components/NewsDemo.component.tsx,19,button,,descendant content,<Square/> {player.newsPhase === 'waiting' || playback.isPending ? 'Cancel scheduled demo' : 'Stop demo'},False,False
+src/renderer/pages/DJs/components/NewsDemo.component.tsx,22,summary,,descendant content,Transcript and sources,False,False
+src/renderer/pages/DJs/components/NewsDemo.component.tsx,22,button,,descendant content,{article.title},False,False
+src/renderer/pages/DJs/components/NewsTest.component.tsx,119,input,,enclosing label,,True,False
+src/renderer/pages/DJs/components/NewsTest.component.tsx,119,button,,enclosing label,{keyEdit.pending ? 'Saving…' : 'Save key'},True,False
+src/renderer/pages/DJs/components/NewsTest.component.tsx,122,button,,descendant content,Remove saved key,False,False
+src/renderer/pages/DJs/components/NewsTest.component.tsx,126,input,,enclosing label,,True,False
+src/renderer/pages/DJs/components/NewsTest.component.tsx,126,button,,enclosing label,{elevenKeyEdit.pending ? 'Saving…' : 'Save ElevenLabs key'},True,False
+src/renderer/pages/DJs/components/NewsTest.component.tsx,129,button,,descendant content,Remove saved ElevenLabs key,False,False
+src/renderer/pages/DJs/components/NewsTest.component.tsx,138,button,,descendant content,<WandSparkles/> {busy ? 'Preparing preview…' : 'Save DJ and generate preview'},False,False
+src/renderer/pages/DJs/components/NewsTest.component.tsx,138,button,,descendant content,{cancel.isPending ? 'Cancelling…' : 'Cancel generation'},False,False
+src/renderer/pages/DJs/components/NewsTest.component.tsx,143,button,,descendant content,<span> <ExternalLink/>,False,False
+src/renderer/pages/DJs/components/NewsTest.component.tsx,145,button,,descendant content,<Play/> {playback.isPending ? 'Scheduling…' : active ? player.newsPhase === 'waiting' ? 'Break scheduled' : 'Break active' : 'Schedule DJ break'},False,False
+src/renderer/pages/DJs/components/NewsTest.component.tsx,145,button,,descendant content,<Square/> {player.newsPhase === 'waiting' || playback.isPending ? 'Cancel scheduled break' : 'Stop break'},False,False
+src/renderer/pages/DJs/components/VoicePreview.component.tsx,128,button,,{`${buttonLabel} for ${label}`},"{pending ? <LoaderCircle size={14} className=""spinning"" /> : playing ? <Square size={14} /> : <Play size={14} />} {pending ? 'Loading…' : buttonLabel}",False,False
+src/renderer/pages/DJs/components/VoicePreview.component.tsx,131,button,,{`Regenerate DJ preview for ${label}`},Regenerate DJ preview,False,False
+src/renderer/pages/Playlists/Playlists.page.tsx,41,button,,descendant content,<Plus/> New playlist,False,False
+src/renderer/pages/Playlists/Playlists.page.tsx,44,button,,descendant content,Refresh playlists,False,False
+src/renderer/pages/Playlists/Playlists.page.tsx,44,button,,descendant content,{acknowledgeCreation.isPending ? 'Confirming…' : 'I checked my playlists'},False,False
+src/renderer/pages/Playlists/Playlists.page.tsx,45,button,,descendant content,<Artwork/> <div>,False,False
+src/renderer/pages/Playlists/Playlists.page.tsx,106,button,,descendant content,<ArrowLeft/> Playlists,False,False
+src/renderer/pages/Playlists/Playlists.page.tsx,106,button,,descendant content,<Play/> Play playlist,False,False
+src/renderer/pages/Playlists/Playlists.page.tsx,106,button,,descendant content,<ListPlus/> Queue,False,False
+src/renderer/pages/Playlists/Playlists.page.tsx,106,button,,descendant content,<Pencil/> Rename,False,False
+src/renderer/pages/Playlists/Playlists.page.tsx,109,button,,descendant content,Refresh playlist,False,False
+src/renderer/pages/Playlists/Playlists.page.tsx,109,button,,descendant content,{acknowledge.isPending ? 'Confirming…' : 'I checked the playlist'},False,False
+src/renderer/pages/Playlists/Playlists.page.tsx,123,input,,enclosing label,,True,True
+src/renderer/pages/Playlists/Playlists.page.tsx,123,button,,descendant content,{uncertain ? 'Close and check playlists' : 'Cancel'},False,True
+src/renderer/pages/Playlists/Playlists.page.tsx,123,button,,descendant content,{mutation.isPending ? 'Saving…' : 'Save playlist'},False,True
+src/renderer/pages/Settings/Settings.page.tsx,22,button,,descendant content,Back to setup,False,False
+src/renderer/pages/Settings/Settings.page.tsx,23,button,,descendant content,{item.label},False,False
+src/renderer/pages/Settings/Settings.page.tsx,28,button,,descendant content,Sign out,False,False
+src/renderer/pages/Settings/Settings.page.tsx,33,button,,descendant content,Cancel,False,False
+src/renderer/pages/Settings/Settings.page.tsx,33,button,,descendant content,{disconnect.isPending ? 'Signing out…' : 'Sign out'},False,False
+src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx,24,input,,enclosing label,,True,True
+src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx,26,input,,enclosing label,,True,True
+src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx,28,input,,enclosing label,,True,True
+src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx,30,button,,descendant content,{save.isPending ? 'Saving…' : 'Save DJ playback'},False,True
+src/renderer/pages/Settings/components/NewsTransitionPreview.component.tsx,153,button,,descendant content,{active ? <Square size={14} /> : <Play size={14} />} {active ? 'Stop preview' : 'Preview transition'},False,False
+src/renderer/pages/Settings/components/NewsTransitions.component.tsx,37,select,,enclosing label,<option> {presets.map(item => <option key={item.id} value={item.id}>{item.name}</option>)},True,True
+src/renderer/pages/Settings/components/NewsTransitions.component.tsx,41,select,,enclosing label,<option> <option>,True,True
+src/renderer/pages/Settings/components/NewsTransitions.component.tsx,42,input,,enclosing label,,True,True
+src/renderer/pages/Settings/components/NewsTransitions.component.tsx,45,button,,descendant content,{save.isPending ? 'Saving…' : 'Save DJ transitions'},False,True
+src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx,46,input,,enclosing label,,True,True
+src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx,47,select,,enclosing label,<option> <option> <option>,True,True
+src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx,48,select,,enclosing label,<option> <option>,True,True
+src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx,49,input,,enclosing label,,True,True
+src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx,57,button,,descendant content,{issue.action.label},False,True
+src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx,59,button,,descendant content,{issue.action.label},False,True
+src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx,60,button,,descendant content,{saving ? 'Saving…' : activating ? 'Save setup and enable preparation' : 'Save setup'},False,True
+src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx,64,button,,descendant content,{stopping ? 'Turning off…' : 'Turn off automatic preparation'},False,True
+src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx,72,button,,descendant content,Resume preparation,False,True
+src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx,77,button,,descendant content,Retry key status,False,True
+src/renderer/pages/Songs/Songs.page.tsx,42,input,,"""Search songs, artists and albums""",,False,False
+src/renderer/pages/Songs/Songs.page.tsx,47,button,,{query.descending ? 'Sort ascending' : 'Sort descending'},{query.sort === 'dateAdded' ? (query.descending ? 'Newest first' : 'Oldest first') : (query.descending ? 'Z–A' : 'A–Z')},False,False
+src/renderer/pages/Songs/Songs.page.tsx,47,button,,"""Refresh library""",<RefreshCw/>,False,False
+src/renderer/pages/Songs/VirtualSongs.component.tsx,98,button,,descendant content,Load more songs,False,False
+src/renderer/pages/Sources/Sources.page.tsx,34,button,,descendant content,<Plus/> Add source,False,False
+src/renderer/pages/Sources/Sources.page.tsx,37,button,,{`Edit ${source.name}`},<Pencil/>,False,False
+src/renderer/pages/Sources/Sources.page.tsx,37,button,,{`Delete ${source.name}`},<Trash2/>,False,False
+src/renderer/pages/Sources/Sources.page.tsx,38,input,,enclosing label,,True,True
+src/renderer/pages/Sources/Sources.page.tsx,38,select,,enclosing label,<option> <option> <option>,True,True
+src/renderer/pages/Sources/Sources.page.tsx,39,input,,enclosing label,,True,True
+src/renderer/pages/Sources/Sources.page.tsx,39,select,,enclosing label,<option> <option> <option>,True,True
+src/renderer/pages/Sources/Sources.page.tsx,39,input,,enclosing label,,True,True
+src/renderer/pages/Sources/Sources.page.tsx,39,button,,descendant content,Cancel,False,True
+src/renderer/pages/Sources/Sources.page.tsx,39,button,,descendant content,{mutation.isPending ? 'Saving…' : 'Save source'},False,True
+src/renderer/pages/Sources/Sources.page.tsx,40,button,,descendant content,Cancel,False,False
+src/renderer/pages/Sources/Sources.page.tsx,40,button,,descendant content,{mutation.isPending ? 'Deleting…' : 'Delete source'},False,False
+src/renderer/pages/Stations/Stations.page.tsx,363,button,,descendant content,{reviewAudio.isPending ? 'Opening saved take…' : 'Review saved take'},False,False
+src/renderer/pages/Stations/Stations.page.tsx,372,select,,enclosing label,{state.data.roomProfiles.map(value => <option key={value.id} value={value.id}>{value.name}{value.id === state.data?.activeRoomProfileId ? ' · Active' : ''}</option>)},True,False
+src/renderer/pages/Stations/Stations.page.tsx,372,button,,descendant content,Save as new,False,False
+src/renderer/pages/Stations/Stations.page.tsx,373,summary,,descendant content,Advanced room options,False,False
+src/renderer/pages/Stations/Stations.page.tsx,373,input,,enclosing label,,True,False
+src/renderer/pages/Stations/Stations.page.tsx,380,button,,descendant content,Review preparation history,False,False
+src/renderer/pages/Stations/Stations.page.tsx,381,button,,descendant content,Review settings,False,False
+src/renderer/pages/Stations/Stations.page.tsx,392,button,,descendant content,{!manualPending && runningProfile ? `Cancel this check for ${runningProfile.name}` : 'Cancel preparation'},False,False
+src/renderer/pages/Stations/Stations.page.tsx,392,button,,descendant content,{turnOff.isPending ? 'Turning off…' : 'Turn off automatic preparation'},False,False
+src/renderer/pages/Stations/Stations.page.tsx,395,button,,descendant content,Check saved result for this request,False,False
+src/renderer/pages/Stations/Stations.page.tsx,395,button,,descendant content,Review preparation,False,False
+src/renderer/pages/Stations/Stations.page.tsx,403,button,,descendant content,Provider keys,False,False
+src/renderer/pages/Stations/Stations.page.tsx,404,summary,,descendant content,Testing tools · Prepare a story manually,False,False
+src/renderer/pages/Stations/Stations.page.tsx,405,button,,descendant content,"{manualPending && lastRequest?.kind === 'script' ? <LoaderCircle size={15} className=""spinning"" /> : <Newspaper size={15} />} {manualPending && lastRequest?.kind === 'script' ? checkingSavedResult ? 'Checking saved text…' : 'Preparing text…' : 'Prepa",False,False
+src/renderer/pages/Stations/Stations.page.tsx,407,button,,descendant content,Open Settings,False,False
+src/renderer/pages/Stations/Stations.page.tsx,411,textarea,,"associated id ""news-draft""",,False,False
+src/renderer/pages/Stations/Stations.page.tsx,411,summary,,descendant content,Sources and preparation settings,False,False
+src/renderer/pages/Stations/Stations.page.tsx,411,button,,descendant content,{article.title},False,False
+src/renderer/pages/Stations/Stations.page.tsx,412,button,,descendant content,Manage DJ in Settings,False,False
+src/renderer/pages/Stations/Stations.page.tsx,413,button,,descendant content,Open Settings,False,False
+src/renderer/pages/Stations/Stations.page.tsx,414,button,,descendant content,{manualPending && lastRequest?.kind === 'audio' ? checkingSavedResult ? 'Checking saved audio…' : 'Generating audio…' : 'Generate audio take'},False,False
+src/renderer/pages/Stations/Stations.page.tsx,414,button,,descendant content,Generate another take,False,False
+src/renderer/pages/Stations/Stations.page.tsx,425,summary,,descendant content,Preparation history,False,False
+src/renderer/pages/Stations/Stations.page.tsx,425,button,,descendant content,Show older preparations,False,False
+src/renderer/pages/Stations/Stations.page.tsx,430,button,,descendant content,Keep editing,False,False
+src/renderer/pages/Stations/Stations.page.tsx,430,button,,descendant content,{scriptReplacement.kind === 'prepare' ? 'Prepare new text' : 'Replace draft'},False,False
+src/renderer/pages/Stations/Stations.page.tsx,437,input,,enclosing label,,True,True
+src/renderer/pages/Stations/Stations.page.tsx,437,button,,descendant content,Cancel,False,True
+src/renderer/pages/Stations/Stations.page.tsx,437,button,,descendant content,{profiles.isPending ? 'Saving…' : 'Save room'},False,True
+src/renderer/pages/Stations/Stations.page.tsx,438,button,,descendant content,Cancel,False,False
+src/renderer/pages/Stations/Stations.page.tsx,438,button,,descendant content,Discard and switch,False,False
+src/renderer/pages/Stations/Stations.page.tsx,438,button,,descendant content,{profiles.isPending ? 'Switching…' : 'Save and switch'},False,False
+src/renderer/pages/Stations/components/NewsBucket.component.tsx,77,button,,descendant content,{article.title} <ExternalLink/>,False,False
+src/renderer/pages/Stations/components/NewsBucket.component.tsx,85,button,,descendant content,Review draft,False,False
+src/renderer/pages/Stations/components/NewsBucket.component.tsx,86,button,,descendant content,{article.title} <ExternalLink/>,False,False
+src/renderer/pages/Stations/components/NewsBucket.component.tsx,105,button,,descendant content,News settings,False,False
+src/renderer/pages/Stations/components/NewsBucket.component.tsx,137,button,,descendant content,Set up news preparation,False,False
+src/renderer/pages/Stations/components/NewsBucket.component.tsx,148,button,,descendant content,Show 25 more reviewed stories,False,False
+src/renderer/pages/Stations/components/NewsBucket.component.tsx,167,button,,descendant content,{article.title} <ExternalLink/>,False,False
+src/renderer/pages/Stations/components/PreparedTakes.component.tsx,103,button,,descendant content,Refresh,False,False
+src/renderer/pages/Stations/components/PreparedTakes.component.tsx,104,button,,descendant content,<Radio/> {schedule.isPending ? 'Scheduling…' : selectedActive ? 'Break active' : 'Schedule DJ break'},False,False
+src/renderer/pages/Stations/components/PreparedTakes.component.tsx,104,button,,descendant content,Clear selection,False,False
+src/renderer/pages/Stations/components/PreparedTakes.component.tsx,106,button,,descendant content,{player.newsPhase === 'waiting' ? 'Cancel scheduled break' : 'Stop break'},False,False
+src/renderer/pages/Stations/components/PreparedTakes.component.tsx,116,button,,{current?.phase === 'loading' ? 'Cancel loading audition' : current?.phase === 'playing' ? 'Pause audition' : current?.phase === 'paused' ? 'Resume audition' : `Audition take from ${savedDate(take.createdAt)}`},"{current?.phase === 'loading' ? <LoaderCircle size={15} className=""spinning"" /> : current?.phase === 'playing' ? <Pause size={15} /> : <Play size={15} />} {current?.phase === 'loading' ? 'Loading…' : current?.phase === 'playing' ? 'Pause' : current?.",False,False
+src/renderer/pages/Stations/components/PreparedTakes.component.tsx,116,button,,"""Stop audition""",<Square/> Stop,False,False
+src/renderer/pages/Stations/components/PreparedTakes.component.tsx,116,button,,descendant content,Use this take,False,False
+src/renderer/pages/Stations/components/PreparedTakes.component.tsx,119,summary,,descendant content,"Saved mood, settings, and sources",False,False
+src/renderer/pages/Stations/components/PreparedTakes.component.tsx,119,button,,descendant content,<ExternalLink/> <span>,False,False
+src/renderer/pages/Stations/components/PreparedTakes.component.tsx,119,button,,descendant content,<ExternalLink/> <span>,False,False
+src/renderer/pages/Stations/components/PreparedTakes.component.tsx,120,button,,descendant content,Load script into draft,False,False
+src/renderer/pages/Stations/components/RoomSetup.component.tsx,14,button,,"associated id ""manage-room-sources""",Manage sources,False,False
+src/renderer/pages/Stations/components/RoomSetup.component.tsx,15,input,,enclosing label,,True,False
+src/renderer/pages/Stations/components/RoomSetup.component.tsx,17,textarea,,enclosing label,,True,False
+src/renderer/pages/Stations/components/RoomSetup.component.tsx,18,button,,"associated id ""manage-room-djs""",Manage DJs,False,False
+src/renderer/pages/Stations/components/RoomSetup.component.tsx,19,textarea,,enclosing label,,True,False
