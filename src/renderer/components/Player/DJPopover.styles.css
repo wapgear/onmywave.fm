@@ -5,13 +5,15 @@
 .dj-popover { position: fixed; inset: auto; margin: 0; width: 360px; max-width: calc(100vw - 24px); padding: 20px; overflow: auto; border: 1px solid var(--border); border-radius: 18px; background: var(--popover, #fff); color: var(--text); box-shadow: 0 12px 48px #262d4026; -webkit-app-region: no-drag; }
 .dj-popover:not(:popover-open) { display: none; }
 .dj-popover header, .dj-control, .dj-popover footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.dj-popover header > div, .dj-control > div { min-width: 0; }
 .dj-popover h2 { margin: 0 0 6px; font-size: 18px; }
-.dj-popover h3 { margin: 0 0 10px; font-size: 12px; font-weight: 600; }
+.dj-popover h3 { margin: 0 0 10px; font-size: 12px; font-weight: 600; overflow-wrap: anywhere; }
 .dj-popover section { margin-top: 20px; }
 .dj-popover .dj-control { align-items: flex-start; }
 .dj-control strong { font-size: 12px; }
 .dj-popover p { font-size: 12px; line-height: 1.6; margin: 6px 0; overflow-wrap: anywhere; }
 .dj-popover .dj-hint, .dj-popover small { color: var(--muted); font-size: 11px; }
+.dj-popover .dj-status, .dj-popover small, .dj-control strong { overflow-wrap: anywhere; }
 .dj-status { font-size: 11px; color: var(--muted); }
 .dj-status.is-active { color: var(--accent); }
 .dj-popover .dj-automation-note { margin-top: 12px; padding: 9px 11px; background: var(--accent-soft); border-radius: 8px; font-size: 11px; }
@@ -25,7 +27,8 @@
 .dj-popover select { width: 100%; min-width: 0; font-size: 12px; }
 .dj-story ul { padding: 0; margin: 10px 0 0; list-style: none; }
 .dj-story li { margin-top: 8px; }
-.dj-source-link { display: inline-flex; align-items: baseline; gap: 6px; border: 0; padding: 0; min-height: 24px; background: none; color: var(--accent); text-align: left; line-height: 1.5; overflow-wrap: anywhere; }
+.dj-source-link { display: flex; width: 100%; max-width: 100%; min-width: 0; align-items: baseline; gap: 6px; border: 0; padding: 0; min-height: 24px; background: none; color: var(--accent); text-align: left; line-height: 1.5; overflow-wrap: anywhere; }
+.dj-source-link > span { min-width: 0; max-width: 100%; overflow-wrap: anywhere; }
 .dj-source-link svg { flex-shrink: 0; }
 .dj-story small { display: block; }
 .dj-popover footer { margin-top: 20px; padding-top: 14px; border-top: 1px solid var(--border); }

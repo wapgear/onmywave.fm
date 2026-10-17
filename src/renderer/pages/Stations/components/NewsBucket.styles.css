@@ -20,10 +20,10 @@
 .news-bucket-script,.news-bucket-draft>p:first-child { margin:0; white-space:pre-wrap; overflow-wrap:anywhere; font-size:14px; line-height:1.85; }
 .news-bucket-sources { margin:18px 0 0; padding:0; list-style:none; }
 .news-bucket-sources li { margin-top:11px; }
-.news-bucket-sources button,.news-bucket-article-link,.news-bucket-draft-source button { display:inline-flex; align-items:baseline; gap:6px; min-height:24px; padding:0; border:0; border-radius:0; background:none; color:var(--accent); text-align:left; white-space:normal; line-height:1.55; }
+.news-bucket-sources button,.news-bucket-article-link,.news-bucket-draft-source button { display:flex; width:100%; max-width:100%; min-width:0; align-items:baseline; gap:6px; min-height:24px; padding:0; border:0; border-radius:0; background:none; color:var(--accent); text-align:left; white-space:normal; line-height:1.55; overflow-wrap:anywhere; }
 .news-bucket-sources button:hover,.news-bucket-article-link:hover,.news-bucket-draft-source button:hover { background:none; text-decoration:underline; }
 .news-bucket-sources button svg,.news-bucket-article-link svg,.news-bucket-draft-source button svg { flex-shrink:0; }
-.news-bucket-sources li>span,.news-bucket-reviewed-row>div:first-child>span,.news-bucket-draft-source>span { display:block; margin-top:3px; color:var(--muted); font-size:10px; }
+.news-bucket-sources li>span,.news-bucket-reviewed-row>div:first-child>span,.news-bucket-draft-source>span { display:block; min-width:0; max-width:100%; margin-top:3px; color:var(--muted); font-size:10px; overflow-wrap:anywhere; }
 .news-bucket-muted { margin-top:12px; color:var(--muted); font-size:11px; line-height:1.6; }
 .news-bucket-empty { padding:32px 12px; color:var(--muted); text-align:center; }
 .news-bucket-empty>svg { color:var(--accent); }
@@ -31,6 +31,8 @@
 .news-bucket-empty p { max-width:430px; margin:7px auto 12px; font-size:11px; line-height:1.65; }
 .news-bucket-empty button,.news-bucket-draft-meta button { font-size:11px; }
 .news-bucket-draft-meta { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:14px 0; color:var(--muted); font-size:10px; }
+.news-bucket-draft-meta>span { min-width:0; overflow-wrap:anywhere; }
+.news-bucket-draft-meta>button { flex-shrink:0; }
 .news-bucket-draft-source { margin-top:9px; }
 .news-bucket-history { padding:26px 0 0; }
 .news-bucket-ready,.news-bucket-drafts { padding:26px 0 28px; border-bottom:1px solid var(--separator); }

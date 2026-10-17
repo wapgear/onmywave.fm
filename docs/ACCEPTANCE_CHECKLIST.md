@@ -36,7 +36,7 @@ Source: REQUIREMENTS: Product scope, Visual design, Project folder and stack.
 | V04 | Implemented neutral/rose palette matches the documented tokens in default, selected, disabled and focus states. | N | Controlled |
 | V05 | Bundled Manrope 600 headings and Inter 400/500 interface text render without font network requests. | I+N | Controlled |
 | V06 | Sidebar, song table, artwork grid and persistent inset player follow the documented spacing and typography targets. | N+U | Review |
-| V07 | Long metadata truncates or wraps without moving or covering essential controls. | N | Review |
+| V07 | Long metadata truncates or wraps without moving or covering essential controls. | N | Controlled |
 | V08 | Hover, pressed, selected, disabled and keyboard focus states remain distinguishable and readable. | N | Review |
 | V09 | Motion respects reduced-motion preference. | N | Controlled |
 | V10 | Native window chrome, traffic lights and titlebar behavior work in desktop context. | N+O | Review |
@@ -459,3 +459,6 @@ V04/V17 evidence, 17 October 2026: [current scope and palette](verification/2026
 
 
 The [dialog form-focus record](verification/2026-10-17-dialog-form-focus.json) fixes initial typing focus across playlist, source and listening-room name forms, preserves conditional Add destination focus, and verifies safe confirmation/help targets and dismissal/restoration in eleven native checks. Q06 remains Review for all essential controls and native accessibility scope. Inventory and remaining count are unchanged:35 active checks.
+
+
+The [current long-metadata record](verification/2026-10-17-long-metadata.json) closes V07 as Controlled. It reproduces and fixes Inspector artist/tag overflow, collection subtitle overflow, long profile text in DJ controls, expanded saved-source/notes overflow, scheduled-story source links, and a collection title hiding initial actions.44 native states at1280×720 and1600×1000 have no horizontal overflow or covered sampled controls. Short titles have no disclosure; clipped album and playlist titles expose exact full text with the keyboard. Native muted music advances then pauses; no provider call or renderer/fatal error occurs. Broader V13/Q06 and listener/OS checks stay open. Inventory:187 rows,185 active,2 Deferred;22 Review,1 Dated,0 Recorded,131 Controlled,20 Live,11 External.34 active checks remain.

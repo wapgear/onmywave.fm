@@ -70,7 +70,7 @@ Use these initial design targets in logical points, adjusting only where actual 
 | Search and filter controls | 32 to 36 pt high |
 | Floating player | Approximately 72 pt high |
 
-Align text baselines, table columns, icons, control centers, and outer insets consistently. Keep icon stroke weights consistent, reserve adequate hit areas, and show hover, focus, pressed, selected, and disabled states. Long titles must truncate or wrap deliberately without moving adjacent controls. Saved DJ names, preview labels and recovery messages must also handle long text without spaces while keeping actions reachable.
+Align text baselines, table columns, icons, control centers, and outer insets consistently. Keep icon stroke weights consistent, reserve adequate hit areas, and show hover, focus, pressed, selected, and disabled states. Long titles must truncate or wrap deliberately without moving adjacent controls. Keep compact music rows, tiles, queue and player labels bounded. Collection headings use a two-line title so Play, Queue and Add remain visible; when that title is clipped, offer a keyboard-accessible Show full title disclosure after the actions. Full inspector metadata, tags, story references, source labels and preparation notes wrap within their reading surface, including text without spaces. Saved DJ names, preview labels and recovery messages must also handle long text without spaces while keeping actions reachable.
 
 ### macOS presentation
 
