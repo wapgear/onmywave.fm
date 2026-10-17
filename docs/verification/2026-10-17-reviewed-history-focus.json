@@ -1,0 +1,1491 @@
+{
+  "date": "2026-10-17",
+  "baseCommit": "7f3602594512e45a5287c29ee82e4685be6c7cd5",
+  "scope": [
+    "Q06 partial keyboard operation of reviewed-story pagination",
+    "R12 keyboard focus and R8/global-history inspection"
+  ],
+  "classification": "native CUA keyboard/pointer input and inspected Mac accessibility states with read-only production DOM focus telemetry; controlled local fixture",
+  "baseline": {
+    "contentSizePoints": [
+      1280,
+      720
+    ],
+    "zoom": 1,
+    "runtime": "macOS27.2 arm64, Electron43.7.0, one Retina display"
+  },
+  "reproduction": "55 synthetic reviewed stories. Tab34 times from the News bucket navigation opener to Show25more. Space reveals50 but keeps focus after the new stories. Another Space reveals55, removes the button and drops focus to body. The old label still claims25 for the final5.",
+  "implementation": [
+    "Keep existing25-story batches. Capture the next story canonicalUrl/requestId only for a focus-visible keyboard-owned expansion.",
+    "Consume the handoff in a layout effect after commit; resolve the stable key within the committed history list. Require original trigger ownership or detached-trigger/body, focused visible document and no dialog/popover. No delayed RAF or generic helper.",
+    "Focus the first revealed story title without activation and scroll nearest. Pointer expansion does not arm the handoff. Label actual next batch count, including singular story."
+  ],
+  "pairedDecision": {
+    "Steve": "Supports local synchronous layout effect, stable key, keyboard-only handoff and correct final-batch count after challenge. Avoid async read-retry hook.",
+    "Elena": "Supports the same after challenge, with a preference for passing a matching button ref rather than a DOM data key. Actual data-key diff reviewed without actionable finding.",
+    "Morgan": "Scoped existing ul ref plus string dataset comparison avoids selector interpolation and another ReviewedRow prop. No shared hook or new dependency. Both reviewers agree on behavior; the ref/attribute preference is reversible."
+  },
+  "nativeCases": [
+    {
+      "name": "reviewed-history-before-first",
+      "sha256": "41f35ba6748ecbd3583562aa227d1a8c20b77489576a1895cb98eb0f2f7b553b",
+      "history": {
+        "count": 50,
+        "titles": [
+          "Reviewed story 001",
+          "Reviewed story 002",
+          "Reviewed story 003",
+          "Reviewed story 004",
+          "Reviewed story 005",
+          "Reviewed story 006",
+          "Reviewed story 007",
+          "Reviewed story 008",
+          "Reviewed story 009",
+          "Reviewed story 010",
+          "Reviewed story 011",
+          "Reviewed story 012",
+          "Reviewed story 013",
+          "Reviewed story 014",
+          "Reviewed story 015",
+          "Reviewed story 016",
+          "Reviewed story 017",
+          "Reviewed story 018",
+          "Reviewed story 019",
+          "Reviewed story 020",
+          "Reviewed story 021",
+          "Reviewed story 022",
+          "Reviewed story 023",
+          "Reviewed story 024",
+          "Reviewed story 025",
+          "Reviewed story 026",
+          "Reviewed story 027",
+          "Reviewed story 028",
+          "Reviewed story 029",
+          "Reviewed story 030",
+          "Reviewed story 031",
+          "Reviewed story 032",
+          "Reviewed story 033",
+          "Reviewed story 034",
+          "Reviewed story 035",
+          "Reviewed story 036",
+          "Reviewed story 037",
+          "Reviewed story 038",
+          "Reviewed story 039",
+          "Reviewed story 040",
+          "Reviewed story 041",
+          "Reviewed story 042",
+          "Reviewed story 043",
+          "Reviewed story 044",
+          "Reviewed story 045",
+          "Reviewed story 046",
+          "Reviewed story 047",
+          "Reviewed story 048",
+          "Reviewed story 049",
+          "Reviewed story 050"
+        ],
+        "more": "Show 25 more reviewed stories",
+        "activeHistoryIndex": -1
+      },
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Show 25 more reviewed stories",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": null,
+        "target": {
+          "x": 238,
+          "y": 2203.8125,
+          "width": 191.3671875,
+          "height": 34,
+          "bottom": 2237.8125,
+          "top": 2203.8125
+        },
+        "scrollTop": 2760.5,
+        "keyboard": true,
+        "toolbar": null,
+        "header": null,
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0,
+          "top": 0
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "recentFocus": [
+        {
+          "index": 34,
+          "count": 47,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Reviewed story 024",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 517.8125,
+            "width": 221.1328125,
+            "height": 24
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-article-link",
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 35,
+          "count": 47,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Reviewed story 025",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 438.8125,
+            "width": 221.1328125,
+            "height": 24
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-article-link",
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 36,
+          "count": 47,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Show 25 more reviewed stories",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 503.8125,
+            "width": 191.3671875,
+            "height": 34
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-show-more",
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "reviewed-history-before-last",
+      "sha256": "3ea35402c2ac0b26ee06bd00039e383ced1ea9596cc353eff2862db6652d2dac",
+      "history": {
+        "count": 55,
+        "titles": [
+          "Reviewed story 001",
+          "Reviewed story 002",
+          "Reviewed story 003",
+          "Reviewed story 004",
+          "Reviewed story 005",
+          "Reviewed story 006",
+          "Reviewed story 007",
+          "Reviewed story 008",
+          "Reviewed story 009",
+          "Reviewed story 010",
+          "Reviewed story 011",
+          "Reviewed story 012",
+          "Reviewed story 013",
+          "Reviewed story 014",
+          "Reviewed story 015",
+          "Reviewed story 016",
+          "Reviewed story 017",
+          "Reviewed story 018",
+          "Reviewed story 019",
+          "Reviewed story 020",
+          "Reviewed story 021",
+          "Reviewed story 022",
+          "Reviewed story 023",
+          "Reviewed story 024",
+          "Reviewed story 025",
+          "Reviewed story 026",
+          "Reviewed story 027",
+          "Reviewed story 028",
+          "Reviewed story 029",
+          "Reviewed story 030",
+          "Reviewed story 031",
+          "Reviewed story 032",
+          "Reviewed story 033",
+          "Reviewed story 034",
+          "Reviewed story 035",
+          "Reviewed story 036",
+          "Reviewed story 037",
+          "Reviewed story 038",
+          "Reviewed story 039",
+          "Reviewed story 040",
+          "Reviewed story 041",
+          "Reviewed story 042",
+          "Reviewed story 043",
+          "Reviewed story 044",
+          "Reviewed story 045",
+          "Reviewed story 046",
+          "Reviewed story 047",
+          "Reviewed story 048",
+          "Reviewed story 049",
+          "Reviewed story 050",
+          "Reviewed story 051",
+          "Reviewed story 052",
+          "Reviewed story 053",
+          "Reviewed story 054",
+          "Reviewed story 055"
+        ],
+        "activeHistoryIndex": -1
+      },
+      "focus": {
+        "tag": "BODY",
+        "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedNews bucketSetup profileMy room \u00b7 ActiveSave as newAdvanced room optionsMake this profile available for DJ playback and preparationChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.News bucketSettingsSaved audioYour radioWhat your DJ will saySee what is ready to hear, what was prepared, and where each story came from.DJ playback is offPlayback is off. The ready queue below remains available for this profile.My roomAutomatic news preparationNews settingsPreparation off. Saved recordings remain available. Enable news preparation in News settings.Scheduled checks started today0 / 8Automatic recordings saved today0 / 3Ready for this profile0Only scheduled preparation is counted for this profile in your Mac's local day. Checks can use paid text generation even when no recording is made.No scheduled check has been recorded for this profile yet.Choose sources, a host, and a mood in News settings to finish setup. Music and saved audio remain available.PlaybackNext DJ breakAutomatic DJ playback is offStories prepared for this profile stay visible in its ready queue below.Saved newsReady for My room0 recordingsThese recordings match your current setup and are fresh enough to play. Older and already heard stories stay out. The DJ chooses one when a break is due.No fresh matching recordings are ready for this profile. Set up news preparationIn preparationDrafts for My room0No drafts are waiting for audio.Article historyReviewed across all profiles55 storiesReviewed stories are excluded from future news selection in every profile.Reviewed story 001Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 002Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 003Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 004Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 005Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 006Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 007Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 008Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 009Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 010Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 011Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 012Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 013Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 014Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 015Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 016Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 017Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 018Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 019Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 020Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 021Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 022Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 023Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 024Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 025Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 026Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 027Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 028Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 029Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 030Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 031Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 032Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 033Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 034Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 035Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 036Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 037Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 038Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 039Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 040Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 041Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 042Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 043Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 044Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 045Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 046Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 047Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 048Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 049Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 050Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 051Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 052Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 053Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026Reviewed story 054Fixture source \u00b7 example.org \u00b7 Date unavailableSelected for a briefing10/17/2026Reviewed story 055Fixture source \u00b7 example.org \u00b7 Date unavailableReviewed \u00b7 not selected10/17/2026News sources and hostNews sourcesManage sourcesAdd your first source with Manage sources.News interests \u00b7 OptionalDJChoose a DJChoose a DJNo matching optionsManage DJsMoodSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.Automatic news preparationPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running. Automatically prepare newsCheck sources every1 hour3 hours6 hoursNews selectionMajor developments onlyRelevant storiesMaximum automatic recordings per dayUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.Saving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.Finish setup before enabling preparationChoose at least one news source.Manage sourcesAdd your first DJ.Manage DJsAdd a mood for the host.Review moodOpenAI key is missing.Provider keysElevenLabs key is missing.Provider keysSave setupPreparation off. Saved recordings remain available. Enable news preparation in News settings.News preparation needs OpenAI and ElevenLabs keys. Provider keysTesting tools \u00b7 Prepare a story manuallyManual testingPrepare a storyPrepare text, review it, then generate an audio take.Manual text preparation uses OpenAI outside automatic preparation limits. It can incur charges even when no recording is made.Prepare news textChoose sources and a DJ, and describe your station mood first.Saved audio takesListen or choose a take for a DJ break.RefreshNo saved audio yetPrepare a story to save your first recording.Song 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": null,
+        "target": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "bottom": 720,
+          "top": 0
+        },
+        "scrollTop": 2760.5,
+        "keyboard": false,
+        "toolbar": null,
+        "header": null,
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0,
+          "top": 0
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "recentFocus": [
+        {
+          "index": 34,
+          "count": 47,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Reviewed story 024",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 517.8125,
+            "width": 221.1328125,
+            "height": 24
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-article-link",
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 35,
+          "count": 47,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Reviewed story 025",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 438.8125,
+            "width": 221.1328125,
+            "height": 24
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-article-link",
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 36,
+          "count": 47,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Show 25 more reviewed stories",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 503.8125,
+            "width": 191.3671875,
+            "height": 34
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-show-more",
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "reviewed-history-after-first",
+      "sha256": "d3e7ed7b50c11c7a01d91b7318a8f242c8c0253871d741d813964ea6e4f4d22b",
+      "history": {
+        "count": 50,
+        "titles": [
+          "Reviewed story 001",
+          "Reviewed story 002",
+          "Reviewed story 003",
+          "Reviewed story 004",
+          "Reviewed story 005",
+          "Reviewed story 006",
+          "Reviewed story 007",
+          "Reviewed story 008",
+          "Reviewed story 009",
+          "Reviewed story 010",
+          "Reviewed story 011",
+          "Reviewed story 012",
+          "Reviewed story 013",
+          "Reviewed story 014",
+          "Reviewed story 015",
+          "Reviewed story 016",
+          "Reviewed story 017",
+          "Reviewed story 018",
+          "Reviewed story 019",
+          "Reviewed story 020",
+          "Reviewed story 021",
+          "Reviewed story 022",
+          "Reviewed story 023",
+          "Reviewed story 024",
+          "Reviewed story 025",
+          "Reviewed story 026",
+          "Reviewed story 027",
+          "Reviewed story 028",
+          "Reviewed story 029",
+          "Reviewed story 030",
+          "Reviewed story 031",
+          "Reviewed story 032",
+          "Reviewed story 033",
+          "Reviewed story 034",
+          "Reviewed story 035",
+          "Reviewed story 036",
+          "Reviewed story 037",
+          "Reviewed story 038",
+          "Reviewed story 039",
+          "Reviewed story 040",
+          "Reviewed story 041",
+          "Reviewed story 042",
+          "Reviewed story 043",
+          "Reviewed story 044",
+          "Reviewed story 045",
+          "Reviewed story 046",
+          "Reviewed story 047",
+          "Reviewed story 048",
+          "Reviewed story 049",
+          "Reviewed story 050"
+        ],
+        "more": "Show 5 more reviewed stories",
+        "activeHistoryIndex": 25
+      },
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Reviewed story 026",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": null,
+        "target": {
+          "x": 238,
+          "y": 506.8125,
+          "width": 221.1328125,
+          "height": 24,
+          "bottom": 530.8125,
+          "top": 506.8125
+        },
+        "scrollTop": 2760.5,
+        "keyboard": true,
+        "toolbar": null,
+        "header": null,
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0,
+          "top": 0
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "recentFocus": [
+        {
+          "index": 35,
+          "count": 47,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Reviewed story 025",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 438.8125,
+            "width": 221.1328125,
+            "height": 24
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-article-link",
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 36,
+          "count": 47,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Show 25 more reviewed stories",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 503.8125,
+            "width": 191.375,
+            "height": 34
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-show-more",
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 36,
+          "count": 72,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Reviewed story 026",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 506.8125,
+            "width": 221.1328125,
+            "height": 24
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-article-link",
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "reviewed-history-after-tab",
+      "sha256": "2c73044a09ef986868ec7a83db25468a93dbcb079f52b962172ed01ba1aa4368",
+      "history": {
+        "count": 50,
+        "titles": [
+          "Reviewed story 001",
+          "Reviewed story 002",
+          "Reviewed story 003",
+          "Reviewed story 004",
+          "Reviewed story 005",
+          "Reviewed story 006",
+          "Reviewed story 007",
+          "Reviewed story 008",
+          "Reviewed story 009",
+          "Reviewed story 010",
+          "Reviewed story 011",
+          "Reviewed story 012",
+          "Reviewed story 013",
+          "Reviewed story 014",
+          "Reviewed story 015",
+          "Reviewed story 016",
+          "Reviewed story 017",
+          "Reviewed story 018",
+          "Reviewed story 019",
+          "Reviewed story 020",
+          "Reviewed story 021",
+          "Reviewed story 022",
+          "Reviewed story 023",
+          "Reviewed story 024",
+          "Reviewed story 025",
+          "Reviewed story 026",
+          "Reviewed story 027",
+          "Reviewed story 028",
+          "Reviewed story 029",
+          "Reviewed story 030",
+          "Reviewed story 031",
+          "Reviewed story 032",
+          "Reviewed story 033",
+          "Reviewed story 034",
+          "Reviewed story 035",
+          "Reviewed story 036",
+          "Reviewed story 037",
+          "Reviewed story 038",
+          "Reviewed story 039",
+          "Reviewed story 040",
+          "Reviewed story 041",
+          "Reviewed story 042",
+          "Reviewed story 043",
+          "Reviewed story 044",
+          "Reviewed story 045",
+          "Reviewed story 046",
+          "Reviewed story 047",
+          "Reviewed story 048",
+          "Reviewed story 049",
+          "Reviewed story 050"
+        ],
+        "more": "Show 5 more reviewed stories",
+        "activeHistoryIndex": 26
+      },
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Reviewed story 027",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": null,
+        "target": {
+          "x": 238,
+          "y": 555.8125,
+          "width": 221.1328125,
+          "height": 24,
+          "bottom": 579.8125,
+          "top": 555.8125
+        },
+        "scrollTop": 2779.5,
+        "keyboard": true,
+        "toolbar": null,
+        "header": null,
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0,
+          "top": 0
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "recentFocus": [
+        {
+          "index": 36,
+          "count": 47,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Show 25 more reviewed stories",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 503.8125,
+            "width": 191.375,
+            "height": 34
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-show-more",
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 36,
+          "count": 72,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Reviewed story 026",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 506.8125,
+            "width": 221.1328125,
+            "height": 24
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-article-link",
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 37,
+          "count": 72,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Reviewed story 027",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 555.8125,
+            "width": 221.1328125,
+            "height": 24
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-article-link",
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "reviewed-history-after-last",
+      "sha256": "aa78355dc6dda195d739309e57f52bf2d32510e0e7b8d8c4f17e91a12668dc13",
+      "history": {
+        "count": 55,
+        "titles": [
+          "Reviewed story 001",
+          "Reviewed story 002",
+          "Reviewed story 003",
+          "Reviewed story 004",
+          "Reviewed story 005",
+          "Reviewed story 006",
+          "Reviewed story 007",
+          "Reviewed story 008",
+          "Reviewed story 009",
+          "Reviewed story 010",
+          "Reviewed story 011",
+          "Reviewed story 012",
+          "Reviewed story 013",
+          "Reviewed story 014",
+          "Reviewed story 015",
+          "Reviewed story 016",
+          "Reviewed story 017",
+          "Reviewed story 018",
+          "Reviewed story 019",
+          "Reviewed story 020",
+          "Reviewed story 021",
+          "Reviewed story 022",
+          "Reviewed story 023",
+          "Reviewed story 024",
+          "Reviewed story 025",
+          "Reviewed story 026",
+          "Reviewed story 027",
+          "Reviewed story 028",
+          "Reviewed story 029",
+          "Reviewed story 030",
+          "Reviewed story 031",
+          "Reviewed story 032",
+          "Reviewed story 033",
+          "Reviewed story 034",
+          "Reviewed story 035",
+          "Reviewed story 036",
+          "Reviewed story 037",
+          "Reviewed story 038",
+          "Reviewed story 039",
+          "Reviewed story 040",
+          "Reviewed story 041",
+          "Reviewed story 042",
+          "Reviewed story 043",
+          "Reviewed story 044",
+          "Reviewed story 045",
+          "Reviewed story 046",
+          "Reviewed story 047",
+          "Reviewed story 048",
+          "Reviewed story 049",
+          "Reviewed story 050",
+          "Reviewed story 051",
+          "Reviewed story 052",
+          "Reviewed story 053",
+          "Reviewed story 054",
+          "Reviewed story 055"
+        ],
+        "activeHistoryIndex": 50
+      },
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Reviewed story 051",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": null,
+        "target": {
+          "x": 238,
+          "y": 517.8125,
+          "width": 221.1328125,
+          "height": 24,
+          "bottom": 541.8125,
+          "top": 517.8125
+        },
+        "scrollTop": 4449.5,
+        "keyboard": true,
+        "toolbar": null,
+        "header": null,
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0,
+          "top": 0
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "recentFocus": [
+        {
+          "index": 60,
+          "count": 72,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Reviewed story 050",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 449.8125,
+            "width": 221.1328125,
+            "height": 24
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-article-link",
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 61,
+          "count": 72,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Show 5 more reviewed stories",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 514.8125,
+            "width": 184.671875,
+            "height": 34
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-show-more",
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 61,
+          "count": 76,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Reviewed story 051",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 517.8125,
+            "width": 221.1328125,
+            "height": 24
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-article-link",
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "reviewed-history-after-pointer",
+      "sha256": "56d6cee816f320924f8fce70eecf627bbfb12031881ad3a02d365ae12507aff2",
+      "history": {
+        "count": 50,
+        "titles": [
+          "Reviewed story 001",
+          "Reviewed story 002",
+          "Reviewed story 003",
+          "Reviewed story 004",
+          "Reviewed story 005",
+          "Reviewed story 006",
+          "Reviewed story 007",
+          "Reviewed story 008",
+          "Reviewed story 009",
+          "Reviewed story 010",
+          "Reviewed story 011",
+          "Reviewed story 012",
+          "Reviewed story 013",
+          "Reviewed story 014",
+          "Reviewed story 015",
+          "Reviewed story 016",
+          "Reviewed story 017",
+          "Reviewed story 018",
+          "Reviewed story 019",
+          "Reviewed story 020",
+          "Reviewed story 021",
+          "Reviewed story 022",
+          "Reviewed story 023",
+          "Reviewed story 024",
+          "Reviewed story 025",
+          "Reviewed story 026",
+          "Reviewed story 027",
+          "Reviewed story 028",
+          "Reviewed story 029",
+          "Reviewed story 030",
+          "Reviewed story 031",
+          "Reviewed story 032",
+          "Reviewed story 033",
+          "Reviewed story 034",
+          "Reviewed story 035",
+          "Reviewed story 036",
+          "Reviewed story 037",
+          "Reviewed story 038",
+          "Reviewed story 039",
+          "Reviewed story 040",
+          "Reviewed story 041",
+          "Reviewed story 042",
+          "Reviewed story 043",
+          "Reviewed story 044",
+          "Reviewed story 045",
+          "Reviewed story 046",
+          "Reviewed story 047",
+          "Reviewed story 048",
+          "Reviewed story 049",
+          "Reviewed story 050"
+        ],
+        "more": "Show 5 more reviewed stories",
+        "activeHistoryIndex": -1
+      },
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Show 5 more reviewed stories",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": null,
+        "target": {
+          "x": 238,
+          "y": 2203.8125,
+          "width": 184.671875,
+          "height": 34,
+          "bottom": 2237.8125,
+          "top": 2203.8125
+        },
+        "scrollTop": 2760.5,
+        "keyboard": false,
+        "toolbar": null,
+        "header": null,
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0,
+          "top": 0
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "recentFocus": [
+        {
+          "index": 0,
+          "count": 76,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "All songs",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 16,
+            "y": 108.5,
+            "width": 176,
+            "height": 44
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "",
+          "outline": {
+            "width": "3px",
+            "style": "none",
+            "color": "rgb(32, 32, 36)"
+          }
+        },
+        {
+          "index": 3,
+          "count": 83,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "News bucket",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 16,
+            "y": 264.5,
+            "width": 168,
+            "height": 44
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "",
+          "outline": {
+            "width": "3px",
+            "style": "none",
+            "color": "rgb(32, 32, 36)"
+          }
+        },
+        {
+          "index": 36,
+          "count": 47,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Show 25 more reviewed stories",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 504.8125,
+            "width": 191.375,
+            "height": 34
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-show-more",
+          "outline": {
+            "width": "3px",
+            "style": "none",
+            "color": "rgb(32, 32, 36)"
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "reviewed-history-single-label",
+      "sha256": "279c712dc8b479bf2af8d64ff6d74de1844c6e0a91e1a8ec9e4324c3fe469745",
+      "history": {
+        "count": 25,
+        "titles": [
+          "Reviewed story 001",
+          "Reviewed story 002",
+          "Reviewed story 003",
+          "Reviewed story 004",
+          "Reviewed story 005",
+          "Reviewed story 006",
+          "Reviewed story 007",
+          "Reviewed story 008",
+          "Reviewed story 009",
+          "Reviewed story 010",
+          "Reviewed story 011",
+          "Reviewed story 012",
+          "Reviewed story 013",
+          "Reviewed story 014",
+          "Reviewed story 015",
+          "Reviewed story 016",
+          "Reviewed story 017",
+          "Reviewed story 018",
+          "Reviewed story 019",
+          "Reviewed story 020",
+          "Reviewed story 021",
+          "Reviewed story 022",
+          "Reviewed story 023",
+          "Reviewed story 024",
+          "Reviewed story 025"
+        ],
+        "more": "Show 1 more reviewed story",
+        "activeHistoryIndex": -1
+      },
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Show 1 more reviewed story",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": null,
+        "target": {
+          "x": 238,
+          "y": 503.8125,
+          "width": 173.9765625,
+          "height": 34,
+          "bottom": 537.8125,
+          "top": 503.8125
+        },
+        "scrollTop": 2760.5,
+        "keyboard": true,
+        "toolbar": null,
+        "header": null,
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0,
+          "top": 0
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "recentFocus": [
+        {
+          "index": 34,
+          "count": 47,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Reviewed story 024",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 517.8125,
+            "width": 221.1328125,
+            "height": 24
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-article-link",
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 35,
+          "count": 47,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Reviewed story 025",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 438.8125,
+            "width": 221.1328125,
+            "height": 24
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-article-link",
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 36,
+          "count": 47,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Show 1 more reviewed story",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 503.8125,
+            "width": 173.9765625,
+            "height": 34
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-show-more",
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "providers": 0,
+      "serverWrites": 0
+    },
+    {
+      "name": "reviewed-history-single-after-tab",
+      "sha256": "2f95e1029a2ef3d651dd787c6bb7d5686901c74ee07cf97f6add85daf06f3bd2",
+      "history": {
+        "count": 26,
+        "titles": [
+          "Reviewed story 001",
+          "Reviewed story 002",
+          "Reviewed story 003",
+          "Reviewed story 004",
+          "Reviewed story 005",
+          "Reviewed story 006",
+          "Reviewed story 007",
+          "Reviewed story 008",
+          "Reviewed story 009",
+          "Reviewed story 010",
+          "Reviewed story 011",
+          "Reviewed story 012",
+          "Reviewed story 013",
+          "Reviewed story 014",
+          "Reviewed story 015",
+          "Reviewed story 016",
+          "Reviewed story 017",
+          "Reviewed story 018",
+          "Reviewed story 019",
+          "Reviewed story 020",
+          "Reviewed story 021",
+          "Reviewed story 022",
+          "Reviewed story 023",
+          "Reviewed story 024",
+          "Reviewed story 025",
+          "Reviewed story 026"
+        ],
+        "activeHistoryIndex": -1
+      },
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Shuffle",
+        "type": null,
+        "role": null
+      },
+      "geometry": {
+        "row": null,
+        "target": {
+          "x": 537.9921875,
+          "y": 630.5,
+          "width": 32,
+          "height": 32,
+          "bottom": 662.5,
+          "top": 630.5
+        },
+        "scrollTop": 2760.5,
+        "keyboard": true,
+        "toolbar": null,
+        "header": null,
+        "player": {
+          "x": 16,
+          "y": 616,
+          "width": 1248,
+          "height": 88,
+          "bottom": 704,
+          "top": 616
+        },
+        "notices": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0,
+          "bottom": 0,
+          "top": 0
+        },
+        "viewport": {
+          "width": 1280,
+          "height": 720
+        }
+      },
+      "recentFocus": [
+        {
+          "index": 36,
+          "count": 47,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Show 1 more reviewed story",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 503.8125,
+            "width": 173.9765625,
+            "height": 34
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-show-more",
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 36,
+          "count": 47,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Reviewed story 026",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 238,
+            "y": 506.8125,
+            "width": 221.1328125,
+            "height": 24
+          },
+          "hitTag": "BUTTON",
+          "hitClass": "news-bucket-article-link",
+          "outline": {
+            "width": "2px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        },
+        {
+          "index": 37,
+          "count": 47,
+          "rowIndex": -1,
+          "tag": "BUTTON",
+          "type": null,
+          "name": "Shuffle",
+          "visible": true,
+          "insideViewport": true,
+          "centerUncovered": true,
+          "playerTop": 616,
+          "rect": {
+            "x": 537.9921875,
+            "y": 630.5,
+            "width": 32,
+            "height": 32
+          },
+          "hitTag": "svg",
+          "hitClass": {},
+          "outline": {
+            "width": "1px",
+            "style": "solid",
+            "color": "rgb(201, 40, 67)"
+          }
+        }
+      ],
+      "player": "Song 00002",
+      "transport": "Play",
+      "providers": 0,
+      "serverWrites": 0
+    }
+  ],
+  "fixture": {
+    "data": "Actual isolated safeStorage/main/prepared-news load seeded with55 or26 synthetic reviewed articles, no scripts/takes/requests. Actual current renderer/preload.",
+    "main": "Instrumented actual main/services from the existing provider fixture. Shared Keychain adapter returns null. Scheduler stopped. Inactive recovery setter/read-fault adapters retained. No fault is enabled for these journeys.",
+    "network": "Local127.0.0.1:5191 synthetic catalog. Nonlocal fetch and server writes blocked. No key, source URL, provider request or generation is submitted by these UI actions.",
+    "hashes": {
+      "bootstrap-history-before.mjs": "eaea8ae252356dbd3a4f28754e05576ad3bb7a2d1f9c5a813c80bf2cfb188ac8",
+      "bootstrap-history.mjs": "3e5e63b6042343f38b584091822527a21ba04faf64e5822c271be55320260118",
+      "observe-history.cjs": "c2f022b0dc7aecfd5a81f9412b0473c6a801f3d0c4290bc89b71e1ab79398440",
+      "server.mjs": "e5ad2ac7ee103d80a6131080a1545050cba15441f871909381e71c6bba488820"
+    },
+    "cleanup": "Three observer runs exited0, and owned catalog server exited143 after explicit shutdown."
+  },
+  "checks": {
+    "buildIncludingTypeScript": "pass",
+    "fullEslint": "pass",
+    "actualDiffReview": "no actionable finding",
+    "beforeSnapshots": 2,
+    "correctedSnapshots": 6,
+    "rendererErrors": 0,
+    "providerRequests": 0,
+    "serverWrites": 0,
+    "unitTests": "not run",
+    "releasePackage": "not run"
+  },
+  "sourceAndBundleSha256": {
+    "src/renderer/pages/Stations/components/NewsBucket.component.tsx": "61e5027abd4def319532645a9a3b1425a4b6531860a2609b113c18670c0fa2f3",
+    "out/renderer/index.html": "42a5d5001ecf1d1801762a01cc04f25dba4e2f31ba5e8abdcf45d3fd683ac548",
+    "out/renderer/assets/index-CUgwj8xN.css": "8dedf91bec8e203b47c5630cbd8925f4f357523a53a65c6a66ba92b9ba0f19c4",
+    "out/renderer/assets/index-BOme4564.js": "35fa19bc8ce7bc3855f50b83bd497ba4cb15d5dedb65a3be261ae41c3044dee3",
+    "out/main/index.js": "be2b4baff3c4577a06efadbdf021d8cda9b6319cb3d9157be5f238469c457fbd",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb"
+  },
+  "limits": [
+    "The list-refresh/reordering, missing-key, lost-window-focus and overlay guards are source-reviewed; no artificial concurrent-commit injection or VoiceOver pass is claimed.",
+    "Native input and AX confirm the actions and targets. Two-RAF DOM telemetry records stable focus geometry; no new screenshot artifact is supplied.",
+    "No app source changes occur after the corrected native runs.",
+    "No live-source, audible-quality, first-time listener, package/release, smaller-window or enlarged-zoom pass.",
+    "Q06 remains Review; all187 row dispositions and28 remaining active checks stay unchanged. Outside the dated90-record audit."
+  ]
+}

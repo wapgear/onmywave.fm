@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { ExternalLink, Newspaper, Radio } from 'lucide-react';
 import type { LocalState, NewsArticle, NewsBreak, PreparedNewsLibrary, PreparedNewsTake, PreparedNewsScript, ReviewedNewsArticle } from '../../../../shared/types';
 import { eligibleNewsTakes } from '../../../../shared/news-pool';
@@ -28,6 +28,19 @@ export function NewsBucket({ library, localState, automation, profileStatusUnkno
 }) {
   const player = usePlayer();
   const [historyLimit, setHistoryLimit] = useState(25);
+  const historyList = useRef<HTMLUListElement>(null);
+  const revealHistory = useRef<{ button: HTMLButtonElement; key: string } | null>(null);
+  useLayoutEffect(() => {
+    const pending = revealHistory.current;
+    revealHistory.current = null;
+    if (!pending) return;
+    const active = document.activeElement;
+    if ((active !== pending.button && !(active === document.body && !pending.button.isConnected))
+      || document.visibilityState !== 'visible' || !document.hasFocus() || document.querySelector('dialog[open], :popover-open')) return;
+    const target = [...(historyList.current?.querySelectorAll<HTMLButtonElement>('[data-reviewed-key]') ?? [])].find(button => button.dataset.reviewedKey === pending.key);
+    target?.focus({ preventScroll: true });
+    target?.scrollIntoView({ block: 'nearest' });
+  }, [historyLimit]);
   const pageProfile = localState.roomProfiles.find(room => room.id === localState.activeRoomProfileId);
   const eligible = pageProfile ? eligibleNewsTakes(library.takes, localState, pageProfile.id) : [];
   const active = player.activeNews;
@@ -46,6 +59,7 @@ export function NewsBucket({ library, localState, automation, profileStatusUnkno
     .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)) : [];
   const reviewed = [...(library.reviewedArticles ?? [])].sort((a, b) => Date.parse(b.reviewedAt) - Date.parse(a.reviewedAt));
   const visibleReviewed = reviewed.slice(0, historyLimit);
+  const nextHistoryCount = Math.min(25, reviewed.length - visibleReviewed.length);
   const runtimeDJ = localState.djs.find(dj => dj.id === automation.room?.room.djId);
   const runtimeDiffersFromPage = !!automation.room && pageProfile?.id !== automation.room.id;
   const phaseLabel = player.newsPhase === 'speaking' ? 'On air'
@@ -145,7 +159,12 @@ export function NewsBucket({ library, localState, automation, profileStatusUnkno
     <section className="news-bucket-history" aria-labelledby="news-bucket-history-title">
       <div className="news-bucket-section-heading"><div><span className="eyebrow">{savedNewsStale ? 'Last loaded article history' : 'Article history'}</span><h3 id="news-bucket-history-title">Reviewed across all profiles</h3></div><span>{reviewed.length} {reviewed.length === 1 ? 'story' : 'stories'}{savedNewsStale ? ' last loaded' : ''}</span></div>
       <p className="news-bucket-muted">Reviewed stories are excluded from future news selection in every profile.</p>
-      {!reviewed.length ? <p className="news-bucket-history-empty">{savedNewsStale ? 'No reviewed stories were in the last loaded history.' : 'No stories have been reviewed yet.'}</p> : <><ul className="news-bucket-reviewed">{visibleReviewed.map(article => <ReviewedRow key={`${article.canonicalUrl}-${article.requestId}`} article={article} openSource={openSource} />)}</ul>{reviewed.length > visibleReviewed.length && <button className="news-bucket-show-more" onClick={() => setHistoryLimit(limit => limit + 25)}>Show 25 more reviewed stories</button>}</>}
+      {!reviewed.length ? <p className="news-bucket-history-empty">{savedNewsStale ? 'No reviewed stories were in the last loaded history.' : 'No stories have been reviewed yet.'}</p> : <><ul ref={historyList} className="news-bucket-reviewed">{visibleReviewed.map(article => <ReviewedRow key={`${article.canonicalUrl}-${article.requestId}`} article={article} openSource={openSource} />)}</ul>{nextHistoryCount > 0 && <button className="news-bucket-show-more" onClick={event => {
+        const first = reviewed[visibleReviewed.length];
+        revealHistory.current = first && document.activeElement === event.currentTarget && event.currentTarget.matches(':focus-visible')
+          ? { button: event.currentTarget, key: JSON.stringify([first.canonicalUrl, first.requestId]) } : null;
+        setHistoryLimit(limit => limit + 25);
+      }}>Show {nextHistoryCount} more reviewed {nextHistoryCount === 1 ? 'story' : 'stories'}</button>}</>}
     </section>
   </section>;
 }
@@ -164,5 +183,5 @@ function ReviewedRow({ article, openSource }: { article: ReviewedNewsArticle; op
       : article.outcome === 'selected' ? 'Selected for a briefing' : 'Reviewed · not selected';
   let domain = '';
   try { domain = new URL(article.url).hostname.replace(/^www\./u, ''); } catch { /* Preserve saved source rows even when a reference is malformed. */ }
-  return <li className="news-bucket-reviewed-row"><div><button className="news-bucket-article-link" onClick={() => openSource(article.url)}>{article.title}<ExternalLink size={13} aria-hidden="true" /></button><span>{article.source}{domain ? ` · ${domain}` : ''}{Number.isFinite(Date.parse(article.publishedAt ?? '')) ? ` · Published ${new Date(article.publishedAt!).toLocaleDateString()}` : ' · Date unavailable'}</span></div><div className="news-bucket-reviewed-meta"><span>{outcome}</span><time dateTime={article.reviewedAt}>{new Date(article.reviewedAt).toLocaleDateString()}</time></div></li>;
+  return <li className="news-bucket-reviewed-row"><div><button className="news-bucket-article-link" data-reviewed-key={JSON.stringify([article.canonicalUrl, article.requestId])} onClick={() => openSource(article.url)}>{article.title}<ExternalLink size={13} aria-hidden="true" /></button><span>{article.source}{domain ? ` · ${domain}` : ''}{Number.isFinite(Date.parse(article.publishedAt ?? '')) ? ` · Published ${new Date(article.publishedAt!).toLocaleDateString()}` : ' · Date unavailable'}</span></div><div className="news-bucket-reviewed-meta"><span>{outcome}</span><time dateTime={article.reviewedAt}>{new Date(article.reviewedAt).toLocaleDateString()}</time></div></li>;
 }
