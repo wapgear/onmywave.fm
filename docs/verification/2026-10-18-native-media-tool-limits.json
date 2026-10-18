@@ -1,0 +1,168 @@
+{
+  "date": "2026-10-18",
+  "sourceCommit": "1ef0f6a7eabe9eff690fabe476075d97828f53c2",
+  "scope": "Bounded check of available native media-control tooling; no M16 or M17 acceptance promotion.",
+  "environment": {
+    "OS": "macOS27.2 arm64",
+    "window": "1280x720,100% app zoom",
+    "input": "Native CUA only",
+    "observation": "Passive DOM telemetry",
+    "app": "Production renderer/preload with copied instrumented main/storage; disposable safeStorage/catalog, null shared-key adapter, stopped scheduler, muted media",
+    "catalog": "Owned localhost5191;40 songs/12 albums. Static startup label still incorrectly says20000/2000."
+  },
+  "attempts": [
+    {
+      "action": "Native fixture Play",
+      "result": "UI becomes Pause, position advances and mediaSession reports playing."
+    },
+    {
+      "action": "CUA pressKey XF86AudioPlay",
+      "result": "Computer Use server error -10005: keyNotFound(\"XF86AudioPlay\")",
+      "meaning": "Input rejected by tool. No macOS media-key event or app-handler outcome established."
+    },
+    {
+      "action": "CUA getApp com.apple.controlcenter",
+      "result": "Computer Use was not approved to use Control Center",
+      "meaning": "Tool access denied; no reason supplied. No Control Center UI inspected or operated; no alternative route used to bypass the denial."
+    },
+    {
+      "action": "Native fixture Pause",
+      "result": "UI becomes Play and mediaSession reports paused."
+    }
+  ],
+  "observations": [
+    {
+      "name": "before-media-key",
+      "rawSha256": "b90913e68fdd6e1dc5b9d0fbf12548239bef70efb6887e14228d5b859efd3f6d",
+      "mediaSession": {
+        "state": "playing",
+        "title": "Song 00002"
+      },
+      "transport": "Pause",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 621.272216796875,
+          "y": 627.780029296875,
+          "width": 37.43994140625,
+          "height": 37.43994140625,
+          "top": 627.780029296875,
+          "right": 658.712158203125,
+          "bottom": 665.219970703125,
+          "left": 621.272216796875
+        },
+        "insideDrawer": false,
+        "name": "Pause",
+        "type": null,
+        "role": null
+      },
+      "providers": 0,
+      "HTTPWrites": 0
+    },
+    {
+      "name": "after-rejected-command",
+      "rawSha256": "1fef84f4b932a8ade6e838bf24c36cc080e6a912e3da5279c9c80a3a733c21cd",
+      "mediaSession": {
+        "state": "playing",
+        "title": "Song 00002"
+      },
+      "transport": "Pause",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 621.272216796875,
+          "y": 627.780029296875,
+          "width": 37.43994140625,
+          "height": 37.43994140625,
+          "top": 627.780029296875,
+          "right": 658.712158203125,
+          "bottom": 665.219970703125,
+          "left": 621.272216796875
+        },
+        "insideDrawer": false,
+        "name": "Pause",
+        "type": null,
+        "role": null
+      },
+      "providers": 0,
+      "HTTPWrites": 0
+    },
+    {
+      "name": "paused",
+      "rawSha256": "86548fbe492ea470e2ff92b08436220bc301cb0275f9a4843dd9a8a93ae7f893",
+      "mediaSession": {
+        "state": "paused",
+        "title": "Song 00002"
+      },
+      "transport": "Play",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 621.272216796875,
+          "y": 627.780029296875,
+          "width": 37.43994140625,
+          "height": 37.43994140625,
+          "top": 627.780029296875,
+          "right": 658.712158203125,
+          "bottom": 665.219970703125,
+          "left": 621.272216796875
+        },
+        "insideDrawer": false,
+        "name": "Play",
+        "type": null,
+        "role": null
+      },
+      "providers": 0,
+      "HTTPWrites": 0
+    }
+  ],
+  "bundles": {
+    "out/renderer/assets/index-fts6GN4_.js": "0790ffbffc259113301bd01c2fa08ea1339f6c79c005200cd885368b2abd4648",
+    "out/renderer/assets/index-B9cR7bvN.css": "78fcc2ec135ead9b4d1badd479acfb6d54ca4a41dc08f9be074474ddebe05f76",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb"
+  },
+  "fixtureHashes": {
+    "bootstrap.mjs": "c3c093229e7b7ec5354523c83e1f543725e5a2bf96719bfe81e8ce0b15ecaf85",
+    "observe.cjs": "5888cbbf022bcff0a310f8278ff850044aa1631bc6a2c3692bcb7a1dbc62f68d",
+    "server.mjs": "6eb85aca2a2082c80f614cd113c43d9a03300e78f96f7dd875e3f86ee889b9ab",
+    "out/main/index.js": "576624282916408675d3a7ee10b7528d3334dc477ed0de6f259d0339a53bd57a"
+  },
+  "sourceHashes": {
+    "src/renderer/player.tsx": "682513a44f59cf746c6464d24163181473d80e79addc33edd19aa2dfc9e810d4",
+    "src/renderer/components/Player/Player.component.tsx": "13cde7bdf704f5eb153d872508af3840c7fc7fd9befbd9b62e829d2a5233e27f",
+    "src/main/index.ts": "e4ab045607c0e17eed5cdf82594fdedad4c84430f9e3f5eaa72cb84e9bb465c4"
+  },
+  "report": {
+    "sha256": "c95b7f2f2163be0225d06104b471fea2bfa8d11672ac654d28c02b96695426ea",
+    "result": "observed",
+    "pageErrors": []
+  },
+  "processes": "Observer exit0. Exact owned catalog PID60523 revalidated, stopped and terminal handle exit143. Other apps and original local data left intact.",
+  "verification": "Scoped passive state/no-provider/no-HTTP-write predicates pass. Production source unchanged; no new build/lint/unit/live-codec run.",
+  "acceptance": {
+    "M16": "External. Physical/system media commands remain unverified.",
+    "M17": "External. Earlier live-codec evidence retained; distinct OS-mediated converted-audio control still unverified.",
+    "counts": "26 open,14 listener/12 other-proof; no status or requirement change."
+  },
+  "nextProof": "An operator or an explicitly authorized native system-control route must supply actual OS media events. Replay the named paused/playing/speech scenarios and converted-audio seek/control against the recorded session; renderer-handler invocation is not a substitute.",
+  "limits": [
+    "Tool rejection/denial is not an app defect or proof that physical media keys fail.",
+    "Ordinary native Play/Pause and renderer MediaSession state are not independent OS media-control evidence.",
+    "No audible, VoiceOver, actual sleep, broader platform/display or deferred viewport/zoom result."
+  ]
+}

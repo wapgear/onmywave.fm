@@ -177,3 +177,6 @@ The [Q06 consolidated audit](verification/2026-10-18-q06-keyboard-acceptance.jso
 
 
 The [18 October PRD reconciliation](verification/2026-10-18-current-prd-reconciliation.json) records the exact current hashes and a complete line-for-line successor to the dated source map. It retains every nonblank source line and all compound story results. Its 47 changed/new lines are textual freshness, not new tests or acceptance points. No source requirement, check or proof kind changes; Q13 remains open pending individual invariant/evidence review.
+
+
+The [native media-tool limit record](verification/2026-10-18-native-media-tool-limits.json) preserves three passive state projections, exact input rejection/access denial, one terminal observer and owned catalog cleanup. The successful Play/Pause uses ordinary native app input; it does not establish a system media command. No rejected key is counted as dispatched, and Control Center denial is not bypassed. M16/M17 and all acceptance counts remain unchanged.
