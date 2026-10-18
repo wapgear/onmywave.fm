@@ -25,3 +25,5 @@
 .room-request-history p:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
 
 .room-availability{min-width:0}.room-availability input[aria-disabled="true"]{cursor:progress}.room-progress-stop{min-width:0;max-width:100%}.room-progress-stop>button[aria-disabled="true"]{color:var(--muted);background:var(--surface);cursor:default}.room-progress-stop>button[aria-busy="true"]{cursor:progress}.room-progress-stop>button[aria-disabled="true"]:active{translate:0 0}
+
+.room-manual-action,.room-manual-feedback,.room-cancel-action{min-width:0;max-width:100%}.room-manual-action button[aria-disabled="true"],.room-manual-feedback button[aria-disabled="true"],.room-cancel-action button[aria-disabled="true"]{color:var(--muted);background:var(--surface);cursor:default}.room-manual-action button[aria-busy="true"],.room-manual-feedback button[aria-busy="true"],.room-cancel-action button[aria-busy="true"]{cursor:progress}.room-manual-action button[aria-disabled="true"]:active,.room-manual-feedback button[aria-disabled="true"]:active,.room-cancel-action button[aria-disabled="true"]:active{translate:0 0}
