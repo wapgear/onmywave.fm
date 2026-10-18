@@ -33,7 +33,7 @@ export function SettingsPage({ connection, update, disconnected, section, onSect
     {activeSection === 'djs' && <DJsPage />}
     {activeSection === 'general' && <div className="settings-content settings-preferences">
     <section><h2>Account</h2><dl className="settings-account"><div><dt>Signed in as</dt><dd>{connection.userName}</dd></div><div><dt>Server</dt><dd>{connection.serverUrl}</dd></div><div><dt>Version</dt><dd>Jellyfin {connection.serverVersion}</dd></div></dl><button className="settings-signout" disabled={savingLibraries || disconnect.isPending} onClick={() => setConfirm(true)}>Sign out</button>{connection.sessionOnly && <p className="notice">The app cannot reliably restore this connection after quitting. You may need to sign in again.</p>}</section>
-    <section><h2>Music libraries</h2><p className="settings-description">Choose the libraries shown in your collection. Your listening queue stays available.</p><LibraryChooser key={`${connection.id}-${connection.selectedLibraryIds.join(',')}`} connection={connection} done={update} disabled={disconnect.isPending} /></section>
+    <section><h2>Music libraries</h2><p className="settings-description">Choose the libraries shown in your collection. Your listening queue stays available.</p><LibraryChooser key={connection.id} connection={connection} done={update} disabled={disconnect.isPending} /></section>
     <DJPlaybackSettings />
     <NewsTransitions />
     <section><h2>About</h2><p className="settings-description">onmywave.fm Light for macOS</p></section>

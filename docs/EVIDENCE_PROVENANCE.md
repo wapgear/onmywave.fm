@@ -141,3 +141,6 @@ The [player DJ control record](verification/2026-10-18-player-dj-controls-focus.
 
 
 The [voice-preview record](verification/2026-10-18-voice-preview-focus.json) separates two baseline and eleven final native projections, includes source/bundle/fixture/raw hashes, and records shared-component source limits. Actual preview cache publication uses bundled bytes substituted only at speech rendering; no external request is made. Its current import-graph inventory lists 218 interactive definitions and does not claim computed runtime naming or whole-Q06 acceptance. All dispositions remain unchanged.
+
+
+The [account-form record](verification/2026-10-18-account-form-focus.json) separates baseline, rejected intermediate and 18 reviewed/final native projections. It records scoped failure/retry, actual disposable local key/library results, held requests and current-focus geometry, retaining the Connect observer readiness failure. Provider cases precede later Settings/Connect fixes; no missing intermediate bundle hash is invented. All 191 acceptance dispositions remain unchanged.
