@@ -615,7 +615,8 @@
     "Current source reconciliation hashes had been updated through later PRD changes while review/verification text still asserted no source change and26 open checks. Preserve the original reconciliation explicitly and make current metadata truthful.",
     "RADIO_EXPERIENCE112,116,118 are classified reference in the navigation map but contain binding evidence/acceptance rules. Their classification cannot exempt those obligations.",
     "Punctuation partition alone is not an atomic denominator. The six opening scope fragments demonstrate compound stages, mandatory variants and duplicate-scope review without granting acceptance.",
-    "Music-first and independent opt-ins now have six bounded canonical review groups. The older keyless native record used a media-time setter; its timing result is not a current CUA-only natural-ending proof. No full group is accepted from partial evidence."
+    "Music-first and independent opt-ins now have six bounded canonical review groups. The older keyless native record used a media-time setter; its timing result is not a current CUA-only natural-ending proof. No full group is accepted from partial evidence.",
+    "Fresh current first-use engineering proof now covers MF01 fresh defaults and MF02 connect/select/album, no AI dispatch, natural continuation and paused process restoration. No listener or whole-group acceptance is inferred."
   ],
   "remainingWork": [
     "Review every non-structural line and fragment semantically; split compound outcomes where independent, preserve required condition/variant groups and deduplicate repeated source contracts.",
@@ -715,7 +716,7 @@
   },
   "clauseLedger": {
     "file": "2026-10-18-requirement-clauses.csv",
-    "sha256": "20303acba27b1fb26bcbdbfa2d333684528a286adf7dbdac4ca0ba246d3b75e6",
+    "sha256": "8ea57ba0f3755ca2e0de3b55f1f02dece7d7be472590b0fbe42bf1cc69bfce6c",
     "columns": "Candidate navigation, semantic review and actual proof review are distinct. Empty evidence/canonical IDs do not establish completion."
   },
   "scopeReviews": [
@@ -738,7 +739,7 @@
   "semanticReviews": [
     {
       "file": "2026-10-18-music-first-clause-adjudication.json",
-      "sha256": "9f4d5a8050b03c4dc329f8ada7ff33578b9f4c90a15a8b7ae6ae4dc02e9dddf4",
+      "sha256": "7fe4b9e38db66f32e51a19b84e2ac82f9e8509e0d51981219666d5e1d4967251",
       "meaning": "Six all-variants review groups with exact fragment links, direct static inspection, scoped prior evidence and explicit missing proof. No accepted groups or overall score."
     }
   ],

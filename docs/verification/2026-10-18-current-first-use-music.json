@@ -1,0 +1,261 @@
+{
+  "date": "2026-10-18",
+  "baseCommit": "786d3b3482d7a40bac7d96f19897ae2acab12664",
+  "scope": "Fresh current controlled R1 engineering journey: connect, choose library, play album without AI; navigate during playback, natural continuation, independent off flags, then paused restoration. No listener acceptance claim.",
+  "setup": {
+    "initialState": "Fresh temporary appData, no seeded connection, provider keys, DJs, sources, recordings or radio settings. Actual default storage creates the default profile.",
+    "network": "Owned localhost Jellyfin fixture, two libraries, 20000 songs and 2000 albums. Archive selection exposes10000 songs/1000 albums. Shared provider key adapter returns null; no key setters invoked. Unexpected external fetch attempts are counted then blocked.",
+    "media": "Actual native decoded40-second silent WAV through production media protocol; native playback muted. No audible-quality inference.",
+    "scheduler": "Production scheduler remains running; no stop/scheduling-hook override.",
+    "baseline": {
+      "cssWidth": 1280,
+      "cssHeight": 720,
+      "zoomFactor": 1
+    }
+  },
+  "driver": {
+    "inputs": "CUA native AX clicks and field values only, with fresh accessibility state after actions.",
+    "passive": "Playwright launch/close, initial reload for an Audio-constructor observer, DOM/native-media state and saved-file reads. Audio play/pause/seek methods, events and media time are never replaced or set.",
+    "lifecycle": "Playwright graceful app close and fresh process on same appData. This is session restoration proof, not physical Cmd-Q/window/sleep/hardware acceptance.",
+    "initialHarnessCorrection": "First attempt reloaded before initial app navigation completed, resulting in ERR_ABORTED. It terminated, then the driver waited for the observed initial heading before reload. Only the two successful complete processes provide behavior evidence."
+  },
+  "journey": [
+    {
+      "action": "Sign in through native form, select Archive music, save libraries",
+      "result": "All songs opens; no AI prerequisite or prompt blocks music."
+    },
+    {
+      "action": "Albums -> Album0002 -> Play album",
+      "result": "Ten-song album queue; actual native music plays at4.736724 seconds,40-second duration."
+    },
+    {
+      "action": "Settings -> Provider keys",
+      "result": "Three No key configured statuses; music still playing at28.295635 seconds."
+    },
+    {
+      "action": "News bucket -> All songs -> DJ controls",
+      "result": "Optional preparation and playback shown off; natural40-second end occurs once, next queue index1 plays. No news claims or provider requests."
+    },
+    {
+      "action": "Close DJ controls, Pause, graceful app close and restart with same temporary data",
+      "result": "Same ten-track queue,index1 and19.008015-second position restored paused; no play events or news generation."
+    }
+  ],
+  "observations": {
+    "first-signin": {
+      "snapshotSha256": "48d45819da8ea30ac30a4a39fac2f9c1a23083e80c0a3ac3a1b416c350fa296e",
+      "queueIndex": null,
+      "queueLength": 0,
+      "audio": [],
+      "events": [],
+      "DJEnabled": false,
+      "preparationEnabled": false,
+      "externalFetchAttempts": 0,
+      "newsSourceFetches": 0,
+      "generationOrClaimCalls": 0
+    },
+    "album-playing": {
+      "snapshotSha256": "45b12d9bf07dd2910b9ffd19b282f9954fbc88afb0d41d8a84d4b7003e5d9496",
+      "queueIndex": 0,
+      "queueLength": 10,
+      "audio": [
+        {
+          "paused": false,
+          "ended": false,
+          "time": 4.736724,
+          "duration": 40,
+          "readyState": 4
+        }
+      ],
+      "events": [
+        {
+          "type": "play",
+          "time": 0,
+          "at": 1792360564977
+        }
+      ],
+      "DJEnabled": false,
+      "preparationEnabled": false,
+      "externalFetchAttempts": 0,
+      "newsSourceFetches": 0,
+      "generationOrClaimCalls": 0
+    },
+    "keys-absent-music-playing": {
+      "snapshotSha256": "bba6ea1b68538a5de1a9948feb9698171a145c301303188c25aadf2a12bdccb0",
+      "queueIndex": 0,
+      "queueLength": 10,
+      "audio": [
+        {
+          "paused": false,
+          "ended": false,
+          "time": 28.295635,
+          "duration": 40,
+          "readyState": 4
+        }
+      ],
+      "events": [
+        {
+          "type": "play",
+          "time": 0,
+          "at": 1792360564977
+        }
+      ],
+      "DJEnabled": false,
+      "preparationEnabled": false,
+      "externalFetchAttempts": 0,
+      "newsSourceFetches": 0,
+      "generationOrClaimCalls": 0
+    },
+    "natural-continuation-dj-off": {
+      "snapshotSha256": "3b3a4fb00cc1dd494050b96f1c7e009456ad2707b3f25f17da70f9f4262a8bdf",
+      "queueIndex": 1,
+      "queueLength": 10,
+      "audio": [
+        {
+          "paused": false,
+          "ended": false,
+          "time": 7.159674,
+          "duration": 40,
+          "readyState": 4
+        }
+      ],
+      "events": [
+        {
+          "type": "play",
+          "time": 0,
+          "at": 1792360564977
+        },
+        {
+          "type": "pause",
+          "time": 40,
+          "at": 1792360605337
+        },
+        {
+          "type": "ended",
+          "time": 40,
+          "at": 1792360605343
+        },
+        {
+          "type": "play",
+          "time": 0,
+          "at": 1792360605350
+        }
+      ],
+      "DJEnabled": false,
+      "preparationEnabled": false,
+      "externalFetchAttempts": 0,
+      "newsSourceFetches": 0,
+      "generationOrClaimCalls": 0
+    },
+    "paused-before-close": {
+      "snapshotSha256": "49b53608c069c1f9d1c2dae6e4a51cb3054f076cce36f67001e793816c9a9d5d",
+      "queueIndex": 1,
+      "queueLength": 10,
+      "audio": [
+        {
+          "paused": true,
+          "ended": false,
+          "time": 19.008015,
+          "duration": 40,
+          "readyState": 4
+        }
+      ],
+      "events": [
+        {
+          "type": "play",
+          "time": 0,
+          "at": 1792360564977
+        },
+        {
+          "type": "pause",
+          "time": 40,
+          "at": 1792360605337
+        },
+        {
+          "type": "ended",
+          "time": 40,
+          "at": 1792360605343
+        },
+        {
+          "type": "play",
+          "time": 0,
+          "at": 1792360605350
+        },
+        {
+          "type": "pause",
+          "time": 19.008015,
+          "at": 1792360624388
+        }
+      ],
+      "DJEnabled": false,
+      "preparationEnabled": false,
+      "externalFetchAttempts": 0,
+      "newsSourceFetches": 0,
+      "generationOrClaimCalls": 0
+    },
+    "restored-paused": {
+      "snapshotSha256": "0eb4840c337ffb5dd7c461a389ff9a54c6b960347b263d65eda8077d75dbc769",
+      "queueIndex": 1,
+      "queueLength": 10,
+      "audio": [
+        {
+          "paused": true,
+          "ended": false,
+          "time": 19.008015,
+          "duration": 40,
+          "readyState": 4
+        }
+      ],
+      "events": [],
+      "DJEnabled": false,
+      "preparationEnabled": false,
+      "externalFetchAttempts": 0,
+      "newsSourceFetches": 0,
+      "generationOrClaimCalls": 0
+    }
+  },
+  "checks": {
+    "buildTypeScript": "passed",
+    "snapshotPredicates": "passed for six named current snapshots and two terminal successful native processes",
+    "rendererErrors": 0,
+    "visualInspection": "CUA screenshot of album/player at1280x720 content and100% zoom inspected. Music remains available with optional DJ Off.",
+    "unitTests": "not added or run",
+    "checklistDispositions": "unchanged;25 known open,14 listener and11 other-proof"
+  },
+  "sourceSha256": {
+    "src/main/index.ts": "aaa4568e65b5d8397b26a767ead775ce848e91038a58b9e3e486a29a0a6e22ec",
+    "src/main/storage.ts": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+    "src/main/news-workflow.ts": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+    "src/main/jellyfin.ts": "6e1191d733752c57787c1c9465085e014a0500e0543e56a22467019892ad74ab",
+    "src/main/media.ts": "c2dbac7a2c6892e44794cffde7cd5118f6999f712b1f6f06533b3a9f44245fe2",
+    "src/renderer/App.tsx": "eae93435308b21d89e771bc920b389b753743923b1d9e907abed0f5d551551f7",
+    "src/renderer/player.tsx": "aa7d866e5724945a3f06773a984f6983ccc6544ee08b02991fd54c0f53f25f0c",
+    "src/renderer/dj-playback.tsx": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+    "src/renderer/pages/Connection/Connection.page.tsx": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815",
+    "src/renderer/pages/Albums/Albums.page.tsx": "09a1292143de4e0f24a233a41b50e90fae8f19d394afae2f5171384f59fc9667",
+    "src/shared/dj-playback.ts": "7e807ff052f50332ff9c78b083c450a9f5c116f68fc36de93480165ec1e6e55b",
+    "src/shared/workflow.ts": "22bbb66493579cc57e09c69119943adec0fa2373d823820a2579bd4996e6cc77"
+  },
+  "fixtureSha256": {
+    "/private/tmp/music-first-native-current/build.mjs": "1d95c2d04b522c6e8259aa65cf303875bc67884880e54203588c4d955ccfa4d9",
+    "/private/tmp/music-first-native-current/bootstrap.mjs": "a7969c053c91b9a027bdda871bb552522727e5cbb9ab79b0e57a3fed7be1bbc6",
+    "/private/tmp/music-first-native-current/server.mjs": "c0b97d6efa738a407a3ee7d70a0351bb4c72a83ac5bdae5d81b39b5a9e6d423f",
+    "/private/tmp/music-first-native-current/observe.cjs": "0a01e99eea47182c29f7be9f670598dbb9238062ac8d053663d7f4509f5b731f",
+    "/private/tmp/music-first-native-current/native-report.json": "8084da49bd6458d710026538ee725867192ff9e751d24bc5ec62ed733cee5177",
+    "/private/tmp/music-first-native-current/restart-native-report.json": "75e5fd5e508a43e081e13de4dbf91d113e4d775aefe371f8542bdcd83448764b",
+    "/private/tmp/music-first-native-current/out/main/index.js": "4d4dc15995df7e1c85aea4f84522ac200385cdb928fa723bd80021ce3084b86a"
+  },
+  "productionOutputSha256": {
+    "out/preload/index.cjs": "9b78be58d4f9bd70fb5b6d3315d888ee9442cfbf09bfab2b2f902de015e902f2",
+    "out/renderer/assets/index-BJOU1xVm.js": "b8a16c94e7c2d0225b376f2b4ef956e92572b10867e6450a7bf28936d2d45082",
+    "out/renderer/assets/index-B9cR7bvN.css": "78fcc2ec135ead9b4d1badd479acfb6d54ca4a41dc08f9be074474ddebe05f76"
+  },
+  "limitations": [
+    "Controlled Jellyfin responses and silent muted media do not prove actual server compatibility or audible quality.",
+    "No uncoached listener session, first-attempt cohort success or overall percentage. MF02 human requirement remains unachieved.",
+    "Fresh defaults and this saved-session restart are covered; invalid/legacy settings normalization variants remain static-only under MF01.",
+    "No physical sleep/wake, window close, media keys, VoiceOver or broader macOS/display proof.",
+    "No smaller viewport or200% zoom test."
+  ],
+  "cleanup": "Both native processes exited0 after observation; owned local server stopped130. Only isolated temporary data used."
+}
