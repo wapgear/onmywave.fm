@@ -185,7 +185,7 @@ Metadata includes artwork, title, artist, album artist, album, duration, year, g
 
 - Add one song, multiple selected songs, or all tracks from an album.
 
-- During an add operation, choose an existing playlist or create a new one.
+- During an add operation, choose an existing playlist or create a new one. Keep the chosen destination, name and skip-existing option readable and keyboard-focusable while saving, with edits locked. Show unavailable Save, Cancel, Close and Review actions; repeated activation cannot duplicate the write or leave during its readback. A definite failure retains the draft for an explicit retry. An uncertain result locks changes and offers checking the refreshed playlists. Success closes the dialog and restores its opener.
 
 - Remove tracks from editable playlists and reorder them.
 

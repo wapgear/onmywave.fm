@@ -71,3 +71,9 @@ input[type=checkbox]{accent-color:var(--accent)}
 .notice.error button[aria-disabled="true"]:active { translate:0 0; }
 .modal-actions button[aria-disabled="true"] { cursor:progress; color:var(--muted); background:var(--surface); }
 .modal-actions button[aria-disabled="true"]:active { translate:0 0; background:var(--surface); }
+.modal-heading .icon-button[aria-disabled="true"] { cursor:progress; color:var(--muted); }
+.modal-heading .icon-button[aria-disabled="true"]:hover { background:transparent; }
+.modal-heading .icon-button[aria-disabled="true"]:active { translate:0 0; background:transparent; }
+.modal select[aria-disabled="true"], .modal input[type=checkbox][aria-disabled="true"] { cursor:progress; color:var(--muted); }
+.modal .room-link[aria-disabled="true"] { cursor:progress; color:var(--muted); text-decoration:none; }
+.modal .room-link[aria-disabled="true"]:active { translate:0 0; }

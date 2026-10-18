@@ -1,0 +1,2093 @@
+{
+  "date": "2026-10-18",
+  "baseCommit": "faf5fddba0d341a0c176f07a2400ae987dd92a8f",
+  "scope": [
+    "Q06/R12 and STAR M6 Add to playlist pending/error/uncertain controls",
+    "Shared Dialog close unavailable presentation used by AddPlaylist and PlaylistNameDialog"
+  ],
+  "baseline": {
+    "contentSizePoints": [
+      1280,
+      720
+    ],
+    "appZoom": 1,
+    "runtime": "macOS arm64, Electron43.7.0, Retina display"
+  },
+  "before": "Native Return from Add playlist name makes the focused input disabled and leaves BODY during the create and list invalidation. Success restores Actions for Song10000 normally; that existing completion behavior is preserved.",
+  "implementation": [
+    "Read-only name and native-focusable aria-disabled select/checkbox preserve focus. Block key/pointer/click native changes while pending or uncertain and restore controlled values in onChange. Tab and Escape retain their normal guarded routing.",
+    "Synchronous inFlight blocks duplicate submit, dismissal and Review playlists through async success/error invalidations. onSettled unlocks. Definite rejection keeps the draft; uncertain results cannot repeat a write.",
+    "Save remains native-focusable during pending/uncertain states, including when refreshed recovery metadata changes. Existing business eligibility gates remain for settled forms.",
+    "Optional Shared Dialog closeDisabled gives a visible aria-disabled Close icon and guards icon/Escape/backdrop. The existing playlist-name dialog also opts in during save. Scoped muted/progress styling keeps values and focus outlines readable."
+  ],
+  "pairedDecision": {
+    "Steve": "Initially proposed guarded aria-disabled native controls. Challenge preferred native-disabled select/checkbox with synchronous transfer to Save, reserving concern about popup ambiguity. Actual source review supports implemented guards subject to native/assistive-technology confirmation.",
+    "Elena": "Proposed preserving focus with native default prevention and controlled restoration; supported optional Shared close presentation. Actual source review found missing visual unavailable treatment for select/checkbox/Review; root added scoped styles.",
+    "Morgan": "Chose focus preservation provisionally over submit-time focus transfer, then native-tested both select and checkbox. Down/Space/Return/pointer leave the select closed/unchanged; Space/pointer leave checkbox unchanged. Both keep native focus. No new AT/VoiceOver pass.",
+    "finalReview": "Steve and Elena independently reviewed final source, four matching source hashes and the evidence record; both found no blocker. VoiceOver/AT and Q06 limits retained."
+  },
+  "phases": {
+    "before": {
+      "bundleHashes": {
+        "out/renderer/assets/index-AFWnzW1L.css": "3f735ed1795b98b60212b0b80a5ddc49124a5520be7b80e32f2868027e9c3d4d",
+        "out/renderer/assets/index-BswJDzMY.js": "b612d676c50f5c93bb2754daa05a413a4fd441ba2e70d8d434c8c69ce717b8ab",
+        "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2",
+        "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb"
+      },
+      "snapshots": [
+        {
+          "name": "before-name-ready",
+          "rawSha256": "5a91f83f32c6982f0e4536aeb4d2370ce6937cd3db14b956979a4724c28e8894",
+          "observedAt": 1792314314074,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "INPUT",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 447,
+              "y": 378.8046875,
+              "width": 386,
+              "height": 38,
+              "top": 378.8046875,
+              "right": 833,
+              "bottom": 416.8046875,
+              "left": 447
+            },
+            "insideDrawer": false,
+            "name": "",
+            "type": null,
+            "label": "Playlist name",
+            "role": null
+          },
+          "focusScope": "Add song to playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "label": "Playlist name",
+                  "disabled": false,
+                  "readOnly": false,
+                  "value": "Add focus before",
+                  "active": true
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Create playlist",
+                  "disabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "All songs",
+            "Add song to playlist"
+          ],
+          "dialogs": [
+            {
+              "title": "Add song to playlist",
+              "paragraphs": [
+                "Changes are saved to Jellyfin. Your account must have permission to edit the selected playlist."
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [],
+            "mutationCalls": []
+          },
+          "transport": "Play"
+        },
+        {
+          "name": "before-pending-body",
+          "rawSha256": "5ce45b30f71fcbd87afe57080ca1ab3c346e930825bcd584b8368af0d98cf2a1",
+          "observedAt": 1792314337028,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BODY",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 720,
+              "top": 0,
+              "right": 1280,
+              "bottom": 720,
+              "left": 0
+            },
+            "insideDrawer": false,
+            "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedAll songsYour Jellyfin libraryGenreAny genreAny genreJazzRockTagAny tagAny tagArchiveLiveStudioSortDate addedDate addedTitleArtistAlbumYearNewest first#TitleAlbumActions1Song 10000Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details2Song 09999Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details3Song 09998Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details4Song 09997Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details5Song 09996Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details6Song 09995Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details7Song 09994Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details8Song 09993Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details9Song 09992Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details10Song 09991Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details11Song 09990Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details12Song 09989Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details13Song 09988Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details14Song 09987Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details15Song 09986Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details80 of 10,000 songs loadedLoad more songsSong 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settingsAdd song to playlistPlaylistCreate a new playlistFixture editableOther collectionPlaylist nameChanges are saved to Jellyfin. Your account must have permission to edit the selected playlist.CancelSaving\u2026\n  \n\n",
+            "type": null,
+            "role": null
+          },
+          "focusScope": null,
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "label": "Playlist name",
+                  "disabled": true,
+                  "readOnly": false,
+                  "value": "Add focus before",
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "All songs",
+            "Add song to playlist"
+          ],
+          "dialogs": [
+            {
+              "title": "Add song to playlist",
+              "paragraphs": [
+                "Changes are saved to Jellyfin. Your account must have permission to edit the selected playlist."
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [
+              "createPlaylist"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792314317945,
+                "mode": "hold"
+              }
+            ]
+          },
+          "transport": "Play"
+        },
+        {
+          "name": "before-readback-body",
+          "rawSha256": "8c8f3d3069053d74890749dc9be017bef7eba7bd7cdbbb1ae1e5eaf6126ce0b9",
+          "observedAt": 1792314341100,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BODY",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 720,
+              "top": 0,
+              "right": 1280,
+              "bottom": 720,
+              "left": 0
+            },
+            "insideDrawer": false,
+            "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedAll songsYour Jellyfin libraryGenreAny genreAny genreJazzRockTagAny tagAny tagArchiveLiveStudioSortDate addedDate addedTitleArtistAlbumYearNewest first#TitleAlbumActions1Song 10000Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details2Song 09999Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details3Song 09998Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details4Song 09997Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details5Song 09996Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details6Song 09995Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details7Song 09994Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details8Song 09993Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details9Song 09992Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details10Song 09991Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details11Song 09990Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details12Song 09989Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details13Song 09988Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details14Song 09987Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details15Song 09986Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details80 of 10,000 songs loadedLoad more songsSong 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settingsAdd song to playlistPlaylistCreate a new playlistFixture editableOther collectionPlaylist nameChanges are saved to Jellyfin. Your account must have permission to edit the selected playlist.CancelSaving\u2026\n  \n\n",
+            "type": null,
+            "role": null
+          },
+          "focusScope": null,
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "label": "Playlist name",
+                  "disabled": true,
+                  "readOnly": false,
+                  "value": "Add focus before",
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "All songs",
+            "Add song to playlist"
+          ],
+          "dialogs": [
+            {
+              "title": "Add song to playlist",
+              "paragraphs": [
+                "Changes are saved to Jellyfin. Your account must have permission to edit the selected playlist."
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 1,
+            "providers": 0,
+            "held": [
+              "playlists"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792314317945,
+                "mode": "hold"
+              }
+            ]
+          },
+          "transport": "Play"
+        },
+        {
+          "name": "before-success-opener",
+          "rawSha256": "a9844056a2579e877e3308fa559da50fd6565770c986a40712901d81eab150bf",
+          "observedAt": 1792314347993,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 1214,
+              "y": 248.5,
+              "width": 28,
+              "height": 30,
+              "top": 248.5,
+              "right": 1242,
+              "bottom": 278.5,
+              "left": 1214
+            },
+            "insideDrawer": false,
+            "name": "Actions for Song 10000",
+            "type": null,
+            "role": null
+          },
+          "focusScope": null,
+          "playlistForm": [],
+          "headings": [
+            "All songs"
+          ],
+          "dialogs": [],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 1,
+            "providers": 0,
+            "held": [],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792314317945,
+                "mode": "hold"
+              }
+            ]
+          },
+          "transport": "Play"
+        }
+      ]
+    },
+    "nativeGuardExperiment": {
+      "bundleHashes": {
+        "out/renderer/assets/index-D2vPcfMA.css": "cdc49dca5f3e3c15e50b68f7b3d74114373c64be4a19d51dd734ab4751b00651",
+        "out/renderer/assets/index-D_LzPpBm.js": "3b14d85fde3308d581794262b9dfe1c9dede7e0a5347121e4c4ccf7d26936bbe",
+        "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2",
+        "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb"
+      },
+      "snapshots": [
+        {
+          "name": "experiment-select-locked",
+          "rawSha256": "9cad8853b6a606a97184f041ebb6919dc743ba8377a020f4979462395cd539fd",
+          "observedAt": 1792314487238,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "SELECT",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 447,
+              "y": 299.8046875,
+              "width": 386,
+              "height": 38.5,
+              "top": 299.8046875,
+              "right": 833,
+              "bottom": 338.3046875,
+              "left": 447
+            },
+            "insideDrawer": false,
+            "name": "Create a new playlistFixture editableOther collectionAdd focus before",
+            "type": null,
+            "label": "PlaylistCreate a new playlistFixture editableOther collectionAdd focus before",
+            "role": null
+          },
+          "focusScope": "Add song to playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "PlaylistCreate a new playlistFixture editableOther collectionAdd focus before",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "value": "new",
+                  "active": true,
+                  "options": [
+                    {
+                      "value": "new",
+                      "label": "Create a new playlist",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "0000000000000000000000000007a120",
+                      "label": "Fixture editable",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a121",
+                      "label": "Other collection",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a124",
+                      "label": "Add focus before",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "text",
+                  "label": "Playlist name",
+                  "disabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": true,
+                  "value": "Add guarded creation",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "All songs",
+            "Add song to playlist"
+          ],
+          "dialogs": [
+            {
+              "title": "Add song to playlist",
+              "paragraphs": [
+                "Changes are saved to Jellyfin. Your account must have permission to edit the selected playlist."
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [
+              "createPlaylist"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792314470605,
+                "mode": "hold"
+              }
+            ]
+          },
+          "transport": "Play"
+        },
+        {
+          "name": "experiment-checkbox-locked",
+          "rawSha256": "75fb12d672e6c3ff0492dd14492aecc17482756579fda65333c7dcfbc2150f2c",
+          "observedAt": 1792314531130,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "INPUT",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 451,
+              "y": 378.5546875,
+              "width": 16,
+              "height": 16,
+              "top": 378.5546875,
+              "right": 467,
+              "bottom": 394.5546875,
+              "left": 451
+            },
+            "insideDrawer": false,
+            "name": "",
+            "type": "checkbox",
+            "label": "Skip songs already in this playlist",
+            "role": null
+          },
+          "focusScope": "Add song to playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "PlaylistCreate a new playlistFixture editableOther collectionAdd focus beforeAdd guarded creation",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "value": "0000000000000000000000000007a120",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "new",
+                      "label": "Create a new playlist",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a120",
+                      "label": "Fixture editable",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "0000000000000000000000000007a121",
+                      "label": "Other collection",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a124",
+                      "label": "Add focus before",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a125",
+                      "label": "Add guarded creation",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Skip songs already in this playlist",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": true
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "All songs",
+            "Add song to playlist"
+          ],
+          "dialogs": [
+            {
+              "title": "Add song to playlist",
+              "paragraphs": [
+                "Changes are saved to Jellyfin. Your account must have permission to edit the selected playlist."
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 1,
+            "providers": 0,
+            "held": [
+              "addPlaylistItems"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792314470605,
+                "mode": "hold"
+              },
+              {
+                "name": "addPlaylistItems",
+                "at": 1792314511563,
+                "mode": "hold"
+              }
+            ]
+          },
+          "transport": "Play"
+        }
+      ],
+      "limits": "Intermediate build lacks final muted select/checkbox/Review styles. Observer quit releases held operations during cleanup; the pending-add snapshot is not a final successful-add proof."
+    },
+    "final": {
+      "bundleHashes": {
+        "out/renderer/assets/index-B6xLThny.js": "3b14d85fde3308d581794262b9dfe1c9dede7e0a5347121e4c4ccf7d26936bbe",
+        "out/renderer/assets/index-xNvOC8FU.css": "40fa899bf92a922493225c00234d814cf468a7c27490fe9d4aa5cd90dd870b17",
+        "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2",
+        "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb"
+      },
+      "snapshots": [
+        {
+          "name": "final-name-pending",
+          "rawSha256": "6bf7beedadea53b3d9f9ff207ed8bfda94c3a4aa8a5756b6663540dc53fe7e52",
+          "observedAt": 1792314583078,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "INPUT",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 447,
+              "y": 378.8046875,
+              "width": 386,
+              "height": 38,
+              "top": 378.8046875,
+              "right": 833,
+              "bottom": 416.8046875,
+              "left": 447
+            },
+            "insideDrawer": false,
+            "name": "",
+            "type": null,
+            "label": "Playlist name",
+            "role": null
+          },
+          "focusScope": "Add song to playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "PlaylistCreate a new playlistFixture editableOther collectionAdd focus beforeAdd guarded creation",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "value": "new",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "new",
+                      "label": "Create a new playlist",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "0000000000000000000000000007a120",
+                      "label": "Fixture editable",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a121",
+                      "label": "Other collection",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a124",
+                      "label": "Add focus before",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a125",
+                      "label": "Add guarded creation",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "text",
+                  "label": "Playlist name",
+                  "disabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": true,
+                  "value": "Add rejected final",
+                  "checked": false,
+                  "active": true
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "All songs",
+            "Add song to playlist"
+          ],
+          "dialogs": [
+            {
+              "title": "Add song to playlist",
+              "paragraphs": [
+                "Changes are saved to Jellyfin. Your account must have permission to edit the selected playlist."
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [
+              "createPlaylist"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792314573999,
+                "mode": "hold"
+              }
+            ]
+          },
+          "transport": "Play"
+        },
+        {
+          "name": "final-rejection-readback-held",
+          "rawSha256": "0eb4546e7475f6d1ce4b3f0c836bb6e0d3606359929373cae0c29016dba735a5",
+          "observedAt": 1792314595119,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 804,
+              "y": 204.5546875,
+              "width": 34,
+              "height": 34,
+              "top": 204.5546875,
+              "right": 838,
+              "bottom": 238.5546875,
+              "left": 804
+            },
+            "insideDrawer": false,
+            "name": "Close dialog",
+            "type": null,
+            "role": null
+          },
+          "focusScope": "Add song to playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "PlaylistCreate a new playlistFixture editableOther collectionAdd focus beforeAdd guarded creation",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "value": "new",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "new",
+                      "label": "Create a new playlist",
+                      "disabled": true,
+                      "selected": true
+                    },
+                    {
+                      "value": "0000000000000000000000000007a120",
+                      "label": "Fixture editable",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a121",
+                      "label": "Other collection",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a124",
+                      "label": "Add focus before",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a125",
+                      "label": "Add guarded creation",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "text",
+                  "label": "Playlist name",
+                  "disabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": true,
+                  "value": "Add rejected final",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "All songs",
+            "Add song to playlist"
+          ],
+          "dialogs": [
+            {
+              "title": "Add song to playlist",
+              "paragraphs": [
+                "Changes are saved to Jellyfin. Your account must have permission to edit the selected playlist."
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 1,
+            "providers": 0,
+            "held": [
+              "playlists"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792314573999,
+                "mode": "hold"
+              }
+            ]
+          },
+          "transport": "Play"
+        },
+        {
+          "name": "final-rejected-editable",
+          "rawSha256": "c625a5f5d4bdcb5658122680a9f89b38ce59644b03b69ba0eddc820ea0552524",
+          "observedAt": 1792314601271,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 804,
+              "y": 175.65625,
+              "width": 34,
+              "height": 34,
+              "top": 175.65625,
+              "right": 838,
+              "bottom": 209.65625,
+              "left": 804
+            },
+            "insideDrawer": false,
+            "name": "Close dialog",
+            "type": null,
+            "role": null
+          },
+          "focusScope": "Add song to playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "PlaylistCreate a new playlistFixture editableOther collectionAdd focus beforeAdd guarded creation",
+                  "disabled": false,
+                  "ariaDisabled": null,
+                  "value": "new",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "new",
+                      "label": "Create a new playlist",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "0000000000000000000000000007a120",
+                      "label": "Fixture editable",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a121",
+                      "label": "Other collection",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a124",
+                      "label": "Add focus before",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a125",
+                      "label": "Add guarded creation",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "text",
+                  "label": "Playlist name",
+                  "disabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "Add rejected final",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Create playlist",
+                  "disabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "All songs",
+            "Add song to playlist"
+          ],
+          "dialogs": [
+            {
+              "title": "Add song to playlist",
+              "paragraphs": [
+                "Changes are saved to Jellyfin. Your account must have permission to edit the selected playlist."
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 1,
+            "providers": 0,
+            "held": [],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792314573999,
+                "mode": "hold"
+              }
+            ]
+          },
+          "transport": "Play"
+        },
+        {
+          "name": "final-retry-success-readback-held",
+          "rawSha256": "9435a6c844037e5471574941653142dd166bf7e5c4be4b9d5da8e9c8064a2407",
+          "observedAt": 1792314618997,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 756.265625,
+              "y": 496.1953125,
+              "width": 76.734375,
+              "height": 34,
+              "top": 496.1953125,
+              "right": 833,
+              "bottom": 530.1953125,
+              "left": 756.265625
+            },
+            "insideDrawer": false,
+            "name": "Saving\u2026",
+            "type": null,
+            "role": null
+          },
+          "focusScope": "Add song to playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "PlaylistCreate a new playlistFixture editableOther collectionAdd focus beforeAdd guarded creation",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "value": "new",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "new",
+                      "label": "Create a new playlist",
+                      "disabled": true,
+                      "selected": true
+                    },
+                    {
+                      "value": "0000000000000000000000000007a120",
+                      "label": "Fixture editable",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a121",
+                      "label": "Other collection",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a124",
+                      "label": "Add focus before",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a125",
+                      "label": "Add guarded creation",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "text",
+                  "label": "Playlist name",
+                  "disabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": true,
+                  "value": "Add rejected final",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": true
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "All songs",
+            "Add song to playlist"
+          ],
+          "dialogs": [
+            {
+              "title": "Add song to playlist",
+              "paragraphs": [
+                "Changes are saved to Jellyfin. Your account must have permission to edit the selected playlist."
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 2,
+            "providers": 0,
+            "held": [
+              "playlists"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792314573999,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792314604955,
+                "mode": "normal"
+              }
+            ]
+          },
+          "transport": "Play"
+        },
+        {
+          "name": "final-create-restored-opener",
+          "rawSha256": "e340ad3b19daf3e30f432b11711fdda88e155f7fa84f4a90710bcc007b3c9b4a",
+          "observedAt": 1792314626977,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 1214,
+              "y": 248.5,
+              "width": 28,
+              "height": 30,
+              "top": 248.5,
+              "right": 1242,
+              "bottom": 278.5,
+              "left": 1214
+            },
+            "insideDrawer": false,
+            "name": "Actions for Song 10000",
+            "type": null,
+            "role": null
+          },
+          "focusScope": null,
+          "playlistForm": [],
+          "headings": [
+            "All songs"
+          ],
+          "dialogs": [],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 2,
+            "providers": 0,
+            "held": [],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792314573999,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792314604955,
+                "mode": "normal"
+              }
+            ]
+          },
+          "transport": "Play"
+        },
+        {
+          "name": "final-checkbox-pending",
+          "rawSha256": "4c4255aba0762ba4801bc0d4de1baa21ee92fea098f9b666e420245d04108aac",
+          "observedAt": 1792314657877,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "INPUT",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 451,
+              "y": 378.5546875,
+              "width": 16,
+              "height": 16,
+              "top": 378.5546875,
+              "right": 467,
+              "bottom": 394.5546875,
+              "left": 451
+            },
+            "insideDrawer": false,
+            "name": "",
+            "type": "checkbox",
+            "label": "Skip songs already in this playlist",
+            "role": null
+          },
+          "focusScope": "Add song to playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "PlaylistCreate a new playlistFixture editableOther collectionAdd focus beforeAdd guarded creationAdd rejected final",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "value": "0000000000000000000000000007a120",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "new",
+                      "label": "Create a new playlist",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a120",
+                      "label": "Fixture editable",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "0000000000000000000000000007a121",
+                      "label": "Other collection",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a124",
+                      "label": "Add focus before",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a125",
+                      "label": "Add guarded creation",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a126",
+                      "label": "Add rejected final",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Skip songs already in this playlist",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": false,
+                  "active": true
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "All songs",
+            "Add song to playlist"
+          ],
+          "dialogs": [
+            {
+              "title": "Add song to playlist",
+              "paragraphs": [
+                "Changes are saved to Jellyfin. Your account must have permission to edit the selected playlist."
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 2,
+            "providers": 0,
+            "held": [
+              "addPlaylistItems"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792314573999,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792314604955,
+                "mode": "normal"
+              },
+              {
+                "name": "addPlaylistItems",
+                "at": 1792314649223,
+                "mode": "hold"
+              }
+            ]
+          },
+          "transport": "Play"
+        },
+        {
+          "name": "final-uncertain-no-repeat",
+          "rawSha256": "ae3f79c451c66a3070f1e82e3e5832b39c9dfe53b39500989a0cd89c12644e40",
+          "observedAt": 1792314671923,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 744.3359375,
+              "y": 557.6328125,
+              "width": 88.6640625,
+              "height": 34,
+              "top": 557.6328125,
+              "right": 833,
+              "bottom": 591.6328125,
+              "left": 744.3359375
+            },
+            "insideDrawer": false,
+            "name": "Add songs",
+            "type": null,
+            "role": null
+          },
+          "focusScope": "Add song to playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "PlaylistCreate a new playlistFixture editable \u00b7 Review neededOther collectionAdd focus beforeAdd guarded creationAdd rejected final",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "value": "0000000000000000000000000007a120",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "new",
+                      "label": "Create a new playlist",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a120",
+                      "label": "Fixture editable \u00b7 Review needed",
+                      "disabled": true,
+                      "selected": true
+                    },
+                    {
+                      "value": "0000000000000000000000000007a121",
+                      "label": "Other collection",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a124",
+                      "label": "Add focus before",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a125",
+                      "label": "Add guarded creation",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a126",
+                      "label": "Add rejected final",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Skip songs already in this playlist",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Review playlists",
+                  "disabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Close and check playlists",
+                  "disabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Add songs",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": true
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "All songs",
+            "Add song to playlist"
+          ],
+          "dialogs": [
+            {
+              "title": "Add song to playlist",
+              "paragraphs": [
+                "Changes are saved to Jellyfin. Your account must have permission to edit the selected playlist.",
+                "Some playlists need review before you can add songs. Review playlists",
+                "The change may already be saved. Check the refreshed playlists and their songs before trying again."
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 3,
+            "providers": 0,
+            "held": [],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792314573999,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792314604955,
+                "mode": "normal"
+              },
+              {
+                "name": "addPlaylistItems",
+                "at": 1792314649223,
+                "mode": "hold"
+              }
+            ]
+          },
+          "transport": "Play"
+        },
+        {
+          "name": "final-review-list",
+          "rawSha256": "34e2c1422a391578e74c675cf3f0369440070e42361552f32866d881d54dfde5",
+          "observedAt": 1792314679953,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "H1",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 238,
+              "y": 48.078125,
+              "width": 244.0625,
+              "height": 36.3984375,
+              "top": 48.078125,
+              "right": 482.0625,
+              "bottom": 84.4765625,
+              "left": 238
+            },
+            "insideDrawer": false,
+            "name": "Playlists",
+            "type": null,
+            "role": null
+          },
+          "focusScope": null,
+          "playlistForm": [],
+          "headings": [
+            "Playlists"
+          ],
+          "dialogs": [],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 3,
+            "providers": 0,
+            "held": [],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792314573999,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792314604955,
+                "mode": "normal"
+              },
+              {
+                "name": "addPlaylistItems",
+                "at": 1792314649223,
+                "mode": "hold"
+              }
+            ]
+          },
+          "transport": "Play"
+        },
+        {
+          "name": "final-review-link-pending",
+          "rawSha256": "631f864af52f9988a6135cab3f7bd858796e365331d0ec9a18cc84f9c9097128",
+          "observedAt": 1792314711503,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 733.1796875,
+              "y": 458.9921875,
+              "width": 89.84375,
+              "height": 26.3984375,
+              "top": 458.9921875,
+              "right": 823.0234375,
+              "bottom": 485.390625,
+              "left": 733.1796875
+            },
+            "insideDrawer": false,
+            "name": "Review playlists",
+            "type": "button",
+            "role": null
+          },
+          "focusScope": "Add song to playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "PlaylistCreate a new playlistFixture editable \u00b7 Review neededOther collectionAdd focus beforeAdd guarded creationAdd rejected final",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "value": "new",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "new",
+                      "label": "Create a new playlist",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "0000000000000000000000000007a120",
+                      "label": "Fixture editable \u00b7 Review needed",
+                      "disabled": true,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a121",
+                      "label": "Other collection",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a124",
+                      "label": "Add focus before",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a125",
+                      "label": "Add guarded creation",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "0000000000000000000000000007a126",
+                      "label": "Add rejected final",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "text",
+                  "label": "Playlist name",
+                  "disabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": true,
+                  "value": "Review gated creation",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Review playlists",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": true
+                },
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "All songs",
+            "Add song to playlist"
+          ],
+          "dialogs": [
+            {
+              "title": "Add song to playlist",
+              "paragraphs": [
+                "Changes are saved to Jellyfin. Your account must have permission to edit the selected playlist.",
+                "Some playlists need review before you can add songs. Review playlists"
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 3,
+            "providers": 0,
+            "held": [
+              "createPlaylist"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792314573999,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792314604955,
+                "mode": "normal"
+              },
+              {
+                "name": "addPlaylistItems",
+                "at": 1792314649223,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792314702549,
+                "mode": "hold"
+              }
+            ]
+          },
+          "transport": "Play"
+        },
+        {
+          "name": "final-review-gated-success",
+          "rawSha256": "f934c4742a915117cd6ab801d222591fb3b6dbf517548bb5a2f45a9f7d66f970",
+          "observedAt": 1792314723867,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 1214,
+              "y": 248.5,
+              "width": 28,
+              "height": 30,
+              "top": 248.5,
+              "right": 1242,
+              "bottom": 278.5,
+              "left": 1214
+            },
+            "insideDrawer": false,
+            "name": "Actions for Song 10000",
+            "type": null,
+            "role": null
+          },
+          "focusScope": null,
+          "playlistForm": [],
+          "headings": [
+            "All songs"
+          ],
+          "dialogs": [],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 4,
+            "providers": 0,
+            "held": [],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792314573999,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792314604955,
+                "mode": "normal"
+              },
+              {
+                "name": "addPlaylistItems",
+                "at": 1792314649223,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792314702549,
+                "mode": "hold"
+              }
+            ]
+          },
+          "transport": "Play"
+        }
+      ],
+      "writeAccounting": "Four actual synthetic POST attempts: rejected create, explicit successful create retry, saved addition whose connection is destroyed before confirmation, and a later successful create while another playlist needs review. Repeated keys/pointers do not increase counts."
+    }
+  },
+  "checks": {
+    "build": "Full production build including TypeScript passes; final CSS/JS hashes match current output.",
+    "lint": "Full ESLint passes after final style change.",
+    "native": "Final snapshots verify readonly name/repeat suppression, unavailable Close through held rejected readback, editable retained failure, focused Saving through successful readback, opener restoration, checkbox keyboard/pointer lock, uncertain no-repeat, refreshed review list and blocked Review navigation during a new create. Native screenshot inspected final muted values and visible Saving focus outline.",
+    "playback": "All experiment and final snapshots retain identical actual saved duplicate queue/current occurrence, position12, volume0.42, shuffle=false and repeat=off; paused transport remains.",
+    "processes": "Before, experiment and final observers exit0. Exact owned server PID21545 stopped; session93913 exits143.",
+    "reports": {
+      "before": {
+        "rawSha256": "6fe0bb39c8e74b01925364729642d266810cbf11b9a5b04328d01d5b0c06058d",
+        "result": "observed",
+        "errors": [],
+        "finalWrites": 1
+      },
+      "guard-experiment": {
+        "rawSha256": "1068f220ef31d7e8517ad91ea2ab0aa1dcf5c9c4b89694f99c5abc5a0f49472f",
+        "result": "observed",
+        "errors": [],
+        "finalWrites": 1
+      },
+      "final": {
+        "rawSha256": "6116e8dde6cb15b4f2899c33dcb7ae1667b01e0907063b22fdd47d3f3f7853d7",
+        "result": "observed",
+        "errors": [],
+        "finalWrites": 4
+      }
+    }
+  },
+  "fixture": {
+    "input": "Native CUA only; Playwright launches/observes. Distinct copied Electron app identity avoids the live development app.",
+    "runtime": "Production renderer/preload, copied instrumented actual main/storage, disposable safeStorage/catalog, null shared-key adapter, stopped scheduler, muted synthetic PCM media.",
+    "writes": "Only synthetic POST /Playlists and POST /Playlists/<id>/Items permitted via flags; all external/provider requests and other writes blocked.",
+    "serverCorrection": "Synthetic create now includes parsed request Ids in created entries; existing add supports duplicates and destroyed-response uncertainty. No live data mutated.",
+    "hashes": {
+      "observe.cjs": "58690e999af598badc014394ec122d5600dd7c0d356643b817bfb63d7b69efc2",
+      "bootstrap.mjs": "a48fcb989e12c3db8d80605fb32f19bbf095e89bbd31422428eb9b8af8c1cadc",
+      "server.mjs": "cc37a8b8bb49afd480083f606e38601afda53afb98162008bc3f7f087501dead"
+    },
+    "beforeHashes": {
+      "observe.cjs": "c9fd8e217b2c7d7a05573447448b8675e7e93c483afc589103a421774e754c56",
+      "bootstrap.mjs": "a48fcb989e12c3db8d80605fb32f19bbf095e89bbd31422428eb9b8af8c1cadc",
+      "server.mjs": "cc37a8b8bb49afd480083f606e38601afda53afb98162008bc3f7f087501dead"
+    },
+    "observationChange": "Final observer also records select options and checkbox state; before observer only records inputs/buttons."
+  },
+  "sourceHashes": {
+    "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": "2f750a0a07c76a2d1d77bbe28a28c2c572e90fbac5d9c66391922b2f99e70e33",
+    "src/renderer/components/Shared.tsx": "16726cf323f44324a124ee5fb29a7270ae514f8dc04f87f153f6b0a5e289ff5e",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "b7776090d61317ad92f967df2cfff4ca1e4e1d073f3a94b84b986ee44ac25cf0",
+    "src/renderer/styles.css": "e6139cafd82dddec372b82f7d40a22ddb852f965a9c845703f8db86fea6d6bf5"
+  },
+  "acceptance": {
+    "rows": 191,
+    "active": 189,
+    "deferred": 2,
+    "open": 27,
+    "listener": 14,
+    "otherProof": 13,
+    "statusChanges": [],
+    "Q06": "Review for complete app-wide controls and conditional states."
+  },
+  "limits": [
+    "No VoiceOver/AT activation, physical OS controls, audible quality, listener, live server/provider, platform matrix, release or deferred viewport/zoom acceptance.",
+    "Newly added closeDisabled wiring in PlaylistNameDialog receives source review; new native close-state proof is AddPlaylist only.",
+    "Existing multi-selection/album add and recovery protocol have prior scoped evidence; this run uses a single song, not a new batch/durable-restart proof.",
+    "No new hidden-window/overlay pass; old source maps and the dated provenance audit remain dated."
+  ],
+  "sourceTraceSupplement": [
+    {
+      "file": "REQUIREMENTS.md",
+      "line": 188,
+      "text": "- During an add operation, choose an existing playlist or create a new one. Keep the chosen destination, name and skip-existing option readable and keyboard-focusable while saving, with edits locked. Show unavailable Save, Cancel, Close and Review actions; repeated activation cannot duplicate the write or leave during its readback. A definite failure retains the draft for an explicit retry. An uncertain result locks changes and offers checking the refreshed playlists. Success closes the dialog and restores its opener.",
+      "sha256": "ef1241138d0bd2ca6a4014950383b0b027c71d5bf3cfce101ec07cbed1a24ff8"
+    },
+    {
+      "file": "docs/RADIO_EXPERIENCE.md",
+      "line": 137,
+      "text": "| M6 | I can edit playlists without repeating uncertain changes | My account may edit a shared playlist, or a save loses its response | Attempt the allowed action; inspect refreshed order after an uncertain result | Adding songs keeps destination, name and skip-existing values readable and focusable through save/readback, locks changes and visibly guards Save/Cancel/Close/Review against duplicate writes or navigation, retains definite-failure drafts for explicit retry, and closes on success with opener focus; Creating or renaming keeps the name readable and focus within the pending dialog; repeated save/dismiss keys cannot repeat the change; confirmed creation opens its detail on Back while the modal still owns interaction, including internal Tab movement; outside actions, overlays or backgrounding cancel that focus handoff; definite rejection retains the editable draft after readback, uncertain saves stay locked, and rename/cancel restore their opener; Jellyfin authorizes unknown permissions, explicit read-only stays disabled, unconfirmed permission never claims read-only or hides otherwise readable tracks, auth/account or playlist-data failures still surface, errors remain visible, and an uncertain reorder/removal needs successful refresh plus acknowledgement before editing continues; pending/error/review state survives page changes, playlist switches, library saves and same-account sign-in; after restart an unresolved addition/reorder/removal still needs a fresh detail read and explicit acknowledgement, without replay; an uncertain creation requires checking the refreshed playlist list before another create; affected playlist tiles say Review needed and their Add destinations are disabled, with an explanation and direct Review playlists action in the Add dialog; failed duplicate reads and empty additions leave no false lock; other playlists/accounts remain usable and returning to the original account retains its unresolved change; repeated positions select and play independently; if the server cannot identify an occurrence separately, explain unavailable Move/Remove actions while retaining listening and safe edits; changing entries clears unreliable selections and preserves uniquely identified ones |",
+      "sha256": "a34a4fa08f58975737b1a55f5c02536e717d3ffc6799979134a7e4cf478d4ee1"
+    }
+  ]
+}
