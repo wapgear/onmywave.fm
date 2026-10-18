@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { defaultDJPlaybackSettings, type DJPlaybackSettings as Settings } from '../../../../shared/dj-playback';
 import { unwrap } from '../../../api';
@@ -13,6 +13,8 @@ export function DJPlaybackSettings() {
   const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()), enabled: recoveryReady });
   const heading = useRef<HTMLHeadingElement>(null);
   const intervalInput = useRef<HTMLInputElement>(null);
+  const saveButton = useRef<HTMLButtonElement>(null);
+  const [saveFocused, setSaveFocused] = useState(false);
   const retryFocus = useRetryFocus({
     ownerKey: 'settings:general:dj-playback',
     target: () => intervalInput.current && !intervalInput.current.matches(':disabled') ? intervalInput.current : heading.current,
@@ -28,7 +30,16 @@ export function DJPlaybackSettings() {
     {!recoveryReady && <p className="notice">DJ playback settings are unavailable until news data recovery completes. Existing music playback remains available.</p>}
     <ErrorNotice error={state.error} retryRef={retryFocus.retryRef} retrying={state.isFetching} retry={() => retryFocus.retry(() => state.refetch())} />
     {state.isPending && <p role="status">Loading DJ schedule…</p>}
-    <form onSubmit={event => { event.preventDefault(); if (!save.isPending) edit.submit(); }}>
+    <form onSubmit={event => {
+      event.preventDefault();
+      if (!recoveryReady || !state.data || draft === null || save.isPending) return;
+      const active = document.activeElement;
+      if (active instanceof HTMLElement && event.currentTarget.contains(active) && document.visibilityState === 'visible' && document.hasFocus() && !document.querySelector('dialog[open], :popover-open')) {
+        saveButton.current?.focus({ preventScroll: true });
+        saveButton.current?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      }
+      edit.submit();
+    }}>
       <fieldset disabled={!recoveryReady || !state.data || save.isPending}>
         <label className="dj-song-interval">Check news every<input ref={intervalInput} type="number" min={1} max={100} step={1} required value={Number.isNaN(settings.everySongs) ? '' : settings.everySongs} aria-describedby="dj-interval-help" onChange={event => change({ everySongs: event.target.value === '' ? NaN : Number(event.target.value) })} /><span>{settings.everySongs === 1 ? 'song' : 'songs'}</span></label>
         <p id="dj-interval-help" className="settings-footnote">Only finished songs count. Choose 1 for testing. Empty news pools are skipped without generating anything.</p>
@@ -36,8 +47,8 @@ export function DJPlaybackSettings() {
         <p className="settings-footnote">Keeps the break when you seek. Speech waits for the next suitable ending and resumes where it paused.</p>
         <label className="dj-song-interval">DJ voice volume<input type="range" min={0} max={1} step={0.05} value={settings.voiceVolume} aria-valuetext={`${Math.round(settings.voiceVolume * 100)}% of player volume`} onChange={event => change({ voiceVolume: Number(event.target.value) })} /><span>{Math.round(settings.voiceVolume * 100)}%</span></label>
         <p className="settings-footnote">Relative to player volume. The default is 70%.</p>
-        <button className="primary" disabled={draft === null || save.isPending}>{save.isPending ? 'Saving…' : 'Save DJ playback'}</button>
       </fieldset>
+      <button ref={saveButton} className="primary settings-save" disabled={!save.isPending && (!recoveryReady || !state.data || (draft === null && !saveFocused))} aria-disabled={!recoveryReady || !state.data || draft === null || save.isPending || undefined} aria-busy={save.isPending || undefined} onFocus={() => setSaveFocused(true)} onBlur={() => setSaveFocused(false)}>{save.isPending ? 'Saving…' : 'Save DJ playback'}</button>
       <ErrorNotice error={save.error} />
       {save.isSuccess && draft === null && <p className="form-hint" role="status">DJ playback saved.</p>}
     </form>
