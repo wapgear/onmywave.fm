@@ -1,0 +1,3766 @@
+{
+  "date": "2026-10-18",
+  "scope": "Profile copy and unsaved switch confirmations; mechanical reuse of existing focusable unavailable actions and synchronous guards. Root review only, no independent pair.",
+  "baseline": {
+    "record": "2026-10-18-radio-setup-save-focus.json",
+    "snapshot": "feedback-profile-failure-body",
+    "result": "Existing native Save-and-switch failure left BODY focus. Copy disabled-fieldset focus loss is source-established; no new base copy run."
+  },
+  "verification": {
+    "build": "npm run build exit 0, including TypeScript",
+    "lint": "npm run lint exit 0",
+    "input": "Native CUA at 1280x720 and normal app zoom. Screenshot retina pixels are OS scaling.",
+    "fixture": "Production renderer/preload; copied instrumented actual main/storage with disposable safeStorage/catalog, null shared-key adapter, stopped scheduler and muted media. Post-guard faults fail before operation, not actual OS failure.",
+    "snapshotCount": 15,
+    "HTTPWrites": 0,
+    "providerRequests": 0,
+    "playbackUnchanged": {
+      "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+      "trackIds": [
+        "000000000000000000000000000003e9",
+        "000000000000000000000000000003ea",
+        "000000000000000000000000000003e9",
+        "000000000000000000000000000003eb"
+      ],
+      "currentIndex": 2,
+      "position": 12,
+      "volume": 0.42,
+      "shuffle": false,
+      "repeat": "off"
+    },
+    "calls": {
+      "saveRoomProfile": 2,
+      "saveWorkflowDraft": 2,
+      "activateRoomProfile": 3
+    },
+    "failures": "One injected pre-operation failure for each of copy, setup save and activation. Two successful local profile activations; one successful local copy and setup save.",
+    "screenshots": "Inspected pending copy and failed switch inline; PNG not retained.",
+    "processes": "Observer exit 0; exact owned catalog PID27568 terminated, exit143."
+  },
+  "sourceHashes": {
+    "src/renderer/pages/Stations/Stations.page.tsx": "9d412914af871ae9bbd6b7f7caebc82cf246bc702d15100d015bfc7ee87431b0"
+  },
+  "bundles": {
+    "out/renderer/assets/index-BoYrtVmF.js": "a0aaca22aeb497b2b58f4ac3edced4fa3c1f1141d89b824abae8c34080aaa7a2",
+    "out/renderer/assets/index-B3M1WwkU.css": "17b7abec42f2f3b3e2f3440d30aa2cd146f5797b216f62462abcc441580811bc",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb"
+  },
+  "fixtureHashes": {
+    "observe.cjs": "4ff852b0b655b2c2a40fc922b203c5b7288d5b48b358d90431a6a015c8a343ca",
+    "bootstrap.mjs": "a48fcb989e12c3db8d80605fb32f19bbf095e89bbd31422428eb9b8af8c1cadc",
+    "server.mjs": "33b1beafab299247920af0bee234c85d500ecb207a2527bf3c25a2feb9dcc7da",
+    "out/main/index.js": "f3d043a00aac5a2bec9741c3cdb783a883789a7dd705fd838980879f22a481c5"
+  },
+  "rawReportSha256": "1f2096d9886cf05cb29af4cb8cd81bc9004494093bb41d65295a7c36373056e6",
+  "snapshots": [
+    {
+      "name": "copy-cancel",
+      "rawSha256": "ac65ffb3680affab5dcc83b80b2b88319d16f67d9fd1e5a22ab41701dab9cfb9",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 692,
+          "y": 161,
+          "width": 99.28125,
+          "height": 34,
+          "top": 161,
+          "right": 791.28125,
+          "bottom": 195,
+          "left": 692
+        },
+        "insideDrawer": false,
+        "name": "Save as new",
+        "type": null,
+        "role": null
+      },
+      "dialogs": [],
+      "dialogActions": [],
+      "formInputs": [
+        {
+          "inputs": [
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "News interests \u00b7 Optional",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            },
+            {
+              "tag": "INPUT",
+              "type": "text",
+              "label": "",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "Mood",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "tag": "INPUT",
+              "type": "checkbox",
+              "label": " Automatically prepare news",
+              "disabled": true,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "on",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "Check sources every1 hour3 hours6 hours",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "value": "3",
+              "active": false,
+              "options": [
+                {
+                  "value": "1",
+                  "label": "1 hour",
+                  "disabled": false,
+                  "selected": false
+                },
+                {
+                  "value": "3",
+                  "label": "3 hours",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "6",
+                  "label": "6 hours",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "News selectionMajor developments onlyRelevant stories",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "value": "major",
+              "active": false,
+              "options": [
+                {
+                  "value": "major",
+                  "label": "Major developments only",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "relevant",
+                  "label": "Relevant stories",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "INPUT",
+              "type": "number",
+              "label": "Maximum automatic recordings per day",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "3",
+              "checked": false,
+              "active": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "profileCalls": [],
+      "held": [],
+      "savedProfiles": [
+        {
+          "enabled": true,
+          "id": "default-room",
+          "name": "My room",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "",
+          "workflowDraft": {
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "activeProfile": "default-room"
+    },
+    {
+      "name": "copy-failure",
+      "rawSha256": "01bf50555a4f8a6ffec2a03374050317c9c2a9c6c13bf7e470e1a23c0d346957",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 669.28125,
+          "y": 494.9375,
+          "width": 67.3515625,
+          "height": 34,
+          "top": 494.9375,
+          "right": 736.6328125,
+          "bottom": 528.9375,
+          "left": 669.28125
+        },
+        "insideDrawer": false,
+        "name": "Cancel",
+        "type": "button",
+        "role": null
+      },
+      "dialogs": [
+        {
+          "title": "Save a new listening room",
+          "paragraphs": [
+            "Copies your setup with automatic preparation off. Choose the new room, then make it available in Advanced room options before enabling preparation or DJ breaks. You can finish incomplete setup later."
+          ]
+        }
+      ],
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true
+        },
+        {
+          "name": "Save room",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        }
+      ],
+      "formInputs": [
+        {
+          "inputs": [
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "News interests \u00b7 Optional",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            },
+            {
+              "tag": "INPUT",
+              "type": "text",
+              "label": "",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "Mood",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "tag": "INPUT",
+              "type": "checkbox",
+              "label": " Automatically prepare news",
+              "disabled": true,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "on",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "Check sources every1 hour3 hours6 hours",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "value": "3",
+              "active": false,
+              "options": [
+                {
+                  "value": "1",
+                  "label": "1 hour",
+                  "disabled": false,
+                  "selected": false
+                },
+                {
+                  "value": "3",
+                  "label": "3 hours",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "6",
+                  "label": "6 hours",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "News selectionMajor developments onlyRelevant stories",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "value": "major",
+              "active": false,
+              "options": [
+                {
+                  "value": "major",
+                  "label": "Major developments only",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "relevant",
+                  "label": "Relevant stories",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "INPUT",
+              "type": "number",
+              "label": "Maximum automatic recordings per day",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "3",
+              "checked": false,
+              "active": false
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "tag": "INPUT",
+              "type": "text",
+              "label": "Name",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "Profile focus copy",
+              "checked": false,
+              "active": false
+            }
+          ]
+        }
+      ],
+      "notices": [
+        {
+          "rect": {
+            "x": 447,
+            "y": 425.140625,
+            "width": 386,
+            "height": 45.796875,
+            "top": 425.140625,
+            "right": 833,
+            "bottom": 470.9375,
+            "left": 447
+          },
+          "error": "saveRoomProfile unavailable.",
+          "button": null
+        }
+      ],
+      "profileCalls": [
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317436730,
+          "mode": "hold"
+        }
+      ],
+      "held": [],
+      "savedProfiles": [
+        {
+          "enabled": true,
+          "id": "default-room",
+          "name": "My room",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "",
+          "workflowDraft": {
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "activeProfile": "default-room"
+    },
+    {
+      "name": "copy-pending-cancel",
+      "rawSha256": "bdfbde7be7623bce643a2827572fea26f9ab4b55fe97edb74efecf5c14f36bb1",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 680.9140625,
+          "y": 466.0390625,
+          "width": 67.3515625,
+          "height": 34,
+          "top": 466.0390625,
+          "right": 748.265625,
+          "bottom": 500.0390625,
+          "left": 680.9140625
+        },
+        "insideDrawer": false,
+        "name": "Cancel",
+        "type": "button",
+        "role": null
+      },
+      "dialogs": [
+        {
+          "title": "Save a new listening room",
+          "paragraphs": [
+            "Copies your setup with automatic preparation off. Choose the new room, then make it available in Advanced room options before enabling preparation or DJ breaks. You can finish incomplete setup later."
+          ]
+        }
+      ],
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": true
+        },
+        {
+          "name": "Saving\u2026",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": false
+        }
+      ],
+      "formInputs": [
+        {
+          "inputs": [
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "News interests \u00b7 Optional",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            },
+            {
+              "tag": "INPUT",
+              "type": "text",
+              "label": "",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "Mood",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "tag": "INPUT",
+              "type": "checkbox",
+              "label": " Automatically prepare news",
+              "disabled": true,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "on",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "Check sources every1 hour3 hours6 hours",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "value": "3",
+              "active": false,
+              "options": [
+                {
+                  "value": "1",
+                  "label": "1 hour",
+                  "disabled": false,
+                  "selected": false
+                },
+                {
+                  "value": "3",
+                  "label": "3 hours",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "6",
+                  "label": "6 hours",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "News selectionMajor developments onlyRelevant stories",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "value": "major",
+              "active": false,
+              "options": [
+                {
+                  "value": "major",
+                  "label": "Major developments only",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "relevant",
+                  "label": "Relevant stories",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "INPUT",
+              "type": "number",
+              "label": "Maximum automatic recordings per day",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "3",
+              "checked": false,
+              "active": false
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "tag": "INPUT",
+              "type": "text",
+              "label": "Name",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": true,
+              "value": "Profile focus copy",
+              "checked": false,
+              "active": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "profileCalls": [
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317436730,
+          "mode": "hold"
+        }
+      ],
+      "held": [
+        "saveRoomProfile"
+      ],
+      "savedProfiles": [
+        {
+          "enabled": true,
+          "id": "default-room",
+          "name": "My room",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "",
+          "workflowDraft": {
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "activeProfile": "default-room"
+    },
+    {
+      "name": "copy-pending-name",
+      "rawSha256": "e0d15ede0773652325a0130afc20c569e8ef614d6f29d9e926b10704ace4b9aa",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 447,
+          "y": 329.953125,
+          "width": 386,
+          "height": 38,
+          "top": 329.953125,
+          "right": 833,
+          "bottom": 367.953125,
+          "left": 447
+        },
+        "insideDrawer": false,
+        "name": "",
+        "type": null,
+        "label": "Name",
+        "role": null
+      },
+      "dialogs": [
+        {
+          "title": "Save a new listening room",
+          "paragraphs": [
+            "Copies your setup with automatic preparation off. Choose the new room, then make it available in Advanced room options before enabling preparation or DJ breaks. You can finish incomplete setup later."
+          ]
+        }
+      ],
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Saving\u2026",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": false
+        }
+      ],
+      "formInputs": [
+        {
+          "inputs": [
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "News interests \u00b7 Optional",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            },
+            {
+              "tag": "INPUT",
+              "type": "text",
+              "label": "",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "Mood",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "tag": "INPUT",
+              "type": "checkbox",
+              "label": " Automatically prepare news",
+              "disabled": true,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "on",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "Check sources every1 hour3 hours6 hours",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "value": "3",
+              "active": false,
+              "options": [
+                {
+                  "value": "1",
+                  "label": "1 hour",
+                  "disabled": false,
+                  "selected": false
+                },
+                {
+                  "value": "3",
+                  "label": "3 hours",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "6",
+                  "label": "6 hours",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "News selectionMajor developments onlyRelevant stories",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "value": "major",
+              "active": false,
+              "options": [
+                {
+                  "value": "major",
+                  "label": "Major developments only",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "relevant",
+                  "label": "Relevant stories",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "INPUT",
+              "type": "number",
+              "label": "Maximum automatic recordings per day",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "3",
+              "checked": false,
+              "active": false
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "tag": "INPUT",
+              "type": "text",
+              "label": "Name",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": true,
+              "value": "Profile focus copy",
+              "checked": false,
+              "active": true
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "profileCalls": [
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317436730,
+          "mode": "hold"
+        }
+      ],
+      "held": [
+        "saveRoomProfile"
+      ],
+      "savedProfiles": [
+        {
+          "enabled": true,
+          "id": "default-room",
+          "name": "My room",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "",
+          "workflowDraft": {
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "activeProfile": "default-room"
+    },
+    {
+      "name": "copy-retry-pending",
+      "rawSha256": "5c54a7a4d18ad4cab4c466f105ec63d77e16ae6bbf9903eb0519fe32480a6203",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 756.265625,
+          "y": 466.0390625,
+          "width": 76.734375,
+          "height": 34,
+          "top": 466.0390625,
+          "right": 833,
+          "bottom": 500.0390625,
+          "left": 756.265625
+        },
+        "insideDrawer": false,
+        "name": "Saving\u2026",
+        "type": null,
+        "role": null
+      },
+      "dialogs": [
+        {
+          "title": "Save a new listening room",
+          "paragraphs": [
+            "Copies your setup with automatic preparation off. Choose the new room, then make it available in Advanced room options before enabling preparation or DJ breaks. You can finish incomplete setup later."
+          ]
+        }
+      ],
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Saving\u2026",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true
+        }
+      ],
+      "formInputs": [
+        {
+          "inputs": [
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "News interests \u00b7 Optional",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            },
+            {
+              "tag": "INPUT",
+              "type": "text",
+              "label": "",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "Mood",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "tag": "INPUT",
+              "type": "checkbox",
+              "label": " Automatically prepare news",
+              "disabled": true,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "on",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "Check sources every1 hour3 hours6 hours",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "value": "3",
+              "active": false,
+              "options": [
+                {
+                  "value": "1",
+                  "label": "1 hour",
+                  "disabled": false,
+                  "selected": false
+                },
+                {
+                  "value": "3",
+                  "label": "3 hours",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "6",
+                  "label": "6 hours",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "News selectionMajor developments onlyRelevant stories",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "value": "major",
+              "active": false,
+              "options": [
+                {
+                  "value": "major",
+                  "label": "Major developments only",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "relevant",
+                  "label": "Relevant stories",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "INPUT",
+              "type": "number",
+              "label": "Maximum automatic recordings per day",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "3",
+              "checked": false,
+              "active": false
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "tag": "INPUT",
+              "type": "text",
+              "label": "Name",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": true,
+              "value": "Profile focus copy",
+              "checked": false,
+              "active": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "profileCalls": [
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317436730,
+          "mode": "hold"
+        },
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317469205,
+          "mode": "hold"
+        }
+      ],
+      "held": [
+        "saveRoomProfile"
+      ],
+      "savedProfiles": [
+        {
+          "enabled": true,
+          "id": "default-room",
+          "name": "My room",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "",
+          "workflowDraft": {
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "activeProfile": "default-room"
+    },
+    {
+      "name": "copy-success",
+      "rawSha256": "cef9558ac7e1e86c55569c6c88c2c0b9fb3fb622813cf26131b2ee65e845ab4d",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 692,
+          "y": 161,
+          "width": 99.28125,
+          "height": 34,
+          "top": 161,
+          "right": 791.28125,
+          "bottom": 195,
+          "left": 692
+        },
+        "insideDrawer": false,
+        "name": "Save as new",
+        "type": null,
+        "role": null
+      },
+      "dialogs": [],
+      "dialogActions": [],
+      "formInputs": [
+        {
+          "inputs": [
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "News interests \u00b7 Optional",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            },
+            {
+              "tag": "INPUT",
+              "type": "text",
+              "label": "",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "Mood",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "tag": "INPUT",
+              "type": "checkbox",
+              "label": " Automatically prepare news",
+              "disabled": true,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "on",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "Check sources every1 hour3 hours6 hours",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "value": "3",
+              "active": false,
+              "options": [
+                {
+                  "value": "1",
+                  "label": "1 hour",
+                  "disabled": false,
+                  "selected": false
+                },
+                {
+                  "value": "3",
+                  "label": "3 hours",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "6",
+                  "label": "6 hours",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "News selectionMajor developments onlyRelevant stories",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "value": "major",
+              "active": false,
+              "options": [
+                {
+                  "value": "major",
+                  "label": "Major developments only",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "relevant",
+                  "label": "Relevant stories",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "INPUT",
+              "type": "number",
+              "label": "Maximum automatic recordings per day",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "3",
+              "checked": false,
+              "active": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "profileCalls": [
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317436730,
+          "mode": "hold"
+        },
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317469205,
+          "mode": "hold"
+        }
+      ],
+      "held": [],
+      "savedProfiles": [
+        {
+          "enabled": true,
+          "id": "default-room",
+          "name": "My room",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "",
+          "workflowDraft": {
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "enabled": false,
+          "id": "a0f42ff9-4901-4823-9aa8-7cc3daca4428",
+          "name": "Profile focus copy",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "",
+          "workflowDraft": {
+            "newsInterests": "",
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "activeProfile": "default-room"
+    },
+    {
+      "name": "discard-failure",
+      "rawSha256": "c98c84fb6242751cec0c02ec17c17f75efb69f072e9063c348c8cc38474f6fcb",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 568.4609375,
+          "y": 459.8125,
+          "width": 136.0234375,
+          "height": 34,
+          "top": 459.8125,
+          "right": 704.484375,
+          "bottom": 493.8125,
+          "left": 568.4609375
+        },
+        "insideDrawer": false,
+        "name": "Discard and switch",
+        "type": null,
+        "role": null
+      },
+      "dialogs": [
+        {
+          "title": "Switch listening rooms?",
+          "paragraphs": [
+            "You have unsaved changes to Profile focus copy. Save them before switching, or discard them. Your script and selected audio stay unchanged."
+          ]
+        }
+      ],
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Discard and switch",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true
+        },
+        {
+          "name": "Save and switch",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        }
+      ],
+      "formInputs": [
+        {
+          "inputs": [
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "News interests \u00b7 Optional",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            },
+            {
+              "tag": "INPUT",
+              "type": "text",
+              "label": "",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "MoodDiscard this draft",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "Discard this draft",
+              "active": false
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "tag": "INPUT",
+              "type": "checkbox",
+              "label": " Automatically prepare news",
+              "disabled": true,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "on",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "Check sources every1 hour3 hours6 hours",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "value": "3",
+              "active": false,
+              "options": [
+                {
+                  "value": "1",
+                  "label": "1 hour",
+                  "disabled": false,
+                  "selected": false
+                },
+                {
+                  "value": "3",
+                  "label": "3 hours",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "6",
+                  "label": "6 hours",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "News selectionMajor developments onlyRelevant stories",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "value": "major",
+              "active": false,
+              "options": [
+                {
+                  "value": "major",
+                  "label": "Major developments only",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "relevant",
+                  "label": "Relevant stories",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "INPUT",
+              "type": "number",
+              "label": "Maximum automatic recordings per day",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "3",
+              "checked": false,
+              "active": false
+            }
+          ]
+        }
+      ],
+      "notices": [
+        {
+          "rect": {
+            "x": 447,
+            "y": 390.015625,
+            "width": 386,
+            "height": 45.796875,
+            "top": 390.015625,
+            "right": 833,
+            "bottom": 435.8125,
+            "left": 447
+          },
+          "error": "activateRoomProfile unavailable.",
+          "button": null
+        }
+      ],
+      "profileCalls": [
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317436730,
+          "mode": "hold"
+        },
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317469205,
+          "mode": "hold"
+        },
+        {
+          "name": "saveWorkflowDraft",
+          "at": 1792317506103,
+          "mode": "hold"
+        },
+        {
+          "name": "saveWorkflowDraft",
+          "at": 1792317548913,
+          "mode": "normal"
+        },
+        {
+          "name": "activateRoomProfile",
+          "at": 1792317548917,
+          "mode": "hold"
+        },
+        {
+          "name": "activateRoomProfile",
+          "at": 1792317579726,
+          "mode": "hold"
+        }
+      ],
+      "held": [],
+      "savedProfiles": [
+        {
+          "enabled": true,
+          "id": "default-room",
+          "name": "My room",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "Profile switch draft",
+          "workflowDraft": {
+            "newsInterests": "",
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "enabled": false,
+          "id": "a0f42ff9-4901-4823-9aa8-7cc3daca4428",
+          "name": "Profile focus copy",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "",
+          "workflowDraft": {
+            "newsInterests": "",
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "activeProfile": "a0f42ff9-4901-4823-9aa8-7cc3daca4428"
+    },
+    {
+      "name": "discard-pending",
+      "rawSha256": "d77a15c545e6b0ad7c4ed64de57d39b7ca362c02738edf4d806f62328bd80047",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 595.0625,
+          "y": 430.9140625,
+          "width": 136.0234375,
+          "height": 34,
+          "top": 430.9140625,
+          "right": 731.0859375,
+          "bottom": 464.9140625,
+          "left": 595.0625
+        },
+        "insideDrawer": false,
+        "name": "Discard and switch",
+        "type": null,
+        "role": null
+      },
+      "dialogs": [
+        {
+          "title": "Switch listening rooms?",
+          "paragraphs": [
+            "You have unsaved changes to Profile focus copy. Save them before switching, or discard them. Your script and selected audio stay unchanged."
+          ]
+        }
+      ],
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Discard and switch",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": true
+        },
+        {
+          "name": "Switching\u2026",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": false
+        }
+      ],
+      "formInputs": [
+        {
+          "inputs": [
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "News interests \u00b7 Optional",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            },
+            {
+              "tag": "INPUT",
+              "type": "text",
+              "label": "",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "MoodDiscard this draft",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "Discard this draft",
+              "active": false
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "tag": "INPUT",
+              "type": "checkbox",
+              "label": " Automatically prepare news",
+              "disabled": true,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "on",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "Check sources every1 hour3 hours6 hours",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "value": "3",
+              "active": false,
+              "options": [
+                {
+                  "value": "1",
+                  "label": "1 hour",
+                  "disabled": false,
+                  "selected": false
+                },
+                {
+                  "value": "3",
+                  "label": "3 hours",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "6",
+                  "label": "6 hours",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "News selectionMajor developments onlyRelevant stories",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "value": "major",
+              "active": false,
+              "options": [
+                {
+                  "value": "major",
+                  "label": "Major developments only",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "relevant",
+                  "label": "Relevant stories",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "INPUT",
+              "type": "number",
+              "label": "Maximum automatic recordings per day",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "3",
+              "checked": false,
+              "active": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "profileCalls": [
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317436730,
+          "mode": "hold"
+        },
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317469205,
+          "mode": "hold"
+        },
+        {
+          "name": "saveWorkflowDraft",
+          "at": 1792317506103,
+          "mode": "hold"
+        },
+        {
+          "name": "saveWorkflowDraft",
+          "at": 1792317548913,
+          "mode": "normal"
+        },
+        {
+          "name": "activateRoomProfile",
+          "at": 1792317548917,
+          "mode": "hold"
+        },
+        {
+          "name": "activateRoomProfile",
+          "at": 1792317579726,
+          "mode": "hold"
+        }
+      ],
+      "held": [
+        "activateRoomProfile"
+      ],
+      "savedProfiles": [
+        {
+          "enabled": true,
+          "id": "default-room",
+          "name": "My room",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "Profile switch draft",
+          "workflowDraft": {
+            "newsInterests": "",
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "enabled": false,
+          "id": "a0f42ff9-4901-4823-9aa8-7cc3daca4428",
+          "name": "Profile focus copy",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "",
+          "workflowDraft": {
+            "newsInterests": "",
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "activeProfile": "a0f42ff9-4901-4823-9aa8-7cc3daca4428"
+    },
+    {
+      "name": "discard-success",
+      "rawSha256": "2322f16fd85b93afb6c2f84bf16c6b6e3e25aecf59caf73aeace330a8c6c587f",
+      "focus": {
+        "tag": "SELECT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 156.5,
+          "width": 440,
+          "height": 38.5,
+          "top": 156.5,
+          "right": 678,
+          "bottom": 195,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "My room \u00b7 ActiveProfile focus copy",
+        "type": null,
+        "label": "Setup profileMy room \u00b7 ActiveProfile focus copy",
+        "role": null
+      },
+      "dialogs": [],
+      "dialogActions": [],
+      "formInputs": [
+        {
+          "inputs": [
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "News interests \u00b7 Optional",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            },
+            {
+              "tag": "INPUT",
+              "type": "text",
+              "label": "",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "MoodProfile switch draft",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "Profile switch draft",
+              "active": false
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "tag": "INPUT",
+              "type": "checkbox",
+              "label": " Automatically prepare news",
+              "disabled": true,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "on",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "Check sources every1 hour3 hours6 hours",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "value": "3",
+              "active": false,
+              "options": [
+                {
+                  "value": "1",
+                  "label": "1 hour",
+                  "disabled": false,
+                  "selected": false
+                },
+                {
+                  "value": "3",
+                  "label": "3 hours",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "6",
+                  "label": "6 hours",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "News selectionMajor developments onlyRelevant stories",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "value": "major",
+              "active": false,
+              "options": [
+                {
+                  "value": "major",
+                  "label": "Major developments only",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "relevant",
+                  "label": "Relevant stories",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "INPUT",
+              "type": "number",
+              "label": "Maximum automatic recordings per day",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "3",
+              "checked": false,
+              "active": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "profileCalls": [
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317436730,
+          "mode": "hold"
+        },
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317469205,
+          "mode": "hold"
+        },
+        {
+          "name": "saveWorkflowDraft",
+          "at": 1792317506103,
+          "mode": "hold"
+        },
+        {
+          "name": "saveWorkflowDraft",
+          "at": 1792317548913,
+          "mode": "normal"
+        },
+        {
+          "name": "activateRoomProfile",
+          "at": 1792317548917,
+          "mode": "hold"
+        },
+        {
+          "name": "activateRoomProfile",
+          "at": 1792317579726,
+          "mode": "hold"
+        },
+        {
+          "name": "activateRoomProfile",
+          "at": 1792317600144,
+          "mode": "normal"
+        }
+      ],
+      "held": [],
+      "savedProfiles": [
+        {
+          "enabled": true,
+          "id": "default-room",
+          "name": "My room",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "Profile switch draft",
+          "workflowDraft": {
+            "newsInterests": "",
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "enabled": false,
+          "id": "a0f42ff9-4901-4823-9aa8-7cc3daca4428",
+          "name": "Profile focus copy",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "",
+          "workflowDraft": {
+            "newsInterests": "",
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "activeProfile": "default-room"
+    },
+    {
+      "name": "switch-activation-pending",
+      "rawSha256": "0950ecd2685f59a0c7846c45660bab1e3d81df719693b1cc4d79e66fdebeb2f6",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 739.0859375,
+          "y": 430.9140625,
+          "width": 93.9140625,
+          "height": 34,
+          "top": 430.9140625,
+          "right": 833,
+          "bottom": 464.9140625,
+          "left": 739.0859375
+        },
+        "insideDrawer": false,
+        "name": "Switching\u2026",
+        "type": null,
+        "role": null
+      },
+      "dialogs": [
+        {
+          "title": "Switch listening rooms?",
+          "paragraphs": [
+            "You have unsaved changes to My room. Save them before switching, or discard them. Your script and selected audio stay unchanged."
+          ]
+        }
+      ],
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Discard and switch",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Switching\u2026",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true
+        }
+      ],
+      "formInputs": [
+        {
+          "inputs": [
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "News interests \u00b7 Optional",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            },
+            {
+              "tag": "INPUT",
+              "type": "text",
+              "label": "",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "MoodProfile switch draft",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "Profile switch draft",
+              "active": false
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "tag": "INPUT",
+              "type": "checkbox",
+              "label": " Automatically prepare news",
+              "disabled": true,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "on",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "Check sources every1 hour3 hours6 hours",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "value": "3",
+              "active": false,
+              "options": [
+                {
+                  "value": "1",
+                  "label": "1 hour",
+                  "disabled": false,
+                  "selected": false
+                },
+                {
+                  "value": "3",
+                  "label": "3 hours",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "6",
+                  "label": "6 hours",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "News selectionMajor developments onlyRelevant stories",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "value": "major",
+              "active": false,
+              "options": [
+                {
+                  "value": "major",
+                  "label": "Major developments only",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "relevant",
+                  "label": "Relevant stories",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "INPUT",
+              "type": "number",
+              "label": "Maximum automatic recordings per day",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "3",
+              "checked": false,
+              "active": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "profileCalls": [
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317436730,
+          "mode": "hold"
+        },
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317469205,
+          "mode": "hold"
+        },
+        {
+          "name": "saveWorkflowDraft",
+          "at": 1792317506103,
+          "mode": "hold"
+        },
+        {
+          "name": "saveWorkflowDraft",
+          "at": 1792317548913,
+          "mode": "normal"
+        },
+        {
+          "name": "activateRoomProfile",
+          "at": 1792317548917,
+          "mode": "hold"
+        }
+      ],
+      "held": [
+        "activateRoomProfile"
+      ],
+      "savedProfiles": [
+        {
+          "enabled": true,
+          "id": "default-room",
+          "name": "My room",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "Profile switch draft",
+          "workflowDraft": {
+            "newsInterests": "",
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "enabled": false,
+          "id": "a0f42ff9-4901-4823-9aa8-7cc3daca4428",
+          "name": "Profile focus copy",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "",
+          "workflowDraft": {
+            "newsInterests": "",
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "activeProfile": "default-room"
+    },
+    {
+      "name": "switch-cancel-draft",
+      "rawSha256": "408cced4b9c5eb5aab6ba944611205a2d64b957b691add44cd96381b3e3693a1",
+      "focus": {
+        "tag": "SELECT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 156.5,
+          "width": 440,
+          "height": 38.5,
+          "top": 156.5,
+          "right": 678,
+          "bottom": 195,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "My room \u00b7 ActiveProfile focus copy",
+        "type": null,
+        "label": "Setup profileMy room \u00b7 ActiveProfile focus copy",
+        "role": null
+      },
+      "dialogs": [],
+      "dialogActions": [],
+      "formInputs": [
+        {
+          "inputs": [
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "News interests \u00b7 Optional",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            },
+            {
+              "tag": "INPUT",
+              "type": "text",
+              "label": "",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "MoodProfile switch draft",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "Profile switch draft",
+              "active": false
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "tag": "INPUT",
+              "type": "checkbox",
+              "label": " Automatically prepare news",
+              "disabled": true,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "on",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "Check sources every1 hour3 hours6 hours",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "value": "3",
+              "active": false,
+              "options": [
+                {
+                  "value": "1",
+                  "label": "1 hour",
+                  "disabled": false,
+                  "selected": false
+                },
+                {
+                  "value": "3",
+                  "label": "3 hours",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "6",
+                  "label": "6 hours",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "News selectionMajor developments onlyRelevant stories",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "value": "major",
+              "active": false,
+              "options": [
+                {
+                  "value": "major",
+                  "label": "Major developments only",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "relevant",
+                  "label": "Relevant stories",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "INPUT",
+              "type": "number",
+              "label": "Maximum automatic recordings per day",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "3",
+              "checked": false,
+              "active": false
+            }
+          ]
+        }
+      ],
+      "notices": [
+        {
+          "rect": {
+            "x": 238,
+            "y": 262.6953125,
+            "width": 960,
+            "height": 45.796875,
+            "top": 262.6953125,
+            "right": 1198,
+            "bottom": 308.4921875,
+            "left": 238
+          },
+          "error": "saveWorkflowDraft unavailable.",
+          "button": null
+        }
+      ],
+      "profileCalls": [
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317436730,
+          "mode": "hold"
+        },
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317469205,
+          "mode": "hold"
+        },
+        {
+          "name": "saveWorkflowDraft",
+          "at": 1792317506103,
+          "mode": "hold"
+        }
+      ],
+      "held": [],
+      "savedProfiles": [
+        {
+          "enabled": true,
+          "id": "default-room",
+          "name": "My room",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "",
+          "workflowDraft": {
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "enabled": false,
+          "id": "a0f42ff9-4901-4823-9aa8-7cc3daca4428",
+          "name": "Profile focus copy",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "",
+          "workflowDraft": {
+            "newsInterests": "",
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "activeProfile": "default-room"
+    },
+    {
+      "name": "switch-pending-close",
+      "rawSha256": "79b05b19e4d86736aef71220c7abe0d5c01fe4c06233fd779e473cd9e8ff1ad2",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 804,
+          "y": 269.828125,
+          "width": 34,
+          "height": 34,
+          "top": 269.828125,
+          "right": 838,
+          "bottom": 303.828125,
+          "left": 804
+        },
+        "insideDrawer": false,
+        "name": "Close dialog",
+        "type": null,
+        "role": null
+      },
+      "dialogs": [
+        {
+          "title": "Switch listening rooms?",
+          "paragraphs": [
+            "You have unsaved changes to My room. Save them before switching, or discard them. Your script and selected audio stay unchanged."
+          ]
+        }
+      ],
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": true
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Discard and switch",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Switching\u2026",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": false
+        }
+      ],
+      "formInputs": [
+        {
+          "inputs": [
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "News interests \u00b7 Optional",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            },
+            {
+              "tag": "INPUT",
+              "type": "text",
+              "label": "",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "MoodProfile switch draft",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "Profile switch draft",
+              "active": false
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "tag": "INPUT",
+              "type": "checkbox",
+              "label": " Automatically prepare news",
+              "disabled": true,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "on",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "Check sources every1 hour3 hours6 hours",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "value": "3",
+              "active": false,
+              "options": [
+                {
+                  "value": "1",
+                  "label": "1 hour",
+                  "disabled": false,
+                  "selected": false
+                },
+                {
+                  "value": "3",
+                  "label": "3 hours",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "6",
+                  "label": "6 hours",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "News selectionMajor developments onlyRelevant stories",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "value": "major",
+              "active": false,
+              "options": [
+                {
+                  "value": "major",
+                  "label": "Major developments only",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "relevant",
+                  "label": "Relevant stories",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "INPUT",
+              "type": "number",
+              "label": "Maximum automatic recordings per day",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "3",
+              "checked": false,
+              "active": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "profileCalls": [
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317436730,
+          "mode": "hold"
+        },
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317469205,
+          "mode": "hold"
+        },
+        {
+          "name": "saveWorkflowDraft",
+          "at": 1792317506103,
+          "mode": "hold"
+        }
+      ],
+      "held": [
+        "saveWorkflowDraft"
+      ],
+      "savedProfiles": [
+        {
+          "enabled": true,
+          "id": "default-room",
+          "name": "My room",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "",
+          "workflowDraft": {
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "enabled": false,
+          "id": "a0f42ff9-4901-4823-9aa8-7cc3daca4428",
+          "name": "Profile focus copy",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "",
+          "workflowDraft": {
+            "newsInterests": "",
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "activeProfile": "default-room"
+    },
+    {
+      "name": "switch-save-failure",
+      "rawSha256": "0f9abaa2781077fb25d8d12d9e1a42ac824bdfcd8b327f70df6ed9386eb13d49",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 804,
+          "y": 240.9296875,
+          "width": 34,
+          "height": 34,
+          "top": 240.9296875,
+          "right": 838,
+          "bottom": 274.9296875,
+          "left": 804
+        },
+        "insideDrawer": false,
+        "name": "Close dialog",
+        "type": null,
+        "role": null
+      },
+      "dialogs": [
+        {
+          "title": "Switch listening rooms?",
+          "paragraphs": [
+            "You have unsaved changes to My room. Save them before switching, or discard them. Your script and selected audio stay unchanged."
+          ]
+        }
+      ],
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Discard and switch",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Save and switch",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        }
+      ],
+      "formInputs": [
+        {
+          "inputs": [
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "News interests \u00b7 Optional",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            },
+            {
+              "tag": "INPUT",
+              "type": "text",
+              "label": "",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "MoodProfile switch draft",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "Profile switch draft",
+              "active": false
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "tag": "INPUT",
+              "type": "checkbox",
+              "label": " Automatically prepare news",
+              "disabled": true,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "on",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "Check sources every1 hour3 hours6 hours",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "value": "3",
+              "active": false,
+              "options": [
+                {
+                  "value": "1",
+                  "label": "1 hour",
+                  "disabled": false,
+                  "selected": false
+                },
+                {
+                  "value": "3",
+                  "label": "3 hours",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "6",
+                  "label": "6 hours",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "News selectionMajor developments onlyRelevant stories",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "value": "major",
+              "active": false,
+              "options": [
+                {
+                  "value": "major",
+                  "label": "Major developments only",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "relevant",
+                  "label": "Relevant stories",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "INPUT",
+              "type": "number",
+              "label": "Maximum automatic recordings per day",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "3",
+              "checked": false,
+              "active": false
+            }
+          ]
+        }
+      ],
+      "notices": [
+        {
+          "rect": {
+            "x": 447,
+            "y": 390.015625,
+            "width": 386,
+            "height": 45.796875,
+            "top": 390.015625,
+            "right": 833,
+            "bottom": 435.8125,
+            "left": 447
+          },
+          "error": "saveWorkflowDraft unavailable.",
+          "button": null
+        }
+      ],
+      "profileCalls": [
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317436730,
+          "mode": "hold"
+        },
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317469205,
+          "mode": "hold"
+        },
+        {
+          "name": "saveWorkflowDraft",
+          "at": 1792317506103,
+          "mode": "hold"
+        }
+      ],
+      "held": [],
+      "savedProfiles": [
+        {
+          "enabled": true,
+          "id": "default-room",
+          "name": "My room",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "",
+          "workflowDraft": {
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "enabled": false,
+          "id": "a0f42ff9-4901-4823-9aa8-7cc3daca4428",
+          "name": "Profile focus copy",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "",
+          "workflowDraft": {
+            "newsInterests": "",
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "activeProfile": "default-room"
+    },
+    {
+      "name": "switch-save-pending",
+      "rawSha256": "d84a8171454c0c2b0c33133c2caf3a38445f09abef6e766810c37bfed9c2a3e4",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 739.0859375,
+          "y": 430.9140625,
+          "width": 93.9140625,
+          "height": 34,
+          "top": 430.9140625,
+          "right": 833,
+          "bottom": 464.9140625,
+          "left": 739.0859375
+        },
+        "insideDrawer": false,
+        "name": "Switching\u2026",
+        "type": null,
+        "role": null
+      },
+      "dialogs": [
+        {
+          "title": "Switch listening rooms?",
+          "paragraphs": [
+            "You have unsaved changes to My room. Save them before switching, or discard them. Your script and selected audio stay unchanged."
+          ]
+        }
+      ],
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Discard and switch",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Switching\u2026",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true
+        }
+      ],
+      "formInputs": [
+        {
+          "inputs": [
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "News interests \u00b7 Optional",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            },
+            {
+              "tag": "INPUT",
+              "type": "text",
+              "label": "",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "MoodProfile switch draft",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "Profile switch draft",
+              "active": false
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "tag": "INPUT",
+              "type": "checkbox",
+              "label": " Automatically prepare news",
+              "disabled": true,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "on",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "Check sources every1 hour3 hours6 hours",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "value": "3",
+              "active": false,
+              "options": [
+                {
+                  "value": "1",
+                  "label": "1 hour",
+                  "disabled": false,
+                  "selected": false
+                },
+                {
+                  "value": "3",
+                  "label": "3 hours",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "6",
+                  "label": "6 hours",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "News selectionMajor developments onlyRelevant stories",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "value": "major",
+              "active": false,
+              "options": [
+                {
+                  "value": "major",
+                  "label": "Major developments only",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "relevant",
+                  "label": "Relevant stories",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "INPUT",
+              "type": "number",
+              "label": "Maximum automatic recordings per day",
+              "disabled": false,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "3",
+              "checked": false,
+              "active": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "profileCalls": [
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317436730,
+          "mode": "hold"
+        },
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317469205,
+          "mode": "hold"
+        },
+        {
+          "name": "saveWorkflowDraft",
+          "at": 1792317506103,
+          "mode": "hold"
+        }
+      ],
+      "held": [
+        "saveWorkflowDraft"
+      ],
+      "savedProfiles": [
+        {
+          "enabled": true,
+          "id": "default-room",
+          "name": "My room",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "",
+          "workflowDraft": {
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "enabled": false,
+          "id": "a0f42ff9-4901-4823-9aa8-7cc3daca4428",
+          "name": "Profile focus copy",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "",
+          "workflowDraft": {
+            "newsInterests": "",
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "activeProfile": "default-room"
+    },
+    {
+      "name": "switch-success",
+      "rawSha256": "45340cddd1c0f781f4694908ac9202937378003678709dcd67b9cddae0951c34",
+      "focus": {
+        "tag": "SELECT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 156.5,
+          "width": 440,
+          "height": 38.5,
+          "top": 156.5,
+          "right": 678,
+          "bottom": 195,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "My roomProfile focus copy \u00b7 Active",
+        "type": null,
+        "label": "Setup profileMy roomProfile focus copy \u00b7 Active",
+        "role": null
+      },
+      "dialogs": [],
+      "dialogActions": [],
+      "formInputs": [
+        {
+          "inputs": [
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "News interests \u00b7 Optional",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            },
+            {
+              "tag": "INPUT",
+              "type": "text",
+              "label": "",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "TEXTAREA",
+              "type": "textarea",
+              "label": "Mood",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "",
+              "active": false
+            }
+          ]
+        },
+        {
+          "inputs": [
+            {
+              "tag": "INPUT",
+              "type": "checkbox",
+              "label": " Automatically prepare news",
+              "disabled": true,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "on",
+              "checked": false,
+              "active": false
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "Check sources every1 hour3 hours6 hours",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "value": "3",
+              "active": false,
+              "options": [
+                {
+                  "value": "1",
+                  "label": "1 hour",
+                  "disabled": false,
+                  "selected": false
+                },
+                {
+                  "value": "3",
+                  "label": "3 hours",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "6",
+                  "label": "6 hours",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "SELECT",
+              "type": "select-one",
+              "label": "News selectionMajor developments onlyRelevant stories",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "value": "major",
+              "active": false,
+              "options": [
+                {
+                  "value": "major",
+                  "label": "Major developments only",
+                  "disabled": false,
+                  "selected": true
+                },
+                {
+                  "value": "relevant",
+                  "label": "Relevant stories",
+                  "disabled": false,
+                  "selected": false
+                }
+              ]
+            },
+            {
+              "tag": "INPUT",
+              "type": "number",
+              "label": "Maximum automatic recordings per day",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "readOnly": false,
+              "value": "3",
+              "checked": false,
+              "active": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "profileCalls": [
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317436730,
+          "mode": "hold"
+        },
+        {
+          "name": "saveRoomProfile",
+          "at": 1792317469205,
+          "mode": "hold"
+        },
+        {
+          "name": "saveWorkflowDraft",
+          "at": 1792317506103,
+          "mode": "hold"
+        },
+        {
+          "name": "saveWorkflowDraft",
+          "at": 1792317548913,
+          "mode": "normal"
+        },
+        {
+          "name": "activateRoomProfile",
+          "at": 1792317548917,
+          "mode": "hold"
+        }
+      ],
+      "held": [],
+      "savedProfiles": [
+        {
+          "enabled": true,
+          "id": "default-room",
+          "name": "My room",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "Profile switch draft",
+          "workflowDraft": {
+            "newsInterests": "",
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "enabled": false,
+          "id": "a0f42ff9-4901-4823-9aa8-7cc3daca4428",
+          "name": "Profile focus copy",
+          "room": {
+            "djId": null,
+            "sourceIds": []
+          },
+          "mood": "",
+          "workflowDraft": {
+            "newsInterests": "",
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "activeProfile": "a0f42ff9-4901-4823-9aa8-7cc3daca4428"
+    }
+  ],
+  "acceptance": {
+    "rows": 191,
+    "active": 189,
+    "deferred": 2,
+    "open": 27,
+    "listener": 14,
+    "otherProof": 13,
+    "statusChanges": [],
+    "Q06": "Review. Profile confirmations covered; remaining essential source/DJ, preparation, prepared-take and profile availability controls and conditional states still need review."
+  },
+  "limits": [
+    "No unit tests, VoiceOver/AT, listener, audible quality, live server/provider, actual OS failure, platform matrix, release or deferred viewport/zoom acceptance.",
+    "No new overlay/hidden-window or page-remount failure-retention proof. Existing global configuration lock remains authoritative.",
+    "Copy fixture has incomplete setup with preparation off. No new enabled preparation authorization pass."
+  ]
+}
