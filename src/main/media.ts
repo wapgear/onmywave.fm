@@ -140,9 +140,9 @@ export function registerMedia(getSession: () => Session | null, deviceId: string
             const next = await reader.read();
             if (next.done) { activeRequests.delete(controller); target.close(); }
             else target.enqueue(next.value);
-          } catch (error) { activeRequests.delete(controller); target.error(error); }
+          } catch { activeRequests.delete(controller); target.error(new Error('The media stream was interrupted. Retry playback.')); }
         },
-        async cancel() { activeRequests.delete(controller); controller.abort(); await reader.cancel(); },
+        async cancel() { activeRequests.delete(controller); controller.abort(); await reader.cancel().catch(() => {}); },
       });
       return new Response(body, { status: response.status, headers: outgoing });
     } catch {

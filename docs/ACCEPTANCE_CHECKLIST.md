@@ -371,7 +371,7 @@ Current invariant review index,18 October2026. Each record retains its tested sc
 | --- | --- |
 | CI1 Committed and unsaved edits | Domain records exist; full current cross-lifetime adjudication remains to be consolidated. |
 | CI2 No unrequested paid work | [Authorization review](verification/2026-10-18-paid-authorization-invariant.json) supports engineering gates and current disclosure wording. Observed cost/opt-in understanding remains missing. |
-| CI3 No credential exposure | [Secret-boundary record](verification/2026-10-17-secret-boundaries.json) retains its dated scope; the complete current sink and lifetime review remains open. |
+| CI3 No credential exposure | [Current credential review](verification/2026-10-18-secret-invariant.json) adjudicates eight obligations and fixes media-stream exception forwarding. Retained native/OS evidence and new controlled protocol scope stay distinct. |
 | CI4 No silent selected-take replacement | [Current selection audit](verification/2026-10-18-selected-take-invariant.json) individually reviews controlled data-preservation obligations. |
 | CI5 No automatic uncertain retries | [Current uncertain-work audit](verification/2026-10-18-uncertain-work-invariant.json) reviews durable request/attempt/playlist recovery and removes the obsolete alternate API. |
 | CI6 No duplicate advance or heard-news replay | Domain playback records exist; current joint state/dispatch adjudication and listener/audible limits remain to be reviewed. |
@@ -880,3 +880,12 @@ Production build/TypeScript, full lint and all62 final assertions pass. The rend
 The [CI2 review](verification/2026-10-18-paid-authorization-invariant.json) separates seven obligations for default-off behavior, explicit authorization, independent playback, limits, cancellation/sign-out, recovery and listener understanding. It traces current generation entry points and resolves retained test records to their actual source hashes. Of24 relevant function/method/property nodes,21 match their tested text exactly. Three changes are reviewed individually: sign-out failure handling closes the recovery gate, DJ playback saves merge validated patches, and speech rejects non-audio responses. None adds a paid dispatch or retry.
 
 Existing native opt-in,21-case sign-out and startup-recovery evidence retain their scope rather than being rerun for counts. Current manual/preview controls disclose costs and limit scope; wording presence does not establish comprehension. Observed listener cost/opt-in understanding remains unachieved. No production source change, new runtime/build/lint or provider call is claimed. The seven-invariant index now separates current CI2/CI4/CI5 adjudication from the unresolved CI1/CI3/CI6 and VoiceOver work. Q13 stays Review and25 acceptance checks remain open,14 listener and11 other-proof.
+
+
+## Credential invariant and stream error boundary, 18 October 2026
+
+The [CI3 record](verification/2026-10-18-secret-invariant.json) individually reviews eight credential obligations across protected storage, safe renderer replies, header routing, media URLs, errors, history/logs, provider content and transient key drafts. Current storage/keychain and key-owner matches retain the accepted protected-storage and lifecycle evidence; changed source scopes are reviewed explicitly. Historical native/OS records are not presented as freshly replayed.
+
+The review found two raw error-forwarding paths in the media proxy's returned stream. With a synthetic upstream credential marker, read and cancellation exceptions reached the protocol Response body consumer. This establishes an unsanitized protocol boundary, not observed Chromium display leakage. Read errors now use fixed retry guidance; cancellation still aborts upstream and contains its rejection. Nine focused checks pass for first/later failure, cancellation, successful bytes/headers, ranges, request failures, denied bodies, redirects and revoked handles. Production build/TypeScript and full lint pass. No personal credentials, real server/provider request or new native/OS check runs.
+
+CI3 has a current scoped adjudication and the protocol defect is fixed. Q13 remains Review for the remaining invariant/denominator work. All191 dispositions stay unchanged;25 checks remain open,14 listener and11 other-proof.
