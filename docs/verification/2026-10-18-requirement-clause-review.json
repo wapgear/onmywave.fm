@@ -21,8 +21,8 @@
     "STARStories": 27,
     "STARResultFragments": 265,
     "structuralLines": 47,
-    "semanticFragmentsReviewed": 80,
-    "proofFragmentsReviewed": 78,
+    "semanticFragmentsReviewed": 168,
+    "proofFragmentsReviewed": 166,
     "partitionComplete": true,
     "semanticDenominatorComplete": false,
     "overallScore": null,
@@ -38,7 +38,7 @@
     "listenerOpenChecks": 14,
     "otherProofOpenChecks": 11,
     "contextFragmentsReviewed": 1,
-    "canonicalReviewGroups": 17,
+    "canonicalReviewGroups": 26,
     "acceptedCanonicalGroups": 0
   },
   "STARContexts": [
@@ -427,7 +427,7 @@
         "RAD-L137-result-19",
         "RAD-L137-result-20"
       ],
-      "contextReviewState": "pending"
+      "contextReviewState": "reviewed-linked;whole-story acceptance incomplete"
     },
     {
       "id": "M7",
@@ -718,7 +718,7 @@
   },
   "clauseLedger": {
     "file": "2026-10-18-requirement-clauses.csv",
-    "sha256": "44ce5e7f1f90ba379d34490d1ce394e8db71818a9ff7be30ed4f65de474507ea",
+    "sha256": "237566e112e3372304dbefc0d5ddbd590d975aa3c006b89e21424777d3e3e365",
     "columns": "Candidate navigation, semantic review and actual proof review are distinct. Empty evidence/canonical IDs do not establish completion."
   },
   "scopeReviews": [
@@ -763,6 +763,11 @@
       "file": "2026-10-19-playlist-song-identity.json",
       "sha256": "4a95e41aa9a21f2daad4eeb14b5546c6d9c6fbd43df3f0965a222dc5a8970434",
       "meaning": "PLID01 exact duplicate-option clause,current contradiction/fix and8 service cases;native/live/full-M6 acceptance remains scoped."
+    },
+    {
+      "file": "2026-10-19-playlist-obligations.json",
+      "sha256": "af2ce81d69aad939fb1cb7af300371d41484e6e3ced591d11b7b244cffbf092d",
+      "meaning": "Nine playlist groups,88 new exact fragments and existing PLID01 dependency cover all Playlists/M6 source;source/dated proof review only,no accepted groups."
     }
   ],
   "generatorMeaning": "Original mechanical partition generator only. Later deliberate semantic/proof annotations are authoritative and must be preserved; rerunning the original generator alone would discard them."

@@ -1,0 +1,1023 @@
+{
+  "date": "2026-10-19",
+  "baseCommit": "7bd20b991f032d08539c298152a55b39df1ae347",
+  "scope": "Entire Playlists section and all20 M6 result fragments.88 new exact-fragment semantic/partial-proof reviews plus the existing PLID01 duplicate obligation.",
+  "groups": [
+    {
+      "id": "PL01",
+      "actor": "Listener managing Jellyfin playlists",
+      "trigger": "Open playlists or explicitly create/rename",
+      "outcome": "Accessible music playlists and tracks remain on Jellyfin and readable by other clients;excluded features stay outside scope.",
+      "fragments": [
+        "REQ-L186-text-01",
+        "REQ-L188-text-01",
+        "REQ-L200-text-01",
+        "REQ-L210-text-01"
+      ],
+      "mandatoryVariants": [
+        "Account-accessible audio playlists",
+        "Create private audio playlist",
+        "Editable rename",
+        "Open ordered entries",
+        "Server persistence visible to another read/client",
+        "No playlist deletion/sharing/smart editing"
+      ],
+      "checks": [
+        "P01",
+        "P02"
+      ],
+      "source": [
+        "src/main/jellyfin.ts:playlists,playlist,createPlaylist,renamePlaylist",
+        "src/renderer/pages/Playlists/Playlists.page.tsx"
+      ],
+      "evidence": [
+        "2026-10-16-live-playlists.json",
+        "2026-10-17-playlist-creation-batches.json"
+      ],
+      "judgment": "Current list uses account-scoped recursive playlist reads and filters non-audio media. Explicit create/rename write to Jellyfin;no local-only shadow playlist or delete/share/smart editor is exposed. Pending and uncertain behavior additionally belongs to PL02/PL07.",
+      "remaining": [
+        "Dated live persistence is one configured server/runtime,not a complete server-version matrix or uncoached usability result."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "PL02",
+      "actor": "Listener managing Jellyfin playlists",
+      "trigger": "Submit a playlist name or cancel",
+      "outcome": "Readable guarded name dialog preserves failed draft and restores owned focus;confirmed creation opens detail only while still owned.",
+      "fragments": [
+        "REQ-L188-text-02",
+        "REQ-L188-text-03",
+        "REQ-L188-text-04",
+        "REQ-L188-text-05",
+        "REQ-L188-text-06",
+        "REQ-L188-text-07",
+        "REQ-L188-text-08",
+        "REQ-L188-text-09",
+        "RAD-L137-result-06",
+        "RAD-L137-result-07",
+        "RAD-L137-result-08",
+        "RAD-L137-result-09",
+        "RAD-L137-result-10"
+      ],
+      "mandatoryVariants": [
+        "Pending name remains readable",
+        "Save/Cancel/Close/Escape repetition guarded",
+        "Internal Tab retains modal ownership",
+        "Outside pointer/overlay/window loses ownership",
+        "Confirmed creation opens detail Back",
+        "Definite rejection permits explicit retry after readback",
+        "Uncertain Save stays locked with check action",
+        "Rename/cancel restore opener"
+      ],
+      "checks": [
+        "P02",
+        "P09",
+        "Q06",
+        "Q09"
+      ],
+      "source": [
+        "src/renderer/pages/Playlists/Playlists.page.tsx:PlaylistNameDialog",
+        "src/renderer/App.tsx:requestCreatedPlaylistFocus",
+        "src/renderer/components/Shared.tsx:Dialog"
+      ],
+      "evidence": [
+        "2026-10-18-playlist-create-focus.json",
+        "2026-10-18-add-playlist-focus.json"
+      ],
+      "judgment": "Name-dialog inFlight ref blocks repeated submission before React settles. Pending/readback is one mutation;input becomes readOnly and close is guarded. Focus ownership tracks dialog,window,visibility,outside focus and overlays. Current dialog restoration checks surviving opener then page heading.",
+      "remaining": [
+        "Create-focus record explicitly leaves overlay/hidden-window cancellation at source-only review. Native phases and later Shared changes retain their exact limits;Q09 remains open."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "PL03",
+      "actor": "Listener managing Jellyfin playlists",
+      "trigger": "Add music from a song/selection/album",
+      "outcome": "Choose existing/new destination and keep the guarded form until confirmed save/readback.",
+      "fragments": [
+        "REQ-L190-text-01",
+        "REQ-L192-text-01",
+        "REQ-L192-text-02",
+        "REQ-L192-text-03",
+        "REQ-L192-text-04",
+        "REQ-L192-text-05",
+        "REQ-L192-text-06",
+        "REQ-L192-text-07",
+        "RAD-L137-result-05"
+      ],
+      "mandatoryVariants": [
+        "Single/selected/all-album songs",
+        "Existing destination",
+        "New playlist name",
+        "Readable/focusable destination/name/skip values",
+        "Pending edits locked",
+        "Save/Cancel/Close/Review cannot overlap write/readback",
+        "Definite failure retains draft",
+        "Uncertain result locked and checkable",
+        "Success closes and restores opener",
+        "Duplicate option depends on PLID01"
+      ],
+      "checks": [
+        "P03",
+        "P06",
+        "Q06"
+      ],
+      "source": [
+        "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx",
+        "src/renderer/components/TrackTable/TrackTable.component.tsx:selectedSongs",
+        "src/renderer/pages/Albums/Albums.page.tsx:AlbumDetail"
+      ],
+      "evidence": [
+        "2026-10-16-live-playlist-additions.json",
+        "2026-10-18-add-playlist-focus.json",
+        "2026-10-19-playlist-song-identity.json"
+      ],
+      "judgment": "Add dialog starts with a new destination and skip enabled. Ref-based guards retain read-only/pointer/key-locked values through asynchronous invalidation. Selected songs arrive in row order. Canonical duplicate behavior is retained as existing PLID01,not counted again.",
+      "remaining": [
+        "The dedicated pending-form native run uses one song;bulk/album native/live proof retains its older version and scope. No new native or live add is claimed here."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "PL04",
+      "actor": "Listener managing Jellyfin playlists",
+      "trigger": "Play/select repeated songs or fetch unsafe occurrence IDs",
+      "outcome": "Preserve independent occurrences;disable only unsafe Move/Remove and avoid guessing a replacement playlist.",
+      "fragments": [
+        "REQ-L196-text-01",
+        "REQ-L196-text-02",
+        "REQ-L196-text-03",
+        "REQ-L196-text-04",
+        "REQ-L196-text-05",
+        "REQ-L196-text-06",
+        "REQ-L196-text-07",
+        "REQ-L196-text-08",
+        "REQ-L198-text-01",
+        "RAD-L137-result-18",
+        "RAD-L137-result-19",
+        "RAD-L137-result-20"
+      ],
+      "mandatoryVariants": [
+        "Repeated songs with distinct entry IDs",
+        "Missing/empty/invalid/reused entry IDs",
+        "Equivalent GUID handle variants",
+        "Listening/selection/Add/rename stay available",
+        "Safe uniquely identified entries remain editable",
+        "Preflight reads current entries",
+        "Absent/ambiguous target rejected before reserve/dispatch",
+        "No whole-playlist replacement",
+        "Changed entries clear unreliable selections and preserve unique ones"
+      ],
+      "checks": [
+        "P04",
+        "P19"
+      ],
+      "source": [
+        "src/shared/playlist-entries.ts",
+        "src/renderer/components/TrackTable/TrackTable.component.tsx:playlistRows,selectedSongs",
+        "src/renderer/pages/Playlists/Playlists.page.tsx:selectionEntries",
+        "src/main/jellyfin.ts:validateEntryChanges,removePlaylistEntries,movePlaylistEntry"
+      ],
+      "evidence": [
+        "2026-10-16-playlist-occurrences.json",
+        "2026-10-17-playlist-identities.json",
+        "2026-10-17-live-playlist-entry.json",
+        "2026-10-17-live-playlist-order.json"
+      ],
+      "judgment": "Identity counting disables duplicate canonical handles. Renderer generates unique fallback keys for unsafe rows without making them editable. Service rechecks live entries and validates move index before reservation. Selection refresh preserves only keys that still identify one editable occurrence.",
+      "remaining": [
+        "No conditional server transaction prevents another client changing entries between preflight and write. Actual live ambiguous-handle server support is not established by controlled malformed responses."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "PL05",
+      "actor": "Listener managing Jellyfin playlists",
+      "trigger": "Remove/reorder an editable occurrence",
+      "outcome": "Modify the intended entry and hand owned focus to a surviving action without disguising uncertainty.",
+      "fragments": [
+        "REQ-L194-text-01",
+        "REQ-L194-text-02",
+        "REQ-L194-text-03",
+        "REQ-L194-text-04",
+        "REQ-L194-text-05",
+        "RAD-L137-result-03",
+        "RAD-L137-result-04"
+      ],
+      "mandatoryVariants": [
+        "Authorized Remove/Move",
+        "Next surviving reviewed occurrence",
+        "Previous if no next",
+        "Back when empty",
+        "Definite failure retains surviving action",
+        "Uncertain removal can target recovery",
+        "Later Tab/pointer/navigation/overlay/window cancels handoff"
+      ],
+      "checks": [
+        "P04",
+        "P10",
+        "Q06"
+      ],
+      "source": [
+        "src/renderer/pages/Playlists/Playlists.page.tsx:removeEntry,removalFallback,recoveryFocusTarget",
+        "src/renderer/useRetryFocus.ts",
+        "src/main/jellyfin.ts:removePlaylistEntries,movePlaylistEntry"
+      ],
+      "evidence": [
+        "2026-10-17-live-playlist-order.json",
+        "2026-10-18-playlist-player-recovery-focus.json"
+      ],
+      "judgment": "Removal captures the reviewed key order and originating menu trigger. Focus resolution checks surviving rows,then Back;uncertainty selects visible recovery rather than reporting success. Main serializes by account/playlist and uses occurrence endpoint APIs.",
+      "remaining": [
+        "Recovery-focus record names source phases and missing same-song duplicate-row/pending-marker/window variants. This review does not turn those into current native passes."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "PL06",
+      "actor": "Listener managing Jellyfin playlists",
+      "trigger": "Read permissions or attempt a server-authorized edit",
+      "outcome": "Explicit read-only disables editing;unknown permission remains distinct and does not hide readable tracks.",
+      "fragments": [
+        "REQ-L202-text-01",
+        "REQ-L202-text-02",
+        "REQ-L202-text-03",
+        "REQ-L202-text-04",
+        "REQ-L202-text-05",
+        "REQ-L202-text-06",
+        "REQ-L202-text-07",
+        "RAD-L137-result-11"
+      ],
+      "mandatoryVariants": [
+        "CanEdit true",
+        "CanEdit false",
+        "Missing/malformed/non-boolean result",
+        "Optional lookup unavailable",
+        "Tracks still load",
+        "Authentication/account change remains error",
+        "Metadata/entries read errors remain errors",
+        "Denied edit visible without automatic retry",
+        "Uncertain edit additionally requires PL07"
+      ],
+      "checks": [
+        "P05"
+      ],
+      "source": [
+        "src/main/jellyfin.ts:playlistPermission,playlist",
+        "src/renderer/pages/Playlists/Playlists.page.tsx:restriction,editable",
+        "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx:permissionBlocked"
+      ],
+      "evidence": [
+        "2026-10-16-playlist-permissions.json",
+        "2026-10-18-live-access-permissions.json"
+      ],
+      "judgment": "Current service recognizes only actual booleans as permission evidence. Selected optional lookup failures return unknown;401/current-account changes escape as their own errors. UI locks confirmed read-only and otherwise lets the server authorize after a successful permission read,with separate read failures shown.",
+      "remaining": [
+        "P05 still requires actual unavailable-permission live configuration. Controlled optional lookup failure does not replace it. No new real account/access change here."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "PL07",
+      "actor": "Listener managing Jellyfin playlists",
+      "trigger": "Write confirmation is lost,invalid,partial or interrupted",
+      "outcome": "Persist intent before uncertain edits;require a fresh reviewed read and acknowledgement without replay.",
+      "fragments": [
+        "REQ-L204-text-01",
+        "REQ-L204-text-02",
+        "REQ-L204-text-03",
+        "REQ-L204-text-06",
+        "REQ-L204-text-07",
+        "REQ-L204-text-08",
+        "REQ-L204-text-09",
+        "REQ-L204-text-13",
+        "REQ-L204-text-14",
+        "REQ-L204-text-15",
+        "REQ-L204-text-16",
+        "REQ-L204-text-18",
+        "RAD-L137-result-11",
+        "RAD-L137-result-13",
+        "RAD-L137-result-14",
+        "RAD-L137-result-16"
+      ],
+      "mandatoryVariants": [
+        "Account-owned durable intent before create/add/remove/move",
+        "Duplicate preflight before reserve",
+        "No remainder/read failure leaves no intent",
+        "One addition intent across batches",
+        "Missing create ID remains unknown",
+        "Lost/malformed confirmation stays locked",
+        "Restart does not replay",
+        "Fresh complete list for creation",
+        "Fresh detail for inline edits",
+        "Read begun pending cannot authorize acknowledgement",
+        "Unavailable recovery storage rejects before dispatch",
+        "Music remains available"
+      ],
+      "checks": [
+        "P08",
+        "P09",
+        "P10",
+        "P11",
+        "P12",
+        "P13",
+        "P15",
+        "P17",
+        "P18"
+      ],
+      "source": [
+        "src/main/playlist-recovery.ts:withPlaylistRecovery,beginPlaylistRead,finishPlaylistRead,acknowledgePlaylistRecovery",
+        "src/main/index.ts:playlists,playlist,acknowledge handlers",
+        "src/main/jellyfin.ts:serialize,runPlaylistWrite,request,addPlaylistItems"
+      ],
+      "evidence": [
+        "2026-10-16-playlist-storage-current.json",
+        "2026-10-16-playlist-recovery-current.json",
+        "2026-10-17-playlist-creation-batches.json",
+        "2026-10-19-playlist-song-identity.json"
+      ],
+      "judgment": "Recovery saves markers before dispatch,retains ambiguous outcomes and removes markers only after confirmed success/definite rejection. Read receipts carry marker/epoch/pending identity;pending or changed reads cannot issue a valid acknowledgement. Status-only mutations do not await unused body;creation consumes/validates returned ID. The current identity fix preserves preflight-before-reserve and one marker across batches.",
+      "remaining": [
+        "Controlled file failures and ordinary restarts do not prove power-loss durability. Live lost confirmation is a controlled client fault after a real successful write,not an actual server outage."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "PL08",
+      "actor": "Listener managing Jellyfin playlists",
+      "trigger": "Navigate,change libraries/account or reopen after an unresolved edit",
+      "outcome": "Keep affected recovery discoverable and scoped while other music/playlists remain usable.",
+      "fragments": [
+        "REQ-L204-text-04",
+        "REQ-L204-text-05",
+        "REQ-L204-text-10",
+        "REQ-L204-text-11",
+        "REQ-L204-text-12",
+        "REQ-L204-text-17",
+        "REQ-L204-text-19",
+        "REQ-L204-text-20",
+        "REQ-L204-text-21",
+        "RAD-L137-result-12",
+        "RAD-L137-result-15",
+        "RAD-L137-result-17"
+      ],
+      "mandatoryVariants": [
+        "Music/page/playlist detours",
+        "Library save",
+        "Same-account sign-in",
+        "Affected tile Review needed",
+        "Affected Add destination disabled with explanation/direct Review",
+        "Unresolved creation leaves existing destinations usable",
+        "Rename and Add respect known locks",
+        "Sign-out/different account hides feedback",
+        "Returning restores account-owned review",
+        "Late old account cannot refresh new data"
+      ],
+      "checks": [
+        "P07",
+        "P13",
+        "P14",
+        "P16"
+      ],
+      "source": [
+        "src/renderer/App.tsx:SessionContent,usePlaylistRecovery",
+        "src/renderer/pages/Playlists/Playlists.page.tsx:usePlaylistRecovery,creationBlocked,editBlocked",
+        "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx:additionBlocked,review",
+        "src/main/index.ts:playlistSessionEpoch",
+        "src/main/playlist-recovery.ts:keys,statuses"
+      ],
+      "evidence": [
+        "2026-10-17-playlist-boundaries.json",
+        "2026-10-16-playlist-add-review.json",
+        "2026-10-19-account-expiry-boundary.json"
+      ],
+      "judgment": "SessionContent retains recovery across same-ID ready-screen changes and remounts for another account. Recovery keys hash server/account/playlist. Main epoch guards returned read/receipt state;unmounted old-account recovery callbacks are ignored. Affected destinations remain locked while unrelated music and playlists stay available.",
+      "remaining": [
+        "Prior boundary checks retain their controlled accounts/restart scopes. No new native account-change/library-save sequence is claimed;auth-expiry evidence covers its separately named race,not all playlist mutations."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "PL09",
+      "actor": "Listener managing Jellyfin playlists",
+      "trigger": "Refresh or acknowledge a recovery state",
+      "outcome": "Retain the focused pending action and acknowledge only the exact reviewed version.",
+      "fragments": [
+        "REQ-L206-text-01",
+        "REQ-L206-text-02",
+        "REQ-L206-text-03",
+        "REQ-L206-text-04",
+        "REQ-L206-text-05",
+        "REQ-L206-text-06",
+        "RAD-L137-result-01",
+        "RAD-L137-result-02"
+      ],
+      "mandatoryVariants": [
+        "Refresh versus Confirming labels",
+        "Immediate repeated/overlap guards",
+        "Pending mutation lock across navigation",
+        "Capture exact marker/receipt",
+        "Failure retains action only for same reviewed version",
+        "Later read requires new acknowledgement",
+        "Success targets list result or detail Back only while owned",
+        "Older action never clears newer marker"
+      ],
+      "checks": [
+        "P10",
+        "P11",
+        "P12",
+        "Q06"
+      ],
+      "source": [
+        "src/renderer/pages/Playlists/Playlists.page.tsx:creation/review action refs,mutation keys,retryReviewAction",
+        "src/main/playlist-recovery.ts:receipts,epoch,acknowledgePlaylistRecovery",
+        "src/renderer/useRetryFocus.ts"
+      ],
+      "evidence": [
+        "2026-10-18-playlist-player-recovery-focus.json",
+        "2026-10-17-playlist-boundaries.json",
+        "2026-10-17-playlist-creation-batches.json"
+      ],
+      "judgment": "Immediate action refs and account/playlist mutation keys prevent overlap across component remounts. UI rechecks captured marker/receipt against cache;main independently checks current account epoch,active writer,marker and receipt before clearing. Focus uses the shared ownership guard.",
+      "remaining": [
+        "Named native focus record is phase-scoped with residual variants. Source validation of receipts is not a substitute for VoiceOver or observed understanding of acknowledgement."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    }
+  ],
+  "STARContext": {
+    "id": "M6",
+    "sourceId": "RAD-L137",
+    "story": "I can edit playlists without repeating uncertain changes",
+    "situationAndTask": "My account may edit a shared playlist, or a save loses its response",
+    "action": "Attempt the allowed action; inspect refreshed order after an uncertain result",
+    "expectedResult": "Recovery Refresh/confirmation retain focused controls, label their own pending action and block overlap across music navigation; confirmation applies only to the reviewed state and conditionally hands focus to list results or detail Back. Removing the focused occurrence hands focus to the next surviving reviewed occurrence, then previous, or Back; uncertainty stays explicit and later navigation cancels that handoff. Adding songs keeps destination, name and skip-existing values readable and focusable through save/readback, locks changes and visibly guards Save/Cancel/Close/Review against duplicate writes or navigation, retains definite-failure drafts for explicit retry, and closes on success with opener focus; Creating or renaming keeps the name readable and focus within the pending dialog; repeated save/dismiss keys cannot repeat the change; confirmed creation opens its detail on Back while the modal still owns interaction, including internal Tab movement; outside actions, overlays or backgrounding cancel that focus handoff; definite rejection retains the editable draft after readback, uncertain saves stay locked, and rename/cancel restore their opener; Jellyfin authorizes unknown permissions, explicit read-only stays disabled, unconfirmed permission never claims read-only or hides otherwise readable tracks, auth/account or playlist-data failures still surface, errors remain visible, and an uncertain reorder/removal needs successful refresh plus acknowledgement before editing continues; pending/error/review state survives page changes, playlist switches, library saves and same-account sign-in; after restart an unresolved addition/reorder/removal still needs a fresh detail read and explicit acknowledgement, without replay; an uncertain creation requires checking the refreshed playlist list before another create; affected playlist tiles say Review needed and their Add destinations are disabled, with an explanation and direct Review playlists action in the Add dialog; failed duplicate reads and empty additions leave no false lock; other playlists/accounts remain usable and returning to the original account retains its unresolved change; repeated positions select and play independently; if the server cannot identify an occurrence separately, explain unavailable Move/Remove actions while retaining listening and safe edits; changing entries clears unreliable selections and preserves uniquely identified ones",
+    "resultFragments": [
+      "RAD-L137-result-01",
+      "RAD-L137-result-02",
+      "RAD-L137-result-03",
+      "RAD-L137-result-04",
+      "RAD-L137-result-05",
+      "RAD-L137-result-06",
+      "RAD-L137-result-07",
+      "RAD-L137-result-08",
+      "RAD-L137-result-09",
+      "RAD-L137-result-10",
+      "RAD-L137-result-11",
+      "RAD-L137-result-12",
+      "RAD-L137-result-13",
+      "RAD-L137-result-14",
+      "RAD-L137-result-15",
+      "RAD-L137-result-16",
+      "RAD-L137-result-17",
+      "RAD-L137-result-18",
+      "RAD-L137-result-19",
+      "RAD-L137-result-20"
+    ],
+    "contextReviewState": "pending"
+  },
+  "externalCanonicalDependencies": [
+    {
+      "id": "PLID01",
+      "fragment": "REQ-L208-text-01",
+      "record": "2026-10-19-playlist-song-identity.json",
+      "meaning": "Existing canonical obligation covers duplicate option behavior;not recounted or overwritten."
+    }
+  ],
+  "sourceSha256": {
+    "src/main/jellyfin.ts": "59f19ce18dd13f9037c4e88e94de205f3e0e0e4a15b01943afb805c2e155b6c0",
+    "src/main/playlist-recovery.ts": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+    "src/main/index.ts": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+    "src/main/storage.ts": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+    "src/shared/playlist-entries.ts": "bb58ab3747844f5080fae78be9a9431bc9cb841fbbb704866cd7e064b5a1292c",
+    "src/renderer/App.tsx": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+    "src/renderer/useRetryFocus.ts": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+    "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": "53afdb4d78cca027bce5865b5180dab1a27d5873ad1541b988eea50cd7802ecd",
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "158caa15a4fe11170ac048c1752d4b9327006595646f5a86acd27c5b1c0216e5",
+    "src/renderer/components/Shared.tsx": "16726cf323f44324a124ee5fb29a7270ae514f8dc04f87f153f6b0a5e289ff5e"
+  },
+  "evidenceSha256": {
+    "2026-10-16-live-playlist-additions.json": "ab8116e35e24cfe7859cd38c2dc45320466ac194aad1a0626996e91b9bf00771",
+    "2026-10-16-live-playlists.json": "7fc4e2cc228b93a2dd50f9b40e7c0613ec93109556e166842997dd9993744194",
+    "2026-10-16-playlist-add-review.json": "58811b75e930752eb7f1e3d15e254f968bc0aa6890b8fb2f467dcec48b4a23f8",
+    "2026-10-16-playlist-occurrences.json": "1e9e2369c8cc65fa1cc4e6184045baa2588f67c4924a040c2a2d53a0b2a487b5",
+    "2026-10-16-playlist-permissions.json": "9d7d664dcaa6ca5c529b686b8799007bff071ce619b4acb7ecb8cd288da25c0c",
+    "2026-10-16-playlist-recovery-current.json": "583b0918ffb177f773c3d811b64dea370169a429cd563da0629c7671c527afd2",
+    "2026-10-16-playlist-storage-current.json": "7aeee1107aefce64ba6107ea50670ad6b77f719e61c688a5a96206122a04f93e",
+    "2026-10-17-live-playlist-entry.json": "91e94c5c6d8c5d904ed8d8208f6f2f75a98d3cd90dbe5b20f1a8a672ddbd6520",
+    "2026-10-17-live-playlist-order.json": "8a4d71c283d681d7c3820748fa02c1a256a5f99a6af3fe4ee556c6d4ab260427",
+    "2026-10-17-playlist-boundaries.json": "79afbd4e117323ffd5d85d2ec18d3c51c1f2c9226645fed4de7bdc6203347835",
+    "2026-10-17-playlist-creation-batches.json": "b203fbbe981935553b7157bf3cd0986ac5cc34fb20bfb93930e082251c5d8606",
+    "2026-10-17-playlist-identities.json": "a16a4b476b8a42759119350b49ff26ee81c25a561edff09c5b575212aa9e212a",
+    "2026-10-18-add-playlist-focus.json": "dc90cb93cd7bcdcecb4c7e1bfd75926b5f8ad1af865b29944ac41c56055704ed",
+    "2026-10-18-live-access-permissions.json": "49e0f34408000390e503742e48e5ded63f28ea4899821227dc2429d60d5090a7",
+    "2026-10-18-playlist-create-focus.json": "2e487bc34658105ad8a68599dc6bd85fbf12cdcf74b6ea86437a0ec142bae8e2",
+    "2026-10-18-playlist-player-recovery-focus.json": "dbdf01c6026f4cdf656cd0be6dfb8a104f5937a365d9263bff9bddefb574bcb8",
+    "2026-10-19-account-expiry-boundary.json": "e8a4137ef4d80d9fb377850ef31571f6194881327ea476556d41d69d59433985",
+    "2026-10-19-playlist-song-identity.json": "4a95e41aa9a21f2daad4eeb14b5546c6d9c6fbd43df3f0965a222dc5a8970434"
+  },
+  "sourceFreshnessComparisons": {
+    "2026-10-16-live-playlist-additions.json": {},
+    "2026-10-16-live-playlists.json": {},
+    "2026-10-16-playlist-add-review.json": {},
+    "2026-10-16-playlist-occurrences.json": {},
+    "2026-10-16-playlist-permissions.json": {},
+    "2026-10-16-playlist-recovery-current.json": {},
+    "2026-10-16-playlist-storage-current.json": {},
+    "2026-10-17-live-playlist-entry.json": {
+      "src/main/index.ts": {
+        "recorded": "a5d1528149631987f30b25a6e296b60bc97b950a712280bf6f584cce13b1d320",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/main/jellyfin.ts": {
+        "recorded": "4daf9866e8034ca89ffd209035b1b8795f5127082bcea0fa825182b66d103483",
+        "current": "59f19ce18dd13f9037c4e88e94de205f3e0e0e4a15b01943afb805c2e155b6c0",
+        "matches": false
+      },
+      "src/main/media.ts": {
+        "recorded": "19252d91dd9b85a1a322f174446ebd6a34d72b77f0ab7a8a1db693d47424259e",
+        "current": "c2dbac7a2c6892e44794cffde7cd5118f6999f712b1f6f06533b3a9f44245fe2",
+        "matches": false
+      },
+      "src/main/storage.ts": {
+        "recorded": "7df3fcda71eaeb8faaa42f24c70336949fb00e494a29ecfb293c93ac61825418",
+        "current": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "matches": false
+      },
+      "src/preload/index.ts": {
+        "recorded": "041f6e536c7d0c09f0dffc870c150b10affa44da0e7862de21dce8397ebacb10",
+        "current": "458378616e402bc07202f269fa94092d8ee8685e2dd9bba7fcaf0c7ca58e31c1",
+        "matches": false
+      },
+      "src/renderer/App.tsx": {
+        "recorded": "9341e01ab161fec685239fb5e2841342e85df33016326744db1ade9fe20860e1",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": false
+      },
+      "src/renderer/pages/Connection/Connection.page.tsx": {
+        "recorded": "1256fee7c558c4840e6b400d6990d5b5f7a7c5afcc9f1bd7fa6171e2a5007d5e",
+        "current": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815",
+        "matches": false
+      },
+      "src/renderer/pages/Songs/Songs.page.tsx": {
+        "recorded": "79b3115960d53568bac407d5754ff0996fee44ba895b222d99b4e0fb71e3007f",
+        "current": "a15a3adc08b8ebb2bd4d96b00c8462d94922bef67eb2fad655c6c428af0eb942",
+        "matches": false
+      },
+      "src/renderer/pages/Playlists/Playlists.page.tsx": {
+        "recorded": "8bea51f6cb40f8b4ca0714e8af6b344b7e0a6e40278e018935b6a0d5e7f4e721",
+        "current": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+        "matches": false
+      },
+      "src/renderer/components/TrackTable/TrackTable.component.tsx": {
+        "recorded": "c6d1b4c4f94a8cc67f9c052526b054ad8b716fbb3ceb9f83e347946bd4ad3a63",
+        "current": "158caa15a4fe11170ac048c1752d4b9327006595646f5a86acd27c5b1c0216e5",
+        "matches": false
+      }
+    },
+    "2026-10-17-live-playlist-order.json": {
+      "src/main/index.ts": {
+        "recorded": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/main/jellyfin.ts": {
+        "recorded": "22f083327dfdcbb0952d9750662df95d13c31e09a83f628f8c1e3393072f90eb",
+        "current": "59f19ce18dd13f9037c4e88e94de205f3e0e0e4a15b01943afb805c2e155b6c0",
+        "matches": false
+      },
+      "src/main/playlist-recovery.ts": {
+        "recorded": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+        "current": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+        "matches": true
+      },
+      "src/shared/playlist-entries.ts": {
+        "recorded": "bb58ab3747844f5080fae78be9a9431bc9cb841fbbb704866cd7e064b5a1292c",
+        "current": "bb58ab3747844f5080fae78be9a9431bc9cb841fbbb704866cd7e064b5a1292c",
+        "matches": true
+      },
+      "src/renderer/pages/Playlists/Playlists.page.tsx": {
+        "recorded": "8bea51f6cb40f8b4ca0714e8af6b344b7e0a6e40278e018935b6a0d5e7f4e721",
+        "current": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+        "matches": false
+      },
+      "src/renderer/components/TrackTable/TrackTable.component.tsx": {
+        "recorded": "c6d1b4c4f94a8cc67f9c052526b054ad8b716fbb3ceb9f83e347946bd4ad3a63",
+        "current": "158caa15a4fe11170ac048c1752d4b9327006595646f5a86acd27c5b1c0216e5",
+        "matches": false
+      },
+      "src/renderer/player.tsx": {
+        "recorded": "481d350ef35d5e11d77848f661419f5eea265cbf643db234c665174255ec562c",
+        "current": "aa7d866e5724945a3f06773a984f6983ccc6544ee08b02991fd54c0f53f25f0c",
+        "matches": false
+      }
+    },
+    "2026-10-17-playlist-boundaries.json": {
+      "src/main/playlist-recovery.ts": {
+        "recorded": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+        "current": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+        "matches": true
+      },
+      "src/main/jellyfin.ts": {
+        "recorded": "22f083327dfdcbb0952d9750662df95d13c31e09a83f628f8c1e3393072f90eb",
+        "current": "59f19ce18dd13f9037c4e88e94de205f3e0e0e4a15b01943afb805c2e155b6c0",
+        "matches": false
+      },
+      "src/main/index.ts": {
+        "recorded": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/main/storage.ts": {
+        "recorded": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+        "current": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "matches": false
+      },
+      "src/renderer/pages/Playlists/Playlists.page.tsx": {
+        "recorded": "8bea51f6cb40f8b4ca0714e8af6b344b7e0a6e40278e018935b6a0d5e7f4e721",
+        "current": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+        "matches": false
+      },
+      "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": {
+        "recorded": "550356492cae38ab34925c91ad9cb5c1ab7c9a7685779e9202de297fc33915de",
+        "current": "53afdb4d78cca027bce5865b5180dab1a27d5873ad1541b988eea50cd7802ecd",
+        "matches": false
+      },
+      "src/renderer/App.tsx": {
+        "recorded": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": false
+      },
+      "src/renderer/pages/Connection/Connection.page.tsx": {
+        "recorded": "715243e30983a390744988b2f25c6ef4319898c88c3daf6db6a7c7f216ef2d09",
+        "current": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815",
+        "matches": false
+      }
+    },
+    "2026-10-17-playlist-creation-batches.json": {
+      "src/main/playlist-recovery.ts": {
+        "recorded": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+        "current": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+        "matches": true
+      },
+      "src/main/jellyfin.ts": {
+        "recorded": "22f083327dfdcbb0952d9750662df95d13c31e09a83f628f8c1e3393072f90eb",
+        "current": "59f19ce18dd13f9037c4e88e94de205f3e0e0e4a15b01943afb805c2e155b6c0",
+        "matches": false
+      },
+      "src/main/index.ts": {
+        "recorded": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/main/storage.ts": {
+        "recorded": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+        "current": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "matches": false
+      },
+      "src/renderer/pages/Playlists/Playlists.page.tsx": {
+        "recorded": "8bea51f6cb40f8b4ca0714e8af6b344b7e0a6e40278e018935b6a0d5e7f4e721",
+        "current": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+        "matches": false
+      },
+      "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": {
+        "recorded": "550356492cae38ab34925c91ad9cb5c1ab7c9a7685779e9202de297fc33915de",
+        "current": "53afdb4d78cca027bce5865b5180dab1a27d5873ad1541b988eea50cd7802ecd",
+        "matches": false
+      },
+      "src/renderer/App.tsx": {
+        "recorded": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": false
+      }
+    },
+    "2026-10-17-playlist-identities.json": {
+      "src/shared/playlist-entries.ts": {
+        "recorded": "bb58ab3747844f5080fae78be9a9431bc9cb841fbbb704866cd7e064b5a1292c",
+        "current": "bb58ab3747844f5080fae78be9a9431bc9cb841fbbb704866cd7e064b5a1292c",
+        "matches": true
+      },
+      "src/main/jellyfin.ts": {
+        "recorded": "22f083327dfdcbb0952d9750662df95d13c31e09a83f628f8c1e3393072f90eb",
+        "current": "59f19ce18dd13f9037c4e88e94de205f3e0e0e4a15b01943afb805c2e155b6c0",
+        "matches": false
+      },
+      "src/main/playlist-recovery.ts": {
+        "recorded": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+        "current": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+        "matches": true
+      },
+      "src/main/index.ts": {
+        "recorded": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/renderer/components/TrackTable/TrackTable.component.tsx": {
+        "recorded": "c6d1b4c4f94a8cc67f9c052526b054ad8b716fbb3ceb9f83e347946bd4ad3a63",
+        "current": "158caa15a4fe11170ac048c1752d4b9327006595646f5a86acd27c5b1c0216e5",
+        "matches": false
+      },
+      "src/renderer/pages/Playlists/Playlists.page.tsx": {
+        "recorded": "8bea51f6cb40f8b4ca0714e8af6b344b7e0a6e40278e018935b6a0d5e7f4e721",
+        "current": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+        "matches": false
+      }
+    },
+    "2026-10-18-add-playlist-focus.json": {
+      "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": {
+        "recorded": "2f750a0a07c76a2d1d77bbe28a28c2c572e90fbac5d9c66391922b2f99e70e33",
+        "current": "53afdb4d78cca027bce5865b5180dab1a27d5873ad1541b988eea50cd7802ecd",
+        "matches": false
+      },
+      "src/renderer/components/Shared.tsx": {
+        "recorded": "16726cf323f44324a124ee5fb29a7270ae514f8dc04f87f153f6b0a5e289ff5e",
+        "current": "16726cf323f44324a124ee5fb29a7270ae514f8dc04f87f153f6b0a5e289ff5e",
+        "matches": true
+      },
+      "src/renderer/pages/Playlists/Playlists.page.tsx": {
+        "recorded": "b7776090d61317ad92f967df2cfff4ca1e4e1d073f3a94b84b986ee44ac25cf0",
+        "current": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+        "matches": false
+      },
+      "src/renderer/styles.css": {
+        "recorded": "e6139cafd82dddec372b82f7d40a22ddb852f965a9c845703f8db86fea6d6bf5",
+        "current": "43da67b986692d802df012ddb0c01c03293edc3851930370e0d2a974a72c79b6",
+        "matches": false
+      }
+    },
+    "2026-10-18-live-access-permissions.json": {
+      "src/main/jellyfin.ts": {
+        "recorded": "6e1191d733752c57787c1c9465085e014a0500e0543e56a22467019892ad74ab",
+        "current": "59f19ce18dd13f9037c4e88e94de205f3e0e0e4a15b01943afb805c2e155b6c0",
+        "matches": false
+      },
+      "src/main/index.ts": {
+        "recorded": "1b7ead1138761424fccd5e35dd432b7ba0c3e7d7e43eec18fd408f49e6e8362c",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/shared/types.ts": {
+        "recorded": "0637a467d043774954160f8f22b4d3074cc853534593b36f68e718c60f5040c5",
+        "current": "a4777ac71292ab6adddcb1fce211ad14c7e324fe1ccd5ed278fb1f290dfcaea0",
+        "matches": false
+      },
+      "src/preload/index.ts": {
+        "recorded": "6a5e85fafc04caea2b62b6f4bef794bffe166b72322ecd677697413639ec6f9f",
+        "current": "458378616e402bc07202f269fa94092d8ee8685e2dd9bba7fcaf0c7ca58e31c1",
+        "matches": false
+      },
+      "src/renderer/App.tsx": {
+        "recorded": "eae93435308b21d89e771bc920b389b753743923b1d9e907abed0f5d551551f7",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": false
+      },
+      "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": {
+        "recorded": "53afdb4d78cca027bce5865b5180dab1a27d5873ad1541b988eea50cd7802ecd",
+        "current": "53afdb4d78cca027bce5865b5180dab1a27d5873ad1541b988eea50cd7802ecd",
+        "matches": true
+      }
+    },
+    "2026-10-18-playlist-create-focus.json": {
+      "src/renderer/App.tsx": {
+        "recorded": "a598265408255fc79db070fe71a98abe75f473fccbb2e8b208ddce0cd4140866",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": false
+      },
+      "src/renderer/components/Shared.tsx": {
+        "recorded": "57fe87a92034d3088c78b22c8bb205ca4a89750a99b51e5f5e85ae879c7a7967",
+        "current": "16726cf323f44324a124ee5fb29a7270ae514f8dc04f87f153f6b0a5e289ff5e",
+        "matches": false
+      },
+      "src/renderer/pages/Playlists/Playlists.page.tsx": {
+        "recorded": "21e9ce748f2c1a1407eb62a0e56bf348f2fde9e9c80b879a8ab789f2878d3a47",
+        "current": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+        "matches": false
+      },
+      "src/renderer/styles.css": {
+        "recorded": "b4cfa77bde472f442c2bfa6bacca3a399eb0a2cba92f6b1fb7f565fc6ab8a6eb",
+        "current": "43da67b986692d802df012ddb0c01c03293edc3851930370e0d2a974a72c79b6",
+        "matches": false
+      }
+    },
+    "2026-10-18-playlist-player-recovery-focus.json": {
+      "src/renderer/useRetryFocus.ts": {
+        "recorded": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c",
+        "current": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c",
+        "matches": true
+      },
+      "src/renderer/player.tsx": {
+        "recorded": "f18e166b2a750dfc2c9f9a108380757683f475cbe5cd33717af5be281292a600",
+        "current": "aa7d866e5724945a3f06773a984f6983ccc6544ee08b02991fd54c0f53f25f0c",
+        "matches": false
+      },
+      "src/renderer/components/Player/Player.component.tsx": {
+        "recorded": "ff91b28a23255a7467201630ed605fc6dd73231c340470e8827c6382e6cb74f2",
+        "current": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+        "matches": false
+      },
+      "src/renderer/components/Player/Player.styles.css": {
+        "recorded": "6e1d3fc6940e0f0bc2dd7b94667feba86ed566e3ce1c695d29a1a3b2968bb9c6",
+        "current": "6e1d3fc6940e0f0bc2dd7b94667feba86ed566e3ce1c695d29a1a3b2968bb9c6",
+        "matches": true
+      },
+      "src/renderer/components/TrackTable/TrackTable.component.tsx": {
+        "recorded": "062f3dc8c72be8d68df268eba642ef2d93b89ac500c73303688ec98653433ec9",
+        "current": "158caa15a4fe11170ac048c1752d4b9327006595646f5a86acd27c5b1c0216e5",
+        "matches": false
+      },
+      "src/renderer/pages/Playlists/Playlists.page.tsx": {
+        "recorded": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+        "current": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+        "matches": true
+      },
+      "src/renderer/styles.css": {
+        "recorded": "59a887c4f754a3e54d9fea94420cf39ffc99a825211113e85b98df2cd2b53693",
+        "current": "43da67b986692d802df012ddb0c01c03293edc3851930370e0d2a974a72c79b6",
+        "matches": false
+      }
+    },
+    "2026-10-19-account-expiry-boundary.json": {
+      "src/main/index.ts": {
+        "recorded": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": true
+      },
+      "src/main/jellyfin.ts": {
+        "recorded": "ad380aa5fc6e6963254831e5f5d5d67210053977a374e3473c62435d56dc26c8",
+        "current": "59f19ce18dd13f9037c4e88e94de205f3e0e0e4a15b01943afb805c2e155b6c0",
+        "matches": false
+      },
+      "src/renderer/App.tsx": {
+        "recorded": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": true
+      },
+      "src/renderer/api.ts": {
+        "recorded": "9c2f347ebb911d73915cbc4178a03f33e8dfcfcec4ff4a8b2ef4cd1e94ca4e18",
+        "current": "9c2f347ebb911d73915cbc4178a03f33e8dfcfcec4ff4a8b2ef4cd1e94ca4e18",
+        "matches": true
+      },
+      "src/renderer/main.tsx": {
+        "recorded": "fa6dae583c41c04186cb71ec7b3b68af716ba82fc46cb788b1b433d106141065",
+        "current": "fa6dae583c41c04186cb71ec7b3b68af716ba82fc46cb788b1b433d106141065",
+        "matches": true
+      },
+      "src/renderer/pages/Settings/Settings.page.tsx": {
+        "recorded": "bfd9e02f6187a9581e9de3e5d941f66a35be7cf5477b68594b740ee25ebbf101",
+        "current": "bfd9e02f6187a9581e9de3e5d941f66a35be7cf5477b68594b740ee25ebbf101",
+        "matches": true
+      },
+      "src/shared/types.ts": {
+        "recorded": "a4777ac71292ab6adddcb1fce211ad14c7e324fe1ccd5ed278fb1f290dfcaea0",
+        "current": "a4777ac71292ab6adddcb1fce211ad14c7e324fe1ccd5ed278fb1f290dfcaea0",
+        "matches": true
+      },
+      "src/renderer/pages/Connection/Connection.page.tsx": {
+        "recorded": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815",
+        "current": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815",
+        "matches": true
+      }
+    },
+    "2026-10-19-playlist-song-identity.json": {
+      "src/main/jellyfin.ts": {
+        "recorded": "59f19ce18dd13f9037c4e88e94de205f3e0e0e4a15b01943afb805c2e155b6c0",
+        "current": "59f19ce18dd13f9037c4e88e94de205f3e0e0e4a15b01943afb805c2e155b6c0",
+        "matches": true
+      },
+      "src/main/playlist-recovery.ts": {
+        "recorded": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+        "current": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+        "matches": true
+      },
+      "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": {
+        "recorded": "53afdb4d78cca027bce5865b5180dab1a27d5873ad1541b988eea50cd7802ecd",
+        "current": "53afdb4d78cca027bce5865b5180dab1a27d5873ad1541b988eea50cd7802ecd",
+        "matches": true
+      }
+    }
+  },
+  "fragmentTextSha256": {
+    "RAD-L137-result-01": "5e5dffe1146713cc23d08f8e91bee2fe917098bbdf441cabb52a9ddd6d72dc10",
+    "RAD-L137-result-02": "576d72a3c821953e235ed10122578c406b1b404d6dee36f7d4410c2270e38f68",
+    "RAD-L137-result-03": "bd26c6df5c07207c3182e9650e95cb2dfd8eae9c0c342d829c4b035433e1cd27",
+    "RAD-L137-result-04": "2e906da32c42c61c9afa8753740f7fdfc5b4095c8513fb057b95425ab36a5062",
+    "RAD-L137-result-05": "3c35ed0f7f4b0da01b7bdc13e833da27f7cf998c9ff0745f3705d88203ea3fa5",
+    "RAD-L137-result-06": "f85e7161e67ab73fc8e86b1facfedf6fdc07f22863f8f434f8ea0139170a3b95",
+    "RAD-L137-result-07": "70ee1fd48da5d5d7cb3caacbd1380e06f383aef4d95e7de7e95895ccc9a82fff",
+    "RAD-L137-result-08": "ebff8ed68254e9734da4ee93c3f8994aaba795668c64969ff5c3d1150cf725f8",
+    "RAD-L137-result-09": "5e3cd2f6b4a9fb8f5e18c80166b76f7813e9d6d847950f3c27b66dc6985bebea",
+    "RAD-L137-result-10": "2cdf62e8969ed667b6a80db2e180a136a0321bf54cb115739429a6d001b6c496",
+    "RAD-L137-result-11": "e8c83f64f36055a6aae849c38b8ac151a5cde1da5aa773973c573b23f00ae846",
+    "RAD-L137-result-12": "1557d3297fed46fc5d993f791cc22a131d7b1ea8659b3a9977a566687d016c05",
+    "RAD-L137-result-13": "1b1d1a11a5de0863382ea1edf628c507fd8f453b2e28e94df1c1cf62a9f7617a",
+    "RAD-L137-result-14": "6c38953a9731805ea475e08ba5440946f8f3f47a83be014a19f54c3f7d3a38fe",
+    "RAD-L137-result-15": "e26cd9229196a27d4970358c73be36b39223f63de73c69846695b60358d740c2",
+    "RAD-L137-result-16": "0c9595f71a3061497a2023072db12a6d16de094cde241fdd48e89f5d2b54bc02",
+    "RAD-L137-result-17": "6cc3a4cea7c9babf760ff0745f86e0a9879ffdd19afd3ed476d93af70f79c0ba",
+    "RAD-L137-result-18": "627cb25dec0566c5c497360ec48bcaaf713c5d67f2f70afd88d8679098425935",
+    "RAD-L137-result-19": "bdc982fbfaf4daacfcf94dab8120ee028c4be01edd2a66c33df93945d37116a3",
+    "RAD-L137-result-20": "a0f201c0ee1799b0c57ba14a75791042f9d19bb7458c375fae53e7b8b6908c93",
+    "REQ-L186-text-01": "4ce144a81026741ef667580e96ffe33bd5636a0c237299e238739e6c5e0dbfd8",
+    "REQ-L188-text-01": "37d01c8c3d4cdfcbc4ac5113ed779e5238dfdcf1f7cf79da9de3a77bfc363f5a",
+    "REQ-L188-text-02": "827fc364e08a40bde8ca2272a0ab1294e5aac529e4998694041162d34e857fc8",
+    "REQ-L188-text-03": "ac95ce5398aebb4e4cf92a14cc74c57e3bcf3b2a9c1865e3961ee91ddebe48ee",
+    "REQ-L188-text-04": "57f0bf8d09bc7ebb4f98b385e12d1173ad08f5a67f5d9ddc9be75042093bec9c",
+    "REQ-L188-text-05": "c03125318ff6d0512a19db702c9047d424b8bd37b58184a8713cff9fb9fb5be9",
+    "REQ-L188-text-06": "fed282dac3fbc6d67ec2dbeb79697621ba0067b29419368cc055a8c0311ade8b",
+    "REQ-L188-text-07": "57d9848cfd6cd741b67f3d0e3e720629e1d0b0cac69d9682453dba98e2e20415",
+    "REQ-L188-text-08": "205963a1b41132d08fa59e9b943a81ae3ff239f4b508a3b21b8185cc1743a0fa",
+    "REQ-L188-text-09": "16fced1a9a240303104075f503c12c7daedd6c1e544ca0c79e34ed76bcdc5a48",
+    "REQ-L190-text-01": "1c6d57ec654e43961b642cb67e7e897447b9a27abb734baa8c64fb774e96ccb2",
+    "REQ-L192-text-01": "3a77229ce337e7019f8efc24c940531ae3842f0420709dc2bf0cd7c2fc4f5d99",
+    "REQ-L192-text-02": "75253fa1163a2c2d9b316cf38d76dd4543a8618b5a10b1a3ec7b0d152f60f0be",
+    "REQ-L192-text-03": "51078173f3d8a2dd3c0a42991496c3a8a93cc63792074ff261d62fbd522de2e9",
+    "REQ-L192-text-04": "7f78e82bb434f574ccee3c57c65c01d9701aedd930e53fe79e40f2e5a717a627",
+    "REQ-L192-text-05": "464cb58b75499762c5e890093573491012caf8a4f1429c9dfc9020506d2e8050",
+    "REQ-L192-text-06": "8813334a85ccd0dbf1970acceb933949b42c1031295292caf4fbaf54903c3ab6",
+    "REQ-L192-text-07": "0c2d4267fe4ffbfa24c1ff7ea00f2ff5490c64d4009b8b78fbe226f1cd059102",
+    "REQ-L194-text-01": "bc1dd1bb03e01db541644518d39bab672ab8d986f9fa694ccc035b07c5d99e07",
+    "REQ-L194-text-02": "17b58fa68311b0d3b4a0d0dd7a6174825e0535a22db088d27d965d91c4f0d9bc",
+    "REQ-L194-text-03": "6181e7f0439331e131662192cdb9dd2647eb6225f9dd6803a36d38702c8263ab",
+    "REQ-L194-text-04": "d9edfe04085e27bd29081e0edbad52d9610e9486a50a098c0c36c55c058f9d48",
+    "REQ-L194-text-05": "014c853eb962b45f004c1505f59ffda803e3cb0891b6f9cd69ca103990af3cd1",
+    "REQ-L196-text-01": "cb29ff6ea9225dd0265ad10aad154c5ae6dffd235b527457c8a27d3ba4c517b1",
+    "REQ-L196-text-02": "e60b1d67693e467800210bf7929d6dd811ba1520a02db363ff8e1b9fbd3d8140",
+    "REQ-L196-text-03": "1c2a46de07d78b3ddd181aea2ee3fd8f17b7db7bc3e6c9122424f256c905ba4d",
+    "REQ-L196-text-04": "5199916c167737614a535e9d1121701c55907e800da3351f5261c3755eac3440",
+    "REQ-L196-text-05": "b25043009cfc02a659d9cb989d5e61b59395c77fd0158c7ae8fd0bede78b88c1",
+    "REQ-L196-text-06": "3286507bf02ade01be5c6fab42801fe24e7d24e3d5cfec11200b61f061474461",
+    "REQ-L196-text-07": "ef92c0e2b0071debbc1535eb7308014889e38f59a80322820423310f760b9db9",
+    "REQ-L196-text-08": "81d6030733ebac71628c6c0a447aca1064d4458daaf300c60a3182235526a07e",
+    "REQ-L198-text-01": "156d34cdac3ee4fd64388d1902c7555a1ca8c5668a0b383f251e3e7ed40681a1",
+    "REQ-L200-text-01": "c2149d4c3311fbba56fb7582398edb9b232f7ab8e3089bb2fbb7806341645251",
+    "REQ-L202-text-01": "2beb5176736cbff678ce8093bf5093f152244d370a28c6c8c3d97408097b1a52",
+    "REQ-L202-text-02": "9266942ed2f42c35b4580f48ba9a5dcf30d50b771397667e2e80fa27bc94b79c",
+    "REQ-L202-text-03": "12438176ad201d3fb425cb83032f72de7568018e6f478e9d0d448a540691f035",
+    "REQ-L202-text-04": "465b342cea5501de9100876a57800cab733f8f1896ff142caaa820d43f25fc13",
+    "REQ-L202-text-05": "d462a40ea5b899a1bc9fd3308778f948aa725efcce5f9fb57c7bb9e656ae4327",
+    "REQ-L202-text-06": "ce792585ffe33fb3b076654ea8daccc397424251fff1a1afbfd938de78896385",
+    "REQ-L202-text-07": "1b94364fb004aaf1b7f32bd39119fdbd7fcdc9e514422d6b55643cd2711cadc6",
+    "REQ-L204-text-01": "32f20afbdf99b61df2aa322fb6363877ea87d3503e306fd77fe56b635dda8cc3",
+    "REQ-L204-text-02": "36272011b8a81599d0a87e4f9c5057dbbd97d587e5dc21ccfda8a51dedd7b7b3",
+    "REQ-L204-text-03": "6e3010e6b6581420ef0a653c850d2d5f48d784d64afc7157c65f53c8710557b6",
+    "REQ-L204-text-04": "ffa60b3fe11de50d04d59087a74aefcce0782403e08579884ee9c6fe320e563d",
+    "REQ-L204-text-05": "7b735c0dcb9fe3cfd461f011dc9bfcd6240b3c6d596b4e1b56fe858e5dcd5eb9",
+    "REQ-L204-text-06": "cf68cf9dd8fd680e0b985cc897fcd491d7bd72508cfd9cf9dad522785ebac1e7",
+    "REQ-L204-text-07": "53e6af4125a0af6dc53c10098dae504b839a99bd202ed97857eb323e618bbe21",
+    "REQ-L204-text-08": "89c754920a56a30a1e42ad21509f5d7cf91e979959dff6a8213157602e1e8089",
+    "REQ-L204-text-09": "e756247af300ef0a08e60c6e8dea6f45725ad5d32690f603797b9ccb8e5af0b8",
+    "REQ-L204-text-10": "2a1d6bb9f7cee2de78a2c48848c4d1f4ea1da83ed6b893ce2db26480005df3b9",
+    "REQ-L204-text-11": "51880e97eff9281c7fdb1d965f91ca8dd770142a04f69e763ade3aa0ce00a964",
+    "REQ-L204-text-12": "e8b2f2a83d08174a017961bd813f704dddbbf1370c393f6d69e9e83ce4653a95",
+    "REQ-L204-text-13": "e4b2e5397ec9f0c3b0d4f0a17db9a40909b07ab312d04c270ba851c09b0ae327",
+    "REQ-L204-text-14": "c25f13eac991dd4973322b845db17ddf7cac5b538f8801fda87e95f7b7e012d1",
+    "REQ-L204-text-15": "2997bd39d139e3c8e024af8db08f2e9bb52569a9b4e6bba8e114102f79a1cb0a",
+    "REQ-L204-text-16": "e92b8b6efc69253f3e15efdc33e928d52d2435010a0316befd017ab25f9e0a57",
+    "REQ-L204-text-17": "2c91b11d8adeffc99c9b9bf99dc565183009fb6eb632ea5f7638cb8a736fa718",
+    "REQ-L204-text-18": "218998009d0a3364acb21df5b2c5dc0c9ab979465397a5107677bf6fa20cede1",
+    "REQ-L204-text-19": "a9f033fefd87058046c92ac87d52e81074f830fb2d23e4d2f045b0be483017b8",
+    "REQ-L204-text-20": "9b2d8727f3d7bdd6040a5a00094482b54d41c155fbe5c8d842f530937d722405",
+    "REQ-L204-text-21": "7e1c4846da4022eb4e64cddb5c1b3df27453c20204635b0431dcd73a057e18f1",
+    "REQ-L206-text-01": "f4b2dd5901cecbe6f682817ec49ce77d57a6e72f92faf635d7114b690e5dc8dc",
+    "REQ-L206-text-02": "0fbdbed35a5f35f25564fc0ded9ea39efea49be7c97a7eb89a65870e2162779d",
+    "REQ-L206-text-03": "ae691ffc0dd79132692d59910be5100b7f6d4d413c07f772271fb9e833ef1d9c",
+    "REQ-L206-text-04": "89b7fcd87d0b36a170e7524075053f0af850e7820961ac60210b9ea71b1f7d33",
+    "REQ-L206-text-05": "e10d13f780ae2b1fcefb67eb2e70b711bf09c39893026ca1cdf9e0c9a889ea86",
+    "REQ-L206-text-06": "802f0bb54e94f7811b6a35e1cd0755f6b37643a66f652d54b79cce06dc5816f5",
+    "REQ-L210-text-01": "ddc5479c86810f3db50b5789632a3bca16d519a4eeb194ab8bb69389831b98e6"
+  },
+  "summary": {
+    "canonicalReviewGroups": 9,
+    "newLinkedFragments": 88,
+    "existingDependencyFragments": 1,
+    "wholeSTARResultFragments": 20,
+    "acceptedGroups": 0,
+    "knownOpenChecks": 25,
+    "semanticDenominatorComplete": false,
+    "overallScore": null
+  },
+  "method": [
+    "Read current service,IPC,recovery,dialog,selection and focus owners;retain explicit condition groups and cross-group links for compound fragments.",
+    "Review selected dated evidence scopes and limits;retain recorded hashes and report exact current source matches/mismatches where those fields exist. A match is source freshness only,a mismatch is not silently accepted,and neither is a new runtime pass.",
+    "Keep M6 story/situation/action/result intact. All89 scope fragments route to new groups or existing PLID01."
+  ],
+  "limits": [
+    "No new native/service/live/provider/listener/audible/VoiceOver or performance run. No app source change or repeated build/type/lint/unit check.",
+    "P05 actual unavailable-permission configuration and named focus/OS/listener gaps remain open. Current source review does not accept whole M6 or parent criterion2.",
+    "Historical artifacts preserve their substitutions,versions,driver differences,phase limits and dated inventories. Empty freshness entries mean no supported top-level hash map was extracted,not that no source differs.",
+    "No deferred smaller-window or enlarged-zoom work. No complete denominator,overall percentage or goal-completion claim."
+  ]
+}
