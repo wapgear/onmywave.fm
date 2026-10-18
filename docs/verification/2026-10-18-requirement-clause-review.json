@@ -21,8 +21,8 @@
     "STARStories": 27,
     "STARResultFragments": 265,
     "structuralLines": 47,
-    "semanticFragmentsReviewed": 170,
-    "proofFragmentsReviewed": 168,
+    "semanticFragmentsReviewed": 264,
+    "proofFragmentsReviewed": 262,
     "partitionComplete": true,
     "semanticDenominatorComplete": false,
     "overallScore": null,
@@ -38,7 +38,7 @@
     "listenerOpenChecks": 14,
     "otherProofOpenChecks": 11,
     "contextFragmentsReviewed": 1,
-    "canonicalReviewGroups": 27,
+    "canonicalReviewGroups": 38,
     "acceptedCanonicalGroups": 0
   },
   "STARContexts": [
@@ -318,7 +318,7 @@
         "RAD-L132-result-04",
         "RAD-L132-result-05"
       ],
-      "contextReviewState": "pending"
+      "contextReviewState": "reviewed-linked;whole-story acceptance incomplete"
     },
     {
       "id": "M2",
@@ -335,7 +335,7 @@
         "RAD-L133-result-05",
         "RAD-L133-result-06"
       ],
-      "contextReviewState": "pending"
+      "contextReviewState": "reviewed-linked;whole-story acceptance incomplete"
     },
     {
       "id": "M3",
@@ -350,7 +350,7 @@
         "RAD-L134-result-03",
         "RAD-L134-result-04"
       ],
-      "contextReviewState": "pending"
+      "contextReviewState": "reviewed-linked;whole-story acceptance incomplete"
     },
     {
       "id": "M4",
@@ -368,7 +368,7 @@
         "RAD-L135-result-06",
         "RAD-L135-result-07"
       ],
-      "contextReviewState": "pending"
+      "contextReviewState": "reviewed-linked;whole-story acceptance incomplete"
     },
     {
       "id": "M5",
@@ -459,7 +459,7 @@
         "RAD-L139-result-06",
         "RAD-L139-result-07"
       ],
-      "contextReviewState": "pending"
+      "contextReviewState": "reviewed-linked;whole-story acceptance incomplete"
     },
     {
       "id": "M9",
@@ -484,7 +484,7 @@
         "RAD-L140-result-13",
         "RAD-L140-result-14"
       ],
-      "contextReviewState": "pending"
+      "contextReviewState": "reviewed-linked;whole-story acceptance incomplete"
     },
     {
       "id": "M10",
@@ -718,7 +718,7 @@
   },
   "clauseLedger": {
     "file": "2026-10-18-requirement-clauses.csv",
-    "sha256": "112ca687f1016bf56f01cb9e345e47c5d4000eaa024e360d1dcb4e47ccf8eb97",
+    "sha256": "b671e6f10197903fcd1d6aba41afaf3c855a4b0d07e233b42a7a64372c033787",
     "columns": "Candidate navigation, semantic review and actual proof review are distinct. Empty evidence/canonical IDs do not establish completion."
   },
   "scopeReviews": [
@@ -773,6 +773,11 @@
       "file": "2026-10-19-keyboard-volume-startup.json",
       "sha256": "d62f5798613f171def2b1cd9c7f0955a3f64403a99ad3c5e47881b8f99ea1fd0",
       "meaning": "VOL01 two exact clauses,current native startup-volume contradiction/fix and restart;other startup-control/failure variants remain explicit."
+    },
+    {
+      "file": "2026-10-19-playback-obligations.json",
+      "sha256": "cdbe4d0d5eae37bc8e763171c4f02dce3ca14835c549848be1c78f254698bdac",
+      "meaning": "Eleven playback groups,94 new fragments plus retained VOL01 clauses and six whole STAR contexts;source/dated proof review and paired MediaSession decision only,no accepted groups."
     }
   ],
   "generatorMeaning": "Original mechanical partition generator only. Later deliberate semantic/proof annotations are authoritative and must be preserved; rerunning the original generator alone would discard them."
