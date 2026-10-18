@@ -137,7 +137,7 @@ export interface WaveApi {
   movePlaylistEntry(input: { id: string; entryId: string; index: number }): Promise<Result<void>>;
   preparePlayback(input: { id: string; transcode?: boolean; offsetSeconds?: number }): Promise<Result<PlaybackResource>>;
   getLocalState(): Promise<Result<LocalStateSnapshot>>;
-  saveDjs(djs: DJ[]): Promise<Result<void>>;
+  saveDjs(djs: DJ[]): Promise<Result<LocalStateSnapshot>>;
   searchDJVoices(input: DJVoiceSearch): Promise<Result<DJVoice[]>>;
   saveVibe(vibe: string): Promise<Result<void>>;
   saveNewsTransitions(settings: NewsTransitionSettings): Promise<Result<LocalStateSnapshot>>;
@@ -150,7 +150,7 @@ export interface WaveApi {
   activateRoomProfile(id: string): Promise<Result<LocalStateSnapshot>>;
   renameRoomProfile(input: { id: string; name: string }): Promise<Result<void>>;
   deleteRoomProfile(id: string): Promise<Result<void>>;
-  saveNewsSources(sources: NewsSource[]): Promise<Result<void>>;
+  saveNewsSources(sources: NewsSource[]): Promise<Result<LocalStateSnapshot>>;
   saveListeningRoom(room: ListeningRoom): Promise<Result<void>>;
   setRoomProfileEnabled(input: { id: string; enabled: boolean }): Promise<Result<LocalStateSnapshot>>;
   saveDJPlayback(settings: DJPlaybackSettingsPatch): Promise<Result<LocalStateSnapshot>>;

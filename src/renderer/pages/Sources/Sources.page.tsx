@@ -4,6 +4,7 @@ import { Pencil, Plus, Rss, Trash2 } from 'lucide-react';
 import { normalizeNewsSource } from '../../../shared/sources';
 import type { NewsSource } from '../../../shared/types';
 import { unwrap } from '../../api';
+import { confirmLocalState } from '../../local-state-cache';
 import { Dialog, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { TwitterSetupHelp } from '../../components/ProviderKeys/TwitterSetupHelp.component';
 import { useRetryFocus } from '../../useRetryFocus';
@@ -34,7 +35,7 @@ export function SourcesPage() {
         if (local.sources.some(source => source.id !== next.id && source.url === next.url && (source.query ?? '') === (next.query ?? ''))) throw new Error('This source is already saved. Edit the existing source instead.');
         sources = local.sources.some(source => source.id === next.id) ? local.sources.map(source => source.id === next.id ? next : source) : [...local.sources, next];
       } else sources = local.sources.filter(source => source.id !== action.remove);
-      unwrap(await window.wave.saveNewsSources(sources));
+      await confirmLocalState(client, unwrap(await window.wave.saveNewsSources(sources)));
     },
     onSuccess: async () => { await client.invalidateQueries({ queryKey: ['localState'] }); setEditing(null); setDeleting(null); },
     onSettled: () => { inFlight.current = false; },

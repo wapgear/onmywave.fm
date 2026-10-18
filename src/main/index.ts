@@ -251,7 +251,7 @@ function registerIpc() {
     saveDjs: async input => {
       validateDjs(input);
       const djs = input as DJ[];
-      await updateLocalState(state => {
+      return updateLocalStateAndGet(state => {
         const before = new Map(state.djs.map(dj => [dj.id, JSON.stringify(dj)]));
         const after = new Map(djs.map(dj => [dj.id, JSON.stringify(dj)]));
         const changed = new Set([...before.keys(), ...after.keys()].filter(id => before.get(id) !== after.get(id)));
@@ -423,7 +423,7 @@ function registerIpc() {
       let sources: NewsSource[];
       try { sources = input.map(normalizeNewsSource); } catch (error) { throw new ServiceError('invalid', error instanceof Error ? error.message : 'Invalid source.'); }
       if (new Set(sources.map(source => `${source.kind}:${source.url}`)).size !== sources.length) throw new ServiceError('invalid', 'This source is already configured.');
-      await updateLocalState(state => {
+      return updateLocalStateAndGet(state => {
         const before = new Map(state.sources.map(source => [source.id, JSON.stringify(source)]));
         const after = new Map(sources.map(source => [source.id, JSON.stringify(source)]));
         const changed = new Set([...before.keys(), ...after.keys()].filter(id => before.get(id) !== after.get(id)));

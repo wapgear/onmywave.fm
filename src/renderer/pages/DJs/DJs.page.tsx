@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Copy, Pencil, Plus, Trash2, UserRound } from 'lucide-react';
 import type { DJ } from '../../../shared/types';
 import { unwrap } from '../../api';
+import { confirmLocalState } from '../../local-state-cache';
 import { Dialog, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { DJEditor } from './components/DJEditor.component';
 import { DJPreview } from './components/DJPreview.component';
@@ -24,7 +25,7 @@ export function DJsPage() {
     target: () => results.current?.querySelector<HTMLButtonElement>('.dj-row .icon-button') ?? newDJ.current ?? heading.current,
     canFocusSuccess: () => !state.isError && !state.isFetching && !!state.data,
   });
-  const save = useMutation({ mutationFn: async (id: string) => { const local = unwrap(await window.wave.getLocalState()); unwrap(await window.wave.saveDjs(local.djs.filter(dj => dj.id !== id))); }, onSuccess: async () => { await client.invalidateQueries({ queryKey: ['localState'] }); setEditing(null); setDeleting(null); }, onSettled: () => { deletingInFlight.current = false; } });
+  const save = useMutation({ mutationFn: async (id: string) => { const local = unwrap(await window.wave.getLocalState()); await confirmLocalState(client, unwrap(await window.wave.saveDjs(local.djs.filter(dj => dj.id !== id)))); }, onSuccess: async () => { await client.invalidateQueries({ queryKey: ['localState'] }); setEditing(null); setDeleting(null); }, onSettled: () => { deletingInFlight.current = false; } });
   function closeDeletion() { if (!deletingInFlight.current && !save.isPending) setDeleting(null); }
   function deleteDJ(id: string) {
     if (deletingInFlight.current || save.isPending) return;
