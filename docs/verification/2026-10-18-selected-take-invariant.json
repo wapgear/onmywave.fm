@@ -1,0 +1,316 @@
+{
+  "date": "2026-10-18",
+  "baseCommit": "eeedc0e6004c52e52114460065117767fbb05235",
+  "scope": "Q13 partial critical-invariant audit, CI4 selected-recording integrity. No product or checklist-disposition change.",
+  "requirement": "New preparation, editing, recovery and restart must not silently replace the selected recording or change its saved script/host/voice/provenance. Selection and clearing require explicit actions.",
+  "obligations": [
+    {
+      "id": "CI4.1",
+      "behavior": "Preparing text, rendering audio and automatic preparation leave selectedTakeId and the existing take content unchanged.",
+      "evidence": [
+        "manual script completion preserves selection",
+        "manual audio completion preserves selection",
+        "automatic completion preserves selection"
+      ],
+      "judgment": "controlled pass"
+    },
+    {
+      "id": "CI4.2",
+      "behavior": "Cached reuse and delayed or failed variation preserve the selected take, including a newer explicit choice made while generation is pending.",
+      "evidence": [
+        "cached recording reuse preserves selection without dispatch",
+        "delayed variation cannot replace newer explicit selection",
+        "failed variation preserves selected recording and provenance"
+      ],
+      "judgment": "controlled pass"
+    },
+    {
+      "id": "CI4.3",
+      "behavior": "Editing saved host, voice and profile settings does not mutate an existing recording or replace its selection.",
+      "evidence": [
+        "saved host and profile edits preserve selected recording and provenance"
+      ],
+      "judgment": "controlled pass"
+    },
+    {
+      "id": "CI4.4",
+      "behavior": "Completed sidecar reconciliation and repeated process restarts retain selection and do not choose recovered audio.",
+      "evidence": [
+        "reconciliation preserves selection",
+        "first restart recovers audio without choosing it",
+        "second restart neither duplicates nor selects recovered take"
+      ],
+      "judgment": "controlled pass"
+    },
+    {
+      "id": "CI4.5",
+      "behavior": "Explicit valid selection or clearing persists across restart; an unavailable choice fails without losing the prior selection.",
+      "evidence": [
+        "explicit available selection changes only on request",
+        "unavailable selection fails without clearing prior choice",
+        "explicit recovered selection persists",
+        "subsequent restart retains explicit recovered selection",
+        "explicit clear persists",
+        "restart retains explicit clear"
+      ],
+      "judgment": "controlled pass"
+    }
+  ],
+  "runtime": {
+    "rows": [
+      {
+        "name": "manual script completion preserves selection",
+        "selected": "take-seed",
+        "memoryAndDiskAgree": true,
+        "textDispatches": 1,
+        "voiceDispatches": 0
+      },
+      {
+        "name": "manual audio completion preserves selection",
+        "selected": "take-seed",
+        "memoryAndDiskAgree": true,
+        "textDispatches": 1,
+        "voiceDispatches": 1
+      },
+      {
+        "name": "cached recording reuse preserves selection without dispatch",
+        "selected": "take-seed",
+        "memoryAndDiskAgree": true,
+        "textDispatches": 1,
+        "voiceDispatches": 1
+      },
+      {
+        "name": "automatic completion preserves selection",
+        "selected": "take-seed",
+        "memoryAndDiskAgree": true,
+        "textDispatches": 2,
+        "voiceDispatches": 2
+      },
+      {
+        "name": "explicit available selection changes only on request",
+        "selected": "898f6756-9fd2-4bef-805e-1b5eb7884ba8",
+        "memoryAndDiskAgree": true,
+        "textDispatches": 2,
+        "voiceDispatches": 2
+      },
+      {
+        "name": "delayed variation cannot replace newer explicit selection",
+        "selected": "take-seed",
+        "memoryAndDiskAgree": true,
+        "textDispatches": 2,
+        "voiceDispatches": 3
+      },
+      {
+        "name": "unavailable selection fails without clearing prior choice",
+        "selected": "take-seed",
+        "memoryAndDiskAgree": true,
+        "textDispatches": 2,
+        "voiceDispatches": 3
+      },
+      {
+        "name": "reconciliation preserves selection",
+        "selected": "take-seed",
+        "memoryAndDiskAgree": true,
+        "textDispatches": 2,
+        "voiceDispatches": 3
+      },
+      {
+        "name": "saved host and profile edits preserve selected recording and provenance",
+        "selected": "take-seed",
+        "memoryAndDiskAgree": true,
+        "textDispatches": 2,
+        "voiceDispatches": 3
+      },
+      {
+        "name": "failed variation preserves selected recording and provenance",
+        "selected": "take-seed",
+        "memoryAndDiskAgree": true,
+        "textDispatches": 2,
+        "voiceDispatches": 4
+      },
+      {
+        "name": "first restart recovers audio without choosing it",
+        "selected": "take-seed",
+        "takes": 5,
+        "recovered": 1,
+        "freshProcess": true
+      },
+      {
+        "name": "second restart neither duplicates nor selects recovered take",
+        "selected": "take-seed",
+        "takes": 5,
+        "recovered": 1,
+        "freshProcess": true
+      },
+      {
+        "name": "explicit recovered selection persists",
+        "selected": "sidecar-take",
+        "takes": 5,
+        "recovered": 1,
+        "freshProcess": true
+      },
+      {
+        "name": "subsequent restart retains explicit recovered selection",
+        "selected": "sidecar-take",
+        "takes": 5,
+        "recovered": 1,
+        "freshProcess": true
+      },
+      {
+        "name": "explicit clear persists",
+        "selected": null,
+        "takes": 5,
+        "recovered": 1,
+        "freshProcess": true
+      },
+      {
+        "name": "restart retains explicit clear",
+        "selected": null,
+        "takes": 5,
+        "recovered": 1,
+        "freshProcess": true
+      }
+    ],
+    "passed": 16,
+    "externalRequests": 0,
+    "scope": "Actual prepared-news source, real temporary filesystem; substituted Electron path/storage/provider adapters and synthetic audio bytes. No renderer/native/audio-quality or live provider claim."
+  },
+  "sourceReview": {
+    "assignmentInventory": [
+      {
+        "file": "src/main/prepared-news.ts",
+        "line": 84,
+        "textSha256": "9be2fca874ecfb2e70efa1dbeffbcea0321b7d6df668578610aa6dda7cbcbc10",
+        "role": "single explicit selection setter or its UI/IPC/read-only consumers"
+      },
+      {
+        "file": "src/main/prepared-news.ts",
+        "line": 252,
+        "textSha256": "1c8e717184f636faf8dea9cac37a5ce502defffc9738465fb726725d99a0c856",
+        "role": "single explicit selection setter or its UI/IPC/read-only consumers"
+      },
+      {
+        "file": "src/main/prepared-news.ts",
+        "line": 254,
+        "textSha256": "c3c7bc91de27c1dd30c463cde7219445d21d0163bd6da88581435c01ef6210a4",
+        "role": "single explicit selection setter or its UI/IPC/read-only consumers"
+      },
+      {
+        "file": "src/main/index.ts",
+        "line": 16,
+        "textSha256": "f4b4bc399c9ea06c600ed1cc35a2f78ed66afaeebe4c1aaffdca5d0f1f496ea0",
+        "role": "single explicit selection setter or its UI/IPC/read-only consumers"
+      },
+      {
+        "file": "src/main/index.ts",
+        "line": 157,
+        "textSha256": "abf67be80a03724c68ddd3cbbea8c7efd6519c976dd785c2d02174d513f9245d",
+        "role": "single explicit selection setter or its UI/IPC/read-only consumers"
+      },
+      {
+        "file": "src/main/index.ts",
+        "line": 481,
+        "textSha256": "ad7f06768d9425655a0a1b7f7628ff7a32de031c159666af71ab146245f6f66b",
+        "role": "single explicit selection setter or its UI/IPC/read-only consumers"
+      },
+      {
+        "file": "src/preload/index.ts",
+        "line": 53,
+        "textSha256": "8811ba6cdb4a88384afc6c7016c33c792dd2aea427885cf8b70b2e190b7458ed",
+        "role": "single explicit selection setter or its UI/IPC/read-only consumers"
+      },
+      {
+        "file": "src/shared/types.ts",
+        "line": 110,
+        "textSha256": "8555888290343529f9c4eeefe3ac34b3d557fc64c9532a1efdf5a8af10353fc8",
+        "role": "single explicit selection setter or its UI/IPC/read-only consumers"
+      },
+      {
+        "file": "src/shared/types.ts",
+        "line": 162,
+        "textSha256": "1a8e58de2c1a0b00361ac5754a6e4cf1bf5927b63fd2f93f04310030662f5b68",
+        "role": "single explicit selection setter or its UI/IPC/read-only consumers"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "line": 122,
+        "textSha256": "a1befa5d11d6154d50786aa9defd06bf62c42d43ab91d189fa563bda54f5dcd4",
+        "role": "single explicit selection setter or its UI/IPC/read-only consumers"
+      },
+      {
+        "file": "src/renderer/pages/Stations/components/PreparedTakes.component.tsx",
+        "line": 37,
+        "textSha256": "2888a176560110ff443818840dc173fc3667558c0cc9ec7ac6436285e92de887",
+        "role": "single explicit selection setter or its UI/IPC/read-only consumers"
+      },
+      {
+        "file": "src/renderer/pages/Stations/components/PreparedTakes.component.tsx",
+        "line": 69,
+        "textSha256": "776533e68a6c0d2880bcc035ac9c45b1faa99f3fd4b2ab599ef4f7d2216a455f",
+        "role": "single explicit selection setter or its UI/IPC/read-only consumers"
+      },
+      {
+        "file": "src/renderer/pages/Stations/components/PreparedTakes.component.tsx",
+        "line": 75,
+        "textSha256": "3f48ce0e1df9548304124decf0ef2c527dd658bd0c110774fd297b75a86e09bf",
+        "role": "single explicit selection setter or its UI/IPC/read-only consumers"
+      },
+      {
+        "file": "src/renderer/pages/Stations/components/PreparedTakes.component.tsx",
+        "line": 76,
+        "textSha256": "78b28b512ab0c970e8eb7f60d5809b5167bca3822a5df4120bc7f77579686db4",
+        "role": "single explicit selection setter or its UI/IPC/read-only consumers"
+      }
+    ],
+    "findings": [
+      "The only noninitialization selectedTakeId assignment is selectNewsTake, after available-audio validation and through serialized change.",
+      "Library creation initializes null; load migrations preserve the saved field through object spread. Completion and sidecar recovery append artifacts and update requests, without assigning selection.",
+      "The only renderer invocation is PreparedTakes selection mutation, called by explicit chooseTake handlers on Use this take and Clear selection. Synchronous ownership/global mutation guards reject overlap.",
+      "Stations editing and mismatch indicators read the selected take; script replacement/load actions alter the editable draft rather than invoke selection.",
+      "Main IPC delegates explicitly; sign-out cancels preparation and updates connection/workflow state without selecting or clearing a take."
+    ],
+    "historicalDelta": "The16 October publication record predates origin metadata, redaction and StorageError/read-publication changes. The full prepared-news diff was inspected; this fresh16-case run exercises the current service instead of treating historical whole-file hashes as current."
+  },
+  "retainedNativeEvidence": [
+    {
+      "file": "2026-10-16-recording-recovery.json",
+      "pointers": [
+        "/nativeSignout",
+        "/nativeAutomatic",
+        "/method/preservedState"
+      ],
+      "scope": "Historical native sign-out, late cancellation and restart evidence; retained as dated evidence, not newly replayed."
+    },
+    {
+      "file": "2026-10-18-prepared-take-focus.json",
+      "scope": "Native current explicit selection/pending control behavior; service data integrity exercised fresh here."
+    },
+    {
+      "file": "2026-10-18-saved-take-review-focus.json",
+      "scope": "Native review/selection surface context; no fresh native run in this audit."
+    }
+  ],
+  "sourceHashes": {
+    "src/main/prepared-news.ts": "c437802be1bedd736f3a5e4de15966c319a6250a00090f4877e66b7c65a5be6b",
+    "src/main/index.ts": "1b7ead1138761424fccd5e35dd432b7ba0c3e7d7e43eec18fd408f49e6e8362c",
+    "src/preload/index.ts": "6a5e85fafc04caea2b62b6f4bef794bffe166b72322ecd677697413639ec6f9f",
+    "src/shared/types.ts": "0637a467d043774954160f8f22b4d3074cc853534593b36f68e718c60f5040c5",
+    "src/renderer/pages/Stations/Stations.page.tsx": "af0c5219948700ed27fab50a9490184856a2055983fae09a64781dd2ee8f8bc2",
+    "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": "2acd8dc806c843d6578d0412be6650dc4e03da373c1d51af2850f890b68407a1"
+  },
+  "fixtureHashes": {
+    "check.mjs": "5d271efdaacc5cac9d1e367fc31a4d7e67b3e9dc7e6e2a0f975d276672cbfd29",
+    "service.mjs": "c18e25d71d9f6549846f7311f40cbc97101b315c37df4ec927e2db6b43209eca",
+    "report.json": "99f680fd4803e2155ed579e3aaa3e2344f1f20c5c94ffaab1b28404e5c63c205"
+  },
+  "fixtureCorrections": "The first14-case exploratory run preceded two added edit/failure cases. A rerun reused its disposable sidecars and correctly rejected mismatched request input; the final fixture clears only its own synthetic data directory before seeding. The final16-case run exits0. No production data read or changed.",
+  "validation": "16 focused service integration checks, including six fresh Node subprocesses, real temporary disk and memory state assertions and preserved script/provenance/host/voice/model checks. JSON/references/source hashes/inventory/whitespace verified. No unit framework, production source change, redundant build or new native/live-provider claim.",
+  "conclusion": "CI4 data-integrity obligations reviewed individually and supported within the stated controlled scope. This does not establish every critical invariant or complete Q13.",
+  "limits": [
+    "Electron app path, local-state/key readers and provider methods are substituted. Audio is synthetic bytes validated for artifact availability; no decoding or audible-quality inference.",
+    "Fresh Node subprocesses exercise persisted service load/recovery, not full Electron activation or forced termination/power-loss durability.",
+    "UI trigger analysis is source inspection composed with retained native evidence. No fresh keyboard, VoiceOver, account-switch or cancellation UI run here.",
+    "No general corruption or filesystem-failure claim. Historical records retain their original source and runtime limits.",
+    "Other six critical invariants and complete atomic source denominator still need adjudication;25 checks remain open,14 listener and11 other-proof."
+  ]
+}
