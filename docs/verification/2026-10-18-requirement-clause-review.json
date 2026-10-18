@@ -21,8 +21,8 @@
     "STARStories": 27,
     "STARResultFragments": 265,
     "structuralLines": 47,
-    "semanticFragmentsReviewed": 284,
-    "proofFragmentsReviewed": 282,
+    "semanticFragmentsReviewed": 313,
+    "proofFragmentsReviewed": 311,
     "partitionComplete": true,
     "semanticDenominatorComplete": false,
     "overallScore": null,
@@ -38,7 +38,7 @@
     "listenerOpenChecks": 14,
     "otherProofOpenChecks": 11,
     "contextFragmentsReviewed": 1,
-    "canonicalReviewGroups": 45,
+    "canonicalReviewGroups": 51,
     "acceptedCanonicalGroups": 0
   },
   "STARContexts": [
@@ -718,7 +718,7 @@
   },
   "clauseLedger": {
     "file": "2026-10-18-requirement-clauses.csv",
-    "sha256": "a8bfd6a51680f03d1213427c33c8406043ac3c1c6d7725ad071cd2580db01d19",
+    "sha256": "b76dabe11cb324be2f9c860e2721ff97305a92365ed1e206737a683fef02b5f9",
     "columns": "Candidate navigation, semantic review and actual proof review are distinct. Empty evidence/canonical IDs do not establish completion."
   },
   "scopeReviews": [
@@ -783,6 +783,11 @@
       "file": "2026-10-19-radio-setup-obligations.json",
       "sha256": "ef53bbb57269f6e0d8b66546266dea01d35381f620d4b208ae8f9e6e9d793da6",
       "meaning": "Seven setup/profile groups,20 exact fragments and full R2 context; current source and dated evidence scope review only; no accepted groups."
+    },
+    {
+      "file": "2026-10-19-source-host-obligations.json",
+      "sha256": "7d6b68eec79df592ae53b13a6d3a38ed940af551782d02685647a445862b71c0",
+      "meaning": "Six source/host/search groups,29 exact fragments;current source and dated evidence review only,no accepted groups."
     }
   ],
   "generatorMeaning": "Original mechanical partition generator only. Later deliberate semantic/proof annotations are authoritative and must be preserved; rerunning the original generator alone would discard them.",

@@ -1,0 +1,681 @@
+{
+  "date": "2026-10-19",
+  "baseCommit": "70aa16b1e365722687d0c9f5116ec3cba03ba83e",
+  "scope": "Complete source-support clause,named-host clause,custom voice-search section and saved-host-preferences paragraph:29 exact fragments in6 groups. No new runtime pass.",
+  "groups": [
+    {
+      "id": "SH01",
+      "actor": "Listener choosing news sources and a host",
+      "trigger": "Save or prepare a named source",
+      "outcome": "Use supported RSS/Atom,Hacker News lists and X recent search with relevant setup guidance.",
+      "fragments": [
+        "REQ-L248-text-01"
+      ],
+      "mandatoryVariants": [
+        "Named source normalization",
+        "HTTP(S) without URL credentials",
+        "RSS/Atom and bounded redirects",
+        "HN Top/New/Best only",
+        "X bounded query and saved bearer-key requirement",
+        "Explicit save without source fetch"
+      ],
+      "source": [
+        "src/shared/sources.ts:normalizeNewsSource",
+        "src/renderer/pages/Sources/Sources.page.tsx",
+        "src/main/news.ts:feed,source",
+        "src/main/index.ts:saveNewsSources"
+      ],
+      "evidence": [
+        "2026-10-16-live-news-sources.json",
+        "2026-10-17-source-boundaries.json",
+        "2026-10-19-current-radio-setup.json"
+      ],
+      "judgment": "Shared normalization fixes source type and canonical saved location;HN lists are allowlisted and X requests use a fixed API endpoint,not the saved display URL. UI names source-specific requirements. RSS requests validate each redirect target;JSON source redirects fail. Current native source save does not fetch or generate.",
+      "remaining": [
+        "Live X access/recent-search behavior remains S03 Review. Earlier live RSS/HN records retain their tested dates and sources;no new live run."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "SH02",
+      "actor": "Listener choosing news sources and a host",
+      "trigger": "A source returns partial,unreadable or undated data",
+      "outcome": "Preserve usable story provenance and name incomplete coverage without treating it as complete empty news.",
+      "fragments": [
+        "REQ-L248-text-02"
+      ],
+      "mandatoryVariants": [
+        "RSS malformed entry/XML/oversize",
+        "HN failed item,identity mismatch,unsafe supplied URL,excluded old/deleted/dead/non-story",
+        "X explicit/omitted empty list,malformed data/errors/counts,partial usable posts",
+        "Publication date and link retained",
+        "Named warnings through scripts/recordings/player/bucket",
+        "Unknown dates remain labeled"
+      ],
+      "source": [
+        "src/main/news.ts:boundedBytes,feed,source,script",
+        "src/main/prepared-news.ts",
+        "src/renderer/pages/Stations/components/NewsBucket.component.tsx",
+        "src/renderer/pages/Stations/components/PreparedTakes.component.tsx",
+        "src/renderer/components/Player/Player.component.tsx"
+      ],
+      "evidence": [
+        "2026-10-16-partial-coverage.json",
+        "2026-10-16-hn-coverage.json",
+        "2026-10-16-x-coverage.json",
+        "2026-10-17-source-presentation.json"
+      ],
+      "judgment": "Source batches separate candidates and coverage warnings. Assessment names source failures and malformed records;readable assessed but unselected partial coverage differs from complete no-news and from a failed no-candidate read. Selected script references retain dates/URLs and warnings;presentation records cover visible provenance locations.",
+      "remaining": [
+        "Controlled replies establish parsing/outcome branches,not all live source schemas or provider relevance. Full scheduling retry/paid-history invariants retain their separate scope;this source clause is still partial."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "SH03",
+      "actor": "Listener choosing news sources and a host",
+      "trigger": "Save host fields or prepare from a legacy DJ",
+      "outcome": "Retain complete supported editorial text;reject over-limit fields before assessment with editing guidance and cost disclosure.",
+      "fragments": [
+        "REQ-L249-text-01",
+        "REQ-L249-text-02",
+        "REQ-L249-text-03",
+        "REQ-L249-text-04",
+        "REQ-L249-text-05",
+        "RAD-L106-text-01",
+        "RAD-L106-text-04",
+        "RAD-L106-text-05",
+        "RAD-L106-text-06"
+      ],
+      "mandatoryVariants": [
+        "Reusable name/personality/language/voice/editorial fields",
+        "Exactly20000 characters per editorial field",
+        "Over-limit instructions/music preferences/exclusions",
+        "Legacy over-limit values remain editable",
+        "No silent truncation or rewriting",
+        "Manual and automatic input construction",
+        "Visible full-value/input-usage disclosure"
+      ],
+      "source": [
+        "src/main/index.ts:validateDjs,saveDjs",
+        "src/main/storage.ts:getLocalState",
+        "src/main/news.ts:script,musicContext",
+        "src/main/prepared-news.ts",
+        "src/renderer/pages/DJs/components/DJEditor.component.tsx:field,Host preferences"
+      ],
+      "evidence": [
+        "2026-10-17-dj-editorial-preferences.json",
+        "2026-10-19-mood-queue-boundary.json"
+      ],
+      "judgment": "Main save validates field sizes. Storage preserves legacy strings;script checks all three editorial fields before candidates/source assessment. Payload uses complete editorial strings and only bounds separate metadata. Editor maxLength and native form validity protect edits without automatic saved-text migration;adjacent copy discloses OpenAI input and usage cost.",
+      "remaining": [
+        "Controlled payload/native boundary evidence proves construction and retained text,not actual model compliance,context/billing behavior or every malformed legacy object. Current source hashes are compared to dated evidence rather than implying a rerun."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "SH04",
+      "actor": "Listener choosing news sources and a host",
+      "trigger": "Interpret exclusions and music preferences",
+      "outcome": "Use freeform editorial guidance for article choice/wording and delivery style while the listener controls songs.",
+      "fragments": [
+        "REQ-L249-text-06",
+        "REQ-L249-text-07",
+        "REQ-L249-text-08",
+        "RAD-L106-text-02",
+        "RAD-L106-text-03",
+        "RAD-L106-text-07"
+      ],
+      "mandatoryVariants": [
+        "Exclusions guide candidate selection and script",
+        "Preferences guide style only",
+        "No queue selector/provider queue directive",
+        "Full editorial values retained",
+        "Model interpretation can fail"
+      ],
+      "source": [
+        "src/main/news.ts:musicContext,script",
+        "src/renderer/player.tsx",
+        "src/renderer/pages/DJs/components/DJEditor.component.tsx"
+      ],
+      "evidence": [
+        "2026-10-17-dj-editorial-preferences.json",
+        "2026-10-19-mood-queue-boundary.json"
+      ],
+      "judgment": "Provider instructions explicitly apply exclusions to both selection and wording and describe music context as style guidance. Music queue writes remain explicit listener/player operations;provider response handling discards unrelated directives. Freeform interpretation is a product limit and cannot be established as a deterministic filter by a controlled reply.",
+      "remaining": [
+        "Live model exclusion compliance,spoken quality and listener understanding remain unproven. The current queue-boundary audit closes only that engineering boundary,not all music/radio acceptance."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "SH05",
+      "actor": "Listener choosing news sources and a host",
+      "trigger": "Choose a preset,save a host or replay cached preview",
+      "outcome": "Offer a generation-free setup path and keep automation/music choices independent.",
+      "fragments": [
+        "REQ-L249-text-09",
+        "REQ-L249-text-10",
+        "REQ-L249-text-11",
+        "REQ-L249-text-12",
+        "RAD-L106-text-08"
+      ],
+      "mandatoryVariants": [
+        "Apply predefined personality/voice",
+        "Save/edit DJ without generation or automatic opt-in",
+        "Cached preview replay without provider request",
+        "Working host fields",
+        "Frequency link points to General DJ playback",
+        "Empty state explains listener-selected queue"
+      ],
+      "source": [
+        "src/renderer/pages/DJs/components/DJEditor.component.tsx:applyPreset,save",
+        "src/renderer/pages/DJs/DJs.page.tsx",
+        "src/renderer/pages/DJs/components/VoicePreview.component.tsx",
+        "src/main/index.ts:saveDjs",
+        "src/main/dj-previews.ts"
+      ],
+      "evidence": [
+        "2026-10-16-first-dj-setup.json",
+        "2026-10-19-current-radio-setup.json",
+        "2026-10-17-dj-previews.json"
+      ],
+      "judgment": "Preset application changes only editor draft. DJ save commits local fields with no generation;UI points cadence to Settings and explicitly describes user music selection. Current native preset creation/save with music confirms no source/provider fetch and both automation flags off. Cached preview has a replay path separate from explicit generation.",
+      "remaining": [
+        "Preview generation,cache interruption/failure/exclusivity and real voice access retain their full separate contracts. This packet does not accept the entire per-DJ preview section or subjective host usability."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "SH06",
+      "actor": "Listener choosing news sources and a host",
+      "trigger": "Search voices in Simple mode",
+      "outcome": "Retain focused Find voices and matching editable terms;block repeated work;completion leaves later user intent alone.",
+      "fragments": [
+        "REQ-L267-text-01",
+        "REQ-L267-text-02",
+        "REQ-L267-text-03",
+        "REQ-L267-text-04",
+        "REQ-L267-text-05",
+        "REQ-L267-text-06",
+        "REQ-L267-text-07"
+      ],
+      "mandatoryVariants": [
+        "Pending/failure/empty/success stable action",
+        "Busy/unavailable announcement",
+        "Command/Control-Enter retains description focus",
+        "Description/gender editable during search",
+        "Only submitted matching terms show results",
+        "Later field/mode/dialog/window actions win",
+        "Search does not choose/save/generate/play"
+      ],
+      "source": [
+        "src/renderer/pages/DJs/components/DJEditor.component.tsx:search,currentResults,findVoices,chooseVoice",
+        "src/main/dj-voices.ts:searchDJVoices"
+      ],
+      "evidence": [
+        "2026-10-18-voice-search-focus.json"
+      ],
+      "judgment": "Find voices remains a stable button with aria busy/unavailable while query fetching guards repeated calls. Description shortcut prevents newline and starts search without focusing button. Results require matching trimmed prompt and gender. Completion has no focus effect,voice selection is a separate explicit button,and search service only reads available voices.",
+      "remaining": [
+        "Dated native record explicitly lacks new changed-gender,cached-new-key,window-loss and editor-save-overlap replay. No actual ElevenLabs result,VoiceOver,voice quality or uncoached listener acceptance."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    }
+  ],
+  "fragmentTextSha256": {
+    "RAD-L106-text-01": "cabd8eb54cb63ea8c3b8c8c560a22df5fa9150fb94bf503b9829b34f48119ca9",
+    "RAD-L106-text-02": "b4daa01fdaedd39ba836163f2038c4ff6bfb94b1017dc40bca1b9944dce06903",
+    "RAD-L106-text-03": "8b557a172ee968b1368613ae01b2c3866bce6b5481b9ce16fe3a5715fb9e0aab",
+    "RAD-L106-text-04": "58370fab7f3741324d8bc07a6a58ac0d86edb5044363b41867d9051b1ef0e8f6",
+    "RAD-L106-text-05": "2ec20eac3c0407bb535f94a02636bcda157bdf7fded4630bd95125e1f8a567a0",
+    "RAD-L106-text-06": "b8f21e2d7b3645b578932b4fee4eea032ba09951b4a80960c544353dd47727d9",
+    "RAD-L106-text-07": "9fdabec133510809130bb34bc481da16a947feb0d38fffb69963cfd53ccc3aa1",
+    "RAD-L106-text-08": "22f1beb14f0362bd45ba7b98b32a8f438c4617db0c2eb1e6d3b8591cbf62011d",
+    "REQ-L248-text-01": "f138933218c43db3ebe62dee239f4ec02ae58913efd793720ad407af971b1d9b",
+    "REQ-L248-text-02": "10bfd29e6dd3c861cbf58ff66218e91e56631b4531a4fbc9cd7f92350d2adca0",
+    "REQ-L249-text-01": "30ccceb7f49441497dc2a50ffc3fa038871a7f14cd62ff822384093dc2a78ff2",
+    "REQ-L249-text-02": "28d099f51e074859f50302ca4576ccc09ca112a42df3ab2ce2c56e41664b6799",
+    "REQ-L249-text-03": "b770f4d4552f494d5cff3a555903fd04b9d14fc21f4ca20a201752807866d3a5",
+    "REQ-L249-text-04": "cab6e4944a7fa6f7088007718b8a988f249b4619ee3a2e050f0e5b413234a30b",
+    "REQ-L249-text-05": "3b3477b331bb002e3a9e694ebd48836b650ac132220c35ebced420e20f628bff",
+    "REQ-L249-text-06": "abc144862e7b0bfe72a6201262d3ea1f695ea5ffd756f1bacf2b952af71dc0c8",
+    "REQ-L249-text-07": "325632254372792d5a97a789d214225a367bd488a1b3123ee1955385ab01fb19",
+    "REQ-L249-text-08": "4a193a74ac87579680f60f0dc4f7c696905efb461effc41638b37141c915d38c",
+    "REQ-L249-text-09": "39f86b9969144a349b557296af9f01ad90d28aab556840fc31c25abb0ac3d846",
+    "REQ-L249-text-10": "d521ecdf6dbde4b5ba977c59e8ff2547dfa6b2ca30370ff4924c4b70f0facb8f",
+    "REQ-L249-text-11": "70447dea71db83210be974e7924a22e8a7e6559cc4705820fb665f35464295b3",
+    "REQ-L249-text-12": "5816ebdf7c1bd3cea27d0ade13a48ce094c57f9a3483bbb84072d7a47645e4f3",
+    "REQ-L267-text-01": "baeb1c0b4c5cf98bc022027952465fa8f5a6780ea2f4e9c02f33eb2aaa2edb2b",
+    "REQ-L267-text-02": "dcc1469c3428fc4004c6d0b6210f62cadcba38867f5fcb2a74ac9154ad581a0e",
+    "REQ-L267-text-03": "954176f8eca756742558cca212695e24a6902bebb1ab48116f29cd027370e6f7",
+    "REQ-L267-text-04": "79aafee98170bdbe0fdd9a7e51ec45cbf2332429b66f0b705cb04fcae3e3b632",
+    "REQ-L267-text-05": "94b7227c035eededef78e1bb3251c62dce5a87ac81902a0dc94c58e168feb56b",
+    "REQ-L267-text-06": "82b2dd72b3bef78ca8fe2e930ff590c79084e609e47d4a255b3068318fabbef4",
+    "REQ-L267-text-07": "6389ce61135d93864eed47bbda8aa297491e08f03acad3b406af2e80c5689a81"
+  },
+  "sourceSha256": {
+    "src/main/dj-previews.ts": "56d36390dbf9ba2a3177c46ff2a20d4478fa20bc37d6220bc1459b6e592722b3",
+    "src/main/dj-voices.ts": "c5dd6b8af812181e99eb5d30cd4844ede4717460b641319d267620ba5b51f1e9",
+    "src/main/index.ts": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+    "src/main/news.ts": "f2933aac8c9d2334e84a6850c7023207fbd1b86f905bd3844977ad5cb0be7a48",
+    "src/main/prepared-news.ts": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+    "src/main/storage.ts": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+    "src/renderer/components/Player/Player.component.tsx": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+    "src/renderer/pages/DJs/DJs.page.tsx": "7e9111ce7c77f3b8f003b1378ec2a8bb4d5e9bae6f4216204974046c30c483fc",
+    "src/renderer/pages/DJs/components/DJEditor.component.tsx": "5c440c3fc2199e4f0d7de7ddb01f481707e8ac1d3470e8296e3f90a17691210d",
+    "src/renderer/pages/DJs/components/VoicePreview.component.tsx": "d2cbca679984903fdc0692488dff67069fad302e4e3adcd8352915b5eb209581",
+    "src/renderer/pages/Sources/Sources.page.tsx": "081ee16883dec3792c492c710414a0bb5f0ff98c6c17f8f7b448f8ad540bc73a",
+    "src/renderer/pages/Stations/components/NewsBucket.component.tsx": "61e5027abd4def319532645a9a3b1425a4b6531860a2609b113c18670c0fa2f3",
+    "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": "fd9488789ef2042e6146938d8117e29df0823aae6611013952eb1b4debe83c92",
+    "src/renderer/player.tsx": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+    "src/shared/sources.ts": "1da2117a59995911c14d098c8c814811ec309fb0d81c2fbf24b53721404e8f18"
+  },
+  "evidenceSha256": {
+    "2026-10-16-first-dj-setup.json": "b6728a84924b53017d4a6c4002dfe40217b61f573be76a0fdc431672a3b83b5d",
+    "2026-10-16-hn-coverage.json": "f616c8dfdb82ec21b6f6937e0313420ce1f0ed31dd09de86165897b84750cc54",
+    "2026-10-16-live-news-sources.json": "430190fbda59f02a63060672da2c6282ad068a6406df0f4e55e6927a90b5454e",
+    "2026-10-16-partial-coverage.json": "ae37bce518a9776e4009a8b908579c77a1fb099b6620133984a0e6ec9173456c",
+    "2026-10-16-x-coverage.json": "f755a09295ca4bdd14c2a116486bb75d46bcc20db38c5e948de29ea1415f0449",
+    "2026-10-17-dj-editorial-preferences.json": "152493cfd525739d78a75a91de285904302c8a62d00d5103341ec05d90f8a8ca",
+    "2026-10-17-source-boundaries.json": "50e10d6ea3df586a71a329094b5cefd5873571008654b249bb4dfa163895f883",
+    "2026-10-17-source-presentation.json": "15b1f3fb1d1cbe9417d830ad04019368e2163d5e771db7ada657dd5aac01eeec",
+    "2026-10-18-voice-search-focus.json": "c19e932bf3dcc3021f4630e36cb7607630dca7ca9fe5251ae9a7c7e1101fb1c7",
+    "2026-10-19-current-radio-setup.json": "6b883b61dfb5f7a1f4291748bb27297a6a65050e7a06effef244101a0b14baec",
+    "2026-10-19-mood-queue-boundary.json": "6395b8b47fdc9ef9dd34d586bafabb0d5716dbdda2e0e19e9e85d2d99d31c6af",
+    "2026-10-17-dj-previews.json": "ac2c669a4b82066a6b977cf9a3c594fcfedb7263816ea9b3a9c479f5a308df86"
+  },
+  "sourceFreshnessComparisons": {
+    "2026-10-16-first-dj-setup.json": {},
+    "2026-10-16-hn-coverage.json": {},
+    "2026-10-16-live-news-sources.json": {},
+    "2026-10-16-partial-coverage.json": {},
+    "2026-10-16-x-coverage.json": {},
+    "2026-10-17-dj-editorial-preferences.json": {
+      "src/main/news.ts": {
+        "recorded": "a128b7671dd080df1cd8f87294633adc657e88ca63dfc1e8bf8bbb767c8c1ce9",
+        "current": "f2933aac8c9d2334e84a6850c7023207fbd1b86f905bd3844977ad5cb0be7a48",
+        "matches": false
+      },
+      "src/renderer/pages/DJs/components/DJEditor.component.tsx": {
+        "recorded": "4046217da52424c654bbf90aaae7d4aafea2cc71a649b409312c776c97614684",
+        "current": "5c440c3fc2199e4f0d7de7ddb01f481707e8ac1d3470e8296e3f90a17691210d",
+        "matches": false
+      },
+      "src/main/index.ts": {
+        "recorded": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/main/storage.ts": {
+        "recorded": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+        "current": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "matches": false
+      },
+      "src/preload/index.ts": {
+        "recorded": "0c7edf2153d5210b24a0fac9db667fd254e324366d4737653578ef067c1eac63",
+        "current": "458378616e402bc07202f269fa94092d8ee8685e2dd9bba7fcaf0c7ca58e31c1",
+        "matches": false
+      },
+      "out/preload/index.cjs": {
+        "recorded": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+        "current": "9b78be58d4f9bd70fb5b6d3315d888ee9442cfbf09bfab2b2f902de015e902f2",
+        "matches": false
+      }
+    },
+    "2026-10-17-source-boundaries.json": {
+      "src/main/news.ts": {
+        "recorded": "9c2076bf3808221980dac5aa2befb9d5532278027ccdcc6197e8324930b6571e",
+        "current": "f2933aac8c9d2334e84a6850c7023207fbd1b86f905bd3844977ad5cb0be7a48",
+        "matches": false
+      },
+      "src/main/prepared-news.ts": {
+        "recorded": "0d0d40b27e899d04bea54d064d62017643c58211997f8c3e36f896b26c24bd2d",
+        "current": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+        "matches": false
+      },
+      "src/shared/news-pool.ts": {
+        "recorded": "2f8ac1bde20b4a9adfd3beedf015e2d7e843dda584e7713be29e1a4c7ad3fa77",
+        "current": "d8a190d01563d458a34bd2a89e9bbce8aa7533a7e678b44d88559951768f9da5",
+        "matches": false
+      },
+      "src/shared/sources.ts": {
+        "recorded": "1da2117a59995911c14d098c8c814811ec309fb0d81c2fbf24b53721404e8f18",
+        "current": "1da2117a59995911c14d098c8c814811ec309fb0d81c2fbf24b53721404e8f18",
+        "matches": true
+      },
+      "src/main/index.ts": {
+        "recorded": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/main/storage.ts": {
+        "recorded": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+        "current": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "matches": false
+      },
+      "src/preload/index.ts": {
+        "recorded": "0c7edf2153d5210b24a0fac9db667fd254e324366d4737653578ef067c1eac63",
+        "current": "458378616e402bc07202f269fa94092d8ee8685e2dd9bba7fcaf0c7ca58e31c1",
+        "matches": false
+      },
+      "src/shared/types.ts": {
+        "recorded": "d67dcace88513b8ee42238aa512eb2c480ded9b1275977567e8b3d1cec62a652",
+        "current": "a4777ac71292ab6adddcb1fce211ad14c7e324fe1ccd5ed278fb1f290dfcaea0",
+        "matches": false
+      },
+      "src/renderer/components/Player/DJPopover.component.tsx": {
+        "recorded": "6ffca314f80c990adb9c1fbf81f970560cd5d2debc786e855098f89551e2e4ec",
+        "current": "7a9858830d98a053b2a3d805e6a2b6521aa483154c00306b0a6cfb4fb96fd981",
+        "matches": false
+      },
+      "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": {
+        "recorded": "a089c86e2b2678ed77f2559648cdfeaca072ba6bb46453a2f4e8befb2f68e09e",
+        "current": "fd9488789ef2042e6146938d8117e29df0823aae6611013952eb1b4debe83c92",
+        "matches": false
+      },
+      "src/renderer/pages/Stations/Stations.page.tsx": {
+        "recorded": "83c78a0854859e81ea9ec21330f88e53ee6c30fe81651a1551d99d48d59fedff",
+        "current": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573",
+        "matches": false
+      },
+      "out/preload/index.cjs": {
+        "recorded": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+        "current": "9b78be58d4f9bd70fb5b6d3315d888ee9442cfbf09bfab2b2f902de015e902f2",
+        "matches": false
+      }
+    },
+    "2026-10-17-source-presentation.json": {
+      "src/main/news.ts": {
+        "recorded": "9c2076bf3808221980dac5aa2befb9d5532278027ccdcc6197e8324930b6571e",
+        "current": "f2933aac8c9d2334e84a6850c7023207fbd1b86f905bd3844977ad5cb0be7a48",
+        "matches": false
+      },
+      "src/main/news-workflow.ts": {
+        "recorded": "16e61a8e65a69bf97a59101befcd6a66e23cdb69350c9e2b854ed3e2772e11a2",
+        "current": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+        "matches": false
+      },
+      "src/main/prepared-news.ts": {
+        "recorded": "0d0d40b27e899d04bea54d064d62017643c58211997f8c3e36f896b26c24bd2d",
+        "current": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+        "matches": false
+      },
+      "src/main/index.ts": {
+        "recorded": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/renderer/pages/Stations/components/NewsBucket.component.tsx": {
+        "recorded": "de83e49585e17339bca32a0866b4c5126e95ceacb1cc4bf9e80d81a50221f5a7",
+        "current": "61e5027abd4def319532645a9a3b1425a4b6531860a2609b113c18670c0fa2f3",
+        "matches": false
+      },
+      "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": {
+        "recorded": "a089c86e2b2678ed77f2559648cdfeaca072ba6bb46453a2f4e8befb2f68e09e",
+        "current": "fd9488789ef2042e6146938d8117e29df0823aae6611013952eb1b4debe83c92",
+        "matches": false
+      },
+      "src/renderer/pages/Stations/components/PreparedTakes.styles.css": {
+        "recorded": "45bbb454fd3492e5c3b561c6670b69ee7091545f478d604579b3786331e0f32c",
+        "current": "c806e6a76dde1eedb5ade89d9c48318d4e6d081af268d155a8934f29504cfc4b",
+        "matches": false
+      },
+      "src/renderer/pages/Stations/Stations.page.tsx": {
+        "recorded": "83c78a0854859e81ea9ec21330f88e53ee6c30fe81651a1551d99d48d59fedff",
+        "current": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573",
+        "matches": false
+      },
+      "src/renderer/components/Player/DJPopover.component.tsx": {
+        "recorded": "6ffca314f80c990adb9c1fbf81f970560cd5d2debc786e855098f89551e2e4ec",
+        "current": "7a9858830d98a053b2a3d805e6a2b6521aa483154c00306b0a6cfb4fb96fd981",
+        "matches": false
+      },
+      "src/renderer/player.tsx": {
+        "recorded": "481d350ef35d5e11d77848f661419f5eea265cbf643db234c665174255ec562c",
+        "current": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+        "matches": false
+      },
+      "src/renderer/dj-playback.tsx": {
+        "recorded": "31e217aa382a88dcfddbfb0b06b0294825d4acdb7a9bc0127dd8e367adf85c5f",
+        "current": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+        "matches": false
+      },
+      "out/preload/index.cjs": {
+        "recorded": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+        "current": "9b78be58d4f9bd70fb5b6d3315d888ee9442cfbf09bfab2b2f902de015e902f2",
+        "matches": false
+      }
+    },
+    "2026-10-18-voice-search-focus.json": {},
+    "2026-10-19-current-radio-setup.json": {
+      "src/main/index.ts": {
+        "recorded": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": true
+      },
+      "src/main/storage.ts": {
+        "recorded": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "current": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "matches": true
+      },
+      "src/main/news-workflow.ts": {
+        "recorded": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+        "current": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+        "matches": true
+      },
+      "src/renderer/player.tsx": {
+        "recorded": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+        "current": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+        "matches": true
+      },
+      "src/renderer/pages/Stations/components/RoomSetup.component.tsx": {
+        "recorded": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330",
+        "current": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330",
+        "matches": true
+      },
+      "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": {
+        "recorded": "0cd2699a1bc6131ebc898ae216f434223684746e209e275edd43008e56a191d1",
+        "current": "0cd2699a1bc6131ebc898ae216f434223684746e209e275edd43008e56a191d1",
+        "matches": true
+      },
+      "out/renderer/index.html": {
+        "recorded": "f5bd865b615d3cb18c1f2cc84924793c18318fc30e02e1fe91bf42fa8e362d41",
+        "current": "f5bd865b615d3cb18c1f2cc84924793c18318fc30e02e1fe91bf42fa8e362d41",
+        "matches": true
+      },
+      "out/preload/index.cjs": {
+        "recorded": "9b78be58d4f9bd70fb5b6d3315d888ee9442cfbf09bfab2b2f902de015e902f2",
+        "current": "9b78be58d4f9bd70fb5b6d3315d888ee9442cfbf09bfab2b2f902de015e902f2",
+        "matches": true
+      }
+    },
+    "2026-10-19-mood-queue-boundary.json": {
+      "src/main/index.ts": {
+        "recorded": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": true
+      },
+      "src/main/news-workflow.ts": {
+        "recorded": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+        "current": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+        "matches": true
+      },
+      "src/main/news.ts": {
+        "recorded": "f2933aac8c9d2334e84a6850c7023207fbd1b86f905bd3844977ad5cb0be7a48",
+        "current": "f2933aac8c9d2334e84a6850c7023207fbd1b86f905bd3844977ad5cb0be7a48",
+        "matches": true
+      },
+      "src/main/prepared-news.ts": {
+        "recorded": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+        "current": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+        "matches": true
+      },
+      "src/main/storage.ts": {
+        "recorded": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "current": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "matches": true
+      },
+      "src/preload/index.ts": {
+        "recorded": "458378616e402bc07202f269fa94092d8ee8685e2dd9bba7fcaf0c7ca58e31c1",
+        "current": "458378616e402bc07202f269fa94092d8ee8685e2dd9bba7fcaf0c7ca58e31c1",
+        "matches": true
+      },
+      "src/renderer/components/Player/DJPopover.component.tsx": {
+        "recorded": "7a9858830d98a053b2a3d805e6a2b6521aa483154c00306b0a6cfb4fb96fd981",
+        "current": "7a9858830d98a053b2a3d805e6a2b6521aa483154c00306b0a6cfb4fb96fd981",
+        "matches": true
+      },
+      "src/renderer/components/Player/Player.component.tsx": {
+        "recorded": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+        "current": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+        "matches": true
+      },
+      "src/renderer/components/Queue/Queue.component.tsx": {
+        "recorded": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082",
+        "current": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082",
+        "matches": true
+      },
+      "src/renderer/components/TrackTable/TrackTable.component.tsx": {
+        "recorded": "158caa15a4fe11170ac048c1752d4b9327006595646f5a86acd27c5b1c0216e5",
+        "current": "158caa15a4fe11170ac048c1752d4b9327006595646f5a86acd27c5b1c0216e5",
+        "matches": true
+      },
+      "src/renderer/dj-playback.tsx": {
+        "recorded": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+        "current": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+        "matches": true
+      },
+      "src/renderer/pages/Albums/Albums.page.tsx": {
+        "recorded": "09a1292143de4e0f24a233a41b50e90fae8f19d394afae2f5171384f59fc9667",
+        "current": "09a1292143de4e0f24a233a41b50e90fae8f19d394afae2f5171384f59fc9667",
+        "matches": true
+      },
+      "src/renderer/pages/DJs/components/NewsDemo.component.tsx": {
+        "recorded": "32c3c7403ed5fc3cb5bfa8841e53650e20eab85e866021d5130af1059e2da8bb",
+        "current": "32c3c7403ed5fc3cb5bfa8841e53650e20eab85e866021d5130af1059e2da8bb",
+        "matches": true
+      },
+      "src/renderer/pages/DJs/components/VoicePreview.component.tsx": {
+        "recorded": "d2cbca679984903fdc0692488dff67069fad302e4e3adcd8352915b5eb209581",
+        "current": "d2cbca679984903fdc0692488dff67069fad302e4e3adcd8352915b5eb209581",
+        "matches": true
+      },
+      "src/renderer/pages/Playlists/Playlists.page.tsx": {
+        "recorded": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+        "current": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+        "matches": true
+      },
+      "src/renderer/pages/Settings/components/NewsTransitionPreview.component.tsx": {
+        "recorded": "b44dc08192dd9d4a354a8f921c1b5e17c6a0cf2291b26b8aa3bd285d55b2ff31",
+        "current": "b44dc08192dd9d4a354a8f921c1b5e17c6a0cf2291b26b8aa3bd285d55b2ff31",
+        "matches": true
+      },
+      "src/renderer/pages/Songs/Songs.page.tsx": {
+        "recorded": "a15a3adc08b8ebb2bd4d96b00c8462d94922bef67eb2fad655c6c428af0eb942",
+        "current": "a15a3adc08b8ebb2bd4d96b00c8462d94922bef67eb2fad655c6c428af0eb942",
+        "matches": true
+      },
+      "src/renderer/pages/Songs/VirtualSongs.component.tsx": {
+        "recorded": "4484149d94156d3f6f9b5bcb5b201285a1264e2e28125f50e10a4d401f593206",
+        "current": "4484149d94156d3f6f9b5bcb5b201285a1264e2e28125f50e10a4d401f593206",
+        "matches": true
+      },
+      "src/renderer/pages/Stations/components/NewsBucket.component.tsx": {
+        "recorded": "61e5027abd4def319532645a9a3b1425a4b6531860a2609b113c18670c0fa2f3",
+        "current": "61e5027abd4def319532645a9a3b1425a4b6531860a2609b113c18670c0fa2f3",
+        "matches": true
+      },
+      "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": {
+        "recorded": "fd9488789ef2042e6146938d8117e29df0823aae6611013952eb1b4debe83c92",
+        "current": "fd9488789ef2042e6146938d8117e29df0823aae6611013952eb1b4debe83c92",
+        "matches": true
+      },
+      "src/renderer/player.tsx": {
+        "recorded": "aa7d866e5724945a3f06773a984f6983ccc6544ee08b02991fd54c0f53f25f0c",
+        "current": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+        "matches": false
+      }
+    },
+    "2026-10-17-dj-previews.json": {
+      "src/main/dj-previews.ts": {
+        "recorded": "56d36390dbf9ba2a3177c46ff2a20d4478fa20bc37d6220bc1459b6e592722b3",
+        "current": "56d36390dbf9ba2a3177c46ff2a20d4478fa20bc37d6220bc1459b6e592722b3",
+        "matches": true
+      },
+      "src/main/news.ts": {
+        "recorded": "9c2076bf3808221980dac5aa2befb9d5532278027ccdcc6197e8324930b6571e",
+        "current": "f2933aac8c9d2334e84a6850c7023207fbd1b86f905bd3844977ad5cb0be7a48",
+        "matches": false
+      },
+      "src/main/media.ts": {
+        "recorded": "6768544bd3215e37187a12293571c894a1023619ebe8f09e25403bdec0bfb671",
+        "current": "c2dbac7a2c6892e44794cffde7cd5118f6999f712b1f6f06533b3a9f44245fe2",
+        "matches": false
+      },
+      "src/main/storage.ts": {
+        "recorded": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+        "current": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "matches": false
+      },
+      "src/main/index.ts": {
+        "recorded": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/shared/voice-previews.ts": {
+        "recorded": "4ebe9fe7dad73cc2195573ec729cb99440313fe8eea24e5b0201154cc8095bfe",
+        "current": "4ebe9fe7dad73cc2195573ec729cb99440313fe8eea24e5b0201154cc8095bfe",
+        "matches": true
+      },
+      "src/renderer/player.tsx": {
+        "recorded": "481d350ef35d5e11d77848f661419f5eea265cbf643db234c665174255ec562c",
+        "current": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+        "matches": false
+      },
+      "src/renderer/pages/DJs/components/VoicePreview.component.tsx": {
+        "recorded": "b33006579294d0c1fc455f2be47478c6bea30140b7bcbb4ad926dc4c7c3ce81c",
+        "current": "d2cbca679984903fdc0692488dff67069fad302e4e3adcd8352915b5eb209581",
+        "matches": false
+      },
+      "src/renderer/pages/DJs/components/DJPreview.component.tsx": {
+        "recorded": "496eaaac54e8fedb02e33bd2c07b01bc5c4a0b23fcb57940729c32a5bd11c3b8",
+        "current": "496eaaac54e8fedb02e33bd2c07b01bc5c4a0b23fcb57940729c32a5bd11c3b8",
+        "matches": true
+      },
+      "src/renderer/pages/DJs/components/DJEditor.component.tsx": {
+        "recorded": "2c1260a44cc2fed82542972a9055f63b4d4890fe6232793eaa97a825898c4a7d",
+        "current": "5c440c3fc2199e4f0d7de7ddb01f481707e8ac1d3470e8296e3f90a17691210d",
+        "matches": false
+      },
+      "src/renderer/pages/DJs/DJs.page.tsx": {
+        "recorded": "59edbcbd3f4e56834f4757910120b9d914bac36cda4311a5508b81ecb46e8e30",
+        "current": "7e9111ce7c77f3b8f003b1378ec2a8bb4d5e9bae6f4216204974046c30c483fc",
+        "matches": false
+      },
+      "out/preload/index.cjs": {
+        "recorded": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+        "current": "9b78be58d4f9bd70fb5b6d3315d888ee9442cfbf09bfab2b2f902de015e902f2",
+        "matches": false
+      }
+    }
+  },
+  "adjudication": {
+    "acceptedCanonicalGroups": 0,
+    "knownOpenChecks": 25,
+    "semanticDenominatorComplete": false,
+    "overallScore": null
+  },
+  "limits": [
+    "Current code and dated evidence review only;no app code changed.",
+    "Live X permission/access,provider instruction compliance and subjective voice/listener outcomes remain separate proof.",
+    "All29 fragments retain mandatory variants and partial evidence status. Other personal-radio clauses and full R11/R12 stories remain outside this packet.",
+    "No new build/lint/unit,live source/provider,VoiceOver,OS,smaller viewport or enlarged-zoom check."
+  ]
+}
