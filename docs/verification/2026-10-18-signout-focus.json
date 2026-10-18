@@ -1,0 +1,904 @@
+{
+  "date": "2026-10-18",
+  "baseCommit": "1a82ed753873dd9a02be57c166e5fe3a9fb99712",
+  "scope": [
+    "Q06/R12 sign-out confirmation focus and repeat/dismissal guard",
+    "M15 explicit sign-out retry and signed-out entry focus"
+  ],
+  "baseline": {
+    "contentSizePoints": [
+      1280,
+      720
+    ],
+    "appZoom": 1,
+    "runtime": "macOS arm64, Electron43.7.0, Retina display"
+  },
+  "before": "Activating Sign out natively disables its focused action and leaves BODY while waiting and after an injected failure.",
+  "implementation": [
+    "Keep Sign out and Cancel natively focusable while pending using established modal aria-disabled/busy styling. Shared Dialog closeDisabled presents and guards the header Close and its Escape/backdrop routes.",
+    "Add synchronous inFlight guard for repeated confirmation and dismissal before pending renders. Clear it on settlement. Existing library-save exclusion and backend sign-out protocol remain unchanged.",
+    "Preserve ordinary Cancel/opener return. On failure keep the user's current dialog focus for explicit retry; on success the existing connection page auto-focuses Jellyfin server. No delayed focus effect."
+  ],
+  "decision": "Mechanical correction following the established pending-dialog pattern from PR86/87; root source review, no independent paired proposal/review claimed.",
+  "phases": {
+    "before": {
+      "bundleHashes": {
+        "out/renderer/assets/index-CB30TbEb.js": "9a1ec51a77b1e0c3db5a232ba87979dfe36e8c1d47f1eef5e70bb45ba4e36b0e",
+        "out/renderer/assets/index-CDGpOogy.css": "9576f7f68ad54a7d6eba6feb802e6d4d69d9790906840deb70eda552385561ba",
+        "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2",
+        "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb"
+      },
+      "snapshots": [
+        {
+          "name": "before-dialog-ready",
+          "rawSha256": "24c0e56ef4dedeb8359ec44d2cd2db56c3c27a58b9369d9beefc48fa148c0fff",
+          "observedAt": 1792315712415,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 804,
+              "y": 226.9375,
+              "width": 34,
+              "height": 34,
+              "top": 226.9375,
+              "right": 838,
+              "bottom": 260.9375,
+              "left": 804
+            },
+            "insideDrawer": false,
+            "name": "Close dialog",
+            "type": null,
+            "role": null
+          },
+          "focusScope": "Sign out of Jellyfin?",
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About",
+            "Sign out of Jellyfin?"
+          ],
+          "dialogs": [
+            {
+              "title": "Sign out of Jellyfin?",
+              "paragraphs": [
+                "Playback will stop and unsaved news setup and script edits will be discarded. Your saved profiles, DJs, provider keys and recordings stay on this Mac.",
+                "Signing out pauses automatic news preparation and stops in-progress news and voice generation. A request already sent may still finish or incur a charge. After signing in, resume automatic preparation in News bucket \u2192 Settings."
+              ]
+            }
+          ],
+          "dialogActions": [
+            {
+              "name": "Close dialog",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": true
+            },
+            {
+              "name": "Cancel",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false
+            },
+            {
+              "name": "Sign out",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "main": {
+            "disconnectCalls": 0,
+            "held": [],
+            "httpWrites": 0,
+            "providers": 0
+          }
+        },
+        {
+          "name": "before-pending-body",
+          "rawSha256": "2276f64697f0b46a45cb8cf5d476977b4139584cadf3652855d7d215f56d3af0",
+          "observedAt": 1792315722497,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BODY",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 720,
+              "top": 0,
+              "right": 1280,
+              "bottom": 720,
+              "left": 0
+            },
+            "insideDrawer": false,
+            "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedSettingsGeneralProvider keysSourcesDJsAccountSigned in asFixture listenerServerhttp://127.0.0.1:5191VersionJellyfin fixtureSign outMusic librariesChoose the libraries shown in your collection. Your listening queue stays available.Music librariesArchive musicRecent music1 library selectedSave librariesDJ playbackChoose how often the DJ checks saved news and how its voice plays.Check news everysongsOnly finished songs count. Choose 1 for testing. Empty news pools are skipped without generating anything.Keep the DJ when seeking or rewindingKeeps the break when you seek. Speech waits for the next suitable ending and resumes where it paused.DJ voice volume70%Relative to player volume. The default is 70%.Save DJ playbackDJ transitionsGive news breaks room to breathe. Saved changes apply to the next break you schedule.Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.Lower music oversecondsFade down before the DJ starts.Breathing room before speechsecondsWait after the music fades or finishes.Pause after speechsecondsLeave a moment before music resumes.Bring music back oversecondsFade music up to your listening volume.Hear this transitionPreview transitionUses the timings above, even before saving. Sample music and a saved AI voice, no generation needed. Your music pauses and stays paused. Changing songs or seeking stops the sample.Sample song2 sLower music1.5 sQuiet music0.8 sDJ over musicSaved sampleQuiet music0.5 sNext song fades in1.5 sReady to preview.Save DJ transitionsAboutonmywave.fm Light for macOSSign out of Jellyfin?Playback will stop and unsaved news setup and script edits will be discarded. Your saved profiles, DJs, provider keys and recordings stay on this Mac.Signing out pauses automatic news preparation and stops in-progress news and voice generation. A request already sent may still finish or incur a charge. After signing in, resume automatic preparation in News bucket \u2192 Settings.CancelSigning out\u2026Song 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+            "type": null,
+            "role": null
+          },
+          "focusScope": null,
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About",
+            "Sign out of Jellyfin?"
+          ],
+          "dialogs": [
+            {
+              "title": "Sign out of Jellyfin?",
+              "paragraphs": [
+                "Playback will stop and unsaved news setup and script edits will be discarded. Your saved profiles, DJs, provider keys and recordings stay on this Mac.",
+                "Signing out pauses automatic news preparation and stops in-progress news and voice generation. A request already sent may still finish or incur a charge. After signing in, resume automatic preparation in News bucket \u2192 Settings."
+              ]
+            }
+          ],
+          "dialogActions": [
+            {
+              "name": "Close dialog",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false
+            },
+            {
+              "name": "Cancel",
+              "disabled": true,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false
+            },
+            {
+              "name": "Signing out\u2026",
+              "disabled": true,
+              "nativeDisabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "main": {
+            "disconnectCalls": 1,
+            "held": [
+              "disconnect"
+            ],
+            "httpWrites": 0,
+            "providers": 0
+          }
+        },
+        {
+          "name": "before-failure-body",
+          "rawSha256": "5df9b047b810b8c1096e01ffe1123e5eebddd37718507a384736e994132f09a4",
+          "observedAt": 1792315749077,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BODY",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 720,
+              "top": 0,
+              "right": 1280,
+              "bottom": 720,
+              "left": 0
+            },
+            "insideDrawer": false,
+            "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedSettingsGeneralProvider keysSourcesDJsAccountSigned in asFixture listenerServerhttp://127.0.0.1:5191VersionJellyfin fixtureSign outMusic librariesChoose the libraries shown in your collection. Your listening queue stays available.Music librariesArchive musicRecent music1 library selectedSave librariesDJ playbackChoose how often the DJ checks saved news and how its voice plays.Check news everysongsOnly finished songs count. Choose 1 for testing. Empty news pools are skipped without generating anything.Keep the DJ when seeking or rewindingKeeps the break when you seek. Speech waits for the next suitable ending and resumes where it paused.DJ voice volume70%Relative to player volume. The default is 70%.Save DJ playbackDJ transitionsGive news breaks room to breathe. Saved changes apply to the next break you schedule.Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.Lower music oversecondsFade down before the DJ starts.Breathing room before speechsecondsWait after the music fades or finishes.Pause after speechsecondsLeave a moment before music resumes.Bring music back oversecondsFade music up to your listening volume.Hear this transitionPreview transitionUses the timings above, even before saving. Sample music and a saved AI voice, no generation needed. Your music pauses and stays paused. Changing songs or seeking stops the sample.Sample song2 sLower music1.5 sQuiet music0.8 sDJ over musicSaved sampleQuiet music0.5 sNext song fades in1.5 sReady to preview.Save DJ transitionsAboutonmywave.fm Light for macOSSign out of Jellyfin?Playback will stop and unsaved news setup and script edits will be discarded. Your saved profiles, DJs, provider keys and recordings stay on this Mac.Signing out pauses automatic news preparation and stops in-progress news and voice generation. A request already sent may still finish or incur a charge. After signing in, resume automatic preparation in News bucket \u2192 Settings.disconnect unavailable.CancelSign outSong 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+            "type": null,
+            "role": null
+          },
+          "focusScope": null,
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About",
+            "Sign out of Jellyfin?"
+          ],
+          "dialogs": [
+            {
+              "title": "Sign out of Jellyfin?",
+              "paragraphs": [
+                "Playback will stop and unsaved news setup and script edits will be discarded. Your saved profiles, DJs, provider keys and recordings stay on this Mac.",
+                "Signing out pauses automatic news preparation and stops in-progress news and voice generation. A request already sent may still finish or incur a charge. After signing in, resume automatic preparation in News bucket \u2192 Settings."
+              ]
+            }
+          ],
+          "dialogActions": [
+            {
+              "name": "Close dialog",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false
+            },
+            {
+              "name": "Cancel",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false
+            },
+            {
+              "name": "Sign out",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "main": {
+            "disconnectCalls": 1,
+            "held": [],
+            "httpWrites": 0,
+            "providers": 0
+          }
+        }
+      ]
+    },
+    "final": {
+      "bundleHashes": {
+        "out/renderer/assets/index-CDGpOogy.css": "9576f7f68ad54a7d6eba6feb802e6d4d69d9790906840deb70eda552385561ba",
+        "out/renderer/assets/index-BHh4GCm5.js": "8bf377cabf06e284a672ad95c8e64ea5f42b39f44db09dda51392775b3945c27",
+        "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2",
+        "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb"
+      },
+      "snapshots": [
+        {
+          "name": "final-cancel-opener",
+          "rawSha256": "fda0422a0e2e4a2f45a6c42e1e6856bfe3b3d87d994ca57b7af8181d0465e93e",
+          "observedAt": 1792315788400,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 238,
+              "y": 366.390625,
+              "width": 74.6484375,
+              "height": 34,
+              "top": 366.390625,
+              "right": 312.6484375,
+              "bottom": 400.390625,
+              "left": 238
+            },
+            "insideDrawer": false,
+            "name": "Sign out",
+            "type": null,
+            "role": null
+          },
+          "focusScope": null,
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About"
+          ],
+          "dialogs": [],
+          "dialogActions": [],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "main": {
+            "disconnectCalls": 0,
+            "held": [],
+            "httpWrites": 0,
+            "providers": 0
+          }
+        },
+        {
+          "name": "final-pending-signout-focus",
+          "rawSha256": "427cace493393855f191de8e46912bb6ac882ab2c86d6213475385435b05d8d4",
+          "observedAt": 1792315801461,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 730.625,
+              "y": 473.8046875,
+              "width": 102.375,
+              "height": 34,
+              "top": 473.8046875,
+              "right": 833,
+              "bottom": 507.8046875,
+              "left": 730.625
+            },
+            "insideDrawer": false,
+            "name": "Signing out\u2026",
+            "type": null,
+            "role": null
+          },
+          "focusScope": "Sign out of Jellyfin?",
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About",
+            "Sign out of Jellyfin?"
+          ],
+          "dialogs": [
+            {
+              "title": "Sign out of Jellyfin?",
+              "paragraphs": [
+                "Playback will stop and unsaved news setup and script edits will be discarded. Your saved profiles, DJs, provider keys and recordings stay on this Mac.",
+                "Signing out pauses automatic news preparation and stops in-progress news and voice generation. A request already sent may still finish or incur a charge. After signing in, resume automatic preparation in News bucket \u2192 Settings."
+              ]
+            }
+          ],
+          "dialogActions": [
+            {
+              "name": "Close dialog",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false
+            },
+            {
+              "name": "Cancel",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false
+            },
+            {
+              "name": "Signing out\u2026",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": "true",
+              "busy": "true",
+              "active": true
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "main": {
+            "disconnectCalls": 1,
+            "held": [
+              "disconnect"
+            ],
+            "httpWrites": 0,
+            "providers": 0
+          }
+        },
+        {
+          "name": "final-pending-dismissal-blocked",
+          "rawSha256": "dc7a55717aad3692618415a5e7ab843bdbe02bcafdc3ebbaaed6d52e69caa57d",
+          "observedAt": 1792315815196,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 804,
+              "y": 226.9375,
+              "width": 34,
+              "height": 34,
+              "top": 226.9375,
+              "right": 838,
+              "bottom": 260.9375,
+              "left": 804
+            },
+            "insideDrawer": false,
+            "name": "Close dialog",
+            "type": null,
+            "role": null
+          },
+          "focusScope": "Sign out of Jellyfin?",
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About",
+            "Sign out of Jellyfin?"
+          ],
+          "dialogs": [
+            {
+              "title": "Sign out of Jellyfin?",
+              "paragraphs": [
+                "Playback will stop and unsaved news setup and script edits will be discarded. Your saved profiles, DJs, provider keys and recordings stay on this Mac.",
+                "Signing out pauses automatic news preparation and stops in-progress news and voice generation. A request already sent may still finish or incur a charge. After signing in, resume automatic preparation in News bucket \u2192 Settings."
+              ]
+            }
+          ],
+          "dialogActions": [
+            {
+              "name": "Close dialog",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": true
+            },
+            {
+              "name": "Cancel",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false
+            },
+            {
+              "name": "Signing out\u2026",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": "true",
+              "busy": "true",
+              "active": false
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "main": {
+            "disconnectCalls": 1,
+            "held": [
+              "disconnect"
+            ],
+            "httpWrites": 0,
+            "providers": 0
+          }
+        },
+        {
+          "name": "final-failure-retains-focus",
+          "rawSha256": "110a9995fbb254a60c62e04e1ce0016a9866acb7c52e9d885503b6f78bac43cb",
+          "observedAt": 1792315834095,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 804,
+              "y": 198.0390625,
+              "width": 34,
+              "height": 34,
+              "top": 198.0390625,
+              "right": 838,
+              "bottom": 232.0390625,
+              "left": 804
+            },
+            "insideDrawer": false,
+            "name": "Close dialog",
+            "type": null,
+            "role": null
+          },
+          "focusScope": "Sign out of Jellyfin?",
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About",
+            "Sign out of Jellyfin?"
+          ],
+          "dialogs": [
+            {
+              "title": "Sign out of Jellyfin?",
+              "paragraphs": [
+                "Playback will stop and unsaved news setup and script edits will be discarded. Your saved profiles, DJs, provider keys and recordings stay on this Mac.",
+                "Signing out pauses automatic news preparation and stops in-progress news and voice generation. A request already sent may still finish or incur a charge. After signing in, resume automatic preparation in News bucket \u2192 Settings."
+              ]
+            }
+          ],
+          "dialogActions": [
+            {
+              "name": "Close dialog",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": true
+            },
+            {
+              "name": "Cancel",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false
+            },
+            {
+              "name": "Sign out",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "main": {
+            "disconnectCalls": 1,
+            "held": [],
+            "httpWrites": 0,
+            "providers": 0
+          }
+        },
+        {
+          "name": "final-retry-pending",
+          "rawSha256": "6cfb78e0e8aa3a07489ee554b5fd87f63397f5bce8fdaaea38732cf697893ea1",
+          "observedAt": 1792315848625,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 730.625,
+              "y": 473.8046875,
+              "width": 102.375,
+              "height": 34,
+              "top": 473.8046875,
+              "right": 833,
+              "bottom": 507.8046875,
+              "left": 730.625
+            },
+            "insideDrawer": false,
+            "name": "Signing out\u2026",
+            "type": null,
+            "role": null
+          },
+          "focusScope": "Sign out of Jellyfin?",
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About",
+            "Sign out of Jellyfin?"
+          ],
+          "dialogs": [
+            {
+              "title": "Sign out of Jellyfin?",
+              "paragraphs": [
+                "Playback will stop and unsaved news setup and script edits will be discarded. Your saved profiles, DJs, provider keys and recordings stay on this Mac.",
+                "Signing out pauses automatic news preparation and stops in-progress news and voice generation. A request already sent may still finish or incur a charge. After signing in, resume automatic preparation in News bucket \u2192 Settings."
+              ]
+            }
+          ],
+          "dialogActions": [
+            {
+              "name": "Close dialog",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false
+            },
+            {
+              "name": "Cancel",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false
+            },
+            {
+              "name": "Signing out\u2026",
+              "disabled": false,
+              "nativeDisabled": false,
+              "ariaDisabled": "true",
+              "busy": "true",
+              "active": true
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "main": {
+            "disconnectCalls": 2,
+            "held": [
+              "disconnect"
+            ],
+            "httpWrites": 0,
+            "providers": 0
+          }
+        },
+        {
+          "name": "final-signedout-server-focus",
+          "rawSha256": "c8e538b82f3fec9e247c28f94e2d88be12efc30189e011c8310c85c6124578d7",
+          "observedAt": 1792315858773,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "INPUT",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 416,
+              "y": 345.1875,
+              "width": 440,
+              "height": 44,
+              "top": 345.1875,
+              "right": 856,
+              "bottom": 389.1875,
+              "left": 416
+            },
+            "insideDrawer": false,
+            "name": "",
+            "type": "url",
+            "label": "Jellyfin server",
+            "role": null
+          },
+          "focusScope": null,
+          "headings": [
+            "A home for your music."
+          ],
+          "dialogs": [],
+          "dialogActions": [],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "disconnectCalls": 2,
+            "held": [],
+            "httpWrites": 0,
+            "providers": 0
+          }
+        }
+      ],
+      "disconnectAccounting": "Two IPC attempts: one held and deliberately failed before operation, then one explicit successful retry. Repeated Return/Space dispatch no extra call. Ordinary Cancel makes none."
+    }
+  },
+  "checks": {
+    "build": "Full production build including TypeScript passed on final source; bundle hashes revalidated.",
+    "lint": "Full ESLint passed.",
+    "native": "Cancel/opener, focused busy action, duplicate suppression, pending Cancel/Escape/Close, failure preserving later Close focus, explicit retry and signed-out server focus pass. Busy actions retain a solid visible outline.",
+    "playback": "Actual disposable saved duplicate queue/current occurrence and options remain identical across all final snapshots. UI transport is paused before sign-out and absent on the signed-out form.",
+    "processes": "Before/final observers exit0; exact owned server PID24417 stopped and session86154 exits143.",
+    "reports": {
+      "before": {
+        "rawSha256": "cbbadfbf32b0cf0ef25f7dedacb9b2288a322f63a9f7d1cea200a8418446672e",
+        "result": "observed",
+        "errors": []
+      },
+      "final": {
+        "rawSha256": "3ff2c63d97f94541e99f610e2fdfbf9d68c1cd9946576ef6abe1dacaf75f739a",
+        "result": "observed",
+        "errors": []
+      }
+    }
+  },
+  "fixture": {
+    "input": "Native CUA only; Playwright launch/read-only observation. Distinct copied Electron identity avoids live development app.",
+    "runtime": "Production renderer/preload, copied instrumented actual main/storage, disposable safeStorage/catalog, null shared-key adapter, stopped scheduler and muted media.",
+    "writes": "No HTTP write or provider/external request. Successful retry executes existing disconnect against disposable protected connection/local state only.",
+    "failure": "Post-guard IPC completion gate injects disconnect failure before operation, not actual credential-removal or preparation-pause storage failure.",
+    "hashes": {
+      "observe.cjs": "ac7427bad740fbea9e6624992993fb4d63c59905711844e64d2bd0e8ed0c5691",
+      "bootstrap.mjs": "a48fcb989e12c3db8d80605fb32f19bbf095e89bbd31422428eb9b8af8c1cadc",
+      "server.mjs": "31737fd66ee65d855610f463703742a421eaf4767c2f1f2c848e2d893f964626"
+    }
+  },
+  "sourceHashes": {
+    "src/renderer/pages/Settings/Settings.page.tsx": "2ab83e237a470dc453f005bbda2eec6bb9d77fdedf86401b1b9dab710cafa1b7"
+  },
+  "unchangedOwnerHashes": {
+    "src/renderer/components/Shared.tsx": "16726cf323f44324a124ee5fb29a7270ae514f8dc04f87f153f6b0a5e289ff5e",
+    "src/renderer/pages/Connection/Connection.page.tsx": "6136e0df35aacd3f100e54b94b6b5f5641eda872fb6a6667cc0ecbe6882f480b",
+    "src/main/index.ts": "e4ab045607c0e17eed5cdf82594fdedad4c84430f9e3f5eaa72cb84e9bb465c4"
+  },
+  "acceptance": {
+    "rows": 191,
+    "active": 189,
+    "deferred": 2,
+    "open": 27,
+    "listener": 14,
+    "otherProof": 13,
+    "statusChanges": [],
+    "Q06": "Review for remaining radio/setup/prepared-take controls and conditional states."
+  },
+  "limits": [
+    "No VoiceOver/AT, listener, audible, live-provider/server, platform matrix, release, unit or deferred viewport/zoom acceptance.",
+    "No new paid-preparation cancellation, active speech, provider-key-write overlap or library-save race proof; unchanged backend protocol retains its prior scoped evidence.",
+    "Pending backdrop follows unchanged inspected Shared Dialog path; no separate new native backdrop click.",
+    "Dated source maps and provenance audit remain dated."
+  ],
+  "sourceTraceSupplement": [
+    {
+      "file": "REQUIREMENTS.md",
+      "line": 259,
+      "text": "The sign-out confirmation keeps Sign out, Cancel and Close keyboard-focusable while showing that they are unavailable during the request. Repeated confirmation or dismissal cannot duplicate or interrupt it. A failed sign-out keeps the error and current dialog focus for explicit retry. Ordinary Cancel restores its opener without signing out. Success opens the signed-out form with focus on Jellyfin server.",
+      "sha256": "2902161df8862d30db38c0ac47153b3652914056b575b5babd21b5b10cdd17f5"
+    },
+    {
+      "file": "docs/RADIO_EXPERIENCE.md",
+      "line": 146,
+      "text": "| M15 | I can sign out without leaving paid work running | Automatic preparation is enabled, or text/voice generation is pending, and I want to leave the account | Review Sign out, cancel or confirm, then reopen and sign in again | Cancel changes nothing and restores its opener; pending Sign out/Cancel/Close remain focusable but visibly unavailable, repeated confirm/dismiss keys cannot duplicate or interrupt the request, failure keeps current dialog focus for retry, and success focuses the signed-out server field; confirmation discards only unsaved radio drafts, pauses automatic preparation across profiles and cancels generation without replay; completed publications and saved settings/history/counts stay intact; signed-out startup and reconnect never resume preparation automatically; explicitly resume one profile after reviewing setup; failed pause or credential removal keeps a coherent connected account with visible recovery; a failed pause explains that preparation could not be paused and the listener is still signed in, with explicit sign-out retry |",
+      "sha256": "2c86a31a4c85ddc1fc038ce37580cfbe97f15e8b4c5751fc36a4135e6a22efa9"
+    }
+  ]
+}
