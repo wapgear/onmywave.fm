@@ -1,5 +1,5 @@
 import { NEWS_TEXT_MODEL } from '../../../../shared/types';
-import { useId, useRef, useState } from 'react';
+import { useId, useLayoutEffect, useRef, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { DJ, DJVoice, DJVoiceSearch, NewsSettings } from '../../../../shared/types';
 import { unwrap } from '../../../api';
@@ -18,6 +18,8 @@ type TextField = 'name' | 'description' | 'instructions' | 'musicPreferences' | 
 export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
   const client = useQueryClient();
   const form = useRef<HTMLFormElement>(null);
+  const saveButton = useRef<HTMLButtonElement>(null);
+  const inFlight = useRef(false);
   const [draft, setDraft] = useState<DJ>({ ...value, news: { ...defaultNews, ...value.news, elevenVoiceId: value.name ? value.news?.elevenVoiceId ?? defaultNews.elevenVoiceId : '', speechEngine: 'elevenlabs-v4', textModel: NEWS_TEXT_MODEL } });
   const [mode, setMode] = useState(value.name ? 'advanced' : 'predefined');
   const modeId = useId();
@@ -59,12 +61,20 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
       await Promise.all([client.invalidateQueries({ queryKey: ['localState'] }), client.invalidateQueries({ queryKey: ['djVoicePreview', next.id] })]);
     },
     onSuccess: close,
+    onSettled: () => { inFlight.current = false; },
   });
+  useLayoutEffect(() => {
+    const active = document.activeElement;
+    if (!save.error || !(active instanceof HTMLElement) || !form.current?.contains(active)
+      || !active.closest('.modal-actions') || document.visibilityState !== 'visible' || !document.hasFocus()) return;
+    active.scrollIntoView({ block: 'center', inline: 'nearest' });
+  }, [save.error]);
+  function closeEditor() { if (!inFlight.current && !save.isPending) close(); }
   function updateNews(patch: Partial<NewsSettings>) { save.reset(); setDraft(old => ({ ...old, news: { ...old.news!, ...patch } })); }
   const field = (key: TextField, label: string, placeholder = '', multiline = false) => <label>{label}{multiline
     ? <textarea value={draft[key]} maxLength={20_000} placeholder={placeholder} rows={3} onChange={event => { save.reset(); setDraft(old => ({ ...old, [key]: event.target.value })); }} />
     : <input value={draft[key]} placeholder={placeholder} required={key === 'name'} maxLength={key === 'name' ? 160 : 20_000} onChange={event => { save.reset(); setDraft(old => ({ ...old, [key]: event.target.value })); }} />}</label>;
-  return <Dialog title={value.name ? 'Edit DJ' : 'Create a DJ'} close={() => { if (!save.isPending) close(); }} wide><form ref={form} className="dj-profile-form" onSubmit={event => { event.preventDefault(); if (!save.isPending) save.mutate(); }}>
+  return <Dialog title={value.name ? 'Edit DJ' : 'Create a DJ'} close={closeEditor} closeDisabled={save.isPending} wide><form ref={form} className="dj-profile-form" onSubmit={event => { event.preventDefault(); if (inFlight.current || save.isPending) return; inFlight.current = true; if (event.currentTarget.contains(document.activeElement) && document.visibilityState === 'visible' && document.hasFocus()) { saveButton.current?.focus({ preventScroll: true }); saveButton.current?.scrollIntoView({ block: 'center', inline: 'nearest' }); } save.mutate(); }}>
     <fieldset disabled={save.isPending}>
       <ConfigurationTabs id={modeId} label="DJ creation mode" tabs={[{ id: 'predefined', label: 'Predefined' }, { id: 'simple', label: 'Simple' }, { id: 'advanced', label: 'Advanced' }]} value={mode} onChange={value => { setMode(value); setPreviewingVoice(''); }} />
       <p className="dj-profile-intro">{mode === 'predefined' ? 'Start with a ready-made personality and voice.' : mode === 'simple' ? 'Describe your host and find a voice in ElevenLabs.' : 'Fine-tune your host, voice and delivery yourself.'}</p>
@@ -106,6 +116,6 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
       </div></section>
       </div>
     </fieldset>
-    <ErrorNotice error={save.error} /><p className="dj-profile-save-note">Saving a DJ does not generate audio, start playback, or change a selected take.</p><div className="modal-actions"><button type="button" disabled={save.isPending} onClick={close}>Cancel</button><button className="primary" disabled={save.isPending || !draft.name.trim() || !news.elevenVoiceId?.trim()}>{save.isPending ? 'Saving…' : 'Save DJ'}</button></div>
+    <ErrorNotice error={save.error} /><p className="dj-profile-save-note">Saving a DJ does not generate audio, start playback, or change a selected take.</p><div className="modal-actions"><button type="button" aria-disabled={save.isPending || undefined} onClick={closeEditor}>Cancel</button><button ref={saveButton} className="primary" aria-disabled={save.isPending || undefined} aria-busy={save.isPending || undefined} disabled={!draft.name.trim() || !news.elevenVoiceId?.trim()}>{save.isPending ? 'Saving…' : 'Save DJ'}</button></div>
   </form></Dialog>;
 }

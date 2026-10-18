@@ -1,0 +1,2989 @@
+{
+  "date": "2026-10-18",
+  "scope": "Shared source/DJ editors and delete confirmations; root source review of established focusable-unavailable action pattern, no independent pair.",
+  "sourceHashes": {
+    "src/renderer/pages/Sources/Sources.page.tsx": "0010c35635ef75c8648bb4aded6b754603738cc0c345d493fa9624d8f4481fb8",
+    "src/renderer/pages/DJs/DJs.page.tsx": "b04a570f45ae65e795c87fa5a866755e2e620bc056223cab5a97e5db24c7faa1",
+    "src/renderer/pages/DJs/components/DJEditor.component.tsx": "0aa1a7de1fd6110bb384d56337a0c91f807286b3ff27d1e1894c6e3f28eadbfc"
+  },
+  "productionRendererPhases": {
+    "before": {
+      "out/renderer/assets/index-BoYrtVmF.js": "a0aaca22aeb497b2b58f4ac3edced4fa3c1f1141d89b824abae8c34080aaa7a2",
+      "out/renderer/assets/index-B3M1WwkU.css": "17b7abec42f2f3b3e2f3440d30aa2cd146f5797b216f62462abcc441580811bc"
+    },
+    "initialCorrection": {
+      "out/renderer/assets/index-B0nXsxge.js": "63c03b21f5ef96c2d3803ae069d60efa43ffc114e63c7e164f8a12ff93304628",
+      "out/renderer/assets/index-B3M1WwkU.css": "17b7abec42f2f3b3e2f3440d30aa2cd146f5797b216f62462abcc441580811bc"
+    },
+    "nearestReveal": {
+      "out/renderer/assets/index-C0EPLffT.js": "9e5a94747be3ee34cac51395b34e8a8913c1756602a92455e5eb8dfcb8f78fae",
+      "out/renderer/assets/index-B3M1WwkU.css": "17b7abec42f2f3b3e2f3440d30aa2cd146f5797b216f62462abcc441580811bc"
+    },
+    "finalInsetReveal": {
+      "out/renderer/assets/index-CmkkmMpt.js": "866120f00355c982fcba1677d4a052e1ca2313a2113b91918348944db211b966",
+      "out/renderer/assets/index-B3M1WwkU.css": "17b7abec42f2f3b3e2f3440d30aa2cd146f5797b216f62462abcc441580811bc"
+    }
+  },
+  "scopeOfLaterChanges": "After initialCorrection, Sources.page and DJs.page remain byte-identical. Later edits only add DJEditor failure scrolling, then change its submission/error reveal from nearest to center for inset focus outline. Earlier source/delete successes are not described as rerun on the final bundle.",
+  "fixture": {
+    "input": "Native CUA only,1280x720 normal app zoom; passive Playwright launch/observation.",
+    "storage": "Copied instrumented actual main/storage, disposable safeStorage/catalog, null shared-key adapter, stopped scheduler and muted media.",
+    "faults": "Post-guard saveNewsSources/saveDjs hold or injected pre-operation rejection. Not actual OS disk failure.",
+    "HTTPWrites": 0,
+    "providerRequests": 0,
+    "playbackUnchanged": {
+      "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+      "trackIds": [
+        "000000000000000000000000000003e9",
+        "000000000000000000000000000003ea",
+        "000000000000000000000000000003e9",
+        "000000000000000000000000000003eb"
+      ],
+      "currentIndex": 2,
+      "position": 12,
+      "volume": 0.42,
+      "shuffle": false,
+      "repeat": "off"
+    },
+    "hashes": {
+      "observe.cjs": "4071a3f8f3cc4cf64db9067d8206ed418432ae6c31c059a6880dcbed9a1551cc",
+      "bootstrap.mjs": "a48fcb989e12c3db8d80605fb32f19bbf095e89bbd31422428eb9b8af8c1cadc",
+      "server.mjs": "33b1beafab299247920af0bee234c85d500ecb207a2527bf3c25a2feb9dcc7da",
+      "out/main/index.js": "f3d043a00aac5a2bec9741c3cdb783a883789a7dd705fd838980879f22a481c5"
+    },
+    "preloadSha256": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "processes": "All four observers exit0. Exact owned catalog PID28194 stopped with exit143; later exact PID28826 stopped with exit143.",
+    "screenshots": "Source failure and three DJ failure stages inspected inline; PNGs not retained. Initial DJ failure clips the action; nearest reveals button but leaves outline against clipping edge; final inset reveal shows whole outline with space below.",
+    "nativeAXLimitation": "AX sometimes retains selected input text after focus moved; read-only DOM activeElement, outline and geometry establish actual action focus. Native text entry appended Focus host to preset name in nearestReveal; actual saved name is retained in snapshots, not normalized by assertion."
+  },
+  "reports": {
+    "before": {
+      "sha256": "30a8e9e3729a9e0385c8029a702dd751895e6f0981e7023f89562f5877d98ee3",
+      "result": "observed",
+      "errors": []
+    },
+    "intermediate-report": {
+      "sha256": "1f28bfa0708d416937ab408ee9f6cb19e98488b3954c4421eb7fc9a53be50d0a",
+      "result": "observed",
+      "errors": []
+    },
+    "feedback-final": {
+      "sha256": "f25eb3fc6e1f74c52939c9a41b18153355419db215e45eddd8698e173a0f6a20",
+      "result": "observed",
+      "errors": []
+    },
+    "visibility-final": {
+      "sha256": "81aa993545b8ce53c1ff64c981a26990e447bb60d4ddc0f0a779d0333cd34d07",
+      "result": "observed",
+      "errors": []
+    }
+  },
+  "snapshots": {
+    "before": [
+      {
+        "name": "before-source-pending",
+        "rawSha256": "8a262585df39a601e1ec0a63d6e390415d2e78456bf9ed1472cfa86bd3cd81a8",
+        "focus": {
+          "tag": "BODY",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 720,
+            "top": 0,
+            "right": 1280,
+            "bottom": 720,
+            "left": 0
+          },
+          "insideDrawer": false,
+          "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedSettingsGeneralProvider keysSourcesDJsSourcesNews for your prepared storiesAdd sour",
+          "type": null,
+          "role": null
+        },
+        "dialogActions": [
+          {
+            "name": "Close dialog",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Cancel",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Saving\u2026",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          }
+        ],
+        "notices": [],
+        "held": [
+          "saveNewsSources"
+        ],
+        "writeCalls": [
+          {
+            "name": "saveNewsSources",
+            "at": 1792317773526,
+            "mode": "hold"
+          }
+        ],
+        "savedSources": [],
+        "savedDJs": []
+      },
+      {
+        "name": "before-source-failure",
+        "rawSha256": "08f41cda7145c5ccd4d41219c2c23b6813bfaa07c50d9ef86e7aac074e2e2ce1",
+        "focus": {
+          "tag": "BODY",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 720,
+            "top": 0,
+            "right": 1280,
+            "bottom": 720,
+            "left": 0
+          },
+          "insideDrawer": false,
+          "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedSettingsGeneralProvider keysSourcesDJsSourcesNews for your prepared storiesAdd sour",
+          "type": null,
+          "role": null
+        },
+        "dialogActions": [
+          {
+            "name": "Close dialog",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Cancel",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Save source",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          }
+        ],
+        "notices": [
+          {
+            "rect": {
+              "x": 447,
+              "y": 475.8515625,
+              "width": 386,
+              "height": 45.796875,
+              "top": 475.8515625,
+              "right": 833,
+              "bottom": 521.6484375,
+              "left": 447
+            },
+            "error": "saveNewsSources unavailable.",
+            "button": null
+          }
+        ],
+        "held": [],
+        "writeCalls": [
+          {
+            "name": "saveNewsSources",
+            "at": 1792317773526,
+            "mode": "hold"
+          }
+        ],
+        "savedSources": [],
+        "savedDJs": []
+      }
+    ],
+    "initialCorrection": [
+      {
+        "name": "final-source-pending",
+        "rawSha256": "7f9b2ed3912e10ff64dcbc775e495dc1df8f15a1b4dc1812990d341469f8c1f6",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 756.265625,
+            "y": 516.75,
+            "width": 76.734375,
+            "height": 34,
+            "top": 516.75,
+            "right": 833,
+            "bottom": 550.75,
+            "left": 756.265625
+          },
+          "insideDrawer": false,
+          "name": "Saving\u2026",
+          "type": null,
+          "role": null
+        },
+        "dialogActions": [
+          {
+            "name": "Close dialog",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Cancel",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Saving\u2026",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": true
+          }
+        ],
+        "notices": [],
+        "held": [
+          "saveNewsSources"
+        ],
+        "writeCalls": [
+          {
+            "name": "saveNewsSources",
+            "at": 1792317844126,
+            "mode": "hold"
+          }
+        ],
+        "savedSources": [],
+        "savedDJs": []
+      },
+      {
+        "name": "final-source-failure",
+        "rawSha256": "0d593373dd46b0225e4407abbb9c21ff03cadd43e627955c743cf9b66214d5ed",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 735.0625,
+            "y": 545.6484375,
+            "width": 97.9375,
+            "height": 34,
+            "top": 545.6484375,
+            "right": 833,
+            "bottom": 579.6484375,
+            "left": 735.0625
+          },
+          "insideDrawer": false,
+          "name": "Save source",
+          "type": null,
+          "role": null
+        },
+        "dialogActions": [
+          {
+            "name": "Close dialog",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Cancel",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Save source",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": true
+          }
+        ],
+        "notices": [
+          {
+            "rect": {
+              "x": 447,
+              "y": 475.8515625,
+              "width": 386,
+              "height": 45.796875,
+              "top": 475.8515625,
+              "right": 833,
+              "bottom": 521.6484375,
+              "left": 447
+            },
+            "error": "saveNewsSources unavailable.",
+            "button": null
+          }
+        ],
+        "held": [],
+        "writeCalls": [
+          {
+            "name": "saveNewsSources",
+            "at": 1792317844126,
+            "mode": "hold"
+          }
+        ],
+        "savedSources": [],
+        "savedDJs": []
+      },
+      {
+        "name": "final-source-success",
+        "rawSha256": "0830e5156a748e1fcc6320065c8318fb6e90cce695828b485ff80364fbac2d29",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 1121.9921875,
+            "y": 216,
+            "width": 128.0078125,
+            "height": 34,
+            "top": 216,
+            "right": 1250,
+            "bottom": 250,
+            "left": 1121.9921875
+          },
+          "insideDrawer": false,
+          "name": "Add source",
+          "type": null,
+          "role": null
+        },
+        "dialogActions": [],
+        "notices": [],
+        "held": [],
+        "writeCalls": [
+          {
+            "name": "saveNewsSources",
+            "at": 1792317844126,
+            "mode": "hold"
+          },
+          {
+            "name": "saveNewsSources",
+            "at": 1792317864923,
+            "mode": "normal"
+          }
+        ],
+        "savedSources": [
+          {
+            "id": "63bc8812-42f6-4131-9eee-ddc94a068138",
+            "name": "Focus feed",
+            "kind": "rss",
+            "url": "https://example.com/feed.xml"
+          }
+        ],
+        "savedDJs": []
+      },
+      {
+        "name": "final-source-delete-pending",
+        "rawSha256": "e12a132790f1a48852e54957b8c621bf67157bccf234f02efa267a6ba30d35d0",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 747.7890625,
+            "y": 420.1953125,
+            "width": 85.2109375,
+            "height": 34,
+            "top": 420.1953125,
+            "right": 833,
+            "bottom": 454.1953125,
+            "left": 747.7890625
+          },
+          "insideDrawer": false,
+          "name": "Deleting\u2026",
+          "type": null,
+          "role": null
+        },
+        "dialogActions": [
+          {
+            "name": "Close dialog",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Cancel",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Deleting\u2026",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": true
+          }
+        ],
+        "notices": [],
+        "held": [
+          "saveNewsSources"
+        ],
+        "writeCalls": [
+          {
+            "name": "saveNewsSources",
+            "at": 1792317844126,
+            "mode": "hold"
+          },
+          {
+            "name": "saveNewsSources",
+            "at": 1792317864923,
+            "mode": "normal"
+          },
+          {
+            "name": "saveNewsSources",
+            "at": 1792317875722,
+            "mode": "hold"
+          }
+        ],
+        "savedSources": [
+          {
+            "id": "63bc8812-42f6-4131-9eee-ddc94a068138",
+            "name": "Focus feed",
+            "kind": "rss",
+            "url": "https://example.com/feed.xml"
+          }
+        ],
+        "savedDJs": []
+      },
+      {
+        "name": "final-source-delete-close",
+        "rawSha256": "a160d034c4e676a78fe39c2becbb97e0d072ed44c7a92f63e1e753b46daa87b4",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 804,
+            "y": 280.5546875,
+            "width": 34,
+            "height": 34,
+            "top": 280.5546875,
+            "right": 838,
+            "bottom": 314.5546875,
+            "left": 804
+          },
+          "insideDrawer": false,
+          "name": "Close dialog",
+          "type": null,
+          "role": null
+        },
+        "dialogActions": [
+          {
+            "name": "Close dialog",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": true
+          },
+          {
+            "name": "Cancel",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Deleting\u2026",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": false
+          }
+        ],
+        "notices": [],
+        "held": [
+          "saveNewsSources"
+        ],
+        "writeCalls": [
+          {
+            "name": "saveNewsSources",
+            "at": 1792317844126,
+            "mode": "hold"
+          },
+          {
+            "name": "saveNewsSources",
+            "at": 1792317864923,
+            "mode": "normal"
+          },
+          {
+            "name": "saveNewsSources",
+            "at": 1792317875722,
+            "mode": "hold"
+          }
+        ],
+        "savedSources": [
+          {
+            "id": "63bc8812-42f6-4131-9eee-ddc94a068138",
+            "name": "Focus feed",
+            "kind": "rss",
+            "url": "https://example.com/feed.xml"
+          }
+        ],
+        "savedDJs": []
+      },
+      {
+        "name": "final-source-delete-failure",
+        "rawSha256": "dca6572a4273a4339862b3cd2ddc036c0b331a6bb142e0b37948eee3e723714a",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 804,
+            "y": 251.65625,
+            "width": 34,
+            "height": 34,
+            "top": 251.65625,
+            "right": 838,
+            "bottom": 285.65625,
+            "left": 804
+          },
+          "insideDrawer": false,
+          "name": "Close dialog",
+          "type": null,
+          "role": null
+        },
+        "dialogActions": [
+          {
+            "name": "Close dialog",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": true
+          },
+          {
+            "name": "Cancel",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Delete source",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          }
+        ],
+        "notices": [
+          {
+            "rect": {
+              "x": 447,
+              "y": 379.296875,
+              "width": 386,
+              "height": 45.796875,
+              "top": 379.296875,
+              "right": 833,
+              "bottom": 425.09375,
+              "left": 447
+            },
+            "error": "saveNewsSources unavailable.",
+            "button": null
+          }
+        ],
+        "held": [],
+        "writeCalls": [
+          {
+            "name": "saveNewsSources",
+            "at": 1792317844126,
+            "mode": "hold"
+          },
+          {
+            "name": "saveNewsSources",
+            "at": 1792317864923,
+            "mode": "normal"
+          },
+          {
+            "name": "saveNewsSources",
+            "at": 1792317875722,
+            "mode": "hold"
+          }
+        ],
+        "savedSources": [
+          {
+            "id": "63bc8812-42f6-4131-9eee-ddc94a068138",
+            "name": "Focus feed",
+            "kind": "rss",
+            "url": "https://example.com/feed.xml"
+          }
+        ],
+        "savedDJs": []
+      },
+      {
+        "name": "final-source-delete-success",
+        "rawSha256": "864e3a1c1edcfe54440dba307403c0f3579103b39d4304560a376a0c80ab0409",
+        "focus": {
+          "tag": "H1",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 202.078125,
+            "width": 191.03125,
+            "height": 36.3984375,
+            "top": 202.078125,
+            "right": 429.03125,
+            "bottom": 238.4765625,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Sources",
+          "type": null,
+          "role": null
+        },
+        "dialogActions": [],
+        "notices": [],
+        "held": [],
+        "writeCalls": [
+          {
+            "name": "saveNewsSources",
+            "at": 1792317844126,
+            "mode": "hold"
+          },
+          {
+            "name": "saveNewsSources",
+            "at": 1792317864923,
+            "mode": "normal"
+          },
+          {
+            "name": "saveNewsSources",
+            "at": 1792317875722,
+            "mode": "hold"
+          },
+          {
+            "name": "saveNewsSources",
+            "at": 1792317907980,
+            "mode": "normal"
+          }
+        ],
+        "savedSources": [],
+        "savedDJs": []
+      },
+      {
+        "name": "final-dj-pending",
+        "rawSha256": "c1b4705befd91e1c6e1a5d3c1495ffac8eadd44b3bf81479af2db7cd0b1947c7",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "2px"
+          },
+          "rect": {
+            "x": 858.265625,
+            "y": 618.75,
+            "width": 76.734375,
+            "height": 34,
+            "top": 618.75,
+            "right": 935,
+            "bottom": 652.75,
+            "left": 858.265625
+          },
+          "insideDrawer": false,
+          "name": "Saving\u2026",
+          "type": null,
+          "role": null
+        },
+        "dialogActions": [
+          {
+            "name": "Close dialog",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Predefined",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Simple",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Advanced",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "EnthusiasticCurious, upbeat, delighted to share.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "EnergeticFast, punchy, ready to turn it up.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Quiet & warmSoft, unhurried, easy company.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "ProfessorThoughtful context, clearly explained.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "NerdyDeep cuts, details, a little dry wit.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Man",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Woman",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Apply preset",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Sarah",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Find voices",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Sarah",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Voice EXAVITQu4vr4xnSDxMaL",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Cancel",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Saving\u2026",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": true
+          }
+        ],
+        "notices": [],
+        "held": [
+          "saveDjs"
+        ],
+        "writeCalls": [
+          {
+            "name": "saveNewsSources",
+            "at": 1792317844126,
+            "mode": "hold"
+          },
+          {
+            "name": "saveNewsSources",
+            "at": 1792317864923,
+            "mode": "normal"
+          },
+          {
+            "name": "saveNewsSources",
+            "at": 1792317875722,
+            "mode": "hold"
+          },
+          {
+            "name": "saveNewsSources",
+            "at": 1792317907980,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDjs",
+            "at": 1792317929715,
+            "mode": "hold"
+          }
+        ],
+        "savedSources": [],
+        "savedDJs": []
+      },
+      {
+        "name": "final-dj-pending-cancel",
+        "rawSha256": "f6e11531271d6a087e1026d81a3e26f0beacd21f3bd351443a04c7ef8ba61172",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "2px"
+          },
+          "rect": {
+            "x": 782.9140625,
+            "y": 618.75,
+            "width": 67.3515625,
+            "height": 34,
+            "top": 618.75,
+            "right": 850.265625,
+            "bottom": 652.75,
+            "left": 782.9140625
+          },
+          "insideDrawer": false,
+          "name": "Cancel",
+          "type": "button",
+          "role": null
+        },
+        "dialogActions": [
+          {
+            "name": "Close dialog",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Predefined",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Simple",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Advanced",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "EnthusiasticCurious, upbeat, delighted to share.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "EnergeticFast, punchy, ready to turn it up.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Quiet & warmSoft, unhurried, easy company.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "ProfessorThoughtful context, clearly explained.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "NerdyDeep cuts, details, a little dry wit.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Man",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Woman",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Apply preset",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Sarah",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Find voices",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Sarah",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Voice EXAVITQu4vr4xnSDxMaL",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Cancel",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": true
+          },
+          {
+            "name": "Saving\u2026",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": false
+          }
+        ],
+        "notices": [],
+        "held": [
+          "saveDjs"
+        ],
+        "writeCalls": [
+          {
+            "name": "saveNewsSources",
+            "at": 1792317844126,
+            "mode": "hold"
+          },
+          {
+            "name": "saveNewsSources",
+            "at": 1792317864923,
+            "mode": "normal"
+          },
+          {
+            "name": "saveNewsSources",
+            "at": 1792317875722,
+            "mode": "hold"
+          },
+          {
+            "name": "saveNewsSources",
+            "at": 1792317907980,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDjs",
+            "at": 1792317929715,
+            "mode": "hold"
+          }
+        ],
+        "savedSources": [],
+        "savedDJs": []
+      },
+      {
+        "name": "intermediate-dj-failure-clipped",
+        "rawSha256": "a1ebe4b178af96a6897122c0426e5be4da040ab77e821b1788189919e0ebc771",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "2px"
+          },
+          "rect": {
+            "x": 784.9921875,
+            "y": 676.546875,
+            "width": 67.3515625,
+            "height": 34,
+            "top": 676.546875,
+            "right": 852.34375,
+            "bottom": 710.546875,
+            "left": 784.9921875
+          },
+          "insideDrawer": false,
+          "name": "Cancel",
+          "type": "button",
+          "role": null
+        },
+        "dialogActions": [
+          {
+            "name": "Close dialog",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Predefined",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Simple",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Advanced",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "EnthusiasticCurious, upbeat, delighted to share.",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "EnergeticFast, punchy, ready to turn it up.",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Quiet & warmSoft, unhurried, easy company.",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "ProfessorThoughtful context, clearly explained.",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "NerdyDeep cuts, details, a little dry wit.",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Man",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Woman",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Apply preset",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Sarah",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Find voices",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Sarah",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Voice EXAVITQu4vr4xnSDxMaL",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Cancel",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": true
+          },
+          {
+            "name": "Save DJ",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          }
+        ],
+        "notices": [
+          {
+            "rect": {
+              "x": 337,
+              "y": 564.0546875,
+              "width": 598,
+              "height": 45.796875,
+              "top": 564.0546875,
+              "right": 935,
+              "bottom": 609.8515625,
+              "left": 337
+            },
+            "error": "saveDjs unavailable.",
+            "button": null
+          }
+        ],
+        "held": [],
+        "writeCalls": [
+          {
+            "name": "saveNewsSources",
+            "at": 1792317844126,
+            "mode": "hold"
+          },
+          {
+            "name": "saveNewsSources",
+            "at": 1792317864923,
+            "mode": "normal"
+          },
+          {
+            "name": "saveNewsSources",
+            "at": 1792317875722,
+            "mode": "hold"
+          },
+          {
+            "name": "saveNewsSources",
+            "at": 1792317907980,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDjs",
+            "at": 1792317929715,
+            "mode": "hold"
+          }
+        ],
+        "savedSources": [],
+        "savedDJs": []
+      }
+    ],
+    "nearestReveal": [
+      {
+        "name": "feedback-dj-pending",
+        "rawSha256": "64e3bb8b233eb3f9948b1448413ada68d2d27e9e161aa3e61c5e892666488028",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "2px"
+          },
+          "rect": {
+            "x": 858.265625,
+            "y": 618.75,
+            "width": 76.734375,
+            "height": 34,
+            "top": 618.75,
+            "right": 935,
+            "bottom": 652.75,
+            "left": 858.265625
+          },
+          "insideDrawer": false,
+          "name": "Saving\u2026",
+          "type": null,
+          "role": null
+        },
+        "dialogActions": [
+          {
+            "name": "Close dialog",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Predefined",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Simple",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Advanced",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "EnthusiasticCurious, upbeat, delighted to share.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "EnergeticFast, punchy, ready to turn it up.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Quiet & warmSoft, unhurried, easy company.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "ProfessorThoughtful context, clearly explained.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "NerdyDeep cuts, details, a little dry wit.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Man",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Woman",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Apply preset",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Sarah",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Find voices",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Sarah",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Voice EXAVITQu4vr4xnSDxMaL",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Cancel",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Saving\u2026",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": true
+          }
+        ],
+        "notices": [],
+        "held": [
+          "saveDjs"
+        ],
+        "writeCalls": [
+          {
+            "name": "saveDjs",
+            "at": 1792318007769,
+            "mode": "hold"
+          }
+        ],
+        "savedSources": [],
+        "savedDJs": []
+      },
+      {
+        "name": "feedback-dj-pending-cancel",
+        "rawSha256": "e5558488ad6cd7d5141076d21debbfa02f49487185b3eb67f179227c13ad49e6",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "2px"
+          },
+          "rect": {
+            "x": 782.9140625,
+            "y": 618.75,
+            "width": 67.3515625,
+            "height": 34,
+            "top": 618.75,
+            "right": 850.265625,
+            "bottom": 652.75,
+            "left": 782.9140625
+          },
+          "insideDrawer": false,
+          "name": "Cancel",
+          "type": "button",
+          "role": null
+        },
+        "dialogActions": [
+          {
+            "name": "Close dialog",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Predefined",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Simple",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Advanced",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "EnthusiasticCurious, upbeat, delighted to share.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "EnergeticFast, punchy, ready to turn it up.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Quiet & warmSoft, unhurried, easy company.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "ProfessorThoughtful context, clearly explained.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "NerdyDeep cuts, details, a little dry wit.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Man",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Woman",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Apply preset",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Sarah",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Find voices",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Sarah",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Voice EXAVITQu4vr4xnSDxMaL",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Cancel",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": true
+          },
+          {
+            "name": "Saving\u2026",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": false
+          }
+        ],
+        "notices": [],
+        "held": [
+          "saveDjs"
+        ],
+        "writeCalls": [
+          {
+            "name": "saveDjs",
+            "at": 1792318007769,
+            "mode": "hold"
+          }
+        ],
+        "savedSources": [],
+        "savedDJs": []
+      },
+      {
+        "name": "feedback-dj-failure-visible",
+        "rawSha256": "871418cd8a235f5a1952d9a21801ab567c02b51fb2cf8a6a2a4763001e4ea11c",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "2px"
+          },
+          "rect": {
+            "x": 784.9921875,
+            "y": 645.046875,
+            "width": 67.3515625,
+            "height": 34,
+            "top": 645.046875,
+            "right": 852.34375,
+            "bottom": 679.046875,
+            "left": 784.9921875
+          },
+          "insideDrawer": false,
+          "name": "Cancel",
+          "type": "button",
+          "role": null
+        },
+        "dialogActions": [
+          {
+            "name": "Close dialog",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Predefined",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Simple",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Advanced",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "EnthusiasticCurious, upbeat, delighted to share.",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "EnergeticFast, punchy, ready to turn it up.",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Quiet & warmSoft, unhurried, easy company.",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "ProfessorThoughtful context, clearly explained.",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "NerdyDeep cuts, details, a little dry wit.",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Man",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Woman",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Apply preset",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Sarah",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Find voices",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Sarah",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Voice EXAVITQu4vr4xnSDxMaL",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Cancel",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": true
+          },
+          {
+            "name": "Save DJ",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          }
+        ],
+        "notices": [
+          {
+            "rect": {
+              "x": 337,
+              "y": 532.5546875,
+              "width": 598,
+              "height": 45.796875,
+              "top": 532.5546875,
+              "right": 935,
+              "bottom": 578.3515625,
+              "left": 337
+            },
+            "error": "saveDjs unavailable.",
+            "button": null
+          }
+        ],
+        "held": [],
+        "writeCalls": [
+          {
+            "name": "saveDjs",
+            "at": 1792318007769,
+            "mode": "hold"
+          }
+        ],
+        "savedSources": [],
+        "savedDJs": []
+      },
+      {
+        "name": "feedback-dj-success",
+        "rawSha256": "12a6ff9b041bcfe95379a3d3aeb1c99ec6f29f6c699c69204c7c3529ec8fa226",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 1145.046875,
+            "y": 216,
+            "width": 104.953125,
+            "height": 34,
+            "top": 216,
+            "right": 1250,
+            "bottom": 250,
+            "left": 1145.046875
+          },
+          "insideDrawer": false,
+          "name": "New DJ",
+          "type": null,
+          "role": null
+        },
+        "dialogActions": [],
+        "notices": [],
+        "held": [],
+        "writeCalls": [
+          {
+            "name": "saveDjs",
+            "at": 1792318007769,
+            "mode": "hold"
+          },
+          {
+            "name": "saveDjs",
+            "at": 1792318040658,
+            "mode": "normal"
+          }
+        ],
+        "savedSources": [],
+        "savedDJs": [
+          {
+            "id": "4d59fb92-fc11-43b3-9694-d90b488cf63e",
+            "name": "Quiet & warmFocus host",
+            "description": "Soft, unhurried, easy company.",
+            "instructions": "",
+            "musicPreferences": "",
+            "exclusions": "",
+            "language": "",
+            "personality": "A quiet, warm companion. Speak gently and without rushing. Keep commentary brief, thoughtful and relaxed, leaving plenty of space for the music.",
+            "speakingFrequency": "never",
+            "news": {
+              "feedUrls": [],
+              "interests": "",
+              "minStories": 1,
+              "maxStories": 1,
+              "voice": "coral",
+              "textModel": "gpt-6-luna",
+              "speechEngine": "elevenlabs-v4",
+              "duckVolume": 0.05,
+              "elevenVoiceId": "EXAVITQu4vr4xnSDxMaL",
+              "elevenTags": ""
+            }
+          }
+        ]
+      },
+      {
+        "name": "feedback-dj-delete-pending",
+        "rawSha256": "ac56f3fffa326fb6c4aa08953dfa27e7a786baefa2a2333ea213b201eaa34a54",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 747.7890625,
+            "y": 430.9140625,
+            "width": 85.2109375,
+            "height": 34,
+            "top": 430.9140625,
+            "right": 833,
+            "bottom": 464.9140625,
+            "left": 747.7890625
+          },
+          "insideDrawer": false,
+          "name": "Deleting\u2026",
+          "type": null,
+          "role": null
+        },
+        "dialogActions": [
+          {
+            "name": "Close dialog",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Cancel",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Deleting\u2026",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": true
+          }
+        ],
+        "notices": [],
+        "held": [
+          "saveDjs"
+        ],
+        "writeCalls": [
+          {
+            "name": "saveDjs",
+            "at": 1792318007769,
+            "mode": "hold"
+          },
+          {
+            "name": "saveDjs",
+            "at": 1792318040658,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDjs",
+            "at": 1792318056768,
+            "mode": "hold"
+          }
+        ],
+        "savedSources": [],
+        "savedDJs": [
+          {
+            "id": "4d59fb92-fc11-43b3-9694-d90b488cf63e",
+            "name": "Quiet & warmFocus host",
+            "description": "Soft, unhurried, easy company.",
+            "instructions": "",
+            "musicPreferences": "",
+            "exclusions": "",
+            "language": "",
+            "personality": "A quiet, warm companion. Speak gently and without rushing. Keep commentary brief, thoughtful and relaxed, leaving plenty of space for the music.",
+            "speakingFrequency": "never",
+            "news": {
+              "feedUrls": [],
+              "interests": "",
+              "minStories": 1,
+              "maxStories": 1,
+              "voice": "coral",
+              "textModel": "gpt-6-luna",
+              "speechEngine": "elevenlabs-v4",
+              "duckVolume": 0.05,
+              "elevenVoiceId": "EXAVITQu4vr4xnSDxMaL",
+              "elevenTags": ""
+            }
+          }
+        ]
+      },
+      {
+        "name": "feedback-dj-delete-failure",
+        "rawSha256": "54e1688a519117c5fd0b1bd5f85d94abf1456b1fc5b62113b18be9b22927c9d1",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 749.75,
+            "y": 459.8125,
+            "width": 83.25,
+            "height": 34,
+            "top": 459.8125,
+            "right": 833,
+            "bottom": 493.8125,
+            "left": 749.75
+          },
+          "insideDrawer": false,
+          "name": "Delete DJ",
+          "type": null,
+          "role": null
+        },
+        "dialogActions": [
+          {
+            "name": "Close dialog",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Cancel",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Delete DJ",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": true
+          }
+        ],
+        "notices": [
+          {
+            "rect": {
+              "x": 447,
+              "y": 390.015625,
+              "width": 386,
+              "height": 45.796875,
+              "top": 390.015625,
+              "right": 833,
+              "bottom": 435.8125,
+              "left": 447
+            },
+            "error": "saveDjs unavailable.",
+            "button": null
+          }
+        ],
+        "held": [],
+        "writeCalls": [
+          {
+            "name": "saveDjs",
+            "at": 1792318007769,
+            "mode": "hold"
+          },
+          {
+            "name": "saveDjs",
+            "at": 1792318040658,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDjs",
+            "at": 1792318056768,
+            "mode": "hold"
+          }
+        ],
+        "savedSources": [],
+        "savedDJs": [
+          {
+            "id": "4d59fb92-fc11-43b3-9694-d90b488cf63e",
+            "name": "Quiet & warmFocus host",
+            "description": "Soft, unhurried, easy company.",
+            "instructions": "",
+            "musicPreferences": "",
+            "exclusions": "",
+            "language": "",
+            "personality": "A quiet, warm companion. Speak gently and without rushing. Keep commentary brief, thoughtful and relaxed, leaving plenty of space for the music.",
+            "speakingFrequency": "never",
+            "news": {
+              "feedUrls": [],
+              "interests": "",
+              "minStories": 1,
+              "maxStories": 1,
+              "voice": "coral",
+              "textModel": "gpt-6-luna",
+              "speechEngine": "elevenlabs-v4",
+              "duckVolume": 0.05,
+              "elevenVoiceId": "EXAVITQu4vr4xnSDxMaL",
+              "elevenTags": ""
+            }
+          }
+        ]
+      },
+      {
+        "name": "feedback-dj-delete-cancel",
+        "rawSha256": "0374e250f6b240e53eb15ceb963e2a029e9caad8da31097fc401e87289d194ba",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 1200,
+            "y": 379.5859375,
+            "width": 34,
+            "height": 34,
+            "top": 379.5859375,
+            "right": 1234,
+            "bottom": 413.5859375,
+            "left": 1200
+          },
+          "insideDrawer": false,
+          "name": "Delete Quiet & warmFocus host",
+          "type": null,
+          "role": null
+        },
+        "dialogActions": [],
+        "notices": [],
+        "held": [],
+        "writeCalls": [
+          {
+            "name": "saveDjs",
+            "at": 1792318007769,
+            "mode": "hold"
+          },
+          {
+            "name": "saveDjs",
+            "at": 1792318040658,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDjs",
+            "at": 1792318056768,
+            "mode": "hold"
+          }
+        ],
+        "savedSources": [],
+        "savedDJs": [
+          {
+            "id": "4d59fb92-fc11-43b3-9694-d90b488cf63e",
+            "name": "Quiet & warmFocus host",
+            "description": "Soft, unhurried, easy company.",
+            "instructions": "",
+            "musicPreferences": "",
+            "exclusions": "",
+            "language": "",
+            "personality": "A quiet, warm companion. Speak gently and without rushing. Keep commentary brief, thoughtful and relaxed, leaving plenty of space for the music.",
+            "speakingFrequency": "never",
+            "news": {
+              "feedUrls": [],
+              "interests": "",
+              "minStories": 1,
+              "maxStories": 1,
+              "voice": "coral",
+              "textModel": "gpt-6-luna",
+              "speechEngine": "elevenlabs-v4",
+              "duckVolume": 0.05,
+              "elevenVoiceId": "EXAVITQu4vr4xnSDxMaL",
+              "elevenTags": ""
+            }
+          }
+        ]
+      },
+      {
+        "name": "feedback-dj-delete-success",
+        "rawSha256": "74998b204cfce24486e8203d3f4d8a1576c0e1873a967f08414d4bdaf10eddcd",
+        "focus": {
+          "tag": "H1",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 202.078125,
+            "width": 290.8671875,
+            "height": 36.3984375,
+            "top": 202.078125,
+            "right": 528.8671875,
+            "bottom": 238.4765625,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "DJs",
+          "type": null,
+          "role": null
+        },
+        "dialogActions": [],
+        "notices": [],
+        "held": [],
+        "writeCalls": [
+          {
+            "name": "saveDjs",
+            "at": 1792318007769,
+            "mode": "hold"
+          },
+          {
+            "name": "saveDjs",
+            "at": 1792318040658,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDjs",
+            "at": 1792318056768,
+            "mode": "hold"
+          },
+          {
+            "name": "saveDjs",
+            "at": 1792318084343,
+            "mode": "normal"
+          }
+        ],
+        "savedSources": [],
+        "savedDJs": []
+      }
+    ],
+    "finalInsetReveal": [
+      {
+        "name": "visibility-dj-pending",
+        "rawSha256": "97a75cd1154a9aeeffe1d532d06e23196d076438f4aaf0ed8fc60511a1acd785",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "2px"
+          },
+          "rect": {
+            "x": 858.265625,
+            "y": 618.75,
+            "width": 76.734375,
+            "height": 34,
+            "top": 618.75,
+            "right": 935,
+            "bottom": 652.75,
+            "left": 858.265625
+          },
+          "insideDrawer": false,
+          "name": "Saving\u2026",
+          "type": null,
+          "role": null
+        },
+        "dialogActions": [
+          {
+            "name": "Close dialog",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Predefined",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Simple",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Advanced",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "EnthusiasticCurious, upbeat, delighted to share.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "EnergeticFast, punchy, ready to turn it up.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Quiet & warmSoft, unhurried, easy company.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "ProfessorThoughtful context, clearly explained.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "NerdyDeep cuts, details, a little dry wit.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Man",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Woman",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Apply preset",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Sarah",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Find voices",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Sarah",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Voice EXAVITQu4vr4xnSDxMaL",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Cancel",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Saving\u2026",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": true
+          }
+        ],
+        "notices": [],
+        "held": [
+          "saveDjs"
+        ],
+        "writeCalls": [
+          {
+            "name": "saveDjs",
+            "at": 1792318171581,
+            "mode": "hold"
+          }
+        ],
+        "savedSources": [],
+        "savedDJs": []
+      },
+      {
+        "name": "visibility-dj-pending-cancel",
+        "rawSha256": "ee45fdfd6aa4e234318ad620d13d7868c3fec7bef530cf879eb37d3deaeb2130",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "2px"
+          },
+          "rect": {
+            "x": 782.9140625,
+            "y": 618.75,
+            "width": 67.3515625,
+            "height": 34,
+            "top": 618.75,
+            "right": 850.265625,
+            "bottom": 652.75,
+            "left": 782.9140625
+          },
+          "insideDrawer": false,
+          "name": "Cancel",
+          "type": "button",
+          "role": null
+        },
+        "dialogActions": [
+          {
+            "name": "Close dialog",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Predefined",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Simple",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Advanced",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "EnthusiasticCurious, upbeat, delighted to share.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "EnergeticFast, punchy, ready to turn it up.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Quiet & warmSoft, unhurried, easy company.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "ProfessorThoughtful context, clearly explained.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "NerdyDeep cuts, details, a little dry wit.",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Man",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Woman",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Apply preset",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Sarah",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Find voices",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Sarah",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Voice EXAVITQu4vr4xnSDxMaL",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Cancel",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": true
+          },
+          {
+            "name": "Saving\u2026",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": false
+          }
+        ],
+        "notices": [],
+        "held": [
+          "saveDjs"
+        ],
+        "writeCalls": [
+          {
+            "name": "saveDjs",
+            "at": 1792318171581,
+            "mode": "hold"
+          }
+        ],
+        "savedSources": [],
+        "savedDJs": []
+      },
+      {
+        "name": "visibility-dj-failure-visible",
+        "rawSha256": "4049fdb959760c0c2addb839e532606f8008e82628451109afb4bc5a242c1376",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "2px"
+          },
+          "rect": {
+            "x": 784.9921875,
+            "y": 619.046875,
+            "width": 67.3515625,
+            "height": 34,
+            "top": 619.046875,
+            "right": 852.34375,
+            "bottom": 653.046875,
+            "left": 784.9921875
+          },
+          "insideDrawer": false,
+          "name": "Cancel",
+          "type": "button",
+          "role": null
+        },
+        "dialogActions": [
+          {
+            "name": "Close dialog",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Predefined",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Simple",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Advanced",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "EnthusiasticCurious, upbeat, delighted to share.",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "EnergeticFast, punchy, ready to turn it up.",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Quiet & warmSoft, unhurried, easy company.",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "ProfessorThoughtful context, clearly explained.",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "NerdyDeep cuts, details, a little dry wit.",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Man",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Woman",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Apply preset",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Sarah",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Find voices",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Sarah",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Preview voice for Voice EXAVITQu4vr4xnSDxMaL",
+            "disabled": true,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          },
+          {
+            "name": "Cancel",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": true
+          },
+          {
+            "name": "Save DJ",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false
+          }
+        ],
+        "notices": [
+          {
+            "rect": {
+              "x": 337,
+              "y": 506.5546875,
+              "width": 598,
+              "height": 45.796875,
+              "top": 506.5546875,
+              "right": 935,
+              "bottom": 552.3515625,
+              "left": 337
+            },
+            "error": "saveDjs unavailable.",
+            "button": null
+          }
+        ],
+        "held": [],
+        "writeCalls": [
+          {
+            "name": "saveDjs",
+            "at": 1792318171581,
+            "mode": "hold"
+          }
+        ],
+        "savedSources": [],
+        "savedDJs": []
+      },
+      {
+        "name": "visibility-dj-success",
+        "rawSha256": "ff67d998a50d4a9349153234633add4cf63c0a763e1953117cfb280e7943f5b7",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 1145.046875,
+            "y": 216,
+            "width": 104.953125,
+            "height": 34,
+            "top": 216,
+            "right": 1250,
+            "bottom": 250,
+            "left": 1145.046875
+          },
+          "insideDrawer": false,
+          "name": "New DJ",
+          "type": null,
+          "role": null
+        },
+        "dialogActions": [],
+        "notices": [],
+        "held": [],
+        "writeCalls": [
+          {
+            "name": "saveDjs",
+            "at": 1792318171581,
+            "mode": "hold"
+          },
+          {
+            "name": "saveDjs",
+            "at": 1792318204269,
+            "mode": "normal"
+          }
+        ],
+        "savedSources": [],
+        "savedDJs": [
+          {
+            "id": "469c2dfc-5f32-4fa0-814d-3d727048f611",
+            "name": "Quiet & warm",
+            "description": "Soft, unhurried, easy company.",
+            "instructions": "",
+            "musicPreferences": "",
+            "exclusions": "",
+            "language": "",
+            "personality": "A quiet, warm companion. Speak gently and without rushing. Keep commentary brief, thoughtful and relaxed, leaving plenty of space for the music.",
+            "speakingFrequency": "never",
+            "news": {
+              "feedUrls": [],
+              "interests": "",
+              "minStories": 1,
+              "maxStories": 1,
+              "voice": "coral",
+              "textModel": "gpt-6-luna",
+              "speechEngine": "elevenlabs-v4",
+              "duckVolume": 0.05,
+              "elevenVoiceId": "EXAVITQu4vr4xnSDxMaL",
+              "elevenTags": ""
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "acceptance": {
+    "rows": 191,
+    "active": 189,
+    "deferred": 2,
+    "open": 27,
+    "listener": 14,
+    "otherProof": 13,
+    "statusChanges": [],
+    "Q06": "Review. Remaining prepared-take, manual preparation, status/availability, DJ enable/profile conditional controls still require scoped review."
+  },
+  "limitations": [
+    "No new independent paired review, unit tests, AT/VoiceOver, listener, audible, live-provider/server, actual OS failure, platform matrix, release or deferred resolution/zoom acceptance.",
+    "Source runtime covers RSS create/delete; Twitter/Hacker News branches and DJ Simple/Advanced saves are source-reviewed only in this change.",
+    "Existing affected-profile warning semantics are unchanged; native fixtures do not newly establish linked-profile deletion warnings.",
+    "No new hidden-window, nested overlay or page-navigation error-retention proof."
+  ]
+}

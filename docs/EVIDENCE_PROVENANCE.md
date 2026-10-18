@@ -120,3 +120,6 @@ The [radio setup save record](verification/2026-10-18-radio-setup-save-focus.jso
 
 
 The [18 October profile confirmation record](verification/2026-10-18-profile-dialog-focus.json) contains15 final native projections and raw hashes, production renderer/preload and copied instrumented main hashes. Its baseline is the prior setup-save profile failure. It verifies only the scoped confirmations and leaves all191 acceptance dispositions unchanged.
+
+
+The [shared editor focus record](verification/2026-10-18-shared-editor-focus.json) separates four renderer phases and24 native projections, retains the failed clipping intermediates and records final source/bundle/fixture/raw hashes. Source/DJ deletion owners were unchanged during later DJ-editor scrolling corrections; their earlier checks are not a final-bundle rerun. All191 acceptance dispositions remain unchanged.
