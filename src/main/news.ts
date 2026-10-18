@@ -10,7 +10,7 @@ export type { NewsArticle, NewsScript } from '../shared/types';
 export type GeneratedNews = NewsScript & { audio: Buffer; mimeType: 'audio/mpeg'; engine: 'elevenlabs-v4' };
 type Candidate = NewsArticle & { summary: string };
 type SourceBatch = { articles: Candidate[]; coverageWarnings: string[] };
-type Input = { sources?: NewsSource[]; mood?: string; requestId: string; settings: NewsSettings; dj: DJ; music?: Pick<Song, 'name' | 'artists' | 'album' | 'genres' | 'tags'>; importance?: 'major' | 'relevant'; excludeArticleUrls?: string[]; freshWithinHours?: number; onCandidates?: (articles: NewsArticle[]) => Promise<void>; onReleaseCandidates?: (articles: NewsArticle[]) => Promise<void>; onReview?: (selectedUrl?: string) => Promise<void>; onPreparedScript?: (script: NewsScript) => Promise<void> };
+type Input = { sources?: NewsSource[]; mood?: string; requestId: string; settings: NewsSettings; dj: DJ; music?: Pick<Song, 'name' | 'artists' | 'album' | 'genres' | 'tags'>; importance?: 'major' | 'relevant'; excludeArticleUrls?: string[]; freshWithinHours?: number; onCandidates?: (articles: NewsArticle[]) => Promise<void>; onReleaseCandidates?: (articles: NewsArticle[]) => Promise<void>; onReview?: (selectedUrl?: string) => Promise<void> };
 class DefinitiveProviderRejection extends ServiceError {}
 const musicContext = (input: Input, listenerPreferences: string) => ({ title: input.music?.name.slice(0, 256), artists: input.music?.artists.slice(0, 8).map(value => value.slice(0, 128)), album: input.music?.album.slice(0, 256), genres: input.music?.genres.slice(0, 12).map(value => value.slice(0, 128)), tags: input.music?.tags.slice(0, 12).map(value => value.slice(0, 128)), listenerPreferences });
 type XmlNode = Record<string, unknown>;
@@ -315,15 +315,5 @@ export class NewsService {
     signal.throwIfAborted();
     return { ...script, audio, mimeType: 'audio/mpeg', engine: 'elevenlabs-v4' };
 
-  }
-  generate(input: Input & { engine: 'elevenlabs-v4' }): Promise<GeneratedNews> {
-    if (input.engine !== 'elevenlabs-v4') return Promise.reject(new ServiceError('invalid', 'Select a finite speech engine explicitly.'));
-    return this.run(input, async (settings, key, signal) => {
-      if (!await this.deps.getElevenApiKey?.()) throw new ServiceError('invalid', 'Add your ElevenLabs API key before generating with Eleven v4.');
-      signal.throwIfAborted();
-      const script = await this.script(input, settings, key, signal);
-      await input.onPreparedScript?.(script);
-      return this.renderPreparedSpeech(input, script, signal);
-    });
   }
 }

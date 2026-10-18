@@ -171,8 +171,6 @@ export interface WaveApi {
   getElevenLabsStatus(): Promise<Result<AiStatus>>;
   setElevenLabsKey(key: string | null): Promise<Result<AiStatus>>;
   setOpenAiKey(key: string | null): Promise<Result<AiStatus>>;
-  prepareNewsBreak(input: { requestId: string; djId: string; songId: string }): Promise<Result<NewsBreak>>;
-  cancelNewsBreak(requestId: string): Promise<Result<void>>;
   onNewsProgress(callback: (progress: NewsProgress) => void): () => void;
   openSource(url: string): Promise<Result<void>>;
 }

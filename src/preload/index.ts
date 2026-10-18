@@ -62,8 +62,6 @@ const api: WaveApi = {
   getElevenLabsStatus: () => ipcRenderer.invoke('wave:getElevenLabsStatus'),
   setElevenLabsKey: key => ipcRenderer.invoke('wave:setElevenLabsKey', key),
   setOpenAiKey: (key) => ipcRenderer.invoke('wave:setOpenAiKey', key),
-  prepareNewsBreak: (input) => ipcRenderer.invoke('wave:prepareNewsBreak', input),
-  cancelNewsBreak: (requestId) => ipcRenderer.invoke('wave:cancelNewsBreak', requestId),
   onNewsProgress: (callback) => {
     const listener = (_event: Electron.IpcRendererEvent, progress: NewsProgress) => callback(progress);
     ipcRenderer.on('wave:newsProgress', listener);
