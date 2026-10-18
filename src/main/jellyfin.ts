@@ -105,6 +105,20 @@ export class JellyfinService {
     if (!this.session) throw new ServiceError('unauthorized', 'Sign in to Jellyfin.');
     return this.session;
   }
+  private async readCurrentSession<T>(operation: () => Promise<T>): Promise<T> {
+    const session = this.requireSession();
+    const ensureCurrent = () => {
+      if (this.session !== session) throw new ServiceError('invalid', 'The connection changed. Refresh your library.');
+    };
+    try {
+      const result = await operation();
+      ensureCurrent();
+      return result;
+    } catch (error) {
+      ensureCurrent();
+      throw error;
+    }
+  }
   private async request<T>(base: string, path: string, init: RequestInit, token: string | undefined, consume: (response: Response) => Promise<T>): Promise<T> {
     if (!path.startsWith('/') || path.startsWith('//') || path.includes('\\')) throw new ServiceError('invalid', 'Invalid server request.');
     const target = new URL(base + path);
@@ -169,18 +183,22 @@ export class JellyfinService {
   }
   async disconnect(): Promise<void> { this.cancelPendingSignIns(); await this.persistSession(null, true); this.writes.clear(); }
   async libraries(): Promise<Library[]> {
-    const s = this.requireSession();
-    const data = await this.json(`/Users/${s.userId}/Views`);
-    return (data.Items || []).filter((item: Item) => item.CollectionType === 'music').map((item: Item) => ({ id: validId(item.Id), name: item.Name || 'Music' }));
+    return this.readCurrentSession(async () => {
+      const s = this.requireSession();
+      const data = await this.json(`/Users/${s.userId}/Views`);
+      return (data.Items || []).filter((item: Item) => item.CollectionType === 'music').map((item: Item) => ({ id: validId(item.Id), name: item.Name || 'Music' }));
+    });
   }
   async libraryFilters(): Promise<LibraryFilters> {
-    const session = this.requireSession();
-    const results = await Promise.all(session.selectedLibraryIds.map(async parentId => {
-      const parameters = new URLSearchParams({ UserId: session.userId, ParentId: parentId, IncludeItemTypes: 'Audio', MediaTypes: 'Audio' });
-      return this.json(`/Items/Filters?${parameters}`);
-    }));
-    const unique = (values: string[]) => [...new Set(values)].sort((a, b) => a.localeCompare(b));
-    return { genres: unique(results.flatMap(value => stringArray(value.Genres))), tags: unique(results.flatMap(value => stringArray(value.Tags))) };
+    return this.readCurrentSession(async () => {
+      const session = this.requireSession();
+      const results = await Promise.all(session.selectedLibraryIds.map(async parentId => {
+        const parameters = new URLSearchParams({ UserId: session.userId, ParentId: parentId, IncludeItemTypes: 'Audio', MediaTypes: 'Audio' });
+        return this.json(`/Items/Filters?${parameters}`);
+      }));
+      const unique = (values: string[]) => [...new Set(values)].sort((a, b) => a.localeCompare(b));
+      return { genres: unique(results.flatMap(value => stringArray(value.Genres))), tags: unique(results.flatMap(value => stringArray(value.Tags))) };
+    });
   }
   async selectLibraries(values: string[]): Promise<Connection> {
     const session = this.requireSession();
@@ -328,8 +346,8 @@ export class JellyfinService {
     if (this.session !== session) throw new ServiceError('unauthorized', 'The connection changed. Search again.');
     return { items: items.slice(start, start + limit), total: items.length, start };
   }
-  async songs(query: CatalogQuery): Promise<Page<Song>> { const page = await this.catalog('Audio', query); return { ...page, items: page.items.map(item => this.songItem(item)) }; }
-  async albums(query: CatalogQuery): Promise<Page<Album>> { const page = await this.catalog('MusicAlbum', query); return { ...page, items: page.items.map(item => this.albumItem(item)) }; }
+  async songs(query: CatalogQuery): Promise<Page<Song>> { return this.readCurrentSession(async () => { const page = await this.catalog('Audio', query); return { ...page, items: page.items.map(item => this.songItem(item)) }; }); }
+  async albums(query: CatalogQuery): Promise<Page<Album>> { return this.readCurrentSession(async () => { const page = await this.catalog('MusicAlbum', query); return { ...page, items: page.items.map(item => this.albumItem(item)) }; }); }
   private async allItems(path: string, parameters: Record<string, string> = {}): Promise<Item[]> {
     const session = this.requireSession();
     const items: Item[] = [];
@@ -345,29 +363,39 @@ export class JellyfinService {
     }
   }
   async album(value: string): Promise<Album> {
-    const id = validId(value), s = this.requireSession();
-    const item = await this.json(`/Users/${s.userId}/Items/${id}`);
-    if (item.Type !== 'MusicAlbum') throw new ServiceError('invalid', 'This item is not an album.');
-    return this.albumItem(item);
+    return this.readCurrentSession(async () => {
+      const id = validId(value), s = this.requireSession();
+      const item = await this.json(`/Users/${s.userId}/Items/${id}`);
+      if (item.Type !== 'MusicAlbum') throw new ServiceError('invalid', 'This item is not an album.');
+      return this.albumItem(item);
+    });
   }
   async albumTracks(value: string): Promise<Song[]> {
-    const id = validId(value), s = this.requireSession();
-    return (await this.allItems(`/Users/${s.userId}/Items`, { ParentId: id, Recursive: 'true', IncludeItemTypes: 'Audio', SortBy: 'ParentIndexNumber,IndexNumber,SortName' })).map(item => this.songItem(item));
+    return this.readCurrentSession(async () => {
+      const id = validId(value), s = this.requireSession();
+      return (await this.allItems(`/Users/${s.userId}/Items`, { ParentId: id, Recursive: 'true', IncludeItemTypes: 'Audio', SortBy: 'ParentIndexNumber,IndexNumber,SortName' })).map(item => this.songItem(item));
+    });
   }
   async song(value: string): Promise<Song> {
-    const id = validId(value), s = this.requireSession();
-    const item = await this.json(`/Users/${s.userId}/Items/${id}`);
-    if (item.Type !== 'Audio') throw new ServiceError('invalid', 'This item is not a song.');
-    return this.songItem(item);
+    return this.readCurrentSession(async () => {
+      const id = validId(value), s = this.requireSession();
+      const item = await this.json(`/Users/${s.userId}/Items/${id}`);
+      if (item.Type !== 'Audio') throw new ServiceError('invalid', 'This item is not a song.');
+      return this.songItem(item);
+    });
   }
   private playlistItem(item: Item): Playlist { return { id: item.Id, name: item.Name || 'Untitled playlist', songCount: item.ChildCount, imageUrl: item.ImageTags?.Primary ? this.deps.imageUrl(item.Id, item.ImageTags.Primary) : undefined }; }
   async playlists(): Promise<Playlist[]> {
-    const s = this.requireSession();
-    return (await this.allItems(`/Users/${s.userId}/Items`, { Recursive: 'true', IncludeItemTypes: 'Playlist', SortBy: 'SortName' })).filter(item => !item.MediaType || item.MediaType === 'Audio').map(item => this.playlistItem(item));
+    return this.readCurrentSession(async () => {
+      const s = this.requireSession();
+      return (await this.allItems(`/Users/${s.userId}/Items`, { Recursive: 'true', IncludeItemTypes: 'Playlist', SortBy: 'SortName' })).filter(item => !item.MediaType || item.MediaType === 'Audio').map(item => this.playlistItem(item));
+    });
   }
   private async entries(id: string): Promise<PlaylistEntry[]> {
-    const s = this.requireSession();
-    return (await this.allItems(`/Playlists/${id}/Items`, { UserId: s.userId })).map(item => ({ entryId: item.PlaylistItemId || '', song: this.songItem(item) }));
+    return this.readCurrentSession(async () => {
+      const s = this.requireSession();
+      return (await this.allItems(`/Playlists/${id}/Items`, { UserId: s.userId })).map(item => ({ entryId: item.PlaylistItemId || '', song: this.songItem(item) }));
+    });
   }
   private async validateEntryChanges(id: string, targets: string[]): Promise<PlaylistEntry[]> {
     const current = await this.entries(id);
@@ -376,22 +404,26 @@ export class JellyfinService {
     return current;
   }
   async playlistPermission(value: string): Promise<boolean | null> {
-    const id = validId(value), s = this.requireSession();
-    let canEdit: boolean | null = null;
-    try { const permission = await this.json(`/Playlists/${id}/Users/${s.userId}`); canEdit = typeof permission?.CanEdit === 'boolean' ? permission.CanEdit : null; }
-    catch (error) { if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.'); if (!(error instanceof ServiceError) || !['not-found', 'forbidden', 'unsupported', 'server', 'offline', 'timeout'].includes(error.code)) throw error; }
-    if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
-    return canEdit;
+    return this.readCurrentSession(async () => {
+      const id = validId(value), s = this.requireSession();
+      let canEdit: boolean | null = null;
+      try { const permission = await this.json(`/Playlists/${id}/Users/${s.userId}`); canEdit = typeof permission?.CanEdit === 'boolean' ? permission.CanEdit : null; }
+      catch (error) { if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.'); if (!(error instanceof ServiceError) || !['not-found', 'forbidden', 'unsupported', 'server', 'offline', 'timeout'].includes(error.code)) throw error; }
+      if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
+      return canEdit;
+    });
   }
   async playlist(value: string): Promise<PlaylistDetail> {
-    const id = validId(value), s = this.requireSession();
-    const item = await this.json(`/Users/${s.userId}/Items/${id}`);
-    if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
-    const canEdit = await this.playlistPermission(id);
-    if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
-    const entries = await this.entries(id);
-    if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
-    return { ...this.playlistItem(item), canEdit, restriction: canEdit === true ? undefined : canEdit === false ? 'Your account can listen to this playlist but cannot edit it.' : 'Jellyfin could not confirm edit permission. The server will check each change.', entries };
+    return this.readCurrentSession(async () => {
+      const id = validId(value), s = this.requireSession();
+      const item = await this.json(`/Users/${s.userId}/Items/${id}`);
+      if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
+      const canEdit = await this.playlistPermission(id);
+      if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
+      const entries = await this.entries(id);
+      if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
+      return { ...this.playlistItem(item), canEdit, restriction: canEdit === true ? undefined : canEdit === false ? 'Your account can listen to this playlist but cannot edit it.' : 'Jellyfin could not confirm edit permission. The server will check each change.', entries };
+    });
   }
   private serialize(id: string, operation: () => Promise<void>, reserve = false): Promise<void> {
     const session = this.requireSession();

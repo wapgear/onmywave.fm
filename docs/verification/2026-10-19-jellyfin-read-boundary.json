@@ -1,0 +1,293 @@
+{
+  "date": "2026-10-19",
+  "baseCommit": "2bd49b3dd825ad77c08e48fe626de5abb5c7c5d0",
+  "scope": "Current Jellyfin service read completion ownership after a committed account/library change or sign-out. Actual service/ownedHTTP evidence;no native or live-server wrong-data presentation is claimed.",
+  "problem": "Single-root catalog,libraries,filters and direct song/album reads could return delayed old data. Other composite methods rejected stale successful pages but could propagate delayed old401/server errors. JSON-only checks leave a queued continuation gap before public mapping completes.",
+  "change": "readCurrentSession captures the committed immutable Session object and checks after success or failure. Wrap all10 public async data reads plus private entries used by playlist preflights. Keep request/json/authentication/publication/mutation bodies unchanged.",
+  "decision": {
+    "mode": "Team-work bounded read-only Boris/Nadia proposals,one exchanged challenge,root implementation and both actual-diff reviews.",
+    "Boris": "Initially proposed JSON GET boundary;after challenge supported public/composite boundary because queued commits can precede public continuation. Final support,no blocker.",
+    "Nadia": "Initially proposed public/composite helper;challenge supported narrower JSON boundary with future-composite reservation. Root chose public boundary after queued-microtask evidence. Review identified private entries preflight failure scope;wrapped and18 cases added. Reservation resolved,no blocker.",
+    "Morgan": "Choose public read completion boundary using actual Session object identity. Do not invalidate for unchanged parallel reads or pending connection intent;do not guard mutation confirmation as a read."
+  },
+  "method": {
+    "service": "Bundle actual current/baseline JellyfinService and shared helpers. Real owned localhost HTTP server and response bodies,not mocked fetch. Every baseline and final case uses a fresh service with dummy credentials.",
+    "connectionPersistence": "Fixture adapter commits synchronously in memory. Changes invoke actual selectLibraries,connect or disconnect. No OS credential/publication persistence fault is exercised.",
+    "delays": "Hold exactly the first target HTTP response,commit the change,then release status200 or401. No timer/deadline rewrite.",
+    "queuedProbe": "Instrument the service nested json return to queue restore of another committed snapshot before the public continuation. This is an explicit scheduler probe,not a naturally reproduced native race.",
+    "mutationRegression": "Real local create/status-only requests;confirmed/malformed/missing JSON and status200 with an unused stalled body. Create confirmation also tested after an account change.",
+    "cleanup": "Each owned server closes all connections and terminates in its script finally;both matrix processes exit0."
+  },
+  "results": {
+    "publicReads": {
+      "changes": [
+        "accepted library selection",
+        "accepted different-account sign-in",
+        "sign-out"
+      ],
+      "responses": [
+        200,
+        401
+      ],
+      "matrix": [
+        {
+          "read": "libraries",
+          "cases": 6,
+          "beforeStaleRejected": 0,
+          "afterStaleRejected": 6
+        },
+        {
+          "read": "filters",
+          "cases": 6,
+          "beforeStaleRejected": 0,
+          "afterStaleRejected": 6
+        },
+        {
+          "read": "songs",
+          "cases": 6,
+          "beforeStaleRejected": 0,
+          "afterStaleRejected": 6
+        },
+        {
+          "read": "albums",
+          "cases": 6,
+          "beforeStaleRejected": 0,
+          "afterStaleRejected": 6
+        },
+        {
+          "read": "album",
+          "cases": 6,
+          "beforeStaleRejected": 0,
+          "afterStaleRejected": 6
+        },
+        {
+          "read": "albumTracks",
+          "cases": 6,
+          "beforeStaleRejected": 3,
+          "afterStaleRejected": 6
+        },
+        {
+          "read": "song",
+          "cases": 6,
+          "beforeStaleRejected": 0,
+          "afterStaleRejected": 6
+        },
+        {
+          "read": "playlists",
+          "cases": 6,
+          "beforeStaleRejected": 3,
+          "afterStaleRejected": 6
+        },
+        {
+          "read": "playlistPermission",
+          "cases": 6,
+          "beforeStaleRejected": 6,
+          "afterStaleRejected": 6
+        },
+        {
+          "read": "playlist",
+          "cases": 6,
+          "beforeStaleRejected": 3,
+          "afterStaleRejected": 6
+        }
+      ],
+      "before": {
+        "obsoleteDataReturned": 18,
+        "oldErrorsNotReclassified": 27,
+        "staleRejected": 15
+      },
+      "after": {
+        "staleRejected": 60
+      }
+    },
+    "queuedCommit": {
+      "reads": [
+        "song",
+        "album",
+        "songs",
+        "libraries",
+        "filters"
+      ],
+      "beforeRejected": 0,
+      "afterRejected": 5
+    },
+    "playlistPreflight": {
+      "operations": [
+        "add with skipExisting",
+        "remove",
+        "move"
+      ],
+      "cases": 18,
+      "beforeStaleRejected": 9,
+      "afterStaleRejected": 18,
+      "writesDispatched": 0
+    },
+    "unchangedConcurrentReads": "Four simultaneous reads succeed with the same committed session in both phases.",
+    "permissionTriState": [
+      {
+        "status": 403,
+        "value": null
+      },
+      {
+        "status": 404,
+        "value": null
+      },
+      {
+        "status": 503,
+        "value": null
+      },
+      {
+        "status": 401,
+        "code": "unauthorized"
+      }
+    ],
+    "mutationConfirmation": [
+      {
+        "name": "create",
+        "mode": "confirmed",
+        "change": "none",
+        "resolved": true,
+        "idConfirmed": true,
+        "passed": true
+      },
+      {
+        "name": "create",
+        "mode": "confirmed",
+        "change": "account",
+        "resolved": true,
+        "idConfirmed": true,
+        "passed": true
+      },
+      {
+        "name": "create",
+        "mode": "bad-json",
+        "change": "none",
+        "resolved": false,
+        "code": "uncertain-write",
+        "passed": true
+      },
+      {
+        "name": "create",
+        "mode": "bad-json",
+        "change": "account",
+        "resolved": false,
+        "code": "uncertain-write",
+        "passed": true
+      },
+      {
+        "name": "create",
+        "mode": "missing-id",
+        "change": "none",
+        "resolved": false,
+        "code": "uncertain-write",
+        "passed": true
+      },
+      {
+        "name": "create",
+        "mode": "missing-id",
+        "change": "account",
+        "resolved": false,
+        "code": "uncertain-write",
+        "passed": true
+      },
+      {
+        "name": "rename",
+        "mode": "status-stall",
+        "resolved": true,
+        "passed": true
+      },
+      {
+        "name": "add",
+        "mode": "status-stall",
+        "resolved": true,
+        "passed": true
+      },
+      {
+        "name": "remove",
+        "mode": "status-stall",
+        "resolved": true,
+        "passed": true
+      },
+      {
+        "name": "move",
+        "mode": "status-stall",
+        "resolved": true,
+        "passed": true
+      }
+    ],
+    "sourceComparison": {
+      "wrappedOriginalBodiesUnchanged": 11,
+      "otherMembersUnchanged": 35,
+      "onlyAddedMember": "readCurrentSession"
+    }
+  },
+  "groups": [
+    {
+      "id": "JR01",
+      "actor": "Listener changing account or accessible libraries",
+      "trigger": "A pending Jellyfin data/preflight read settles after the committed session changes",
+      "outcome": "Reject the obsolete read rather than returning old data or an obsolete authentication failure.",
+      "fragments": [
+        "REQ-L146-text-03"
+      ],
+      "mandatoryVariants": [
+        "Changed account",
+        "Changed selected libraries",
+        "Sign-out",
+        "Delayed successful body",
+        "Delayed failed body",
+        "Public mapping continuation",
+        "Playlist read preflight",
+        "Unchanged concurrent reads succeed",
+        "Optional permission tri-state preserved",
+        "Mutation confirmations retain uncertain-write semantics"
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false,
+      "remaining": [
+        "Controlled actual-service boundary proof is not native UI account/selection handoff or a complete live server/version matrix.",
+        "Full connection publication,physical storage,auth screen lifetime and listener/platform requirements retain their separate evidence."
+      ]
+    }
+  ],
+  "sourceSha256": {
+    "src/main/jellyfin.ts": "4d8a18d25cefa435355035df9ad97b897c68570a6035b70adbd5f25b31c48044"
+  },
+  "baselineSourceSha256": {
+    "src/main/jellyfin.ts": "59f19ce18dd13f9037c4e88e94de205f3e0e0e4a15b01943afb805c2e155b6c0"
+  },
+  "fixtureSha256": {
+    "/private/tmp/obsolete-jellyfin-reads-current/check.mjs": "29523a137245f6adb8dcc29f0e7844e7f095f05a6f971a961916081296158c12",
+    "/private/tmp/obsolete-jellyfin-reads-current/build.mjs": "a807fd502e0bfc02d292f1fac82d177686994c695293b443f6e341b8f3f867ec",
+    "/private/tmp/obsolete-jellyfin-reads-current/compare.mjs": "92717a810ae3bfac88b27a0b0123531bfbda74b7c48de20b203c7ca63af315f5",
+    "/private/tmp/obsolete-jellyfin-reads-current/baseline-jellyfin.ts": "59f19ce18dd13f9037c4e88e94de205f3e0e0e4a15b01943afb805c2e155b6c0",
+    "/private/tmp/obsolete-jellyfin-reads-current/before-bundled.mjs": "25f2c34d366452e9ca8ec8a4f0e3d272e3e3b4c84388acf93db4834b7ee357cf",
+    "/private/tmp/obsolete-jellyfin-reads-current/after-bundled.mjs": "52c661c17ec914aef2d72a291a7dec8bb4b25644fafc8cd297b1c1925246a064",
+    "/private/tmp/obsolete-jellyfin-reads-current/before.json": "22cc3030a939f17efdf1eff7d60c3a7fab2b85bd4b9643301ae874f9d3c54d54",
+    "/private/tmp/obsolete-jellyfin-reads-current/after.json": "3f5e2494ced07770f842e9002c69327a4e4178bdc45b009b1511ebc3e2a19106",
+    "/private/tmp/obsolete-jellyfin-reads-current/source-comparison.json": "e0d63b1741e1c01d846164f6e620f98ce39c75a0ae9ece948f7e8b71603ec1b5",
+    "/private/tmp/obsolete-jellyfin-reads-current/build.log": "28386173c34f90e8e2500c6a76a75471fbf0108b6be22ac7ea6b79d5c2b388a4",
+    "/private/tmp/obsolete-jellyfin-reads-current/lint.log": "6f1680e0ff047e07a06dcf9afc079770fad3f871d47a52ee12dccaaa84366d63"
+  },
+  "validation": {
+    "integration": "Both baseline/final expanded matrices exit0. Final60 public stale cases,5 queued probes,18 stale preflights,4 optional outcomes,10 mutation cases and concurrent read group pass.",
+    "buildTypecheck": "Final npm run build exit0,including TypeScript and voice-resource check.",
+    "lint": "Final npm run lint exit0.",
+    "unitTests": "No unit tests/framework added or run.",
+    "reviews": "Boris and Nadia independently reviewed final source and supplied scoped evidence;no additional tests from reviewers."
+  },
+  "adjudication": {
+    "acceptedCanonicalGroups": 0,
+    "knownOpenChecks": 25,
+    "semanticDenominatorComplete": false,
+    "overallScore": null
+  },
+  "limits": [
+    "No new native UI/live Jellyfin/provider,audible,VoiceOver,OS or listener result. Renderer is unchanged.",
+    "HTTP success/401 and queued commit probes do not represent every transport,body shape or scheduling order. Existing20-second deadline remains unchanged.",
+    "No smaller viewport,200% zoom,packaging or release check."
+  ],
+  "fragmentTextSha256": {
+    "REQ-L146-text-03": "9461efe6569802d0afb449e561882ed11e76a8a2f19f9dfd61c12cc825e1bc15"
+  }
+}

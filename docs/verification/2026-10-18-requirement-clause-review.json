@@ -21,8 +21,8 @@
     "STARStories": 27,
     "STARResultFragments": 265,
     "structuralLines": 47,
-    "semanticFragmentsReviewed": 317,
-    "proofFragmentsReviewed": 315,
+    "semanticFragmentsReviewed": 318,
+    "proofFragmentsReviewed": 316,
     "partitionComplete": true,
     "semanticDenominatorComplete": false,
     "overallScore": null,
@@ -38,7 +38,7 @@
     "listenerOpenChecks": 14,
     "otherProofOpenChecks": 11,
     "contextFragmentsReviewed": 1,
-    "canonicalReviewGroups": 52,
+    "canonicalReviewGroups": 53,
     "acceptedCanonicalGroups": 0
   },
   "STARContexts": [
@@ -718,7 +718,7 @@
   },
   "clauseLedger": {
     "file": "2026-10-18-requirement-clauses.csv",
-    "sha256": "8abc9a26acabc4146cffc708e69439d653b54902c1a9dc6ac7084fe10290e3a5",
+    "sha256": "cfbb005b74a3a3029b24157b73ebe4781328c0194624e41166cd93cc46e2cdee",
     "columns": "Candidate navigation, semantic review and actual proof review are distinct. Empty evidence/canonical IDs do not establish completion."
   },
   "scopeReviews": [
@@ -793,6 +793,11 @@
       "file": "2026-10-19-account-switch-server-draft.json",
       "sha256": "85c1853be94f5254f51fb1581932c8e3294c6607efd3b989af76a41826b11a0d",
       "meaning": "AS01 four exact clauses;native abandoned-server prefill contradiction/fix and retained Back/failed-form behavior. Whole M11 remains incomplete."
+    },
+    {
+      "file": "2026-10-19-jellyfin-read-boundary.json",
+      "sha256": "e8746c9f2af30634238d589bc994210aa9228145bf0b43b856a3f893cbc79023",
+      "meaning": "JR01 one exact obsolete-read clause,current service/HTTP contradiction and read/preflight guard;full native/live connection acceptance remains separate."
     }
   ],
   "generatorMeaning": "Original mechanical partition generator only. Later deliberate semantic/proof annotations are authoritative and must be preserved; rerunning the original generator alone would discard them.",
