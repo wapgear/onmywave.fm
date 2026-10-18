@@ -1,0 +1,195 @@
+{
+  "date": "2026-10-19",
+  "baseCommit": "bbb58a42ecd9719429c890156be7928fe6951b5c",
+  "scope": "Command-Up/Down volume edits lost to delayed startup preferences. Current native reproduction,shared-handler fix and same-data restart.",
+  "problem": "The keyboard listener called the raw React volume setter while the public volume control also marked preference edits and save generation. A delayed25% settings read overwrote a native Command-Up change to80%.",
+  "implementation": "Extract the existing volume-control edit path into changeVolume and use it for public volume changes and both keyboard directions. Advance option generation/revision,mark volume edited,and update the live value before setting React state so successive commands use the newest level. Preserve initial restore setters and shortcut exclusion guards.",
+  "native": {
+    "baseline": "1280x720,100% app zoom. Actual production renderer/preload,bundled actual main/storage,disposable local safeStorage connection and empty localhost catalog. Scheduler active,shared-key null adapter,nonlocal fetches blocked.",
+    "input": "CUA clicks/native key presses only. Playwright launches/closes and passively reads DOM/main/file state;no UI events,media methods or private UI commands.",
+    "fault": "Hold the actual getPlaybackPreferences result after reading saved25%,before IPC reply delivery. User input and real preference writes proceed while this stale result waits.",
+    "snapshots": {
+      "before-keyboard-edit": {
+        "sha256": "e263e9e3af94a6793d179e636a96141e823ef729a4be4338a0eb5f82acf2a3fd",
+        "volume": 0.8,
+        "savedVolume": 0.25,
+        "preferencesReplyHeld": true,
+        "queueTrackIds": null,
+        "focus": {
+          "tag": "H1",
+          "name": "All songs"
+        },
+        "optionsWriteCount": 0
+      },
+      "before-overwritten": {
+        "sha256": "6f2a0bb2d075975691665517ac941e6da3bca64e596d32a43cbe3ac1070c4378",
+        "volume": 0.25,
+        "savedVolume": 0.25,
+        "preferencesReplyHeld": false,
+        "queueTrackIds": [],
+        "focus": {
+          "tag": "H1",
+          "name": "All songs"
+        },
+        "optionsWriteCount": 0
+      },
+      "after-edit-saved-while-held": {
+        "sha256": "9c64203ab981eeb326b030a226d48411e1c07f4ed47cf0f62aa80933ba6f366f",
+        "volume": 0.8,
+        "savedVolume": 0.8,
+        "preferencesReplyHeld": true,
+        "queueTrackIds": null,
+        "focus": {
+          "tag": "H1",
+          "name": "All songs"
+        },
+        "optionsWriteCount": 1
+      },
+      "after-old-read-ignored": {
+        "sha256": "4940182ea0f97eaa0f1295a8b49a774bd5b85bc4656382f61ef52a005168138c",
+        "volume": 0.8,
+        "savedVolume": 0.8,
+        "preferencesReplyHeld": false,
+        "queueTrackIds": [],
+        "focus": {
+          "tag": "H1",
+          "name": "All songs"
+        },
+        "optionsWriteCount": 1
+      },
+      "after-input-guard": {
+        "sha256": "d1b0b6a863d96ccea812a0f73983096febb73d8b7630b892994fb4e94e6819af",
+        "volume": 0.8,
+        "savedVolume": 0.8,
+        "preferencesReplyHeld": false,
+        "queueTrackIds": [],
+        "focus": {
+          "tag": "INPUT",
+          "name": "Search songs, artists and albums"
+        },
+        "optionsWriteCount": 1
+      },
+      "after-both-directions": {
+        "sha256": "a7a3f851253f297234c543f675b15ced79c4d8444dc93f8b4201017624568bce",
+        "volume": 0.85,
+        "savedVolume": 0.8500000000000001,
+        "preferencesReplyHeld": false,
+        "queueTrackIds": [],
+        "focus": {
+          "tag": "H1",
+          "name": "All songs"
+        },
+        "optionsWriteCount": 1
+      },
+      "restart-mute-unmute": {
+        "sha256": "2e02482291709a61634dfeaa42e0564e3d0027f1ac651225a19723f4915bd22d",
+        "volume": 0.85,
+        "savedVolume": 0.8500000000000001,
+        "preferencesReplyHeld": false,
+        "queueTrackIds": [],
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Mute"
+        },
+        "optionsWriteCount": 0
+      }
+    },
+    "observedAX": [
+      "Before:focused All songs heading,Command-Up changes75% to80%;release old reply shows25%.",
+      "After:Command-Up saves80% while old reply waits;release keeps80%.",
+      "Search field Command-Up leaves80% and input focus unchanged.",
+      "Heading Command-Down then two Command-Up commands reaches85%.",
+      "Fresh same-data process initially exposes85% in native AX. Mute then Unmute shows0% then85% with an empty queue."
+    ],
+    "reports": {
+      "before": {
+        "sha256": "8abad047710c6fe6175ac69c52964da2b1481a75cc94b93d43f131d11b9be485",
+        "rendererErrors": 0,
+        "exitCode": 0
+      },
+      "after": {
+        "sha256": "1ece2f66980c59aaf83e711e4287daf97b8cd5c527e44adcee338dd27c0a6cb8",
+        "rendererErrors": 0,
+        "exitCode": 0
+      },
+      "restart": {
+        "sha256": "2335d8c4e50e11fc210f64d7234f76614325459e81cb9c4855a2fdd5e53a2be8",
+        "rendererErrors": 0,
+        "exitCode": 0
+      }
+    }
+  },
+  "requirements": {
+    "canonicalGroup": "VOL01",
+    "actor": "Listener adjusting volume while startup settings load",
+    "trigger": "Command-Up/Down from ordinary page content before saved options arrive",
+    "outcome": "Keep and persist the explicit volume edit just like the visible volume control,without starting music or replacing a queue.",
+    "fragments": [
+      "REQ-L218-text-07",
+      "REQ-L228-text-06"
+    ],
+    "checks": [
+      "M12",
+      "Q06"
+    ],
+    "mandatoryVariants": [
+      "Keyboard Up and Down use edit/save tracking",
+      "Delayed startup read cannot overwrite explicit volume",
+      "Successive commands retain their increments",
+      "Noninteractive page shortcut works",
+      "Editable fields retain own behavior",
+      "Same-data restart retains saved volume",
+      "Public mute/unmute still uses shared path",
+      "Broader compound startup requirement also retains shuffle/repeat edits and failed-restore cases"
+    ],
+    "proofState": "reviewed-partial",
+    "accepted": false,
+    "remaining": [
+      "This native run uses an empty queue and successful delayed options read,not a failed queue restore or another account.",
+      "Other startup-control variants and the full playback stories retain their separately scoped evidence;no whole-fragment or whole-story acceptance."
+    ]
+  },
+  "sourceSha256": {
+    "src/renderer/player.tsx": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+    "src/renderer/components/Player/Player.component.tsx": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+    "src/main/playback-preferences.ts": "015bbe70cc718f2449061cf25066ecd85e9d2bf281a0cb7d6dd7949fddc5ea4f",
+    "src/main/storage.ts": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+    "src/main/index.ts": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932"
+  },
+  "beforeHashes": {
+    "src/renderer/player.tsx": "aa7d866e5724945a3f06773a984f6983ccc6544ee08b02991fd54c0f53f25f0c",
+    "out/renderer/assets/index-BxYSxxHo.js": "0663a0d60d21f5c957193f8cb997610ff8349e1b0e8dfde7258de2752060b273"
+  },
+  "fixtureSha256": {
+    "/private/tmp/keyboard-volume-startup-current/build.mjs": "f986214873b7adfdafe65100b76c491e1127e7d3ddf1763af65afec9a586767e",
+    "/private/tmp/keyboard-volume-startup-current/bootstrap.mjs": "02f3b5547c06e348604e764b820283545780db46c6613b2da3e618a61d3e8474",
+    "/private/tmp/keyboard-volume-startup-current/observe.cjs": "e08fa506c9bbcbcc0f0b350e64edd40f9b08f894d8a8fd4a005783f370877cc6",
+    "/private/tmp/keyboard-volume-startup-current/server.mjs": "c7a18f985f53e53ac24f1d72b6d1b13ea2d92e6dd51ba641bb271e17c7f5dc33",
+    "/private/tmp/keyboard-volume-startup-current/out/main/index.js": "fd8b4dea42eed68136ed421305ecdc9e582f5fc548dc8ca8b75d1ed5abf54e5d"
+  },
+  "buildSha256": {
+    "out/main/index.js": "872efec946a53c7e7342a84902593764098880caf38952fe5cbab095dc9ebf29",
+    "out/preload/index.cjs": "9b78be58d4f9bd70fb5b6d3315d888ee9442cfbf09bfab2b2f902de015e902f2",
+    "out/renderer/assets/index-BdkWgyrR.js": "f3ed7b1d15eb6e5aae05c3ab809e1e688049400c8d091f29cf79f66cf9037289",
+    "out/renderer/assets/index-CTTY7D_T.css": "311365026a2a43358e39a1d34174216b1bb7d4faea839db0b11092e497b58f0f"
+  },
+  "validation": {
+    "productionBuildTypeScript": "npm run build passed,session36449 exit0.",
+    "fullLint": "npm run lint passed,session98724 exit0.",
+    "native": "One before and two final processes;seven saved passive snapshots plus transcribed native AX observations. Zero renderer errors.",
+    "cleanup": "All observers exit0;owned catalog server stopped130. No personal server write or provider request.",
+    "unitTests": "Not added or run."
+  },
+  "acceptance": {
+    "knownOpenChecks": 25,
+    "rowDispositionsChanged": false,
+    "semanticDenominatorComplete": false,
+    "overallScore": null
+  },
+  "limits": [
+    "Controlled localhost and delayed actual IPC reply,not a real server outage or physical disk failure.",
+    "No active-music,audible,hardware media,VoiceOver,live server/provider or uncoached listener result.",
+    "Initial fresh-process85% is native AX observation;the retained restart passive snapshot is after mute/unmute.",
+    "No smaller-window or enlarged-zoom check. No complete denominator or goal-completion claim."
+  ]
+}
