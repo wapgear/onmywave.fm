@@ -28,7 +28,7 @@ export function usePlaylistRecovery() {
   } };
 }
 type PlaylistRecovery = ReturnType<typeof usePlaylistRecovery>;
-export function PlaylistsPage({ add, details, id, setId, recovery, onOpenDetail, onReturnFromDetail }: { onReturnFromDetail: (id: string, origin: HTMLButtonElement) => void; onOpenDetail: (id: string, origin: HTMLButtonElement) => void; recovery: PlaylistRecovery; id: string | null; setId: (id: string | null) => void; add: (songs: Song[]) => void; details: (song: Song) => void }) {
+export function PlaylistsPage({ add, details, id, setId, recovery, onOpenDetail, onCreateDetail, onReturnFromDetail }: { onReturnFromDetail: (id: string, origin: HTMLButtonElement) => void; onOpenDetail: (id: string, origin: HTMLButtonElement) => void; onCreateDetail: (id: string, origin: HTMLElement | null) => void; recovery: PlaylistRecovery; id: string | null; setId: (id: string | null) => void; add: (songs: Song[]) => void; details: (song: Song) => void }) {
   const [creating, setCreating] = useState(false);
   const client = useQueryClient();
   const playlists = useQuery({ queryKey: ['playlists'], queryFn: async () => unwrap(await window.wave.playlists()) });
@@ -71,7 +71,7 @@ export function PlaylistsPage({ add, details, id, setId, recovery, onOpenDetail,
     })} />}
     {(creation?.status === 'review' || creation?.status === 'pending') && <div className="notice playlist-recovery"><span role="status">A playlist may already have been created. Review your refreshed playlists before creating another.</span><button ref={creationReviewButton} disabled={creation.status === 'pending' || playlists.isFetching || acknowledgeCreation.isPending} onClick={() => void playlists.refetch()}>Refresh playlists</button><button disabled={creation.status !== 'review' || !creation.receipt || playlists.isFetching || !!playlists.error || acknowledgeCreation.isPending} onClick={() => acknowledgeCreation.mutate()}>{acknowledgeCreation.isPending ? 'Confirming…' : 'I checked my playlists'}</button></div>}
     {playlists.isPending ? <p className="loading" role="status">Loading playlists…</p> : playlists.data?.items.length ? <div className="playlist-grid" ref={results}>{playlists.data.items.map(item => <button className="playlist-tile" data-playlist-id={item.id} key={item.id} onClick={event => { onOpenDetail(item.id, event.currentTarget); setId(item.id); }}><Artwork url={item.imageUrl} name={item.name} /><div><strong>{item.name}</strong><span><ListMusic size={14} />{item.songCount === undefined ? 'Playlist' : `${item.songCount} songs`}</span>{item.recoveryStatus && <span>{item.recoveryStatus === 'pending' ? 'Saving changes…' : item.recoveryStatus === 'review' ? 'Review needed' : 'Editing unavailable'}</span>}</div></button>)}</div> : !playlists.error && <Empty title="Make room for your favorites">Create a playlist, then add songs from your library.</Empty>}
-    {creating && <PlaylistNameDialog title="New playlist" initial="" close={() => setCreating(false)} save={async name => { const value = unwrap(await window.wave.createPlaylist({ name, trackIds: [] })); if (!recovery.isCurrent()) return; await client.invalidateQueries({ queryKey: ['playlists'] }); if (recovery.isCurrent()) setId(value.id); }} />}
+    {creating && <PlaylistNameDialog title="New playlist" initial="" close={() => setCreating(false)} save={async name => { const value = unwrap(await window.wave.createPlaylist({ name, trackIds: [] })); if (!recovery.isCurrent()) return; await client.invalidateQueries({ queryKey: ['playlists'] }); return recovery.isCurrent() ? value.id : undefined; }} created={(createdId, origin) => { onCreateDetail(createdId, origin); setCreating(false); setId(createdId); }} />}
   </>;
 }
 function PlaylistDetail({ id, listError, back, add, details, recovery }: { recovery: PlaylistRecovery; id: string; listError: unknown; back: (origin: HTMLButtonElement) => void; add: (songs: Song[]) => void; details: (song: Song) => void }) {
@@ -163,13 +163,78 @@ function PlaylistDetail({ id, listError, back, add, details, recovery }: { recov
     {playlist.isPending && <p className="loading" role="status">Loading playlist…</p>}<ErrorNotice error={playlist.error ?? listError} retryRef={detailRetryFocus.retryRef} retrying={playlist.isFetching || listFetching} retry={() => detailRetryFocus.retry(retryReads)} />
   </>;
 }
-function PlaylistNameDialog({ title, initial, close, save }: { title: string; initial: string; close: () => void; save: (name: string) => Promise<void> }) {
+function PlaylistNameDialog({ title, initial, close, save, created }: { title: string; initial: string; close: () => void; save: (name: string) => Promise<string | void>; created?: (id: string, origin: HTMLElement | null) => void }) {
   const [name, setName] = useState(initial);
   const client = useQueryClient();
   const mounted = useRef(true);
   const nameInput = useRef<HTMLInputElement>(null);
+  const restoreFocusRef = useRef(true);
+  const inFlight = useRef(false);
+  const stopTracking = useRef<(() => void) | null>(null);
   useLayoutEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
-  const mutation = useMutation({ mutationFn: () => save(name.trim()), onSuccess: () => { if (mounted.current) close(); }, onError: async () => { if (!mounted.current) return; await client.invalidateQueries({ queryKey: ['playlists'] }); if (mounted.current) await client.invalidateQueries({ queryKey: ['playlist'] }); } });
+  useLayoutEffect(() => () => { stopTracking.current?.(); }, []);
+  const mutation = useMutation({ mutationFn: () => save(name.trim()), onSuccess: id => {
+    if (!mounted.current) return;
+    stopTracking.current?.();
+    inFlight.current = false;
+    if (id && created) {
+      const dialog = nameInput.current?.closest('dialog') ?? null;
+      const origin = focusOwner.current?.dialog === dialog && focusOwner.current.ownsFocus && dialog && document.activeElement instanceof HTMLElement && dialog.contains(document.activeElement) && document.hasFocus() && document.visibilityState === 'visible' && !document.querySelector(':popover-open') && document.querySelector('dialog[open]') === dialog ? document.activeElement : null;
+      restoreFocusRef.current = false;
+      created(id, origin);
+    } else close();
+  }, onError: async () => {
+    try {
+      if (mounted.current) {
+        await client.invalidateQueries({ queryKey: ['playlists'] });
+        if (mounted.current) await client.invalidateQueries({ queryKey: ['playlist'] });
+      }
+    } finally {
+      stopTracking.current?.();
+      inFlight.current = false;
+    }
+  } });
   const uncertain = mutation.error instanceof WaveError && mutation.error.code === 'uncertain-write';
-  return <Dialog title={title} close={() => { if (!mutation.isPending) close(); }} initialFocusRef={nameInput}><form onSubmit={event => { event.preventDefault(); if (!uncertain && !mutation.isPending) mutation.mutate(); }}><label>Playlist name<input ref={nameInput} autoFocus required maxLength={160} disabled={mutation.isPending || uncertain} value={name} onChange={event => setName(event.target.value)} /></label><ErrorNotice error={mutation.error} />{uncertain && <p className="form-hint">The change may already be saved. Close this dialog and check Jellyfin's refreshed playlists before trying again.</p>}<div className="modal-actions"><button type="button" disabled={mutation.isPending} onClick={close}>{uncertain ? 'Close and check playlists' : 'Cancel'}</button><button className="primary" disabled={!name.trim() || mutation.isPending || uncertain}>{mutation.isPending ? 'Saving…' : 'Save playlist'}</button></div></form></Dialog>;
+  const focusOwner = useRef<{ dialog: HTMLDialogElement; ownsFocus: boolean } | null>(null);
+  function startTracking() {
+    const dialog = nameInput.current?.closest('dialog');
+    if (!dialog) return;
+    const owner = { dialog, ownsFocus: document.activeElement instanceof HTMLElement && dialog.contains(document.activeElement) && document.hasFocus() && document.visibilityState === 'visible' && !document.querySelector(':popover-open') && document.querySelector('dialog[open]') === dialog };
+    focusOwner.current = owner;
+    const cancel = () => { owner.ownsFocus = false; };
+    const onFocusIn = (event: FocusEvent) => { if (!(event.target instanceof Node) || !dialog.contains(event.target)) cancel(); };
+    const onPointerDown = (event: PointerEvent) => {
+      const rect = dialog.getBoundingClientRect();
+      if (!(event.target instanceof Node) || !dialog.contains(event.target)
+        || (event.target === dialog && (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom))) cancel();
+    };
+    const onBeforeToggle = (event: Event) => {
+      const toggle = event as ToggleEvent;
+      if (toggle.newState === 'open') cancel();
+    };
+    const checkScope = () => {
+      if (!dialog.open || document.querySelector('dialog[open]') !== dialog || document.querySelector(':popover-open')) cancel();
+    };
+    const onBlur = () => cancel();
+    const onVisibility = () => { if (document.visibilityState !== 'visible') cancel(); };
+    document.addEventListener('focusin', onFocusIn, true);
+    document.addEventListener('pointerdown', onPointerDown, true);
+    document.addEventListener('beforetoggle', onBeforeToggle, true);
+    document.addEventListener('toggle', checkScope, true);
+    document.addEventListener('close', checkScope, true);
+    window.addEventListener('blur', onBlur);
+    document.addEventListener('visibilitychange', onVisibility);
+    stopTracking.current = () => {
+      document.removeEventListener('focusin', onFocusIn, true);
+      document.removeEventListener('pointerdown', onPointerDown, true);
+      document.removeEventListener('beforetoggle', onBeforeToggle, true);
+      document.removeEventListener('toggle', checkScope, true);
+      document.removeEventListener('close', checkScope, true);
+      window.removeEventListener('blur', onBlur);
+      document.removeEventListener('visibilitychange', onVisibility);
+      if (stopTracking.current) stopTracking.current = null;
+    };
+  }
+  const cancel = () => { if (!inFlight.current && !mutation.isPending) close(); };
+  return <Dialog title={title} close={cancel} initialFocusRef={nameInput} restoreFocusRef={restoreFocusRef}><form onSubmit={event => { event.preventDefault(); if (inFlight.current || mutation.isPending || uncertain || !name.trim()) return; inFlight.current = true; startTracking(); mutation.mutate(); }}><label>Playlist name<input ref={nameInput} autoFocus required maxLength={160} readOnly={mutation.isPending || uncertain} value={name} onChange={event => setName(event.target.value)} /></label><ErrorNotice error={mutation.error} />{uncertain && <p className="form-hint">The change may already be saved. Close this dialog and check Jellyfin's refreshed playlists before trying again.</p>}<div className="modal-actions"><button type="button" aria-disabled={mutation.isPending || undefined} onClick={cancel}>{uncertain ? 'Close and check playlists' : 'Cancel'}</button><button className="primary" disabled={!name.trim()} aria-disabled={mutation.isPending || uncertain || undefined} aria-busy={mutation.isPending || undefined}>{mutation.isPending ? 'Saving…' : 'Save playlist'}</button></div></form></Dialog>;
 }

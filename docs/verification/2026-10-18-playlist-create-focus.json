@@ -1,0 +1,2418 @@
+{
+  "date": "2026-10-18",
+  "baseCommit": "a25ca8fbb40ba2a4558b487ff0b80d9deb7d569d",
+  "scope": [
+    "Q06/R12 playlist-name pending keyboard focus",
+    "M6 confirmed create to detail, definite failure, uncertain save and rename regression"
+  ],
+  "baseline": {
+    "contentSizePoints": [
+      1280,
+      720
+    ],
+    "appZoom": 1,
+    "runtime": "macOS arm64, Electron43.7.0, Retina display"
+  },
+  "before": "Submitting a playlist name disables its focused native input, leaving BODY while create/list reads wait and after detail opens.",
+  "implementation": [
+    "Keep the name read-only while pending or uncertain. Save and Cancel remain native-focusable with aria-disabled, synchronous submit/dismiss guards and visible busy styling.",
+    "Preserve modal ownership across internal Tab/pointer movement. Outside focus/pointer, backdrop, a new overlay, window blur/hidden state or unmount cancels creation focus handoff.",
+    "After confirmed create and list invalidation, atomically close the form and open its detail. Suppress generic Dialog opener restoration. Existing guarded ReadyApp route/scroll restoration focuses Back only for the still-owned modal.",
+    "Definite rejection retains draft/error and holds the lock through readback. Uncertain result never repeats create. Rename/cancel retain ordinary opener restoration."
+  ],
+  "pairedDecision": {
+    "Steve": "Independent modal ownership proposal and implementation; error-readback lock and overlay-scope review corrections applied. Final actual-source review found no blocker.",
+    "Elena": "Independent pending focus and create-handoff proposal; Shared Dialog restore suppression and busy styling. Reviewed exact captured scope and backdrop bounds correction.",
+    "Morgan": "Integrated source, corrected backdrop retargeting using existing Dialog bounds semantics, verified native production flows and documented unverified window guards."
+  },
+  "phases": {
+    "before": {
+      "bundleHashes": {
+        "out/renderer/assets/index-k33fbArN.js": "c36faabb45080707cffd3c809c6ff7a840614c006bec12cd4cd537c225ba0201",
+        "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+        "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2"
+      },
+      "snapshots": [
+        {
+          "name": "before-name-ready",
+          "rawSha256": "3b9df4d9273ac20243aafa4915e969e1ca9f1ba02b6413ac187c7bddf20f7a79",
+          "observedAt": 1792268104546,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "INPUT",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 447,
+              "y": 367,
+              "width": 386,
+              "height": 38,
+              "top": 367,
+              "right": 833,
+              "bottom": 405,
+              "left": 447
+            },
+            "insideDrawer": false,
+            "name": "",
+            "type": null,
+            "label": "Playlist name",
+            "role": null
+          },
+          "focusScope": "New playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "label": "Playlist name",
+                  "disabled": false,
+                  "readOnly": false,
+                  "value": "Creation focus before",
+                  "active": true
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Save playlist",
+                  "disabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "Playlists",
+            "New playlist"
+          ],
+          "detailBacks": [],
+          "dialogs": [
+            {
+              "title": "New playlist",
+              "paragraphs": []
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [],
+            "mutationCalls": []
+          }
+        },
+        {
+          "name": "before-create-held-body",
+          "rawSha256": "1c6a2c993d24cbc1636e2369717c11cab0a9afd620f2c35ce8b11e01b343c18e",
+          "observedAt": 1792268114062,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BODY",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 720,
+              "top": 0,
+              "right": 1280,
+              "bottom": 720,
+              "left": 0
+            },
+            "insideDrawer": false,
+            "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedPlaylistsYour collections, on every Jellyfin clientNew playlistFixture editable3 songsOther collection3 songsNew playlistPlaylist nameCancelSaving\u2026Song 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+            "type": null,
+            "role": null
+          },
+          "focusScope": null,
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "label": "Playlist name",
+                  "disabled": true,
+                  "readOnly": false,
+                  "value": "Creation focus before",
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "Playlists",
+            "New playlist"
+          ],
+          "detailBacks": [],
+          "dialogs": [
+            {
+              "title": "New playlist",
+              "paragraphs": []
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [
+              "createPlaylist"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792268107937,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "before-list-held-body",
+          "rawSha256": "699857b9b71f7a44dfaa9921a9070686cd807db9e058e5b1b9eed2eb6975f8f4",
+          "observedAt": 1792268151851,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BODY",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 720,
+              "top": 0,
+              "right": 1280,
+              "bottom": 720,
+              "left": 0
+            },
+            "insideDrawer": false,
+            "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedPlaylistsYour collections, on every Jellyfin clientNew playlistFixture editable3 songsOther collection3 songsNew playlistPlaylist nameCancelSaving\u2026Song 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+            "type": null,
+            "role": null
+          },
+          "focusScope": null,
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "label": "Playlist name",
+                  "disabled": true,
+                  "readOnly": false,
+                  "value": "Creation focus before",
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "Playlists",
+            "New playlist"
+          ],
+          "detailBacks": [],
+          "dialogs": [
+            {
+              "title": "New playlist",
+              "paragraphs": []
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 1,
+            "providers": 0,
+            "held": [
+              "playlists"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792268107937,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "before-created-body",
+          "rawSha256": "8d83b77a19b92f845e4a27ed11849c9c2b84ed1c8bea2ba72601378ccfdf9e32",
+          "observedAt": 1792268176562,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BODY",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 720,
+              "top": 0,
+              "right": 1280,
+              "bottom": 720,
+              "left": 0
+            },
+            "insideDrawer": false,
+            "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedPlaylistsPlaylist \u00b7 0 songsCreation focus beforePlay playlistQueueRenameThis playlist is waiting for musicSelect songs or an album in your library and choose Add to playlist.Song 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+            "type": null,
+            "role": null
+          },
+          "focusScope": null,
+          "playlistForm": [],
+          "headings": [
+            "Creation focus before",
+            "This playlist is waiting for music"
+          ],
+          "detailBacks": [
+            {
+              "name": "Playlists",
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 46,
+                "width": 85.2265625,
+                "height": 34,
+                "top": 46,
+                "right": 323.2265625,
+                "bottom": 80,
+                "left": 238
+              }
+            }
+          ],
+          "dialogs": [],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 1,
+            "providers": 0,
+            "held": [],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792268107937,
+                "mode": "hold"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "final": {
+      "bundleHashes": {
+        "out/renderer/assets/index-BswJDzMY.js": "b612d676c50f5c93bb2754daa05a413a4fd441ba2e70d8d434c8c69ce717b8ab",
+        "out/renderer/assets/index-AFWnzW1L.css": "3f735ed1795b98b60212b0b80a5ddc49124a5520be7b80e32f2868027e9c3d4d",
+        "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+        "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2"
+      },
+      "snapshots": [
+        {
+          "name": "final-owned-input-held",
+          "rawSha256": "657f5f8a923e344b391db532190d4b8f8e62d8391d8f847920e07dad3abc80fb",
+          "observedAt": 1792268577316,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "INPUT",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 447,
+              "y": 367,
+              "width": 386,
+              "height": 38,
+              "top": 367,
+              "right": 833,
+              "bottom": 405,
+              "left": 447
+            },
+            "insideDrawer": false,
+            "name": "",
+            "type": null,
+            "label": "Playlist name",
+            "role": null
+          },
+          "focusScope": "New playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "label": "Playlist name",
+                  "disabled": false,
+                  "readOnly": true,
+                  "value": "Owned creation final",
+                  "active": true
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "Playlists",
+            "New playlist"
+          ],
+          "detailBacks": [],
+          "dialogs": [
+            {
+              "title": "New playlist",
+              "paragraphs": []
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [
+              "createPlaylist"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792268561916,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "final-owned-repeat-held",
+          "rawSha256": "100945c667a243e8c31867abd0aef4fe5cb31b37e3016cc9dc1f78355c2099e9",
+          "observedAt": 1792268589683,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 756.265625,
+              "y": 429,
+              "width": 76.734375,
+              "height": 34,
+              "top": 429,
+              "right": 833,
+              "bottom": 463,
+              "left": 756.265625
+            },
+            "insideDrawer": false,
+            "name": "Saving\u2026",
+            "type": null,
+            "role": null
+          },
+          "focusScope": "New playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "label": "Playlist name",
+                  "disabled": false,
+                  "readOnly": true,
+                  "value": "Owned creation final",
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": true
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "Playlists",
+            "New playlist"
+          ],
+          "detailBacks": [],
+          "dialogs": [
+            {
+              "title": "New playlist",
+              "paragraphs": []
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [
+              "createPlaylist"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792268561916,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "final-owned-list-held",
+          "rawSha256": "6036ab0e67e4d6e4f33e0f823f71c39a371b79b5fd6e2c746521b58f74b97830",
+          "observedAt": 1792268599140,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 756.265625,
+              "y": 429,
+              "width": 76.734375,
+              "height": 34,
+              "top": 429,
+              "right": 833,
+              "bottom": 463,
+              "left": 756.265625
+            },
+            "insideDrawer": false,
+            "name": "Saving\u2026",
+            "type": null,
+            "role": null
+          },
+          "focusScope": "New playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "label": "Playlist name",
+                  "disabled": false,
+                  "readOnly": true,
+                  "value": "Owned creation final",
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": true
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "Playlists",
+            "New playlist"
+          ],
+          "detailBacks": [],
+          "dialogs": [
+            {
+              "title": "New playlist",
+              "paragraphs": []
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 1,
+            "providers": 0,
+            "held": [
+              "playlists"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792268561916,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "final-owned-created-back",
+          "rawSha256": "003a191fced38208940a48659a16104378eec85ea9569082e054cb0f60dab738",
+          "observedAt": 1792268609746,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 238,
+              "y": 46,
+              "width": 85.2265625,
+              "height": 34,
+              "top": 46,
+              "right": 323.2265625,
+              "bottom": 80,
+              "left": 238
+            },
+            "insideDrawer": false,
+            "name": "Back to playlists",
+            "type": null,
+            "role": null
+          },
+          "focusScope": null,
+          "playlistForm": [],
+          "headings": [
+            "Owned creation final",
+            "This playlist is waiting for music"
+          ],
+          "detailBacks": [
+            {
+              "name": "Playlists",
+              "active": true,
+              "rect": {
+                "x": 238,
+                "y": 46,
+                "width": 85.2265625,
+                "height": 34,
+                "top": 46,
+                "right": 323.2265625,
+                "bottom": 80,
+                "left": 238
+              }
+            }
+          ],
+          "dialogs": [],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 1,
+            "providers": 0,
+            "held": [],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792268561916,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "final-backdrop-detour",
+          "rawSha256": "f08aa98060188ab8894e4021e0cd40424321d758f21a5afebcf2b20c521b4c29",
+          "observedAt": 1792268647760,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "DIALOG",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 420,
+              "y": 230,
+              "width": 440,
+              "height": 260,
+              "top": 230,
+              "right": 860,
+              "bottom": 490,
+              "left": 420
+            },
+            "insideDrawer": false,
+            "name": "New playlistPlaylist nameCancelSaving\u2026",
+            "type": null,
+            "role": null
+          },
+          "focusScope": "New playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "label": "Playlist name",
+                  "disabled": false,
+                  "readOnly": true,
+                  "value": "Backdrop creation final",
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "Playlists",
+            "New playlist"
+          ],
+          "detailBacks": [],
+          "dialogs": [
+            {
+              "title": "New playlist",
+              "paragraphs": []
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 1,
+            "providers": 0,
+            "held": [
+              "createPlaylist"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792268561916,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792268627987,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "final-backdrop-created-no-handoff",
+          "rawSha256": "dee891d14309f15de13874dc6e4487dd8efb64ab24ca4098f02c67be4725644f",
+          "observedAt": 1792268657476,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BODY",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 720,
+              "top": 0,
+              "right": 1280,
+              "bottom": 720,
+              "left": 0
+            },
+            "insideDrawer": false,
+            "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedPlaylistsPlaylist \u00b7 0 songsBackdrop creation finalPlay playlistQueueRenameThis playlist is waiting for musicSelect songs or an album in your library and choose Add to playlist.Song 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+            "type": null,
+            "role": null
+          },
+          "focusScope": null,
+          "playlistForm": [],
+          "headings": [
+            "Backdrop creation final",
+            "This playlist is waiting for music"
+          ],
+          "detailBacks": [
+            {
+              "name": "Playlists",
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 46,
+                "width": 85.2265625,
+                "height": 34,
+                "top": 46,
+                "right": 323.2265625,
+                "bottom": 80,
+                "left": 238
+              }
+            }
+          ],
+          "dialogs": [],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 2,
+            "providers": 0,
+            "held": [],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792268561916,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792268627987,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "final-hide-shortcut-not-hidden",
+          "rawSha256": "3c9d55f1cd493e05dba850e491d6fb28c371001d84a6793bca8bcfedbcfa3e94",
+          "observedAt": 1792268681075,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "INPUT",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 447,
+              "y": 367,
+              "width": 386,
+              "height": 38,
+              "top": 367,
+              "right": 833,
+              "bottom": 405,
+              "left": 447
+            },
+            "insideDrawer": false,
+            "name": "",
+            "type": null,
+            "label": "Playlist name",
+            "role": null
+          },
+          "focusScope": "New playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "label": "Playlist name",
+                  "disabled": false,
+                  "readOnly": true,
+                  "value": "Hidden creation final",
+                  "active": true
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "Playlists",
+            "New playlist"
+          ],
+          "detailBacks": [],
+          "dialogs": [
+            {
+              "title": "New playlist",
+              "paragraphs": []
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 2,
+            "providers": 0,
+            "held": [
+              "createPlaylist"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792268561916,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792268627987,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792268671967,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "final-hide-shortcut-owned-completion",
+          "rawSha256": "d2baaf19733221e3c011a7fa9acbd6397b68addc01807829daae26ab8dfb549f",
+          "observedAt": 1792268727687,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 238,
+              "y": 46,
+              "width": 85.2265625,
+              "height": 34,
+              "top": 46,
+              "right": 323.2265625,
+              "bottom": 80,
+              "left": 238
+            },
+            "insideDrawer": false,
+            "name": "Back to playlists",
+            "type": null,
+            "role": null
+          },
+          "focusScope": null,
+          "playlistForm": [],
+          "headings": [
+            "Hidden creation final",
+            "This playlist is waiting for music"
+          ],
+          "detailBacks": [
+            {
+              "name": "Playlists",
+              "active": true,
+              "rect": {
+                "x": 238,
+                "y": 46,
+                "width": 85.2265625,
+                "height": 34,
+                "top": 46,
+                "right": 323.2265625,
+                "bottom": 80,
+                "left": 238
+              }
+            }
+          ],
+          "dialogs": [],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 3,
+            "providers": 0,
+            "held": [],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792268561916,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792268627987,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792268671967,
+                "mode": "hold"
+              }
+            ]
+          }
+        }
+      ],
+      "limit": "Hide shortcut reached renderer but did not establish hidden window. Only owned completion is proven for that case. The final observer expired normally after later native targeting stalled; its report has no final snapshot."
+    },
+    "remaining": {
+      "bundleHashes": {
+        "out/renderer/assets/index-BswJDzMY.js": "b612d676c50f5c93bb2754daa05a413a4fd441ba2e70d8d434c8c69ce717b8ab",
+        "out/renderer/assets/index-AFWnzW1L.css": "3f735ed1795b98b60212b0b80a5ddc49124a5520be7b80e32f2868027e9c3d4d",
+        "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+        "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2"
+      },
+      "snapshots": [
+        {
+          "name": "remaining-reject-create-held",
+          "rawSha256": "396fcaef2803bd896b7732c8a3884e368b629aba4f9b58f92eee2d69a805d64a",
+          "observedAt": 1792281618748,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "INPUT",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 447,
+              "y": 367,
+              "width": 386,
+              "height": 38,
+              "top": 367,
+              "right": 833,
+              "bottom": 405,
+              "left": 447
+            },
+            "insideDrawer": false,
+            "name": "",
+            "type": null,
+            "label": "Playlist name",
+            "role": null
+          },
+          "focusScope": "New playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "label": "Playlist name",
+                  "disabled": false,
+                  "readOnly": true,
+                  "value": "Rejected creation verified",
+                  "active": true
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "Playlists",
+            "New playlist"
+          ],
+          "detailBacks": [],
+          "dialogs": [
+            {
+              "title": "New playlist",
+              "paragraphs": []
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [
+              "createPlaylist"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792281608505,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "remaining-reject-readback-held",
+          "rawSha256": "3454846d980c91722e4499a41bbdfa9cd686120c8910632749914015995c11f6",
+          "observedAt": 1792281630389,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 680.9140625,
+              "y": 429,
+              "width": 67.3515625,
+              "height": 34,
+              "top": 429,
+              "right": 748.265625,
+              "bottom": 463,
+              "left": 680.9140625
+            },
+            "insideDrawer": false,
+            "name": "Cancel",
+            "type": "button",
+            "role": null
+          },
+          "focusScope": "New playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "label": "Playlist name",
+                  "disabled": false,
+                  "readOnly": true,
+                  "value": "Rejected creation verified",
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": true
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "Playlists",
+            "New playlist"
+          ],
+          "detailBacks": [],
+          "dialogs": [
+            {
+              "title": "New playlist",
+              "paragraphs": []
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 1,
+            "providers": 0,
+            "held": [
+              "playlists"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792281608505,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "remaining-rejected-editable",
+          "rawSha256": "effabd7acc04d2d480fa19bd90215d9c4981f5ccaf7e87d8698b4eaeb6acbc6a",
+          "observedAt": 1792281636304,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 658.8125,
+              "y": 460.8984375,
+              "width": 67.3515625,
+              "height": 34,
+              "top": 460.8984375,
+              "right": 726.1640625,
+              "bottom": 494.8984375,
+              "left": 658.8125
+            },
+            "insideDrawer": false,
+            "name": "Cancel",
+            "type": "button",
+            "role": null
+          },
+          "focusScope": "New playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "label": "Playlist name",
+                  "disabled": false,
+                  "readOnly": false,
+                  "value": "Rejected creation verified",
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": true
+                },
+                {
+                  "name": "Save playlist",
+                  "disabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "Playlists",
+            "New playlist"
+          ],
+          "detailBacks": [],
+          "dialogs": [
+            {
+              "title": "New playlist",
+              "paragraphs": []
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 1,
+            "providers": 0,
+            "held": [],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792281608505,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "remaining-retry-created-back",
+          "rawSha256": "f247a9a5bc34f1cad1b9cae06b3a2d23ff36e30e76fced9b6411587eb0528ecd",
+          "observedAt": 1792281641626,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 238,
+              "y": 46,
+              "width": 85.2265625,
+              "height": 34,
+              "top": 46,
+              "right": 323.2265625,
+              "bottom": 80,
+              "left": 238
+            },
+            "insideDrawer": false,
+            "name": "Back to playlists",
+            "type": null,
+            "role": null
+          },
+          "focusScope": null,
+          "playlistForm": [],
+          "headings": [
+            "Rejected creation verified",
+            "This playlist is waiting for music"
+          ],
+          "detailBacks": [
+            {
+              "name": "Playlists",
+              "active": true,
+              "rect": {
+                "x": 238,
+                "y": 46,
+                "width": 85.2265625,
+                "height": 34,
+                "top": 46,
+                "right": 323.2265625,
+                "bottom": 80,
+                "left": 238
+              }
+            }
+          ],
+          "dialogs": [],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 2,
+            "providers": 0,
+            "held": [],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792281608505,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792281639034,
+                "mode": "normal"
+              }
+            ]
+          }
+        },
+        {
+          "name": "remaining-rename-held",
+          "rawSha256": "4209c12cd8ac1cb05a318380c4ba530990645ed529c0dd1044a9fbac120c1585",
+          "observedAt": 1792281663065,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 756.265625,
+              "y": 429,
+              "width": 76.734375,
+              "height": 34,
+              "top": 429,
+              "right": 833,
+              "bottom": 463,
+              "left": 756.265625
+            },
+            "insideDrawer": false,
+            "name": "Saving\u2026",
+            "type": null,
+            "role": null
+          },
+          "focusScope": "Rename playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "label": "Playlist name",
+                  "disabled": false,
+                  "readOnly": true,
+                  "value": "Rename verified",
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": true
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "Rejected creation verified",
+            "This playlist is waiting for music",
+            "Rename playlist"
+          ],
+          "detailBacks": [
+            {
+              "name": "Playlists",
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 46,
+                "width": 85.2265625,
+                "height": 34,
+                "top": 46,
+                "right": 323.2265625,
+                "bottom": 80,
+                "left": 238
+              }
+            }
+          ],
+          "dialogs": [
+            {
+              "title": "Rename playlist",
+              "paragraphs": []
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 2,
+            "providers": 0,
+            "held": [
+              "renamePlaylist"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792281608505,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792281639034,
+                "mode": "normal"
+              },
+              {
+                "name": "renamePlaylist",
+                "at": 1792281654505,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "remaining-rename-restored",
+          "rawSha256": "e5dc871b7fabdbe1d25f01e98465eadb11f5981f5d390820359331608efba3bd",
+          "observedAt": 1792281669135,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 635.3046875,
+              "y": 193.1953125,
+              "width": 96.8828125,
+              "height": 34,
+              "top": 193.1953125,
+              "right": 732.1875,
+              "bottom": 227.1953125,
+              "left": 635.3046875
+            },
+            "insideDrawer": false,
+            "name": "Rename",
+            "type": null,
+            "role": null
+          },
+          "focusScope": null,
+          "playlistForm": [],
+          "headings": [
+            "Rename verified",
+            "This playlist is waiting for music"
+          ],
+          "detailBacks": [
+            {
+              "name": "Playlists",
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 46,
+                "width": 85.2265625,
+                "height": 34,
+                "top": 46,
+                "right": 323.2265625,
+                "bottom": 80,
+                "left": 238
+              }
+            }
+          ],
+          "dialogs": [],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 3,
+            "providers": 0,
+            "held": [],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792281608505,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792281639034,
+                "mode": "normal"
+              },
+              {
+                "name": "renamePlaylist",
+                "at": 1792281654505,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "remaining-cancel-restored",
+          "rawSha256": "8123f18cc9c0012dacc30e3757298a0c3054a503307297fa6b286a31a7f4f32f",
+          "observedAt": 1792281674435,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 635.3046875,
+              "y": 193.1953125,
+              "width": 96.8828125,
+              "height": 34,
+              "top": 193.1953125,
+              "right": 732.1875,
+              "bottom": 227.1953125,
+              "left": 635.3046875
+            },
+            "insideDrawer": false,
+            "name": "Rename",
+            "type": null,
+            "role": null
+          },
+          "focusScope": null,
+          "playlistForm": [],
+          "headings": [
+            "Rename verified",
+            "This playlist is waiting for music"
+          ],
+          "detailBacks": [
+            {
+              "name": "Playlists",
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 46,
+                "width": 85.2265625,
+                "height": 34,
+                "top": 46,
+                "right": 323.2265625,
+                "bottom": 80,
+                "left": 238
+              }
+            }
+          ],
+          "dialogs": [],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 3,
+            "providers": 0,
+            "held": [],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792281608505,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792281639034,
+                "mode": "normal"
+              },
+              {
+                "name": "renamePlaylist",
+                "at": 1792281654505,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "remaining-uncertain-no-repeat",
+          "rawSha256": "15090467796866fd6b92b07cd7e5f2585c7d8ca4958eadbeea7262bf069e9808",
+          "observedAt": 1792281693126,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 734.1640625,
+              "y": 499.4921875,
+              "width": 98.8359375,
+              "height": 34,
+              "top": 499.4921875,
+              "right": 833,
+              "bottom": 533.4921875,
+              "left": 734.1640625
+            },
+            "insideDrawer": false,
+            "name": "Save playlist",
+            "type": null,
+            "role": null
+          },
+          "focusScope": "New playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "label": "Playlist name",
+                  "disabled": false,
+                  "readOnly": true,
+                  "value": "Uncertain creation verified",
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Close and check playlists",
+                  "disabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Save playlist",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": true
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "Playlists",
+            "New playlist"
+          ],
+          "detailBacks": [],
+          "dialogs": [
+            {
+              "title": "New playlist",
+              "paragraphs": [
+                "The change may already be saved. Close this dialog and check Jellyfin's refreshed playlists before trying again."
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 4,
+            "providers": 0,
+            "held": [],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792281608505,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792281639034,
+                "mode": "normal"
+              },
+              {
+                "name": "renamePlaylist",
+                "at": 1792281654505,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792281686006,
+                "mode": "normal"
+              }
+            ]
+          }
+        },
+        {
+          "name": "remaining-uncertain-list-heading",
+          "rawSha256": "e588a51d213a4e4b8252f92ccc8f71173aa2f90a600b3bc1f565d3edc2937409",
+          "observedAt": 1792281699333,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "H1",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 238,
+              "y": 48.078125,
+              "width": 244.0625,
+              "height": 36.3984375,
+              "top": 48.078125,
+              "right": 482.0625,
+              "bottom": 84.4765625,
+              "left": 238
+            },
+            "insideDrawer": false,
+            "name": "Playlists",
+            "type": null,
+            "role": null
+          },
+          "focusScope": null,
+          "playlistForm": [],
+          "headings": [
+            "Playlists"
+          ],
+          "detailBacks": [],
+          "dialogs": [],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 4,
+            "providers": 0,
+            "held": [],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792281608505,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792281639034,
+                "mode": "normal"
+              },
+              {
+                "name": "renamePlaylist",
+                "at": 1792281654505,
+                "mode": "hold"
+              },
+              {
+                "name": "createPlaylist",
+                "at": 1792281686006,
+                "mode": "normal"
+              }
+            ]
+          }
+        }
+      ],
+      "writeAccounting": "Four actual synthetic POST attempts: one rejected create, one explicitly retried successful create, one successful rename and one saved create without confirmation. Repeated pending/uncertain keys make no extra POST.",
+      "report": {
+        "result": "observed",
+        "errors": [],
+        "finalWrites": 4
+      }
+    },
+    "windowCloseAttempts": {
+      "snapshots": [
+        {
+          "name": "background-window-close-held",
+          "rawSha256": "db792e0b81d725efda4645aae5eca3a61abaaa1d3bb8daeaf96f56d626a4ac41",
+          "observedAt": 1792314018051,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "INPUT",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 447,
+              "y": 367,
+              "width": 386,
+              "height": 38,
+              "top": 367,
+              "right": 833,
+              "bottom": 405,
+              "left": 447
+            },
+            "insideDrawer": false,
+            "name": "",
+            "type": null,
+            "label": "Playlist name",
+            "role": null
+          },
+          "focusScope": "New playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "label": "Playlist name",
+                  "disabled": false,
+                  "readOnly": true,
+                  "value": "Window close verified",
+                  "active": true
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "Playlists",
+            "New playlist"
+          ],
+          "detailBacks": [],
+          "dialogs": [
+            {
+              "title": "New playlist",
+              "paragraphs": []
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [
+              "createPlaylist"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792313992058,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "background-native-close-held",
+          "rawSha256": "84504325f14cf8f82559260de32209e9064a24c3a97e63a2777c4141b6ea1213",
+          "observedAt": 1792314025277,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "INPUT",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 447,
+              "y": 367,
+              "width": 386,
+              "height": 38,
+              "top": 367,
+              "right": 833,
+              "bottom": 405,
+              "left": 447
+            },
+            "insideDrawer": false,
+            "name": "",
+            "type": null,
+            "label": "Playlist name",
+            "role": null
+          },
+          "focusScope": "New playlist",
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "label": "Playlist name",
+                  "disabled": false,
+                  "readOnly": true,
+                  "value": "Window close verified",
+                  "active": true
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Cancel",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "headings": [
+            "Playlists",
+            "New playlist"
+          ],
+          "detailBacks": [],
+          "dialogs": [
+            {
+              "title": "New playlist",
+              "paragraphs": []
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [
+              "createPlaylist"
+            ],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792313992058,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "background-close-attempt-completed",
+          "rawSha256": "63d8f95d46ec5953cdee4e5eb918ef787882874bddd9328792a5a766672c16f0",
+          "observedAt": 1792314031897,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 238,
+              "y": 46,
+              "width": 85.2265625,
+              "height": 34,
+              "top": 46,
+              "right": 323.2265625,
+              "bottom": 80,
+              "left": 238
+            },
+            "insideDrawer": false,
+            "name": "Back to playlists",
+            "type": null,
+            "role": null
+          },
+          "focusScope": null,
+          "playlistForm": [],
+          "headings": [
+            "Window close verified",
+            "This playlist is waiting for music"
+          ],
+          "detailBacks": [
+            {
+              "name": "Playlists",
+              "active": true,
+              "rect": {
+                "x": 238,
+                "y": 46,
+                "width": 85.2265625,
+                "height": 34,
+                "top": 46,
+                "right": 323.2265625,
+                "bottom": 80,
+                "left": 238
+              }
+            }
+          ],
+          "dialogs": [],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "main": {
+            "writes": 1,
+            "providers": 0,
+            "held": [],
+            "mutationCalls": [
+              {
+                "name": "createPlaylist",
+                "at": 1792313992058,
+                "mode": "hold"
+              }
+            ]
+          }
+        }
+      ],
+      "limit": "Command-W followed by AX observation, then native close click without an observation, did not establish documentFocus=false or visibility=hidden. Completion stayed visible and owned. This is not a hidden-window guard pass.",
+      "finalWrites": 1
+    }
+  },
+  "checks": {
+    "productionBuild": "Passed including TypeScript on final source before native verification; bundle hashes revalidated after verification.",
+    "eslint": "Passed full ESLint on final source. No source edits followed.",
+    "nativePredicates": "Before BODY reproduction, final owned Back focus, backdrop suppression, held error readback, editable rejection, explicit retry, pending rename duplicate suppression, Rename restoration, cancel without write, uncertain no-repeat and heading fallback pass.",
+    "savedPlayback": "Every final/remaining/window-attempt snapshot has identical actual disposable-file playback: duplicate queue occurrence, position12, volume0.42, shuffle=false, repeat=off; transport remains paused.",
+    "processes": "All owned observer processes exited0; verified server PID2247 stopped and session7859 exited143.",
+    "reports": {
+      "before": {
+        "rawSha256": "3ed955efd9f7b31b2f1e8dc694d7929bafc501c06626348a8528fcdf0b70a1d8",
+        "result": "observed",
+        "errors": []
+      },
+      "final": {
+        "rawSha256": "8bb5df7e401fa4d30550e9588bd0963751a7f24a6c680cdea273efc5e1c255b0",
+        "result": "observed",
+        "errors": []
+      },
+      "remaining-identified": {
+        "rawSha256": "ee334f7c40b43e40de04b58514bdd87a7628b7b2aa6cf578ac5c052d311b4da4",
+        "result": "observed",
+        "errors": []
+      },
+      "background": {
+        "rawSha256": "1a511b71013518016a1e0059389f04e60a23340177a55572c27526893dfa3f4f",
+        "result": "observed",
+        "errors": []
+      }
+    }
+  },
+  "fixture": {
+    "input": "All UI actions via native CUA. Playwright only launches and observes.",
+    "data": "Disposable synthetic localhost catalog and safeStorage, muted media, stopped scheduler, null shared-key adapter. Actual production renderer/preload; copied instrumented main/storage.",
+    "writes": "Only synthetic POST /Playlists and POST /Playlists/<id> allowed by explicit fixture flags. All external/provider requests and other writes blocked. No live-server write.",
+    "identityCorrection": "After the original Electron binding selected a separate live development window, no UI action was sent there. That no-input observer was stopped. Later phases use a copied Electron bundle with local.onmywave.playlist-verification identity. Installed Electron bundle unchanged.",
+    "launchLimits": "One sandbox launch failed before startup; approved native launch succeeded. A pre-backdrop build was launched without UI input and discarded. Dock selection in the earlier final phase stalled and timed out; no Dock retry.",
+    "hashes": {
+      "observe.cjs": "575df54c4cfc0cb65ad17964e61dca85b59e1bde0f0023a18e0446d51407365f",
+      "bootstrap.mjs": "91e061e858c0fcd067534ac8e2e72a76df7a2e4de6b48b2baf2cc5784db3bec9",
+      "server.mjs": "ab838b4d180752da0502ddaaf79c57a28ca49a005aff3c3e55b4e067299e4e78"
+    },
+    "beforeFixtureHashes": {
+      "bootstrap.mjs": "c79f5ab73c54e11424c731053eb5cbf8c4e3ddaf985d7d672105394ac85bf125",
+      "build.mjs": "9f7427138b8126114d2b2dc7eae67d2cf82aeafed5d6c7f2869ae0df5ec96913",
+      "observe.cjs": "8d091c290b1025f138cf75216d291b550a14348fe339be2ac5d3ccd0ff9f894e",
+      "server.mjs": "ab838b4d180752da0502ddaaf79c57a28ca49a005aff3c3e55b4e067299e4e78"
+    }
+  },
+  "sourceHashes": {
+    "src/renderer/App.tsx": "a598265408255fc79db070fe71a98abe75f473fccbb2e8b208ddce0cd4140866",
+    "src/renderer/components/Shared.tsx": "57fe87a92034d3088c78b22c8bb205ca4a89750a99b51e5f5e85ae879c7a7967",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "21e9ce748f2c1a1407eb62a0e56bf348f2fde9e9c80b879a8ab789f2878d3a47",
+    "src/renderer/styles.css": "b4cfa77bde472f442c2bfa6bacca3a399eb0a2cba92f6b1fb7f565fc6ab8a6eb"
+  },
+  "acceptance": {
+    "rows": 191,
+    "active": 189,
+    "deferred": 2,
+    "open": 27,
+    "listener": 14,
+    "otherProof": 13,
+    "statusChanges": [],
+    "Q06": "Review for complete app-wide controls and conditional states."
+  },
+  "limits": [
+    "No VoiceOver, physical media controls, audible quality, listener, live-provider/server, platform matrix, release or deferred viewport/zoom pass.",
+    "Overlay and hidden-window cancellation have source review, not a successful new native background pass.",
+    "Synthetic missing-confirmation proves UI lock/no repeat; no new durable recovery journal protocol proof.",
+    "Local raw observations retain timestamps; dated earlier source maps and provenance audit are not refreshed by this record."
+  ],
+  "sourceTraceSupplement": [
+    {
+      "file": "REQUIREMENTS.md",
+      "line": 184,
+      "text": "- Create a playlist, rename an editable playlist, and open its track list. While saving, keep the name readable and keyboard focus within the dialog; repeated Save, Cancel, Close or Escape cannot repeat or interrupt the pending change. A confirmed creation opens its detail and focuses Back to playlists when the dialog still owns the interaction. Internal Tab movement keeps that ownership; an outside action, overlay or background window cancels the handoff. Definite failure keeps the draft editable after readback. An uncertain result locks Save and offers checking refreshed playlists. Rename and ordinary cancellation restore their opener.",
+      "sha256": "642a1191eb973a6980cd841941fe8904632071b669a18281e70218f8281031e2"
+    },
+    {
+      "file": "docs/RADIO_EXPERIENCE.md",
+      "line": 137,
+      "text": "| M6 | I can edit playlists without repeating uncertain changes | My account may edit a shared playlist, or a save loses its response | Attempt the allowed action; inspect refreshed order after an uncertain result | Creating or renaming keeps the name readable and focus within the pending dialog; repeated save/dismiss keys cannot repeat the change; confirmed creation opens its detail on Back while the modal still owns interaction, including internal Tab movement; outside actions, overlays or backgrounding cancel that focus handoff; definite rejection retains the editable draft after readback, uncertain saves stay locked, and rename/cancel restore their opener; Jellyfin authorizes unknown permissions, explicit read-only stays disabled, unconfirmed permission never claims read-only or hides otherwise readable tracks, auth/account or playlist-data failures still surface, errors remain visible, and an uncertain reorder/removal needs successful refresh plus acknowledgement before editing continues; pending/error/review state survives page changes, playlist switches, library saves and same-account sign-in; after restart an unresolved addition/reorder/removal still needs a fresh detail read and explicit acknowledgement, without replay; an uncertain creation requires checking the refreshed playlist list before another create; affected playlist tiles say Review needed and their Add destinations are disabled, with an explanation and direct Review playlists action in the Add dialog; failed duplicate reads and empty additions leave no false lock; other playlists/accounts remain usable and returning to the original account retains its unresolved change; repeated positions select and play independently; if the server cannot identify an occurrence separately, explain unavailable Move/Remove actions while retaining listening and safe edits; changing entries clears unreliable selections and preserves uniquely identified ones |",
+      "sha256": "94a8108ba90acb5650a55d9183f5faac3acbee82e30b2a644b8cdbf031a3efcc"
+    }
+  ]
+}

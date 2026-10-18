@@ -69,3 +69,5 @@ input[type=checkbox]{accent-color:var(--accent)}
 
 .notice.error button[aria-disabled="true"] { cursor:progress; color:var(--muted); }
 .notice.error button[aria-disabled="true"]:active { translate:0 0; }
+.modal-actions button[aria-disabled="true"] { cursor:progress; color:var(--muted); background:var(--surface); }
+.modal-actions button[aria-disabled="true"]:active { translate:0 0; background:var(--surface); }

@@ -181,7 +181,7 @@ Metadata includes artwork, title, artist, album artist, album, duration, year, g
 
 - Show the connected account's accessible playlists.
 
-- Create a playlist, rename an editable playlist, and open its track list.
+- Create a playlist, rename an editable playlist, and open its track list. While saving, keep the name readable and keyboard focus within the dialog; repeated Save, Cancel, Close or Escape cannot repeat or interrupt the pending change. A confirmed creation opens its detail and focuses Back to playlists when the dialog still owns the interaction. Internal Tab movement keeps that ownership; an outside action, overlay or background window cancels the handoff. Definite failure keeps the draft editable after readback. An uncertain result locks Save and offers checking refreshed playlists. Rename and ordinary cancellation restore their opener.
 
 - Add one song, multiple selected songs, or all tracks from an album.
 
