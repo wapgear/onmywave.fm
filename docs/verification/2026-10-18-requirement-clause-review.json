@@ -21,8 +21,8 @@
     "STARStories": 27,
     "STARResultFragments": 265,
     "structuralLines": 47,
-    "semanticFragmentsReviewed": 264,
-    "proofFragmentsReviewed": 262,
+    "semanticFragmentsReviewed": 284,
+    "proofFragmentsReviewed": 282,
     "partitionComplete": true,
     "semanticDenominatorComplete": false,
     "overallScore": null,
@@ -38,7 +38,7 @@
     "listenerOpenChecks": 14,
     "otherProofOpenChecks": 11,
     "contextFragmentsReviewed": 1,
-    "canonicalReviewGroups": 38,
+    "canonicalReviewGroups": 45,
     "acceptedCanonicalGroups": 0
   },
   "STARContexts": [
@@ -78,7 +78,7 @@
         "RAD-L092-result-12",
         "RAD-L092-result-13"
       ],
-      "contextReviewState": "pending"
+      "contextReviewState": "reviewed-partial; current ordinary native setup plus source/dated variant review linked; whole-story acceptance incomplete"
     },
     {
       "id": "R3",
@@ -718,7 +718,7 @@
   },
   "clauseLedger": {
     "file": "2026-10-18-requirement-clauses.csv",
-    "sha256": "b671e6f10197903fcd1d6aba41afaf3c855a4b0d07e233b42a7a64372c033787",
+    "sha256": "a8bfd6a51680f03d1213427c33c8406043ac3c1c6d7725ad071cd2580db01d19",
     "columns": "Candidate navigation, semantic review and actual proof review are distinct. Empty evidence/canonical IDs do not establish completion."
   },
   "scopeReviews": [
@@ -778,6 +778,11 @@
       "file": "2026-10-19-playback-obligations.json",
       "sha256": "cdbe4d0d5eae37bc8e763171c4f02dce3ca14835c549848be1c78f254698bdac",
       "meaning": "Eleven playback groups,94 new fragments plus retained VOL01 clauses and six whole STAR contexts;source/dated proof review and paired MediaSession decision only,no accepted groups."
+    },
+    {
+      "file": "2026-10-19-radio-setup-obligations.json",
+      "sha256": "ef53bbb57269f6e0d8b66546266dea01d35381f620d4b208ae8f9e6e9d793da6",
+      "meaning": "Seven setup/profile groups,20 exact fragments and full R2 context; current source and dated evidence scope review only; no accepted groups."
     }
   ],
   "generatorMeaning": "Original mechanical partition generator only. Later deliberate semantic/proof annotations are authoritative and must be preserved; rerunning the original generator alone would discard them.",
