@@ -1,0 +1,236 @@
+{
+  "date": "2026-10-19",
+  "baseCommit": "83274d4f5195ea0ade3124aab96d2340fe38fd59",
+  "scope": "MF01 direct current startup evidence for missing legacy preparation/DJ flags and a malformed enabled string.",
+  "method": {
+    "native": "Two separate Electron processes with disposable encrypted localhost connections and actual local-state.json seeds. Actual storage loader, main and production renderer/preload. News scheduler remains active.",
+    "input": "CUA opens News bucket from All songs. Playwright only launches/closes and passively observes. 1280x720 at100% zoom.",
+    "substitutions": "Disposable empty localhost Jellyfin catalog;shared-key adapter returns null and rejects shared writes. External fetches are recorded and blocked. No media is selected."
+  },
+  "cases": {
+    "missing-flags": {
+      "input": {
+        "workflowDraft": {
+          "everyHours": 3,
+          "importance": "major",
+          "maxNewsClipsPerDay": 3,
+          "morning": {
+            "includeWeather": false,
+            "city": "",
+            "localTime": "08:00",
+            "timeZone": "UTC",
+            "units": "celsius"
+          }
+        },
+        "djs": [],
+        "sources": [],
+        "listeningRoom": {
+          "djId": null,
+          "sourceIds": []
+        }
+      },
+      "normalized": {
+        "workflowDraft": {
+          "newsEnabled": false,
+          "everyHours": 3,
+          "importance": "major",
+          "maxNewsClipsPerDay": 3,
+          "morning": {
+            "includeWeather": false,
+            "city": "",
+            "localTime": "08:00",
+            "timeZone": "UTC",
+            "units": "celsius"
+          }
+        },
+        "djPlayback": {
+          "enabled": false,
+          "roomId": null,
+          "everySongs": 3,
+          "keepOnSeek": true,
+          "voiceVolume": 0.7
+        },
+        "profileWorkflow": {
+          "newsEnabled": false,
+          "everyHours": 3,
+          "importance": "major",
+          "maxNewsClipsPerDay": 3,
+          "morning": {
+            "includeWeather": false,
+            "city": "",
+            "localTime": "08:00",
+            "timeZone": "UTC",
+            "units": "celsius"
+          }
+        }
+      },
+      "visible": {
+        "preparationOff": true,
+        "automaticPlaybackOff": true,
+        "headings": [
+          "News bucket",
+          "What your DJ will say"
+        ]
+      },
+      "fetches": [
+        {
+          "origin": "http://127.0.0.1:5212",
+          "path": "/Users/00000000000000000000000000000001/Items",
+          "method": "GET"
+        },
+        {
+          "origin": "http://127.0.0.1:5212",
+          "path": "/Items/Filters",
+          "method": "GET"
+        }
+      ],
+      "ipcNames": [
+        "getAiStatus",
+        "getConnection",
+        "getElevenLabsStatus",
+        "getLocalState",
+        "getNewsRecoveryStatus",
+        "getPlaybackPreferences",
+        "getPreparedNews",
+        "libraryFilters",
+        "savePlayback",
+        "songs"
+      ],
+      "snapshotSha256": "9625cbe8ecc2ed7b9a5fd4244c293bfb78a17faeae188d90a620e02a7b800dc3",
+      "reportSha256": "6b459bfa13c42236a638528f2d4f53a93a3067b1ebbbaba87cb2db9596746d21",
+      "rendererErrors": []
+    },
+    "invalid-dj": {
+      "input": {
+        "workflowDraft": {
+          "everyHours": 3,
+          "importance": "major",
+          "maxNewsClipsPerDay": 3,
+          "morning": {
+            "includeWeather": false,
+            "city": "",
+            "localTime": "08:00",
+            "timeZone": "UTC",
+            "units": "celsius"
+          },
+          "newsEnabled": false
+        },
+        "djs": [],
+        "sources": [],
+        "listeningRoom": {
+          "djId": null,
+          "sourceIds": []
+        },
+        "djPlayback": {
+          "enabled": "true",
+          "roomId": "default-room",
+          "everySongs": 3,
+          "keepOnSeek": true,
+          "voiceVolume": 0.7
+        }
+      },
+      "normalized": {
+        "workflowDraft": {
+          "newsEnabled": false,
+          "everyHours": 3,
+          "importance": "major",
+          "maxNewsClipsPerDay": 3,
+          "morning": {
+            "includeWeather": false,
+            "city": "",
+            "localTime": "08:00",
+            "timeZone": "UTC",
+            "units": "celsius"
+          }
+        },
+        "djPlayback": {
+          "enabled": false,
+          "roomId": null,
+          "everySongs": 3,
+          "keepOnSeek": true,
+          "voiceVolume": 0.7
+        },
+        "profileWorkflow": {
+          "newsEnabled": false,
+          "everyHours": 3,
+          "importance": "major",
+          "maxNewsClipsPerDay": 3,
+          "morning": {
+            "includeWeather": false,
+            "city": "",
+            "localTime": "08:00",
+            "timeZone": "UTC",
+            "units": "celsius"
+          }
+        }
+      },
+      "visible": {
+        "preparationOff": true,
+        "automaticPlaybackOff": true,
+        "headings": [
+          "News bucket",
+          "What your DJ will say"
+        ]
+      },
+      "fetches": [
+        {
+          "origin": "http://127.0.0.1:5212",
+          "path": "/Users/00000000000000000000000000000001/Items",
+          "method": "GET"
+        },
+        {
+          "origin": "http://127.0.0.1:5212",
+          "path": "/Items/Filters",
+          "method": "GET"
+        }
+      ],
+      "ipcNames": [
+        "getAiStatus",
+        "getConnection",
+        "getElevenLabsStatus",
+        "getLocalState",
+        "getNewsRecoveryStatus",
+        "getPlaybackPreferences",
+        "getPreparedNews",
+        "libraryFilters",
+        "savePlayback",
+        "songs"
+      ],
+      "snapshotSha256": "f2e4ce54a4211d2e0163437575cd6d9bfc4b69fce4949e1250731957db17e82a",
+      "reportSha256": "5cdb05abac5567d40c7729a810b96867ceb99cb1d17b520054de1ba12ff268ce",
+      "rendererErrors": []
+    }
+  },
+  "sourceSha256": {
+    "src/main/storage.ts": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+    "src/main/index.ts": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+    "src/main/news-workflow.ts": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+    "src/shared/workflow.ts": "22bbb66493579cc57e09c69119943adec0fa2373d823820a2579bd4996e6cc77",
+    "src/shared/dj-playback.ts": "7e807ff052f50332ff9c78b083c450a9f5c116f68fc36de93480165ec1e6e55b",
+    "src/renderer/dj-playback.tsx": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52"
+  },
+  "fixtureSha256": {
+    "/private/tmp/legacy-radio-startup-current/build.mjs": "318b5a12336ee80b50a7d6b9651c77c01a2c61afb137e2a7aec09ba79cdbbd0a",
+    "/private/tmp/legacy-radio-startup-current/bootstrap.mjs": "0e05a7988ebd37f832ad407df42c995fe0ade0b4d266bb2a775d7e36070dd3e6",
+    "/private/tmp/legacy-radio-startup-current/server.mjs": "968b150a5efb2956f69ff649b76485e839243ce94b573aea33a3201b8650a7b8",
+    "/private/tmp/legacy-radio-startup-current/observe.cjs": "7c2de7b2e8196cd3d36dba1b41b96643a6e6880f854c0a0648576fc825f13d45",
+    "/private/tmp/legacy-radio-startup-current/out/main/index.js": "4df82687c416e85c2bfe6ebe7d75df0089ffacd578105c11d0d2ecc4c58a1be7"
+  },
+  "adjudication": {
+    "canonicalGroup": "MF01",
+    "result": "Previously source-only missing/invalid default branches now have direct actual-storage/native examples. Both switches stay off and no source/provider fetch occurs during either observation.",
+    "accepted": false,
+    "remaining": "Independent opt-ins retain MF03/MF04 evidence and required proof;these two startup examples do not accept every compound fragment or the whole group.",
+    "knownOpenChecks": 25
+  },
+  "validation": {
+    "reports": "Two observer exits0,zero renderer errors;owned server stopped130.",
+    "buildLint": "No app code changes. Fixture main bundled from current source;existing PR128 build/type/lint evidence remains scoped to identical app source. No repeated full build or lint.",
+    "unitTests": "Not added or run."
+  },
+  "limits": [
+    "Representative missing and malformed enabled-value branches,not every possible damaged settings file. Invalid stored profile structure retains its separate storage recovery contract.",
+    "No preparation/provider dispatch, paid work,live Jellyfin,music playback,audible quality,OS media control or listener study.",
+    "No deferred viewport or zoom check. No complete semantic denominator,overall percentage or goal completion claim."
+  ]
+}
