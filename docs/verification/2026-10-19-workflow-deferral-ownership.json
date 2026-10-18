@@ -1,0 +1,710 @@
+{
+  "date": "2026-10-19",
+  "baseCommit": "3ede1dc840f83c46442e024c811ed61e06efb07a",
+  "scope": "Scheduler deferral and unused reservation rollback ownership. Actual storage/scheduler/prepared-manifest integration,not a new native/full-signout/live-provider result.",
+  "problem": "replaceWorkflow compared producer configuration but replaced an entire older workflow. Queued busy/quota deferrals could clear a newer pause,error,result,counter or schedule. Collision rollback reread latest state but restored older counters/run metadata without ownership checks.",
+  "change": [
+    "Deferral requires unchanged producer and observed workflow,checks current eligibility/due state,and patches only the next-check timestamp onto latest state. Recompute quota using the current local day inside the serialized updater.",
+    "Capture before/started workflow at reservation. Collision cleanup requires this exact request,start time and running outcome. Restore assessment fields only while the reserved date/count still match;leave newer counters untouched. Restore the prior run while carrying setupChanged. Change retry time only while the reservation still owns the schedule and current profile remains eligible/config-current.",
+    "Retain immutable preparation input snapshot and finishRun semantics. Conservative rejected deferrals are reevaluated on a later minute tick."
+  ],
+  "pairedDecision": {
+    "Boris": "Proposed whole-workflow compare-and-replace plus eligibility/owned rollback. Challenge identified false-running reservation risk after benign edits;recommended narrow patches and reservation-owned cleanup. Final actual-diff/evidence review support,no blocker.",
+    "Nadia": "Proposed latest-state patches and precise rollback ownership. Challenge accepted conservative deferral CAS,required current-day quota recomputation and warned about stranded reservations. Final review support,no blocker.",
+    "Morgan": "Use conservative observed-workflow check for deferrals with a latest-state timestamp patch,and a separate field-owned rollback that can clear its own unused reservation while preserving newer edits. Root owns all source changes."
+  },
+  "method": {
+    "storage": "Actual storage.ts serialized updateLocalState,private temporary files,atomic temp write/rename and prepared-news.ts manifest/active request state. Each case has a fresh Node process and temporary user-data directory.",
+    "adapters": "Electron app.getPath points to disposable data;safeStorage availability false and shared-key reader null. No real credentials or native encryption exercised. A controlled NewsService facade holds manual text preparation without network or provider work.",
+    "queueRace": "Gate real local-state publication after temp-file write. While the newer update waits,the scheduler reads old cached state and queues its deferral behind the newer write;release publication and inspect final cache and disk. Notification hook observes deferral entry without changing its result.",
+    "collisionRace": "Hold the scheduler after reservation,begin a real prepared-news manual request,commit another workflow update,then release. The actual prepared operation rejects concurrent work and the scheduler performs its cleanup.",
+    "newerMetadata": "New counter,result,error,run and schedule values are injected through actual serialized storage updates. A prepared outcome here models metadata ownership;it is not a newly published recording.",
+    "midnight": "One case advances only the fixture Date clock after the old decision is queued,then checks current-day quota in the updater. No actual sleep or OS clock change.",
+    "signoutScope": "Pause updates use the same saved paused/next-check shape and generation invalidation as sign-out. Full main sign-out IPC/credential removal/native flow is not run."
+  },
+  "cases": [
+    {
+      "name": "busy-counter",
+      "beforePreserved": false,
+      "afterPreserved": true,
+      "afterDiskMatches": true,
+      "finalWorkflow": {
+        "newsEnabled": true,
+        "everyHours": 3,
+        "importance": "major",
+        "maxNewsClipsPerDay": 3,
+        "morning": {
+          "includeWeather": false,
+          "city": "",
+          "localTime": "08:00",
+          "timeZone": "Europe/Madrid",
+          "units": "celsius"
+        },
+        "newsAssessmentDate": "2026-10-19",
+        "newsAssessmentsToday": 3,
+        "newsLastRun": {
+          "requestId": "prior-run",
+          "startedAt": "2026-10-18T22:52:41.208Z",
+          "finishedAt": "2026-10-18T22:54:21.208Z",
+          "outcome": "no-news"
+        }
+      }
+    },
+    {
+      "name": "busy-error",
+      "beforePreserved": false,
+      "afterPreserved": true,
+      "afterDiskMatches": true,
+      "finalWorkflow": {
+        "newsEnabled": true,
+        "everyHours": 3,
+        "importance": "major",
+        "maxNewsClipsPerDay": 3,
+        "morning": {
+          "includeWeather": false,
+          "city": "",
+          "localTime": "08:00",
+          "timeZone": "Europe/Madrid",
+          "units": "celsius"
+        },
+        "newsAssessmentDate": "2026-10-19",
+        "newsAssessmentsToday": 1,
+        "newsLastRun": {
+          "requestId": "prior-run",
+          "startedAt": "2026-10-18T22:52:41.317Z",
+          "finishedAt": "2026-10-18T22:54:21.317Z",
+          "outcome": "no-news"
+        },
+        "newsWorkflowError": "New saved failure"
+      }
+    },
+    {
+      "name": "busy-pause",
+      "beforePreserved": false,
+      "afterPreserved": true,
+      "afterDiskMatches": true,
+      "finalWorkflow": {
+        "newsEnabled": true,
+        "everyHours": 3,
+        "importance": "major",
+        "maxNewsClipsPerDay": 3,
+        "morning": {
+          "includeWeather": false,
+          "city": "",
+          "localTime": "08:00",
+          "timeZone": "Europe/Madrid",
+          "units": "celsius"
+        },
+        "newsAssessmentDate": "2026-10-19",
+        "newsAssessmentsToday": 1,
+        "newsLastRun": {
+          "requestId": "prior-run",
+          "startedAt": "2026-10-18T22:52:41.155Z",
+          "finishedAt": "2026-10-18T22:54:21.155Z",
+          "outcome": "no-news"
+        },
+        "newsWorkflowPaused": true
+      }
+    },
+    {
+      "name": "busy-result",
+      "beforePreserved": false,
+      "afterPreserved": true,
+      "afterDiskMatches": true,
+      "finalWorkflow": {
+        "newsEnabled": true,
+        "everyHours": 3,
+        "importance": "major",
+        "maxNewsClipsPerDay": 3,
+        "morning": {
+          "includeWeather": false,
+          "city": "",
+          "localTime": "08:00",
+          "timeZone": "Europe/Madrid",
+          "units": "celsius"
+        },
+        "newsAssessmentDate": "2026-10-19",
+        "newsAssessmentsToday": 1,
+        "newsLastRun": {
+          "requestId": "prior-run",
+          "startedAt": "2026-10-18T22:52:41.263Z",
+          "finishedAt": "2026-10-18T23:52:41.267Z",
+          "outcome": "prepared",
+          "message": "New saved result"
+        }
+      }
+    },
+    {
+      "name": "busy-schedule",
+      "beforePreserved": false,
+      "afterPreserved": true,
+      "afterDiskMatches": true,
+      "finalWorkflow": {
+        "newsEnabled": true,
+        "everyHours": 3,
+        "importance": "major",
+        "maxNewsClipsPerDay": 3,
+        "morning": {
+          "includeWeather": false,
+          "city": "",
+          "localTime": "08:00",
+          "timeZone": "Europe/Madrid",
+          "units": "celsius"
+        },
+        "newsAssessmentDate": "2026-10-19",
+        "newsAssessmentsToday": 1,
+        "newsLastRun": {
+          "requestId": "prior-run",
+          "startedAt": "2026-10-18T22:52:41.369Z",
+          "finishedAt": "2026-10-18T22:54:21.369Z",
+          "outcome": "no-news"
+        },
+        "nextNewsCheckAt": "2026-10-19T04:52:41.373Z"
+      }
+    },
+    {
+      "name": "busy-setup",
+      "beforePreserved": true,
+      "afterPreserved": true,
+      "afterDiskMatches": true,
+      "finalWorkflow": {
+        "newsEnabled": true,
+        "everyHours": 3,
+        "importance": "major",
+        "maxNewsClipsPerDay": 3,
+        "morning": {
+          "includeWeather": false,
+          "city": "",
+          "localTime": "08:00",
+          "timeZone": "Europe/Madrid",
+          "units": "celsius"
+        },
+        "newsAssessmentDate": "2026-10-19",
+        "newsAssessmentsToday": 1,
+        "newsLastRun": {
+          "requestId": "prior-run",
+          "startedAt": "2026-10-18T22:52:41.424Z",
+          "finishedAt": "2026-10-18T22:54:21.424Z",
+          "outcome": "no-news",
+          "setupChanged": true
+        }
+      }
+    },
+    {
+      "name": "busy-unchanged",
+      "beforePreserved": true,
+      "afterPreserved": true,
+      "afterDiskMatches": true,
+      "finalWorkflow": {
+        "newsEnabled": true,
+        "everyHours": 3,
+        "importance": "major",
+        "maxNewsClipsPerDay": 3,
+        "morning": {
+          "includeWeather": false,
+          "city": "",
+          "localTime": "08:00",
+          "timeZone": "Europe/Madrid",
+          "units": "celsius"
+        },
+        "newsAssessmentDate": "2026-10-19",
+        "newsAssessmentsToday": 1,
+        "newsLastRun": {
+          "requestId": "prior-run",
+          "startedAt": "2026-10-18T22:52:41.480Z",
+          "finishedAt": "2026-10-18T22:54:21.480Z",
+          "outcome": "no-news"
+        },
+        "nextNewsCheckAt": "2026-10-18T23:53:41.486Z"
+      }
+    },
+    {
+      "name": "quota-counter",
+      "beforePreserved": false,
+      "afterPreserved": true,
+      "afterDiskMatches": true,
+      "finalWorkflow": {
+        "newsEnabled": true,
+        "everyHours": 3,
+        "importance": "major",
+        "maxNewsClipsPerDay": 3,
+        "morning": {
+          "includeWeather": false,
+          "city": "",
+          "localTime": "08:00",
+          "timeZone": "Europe/Madrid",
+          "units": "celsius"
+        },
+        "newsAssessmentDate": "2026-10-19",
+        "newsAssessmentsToday": 0,
+        "newsLastRun": {
+          "requestId": "prior-run",
+          "startedAt": "2026-10-18T22:52:41.589Z",
+          "finishedAt": "2026-10-18T22:54:21.589Z",
+          "outcome": "no-news"
+        }
+      }
+    },
+    {
+      "name": "quota-midnight",
+      "beforePreserved": false,
+      "afterPreserved": true,
+      "afterDiskMatches": true,
+      "finalWorkflow": {
+        "newsEnabled": true,
+        "everyHours": 3,
+        "importance": "major",
+        "maxNewsClipsPerDay": 3,
+        "morning": {
+          "includeWeather": false,
+          "city": "",
+          "localTime": "08:00",
+          "timeZone": "Europe/Madrid",
+          "units": "celsius"
+        },
+        "newsAssessmentDate": "2026-10-19",
+        "newsAssessmentsToday": 8,
+        "newsLastRun": {
+          "requestId": "prior-run",
+          "startedAt": "2026-10-18T22:52:41.693Z",
+          "finishedAt": "2026-10-18T22:54:21.693Z",
+          "outcome": "no-news"
+        }
+      }
+    },
+    {
+      "name": "quota-pause",
+      "beforePreserved": false,
+      "afterPreserved": true,
+      "afterDiskMatches": true,
+      "finalWorkflow": {
+        "newsEnabled": true,
+        "everyHours": 3,
+        "importance": "major",
+        "maxNewsClipsPerDay": 3,
+        "morning": {
+          "includeWeather": false,
+          "city": "",
+          "localTime": "08:00",
+          "timeZone": "Europe/Madrid",
+          "units": "celsius"
+        },
+        "newsAssessmentDate": "2026-10-19",
+        "newsAssessmentsToday": 8,
+        "newsLastRun": {
+          "requestId": "prior-run",
+          "startedAt": "2026-10-18T22:52:41.536Z",
+          "finishedAt": "2026-10-18T22:54:21.537Z",
+          "outcome": "no-news"
+        },
+        "newsWorkflowPaused": true
+      }
+    },
+    {
+      "name": "quota-unchanged",
+      "beforePreserved": true,
+      "afterPreserved": true,
+      "afterDiskMatches": true,
+      "finalWorkflow": {
+        "newsEnabled": true,
+        "everyHours": 3,
+        "importance": "major",
+        "maxNewsClipsPerDay": 3,
+        "morning": {
+          "includeWeather": false,
+          "city": "",
+          "localTime": "08:00",
+          "timeZone": "Europe/Madrid",
+          "units": "celsius"
+        },
+        "newsAssessmentDate": "2026-10-19",
+        "newsAssessmentsToday": 8,
+        "newsLastRun": {
+          "requestId": "prior-run",
+          "startedAt": "2026-10-18T22:52:41.641Z",
+          "finishedAt": "2026-10-18T22:54:21.641Z",
+          "outcome": "no-news"
+        },
+        "nextNewsCheckAt": "2026-10-19T22:00:00.000Z"
+      }
+    },
+    {
+      "name": "rollback-counter",
+      "beforePreserved": false,
+      "afterPreserved": true,
+      "afterDiskMatches": true,
+      "finalWorkflow": {
+        "newsEnabled": true,
+        "everyHours": 3,
+        "importance": "major",
+        "maxNewsClipsPerDay": 3,
+        "morning": {
+          "includeWeather": false,
+          "city": "",
+          "localTime": "08:00",
+          "timeZone": "Europe/Madrid",
+          "units": "celsius"
+        },
+        "newsAssessmentDate": "2026-10-19",
+        "newsAssessmentsToday": 3,
+        "newsLastRun": {
+          "requestId": "prior-run",
+          "startedAt": "2026-10-18T22:52:41.809Z",
+          "finishedAt": "2026-10-18T22:54:21.809Z",
+          "outcome": "no-news"
+        },
+        "nextNewsCheckAt": "2026-10-18T23:53:41.816Z",
+        "newsWorkflowPaused": false
+      }
+    },
+    {
+      "name": "rollback-error",
+      "beforePreserved": false,
+      "afterPreserved": true,
+      "afterDiskMatches": true,
+      "finalWorkflow": {
+        "newsEnabled": true,
+        "everyHours": 3,
+        "importance": "major",
+        "maxNewsClipsPerDay": 3,
+        "morning": {
+          "includeWeather": false,
+          "city": "",
+          "localTime": "08:00",
+          "timeZone": "Europe/Madrid",
+          "units": "celsius"
+        },
+        "newsAssessmentDate": "2026-10-19",
+        "newsAssessmentsToday": 1,
+        "newsLastRun": {
+          "requestId": "prior-run",
+          "startedAt": "2026-10-18T22:52:42.089Z",
+          "finishedAt": "2026-10-18T22:54:22.090Z",
+          "outcome": "no-news"
+        },
+        "nextNewsCheckAt": "2026-10-19T02:52:42.093Z",
+        "newsWorkflowPaused": false,
+        "newsWorkflowError": "New saved failure"
+      }
+    },
+    {
+      "name": "rollback-newrun",
+      "beforePreserved": false,
+      "afterPreserved": true,
+      "afterDiskMatches": true,
+      "finalWorkflow": {
+        "newsEnabled": true,
+        "everyHours": 3,
+        "importance": "major",
+        "maxNewsClipsPerDay": 3,
+        "morning": {
+          "includeWeather": false,
+          "city": "",
+          "localTime": "08:00",
+          "timeZone": "Europe/Madrid",
+          "units": "celsius"
+        },
+        "newsAssessmentDate": "2026-10-19",
+        "newsAssessmentsToday": 3,
+        "newsLastRun": {
+          "requestId": "newer-run",
+          "startedAt": "2026-10-18T23:52:42.150Z",
+          "outcome": "running"
+        },
+        "nextNewsCheckAt": "2026-10-19T02:52:42.147Z",
+        "newsWorkflowPaused": false
+      }
+    },
+    {
+      "name": "rollback-pause",
+      "beforePreserved": true,
+      "afterPreserved": true,
+      "afterDiskMatches": true,
+      "finalWorkflow": {
+        "newsEnabled": true,
+        "everyHours": 3,
+        "importance": "major",
+        "maxNewsClipsPerDay": 3,
+        "morning": {
+          "includeWeather": false,
+          "city": "",
+          "localTime": "08:00",
+          "timeZone": "Europe/Madrid",
+          "units": "celsius"
+        },
+        "newsAssessmentDate": "2026-10-19",
+        "newsAssessmentsToday": 2,
+        "newsLastRun": {
+          "requestId": "212f286f-fc71-458d-b02e-d676cddb1538",
+          "startedAt": "2026-10-18T23:52:41.756Z",
+          "outcome": "interrupted",
+          "roomName": "My room",
+          "finishedAt": "2026-10-18T23:52:41.760Z",
+          "message": "Preparation stopped before provider dispatch."
+        },
+        "newsWorkflowPaused": true
+      }
+    },
+    {
+      "name": "rollback-result",
+      "beforePreserved": false,
+      "afterPreserved": true,
+      "afterDiskMatches": true,
+      "finalWorkflow": {
+        "newsEnabled": true,
+        "everyHours": 3,
+        "importance": "major",
+        "maxNewsClipsPerDay": 3,
+        "morning": {
+          "includeWeather": false,
+          "city": "",
+          "localTime": "08:00",
+          "timeZone": "Europe/Madrid",
+          "units": "celsius"
+        },
+        "newsAssessmentDate": "2026-10-19",
+        "newsAssessmentsToday": 2,
+        "newsLastRun": {
+          "requestId": "087e73d7-1e75-44bf-bbde-250049d099a1",
+          "startedAt": "2026-10-18T23:52:41.868Z",
+          "outcome": "prepared",
+          "roomName": "My room",
+          "finishedAt": "2026-10-18T23:52:41.871Z",
+          "message": "New saved result"
+        },
+        "nextNewsCheckAt": "2026-10-19T02:52:41.868Z",
+        "newsWorkflowPaused": false
+      }
+    },
+    {
+      "name": "rollback-schedule",
+      "beforePreserved": false,
+      "afterPreserved": true,
+      "afterDiskMatches": true,
+      "finalWorkflow": {
+        "newsEnabled": true,
+        "everyHours": 3,
+        "importance": "major",
+        "maxNewsClipsPerDay": 3,
+        "morning": {
+          "includeWeather": false,
+          "city": "",
+          "localTime": "08:00",
+          "timeZone": "Europe/Madrid",
+          "units": "celsius"
+        },
+        "newsAssessmentDate": "2026-10-19",
+        "newsAssessmentsToday": 1,
+        "newsLastRun": {
+          "requestId": "prior-run",
+          "startedAt": "2026-10-18T22:52:42.035Z",
+          "finishedAt": "2026-10-18T22:54:22.035Z",
+          "outcome": "no-news"
+        },
+        "nextNewsCheckAt": "2026-10-19T04:52:42.041Z",
+        "newsWorkflowPaused": false
+      }
+    },
+    {
+      "name": "rollback-setup",
+      "beforePreserved": false,
+      "afterPreserved": true,
+      "afterDiskMatches": true,
+      "finalWorkflow": {
+        "newsEnabled": true,
+        "everyHours": 3,
+        "importance": "major",
+        "maxNewsClipsPerDay": 3,
+        "morning": {
+          "includeWeather": false,
+          "city": "",
+          "localTime": "08:00",
+          "timeZone": "Europe/Madrid",
+          "units": "celsius"
+        },
+        "newsAssessmentDate": "2026-10-19",
+        "newsAssessmentsToday": 1,
+        "newsLastRun": {
+          "requestId": "prior-run",
+          "startedAt": "2026-10-18T22:52:41.921Z",
+          "finishedAt": "2026-10-18T22:54:21.921Z",
+          "outcome": "no-news",
+          "setupChanged": true
+        },
+        "nextNewsCheckAt": "2026-10-19T02:52:41.925Z",
+        "newsWorkflowPaused": false
+      }
+    },
+    {
+      "name": "rollback-unchanged",
+      "beforePreserved": true,
+      "afterPreserved": true,
+      "afterDiskMatches": true,
+      "finalWorkflow": {
+        "newsEnabled": true,
+        "everyHours": 3,
+        "importance": "major",
+        "maxNewsClipsPerDay": 3,
+        "morning": {
+          "includeWeather": false,
+          "city": "",
+          "localTime": "08:00",
+          "timeZone": "Europe/Madrid",
+          "units": "celsius"
+        },
+        "newsAssessmentDate": "2026-10-19",
+        "newsAssessmentsToday": 1,
+        "newsLastRun": {
+          "requestId": "prior-run",
+          "startedAt": "2026-10-18T22:52:41.978Z",
+          "finishedAt": "2026-10-18T22:54:21.978Z",
+          "outcome": "no-news"
+        },
+        "nextNewsCheckAt": "2026-10-18T23:53:41.985Z",
+        "newsWorkflowPaused": false
+      }
+    }
+  ],
+  "results": {
+    "cases": 19,
+    "beforeLosses": 14,
+    "afterPreserved": 19,
+    "externalRequests": 0,
+    "normalControls": [
+      "busy-unchanged retries in about60 seconds",
+      "quota-unchanged defers to local midnight",
+      "rollback-unchanged restores prior run/count and retries in about60 seconds"
+    ],
+    "ownershipControls": [
+      "setup edits remain and previous-run setupChanged stays visible",
+      "newer run/result not replaced",
+      "newer counters not refunded as though still owned",
+      "newer error/pause/schedule remain",
+      "midnight invalidates yesterday quota decision"
+    ]
+  },
+  "groups": [
+    {
+      "id": "WF01",
+      "actor": "Listener with saved radio setup,activity and pause state",
+      "trigger": "An older scheduled deferral or unused reservation settles behind a newer storage update",
+      "outcome": "Retain saved state and future edits;clean only owned unused bookkeeping without a false running status.",
+      "fragments": [
+        "REQ-L240-text-02",
+        "RAD-L101-result-03"
+      ],
+      "mandatoryVariants": [
+        "Quota and manual-busy deferral",
+        "Pause/error/counter/result/schedule/setup updates",
+        "Unchanged deferrals",
+        "Current-day quota at midnight",
+        "Exact owned running collision",
+        "Changed reservation count",
+        "Changed schedule/producer",
+        "Newer run or completed result",
+        "Carry setupChanged into prior history"
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false,
+      "remaining": [
+        "Full sign-out/restart,actual UI setup save during automatic preparation,and completed recording reconciliation retain their separate dated evidence.",
+        "Injected metadata/fake provider hold does not establish live generation,article selection,audible quality or listener understanding."
+      ]
+    }
+  ],
+  "sourceSha256": {
+    "src/main/news-workflow.ts": "bfb496c6ef259fe804bdf3c63a9d59c5863a5061b927cc95adbdd6ae92161015"
+  },
+  "baselineSourceSha256": {
+    "src/main/news-workflow.ts": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271"
+  },
+  "sourceComparison": {
+    "unchangedFunctions": [
+      "invalidateNewsWorkflow",
+      "sameProducerConfig",
+      "finishRun",
+      "tick",
+      "startNewsWorkflow",
+      "checkNewsWorkflow",
+      "stopNewsWorkflow",
+      "pauseNewsWorkflow"
+    ],
+    "preparedInputSnapshotAndInvocationUnchanged": true,
+    "changedFunctions": [
+      "replaceWorkflow replaced by deferWorkflow",
+      "processProfile deferral calls and reservation rollback"
+    ]
+  },
+  "fixtureSha256": {
+    "/private/tmp/workflow-deferral-current/after-bundled.mjs": "fa464ea7394a485335f90222d3c0464966260dea7d183ea6f83415a6a60ed3aa",
+    "/private/tmp/workflow-deferral-current/after-busy-counter.json": "c34a085529529ff91281f84fa5ac1826096bba7dd89a65e61dcb95a4941e40c9",
+    "/private/tmp/workflow-deferral-current/after-busy-error.json": "d27051bab4c7b25186584c3dd5fa12fcf311fc3be27b3e7a6da1305c66cfc4ae",
+    "/private/tmp/workflow-deferral-current/after-busy-pause.json": "5a380cfbfbd28ff7d898c3cbd2690dfaa1fdf35ee70c1de4de855216af17cdc9",
+    "/private/tmp/workflow-deferral-current/after-busy-result.json": "277afe5dbbb5d08829a21703582a14774d471736b31bd8d11a6294af0e72a96d",
+    "/private/tmp/workflow-deferral-current/after-busy-schedule.json": "aa5dfe4a4fb98fbbe7c42dd38209f5812adbc36fef7047a778bcf855c9c3abc7",
+    "/private/tmp/workflow-deferral-current/after-busy-setup.json": "911fe6a470b943620bbaf2c930862452df405ca632f145fd8110f98b812cba4f",
+    "/private/tmp/workflow-deferral-current/after-busy-unchanged.json": "63e2f0cfa230977f496c97b7fdd7fe1ebf3ada125502c9002ea1c95d7a20f725",
+    "/private/tmp/workflow-deferral-current/after-quota-counter.json": "6ffa68f23fe22fd4b05f6d163302f6e1e9ed5262423e205293a738055658ec08",
+    "/private/tmp/workflow-deferral-current/after-quota-midnight.json": "bcdd5efc93b8ce4f62377a9eff283662a347fdead3fe9d67d89fa7cf2ba8d61c",
+    "/private/tmp/workflow-deferral-current/after-quota-pause.json": "3732a73a6dfebe79198f77ad4475235679b95a14dd9be943fc9cd45e70b60c77",
+    "/private/tmp/workflow-deferral-current/after-quota-unchanged.json": "a9e036b426898a9c74559cdc2d4bcf1e6e8815c7844eee7ed85097d98fc2c429",
+    "/private/tmp/workflow-deferral-current/after-rollback-counter.json": "4e2bb3b41a4c37b229fb212cd2767a4fa4000ffdcaa33ca8edd6ef969b5bcc2f",
+    "/private/tmp/workflow-deferral-current/after-rollback-error.json": "fa41a625d4b97f4739eb003c6a463701e8f262094494646c1bdf3ce5b04994e1",
+    "/private/tmp/workflow-deferral-current/after-rollback-newrun.json": "d819bfb9487e771e2a00b990e6366ccac1303a66651fdbbbcda7994a3cfaa070",
+    "/private/tmp/workflow-deferral-current/after-rollback-pause.json": "f34768253e57853482453deeea4d9744d9b686167619c17a4bf636f6773715b9",
+    "/private/tmp/workflow-deferral-current/after-rollback-result.json": "be4e70edfdfc091ea6d6f10ca440aeaa98de2455a65918be1adf3546a783cb21",
+    "/private/tmp/workflow-deferral-current/after-rollback-schedule.json": "8bc24b9983dd98fa40c09b50e82972447334cc0a2dcdc0f6a93f26ac0a8abeaf",
+    "/private/tmp/workflow-deferral-current/after-rollback-setup.json": "f1e23a89c7c71994d2b4276776a1723243b896943e8fad035ea0dec1012c4348",
+    "/private/tmp/workflow-deferral-current/after-rollback-unchanged.json": "08bbbbfa86bb02f59fc378a33553edf239631e591d4ee9d67fc9469c4275a12f",
+    "/private/tmp/workflow-deferral-current/baseline-workflow.ts": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+    "/private/tmp/workflow-deferral-current/before-bundled.mjs": "33c3143cf63323fb0378e685c5885e43840485e181d2be35923b8f0bdaa3bb2f",
+    "/private/tmp/workflow-deferral-current/before-busy-counter.json": "21226c73355d6dae97875da093581755f729d0da92d7b3bb632faeae5c1133a7",
+    "/private/tmp/workflow-deferral-current/before-busy-error.json": "b06131bf6841b727b585222613633578ee922d6dccb729f334c228bf25420b74",
+    "/private/tmp/workflow-deferral-current/before-busy-pause.json": "8618cc1f17dfe22be42f8d4c0958677f956d0e8e90a4612d11d4d8917f8dc26b",
+    "/private/tmp/workflow-deferral-current/before-busy-result.json": "a22998e96f8e8f0fc263498fe4af93cc1b910441e8489910990cbf0a3c172d2e",
+    "/private/tmp/workflow-deferral-current/before-busy-schedule.json": "c53e5e2801853c4e1213a5c4c146639ee05c54de490313c407c32185c4b517d6",
+    "/private/tmp/workflow-deferral-current/before-busy-setup.json": "2d885a55b9b6bddc2992dd3f8dbbc46ff5dd1695eb2d6ad32ba063927557d1a1",
+    "/private/tmp/workflow-deferral-current/before-busy-unchanged.json": "e9e4b28ba025279b4eee1b8b26bd15f6e140dd1d24233d2538f76ffc802bfb4c",
+    "/private/tmp/workflow-deferral-current/before-quota-counter.json": "f359348c0d0a47af98efbbf2c94475cb06a492ee2967a5f58734c38e21a1793a",
+    "/private/tmp/workflow-deferral-current/before-quota-midnight.json": "42cd24cce10588c31b76a9c9db232846d6c82671672052a74da17b85fa9393b2",
+    "/private/tmp/workflow-deferral-current/before-quota-pause.json": "392283c242bcf18c9e10248c52c3a333b8247fff9355eac24853cd8e2162b24d",
+    "/private/tmp/workflow-deferral-current/before-quota-unchanged.json": "8f8d770f6ef2c6cadcac49184a4e2cfc5977555480c3e6245614453eeee35926",
+    "/private/tmp/workflow-deferral-current/before-rollback-counter.json": "8a1b52acbfbdac188f649a8f783e6f2c6ffcdfecd86a6e57d7d0da8e932f6458",
+    "/private/tmp/workflow-deferral-current/before-rollback-error.json": "7d7d789132a52a7003624dd7707993bc2c0e7f3b4c5ecf30aa47f3e2fbe5052f",
+    "/private/tmp/workflow-deferral-current/before-rollback-newrun.json": "8f2c1815d23787e3ea1806bf13b6390f3498202d2019ebf22c389e3ad2c63769",
+    "/private/tmp/workflow-deferral-current/before-rollback-pause.json": "adac500d03c8a834c53f6d8cf222d779be244bdbfd035628cf8c771429d7dbc9",
+    "/private/tmp/workflow-deferral-current/before-rollback-result.json": "d860cf43608dde17ebb42324496752b3029a27ae3d2e47c2ca2cccb2d1694096",
+    "/private/tmp/workflow-deferral-current/before-rollback-schedule.json": "f009a059d24cc145d23b978b121523ffbe7136a6406181ae4df5e66798dec7aa",
+    "/private/tmp/workflow-deferral-current/before-rollback-setup.json": "2fa4fffa5970f9bde5d0404f21cb7cfc04eaf367b28ecaa046c54f5909c039dd",
+    "/private/tmp/workflow-deferral-current/before-rollback-unchanged.json": "77603ef9c1101078a63de5315df9a8ae3a4783ff97a111b41680ece6c442cfbc",
+    "/private/tmp/workflow-deferral-current/build.log": "a84e66413d2949e08203ad9a61baa55eb94f8eb3df66ab72f971895de7e0ac14",
+    "/private/tmp/workflow-deferral-current/build.mjs": "0e579c93b5ad12900c0ddebba506a3f07ccc97cd501be2b30eade00ba9260612",
+    "/private/tmp/workflow-deferral-current/check.mjs": "e39b4ca8cf97aede3ba3346511716ec19b59dda3cc618ed6d1a47c787ec92b03",
+    "/private/tmp/workflow-deferral-current/compare.mjs": "75352b56e7b68b43778c9612b2fc0bb103c2ab4c020f1f9fa4aadbd704de6b27",
+    "/private/tmp/workflow-deferral-current/lint.log": "6f1680e0ff047e07a06dcf9afc079770fad3f871d47a52ee12dccaaa84366d63",
+    "/private/tmp/workflow-deferral-current/run.mjs": "d6c7572952d9f38018512bf67c22a05e9a7097e8d2dd6c8010f1c65053691233",
+    "/private/tmp/workflow-deferral-current/source-comparison.json": "70b9193ab31bf86b0e18cd72676abdaa584076aa30d7d8cccb7e91e794af50c5"
+  },
+  "validation": {
+    "integration": "Both expanded19-case runners exit0;all final preserved/disk predicates pass. Each manual request is settled and scheduler stopped in finally;no provider traffic.",
+    "buildTypecheck": "npm run build exit0 including TypeScript and voice-resource check.",
+    "lint": "npm run lint exit0.",
+    "unitTests": "No unit framework or tests added/run;focused actual filesystem/manifest/scheduler integration.",
+    "review": "Boris and Nadia reviewed final code and supplied scoped artifacts;no independent rerun claimed."
+  },
+  "adjudication": {
+    "acceptedCanonicalGroups": 0,
+    "knownOpenChecks": 25,
+    "semanticDenominatorComplete": false,
+    "overallScore": null
+  },
+  "limits": [
+    "No new native UI,live server/provider,actual sleep,restart,VoiceOver,audible or listener validation. A05 OS proof remains Review.",
+    "A concurrently changed count is preserved conservatively;refund occurs only while exact reservation count/date are still owned.",
+    "No smaller viewport,200% zoom,packaging or release work."
+  ],
+  "fragmentTextSha256": {
+    "REQ-L240-text-02": "e6cf52604c810ff4b59232cbaefa7264185fd429655a9957bd058f54aeb95df4",
+    "RAD-L101-result-03": "b7f65d04e13f3544f803fea6f3e2a020cdeee0a0a4ec16db6e2506323554c2cd"
+  }
+}

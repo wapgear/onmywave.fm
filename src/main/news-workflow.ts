@@ -23,11 +23,24 @@ function sameProducerConfig(a: RoomProfile, b: RoomProfile) {
     && a.workflowDraft.importance === b.workflowDraft.importance && a.workflowDraft.maxNewsClipsPerDay === b.workflowDraft.maxNewsClipsPerDay;
 }
 
-async function replaceWorkflow(profile: RoomProfile, workflowDraft: WorkflowDraft): Promise<boolean> {
+async function deferWorkflow(profile: RoomProfile, reason: 'limit' | 'busy'): Promise<boolean> {
   let applied = false;
   await updateLocalState(state => {
     const latest = state.roomProfiles.find(value => value.id === profile.id);
-    if (!latest || !sameProducerConfig(latest, profile)) return {};
+    if (!latest || !sameProducerConfig(latest, profile) || JSON.stringify(latest.workflowDraft) !== JSON.stringify(profile.workflowDraft)) return {};
+    const draft = latest.workflowDraft;
+    const now = new Date();
+    if (!latest.enabled || !draft.newsEnabled || draft.newsWorkflowPaused || draft.newsWorkflowError
+      || (draft.nextNewsCheckAt && Date.parse(draft.nextNewsCheckAt) > now.getTime())) return {};
+    const next = new Date(now.getTime() + 60_000);
+    if (reason === 'limit') {
+      const date = dayKey(now);
+      const assessments = draft.newsAssessmentDate === date ? draft.newsAssessmentsToday ?? 0 : 0;
+      const clips = draft.newsClipDate === date ? draft.newsClipsToday ?? 0 : 0;
+      if (assessments < Math.ceil(24 / draft.everyHours) && clips < draft.maxNewsClipsPerDay) return {};
+      next.setHours(24, 0, 0, 0);
+    }
+    const workflowDraft = { ...draft, nextNewsCheckAt: next.toISOString() };
     applied = true;
     return {
       roomProfiles: state.roomProfiles.map(value => value.id === profile.id ? { ...value, workflowDraft } : value),
@@ -67,18 +80,17 @@ async function processProfile(news: NewsService, profile: RoomProfile) {
   const clips = draft.newsClipDate === date ? draft.newsClipsToday ?? 0 : 0;
   const assessmentLimit = Math.ceil(24 / draft.everyHours);
   if (assessments >= assessmentLimit || clips >= draft.maxNewsClipsPerDay) {
-    const tomorrow = new Date(now);
-    tomorrow.setHours(24, 0, 0, 0);
-    await replaceWorkflow(current, { ...draft, nextNewsCheckAt: tomorrow.toISOString() });
+    await deferWorkflow(current, 'limit');
     return;
   }
   if ((await getPreparedNews()).requests.some(request => request.status === 'running')) {
-    await replaceWorkflow(current, { ...draft, nextNewsCheckAt: new Date(now.getTime() + 60_000).toISOString() });
+    await deferWorkflow(current, 'busy');
     return;
   }
 
   const requestId = randomUUID();
   let snapshot: Pick<LocalState, 'roomProfiles' | 'djs' | 'sources'> | undefined;
+  let reservation: { before: WorkflowDraft; started: WorkflowDraft } | undefined;
   await updateLocalState(state => {
     if (!canRun() || epoch !== generation) return {};
     const latest = state.roomProfiles.find(value => value.id === current.id);
@@ -95,6 +107,7 @@ async function processProfile(news: NewsService, profile: RoomProfile) {
     const started = { ...workflow, nextNewsCheckAt: new Date(reservedAt.getTime() + workflow.everyHours * 60 * 60 * 1000).toISOString(),
       newsAssessmentDate: reservedDate, newsAssessmentsToday: count + 1, newsWorkflowPaused: false,
       newsLastRun: { requestId, startedAt: reservedAt.toISOString(), outcome: 'running' as const, roomName: latest.name } };
+    reservation = structuredClone({ before: workflow, started });
     return { roomProfiles: state.roomProfiles.map(value => value.id === latest.id ? { ...value, workflowDraft: started } : value),
       ...(state.activeRoomProfileId === latest.id ? { workflowDraft: started } : {}) };
   });
@@ -114,10 +127,25 @@ async function processProfile(news: NewsService, profile: RoomProfile) {
     if (error instanceof ServiceError && error.code === 'no-news') { await finishRun(current.id, requestId, 'no-news', message); return; }
     if (error instanceof ServiceError && error.code === 'partial-coverage') { await finishRun(current.id, requestId, 'partial-coverage', message); return; }
     if (error instanceof ServiceError && /another preparation is running/i.test(message)) {
-      const latest = await getLocalState();
-      const after = latest.roomProfiles.find(value => value.id === current.id);
-      if (after) await replaceWorkflow(after, { ...after.workflowDraft, nextNewsCheckAt: new Date(Date.now() + 60_000).toISOString(), newsAssessmentDate: date, newsAssessmentsToday: assessments,
-        newsLastRun: after.workflowDraft.newsLastRun?.requestId === requestId ? draft.newsLastRun : after.workflowDraft.newsLastRun });
+      const reserved = reservation;
+      if (!reserved) return;
+      await updateLocalState(state => {
+        const latest = state.roomProfiles.find(value => value.id === current.id);
+        const run = latest?.workflowDraft.newsLastRun;
+        if (!latest || run?.requestId !== requestId || run.outcome !== 'running' || run.startedAt !== reserved.started.newsLastRun?.startedAt) return {};
+        const draft = latest.workflowDraft;
+        const ownsCount = draft.newsAssessmentDate === reserved.started.newsAssessmentDate && draft.newsAssessmentsToday === reserved.started.newsAssessmentsToday;
+        const mayRetry = sameProducerConfig(latest, current) && latest.enabled && draft.newsEnabled && !draft.newsWorkflowPaused && !draft.newsWorkflowError
+          && draft.nextNewsCheckAt === reserved.started.nextNewsCheckAt;
+        const previousRun = reserved.before.newsLastRun;
+        const workflowDraft: WorkflowDraft = { ...draft,
+          ...(ownsCount ? { newsAssessmentDate: reserved.before.newsAssessmentDate, newsAssessmentsToday: reserved.before.newsAssessmentsToday } : {}),
+          newsLastRun: previousRun ? { ...previousRun, ...(run.setupChanged ? { setupChanged: true } : {}) } : undefined,
+          ...(mayRetry ? { nextNewsCheckAt: new Date(Date.now() + 60_000).toISOString() } : {}),
+        };
+        return { roomProfiles: state.roomProfiles.map(value => value.id === current.id ? { ...value, workflowDraft } : value),
+          ...(state.activeRoomProfileId === current.id ? { workflowDraft } : {}) };
+      });
       return;
     }
     const latest = await getLocalState();
