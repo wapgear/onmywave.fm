@@ -741,8 +741,8 @@
   "semanticReviews": [
     {
       "file": "2026-10-18-music-first-clause-adjudication.json",
-      "sha256": "5d4e5b796a7c40fbca75e9a1bd52b737d97f4fbfdbcfd28f5b81f08489f5853e",
-      "meaning": "Six all-variants review groups with exact fragment links, direct static inspection, scoped prior evidence and explicit missing proof. No accepted groups or overall score. MF01 legacy startup follow-up supplies two controlled native examples;broader acceptance remains incomplete."
+      "sha256": "94cd44671557dbe717e4edc4231ec66d2ed3abdbe1ed992e72f07d7dd1cb2b17",
+      "meaning": "Six all-variants review groups with exact fragment links, direct static inspection, scoped prior evidence and explicit missing proof. No accepted groups or overall score. MF01 legacy startup follow-up supplies two controlled native examples;broader acceptance remains incomplete. MF05 current source/controlled service queue-boundary follow-up closes its engineering audit gap;listener acceptance remains open."
     },
     {
       "file": "2026-10-19-account-expiry-boundary.json",

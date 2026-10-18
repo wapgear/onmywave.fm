@@ -1,0 +1,336 @@
+{
+  "date": "2026-10-19",
+  "baseCommit": "070d92c27153585d6ffb7a65576fb0dfc768e98b",
+  "scope": "MF05 current music queue ownership and host-mood boundary. Source audit plus two actual NewsService/owned HTTP cases;not a new native playback run.",
+  "inventoryMethod": "TypeScript syntax traversal of src enumerates every setQueue identifier reference,all usePlayer consumer files and main webContents.send calls. Direct source review follows the reported setters,consumer methods and callback destinations;syntax inventory alone is not a data-flow proof.",
+  "queueSetterReview": [
+    {
+      "line": 200,
+      "parent": "CallExpression",
+      "text": "setQueue(items => {\n            if (token !== generation.current || items.find(item => item.key === key)?.song.duration === measured) return items;\n            return items.map(item => item.key === key ? { ...item, song: { ...item.song, duration: measured } } : item);\n          })",
+      "judgment": "Update measured duration on an existing occurrence;preserves order,keys and track identity."
+    },
+    {
+      "line": 494,
+      "parent": "CallExpression",
+      "text": "setQueue(restoredQueue)",
+      "judgment": "Restore only saved track IDs through Jellyfin song reads;missing tracks are omitted;restore stays paused."
+    },
+    {
+      "line": 813,
+      "parent": "CallExpression",
+      "text": "setQueue(entries(songs))",
+      "judgment": "Explicit Play replaces queue with user-selected songs and fresh occurrence keys."
+    },
+    {
+      "line": 950,
+      "parent": "CallExpression",
+      "text": "setQueue(items => [...items, ...entries(songs)])",
+      "judgment": "Explicit Queue appends selected songs and supersedes stale restore."
+    },
+    {
+      "line": 985,
+      "parent": "CallExpression",
+      "text": "setQueue(remaining)",
+      "judgment": "Explicit Remove filters one occurrence key and preserves remaining order."
+    }
+  ],
+  "consumerReview": [
+    {
+      "file": "src/renderer/components/Player/DJPopover.component.tsx",
+      "members": [
+        "activeNews",
+        "error",
+        "lastNews",
+        "newsLoading",
+        "newsPhase",
+        "requestedPlaying"
+      ]
+    },
+    {
+      "file": "src/renderer/components/Player/Player.component.tsx",
+      "members": [
+        "activeNews",
+        "busy",
+        "canRetry",
+        "controlNews",
+        "current",
+        "currentKey",
+        "cycleRepeat",
+        "duration",
+        "error",
+        "getMusicCommandRevision",
+        "getOptionsSaveGeneration",
+        "getPlaybackGeneration",
+        "getResumeGeneration",
+        "lastNews",
+        "newsNotice",
+        "newsPhase",
+        "newsRunId",
+        "next",
+        "optionsError",
+        "optionsRevision",
+        "position",
+        "previous",
+        "queue",
+        "repeat",
+        "requestedPlaying",
+        "retry",
+        "retryOptions",
+        "seek",
+        "setVolume",
+        "shuffle",
+        "toggle",
+        "toggleShuffle",
+        "volume"
+      ]
+    },
+    {
+      "file": "src/renderer/components/Queue/Queue.component.tsx",
+      "members": [
+        "currentKey",
+        "playQueueEntry",
+        "queue",
+        "removeQueue",
+        "requestedPlaying",
+        "shuffle",
+        "toggle"
+      ]
+    },
+    {
+      "file": "src/renderer/dj-playback.tsx",
+      "members": [
+        "activeNews",
+        "busy",
+        "completedSongs",
+        "currentKey",
+        "lastNews",
+        "newsPhase",
+        "requestedPlaying",
+        "scheduleNews",
+        "stopNews"
+      ]
+    },
+    {
+      "file": "src/renderer/pages/Albums/Albums.page.tsx",
+      "members": [
+        "current",
+        "enqueue",
+        "play"
+      ]
+    },
+    {
+      "file": "src/renderer/pages/DJs/components/NewsDemo.component.tsx",
+      "members": [
+        "activeNewsId",
+        "current",
+        "newsPhase",
+        "scheduleNews",
+        "stopNews"
+      ]
+    },
+    {
+      "file": "src/renderer/pages/DJs/components/VoicePreview.component.tsx",
+      "members": [
+        "currentKey",
+        "getMusicCommandRevision",
+        "musicCommandRevision",
+        "pauseForPreview",
+        "requestedPlaying",
+        "volume"
+      ]
+    },
+    {
+      "file": "src/renderer/pages/Playlists/Playlists.page.tsx",
+      "members": [
+        "current",
+        "enqueue",
+        "play"
+      ]
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/NewsTransitionPreview.component.tsx",
+      "members": [
+        "activeNewsId",
+        "currentKey",
+        "getMusicCommandRevision",
+        "musicCommandRevision",
+        "pauseForPreview",
+        "requestedPlaying",
+        "volume"
+      ]
+    },
+    {
+      "file": "src/renderer/pages/Songs/Songs.page.tsx",
+      "members": [
+        "current",
+        "enqueue",
+        "play"
+      ]
+    },
+    {
+      "file": "src/renderer/pages/Stations/components/NewsBucket.component.tsx",
+      "members": [
+        "activeNews",
+        "lastNews",
+        "newsLoading",
+        "newsPhase"
+      ]
+    },
+    {
+      "file": "src/renderer/pages/Stations/components/PreparedTakes.component.tsx",
+      "members": [
+        "activeNewsId",
+        "controlNews",
+        "current",
+        "currentKey",
+        "getMusicCommandRevision",
+        "musicCommandRevision",
+        "newsPhase",
+        "newsRunId",
+        "pauseForPreview",
+        "requestedPlaying",
+        "scheduleNews",
+        "volume"
+      ]
+    }
+  ],
+  "boundaryReview": [
+    {
+      "owner": "Player queue and consumers",
+      "finding": "The setter has only its binding and five direct calls,no exported setter alias. Queue/Player consumers read the queue with index/map/filter/slice;they do not mutate its array. Music page Play/Queue callbacks reach explicit table keyboard/pointer actions and collection buttons. Queue Remove uses the occurrence key."
+    },
+    {
+      "owner": "Automatic DJ and previews",
+      "finding": "Automatic controller calls scheduleNews/stopNews and reads transport state. Audition/voice/transition preview may pause or stop transport but has no play/enqueue/removeQueue access. Retained NewsDemo also only schedules separate speech."
+    },
+    {
+      "owner": "Song continuation",
+      "finding": "next/changeTrack choose an existing queue index under listener shuffle/repeat controls. A completed speech break may continue that queue. This is not mood-based selection or a promise to freeze index/position during playback."
+    },
+    {
+      "owner": "Main workflow and persistence",
+      "finding": "Prepared-news module changes its separate news repository. Four news-workflow local-state writes patch profile/workflow fields;storage merges those fields into the latest local state. They do not replace music playback. savePlayback records a validated renderer snapshot scoped to the current connection."
+    },
+    {
+      "owner": "Main-to-renderer messages",
+      "finding": "The source traversal finds one webContents.send,newsProgress. Preload forwards it as progress;there is no provider-returned queue command channel."
+    },
+    {
+      "owner": "Mood and provider boundary",
+      "finding": "Manual preparation passes saved state.vibe;automatic preparation passes captured profile.mood. Text input uses stationMood and a selected metadata whitelist plus listenerPreferences. No audio analysis request exists in this preparation path. Current app preparation calls do not pass current music metadata;the service accepts optional metadata. Output is reconstructed from validated script and selected source,not a returned queue or next-track field."
+    }
+  ],
+  "mainMessages": [
+    {
+      "file": "src/main/index.ts",
+      "line": 43,
+      "text": "window.webContents.send('wave:newsProgress', value)"
+    }
+  ],
+  "runtime": {
+    "result": "passed",
+    "cases": [
+      {
+        "mood": "Calm and thoughtful",
+        "musicContextKeys": [
+          "album",
+          "artists",
+          "genres",
+          "listenerPreferences",
+          "tags",
+          "title"
+        ],
+        "resultKeys": [
+          "articles",
+          "requestId",
+          "script",
+          "warnings"
+        ],
+        "providerQueueFieldsDiscarded": true
+      },
+      {
+        "mood": "Playful and bright",
+        "musicContextKeys": [
+          "listenerPreferences"
+        ],
+        "resultKeys": [
+          "articles",
+          "requestId",
+          "script",
+          "warnings"
+        ],
+        "providerQueueFieldsDiscarded": true
+      }
+    ],
+    "substitutedProviderCalls": 2,
+    "realProviderCalls": 0,
+    "method": "Actual NewsService,owned HTTP feed/provider responses,fetch destination rewrite;no mounted app or native input."
+  },
+  "sourceSha256": {
+    "src/main/index.ts": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+    "src/main/news-workflow.ts": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+    "src/main/news.ts": "f2933aac8c9d2334e84a6850c7023207fbd1b86f905bd3844977ad5cb0be7a48",
+    "src/main/prepared-news.ts": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+    "src/main/storage.ts": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+    "src/preload/index.ts": "458378616e402bc07202f269fa94092d8ee8685e2dd9bba7fcaf0c7ca58e31c1",
+    "src/renderer/components/Player/DJPopover.component.tsx": "7a9858830d98a053b2a3d805e6a2b6521aa483154c00306b0a6cfb4fb96fd981",
+    "src/renderer/components/Player/Player.component.tsx": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+    "src/renderer/components/Queue/Queue.component.tsx": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082",
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "158caa15a4fe11170ac048c1752d4b9327006595646f5a86acd27c5b1c0216e5",
+    "src/renderer/dj-playback.tsx": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+    "src/renderer/pages/Albums/Albums.page.tsx": "09a1292143de4e0f24a233a41b50e90fae8f19d394afae2f5171384f59fc9667",
+    "src/renderer/pages/DJs/components/NewsDemo.component.tsx": "32c3c7403ed5fc3cb5bfa8841e53650e20eab85e866021d5130af1059e2da8bb",
+    "src/renderer/pages/DJs/components/VoicePreview.component.tsx": "d2cbca679984903fdc0692488dff67069fad302e4e3adcd8352915b5eb209581",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+    "src/renderer/pages/Settings/components/NewsTransitionPreview.component.tsx": "b44dc08192dd9d4a354a8f921c1b5e17c6a0cf2291b26b8aa3bd285d55b2ff31",
+    "src/renderer/pages/Songs/Songs.page.tsx": "a15a3adc08b8ebb2bd4d96b00c8462d94922bef67eb2fad655c6c428af0eb942",
+    "src/renderer/pages/Songs/VirtualSongs.component.tsx": "4484149d94156d3f6f9b5bcb5b201285a1264e2e28125f50e10a4d401f593206",
+    "src/renderer/pages/Stations/components/NewsBucket.component.tsx": "61e5027abd4def319532645a9a3b1425a4b6531860a2609b113c18670c0fa2f3",
+    "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": "fd9488789ef2042e6146938d8117e29df0823aae6611013952eb1b4debe83c92",
+    "src/renderer/player.tsx": "aa7d866e5724945a3f06773a984f6983ccc6544ee08b02991fd54c0f53f25f0c"
+  },
+  "fixtureSha256": {
+    "/private/tmp/music-queue-boundary-current/inspect.cjs": "9af8e5367c4b6fe8b5bfa2ef6f51dcdebfa6766649aee799789503595d6a1969",
+    "/private/tmp/music-queue-boundary-current/inventory.json": "7c7c4f55e19d51ce2a32700159eab47e2066884ee899362c79ce94fc810a34ec",
+    "/private/tmp/music-queue-boundary-current/verify.mjs": "16d74d03a849702a1b0a2645698fb150f97a435ecaf8b6ca2ae8fb8196aa3c49",
+    "/private/tmp/music-queue-boundary-current/verification.json": "2c7acda5cc7cc592179953428000cffe8c4fb9c55f2973845c3047de46df1dfd",
+    "/private/tmp/music-queue-boundary-current/news.mjs": "853114a53cf03dfdc2a7749420a868efe3387a703e627237c0df25f1870cbd4f"
+  },
+  "priorRuntime": {
+    "record": "2026-10-19-keyless-natural-radio.json",
+    "meaning": "Separate existing controlled native evidence for normal queue continuation. No new runtime or unchanged-all-source claim is inferred from its presence. The older17October keyless timing run retains its disclosed media-time setter and is not current CUA-only proof."
+  },
+  "adjudication": {
+    "canonicalGroup": "MF05",
+    "fragments": [
+      "REQ-L005-text-06",
+      "RAD-L009-text-01",
+      "RAD-L009-text-02",
+      "RAD-L009-text-03"
+    ],
+    "checks": [
+      "D03",
+      "T11",
+      "V17"
+    ],
+    "engineeringResult": "Current source boundary reviewed;two service/HTTP cases confirm mood metadata serialization and output reconstruction. No queue-selection path found in the reviewed current preparation boundary.",
+    "accepted": false,
+    "remaining": [
+      "D03 observed listener understanding of host mood versus music selection.",
+      "Subjective quality and prompt compliance require their existing listener/live-provider proof;instructions alone do not guarantee generated speech."
+    ],
+    "knownOpenChecks": 25
+  },
+  "validation": {
+    "inspection": "Five queue writes,twelve consumers,one main renderer message inspected. Source and evidence hashes retained.",
+    "runtime": "Two actual NewsService calls,owned feed/provider HTTP responses;real provider calls0;owned HTTP server closes in finally;process exits0.",
+    "buildLint": "No production code changed;no repeated build/type/lint or unit tests."
+  },
+  "limits": [
+    "Static review and controlled service payloads do not prove subjective speech quality,unassisted understanding or arbitrary future code.",
+    "Provider endpoints rewritten to owned localhost;dummy credentials;no paid request. No app mounted in this service check.",
+    "No new native,audible,OS control,live Jellyfin or deferred viewport/zoom check.",
+    "Same acceptance totals;semantic denominator remains incomplete;no overall percentage or goal-completion claim."
+  ]
+}
