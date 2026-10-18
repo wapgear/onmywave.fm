@@ -122,7 +122,7 @@ The [radio setup save record](verification/2026-10-18-radio-setup-save-focus.jso
 The [18 October profile confirmation record](verification/2026-10-18-profile-dialog-focus.json) contains15 final native projections and raw hashes, production renderer/preload and copied instrumented main hashes. Its baseline is the prior setup-save profile failure. It verifies only the scoped confirmations and leaves all191 acceptance dispositions unchanged.
 
 
-The [shared editor focus record](verification/2026-10-18-shared-editor-focus.json) separates four renderer phases and24 native projections, retains the failed clipping intermediates and records final source/bundle/fixture/raw hashes. Source/DJ deletion owners were unchanged during later DJ-editor scrolling corrections; their earlier checks are not a final-bundle rerun. All191 acceptance dispositions remain unchanged.
+The [shared editor focus record](verification/2026-10-18-shared-editor-focus.json) separates four renderer phases and24 native projections, retains the failed clipping intermediates and records final source/bundle/fixture/raw hashes. Source/DJ deletion owners were unchanged during later DJ-editor scrolling corrections; their earlier checks are not a final-bundle rerun. All 191 acceptance dispositions remain unchanged.
 
 
 The [saved-take focus record](verification/2026-10-18-prepared-take-focus.json) separates2 baseline,17 reviewed and4 final-Stop projections with source/bundle/fixture/raw hashes. A selection-error CUA observation has no valid retained raw snapshot and is explicitly excluded. Final Stop verification is scoped separately from earlier selection/scheduling checks; all191 dispositions remain unchanged.
@@ -147,3 +147,6 @@ The [account-form record](verification/2026-10-18-account-form-focus.json) separ
 
 
 The [playlist/player recovery-focus record](verification/2026-10-18-playlist-player-recovery-focus.json) retains 42 scoped native projections, nine terminal observer reports and separate baseline/reviewed/final hashes. Actual marker/receipt transitions, local DELETE counts and lost-response removal remain distinct from focus outcomes. It records the singular-count/Skip renderer phase limits and missing intermediate hash, without inventing a final-bundle rerun. Unobserved variants remain explicit and all 191 dispositions are unchanged.
+
+
+The [voice-search record](verification/2026-10-18-voice-search-focus.json) retains one baseline and thirteen final native projections, source/bundle/fixture/raw hashes and terminal observer reports. Search results are substituted at the copied IPC gate, so no live ElevenLabs or voice-quality result is implied. All final cases use one renderer. The refreshed source inventory changes neither its 218-definition count nor any acceptance disposition.

@@ -1,0 +1,2586 @@
+{
+  "date": "2026-10-18",
+  "scope": "DJ Simple-mode voice-search pending focus and guarded activation; Q06 remains Review.",
+  "base": "24ea8f76456a66bdfd0e583def40d7a3dedf511c",
+  "environment": {
+    "viewport": [
+      1280,
+      720
+    ],
+    "zoom": 1,
+    "input": "Native CUA only",
+    "renderer": "Production renderer and preload; one final bundle for all final cases",
+    "main": "Copied instrumented main/storage reused from voice-preview fixture; not unmodified current production main",
+    "storage": "Disposable safeStorage, placeholder provider keys, null shared-key adapter",
+    "search": "IPC gate substitutes controlled results after hold/fail; no ElevenLabs request",
+    "media": "Muted; paused saved queue retained at 12 seconds",
+    "processes": "Both observers terminal observed with no page errors; owned localhost catalog terminal exit 143"
+  },
+  "source": {
+    "src/renderer/pages/DJs/components/DJEditor.component.tsx": "64457abf271353499f45a9b719a643b90a330e87fdd86311981255cd1caa04ef",
+    "src/main/dj-voices.ts": "c5dd6b8af812181e99eb5d30cd4844ede4717460b641319d267620ba5b51f1e9"
+  },
+  "baselineBundles": {
+    "index-C-2WfQBm.js": "acbe068a5b94371a252989adc26caa54cf3f8122ef976b583e1ba88e2679e82a"
+  },
+  "finalBundles": {
+    "index-BVj4zIC4.js": "9c1e5851008d3d6cfc16da58a0a306901da40818422382edb1d542339254ce17"
+  },
+  "fixtureHashes": {
+    "bootstrap.mjs": "75125371060d958c0b139bab3f8bd037023438b85849280fcf1d8b6e63a13c9f",
+    "observe.cjs": "ad17ee6c121142a75b575e891cf577add33cd5d6facf3d2ae47d961c86842e43",
+    "server.mjs": "33b1beafab299247920af0bee234c85d500ecb207a2527bf3c25a2feb9dcc7da",
+    "out/main/index.js": "576624282916408675d3a7ee10b7528d3334dc477ed0de6f259d0339a53bd57a"
+  },
+  "observerReports": {
+    "before": {
+      "sha256": "e3cd6eaa2c11e493abf680b70f671b7d250d931afdf42bfc5dcf26c96bdbac30",
+      "result": "observed",
+      "errors": []
+    },
+    "final": {
+      "sha256": "e20f657c9b56d80058001b28a32d3add7e300e0c4ffba700144ca16b450156b8",
+      "result": "observed",
+      "errors": []
+    }
+  },
+  "checks": {
+    "buildIncludingTypeScript": "passed",
+    "fullESLint": "passed",
+    "nativePredicates": "passed",
+    "review": "Root source review of mechanical existing-pattern reuse; no independent paired review"
+  },
+  "limitations": [
+    "No complete app-wide Q06 acceptance",
+    "No live provider result, voice quality, listener or VoiceOver acceptance",
+    "No new forced window-loss, changed gender, cached new-key, or editor-save overlap replay",
+    "No new options-save Retry or successful authentication handoff evidence",
+    "No smaller viewport or enlarged zoom check"
+  ],
+  "acceptance": {
+    "rows": 191,
+    "active": 189,
+    "deferred": 2,
+    "open": 27,
+    "listenerOpen": 14,
+    "otherProofOpen": 13,
+    "dispositionsChanged": false
+  },
+  "snapshots": [
+    {
+      "name": "before-pending",
+      "rawSha256": "b634556ea5668741409e42c0e3e876d29d44fa02c4b594cd88e971efd20ad389",
+      "focus": {
+        "tag": "BODY",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "top": 0,
+          "right": 1280,
+          "bottom": 720,
+          "left": 0
+        },
+        "insideDrawer": false,
+        "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedSettingsGeneralProvider keysSourcesDJsDJsHosts and voices for your prepared audio takesNew DJFixture hostYour saved DJ configurationGenerate DJ previewFixture host \u00b7 DJ delivery previewGenerate a fixed sample with this DJ\u2019s saved voice and delivery using ElevenLabs. Saving this DJ does not generate audio.Generating or regenerating a preview uses ElevenLabs outside automatic news limits and can use credits or incur charges. Replaying saved audio makes no provider request.Create a DJPredefinedSimpleAdvancedDescribe your host and find a voice in ElevenLabs.EnthusiasticCurious, upbeat, delighted to share.EnergeticFast, punchy, ready to turn it up.Quiet & warmSoft, unhurried, easy company.ProfessorThoughtful context, clearly explained.NerdyDeep cuts, details, a little dry wit.ManWomanElevenLabs \u00b7 SarahApply presetPreview voiceSarah \u00b7 voice sampleSaved locally. Replaying does not make a provider request.Applies the personality, description, voice and delivery. Voice access depends on your ElevenLabs account. You can listen after saving.Describe your DJwarm narratorUse short descriptive keywords. Searches the names, descriptions and labels of voices available to your ElevenLabs account.Voice preferenceAny voiceManWomanSearching\u2026Searching ElevenLabs\u2026NamePersonalityLanguageVoiceElevenLabs \u00b7 prepared speechElevenLabs voice IDFind this ID in your ElevenLabs voice library. Your existing voice is kept when you edit this DJ.Host preferencesYour full host instructions, music preferences and exclusions are sent to OpenAI for news preparation, up to 20,000 characters per field. Longer text can increase usage and cost. Music preferences guide the host\u2019s style; you choose the music queue.Short descriptionHost instructionsMusic preferencesExclusionsNews interestsOpenAI \u00b7 gpt-6-luna prepares stories from your sources. ElevenLabs generates the voice.Delivery tagsOptional bracketed tags supported by your voice provider.Music level under the voice5%Applied when you schedule a saved take over music.Set how often you hear news in Settings \u2192 General \u2192 DJ playback.Saving a DJ does not generate audio, start playback, or change a selected take.CancelSave DJSong 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparation \u00b7 My roomPreparation paused. Fixture prior preparation failure. Preparation stays paused until you resume it in News settings.Open News bucketQuick configurationNews profileChoose a news profileMy roomEvening profileFixture host \u00b7 Fixture feedDJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+        "type": null,
+        "role": null
+      },
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Predefined",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Simple",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Advanced",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnthusiasticCurious, upbeat, delighted to share.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnergeticFast, punchy, ready to turn it up.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Quiet & warmSoft, unhurried, easy company.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "ProfessorThoughtful context, clearly explained.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "NerdyDeep cuts, details, a little dry wit.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Man",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Woman",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Apply preset",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Preview voice for Sarah",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Searching\u2026",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Save DJ",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        }
+      ],
+      "headings": [
+        "Settings",
+        "DJs",
+        "Fixture host",
+        "Create a DJ"
+      ],
+      "dialogs": [
+        {
+          "title": "Create a DJ",
+          "paragraphs": [
+            "Describe your host and find a voice in ElevenLabs.",
+            "Saved locally. Replaying does not make a provider request.",
+            "Applies the personality, description, voice and delivery. Voice access depends on your ElevenLabs account. You can listen after saving.",
+            "Searching ElevenLabs\u2026",
+            "ElevenLabs \u00b7 prepared speech",
+            "Your full host instructions, music preferences and exclusions are sent to OpenAI for news preparation, up to 20,000 characters per field. Longer text can increase usage and cost. Music preferences guide the host\u2019s style; you choose the music queue.",
+            "OpenAI \u00b7 gpt-6-luna prepares stories from your sources. ElevenLabs generates the voice.",
+            "Set how often you hear news in Settings \u2192 General \u2192 DJ playback.",
+            "Saving a DJ does not generate audio, start playback, or change a selected take."
+          ]
+        }
+      ],
+      "searchCalls": 1,
+      "held": [
+        "searchDJVoices"
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "position": 12
+    },
+    {
+      "name": "final-closed",
+      "rawSha256": "47849383345e224186cd435aefde468b4ed437708904407105651988e8911bfa",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1145.046875,
+          "y": 216,
+          "width": 104.953125,
+          "height": 34,
+          "top": 216,
+          "right": 1250,
+          "bottom": 250,
+          "left": 1145.046875
+        },
+        "insideDrawer": false,
+        "name": "New DJ",
+        "type": null,
+        "role": null
+      },
+      "dialogActions": [],
+      "headings": [
+        "Settings",
+        "DJs",
+        "Fixture host"
+      ],
+      "dialogs": [],
+      "searchCalls": 6,
+      "held": [
+        "searchDJVoices"
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "position": 12
+    },
+    {
+      "name": "final-closed-complete",
+      "rawSha256": "379c31a47a15c102b8ce6553a2adeefbf4c711241ed654a0773b0c0b8601f34e",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1145.046875,
+          "y": 216,
+          "width": 104.953125,
+          "height": 34,
+          "top": 216,
+          "right": 1250,
+          "bottom": 250,
+          "left": 1145.046875
+        },
+        "insideDrawer": false,
+        "name": "New DJ",
+        "type": null,
+        "role": null
+      },
+      "dialogActions": [],
+      "headings": [
+        "Settings",
+        "DJs",
+        "Fixture host"
+      ],
+      "dialogs": [],
+      "searchCalls": 6,
+      "held": [],
+      "externalAttempts": 0,
+      "httpWrites": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "position": 12
+    },
+    {
+      "name": "final-edited-pending",
+      "rawSha256": "b8589fde7253f23a47a08512c54c98b0b6b1acdd425c0703b9e5bf81b66ef9b1",
+      "focus": {
+        "tag": "TEXTAREA",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 337,
+          "y": 290.09375,
+          "width": 598,
+          "height": 81.390625,
+          "top": 290.09375,
+          "right": 935,
+          "bottom": 371.484375,
+          "left": 337
+        },
+        "insideDrawer": false,
+        "name": "energetic presenter",
+        "type": null,
+        "label": "Describe your DJenergetic presenterUse short descriptive keywords. Searches the names, descriptions and labels of voices available to your ElevenLabs account.",
+        "role": null
+      },
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Predefined",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Simple",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Advanced",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnthusiasticCurious, upbeat, delighted to share.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnergeticFast, punchy, ready to turn it up.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Quiet & warmSoft, unhurried, easy company.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "ProfessorThoughtful context, clearly explained.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "NerdyDeep cuts, details, a little dry wit.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Man",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Woman",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Apply preset",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Preview voice for Sarah",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Searching\u2026",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": false
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Save DJ",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        }
+      ],
+      "headings": [
+        "Settings",
+        "DJs",
+        "Fixture host",
+        "Create a DJ"
+      ],
+      "dialogs": [
+        {
+          "title": "Create a DJ",
+          "paragraphs": [
+            "Describe your host and find a voice in ElevenLabs.",
+            "Saved locally. Replaying does not make a provider request.",
+            "Applies the personality, description, voice and delivery. Voice access depends on your ElevenLabs account. You can listen after saving.",
+            "Searching ElevenLabs\u2026",
+            "ElevenLabs \u00b7 prepared speech",
+            "Your full host instructions, music preferences and exclusions are sent to OpenAI for news preparation, up to 20,000 characters per field. Longer text can increase usage and cost. Music preferences guide the host\u2019s style; you choose the music queue.",
+            "OpenAI \u00b7 gpt-6-luna prepares stories from your sources. ElevenLabs generates the voice.",
+            "Set how often you hear news in Settings \u2192 General \u2192 DJ playback.",
+            "Saving a DJ does not generate audio, start playback, or change a selected take."
+          ]
+        }
+      ],
+      "searchCalls": 4,
+      "held": [
+        "searchDJVoices"
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "position": 12
+    },
+    {
+      "name": "final-empty",
+      "rawSha256": "052ae167aea5bf8236894115fa65d3f1b5ddc3f0536a0bb1f6dac116faed6eb0",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 337,
+          "y": 575.8203125,
+          "width": 598,
+          "height": 38,
+          "top": 575.8203125,
+          "right": 935,
+          "bottom": 613.8203125,
+          "left": 337
+        },
+        "insideDrawer": false,
+        "name": "",
+        "type": null,
+        "label": "Name",
+        "role": null
+      },
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Predefined",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Simple",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Advanced",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnthusiasticCurious, upbeat, delighted to share.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnergeticFast, punchy, ready to turn it up.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Quiet & warmSoft, unhurried, easy company.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "ProfessorThoughtful context, clearly explained.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "NerdyDeep cuts, details, a little dry wit.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Man",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Woman",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Apply preset",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Preview voice for Sarah",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Find voices",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Save DJ",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        }
+      ],
+      "headings": [
+        "Settings",
+        "DJs",
+        "Fixture host",
+        "Create a DJ"
+      ],
+      "dialogs": [
+        {
+          "title": "Create a DJ",
+          "paragraphs": [
+            "Describe your host and find a voice in ElevenLabs.",
+            "Saved locally. Replaying does not make a provider request.",
+            "Applies the personality, description, voice and delivery. Voice access depends on your ElevenLabs account. You can listen after saving.",
+            "No voices found. Try fewer keywords, change the voice preference, or use a predefined host.",
+            "ElevenLabs \u00b7 prepared speech",
+            "Your full host instructions, music preferences and exclusions are sent to OpenAI for news preparation, up to 20,000 characters per field. Longer text can increase usage and cost. Music preferences guide the host\u2019s style; you choose the music queue.",
+            "OpenAI \u00b7 gpt-6-luna prepares stories from your sources. ElevenLabs generates the voice.",
+            "Set how often you hear news in Settings \u2192 General \u2192 DJ playback.",
+            "Saving a DJ does not generate audio, start playback, or change a selected take."
+          ]
+        }
+      ],
+      "searchCalls": 3,
+      "held": [],
+      "externalAttempts": 0,
+      "httpWrites": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "position": 12
+    },
+    {
+      "name": "final-failure",
+      "rawSha256": "9132830346481d72fec669e6a0166a04c5745e83cf38a66f00f2d127523f1188",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 831.6328125,
+          "y": 455.875,
+          "width": 103.3671875,
+          "height": 40,
+          "top": 455.875,
+          "right": 935,
+          "bottom": 495.875,
+          "left": 831.6328125
+        },
+        "insideDrawer": false,
+        "name": "Find voices",
+        "type": "button",
+        "role": null
+      },
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Predefined",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Simple",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Advanced",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnthusiasticCurious, upbeat, delighted to share.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnergeticFast, punchy, ready to turn it up.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Quiet & warmSoft, unhurried, easy company.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "ProfessorThoughtful context, clearly explained.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "NerdyDeep cuts, details, a little dry wit.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Man",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Woman",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Apply preset",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Preview voice for Sarah",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Find voices",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Save DJ",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        }
+      ],
+      "headings": [
+        "Settings",
+        "DJs",
+        "Fixture host",
+        "Create a DJ"
+      ],
+      "dialogs": [
+        {
+          "title": "Create a DJ",
+          "paragraphs": [
+            "Describe your host and find a voice in ElevenLabs.",
+            "Saved locally. Replaying does not make a provider request.",
+            "Applies the personality, description, voice and delivery. Voice access depends on your ElevenLabs account. You can listen after saving.",
+            "ElevenLabs \u00b7 prepared speech",
+            "Your full host instructions, music preferences and exclusions are sent to OpenAI for news preparation, up to 20,000 characters per field. Longer text can increase usage and cost. Music preferences guide the host\u2019s style; you choose the music queue.",
+            "OpenAI \u00b7 gpt-6-luna prepares stories from your sources. ElevenLabs generates the voice.",
+            "Set how often you hear news in Settings \u2192 General \u2192 DJ playback.",
+            "Saving a DJ does not generate audio, start playback, or change a selected take."
+          ]
+        }
+      ],
+      "searchCalls": 1,
+      "held": [],
+      "externalAttempts": 0,
+      "httpWrites": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "position": 12
+    },
+    {
+      "name": "final-mode-away",
+      "rawSha256": "062e3b052c2a82dff573a8cdeb4f722d7f5e3ee2f9efb171c0f4429b1cdb1fad",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 339,
+          "y": 158.5,
+          "width": 194,
+          "height": 34,
+          "top": 158.5,
+          "right": 533,
+          "bottom": 192.5,
+          "left": 339
+        },
+        "insideDrawer": false,
+        "name": "Predefined",
+        "type": "button",
+        "role": "tab"
+      },
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Predefined",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true
+        },
+        {
+          "name": "Simple",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Advanced",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnthusiasticCurious, upbeat, delighted to share.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnergeticFast, punchy, ready to turn it up.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Quiet & warmSoft, unhurried, easy company.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "ProfessorThoughtful context, clearly explained.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "NerdyDeep cuts, details, a little dry wit.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Man",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Woman",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Apply preset",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Preview voice for Sarah",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Searching\u2026",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": false
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Save DJ",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        }
+      ],
+      "headings": [
+        "Settings",
+        "DJs",
+        "Fixture host",
+        "Create a DJ"
+      ],
+      "dialogs": [
+        {
+          "title": "Create a DJ",
+          "paragraphs": [
+            "Start with a ready-made personality and voice.",
+            "Saved locally. Replaying does not make a provider request.",
+            "Applies the personality, description, voice and delivery. Voice access depends on your ElevenLabs account. You can listen after saving.",
+            "Searching ElevenLabs\u2026",
+            "ElevenLabs \u00b7 prepared speech",
+            "Your full host instructions, music preferences and exclusions are sent to OpenAI for news preparation, up to 20,000 characters per field. Longer text can increase usage and cost. Music preferences guide the host\u2019s style; you choose the music queue.",
+            "OpenAI \u00b7 gpt-6-luna prepares stories from your sources. ElevenLabs generates the voice.",
+            "Set how often you hear news in Settings \u2192 General \u2192 DJ playback.",
+            "Saving a DJ does not generate audio, start playback, or change a selected take."
+          ]
+        }
+      ],
+      "searchCalls": 5,
+      "held": [
+        "searchDJVoices"
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "position": 12
+    },
+    {
+      "name": "final-mode-complete",
+      "rawSha256": "d3d5b28418cd03fa76863cc0e228ab96abd53f813d0ec1fdb140bb042e7092db",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 339,
+          "y": 158.5,
+          "width": 194,
+          "height": 34,
+          "top": 158.5,
+          "right": 533,
+          "bottom": 192.5,
+          "left": 339
+        },
+        "insideDrawer": false,
+        "name": "Predefined",
+        "type": "button",
+        "role": "tab"
+      },
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Predefined",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true
+        },
+        {
+          "name": "Simple",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Advanced",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnthusiasticCurious, upbeat, delighted to share.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnergeticFast, punchy, ready to turn it up.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Quiet & warmSoft, unhurried, easy company.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "ProfessorThoughtful context, clearly explained.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "NerdyDeep cuts, details, a little dry wit.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Man",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Woman",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Apply preset",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Preview voice for Sarah",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Find voices",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Warm fixture voiceControlled search resultUse this voice",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Save DJ",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        }
+      ],
+      "headings": [
+        "Settings",
+        "DJs",
+        "Fixture host",
+        "Create a DJ"
+      ],
+      "dialogs": [
+        {
+          "title": "Create a DJ",
+          "paragraphs": [
+            "Start with a ready-made personality and voice.",
+            "Saved locally. Replaying does not make a provider request.",
+            "Applies the personality, description, voice and delivery. Voice access depends on your ElevenLabs account. You can listen after saving.",
+            "ElevenLabs \u00b7 prepared speech",
+            "Your full host instructions, music preferences and exclusions are sent to OpenAI for news preparation, up to 20,000 characters per field. Longer text can increase usage and cost. Music preferences guide the host\u2019s style; you choose the music queue.",
+            "OpenAI \u00b7 gpt-6-luna prepares stories from your sources. ElevenLabs generates the voice.",
+            "Set how often you hear news in Settings \u2192 General \u2192 DJ playback.",
+            "Saving a DJ does not generate audio, start playback, or change a selected take."
+          ]
+        }
+      ],
+      "searchCalls": 5,
+      "held": [],
+      "externalAttempts": 0,
+      "httpWrites": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "position": 12
+    },
+    {
+      "name": "final-pending",
+      "rawSha256": "afeb641de0bec397795a59fe84a46834b349b30a9b09b551c6feaa1dfed4a5bc",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 828.1953125,
+          "y": 455.875,
+          "width": 106.8046875,
+          "height": 40,
+          "top": 455.875,
+          "right": 935,
+          "bottom": 495.875,
+          "left": 828.1953125
+        },
+        "insideDrawer": false,
+        "name": "Searching\u2026",
+        "type": "button",
+        "role": null
+      },
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Predefined",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Simple",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Advanced",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnthusiasticCurious, upbeat, delighted to share.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnergeticFast, punchy, ready to turn it up.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Quiet & warmSoft, unhurried, easy company.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "ProfessorThoughtful context, clearly explained.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "NerdyDeep cuts, details, a little dry wit.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Man",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Woman",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Apply preset",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Preview voice for Sarah",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Searching\u2026",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Save DJ",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        }
+      ],
+      "headings": [
+        "Settings",
+        "DJs",
+        "Fixture host",
+        "Create a DJ"
+      ],
+      "dialogs": [
+        {
+          "title": "Create a DJ",
+          "paragraphs": [
+            "Describe your host and find a voice in ElevenLabs.",
+            "Saved locally. Replaying does not make a provider request.",
+            "Applies the personality, description, voice and delivery. Voice access depends on your ElevenLabs account. You can listen after saving.",
+            "Searching ElevenLabs\u2026",
+            "ElevenLabs \u00b7 prepared speech",
+            "Your full host instructions, music preferences and exclusions are sent to OpenAI for news preparation, up to 20,000 characters per field. Longer text can increase usage and cost. Music preferences guide the host\u2019s style; you choose the music queue.",
+            "OpenAI \u00b7 gpt-6-luna prepares stories from your sources. ElevenLabs generates the voice.",
+            "Set how often you hear news in Settings \u2192 General \u2192 DJ playback.",
+            "Saving a DJ does not generate audio, start playback, or change a selected take."
+          ]
+        }
+      ],
+      "searchCalls": 1,
+      "held": [
+        "searchDJVoices"
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "position": 12
+    },
+    {
+      "name": "final-retry-pending",
+      "rawSha256": "b4df46e13e7a2bd38fe6cc1618052c55d5274e14a7d204adeb2fd1d8902c88c7",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 828.1953125,
+          "y": 455.875,
+          "width": 106.8046875,
+          "height": 40,
+          "top": 455.875,
+          "right": 935,
+          "bottom": 495.875,
+          "left": 828.1953125
+        },
+        "insideDrawer": false,
+        "name": "Searching\u2026",
+        "type": "button",
+        "role": null
+      },
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Predefined",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Simple",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Advanced",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnthusiasticCurious, upbeat, delighted to share.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnergeticFast, punchy, ready to turn it up.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Quiet & warmSoft, unhurried, easy company.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "ProfessorThoughtful context, clearly explained.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "NerdyDeep cuts, details, a little dry wit.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Man",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Woman",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Apply preset",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Preview voice for Sarah",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Searching\u2026",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Save DJ",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        }
+      ],
+      "headings": [
+        "Settings",
+        "DJs",
+        "Fixture host",
+        "Create a DJ"
+      ],
+      "dialogs": [
+        {
+          "title": "Create a DJ",
+          "paragraphs": [
+            "Describe your host and find a voice in ElevenLabs.",
+            "Saved locally. Replaying does not make a provider request.",
+            "Applies the personality, description, voice and delivery. Voice access depends on your ElevenLabs account. You can listen after saving.",
+            "Searching ElevenLabs\u2026",
+            "ElevenLabs \u00b7 prepared speech",
+            "Your full host instructions, music preferences and exclusions are sent to OpenAI for news preparation, up to 20,000 characters per field. Longer text can increase usage and cost. Music preferences guide the host\u2019s style; you choose the music queue.",
+            "OpenAI \u00b7 gpt-6-luna prepares stories from your sources. ElevenLabs generates the voice.",
+            "Set how often you hear news in Settings \u2192 General \u2192 DJ playback.",
+            "Saving a DJ does not generate audio, start playback, or change a selected take."
+          ]
+        }
+      ],
+      "searchCalls": 2,
+      "held": [
+        "searchDJVoices"
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "position": 12
+    },
+    {
+      "name": "final-shortcut-pending",
+      "rawSha256": "c1ddfb8935e04d54080bd76857f1d9cc2653e5c0f998c2e63e5af4ccd1da56e7",
+      "focus": {
+        "tag": "TEXTAREA",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 337,
+          "y": 290.09375,
+          "width": 598,
+          "height": 81.390625,
+          "top": 290.09375,
+          "right": 935,
+          "bottom": 371.484375,
+          "left": 337
+        },
+        "insideDrawer": false,
+        "name": "warm narrator",
+        "type": null,
+        "label": "Describe your DJwarm narratorUse short descriptive keywords. Searches the names, descriptions and labels of voices available to your ElevenLabs account.",
+        "role": null
+      },
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Predefined",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Simple",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Advanced",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnthusiasticCurious, upbeat, delighted to share.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnergeticFast, punchy, ready to turn it up.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Quiet & warmSoft, unhurried, easy company.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "ProfessorThoughtful context, clearly explained.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "NerdyDeep cuts, details, a little dry wit.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Man",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Woman",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Apply preset",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Preview voice for Sarah",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Searching\u2026",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": false
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Save DJ",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        }
+      ],
+      "headings": [
+        "Settings",
+        "DJs",
+        "Fixture host",
+        "Create a DJ"
+      ],
+      "dialogs": [
+        {
+          "title": "Create a DJ",
+          "paragraphs": [
+            "Describe your host and find a voice in ElevenLabs.",
+            "Saved locally. Replaying does not make a provider request.",
+            "Applies the personality, description, voice and delivery. Voice access depends on your ElevenLabs account. You can listen after saving.",
+            "Searching ElevenLabs\u2026",
+            "ElevenLabs \u00b7 prepared speech",
+            "Your full host instructions, music preferences and exclusions are sent to OpenAI for news preparation, up to 20,000 characters per field. Longer text can increase usage and cost. Music preferences guide the host\u2019s style; you choose the music queue.",
+            "OpenAI \u00b7 gpt-6-luna prepares stories from your sources. ElevenLabs generates the voice.",
+            "Set how often you hear news in Settings \u2192 General \u2192 DJ playback.",
+            "Saving a DJ does not generate audio, start playback, or change a selected take."
+          ]
+        }
+      ],
+      "searchCalls": 4,
+      "held": [
+        "searchDJVoices"
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "position": 12
+    },
+    {
+      "name": "final-stale-hidden",
+      "rawSha256": "f1462e22024d6370bb36b1f8201b57703fe2a305099c8217b60c9e194acdd696",
+      "focus": {
+        "tag": "TEXTAREA",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 337,
+          "y": 290.09375,
+          "width": 598,
+          "height": 81.390625,
+          "top": 290.09375,
+          "right": 935,
+          "bottom": 371.484375,
+          "left": 337
+        },
+        "insideDrawer": false,
+        "name": "energetic presenter",
+        "type": null,
+        "label": "Describe your DJenergetic presenterUse short descriptive keywords. Searches the names, descriptions and labels of voices available to your ElevenLabs account.",
+        "role": null
+      },
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Predefined",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Simple",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Advanced",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnthusiasticCurious, upbeat, delighted to share.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnergeticFast, punchy, ready to turn it up.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Quiet & warmSoft, unhurried, easy company.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "ProfessorThoughtful context, clearly explained.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "NerdyDeep cuts, details, a little dry wit.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Man",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Woman",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Apply preset",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Preview voice for Sarah",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Find voices",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Save DJ",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        }
+      ],
+      "headings": [
+        "Settings",
+        "DJs",
+        "Fixture host",
+        "Create a DJ"
+      ],
+      "dialogs": [
+        {
+          "title": "Create a DJ",
+          "paragraphs": [
+            "Describe your host and find a voice in ElevenLabs.",
+            "Saved locally. Replaying does not make a provider request.",
+            "Applies the personality, description, voice and delivery. Voice access depends on your ElevenLabs account. You can listen after saving.",
+            "ElevenLabs \u00b7 prepared speech",
+            "Your full host instructions, music preferences and exclusions are sent to OpenAI for news preparation, up to 20,000 characters per field. Longer text can increase usage and cost. Music preferences guide the host\u2019s style; you choose the music queue.",
+            "OpenAI \u00b7 gpt-6-luna prepares stories from your sources. ElevenLabs generates the voice.",
+            "Set how often you hear news in Settings \u2192 General \u2192 DJ playback.",
+            "Saving a DJ does not generate audio, start playback, or change a selected take."
+          ]
+        }
+      ],
+      "searchCalls": 4,
+      "held": [],
+      "externalAttempts": 0,
+      "httpWrites": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "position": 12
+    },
+    {
+      "name": "final-success",
+      "rawSha256": "e10c4f7a0194ce094dc69ea82dff3db79b90596b87e91a478dece55998b0d55b",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 831.6328125,
+          "y": 455.875,
+          "width": 103.3671875,
+          "height": 40,
+          "top": 455.875,
+          "right": 935,
+          "bottom": 495.875,
+          "left": 831.6328125
+        },
+        "insideDrawer": false,
+        "name": "Find voices",
+        "type": "button",
+        "role": null
+      },
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Predefined",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Simple",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Advanced",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnthusiasticCurious, upbeat, delighted to share.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnergeticFast, punchy, ready to turn it up.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Quiet & warmSoft, unhurried, easy company.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "ProfessorThoughtful context, clearly explained.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "NerdyDeep cuts, details, a little dry wit.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Man",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Woman",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Apply preset",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Preview voice for Sarah",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Find voices",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true
+        },
+        {
+          "name": "Warm fixture voiceControlled search resultUse this voice",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Save DJ",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        }
+      ],
+      "headings": [
+        "Settings",
+        "DJs",
+        "Fixture host",
+        "Create a DJ"
+      ],
+      "dialogs": [
+        {
+          "title": "Create a DJ",
+          "paragraphs": [
+            "Describe your host and find a voice in ElevenLabs.",
+            "Saved locally. Replaying does not make a provider request.",
+            "Applies the personality, description, voice and delivery. Voice access depends on your ElevenLabs account. You can listen after saving.",
+            "ElevenLabs \u00b7 prepared speech",
+            "Your full host instructions, music preferences and exclusions are sent to OpenAI for news preparation, up to 20,000 characters per field. Longer text can increase usage and cost. Music preferences guide the host\u2019s style; you choose the music queue.",
+            "OpenAI \u00b7 gpt-6-luna prepares stories from your sources. ElevenLabs generates the voice.",
+            "Set how often you hear news in Settings \u2192 General \u2192 DJ playback.",
+            "Saving a DJ does not generate audio, start playback, or change a selected take."
+          ]
+        }
+      ],
+      "searchCalls": 2,
+      "held": [],
+      "externalAttempts": 0,
+      "httpWrites": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "position": 12
+    },
+    {
+      "name": "final-tab-away",
+      "rawSha256": "632436600d0fd52b1ab68d09665c530b8088ec4932a48360d768d23431199a47",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 337,
+          "y": 557.8203125,
+          "width": 598,
+          "height": 38,
+          "top": 557.8203125,
+          "right": 935,
+          "bottom": 595.8203125,
+          "left": 337
+        },
+        "insideDrawer": false,
+        "name": "",
+        "type": null,
+        "label": "Name",
+        "role": null
+      },
+      "dialogActions": [
+        {
+          "name": "Close dialog",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Predefined",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Simple",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Advanced",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnthusiasticCurious, upbeat, delighted to share.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "EnergeticFast, punchy, ready to turn it up.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Quiet & warmSoft, unhurried, easy company.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "ProfessorThoughtful context, clearly explained.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "NerdyDeep cuts, details, a little dry wit.",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Man",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Woman",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Apply preset",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Preview voice for Sarah",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Searching\u2026",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": false
+        },
+        {
+          "name": "Cancel",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        },
+        {
+          "name": "Save DJ",
+          "disabled": true,
+          "nativeDisabled": true,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false
+        }
+      ],
+      "headings": [
+        "Settings",
+        "DJs",
+        "Fixture host",
+        "Create a DJ"
+      ],
+      "dialogs": [
+        {
+          "title": "Create a DJ",
+          "paragraphs": [
+            "Describe your host and find a voice in ElevenLabs.",
+            "Saved locally. Replaying does not make a provider request.",
+            "Applies the personality, description, voice and delivery. Voice access depends on your ElevenLabs account. You can listen after saving.",
+            "Searching ElevenLabs\u2026",
+            "ElevenLabs \u00b7 prepared speech",
+            "Your full host instructions, music preferences and exclusions are sent to OpenAI for news preparation, up to 20,000 characters per field. Longer text can increase usage and cost. Music preferences guide the host\u2019s style; you choose the music queue.",
+            "OpenAI \u00b7 gpt-6-luna prepares stories from your sources. ElevenLabs generates the voice.",
+            "Set how often you hear news in Settings \u2192 General \u2192 DJ playback.",
+            "Saving a DJ does not generate audio, start playback, or change a selected take."
+          ]
+        }
+      ],
+      "searchCalls": 3,
+      "held": [
+        "searchDJVoices"
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "position": 12
+    }
+  ]
+}
