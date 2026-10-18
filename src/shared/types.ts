@@ -7,11 +7,13 @@ export type { WorkflowDraft } from './workflow';
 export type ApiError = {
   code: 'offline' | 'timeout' | 'unauthorized' | 'forbidden' | 'not-found' | 'unsupported' | 'invalid' | 'server' | 'uncertain-write' | 'no-news' | 'partial-coverage';
   message: string;
+  authRevision?: number;
 };
 export type Result<T> = { ok: true; value: T } | { ok: false; error: ApiError };
 export type Page<T> = { items: T[]; total: number; start: number };
 export type Connection = {
   id: string;
+  authRevision: number;
   serverUrl: string;
   serverVersion: string;
   userName: string;

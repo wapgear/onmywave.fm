@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type Dispatch, type SetStateAction } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useIsMutating, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Disc3, ListMusic, Music2, Radio, Settings } from 'lucide-react';
 import type { Connection, Song } from '../shared/types';
 import { unwrap } from './api';
@@ -29,6 +29,8 @@ export default function App() {
   const connectionQuery = useQuery({ queryKey: ['connection'], queryFn: async () => unwrap(await window.wave.getConnection()), retry: false });
   const connectionRetryFocus = useRetryFocus({ ownerKey: 'connection-startup', target: () => document.querySelector<HTMLElement>('.page-heading h1, .connection-card h1'), canFocusSuccess: () => connectionQuery.isSuccess && !connectionQuery.isFetching });
   const [expired, setExpired] = useState(false);
+  const deferredExpiry = useRef<number | null>(null);
+  const pendingAuthChanges = useIsMutating({ predicate: mutation => !!mutation.options.meta?.authAttempt });
   const { retryFrom: transitionWithFocus } = useRetryFocus({ ownerKey: 'connection-transition', target: () => null, canFocusSuccess: () => connectionQuery.isSuccess && !connectionQuery.isFetching && !!connectionQuery.data && !expired });
   const runConnectionTransition: ConnectionTransition = (source, operation) => {
     let destination: Connection | undefined;
@@ -44,13 +46,28 @@ export default function App() {
       return heading?.checkVisibility() ? heading : null;
     }, undefined, () => source);
   };
-  useEffect(() => { const expire = () => setExpired(true); window.addEventListener('wave:auth-expired', expire); return () => window.removeEventListener('wave:auth-expired', expire); }, []);
+  useEffect(() => {
+    const expire = (event: Event) => {
+      const revision = (event as CustomEvent<{ authRevision: number }>).detail?.authRevision;
+      if (revision === undefined || client.getQueryData<Connection | null>(['connection'])?.authRevision !== revision) return;
+      if (client.isMutating({ predicate: mutation => !!mutation.options.meta?.authAttempt })) deferredExpiry.current = revision;
+      else { deferredExpiry.current = null; setExpired(true); }
+    };
+    window.addEventListener('wave:auth-expired', expire);
+    return () => window.removeEventListener('wave:auth-expired', expire);
+  }, [client]);
+  useEffect(() => {
+    if (pendingAuthChanges || deferredExpiry.current === null) return;
+    const revision = deferredExpiry.current;
+    deferredExpiry.current = null;
+    if (client.getQueryData<Connection | null>(['connection'])?.authRevision === revision) setExpired(true);
+  }, [pendingAuthChanges, client, connectionQuery.data?.authRevision]);
   async function setConnection(connection: Connection | null, clearExpiry = true) {
     const accountData = { predicate: (query: { queryKey: readonly unknown[] }) => query.queryKey[0] !== 'connection' };
     await client.cancelQueries(accountData);
     client.removeQueries(accountData);
     client.setQueryData(['connection'], connection);
-    if (clearExpiry) setExpired(false);
+    if (clearExpiry) { deferredExpiry.current = null; setExpired(false); }
   }
   const connection = connectionQuery.data ?? null;
   return <><div className="titlebar-drag-region" aria-hidden="true" /><ProviderKeyEditsProvider sessionId={connection?.id ?? null}><NewsRecoveryProvider><SettingsEditsProvider>{connectionQuery.isPending || connectionQuery.error
@@ -70,7 +87,7 @@ function SessionContent({ connection, expired, setConnection, runConnectionTrans
     : <PlayerProvider key={connection.id} connection={connection}><DJPlaybackProvider><ReadyApp key={connection.id} connection={connection} update={librariesSelected} disconnected={() => setConnection(null)} playlistRecovery={playlistRecovery} roomDraft={roomDraft} setRoomDraft={setRoomDraft} roomSetupDraft={roomSetupDraft} setRoomSetupDraft={setRoomSetupDraft} /></DJPlaybackProvider></PlayerProvider>;
   return <LibrarySelectionProvider connection={connection} expired={expired}>{content}</LibrarySelectionProvider>;
 }
-function ReadyApp({ connection, update, disconnected, playlistRecovery, roomDraft, setRoomDraft, roomSetupDraft, setRoomSetupDraft }: { connection: Connection; update: (connection: Connection) => void; disconnected: () => void; playlistRecovery: ReturnType<typeof usePlaylistRecovery> } & RadioDrafts) {
+function ReadyApp({ connection, update, disconnected, playlistRecovery, roomDraft, setRoomDraft, roomSetupDraft, setRoomSetupDraft }: { connection: Connection; update: (connection: Connection) => void; disconnected: () => void | Promise<void>; playlistRecovery: ReturnType<typeof usePlaylistRecovery> } & RadioDrafts) {
   const active = useRef(false);
   useEffect(() => { active.current = true; return () => { active.current = false; }; }, []);
   const [songsView, setSongsView] = useState(initialSongsView);
@@ -220,7 +237,7 @@ function ReadyApp({ connection, update, disconnected, playlistRecovery, roomDraf
   }, [page]);
 
   return <div className={`app-shell ${drawer ? 'has-drawer' : ''}`}><aside className="sidebar"><div className="traffic-light-space" /><div className="wordmark">onmywave.fm</div><nav aria-label="Main navigation">{navigation.map(item => <button key={item.id} className={page === item.id ? 'active' : ''} aria-current={page === item.id ? 'page' : undefined} onClick={() => navigate(item.id)}><item.icon size={21} strokeWidth={1.7} />{item.name}</button>)}</nav><div className="sidebar-bottom"><button className={`settings-nav ${page === 'settings' ? 'active' : ''}`} onClick={() => navigate('settings')} aria-current={page === 'settings' ? 'page' : undefined}><Settings size={20} strokeWidth={1.7} />Settings</button><p className={`connection-status ${networkError ? 'unreachable' : ''}`}><span />{networkError ? 'Server unreachable' : 'Jellyfin connected'}</p></div></aside>
-    <main ref={main} className="main-content" id="main-content"><div ref={content} className="page-content"><NewsRecoveryNotice onOpenSettings={openNewsSettings} focusTarget={() => content.current?.querySelector<HTMLElement>('.page-heading h1') ?? null} settingsTarget={() => content.current?.querySelector<HTMLElement>('#room-panel-settings') ?? null} />{page === 'songs' && <SongsPage view={songsView} setView={setSongsView} add={setAdding} details={openDrawer} />}{page === 'albums' && <AlbumsPage onOpenDetail={(id, origin) => requestCollectionFocus(`albums-${id}`, origin)} view={albumsView} setView={setAlbumsView} add={setAdding} details={openDrawer} />}{page === 'playlists' && <PlaylistsPage onCreateDetail={requestCreatedPlaylistFocus} onReturnFromDetail={(id, origin) => requestCollectionFocus('playlists-list', origin, id)} onOpenDetail={(id, origin) => requestCollectionFocus(`playlists-${id}`, origin)} recovery={playlistRecovery} id={playlistId} setId={setPlaylistId} add={setAdding} details={openDrawer} />}{page === 'stations' && <StationsPage draft={roomDraft} setDraft={setRoomDraft} configDraft={roomSetupDraft} setConfigDraft={setRoomSetupDraft} configureSources={() => configureRoom('sources')} configureDJ={() => configureRoom('djs')} configureSettings={() => configureRoom('keys')} />}{page === 'settings' && <SettingsPage section={settingsSection} onSectionChange={setSettingsSection} returnToSetup={returnToSetup ? () => { restoreSetupFocus.current = true; scrollPositions.current.delete('stations'); setRoomSetupDraft(current => ({ ...current, tab: 'settings' })); setPage('stations'); setReturnToSetup(false); } : undefined} connection={connection} update={updateLibraries} disconnected={() => { if (active.current) disconnected(); }} />}</div></main>
+    <main ref={main} className="main-content" id="main-content"><div ref={content} className="page-content"><NewsRecoveryNotice onOpenSettings={openNewsSettings} focusTarget={() => content.current?.querySelector<HTMLElement>('.page-heading h1') ?? null} settingsTarget={() => content.current?.querySelector<HTMLElement>('#room-panel-settings') ?? null} />{page === 'songs' && <SongsPage view={songsView} setView={setSongsView} add={setAdding} details={openDrawer} />}{page === 'albums' && <AlbumsPage onOpenDetail={(id, origin) => requestCollectionFocus(`albums-${id}`, origin)} view={albumsView} setView={setAlbumsView} add={setAdding} details={openDrawer} />}{page === 'playlists' && <PlaylistsPage onCreateDetail={requestCreatedPlaylistFocus} onReturnFromDetail={(id, origin) => requestCollectionFocus('playlists-list', origin, id)} onOpenDetail={(id, origin) => requestCollectionFocus(`playlists-${id}`, origin)} recovery={playlistRecovery} id={playlistId} setId={setPlaylistId} add={setAdding} details={openDrawer} />}{page === 'stations' && <StationsPage draft={roomDraft} setDraft={setRoomDraft} configDraft={roomSetupDraft} setConfigDraft={setRoomSetupDraft} configureSources={() => configureRoom('sources')} configureDJ={() => configureRoom('djs')} configureSettings={() => configureRoom('keys')} />}{page === 'settings' && <SettingsPage section={settingsSection} onSectionChange={setSettingsSection} returnToSetup={returnToSetup ? () => { restoreSetupFocus.current = true; scrollPositions.current.delete('stations'); setRoomSetupDraft(current => ({ ...current, tab: 'settings' })); setPage('stations'); setReturnToSetup(false); } : undefined} connection={connection} update={updateLibraries} disconnected={() => active.current ? disconnected() : undefined} />}</div></main>
     {drawer && <aside id="listening-drawer" className="side-drawer" aria-labelledby="drawer-title"><header className="drawer-heading"><h2 id="drawer-title">{drawer === 'queue' ? 'Playing Next' : 'Song details'}</h2><button ref={drawerClose} className="icon-button" onClick={closeDrawer} aria-label={drawer === 'queue' ? 'Close queue' : 'Close song details'}><span aria-hidden="true">×</span></button></header><div key={drawer === 'queue' ? 'queue' : drawer.id} className="drawer-body">{drawer === 'queue' ? <Queue /> : <Inspector key={drawer.id} song={drawer} />}</div></aside>}<Player openRoom={source => openPlayerDestination('stations', source)} openSettings={source => openPlayerDestination('settings', source)} queueOpen={drawer === 'queue'} toggleQueue={() => drawer === 'queue' ? closeDrawer() : openDrawer('queue')} />{adding && <AddPlaylist connectionId={connection.id} songs={adding} close={() => setAdding(null)} checkPlaylists={() => { setAdding(null); setPlaylistId(null); navigate('playlists'); }} />}
   </div>;
 }
