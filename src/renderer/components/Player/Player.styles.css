@@ -34,6 +34,7 @@
 .playback-error { background: #fff0ed; color: #893b30; }
 .radio-speaking { background: var(--accent-soft); }
 .player-notices button { display: inline-flex; align-items: center; gap: 5px; background: transparent; border: 0; min-height: 28px; padding: 2px 4px; font: inherit; font-weight: 500; text-decoration: underline; cursor: pointer; color: inherit; white-space: nowrap; }
+.playback-error button[aria-disabled="true"] { color: var(--muted); cursor: default; }
 .player-spin { animation: player-spin 1s linear infinite; flex-shrink: 0; color: #656873; }
 @keyframes player-spin { to { transform: rotate(360deg); } }
 @media (max-width: 1100px) { .player-bar { gap: 12px; grid-template-columns: minmax(150px, 1fr) minmax(240px, 1.2fr) minmax(150px, 1fr); padding: 12px 16px; } .player-transport { gap: 6px; } .player-volume { width: 64px; } }

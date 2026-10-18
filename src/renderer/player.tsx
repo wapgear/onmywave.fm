@@ -13,6 +13,8 @@ type NewsPhase = 'waiting' | 'fading' | 'lead-in' | 'speaking' | 'tail';
 type ScheduledNews = { token: number; key: string; duration: number; bed: number; phase: NewsPhase; trackEnded: boolean; settings: NewsTransitionSettings; elapsed: number; lastTick: number; startLevel: number; speechAttempt: number };
 
 type QueueEntry = { key: string; song: Song };
+type LoadSettlement = { key?: string; generation: number; outcome: 'success' | 'failure' | 'superseded' };
+export type PlaybackRetrySettlement = { key?: string; generation: number; commandRevision: number; kind: 'track' | 'restore'; outcome: 'success' | 'failure' | 'superseded' };
 type PlayerState = {
   queue: QueueEntry[]; current?: Song; currentKey?: string; playing: boolean; requestedPlaying: boolean; busy: boolean;
   position: number; duration: number; error: string | null; volume: number; shuffle: boolean;
@@ -22,7 +24,7 @@ type PlayerState = {
   musicCommandRevision: number; getMusicCommandRevision(): number; pauseForPreview(): void;
   toggle(): void; next(): void; previous(): void; seek(seconds: number): void;
   setVolume(value: number): void; toggleShuffle(): void; cycleRepeat(): void;
-  removeQueue(key: string): void; retry(): void;
+  removeQueue(key: string): void; retry(): Promise<PlaybackRetrySettlement>; getPlaybackGeneration(): number; getResumeGeneration(): number;
   newsPhase: 'idle' | NewsPhase | 'paused'; activeNewsId?: string; newsRunId?: number;
   newsLoading: boolean; activeNews?: NewsBreak; lastNews: HeardNews | null;
   scheduleNews(news: NewsBreak, duckVolume: number): Promise<void>; stopNews(): void;
@@ -69,7 +71,12 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const [completedSongs, setCompletedSongs] = useState(0);
   const commandRevision = useRef(0);
   const [musicCommandRevision, setMusicCommandRevision] = useState(0);
-  const musicCommand = useCallback(() => { setMusicCommandRevision(++commandRevision.current); }, []);
+  const cancelRestoreRetry = useRef<(() => void) | null>(null);
+  const musicCommand = useCallback(() => {
+    setMusicCommandRevision(++commandRevision.current);
+    cancelRestoreRetry.current?.();
+    cancelRestoreRetry.current = null;
+  }, []);
   const getMusicCommandRevision = useCallback(() => commandRevision.current, []);
   const countedSongGeneration = useRef(-1);
   const audio = useRef<HTMLAudioElement | null>(null);
@@ -87,6 +94,8 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const offset = useRef(0);
   const converted = useRef(false);
   const generation = useRef(0);
+  const retryInFlight = useRef<{ key?: string; kind: 'track' | 'restore'; promise: Promise<PlaybackRetrySettlement> } | null>(null);
+  const restoreRetryWaiter = useRef<{ commandRevision: number; resolve: (settlement: PlaybackRetrySettlement) => void } | null>(null);
   const resumeGeneration = useRef(0);
   const target = useRef(0);
   const playIntent = useRef(false);
@@ -155,12 +164,13 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     }
   }, [activeNews, lastNews, newsPhase, recoveryReady, stopNews]);
 
-  const load = useCallback(async (song: Song, transcode = false, start = 0) => {
+  const load = useCallback(async (song: Song, transcode = false, start = 0): Promise<LoadSettlement> => {
     const token = ++generation.current;
     const key = live.current.queue[live.current.index]?.key;
+    const settlement = (outcome: LoadSettlement['outcome']): LoadSettlement => ({ key, generation: token, outcome });
     consumedEnd.current = null;
     const element = audio.current;
-    if (!element) return;
+    if (!element) return settlement('superseded');
     element.ondurationchange = null;
     preparing.current = true;
     element.pause();
@@ -170,7 +180,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     setError(null);
     try {
       const resource = unwrap(await window.wave.preparePlayback({ id: song.id, transcode, offsetSeconds: start }));
-      if (token !== generation.current) return;
+      if (token !== generation.current) return settlement('superseded');
       offset.current = resource.offsetSeconds;
       converted.current = resource.transcoded;
       target.current = resource.transcoded ? 0 : start;
@@ -190,18 +200,20 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       element.load();
       preparing.current = false;
       if (playIntent.current) await element.play();
-      if (token !== generation.current) return;
+      if (token !== generation.current) return settlement('superseded');
       if (!playIntent.current) element.pause();
       setBusy(false);
+      return settlement('success');
     } catch (cause) {
-      if (token !== generation.current) return;
+      if (token !== generation.current) return settlement('superseded');
       preparing.current = false;
       setBusy(false);
-      if (cause instanceof DOMException && cause.name === 'AbortError') return;
+      if (cause instanceof DOMException && cause.name === 'AbortError') return settlement('superseded');
       requestPlayback(false);
       setPlaying(false);
       setError(cause instanceof DOMException && cause.name === 'NotSupportedError' ? trackLoadError
         : cause instanceof Error ? cause.message : 'Playback could not start. Retry or skip this track.');
+      return settlement('failure');
     }
   }, [requestPlayback]);
 
@@ -433,7 +445,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     };
   }, [load, continueAfterSong, checkScheduledNews, stopNews, fadeMusic, requestPlayback]);
 
-  const restoreSession = useCallback(async (saved: PlaybackSnapshot) => {
+  const restoreSession = useCallback(async (saved: PlaybackSnapshot, retryCommandRevision?: number): Promise<PlaybackRetrySettlement> => {
     const resumeToken = ++resumeGeneration.current;
     setBusy(true);
     setError(null);
@@ -446,7 +458,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
           if (cause instanceof WaveError && cause.code === 'not-found') return null;
           throw cause;
         })));
-        if (resumeToken !== resumeGeneration.current) return;
+        if (resumeToken !== resumeGeneration.current) return { generation: resumeToken, commandRevision: retryCommandRevision ?? commandRevision.current, kind: 'restore', outcome: 'superseded' };
         batch.forEach((song, j) => {
           if (song) {
             if (n + j < saved.currentIndex) restoredIndex++;
@@ -463,11 +475,18 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       ++generation.current;
       preparing.current = true;
       shuffleHistory.current = { keys: [], cursor: -1, visited: new Set() };
-      setQueue(entries(songs));
-      setIndex(Math.min(restoredIndex, songs.length - 1));
+      const restoredQueue = entries(songs);
+      const restoredIndexInQueue = Math.min(restoredIndex, songs.length - 1);
+      const restoredKey = restoredQueue[restoredIndexInQueue]?.key;
+      setQueue(restoredQueue);
+      setIndex(restoredIndexInQueue);
       setRestore(null);
       setReadyConnection(saved.connectionId);
-    } catch (cause) { if (resumeToken === resumeGeneration.current) setError(`Your saved queue could not be restored. It is still saved. ${cause instanceof Error ? cause.message : 'Check the connection and try again.'}`); }
+      return { key: restoredKey, generation: resumeToken, commandRevision: retryCommandRevision ?? commandRevision.current, kind: 'restore', outcome: restoredKey ? 'success' : 'superseded' };
+    } catch (cause) {
+      if (resumeToken === resumeGeneration.current) setError(`Your saved queue could not be restored. It is still saved. ${cause instanceof Error ? cause.message : 'Check the connection and try again.'}`);
+      return { generation: resumeToken, commandRevision: retryCommandRevision ?? commandRevision.current, kind: 'restore', outcome: resumeToken === resumeGeneration.current ? 'failure' : 'superseded' };
+    }
     finally { if (resumeToken === resumeGeneration.current) setBusy(false); }
   }, [requestPlayback, stopNews]);
 
@@ -476,19 +495,33 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     const token = ++resumeGeneration.current;
     const restoreLifecycle = resumeGeneration;
     const connectionId = connection?.id;
-    void Promise.all([window.wave.getLocalState().then(unwrap), connectionId ? window.wave.getPlaybackPreferences(connectionId).then(unwrap) : Promise.resolve(null)]).then(([state, options]) => {
-      if (!active || token !== restoreLifecycle.current) return;
+    const retryWaiter = restoreRetryWaiter.current;
+    if (retryWaiter) restoreRetryWaiter.current = null;
+    const superseded = () => ({ generation: token, commandRevision: retryWaiter?.commandRevision ?? commandRevision.current, kind: 'restore' as const, outcome: 'superseded' as const });
+    void Promise.all([window.wave.getLocalState().then(unwrap), connectionId ? window.wave.getPlaybackPreferences(connectionId).then(unwrap) : Promise.resolve(null)]).then(async ([state, options]) => {
+      if (!active || token !== restoreLifecycle.current) { retryWaiter?.resolve(superseded()); return; }
       if (options) {
         if (!preferenceEdits.current.volume) setVolume(options.volume);
         if (!preferenceEdits.current.shuffle) setShuffle(options.shuffle);
         if (!preferenceEdits.current.repeat) setRepeat(options.repeat);
       }
       const saved = state.playback;
-      if (!saved || saved.connectionId !== connectionId) { setReadyConnection(connectionId ?? null); return; }
-      if (saved.trackIds.length) void restoreSession(saved);
-      else setReadyConnection(connectionId ?? null);
-    }).catch(() => { if (active && token === restoreLifecycle.current) setError('Your previous listening session could not be restored.'); });
-    return () => { active = false; ++restoreLifecycle.current; };
+      if (!saved || saved.connectionId !== connectionId || !saved.trackIds.length) {
+        setReadyConnection(connectionId ?? null);
+        retryWaiter?.resolve(superseded());
+        return;
+      }
+      const settlement = await restoreSession(saved, retryWaiter?.commandRevision);
+      retryWaiter?.resolve(settlement);
+    }).catch(() => {
+      if (active && token === restoreLifecycle.current) setError('Your previous listening session could not be restored.');
+      retryWaiter?.resolve({ generation: token, commandRevision: retryWaiter?.commandRevision ?? commandRevision.current, kind: 'restore', outcome: active && token === restoreLifecycle.current ? 'failure' : 'superseded' });
+    });
+    return () => {
+      active = false;
+      ++restoreLifecycle.current;
+      retryWaiter?.resolve(superseded());
+    };
   }, [connection?.id, restoreSession, restoreAttempt]);
 
   useEffect(() => {
@@ -583,6 +616,56 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       catch { setError('Seeking is not available yet. Wait for playback and try again.'); }
     }
   }, [load, stopNews, continueAfterSong, checkScheduledNews, djSettings.keepOnSeek, musicCommand, fadeMusic]);
+  const retry = useCallback((): Promise<PlaybackRetrySettlement> => {
+    if (retryInFlight.current && (retryInFlight.current.kind === 'restore' || retryInFlight.current.key === currentKey)) return retryInFlight.current.promise;
+    musicCommand();
+    const retryCommandRevision = commandRevision.current;
+    stopNews();
+    let pending: Promise<PlaybackRetrySettlement>;
+    if (current && currentKey) {
+      const key = currentKey;
+      requestPlayback(true);
+      pending = load(current, converted.current, position).then(result => ({
+        key: result.key,
+        generation: result.generation,
+        commandRevision: retryCommandRevision,
+        kind: 'track' as const,
+        outcome: live.current.queue[live.current.index]?.key === key && generation.current === result.generation ? result.outcome : 'superseded',
+      }));
+    } else if (restore) {
+      pending = new Promise(resolve => {
+        const finish = (settlement: PlaybackRetrySettlement) => {
+          if (cancelRestoreRetry.current === cancel) cancelRestoreRetry.current = null;
+          resolve(settlement);
+        };
+        const cancel = () => {
+          ++resumeGeneration.current;
+          finish({ generation: resumeGeneration.current, commandRevision: retryCommandRevision, kind: 'restore', outcome: 'superseded' });
+        };
+        cancelRestoreRetry.current = cancel;
+        void restoreSession(restore, retryCommandRevision).then(finish);
+      });
+    } else {
+      pending = new Promise(resolve => {
+        const finish = (settlement: PlaybackRetrySettlement) => {
+          if (restoreRetryWaiter.current?.resolve === finish) restoreRetryWaiter.current = null;
+          if (cancelRestoreRetry.current === cancel) cancelRestoreRetry.current = null;
+          resolve(settlement);
+        };
+        const cancel = () => {
+          ++resumeGeneration.current;
+          finish({ generation: resumeGeneration.current, commandRevision: retryCommandRevision, kind: 'restore', outcome: 'superseded' });
+        };
+        cancelRestoreRetry.current = cancel;
+        restoreRetryWaiter.current = { commandRevision: retryCommandRevision, resolve: finish };
+        setRestoreAttempt(value => value + 1);
+      });
+    }
+    const currentAttempt = { key: currentKey, kind: current && currentKey ? 'track' as const : 'restore' as const, promise: pending };
+    retryInFlight.current = currentAttempt;
+    void pending.then(() => { if (retryInFlight.current === currentAttempt) retryInFlight.current = null; });
+    return pending;
+  }, [current, currentKey, load, musicCommand, position, requestPlayback, restore, restoreSession, stopNews]);
   const toggle = useCallback((origin?: 'preview') => {
     if (origin !== 'preview') musicCommand();
     const element = audio.current;
@@ -807,6 +890,10 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       changeTrack(nextIndex);
     }, enqueue: songs => {
       if (!songs.length) return;
+      // Queueing replaces an in-flight saved-session restore. Settle its Retry
+      // attempt so it cannot keep masking errors for the newly queued track.
+      cancelRestoreRetry.current?.();
+      cancelRestoreRetry.current = null;
       ++resumeGeneration.current;
       setRestore(null);
       if (!live.current.current) setBusy(false);
@@ -846,6 +933,6 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       setQueue(remaining);
       setIndex(nextIndex);
     },
-    retry: () => { musicCommand(); stopNews(); if (current) { requestPlayback(true); void load(current, converted.current, position); } else if (restore) void restoreSession(restore); else setRestoreAttempt(value => value + 1); },
+    retry, getPlaybackGeneration: () => generation.current, getResumeGeneration: () => resumeGeneration.current,
   }}>{children}</PlayerContext.Provider>;
 }
