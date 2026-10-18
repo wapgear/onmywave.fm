@@ -1,0 +1,527 @@
+{
+  "date": "2026-10-19",
+  "baseCommit": "a6beb4fb04ca2b2d6f03fa77c80b085718f1cfb6",
+  "scope": "All seven named-profile fragments in REQUIREMENTS line247 and all13 R2 result fragments. Seven canonical review groups;20 new semantic/partial-proof links. No new runtime pass or accepted group.",
+  "groups": [
+    {
+      "id": "SET01",
+      "actor": "Listener configuring a personal radio",
+      "trigger": "Edit setup, make a management/music detour, return and save",
+      "outcome": "Keep music and drafts; store the profile only on explicit save; missing requirements provide repair actions.",
+      "fragments": [
+        "REQ-L247-text-01",
+        "RAD-L092-result-01",
+        "RAD-L092-result-02",
+        "RAD-L092-result-06",
+        "RAD-L092-result-07",
+        "RAD-L092-result-09"
+      ],
+      "mandatoryVariants": [
+        "Source/host/interests/mood/cadence draft",
+        "Sources/DJs/provider-key detour with return context",
+        "Music page detour",
+        "Explicit keyless/off save",
+        "No implicit preparation or DJ activation",
+        "Missing source/host/mood/key repair"
+      ],
+      "source": [
+        "src/renderer/App.tsx:roomSetupDraft,configureRoom,returnToSetup",
+        "src/renderer/pages/Stations/Stations.page.tsx:room,newsInterests,persist,preparationIssues",
+        "src/renderer/pages/Stations/components/RoomSetup.component.tsx",
+        "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx:submit,blockedSave"
+      ],
+      "evidence": [
+        "2026-10-19-current-radio-setup.json",
+        "2026-10-18-setup-management-focus.json",
+        "2026-10-16-profile-drafts-status.json"
+      ],
+      "judgment": "App owns the draft across page unmounts. Stations combines current saved state with explicit draft fields and saves via a named-profile checked transaction. OFF save does not require keys. Management return intent selects the corresponding setup control. Current native source/preset-host/music journey proves all observed fields survive and save without source/provider requests while silent media naturally repeats.",
+      "remaining": [
+        "Native current journey omits provider-key repair detour and arbitrary missing-field combinations. No uncoached listener understanding, audible quality or live-server claim."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "SET02",
+      "actor": "Listener configuring a personal radio",
+      "trigger": "Submit setup while write/readback may be pending or fail",
+      "outcome": "Keep owned Save focus and draft; block repeated writes; show one adjacent retryable error without reclaiming later navigation.",
+      "fragments": [
+        "RAD-L092-result-03",
+        "RAD-L092-result-04",
+        "RAD-L092-result-05"
+      ],
+      "mandatoryVariants": [
+        "Synchronous repeated submit guard",
+        "Write plus committed state plus status refresh",
+        "Failed draft through music navigation",
+        "Returning during pending locks editing",
+        "Focused clean Save until blur",
+        "Tab/profile/page/overlay/window intent wins"
+      ],
+      "source": [
+        "src/renderer/pages/Stations/Stations.page.tsx:saveSubmission,persist,save,configurationPending,setupBusy",
+        "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx:submit,saveDisabled,saveFeedback"
+      ],
+      "evidence": [
+        "2026-10-18-radio-setup-save-focus.json",
+        "2026-10-18-radio-configuration-readback.json",
+        "2026-10-19-current-radio-setup.json"
+      ],
+      "judgment": "Save stays outside the disabled fieldset with aria busy/unavailable and synchronous submission protection. The action persists error ownership in App draft, shows its single local or fallback explanation, and never focuses from completion. Pending mutations share the roomConfiguration lock across remount. Current successful native Save retains its control and subsequent tab movement wins.",
+      "remaining": [
+        "Dated native failure/retention checks are scoped to injected IPC/pre-operation faults. No fresh hidden-window/overlay matrix or physical storage failure; successful current path does not establish every async interleaving."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "SET03",
+      "actor": "Listener configuring a personal radio",
+      "trigger": "Copy a draft or choose a separate playback profile",
+      "outcome": "Copy the current draft without altering the original or current selections; start unavailable/off with clean run metadata; require separate availability and preparation opt-ins.",
+      "fragments": [
+        "REQ-L247-text-02",
+        "REQ-L247-text-03",
+        "REQ-L247-text-04",
+        "REQ-L247-text-05",
+        "REQ-L247-text-06",
+        "REQ-L247-text-07",
+        "RAD-L092-result-08",
+        "RAD-L092-result-09"
+      ],
+      "mandatoryVariants": [
+        "Edited profile differs from playback profile",
+        "Explicit attribution",
+        "Copy preserves draft/source/host/interests/mood/preferences",
+        "Original remains unsaved",
+        "Copy unavailable/preparation off",
+        "Clear run/counters/error/paused/next-check",
+        "Availability alone does not dispatch",
+        "Separate enabled preparation save"
+      ],
+      "source": [
+        "src/main/index.ts:saveRoomProfile,setRoomProfileEnabled,saveWorkflowDraft",
+        "src/main/storage.ts:synchronizeRoomProfiles",
+        "src/renderer/pages/Stations/Stations.page.tsx:profiles,enableProfile,profileNotice",
+        "src/renderer/components/Player/Player.component.tsx",
+        "src/renderer/dj-playback.tsx"
+      ],
+      "evidence": [
+        "2026-10-16-copied-profiles.json",
+        "2026-10-18-profile-dialog-focus.json",
+        "2026-10-18-radio-configuration-readback.json"
+      ],
+      "judgment": "Main forces new identity/unavailable/off and explicitly clears workflow run/counter/pause/error metadata. Copy adds a profile without active-profile assignment. Availability changes only enabled state; preparation still needs a separate validated save. Setup text distinguishes edited versus playback profile; player derives playback context from its selected room.",
+      "remaining": [
+        "Dated copy native/service cases and current source checks are not a new enabled-provider run or complete attribution/listener study. Profile copy under every account/lifetime race remains outside this packet."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "SET04",
+      "actor": "Listener configuring a personal radio",
+      "trigger": "Copy or switch with unsaved edits",
+      "outcome": "Keep confirmation, input and owned focus through pending/failure; guard repeat/dismiss; restore opener after cancel/success.",
+      "fragments": [
+        "RAD-L092-result-10"
+      ],
+      "mandatoryVariants": [
+        "Copy pending/error/retry",
+        "Save-and-switch write failure",
+        "Activation failure",
+        "Discard-and-switch",
+        "Cancel retains all draft fields",
+        "Synchronous repeats and close/Escape/backdrop",
+        "Opener survives or falls back to heading"
+      ],
+      "source": [
+        "src/renderer/pages/Stations/Stations.page.tsx:changeProfile,chooseProfile,closeProfileDialogs,profiles,dialogs",
+        "src/renderer/components/Shared.tsx:Dialog"
+      ],
+      "evidence": [
+        "2026-10-18-profile-dialog-focus.json",
+        "2026-10-16-profile-drafts-status.json"
+      ],
+      "judgment": "ProfileSubmission gates repeated actions and dismissal before React pending state. Copy name becomes readOnly. Dialog actions retain nodes and aria-unavailable state. Draft clears only after successful switch; failure keeps confirmation and error. Shared Dialog closes to a connected opener or page heading.",
+      "remaining": [
+        "Fifteen dated native snapshots cover enumerated injected failures; record explicitly excludes new overlay/hidden-window and page-remount failure proof. No full VoiceOver or unassisted comprehension proof."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "SET05",
+      "actor": "Listener configuring a personal radio",
+      "trigger": "Save or delete a shared source/DJ",
+      "outcome": "Keep stable guarded dialog actions and failed drafts; restore surviving opener or heading after deletion.",
+      "fragments": [
+        "RAD-L092-result-11"
+      ],
+      "mandatoryVariants": [
+        "Source save/delete",
+        "DJ save/delete",
+        "Pending duplicate/dismiss guard",
+        "Explicit retry",
+        "Affected-profile warning",
+        "Deleted opener heading fallback",
+        "Save has no provider generation"
+      ],
+      "source": [
+        "src/renderer/pages/Sources/Sources.page.tsx:mutation,changeSource,closeDialogs",
+        "src/renderer/pages/DJs/DJs.page.tsx:save,deleteDJ,closeDeletion",
+        "src/renderer/pages/DJs/components/DJEditor.component.tsx:save,closeEditor",
+        "src/renderer/components/Shared.tsx:Dialog",
+        "src/main/index.ts:saveNewsSources,saveDjs"
+      ],
+      "evidence": [
+        "2026-10-18-shared-editor-focus.json",
+        "2026-10-18-shared-editor-readback.json",
+        "2026-10-16-source-deletion.json",
+        "2026-10-19-current-radio-setup.json"
+      ],
+      "judgment": "Shared editors keep Save/Delete outside native-disabled fields or use readOnly fields, synchronous guards and guarded close. Saved changes use canonical commit receipts before refresh. Source/DJ deletion previews affected profiles; persistent state removes references while saved provenance remains separate. Current ordinary source and preset-DJ creation make no provider request.",
+      "remaining": [
+        "RSS create/delete has native evidence; X/Hacker News branches, linked-profile warning variations and every editor mode retain source-only or earlier scoped evidence. No physical storage failure, full AT or new hidden-window/overlay matrix."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "SET06",
+      "actor": "Listener configuring a personal radio",
+      "trigger": "Use long profile names or recovery explanations",
+      "outcome": "Keep setup actions reachable at supported desktop sizes.",
+      "fragments": [
+        "RAD-L092-result-12"
+      ],
+      "mandatoryVariants": [
+        "Long names and recovery text",
+        "1280x720 at 100%",
+        "Ordinary larger desktop",
+        "Scrollable modal and wrapping actions",
+        "Keyboard access above player"
+      ],
+      "source": [
+        "src/renderer/pages/Stations/Stations.styles.css",
+        "src/renderer/pages/Settings/components/WorkflowPreferences.styles.css",
+        "src/renderer/components/Shared.tsx:Dialog",
+        "src/renderer/styles.css"
+      ],
+      "evidence": [
+        "2026-10-16-copied-profiles.json",
+        "2026-10-16-profile-drafts-status.json",
+        "2026-10-18-radio-setup-save-focus.json",
+        "2026-10-19-current-radio-setup.json"
+      ],
+      "judgment": "Current setup bounds form width, wraps profile/action rows and uses scrollable content. Native records cover representative supported layouts and the current ordinary journey. Historical smaller/200% entries remain dated records, not required or newly executed baseline checks.",
+      "remaining": [
+        "No current exhaustive long-name/recovery-message layout pass for every dialog. Standard/Retina legibility and VoiceOver remain their existing external checks."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "SET07",
+      "actor": "Listener configuring a personal radio",
+      "trigger": "A completed configuration write is followed by a failed status refresh",
+      "outcome": "Show committed settings and read-only recovery; do not repeat the write or lose the saved copy.",
+      "fragments": [
+        "RAD-L092-result-13"
+      ],
+      "mandatoryVariants": [
+        "Setup save",
+        "Copy and switch",
+        "Shared source/DJ create/edit/delete",
+        "Canonical normalized commit receipt",
+        "Monotonic observed revisions",
+        "Failed post-write refresh",
+        "Absent cache/account transition",
+        "Read-only status retry"
+      ],
+      "source": [
+        "src/main/storage.ts:updateLocalStateAndGet",
+        "src/main/index.ts:saveWorkflowDraft,saveRoomProfile,activateRoomProfile,saveNewsSources,saveDjs",
+        "src/renderer/local-state-cache.ts:retainNewestLocalState,confirmLocalState",
+        "src/renderer/pages/Stations/Stations.page.tsx:preparationStatusUnknown,profiles,persist",
+        "src/renderer/pages/Sources/Sources.page.tsx:mutation",
+        "src/renderer/pages/DJs/components/DJEditor.component.tsx:save"
+      ],
+      "evidence": [
+        "2026-10-18-radio-configuration-readback.json",
+        "2026-10-18-shared-editor-readback.json"
+      ],
+      "judgment": "The serialized storage transaction returns a normalized clone only after commit. Consumers apply the receipt before invalidation; monotonic cache sharing rejects older observed snapshots and avoids seeding an absent cache with a late completion. Failed refresh marks status unknown and locks configuration; retry is a read. Receipt proves that transaction, not unseen later disk state.",
+      "remaining": [
+        "CI1 cross-lifetime/account adjudication remains open. Actual QueryClient/service absent-cache cases are not fresh native account-transition proof. No latest-disk guarantee from an older receipt."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    }
+  ],
+  "STARContexts": [
+    {
+      "id": "R2",
+      "sourceId": "RAD-L092",
+      "story": "As a listener, I can set up a familiar host",
+      "situationAndTask": "Music is playing; I want occasional science news",
+      "action": "Add a source, choose a preset DJ, enter interests and mood, edit cadence, visit music, return and save setup",
+      "expectedResult": "Music continues; all draft fields survive navigation and persist on explicit save; Save retains visible focus through the combined write/readback, rejects duplicate submission and keeps failed drafts with one visible explanation beside Save for retry and after returning; success retains clean Save only while focused, and later Tab/profile/page navigation wins; returning during pending configuration shows its update status with editing locked; missing requirements offer direct setup actions; incomplete setup can be saved with preparation off and no keys; a copy retains the drafted setup without saving the original, starts unavailable with preparation off and requires availability plus a separate preparation opt-in; neither switch silently turns on; copy/switch confirmations keep focus and drafts through pending/failure, reject repeat actions and pending dismissal, then restore the opener on cancellation or success; shared source/DJ save and delete dialogs retain visible focus through pending/failure and explicit retry, block duplicate actions and pending dismissal, and restore a surviving opener or page heading after deletion; long saved names and recovery messages keep setup actions reachable; a completed setup save, copy, switch or shared source/DJ change remains visible if status refresh fails, with read-only recovery and no repeated write",
+      "resultFragments": [
+        "RAD-L092-result-01",
+        "RAD-L092-result-02",
+        "RAD-L092-result-03",
+        "RAD-L092-result-04",
+        "RAD-L092-result-05",
+        "RAD-L092-result-06",
+        "RAD-L092-result-07",
+        "RAD-L092-result-08",
+        "RAD-L092-result-09",
+        "RAD-L092-result-10",
+        "RAD-L092-result-11",
+        "RAD-L092-result-12",
+        "RAD-L092-result-13"
+      ],
+      "contextReviewState": "reviewed-partial; current ordinary native setup plus source/dated variant review linked; whole-story acceptance incomplete"
+    }
+  ],
+  "fragmentTextSha256": {
+    "RAD-L092-result-01": "e6ccbef4fa7e6f627f8655480c1a42d4990c9e5388ad3bab50ad430b4bd9167f",
+    "RAD-L092-result-02": "370d7d29435612a2a05cfb267f6f842c91ca373d55b0f0d1668a7c2d26f05b63",
+    "RAD-L092-result-03": "1311a1afbf4bea5aa47c45fdcc1e3d19bf40ae5a8c31762a4da304a273f189cd",
+    "RAD-L092-result-04": "9768ae85e39181e4fc4d322c408dd6cb211cbc37347c24b0a0e2d5d3b8a87bf2",
+    "RAD-L092-result-05": "9b83b2c5c128a43a796993cc32a396e9ecce63dc0decd730f6ad0ab4ead086e3",
+    "RAD-L092-result-06": "bef41f4b4a3a97fc92e09c76017f387426c3b46b3a974145c851a2085d4e6d08",
+    "RAD-L092-result-07": "2c3ce902935c388217e9918e2b7edd538be8e10af694f26b8ecc589b4ce2c7d5",
+    "RAD-L092-result-08": "d77fd66141e6a980c6a8580992ea294178fe64aa77ea53593215e0c465ab94ec",
+    "RAD-L092-result-09": "048d2405c2d233d6ebeaec3270bbf9825425c6955a887925da29b91d0e709247",
+    "RAD-L092-result-10": "c8464c13fc6e817186b536031064444b1c82dbc39f7203760a79d3644701bb79",
+    "RAD-L092-result-11": "54b3fa106ef3f685d0dfb740fc3aa87f6b632f6108e9d7d39feaf035c0de4454",
+    "RAD-L092-result-12": "af93a75daeef04930ac8965e5558f484809f8d461dfd7f4b1640415f690175ca",
+    "RAD-L092-result-13": "fb40f54b64c48c6a56afc01dd3086060660874cba9e544ba1444cd6c23cfa97e",
+    "REQ-L247-text-01": "2ba12ac3454ec82338984351fecebbb661acb2e75d649a49ce03144d93d02010",
+    "REQ-L247-text-02": "18810b3ec51693215141613b1b8b67a2184ea9c261f36189a3c11484489f621b",
+    "REQ-L247-text-03": "49ca71b047c26fa16c0418e5416ebace953f28963c544cd5b06712fa348e6832",
+    "REQ-L247-text-04": "aedfd1f172d85b206dd3179f8fff1890eb79a13fd5000cde5200044bf22a21e3",
+    "REQ-L247-text-05": "a754cac52b8350774a20d77da94cc9df92769a68a2f0f1146c0ec117f0bfd14e",
+    "REQ-L247-text-06": "1f09097382a87ed65413a41221426c0b59b1eadb7885c943b74616592d6c436a",
+    "REQ-L247-text-07": "0b7a5f934802b2d77db087df5cb98fe6bab33268fd4a9cfbda7f1db49f194efe"
+  },
+  "sourceSha256": {
+    "src/renderer/App.tsx": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+    "src/renderer/pages/Stations/Stations.page.tsx": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573",
+    "src/renderer/pages/Stations/components/RoomSetup.component.tsx": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330",
+    "src/renderer/pages/Stations/Stations.styles.css": "43d01e1661741e926ce3d1d5275ca23c383dbf4bf142b4b7c6e54e8b96dd5fea",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": "0cd2699a1bc6131ebc898ae216f434223684746e209e275edd43008e56a191d1",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.styles.css": "6f10a91b993b79069d2ecfba2669e6d0d77077ff97ee60c7fc6aec799dbcba57",
+    "src/renderer/pages/Sources/Sources.page.tsx": "081ee16883dec3792c492c710414a0bb5f0ff98c6c17f8f7b448f8ad540bc73a",
+    "src/renderer/pages/DJs/DJs.page.tsx": "7e9111ce7c77f3b8f003b1378ec2a8bb4d5e9bae6f4216204974046c30c483fc",
+    "src/renderer/pages/DJs/components/DJEditor.component.tsx": "5c440c3fc2199e4f0d7de7ddb01f481707e8ac1d3470e8296e3f90a17691210d",
+    "src/renderer/components/Shared.tsx": "16726cf323f44324a124ee5fb29a7270ae514f8dc04f87f153f6b0a5e289ff5e",
+    "src/renderer/components/Player/Player.component.tsx": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+    "src/renderer/dj-playback.tsx": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+    "src/renderer/local-state-cache.ts": "3408412238143901b1a1101577bbc097734c4f2f7998f34961a6fc6aae15b801",
+    "src/renderer/styles.css": "43da67b986692d802df012ddb0c01c03293edc3851930370e0d2a974a72c79b6",
+    "src/main/index.ts": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+    "src/main/storage.ts": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f"
+  },
+  "evidenceSha256": {
+    "2026-10-16-copied-profiles.json": "f400791c348418bdf334d3858af56c406c92f66c27206c3e4ad259093060c06f",
+    "2026-10-16-profile-drafts-status.json": "0deb53d61ef6854305b33c0a328cf148e4abfe69441c9e0546a39822bb5e81fc",
+    "2026-10-16-source-deletion.json": "cf60843c1d2e3a1927d34357af1fa8881866cedcab2828f245e5b08add3bd241",
+    "2026-10-18-profile-dialog-focus.json": "48bd911e3f8e6c097c5437385e25cc6ad14ead80b27146a5ce257a81ba50538d",
+    "2026-10-18-radio-configuration-readback.json": "002d0d5ec4310a8e1d1c14b7a1320932d1914e47f22e2101cdcbb70378575103",
+    "2026-10-18-radio-setup-save-focus.json": "fbe7cffbcf835a7701a4bb0937f840f8c6d94746184f0585d957388ef842c6d7",
+    "2026-10-18-setup-management-focus.json": "9a83d15e9e042550fd502e49f3ae8844af239f2e774519bdf1fd4b066e82f361",
+    "2026-10-18-shared-editor-focus.json": "5ba5e7d4d9a1c527b786a22e988ec97d4bc313d0f783c022948565515fce42a6",
+    "2026-10-18-shared-editor-readback.json": "86d255657e9b3e003505e8d2120bee4ff1ae035aedf8a704410842eb12dfa31d",
+    "2026-10-19-current-radio-setup.json": "6b883b61dfb5f7a1f4291748bb27297a6a65050e7a06effef244101a0b14baec"
+  },
+  "sourceFreshnessComparisons": {
+    "2026-10-16-copied-profiles.json": {},
+    "2026-10-16-profile-drafts-status.json": {},
+    "2026-10-16-source-deletion.json": {},
+    "2026-10-18-profile-dialog-focus.json": {
+      "src/renderer/pages/Stations/Stations.page.tsx": {
+        "recorded": "9d412914af871ae9bbd6b7f7caebc82cf246bc702d15100d015bfc7ee87431b0",
+        "current": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573",
+        "matches": false
+      }
+    },
+    "2026-10-18-radio-configuration-readback.json": {
+      "src/main/storage.ts": {
+        "recorded": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "current": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "matches": true
+      },
+      "src/main/index.ts": {
+        "recorded": "8b636e631b0acc0c92a49a4e0561ac096431eed30cb143a2af052aeb03695ee3",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/shared/types.ts": {
+        "recorded": "d4e5e6f7acc4baadaee62e4ae656ca54b18347875c0692f46c2a3aa0d4dd71de",
+        "current": "a4777ac71292ab6adddcb1fce211ad14c7e324fe1ccd5ed278fb1f290dfcaea0",
+        "matches": false
+      },
+      "src/renderer/local-state-cache.ts": {
+        "recorded": "3408412238143901b1a1101577bbc097734c4f2f7998f34961a6fc6aae15b801",
+        "current": "3408412238143901b1a1101577bbc097734c4f2f7998f34961a6fc6aae15b801",
+        "matches": true
+      },
+      "src/renderer/main.tsx": {
+        "recorded": "93eaf626f62d66c274b74e098672afb222d3c588a78eaac53d4b9b309a0cb2e3",
+        "current": "fa6dae583c41c04186cb71ec7b3b68af716ba82fc46cb788b1b433d106141065",
+        "matches": false
+      },
+      "src/renderer/dj-playback.tsx": {
+        "recorded": "17c889d6939a34ed06202091f4a8ae4cd8e84c6422dbe9da6341315b79b135dc",
+        "current": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+        "matches": false
+      },
+      "src/renderer/pages/Settings/SettingsEdits.tsx": {
+        "recorded": "0319d54594b8e7658485e8a9dbc33b78b050633623f8cb1665872b2e75387f89",
+        "current": "0319d54594b8e7658485e8a9dbc33b78b050633623f8cb1665872b2e75387f89",
+        "matches": true
+      },
+      "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": {
+        "recorded": "0cd2699a1bc6131ebc898ae216f434223684746e209e275edd43008e56a191d1",
+        "current": "0cd2699a1bc6131ebc898ae216f434223684746e209e275edd43008e56a191d1",
+        "matches": true
+      },
+      "src/renderer/pages/Stations/Stations.page.tsx": {
+        "recorded": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573",
+        "current": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573",
+        "matches": true
+      }
+    },
+    "2026-10-18-radio-setup-save-focus.json": {
+      "src/renderer/pages/Stations/Stations.page.tsx": {
+        "recorded": "3cccfa3e8df9eb9309b8aa9e72d4bbfee87e0b093170fbdea544592b5a394a96",
+        "current": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573",
+        "matches": false
+      },
+      "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": {
+        "recorded": "d3291a135e8c5e3175ae1bf40897b5eea63595d54b33ba61cc7f912b948848a5",
+        "current": "0cd2699a1bc6131ebc898ae216f434223684746e209e275edd43008e56a191d1",
+        "matches": false
+      },
+      "src/renderer/pages/Settings/components/WorkflowPreferences.styles.css": {
+        "recorded": "3d0a83b27184d54e83cd549eaa24c296435a8d43d2bff17c429ca28554194206",
+        "current": "6f10a91b993b79069d2ecfba2669e6d0d77077ff97ee60c7fc6aec799dbcba57",
+        "matches": false
+      }
+    },
+    "2026-10-18-setup-management-focus.json": {},
+    "2026-10-18-shared-editor-focus.json": {
+      "src/renderer/pages/Sources/Sources.page.tsx": {
+        "recorded": "0010c35635ef75c8648bb4aded6b754603738cc0c345d493fa9624d8f4481fb8",
+        "current": "081ee16883dec3792c492c710414a0bb5f0ff98c6c17f8f7b448f8ad540bc73a",
+        "matches": false
+      },
+      "src/renderer/pages/DJs/DJs.page.tsx": {
+        "recorded": "b04a570f45ae65e795c87fa5a866755e2e620bc056223cab5a97e5db24c7faa1",
+        "current": "7e9111ce7c77f3b8f003b1378ec2a8bb4d5e9bae6f4216204974046c30c483fc",
+        "matches": false
+      },
+      "src/renderer/pages/DJs/components/DJEditor.component.tsx": {
+        "recorded": "0aa1a7de1fd6110bb384d56337a0c91f807286b3ff27d1e1894c6e3f28eadbfc",
+        "current": "5c440c3fc2199e4f0d7de7ddb01f481707e8ac1d3470e8296e3f90a17691210d",
+        "matches": false
+      }
+    },
+    "2026-10-18-shared-editor-readback.json": {
+      "src/main/index.ts": {
+        "recorded": "cdf2e042029210ba20b20dd529e838760c6158fe73bb8046118b93fff9085657",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/shared/types.ts": {
+        "recorded": "05a3ae42a216e752b17897dae2268a0954f40a3127fc74a7053db578a3ead9e2",
+        "current": "a4777ac71292ab6adddcb1fce211ad14c7e324fe1ccd5ed278fb1f290dfcaea0",
+        "matches": false
+      },
+      "src/renderer/pages/Sources/Sources.page.tsx": {
+        "recorded": "081ee16883dec3792c492c710414a0bb5f0ff98c6c17f8f7b448f8ad540bc73a",
+        "current": "081ee16883dec3792c492c710414a0bb5f0ff98c6c17f8f7b448f8ad540bc73a",
+        "matches": true
+      },
+      "src/renderer/pages/DJs/DJs.page.tsx": {
+        "recorded": "7e9111ce7c77f3b8f003b1378ec2a8bb4d5e9bae6f4216204974046c30c483fc",
+        "current": "7e9111ce7c77f3b8f003b1378ec2a8bb4d5e9bae6f4216204974046c30c483fc",
+        "matches": true
+      },
+      "src/renderer/pages/DJs/components/DJEditor.component.tsx": {
+        "recorded": "5c440c3fc2199e4f0d7de7ddb01f481707e8ac1d3470e8296e3f90a17691210d",
+        "current": "5c440c3fc2199e4f0d7de7ddb01f481707e8ac1d3470e8296e3f90a17691210d",
+        "matches": true
+      },
+      "src/renderer/local-state-cache.ts": {
+        "recorded": "3408412238143901b1a1101577bbc097734c4f2f7998f34961a6fc6aae15b801",
+        "current": "3408412238143901b1a1101577bbc097734c4f2f7998f34961a6fc6aae15b801",
+        "matches": true
+      },
+      "src/main/storage.ts": {
+        "recorded": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "current": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "matches": true
+      }
+    },
+    "2026-10-19-current-radio-setup.json": {
+      "src/main/index.ts": {
+        "recorded": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": true
+      },
+      "src/main/storage.ts": {
+        "recorded": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "current": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "matches": true
+      },
+      "src/main/news-workflow.ts": {
+        "recorded": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+        "current": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+        "matches": true
+      },
+      "src/renderer/player.tsx": {
+        "recorded": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+        "current": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+        "matches": true
+      },
+      "src/renderer/pages/Stations/components/RoomSetup.component.tsx": {
+        "recorded": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330",
+        "current": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330",
+        "matches": true
+      },
+      "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": {
+        "recorded": "0cd2699a1bc6131ebc898ae216f434223684746e209e275edd43008e56a191d1",
+        "current": "0cd2699a1bc6131ebc898ae216f434223684746e209e275edd43008e56a191d1",
+        "matches": true
+      },
+      "out/renderer/index.html": {
+        "recorded": "f5bd865b615d3cb18c1f2cc84924793c18318fc30e02e1fe91bf42fa8e362d41",
+        "current": "f5bd865b615d3cb18c1f2cc84924793c18318fc30e02e1fe91bf42fa8e362d41",
+        "matches": true
+      },
+      "out/preload/index.cjs": {
+        "recorded": "9b78be58d4f9bd70fb5b6d3315d888ee9442cfbf09bfab2b2f902de015e902f2",
+        "current": "9b78be58d4f9bd70fb5b6d3315d888ee9442cfbf09bfab2b2f902de015e902f2",
+        "matches": true
+      }
+    }
+  },
+  "adjudication": {
+    "acceptedCanonicalGroups": 0,
+    "knownOpenChecks": 25,
+    "semanticDenominatorComplete": false,
+    "overallScore": null
+  },
+  "limits": [
+    "Current code review and retained dated evidence, not a fresh failure/race or listener study.",
+    "PR137 current native happy path retains its exact substitutions and scope; it does not upgrade other dated variants.",
+    "This packet does not review other radio clauses or the complete requirements denominator.",
+    "No unit tests, new build/lint, live provider/server, audible, OS, VoiceOver or deferred viewport checks. App source unchanged."
+  ]
+}
