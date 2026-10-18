@@ -10,7 +10,7 @@ import { dirname, extname, join, relative, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { acknowledgePlaylistRecovery, beginPlaylistRead, finishPlaylistRead, invalidatePlaylistReceipts, playlistRecoveryKey, playlistCreationRecoveryKey, playlistRecoveryStatuses, withPlaylistRecovery } from './playlist-recovery';
 import { JellyfinService, ServiceError, PLAYLIST_CREATION } from './jellyfin';
-import { getLocalState, openAIKeyStatus, readDeviceIdentity, readConnection, readOpenAIKey, updateLocalState, withProviderKeys, writeConnection, writeOpenAIKey, readElevenLabsKey, elevenLabsKeyStatus, writeElevenLabsKey } from './storage';
+import { getLocalState, openAIKeyStatus, readDeviceIdentity, readConnection, readOpenAIKey, updateLocalState, updateLocalStateAndGet, withProviderKeys, writeConnection, writeOpenAIKey, readElevenLabsKey, elevenLabsKeyStatus, writeElevenLabsKey } from './storage';
 import { preparePlayback, registerMedia, revokeMedia } from './media';
 import { NewsService, validateNewsSettings } from './news';
 import { getPreparedNews, prepareNewsScript, renderNewsTake, selectNewsTake, cancelPreparedNews, cancelActivePreparedNews, isPreparedNewsActive, nextRoomNews, releasePreparedNews, markPreparedNewsPlayed, reconcilePreparedNews } from './prepared-news';
@@ -263,8 +263,7 @@ function registerIpc() {
     saveNewsTransitions: async input => {
       if (!isNewsTransitionSettings(input)) invalid();
       const settings = normalizeNewsTransitionSettings(input);
-      await updateLocalState({ newsTransitions: settings });
-      return settings;
+      return updateLocalStateAndGet({ newsTransitions: settings });
     },
     savePlayback: async (input: PlaybackSnapshot | null) => {
       validatePlayback(input);
@@ -333,7 +332,7 @@ function registerIpc() {
           if (!await readElevenLabsKey()) throw new ServiceError('invalid', 'Add an ElevenLabs key before enabling news preparation.');
           if (selectedSources.some(source => source.kind === 'twitter') && !await readTwitterKey()) throw new ServiceError('invalid', 'Add an X bearer token for the selected X sources before enabling news preparation.');
         }
-        await updateLocalState(state => {
+        return updateLocalStateAndGet(state => {
           if (signingOut || epoch !== preparationEpoch) throw new ServiceError('invalid', 'Sign-out interrupted this save. Sign in and review the saved news settings.');
           if (state.activeRoomProfileId !== activeProfileId) throw new ServiceError('invalid', 'The profile changed while saving. Review its settings and save again.');
           validateRoomReferences(input.room, state);
@@ -364,13 +363,13 @@ function registerIpc() {
           return { workflowDraft, listeningRoom: room, vibe: input.mood.trim() };
         });
       };
-      if (input.workflowDraft.newsEnabled) await withProviderKeys(save);
-      else await save();
+      const saved = input.workflowDraft.newsEnabled ? await withProviderKeys(save) : await save();
       if (input.workflowDraft.newsEnabled === false) pauseNewsWorkflow(activeProfileId);
+      return saved;
     },
     disableNewsPreparation: async (input: string) => {
       profileId(input);
-      await updateLocalState(state => {
+      const saved = await updateLocalStateAndGet(state => {
         const profile = state.roomProfiles.find(value => value.id === input);
         if (!profile) throw new ServiceError('not-found', 'This news profile no longer exists.');
         const workflowDraft = { ...profile.workflowDraft, newsEnabled: false, nextNewsCheckAt: undefined };
@@ -378,13 +377,14 @@ function registerIpc() {
           ...(state.activeRoomProfileId === input ? { workflowDraft } : {}) };
       });
       pauseNewsWorkflow(input);
+      return saved;
     },
     saveRoomProfile: async (input: { name: string; room: ListeningRoom; mood: string; workflowDraft: WorkflowDraft }) => {
       validateRoomConfiguration(input);
       const name = profileName(input.name);
       const workflowDraft = { ...normalizeWorkflowDraft(input.workflowDraft), newsEnabled: false, nextNewsCheckAt: undefined, newsWorkflowError: undefined,
         newsAssessmentDate: undefined, newsAssessmentsToday: undefined, newsClipDate: undefined, newsClipsToday: undefined, newsLastRun: undefined, newsWorkflowPaused: undefined };
-      await updateLocalState(state => {
+      return updateLocalStateAndGet(state => {
         validateRoomReferences(input.room, state);
         if (state.roomProfiles.length >= 100) throw new ServiceError('invalid', 'You can save up to 100 configurations.');
         return { roomProfiles: [...state.roomProfiles, { enabled: false, id: randomUUID(), name, room: { djId: input.room.djId, sourceIds: [...new Set(input.room.sourceIds)] }, mood: input.mood.trim(), workflowDraft }] };
@@ -393,7 +393,7 @@ function registerIpc() {
     activateRoomProfile: async (input: string) => {
       profileId(input);
       if ((await getPreparedNews()).requests.some(request => request.status === 'running')) throw new ServiceError('invalid', 'Wait for preparation to finish before switching configurations.');
-      await updateLocalState(state => {
+      return updateLocalStateAndGet(state => {
         const profile = state.roomProfiles.find(value => value.id === input);
         if (!profile) throw new ServiceError('not-found', 'This configuration no longer exists.');
         return { activeRoomProfileId: profile.id, listeningRoom: profile.room, vibe: profile.mood, workflowDraft: profile.workflowDraft };
@@ -441,15 +441,16 @@ function registerIpc() {
     setRoomProfileEnabled: async (input: { id: string; enabled: boolean }) => {
       if (!isRecord(input) || typeof input.enabled !== 'boolean') invalid();
       profileId(input.id);
-      await updateLocalState(state => {
+      const saved = await updateLocalStateAndGet(state => {
         if (!state.roomProfiles.some(profile => profile.id === input.id)) throw new ServiceError('not-found', 'This configuration no longer exists.');
         return { roomProfiles: state.roomProfiles.map(profile => profile.id === input.id ? { ...profile, enabled: input.enabled } : profile) };
       });
       if (!input.enabled) pauseNewsWorkflow(input.id);
+      return saved;
     },
     saveDJPlayback: async (input: DJPlaybackSettingsPatch) => {
       if (!isDJPlaybackSettingsPatch(input)) invalid();
-      await updateLocalState(state => {
+      return updateLocalStateAndGet(state => {
         const merged = { ...state.djPlayback, ...input };
         if (!isDJPlaybackSettings(merged)) invalid();
         const settings = normalizeDJPlaybackSettings(merged);
