@@ -1972,3 +1972,8 @@ The refreshed source inventory remains 218 definitions across 34 files in 55 rea
 For the existing listening and radio stories, opening DJ controls is a short detour from music. The listener chooses DJ settings to adjust actual playback, or either News bucket link to inspect preparation. Closing the popover focuses the named destination. Tab continues into that page, and saved scroll cannot hide the entry target. DJ settings opens General without an unrelated Back to setup action. Ordinary Escape still returns to the DJ trigger.
 
 The [native record](verification/2026-10-18-player-navigation-focus.json) reproduces focus remaining on the player after settings navigation and verifies the corrected DJ playback heading, next Tab, scrolled same-page reentry, both News bucket links and Escape. It also verifies the retained Pool check ended action with a visible ring, computed unavailable state, inert Return/Space and removal after Tab. These are controlled keyboard results. Observed listener understanding, VoiceOver and platform acceptance retain their separate checks.
+
+
+## Current requirement and story indexing, 18 October 2026
+
+The [current source reconciliation](verification/2026-10-18-current-prd-reconciliation.json) refreshes the dated source map after the keyboard and pending-operation revisions. All 294 nonblank lines in both current PRDs, 27 STAR results, seven parent criteria and 191 check IDs remain represented with exact text and hashes. Mapping the 47 changed/new lines neither adds acceptance points nor promotes a compound requirement based on a broad keyboard check. The source requirements themselves remain unchanged. Q13 stays Review; 26 checks remain open and there is no overall acceptance or usability percentage claim.

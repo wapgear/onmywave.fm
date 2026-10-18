@@ -4,6 +4,8 @@ The historical sections below preserve earlier work and evidence. The current da
 
 ## Current dated evidence, 18 October 2026
 
+The [current PRD source map](verification/2026-10-18-current-prd-source-map.csv) and [reconciliation](verification/2026-10-18-current-prd-reconciliation.json) now account for all current source lines and expanded keyboard/pending-operation story results. They replace the dated map for navigation without changing requirements, dispositions or the remaining individual Q13 evidence work.
+
 The [current essential keyboard audit](verification/2026-10-18-q06-keyboard-acceptance.json) closes Q06 by reconciling all 35 reachable families/234 definitions with current source and scoped native evidence. PR #108 also fixes player DJ destination focus and setup-return semantics. Current inventory has 26 open checks, 14 listener and 12 other-proof. Earlier notes below retain their dated dispositions. Full VoiceOver, platform, hardware, live-service and listener proof remain separate.
 
 Authentication and initial library selection now hand focus to the accepted destination heading through an App-owned guarded attempt. Settings keeps its mounted Save behavior. The [authentication handoff record](verification/2026-10-18-authentication-handoff-focus.json) has three baseline and eighteen final native projections from one final renderer, actual disposable connection/library writes, no external/provider request, and separate Tab-cancellation limits. Build/TypeScript, full ESLint, paired source review and scoped predicates pass. Q06 and all 27 open rows remain open pending full evidence reconciliation.
