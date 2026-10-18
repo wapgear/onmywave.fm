@@ -718,7 +718,7 @@
   },
   "clauseLedger": {
     "file": "2026-10-18-requirement-clauses.csv",
-    "sha256": "14ce9739c926d93a83b70e504a1a8b55344713824fe79a6f610852a2771f9f15",
+    "sha256": "a64c75178d987d1a056f98a89fb1bb2c90b5b7e1289b7e9d5b8578a32e5f0039",
     "columns": "Candidate navigation, semantic review and actual proof review are distinct. Empty evidence/canonical IDs do not establish completion."
   },
   "scopeReviews": [
@@ -746,8 +746,13 @@
     },
     {
       "file": "2026-10-19-account-expiry-boundary.json",
-      "sha256": "8c3626d709f818b137e5b101136d478b02bfb4355ca910dfd940adc2815439fa",
-      "meaning": "AUTH01 six exact new clauses,controlled native contradiction/fix,current and stale expiry evidence;whole-group acceptance remains incomplete."
+      "sha256": "e8a4137ef4d80d9fb377850ef31571f6194881327ea476556d41d69d59433985",
+      "meaning": "AUTH01 six clauses and native/bridge proof;failed-signout follow-up closes enumerated controlled engineering variant gap,broader acceptance remains incomplete."
+    },
+    {
+      "file": "2026-10-19-failed-signout-expiry.json",
+      "sha256": "44139ece674c09f5503ac10c98322c92e9bb1fc3bd597f97c651636535121b15",
+      "meaning": "AUTH01 follow-up only;no additional semantic fragments,canonical group or accepted checklist row."
     }
   ],
   "generatorMeaning": "Original mechanical partition generator only. Later deliberate semantic/proof annotations are authoritative and must be preserved; rerunning the original generator alone would discard them."
