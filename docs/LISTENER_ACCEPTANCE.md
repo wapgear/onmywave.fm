@@ -1,6 +1,6 @@
 # Listener acceptance sessions
 
-Use these sessions to check whether a first-time listener can use the music player and optional radio without coaching. Fourteen open inventory rows require observed listener evidence. The other twelve require engineering, live-service or device evidence. This protocol prepares those observations; no listener session has been run or passed.
+Use these sessions to check whether a first-time listener can use the music player and optional radio without coaching. Fourteen open inventory rows require observed listener evidence. The other eleven require engineering, live-service or device evidence. This protocol prepares those observations; no listener session has been run or passed.
 
 The original protocol baseline is merged main commit `93fcb02f700ffc103bdc0422b80378e455e9ba84`, including the player-shortcut and library-retry fixes. The 17 October provider-edit revision adds the conditional pending-key case to Task 10 before any cohort has started. Record the actual app revision in each session. Use at least 1280×720 at 100% app zoom. Smaller windows and enlarged zoom remain deferred.
 

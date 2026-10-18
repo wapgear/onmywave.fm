@@ -4,6 +4,8 @@ The historical sections below preserve earlier work and evidence. The current da
 
 ## Current dated evidence, 18 October 2026
 
+The [requirement clause review](verification/2026-10-18-requirement-clause-review.json) introduces an exact-text semantic/proof review queue while retaining all source lines, STAR stories and parent gates. Its fragments are not scored requirements; proof acceptance remains unreviewed. Current summary text now agrees with the table’s 25 open checks and later PRD revisions. App source and acceptance dispositions are unchanged.
+
 The [CI6 queue/heard review](verification/2026-10-18-queue-heard-invariant.json) adds a preparation guard to the music-ended handler and individually adjudicates eleven documented engineering obligations. Thirty-two scoped native projections cover shuffle/duplicates, repeat-one, retained voice, delayed starts and the actual automatic token path. Final build/type/lint and evidence checks pass. Unresolved historical source versions are excluded; exact browser-task ordering is not claimed reproduced. Atomic requirement accounting and the same 25 listener/live/platform acceptance checks remain open.
 
 The [scheduled-delivery record](verification/2026-10-18-scheduled-news-delivery.json) fixes heard-news replay after failed history updates, adds token-bound manual/automatic reservations and saves delivery start before sound. Seventy-four service checks and scoped native decoded/muted playback cover cancellation, restart, canonical variants and clear DJ failure feedback. The documented crash gap can omit unheard news; explicit replay remains available. CI6 full queue adjudication and the same25 acceptance checks remain open.

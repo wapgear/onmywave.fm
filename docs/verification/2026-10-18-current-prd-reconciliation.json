@@ -1,14 +1,14 @@
 {
   "date": "2026-10-18",
-  "baseCommit": "8d3e00a2407847249d750682e092f3d981317d7f",
-  "scope": "Current PRD source-to-check navigation reconciliation, including confirmed configuration readback and scheduled-delivery protection. Partial Q13 only; this source map is not an atomic metric denominator or acceptance promotion.",
+  "baseCommit": "8650ff1dce5b2b55557ba27fc211961155a1c244",
+  "scope": "Current exact-text source navigation with a separate candidate clause review. No atomic denominator or acceptance promotion is inferred from navigation or punctuation fragments.",
   "sourceFiles": {
-    "REQUIREMENTS.md": "0ea47edfb0038a3cfae70e2434f81a49255f44213bd55880e46d612f6b6e0513",
-    "docs/RADIO_EXPERIENCE.md": "299e57977c88ccdaea8159983696966f0622bd524842c035d31a4752a91f8f21"
+    "REQUIREMENTS.md": "73a6a749c958f23b739e83b204e21a0f71886fcd49367134aff00e84ca5ab11f",
+    "docs/RADIO_EXPERIENCE.md": "cba2f2386f8e9680e348f6c606f87eaa5a6f43447187f4dd087972668e75f0eb"
   },
   "map": {
     "file": "2026-10-18-current-prd-source-map.csv",
-    "sha256": "529795bb8e9ddff6736d9a593b1bdba0d4682d0d5da851c371c03db453dca9e7",
+    "sha256": "c8adc4cb7722abb979858f0977e50b8da46341fbb4910bd1f6a1a7f9b737506c",
     "nonblankLines": 294,
     "classes": {
       "structure": 47,
@@ -400,26 +400,26 @@
     }
   ],
   "review": {
-    "method": "Retain exact unchanged text mappings. Manually map all changed/new requirement paragraphs and changed STAR results to their domain criteria plus Q06 where keyboard behavior expanded. Do not accept closest-string similarity as semantic evidence. Structural headings remain structure; no requirement text omitted.",
+    "method": "Retain exact current source text/hash navigation. Preserve the initial reconciliation separately. Current PRD includes confirmed-save/readback and scheduled-delivery changes recorded in their dedicated evidence. Review the finer clause ledger semantically before selecting canonical acceptance units.",
     "findings": [
-      "The17 October map no longer matched47 changed/new lines, including pending/recovery controls, focus targets, authentication, source management and player routes.",
-      "Current mapping accounts for these additions without changing the191-row inventory or deleting prior source requirements.",
-      "The latest Q06 record provides current essential-control evidence, but Q13 still requires individually reviewed domain invariants and all named proof kinds. A navigation link to Controlled Q06 does not promote a whole story or parent gate."
+      "Current table data has25 known open checks,14 listener/11 other-proof. Checklist/listener introductions and current verification metadata are corrected to agree.",
+      "Later source changes were already hashed into this navigation record while inherited review text still asserted no changes. The historical text is now explicitly separated from current metadata.",
+      "Reference-classified paragraphs can contain required acceptance/evidence rules. The clause review retains those obligations rather than treating the classification as an exemption."
     ],
-    "parentCriteria": "All7 acceptance parent criteria remain indexed in REQUIREMENTS. Their exact clauses remain mandatory.",
-    "sourceChange": "None. Existing requirements and27 STAR result texts are preserved byte for byte."
+    "parentCriteria": "All7 parent gates,27 full STAR results and191 checklist contracts remain required.",
+    "sourceChange": "The current source contains documented later confirmed-save and delivery protections. This maintenance pass updates the two PRD date labels only; it weakens no requirement and changes no acceptance row."
   },
   "verification": {
-    "sourceLineCoverage": "Every nonblank line of both current PRDs reproduced exactly once; line SHA256 matches.",
-    "checks": "Referenced check set equals all191 current unique IDs; every ID exists.",
-    "stories": "Exactly27 unique STAR IDs match the current source table.",
-    "app": "No production code changed; no new build/lint/native result claimed.",
-    "acceptance": "Unchanged,26 open:14 listener/12 other-proof; Q13 Review; no90%/goal completion claim."
+    "sourceLineCoverage": "All294 nonblank lines of both current PRDs are reproduced once with exact current text/hash.",
+    "checks": "Navigation references all191 current unique checklist IDs; these links alone are not evidence of passing clauses.",
+    "stories": "Exactly27 unique STAR IDs retain their complete expected result.",
+    "app": "No production source, new build/lint/native result or listener result in this documentation-only revision.",
+    "acceptance": "191 rows,189 active,2 deferred;25 known open,14 listener/11 other-proof. Q13 remains Review; no overall percentage or completion claim."
   },
   "limits": [
-    "The47-line change count is textual freshness, not47 new behaviors or tests.",
-    "Current source indexing does not establish each compound requirement or invariant passing.",
-    "Existing evidence retains its recorded sources, substitutions, platform/OS/listener/live-service and deferred baseline limits."
+    "The navigation map is not a completed atomic denominator. The separate clause review records mechanical fragments whose semantic and proof reviews remain incomplete.",
+    "Existing source/runtime/service/live/OS/listener evidence retains its own scope; a status or link cannot promote an unreviewed fragment.",
+    "Historical counts and statements remain explicitly dated; the current summary is derived from current checklist rows."
   ],
   "scheduledDeliveryRevision": {
     "sourceLines": [
@@ -429,5 +429,37 @@
     ],
     "record": "2026-10-18-scheduled-news-delivery.json",
     "meaning": "Every existing compound clause remains authoritative. Token reservation, durable start, crash ambiguity and persistent DJ feedback extend the delivery contract and R4 STAR result; no acceptance points are inferred from line counts."
+  },
+  "initialReconciliation": {
+    "baseCommit": "8d3e00a2407847249d750682e092f3d981317d7f",
+    "review": {
+      "method": "Retain exact unchanged text mappings. Manually map all changed/new requirement paragraphs and changed STAR results to their domain criteria plus Q06 where keyboard behavior expanded. Do not accept closest-string similarity as semantic evidence. Structural headings remain structure; no requirement text omitted.",
+      "findings": [
+        "The17 October map no longer matched47 changed/new lines, including pending/recovery controls, focus targets, authentication, source management and player routes.",
+        "Current mapping accounts for these additions without changing the191-row inventory or deleting prior source requirements.",
+        "The latest Q06 record provides current essential-control evidence, but Q13 still requires individually reviewed domain invariants and all named proof kinds. A navigation link to Controlled Q06 does not promote a whole story or parent gate."
+      ],
+      "parentCriteria": "All7 acceptance parent criteria remain indexed in REQUIREMENTS. Their exact clauses remain mandatory.",
+      "sourceChange": "None. Existing requirements and27 STAR result texts are preserved byte for byte."
+    },
+    "verification": {
+      "sourceLineCoverage": "Every nonblank line of both current PRDs reproduced exactly once; line SHA256 matches.",
+      "checks": "Referenced check set equals all191 current unique IDs; every ID exists.",
+      "stories": "Exactly27 unique STAR IDs match the current source table.",
+      "app": "No production code changed; no new build/lint/native result claimed.",
+      "acceptance": "Unchanged,26 open:14 listener/12 other-proof; Q13 Review; no90%/goal completion claim."
+    },
+    "limits": [
+      "The47-line change count is textual freshness, not47 new behaviors or tests.",
+      "Current source indexing does not establish each compound requirement or invariant passing.",
+      "Existing evidence retains its recorded sources, substitutions, platform/OS/listener/live-service and deferred baseline limits."
+    ],
+    "meaning": "Dated initial reconciliation text, preserved as history. Later PRD revisions changed source hashes and behaviors; use the current fields above and the exact historical Git version for dated source text."
+  },
+  "changedOrAddedLinesMeaning": "The original reconciliation selected these lines; their hashes now track current text. This is neither a complete change log of later revisions nor an acceptance/behavior count.",
+  "clauseReview": {
+    "record": "2026-10-18-requirement-clause-review.json",
+    "ledger": "2026-10-18-requirement-clauses.csv",
+    "status": "Candidate text partition only; semantic denominator and proof acceptance remain incomplete."
   }
 }

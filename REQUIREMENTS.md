@@ -1,6 +1,6 @@
 # onmywave.fm macOS app requirements
 
-Current requirements, 17 October 2026. User behavior and acceptance scenarios are defined in [the radio experience PRD](docs/RADIO_EXPERIENCE.md).
+Current requirements, 18 October 2026. User behavior and acceptance scenarios are defined in [the radio experience PRD](docs/RADIO_EXPERIENCE.md).
 
 Build a separate macOS music player for a listener’s existing Jellyfin library, with optional personal radio hosting. Music works without AI setup. A separately enabled local workflow collects selected news sources, assesses new stories, and saves short recordings. A separately enabled DJ plays eligible saved recordings at suitable song endings. Both switches default off. Mood-based music selection remains future work.
 
