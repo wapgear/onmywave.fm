@@ -1,0 +1,287 @@
+{
+  "date": "2026-10-18",
+  "baseCommit": "a8ac6f97376b7f0ebbccf86a604ef7410f436812",
+  "scope": "First bounded semantic/proof review of music-first and independent radio activation requirements. Six canonical review groups, not a complete or scored denominator.",
+  "groups": [
+    {
+      "id": "MF01",
+      "actor": "Listener",
+      "trigger": "First launch or local defaults/missing legacy options",
+      "outcome": "Preparation and DJ playback both default off.",
+      "fragments": [
+        "REQ-L005-text-05",
+        "RAD-L091-result-03",
+        "RAD-L041-text-01",
+        "RAD-L042-text-01"
+      ],
+      "variants": [
+        "Fresh storage",
+        "Missing optional stored preparation flag",
+        "Invalid/missing stored DJ settings",
+        "Independent saved opt-ins after explicit activation"
+      ],
+      "source": [
+        "src/shared/workflow.ts:defaultWorkflowDraft/normalizeWorkflowDraft",
+        "src/shared/dj-playback.ts:defaultDJPlaybackSettings/normalizeDJPlaybackSettings",
+        "src/main/storage.ts:emptyState"
+      ],
+      "checks": [
+        "A01",
+        "R09",
+        "D04"
+      ],
+      "evidence": [
+        "2026-10-17-radio-opt-in-contracts.json:/native/cases",
+        "2026-10-18-paid-authorization-invariant.json:/obligations/0"
+      ],
+      "judgment": "Both default functions and normalizers explicitly produce false. Historical native cases cover off-state setup/restart, not a fresh current first-launch/reconnect matrix. Independent activation is reviewed under MF03/MF04.",
+      "remaining": [
+        "Current first-use evidence must show both flags and no unintended dispatch through the whole R1 action."
+      ],
+      "scopeNote": "The table fragments also describe effects and exclusions. Link them to MF03/MF04 as well; default proof alone never accepts the whole fragment."
+    },
+    {
+      "id": "MF02",
+      "actor": "First-time listener",
+      "trigger": "Connect Jellyfin, choose libraries and play an album without AI configuration",
+      "outcome": "Music plays without news-source or text/voice-provider requests; both opt-ins stay off.",
+      "fragments": [
+        "REQ-L005-text-02",
+        "RAD-L091-result-01",
+        "RAD-L091-result-02",
+        "RAD-L091-result-03"
+      ],
+      "variants": [
+        "No provider keys",
+        "No sources or DJ configured",
+        "Music playback succeeds",
+        "No news-source/provider dispatch",
+        "Both independent saved flags remain off"
+      ],
+      "source": [
+        "src/renderer/player.tsx:play",
+        "src/main/news-workflow.ts:processProfile",
+        "src/renderer/dj-playback.tsx:useDJPlaybackController"
+      ],
+      "checks": [
+        "R01",
+        "A04"
+      ],
+      "evidence": [
+        "2026-10-17-radio-opt-in-contracts.json:/native/cases",
+        "2026-10-17-keyless-radio.json:/savedPlayback",
+        "2026-10-18-paid-authorization-invariant.json:/obligations/0"
+      ],
+      "judgment": "Controlled records establish keyless saved playback and ordinary saves without opt-in. They do not establish one complete current uncoached connect/select/album first-use session. News-source requests here means news collection, not the Jellyfin requests needed to play music.",
+      "remaining": [
+        "Fresh current full R1 engineering journey with dispatch observation",
+        "Observed first-attempt listener success under the existing cohort protocol"
+      ]
+    },
+    {
+      "id": "MF03",
+      "actor": "Listener configuring radio",
+      "trigger": "Explicitly save an enabled preparation setting with complete prerequisites",
+      "outcome": "Selected sources are checked and assessed, qualifying script/audio is saved, and DJ playback/music selection are not enabled.",
+      "fragments": [
+        "REQ-L005-text-03",
+        "RAD-L041-text-01",
+        "RAD-L041-text-02",
+        "RAD-L041-text-03",
+        "RAD-L017-text-03",
+        "RAD-L017-text-04"
+      ],
+      "variants": [
+        "Ordinary setup save with preparation off makes no paid request",
+        "Explicit checked save authorizes preparation",
+        "Current saved source/host/mood/key validation",
+        "Source assessment can produce no qualifying recording",
+        "Complete recording publication",
+        "Playback remains independent",
+        "Process-running/awake scheduling and quit/sleep boundary"
+      ],
+      "source": [
+        "src/main/index.ts:saveWorkflowDraft",
+        "src/main/news-workflow.ts:processProfile",
+        "src/main/prepared-news.ts:prepareRoomNews"
+      ],
+      "checks": [
+        "R07",
+        "R09",
+        "A01",
+        "A02",
+        "A05"
+      ],
+      "evidence": [
+        "2026-10-18-paid-authorization-invariant.json:/obligations/1",
+        "2026-10-18-paid-authorization-invariant.json:/obligations/3",
+        "2026-10-18-uncertain-work-invariant.json:/runtime",
+        "2026-10-17-radio-opt-in-contracts.json:/review/R09"
+      ],
+      "judgment": "Current handler validates only enabled saves for provider credentials, retains explicit saved newsEnabled, and never writes djPlayback. Scheduler checks enabled/pause/error/due/budget before serialized reservation. Retained controlled engineering evidence covers dispatch/publication boundaries, not actual sleep/wake or comprehension.",
+      "remaining": [
+        "A05 physical sleep/quit/return proof",
+        "Observed understanding of authorization/cost before activation",
+        "Complete current all-stage evidence linkage including source/provider live limits"
+      ],
+      "scopeNote": "RAD17 ordinary setup save means saving while preparation remains off. Saving a deliberately checked preparation switch is the explicit opt-in, not a second hidden authorization step."
+    },
+    {
+      "id": "MF04",
+      "actor": "Listener with saved news",
+      "trigger": "Separately enable DJ breaks and reach a suitable natural ending",
+      "outcome": "Play eligible complete saved audio without generating new news or changing the selected music queue.",
+      "fragments": [
+        "REQ-L005-text-04",
+        "RAD-L042-text-01",
+        "RAD-L009-text-04"
+      ],
+      "variants": [
+        "Keys absent and preparation off",
+        "Selected saved profile requirements",
+        "Freshness/matching/complete local audio",
+        "Empty or late pool keeps music playing",
+        "Suitable ending/cadence",
+        "No immediate speech merely from enabling",
+        "Claim/start/heard exclusion and queue continuation"
+      ],
+      "source": [
+        "src/main/index.ts:saveDJPlayback",
+        "src/main/prepared-news.ts:nextRoomNews",
+        "src/shared/news-pool.ts:eligibleNewsTakes",
+        "src/renderer/dj-playback.tsx:useDJPlaybackController",
+        "src/renderer/player.tsx:scheduleNews"
+      ],
+      "checks": [
+        "A04",
+        "D04",
+        "D05",
+        "D06",
+        "T11"
+      ],
+      "evidence": [
+        "2026-10-17-keyless-radio.json:/savedPlayback",
+        "2026-10-18-scheduled-news-delivery.json",
+        "2026-10-18-queue-heard-invariant.json:/obligations"
+      ],
+      "judgment": "Current saveDJPlayback writes only DJ settings and requires no provider keys. nextRoomNews reads eligible local audio and reserves it without generating. PR121/122 give current scoped claim/end/continuation evidence. Older keyless record uses a media-time setter, so its exact ending-placement result is not accepted as a current CUA-only reproduction; current natural-ending evidence is separately bounded.",
+      "remaining": [
+        "Fresh combined current keyless + automatic natural-ending run if accepting the entire all-variants group",
+        "Observed listener understanding and audible quality"
+      ],
+      "scopeNote": "A complete saved file is required before playback, but this does not promise uninterrupted runtime or acceptable subjective sound."
+    },
+    {
+      "id": "MF05",
+      "actor": "Listener selecting music and host delivery",
+      "trigger": "Choose a queue or edit the host mood",
+      "outcome": "Listener keeps control of the music queue; mood supplies host-delivery guidance and does not analyze audio or select songs.",
+      "fragments": [
+        "REQ-L005-text-06",
+        "RAD-L009-text-01",
+        "RAD-L009-text-02",
+        "RAD-L009-text-03"
+      ],
+      "variants": [
+        "Music queue chosen by listener",
+        "Mood passed as delivery guidance",
+        "No automatic music selection",
+        "No claim to measured/heard musical mood",
+        "Listener understands the distinction"
+      ],
+      "source": [
+        "src/renderer/player.tsx:play",
+        "src/main/news.ts:prepareScript instructions and stationMood",
+        "src/main/prepared-news.ts:prepareRoomNews"
+      ],
+      "checks": [
+        "D03",
+        "T11",
+        "V17"
+      ],
+      "evidence": [
+        "2026-10-17-radio-opt-in-contracts.json:/review/D03",
+        "2026-10-17-keyless-radio.json:/explicitPreparation"
+      ],
+      "judgment": "Current prompt calls metadata a style hint and prohibits claiming to hear audio or measure mood. Generation consumes metadata/settings rather than choosing the player queue. Historical native record establishes explanatory wording and controlled queue isolation, not listener comprehension or an exhaustive current negative call-graph proof.",
+      "remaining": [
+        "Complete current queue-mutation/call-boundary audit before exhaustive negative-behavior acceptance",
+        "D03 observed listener understanding"
+      ],
+      "scopeNote": "Future music selection is an explicit product exclusion, not an implemented success to inflate a feature score."
+    },
+    {
+      "id": "MF06",
+      "actor": "Listener reviewing preparation settings",
+      "trigger": "Before saving preparation enabled",
+      "outcome": "Can review cadence, selection, recording maximum, required providers and potential charges.",
+      "fragments": [
+        "RAD-L017-text-02"
+      ],
+      "variants": [
+        "Cadence",
+        "Selection/importance",
+        "Maximum recordings",
+        "Required provider credentials",
+        "Assessment can cost without producing audio",
+        "Manual/preview work outside automatic limits",
+        "Unassisted understanding before activation"
+      ],
+      "source": [
+        "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx",
+        "src/renderer/pages/Stations/components/RoomSetup.component.tsx"
+      ],
+      "checks": [
+        "R07",
+        "A02",
+        "A03"
+      ],
+      "evidence": [
+        "2026-10-17-radio-opt-in-contracts.json:/review/A03",
+        "2026-10-18-paid-authorization-invariant.json:/obligations/6"
+      ],
+      "judgment": "Current engineering records distinguish visible cost/limit explanations from comprehension. No uncoached listener result exists; this requirement is not accepted.",
+      "remaining": [
+        "Observe the existing listener task before enabling preparation",
+        "Link each current visible control/disclosure to its required variant"
+      ],
+      "scopeNote": "The isolated numbering fragment RAD-L017-text-01 is structural context for this action, not a separate scored requirement."
+    }
+  ],
+  "policy": [
+    "Mandatory variants remain together; none of these whole groups is declared accepted.",
+    "Direct current source inspection is static evidence, not a new native/live/listener run.",
+    "Historical records retain their stated substitutions, driver limitations and tested versions. They are not promoted to current full-flow proof.",
+    "One fragment may cover several canonical obligations; every link must be satisfied before accepting the fragment.",
+    "Unreviewed application scope, other source lines, STAR actions/contexts and parent gates remain pending."
+  ],
+  "currentSourceSha256": {
+    "src/shared/workflow.ts": "22bbb66493579cc57e09c69119943adec0fa2373d823820a2579bd4996e6cc77",
+    "src/shared/dj-playback.ts": "7e807ff052f50332ff9c78b083c450a9f5c116f68fc36de93480165ec1e6e55b",
+    "src/main/storage.ts": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+    "src/renderer/player.tsx": "aa7d866e5724945a3f06773a984f6983ccc6544ee08b02991fd54c0f53f25f0c",
+    "src/main/news-workflow.ts": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+    "src/renderer/dj-playback.tsx": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+    "src/main/index.ts": "aaa4568e65b5d8397b26a767ead775ce848e91038a58b9e3e486a29a0a6e22ec",
+    "src/main/prepared-news.ts": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+    "src/shared/news-pool.ts": "d8a190d01563d458a34bd2a89e9bbce8aa7533a7e678b44d88559951768f9da5",
+    "src/main/news.ts": "f2933aac8c9d2334e84a6850c7023207fbd1b86f905bd3844977ad5cb0be7a48",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": "0cd2699a1bc6131ebc898ae216f434223684746e209e275edd43008e56a191d1",
+    "src/renderer/pages/Stations/components/RoomSetup.component.tsx": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330"
+  },
+  "evidenceSha256": {
+    "2026-10-17-radio-opt-in-contracts.json": "c54ad7b4ca22909587981486baef916b0d1a894b11d1f48a04f4ef44f854c5e5",
+    "2026-10-18-paid-authorization-invariant.json": "d928a7e05aad2a852815e653ac252898c6ec971fc620bfa929ad298b6de05cb5",
+    "2026-10-17-keyless-radio.json": "4b2b78eb3d70dd78747acd7ba32200e31fa2c5e94d0f77dc635eb1c576da0ed6",
+    "2026-10-18-uncertain-work-invariant.json": "acff28d5fa03710a1cd5bfdb0e218a5e5d1de65f70d2a9bbd8124e86a8132271",
+    "2026-10-18-scheduled-news-delivery.json": "e4e41973e48e3bdd2fa898a8df4aac5ee9765fc2af3ad403cf15c5db54ceb187",
+    "2026-10-18-queue-heard-invariant.json": "29df0671a73b99dc16518bf31499f5f89141cd585bcbe5bd3576c82e32271ec2"
+  },
+  "summary": {
+    "canonicalReviewGroups": 6,
+    "linkedFragments": 19,
+    "acceptedGroups": 0,
+    "remainingKnownChecks": 25,
+    "overallScore": null
+  }
+}

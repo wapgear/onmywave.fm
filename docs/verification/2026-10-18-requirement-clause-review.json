@@ -21,8 +21,8 @@
     "STARStories": 27,
     "STARResultFragments": 265,
     "structuralLines": 47,
-    "semanticFragmentsReviewed": 6,
-    "proofFragmentsReviewed": 0,
+    "semanticFragmentsReviewed": 21,
+    "proofFragmentsReviewed": 19,
     "partitionComplete": true,
     "semanticDenominatorComplete": false,
     "overallScore": null,
@@ -36,7 +36,10 @@
     },
     "knownOpenChecks": 25,
     "listenerOpenChecks": 14,
-    "otherProofOpenChecks": 11
+    "otherProofOpenChecks": 11,
+    "contextFragmentsReviewed": 1,
+    "canonicalReviewGroups": 6,
+    "acceptedCanonicalGroups": 0
   },
   "STARContexts": [
     {
@@ -611,7 +614,8 @@
     "The checklist introduction and listener-protocol opening still said26/open12 other-proof after C06 was promoted to Live. Current row data has25 open/11 other-proof.",
     "Current source reconciliation hashes had been updated through later PRD changes while review/verification text still asserted no source change and26 open checks. Preserve the original reconciliation explicitly and make current metadata truthful.",
     "RADIO_EXPERIENCE112,116,118 are classified reference in the navigation map but contain binding evidence/acceptance rules. Their classification cannot exempt those obligations.",
-    "Punctuation partition alone is not an atomic denominator. The six opening scope fragments demonstrate compound stages, mandatory variants and duplicate-scope review without granting acceptance."
+    "Punctuation partition alone is not an atomic denominator. The six opening scope fragments demonstrate compound stages, mandatory variants and duplicate-scope review without granting acceptance.",
+    "Music-first and independent opt-ins now have six bounded canonical review groups. The older keyless native record used a media-time setter; its timing result is not a current CUA-only natural-ending proof. No full group is accepted from partial evidence."
   ],
   "remainingWork": [
     "Review every non-structural line and fragment semantically; split compound outcomes where independent, preserve required condition/variant groups and deduplicate repeated source contracts.",
@@ -621,7 +625,7 @@
   "validation": {
     "sourceLineCoverage": "All294 nonblank lines match exact source text/hash; structural context is retained.",
     "STARResultCoverage": "All27 expected-result cells reconstruct exactly from ordered fragments, with action/situation/role retained.",
-    "acceptance": "No app behavior, checklist disposition, listener result or percentage changed. No build/unit/native run needed for these documentation-only changes."
+    "acceptance": "Semantic/proof annotations progressed; no app behavior, checklist disposition, listener result or percentage changed. No new runtime pass is claimed."
   },
   "parentCriteria": [
     {
@@ -711,7 +715,7 @@
   },
   "clauseLedger": {
     "file": "2026-10-18-requirement-clauses.csv",
-    "sha256": "9f77f763e5d7e07de118495d97130c46e31bc6ad167d9fbe70cf4d985d48564f",
+    "sha256": "20303acba27b1fb26bcbdbfa2d333684528a286adf7dbdac4ca0ba246d3b75e6",
     "columns": "Candidate navigation, semantic review and actual proof review are distinct. Empty evidence/canonical IDs do not establish completion."
   },
   "scopeReviews": [
@@ -730,5 +734,13 @@
       "state": "required-governance",
       "reason": "This reference-classified paragraph also defines mandatory acceptance/evidence rules; retain it in semantic review."
     }
-  ]
+  ],
+  "semanticReviews": [
+    {
+      "file": "2026-10-18-music-first-clause-adjudication.json",
+      "sha256": "9f4d5a8050b03c4dc329f8ada7ff33578b9f4c90a15a8b7ae6ae4dc02e9dddf4",
+      "meaning": "Six all-variants review groups with exact fragment links, direct static inspection, scoped prior evidence and explicit missing proof. No accepted groups or overall score."
+    }
+  ],
+  "generatorMeaning": "Original mechanical partition generator only. Later deliberate semantic/proof annotations are authoritative and must be preserved; rerunning the original generator alone would discard them."
 }
