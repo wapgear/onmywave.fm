@@ -162,3 +162,6 @@ The [keyboard target-name record](verification/2026-10-18-keyboard-target-names.
 
 
 The [news-notice record](verification/2026-10-18-news-notice-focus.json) distinguishes original focus loss, scoped chooser/music fixes, rejected full-window focus visibility and the corrected title-heading replay. It retains six terminal observer outcomes, native projections/AX and final source/bundle/fixture hashes. Substituted recovery phases prove UI behavior only; missing intermediate hashes and untested caller transitions remain explicit. No acceptance disposition changes.
+
+
+The [help audit](verification/2026-10-18-keyboard-help-audit.json) separates unchanged provider/manual help checks, the off-screen console failure and the final inline-feedback cases. It retains two terminal observers, source/bundle/fixture hashes, AX projections and precise stale-request/Tab limits. The 35-family evidence map links scoped records without treating file references or source counts as acceptance. No disposition changes.

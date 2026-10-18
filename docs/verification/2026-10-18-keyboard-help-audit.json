@@ -1,0 +1,2572 @@
+{
+  "date": "2026-10-18",
+  "baseMain": "4a809eaee7a5ab71d9ac1034b425643cdd662bd7",
+  "scope": "Q06 partial help control reconciliation plus X help failure visibility.",
+  "environment": {
+    "viewport": "1280x720",
+    "zoom": 1,
+    "input": "Native CUA only",
+    "observation": "Passive Playwright DOM and CDP AX tree",
+    "renderer": "Production renderer/preload",
+    "main": "Copied instrumented main/storage; disposable safeStorage and localhost catalog; muted music; preparation scheduler stopped",
+    "browser": "openSource fails at IPC gate; ack-only substitutes success without opening browser. No external page or account action occurs.",
+    "catalog": "40 songs and12 albums; startup label still says20000/2000."
+  },
+  "phases": {
+    "help": "Base renderer: provider and manual help traversal, X summary and all three failure actions. Console error at y808..854 is outside viewport. Baseline bundle hash not retained.",
+    "help-final": "Single final renderer. Console error is compact at y554.64..571.14 beside focused button, unchanged scroll302.5. Other two link errors, old held failure versus newer acknowledged result, and later Tab tested. Final observer adds read-only compact-feedback geometry; baseline observer copy retained."
+  },
+  "observations": [
+    {
+      "name": "provider-help-trigger",
+      "rawSha256": "482fc6f017ea50a600284725f60684dd3ce04d81f8d7c59dbe5e694e95b49bdb",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 340.7578125,
+          "y": 201,
+          "width": 34,
+          "height": 34,
+          "top": 201,
+          "right": 374.7578125,
+          "bottom": 235,
+          "left": 340.7578125
+        },
+        "insideDrawer": false,
+        "name": "About provider keys",
+        "type": "button",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 999
+      },
+      "feedback": null,
+      "actions": null,
+      "notices": [],
+      "dialogs": [],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "provider-help-open",
+      "rawSha256": "24bb804f45350f133f505069029c51f6811b094576e286c8dcb7045cdc2151fa",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 804,
+          "y": 173.6015625,
+          "width": 34,
+          "height": 34,
+          "top": 173.6015625,
+          "right": 838,
+          "bottom": 207.6015625,
+          "left": 804
+        },
+        "insideDrawer": false,
+        "name": "Close dialog",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 999
+      },
+      "feedback": null,
+      "actions": null,
+      "notices": [],
+      "dialogs": [
+        {
+          "title": "About provider keys",
+          "paragraphs": [
+            "Twitter / X uses your bearer token to search recent posts. OpenAI prepares news text. ElevenLabs generates all new voice audio.",
+            "Keys use protected storage when available. Session-only keys must be entered again after quitting. Saved recordings play without keys.",
+            "Provider keys apply to this app on this Mac when you switch music accounts. Signing out clears entered key text. A key change already saving can still finish.",
+            "Preparing text sends selected source content, news interests, DJ preferences, and mood to OpenAI. Generating audio sends the reviewed script and voice preferences to your chosen provider and uses that provider's account."
+          ]
+        }
+      ],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "provider-help-return",
+      "rawSha256": "1f13b3badf74433eb796ebd511f69d3ca43393ade3e67106ea9da1e51b9da50b",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 340.7578125,
+          "y": 201,
+          "width": 34,
+          "height": 34,
+          "top": 201,
+          "right": 374.7578125,
+          "bottom": 235,
+          "left": 340.7578125
+        },
+        "insideDrawer": false,
+        "name": "About provider keys",
+        "type": "button",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 999
+      },
+      "feedback": null,
+      "actions": null,
+      "notices": [],
+      "dialogs": [],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Escape",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "x-console-focus",
+      "rawSha256": "190931af531895259eb4a77011ffcaaaf4db077bacc6821f57e3978ac7b47843",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 315.3828125,
+          "y": 545.890625,
+          "width": 116.0859375,
+          "height": 34,
+          "top": 545.890625,
+          "right": 431.46875,
+          "bottom": 579.890625,
+          "left": 315.3828125
+        },
+        "insideDrawer": false,
+        "name": "X developer console",
+        "type": "button",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 302.5,
+        "scrollHeight": 1309
+      },
+      "feedback": null,
+      "actions": null,
+      "notices": [],
+      "dialogs": [],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Escape",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "x-console-error",
+      "rawSha256": "8aca9e9915e61ce983cb296f742eb13a7951c1084ba0bff9a2b2047c0eed94c4",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 315.3828125,
+          "y": 545.890625,
+          "width": 116.0859375,
+          "height": 34,
+          "top": 545.890625,
+          "right": 431.46875,
+          "bottom": 579.890625,
+          "left": 315.3828125
+        },
+        "insideDrawer": false,
+        "name": "X developer console",
+        "type": "button",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 302.5,
+        "scrollHeight": 1375
+      },
+      "feedback": null,
+      "actions": null,
+      "notices": [
+        {
+          "rect": {
+            "x": 238,
+            "y": 808.46875,
+            "width": 520,
+            "height": 45.796875,
+            "top": 808.46875,
+            "right": 758,
+            "bottom": 854.265625,
+            "left": 238
+          },
+          "error": "openSource unavailable.",
+          "button": null
+        }
+      ],
+      "dialogs": [],
+      "keys": [
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Escape",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "x-token-guide-error",
+      "rawSha256": "37f4886feac4600b0f1d89089d2f9be40bc0b8c2921a170c383ad8d1c87210d2",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 409.96875,
+          "width": 140.1875,
+          "height": 34,
+          "top": 409.96875,
+          "right": 378.1875,
+          "bottom": 443.96875,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Official token guide \u2197",
+        "type": "button",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 655,
+        "scrollHeight": 1375
+      },
+      "feedback": null,
+      "actions": null,
+      "notices": [
+        {
+          "rect": {
+            "x": 238,
+            "y": 455.96875,
+            "width": 520,
+            "height": 45.796875,
+            "top": 455.96875,
+            "right": 758,
+            "bottom": 501.765625,
+            "left": 238
+          },
+          "error": "openSource unavailable.",
+          "button": null
+        }
+      ],
+      "dialogs": [],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Escape",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "x-pricing-error",
+      "rawSha256": "29a7dc25147a7b02829adbaad3dc87f354870fc79824e031bc9f025b9fc8545f",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 386.1875,
+          "y": 409.96875,
+          "width": 96.0703125,
+          "height": 34,
+          "top": 409.96875,
+          "right": 482.2578125,
+          "bottom": 443.96875,
+          "left": 386.1875
+        },
+        "insideDrawer": false,
+        "name": "API pricing \u2197",
+        "type": "button",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 655,
+        "scrollHeight": 1375
+      },
+      "feedback": null,
+      "actions": null,
+      "notices": [
+        {
+          "rect": {
+            "x": 238,
+            "y": 455.96875,
+            "width": 520,
+            "height": 45.796875,
+            "top": 455.96875,
+            "right": 758,
+            "bottom": 501.765625,
+            "left": 238
+          },
+          "error": "openSource unavailable.",
+          "button": null
+        }
+      ],
+      "dialogs": [],
+      "keys": [
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "manual-help-open",
+      "rawSha256": "5dce3cb18f9ccdf3a2bd23592e2b0e47a7cc127ed48d2c1328958e9fb6b431a1",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 804,
+          "y": 271.3828125,
+          "width": 34,
+          "height": 34,
+          "top": 271.3828125,
+          "right": 838,
+          "bottom": 305.3828125,
+          "left": 804
+        },
+        "insideDrawer": false,
+        "name": "Close dialog",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 1158.5,
+        "scrollHeight": 2065
+      },
+      "feedback": null,
+      "actions": null,
+      "notices": [],
+      "dialogs": [
+        {
+          "title": "About manual preparation",
+          "paragraphs": [
+            "Use these tools to test a script or voice. Text and audio requests use your provider accounts and save completed results locally.",
+            "DJ playback only picks saved recordings. The news workflow prepares stories on its own schedule."
+          ]
+        }
+      ],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "manual-help-return",
+      "rawSha256": "d3fdc8da0ff751f10785a6e6dadc1f2c9393beea36fdf474de676ff1674db1df",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1164,
+          "y": 545.8359375,
+          "width": 34,
+          "height": 34,
+          "top": 545.8359375,
+          "right": 1198,
+          "bottom": 579.8359375,
+          "left": 1164
+        },
+        "insideDrawer": false,
+        "name": "About manual preparation",
+        "type": "button",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 1158.5,
+        "scrollHeight": 2065
+      },
+      "feedback": null,
+      "actions": null,
+      "notices": [],
+      "dialogs": [],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "final-console-before",
+      "rawSha256": "458a17adcb5c539faf9e1a0aad3ca2cc2ff35bacc062b84245f4b6f7fca7c98f",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 260,
+          "y": 545.890625,
+          "width": 116.0859375,
+          "height": 34,
+          "top": 545.890625,
+          "right": 376.0859375,
+          "bottom": 579.890625,
+          "left": 260
+        },
+        "insideDrawer": false,
+        "name": "X developer console",
+        "type": "button",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 302.5,
+        "scrollHeight": 1329
+      },
+      "feedback": [],
+      "actions": [
+        {
+          "name": "X developer console",
+          "focused": true,
+          "rect": {
+            "x": 260,
+            "y": 545.890625,
+            "width": 116.0859375,
+            "height": 34,
+            "top": 545.890625,
+            "right": 376.0859375,
+            "bottom": 579.890625,
+            "left": 260
+          }
+        },
+        {
+          "name": "Official token guide \u2197",
+          "focused": false,
+          "rect": {
+            "x": 238,
+            "y": 782.265625,
+            "width": 140.1875,
+            "height": 34,
+            "top": 782.265625,
+            "right": 378.1875,
+            "bottom": 816.265625,
+            "left": 238
+          }
+        },
+        {
+          "name": "API pricing \u2197",
+          "focused": false,
+          "rect": {
+            "x": 386.1875,
+            "y": 782.265625,
+            "width": 96.0703125,
+            "height": 34,
+            "top": 782.265625,
+            "right": 482.2578125,
+            "bottom": 816.265625,
+            "left": 386.1875
+          }
+        }
+      ],
+      "notices": [],
+      "dialogs": [],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "final-console-error",
+      "rawSha256": "f5abbf86c00d763bf254f1c592f71ac42b66804c1ab0c933e7db6274f9f8d4a3",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 260,
+          "y": 545.890625,
+          "width": 116.0859375,
+          "height": 34,
+          "top": 545.890625,
+          "right": 376.0859375,
+          "bottom": 579.890625,
+          "left": 260
+        },
+        "insideDrawer": false,
+        "name": "X developer console",
+        "type": "button",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 302.5,
+        "scrollHeight": 1329
+      },
+      "feedback": [
+        {
+          "text": "Could not open this page. Try again.",
+          "role": "alert",
+          "visible": true,
+          "rect": {
+            "x": 384.0859375,
+            "y": 554.640625,
+            "width": 188.359375,
+            "height": 16.5,
+            "top": 554.640625,
+            "right": 572.4453125,
+            "bottom": 571.140625,
+            "left": 384.0859375
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "X developer console",
+          "focused": true,
+          "rect": {
+            "x": 260,
+            "y": 545.890625,
+            "width": 116.0859375,
+            "height": 34,
+            "top": 545.890625,
+            "right": 376.0859375,
+            "bottom": 579.890625,
+            "left": 260
+          }
+        },
+        {
+          "name": "Official token guide \u2197",
+          "focused": false,
+          "rect": {
+            "x": 238,
+            "y": 782.265625,
+            "width": 140.1875,
+            "height": 34,
+            "top": 782.265625,
+            "right": 378.1875,
+            "bottom": 816.265625,
+            "left": 238
+          }
+        },
+        {
+          "name": "API pricing \u2197",
+          "focused": false,
+          "rect": {
+            "x": 386.1875,
+            "y": 782.265625,
+            "width": 96.0703125,
+            "height": 34,
+            "top": 782.265625,
+            "right": 482.2578125,
+            "bottom": 816.265625,
+            "left": 386.1875
+          }
+        }
+      ],
+      "notices": [],
+      "dialogs": [],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "final-token-error",
+      "rawSha256": "7e4cf455c4534ff589f2129b63c345186f7f01e9fa3fbe4e515549be18aa7551",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 475.765625,
+          "width": 140.1875,
+          "height": 34,
+          "top": 475.765625,
+          "right": 378.1875,
+          "bottom": 509.765625,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Official token guide \u2197",
+        "type": "button",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 609,
+        "scrollHeight": 1351
+      },
+      "feedback": [
+        {
+          "text": "Could not open this page. Try again.",
+          "role": "alert",
+          "visible": true,
+          "rect": {
+            "x": 238,
+            "y": 515.765625,
+            "width": 188.359375,
+            "height": 16.5,
+            "top": 515.765625,
+            "right": 426.359375,
+            "bottom": 532.265625,
+            "left": 238
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "X developer console",
+          "focused": false,
+          "rect": {
+            "x": 260,
+            "y": 239.390625,
+            "width": 116.0859375,
+            "height": 34,
+            "top": 239.390625,
+            "right": 376.0859375,
+            "bottom": 273.390625,
+            "left": 260
+          }
+        },
+        {
+          "name": "Official token guide \u2197",
+          "focused": true,
+          "rect": {
+            "x": 238,
+            "y": 475.765625,
+            "width": 140.1875,
+            "height": 34,
+            "top": 475.765625,
+            "right": 378.1875,
+            "bottom": 509.765625,
+            "left": 238
+          }
+        },
+        {
+          "name": "API pricing \u2197",
+          "focused": false,
+          "rect": {
+            "x": 434.359375,
+            "y": 475.765625,
+            "width": 96.0703125,
+            "height": 34,
+            "top": 475.765625,
+            "right": 530.4296875,
+            "bottom": 509.765625,
+            "left": 434.359375
+          }
+        }
+      ],
+      "notices": [],
+      "dialogs": [],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "final-pricing-error",
+      "rawSha256": "f1be69be63e3fb96e37ed0ae95a160a7f348a06ab6dcd0eb070c4290cac1cc6c",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 386.1875,
+          "y": 475.765625,
+          "width": 96.0703125,
+          "height": 34,
+          "top": 475.765625,
+          "right": 482.2578125,
+          "bottom": 509.765625,
+          "left": 386.1875
+        },
+        "insideDrawer": false,
+        "name": "API pricing \u2197",
+        "type": "button",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 609,
+        "scrollHeight": 1351
+      },
+      "feedback": [
+        {
+          "text": "Could not open this page. Try again.",
+          "role": "alert",
+          "visible": true,
+          "rect": {
+            "x": 386.1875,
+            "y": 515.765625,
+            "width": 188.359375,
+            "height": 16.5,
+            "top": 515.765625,
+            "right": 574.546875,
+            "bottom": 532.265625,
+            "left": 386.1875
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "X developer console",
+          "focused": false,
+          "rect": {
+            "x": 260,
+            "y": 239.390625,
+            "width": 116.0859375,
+            "height": 34,
+            "top": 239.390625,
+            "right": 376.0859375,
+            "bottom": 273.390625,
+            "left": 260
+          }
+        },
+        {
+          "name": "Official token guide \u2197",
+          "focused": false,
+          "rect": {
+            "x": 238,
+            "y": 475.765625,
+            "width": 140.1875,
+            "height": 34,
+            "top": 475.765625,
+            "right": 378.1875,
+            "bottom": 509.765625,
+            "left": 238
+          }
+        },
+        {
+          "name": "API pricing \u2197",
+          "focused": true,
+          "rect": {
+            "x": 386.1875,
+            "y": 475.765625,
+            "width": 96.0703125,
+            "height": 34,
+            "top": 475.765625,
+            "right": 482.2578125,
+            "bottom": 509.765625,
+            "left": 386.1875
+          }
+        }
+      ],
+      "notices": [],
+      "dialogs": [],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "final-old-guide-held",
+      "rawSha256": "2776c4014848de80a05e9d0ec99d3427ba262827088369f636e4395193b88fe4",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 475.765625,
+          "width": 140.1875,
+          "height": 34,
+          "top": 475.765625,
+          "right": 378.1875,
+          "bottom": 509.765625,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Official token guide \u2197",
+        "type": "button",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 609,
+        "scrollHeight": 1329
+      },
+      "feedback": [],
+      "actions": [
+        {
+          "name": "X developer console",
+          "focused": false,
+          "rect": {
+            "x": 260,
+            "y": 239.390625,
+            "width": 116.0859375,
+            "height": 34,
+            "top": 239.390625,
+            "right": 376.0859375,
+            "bottom": 273.390625,
+            "left": 260
+          }
+        },
+        {
+          "name": "Official token guide \u2197",
+          "focused": true,
+          "rect": {
+            "x": 238,
+            "y": 475.765625,
+            "width": 140.1875,
+            "height": 34,
+            "top": 475.765625,
+            "right": 378.1875,
+            "bottom": 509.765625,
+            "left": 238
+          }
+        },
+        {
+          "name": "API pricing \u2197",
+          "focused": false,
+          "rect": {
+            "x": 386.1875,
+            "y": 475.765625,
+            "width": 96.0703125,
+            "height": 34,
+            "top": 475.765625,
+            "right": 482.2578125,
+            "bottom": 509.765625,
+            "left": 386.1875
+          }
+        }
+      ],
+      "notices": [],
+      "dialogs": [],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "held": [
+          "openSource"
+        ],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "final-new-pricing-ack",
+      "rawSha256": "50e1e16622fcd70e8d96c1060a1055d687df80c65b66ae2e9c3b5a2eb0d89796",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 386.1875,
+          "y": 475.765625,
+          "width": 96.0703125,
+          "height": 34,
+          "top": 475.765625,
+          "right": 482.2578125,
+          "bottom": 509.765625,
+          "left": 386.1875
+        },
+        "insideDrawer": false,
+        "name": "API pricing \u2197",
+        "type": "button",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 609,
+        "scrollHeight": 1329
+      },
+      "feedback": [],
+      "actions": [
+        {
+          "name": "X developer console",
+          "focused": false,
+          "rect": {
+            "x": 260,
+            "y": 239.390625,
+            "width": 116.0859375,
+            "height": 34,
+            "top": 239.390625,
+            "right": 376.0859375,
+            "bottom": 273.390625,
+            "left": 260
+          }
+        },
+        {
+          "name": "Official token guide \u2197",
+          "focused": false,
+          "rect": {
+            "x": 238,
+            "y": 475.765625,
+            "width": 140.1875,
+            "height": 34,
+            "top": 475.765625,
+            "right": 378.1875,
+            "bottom": 509.765625,
+            "left": 238
+          }
+        },
+        {
+          "name": "API pricing \u2197",
+          "focused": true,
+          "rect": {
+            "x": 386.1875,
+            "y": 475.765625,
+            "width": 96.0703125,
+            "height": 34,
+            "top": 475.765625,
+            "right": 482.2578125,
+            "bottom": 509.765625,
+            "left": 386.1875
+          }
+        }
+      ],
+      "notices": [],
+      "dialogs": [],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "held": [
+          "openSource"
+        ],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "final-stale-failure-ignored",
+      "rawSha256": "9baf426020b49ce6509f91a6bde4228f84df21309c53dcca681d7030e46eaaac",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 386.1875,
+          "y": 475.765625,
+          "width": 96.0703125,
+          "height": 34,
+          "top": 475.765625,
+          "right": 482.2578125,
+          "bottom": 509.765625,
+          "left": 386.1875
+        },
+        "insideDrawer": false,
+        "name": "API pricing \u2197",
+        "type": "button",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 609,
+        "scrollHeight": 1329
+      },
+      "feedback": [],
+      "actions": [
+        {
+          "name": "X developer console",
+          "focused": false,
+          "rect": {
+            "x": 260,
+            "y": 239.390625,
+            "width": 116.0859375,
+            "height": 34,
+            "top": 239.390625,
+            "right": 376.0859375,
+            "bottom": 273.390625,
+            "left": 260
+          }
+        },
+        {
+          "name": "Official token guide \u2197",
+          "focused": false,
+          "rect": {
+            "x": 238,
+            "y": 475.765625,
+            "width": 140.1875,
+            "height": 34,
+            "top": 475.765625,
+            "right": 378.1875,
+            "bottom": 509.765625,
+            "left": 238
+          }
+        },
+        {
+          "name": "API pricing \u2197",
+          "focused": true,
+          "rect": {
+            "x": 386.1875,
+            "y": 475.765625,
+            "width": 96.0703125,
+            "height": 34,
+            "top": 475.765625,
+            "right": 482.2578125,
+            "bottom": 509.765625,
+            "left": 386.1875
+          }
+        }
+      ],
+      "notices": [],
+      "dialogs": [],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "final-pending-tab-away",
+      "rawSha256": "18af0bc553a001ae1070ec641621bda0bbf102a64904fca7f730cb8e280bf769",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 475.765625,
+          "width": 140.1875,
+          "height": 34,
+          "top": 475.765625,
+          "right": 378.1875,
+          "bottom": 509.765625,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Official token guide \u2197",
+        "type": "button",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 609,
+        "scrollHeight": 1329
+      },
+      "feedback": [],
+      "actions": [
+        {
+          "name": "X developer console",
+          "focused": false,
+          "rect": {
+            "x": 260,
+            "y": 239.390625,
+            "width": 116.0859375,
+            "height": 34,
+            "top": 239.390625,
+            "right": 376.0859375,
+            "bottom": 273.390625,
+            "left": 260
+          }
+        },
+        {
+          "name": "Official token guide \u2197",
+          "focused": true,
+          "rect": {
+            "x": 238,
+            "y": 475.765625,
+            "width": 140.1875,
+            "height": 34,
+            "top": 475.765625,
+            "right": 378.1875,
+            "bottom": 509.765625,
+            "left": 238
+          }
+        },
+        {
+          "name": "API pricing \u2197",
+          "focused": false,
+          "rect": {
+            "x": 386.1875,
+            "y": 475.765625,
+            "width": 96.0703125,
+            "height": 34,
+            "top": 475.765625,
+            "right": 482.2578125,
+            "bottom": 509.765625,
+            "left": 386.1875
+          }
+        }
+      ],
+      "notices": [],
+      "dialogs": [],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "held": [
+          "openSource"
+        ],
+        "providers": 0,
+        "writes": 0
+      }
+    },
+    {
+      "name": "final-tab-away-error",
+      "rawSha256": "18dc67f8cb23456b95567ab73e74afbc3bdcfc3b280937653445c4e3f23beec3",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 475.765625,
+          "width": 140.1875,
+          "height": 34,
+          "top": 475.765625,
+          "right": 378.1875,
+          "bottom": 509.765625,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Official token guide \u2197",
+        "type": "button",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 609,
+        "scrollHeight": 1351
+      },
+      "feedback": [
+        {
+          "text": "Could not open this page. Try again.",
+          "role": "alert",
+          "visible": true,
+          "rect": {
+            "x": 386.1875,
+            "y": 515.765625,
+            "width": 188.359375,
+            "height": 16.5,
+            "top": 515.765625,
+            "right": 574.546875,
+            "bottom": 532.265625,
+            "left": 386.1875
+          }
+        }
+      ],
+      "actions": [
+        {
+          "name": "X developer console",
+          "focused": false,
+          "rect": {
+            "x": 260,
+            "y": 239.390625,
+            "width": 116.0859375,
+            "height": 34,
+            "top": 239.390625,
+            "right": 376.0859375,
+            "bottom": 273.390625,
+            "left": 260
+          }
+        },
+        {
+          "name": "Official token guide \u2197",
+          "focused": true,
+          "rect": {
+            "x": 238,
+            "y": 475.765625,
+            "width": 140.1875,
+            "height": 34,
+            "top": 475.765625,
+            "right": 378.1875,
+            "bottom": 509.765625,
+            "left": 238
+          }
+        },
+        {
+          "name": "API pricing \u2197",
+          "focused": false,
+          "rect": {
+            "x": 386.1875,
+            "y": 475.765625,
+            "width": 96.0703125,
+            "height": 34,
+            "top": 475.765625,
+            "right": 482.2578125,
+            "bottom": 509.765625,
+            "left": 386.1875
+          }
+        }
+      ],
+      "notices": [],
+      "dialogs": [],
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        }
+      ],
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      }
+    }
+  ],
+  "accessibility": [
+    {
+      "name": "provider-help-ax",
+      "sha256": "453e5874d444f10e755e3596216845bc44d289df8bf16ba42d70a0a6daea0a63",
+      "selectedNodes": [
+        {
+          "role": "RootWebArea",
+          "name": "onmywave.fm",
+          "focused": true
+        },
+        {
+          "role": "dialog",
+          "name": "About provider keys",
+          "focused": null
+        },
+        {
+          "role": "button",
+          "name": "Close dialog",
+          "focused": true
+        }
+      ]
+    },
+    {
+      "name": "manual-help-ax",
+      "sha256": "a37e97abd46f1ea62fe5fe8fc124b493a951009d18baa9278279423c0c305741",
+      "selectedNodes": [
+        {
+          "role": "RootWebArea",
+          "name": "onmywave.fm",
+          "focused": true
+        },
+        {
+          "role": "dialog",
+          "name": "About manual preparation",
+          "focused": null
+        },
+        {
+          "role": "button",
+          "name": "Close dialog",
+          "focused": true
+        }
+      ]
+    },
+    {
+      "name": "x-help-ax",
+      "sha256": "b3f565bf6321c5067cc6c7b1a81809286bfca5bb7cedc307d3c2a8884ca00e32",
+      "selectedNodes": [
+        {
+          "role": "RootWebArea",
+          "name": "onmywave.fm",
+          "focused": true
+        },
+        {
+          "role": "button",
+          "name": "API pricing \u2197",
+          "focused": true
+        },
+        {
+          "role": "alert",
+          "name": "",
+          "focused": null
+        }
+      ]
+    },
+    {
+      "name": "final-console-ax",
+      "sha256": "68322808b29965e14781e8e37c54cfec4a09ab81637cc50de1b4d0cfb08ecce5",
+      "selectedNodes": [
+        {
+          "role": "RootWebArea",
+          "name": "onmywave.fm",
+          "focused": true
+        },
+        {
+          "role": "button",
+          "name": "X developer console",
+          "focused": true
+        },
+        {
+          "role": "alert",
+          "name": "",
+          "focused": null
+        }
+      ]
+    }
+  ],
+  "reports": [
+    {
+      "name": "help",
+      "result": "observed",
+      "errors": [],
+      "sha256": "e5162d2f45c2aee8b1b2d838b3ac5fe8e0d8f47718c9b7c6a77384e58ebd0b5d"
+    },
+    {
+      "name": "help-final",
+      "result": "observed",
+      "errors": [],
+      "sha256": "171ed06c89ab93dac42c5ae9f9fd9e72e632d2b0d7b145ac1d128294821b0c59"
+    }
+  ],
+  "sourceModules": [
+    {
+      "file": "src/renderer/main.tsx",
+      "sha256": "863a6596bde95ba270f0d554a2ac2bd0c3819ca832f1bfd577d0edf9bb69a7cc"
+    },
+    {
+      "file": "src/renderer/App.tsx",
+      "sha256": "f304a255d1674496943e737f45f499a996ae8841ccac57bdce84fcefe3765a38"
+    },
+    {
+      "file": "src/shared/types.ts",
+      "sha256": "f98356fc4473975a77f5f8d0afbe3278bd623e9d94e5c8de85f3db1cd65e2e05"
+    },
+    {
+      "file": "src/shared/dj-playback.ts",
+      "sha256": "7e807ff052f50332ff9c78b083c450a9f5c116f68fc36de93480165ec1e6e55b"
+    },
+    {
+      "file": "src/shared/workflow.ts",
+      "sha256": "22bbb66493579cc57e09c69119943adec0fa2373d823820a2579bd4996e6cc77"
+    },
+    {
+      "file": "src/renderer/api.ts",
+      "sha256": "a44175c0fa1b6d5bb3b5fe611e652334f974aa73a93b37b42b0ab2ad45debeca"
+    },
+    {
+      "file": "src/renderer/useRetryFocus.ts",
+      "sha256": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c"
+    },
+    {
+      "file": "src/renderer/player.tsx",
+      "sha256": "682513a44f59cf746c6464d24163181473d80e79addc33edd19aa2dfc9e810d4"
+    },
+    {
+      "file": "src/shared/news-transitions.ts",
+      "sha256": "dae2314678e39262b7e89986412320c33d96cf8af3dc841188fe5e604eda8c90"
+    },
+    {
+      "file": "src/renderer/audio.ts",
+      "sha256": "48884e62f20bea6779e716f685407f780eaaca8a06b86006e686c4d4bdcdc0aa"
+    },
+    {
+      "file": "src/renderer/NewsRecovery.tsx",
+      "sha256": "5d51f3d77587b4cef19fdc08e16ecbe6d614097ab07a0bf23452990fed097772"
+    },
+    {
+      "file": "src/renderer/dj-playback.tsx",
+      "sha256": "d5fce424eb2f78b8fe546e00b6584b1f877981b42ae12eb531df9d93ae031824"
+    },
+    {
+      "file": "src/renderer/components/Player/Player.component.tsx",
+      "sha256": "450e178394a6a145487854c9c6ea39ccb3886f4c183ff3b5f226fe23128b0901"
+    },
+    {
+      "file": "src/renderer/components/Shared.tsx",
+      "sha256": "16726cf323f44324a124ee5fb29a7270ae514f8dc04f87f153f6b0a5e289ff5e"
+    },
+    {
+      "file": "src/renderer/components/Player/DJPopover.component.tsx",
+      "sha256": "487640aca4cbd79a52ae99f9b03b5ecc57e1ea7da07a437dd9029657bba72d90"
+    },
+    {
+      "file": "src/shared/news-preparation-status.ts",
+      "sha256": "27803f7289d4cf64a0d350a361fe9682231e518e93bd4a71e3590a4df771eae9"
+    },
+    {
+      "file": "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx",
+      "sha256": "2f750a0a07c76a2d1d77bbe28a28c2c572e90fbac5d9c66391922b2f99e70e33"
+    },
+    {
+      "file": "src/renderer/components/Queue/Queue.component.tsx",
+      "sha256": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082"
+    },
+    {
+      "file": "src/renderer/components/Inspector/Inspector.component.tsx",
+      "sha256": "8fd6dd9e51fe39038a893e4e66dc93656713e3434399d0b5210df870d3f5d235"
+    },
+    {
+      "file": "src/renderer/components/LibrarySelection.tsx",
+      "sha256": "612e117abee02b6c69090402331261928792cfc7a0aa445756f764d319de0083"
+    },
+    {
+      "file": "src/renderer/pages/Settings/SettingsEdits.tsx",
+      "sha256": "44e576f60c8a96d9fcc00df839244beefd8144215e0801b03803c20d9b34d56e"
+    },
+    {
+      "file": "src/renderer/components/ProviderKeys/ProviderKeyEdits.tsx",
+      "sha256": "99b9e06d6c62a90d36195ef7ae832444dd64c7cad8153db4fd66fd7feefe04d2"
+    },
+    {
+      "file": "src/renderer/pages/Connection/Connection.page.tsx",
+      "sha256": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815"
+    },
+    {
+      "file": "src/renderer/components/LibraryChooser.tsx",
+      "sha256": "0c91c760e8d10904fc699de951c43a2120c73148cbee800574fd5850e2ed8662"
+    },
+    {
+      "file": "src/renderer/pages/Songs/Songs.page.tsx",
+      "sha256": "a15a3adc08b8ebb2bd4d96b00c8462d94922bef67eb2fad655c6c428af0eb942"
+    },
+    {
+      "file": "src/renderer/components/FilterSelect/FilterSelect.component.tsx",
+      "sha256": "b6c4242190b3d107c5145f464db5f3b4912736c70c940a3344c73aa26463ec26"
+    },
+    {
+      "file": "src/renderer/components/TrackTable/TrackTable.component.tsx",
+      "sha256": "158caa15a4fe11170ac048c1752d4b9327006595646f5a86acd27c5b1c0216e5"
+    },
+    {
+      "file": "src/shared/playlist-entries.ts",
+      "sha256": "bb58ab3747844f5080fae78be9a9431bc9cb841fbbb704866cd7e064b5a1292c"
+    },
+    {
+      "file": "src/renderer/pages/Songs/VirtualSongs.component.tsx",
+      "sha256": "4484149d94156d3f6f9b5bcb5b201285a1264e2e28125f50e10a4d401f593206"
+    },
+    {
+      "file": "src/renderer/pages/Albums/Albums.page.tsx",
+      "sha256": "09a1292143de4e0f24a233a41b50e90fae8f19d394afae2f5171384f59fc9667"
+    },
+    {
+      "file": "src/renderer/components/CollectionHeading/CollectionHeading.component.tsx",
+      "sha256": "3a055f26b529958fd7a010c1318de66c54e4c6c77118207b3eed745c020e5548"
+    },
+    {
+      "file": "src/renderer/pages/Albums/VirtualAlbums.component.tsx",
+      "sha256": "0a533939261b44ee2eeafa2a6127db399d597764a5b14b8e656bf1cc969b5ec9"
+    },
+    {
+      "file": "src/renderer/pages/Playlists/Playlists.page.tsx",
+      "sha256": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc"
+    },
+    {
+      "file": "src/renderer/pages/Stations/Stations.page.tsx",
+      "sha256": "af0c5219948700ed27fab50a9490184856a2055983fae09a64781dd2ee8f8bc2"
+    },
+    {
+      "file": "src/renderer/components/InfoHelp/InfoHelp.component.tsx",
+      "sha256": "be2433410cfe2387f36bae23bc6e993a3f54942e9f7979c1854908a83b508cc8"
+    },
+    {
+      "file": "src/renderer/components/ConfigurationTabs/ConfigurationTabs.component.tsx",
+      "sha256": "20df1037126e5f9596bf917f3d5fbc455f41f236626bdbd9176fdc3ba4242a9f"
+    },
+    {
+      "file": "src/renderer/pages/Stations/components/RoomSetup.component.tsx",
+      "sha256": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330"
+    },
+    {
+      "file": "src/renderer/pages/Stations/components/PreparedTakes.component.tsx",
+      "sha256": "2acd8dc806c843d6578d0412be6650dc4e03da373c1d51af2850f890b68407a1"
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx",
+      "sha256": "c4ad3a4578a806ddde343831a2e2015bd85f9321a9c0d0f23ee3c79b7d1461e8"
+    },
+    {
+      "file": "src/renderer/pages/Stations/components/NewsBucket.component.tsx",
+      "sha256": "61e5027abd4def319532645a9a3b1425a4b6531860a2609b113c18670c0fa2f3"
+    },
+    {
+      "file": "src/shared/news-pool.ts",
+      "sha256": "2f8ac1bde20b4a9adfd3beedf015e2d7e843dda584e7713be29e1a4c7ad3fa77"
+    },
+    {
+      "file": "src/renderer/pages/Settings/Settings.page.tsx",
+      "sha256": "13f585e3995c35a21b1105f787095003d794b14ca885f609e58be1af33756cbe"
+    },
+    {
+      "file": "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx",
+      "sha256": "cfead3feb18d94ec60d2ac25573ddfedb7a2ad0b8bbc0331d1ccd4caaefebd6b"
+    },
+    {
+      "file": "src/renderer/components/ProviderKeys/TwitterSetupHelp.component.tsx",
+      "sha256": "3135481586c31f6b4decd8eabba1eda09a74578163ff4da6dd55fb148de3459f"
+    },
+    {
+      "file": "src/renderer/pages/Sources/Sources.page.tsx",
+      "sha256": "0010c35635ef75c8648bb4aded6b754603738cc0c345d493fa9624d8f4481fb8"
+    },
+    {
+      "file": "src/shared/sources.ts",
+      "sha256": "1da2117a59995911c14d098c8c814811ec309fb0d81c2fbf24b53721404e8f18"
+    },
+    {
+      "file": "src/renderer/pages/DJs/DJs.page.tsx",
+      "sha256": "b04a570f45ae65e795c87fa5a866755e2e620bc056223cab5a97e5db24c7faa1"
+    },
+    {
+      "file": "src/renderer/pages/DJs/components/DJEditor.component.tsx",
+      "sha256": "64457abf271353499f45a9b719a643b90a330e87fdd86311981255cd1caa04ef"
+    },
+    {
+      "file": "src/renderer/pages/DJs/components/DJEditor.presets.ts",
+      "sha256": "1994c54feef51b032cfb15038b9422f3fcb6243a7bf6df1a453ccf3db597ed5a"
+    },
+    {
+      "file": "src/renderer/pages/DJs/components/VoicePreview.component.tsx",
+      "sha256": "d2cbca679984903fdc0692488dff67069fad302e4e3adcd8352915b5eb209581"
+    },
+    {
+      "file": "src/shared/voice-previews.ts",
+      "sha256": "4ebe9fe7dad73cc2195573ec729cb99440313fe8eea24e5b0201154cc8095bfe"
+    },
+    {
+      "file": "src/renderer/pages/DJs/components/DJPreview.component.tsx",
+      "sha256": "496eaaac54e8fedb02e33bd2c07b01bc5c4a0b23fcb57940729c32a5bd11c3b8"
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx",
+      "sha256": "637cd8e97ae915639bcec77ac344ec28159ebc22e40b5e4fa74df4f826e14645"
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/NewsTransitions.component.tsx",
+      "sha256": "69051db733a1e1ed35621d7ac6f7e11908b6faba52d3d1a09515d97cddfc0c9b"
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/NewsTransitionPreview.component.tsx",
+      "sha256": "b44dc08192dd9d4a354a8f921c1b5e17c6a0cf2291b26b8aa3bd285d55b2ff31"
+    }
+  ],
+  "bundleHashes": {
+    "out/renderer/assets/index-CvwvW_bJ.js": "cd8d13e239bc40d9bebcf2ee41a6aad24045f5c07216150d6984b3312ea14bb1",
+    "out/renderer/assets/index-B9cR7bvN.css": "78fcc2ec135ead9b4d1badd479acfb6d54ca4a41dc08f9be074474ddebe05f76"
+  },
+  "fixtureHashes": {
+    "bootstrap.mjs": "e8a690452be2ae9d039c8ec95e93efc3d2df7d495a846a6cc2ad3d2995179e38",
+    "observe-before.cjs": "e99c30a4f676d1fb3c17a08ddc5754ef6c95530c1ca6927ec5e313088f02bdd6",
+    "observe.cjs": "f14817fab0a699240b727a7893cacc36eca9f78b91d9db48af452c108427991a",
+    "server.mjs": "bb34830cdd844f361cf2ca9a30ef57061d06788df956a63b9effef9afec9031b",
+    "inventory.cjs": "11accd2f1d5bba286bb8588fe9137e4162d695e6017cfc2fb355b11a92ec55d3",
+    "build.log": "9b4ed67b34dfc8b22ced40f635bc5e8dc14706b6fd3e7aa54dd142233951d5c9",
+    "lint.log": "6f1680e0ff047e07a06dcf9afc079770fad3f871d47a52ee12dccaaa84366d63"
+  },
+  "familyLedger": {
+    "file": "2026-10-18-keyboard-family-evidence.csv",
+    "families": 35,
+    "definitions": 234,
+    "modules": 55,
+    "method": "All current source families mapped to selected scoped evidence and retained limits. Reference presence or a module hash is not runtime acceptance; no complete control-state matrix or percentage is inferred."
+  },
+  "decision": {
+    "SteveInitial": "Inline ErrorNotice plus latest request; after geometry challenge recommends guarded reveal.",
+    "ElenaInitial": "Inline keyed feedback plus request sequence; after challenge recommends compact feedback and native fit experiment.",
+    "Morgan": "Fixed concise inline alert beside each source, with first console action in a compact flex row and latest-request guard. No focus or scroll side effect. Native geometry resolves baseline fit; no duplicated focus-intent helper.",
+    "finalReview": "Both actual-diff reviewers found no actionable defect. Elena retains narrower-width reservation; smaller widths remain deferred."
+  },
+  "validation": [
+    "Production build including TypeScript, full ESLint and whitespace pass.",
+    "Native screenshot confirms visible focused console and feedback above player.",
+    "Stale held guide rejection after newer acknowledgement shows no error; delayed pricing failure retains later token focus and scroll609.",
+    "Two observer reports terminal observed with no page errors. Owned catalog PID53268 revalidated and stopped; session31790 terminal143.",
+    "Provider/external fetch attempts and HTTP writes remain zero."
+  ],
+  "limits": [
+    "No actual external browser-open success, X token access, pricing accuracy, API use or live-provider acceptance.",
+    "Help Close/return checks use native events; manual close required a subsequent Return before terminal closed state was observed. No single-key timing guarantee is inferred.",
+    "Provider/manual InfoHelp code is unchanged by final Twitter feedback correction; those checks are not final-bundle reruns.",
+    "No full conditional-control or VoiceOver acceptance. Direct count fallback names have evidence but successful paging-to-count handoff lacks a dedicated native case.",
+    "P05 controlled permission behavior already has evidence; real read-only/unavailable server configurations remain unverified.",
+    "Raw fixtures are temporary; retained projections and hashes define evidence scope."
+  ],
+  "acceptance": {
+    "total": 191,
+    "active": 189,
+    "deferred": 2,
+    "open": 27,
+    "listener": 14,
+    "otherProof": 13,
+    "Q06": "Review",
+    "P05": "Review"
+  }
+}

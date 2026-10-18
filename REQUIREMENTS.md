@@ -324,3 +324,6 @@ Existing keyboard focus destinations must expose meaningful accessible names. So
 
 
 When a still-focused news recovery notice disappears after automatic readiness or Dismiss, move focus to the current screen heading. At startup, use the visible app title. Open News settings moves focus to its named Settings panel after navigation. Later Tab, pointer, overlay or window changes win; unmounting the notice caller cancels its handoff. Recovery itself never resumes preparation or starts music.
+
+
+The X setup guide keeps its summary and three page-opening actions keyboard accessible. If a help page cannot open, show a short alert beside that action while preserving its focus and page position. Starting any help action clears the prior error; a delayed older failure cannot replace the newer result. Help actions do not save credentials or prepare news.
