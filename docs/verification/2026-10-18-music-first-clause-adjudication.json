@@ -33,14 +33,16 @@
       "evidence": [
         "2026-10-17-radio-opt-in-contracts.json:/native/cases",
         "2026-10-18-paid-authorization-invariant.json:/obligations/0",
-        "2026-10-18-current-first-use-music.json"
+        "2026-10-18-current-first-use-music.json",
+        "2026-10-19-legacy-radio-startup.json"
       ],
-      "judgment": "Fresh current default storage, full controlled first-use native flow and same-data paused process restart directly show both flags off and no AI dispatch. Missing/invalid legacy normalization remains static source evidence; independent activation is reviewed under MF03/MF04.",
+      "judgment": "Fresh current default storage, full controlled first-use native flow and same-data paused process restart directly show both flags off and no AI dispatch. Missing/invalid legacy normalization remains static source evidence; independent activation is reviewed under MF03/MF04. Current follow-up adds actual storage/native startup with missing legacy flags and malformed enabled string;both default off without source/provider fetch.",
       "remaining": [
-        "Missing/invalid legacy option variants need direct evidence before accepting the entire all-variants group."
+        "Independent explicit opt-ins retain MF03/MF04 all-variant and listener limits;these representative startup cases do not accept compound fragments."
       ],
       "scopeNote": "The table fragments also describe effects and exclusions. Link them to MF03/MF04 as well; default proof alone never accepts the whole fragment.",
-      "currentEngineeringFollowup": "Fresh default storage, complete native connect/select/album action, no AI setup/dispatch, real natural continuation and paused restart pass in this fixture."
+      "currentEngineeringFollowup": "Fresh default storage, complete native connect/select/album action, no AI setup/dispatch, real natural continuation and paused restart pass in this fixture.",
+      "legacyStartupFollowup": "Missing newsEnabled and DJ settings,plus string enabled=\"true\",pass direct native/storage observation."
     },
     {
       "id": "MF02",
@@ -282,7 +284,8 @@
     "2026-10-18-scheduled-news-delivery.json": "e4e41973e48e3bdd2fa898a8df4aac5ee9765fc2af3ad403cf15c5db54ceb187",
     "2026-10-18-queue-heard-invariant.json": "29df0671a73b99dc16518bf31499f5f89141cd585bcbe5bd3576c82e32271ec2",
     "2026-10-18-current-first-use-music.json": "de71ba3a7837c079629189a831a6fba9c84fc3ff6ae7a552d466d666f52d682a",
-    "2026-10-19-keyless-natural-radio.json": "59edffe51a860a69685d0f1394ec5dc234db5f1f88dd3e06a3e66f9705590866"
+    "2026-10-19-keyless-natural-radio.json": "59edffe51a860a69685d0f1394ec5dc234db5f1f88dd3e06a3e66f9705590866",
+    "2026-10-19-legacy-radio-startup.json": "972d3a8ff5aecc58f0c1b0458ea90bdb8d0ee49b832bc8bdbeceab35bfd91e5f"
   },
   "summary": {
     "canonicalReviewGroups": 6,
@@ -301,6 +304,11 @@
       "file": "2026-10-19-keyless-natural-radio.json",
       "sha256": "59edffe51a860a69685d0f1394ec5dc234db5f1f88dd3e06a3e66f9705590866",
       "scope": "Current combined keyless natural-delivery engineering evidence for MF04;human/full-group acceptance remains open."
+    },
+    {
+      "file": "2026-10-19-legacy-radio-startup.json",
+      "sha256": "972d3a8ff5aecc58f0c1b0458ea90bdb8d0ee49b832bc8bdbeceab35bfd91e5f",
+      "scope": "MF01 representative legacy startup branches only;no whole-group or checklist promotion."
     }
   ]
 }
