@@ -165,14 +165,16 @@
       "evidence": [
         "2026-10-17-keyless-radio.json:/savedPlayback",
         "2026-10-18-scheduled-news-delivery.json",
-        "2026-10-18-queue-heard-invariant.json:/obligations"
+        "2026-10-18-queue-heard-invariant.json:/obligations",
+        "2026-10-19-keyless-natural-radio.json"
       ],
-      "judgment": "Current saveDJPlayback writes only DJ settings and requires no provider keys. nextRoomNews reads eligible local audio and reserves it without generating. PR121/122 give current scoped claim/end/continuation evidence. Older keyless record uses a media-time setter, so its exact ending-placement result is not accepted as a current CUA-only reproduction; current natural-ending evidence is separately bounded.",
+      "judgment": "The previously missing current combined keyless/natural-ending run now passes. All eight current CI6 source hashes match;PR121 player differences remain scoped by that later review. Human and complete all-variants acceptance remain unachieved.",
       "remaining": [
-        "Fresh combined current keyless + automatic natural-ending run if accepting the entire all-variants group",
-        "Observed listener understanding and audible quality"
+        "Observed listener understanding and audible quality",
+        "Other eligibility,late/cancel/recovery variants retain their separately bounded current-source evidence;no exhaustive single-run whole-group acceptance."
       ],
-      "scopeNote": "A complete saved file is required before playback, but this does not promise uninterrupted runtime or acceptable subjective sound."
+      "scopeNote": "A complete saved file is required before playback, but this does not promise uninterrupted runtime or acceptable subjective sound.",
+      "currentEngineeringFollowup": "Current CUA profile selection/Enable plus keyless automatic natural delivery,once-only continuation,heard exclusion,empty pool and Disable now directly pass. Preparation stays off,no generation or manual selection."
     },
     {
       "id": "MF05",
@@ -279,7 +281,8 @@
     "2026-10-18-uncertain-work-invariant.json": "acff28d5fa03710a1cd5bfdb0e218a5e5d1de65f70d2a9bbd8124e86a8132271",
     "2026-10-18-scheduled-news-delivery.json": "e4e41973e48e3bdd2fa898a8df4aac5ee9765fc2af3ad403cf15c5db54ceb187",
     "2026-10-18-queue-heard-invariant.json": "29df0671a73b99dc16518bf31499f5f89141cd585bcbe5bd3576c82e32271ec2",
-    "2026-10-18-current-first-use-music.json": "de71ba3a7837c079629189a831a6fba9c84fc3ff6ae7a552d466d666f52d682a"
+    "2026-10-18-current-first-use-music.json": "de71ba3a7837c079629189a831a6fba9c84fc3ff6ae7a552d466d666f52d682a",
+    "2026-10-19-keyless-natural-radio.json": "59edffe51a860a69685d0f1394ec5dc234db5f1f88dd3e06a3e66f9705590866"
   },
   "summary": {
     "canonicalReviewGroups": 6,
@@ -293,6 +296,11 @@
       "file": "2026-10-18-current-first-use-music.json",
       "sha256": "de71ba3a7837c079629189a831a6fba9c84fc3ff6ae7a552d466d666f52d682a",
       "scope": "Fresh current controlled first-use native flow; source-identical production renderer and instrumented actual main. Human acceptance and remaining variants stay open."
+    },
+    {
+      "file": "2026-10-19-keyless-natural-radio.json",
+      "sha256": "59edffe51a860a69685d0f1394ec5dc234db5f1f88dd3e06a3e66f9705590866",
+      "scope": "Current combined keyless natural-delivery engineering evidence for MF04;human/full-group acceptance remains open."
     }
   ]
 }

@@ -616,7 +616,8 @@
     "RADIO_EXPERIENCE112,116,118 are classified reference in the navigation map but contain binding evidence/acceptance rules. Their classification cannot exempt those obligations.",
     "Punctuation partition alone is not an atomic denominator. The six opening scope fragments demonstrate compound stages, mandatory variants and duplicate-scope review without granting acceptance.",
     "Music-first and independent opt-ins now have six bounded canonical review groups. The older keyless native record used a media-time setter; its timing result is not a current CUA-only natural-ending proof. No full group is accepted from partial evidence.",
-    "Fresh current first-use engineering proof now covers MF01 fresh defaults and MF02 connect/select/album, no AI dispatch, natural continuation and paused process restoration. No listener or whole-group acceptance is inferred."
+    "Fresh current first-use engineering proof now covers MF01 fresh defaults and MF02 connect/select/album, no AI dispatch, natural continuation and paused process restoration. No listener or whole-group acceptance is inferred.",
+    "MF04 now has current CUA-only combined keyless automatic natural-delivery proof,heard exclusion/empty pool and Disable. No listener or all-variants acceptance is inferred."
   ],
   "remainingWork": [
     "Review every non-structural line and fragment semantically; split compound outcomes where independent, preserve required condition/variant groups and deduplicate repeated source contracts.",
@@ -716,7 +717,7 @@
   },
   "clauseLedger": {
     "file": "2026-10-18-requirement-clauses.csv",
-    "sha256": "8ea57ba0f3755ca2e0de3b55f1f02dece7d7be472590b0fbe42bf1cc69bfce6c",
+    "sha256": "5bf314a5522577986ff7fbad5b969a7b817d7dcd0d7d879ad66e93bad141d26a",
     "columns": "Candidate navigation, semantic review and actual proof review are distinct. Empty evidence/canonical IDs do not establish completion."
   },
   "scopeReviews": [
@@ -739,7 +740,7 @@
   "semanticReviews": [
     {
       "file": "2026-10-18-music-first-clause-adjudication.json",
-      "sha256": "7fe4b9e38db66f32e51a19b84e2ac82f9e8509e0d51981219666d5e1d4967251",
+      "sha256": "752bd77a268c42902e5cfd01c231585ed84a41126a7ce34d374d3d9f37d9656e",
       "meaning": "Six all-variants review groups with exact fragment links, direct static inspection, scoped prior evidence and explicit missing proof. No accepted groups or overall score."
     }
   ],

@@ -1,0 +1,382 @@
+{
+  "date": "2026-10-19",
+  "baseCommit": "987a977f4ea72f40ad15a86a0272ea3f56415fbb",
+  "scope": "Current controlled native combined keyless automatic saved-news delivery: explicit profile/enable,real natural end,cached speech,one continuation,heard exclusion,empty pool and independent Disable. MF04 engineering follow-up; no whole-group or listener acceptance.",
+  "setup": {
+    "baseline": "1280x720 CSS viewport,100% app zoom;native Electron production renderer/preload and instrumented actual main/services.",
+    "savedData": "Disposable connected localhost fixture with one available complete Science room,one ready13.92-second MP3,selectedTakeId null. Both opt-ins initially off and no playback profile selected. Four-entry A,B,A,C music queue restored paused at index2,12seconds.",
+    "keys": "No local provider keys seeded; shared-key adapter returns null. Actual UI status reads show all three unconfigured.",
+    "cadence": "One song for focused test; not proof of default three-song cadence.",
+    "transition": "Between songs with0.15-second fade and zero lead/tail for focused test; not all transition modes.",
+    "scheduler": "Production scheduler left running,preparation remains off.",
+    "network": "Owned localhost Jellyfin fixture with40-second silent WAV. Main fetch attempts logged without queries or credentials; unexpected origins blocked. No provider response substitutes needed because no provider call occurs.",
+    "historicalNotes": "Cached take includes prior partial-source notes. Their visible unavailable-feed message is seeded preparation history,not a source fetch performed during this run."
+  },
+  "input": "CUA native AX clicks: provider-key visit,choose Science room,Enable DJ,close popup,Play,inspect history,Repeat all,Disable DJ. No manual saved-take selection or schedule action. Playwright only launches/closes and passively reads DOM/media/window state. Initial reload installs an Audio-constructor observer without changing media methods,time,events or duration.",
+  "results": {
+    "providerKeysAbsent": 3,
+    "preparationOffThroughout": true,
+    "enableWhilePaused": "Waits for music;zero claim/start calls and no play events.",
+    "naturalDelivery": "Actual music ended at40seconds,speech played13.92seconds,then music continued exactly once from index2 to3.",
+    "heardExclusion": "Played marker and Last heard Played to the end. Next natural music end40seconds wraps repeat-all to index0,without a second speech play or claim/start.",
+    "disable": "Turns DJ off while music continues at index0;preparation stays off.",
+    "queue": "Same four song IDs/occurrences in saved queue throughout;only expected current index changes.",
+    "providerAndNewsSourceFetchAttempts": 0,
+    "generationCalls": 0,
+    "selectedTakeChanges": 0,
+    "IPCCounts": {
+      "nextRoomNews": 3,
+      "claimPreparedNews": 1,
+      "startPreparedNews": 1,
+      "markPreparedNewsPlayed": 1,
+      "saveDJPlayback": 3
+    },
+    "rendererErrors": 0,
+    "preparationCountersAndLastRun": "unchanged"
+  },
+  "snapshots": {
+    "keys-absent-before-enable": {
+      "sha256": "99a21cfa96e0f9849c65cc38e8281c8076e66226d76ea130aefcedf04ad51f34",
+      "index": 2,
+      "DJEnabled": false,
+      "preparationEnabled": false,
+      "audio": [
+        {
+          "paused": true,
+          "ended": false,
+          "time": 12,
+          "duration": 40,
+          "readyState": 4
+        }
+      ],
+      "events": []
+    },
+    "enabled-waiting-for-music": {
+      "sha256": "503a80691bf9eeb1832bd6f9820e6b4b599c6895f60d9f444b0463c6666e2a32",
+      "index": 2,
+      "DJEnabled": true,
+      "preparationEnabled": false,
+      "audio": [
+        {
+          "paused": true,
+          "ended": false,
+          "time": 12,
+          "duration": 40,
+          "readyState": 4
+        }
+      ],
+      "events": []
+    },
+    "speech-after-natural-end": {
+      "sha256": "ac9fb11e82d531082ef78eb9553cf73a7af186e69b63b442778b3ac1288f08ba",
+      "index": 2,
+      "DJEnabled": true,
+      "preparationEnabled": false,
+      "audio": [
+        {
+          "paused": true,
+          "ended": true,
+          "time": 40,
+          "duration": 40,
+          "readyState": 4
+        },
+        {
+          "paused": false,
+          "ended": false,
+          "time": 0.020341,
+          "duration": 13.92,
+          "readyState": 4
+        }
+      ],
+      "events": [
+        {
+          "type": "play",
+          "time": 12.004437,
+          "at": 1792361303397
+        },
+        {
+          "type": "pause",
+          "time": 40,
+          "at": 1792361331440
+        },
+        {
+          "type": "ended",
+          "time": 40,
+          "at": 1792361331441
+        },
+        {
+          "type": "play",
+          "time": 0,
+          "at": 1792361331443
+        }
+      ]
+    },
+    "heard-completed-in-controls": {
+      "sha256": "d099e6f8555ee7b259ba5d81af943aa1db9b69034c6ff1b675e0c211217e1fc4",
+      "index": 3,
+      "DJEnabled": true,
+      "preparationEnabled": false,
+      "audio": [
+        {
+          "paused": false,
+          "ended": false,
+          "time": 26.799672,
+          "duration": 40,
+          "readyState": 4
+        },
+        {
+          "paused": true,
+          "ended": false,
+          "time": 0,
+          "duration": null,
+          "readyState": 0
+        }
+      ],
+      "events": [
+        {
+          "type": "play",
+          "time": 12.004437,
+          "at": 1792361303397
+        },
+        {
+          "type": "pause",
+          "time": 40,
+          "at": 1792361331440
+        },
+        {
+          "type": "ended",
+          "time": 40,
+          "at": 1792361331441
+        },
+        {
+          "type": "play",
+          "time": 0,
+          "at": 1792361331443
+        },
+        {
+          "type": "pause",
+          "time": 13.92,
+          "at": 1792361345421
+        },
+        {
+          "type": "ended",
+          "time": 13.92,
+          "at": 1792361345421
+        },
+        {
+          "type": "play",
+          "time": 0,
+          "at": 1792361345431
+        }
+      ]
+    },
+    "empty-pool-music-continues": {
+      "sha256": "ca31b7093da6f1ca95c241e21acb2089f9fa148424d2d38740c44471101eb738",
+      "index": 0,
+      "DJEnabled": true,
+      "preparationEnabled": false,
+      "audio": [
+        {
+          "paused": false,
+          "ended": false,
+          "time": 1.820467,
+          "duration": 40,
+          "readyState": 4
+        },
+        {
+          "paused": true,
+          "ended": false,
+          "time": 0,
+          "duration": null,
+          "readyState": 0
+        }
+      ],
+      "events": [
+        {
+          "type": "play",
+          "time": 12.004437,
+          "at": 1792361303397
+        },
+        {
+          "type": "pause",
+          "time": 40,
+          "at": 1792361331440
+        },
+        {
+          "type": "ended",
+          "time": 40,
+          "at": 1792361331441
+        },
+        {
+          "type": "play",
+          "time": 0,
+          "at": 1792361331443
+        },
+        {
+          "type": "pause",
+          "time": 13.92,
+          "at": 1792361345421
+        },
+        {
+          "type": "ended",
+          "time": 13.92,
+          "at": 1792361345421
+        },
+        {
+          "type": "play",
+          "time": 0,
+          "at": 1792361345431
+        },
+        {
+          "type": "pause",
+          "time": 40,
+          "at": 1792361385462
+        },
+        {
+          "type": "ended",
+          "time": 40,
+          "at": 1792361385462
+        },
+        {
+          "type": "play",
+          "time": 0,
+          "at": 1792361385466
+        }
+      ]
+    },
+    "disabled-dj-music-continues": {
+      "sha256": "df7218fe2ecca5edcf6dc3781d92990505b7f0b5c2d85c3d6b6bea24e66608ab",
+      "index": 0,
+      "DJEnabled": false,
+      "preparationEnabled": false,
+      "audio": [
+        {
+          "paused": false,
+          "ended": false,
+          "time": 23.935768,
+          "duration": 40,
+          "readyState": 4
+        },
+        {
+          "paused": true,
+          "ended": false,
+          "time": 0,
+          "duration": null,
+          "readyState": 0
+        }
+      ],
+      "events": [
+        {
+          "type": "play",
+          "time": 12.004437,
+          "at": 1792361303397
+        },
+        {
+          "type": "pause",
+          "time": 40,
+          "at": 1792361331440
+        },
+        {
+          "type": "ended",
+          "time": 40,
+          "at": 1792361331441
+        },
+        {
+          "type": "play",
+          "time": 0,
+          "at": 1792361331443
+        },
+        {
+          "type": "pause",
+          "time": 13.92,
+          "at": 1792361345421
+        },
+        {
+          "type": "ended",
+          "time": 13.92,
+          "at": 1792361345421
+        },
+        {
+          "type": "play",
+          "time": 0,
+          "at": 1792361345431
+        },
+        {
+          "type": "pause",
+          "time": 40,
+          "at": 1792361385462
+        },
+        {
+          "type": "ended",
+          "time": 40,
+          "at": 1792361385462
+        },
+        {
+          "type": "play",
+          "time": 0,
+          "at": 1792361385466
+        }
+      ]
+    }
+  },
+  "retainedSourceMatches": {
+    "2026-10-18-queue-heard-invariant.json": {
+      "src/renderer/player.tsx": true,
+      "src/renderer/dj-playback.tsx": true,
+      "src/renderer/components/Player/Player.component.tsx": true,
+      "src/renderer/components/Player/DJPopover.component.tsx": true,
+      "src/renderer/components/Queue/Queue.component.tsx": true,
+      "src/main/media.ts": true,
+      "src/main/prepared-news.ts": true,
+      "src/shared/news-pool.ts": true
+    },
+    "2026-10-18-scheduled-news-delivery.json": {
+      "src/main/index.ts": true,
+      "src/main/prepared-news.ts": true,
+      "src/preload/index.ts": true,
+      "src/renderer/components/Player/Player.component.tsx": true,
+      "src/renderer/dj-playback.tsx": true,
+      "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": true,
+      "src/renderer/player.tsx": false,
+      "src/shared/news-pool.ts": true,
+      "src/shared/types.ts": true
+    }
+  },
+  "retainedScope": "All eight CI6 sources match exactly. PR121 player hash differs only as already adjudicated by the later CI6 record; no blanket claim of PR121 source identity or runtime rerun. New combined flow uses current sources.",
+  "sourceSha256": {
+    "src/main/index.ts": "aaa4568e65b5d8397b26a767ead775ce848e91038a58b9e3e486a29a0a6e22ec",
+    "src/main/storage.ts": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+    "src/main/prepared-news.ts": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+    "src/main/news-workflow.ts": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+    "src/renderer/App.tsx": "27df7f378c734791390ebc4e0237ae5771fea9a48ffbb541a177182e43efc0fa",
+    "src/renderer/player.tsx": "aa7d866e5724945a3f06773a984f6983ccc6544ee08b02991fd54c0f53f25f0c",
+    "src/renderer/dj-playback.tsx": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+    "src/renderer/components/Player/DJPopover.component.tsx": "7a9858830d98a053b2a3d805e6a2b6521aa483154c00306b0a6cfb4fb96fd981",
+    "src/shared/news-pool.ts": "d8a190d01563d458a34bd2a89e9bbce8aa7533a7e678b44d88559951768f9da5",
+    "src/preload/index.ts": "458378616e402bc07202f269fa94092d8ee8685e2dd9bba7fcaf0c7ca58e31c1"
+  },
+  "fixtureSha256": {
+    "/private/tmp/keyless-natural-current/build.mjs": "76069714027ff7de5c20fd505d0b3c676befc041c7779dea80a9d2abadab24cf",
+    "/private/tmp/keyless-natural-current/bootstrap.mjs": "7ff235929f4bcbeef5bea6257cbc9870ec3ed6cce15f43c0235b40999fce9c99",
+    "/private/tmp/keyless-natural-current/server.mjs": "f1834229ddeb71a085fe3b483f4668c2af07c94fc7ae8c6d7dda13c1f1272687",
+    "/private/tmp/keyless-natural-current/observe.cjs": "203cb8d6f987b2915ab478969dcf26a02680a45cce777b29a77398aac2a8a1b5",
+    "/private/tmp/keyless-natural-current/capture.py": "048f3e365bfc9413c041f0c0ba83b71433e023233659431462ecf811a36fe5d9",
+    "/private/tmp/keyless-natural-current/native-report.json": "3202778870198f8a10f80e67623d82e819af72dc7159d7bd0f401ab503d245dc",
+    "/private/tmp/keyless-natural-current/out/main/index.js": "4d4dc15995df7e1c85aea4f84522ac200385cdb928fa723bd80021ce3084b86a"
+  },
+  "checks": {
+    "snapshotPredicates": "passed for six named current snapshots",
+    "sourceFreshness": "current scoped sources and retained record hashes inspected",
+    "buildTypeLint": "Production build/TypeScript/full lint passed for the identical application source in PR126;not redundantly rerun for evidence-only changes.",
+    "unitTests": "not added or run",
+    "cleanup": "Native observer exit0,capture process terminal,owned server stopped130.",
+    "acceptance": "191 dispositions unchanged,25 known open,14 listener/11 other-proof. No overall score."
+  },
+  "driverCorrection": "The passive phase-capture helper expected a completed speech Audio instance to retain ended=true. Production cleanup clears its source,so that condition missed completion. The independently captured history snapshot and actual native ended-event log directly prove completion;no event or media state was synthesized.",
+  "limits": [
+    "Controlled localhost catalog and muted/silent music do not establish live Jellyfin compatibility or subjective sound quality.",
+    "No real listener understanding,first-attempt success rate,VoiceOver,media hardware or platform proof.",
+    "No smaller viewport or200% zoom check.",
+    "This run covers one cached eligible recording and between-song mode;retained exact-source records keep their separate variant scopes. No whole MF04 all-variants acceptance."
+  ]
+}
