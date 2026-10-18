@@ -321,3 +321,6 @@ Use Electron development or production-preview mode for testing. Do not package,
 
 
 Existing keyboard focus destinations must expose meaningful accessible names. Song rows name the title and artist, with Untitled song and Unknown artist fallbacks. Recovered provider status focuses its provider heading with the current status as its description; recovered voice preview focuses its named preview group. Newly revealed preparation history names its kind and outcome and describes its origin, time and result. Loaded-count fallback destinations expose their visible count. These text destinations remain outside sequential Tab navigation; existing song-row and tab-panel keyboard behavior stays available.
+
+
+When a still-focused news recovery notice disappears after automatic readiness or Dismiss, move focus to the current screen heading. At startup, use the visible app title. Open News settings moves focus to its named Settings panel after navigation. Later Tab, pointer, overlay or window changes win; unmounting the notice caller cancels its handoff. Recovery itself never resumes preparation or starts music.

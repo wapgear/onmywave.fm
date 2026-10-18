@@ -1,0 +1,1420 @@
+{
+  "date": "2026-10-18",
+  "baseMain": "76f3b89db9528a1c8fc7177fdecb3da730f9e2c0",
+  "scope": "Notice-local keyboard focus after passive removal, Dismiss and explicit Open News settings. Partial Q06; no acceptance row closes.",
+  "environment": {
+    "viewport": "1280x720",
+    "zoom": 1,
+    "input": "Native CUA only",
+    "observation": "Passive Playwright DOM and CDP AX tree",
+    "renderer": "Production renderer/preload",
+    "main": "Copied instrumented main/storage; disposable safeStorage; muted media; preparation scheduler stopped",
+    "catalog": "Localhost 5191; 40 songs, 12 albums. Startup label incorrectly still says 20000/2000.",
+    "recovery": "IPC gate substitutes recovery phase/held retry responses. This proves presentation and focus, not actual storage repair. Polling may overwrite a held retry with the substituted unavailable phase; those snapshots do not establish production status consistency."
+  },
+  "phases": {
+    "before": "Current base source; route action retains focus on old Open News settings button; passive-ready and Dismiss remove focused notice leaving body. Baseline bundle hash not retained.",
+    "final-chooser and final-music": "Notice fix plus initial startup-main destination. No subsequent notice/connection code change. Includes passive/Dismiss, Tab takeover, music heading and settings panel. Intermediate renderer bundle hash not retained.",
+    "final-startup": "Rejected main target at full viewport: computed solid outline lies outside window and native screenshot shows no visible ring. Not accepted as visible-focus evidence.",
+    "final-startup-heading": "Final build changes only startup destination from main to existing wordmark h1. Native AX, screenshot and next Tab verify visible heading focus and connection Retry. No claim that every earlier case was rerun on this bundle."
+  },
+  "observations": [
+    {
+      "name": "before-open-settings",
+      "rawSha256": "2ee0ff285e336e869590595942991b9d957a9874d1c054a3c1dfcd2143b76cb1",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1107.3046875,
+          "y": 31,
+          "width": 124.6953125,
+          "height": 30,
+          "top": 31,
+          "right": 1232,
+          "bottom": 61,
+          "left": 1107.3046875
+        },
+        "insideDrawer": false,
+        "name": "Open News settings",
+        "type": "button",
+        "role": null
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "documentFocus": true,
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      },
+      "overlays": []
+    },
+    {
+      "name": "before-passive-trigger",
+      "rawSha256": "e5870012ee76495f4ac5520731518ed4d7e459de9267e3fbffc49a744888dc87",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 860.953125,
+          "y": 120,
+          "width": 149.046875,
+          "height": 30,
+          "top": 120,
+          "right": 1010,
+          "bottom": 150,
+          "left": 860.953125
+        },
+        "insideDrawer": false,
+        "name": "Retry news recovery",
+        "type": "button",
+        "role": null
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "documentFocus": true,
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      },
+      "overlays": []
+    },
+    {
+      "name": "before-passive-result",
+      "rawSha256": "42450bfbfe34ea08f1735db595af6d55fbe9bbda51faa48a9bdd2c4afb64dbc7",
+      "focus": {
+        "tag": "BODY",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "top": 0,
+          "right": 1280,
+          "bottom": 720,
+          "left": 0
+        },
+        "insideDrawer": false,
+        "name": "\n    onmywave.fmYour music, on your waveChoose your librariesSigned in as Fixture listener. Choose the Jellyfin music libraries you'd like to listen to.Music librariesArchive musicRecent music0 libraries selectedSave librariesUse another account or serverYour library stays on your Jellyfin server.\n  \n\n",
+        "type": null,
+        "role": null
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "documentFocus": true,
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      },
+      "overlays": []
+    },
+    {
+      "name": "before-dismiss-result",
+      "rawSha256": "3d7255e06d3be39d56e90831c344281e1ac8551274233cbb3c52ea8ea5a5ac90",
+      "focus": {
+        "tag": "BODY",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "top": 0,
+          "right": 1280,
+          "bottom": 720,
+          "left": 0
+        },
+        "insideDrawer": false,
+        "name": "\n    onmywave.fmYour music, on your waveChoose your librariesSigned in as Fixture listener. Choose the Jellyfin music libraries you'd like to listen to.Music librariesArchive musicRecent music0 libraries selectedSave librariesUse another account or serverYour library stays on your Jellyfin server.\n  \n\n",
+        "type": null,
+        "role": null
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "documentFocus": true,
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      },
+      "overlays": []
+    },
+    {
+      "name": "final-passive-trigger",
+      "rawSha256": "fccbf1d0c6150fa24029192725f8e61379dd4338415622483e35e90dd9ef1179",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 860.953125,
+          "y": 120,
+          "width": 149.046875,
+          "height": 30,
+          "top": 120,
+          "right": 1010,
+          "bottom": 150,
+          "left": 860.953125
+        },
+        "insideDrawer": false,
+        "name": "Retry news recovery",
+        "type": "button",
+        "role": null
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "documentFocus": true,
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      },
+      "overlays": []
+    },
+    {
+      "name": "final-passive-result",
+      "rawSha256": "2985e579f5be88036a428151ed31d0952c29d6c9a6836fc1f0c201385dc81ba7",
+      "focus": {
+        "tag": "H1",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 420,
+          "y": 188,
+          "width": 440,
+          "height": 46.796875,
+          "top": 188,
+          "right": 860,
+          "bottom": 234.796875,
+          "left": 420
+        },
+        "insideDrawer": false,
+        "name": "Choose your libraries",
+        "type": null,
+        "role": null
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "documentFocus": true,
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      },
+      "overlays": []
+    },
+    {
+      "name": "final-retry-pending",
+      "rawSha256": "f590dc830eb6a15e2e7fc7f74973c99c0a35910d72df7b49d9ca6ab6103f5bde",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 915.15625,
+          "y": 120,
+          "width": 94.84375,
+          "height": 30,
+          "top": 120,
+          "right": 1010,
+          "bottom": 150,
+          "left": 915.15625
+        },
+        "insideDrawer": false,
+        "name": "Retrying\u2026",
+        "type": "button",
+        "role": null
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "documentFocus": true,
+      "main": {
+        "held": [
+          "retryNewsRecovery"
+        ],
+        "providers": 0,
+        "writes": 0
+      },
+      "overlays": []
+    },
+    {
+      "name": "final-dismiss-result",
+      "rawSha256": "534ac150913d935c9c0258fe382a0bc8684ac876375ba5cecd4171c9cdc7108c",
+      "focus": {
+        "tag": "H1",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 420,
+          "y": 188,
+          "width": 440,
+          "height": 46.796875,
+          "top": 188,
+          "right": 860,
+          "bottom": 234.796875,
+          "left": 420
+        },
+        "insideDrawer": false,
+        "name": "Choose your libraries",
+        "type": null,
+        "role": null
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "documentFocus": true,
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      },
+      "overlays": []
+    },
+    {
+      "name": "final-passive-tab-away",
+      "rawSha256": "da24662ebec59449d3a99354f46b1c0ae77575b0d673d7a02b59a18623ceb529",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 422,
+          "y": 372.6875,
+          "width": 16,
+          "height": 44,
+          "top": 372.6875,
+          "right": 438,
+          "bottom": 416.6875,
+          "left": 422
+        },
+        "insideDrawer": false,
+        "name": "",
+        "type": "checkbox",
+        "label": "Archive music",
+        "role": null
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "documentFocus": true,
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      },
+      "overlays": []
+    },
+    {
+      "name": "final-passive-tab-result",
+      "rawSha256": "1faeebee34cb0a8d33057b4670f5ebce529e57af6c03eadae702d3d4db5c6bb4",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 422,
+          "y": 336.6875,
+          "width": 16,
+          "height": 44,
+          "top": 336.6875,
+          "right": 438,
+          "bottom": 380.6875,
+          "left": 422
+        },
+        "insideDrawer": false,
+        "name": "",
+        "type": "checkbox",
+        "label": "Archive music",
+        "role": null
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "documentFocus": true,
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      },
+      "overlays": []
+    },
+    {
+      "name": "final-music-passive-trigger",
+      "rawSha256": "ece4e452beac5990345b9007eb56d31b5556e988eac5c8eca1c7b4050a04ac92",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1082.953125,
+          "y": 31,
+          "width": 149.046875,
+          "height": 30,
+          "top": 31,
+          "right": 1232,
+          "bottom": 61,
+          "left": 1082.953125
+        },
+        "insideDrawer": false,
+        "name": "Retry news recovery",
+        "type": "button",
+        "role": null
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "documentFocus": true,
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      },
+      "overlays": []
+    },
+    {
+      "name": "final-music-passive-result",
+      "rawSha256": "a7697c20ddb2dffc65c4729b838728cd6f70262ee3ebaac4048f5560a1e15406",
+      "focus": {
+        "tag": "H1",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 48.078125,
+          "width": 118.8671875,
+          "height": 36.3984375,
+          "top": 48.078125,
+          "right": 356.8671875,
+          "bottom": 84.4765625,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "All songs",
+        "type": null,
+        "role": null
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "documentFocus": true,
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      },
+      "overlays": []
+    },
+    {
+      "name": "final-open-settings",
+      "rawSha256": "ace430b132ae40ed2e67155b6c74fae444575602787932548c373ff8d62215b0",
+      "focus": {
+        "tag": "SECTION",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 111.1953125,
+          "width": 960,
+          "height": 1362.640625,
+          "top": 111.1953125,
+          "right": 1198,
+          "bottom": 1473.8359375,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "News sources and hostNews sourcesManage sourcesFixture feedNews interests \u00b7 OptionalDJFixture hostChoose a DJFixture hostManage DJsMoodCuriousSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.Automatic news preparationPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running. Automatically prepare newsCheck sources every1 hour3 hours6 hoursNews selectionMajor developments onlyRelevant storiesMaximum automatic recordings per dayUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.Saving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.Save setupTurn off automatic preparationTakes effect immediately and asks this profile's automatic check to stop. Other unsaved edits stay here. A provider request already sent may still complete.Preparation paused. Fixture prior preparation failure. Preparation stays paused until you resume it in News settings.Resume preparationTesting tools \u00b7 Prepare a story manuallyManual testingPrepare a storyPrepare text, review it, then generate an audio take.Manual text preparation uses OpenAI outside automatic preparation limits. It can incur charges even when no recording is made.Prepare news text",
+        "type": null,
+        "role": "tabpanel"
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "documentFocus": true,
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      },
+      "overlays": []
+    },
+    {
+      "name": "startup-rejected-main",
+      "rawSha256": "7960e315f2e31ba669a7752edf37356504251cd4568257dca842c4f6061036c9",
+      "focus": {
+        "tag": "MAIN",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "top": 0,
+          "right": 1280,
+          "bottom": 720,
+          "left": 0
+        },
+        "insideDrawer": false,
+        "name": "Music connection",
+        "type": null,
+        "role": null
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "documentFocus": true,
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      },
+      "overlays": []
+    },
+    {
+      "name": "startup-heading-trigger",
+      "rawSha256": "8b4c528c7b2741e3c930c37e6964e139b74f992d69f4b645e2f8e82f86d8fe48",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 830.953125,
+          "y": 426.59375,
+          "width": 149.046875,
+          "height": 30,
+          "top": 426.59375,
+          "right": 980,
+          "bottom": 456.59375,
+          "left": 830.953125
+        },
+        "insideDrawer": false,
+        "name": "Retry news recovery",
+        "type": "button",
+        "role": null
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "documentFocus": true,
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      },
+      "overlays": []
+    },
+    {
+      "name": "startup-heading-result",
+      "rawSha256": "7a48ddcb0796018820e2729ac9192bb4fcb5281d3aedf3a4d728617ba5dbbbf1",
+      "focus": {
+        "tag": "H1",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 566.0078125,
+          "y": 288.3984375,
+          "width": 147.984375,
+          "height": 31.1953125,
+          "top": 288.3984375,
+          "right": 713.9921875,
+          "bottom": 319.59375,
+          "left": 566.0078125
+        },
+        "insideDrawer": false,
+        "name": "onmywave.fm",
+        "type": null,
+        "role": null
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "documentFocus": true,
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      },
+      "overlays": []
+    },
+    {
+      "name": "startup-heading-next-tab",
+      "rawSha256": "8a68626c7656d3e189580cd8a019d2baedf11733aa5a421bd5d0945f44dd5763",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 695.734375,
+          "y": 364.59375,
+          "width": 80.7265625,
+          "height": 34,
+          "top": 364.59375,
+          "right": 776.4609375,
+          "bottom": 398.59375,
+          "left": 695.734375
+        },
+        "insideDrawer": false,
+        "name": "Try again",
+        "type": "button",
+        "role": null
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "documentFocus": true,
+      "main": {
+        "held": [],
+        "providers": 0,
+        "writes": 0
+      },
+      "overlays": []
+    }
+  ],
+  "accessibility": [
+    {
+      "name": "final-settings-ax",
+      "rawSha256": "738213b9660e4fe54fc985af61de2e5ce04be78fc40501224dc9961ec2dbfc3d",
+      "focused": [
+        {
+          "role": "RootWebArea",
+          "name": "onmywave.fm",
+          "description": null
+        },
+        {
+          "role": "tabpanel",
+          "name": "Settings",
+          "description": null
+        }
+      ]
+    },
+    {
+      "name": "final-startup-ax",
+      "rawSha256": "a880b714b7b62217039e7da3095ebe1d20e396a0f05d87dbeb6b031c00121712",
+      "focused": [
+        {
+          "role": "RootWebArea",
+          "name": "onmywave.fm",
+          "description": null
+        },
+        {
+          "role": "main",
+          "name": "Music connection",
+          "description": null
+        }
+      ]
+    },
+    {
+      "name": "startup-heading-ax",
+      "rawSha256": "bb7ca0b1a1ad1173799fff1b1fb3014662f3a3d2e04fcd4d3fbf9e9723f8ae37",
+      "focused": [
+        {
+          "role": "RootWebArea",
+          "name": "onmywave.fm",
+          "description": null
+        },
+        {
+          "role": "heading",
+          "name": "onmywave.fm",
+          "description": null
+        }
+      ]
+    }
+  ],
+  "reports": [
+    {
+      "name": "before",
+      "result": "observed",
+      "errors": [],
+      "rawSha256": "db592dac56344434c50978a713704ac5b5eb2f7f13690e8820bd82fe98bacfa1"
+    },
+    {
+      "name": "before-chooser",
+      "result": "observed",
+      "errors": [],
+      "rawSha256": "53bf726d41ac2361dddf60a7123734217f201f1449b5117f794907bff3eda1ea"
+    },
+    {
+      "name": "final-chooser",
+      "result": "observed",
+      "errors": [],
+      "rawSha256": "2d4aa19c6feddafdcd8678f4c211ae3388db889d6e853b09465416736caaf27a"
+    },
+    {
+      "name": "final-music",
+      "result": "observed",
+      "errors": [],
+      "rawSha256": "41a0aa0181a1199313a18cd314e4c6e33243f21ccfd3b03612ee130b9d4589e8"
+    },
+    {
+      "name": "final-startup",
+      "result": "observed",
+      "errors": [],
+      "rawSha256": "9c2d799ef264dee9c1134b1f09814c1a7c631a9c3ef30f165dd779fdae2f3d8d"
+    },
+    {
+      "name": "final-startup-heading",
+      "result": "observed",
+      "errors": [],
+      "rawSha256": "6db752b725b9140648808f54fe279d8eb5e614f119f7a09fd9157a3d21a8bea6"
+    }
+  ],
+  "sourceModules": [
+    {
+      "file": "src/renderer/main.tsx",
+      "sha256": "863a6596bde95ba270f0d554a2ac2bd0c3819ca832f1bfd577d0edf9bb69a7cc"
+    },
+    {
+      "file": "src/renderer/App.tsx",
+      "sha256": "f304a255d1674496943e737f45f499a996ae8841ccac57bdce84fcefe3765a38"
+    },
+    {
+      "file": "src/shared/types.ts",
+      "sha256": "f98356fc4473975a77f5f8d0afbe3278bd623e9d94e5c8de85f3db1cd65e2e05"
+    },
+    {
+      "file": "src/shared/dj-playback.ts",
+      "sha256": "7e807ff052f50332ff9c78b083c450a9f5c116f68fc36de93480165ec1e6e55b"
+    },
+    {
+      "file": "src/shared/workflow.ts",
+      "sha256": "22bbb66493579cc57e09c69119943adec0fa2373d823820a2579bd4996e6cc77"
+    },
+    {
+      "file": "src/renderer/api.ts",
+      "sha256": "a44175c0fa1b6d5bb3b5fe611e652334f974aa73a93b37b42b0ab2ad45debeca"
+    },
+    {
+      "file": "src/renderer/useRetryFocus.ts",
+      "sha256": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c"
+    },
+    {
+      "file": "src/renderer/player.tsx",
+      "sha256": "682513a44f59cf746c6464d24163181473d80e79addc33edd19aa2dfc9e810d4"
+    },
+    {
+      "file": "src/shared/news-transitions.ts",
+      "sha256": "dae2314678e39262b7e89986412320c33d96cf8af3dc841188fe5e604eda8c90"
+    },
+    {
+      "file": "src/renderer/audio.ts",
+      "sha256": "48884e62f20bea6779e716f685407f780eaaca8a06b86006e686c4d4bdcdc0aa"
+    },
+    {
+      "file": "src/renderer/NewsRecovery.tsx",
+      "sha256": "5d51f3d77587b4cef19fdc08e16ecbe6d614097ab07a0bf23452990fed097772"
+    },
+    {
+      "file": "src/renderer/dj-playback.tsx",
+      "sha256": "d5fce424eb2f78b8fe546e00b6584b1f877981b42ae12eb531df9d93ae031824"
+    },
+    {
+      "file": "src/renderer/components/Player/Player.component.tsx",
+      "sha256": "450e178394a6a145487854c9c6ea39ccb3886f4c183ff3b5f226fe23128b0901"
+    },
+    {
+      "file": "src/renderer/components/Shared.tsx",
+      "sha256": "16726cf323f44324a124ee5fb29a7270ae514f8dc04f87f153f6b0a5e289ff5e"
+    },
+    {
+      "file": "src/renderer/components/Player/DJPopover.component.tsx",
+      "sha256": "487640aca4cbd79a52ae99f9b03b5ecc57e1ea7da07a437dd9029657bba72d90"
+    },
+    {
+      "file": "src/shared/news-preparation-status.ts",
+      "sha256": "27803f7289d4cf64a0d350a361fe9682231e518e93bd4a71e3590a4df771eae9"
+    },
+    {
+      "file": "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx",
+      "sha256": "2f750a0a07c76a2d1d77bbe28a28c2c572e90fbac5d9c66391922b2f99e70e33"
+    },
+    {
+      "file": "src/renderer/components/Queue/Queue.component.tsx",
+      "sha256": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082"
+    },
+    {
+      "file": "src/renderer/components/Inspector/Inspector.component.tsx",
+      "sha256": "8fd6dd9e51fe39038a893e4e66dc93656713e3434399d0b5210df870d3f5d235"
+    },
+    {
+      "file": "src/renderer/components/LibrarySelection.tsx",
+      "sha256": "612e117abee02b6c69090402331261928792cfc7a0aa445756f764d319de0083"
+    },
+    {
+      "file": "src/renderer/pages/Settings/SettingsEdits.tsx",
+      "sha256": "44e576f60c8a96d9fcc00df839244beefd8144215e0801b03803c20d9b34d56e"
+    },
+    {
+      "file": "src/renderer/components/ProviderKeys/ProviderKeyEdits.tsx",
+      "sha256": "99b9e06d6c62a90d36195ef7ae832444dd64c7cad8153db4fd66fd7feefe04d2"
+    },
+    {
+      "file": "src/renderer/pages/Connection/Connection.page.tsx",
+      "sha256": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815"
+    },
+    {
+      "file": "src/renderer/components/LibraryChooser.tsx",
+      "sha256": "0c91c760e8d10904fc699de951c43a2120c73148cbee800574fd5850e2ed8662"
+    },
+    {
+      "file": "src/renderer/pages/Songs/Songs.page.tsx",
+      "sha256": "a15a3adc08b8ebb2bd4d96b00c8462d94922bef67eb2fad655c6c428af0eb942"
+    },
+    {
+      "file": "src/renderer/components/FilterSelect/FilterSelect.component.tsx",
+      "sha256": "b6c4242190b3d107c5145f464db5f3b4912736c70c940a3344c73aa26463ec26"
+    },
+    {
+      "file": "src/renderer/components/TrackTable/TrackTable.component.tsx",
+      "sha256": "158caa15a4fe11170ac048c1752d4b9327006595646f5a86acd27c5b1c0216e5"
+    },
+    {
+      "file": "src/shared/playlist-entries.ts",
+      "sha256": "bb58ab3747844f5080fae78be9a9431bc9cb841fbbb704866cd7e064b5a1292c"
+    },
+    {
+      "file": "src/renderer/pages/Songs/VirtualSongs.component.tsx",
+      "sha256": "4484149d94156d3f6f9b5bcb5b201285a1264e2e28125f50e10a4d401f593206"
+    },
+    {
+      "file": "src/renderer/pages/Albums/Albums.page.tsx",
+      "sha256": "09a1292143de4e0f24a233a41b50e90fae8f19d394afae2f5171384f59fc9667"
+    },
+    {
+      "file": "src/renderer/components/CollectionHeading/CollectionHeading.component.tsx",
+      "sha256": "3a055f26b529958fd7a010c1318de66c54e4c6c77118207b3eed745c020e5548"
+    },
+    {
+      "file": "src/renderer/pages/Albums/VirtualAlbums.component.tsx",
+      "sha256": "0a533939261b44ee2eeafa2a6127db399d597764a5b14b8e656bf1cc969b5ec9"
+    },
+    {
+      "file": "src/renderer/pages/Playlists/Playlists.page.tsx",
+      "sha256": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc"
+    },
+    {
+      "file": "src/renderer/pages/Stations/Stations.page.tsx",
+      "sha256": "af0c5219948700ed27fab50a9490184856a2055983fae09a64781dd2ee8f8bc2"
+    },
+    {
+      "file": "src/renderer/components/InfoHelp/InfoHelp.component.tsx",
+      "sha256": "be2433410cfe2387f36bae23bc6e993a3f54942e9f7979c1854908a83b508cc8"
+    },
+    {
+      "file": "src/renderer/components/ConfigurationTabs/ConfigurationTabs.component.tsx",
+      "sha256": "20df1037126e5f9596bf917f3d5fbc455f41f236626bdbd9176fdc3ba4242a9f"
+    },
+    {
+      "file": "src/renderer/pages/Stations/components/RoomSetup.component.tsx",
+      "sha256": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330"
+    },
+    {
+      "file": "src/renderer/pages/Stations/components/PreparedTakes.component.tsx",
+      "sha256": "2acd8dc806c843d6578d0412be6650dc4e03da373c1d51af2850f890b68407a1"
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx",
+      "sha256": "c4ad3a4578a806ddde343831a2e2015bd85f9321a9c0d0f23ee3c79b7d1461e8"
+    },
+    {
+      "file": "src/renderer/pages/Stations/components/NewsBucket.component.tsx",
+      "sha256": "61e5027abd4def319532645a9a3b1425a4b6531860a2609b113c18670c0fa2f3"
+    },
+    {
+      "file": "src/shared/news-pool.ts",
+      "sha256": "2f8ac1bde20b4a9adfd3beedf015e2d7e843dda584e7713be29e1a4c7ad3fa77"
+    },
+    {
+      "file": "src/renderer/pages/Settings/Settings.page.tsx",
+      "sha256": "13f585e3995c35a21b1105f787095003d794b14ca885f609e58be1af33756cbe"
+    },
+    {
+      "file": "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx",
+      "sha256": "cfead3feb18d94ec60d2ac25573ddfedb7a2ad0b8bbc0331d1ccd4caaefebd6b"
+    },
+    {
+      "file": "src/renderer/components/ProviderKeys/TwitterSetupHelp.component.tsx",
+      "sha256": "49a4b7bd305c502937618daa3acb00fc85100267a60df492cac37efb13254317"
+    },
+    {
+      "file": "src/renderer/pages/Sources/Sources.page.tsx",
+      "sha256": "0010c35635ef75c8648bb4aded6b754603738cc0c345d493fa9624d8f4481fb8"
+    },
+    {
+      "file": "src/shared/sources.ts",
+      "sha256": "1da2117a59995911c14d098c8c814811ec309fb0d81c2fbf24b53721404e8f18"
+    },
+    {
+      "file": "src/renderer/pages/DJs/DJs.page.tsx",
+      "sha256": "b04a570f45ae65e795c87fa5a866755e2e620bc056223cab5a97e5db24c7faa1"
+    },
+    {
+      "file": "src/renderer/pages/DJs/components/DJEditor.component.tsx",
+      "sha256": "64457abf271353499f45a9b719a643b90a330e87fdd86311981255cd1caa04ef"
+    },
+    {
+      "file": "src/renderer/pages/DJs/components/DJEditor.presets.ts",
+      "sha256": "1994c54feef51b032cfb15038b9422f3fcb6243a7bf6df1a453ccf3db597ed5a"
+    },
+    {
+      "file": "src/renderer/pages/DJs/components/VoicePreview.component.tsx",
+      "sha256": "d2cbca679984903fdc0692488dff67069fad302e4e3adcd8352915b5eb209581"
+    },
+    {
+      "file": "src/shared/voice-previews.ts",
+      "sha256": "4ebe9fe7dad73cc2195573ec729cb99440313fe8eea24e5b0201154cc8095bfe"
+    },
+    {
+      "file": "src/renderer/pages/DJs/components/DJPreview.component.tsx",
+      "sha256": "496eaaac54e8fedb02e33bd2c07b01bc5c4a0b23fcb57940729c32a5bd11c3b8"
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx",
+      "sha256": "637cd8e97ae915639bcec77ac344ec28159ebc22e40b5e4fa74df4f826e14645"
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/NewsTransitions.component.tsx",
+      "sha256": "69051db733a1e1ed35621d7ac6f7e11908b6faba52d3d1a09515d97cddfc0c9b"
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/NewsTransitionPreview.component.tsx",
+      "sha256": "b44dc08192dd9d4a354a8f921c1b5e17c6a0cf2291b26b8aa3bd285d55b2ff31"
+    }
+  ],
+  "bundleHashes": {
+    "out/renderer/assets/index-BN460poL.css": "6dc9431899f647cd5f95b97a335cd8ef98405ba961ff2da3a2094d87a918660b",
+    "out/renderer/assets/index-ssHJWPeW.js": "3f6c6814b4fb3bf13b4fcb4ed94cdd9cf09dfb2f5444d42314464470091da6e3"
+  },
+  "fixtureHashes": {
+    "bootstrap.mjs": "1f34ecf8de2e726a33197c3da261c0c975096917b0ec345be13fe7c8bb8c5cc9",
+    "observe.cjs": "a9e287c09103587db73976266bb91502f67dda5f8a810eaac7236233d88f3d0a",
+    "server.mjs": "afbb36a90e9c23dfda22a42923dddb5d24aa5d10da5c0590d8668aa248ca2326",
+    "inventory.cjs": "3a21f26d02ba51e9bc594e190a5e256c662af61e3371bdcf98b26a9b273ae4c2",
+    "build.log": "ac410f251f0a276d8e9ebd438cbe0a781929a658115bcff5a374ecd3ea9d5542",
+    "lint.log": "6f1680e0ff047e07a06dcf9afc079770fad3f871d47a52ee12dccaaa84366d63"
+  },
+  "review": {
+    "decision": "Use existing useRetryFocus inside notice. Null rendering preserves owner; caller unmount cancels. Explicit success actions use existing retry wrapper and caller targets.",
+    "alternatives": "Provider-wide coordinator would survive startup/auth branch replacement but could carry notice intent across unrelated navigation. Root chose cancellation at caller boundary.",
+    "Steve": "Final review found no actionable defect; initial preference/reservation favored provider ownership to cover passive branch replacement.",
+    "Elena": "Revised recommendation supports notice-local ownership; final startup correction review found no actionable defect."
+  },
+  "validation": [
+    "Production build including TypeScript and full ESLint pass after helper return destructuring and final startup heading correction.",
+    "Whitespace and scoped evidence predicates pass.",
+    "Native screenshot confirms corrected title ring.",
+    "All six observers terminal observed with no page errors; owned catalog PID51472 revalidated and stopped, session7096 terminal143.",
+    "External/provider attempts and HTTP writes zero."
+  ],
+  "inventory": {
+    "definitions": 234,
+    "files": 35,
+    "modules": 55,
+    "change": "One additional programmatic startup heading; source inventory is not acceptance or runtime-instance denominator.",
+    "csv": "2026-10-18-news-notice-keyboard-targets.csv"
+  },
+  "limits": [
+    "No caller-unmount handoff is promised; later app branch replacement cancels this notice owner. General passive startup focus across branch replacement is outside this slice.",
+    "Overlay, pointer and window cancellation inherit unchanged helper guards; no new dedicated native replay in this slice.",
+    "Settings panel is taller than viewport; focused top border visible, not entire panel geometry.",
+    "No actual news storage fault/repair, automatic preparation resumption, live Jellyfin/provider, VoiceOver, listener or audible quality acceptance.",
+    "Raw fixture files are temporary; retained projections and hashes define evidence scope."
+  ],
+  "acceptance": {
+    "total": 191,
+    "active": 189,
+    "deferred": 2,
+    "open": 27,
+    "listener": 14,
+    "otherProof": 13,
+    "Q06": "Review"
+  }
+}
