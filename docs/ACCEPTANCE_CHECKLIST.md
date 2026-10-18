@@ -369,7 +369,7 @@ Current invariant review index,18 October2026. Each record retains its tested sc
 
 | Invariant | Current evidence and remaining proof |
 | --- | --- |
-| CI1 Committed and unsaved edits | Domain records exist; full current cross-lifetime adjudication remains to be consolidated. |
+| CI1 Committed and unsaved edits | [Current lifetime review](verification/2026-10-18-edit-lifetime-invariant.json) individually adjudicates 12 documented obligations using current source, retained domain evidence and fresh navigation/relaunch checks. Named OS/live/listener limits remain explicit. |
 | CI2 No unrequested paid work | [Authorization review](verification/2026-10-18-paid-authorization-invariant.json) supports engineering gates and current disclosure wording. Observed cost/opt-in understanding remains missing. |
 | CI3 No credential exposure | [Current credential review](verification/2026-10-18-secret-invariant.json) adjudicates eight obligations and fixes media-stream exception forwarding. Retained native/OS evidence and new controlled protocol scope stay distinct. |
 | CI4 No silent selected-take replacement | [Current selection audit](verification/2026-10-18-selected-take-invariant.json) individually reviews controlled data-preservation obligations. |
@@ -912,3 +912,12 @@ REQUIREMENTS and STAR R2/M14 now explicitly describe confirmed values and read-o
 The [shared-editor readback record](verification/2026-10-18-shared-editor-readback.json) reproduces a committed source disappearing from the visible list after its follow-up read fails. Sources and DJs now return the exact committed snapshot and use the existing monotonic cache helper before refreshing. Native source and DJ save/delete flows keep their changes visible during failed readback; explicit read Retry repeats none of their four total writes. Eight actual main-operation checks cover normalized sources, DJ changes, affected run markers, cleaned profile references, playback disablement and invalid-save rejection. Production build/TypeScript and full lint pass.
 
 REQUIREMENTS and STAR R2 explicitly retain shared changes through failed refresh. The navigation map remains current for all 294 nonblank source lines and 191 check links. CI1 remains under the broader lifetime review. All 191 dispositions and 25 open checks remain unchanged, 14 listener and 11 other-proof.
+
+
+## Committed and unsaved edit lifetime review, 18 October 2026
+
+The [CI1 review](verification/2026-10-18-edit-lifetime-invariant.json) separates twelve obligations for atomic commits, radio/General/library/key drafts, account ownership, script replacement, profile/shared edits, playlist recovery, music selections and window/process lifetime. Eighty-two selected evidence source versions resolve to exact current or Git bytes. Of 93 scoped syntax-node comparisons, 65 retain the same printed source; 28 changed scopes receive explicit review against newer evidence and dependencies. No stale whole-file hash is treated as proof of changed implementation.
+
+Fresh native checks at 1280×720 and 100% retain independent song/album selections and unsaved cadence/mood through music, News bucket and Settings detours. Album Back/reopen clears its detail selection and restores keyboard context. Same-data relaunch clears unsaved drafts/temporary selections while restoring the identical saved duplicate queue, index, position and listening options paused. No setup/preference save, generation or server write is submitted. Close/activation, account changes, pending/failure and durable-artifact paths retain their named evidence rather than being rerun for counts.
+
+An expanded discovery pass could not resolve an old TrackTable hash from the music-browsing record to a Git file revision. It is excluded from current table proof; fresh native selection checks establish this narrow current lifetime behavior without promoting historical keyboard/metadata scope. CI1 has a current engineering adjudication; CI6 joint state/dispatch review and the complete atomic denominator remain under Q13, alongside named listener/live/platform proof. All 191 dispositions stay unchanged; 25 checks remain open, 14 listener and 11 other-proof.
