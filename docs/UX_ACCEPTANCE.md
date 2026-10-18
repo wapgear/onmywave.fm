@@ -2,6 +2,8 @@
 
 Audit opened 16 October 2026. The goal remains active. A previous passing build and status fixture did not prove completion of all music and radio flows.
 
+Current 18 October result: the [essential keyboard audit](verification/2026-10-18-q06-keyboard-acceptance.json) moves Q06 to Controlled after current-source and native-evidence reconciliation. The checklist now has 26 open checks, 14 listener and 12 other-proof. Dated sections below preserve their original dispositions; no listener or full VoiceOver acceptance is implied.
+
 ## Evidence rules and target
 
 The denominator is the full set of current requirements in `REQUIREMENTS.md`, including its music, playlist, persistence, accessibility, security, and voice-preview requirements, plus R1–R12 in `RADIO_EXPERIENCE.md`. M1–M15 there clarify the existing music requirements without replacing them. Future features remain separate as defined there; existing requirements cannot be removed to improve the score.
