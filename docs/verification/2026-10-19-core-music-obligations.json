@@ -1,0 +1,559 @@
+{
+  "date": "2026-10-19",
+  "baseCommit": "093ec756b910ced0381f2afa655980e96cd41979",
+  "scope": "Current semantic/partial-proof review of every exact fragment in REQUIREMENTS All songs/Albums and the complete M5 result. Canonical groups retain compound conditions rather than turn text fragments into scored tests.",
+  "groups": [
+    {
+      "id": "MUS01",
+      "actor": "Listener choosing libraries",
+      "trigger": "Browse or page selected libraries",
+      "outcome": "One coherent ordered catalog with unique songs/albums and totals.",
+      "fragments": [
+        "REQ-L156-text-01",
+        "REQ-L156-text-02",
+        "REQ-L156-text-03",
+        "REQ-L178-text-02",
+        "RAD-L136-result-05",
+        "RAD-L136-result-06"
+      ],
+      "mandatoryVariants": [
+        "Every selected root",
+        "Overlapping identities",
+        "Unique totals",
+        "Ordering across pages",
+        "Concurrent other view",
+        "Eviction and later-page rebuilding",
+        "Actual changed account/library rejection"
+      ],
+      "checks": [
+        "B01",
+        "B03",
+        "B07"
+      ],
+      "source": [
+        "src/main/jellyfin.ts:catalog,searchCatalog,allItems,itemIdentity",
+        "src/renderer/pages/Songs/Songs.page.tsx:items",
+        "src/renderer/pages/Albums/Albums.page.tsx:items"
+      ],
+      "evidence": [
+        "2026-10-16-catalog-union-current.json",
+        "2026-10-17-catalog-view-concurrency.json",
+        "2026-10-17-live-catalog-album-actions.json"
+      ],
+      "judgment": "Current complete-root union deduplicates canonical IDs,sorts before slicing and retains two completed query snapshots. In-flight same-view reads share work;unrelated views do not invalidate session ownership. Single-root paths retain provider ordering. Renderer deduplication is supplementary,not proof of correct server totals.",
+      "remaining": [
+        "Historical controlled overlap and dated live single-root evidence retain their topology/server-mutation limits;not exhaustive real-server snapshot isolation."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "MUS02",
+      "actor": "Listener finding music",
+      "trigger": "Search or change sort/genre/tag",
+      "outcome": "Find song title/artist/album and album title/album-artist matches within selected libraries.",
+      "fragments": [
+        "REQ-L158-text-01",
+        "REQ-L160-text-01",
+        "REQ-L178-text-01"
+      ],
+      "mandatoryVariants": [
+        "Song title",
+        "Artist lookup",
+        "Album-to-song expansion",
+        "Album artist",
+        "Root restrictions",
+        "Combined genre/tag",
+        "Ascending/descending sorts",
+        "Bounded search too-large explanation"
+      ],
+      "checks": [
+        "B02",
+        "B03",
+        "B07"
+      ],
+      "source": [
+        "src/main/jellyfin.ts:searchCatalog",
+        "src/renderer/pages/Songs/Songs.page.tsx:catalog,change",
+        "src/renderer/pages/Albums/Albums.page.tsx:search"
+      ],
+      "evidence": [
+        "2026-10-16-album-artist-search.json",
+        "2026-10-17-live-catalog-album-actions.json",
+        "2026-10-17-catalog-view-concurrency.json"
+      ],
+      "judgment": "Current search explicitly expands artist and album matches and deduplicates before sorting/paging;album artist uses AlbumArtistIds. Album expansion verifies returned AlbumId. Filters remain in base parameters. Over10000 matches fail with a narrowing instruction rather than a truncated result.",
+      "remaining": [
+        "Retained native/live tests are dated and scoped;an uncoached finding-music task and arbitrary server search semantics are not established by source inspection."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "MUS03",
+      "actor": "Listener selecting music",
+      "trigger": "Select rows,act on selection or leave/return to an album",
+      "outcome": "Play/Queue/Add use displayed order and preserve only the intended temporary selection.",
+      "fragments": [
+        "REQ-L162-text-01",
+        "REQ-L164-text-01",
+        "REQ-L164-text-02",
+        "REQ-L180-text-01",
+        "REQ-L182-text-01",
+        "REQ-L182-text-02",
+        "REQ-L182-text-03",
+        "REQ-L182-text-04",
+        "REQ-L182-text-05",
+        "REQ-L182-text-06",
+        "RAD-L136-result-08",
+        "RAD-L136-result-09",
+        "RAD-L136-result-12",
+        "RAD-L136-result-14"
+      ],
+      "mandatoryVariants": [
+        "Single and multiple rows",
+        "Reverse click order",
+        "Play/Queue/Add destinations",
+        "Duplicate playlist occurrence semantics remain separate",
+        "Search/filter resets song selection",
+        "Ordinary music/news/Settings detour retains selection",
+        "Back and fresh open clear album selection",
+        "Back after detour restores tile",
+        "Library/account/restart clears transient selection",
+        "Saved listening queue is independent"
+      ],
+      "checks": [
+        "B04",
+        "B08",
+        "B15",
+        "B16",
+        "B17"
+      ],
+      "source": [
+        "src/renderer/components/TrackTable/TrackTable.component.tsx:selectedSongs",
+        "src/renderer/pages/Songs/Songs.page.tsx:change,search effect",
+        "src/renderer/pages/Albums/Albums.page.tsx:AlbumsView,back,open",
+        "src/renderer/App.tsx:songsView,albumsView,updateLibraries,SessionContent"
+      ],
+      "evidence": [
+        "2026-10-16-music-browsing.json",
+        "2026-10-16-catalog-union-current.json",
+        "2026-10-17-live-catalog-album-actions.json"
+      ],
+      "judgment": "TrackTable derives bulk songs by filtering rows rather than Map insertion order. ReadyApp owns transient selection across page unmounts. Album open/Back and library updates explicitly reset Maps;account-keyed SessionContent and process restart discard them. Shared fragment links to MUS08 retain its focus clauses.",
+      "remaining": [
+        "Every compound selection/focus clause remains required;dated action and selection runs are retained with their controlled/live boundaries rather than recast as one current end-to-end pass."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "MUS04",
+      "actor": "Listener inspecting a song",
+      "trigger": "Browse sparse or full metadata and open details",
+      "outcome": "Show usable music metadata and missing-value fallbacks without editing server metadata.",
+      "fragments": [
+        "REQ-L166-text-01",
+        "REQ-L168-text-01",
+        "REQ-L172-text-01",
+        "REQ-L172-text-02",
+        "REQ-L172-text-03",
+        "REQ-L172-text-04",
+        "REQ-L172-text-11",
+        "REQ-L172-text-12",
+        "REQ-L176-text-01",
+        "RAD-L136-result-01"
+      ],
+      "mandatoryVariants": [
+        "Artwork and revision fallback",
+        "Title/artist/album/album artist",
+        "Duration/year/genre/tags/track/disc",
+        "Optional format/codec/bitrate/sample rate/size",
+        "Missing title and artist",
+        "Unavailable duration label",
+        "Separate detail read may fail",
+        "Metadata/tag/artwork editing excluded"
+      ],
+      "checks": [
+        "B05",
+        "B06",
+        "B12",
+        "B13",
+        "M10"
+      ],
+      "source": [
+        "src/main/jellyfin.ts:songItem,albumItem",
+        "src/renderer/components/Inspector/Inspector.component.tsx",
+        "src/renderer/components/TrackTable/TrackTable.component.tsx",
+        "src/renderer/components/Shared.tsx",
+        "src/renderer/components/Queue/Queue.component.tsx"
+      ],
+      "evidence": [
+        "2026-10-16-catalog-recovery.json",
+        "2026-10-17-live-catalog-album-actions.json",
+        "2026-10-18-keyboard-target-names.json"
+      ],
+      "judgment": "Current mapping handles absent strings/arrays and inspector uses selected metadata during detail loading/failure. Duration visibility is separate from its numeric fallback in MUS05. Track rows expose title/artist names;no metadata editor is exposed.",
+      "remaining": [
+        "Source review does not establish all artwork revisions on every server or subjective legibility;retained native/live metadata cases remain scoped."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "MUS05",
+      "actor": "Listener with an unknown-duration track",
+      "trigger": "Start or seek direct/converted media",
+      "outcome": "Use a finite actual-resource total only on the current occurrence;unknown total disables seeking.",
+      "fragments": [
+        "REQ-L172-text-05",
+        "REQ-L172-text-06",
+        "REQ-L172-text-07",
+        "REQ-L172-text-08",
+        "REQ-L172-text-09",
+        "REQ-L172-text-10"
+      ],
+      "mandatoryVariants": [
+        "Missing/invalid catalog total",
+        "Finite positive resource total",
+        "Converted offset added",
+        "Already-MP3 conversion starts at offset",
+        "Valid catalog total preserved",
+        "Occurrence/token/source guards",
+        "No server metadata rewrite",
+        "Elapsed advances before total",
+        "UI and system seeking availability",
+        "Play/Pause/track changes remain available"
+      ],
+      "checks": [
+        "M09",
+        "M10",
+        "M16",
+        "M17"
+      ],
+      "source": [
+        "src/renderer/player.tsx:load,ondurationchange,ontimeupdate,seek,mediaSession",
+        "src/main/media.ts:preparePlayback",
+        "src/renderer/components/Player/Player.component.tsx"
+      ],
+      "evidence": [
+        "2026-10-16-unknown-duration.json",
+        "2026-10-17-live-duration-recovery.json",
+        "2026-10-17-live-codec-seeking.json"
+      ],
+      "judgment": "Current measured-duration patch preserves occurrence key/track ID and checks generation,current source and current occurrence. Conversion offset contributes to total;catalog duration bypasses the patch. This is not proof of physical system seek delivery.",
+      "remaining": [
+        "M16/M17 actual OS-mediated controls remain open. Codec/native/live records retain their substitutions,representative-format and acoustic-position limits."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "MUS06",
+      "actor": "Listener opening an album",
+      "trigger": "Open an album including empty or failed metadata",
+      "outcome": "Read current album by ID and an ordered track list;available tracks stay usable.",
+      "fragments": [
+        "REQ-L178-text-03",
+        "REQ-L180-text-01"
+      ],
+      "mandatoryVariants": [
+        "Album title/artist/year/artwork by ID",
+        "Disc/track/name ordering",
+        "Album with no tracks",
+        "Metadata-only failure keeps tracks",
+        "Play album",
+        "Queue album",
+        "Add all tracks"
+      ],
+      "checks": [
+        "B07",
+        "B08",
+        "B12"
+      ],
+      "source": [
+        "src/main/jellyfin.ts:album,albumTracks",
+        "src/renderer/pages/Albums/Albums.page.tsx:AlbumDetail"
+      ],
+      "evidence": [
+        "2026-10-16-catalog-recovery.json",
+        "2026-10-17-live-catalog-album-actions.json"
+      ],
+      "judgment": "AlbumDetail separates metadata and track queries,retains supplied album metadata while unavailable and enables actions from tracks alone. albumTracks requests disc/track/name ordering. MUS03 additionally governs selection ordering.",
+      "remaining": [
+        "Dated six-track live album and controlled empty/error cases do not establish every server or every album ordering variant."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "MUS07",
+      "actor": "Listener with their existing collection",
+      "trigger": "Browse,page or select a large collection",
+      "outcome": "Keep browsing responsive at the actual library size.",
+      "fragments": [
+        "REQ-L170-text-01"
+      ],
+      "mandatoryVariants": [
+        "Actual live collection size",
+        "Paging",
+        "Large loaded selections",
+        "Virtualized song rows and album grid",
+        "Retain focused/recovery item",
+        "Cold multiple-root union memory/latency bound"
+      ],
+      "checks": [
+        "B09"
+      ],
+      "source": [
+        "src/renderer/pages/Songs/VirtualSongs.component.tsx",
+        "src/renderer/pages/Albums/VirtualAlbums.component.tsx",
+        "src/main/jellyfin.ts:catalog"
+      ],
+      "evidence": [
+        "2026-10-16-catalog-union-current.json",
+        "2026-10-17-live-catalog-album-actions.json"
+      ],
+      "judgment": "Both views virtualize visible content plus focused/recovery targets. Multi-root cold reads materialize the complete union;two completed views are cached. This deliberate cost remains part of the requirement rather than being hidden by DOM virtualization.",
+      "remaining": [
+        "Existing measured controlled and actual-library evidence retains its exact sizes/runtime. This audit adds no performance measurement or guarantee for larger libraries."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "MUS08",
+      "actor": "Keyboard listener",
+      "trigger": "Search,arrow through rows,open/return from a collection",
+      "outcome": "Focus remains named,visible and owned by the current action;passive updates do not reclaim it.",
+      "fragments": [
+        "RAD-L136-result-01",
+        "RAD-L136-result-02",
+        "RAD-L136-result-03",
+        "RAD-L136-result-04",
+        "RAD-L136-result-10",
+        "RAD-L136-result-11",
+        "RAD-L136-result-12",
+        "RAD-L136-result-13"
+      ],
+      "mandatoryVariants": [
+        "Row title/artist fallback names",
+        "Loaded count target name",
+        "Sticky heading/selection/player visibility",
+        "Quick repeated arrows",
+        "Focused tile opens at top on Back before data",
+        "Sidebar return preserves scroll/focus",
+        "Album Back after detour",
+        "Playlist Back exact tile or heading",
+        "Background data never replays entry focus"
+      ],
+      "checks": [
+        "B16",
+        "B17",
+        "Q06",
+        "Q09"
+      ],
+      "source": [
+        "src/renderer/App.tsx:requestCollectionFocus,location layout effect,shortcut",
+        "src/renderer/components/TrackTable/TrackTable.component.tsx:rowKey,reveal",
+        "src/renderer/pages/Songs/VirtualSongs.component.tsx:focusRow",
+        "src/renderer/pages/Albums/VirtualAlbums.component.tsx:returnFocus"
+      ],
+      "evidence": [
+        "2026-10-17-collection-entry-focus.json",
+        "2026-10-18-keyboard-target-names.json",
+        "2026-10-18-q06-keyboard-acceptance.json"
+      ],
+      "judgment": "Current layout/focus ownership checks visible window,origin,location and overlays. Row arrow handling follows current focused index;virtualizers retain target rows. Command-F accepts only the plain macOS chord. Q06 evidence does not substitute for Q09 spoken VoiceOver operation.",
+      "remaining": [
+        "Q09 VoiceOver remains External. Exact current all-state focus behavior is not newly replayed by this static audit;retained native keyboard evidence keeps its stated source/state limits."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "MUS09",
+      "actor": "Listener recovering a catalog read",
+      "trigger": "Refresh or retry a failed initial/page read",
+      "outcome": "Keep available data and focused recovery controls;successful owned recovery reaches relevant results.",
+      "fragments": [
+        "REQ-L156-text-04",
+        "RAD-L136-result-07",
+        "RAD-L136-result-15",
+        "RAD-L136-result-16",
+        "RAD-L136-result-17"
+      ],
+      "mandatoryVariants": [
+        "Refresh re-reads server",
+        "Preserve search/filter/selection/queue",
+        "Focused busy/success/failure and repeat guard",
+        "Later Tab wins",
+        "Page failure retains loaded data",
+        "Retry first new item or empty heading",
+        "Failure retains retry",
+        "Background refresh does not move focus",
+        "Resource/navigation/overlay/window changes revoke handoff",
+        "Refresh does not prepare or enable radio"
+      ],
+      "checks": [
+        "B10",
+        "B11",
+        "B14",
+        "Q06"
+      ],
+      "source": [
+        "src/renderer/pages/Songs/Songs.page.tsx:refreshLibrary",
+        "src/renderer/pages/Songs/VirtualSongs.component.tsx:retryNextPage",
+        "src/renderer/pages/Albums/VirtualAlbums.component.tsx:retryNextPage",
+        "src/renderer/useRetryFocus.ts"
+      ],
+      "evidence": [
+        "2026-10-16-catalog-recovery.json",
+        "2026-10-17-library-refresh-focus.json",
+        "2026-10-17-keyboard-recovery-focus.json",
+        "2026-10-17-read-retry-busy.json",
+        "2026-10-17-passive-recovery-focus.json"
+      ],
+      "judgment": "Current refresh invalidates all named catalog/detail caches without clearing view selection. A synchronous in-flight ref guards refresh repeats. Shared retry ownership cancels focus handoff on later interaction while the read continues;virtualizers reserve the first appended item.",
+      "remaining": [
+        "No new current native retry/page run is claimed;dated recovery proofs retain their exact variants. Listener comprehension of recovery remains separate."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    }
+  ],
+  "STARContext": {
+    "id": "M5",
+    "sourceId": "RAD-L136",
+    "story": "I can find music and recover from a failed page",
+    "situationAndTask": "I am browsing a growing library or narrowing it by artist, album, genre or tag",
+    "action": "Use Command-F to search, filter, select songs, open an album and return; Retry if the next page fails",
+    "expectedResult": "Focused song rows identify their title and artist, including missing-metadata fallbacks; loaded-count fallback destinations expose their visible count. Keep keyboard-focused rows/controls visible above the selection toolbar and player in songs, albums and playlists; quick arrow presses retain every move; show each song/album once across overlapping selected libraries, with unique totals and coherent pages; concurrent sort/filter reads of an unchanged selection do not falsely claim the library changed; Refresh rereads the server after a completed read, retains its focused action through busy/success/failure, ignores repeated activation while busy and leaves later Tab navigation in place; reset selection for a different search/filter; retain song selection and the same open album's track selection through ordinary page navigation; opening an album or playlist from its focused tile starts at the top on Back before reads finish; data updates leave later focus alone and sidebar return keeps its focus/scroll; Back closes the album, clears its selection and restores its tile focus even after a page detour; focused playlist Back restores that exact tile or the list heading when unavailable; opening from the list starts fresh, and library/account changes or restart clear temporary album selection; keep loaded songs/albums visible during a paging failure with explicit Retry; keyboard recovery focuses visible recovered results, the first new item after paging, or the heading of an empty page; failed retry retains its action, while later focus/navigation wins and background refreshes keep focus",
+    "resultFragments": [
+      "RAD-L136-result-01",
+      "RAD-L136-result-02",
+      "RAD-L136-result-03",
+      "RAD-L136-result-04",
+      "RAD-L136-result-05",
+      "RAD-L136-result-06",
+      "RAD-L136-result-07",
+      "RAD-L136-result-08",
+      "RAD-L136-result-09",
+      "RAD-L136-result-10",
+      "RAD-L136-result-11",
+      "RAD-L136-result-12",
+      "RAD-L136-result-13",
+      "RAD-L136-result-14",
+      "RAD-L136-result-15",
+      "RAD-L136-result-16",
+      "RAD-L136-result-17"
+    ],
+    "contextReviewState": "pending"
+  },
+  "sourceSha256": {
+    "src/main/jellyfin.ts": "ad380aa5fc6e6963254831e5f5d5d67210053977a374e3473c62435d56dc26c8",
+    "src/main/media.ts": "c2dbac7a2c6892e44794cffde7cd5118f6999f712b1f6f06533b3a9f44245fe2",
+    "src/renderer/App.tsx": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+    "src/renderer/player.tsx": "aa7d866e5724945a3f06773a984f6983ccc6544ee08b02991fd54c0f53f25f0c",
+    "src/renderer/useRetryFocus.ts": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c",
+    "src/renderer/pages/Songs/Songs.page.tsx": "a15a3adc08b8ebb2bd4d96b00c8462d94922bef67eb2fad655c6c428af0eb942",
+    "src/renderer/pages/Songs/VirtualSongs.component.tsx": "4484149d94156d3f6f9b5bcb5b201285a1264e2e28125f50e10a4d401f593206",
+    "src/renderer/pages/Albums/Albums.page.tsx": "09a1292143de4e0f24a233a41b50e90fae8f19d394afae2f5171384f59fc9667",
+    "src/renderer/pages/Albums/VirtualAlbums.component.tsx": "0a533939261b44ee2eeafa2a6127db399d597764a5b14b8e656bf1cc969b5ec9",
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "158caa15a4fe11170ac048c1752d4b9327006595646f5a86acd27c5b1c0216e5",
+    "src/renderer/components/Inspector/Inspector.component.tsx": "8fd6dd9e51fe39038a893e4e66dc93656713e3434399d0b5210df870d3f5d235",
+    "src/renderer/components/Shared.tsx": "16726cf323f44324a124ee5fb29a7270ae514f8dc04f87f153f6b0a5e289ff5e",
+    "src/renderer/components/Queue/Queue.component.tsx": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082"
+  },
+  "evidenceSha256": {
+    "2026-10-16-album-artist-search.json": "4945058eb2531997af793d4f08a5a9d947c9f4689fe248697c5a4c17b8ede74f",
+    "2026-10-16-catalog-recovery.json": "ca6a50b91e961a21327c8b8ba6f59aa1d7cfe9d06184d0cea15a2e34aa4afa9d",
+    "2026-10-16-catalog-union-current.json": "7b9eb8bbad9881ad1b50808fa5c7118772373e0dd7598fe17ec1160e553f1575",
+    "2026-10-16-music-browsing.json": "87bfd15c8b149055c0d4693ff9b0538e48bc11348060b09411500c79319d1ef6",
+    "2026-10-16-unknown-duration.json": "96ac3283401f7fe371bcf496c7cec8d1b1ddb4a42e1b1961a31fb177bdcaa1ab",
+    "2026-10-17-catalog-view-concurrency.json": "0436fb76a7d88770d71ac6428849b8cbb429a159e9a6d715e3fee054dfe56b3a",
+    "2026-10-17-collection-entry-focus.json": "d01974b45ddad220b7ca177feae16d6bfd48c8a33b36e21d83da33ed8d26d769",
+    "2026-10-17-keyboard-recovery-focus.json": "e91e0cf38910bc20ac6126f0efb30fab8cb6454aef882992c9e159b12f3d4942",
+    "2026-10-17-library-refresh-focus.json": "83ddf287bbe9536b7c05fcdc459b2e470a9327b2d0d88cda937c41c72a918743",
+    "2026-10-17-live-catalog-album-actions.json": "19a39ea36078c9d88f99517e64bb6276b69dfe7b88e24251c34681b7a7102198",
+    "2026-10-17-live-codec-seeking.json": "ac855992b116ffd4d2d48d7ebd57104fdcd915e9a7b9aa9677ea1fbf484a9f24",
+    "2026-10-17-live-duration-recovery.json": "8ea810f9427f6142125a3f01dfdc294daf1de2042a4e4af6d3238a9c8c458331",
+    "2026-10-17-passive-recovery-focus.json": "f014d1cea9d8327f478da8de831ac558efa4da6f452d7e1869b849ef2d09c4e1",
+    "2026-10-17-read-retry-busy.json": "414b7fb52f579c82bd49d257d06949e08cec2623d1112a59548d3182899e3b1d",
+    "2026-10-18-keyboard-target-names.json": "826e13d4dbd40c7488f86a5c30f592395af8f14d4bcf9cc2618cbdbe921ab4b2",
+    "2026-10-18-q06-keyboard-acceptance.json": "575fe36f9f3963003db2d116d88c733a6e1681882518825293a4bd48082a8f44"
+  },
+  "fragmentTextSha256": {
+    "RAD-L136-result-01": "06487f4bb24fb8ef3b023dfcbf10857d235cb3f2d05bdc02a68d7de4aae66b82",
+    "RAD-L136-result-02": "cf70d9d855f0a86692f4c8bd60bede7f953c4270e691551811840e5329566985",
+    "RAD-L136-result-03": "eece4c60b2c0af9b7209e1044b918210a68b748257b3a775d6980cd56f326f52",
+    "RAD-L136-result-04": "a181af7199bdf300e21adebab6a487d13eed4518f1f46b314053da8b5537748c",
+    "RAD-L136-result-05": "567cb77de7e6877d8a40f79a322cb723b03f36c3a123fdf5cf31faf6e278ca21",
+    "RAD-L136-result-06": "33e2b3ede0a26dfd799ec271b7f69284c7e386505138c3f5761d477a3856fc36",
+    "RAD-L136-result-07": "89b7d9379534433bb42968903ae72900f5647027458d78501a62f2862291602a",
+    "RAD-L136-result-08": "99539a77b4b1da3353024d14564aca34100c8e40817b4515a240fa651bf05d0c",
+    "RAD-L136-result-09": "53877e517cda6348e37ac91f1cb492a36e17b14e35e1fbad9ac28e5af014054f",
+    "RAD-L136-result-10": "d8798fa4b0aa59b548db889f8cd4980408e1c291e960390775613dfd18c7ccc8",
+    "RAD-L136-result-11": "4d5957c6e7b9d30a6c22ee24fcbef7345c8e612c039924976479464d6bd419fc",
+    "RAD-L136-result-12": "1ca53dbf695ca3049059ec7dd29cd57dbf9e7a26cc601ac87fc27f70e8f3577b",
+    "RAD-L136-result-13": "5933469c3240c9730ff87e2678c803b9a9e2ee11518ed682ad399f43254d2d0c",
+    "RAD-L136-result-14": "afe952008a1346d319cebd5d737ccab25a73436d2291b0f0ff798afe4079acc2",
+    "RAD-L136-result-15": "99a7bfa03760d7b1c292827a4b950e0d166a560ad4e42c581e12daec0038e4bc",
+    "RAD-L136-result-16": "fd9c9dc70a995fcdcfca79d01228f5d6f6e09ab7fc5f9cc9b99e1c62dd762a83",
+    "RAD-L136-result-17": "c9043cf790994080015301d06437a437cfbe22b2c779d33ca87fed8e45c8c112",
+    "REQ-L156-text-01": "91c9c449aac961841f15132ff19f5f4a7426574d2f2f4cfc3c794f86d6340e2c",
+    "REQ-L156-text-02": "420a7ceade9ef75ac59b2b263bcfb437f5c1916186fb08b16630ba8f217b8878",
+    "REQ-L156-text-03": "49c73c084d565ab5a54ce5e87a89d2e79b2782b92d95a1dd9f98d0c7ee592c5e",
+    "REQ-L156-text-04": "be0cbfa26622f1ebbd6286120bc7d8165d58f65b51a0b5c606255984282dd064",
+    "REQ-L158-text-01": "2eefc64b2cad67a4eeec9cba1e439798f7d070b061efc12c6f496f106f8209ec",
+    "REQ-L160-text-01": "62ae10f2a0acb1f6dd773582e5c90d1f21cb1df202d6127e531d28d3b273a299",
+    "REQ-L162-text-01": "c5e1d496f302ddbc269f35472d71c9ac1c6ff8d21796c6d2a71bf88d34394089",
+    "REQ-L164-text-01": "bfc661c68d7b41a7a10c3bdcd117e7d394b05f871f621aac5a0eef658eb5aaa4",
+    "REQ-L164-text-02": "cacafbac3b067ea221eb5d1b732dcb3f5d0f791eb11568f2b062ef793efa9e49",
+    "REQ-L166-text-01": "9f5f347255cc1431ff7d3aee4be45a5ed765d1ed0509e5fc83b7118c5dbdc5b6",
+    "REQ-L168-text-01": "775828ea5ccf4b1f9c8f95e46c07ae6ce5dfa294fd0ccf2219197df2abac6d24",
+    "REQ-L170-text-01": "20054464a2edeae114210215dc9b420eb59390f220e434c4508e712c25eac157",
+    "REQ-L172-text-01": "bd9fa6d92d037a34496800ca11465739287803508d0ec03ef14d4f971e7779a7",
+    "REQ-L172-text-02": "9c236225ba0ac32bf53e750f3fe14a21d57dff12b67c78fa7f34950781c99ead",
+    "REQ-L172-text-03": "30ac6a0abb4ea8fee69fbdfe796e8fb89648a4a1c95db8e69b19770c119346f4",
+    "REQ-L172-text-04": "ccc6a07c9ac92201dde8a7c38bd60b95d5eea0c16e58456996fea1ca0c8f9a52",
+    "REQ-L172-text-05": "5c55c5d9b1d0343a48f8d912a14d5633abf9736e8c4ec3323ba3255365df6666",
+    "REQ-L172-text-06": "6d00d80efb64ad188c652cbce3d696f551bb23596bb1a505861a332427564cff",
+    "REQ-L172-text-07": "b9c94711cdcf6bdcacc5f7a2f58d85366e02c63fa0d6386b395c0b74b9afbbd5",
+    "REQ-L172-text-08": "2a3892eca2099807c18a8f57b0d6cbb149d9c7332d10aa900d152792bde002fe",
+    "REQ-L172-text-09": "469809b70eb775c4c1911bdc8c82fc4656e5d33f7ad887a056fc4b31c3fb0858",
+    "REQ-L172-text-10": "45b32ecdb70d22e503a20786268787290dbfc5fb984a82eaa61128e398f5dde0",
+    "REQ-L172-text-11": "f429d501b2eae8cc039e844a980b571604d7d5277c4f39140e4efdfe58ce9b54",
+    "REQ-L172-text-12": "5695630ceda6e54c29b6186ef8d811bb9d0e25b3002224f8158e9f05a011d06f",
+    "REQ-L176-text-01": "d6e7b88f9337541c779892e5dc7f70d4ea7c9cf272d81857e39cfbb9ee309624",
+    "REQ-L178-text-01": "9bedd952ee4f23852a62a0e486ed136344188558b9046531e219b402527a5a9b",
+    "REQ-L178-text-02": "26d0ad21f7c939017e6e620981c7281d49317b7269fa7c1a3ab6fa443328568f",
+    "REQ-L178-text-03": "008b3c68b13758eddb7ebfabb4ded4bd67f0638076fe100017f4a582fcb3855c",
+    "REQ-L180-text-01": "3b0d6b6963a5e05c9e512154598943848f1eaf98fb802a7684bddc7c876badbb",
+    "REQ-L182-text-01": "70ab19c952407e2787b413a5fcb30436fef7ea6811b9142789423858da652a75",
+    "REQ-L182-text-02": "7166376c6efdbc68396f06b8f269fbf4b6005478c15a91049991d07c163f063f",
+    "REQ-L182-text-03": "a1c7e643cf3328e34b427022802d1ffc936b24a5db9d5ca294d1eac34607f2d3",
+    "REQ-L182-text-04": "22e479ce0c60f6ddbd0bbc5b60c46b7f7f0b2cdd0045ccd64cea166a7ec20904",
+    "REQ-L182-text-05": "24c51e55c48e6a7730def028c8ab1b79aead3eef5e6ad1e4504bb3dce7038cc4",
+    "REQ-L182-text-06": "cba4ac872056ebd92b20e447b67c9e77c28effcc309ec2648ad5b8c6be7b88ce"
+  },
+  "method": [
+    "Read current contract,source owners and selected dated evidence fields/scopes/limits. Each group has an actor,trigger,outcome,mandatory variants,explicit checks and current source judgment.",
+    "Historical artifacts are evidence entry points,not re-executions or whole-group acceptance. Current source hashes identify this inspection;they do not refresh old native/live proofs.",
+    "Each of52 fragments is reciprocally linked. Overlapping group links retain independent conditions such as selection plus focus or album actions plus metadata. The whole M5 story/action/result remains intact."
+  ],
+  "summary": {
+    "canonicalReviewGroups": 9,
+    "linkedFragments": 52,
+    "acceptedGroups": 0,
+    "knownOpenChecks": 25,
+    "semanticDenominatorComplete": false,
+    "overallScore": null
+  },
+  "limits": [
+    "No production code change,new native/service/live/provider/performance/VoiceOver/listener result or repeated build/type/lint/unit check.",
+    "Current source appears aligned within this reviewed boundary;runtime completeness remains unproved. Named OS,audible,listener and broad platform checks remain open.",
+    "Other PRD sections,whole-story acceptance and all7 parent gates retain their scope. This review does not accept parent criterion2,which also requires playlist behavior.",
+    "No deferred smaller-window or enlarged-zoom work."
+  ]
+}
