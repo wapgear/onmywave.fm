@@ -1,0 +1,146 @@
+{
+  "date": "2026-10-19",
+  "baseCommit": "8595b89955b6e2e9ff21525ee76b710b536b05fb",
+  "scope": "AUTH01 failed sign-out while a genuine current-session HTTP401 waits at the IPC reply boundary. Controlled engineering follow-up to PR128.",
+  "method": {
+    "native": "Actual production renderer/preload, bundled main/service, local safeStorage and disposable localhost account. CUA clicks only; lifecycle/passive reads through Playwright. 1280x720 at100% zoom.",
+    "fault": "Before actual disconnect, move the disposable encrypted connection file aside and create a directory at its path. Actual credential unlink fails; actual service reports server failure and retains account revision1. Restore the file before delivering the failure. No substituted service error or UI command.",
+    "ordering": [
+      "Hold actual current HTTP401 at IPC.",
+      "CUA Settings > Sign out > Sign out. Actual disconnect fails; hold failure reply.",
+      "Release HTTP401. Sign-out dialog stays Signing out; no expiry remount.",
+      "Release failed disconnect. Welcome back appears for Original listener; main account remains revision1."
+    ]
+  },
+  "snapshots": {
+    "failed-signout-failure-held": {
+      "sha256": "729789c26e816d17937d36716c3255f34564f94954e1a56b1af87e36a9aee6c8",
+      "headings": [
+        "Settings",
+        "Account",
+        "Music libraries",
+        "DJ playback",
+        "DJ transitions",
+        "About",
+        "Sign out of Jellyfin?"
+      ],
+      "signingOut": true,
+      "connection": {
+        "authRevision": 1,
+        "id": "http://127.0.0.1:5211|00000000000000000000000000000001",
+        "serverUrl": "http://127.0.0.1:5211",
+        "serverVersion": "fixture",
+        "userName": "Original listener",
+        "selectedLibraryIds": [
+          "00000000000000000000000000000003"
+        ],
+        "sessionOnly": false
+      },
+      "failure": {
+        "code": "server",
+        "message": "Sign-out could not finish. You are still signed in. Try again."
+      },
+      "credentialRestored": true,
+      "failureReplyHeld": true,
+      "expiryReplyHeld": true
+    },
+    "failed-signout-expiry-deferred": {
+      "sha256": "fc8a5ea886ad27d20dcd91d0cb641a5467e2e39af7e8e9b5d0725aa4368b944c",
+      "headings": [
+        "Settings",
+        "Account",
+        "Music libraries",
+        "DJ playback",
+        "DJ transitions",
+        "About",
+        "Sign out of Jellyfin?"
+      ],
+      "signingOut": true,
+      "connection": {
+        "authRevision": 1,
+        "id": "http://127.0.0.1:5211|00000000000000000000000000000001",
+        "serverUrl": "http://127.0.0.1:5211",
+        "serverVersion": "fixture",
+        "userName": "Original listener",
+        "selectedLibraryIds": [
+          "00000000000000000000000000000003"
+        ],
+        "sessionOnly": false
+      },
+      "failure": {
+        "code": "server",
+        "message": "Sign-out could not finish. You are still signed in. Try again."
+      },
+      "credentialRestored": true,
+      "failureReplyHeld": true,
+      "expiryReplyHeld": false
+    },
+    "failed-signout-current-expiry-applied": {
+      "sha256": "0d888d79561d921950b1215dc0ce32c5efc8a4e05bb2d95c206284cfb7644fd6",
+      "headings": [
+        "Welcome back"
+      ],
+      "signingOut": false,
+      "connection": {
+        "authRevision": 1,
+        "id": "http://127.0.0.1:5211|00000000000000000000000000000001",
+        "serverUrl": "http://127.0.0.1:5211",
+        "serverVersion": "fixture",
+        "userName": "Original listener",
+        "selectedLibraryIds": [
+          "00000000000000000000000000000003"
+        ],
+        "sessionOnly": false
+      },
+      "failure": {
+        "code": "server",
+        "message": "Sign-out could not finish. You are still signed in. Try again."
+      },
+      "credentialRestored": true,
+      "failureReplyHeld": false,
+      "expiryReplyHeld": false
+    }
+  },
+  "sourceSha256": {
+    "src/main/index.ts": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+    "src/main/jellyfin.ts": "ad380aa5fc6e6963254831e5f5d5d67210053977a374e3473c62435d56dc26c8",
+    "src/renderer/App.tsx": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+    "src/renderer/api.ts": "9c2f347ebb911d73915cbc4178a03f33e8dfcfcec4ff4a8b2ef4cd1e94ca4e18",
+    "src/renderer/main.tsx": "fa6dae583c41c04186cb71ec7b3b68af716ba82fc46cb788b1b433d106141065",
+    "src/renderer/pages/Settings/Settings.page.tsx": "bfd9e02f6187a9581e9de3e5d941f66a35be7cf5477b68594b740ee25ebbf101",
+    "src/shared/types.ts": "a4777ac71292ab6adddcb1fce211ad14c7e324fe1ccd5ed278fb1f290dfcaea0",
+    "src/renderer/pages/Connection/Connection.page.tsx": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815"
+  },
+  "fixtureSha256": {
+    "/private/tmp/account-expiry-failed-signout-current/build.mjs": "02664fc68b07084bff1e996761d84af8f7e49aa8ec554d8b83052cf23a1656e4",
+    "/private/tmp/account-expiry-failed-signout-current/bootstrap.mjs": "dffd828d290bf73d963d57a9749f740937c4eb857a9db432499e90bdabb5f6c4",
+    "/private/tmp/account-expiry-failed-signout-current/server.mjs": "604653e2bb883fd2ae9dc6831a17114c1dadb443615fb3680ffff2ceb37a0034",
+    "/private/tmp/account-expiry-failed-signout-current/observe.cjs": "15f5ea57c370542ce4ff0ffc53e73253810b5d25649dcc08719a3e62c9b2d878",
+    "/private/tmp/account-expiry-failed-signout-current/failed-signout-expiry-report.json": "a858a8af700b10343bb172b8c434ed90fe73d1e0baf90f19e15de6763d00ee27"
+  },
+  "validation": {
+    "native": "One process,three saved snapshots;zero renderer errors;observer exit0 and owned server stopped130.",
+    "sourceIdentity": "All eight source hashes match PR128 evidence. No production code changed.",
+    "buildLint": "Not repeated for evidence-only changes. PR128 recorded successful production build/type and full lint on identical source.",
+    "unitTests": "Not added or run."
+  },
+  "adjudication": {
+    "canonicalGroup": "AUTH01",
+    "previousRuntimeGap": "Closed for the combined failed-signout/current-expiry ordering.",
+    "engineeringVariantCount": 8,
+    "engineeringVariantEvidence": "This case completes the enumerated controlled engineering variants together with PR128 native snapshots and12 actual bridge/service cases.",
+    "accepted": false,
+    "remaining": [
+      "Broader account/session lifecycle and first-time-listener acceptance retain their existing scopes.",
+      "Q13 semantic denominator and all required proof kinds remain incomplete."
+    ],
+    "knownOpenChecks": 25,
+    "listenerOpenChecks": 14,
+    "otherProofOpenChecks": 11
+  },
+  "limits": [
+    "A controlled disposable file failure does not establish arbitrary OS faults, live-server compatibility, power-loss behavior or listener understanding.",
+    "No audible-media, provider, accessibility, smaller-screen or200% zoom check.",
+    "No complete account lifecycle, semantic denominator, percentage or goal-completion claim."
+  ]
+}

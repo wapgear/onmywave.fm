@@ -336,10 +336,14 @@
     ],
     "proofState": "reviewed-partial",
     "remaining": [
-      "Failed signout plus deferred401 combined runtime variant is source-reviewed through the shared failure path,not separately replayed.",
-      "Full account/session lifecycle and listener acceptance remain in their existing broader scopes."
+      "Broader account/session lifecycle and listener acceptance remain in their existing scopes."
     ],
-    "accepted": false
+    "accepted": false,
+    "followUp": {
+      "record": "2026-10-19-failed-signout-expiry.json",
+      "sha256": "44139ece674c09f5503ac10c98322c92e9bb1fc3bd597f97c651636535121b15",
+      "result": "Combined failed-signout/deferred-current-expiry runtime variant passed on identical source;bounded engineering variants now evidenced,broader acceptance remains incomplete."
+    }
   },
   "limits": [
     "Controlled native/service reproduction does not establish live-server compatibility,OS fault,power-loss,VoiceOver or uncoached usability.",
