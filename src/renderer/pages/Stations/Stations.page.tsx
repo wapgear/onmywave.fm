@@ -80,6 +80,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   const [newProfileOpen, setNewProfileOpen] = useState(false);
   const [profileName, setProfileName] = useState('');
   const profileNameInput = useRef<HTMLInputElement>(null);
+  const profileSubmission = useRef(false);
   const [switchTarget, setSwitchTarget] = useState<string | null>(null);
   const [profileNotice, setProfileNotice] = useState('');
   const [scriptReplacement, setScriptReplacement] = useState<ScriptReplacement | null>(null);
@@ -281,18 +282,28 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
       setSwitchTarget(null);
       setProfileNotice('Room switched. Your script and selected audio are unchanged.');
     }
-  } });
+  }, onSettled: () => { profileSubmission.current = false; } });
   const enableProfile = useMutation({ ...configurationMutation, mutationFn: async (input: { id: string; enabled: boolean }) => {
     unwrap(await window.wave.setRoomProfileEnabled(input));
     await client.invalidateQueries({ queryKey: ['localState'] });
   } });
   const setupBusy = preparationStatusUnknown || cancellationPending || configurationPending || manualPending || (!!running && !runningProfile);
   const busy = setupBusy || preparing || turnOff.isPending || save.isPending || resume.isPending || profiles.isPending || enableProfile.isPending;
+  function changeProfile(action: { kind: 'copy' } | { kind: 'switch'; id: string; saveChanges: boolean }) {
+    if (profileSubmission.current || busy || (action.kind === 'copy' && !profileName.trim())) return;
+    profileSubmission.current = true;
+    profiles.mutate(action);
+  }
+  function closeProfileDialogs() {
+    if (profileSubmission.current || profiles.isPending) return;
+    setNewProfileOpen(false);
+    setSwitchTarget(null);
+  }
   function chooseProfile(id: string) {
-    if (busy || id === state.data?.activeRoomProfileId) return;
+    if (profileSubmission.current || busy || id === state.data?.activeRoomProfileId) return;
     profiles.reset(); setProfileNotice('');
     if (setupDirty) setSwitchTarget(id);
-    else profiles.mutate({ kind: 'switch', id, saveChanges: false });
+    else changeProfile({ kind: 'switch', id, saveChanges: false });
   }
   function prepareText(confirmed = false) {
     if (!ready || !room.djId || !textKeyReady) return;
@@ -443,8 +454,8 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
         else applyScript(replacement.draft, replacement.reveal);
       }}>{scriptReplacement.kind === 'prepare' ? 'Prepare new text' : 'Replace draft'}</button></div>
     </Dialog>}
-    {newProfileOpen && <Dialog title="Save a new listening room" close={() => { if (!profiles.isPending) setNewProfileOpen(false); }} initialFocusRef={profileNameInput}><form onSubmit={event => { event.preventDefault(); if (!profiles.isPending && profileName.trim()) profiles.mutate({ kind: 'copy' }); }}><fieldset disabled={profiles.isPending}><label>Name<input ref={profileNameInput} autoFocus required maxLength={80} value={profileName} onChange={event => { profiles.reset(); setProfileName(event.target.value); }} placeholder="Evening technology" /></label></fieldset><p className="form-hint">Copies your setup with automatic preparation off. Choose the new room, then make it available in Advanced room options before enabling preparation or DJ breaks. You can finish incomplete setup later.</p><ErrorNotice error={profiles.error} /><div className="modal-actions"><button type="button" disabled={profiles.isPending} onClick={() => setNewProfileOpen(false)}>Cancel</button><button className="primary" disabled={profiles.isPending || !profileName.trim()}>{profiles.isPending ? 'Saving…' : 'Save room'}</button></div></form></Dialog>}
-    {switchTarget && <Dialog title="Switch listening rooms?" close={() => { if (!profiles.isPending) setSwitchTarget(null); }}><p>You have unsaved changes to {activeProfile?.name ?? 'your current room'}. Save them before switching, or discard them. Your script and selected audio stay unchanged.</p><ErrorNotice error={profiles.error} /><div className="modal-actions"><button disabled={profiles.isPending} onClick={() => setSwitchTarget(null)}>Cancel</button><button disabled={profiles.isPending} onClick={() => profiles.mutate({ kind: 'switch', id: switchTarget, saveChanges: false })}>Discard and switch</button><button className="primary" disabled={profiles.isPending} onClick={() => profiles.mutate({ kind: 'switch', id: switchTarget, saveChanges: true })}>{profiles.isPending ? 'Switching…' : 'Save and switch'}</button></div></Dialog>}
+    {newProfileOpen && <Dialog title="Save a new listening room" close={closeProfileDialogs} closeDisabled={profiles.isPending} initialFocusRef={profileNameInput}><form onSubmit={event => { event.preventDefault(); changeProfile({ kind: 'copy' }); }}><label>Name<input ref={profileNameInput} autoFocus required maxLength={80} readOnly={busy} value={profileName} onChange={event => { if (profileSubmission.current || busy) return; profiles.reset(); setProfileName(event.target.value); }} placeholder="Evening technology" /></label><p className="form-hint">Copies your setup with automatic preparation off. Choose the new room, then make it available in Advanced room options before enabling preparation or DJ breaks. You can finish incomplete setup later.</p><ErrorNotice error={profiles.error} /><div className="modal-actions"><button type="button" aria-disabled={profiles.isPending || undefined} onClick={closeProfileDialogs}>Cancel</button><button className="primary" disabled={!profileName.trim()} aria-disabled={busy || undefined} aria-busy={profiles.isPending || undefined}>{profiles.isPending ? 'Saving…' : 'Save room'}</button></div></form></Dialog>}
+    {switchTarget && <Dialog title="Switch listening rooms?" close={closeProfileDialogs} closeDisabled={profiles.isPending}><p>You have unsaved changes to {activeProfile?.name ?? 'your current room'}. Save them before switching, or discard them. Your script and selected audio stay unchanged.</p><ErrorNotice error={profiles.error} /><div className="modal-actions"><button aria-disabled={profiles.isPending || undefined} onClick={closeProfileDialogs}>Cancel</button><button aria-disabled={busy || undefined} onClick={() => changeProfile({ kind: 'switch', id: switchTarget, saveChanges: false })}>Discard and switch</button><button className="primary" aria-disabled={busy || undefined} aria-busy={profiles.isPending || undefined} onClick={() => changeProfile({ kind: 'switch', id: switchTarget, saveChanges: true })}>{profiles.isPending ? 'Switching…' : 'Save and switch'}</button></div></Dialog>}
     </>}
   </>;
 }
