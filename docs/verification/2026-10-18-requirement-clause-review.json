@@ -21,8 +21,8 @@
     "STARStories": 27,
     "STARResultFragments": 265,
     "structuralLines": 47,
-    "semanticFragmentsReviewed": 318,
-    "proofFragmentsReviewed": 316,
+    "semanticFragmentsReviewed": 431,
+    "proofFragmentsReviewed": 429,
     "partitionComplete": true,
     "semanticDenominatorComplete": false,
     "overallScore": null,
@@ -38,7 +38,7 @@
     "listenerOpenChecks": 14,
     "otherProofOpenChecks": 11,
     "contextFragmentsReviewed": 1,
-    "canonicalReviewGroups": 53,
+    "canonicalReviewGroups": 67,
     "acceptedCanonicalGroups": 0
   },
   "STARContexts": [
@@ -441,7 +441,7 @@
         "RAD-L138-result-02",
         "RAD-L138-result-03"
       ],
-      "contextReviewState": "pending"
+      "contextReviewState": "reviewed-linked;complete connection story/source context retained;whole-story acceptance incomplete"
     },
     {
       "id": "M8",
@@ -504,7 +504,7 @@
         "RAD-L141-result-08",
         "RAD-L141-result-09"
       ],
-      "contextReviewState": "pending"
+      "contextReviewState": "reviewed-linked;complete connection story/source context retained;whole-story acceptance incomplete"
     },
     {
       "id": "M11",
@@ -528,7 +528,7 @@
         "RAD-L142-result-12",
         "RAD-L142-result-13"
       ],
-      "contextReviewState": "pending"
+      "contextReviewState": "reviewed-linked;complete connection story/source context retained;whole-story acceptance incomplete"
     },
     {
       "id": "M12",
@@ -548,7 +548,7 @@
         "RAD-L143-result-08",
         "RAD-L143-result-09"
       ],
-      "contextReviewState": "pending"
+      "contextReviewState": "reviewed-linked;complete connection story/source context retained;whole-story acceptance incomplete"
     },
     {
       "id": "M13",
@@ -562,7 +562,7 @@
         "RAD-L144-result-02",
         "RAD-L144-result-03"
       ],
-      "contextReviewState": "pending"
+      "contextReviewState": "reviewed-linked;complete connection story/source context retained;whole-story acceptance incomplete"
     },
     {
       "id": "M14",
@@ -718,7 +718,7 @@
   },
   "clauseLedger": {
     "file": "2026-10-18-requirement-clauses.csv",
-    "sha256": "cfbb005b74a3a3029b24157b73ebe4781328c0194624e41166cd93cc46e2cdee",
+    "sha256": "9ed97d0530cc353ff5b5d540d5b927a084e69e46c418aad18a5463e53c06c22a",
     "columns": "Candidate navigation, semantic review and actual proof review are distinct. Empty evidence/canonical IDs do not establish completion."
   },
   "scopeReviews": [
@@ -798,6 +798,11 @@
       "file": "2026-10-19-jellyfin-read-boundary.json",
       "sha256": "e8746c9f2af30634238d589bc994210aa9228145bf0b43b856a3f893cbc79023",
       "meaning": "JR01 one exact obsolete-read clause,current service/HTTP contradiction and read/preflight guard;full native/live connection acceptance remains separate."
+    },
+    {
+      "file": "2026-10-19-connection-obligations.json",
+      "sha256": "54763e9f4d0891c522004e8b1a354c56a4999bc30f1b68f65d28dc35378dd4b5",
+      "meaning": "Fourteen connection groups,113 new exact fragments plus10 intact prior dependencies and five full STAR contexts. Source/dated evidence review only;no accepted groups."
     }
   ],
   "generatorMeaning": "Original mechanical partition generator only. Later deliberate semantic/proof annotations are authoritative and must be preserved; rerunning the original generator alone would discard them.",

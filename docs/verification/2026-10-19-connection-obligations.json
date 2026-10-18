@@ -1,0 +1,1571 @@
+{
+  "date": "2026-10-19",
+  "baseCommit": "622b92bc609072fb50dfcb9b87a9dbecdadea3c8",
+  "scope": "Entire Jellyfin connection section and complete M7/M10/M11/M12/M13 results:123 exact fragments,113 new reviews plus10 intact AUTH01/AS01/JR01 dependencies.14 canonical groups;no new runtime or accepted group.",
+  "groups": [
+    {
+      "id": "CN01",
+      "actor": "Listener connecting or recovering a Jellyfin collection",
+      "trigger": "Submit Connect or library choices",
+      "outcome": "Keep current action/failure focus and inputs;block repeated submits;later navigation wins.",
+      "fragments": [
+        "REQ-L136-text-01",
+        "REQ-L136-text-02",
+        "REQ-L136-text-03",
+        "REQ-L136-text-05",
+        "RAD-L142-result-05",
+        "RAD-L142-result-06"
+      ],
+      "mandatoryVariants": [
+        "Connect from field or action",
+        "Focus before fields lock",
+        "Synchronous repeat guard",
+        "Failed credentials/checkbox draft retained",
+        "Save pending/failure",
+        "Visible error/action at1280x720",
+        "Later Tab or navigation"
+      ],
+      "source": [
+        "src/renderer/pages/Connection/Connection.page.tsx",
+        "src/renderer/components/LibraryChooser.tsx",
+        "src/renderer/components/LibrarySelection.tsx"
+      ],
+      "evidence": [
+        "2026-10-18-account-form-focus.json",
+        "2026-10-17-library-save-navigation.json",
+        "2026-10-19-account-switch-server-draft.json"
+      ],
+      "judgment": "Connect and Save retain stable focusable actions with aria busy/unavailable;entry/submission refs guard before pending renders. Library selection state lives above the page,while failed sign-in fields stay local. Current account-switch check confirms failed server discovery keeps attempted fields and Connect focus.",
+      "remaining": [
+        "Dated native controls use held/injected faults and exact phases. No fresh successful-auth/forced-window matrix,VoiceOver or listener result."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "CN02",
+      "actor": "Listener connecting or recovering a Jellyfin collection",
+      "trigger": "Successful sign-in or initial library save completes",
+      "outcome": "Hand off only the accepted current action to its next visible heading;cancel for later user intent.",
+      "fragments": [
+        "REQ-L138-text-01",
+        "REQ-L138-text-02",
+        "REQ-L138-text-03",
+        "REQ-L138-text-04",
+        "REQ-L138-text-05",
+        "REQ-L138-text-06",
+        "REQ-L138-text-07",
+        "REQ-L138-text-08",
+        "RAD-L141-result-02",
+        "RAD-L142-result-01",
+        "RAD-L142-result-02",
+        "RAD-L142-result-03",
+        "RAD-L142-result-04"
+      ],
+      "mandatoryVariants": [
+        "Different/same-account sign-in",
+        "Discovery loading/empty",
+        "Exact accepted library selection",
+        "Source action owns request",
+        "Tab/pointer/overlay/window/focus cancellation",
+        "No-op/stale result excluded",
+        "No wait for catalog/audio reads"
+      ],
+      "source": [
+        "src/renderer/App.tsx:runConnectionTransition",
+        "src/renderer/useRetryFocus.ts:retryFrom,completion",
+        "src/renderer/pages/Connection/Connection.page.tsx:login",
+        "src/renderer/components/LibrarySelection.tsx:submit"
+      ],
+      "evidence": [
+        "2026-10-18-authentication-handoff-focus.json",
+        "2026-10-19-account-switch-server-draft.json"
+      ],
+      "judgment": "Transition stores the returned destination and compares current account/exact libraries before selecting a visible heading. RetryFocus captures scope and current action before work and revokes ownership on later intent. The handoff follows accepted connection update,not later library/audio load completion.",
+      "remaining": [
+        "Authentication record excludes new cold expired replay,explicit discovery-query failure and forced pointer/overlay/window/stale-no-op matrix. Those source guards are not a full runtime proof."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "CN03",
+      "actor": "Listener connecting or recovering a Jellyfin collection",
+      "trigger": "Use another account/server during initial selection",
+      "outcome": "Retain old account and choices until accepted authentication;successful login resets choices and refreshes access.",
+      "fragments": [
+        "REQ-L140-text-01",
+        "REQ-L140-text-02",
+        "REQ-L140-text-05",
+        "REQ-L140-text-06",
+        "REQ-L140-text-07",
+        "REQ-L140-text-08",
+        "RAD-L142-result-08",
+        "RAD-L142-result-11"
+      ],
+      "mandatoryVariants": [
+        "Action during loading/empty/failed discovery",
+        "Back versus failed versus successful sign-in",
+        "Same-account reauthentication resets draft/error",
+        "Different account/server replaces only after commit",
+        "Back opener focus",
+        "Repeated entry current-server prefill dependency AS01"
+      ],
+      "source": [
+        "src/renderer/pages/Connection/Connection.page.tsx:changingAccount,login,LibraryChooser",
+        "src/renderer/components/LibrarySelection.tsx:reset",
+        "src/main/jellyfin.ts:connect,persistSession"
+      ],
+      "evidence": [
+        "2026-10-16-connection-recovery-current.json",
+        "2026-10-17-library-save-navigation.json",
+        "2026-10-19-account-switch-server-draft.json"
+      ],
+      "judgment": "Chooser remains mounted while the sign-in form opens. Login resets the checkbox draft only after accepted authentication. Failed authentication leaves the committed service account and checkbox state;Back restores the account-switch action. Current prefill contradiction is fixed and retained separately as AS01.",
+      "remaining": [
+        "Current AS01 native run tests failed public-info discovery,not rejected password or successful account replacement. Earlier controlled authentication records retain their own source/runtime limits."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "CN04",
+      "actor": "Listener connecting or recovering a Jellyfin collection",
+      "trigger": "Accessible libraries disappear or return",
+      "outcome": "Count/submit only accessible choices;empty recovery retains retry intent without selecting for the listener.",
+      "fragments": [
+        "REQ-L142-text-01",
+        "REQ-L142-text-02",
+        "REQ-L142-text-03",
+        "REQ-L142-text-04",
+        "REQ-L142-text-05",
+        "REQ-L142-text-06",
+        "REQ-L142-text-07",
+        "REQ-L142-text-08",
+        "REQ-L142-text-09",
+        "REQ-L142-text-10",
+        "RAD-L141-result-03",
+        "RAD-L141-result-04",
+        "RAD-L141-result-05",
+        "RAD-L141-result-06",
+        "RAD-L141-result-07",
+        "RAD-L141-result-08",
+        "RAD-L141-result-09"
+      ],
+      "mandatoryVariants": [
+        "Removed prior selection explained",
+        "Empty zero count and no Save",
+        "Initial and General chooser",
+        "Pending Checking libraries stable focus",
+        "Repeated retry blocked",
+        "Returned first checkbox focused but unchecked",
+        "Empty/error retry retained",
+        "Later focus wins",
+        "Long account/library names"
+      ],
+      "source": [
+        "src/renderer/components/LibraryChooser.tsx:selectedIds,unavailableSelection,retryLibraries",
+        "src/renderer/components/LibraryChooser.styles.css",
+        "src/renderer/components/LibrarySelection.tsx",
+        "src/renderer/useRetryFocus.ts",
+        "src/renderer/styles.css"
+      ],
+      "evidence": [
+        "2026-10-18-live-access-permissions.json",
+        "2026-10-17-library-retry-focus.json",
+        "2026-10-16-long-text-layout.json"
+      ],
+      "judgment": "Chooser filters submitted/count IDs through current access and blocks empty/unknown reads. Retry has native focus retention with an async guard;successful owned recovery targets the first available checkbox without changing selection. Same component is used initially and in General. Real restricted-account access was granted and recovered through explicit native Retry in the dated live record.",
+      "remaining": [
+        "Live access proof is one server/runtime and bounded temporary account. Older long-text layouts include historical deferred sizes that are not newly required/executed;not an exhaustive current display/AT matrix."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "CN05",
+      "actor": "Listener connecting or recovering a Jellyfin collection",
+      "trigger": "A library save outlives its Settings view or overlaps auth recovery",
+      "outcome": "Keep exact submitted choices/pending/error for the current session;serialize account actions and preserve expiry.",
+      "fragments": [
+        "REQ-L136-text-04",
+        "REQ-L144-text-19",
+        "REQ-L144-text-20",
+        "REQ-L144-text-21",
+        "REQ-L144-text-22",
+        "REQ-L144-text-23",
+        "REQ-L144-text-24",
+        "REQ-L144-text-25",
+        "REQ-L144-text-26",
+        "REQ-L144-text-27",
+        "RAD-L141-result-01",
+        "RAD-L142-result-09",
+        "RAD-L142-result-10",
+        "RAD-L142-result-12",
+        "RAD-L142-result-13"
+      ],
+      "mandatoryVariants": [
+        "Settings chooser remains mounted after success",
+        "Focused clean saved control until blur",
+        "Music navigation while saving",
+        "Failed choice/error retained;edit clears",
+        "Duplicate/library/account/signout overlap blocked",
+        "Same-account login resets choices",
+        "Expiry waits for save and remains visible",
+        "Late old callback cannot reopen session"
+      ],
+      "source": [
+        "src/renderer/components/LibrarySelection.tsx:useSelection,Submission",
+        "src/renderer/components/LibraryChooser.tsx",
+        "src/renderer/pages/Connection/Connection.page.tsx:savingLibraries",
+        "src/renderer/pages/Settings/Settings.page.tsx:savingLibraries,disconnect",
+        "src/renderer/App.tsx:librariesSelected,updateLibraries"
+      ],
+      "evidence": [
+        "2026-10-17-library-save-navigation.json",
+        "2026-10-18-account-form-focus.json",
+        "2026-10-18-authentication-handoff-focus.json",
+        "2026-10-19-account-expiry-boundary.json"
+      ],
+      "judgment": "App-owned provider stores choices and mutation lifetime. Submission captures account/revision/done and applies only to active unchanged ownership. Settings chooser is keyed by account,not library list. UI blocks overlaps and expiry completion does not clear the expired screen;current auth-revision handling remains AUTH01.",
+      "remaining": [
+        "Controlled navigation/storage faults are not every live permission/OS failure. Auth focus and stale/no-op variants retain the handoff record limits;no whole M11 acceptance inferred."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "CN06",
+      "actor": "Listener connecting or recovering a Jellyfin collection",
+      "trigger": "Restore or replace a connection on one or two installations",
+      "outcome": "Protect session locally;use independent persistent device identity with honest session-only fallback.",
+      "fragments": [
+        "REQ-L144-text-01",
+        "REQ-L144-text-02",
+        "REQ-L144-text-03",
+        "REQ-L144-text-04",
+        "REQ-L144-text-05",
+        "RAD-L143-result-09"
+      ],
+      "mandatoryVariants": [
+        "API/artwork/direct/converted identity",
+        "Distinct installations",
+        "Account/signout/restart identity continuity",
+        "Unreadable identity fallback",
+        "Session-only warning",
+        "No restorable replacement when identity/storage unavailable",
+        "Preserve old readable account until safe replacement"
+      ],
+      "source": [
+        "src/main/storage.ts:readDeviceIdentity,readConnection,writeConnection",
+        "src/main/index.ts:app.whenReady,persistConnection",
+        "src/main/jellyfin.ts:connection,request",
+        "src/main/media.ts:preparePlayback,registerMedia",
+        "src/renderer/pages/Settings/Settings.page.tsx"
+      ],
+      "evidence": [
+        "2026-10-16-device-identity.json",
+        "2026-10-16-connection-publication.json",
+        "2026-10-17-private-credentials.json"
+      ],
+      "judgment": "Device identity uses race-safe private-file publication and process fallback. The same identity feeds API and media authorization. Credentials use safeStorage;new session-only acceptance clears an old encrypted record through the commit boundary. An older readable account is not discarded merely for temporary identity fallback. Settings discloses restore limitations.",
+      "remaining": [
+        "One live server/account and macOS architecture;filesystem/encryption unavailable branches are controlled. Converted HEAD establishes route/identity only. Other installs/OS combinations and subjective use remain separate."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "CN07",
+      "actor": "Listener connecting or recovering a Jellyfin collection",
+      "trigger": "Multiple sign-ins or sign-out overlap before publication",
+      "outcome": "A newer intent supersedes older requests;failure retains the committed account without reviving stale attempts.",
+      "fragments": [
+        "REQ-L144-text-06",
+        "REQ-L144-text-07",
+        "REQ-L144-text-08",
+        "REQ-L144-text-09",
+        "REQ-L144-text-10",
+        "RAD-L143-result-02",
+        "RAD-L143-result-03",
+        "RAD-L143-result-04"
+      ],
+      "mandatoryVariants": [
+        "Older success/failure after newer intent",
+        "Failed newer login retains committed account",
+        "Confirm signout before pause/write awaits",
+        "Failed signout keeps original committed account",
+        "Superseded earlier sign-in never revives"
+      ],
+      "source": [
+        "src/main/jellyfin.ts:connectionIntent,connect,cancelPendingSignIns,persistSession",
+        "src/main/index.ts:connect,disconnect"
+      ],
+      "evidence": [
+        "2026-10-16-device-identity.json",
+        "2026-10-16-connection-publication.json",
+        "2026-10-19-failed-signout-expiry.json"
+      ],
+      "judgment": "Connect advances intent before network requests and checks it after each boundary. Sign-out advances it immediately before asynchronous preparation pause. Candidate failures do not replace the committed account;superseded attempts stay invalid even when sign-out fails.",
+      "remaining": [
+        "Explicit controlled checkpoints prove enumerated races,not a naturally induced real-server token invalidation history. Full physical storage,OS and native auth matrix remains broader."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "CN08",
+      "actor": "Listener connecting or recovering a Jellyfin collection",
+      "trigger": "A credential publication or session-only clear is delayed/fails",
+      "outcome": "Commit exact account/library state in order;cancel unpublished replacements and never restore an older restorable account.",
+      "fragments": [
+        "REQ-L144-text-11",
+        "REQ-L144-text-12",
+        "REQ-L144-text-13",
+        "REQ-L144-text-14",
+        "REQ-L144-text-15",
+        "REQ-L144-text-16",
+        "REQ-L144-text-17",
+        "REQ-L144-text-18",
+        "RAD-L143-result-05",
+        "RAD-L143-result-06",
+        "RAD-L143-result-07",
+        "RAD-L143-result-08"
+      ],
+      "mandatoryVariants": [
+        "Ordered credential writes/deletion",
+        "Exact accepted account and library snapshot",
+        "Candidate inactive until commit",
+        "Signout cancels unpublished candidate",
+        "Committed-before-signout ordering",
+        "Failed save retains latest committed state",
+        "Newer sign-in not canceled by older failure",
+        "Session-only clear prevents older-account restart"
+      ],
+      "source": [
+        "src/main/jellyfin.ts:persistSession,sessionRevision,connectionWrites",
+        "src/main/storage.ts:writeConnection",
+        "src/main/index.ts:persistConnection,disconnect"
+      ],
+      "evidence": [
+        "2026-10-16-connection-publication.json",
+        "2026-10-16-device-identity.json"
+      ],
+      "judgment": "Service queues persistence and checks intent/revision before the synchronous publish callback. Storage stages protected bytes then publishes and promotes in the same turn. Failed uncommitted write leaves the latest committed state;postcommit cleanup failure does not roll it back. Session-only acceptance removes an old restorable credential before promotion.",
+      "remaining": [
+        "Controlled real safeStorage/filesystem checkpoints are not every filesystem/Keychain state. Server-side invalidation of an older token remains a separate reconnect possibility even when local ownership is correct."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "CN09",
+      "actor": "Listener connecting or recovering a Jellyfin collection",
+      "trigger": "Offline retry or account recovery occurs during radio editing/preparation",
+      "outcome": "Preserve current-session work for same-account recovery;clear transient work for another account/signout;retain saved local radio data.",
+      "fragments": [
+        "RAD-L138-result-01",
+        "RAD-L138-result-02",
+        "RAD-L138-result-03"
+      ],
+      "mandatoryVariants": [
+        "Offline retry without credential discard",
+        "Same-account auth and library selection",
+        "Unsaved setup/script/manual request retained",
+        "No duplicate save/dispatch",
+        "Music restores paused",
+        "Different account/server/signout clears transient feedback",
+        "Saved local profiles/recordings retained"
+      ],
+      "source": [
+        "src/renderer/App.tsx:SessionContent,SessionContent key,radio drafts",
+        "src/renderer/player.tsx:restoreSession",
+        "src/main/index.ts:connect,disconnect",
+        "src/main/prepared-news.ts"
+      ],
+      "evidence": [
+        "2026-10-16-connection-recovery-current.json",
+        "2026-10-16-account-boundary-current.json",
+        "2026-10-17-live-connection-recovery.json",
+        "2026-10-18-edit-lifetime-invariant.json"
+      ],
+      "judgment": "Radio drafts live in SessionContent keyed by account identity,above ReadyApp/expired views. Same-account reauthentication retains that owner while player remount restores paused. Different identity or confirmed signout remounts it. Durable local radio library is separate from transient draft/feedback. Live recovery record only induces read socket failure and genuine per-request401.",
+      "remaining": [
+        "No fresh live reauthentication/draft preservation;controlled recovery supplies those branches. Live per-request bad token is not saved credential revocation or server shutdown. Full cross-lifetime invariant remains broader."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "CN10",
+      "actor": "Listener connecting or recovering a Jellyfin collection",
+      "trigger": "Refresh or concurrently browse the collection",
+      "outcome": "Read current catalog/artwork and invalidate related cached views while retaining filters,selection,queue and owned Refresh focus.",
+      "fragments": [
+        "REQ-L146-text-01",
+        "REQ-L146-text-02",
+        "REQ-L146-text-04",
+        "REQ-L146-text-05",
+        "REQ-L146-text-06",
+        "REQ-L146-text-07",
+        "REQ-L146-text-08",
+        "REQ-L146-text-09",
+        "REQ-L146-text-12",
+        "REQ-L146-text-13",
+        "RAD-L144-result-01"
+      ],
+      "mandatoryVariants": [
+        "Unchanged concurrent view reads/cache eviction",
+        "Explicit refresh after server changes",
+        "Current songs and genre/tag choices",
+        "Detail/album/playlist invalidation on use",
+        "Search/filter/selection/queue retained",
+        "Busy/failure/success stable Refresh and duplicate guard",
+        "Current primary/album fallback image tags",
+        "No generation or radio opt-in"
+      ],
+      "source": [
+        "src/main/jellyfin.ts:catalog,catalogSnapshots,catalogLoads,songItem",
+        "src/renderer/pages/Songs/Songs.page.tsx:refreshLibrary",
+        "src/renderer/components/Inspector/Inspector.component.tsx",
+        "src/main/media.ts:artwork route"
+      ],
+      "evidence": [
+        "2026-10-17-catalog-view-concurrency.json",
+        "2026-10-17-library-refresh-focus.json",
+        "2026-10-17-live-catalog-album-actions.json",
+        "2026-10-19-jellyfin-read-boundary.json"
+      ],
+      "judgment": "Catalog ownership follows immutable session,not another view/cache eviction. Refresh invalidates songs,filters,details,albums and playlists without replacing view/selection/player state. Stable action uses synchronous/pending guards and no completion refocus. Current metadata retains revision tags through the media proxy. JR01 separately supplies obsolete committed-session completion checks.",
+      "remaining": [
+        "Refresh navigation smoke is not a new changed-server-data/permission pass. Live metadata is sampled;multi-root overlap is controlled. No new complete display/AT or naturally concurrent server mutation proof."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "CN11",
+      "actor": "Listener connecting or recovering a Jellyfin collection",
+      "trigger": "Open an album or inspect long collection metadata",
+      "outcome": "Read album identity metadata separately from tracks;keep playable tracks/actions and reveal full long titles/details.",
+      "fragments": [
+        "REQ-L146-text-10",
+        "REQ-L146-text-11",
+        "RAD-L144-result-02",
+        "RAD-L144-result-03"
+      ],
+      "mandatoryVariants": [
+        "Metadata by album ID even if empty",
+        "Metadata failure leaves tracks playable",
+        "Current title/artist/year/artwork",
+        "Long collection title clamps without losing actions",
+        "Keyboard Show full title",
+        "Inspector wraps complete metadata"
+      ],
+      "source": [
+        "src/main/jellyfin.ts:album,albumTracks",
+        "src/renderer/pages/Albums/Albums.page.tsx:AlbumDetail",
+        "src/renderer/components/CollectionHeading/CollectionHeading.component.tsx",
+        "src/renderer/components/Inspector/Inspector.component.tsx",
+        "src/renderer/components/Drawer/Drawer.styles.css"
+      ],
+      "evidence": [
+        "2026-10-17-live-catalog-album-actions.json",
+        "2026-10-17-long-metadata.json"
+      ],
+      "judgment": "Album metadata and ordered tracks use independent query keys/errors. Fallback heading remains usable if metadata fails;actions depend on available tracks. CollectionHeading measures clipping and offers native disclosure;Inspector has independently refreshed complete metadata within its scrolling drawer.",
+      "remaining": [
+        "Six-track live album and controlled missing metadata/long text are scoped examples,not every personal file or layout. No new visual run,VoiceOver or unassisted title-discovery proof."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "CN12",
+      "actor": "Listener connecting or recovering a Jellyfin collection",
+      "trigger": "Read or mutate an account-accessible playlist",
+      "outcome": "Keep account authorization and honest permission/unknown states on every operation.",
+      "fragments": [
+        "REQ-L148-text-01"
+      ],
+      "mandatoryVariants": [
+        "Account-scoped library/catalog reads",
+        "Editable/read-only/unknown permissions",
+        "Actual mutation server authorization",
+        "No speculative denied write retry",
+        "Captured session before preflight/dispatch"
+      ],
+      "source": [
+        "src/main/jellyfin.ts:request,playlistPermission,serialize,runPlaylistWrite,entries",
+        "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx",
+        "src/renderer/pages/Playlists/Playlists.page.tsx"
+      ],
+      "evidence": [
+        "2026-10-18-live-access-permissions.json",
+        "2026-10-16-playlist-permissions.json",
+        "2026-10-19-playlist-obligations.json",
+        "2026-10-19-jellyfin-read-boundary.json"
+      ],
+      "judgment": "Requests carry the current account token;optional permission lookup gives explicit true/false/null with401 preserved. UI blocks known false and pending permission reads;unknown allows the server to authorize. Serial/preflight/dispatch ownership prevents stale writes. PL groups retain compound playlist mutation recovery.",
+      "remaining": [
+        "P05 still lacks a real unavailable-permission server configuration;controlled503 does not close it. No complete Jellyfin permission/version matrix or live stale-preflight test."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "CN13",
+      "actor": "Listener connecting or recovering a Jellyfin collection",
+      "trigger": "JSON read/authentication stalls or a mutation confirmation is lost",
+      "outcome": "Bound full JSON response reads and classify failures without replaying uncertain writes;status-only success ignores unused bodies.",
+      "fragments": [
+        "REQ-L150-text-01",
+        "REQ-L150-text-02",
+        "REQ-L150-text-03",
+        "REQ-L150-text-04",
+        "REQ-L150-text-05",
+        "REQ-L150-text-06",
+        "REQ-L150-text-07",
+        "RAD-L143-result-01"
+      ],
+      "mandatoryVariants": [
+        "20-second full response body deadline",
+        "Unreachable/unauthorized/empty/failed operation distinction",
+        "Failed sign-in retry",
+        "Unreadable/lost create confirmation uncertain",
+        "Confirmed status-only writes despite stalled unused body",
+        "Music streaming separate recovery"
+      ],
+      "source": [
+        "src/main/jellyfin.ts:request,requestJson,authenticatedRequest,connect,createPlaylist",
+        "src/renderer/components/Shared.tsx:ErrorNotice",
+        "src/renderer/pages/Connection/Connection.page.tsx",
+        "src/renderer/player.tsx"
+      ],
+      "evidence": [
+        "2026-10-16-response-deadline.json",
+        "2026-10-17-live-connection-recovery.json",
+        "2026-10-19-jellyfin-read-boundary.json",
+        "2026-10-19-playlist-obligations.json"
+      ],
+      "judgment": "Request timer spans fetch plus JSON consumption. Known HTTP failures retain service codes;network/parse uncertainty on writes stays uncertain-write. Status-only mutation response cancels unused body without waiting. Music protocol/player use separate stream recovery and never inherit JSON body semantics.",
+      "remaining": [
+        "Deadline record is controlled local HTTP,not physical device/server outages. Current JR01 mutation cases preserve confirmation semantics but do not rerun all20-second timeout variants or live conversion/audio behavior."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "CN14",
+      "actor": "Listener connecting or recovering a Jellyfin collection",
+      "trigger": "Handle Jellyfin credentials and errors",
+      "outcome": "Keep credentials/tokens in protected storage and intended request headers,without logging them.",
+      "fragments": [
+        "REQ-L152-text-01"
+      ],
+      "mandatoryVariants": [
+        "Protected connection bytes",
+        "Sanitized public Connection",
+        "Credentials not in renderer media URLs",
+        "Intended authorization headers",
+        "Generic unsafe error handling",
+        "No raw credential/error logs"
+      ],
+      "source": [
+        "src/main/storage.ts:readConnection,writeConnection",
+        "src/main/jellyfin.ts:connection,request",
+        "src/main/media.ts:registerMedia",
+        "src/main/index.ts:IPC safeError",
+        "src/preload/index.ts",
+        "src/renderer/api.ts"
+      ],
+      "evidence": [
+        "2026-10-17-private-credentials.json",
+        "2026-10-16-device-identity.json",
+        "2026-10-17-source-boundaries.json"
+      ],
+      "judgment": "Current source exposes public connection metadata without token,password or device credential. API/media use intended authorization headers;renderer receives opaque app media URLs. IPC returns known service messages or generic failures;source log scan finds only a constant news-workflow message. Protected storage remains encrypted/private.",
+      "remaining": [
+        "Current static boundary audit and controlled private-file checks are not a forensic audit of all historical console/network traces,OS crash logs or every external dependency. Other platform/Keychain states remain separate."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    }
+  ],
+  "STARContexts": [
+    {
+      "id": "M7",
+      "sourceId": "RAD-L138",
+      "story": "I can reconnect without losing radio work",
+      "situationAndTask": "Jellyfin goes offline or my session expires while I have unsaved setup or an edited script",
+      "action": "Retry an offline request, or sign back into the same server and account and select libraries",
+      "expectedResult": "Offline Retry keeps the session; same-account reauthentication retains radio drafts and pending requests without saving or redispatch, with music restored paused; a different account/server or sign-out clears unsaved drafts and live manual feedback while retaining saved local radio material",
+      "resultFragments": [
+        "RAD-L138-result-01",
+        "RAD-L138-result-02",
+        "RAD-L138-result-03"
+      ],
+      "contextReviewState": "reviewed-linked;complete connection story/source context retained;whole-story acceptance incomplete"
+    },
+    {
+      "id": "M10",
+      "sourceId": "RAD-L141",
+      "story": "I can recover when library access changes",
+      "situationAndTask": "A selected library is no longer available, or my account initially has no music libraries",
+      "action": "Choose an available library and save, or Try again after my administrator grants access",
+      "expectedResult": "Save libraries keeps its current focus while pending and after failure, and a successful Settings update retains the clean saved control until blur; saving initial selection conditionally focuses All songs after that exact accepted connection update. Only available selections are counted and submitted; explain removed access, allow an explicit replacement, and recover from an empty list without reauthentication; retry moves focus to the first available checkbox without selecting it, or retains the empty/error retry; a pending retry ignores repeat activation and never takes focus back after I move elsewhere; initial selection and General settings follow the same rules; empty selection cannot be saved; long account names wrap so library choices and recovery controls stay reachable",
+      "resultFragments": [
+        "RAD-L141-result-01",
+        "RAD-L141-result-02",
+        "RAD-L141-result-03",
+        "RAD-L141-result-04",
+        "RAD-L141-result-05",
+        "RAD-L141-result-06",
+        "RAD-L141-result-07",
+        "RAD-L141-result-08",
+        "RAD-L141-result-09"
+      ],
+      "contextReviewState": "reviewed-linked;complete connection story/source context retained;whole-story acceptance incomplete"
+    },
+    {
+      "id": "M11",
+      "sourceId": "RAD-L142",
+      "story": "I can leave library selection for another account",
+      "situationAndTask": "I chose an account or server that does not have my music",
+      "action": "Use another account or server, sign in, or go Back after a failed attempt",
+      "expectedResult": "Successful sign-in conditionally focuses Choose your libraries from its own Connect action, including another account and pending or empty discovery; saving initial selection conditionally focuses All songs. Later Tab, pointer, overlay/window or focus changes cancel the handoff; stale or no-op results never qualify. Connect retains focused submission through pending and failure; keyboard form submission focuses Connect before fields lock, and the current error/action remain visible without reclaiming later Tab navigation. Keep the server address, clear credentials, retain the old account and library choices until authentication succeeds, then refresh selection and reset old checkbox edits even for the same account; Back restores focus; submitted library choices and Saving survive music navigation, with another save and account actions blocked until settlement; a failed save retains its choices/error for explicit retry after returning; successful same-account sign-in clears the old draft/error and refetches access; expiry keeps sign-in disabled until the save settles, and save completion never dismisses expiry; library saves and sign-in/sign-out wait for each other, and late old results cannot reopen a session",
+      "resultFragments": [
+        "RAD-L142-result-01",
+        "RAD-L142-result-02",
+        "RAD-L142-result-03",
+        "RAD-L142-result-04",
+        "RAD-L142-result-05",
+        "RAD-L142-result-06",
+        "RAD-L142-result-07",
+        "RAD-L142-result-08",
+        "RAD-L142-result-09",
+        "RAD-L142-result-10",
+        "RAD-L142-result-11",
+        "RAD-L142-result-12",
+        "RAD-L142-result-13"
+      ],
+      "contextReviewState": "reviewed-linked;complete connection story/source context retained;whole-story acceptance incomplete"
+    },
+    {
+      "id": "M12",
+      "sourceId": "RAD-L143",
+      "story": "I can trust which account is connected after a delay or restart",
+      "situationAndTask": "A sign-in response arrives late, protected storage or local identity storage becomes unavailable while I change accounts, or I sign in from another installation",
+      "action": "Retry a slow sign-in, finish the newer sign-in or sign out, then reopen the app",
+      "expectedResult": "A stalled response body returns to usable sign-in within the request's 20-second deadline; an older success or failure cannot replace the newer account or undo sign-out; confirming sign-out supersedes older requests before saving its pause, and a later sign-out failure retains the originally committed account; a failed newer login keeps the already connected account; a staged replacement stays inactive until its credential or session-only clear commits; sign-out cancels an unpublished replacement before saving its pause; failed credential saves keep the latest committed account without canceling newer sign-ins; session-only replacement removes the old restorable account and reopening requires sign-in; signing in from a second installation leaves the first session usable",
+      "resultFragments": [
+        "RAD-L143-result-01",
+        "RAD-L143-result-02",
+        "RAD-L143-result-03",
+        "RAD-L143-result-04",
+        "RAD-L143-result-05",
+        "RAD-L143-result-06",
+        "RAD-L143-result-07",
+        "RAD-L143-result-08",
+        "RAD-L143-result-09"
+      ],
+      "contextReviewState": "reviewed-linked;complete connection story/source context retained;whole-story acceptance incomplete"
+    },
+    {
+      "id": "M13",
+      "sourceId": "RAD-L144",
+      "story": "I can see changes made in Jellyfin",
+      "situationAndTask": "I added music or changed metadata/artwork in another client while this app was open",
+      "action": "Press Refresh library in All songs, then revisit the album or playlist",
+      "expectedResult": "Update songs and genre/tag choices, refresh cached details on use, retain search/filter/selection and music, use current image revisions, and offer Retry after read failures; an album metadata failure does not block playable tracks; long collection titles keep actions visible and offer Show full title by keyboard, while complete Inspector metadata wraps within its drawer",
+      "resultFragments": [
+        "RAD-L144-result-01",
+        "RAD-L144-result-02",
+        "RAD-L144-result-03"
+      ],
+      "contextReviewState": "reviewed-linked;complete connection story/source context retained;whole-story acceptance incomplete"
+    }
+  ],
+  "retainedDependencies": [
+    {
+      "id": "RAD-L142-result-07",
+      "canonicalObligationIds": "AS01",
+      "evidence": "2026-10-19-account-switch-server-draft.json"
+    },
+    {
+      "id": "REQ-L140-text-03",
+      "canonicalObligationIds": "AS01",
+      "evidence": "2026-10-19-account-switch-server-draft.json"
+    },
+    {
+      "id": "REQ-L140-text-04",
+      "canonicalObligationIds": "AS01",
+      "evidence": "2026-10-19-account-switch-server-draft.json"
+    },
+    {
+      "id": "REQ-L140-text-09",
+      "canonicalObligationIds": "AS01",
+      "evidence": "2026-10-19-account-switch-server-draft.json"
+    },
+    {
+      "id": "REQ-L144-text-28",
+      "canonicalObligationIds": "AUTH01",
+      "evidence": "2026-10-19-account-expiry-boundary.json;2026-10-19-failed-signout-expiry.json"
+    },
+    {
+      "id": "REQ-L144-text-29",
+      "canonicalObligationIds": "AUTH01",
+      "evidence": "2026-10-19-account-expiry-boundary.json;2026-10-19-failed-signout-expiry.json"
+    },
+    {
+      "id": "REQ-L144-text-30",
+      "canonicalObligationIds": "AUTH01",
+      "evidence": "2026-10-19-account-expiry-boundary.json;2026-10-19-failed-signout-expiry.json"
+    },
+    {
+      "id": "REQ-L144-text-31",
+      "canonicalObligationIds": "AUTH01",
+      "evidence": "2026-10-19-account-expiry-boundary.json;2026-10-19-failed-signout-expiry.json"
+    },
+    {
+      "id": "REQ-L144-text-32",
+      "canonicalObligationIds": "AUTH01",
+      "evidence": "2026-10-19-account-expiry-boundary.json;2026-10-19-failed-signout-expiry.json"
+    },
+    {
+      "id": "REQ-L146-text-03",
+      "canonicalObligationIds": "JR01",
+      "evidence": "2026-10-19-jellyfin-read-boundary.json"
+    }
+  ],
+  "fragmentTextSha256": {
+    "RAD-L138-result-01": "2cdc5984d8f6e120f17ee069181e08a0e4037fa7e0ded4520a6bf88b4c287821",
+    "RAD-L138-result-02": "51799868819abe9407ae3940b56a783919633f1c34d6d1691aab80e64298de8d",
+    "RAD-L138-result-03": "2bf79c8f0dc3181a2d8451ab115e48f7020222bb34b6702cf9dd0de1884eb4f9",
+    "RAD-L141-result-01": "04d54907453c4945f7cadd05af01c0b9e67516057c324032372b37cef82b5dfc",
+    "RAD-L141-result-02": "1b40c1b9f923747ac523e5015e2a40c8219ed875948f6d62aded96c56d90f7e3",
+    "RAD-L141-result-03": "a1a9ec88f8a1d87e5041d6f7e2ddea47f7405227b9b6c229782e955938410790",
+    "RAD-L141-result-04": "ccb79405500742ba3bacbda95be7b1d4882219eee94c4dc56e8c5ba6c9989d30",
+    "RAD-L141-result-05": "254d8552a90f9203ebe8fe9c75aad90f29ed9dbe80e33450cf8bab6e14cc1c9f",
+    "RAD-L141-result-06": "5481b80f68eee88dfa88d2239139c459943bcf05f1736a4cd3de440a22aa7c9d",
+    "RAD-L141-result-07": "a8727318855fbb7a21fbaf3106606fc3af360a4917d5df0a245c9be21eced4e3",
+    "RAD-L141-result-08": "047ff2a7eb5b0861fe227aaef234d3627307785f8c0e90333643497697a29b20",
+    "RAD-L141-result-09": "d9cbaeb957a950c7a52e8c183c1c65ae76e839d007f094ef3bb50f3d91b730e1",
+    "RAD-L142-result-01": "2a0873652da712884a6d8a386e0615a05036b3ab02fbaa62729b6920a6f597e8",
+    "RAD-L142-result-02": "e6783af2e0b1d1afa0b268c9077272d11841f15af762c9d14339beda440857ae",
+    "RAD-L142-result-03": "a008954b597a6e39218eb5d64f45a3b48e123144c02e770204c10bf2b3aca155",
+    "RAD-L142-result-04": "a29c5473f30e7b26558f6d3aeb6c9c71bedddfe55d9c0654dfb7254b32d6eab8",
+    "RAD-L142-result-05": "e9fce6ec40136e14092d3373f743b7238c3ea5fc70b91ed94d1e3946d08133d2",
+    "RAD-L142-result-06": "5954fe296eb5d349342b5fcc78a1ef25e7222b2be60fa61850b97f8b92646153",
+    "RAD-L142-result-08": "2e273841696d3b3cbfdcf0917d131e19ea379a7a2c5d46019ed2ce9d042d3d44",
+    "RAD-L142-result-09": "884d10e8711981e6724eb57d393d137074bb7c8ca945a05a0551e0c3f574d6e8",
+    "RAD-L142-result-10": "ec6316333f16d9387aab2935b4b5eca5420a42d53bea27a386cf16ba4ac62530",
+    "RAD-L142-result-11": "4777779b418ea2e3741a995ba252c1c854daca0b2414413e63452c3e7de6e3a4",
+    "RAD-L142-result-12": "0cb4b332a338d5f1ca91527c6e492809d5f9376d540e8a34b2dc2e04c58663c6",
+    "RAD-L142-result-13": "2842f4536d3f79d920f523659a56b8749c183aaeccc5b7e6b4b190102237c634",
+    "RAD-L143-result-01": "cd1633947bf88163bf32fdaff6230313880adeef0b322363b643650d84a832f6",
+    "RAD-L143-result-02": "a6b54823b39b1de7a00ece043f75b2a85a9b710a66bceb2d1a0faf47c4b215a6",
+    "RAD-L143-result-03": "250ea20f7cdab88866f4fce4d31a4af4b5c75c09650ee3052dfe759cedaed078",
+    "RAD-L143-result-04": "e2e59253c43462df163d90c1edfe2e3e7e7d63b90e8656b6ef2b889a6c816a4d",
+    "RAD-L143-result-05": "ebc6077ce0100ceed1fafb7b83d6d023912acfa3fd19ce3c47634468f5b985c9",
+    "RAD-L143-result-06": "9351fbe2e43547de825200cff4f34019b987bdb85e5a18ecc257c13a4e5801ce",
+    "RAD-L143-result-07": "db1eb025cc2a11eec9dd7d524c05e12f2b11fbcc6bfd2ecfef61faadcea6a462",
+    "RAD-L143-result-08": "012e9a79039d66518390570ae97dd1db78bd2b119614ef73b9090177aa7193ad",
+    "RAD-L143-result-09": "6366ba031ddf5fa0b49f5fdc92d35b0ed8ce4e1ca34e6a5563f30e310a299ab3",
+    "RAD-L144-result-01": "82452794d0bf7831cebd5ea8325f18a3eb052730f358391817f9856e48f50bc9",
+    "RAD-L144-result-02": "92301635868c4eae2dfa4c4fa63bd15e91701654029b6c1f5f399ddb57a03956",
+    "RAD-L144-result-03": "29deaea6c788fa514b3d1435ef0e364a4b748352864ac7066187df96a7dedbf3",
+    "REQ-L136-text-01": "182f97ebe34e47ab84e4ac1b737be3bacd64010493b9cdd298c060ff2f08ec8c",
+    "REQ-L136-text-02": "14315dbc7085d820fd30b89fdd74c4a8dd5ab8a0893573a01fad0eddf9f5475c",
+    "REQ-L136-text-03": "dfd5faee294595d44c672b154ab954b54bead3dcf8bea968f44a3f0f5d262a8a",
+    "REQ-L136-text-04": "2b1d959ab855bfd2787e35f3b84bf9c032d85a4ce203c1c80589fe9b6fa10d09",
+    "REQ-L136-text-05": "d668a14895f3a587369fa11190d8aa88027215184ca7dfe3166c34adbea5e855",
+    "REQ-L138-text-01": "03a3f1e8dba1a1bd59dc234299c125573cad85876bb330cd56632b4d385fc1e5",
+    "REQ-L138-text-02": "0b43c2892db82a1f1a274cd4bdfa9e9de30d11ff8b15d0125810684cfa239aba",
+    "REQ-L138-text-03": "01889c3c4461255f512945561ebc2e14f2fc38f3fd9ab010163f22bd743a5697",
+    "REQ-L138-text-04": "56617bb307fe1be1ca3e11d4e780b94a9dcbc7a618fea6f1aab4d9beb0b6f336",
+    "REQ-L138-text-05": "51724dc0827296c67c3af2c3a0cf51dead14a35e0e4026bc623bf072a561b9ce",
+    "REQ-L138-text-06": "48088df22792aeaff9a677fece10e9442ea7778eb2c22f506786974defb994ed",
+    "REQ-L138-text-07": "2da219b9e0a4d456f4380478be912b92be559a8f9a0f6390420849c3ad2a2327",
+    "REQ-L138-text-08": "39046bc65a6cf599bf92a67095c242aac55183bea363841971438460f2f2b42f",
+    "REQ-L140-text-01": "46628ce24beb0dcc86e15f0049b425f33ea5336f6775a889d36ab08aef1b8754",
+    "REQ-L140-text-02": "70bbc5d44b39515ad53a4382f2ff7a00161450d1ba30541e4299b094cfe360db",
+    "REQ-L140-text-05": "5b01efa4dbee98a130e5283e13dda49b3d13087ea6df38facf8a7ef5f106675d",
+    "REQ-L140-text-06": "23d617e094ff6f8185e0eb26c88cdd29187781cc8dd7d379a750547c3fc36f73",
+    "REQ-L140-text-07": "334bfc33bf9634f9bdd929044f42cf10ac5580d4bb130be1343d1d3c02a4a8fd",
+    "REQ-L140-text-08": "05dc4f6ace6b6c864725ad8e8d69700aec5029a15e25a496070d2bdd7bc3a83e",
+    "REQ-L142-text-01": "8892dac736f669f94249f369a9fc553f549a480c271121039d864b746155c835",
+    "REQ-L142-text-02": "a0e59b0cf3d750e31fc0bd58dabb8c9c93dc304b34e7dfaef7598584fc6cbe4f",
+    "REQ-L142-text-03": "60dec2524c53a9e27ab90f26e55af0db50fe7dbbbe3e287b4ca1aa2b33559379",
+    "REQ-L142-text-04": "5feceb41792c1317af509782b405eab505122717ca1d0f8c7f435abf3a64b1dc",
+    "REQ-L142-text-05": "cb7364238ea8e2ca574d66d4055bbc9140703ec3aac08abda6a679efb6d47f0b",
+    "REQ-L142-text-06": "df76bc13adcd18b5f3b08704169f33251da23e02b13c7a6a6af50136c3196275",
+    "REQ-L142-text-07": "cd067ff06e6c7e350696f9f21ac58605e360c44073e7f0d73d1340d56727e2bb",
+    "REQ-L142-text-08": "2f03c233fc95dda74b085efdde2e297cde84b7b4a624e8e8fb86e64c7b0dd73b",
+    "REQ-L142-text-09": "8b30d6d18f3c5eb8193e63d8f7077d63aeb7efd317a0193bfabcdc6d090bfb68",
+    "REQ-L142-text-10": "4063b4c587681abf2fe0762f4780b61b3b6868226b1508d34687f20d00b1c281",
+    "REQ-L144-text-01": "cf0e436b2cade4865c16a74c83ad93863c76ed6a8681d85c099950447eb950c7",
+    "REQ-L144-text-02": "9372eddd7371713673e86b4216de27de40086127b9c256bae5ba568cdedc65d5",
+    "REQ-L144-text-03": "9dba5acf942a5ae0bfa375c77d93e006c31cc9e51ab3121b6df5df884be71418",
+    "REQ-L144-text-04": "93e2886dd67f9e97a842c49536fb952e5020e34e3ca1101a81846534935fb7de",
+    "REQ-L144-text-05": "dc5673d454bbc9f72ece20b1a7ba637d91f3b2a27a1070ab47e16dbf95f6d8e7",
+    "REQ-L144-text-06": "3ef60fefd6e401ff982594edc208d610167b6aa313ebed0b4ce2da199a4787a5",
+    "REQ-L144-text-07": "ec7984a270547e515e058b3b7ae677cd611d75151e49dafb6508c95d2516e67c",
+    "REQ-L144-text-08": "42e7baa8369a7057ecd171475a1180475d157f9e0f96de11617ff72b3829d9fd",
+    "REQ-L144-text-09": "fbc6b59429fa94d5584e155751d22d7f361e1f2ecae0128a5fbef88f43f4c3da",
+    "REQ-L144-text-10": "3a42a396513005db9b0464ffeb0d5028d86ce6fd604d81c4bb727224ac6dd75b",
+    "REQ-L144-text-11": "98a54fdd029fd74cba6fa9808b333c93b8d287193a91018e59bf5c108a41db78",
+    "REQ-L144-text-12": "666a611fdc0c3b43da5f02d53c47bf60b8dbba76a68c0fc2a94e1dc0bcc0065f",
+    "REQ-L144-text-13": "54889bb2f1729292d27302e48aec30d3a8682818d9e52c7ff2d5f91992e6cb57",
+    "REQ-L144-text-14": "e8bd5d6e02b570e87a25a609134b00a4ebb9523c9d77325f2981893f64ffbd4f",
+    "REQ-L144-text-15": "960cbd65a2dd430372b829ae296e927843f07c66e0fc51370200e5d8e794d5da",
+    "REQ-L144-text-16": "46565c6f8d478aa75de4e212290da05a877079558963584204db93becaf8401a",
+    "REQ-L144-text-17": "da67252154fc383098b8b4762753031f3701666ddf81bd52d6177dabfd57c32c",
+    "REQ-L144-text-18": "8bac6cb83be249de5bf20db7db5f7b1cea49194a87abed41cddb951648a90ef2",
+    "REQ-L144-text-19": "ea282622de22dc8f475095b7bd5c0c3a9353ef9bf97edb578208663f0177a970",
+    "REQ-L144-text-20": "ad2353f5d397b2e8ce3db01c495c3c3553269275392908026a91c355c9278834",
+    "REQ-L144-text-21": "a78c327d6233085916b3ed76e55581f58dd4690e8d6b0a391a816207c0634189",
+    "REQ-L144-text-22": "56bdaf31f623f6454ce81a0f592851b33ec4702edb6f2bc0088d7d14e6dbe89e",
+    "REQ-L144-text-23": "86d2d72debfc199c4c0853a632d3afc0e31e6ffc4ed1540a10b5d76e2897319b",
+    "REQ-L144-text-24": "d7fc79a2872d74dd30270e1e64b9a7417eceb3fca604ab6e2c39290480320e48",
+    "REQ-L144-text-25": "0cbe06803e55ea44a2d5e5c8b75941931f0367b41dfc8a4343c6efaf045ebda3",
+    "REQ-L144-text-26": "63c2f6e7fd2bb5a6b86f06f1c50bc3ccfc1d5df695fd98ade936b40756271c4e",
+    "REQ-L144-text-27": "604f56b8776f70d4c7bf6b97fa683b798795ce42a11b9e6765e4e93d0216d899",
+    "REQ-L146-text-01": "ed1442f738e323d528c78696882c4161b0c4d12bcdaf9534236ee9e4b80dacfd",
+    "REQ-L146-text-02": "ace2b4c24df663bd34c40fd2b7de4a65e1c2ae2d557ea8331426261bbda5f948",
+    "REQ-L146-text-04": "dddfd6635e7b4b780fcaf708ee2d1d2e2d5b39f1534494844aa93e0d2ae1259d",
+    "REQ-L146-text-05": "cd265434b29a2e2100693f7bdc44c48ebde48c345452ef2ef6ff38191691198c",
+    "REQ-L146-text-06": "939878630bc7c9f561b3fe7e16cae44db0e34fc50efad46fb41e3fa14373cb93",
+    "REQ-L146-text-07": "9305224d4711dda20ad13eb0b9d759b124cd23bba36c10ea6eb5b79a9b3ae809",
+    "REQ-L146-text-08": "6b74a156c9d0968d8c009f459a62873906b094b2dd3519f416f44a9fc5a4b1cb",
+    "REQ-L146-text-09": "b19fb29a9b229ae01243958942d8f0ce4fde69ce8738e7424ce9394968eadb33",
+    "REQ-L146-text-10": "039cdc5e6ba3503c606a7d8a7f441d8c92ffad5d6ee5008a981cad2bf2580a65",
+    "REQ-L146-text-11": "7a94744575043e9474957337f709c9e5896f82056b2b6c9ebc561a7ad432c2f0",
+    "REQ-L146-text-12": "d65d034f3209f83f309c14c35ff4cd2131f8ad3b88e814313dc8f9fc1f4f6a92",
+    "REQ-L146-text-13": "a6b0134c0188d27eb0fb9f79499274b14961b473ff1799a07443823f08391927",
+    "REQ-L148-text-01": "2ec0b02e109ebe6bd445269a7a133d08b4724db97e2ae2aad5b2eee39c37ae70",
+    "REQ-L150-text-01": "b7232940a9c174520bc624dfbe6f39cac1fa5a33c4158f4eaf1fd4698deadac5",
+    "REQ-L150-text-02": "986bdb9deb6013b29af121e4ee0e7fa2eb92c376b371cd9e9e305dd9cacddbdf",
+    "REQ-L150-text-03": "1521afe325e1053da4f5084c8e7f61df4046df5dce3e3833a78a1d20601eb959",
+    "REQ-L150-text-04": "64592f7658ee173d4d4209bcf1df5a5657b2684b10fa4c3a9e50c8bef6a98ff9",
+    "REQ-L150-text-05": "1fdd84871b7e44a89eaa7c302899a919638a79c9231dd5bc3d481c1bf75e5530",
+    "REQ-L150-text-06": "9746c1a0f31045d7311e816358f0eef80d1adc55c982acb97d5afa83c1489c08",
+    "REQ-L150-text-07": "f65b3b5a84a228df016956b77807b4bc3286fa04f831eecca9c222eb29e42389",
+    "REQ-L152-text-01": "0804333a5bfc811a3a2da87a41ce993a08efebd6873a24940f1887fa81344f5d"
+  },
+  "sourceSha256": {
+    "src/main/index.ts": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+    "src/main/jellyfin.ts": "4d8a18d25cefa435355035df9ad97b897c68570a6035b70adbd5f25b31c48044",
+    "src/main/media.ts": "c2dbac7a2c6892e44794cffde7cd5118f6999f712b1f6f06533b3a9f44245fe2",
+    "src/main/prepared-news.ts": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+    "src/main/storage.ts": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+    "src/preload/index.ts": "458378616e402bc07202f269fa94092d8ee8685e2dd9bba7fcaf0c7ca58e31c1",
+    "src/renderer/App.tsx": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+    "src/renderer/api.ts": "9c2f347ebb911d73915cbc4178a03f33e8dfcfcec4ff4a8b2ef4cd1e94ca4e18",
+    "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": "53afdb4d78cca027bce5865b5180dab1a27d5873ad1541b988eea50cd7802ecd",
+    "src/renderer/components/CollectionHeading/CollectionHeading.component.tsx": "3a055f26b529958fd7a010c1318de66c54e4c6c77118207b3eed745c020e5548",
+    "src/renderer/components/Drawer/Drawer.styles.css": "f6a585dbc6dd4070b31efd16762d9a79c77ffa46388f79ae8bc8f4a99264d292",
+    "src/renderer/components/Inspector/Inspector.component.tsx": "8fd6dd9e51fe39038a893e4e66dc93656713e3434399d0b5210df870d3f5d235",
+    "src/renderer/components/LibraryChooser.styles.css": "b05f57996e775054bc54f07001ad08c6eb75fffe0aed22bad8072bab8c7750e8",
+    "src/renderer/components/LibraryChooser.tsx": "0c91c760e8d10904fc699de951c43a2120c73148cbee800574fd5850e2ed8662",
+    "src/renderer/components/LibrarySelection.tsx": "612e117abee02b6c69090402331261928792cfc7a0aa445756f764d319de0083",
+    "src/renderer/components/Shared.tsx": "16726cf323f44324a124ee5fb29a7270ae514f8dc04f87f153f6b0a5e289ff5e",
+    "src/renderer/pages/Albums/Albums.page.tsx": "09a1292143de4e0f24a233a41b50e90fae8f19d394afae2f5171384f59fc9667",
+    "src/renderer/pages/Connection/Connection.page.tsx": "0b6db7b41b5e9bcf0100e82b7f9c9998b3111d99601db1a940e671b7adf2dbd3",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+    "src/renderer/pages/Settings/Settings.page.tsx": "bfd9e02f6187a9581e9de3e5d941f66a35be7cf5477b68594b740ee25ebbf101",
+    "src/renderer/pages/Songs/Songs.page.tsx": "a15a3adc08b8ebb2bd4d96b00c8462d94922bef67eb2fad655c6c428af0eb942",
+    "src/renderer/player.tsx": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+    "src/renderer/styles.css": "43da67b986692d802df012ddb0c01c03293edc3851930370e0d2a974a72c79b6",
+    "src/renderer/useRetryFocus.ts": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c"
+  },
+  "evidenceSha256": {
+    "2026-10-16-account-boundary-current.json": "55835a34bffcfcbc49a25f6f33cefeaef190e223714ef2b521372c9a6cec0e36",
+    "2026-10-16-connection-publication.json": "3ab22109fdec2889716f4402e540b0681fb1af047fba1255088205709ec3a0cc",
+    "2026-10-16-connection-recovery-current.json": "f676bc55085f2c7176b4a5dab71761dffc1f98cb1a1c15f9c07640f8df519c03",
+    "2026-10-16-device-identity.json": "8a391b48bce3bc34d54f3fbcbfbb3f4128586c045a04012d4e936b3f70f27ce5",
+    "2026-10-16-long-text-layout.json": "11e8eebebe0950211ea62aadeaca9486c0d41a37f6bc6ad5794929f8ad1e5f66",
+    "2026-10-16-playlist-permissions.json": "9d7d664dcaa6ca5c529b686b8799007bff071ce619b4acb7ecb8cd288da25c0c",
+    "2026-10-16-response-deadline.json": "9e68d4fa3b751726b0d0b3d290032ccb72ed3a53bd4fa540650ecc725b37ff96",
+    "2026-10-17-catalog-view-concurrency.json": "0436fb76a7d88770d71ac6428849b8cbb429a159e9a6d715e3fee054dfe56b3a",
+    "2026-10-17-library-refresh-focus.json": "83ddf287bbe9536b7c05fcdc459b2e470a9327b2d0d88cda937c41c72a918743",
+    "2026-10-17-library-retry-focus.json": "b5d15f5cbfe341b5e0b01569d2975f89a59ada2bf63c3ee8b5dc870c0c68d8ca",
+    "2026-10-17-library-save-navigation.json": "30f3fde2d49b6dd4ccca9095fb923d5eaac0ba9ed5ab386ddc0000f00f3dd1ad",
+    "2026-10-17-live-catalog-album-actions.json": "19a39ea36078c9d88f99517e64bb6276b69dfe7b88e24251c34681b7a7102198",
+    "2026-10-17-live-connection-recovery.json": "c06a5cb864b6b9104ba54fa85dc22154bff05f0fb7dcd77c5c456869faa23b04",
+    "2026-10-17-long-metadata.json": "3cfe605e3717a1936d7e934931f2073cf88e1b51cc02fa7ca154f677631a4dc0",
+    "2026-10-17-private-credentials.json": "708ba22947a39c41d995457e05de4f1048481717970614de76b8887d7c583fe7",
+    "2026-10-17-source-boundaries.json": "50e10d6ea3df586a71a329094b5cefd5873571008654b249bb4dfa163895f883",
+    "2026-10-18-account-form-focus.json": "ade97ad951192ac6f0663e3468ce3c4a11f7f238de5009403d453df4a2ab2821",
+    "2026-10-18-authentication-handoff-focus.json": "5b4a331a3e44641e886a718d90b130b85fff0f9c8e72afdb681f59ae00d613f3",
+    "2026-10-18-edit-lifetime-invariant.json": "bf314440c641b9e91469e1308b741d2f44d6fadcad7268be00dcd944cde74cfa",
+    "2026-10-18-live-access-permissions.json": "49e0f34408000390e503742e48e5ded63f28ea4899821227dc2429d60d5090a7",
+    "2026-10-19-account-expiry-boundary.json": "e8a4137ef4d80d9fb377850ef31571f6194881327ea476556d41d69d59433985",
+    "2026-10-19-account-switch-server-draft.json": "85c1853be94f5254f51fb1581932c8e3294c6607efd3b989af76a41826b11a0d",
+    "2026-10-19-failed-signout-expiry.json": "44139ece674c09f5503ac10c98322c92e9bb1fc3bd597f97c651636535121b15",
+    "2026-10-19-jellyfin-read-boundary.json": "e8746c9f2af30634238d589bc994210aa9228145bf0b43b856a3f893cbc79023",
+    "2026-10-19-playlist-obligations.json": "af2ce81d69aad939fb1cb7af300371d41484e6e3ced591d11b7b244cffbf092d"
+  },
+  "sourceFreshnessComparisons": {
+    "2026-10-16-account-boundary-current.json": {
+      "src/renderer/App.tsx": {
+        "recorded": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": false
+      },
+      "src/renderer/pages/Stations/Stations.page.tsx": {
+        "recorded": "2627f57cb89db0ac5ed73dc85f4bea39987387b07844f5f840e34de81b89fa92",
+        "current": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573",
+        "matches": false
+      },
+      "src/renderer/pages/Settings/Settings.page.tsx": {
+        "recorded": "ce0c41cd58f82a801b651940cb641945c12ed4c83b765377f6be8d809d1e5d9f",
+        "current": "bfd9e02f6187a9581e9de3e5d941f66a35be7cf5477b68594b740ee25ebbf101",
+        "matches": false
+      },
+      "src/main/index.ts": {
+        "recorded": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/main/prepared-news.ts": {
+        "recorded": "c5f75f9818c3537fbf2cc177d5980328926b1d73202a3952f0da84258df11dd2",
+        "current": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+        "matches": false
+      }
+    },
+    "2026-10-16-connection-publication.json": {},
+    "2026-10-16-connection-recovery-current.json": {
+      "src/renderer/pages/Connection/Connection.page.tsx": {
+        "recorded": "715243e30983a390744988b2f25c6ef4319898c88c3daf6db6a7c7f216ef2d09",
+        "current": "0b6db7b41b5e9bcf0100e82b7f9c9998b3111d99601db1a940e671b7adf2dbd3",
+        "matches": false
+      },
+      "src/renderer/components/LibraryChooser.tsx": {
+        "recorded": "3a64a4447975c88150b7076c7e1e6bc8cee1e9396d61829f032c12624e0329d8",
+        "current": "0c91c760e8d10904fc699de951c43a2120c73148cbee800574fd5850e2ed8662",
+        "matches": false
+      },
+      "src/renderer/App.tsx": {
+        "recorded": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": false
+      },
+      "src/main/jellyfin.ts": {
+        "recorded": "22f083327dfdcbb0952d9750662df95d13c31e09a83f628f8c1e3393072f90eb",
+        "current": "4d8a18d25cefa435355035df9ad97b897c68570a6035b70adbd5f25b31c48044",
+        "matches": false
+      },
+      "src/renderer/pages/Stations/Stations.page.tsx": {
+        "recorded": "2627f57cb89db0ac5ed73dc85f4bea39987387b07844f5f840e34de81b89fa92",
+        "current": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573",
+        "matches": false
+      }
+    },
+    "2026-10-16-device-identity.json": {},
+    "2026-10-16-long-text-layout.json": {},
+    "2026-10-16-playlist-permissions.json": {},
+    "2026-10-16-response-deadline.json": {},
+    "2026-10-17-catalog-view-concurrency.json": {
+      "src/main/jellyfin.ts": {
+        "recorded": "4daf9866e8034ca89ffd209035b1b8795f5127082bcea0fa825182b66d103483",
+        "current": "4d8a18d25cefa435355035df9ad97b897c68570a6035b70adbd5f25b31c48044",
+        "matches": false
+      },
+      "src/main/index.ts": {
+        "recorded": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/renderer/pages/Songs/Songs.page.tsx": {
+        "recorded": "79b3115960d53568bac407d5754ff0996fee44ba895b222d99b4e0fb71e3007f",
+        "current": "a15a3adc08b8ebb2bd4d96b00c8462d94922bef67eb2fad655c6c428af0eb942",
+        "matches": false
+      },
+      "src/renderer/pages/Songs/VirtualSongs.component.tsx": {
+        "recorded": "95ada95c0533bb1e462a818f6981c60d22cd4a9a8e4df27b8cea6cc3119606e4",
+        "current": "4484149d94156d3f6f9b5bcb5b201285a1264e2e28125f50e10a4d401f593206",
+        "matches": false
+      },
+      "src/renderer/components/FilterSelect/FilterSelect.component.tsx": {
+        "recorded": "b6c4242190b3d107c5145f464db5f3b4912736c70c940a3344c73aa26463ec26",
+        "current": "b6c4242190b3d107c5145f464db5f3b4912736c70c940a3344c73aa26463ec26",
+        "matches": true
+      },
+      "src/renderer/pages/Albums/Albums.page.tsx": {
+        "recorded": "8abce67107438b4ed395443875aa920b6e71cbc968b3b834c9702ddd745f81ed",
+        "current": "09a1292143de4e0f24a233a41b50e90fae8f19d394afae2f5171384f59fc9667",
+        "matches": false
+      },
+      "src/renderer/App.tsx": {
+        "recorded": "295282dd8549fec72a32bcf1b16cd4095f4a4c2e9baa41044dd0b65fc60d98ab",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": false
+      },
+      "out/preload/index.cjs": {
+        "recorded": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+        "current": "9b78be58d4f9bd70fb5b6d3315d888ee9442cfbf09bfab2b2f902de015e902f2",
+        "matches": false
+      }
+    },
+    "2026-10-17-library-refresh-focus.json": {
+      "src/renderer/pages/Songs/Songs.page.tsx": {
+        "recorded": "a15a3adc08b8ebb2bd4d96b00c8462d94922bef67eb2fad655c6c428af0eb942",
+        "current": "a15a3adc08b8ebb2bd4d96b00c8462d94922bef67eb2fad655c6c428af0eb942",
+        "matches": true
+      },
+      "src/renderer/styles.css": {
+        "recorded": "63ad98d90efa9001367ad21946ef972b1f3c6f53d422e621bcd45664b9e87f47",
+        "current": "43da67b986692d802df012ddb0c01c03293edc3851930370e0d2a974a72c79b6",
+        "matches": false
+      }
+    },
+    "2026-10-17-library-retry-focus.json": {
+      "src/renderer/components/LibraryChooser.tsx": {
+        "recorded": "4fb7c7cdb22445a056d309130dab7eb25488471263719ddf410ae53b3472369b",
+        "current": "0c91c760e8d10904fc699de951c43a2120c73148cbee800574fd5850e2ed8662",
+        "matches": false
+      },
+      "src/renderer/components/LibraryChooser.styles.css": {
+        "recorded": "b05f57996e775054bc54f07001ad08c6eb75fffe0aed22bad8072bab8c7750e8",
+        "current": "b05f57996e775054bc54f07001ad08c6eb75fffe0aed22bad8072bab8c7750e8",
+        "matches": true
+      },
+      "src/renderer/useRetryFocus.ts": {
+        "recorded": "4c95b9a6e946ceebbc395af42567757605db526e4503e073a1d81a0825b048fc",
+        "current": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c",
+        "matches": false
+      },
+      "REQUIREMENTS.md": {
+        "recorded": "60f5ca063fd0508c0ac1b93746cbfa30f980b42e76f4740fe30b66f06264ad81",
+        "current": "4fdaca7c1cdd5bf3f70aa8963c1c6d3fff5f06d896ec44303ee4eb8378df9d35",
+        "matches": false
+      },
+      "docs/RADIO_EXPERIENCE.md": {
+        "recorded": "272a246be8c3b34d87a24007d03764e048e0c6057aa750ebc55b7b03f2d30427",
+        "current": "43bec7b6ca8b7f4286a11beacf59c2e55751a9ee4bbaa68ff40d158a6dab49d8",
+        "matches": false
+      }
+    },
+    "2026-10-17-library-save-navigation.json": {
+      "src/renderer/components/LibrarySelection.tsx": {
+        "recorded": "97db6216b4fada46621ce20658e1bc1d47b76fe0819a0db75e446ea82965e342",
+        "current": "612e117abee02b6c69090402331261928792cfc7a0aa445756f764d319de0083",
+        "matches": false
+      },
+      "src/renderer/components/LibraryChooser.tsx": {
+        "recorded": "18c22d71b890eae73fe8ef20241300dc55160e8372e6ac1ab9f5d998d301cf36",
+        "current": "0c91c760e8d10904fc699de951c43a2120c73148cbee800574fd5850e2ed8662",
+        "matches": false
+      },
+      "src/renderer/pages/Connection/Connection.page.tsx": {
+        "recorded": "6a19c2827c5b0afde7b13eabd72b1431f6045db325a8fac1bbc8c35e25af965a",
+        "current": "0b6db7b41b5e9bcf0100e82b7f9c9998b3111d99601db1a940e671b7adf2dbd3",
+        "matches": false
+      },
+      "src/renderer/pages/Settings/Settings.page.tsx": {
+        "recorded": "ce0c41cd58f82a801b651940cb641945c12ed4c83b765377f6be8d809d1e5d9f",
+        "current": "bfd9e02f6187a9581e9de3e5d941f66a35be7cf5477b68594b740ee25ebbf101",
+        "matches": false
+      },
+      "src/renderer/App.tsx": {
+        "recorded": "295282dd8549fec72a32bcf1b16cd4095f4a4c2e9baa41044dd0b65fc60d98ab",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": false
+      },
+      "src/renderer/main.tsx": {
+        "recorded": "863a6596bde95ba270f0d554a2ac2bd0c3819ca832f1bfd577d0edf9bb69a7cc",
+        "current": "fa6dae583c41c04186cb71ec7b3b68af716ba82fc46cb788b1b433d106141065",
+        "matches": false
+      },
+      "src/main/jellyfin.ts": {
+        "recorded": "22f083327dfdcbb0952d9750662df95d13c31e09a83f628f8c1e3393072f90eb",
+        "current": "4d8a18d25cefa435355035df9ad97b897c68570a6035b70adbd5f25b31c48044",
+        "matches": false
+      },
+      "src/main/index.ts": {
+        "recorded": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/main/storage.ts": {
+        "recorded": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+        "current": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "matches": false
+      },
+      "out/preload/index.cjs": {
+        "recorded": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+        "current": "9b78be58d4f9bd70fb5b6d3315d888ee9442cfbf09bfab2b2f902de015e902f2",
+        "matches": false
+      }
+    },
+    "2026-10-17-live-catalog-album-actions.json": {
+      "src/main/jellyfin.ts": {
+        "recorded": "4daf9866e8034ca89ffd209035b1b8795f5127082bcea0fa825182b66d103483",
+        "current": "4d8a18d25cefa435355035df9ad97b897c68570a6035b70adbd5f25b31c48044",
+        "matches": false
+      },
+      "src/main/index.ts": {
+        "recorded": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/renderer/pages/Albums/Albums.page.tsx": {
+        "recorded": "8abce67107438b4ed395443875aa920b6e71cbc968b3b834c9702ddd745f81ed",
+        "current": "09a1292143de4e0f24a233a41b50e90fae8f19d394afae2f5171384f59fc9667",
+        "matches": false
+      },
+      "src/renderer/components/TrackTable/TrackTable.component.tsx": {
+        "recorded": "c6d1b4c4f94a8cc67f9c052526b054ad8b716fbb3ceb9f83e347946bd4ad3a63",
+        "current": "158caa15a4fe11170ac048c1752d4b9327006595646f5a86acd27c5b1c0216e5",
+        "matches": false
+      },
+      "src/renderer/components/Inspector/Inspector.component.tsx": {
+        "recorded": "39f001049a50433d0eb0bb16af4a8f51d00811e437c12e2145068e8b329dd893",
+        "current": "8fd6dd9e51fe39038a893e4e66dc93656713e3434399d0b5210df870d3f5d235",
+        "matches": false
+      },
+      "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": {
+        "recorded": "550356492cae38ab34925c91ad9cb5c1ab7c9a7685779e9202de297fc33915de",
+        "current": "53afdb4d78cca027bce5865b5180dab1a27d5873ad1541b988eea50cd7802ecd",
+        "matches": false
+      },
+      "src/renderer/pages/Songs/Songs.page.tsx": {
+        "recorded": "79b3115960d53568bac407d5754ff0996fee44ba895b222d99b4e0fb71e3007f",
+        "current": "a15a3adc08b8ebb2bd4d96b00c8462d94922bef67eb2fad655c6c428af0eb942",
+        "matches": false
+      },
+      "out/preload/index.cjs": {
+        "recorded": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+        "current": "9b78be58d4f9bd70fb5b6d3315d888ee9442cfbf09bfab2b2f902de015e902f2",
+        "matches": false
+      }
+    },
+    "2026-10-17-live-connection-recovery.json": {},
+    "2026-10-17-long-metadata.json": {},
+    "2026-10-17-private-credentials.json": {
+      "src/main/storage.ts": {
+        "recorded": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+        "current": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "matches": false
+      },
+      "src/main/keychain.ts": {
+        "recorded": "3d2dd986b94ab4b7dd7b59d96c1e64a9d6f563db4a6c19d6ac781fbb7d3200b5",
+        "current": "3d2dd986b94ab4b7dd7b59d96c1e64a9d6f563db4a6c19d6ac781fbb7d3200b5",
+        "matches": true
+      },
+      "src/main/index.ts": {
+        "recorded": "735adf81f2a16d626b87c7a4d0db5a205d70347fcf460145c87e7a58bbe954fc",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/main/playlist-recovery.ts": {
+        "recorded": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+        "current": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+        "matches": true
+      },
+      "src/main/prepared-news.ts": {
+        "recorded": "0d0d40b27e899d04bea54d064d62017643c58211997f8c3e36f896b26c24bd2d",
+        "current": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+        "matches": false
+      },
+      "src/main/dj-previews.ts": {
+        "recorded": "56d36390dbf9ba2a3177c46ff2a20d4478fa20bc37d6220bc1459b6e592722b3",
+        "current": "56d36390dbf9ba2a3177c46ff2a20d4478fa20bc37d6220bc1459b6e592722b3",
+        "matches": true
+      },
+      "src/preload/index.ts": {
+        "recorded": "0c7edf2153d5210b24a0fac9db667fd254e324366d4737653578ef067c1eac63",
+        "current": "458378616e402bc07202f269fa94092d8ee8685e2dd9bba7fcaf0c7ca58e31c1",
+        "matches": false
+      },
+      "src/shared/types.ts": {
+        "recorded": "d67dcace88513b8ee42238aa512eb2c480ded9b1275977567e8b3d1cec62a652",
+        "current": "a4777ac71292ab6adddcb1fce211ad14c7e324fe1ccd5ed278fb1f290dfcaea0",
+        "matches": false
+      }
+    },
+    "2026-10-17-source-boundaries.json": {
+      "src/main/news.ts": {
+        "recorded": "9c2076bf3808221980dac5aa2befb9d5532278027ccdcc6197e8324930b6571e",
+        "current": "f2933aac8c9d2334e84a6850c7023207fbd1b86f905bd3844977ad5cb0be7a48",
+        "matches": false
+      },
+      "src/main/prepared-news.ts": {
+        "recorded": "0d0d40b27e899d04bea54d064d62017643c58211997f8c3e36f896b26c24bd2d",
+        "current": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+        "matches": false
+      },
+      "src/shared/news-pool.ts": {
+        "recorded": "2f8ac1bde20b4a9adfd3beedf015e2d7e843dda584e7713be29e1a4c7ad3fa77",
+        "current": "d8a190d01563d458a34bd2a89e9bbce8aa7533a7e678b44d88559951768f9da5",
+        "matches": false
+      },
+      "src/shared/sources.ts": {
+        "recorded": "1da2117a59995911c14d098c8c814811ec309fb0d81c2fbf24b53721404e8f18",
+        "current": "1da2117a59995911c14d098c8c814811ec309fb0d81c2fbf24b53721404e8f18",
+        "matches": true
+      },
+      "src/main/index.ts": {
+        "recorded": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/main/storage.ts": {
+        "recorded": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+        "current": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "matches": false
+      },
+      "src/preload/index.ts": {
+        "recorded": "0c7edf2153d5210b24a0fac9db667fd254e324366d4737653578ef067c1eac63",
+        "current": "458378616e402bc07202f269fa94092d8ee8685e2dd9bba7fcaf0c7ca58e31c1",
+        "matches": false
+      },
+      "src/shared/types.ts": {
+        "recorded": "d67dcace88513b8ee42238aa512eb2c480ded9b1275977567e8b3d1cec62a652",
+        "current": "a4777ac71292ab6adddcb1fce211ad14c7e324fe1ccd5ed278fb1f290dfcaea0",
+        "matches": false
+      },
+      "src/renderer/components/Player/DJPopover.component.tsx": {
+        "recorded": "6ffca314f80c990adb9c1fbf81f970560cd5d2debc786e855098f89551e2e4ec",
+        "current": "7a9858830d98a053b2a3d805e6a2b6521aa483154c00306b0a6cfb4fb96fd981",
+        "matches": false
+      },
+      "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": {
+        "recorded": "a089c86e2b2678ed77f2559648cdfeaca072ba6bb46453a2f4e8befb2f68e09e",
+        "current": "fd9488789ef2042e6146938d8117e29df0823aae6611013952eb1b4debe83c92",
+        "matches": false
+      },
+      "src/renderer/pages/Stations/Stations.page.tsx": {
+        "recorded": "83c78a0854859e81ea9ec21330f88e53ee6c30fe81651a1551d99d48d59fedff",
+        "current": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573",
+        "matches": false
+      },
+      "out/preload/index.cjs": {
+        "recorded": "9c71145d93d7cc22ed4b02ae0264aff7d2cbb21355841fddf349ec0b45975370",
+        "current": "9b78be58d4f9bd70fb5b6d3315d888ee9442cfbf09bfab2b2f902de015e902f2",
+        "matches": false
+      }
+    },
+    "2026-10-18-account-form-focus.json": {
+      "src/renderer/components/LibraryChooser.tsx": {
+        "recorded": "4763e065984e0be974156f39732ee1f69fa74fc4e59a9d25c3b73d33d7199b7c",
+        "current": "0c91c760e8d10904fc699de951c43a2120c73148cbee800574fd5850e2ed8662",
+        "matches": false
+      },
+      "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx": {
+        "recorded": "f50dbff52577b24e3722f7b562955025563cb36a72cac0ffcabb3c562a882655",
+        "current": "cfead3feb18d94ec60d2ac25573ddfedb7a2ad0b8bbc0331d1ccd4caaefebd6b",
+        "matches": false
+      },
+      "src/renderer/pages/Connection/Connection.page.tsx": {
+        "recorded": "08359f09953a74c34f569c5327c93a843e19504613938555e90fbef5931552b8",
+        "current": "0b6db7b41b5e9bcf0100e82b7f9c9998b3111d99601db1a940e671b7adf2dbd3",
+        "matches": false
+      },
+      "src/renderer/pages/Settings/Settings.page.tsx": {
+        "recorded": "13f585e3995c35a21b1105f787095003d794b14ca885f609e58be1af33756cbe",
+        "current": "bfd9e02f6187a9581e9de3e5d941f66a35be7cf5477b68594b740ee25ebbf101",
+        "matches": false
+      },
+      "src/renderer/styles.css": {
+        "recorded": "452b45ad01038ed95363bf83593f4f54cbc50cadb727648b8f261fbeb2b8a82f",
+        "current": "43da67b986692d802df012ddb0c01c03293edc3851930370e0d2a974a72c79b6",
+        "matches": false
+      }
+    },
+    "2026-10-18-authentication-handoff-focus.json": {
+      "src/renderer/App.tsx": {
+        "recorded": "8903ec7d663ead3efb15a4e8b6243acb26ce9495deec84e103f7952311112b77",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": false
+      },
+      "src/renderer/components/LibrarySelection.tsx": {
+        "recorded": "612e117abee02b6c69090402331261928792cfc7a0aa445756f764d319de0083",
+        "current": "612e117abee02b6c69090402331261928792cfc7a0aa445756f764d319de0083",
+        "matches": true
+      },
+      "src/renderer/components/LibraryChooser.tsx": {
+        "recorded": "0c91c760e8d10904fc699de951c43a2120c73148cbee800574fd5850e2ed8662",
+        "current": "0c91c760e8d10904fc699de951c43a2120c73148cbee800574fd5850e2ed8662",
+        "matches": true
+      },
+      "src/renderer/pages/Connection/Connection.page.tsx": {
+        "recorded": "3580a1038b25efa4a8a5d0ddb00141f245f1c3304372bbc5d1001a612a0b0b01",
+        "current": "0b6db7b41b5e9bcf0100e82b7f9c9998b3111d99601db1a940e671b7adf2dbd3",
+        "matches": false
+      },
+      "src/renderer/useRetryFocus.ts": {
+        "recorded": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c",
+        "current": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c",
+        "matches": true
+      }
+    },
+    "2026-10-18-edit-lifetime-invariant.json": {
+      "src/main/storage.ts": {
+        "recorded": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "current": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "matches": true
+      },
+      "src/main/index.ts": {
+        "recorded": "cdf2e042029210ba20b20dd529e838760c6158fe73bb8046118b93fff9085657",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/main/playlist-recovery.ts": {
+        "recorded": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+        "current": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+        "matches": true
+      },
+      "src/main/prepared-news.ts": {
+        "recorded": "da830c4e4c95caa62fa103367d7d4eef268ef32970d837fbe1b0d94c1b1809b3",
+        "current": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+        "matches": false
+      },
+      "src/renderer/App.tsx": {
+        "recorded": "eae93435308b21d89e771bc920b389b753743923b1d9e907abed0f5d551551f7",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": false
+      },
+      "src/renderer/components/LibrarySelection.tsx": {
+        "recorded": "612e117abee02b6c69090402331261928792cfc7a0aa445756f764d319de0083",
+        "current": "612e117abee02b6c69090402331261928792cfc7a0aa445756f764d319de0083",
+        "matches": true
+      },
+      "src/renderer/components/ProviderKeys/ProviderKeyEdits.tsx": {
+        "recorded": "99b9e06d6c62a90d36195ef7ae832444dd64c7cad8153db4fd66fd7feefe04d2",
+        "current": "99b9e06d6c62a90d36195ef7ae832444dd64c7cad8153db4fd66fd7feefe04d2",
+        "matches": true
+      },
+      "src/renderer/pages/Albums/Albums.page.tsx": {
+        "recorded": "09a1292143de4e0f24a233a41b50e90fae8f19d394afae2f5171384f59fc9667",
+        "current": "09a1292143de4e0f24a233a41b50e90fae8f19d394afae2f5171384f59fc9667",
+        "matches": true
+      },
+      "src/renderer/pages/Songs/Songs.page.tsx": {
+        "recorded": "a15a3adc08b8ebb2bd4d96b00c8462d94922bef67eb2fad655c6c428af0eb942",
+        "current": "a15a3adc08b8ebb2bd4d96b00c8462d94922bef67eb2fad655c6c428af0eb942",
+        "matches": true
+      },
+      "src/renderer/pages/Playlists/Playlists.page.tsx": {
+        "recorded": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+        "current": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+        "matches": true
+      },
+      "src/renderer/pages/Stations/Stations.page.tsx": {
+        "recorded": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573",
+        "current": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573",
+        "matches": true
+      },
+      "src/renderer/pages/Settings/SettingsEdits.tsx": {
+        "recorded": "0319d54594b8e7658485e8a9dbc33b78b050633623f8cb1665872b2e75387f89",
+        "current": "0319d54594b8e7658485e8a9dbc33b78b050633623f8cb1665872b2e75387f89",
+        "matches": true
+      },
+      "src/renderer/local-state-cache.ts": {
+        "recorded": "3408412238143901b1a1101577bbc097734c4f2f7998f34961a6fc6aae15b801",
+        "current": "3408412238143901b1a1101577bbc097734c4f2f7998f34961a6fc6aae15b801",
+        "matches": true
+      }
+    },
+    "2026-10-18-live-access-permissions.json": {
+      "src/main/jellyfin.ts": {
+        "recorded": "6e1191d733752c57787c1c9465085e014a0500e0543e56a22467019892ad74ab",
+        "current": "4d8a18d25cefa435355035df9ad97b897c68570a6035b70adbd5f25b31c48044",
+        "matches": false
+      },
+      "src/main/index.ts": {
+        "recorded": "1b7ead1138761424fccd5e35dd432b7ba0c3e7d7e43eec18fd408f49e6e8362c",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/shared/types.ts": {
+        "recorded": "0637a467d043774954160f8f22b4d3074cc853534593b36f68e718c60f5040c5",
+        "current": "a4777ac71292ab6adddcb1fce211ad14c7e324fe1ccd5ed278fb1f290dfcaea0",
+        "matches": false
+      },
+      "src/preload/index.ts": {
+        "recorded": "6a5e85fafc04caea2b62b6f4bef794bffe166b72322ecd677697413639ec6f9f",
+        "current": "458378616e402bc07202f269fa94092d8ee8685e2dd9bba7fcaf0c7ca58e31c1",
+        "matches": false
+      },
+      "src/renderer/App.tsx": {
+        "recorded": "eae93435308b21d89e771bc920b389b753743923b1d9e907abed0f5d551551f7",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": false
+      },
+      "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": {
+        "recorded": "53afdb4d78cca027bce5865b5180dab1a27d5873ad1541b988eea50cd7802ecd",
+        "current": "53afdb4d78cca027bce5865b5180dab1a27d5873ad1541b988eea50cd7802ecd",
+        "matches": true
+      }
+    },
+    "2026-10-19-account-expiry-boundary.json": {
+      "src/main/index.ts": {
+        "recorded": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": true
+      },
+      "src/main/jellyfin.ts": {
+        "recorded": "ad380aa5fc6e6963254831e5f5d5d67210053977a374e3473c62435d56dc26c8",
+        "current": "4d8a18d25cefa435355035df9ad97b897c68570a6035b70adbd5f25b31c48044",
+        "matches": false
+      },
+      "src/renderer/App.tsx": {
+        "recorded": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": true
+      },
+      "src/renderer/api.ts": {
+        "recorded": "9c2f347ebb911d73915cbc4178a03f33e8dfcfcec4ff4a8b2ef4cd1e94ca4e18",
+        "current": "9c2f347ebb911d73915cbc4178a03f33e8dfcfcec4ff4a8b2ef4cd1e94ca4e18",
+        "matches": true
+      },
+      "src/renderer/main.tsx": {
+        "recorded": "fa6dae583c41c04186cb71ec7b3b68af716ba82fc46cb788b1b433d106141065",
+        "current": "fa6dae583c41c04186cb71ec7b3b68af716ba82fc46cb788b1b433d106141065",
+        "matches": true
+      },
+      "src/renderer/pages/Settings/Settings.page.tsx": {
+        "recorded": "bfd9e02f6187a9581e9de3e5d941f66a35be7cf5477b68594b740ee25ebbf101",
+        "current": "bfd9e02f6187a9581e9de3e5d941f66a35be7cf5477b68594b740ee25ebbf101",
+        "matches": true
+      },
+      "src/shared/types.ts": {
+        "recorded": "a4777ac71292ab6adddcb1fce211ad14c7e324fe1ccd5ed278fb1f290dfcaea0",
+        "current": "a4777ac71292ab6adddcb1fce211ad14c7e324fe1ccd5ed278fb1f290dfcaea0",
+        "matches": true
+      },
+      "src/renderer/pages/Connection/Connection.page.tsx": {
+        "recorded": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815",
+        "current": "0b6db7b41b5e9bcf0100e82b7f9c9998b3111d99601db1a940e671b7adf2dbd3",
+        "matches": false
+      }
+    },
+    "2026-10-19-account-switch-server-draft.json": {
+      "src/renderer/pages/Connection/Connection.page.tsx": {
+        "recorded": "0b6db7b41b5e9bcf0100e82b7f9c9998b3111d99601db1a940e671b7adf2dbd3",
+        "current": "0b6db7b41b5e9bcf0100e82b7f9c9998b3111d99601db1a940e671b7adf2dbd3",
+        "matches": true
+      }
+    },
+    "2026-10-19-failed-signout-expiry.json": {
+      "src/main/index.ts": {
+        "recorded": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": true
+      },
+      "src/main/jellyfin.ts": {
+        "recorded": "ad380aa5fc6e6963254831e5f5d5d67210053977a374e3473c62435d56dc26c8",
+        "current": "4d8a18d25cefa435355035df9ad97b897c68570a6035b70adbd5f25b31c48044",
+        "matches": false
+      },
+      "src/renderer/App.tsx": {
+        "recorded": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": true
+      },
+      "src/renderer/api.ts": {
+        "recorded": "9c2f347ebb911d73915cbc4178a03f33e8dfcfcec4ff4a8b2ef4cd1e94ca4e18",
+        "current": "9c2f347ebb911d73915cbc4178a03f33e8dfcfcec4ff4a8b2ef4cd1e94ca4e18",
+        "matches": true
+      },
+      "src/renderer/main.tsx": {
+        "recorded": "fa6dae583c41c04186cb71ec7b3b68af716ba82fc46cb788b1b433d106141065",
+        "current": "fa6dae583c41c04186cb71ec7b3b68af716ba82fc46cb788b1b433d106141065",
+        "matches": true
+      },
+      "src/renderer/pages/Settings/Settings.page.tsx": {
+        "recorded": "bfd9e02f6187a9581e9de3e5d941f66a35be7cf5477b68594b740ee25ebbf101",
+        "current": "bfd9e02f6187a9581e9de3e5d941f66a35be7cf5477b68594b740ee25ebbf101",
+        "matches": true
+      },
+      "src/shared/types.ts": {
+        "recorded": "a4777ac71292ab6adddcb1fce211ad14c7e324fe1ccd5ed278fb1f290dfcaea0",
+        "current": "a4777ac71292ab6adddcb1fce211ad14c7e324fe1ccd5ed278fb1f290dfcaea0",
+        "matches": true
+      },
+      "src/renderer/pages/Connection/Connection.page.tsx": {
+        "recorded": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815",
+        "current": "0b6db7b41b5e9bcf0100e82b7f9c9998b3111d99601db1a940e671b7adf2dbd3",
+        "matches": false
+      }
+    },
+    "2026-10-19-jellyfin-read-boundary.json": {
+      "src/main/jellyfin.ts": {
+        "recorded": "4d8a18d25cefa435355035df9ad97b897c68570a6035b70adbd5f25b31c48044",
+        "current": "4d8a18d25cefa435355035df9ad97b897c68570a6035b70adbd5f25b31c48044",
+        "matches": true
+      }
+    },
+    "2026-10-19-playlist-obligations.json": {
+      "src/main/jellyfin.ts": {
+        "recorded": "59f19ce18dd13f9037c4e88e94de205f3e0e0e4a15b01943afb805c2e155b6c0",
+        "current": "4d8a18d25cefa435355035df9ad97b897c68570a6035b70adbd5f25b31c48044",
+        "matches": false
+      },
+      "src/main/playlist-recovery.ts": {
+        "recorded": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+        "current": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+        "matches": true
+      },
+      "src/main/index.ts": {
+        "recorded": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": true
+      },
+      "src/main/storage.ts": {
+        "recorded": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "current": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "matches": true
+      },
+      "src/shared/playlist-entries.ts": {
+        "recorded": "bb58ab3747844f5080fae78be9a9431bc9cb841fbbb704866cd7e064b5a1292c",
+        "current": "bb58ab3747844f5080fae78be9a9431bc9cb841fbbb704866cd7e064b5a1292c",
+        "matches": true
+      },
+      "src/renderer/App.tsx": {
+        "recorded": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": true
+      },
+      "src/renderer/useRetryFocus.ts": {
+        "recorded": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c",
+        "current": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c",
+        "matches": true
+      },
+      "src/renderer/pages/Playlists/Playlists.page.tsx": {
+        "recorded": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+        "current": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+        "matches": true
+      },
+      "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": {
+        "recorded": "53afdb4d78cca027bce5865b5180dab1a27d5873ad1541b988eea50cd7802ecd",
+        "current": "53afdb4d78cca027bce5865b5180dab1a27d5873ad1541b988eea50cd7802ecd",
+        "matches": true
+      },
+      "src/renderer/components/TrackTable/TrackTable.component.tsx": {
+        "recorded": "158caa15a4fe11170ac048c1752d4b9327006595646f5a86acd27c5b1c0216e5",
+        "current": "158caa15a4fe11170ac048c1752d4b9327006595646f5a86acd27c5b1c0216e5",
+        "matches": true
+      },
+      "src/renderer/components/Shared.tsx": {
+        "recorded": "16726cf323f44324a124ee5fb29a7270ae514f8dc04f87f153f6b0a5e289ff5e",
+        "current": "16726cf323f44324a124ee5fb29a7270ae514f8dc04f87f153f6b0a5e289ff5e",
+        "matches": true
+      }
+    }
+  },
+  "adjudication": {
+    "acceptedCanonicalGroups": 0,
+    "knownOpenChecks": 25,
+    "semanticDenominatorComplete": false,
+    "overallScore": null
+  },
+  "limits": [
+    "Current source and scoped dated evidence review only. Hash matches are recorded individually;changed files are not silently treated as current runtime passes.",
+    "All five whole-story contexts retain every result and their role/situation/action. Linked partial examples do not accept the whole story.",
+    "The complete app denominator and critical-invariant lifetime audits remain incomplete.",
+    "No new build/lint/unit,native/live,VoiceOver,OS,audible,listener or deferred viewport/zoom check. App source unchanged."
+  ]
+}
