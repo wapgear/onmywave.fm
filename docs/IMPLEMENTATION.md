@@ -4,6 +4,8 @@ The historical sections below preserve earlier work and evidence. The current da
 
 ## Current dated evidence, 18 October 2026
 
+The [scheduled-delivery record](verification/2026-10-18-scheduled-news-delivery.json) fixes heard-news replay after failed history updates, adds token-bound manual/automatic reservations and saves delivery start before sound. Seventy-four service checks and scoped native decoded/muted playback cover cancellation, restart, canonical variants and clear DJ failure feedback. The documented crash gap can omit unheard news; explicit replay remains available. CI6 full queue adjudication and the same25 acceptance checks remain open.
+
 The [current PRD source map](verification/2026-10-18-current-prd-source-map.csv) and [reconciliation](verification/2026-10-18-current-prd-reconciliation.json) now account for all current source lines and expanded keyboard/pending-operation story results. They replace the dated map for navigation without changing requirements, dispositions or the remaining individual Q13 evidence work.
 
 The [current essential keyboard audit](verification/2026-10-18-q06-keyboard-acceptance.json) closes Q06 by reconciling all 35 reachable families/234 definitions with current source and scoped native evidence. PR #108 also fixes player DJ destination focus and setup-return semantics. Current inventory has 26 open checks, 14 listener and 12 other-proof. Earlier notes below retain their dated dispositions. Full VoiceOver, platform, hardware, live-service and listener proof remain separate.

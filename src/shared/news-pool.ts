@@ -37,15 +37,16 @@ export function matchesNewsRoom(take: PreparedNewsTake, state: LocalState, roomI
 export function eligibleNewsTakes(takes: PreparedNewsTake[], state: LocalState, roomId: string, now = Date.now()): PreparedNewsTake[] {
   const cutoff = now - 24 * 60 * 60 * 1000;
   if (!state.roomProfiles.find(value => value.id === roomId)?.enabled) return [];
-  const playedUrls = new Set(takes.filter(take => take.deliveryState?.status === 'played').flatMap(take => take.articles.map(article => canonicalArticleUrl(article.url)).filter((url): url is string => Boolean(url))));
+  const reservedOrConsumed = new Set(takes.filter(take => ['claimed', 'started', 'played'].includes(take.deliveryState?.status ?? ''))
+    .flatMap(take => take.articles.map(article => canonicalArticleUrl(article.url)).filter((url): url is string => Boolean(url))));
   const candidates = takes.filter(take => take.available && matchesNewsRoom(take, state, roomId)
-    && take.deliveryState?.status !== 'played' && take.deliveryState?.status !== 'claimed'
+    && take.deliveryState?.status !== 'played' && take.deliveryState?.status !== 'claimed' && take.deliveryState?.status !== 'started'
     && take.articles.some(article => {
       const published = article.publishedAt ? Date.parse(article.publishedAt) : NaN;
       const prepared = Date.parse(take.createdAt);
       return Number.isFinite(published) ? published >= cutoff && published <= now : Number.isFinite(prepared) && prepared >= cutoff && prepared <= now;
     })).sort((a, b) => Date.parse(a.createdAt) - Date.parse(b.createdAt));
-  const seenUrls = new Set(playedUrls);
+  const seenUrls = new Set(reservedOrConsumed);
   return candidates.filter(take => {
     const urls = take.articles.map(article => canonicalArticleUrl(article.url));
     if (urls.some(url => !url || seenUrls.has(url))) return false;

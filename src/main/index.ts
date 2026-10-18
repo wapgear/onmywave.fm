@@ -13,7 +13,7 @@ import { JellyfinService, ServiceError, PLAYLIST_CREATION } from './jellyfin';
 import { getLocalState, openAIKeyStatus, readDeviceIdentity, readConnection, readOpenAIKey, updateLocalState, updateLocalStateAndGet, withProviderKeys, writeConnection, writeOpenAIKey, readElevenLabsKey, elevenLabsKeyStatus, writeElevenLabsKey } from './storage';
 import { preparePlayback, registerMedia, revokeMedia } from './media';
 import { NewsService, validateNewsSettings } from './news';
-import { getPreparedNews, prepareNewsScript, renderNewsTake, selectNewsTake, cancelPreparedNews, cancelActivePreparedNews, isPreparedNewsActive, nextRoomNews, releasePreparedNews, markPreparedNewsPlayed, reconcilePreparedNews } from './prepared-news';
+import { getPreparedNews, prepareNewsScript, renderNewsTake, selectNewsTake, cancelPreparedNews, cancelActivePreparedNews, isPreparedNewsActive, nextRoomNews, claimPreparedNews, startPreparedNews, releasePreparedNews, markPreparedNewsPlayed, reconcilePreparedNews } from './prepared-news';
 import { pauseNewsWorkflow, startNewsWorkflow, stopNewsWorkflow, invalidateNewsWorkflow, checkNewsWorkflow } from './news-workflow';
 import { isNewsTransitionSettings, normalizeNewsTransitionSettings } from '../shared/news-transitions';
 import { isWorkflowDraft, normalizeWorkflowDraft } from '../shared/workflow';
@@ -148,7 +148,7 @@ function recoverNews(): Promise<NewsRecoveryStatus> {
   })().finally(() => { newsRecoveryAttempt = null; });
   return newsRecoveryAttempt;
 }
-const newsOperations = new Set(['getPreparedNews', 'nextRoomNews', 'selectNewsTake', 'prepareNewsScript', 'renderNewsTake', 'prepareDJVoicePreview', 'prepareVoicePreview', 'searchDJVoices']);
+const newsOperations = new Set(['getPreparedNews', 'nextRoomNews', 'claimPreparedNews', 'startPreparedNews', 'selectNewsTake', 'prepareNewsScript', 'renderNewsTake', 'prepareDJVoicePreview', 'prepareVoicePreview', 'searchDJVoices']);
 
 function registerIpc() {
   const operations: Record<string, (input: never) => unknown> = {
@@ -468,6 +468,8 @@ function registerIpc() {
       const epoch = newsRecoveryEpoch;
       return nextRoomNews(input, () => !closing && newsRecoveryStatus.phase === 'ready' && epoch === newsRecoveryEpoch);
     },
+    claimPreparedNews: input => claimPreparedNews(input),
+    startPreparedNews: input => startPreparedNews(input),
     releasePreparedNews: input => releasePreparedNews(input),
     markPreparedNewsPlayed: input => markPreparedNewsPlayed(input),
     getPreparedNews: () => getPreparedNews(),
