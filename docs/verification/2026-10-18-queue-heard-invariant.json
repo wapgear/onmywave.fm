@@ -1,0 +1,3704 @@
+{
+  "date": "2026-10-18",
+  "baseCommit": "7a457151da7719720f507437f244eec1d15dab17",
+  "scope": "CI6 current engineering adjudication of queue continuation and heard-news exclusion, with one outgoing-ended preparation guard. Named listener, audible, OS and full atomic-denominator proof remain separate.",
+  "change": {
+    "file": "src/renderer/player.tsx",
+    "behavior": "Ignore music ended while a replacement occurrence is being prepared, before updating cadence or queue history.",
+    "basis": "Both independent reviewers identified the persistent callback window between synchronous live-index change and effect-driven source replacement. Root proposed reusing preparing instead of adding a source-token subsystem; both audited every occurrence mutation and accepted.",
+    "nativeReproduction": "Exact queued-ended then Next ordering was not forcibly reproduced. This is a source-identified race guard with focused final-native regression/positive controls, not a claim of an observed double advance."
+  },
+  "obligations": [
+    {
+      "id": "CI6.1",
+      "title": "Natural completion and cadence",
+      "behavior": "A real music end counts once; skips and exact-end seeks do not count.",
+      "checks": "D04,D06;M05,M07",
+      "currentSource": "Actual ended/countedSongGeneration/consumedEnd guards; preparing fence precedes all count/history mutation.",
+      "evidenceAndJudgment": "Fresh repeat-one3->2 cadence, paused skip unchanged, endpoint unchanged, final natural positive control and automatic3-song delivery."
+    },
+    {
+      "id": "CI6.2",
+      "title": "Queue occurrence identity",
+      "behavior": "Repeated song IDs remain distinct occurrences through shuffle, skips and continuation.",
+      "checks": "M03,M06,M19;D06",
+      "currentSource": "Queue entries have UUID keys; next/previous/shuffle/remove use keys and synchronous live occurrence updates.",
+      "evidenceAndJudgment": "Fresh shuffled2,1,3,0 sequence, Previous/Next history, exhaustion/wrap, paused duplicates restored; current queue-removal source and retained native focus/identity evidence."
+    },
+    {
+      "id": "CI6.3",
+      "title": "Repeat and shuffle after speech",
+      "behavior": "Completion, failure and explicit Stop continue according to repeat mode, shuffle history and pause intent.",
+      "checks": "M05;D06,D09",
+      "currentSource": "continueAfterSong/next/changeTrack and voice onended remain identical to resolved52-case handoff scopes; only outgoing music-end guard strengthens them.",
+      "evidenceAndJudgment": "Retained resolved handoff matrix; fresh repeat-one manual retained speech and automatic one-play delivery; PR121 final marker failure/continuation."
+    },
+    {
+      "id": "CI6.4",
+      "title": "Retained speaking break",
+      "behavior": "Pause/rewind retains heard position; resume music first and only remaining speech at a suitable ending.",
+      "checks": "M08;D06,D09",
+      "currentSource": "seek resets attempt/phase and pauses same clip; one start promise is reused; onplay fences phase/key/token/intent.",
+      "evidenceAndJudgment": "Fresh11.743457-second paused clip resumes at11.743466, one eventual speech end and repeat-one music continuation. Resolved retained-break matrix retains named scope."
+    },
+    {
+      "id": "CI6.5",
+      "title": "Durable heard exclusion",
+      "behavior": "Actual or ambiguous invoked playback must not reenter automatic delivery after failed marker/restart.",
+      "checks": "D06,D07;R4",
+      "currentSource": "Token-bound durable started before play; actual onplay Last heard; started/played excluded after startup; explicit manual replay does not reopen ready.",
+      "evidenceAndJudgment": "PR #121’s 74 service checks/17 native states remain source-current except strengthened ended handler; fresh automatic same token claim->played with no manual selection."
+    },
+    {
+      "id": "CI6.6",
+      "title": "Late preparation and placement",
+      "behavior": "Old music loads or saved-pool callbacks cannot override a newer queue/profile/intent.",
+      "checks": "M15;D05,D06",
+      "currentSource": "load token/key and placement generation fences; controller cancellation releases exact claim; write/recovery gates prevent unowned dispatch.",
+      "evidenceAndJudgment": "Resolved handoff/controller comparisons, current PR121 token service/native cancellation, final held replacement resource with paused newer entry. Unresolved older load-recovery hash is excluded from current source transfer."
+    },
+    {
+      "id": "CI6.7",
+      "title": "Delayed start gate",
+      "behavior": "History save must precede speech; pause/rewind/cancel and recovery must fence a late result.",
+      "checks": "D06,D09",
+      "currentSource": "Single start promise, token/object/attempt/phase/key/intent checks; known never-invoked release; started remains consumed after invocation.",
+      "evidenceAndJudgment": "Current PR121 held start/cancel; fresh over-music held start followed by rewind/release stays silent, music-first resume and later one actual speech play."
+    },
+    {
+      "id": "CI6.8",
+      "title": "Canonical story variants",
+      "behavior": "A reserved or consumed story must not be independently auto-claimed under another tracking variant.",
+      "checks": "D05,D06",
+      "currentSource": "Automatic CAS checks claimed/started/played canonical URLs; all claim/start/release/mark operations guard exact token.",
+      "evidenceAndJudgment": "Current PR121 race and stale-token service checks; fresh controller automatic path passes its actual lease token."
+    },
+    {
+      "id": "CI6.9",
+      "title": "Ending event ownership",
+      "behavior": "A queued outgoing music end must not act on the new live queue entry while its source is being replaced.",
+      "checks": "D06;M15",
+      "currentSource": "New preparing early guard; changeTrack/play/restore/remove-current set flag before occurrence mutation; load clears outgoing src before flag release; endpoint/exhaustion synchronously clear source and consume generation.",
+      "evidenceAndJudgment": "Independent source path audit and final genuine-end/delayed-resource controls. Exact browser queued-event order not forcibly reproduced; source guard closes identified preparation window."
+    },
+    {
+      "id": "CI6.10",
+      "title": "Speech remains separate from music",
+      "behavior": "Speech preparation/playback does not add music queue entries, favorite/history mutations or provider calls during listening.",
+      "checks": "T11,D06",
+      "currentSource": "Only music natural-ended path increments completedSongs; prepared speech uses a separate Audio element; playback APIs have no provider dispatch.",
+      "evidenceAndJudgment": "Fresh32 states retain the same four music IDs and zero text/audio preparation/external attempts; PR121 service provenance/selection and CI4/CI5/CI3 records retain scopes."
+    },
+    {
+      "id": "CI6.11",
+      "title": "Failure and feedback",
+      "behavior": "Failed start/history remains understandable without retrying a song or silently replaying a story.",
+      "checks": "D06,D07;R4",
+      "currentSource": "Current dedicated DJ notice survives automatic load; Last heard is actual onplay and retains completed/interrupted session status.",
+      "evidenceAndJudgment": "PR121 visible failure/marker notices, final automatic Played to end and reset countdown; listener comprehension and audible quality remain separate."
+    }
+  ],
+  "freshness": {
+    "method": "Resolve evidence SHA256 to exact current or Git/reflog file bytes; compare named TypeScript-printed syntax scopes with comments/formatting removed. Inspect changed scopes and dependencies individually. Matching nodes are not a blanket rerun.",
+    "sourceVersions": [
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-listening-controls"
+        ],
+        "evidenceHash": "d682d6ca0ae69d18f6b26dea4d2c9243d316acce8a9a7900fec1a101c6ff0051",
+        "unresolved": true
+      },
+      {
+        "file": "src/renderer/components/Player/Player.component.tsx",
+        "records": [
+          "2026-10-16-listening-controls"
+        ],
+        "evidenceHash": "6a2aba53fae5835a94d1d78d23933ed7245c8a68ece8839f6f7f176a41e15108",
+        "unresolved": true
+      },
+      {
+        "file": "src/renderer/components/Queue/Queue.component.tsx",
+        "records": [
+          "2026-10-16-listening-controls"
+        ],
+        "evidenceHash": "4938e07285b9188b3d9105556ed2ebbed3b20951d4b094b079f27a14d113c1a5",
+        "currentHash": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "2b42ec2426fb9b20e1ba9eb5e78271dd7d4da634"
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-16-listening-controls"
+        ],
+        "evidenceHash": "0178f81ae501df23ba8462e7810cdd4fa8438777ac424419cb52a5e8f7197e3c",
+        "unresolved": true
+      },
+      {
+        "file": "src/main/storage.ts",
+        "records": [
+          "2026-10-16-listening-controls"
+        ],
+        "evidenceHash": "8c06bf1f1fd99f53d224a6ac61a61ea34e48426e3fa33ca276e9880e638c1e36",
+        "unresolved": true
+      },
+      {
+        "file": "src/main/jellyfin.ts",
+        "records": [
+          "2026-10-16-listening-controls",
+          "2026-10-16-endpoint-cadence"
+        ],
+        "evidenceHash": "f4d2e4d8ae75807447bd5b4f64b97938594f3935834932bb7d1bec43a8360448",
+        "currentHash": "6e1191d733752c57787c1c9465085e014a0500e0543e56a22467019892ad74ab",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/main/media.ts",
+        "records": [
+          "2026-10-16-listening-controls",
+          "2026-10-16-endpoint-cadence",
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break",
+          "2026-10-16-playback-load-recovery"
+        ],
+        "evidenceHash": "6768544bd3215e37187a12293571c894a1023619ebe8f09e25403bdec0bfb671",
+        "currentHash": "c2dbac7a2c6892e44794cffde7cd5118f6999f712b1f6f06533b3a9f44245fe2",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/shared/types.ts",
+        "records": [
+          "2026-10-16-listening-controls"
+        ],
+        "evidenceHash": "1ace790d5d37178ead6a375a17ead26b8cc561786dcbc68cb1df136ad37a8852",
+        "unresolved": true
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-endpoint-cadence"
+        ],
+        "evidenceHash": "78729fac82440a7590c885c9722a9bbd0ec67934aac79dd30c5392e297b7c5fa",
+        "unresolved": true
+      },
+      {
+        "file": "src/renderer/components/Player/Player.component.tsx",
+        "records": [
+          "2026-10-16-endpoint-cadence",
+          "2026-10-16-playback-load-recovery"
+        ],
+        "evidenceHash": "37a8009dbf0f2041d39fd3797782c91d59797a6905d5ce2991455b0f82274c7a",
+        "unresolved": true
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-16-endpoint-cadence",
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break",
+          "2026-10-16-playback-load-recovery"
+        ],
+        "evidenceHash": "03c70d68a326aac2ab8826329c7020620404b1daeb9cedb9c317be7f080d4757",
+        "unresolved": true
+      },
+      {
+        "file": "src/main/storage.ts",
+        "records": [
+          "2026-10-16-endpoint-cadence",
+          "2026-10-16-playback-load-recovery"
+        ],
+        "evidenceHash": "844254b83525cc7eaf7c9ad7469eec3550f02e1ebb8b88270018c68937ec5adc",
+        "unresolved": true
+      },
+      {
+        "file": "src/preload/index.ts",
+        "records": [
+          "2026-10-16-endpoint-cadence",
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break",
+          "2026-10-16-playback-load-recovery"
+        ],
+        "evidenceHash": "0c7edf2153d5210b24a0fac9db667fd254e324366d4737653578ef067c1eac63",
+        "currentHash": "458378616e402bc07202f269fa94092d8ee8685e2dd9bba7fcaf0c7ca58e31c1",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/shared/types.ts",
+        "records": [
+          "2026-10-16-endpoint-cadence",
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break",
+          "2026-10-16-playback-load-recovery"
+        ],
+        "evidenceHash": "71e36cce9f904d7327f8d85c38f8ce050c7955877888ed9dde27e4105a6c57f0",
+        "currentHash": "1275f91f29509c8ade9c54fd950516c86bde50c639e291a001b4a2929f407db0",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "evidenceHash": "0d72985571ede7ae6562a95220c03bbdfec6f9367c0741e131a06481bd40e7f6",
+        "currentHash": "aa7d866e5724945a3f06773a984f6983ccc6544ee08b02991fd54c0f53f25f0c",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/renderer/dj-playback.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break",
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "evidenceHash": "31e217aa382a88dcfddbfb0b06b0294825d4acdb7a9bc0127dd8e367adf85c5f",
+        "currentHash": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/renderer/components/Player/Player.component.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "evidenceHash": "66f946823cd41e86f27ed6a53d21998cf7543c929066bc8152ccad2e59c89041",
+        "currentHash": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/renderer/components/Player/DJPopover.component.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "evidenceHash": "656e1d9ee5f39a1beabf6211a69e6483cab04950aea4cdb87971bf682d5806df",
+        "unresolved": true
+      },
+      {
+        "file": "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "evidenceHash": "be6052babfe16f1b501be68e15feceebba30e960e5596c32329d605c3cc666ae",
+        "currentHash": "637cd8e97ae915639bcec77ac344ec28159ebc22e40b5e4fa74df4f826e14645",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/main/prepared-news.ts",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "evidenceHash": "f09a7fd83da395c8de08e1eab3b52f87454e80bbc36dcdad6d2fd1d21f229155",
+        "unresolved": true
+      },
+      {
+        "file": "src/main/playback-preferences.ts",
+        "records": [
+          "2026-10-16-playback-load-recovery"
+        ],
+        "evidenceHash": "015bbe70cc718f2449061cf25066ecd85e9d2bf281a0cb7d6dd7949fddc5ea4f",
+        "currentHash": "015bbe70cc718f2449061cf25066ecd85e9d2bf281a0cb7d6dd7949fddc5ea4f",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-playback-load-recovery"
+        ],
+        "evidenceHash": "614b0ed1d58fe8f0061696d63ead91cbd8e62e41bd16f8a7310cdd9aa0bcc808",
+        "unresolved": true
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-16-playback-load-recovery"
+        ],
+        "evidenceHash": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+        "currentHash": "eae93435308b21d89e771bc920b389b753743923b1d9e907abed0f5d551551f7",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "evidenceHash": "481d350ef35d5e11d77848f661419f5eea265cbf643db234c665174255ec562c",
+        "currentHash": "aa7d866e5724945a3f06773a984f6983ccc6544ee08b02991fd54c0f53f25f0c",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "54a9851eb2fa09e22005200f27e8080a33459c06"
+      },
+      {
+        "file": "src/renderer/components/Player/DJPopover.component.tsx",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "evidenceHash": "6ffca314f80c990adb9c1fbf81f970560cd5d2debc786e855098f89551e2e4ec",
+        "currentHash": "7a9858830d98a053b2a3d805e6a2b6521aa483154c00306b0a6cfb4fb96fd981",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/main/prepared-news.ts",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "evidenceHash": "0d0d40b27e899d04bea54d064d62017643c58211997f8c3e36f896b26c24bd2d",
+        "currentHash": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "c374ac50c55c23e0f65c663123d6af93b9ebedcf"
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "evidenceHash": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+        "currentHash": "aaa4568e65b5d8397b26a767ead775ce848e91038a58b9e3e486a29a0a6e22ec",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/shared/news-pool.ts",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "evidenceHash": "2f8ac1bde20b4a9adfd3beedf015e2d7e843dda584e7713be29e1a4c7ad3fa77",
+        "currentHash": "d8a190d01563d458a34bd2a89e9bbce8aa7533a7e678b44d88559951768f9da5",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/renderer/components/Queue/Queue.component.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "evidenceHash": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082",
+        "currentHash": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/components/Player/Player.component.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "evidenceHash": "8ee20d8917df31c5b880d850d0445a3cf9610969885844b7c67e3e50eb3d65c2",
+        "currentHash": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "2b0c4bc57147abf0b3239430ab80bc7faf5798e2"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "evidenceHash": "1a958a21936d3079f4a4d9c8e6987d47ffed8cf11cf6feee8cf4a4a7f2646f19",
+        "currentHash": "aa7d866e5724945a3f06773a984f6983ccc6544ee08b02991fd54c0f53f25f0c",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e"
+      },
+      {
+        "file": "src/renderer/styles.css",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "evidenceHash": "5a235c72cbcbff30bf790e1fa7044ea6a9abc9727ecbda08389d9a059a196d32",
+        "currentHash": "59a887c4f754a3e54d9fea94420cf39ffc99a825211113e85b98df2cd2b53693",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "9a2a734f131d282b82e7ab53491a63b19a1e8952"
+      },
+      {
+        "file": "src/renderer/components/Drawer/Drawer.styles.css",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "evidenceHash": "f6a585dbc6dd4070b31efd16762d9a79c77ffa46388f79ae8bc8f4a99264d292",
+        "currentHash": "f6a585dbc6dd4070b31efd16762d9a79c77ffa46388f79ae8bc8f4a99264d292",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/components/Player/Player.styles.css",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "evidenceHash": "c14c24b2b563243706fd7deecf0e7e1307965a3830d6208d313b8d0ac25d8114",
+        "currentHash": "6e1d3fc6940e0f0bc2dd7b94667feba86ed566e3ce1c695d29a1a3b2968bb9c6",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "evidenceHash": "aaa4568e65b5d8397b26a767ead775ce848e91038a58b9e3e486a29a0a6e22ec",
+        "currentHash": "aaa4568e65b5d8397b26a767ead775ce848e91038a58b9e3e486a29a0a6e22ec",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/main/prepared-news.ts",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "evidenceHash": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+        "currentHash": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/preload/index.ts",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "evidenceHash": "458378616e402bc07202f269fa94092d8ee8685e2dd9bba7fcaf0c7ca58e31c1",
+        "currentHash": "458378616e402bc07202f269fa94092d8ee8685e2dd9bba7fcaf0c7ca58e31c1",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/components/Player/Player.component.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "evidenceHash": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+        "currentHash": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/dj-playback.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "evidenceHash": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+        "currentHash": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/pages/Stations/components/PreparedTakes.component.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "evidenceHash": "fd9488789ef2042e6146938d8117e29df0823aae6611013952eb1b4debe83c92",
+        "currentHash": "fd9488789ef2042e6146938d8117e29df0823aae6611013952eb1b4debe83c92",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "evidenceHash": "01d43abd5752dfbb7a0f8d5c035e77719f2479cff425af0e45c940a479a464c8",
+        "currentHash": "aa7d866e5724945a3f06773a984f6983ccc6544ee08b02991fd54c0f53f25f0c",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "7a457151da7719720f507437f244eec1d15dab17"
+      },
+      {
+        "file": "src/shared/news-pool.ts",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "evidenceHash": "d8a190d01563d458a34bd2a89e9bbce8aa7533a7e678b44d88559951768f9da5",
+        "currentHash": "d8a190d01563d458a34bd2a89e9bbce8aa7533a7e678b44d88559951768f9da5",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/shared/types.ts",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "evidenceHash": "1275f91f29509c8ade9c54fd950516c86bde50c639e291a001b4a2929f407db0",
+        "currentHash": "1275f91f29509c8ade9c54fd950516c86bde50c639e291a001b4a2929f407db0",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      }
+    ],
+    "versions": 43,
+    "resolvedVersions": 31,
+    "excludedVersions": 12,
+    "wholeCurrentMatches": 11,
+    "nodeComparisons": [
+      {
+        "file": "src/main/media.ts",
+        "records": [
+          "2026-10-16-listening-controls",
+          "2026-10-16-endpoint-cadence",
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break",
+          "2026-10-16-playback-load-recovery"
+        ],
+        "node": "function:preparePlayback",
+        "sourceLine": 41,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "54bb47c4a342a429c62e9dc3e48f6f6e33441b7812b6f7f608792efd527f0e26",
+        "currentHash": "cc49eb7ccb752f19db743eef261aa428100961144f39394e7646589aff27d3b9",
+        "review": "Typed ServiceError replaces plain thrown objects; universal MP3 query correction is established in live-codec evidence. Resources remain unique per preparation; only current load generation applies the returned resource."
+      },
+      {
+        "file": "src/main/media.ts",
+        "records": [
+          "2026-10-16-listening-controls",
+          "2026-10-16-endpoint-cadence",
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break",
+          "2026-10-16-playback-load-recovery"
+        ],
+        "node": "function:registerMedia",
+        "sourceLine": 61,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "f254077962424407c6e39a6e4eea6b39fed26fded7b78a42a57301434e9e6161",
+        "currentHash": "5e0baa38d9b4efe8ec1d61b0634a63fa644330532ea3abc42417124987241ad2",
+        "review": "Obsolete direct speech route removed; saved audio uses current prepared file and storage-recovery feedback. Stream errors are redacted and cancellation handles rejected readers. This cannot issue renderer queue commands; current native WAV/MP3 and CI3 routing evidence establish their named scope."
+      },
+      {
+        "file": "src/main/media.ts",
+        "records": [
+          "2026-10-16-listening-controls",
+          "2026-10-16-endpoint-cadence",
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break",
+          "2026-10-16-playback-load-recovery"
+        ],
+        "node": "function:revokeMedia",
+        "sourceLine": 15,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "6614bd7f554fa449bf4917d69f3481ac886da39ab612750bf9f30ff7dc295204",
+        "currentHash": "8b1e72adf50ec8932d12c5463aadca6069dcefcb29a437372ff121151a45e0c5",
+        "review": "Obsolete speech map cleared route removed; current opaque resources and active media controllers are still revoked. No queue mutation occurs here."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "node": "function:PlayerProvider/variable:load",
+        "sourceLine": 174,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "e4c67b24a51baa489b7a88fc74199ab38d301b34e825a8cfb36065c1cc19fa6c",
+        "currentHash": "d341b58ed1e3974e5d7dfea42cae7573fc4fb274dfa2dd34d69d1b030cb90710",
+        "review": "Load now returns typed retry settlements and classifies unsupported media consistently. Existing generation/source/key/intent guards and source clearing remain; final delayed preparation and natural-end positive control exercise the current path."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "node": "function:PlayerProvider/variable:changeTrack",
+        "sourceLine": 227,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": true,
+        "oldHash": "879c45e372d2e64dc141f34c1f1f7687e3262c82b7d59e724806e2c48138834e",
+        "currentHash": "879c45e372d2e64dc141f34c1f1f7687e3262c82b7d59e724806e2c48138834e"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "node": "function:PlayerProvider/variable:next",
+        "sourceLine": 239,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": true,
+        "oldHash": "c3f4b08d5068d7184ddf2000b0718c05e353dafc7bf6dcd58de2157889e77004",
+        "currentHash": "c3f4b08d5068d7184ddf2000b0718c05e353dafc7bf6dcd58de2157889e77004"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "node": "function:PlayerProvider/variable:continueAfterSong",
+        "sourceLine": 298,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": true,
+        "oldHash": "0f85234cc77da24aabd50428f58c15bfbea2a59d895cf68e4ed36205aa6d8c9a",
+        "currentHash": "0f85234cc77da24aabd50428f58c15bfbea2a59d895cf68e4ed36205aa6d8c9a"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "node": "function:PlayerProvider/variable:checkScheduledNews",
+        "sourceLine": 306,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "11337ae8a620e6745ee965fedfd518aafffe7d5503463e6108d59093d4079cb9",
+        "currentHash": "7333b0407308c56424c077cf41a2c3c55710963638ac3d523615e020f530d27e",
+        "review": "PR121 adds durable start gate/single-flight/late-result fences and separate notice. Tail completion still consumes ending and invokes existing continuation exactly once. PR121 and current natural/manual/automatic/over-music checks exercise changed integration."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "node": "function:PlayerProvider/variable:seek",
+        "sourceLine": 601,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": true,
+        "oldHash": "a31bb779cecb44987f9651d761451d3b93593414c89f49cca2aa51a55becca29",
+        "currentHash": "a31bb779cecb44987f9651d761451d3b93593414c89f49cca2aa51a55becca29"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "node": "function:PlayerProvider/variable:toggle",
+        "sourceLine": 697,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "ae95c342c5bdd3379a12f3d3c7cc0ee5cb67d7e54cc53afcca695f2a103bfdcb",
+        "currentHash": "644852955a403310b81f3a5ee261ab8a5b1a867fd010427f937b0ab6b1324282",
+        "review": "Resuming invokes the same plan-bound play method to retain playInvoked knowledge; existing token/attempt/intent and onplay pause guards remain. Resume errors now use DJ notice. Fresh speaking rewind retains the same clip position and resumes music first."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "node": "function:PlayerProvider/variable:previous",
+        "sourceLine": 747,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": true,
+        "oldHash": "e34f1ed22ecb5591cc8e584cb6a5dc6dd5f88e34a81a8fb2519e5846f05742b9",
+        "currentHash": "e34f1ed22ecb5591cc8e584cb6a5dc6dd5f88e34a81a8fb2519e5846f05742b9"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "node": "function:PlayerProvider/variable:scheduleNews",
+        "sourceLine": 817,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "dc1855b00f992e48bbe322149ffa0886ffbb26a96b0f8227d950aa5fe4284cf8",
+        "currentHash": "370ad5d90c03ecabcdb4e5c4fe2370a0b4f3b70d65f610c9c10d51379af4a0cc",
+        "review": "Current recovery/preload/file freshness, token claim/start/mark/release and run identity are added around the original scheduling phases. PR #121’s 74 service checks and scoped native data remain current except this turn strengthens the music-ended guard. Fresh automatic path passes matching claim token with selectedTakeId null."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "node": "function:PlayerProvider/variable:stopNews",
+        "sourceLine": 138,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "e6b7797da8c3a4939826ecd181ee1ad42a597df7d2e93e7dbbe9a65eface5434",
+        "currentHash": "b0eb19a6ab02ad1f6f58e309ca148876f880057e237970150fa76177cdca8b2c",
+        "review": "Cancels exact unplayed delivery before dropping the plan; once play invoked, it never reopens consumed news. Existing element detachment, generation, return fade and Last heard interruption remain. PR121 cancellation/restart and fresh retained voice prove their named scope."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "node": "function:PlayerProvider/variable:musicCommand",
+        "sourceLine": 79,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "5497c7f3b0d0504449165ba0004e3647583742e0382735939fcd336f433f0776",
+        "currentHash": "bafc42a1bd32457b3359bfeac52b8070a5a2497dfbfa9fb7d8fb70763f01b472",
+        "review": "Additional notice revision/clear prevents stale feedback while retaining existing command revision and restore-retry cancellation; automatic continuation does not manufacture a command."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "node": "function:PlayerProvider/effect:music",
+        "sourceLine": 372,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "7491a5a8e21d26b6c09faf5192d1f4613a9363dc524791e45506355d437616fd",
+        "currentHash": "0416276766be0445d59d4bf6f63268fa30491663bd172a59909f99a730b526e4",
+        "review": "Current effect cleanup releases only known-unplayed delivery; track error string is shared. This turn guards onended with preparing before cadence/history/continuation. Source replacement paths establish the flag before changing the occurrence and clear/load outgoing source before releasing it. Final native held resource and genuine ended controls pass. Exact adversarial browser task ordering is not runtime-reproduced."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "node": "function:PlayerProvider/effect:music/assignment:element.onended",
+        "sourceLine": 405,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "0c582e1d5e7ce26288467158a8988a261ec30e5b4b333dd698f750c12dca3595",
+        "currentHash": "8885491f3fe4f97811967bb8619fc50c0f3d28c1377e3040bb6622eb0389392c",
+        "review": "Only the preparing guard is added to the otherwise retained actual-ended/counted-generation/schedule/continuation logic. It excludes outgoing source events while a new occurrence is being prepared; normal natural completions and third-song automatic placement still work in the final build."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "node": "function:PlayerProvider/effect:music/assignment:element.onerror",
+        "sourceLine": 420,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "241c3ebc585b5694d251b134e946e88ec7fd2297152941924bc92026d75f7deb",
+        "currentHash": "a8590c16ca2b490220cd79f574d2c33c54fe02d9f6462a24d7e9a1d7927138ba",
+        "review": "Current handler uses the shared trackLoadError constant with the same text; native-to-conversion fallback and failure pause semantics remain. It rejects preparing sources and stops the old news plan. Current lease cleanup/source fencing and retained named fallback evidence bound its scope."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "node": "function:PlayerProvider/variable:scheduleNews/assignment:element.onended",
+        "sourceLine": 901,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": true,
+        "oldHash": "83e9916a8d1dbb7b2160e6057d0b34d81cfd02dd39edcab608cf76de8567b016",
+        "currentHash": "83e9916a8d1dbb7b2160e6057d0b34d81cfd02dd39edcab608cf76de8567b016"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "node": "function:PlayerProvider/variable:scheduleNews/assignment:element.onplay",
+        "sourceLine": 891,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "29c25f054ce3416b82bc38d13452aa2fb208e1fd5740070375c5fb2a5c2ee7a0",
+        "currentHash": "9b5c27f1752f89ba017220d4ef30381cc22038900c2bac2e912b615d34692705",
+        "review": "Actual onplay remains the sole Last heard start. Exact delivery token marks started->played; stale history feedback is revision fenced. Current PR121 final marker failure/restart and fresh one-voice automatic timeline cover the new behavior."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "node": "function:PlayerProvider/property:removeQueue",
+        "sourceLine": 963,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": true,
+        "oldHash": "7ef37727d059785e4bfed6a815affc7fdab788d010f72adc2a509d37ae6f06e3",
+        "currentHash": "7ef37727d059785e4bfed6a815affc7fdab788d010f72adc2a509d37ae6f06e3"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break"
+        ],
+        "node": "function:PlayerProvider/property:toggleShuffle",
+        "sourceLine": 954,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "e74539a3f1de32cf2c1a63811a7008045178b56fec68e4bac6a3bfdaced5119a",
+        "currentHash": "e08e95c40978a2ad3c6e741327ae2b587791bb4c53caffd2e2b9138d0b053d3e",
+        "review": "Added preference receipt/generation bookkeeping; shuffle keys/cursor/visited reset remains the same. Fresh four-occurrence/history/exhaustion/wrap verifies real UI behavior."
+      },
+      {
+        "file": "src/renderer/dj-playback.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break",
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:useDJPlaybackController",
+        "sourceLine": 11,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "20e3505eb0f7b1601371b1ae3ae28eed93586c22432b0ca6ab06565684c68ba2",
+        "currentHash": "6604be6d885e1b2d646ad6ac9f56600812125aa2d51945dc00da0c812f36b48d",
+        "review": "Recovery blocks new placements and keeps known speech intact; write serialization/canonical saved-state receipts and read-only retry statuses are independently recorded. New token helper/third schedule argument closes ownership. Cadence/exclusion/attempted occurrence logic remains. Fresh final automatic reserved->played path and cadence reset provide integration proof."
+      },
+      {
+        "file": "src/renderer/dj-playback.tsx",
+        "records": [
+          "2026-10-16-dj-handoff",
+          "2026-10-16-retained-dj-break",
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:useDJPlaybackController/variable:configKey",
+        "sourceLine": 29,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": true,
+        "oldHash": "a72a7145eda6da84150bd556e0cc088bdf7e4f02084fe6c8f10688036ed6d6b2",
+        "currentHash": "a72a7145eda6da84150bd556e0cc088bdf7e4f02084fe6c8f10688036ed6d6b2"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:PlayerProvider/variable:load",
+        "sourceLine": 174,
+        "evidenceRevision": "54a9851eb2fa09e22005200f27e8080a33459c06",
+        "match": false,
+        "oldHash": "e4c67b24a51baa489b7a88fc74199ab38d301b34e825a8cfb36065c1cc19fa6c",
+        "currentHash": "d341b58ed1e3974e5d7dfea42cae7573fc4fb274dfa2dd34d69d1b030cb90710",
+        "review": "Load now returns typed retry settlements and classifies unsupported media consistently. Existing generation/source/key/intent guards and source clearing remain; final delayed preparation and natural-end positive control exercise the current path."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:PlayerProvider/variable:changeTrack",
+        "sourceLine": 227,
+        "evidenceRevision": "54a9851eb2fa09e22005200f27e8080a33459c06",
+        "match": true,
+        "oldHash": "879c45e372d2e64dc141f34c1f1f7687e3262c82b7d59e724806e2c48138834e",
+        "currentHash": "879c45e372d2e64dc141f34c1f1f7687e3262c82b7d59e724806e2c48138834e"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:PlayerProvider/variable:next",
+        "sourceLine": 239,
+        "evidenceRevision": "54a9851eb2fa09e22005200f27e8080a33459c06",
+        "match": true,
+        "oldHash": "c3f4b08d5068d7184ddf2000b0718c05e353dafc7bf6dcd58de2157889e77004",
+        "currentHash": "c3f4b08d5068d7184ddf2000b0718c05e353dafc7bf6dcd58de2157889e77004"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:PlayerProvider/variable:continueAfterSong",
+        "sourceLine": 298,
+        "evidenceRevision": "54a9851eb2fa09e22005200f27e8080a33459c06",
+        "match": true,
+        "oldHash": "0f85234cc77da24aabd50428f58c15bfbea2a59d895cf68e4ed36205aa6d8c9a",
+        "currentHash": "0f85234cc77da24aabd50428f58c15bfbea2a59d895cf68e4ed36205aa6d8c9a"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:PlayerProvider/variable:checkScheduledNews",
+        "sourceLine": 306,
+        "evidenceRevision": "54a9851eb2fa09e22005200f27e8080a33459c06",
+        "match": false,
+        "oldHash": "11337ae8a620e6745ee965fedfd518aafffe7d5503463e6108d59093d4079cb9",
+        "currentHash": "7333b0407308c56424c077cf41a2c3c55710963638ac3d523615e020f530d27e",
+        "review": "PR121 adds durable start gate/single-flight/late-result fences and separate notice. Tail completion still consumes ending and invokes existing continuation exactly once. PR121 and current natural/manual/automatic/over-music checks exercise changed integration."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:PlayerProvider/variable:seek",
+        "sourceLine": 601,
+        "evidenceRevision": "54a9851eb2fa09e22005200f27e8080a33459c06",
+        "match": true,
+        "oldHash": "a31bb779cecb44987f9651d761451d3b93593414c89f49cca2aa51a55becca29",
+        "currentHash": "a31bb779cecb44987f9651d761451d3b93593414c89f49cca2aa51a55becca29"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:PlayerProvider/variable:toggle",
+        "sourceLine": 697,
+        "evidenceRevision": "54a9851eb2fa09e22005200f27e8080a33459c06",
+        "match": false,
+        "oldHash": "ae95c342c5bdd3379a12f3d3c7cc0ee5cb67d7e54cc53afcca695f2a103bfdcb",
+        "currentHash": "644852955a403310b81f3a5ee261ab8a5b1a867fd010427f937b0ab6b1324282",
+        "review": "Resuming invokes the same plan-bound play method to retain playInvoked knowledge; existing token/attempt/intent and onplay pause guards remain. Resume errors now use DJ notice. Fresh speaking rewind retains the same clip position and resumes music first."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:PlayerProvider/variable:previous",
+        "sourceLine": 747,
+        "evidenceRevision": "54a9851eb2fa09e22005200f27e8080a33459c06",
+        "match": true,
+        "oldHash": "e34f1ed22ecb5591cc8e584cb6a5dc6dd5f88e34a81a8fb2519e5846f05742b9",
+        "currentHash": "e34f1ed22ecb5591cc8e584cb6a5dc6dd5f88e34a81a8fb2519e5846f05742b9"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:PlayerProvider/variable:scheduleNews",
+        "sourceLine": 817,
+        "evidenceRevision": "54a9851eb2fa09e22005200f27e8080a33459c06",
+        "match": false,
+        "oldHash": "470e6464ec1061d9fd28bbfce6a9b42381aca32122b28bcdcd1c1d5ebf1a2e32",
+        "currentHash": "370ad5d90c03ecabcdb4e5c4fe2370a0b4f3b70d65f610c9c10d51379af4a0cc",
+        "review": "Current recovery/preload/file freshness, token claim/start/mark/release and run identity are added around the original scheduling phases. PR #121’s 74 service checks and scoped native data remain current except this turn strengthens the music-ended guard. Fresh automatic path passes matching claim token with selectedTakeId null."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:PlayerProvider/variable:stopNews",
+        "sourceLine": 138,
+        "evidenceRevision": "54a9851eb2fa09e22005200f27e8080a33459c06",
+        "match": false,
+        "oldHash": "e6b7797da8c3a4939826ecd181ee1ad42a597df7d2e93e7dbbe9a65eface5434",
+        "currentHash": "b0eb19a6ab02ad1f6f58e309ca148876f880057e237970150fa76177cdca8b2c",
+        "review": "Cancels exact unplayed delivery before dropping the plan; once play invoked, it never reopens consumed news. Existing element detachment, generation, return fade and Last heard interruption remain. PR121 cancellation/restart and fresh retained voice prove their named scope."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:PlayerProvider/variable:musicCommand",
+        "sourceLine": 79,
+        "evidenceRevision": "54a9851eb2fa09e22005200f27e8080a33459c06",
+        "match": false,
+        "oldHash": "5497c7f3b0d0504449165ba0004e3647583742e0382735939fcd336f433f0776",
+        "currentHash": "bafc42a1bd32457b3359bfeac52b8070a5a2497dfbfa9fb7d8fb70763f01b472",
+        "review": "Additional notice revision/clear prevents stale feedback while retaining existing command revision and restore-retry cancellation; automatic continuation does not manufacture a command."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:PlayerProvider/effect:music",
+        "sourceLine": 372,
+        "evidenceRevision": "54a9851eb2fa09e22005200f27e8080a33459c06",
+        "match": false,
+        "oldHash": "7491a5a8e21d26b6c09faf5192d1f4613a9363dc524791e45506355d437616fd",
+        "currentHash": "0416276766be0445d59d4bf6f63268fa30491663bd172a59909f99a730b526e4",
+        "review": "Current effect cleanup releases only known-unplayed delivery; track error string is shared. This turn guards onended with preparing before cadence/history/continuation. Source replacement paths establish the flag before changing the occurrence and clear/load outgoing source before releasing it. Final native held resource and genuine ended controls pass. Exact adversarial browser task ordering is not runtime-reproduced."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:PlayerProvider/effect:music/assignment:element.onended",
+        "sourceLine": 405,
+        "evidenceRevision": "54a9851eb2fa09e22005200f27e8080a33459c06",
+        "match": false,
+        "oldHash": "0c582e1d5e7ce26288467158a8988a261ec30e5b4b333dd698f750c12dca3595",
+        "currentHash": "8885491f3fe4f97811967bb8619fc50c0f3d28c1377e3040bb6622eb0389392c",
+        "review": "Only the preparing guard is added to the otherwise retained actual-ended/counted-generation/schedule/continuation logic. It excludes outgoing source events while a new occurrence is being prepared; normal natural completions and third-song automatic placement still work in the final build."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:PlayerProvider/effect:music/assignment:element.onerror",
+        "sourceLine": 420,
+        "evidenceRevision": "54a9851eb2fa09e22005200f27e8080a33459c06",
+        "match": false,
+        "oldHash": "241c3ebc585b5694d251b134e946e88ec7fd2297152941924bc92026d75f7deb",
+        "currentHash": "a8590c16ca2b490220cd79f574d2c33c54fe02d9f6462a24d7e9a1d7927138ba",
+        "review": "Current handler uses the shared trackLoadError constant with the same text; native-to-conversion fallback and failure pause semantics remain. It rejects preparing sources and stops the old news plan. Current lease cleanup/source fencing and retained named fallback evidence bound its scope."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:PlayerProvider/variable:scheduleNews/assignment:element.onended",
+        "sourceLine": 901,
+        "evidenceRevision": "54a9851eb2fa09e22005200f27e8080a33459c06",
+        "match": true,
+        "oldHash": "83e9916a8d1dbb7b2160e6057d0b34d81cfd02dd39edcab608cf76de8567b016",
+        "currentHash": "83e9916a8d1dbb7b2160e6057d0b34d81cfd02dd39edcab608cf76de8567b016"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:PlayerProvider/variable:scheduleNews/assignment:element.onplay",
+        "sourceLine": 891,
+        "evidenceRevision": "54a9851eb2fa09e22005200f27e8080a33459c06",
+        "match": false,
+        "oldHash": "29c25f054ce3416b82bc38d13452aa2fb208e1fd5740070375c5fb2a5c2ee7a0",
+        "currentHash": "9b5c27f1752f89ba017220d4ef30381cc22038900c2bac2e912b615d34692705",
+        "review": "Actual onplay remains the sole Last heard start. Exact delivery token marks started->played; stale history feedback is revision fenced. Current PR121 final marker failure/restart and fresh one-voice automatic timeline cover the new behavior."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:PlayerProvider/property:removeQueue",
+        "sourceLine": 963,
+        "evidenceRevision": "54a9851eb2fa09e22005200f27e8080a33459c06",
+        "match": true,
+        "oldHash": "7ef37727d059785e4bfed6a815affc7fdab788d010f72adc2a509d37ae6f06e3",
+        "currentHash": "7ef37727d059785e4bfed6a815affc7fdab788d010f72adc2a509d37ae6f06e3"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:PlayerProvider/property:toggleShuffle",
+        "sourceLine": 954,
+        "evidenceRevision": "54a9851eb2fa09e22005200f27e8080a33459c06",
+        "match": false,
+        "oldHash": "e74539a3f1de32cf2c1a63811a7008045178b56fec68e4bac6a3bfdaced5119a",
+        "currentHash": "e08e95c40978a2ad3c6e741327ae2b587791bb4c53caffd2e2b9138d0b053d3e",
+        "review": "Added preference receipt/generation bookkeeping; shuffle keys/cursor/visited reset remains the same. Fresh four-occurrence/history/exhaustion/wrap verifies real UI behavior."
+      },
+      {
+        "file": "src/shared/news-pool.ts",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:canonicalArticleUrl",
+        "sourceLine": 5,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": true,
+        "oldHash": "7cacaaef56ac8569566ab27e69ae1cfd2aa27b9565ebf7dbb0c1eac70c235f30",
+        "currentHash": "7cacaaef56ac8569566ab27e69ae1cfd2aa27b9565ebf7dbb0c1eac70c235f30"
+      },
+      {
+        "file": "src/shared/news-pool.ts",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:eligibleNewsTakes",
+        "sourceLine": 37,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "e8e80308b629d2e1d4b9fb43bd486838e72c228dd3d60ff8e3938d699c4176f7",
+        "currentHash": "d8429327e9cf04e53a02379c569027f945a0a69377fef0c91ace6032761291b5",
+        "review": "Claimed/started/played canonical URLs all suppress variants. PR121 actual service checks cover reservation/start/failed final mark/restart/release; this turn executes the actual automatic controller delivery path."
+      },
+      {
+        "file": "src/shared/news-pool.ts",
+        "records": [
+          "2026-10-17-news-eligibility-handoff"
+        ],
+        "node": "function:matchesNewsRoom",
+        "sourceLine": 23,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": true,
+        "oldHash": "9a7fcb213653483090bf397e3c86d41d7b394908269c5c41a2feb427d5263065",
+        "currentHash": "9a7fcb213653483090bf397e3c86d41d7b394908269c5c41a2feb427d5263065"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "node": "function:PlayerProvider/variable:load",
+        "sourceLine": 174,
+        "evidenceRevision": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e",
+        "match": false,
+        "oldHash": "f69788fcf401972deebbb3482b2325165f8035ddfa00199c4b81e67ceaa8a39b",
+        "currentHash": "d341b58ed1e3974e5d7dfea42cae7573fc4fb274dfa2dd34d69d1b030cb90710",
+        "review": "Load now returns typed retry settlements and classifies unsupported media consistently. Existing generation/source/key/intent guards and source clearing remain; final delayed preparation and natural-end positive control exercise the current path."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "node": "function:PlayerProvider/variable:changeTrack",
+        "sourceLine": 227,
+        "evidenceRevision": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e",
+        "match": true,
+        "oldHash": "879c45e372d2e64dc141f34c1f1f7687e3262c82b7d59e724806e2c48138834e",
+        "currentHash": "879c45e372d2e64dc141f34c1f1f7687e3262c82b7d59e724806e2c48138834e"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "node": "function:PlayerProvider/variable:next",
+        "sourceLine": 239,
+        "evidenceRevision": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e",
+        "match": true,
+        "oldHash": "c3f4b08d5068d7184ddf2000b0718c05e353dafc7bf6dcd58de2157889e77004",
+        "currentHash": "c3f4b08d5068d7184ddf2000b0718c05e353dafc7bf6dcd58de2157889e77004"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "node": "function:PlayerProvider/variable:continueAfterSong",
+        "sourceLine": 298,
+        "evidenceRevision": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e",
+        "match": true,
+        "oldHash": "0f85234cc77da24aabd50428f58c15bfbea2a59d895cf68e4ed36205aa6d8c9a",
+        "currentHash": "0f85234cc77da24aabd50428f58c15bfbea2a59d895cf68e4ed36205aa6d8c9a"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "node": "function:PlayerProvider/variable:checkScheduledNews",
+        "sourceLine": 306,
+        "evidenceRevision": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e",
+        "match": false,
+        "oldHash": "11337ae8a620e6745ee965fedfd518aafffe7d5503463e6108d59093d4079cb9",
+        "currentHash": "7333b0407308c56424c077cf41a2c3c55710963638ac3d523615e020f530d27e",
+        "review": "PR121 adds durable start gate/single-flight/late-result fences and separate notice. Tail completion still consumes ending and invokes existing continuation exactly once. PR121 and current natural/manual/automatic/over-music checks exercise changed integration."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "node": "function:PlayerProvider/variable:seek",
+        "sourceLine": 601,
+        "evidenceRevision": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e",
+        "match": true,
+        "oldHash": "a31bb779cecb44987f9651d761451d3b93593414c89f49cca2aa51a55becca29",
+        "currentHash": "a31bb779cecb44987f9651d761451d3b93593414c89f49cca2aa51a55becca29"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "node": "function:PlayerProvider/variable:toggle",
+        "sourceLine": 697,
+        "evidenceRevision": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e",
+        "match": false,
+        "oldHash": "ae95c342c5bdd3379a12f3d3c7cc0ee5cb67d7e54cc53afcca695f2a103bfdcb",
+        "currentHash": "644852955a403310b81f3a5ee261ab8a5b1a867fd010427f937b0ab6b1324282",
+        "review": "Resuming invokes the same plan-bound play method to retain playInvoked knowledge; existing token/attempt/intent and onplay pause guards remain. Resume errors now use DJ notice. Fresh speaking rewind retains the same clip position and resumes music first."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "node": "function:PlayerProvider/variable:previous",
+        "sourceLine": 747,
+        "evidenceRevision": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e",
+        "match": true,
+        "oldHash": "e34f1ed22ecb5591cc8e584cb6a5dc6dd5f88e34a81a8fb2519e5846f05742b9",
+        "currentHash": "e34f1ed22ecb5591cc8e584cb6a5dc6dd5f88e34a81a8fb2519e5846f05742b9"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "node": "function:PlayerProvider/variable:scheduleNews",
+        "sourceLine": 817,
+        "evidenceRevision": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e",
+        "match": false,
+        "oldHash": "39084a283acf2bef7bacd9e741d3971c07b2fed9219d461be4312ce23026a93d",
+        "currentHash": "370ad5d90c03ecabcdb4e5c4fe2370a0b4f3b70d65f610c9c10d51379af4a0cc",
+        "review": "Current recovery/preload/file freshness, token claim/start/mark/release and run identity are added around the original scheduling phases. PR #121’s 74 service checks and scoped native data remain current except this turn strengthens the music-ended guard. Fresh automatic path passes matching claim token with selectedTakeId null."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "node": "function:PlayerProvider/variable:stopNews",
+        "sourceLine": 138,
+        "evidenceRevision": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e",
+        "match": false,
+        "oldHash": "e6b7797da8c3a4939826ecd181ee1ad42a597df7d2e93e7dbbe9a65eface5434",
+        "currentHash": "b0eb19a6ab02ad1f6f58e309ca148876f880057e237970150fa76177cdca8b2c",
+        "review": "Cancels exact unplayed delivery before dropping the plan; once play invoked, it never reopens consumed news. Existing element detachment, generation, return fade and Last heard interruption remain. PR121 cancellation/restart and fresh retained voice prove their named scope."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "node": "function:PlayerProvider/variable:musicCommand",
+        "sourceLine": 79,
+        "evidenceRevision": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e",
+        "match": false,
+        "oldHash": "5497c7f3b0d0504449165ba0004e3647583742e0382735939fcd336f433f0776",
+        "currentHash": "bafc42a1bd32457b3359bfeac52b8070a5a2497dfbfa9fb7d8fb70763f01b472",
+        "review": "Additional notice revision/clear prevents stale feedback while retaining existing command revision and restore-retry cancellation; automatic continuation does not manufacture a command."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "node": "function:PlayerProvider/effect:music",
+        "sourceLine": 372,
+        "evidenceRevision": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e",
+        "match": false,
+        "oldHash": "8b63951eaeb0d654ccdb079f5f084c4d1f6064c85e5402b27be9b9a0d0998c51",
+        "currentHash": "0416276766be0445d59d4bf6f63268fa30491663bd172a59909f99a730b526e4",
+        "review": "Current effect cleanup releases only known-unplayed delivery; track error string is shared. This turn guards onended with preparing before cadence/history/continuation. Source replacement paths establish the flag before changing the occurrence and clear/load outgoing source before releasing it. Final native held resource and genuine ended controls pass. Exact adversarial browser task ordering is not runtime-reproduced."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "node": "function:PlayerProvider/effect:music/assignment:element.onended",
+        "sourceLine": 405,
+        "evidenceRevision": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e",
+        "match": false,
+        "oldHash": "0c582e1d5e7ce26288467158a8988a261ec30e5b4b333dd698f750c12dca3595",
+        "currentHash": "8885491f3fe4f97811967bb8619fc50c0f3d28c1377e3040bb6622eb0389392c",
+        "review": "Only the preparing guard is added to the otherwise retained actual-ended/counted-generation/schedule/continuation logic. It excludes outgoing source events while a new occurrence is being prepared; normal natural completions and third-song automatic placement still work in the final build."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "node": "function:PlayerProvider/effect:music/assignment:element.onerror",
+        "sourceLine": 420,
+        "evidenceRevision": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e",
+        "match": true,
+        "oldHash": "a8590c16ca2b490220cd79f574d2c33c54fe02d9f6462a24d7e9a1d7927138ba",
+        "currentHash": "a8590c16ca2b490220cd79f574d2c33c54fe02d9f6462a24d7e9a1d7927138ba"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "node": "function:PlayerProvider/variable:scheduleNews/assignment:element.onended",
+        "sourceLine": 901,
+        "evidenceRevision": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e",
+        "match": true,
+        "oldHash": "83e9916a8d1dbb7b2160e6057d0b34d81cfd02dd39edcab608cf76de8567b016",
+        "currentHash": "83e9916a8d1dbb7b2160e6057d0b34d81cfd02dd39edcab608cf76de8567b016"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "node": "function:PlayerProvider/variable:scheduleNews/assignment:element.onplay",
+        "sourceLine": 891,
+        "evidenceRevision": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e",
+        "match": false,
+        "oldHash": "29c25f054ce3416b82bc38d13452aa2fb208e1fd5740070375c5fb2a5c2ee7a0",
+        "currentHash": "9b5c27f1752f89ba017220d4ef30381cc22038900c2bac2e912b615d34692705",
+        "review": "Actual onplay remains the sole Last heard start. Exact delivery token marks started->played; stale history feedback is revision fenced. Current PR121 final marker failure/restart and fresh one-voice automatic timeline cover the new behavior."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "node": "function:PlayerProvider/property:removeQueue",
+        "sourceLine": 963,
+        "evidenceRevision": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e",
+        "match": true,
+        "oldHash": "7ef37727d059785e4bfed6a815affc7fdab788d010f72adc2a509d37ae6f06e3",
+        "currentHash": "7ef37727d059785e4bfed6a815affc7fdab788d010f72adc2a509d37ae6f06e3"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-queue-removal-focus"
+        ],
+        "node": "function:PlayerProvider/property:toggleShuffle",
+        "sourceLine": 954,
+        "evidenceRevision": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e",
+        "match": false,
+        "oldHash": "e74539a3f1de32cf2c1a63811a7008045178b56fec68e4bac6a3bfdaced5119a",
+        "currentHash": "e08e95c40978a2ad3c6e741327ae2b587791bb4c53caffd2e2b9138d0b053d3e",
+        "review": "Added preference receipt/generation bookkeeping; shuffle keys/cursor/visited reset remains the same. Fresh four-occurrence/history/exhaustion/wrap verifies real UI behavior."
+      },
+      {
+        "file": "src/renderer/dj-playback.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:useDJPlaybackController",
+        "sourceLine": 11,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "6604be6d885e1b2d646ad6ac9f56600812125aa2d51945dc00da0c812f36b48d",
+        "currentHash": "6604be6d885e1b2d646ad6ac9f56600812125aa2d51945dc00da0c812f36b48d"
+      },
+      {
+        "file": "src/renderer/dj-playback.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:useDJPlaybackController/variable:configKey",
+        "sourceLine": 29,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "a72a7145eda6da84150bd556e0cc088bdf7e4f02084fe6c8f10688036ed6d6b2",
+        "currentHash": "a72a7145eda6da84150bd556e0cc088bdf7e4f02084fe6c8f10688036ed6d6b2"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:PlayerProvider/variable:load",
+        "sourceLine": 174,
+        "evidenceRevision": "7a457151da7719720f507437f244eec1d15dab17",
+        "match": true,
+        "oldHash": "d341b58ed1e3974e5d7dfea42cae7573fc4fb274dfa2dd34d69d1b030cb90710",
+        "currentHash": "d341b58ed1e3974e5d7dfea42cae7573fc4fb274dfa2dd34d69d1b030cb90710"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:PlayerProvider/variable:changeTrack",
+        "sourceLine": 227,
+        "evidenceRevision": "7a457151da7719720f507437f244eec1d15dab17",
+        "match": true,
+        "oldHash": "879c45e372d2e64dc141f34c1f1f7687e3262c82b7d59e724806e2c48138834e",
+        "currentHash": "879c45e372d2e64dc141f34c1f1f7687e3262c82b7d59e724806e2c48138834e"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:PlayerProvider/variable:next",
+        "sourceLine": 239,
+        "evidenceRevision": "7a457151da7719720f507437f244eec1d15dab17",
+        "match": true,
+        "oldHash": "c3f4b08d5068d7184ddf2000b0718c05e353dafc7bf6dcd58de2157889e77004",
+        "currentHash": "c3f4b08d5068d7184ddf2000b0718c05e353dafc7bf6dcd58de2157889e77004"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:PlayerProvider/variable:continueAfterSong",
+        "sourceLine": 298,
+        "evidenceRevision": "7a457151da7719720f507437f244eec1d15dab17",
+        "match": true,
+        "oldHash": "0f85234cc77da24aabd50428f58c15bfbea2a59d895cf68e4ed36205aa6d8c9a",
+        "currentHash": "0f85234cc77da24aabd50428f58c15bfbea2a59d895cf68e4ed36205aa6d8c9a"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:PlayerProvider/variable:checkScheduledNews",
+        "sourceLine": 306,
+        "evidenceRevision": "7a457151da7719720f507437f244eec1d15dab17",
+        "match": true,
+        "oldHash": "7333b0407308c56424c077cf41a2c3c55710963638ac3d523615e020f530d27e",
+        "currentHash": "7333b0407308c56424c077cf41a2c3c55710963638ac3d523615e020f530d27e"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:PlayerProvider/variable:seek",
+        "sourceLine": 601,
+        "evidenceRevision": "7a457151da7719720f507437f244eec1d15dab17",
+        "match": true,
+        "oldHash": "a31bb779cecb44987f9651d761451d3b93593414c89f49cca2aa51a55becca29",
+        "currentHash": "a31bb779cecb44987f9651d761451d3b93593414c89f49cca2aa51a55becca29"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:PlayerProvider/variable:toggle",
+        "sourceLine": 697,
+        "evidenceRevision": "7a457151da7719720f507437f244eec1d15dab17",
+        "match": true,
+        "oldHash": "644852955a403310b81f3a5ee261ab8a5b1a867fd010427f937b0ab6b1324282",
+        "currentHash": "644852955a403310b81f3a5ee261ab8a5b1a867fd010427f937b0ab6b1324282"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:PlayerProvider/variable:previous",
+        "sourceLine": 747,
+        "evidenceRevision": "7a457151da7719720f507437f244eec1d15dab17",
+        "match": true,
+        "oldHash": "e34f1ed22ecb5591cc8e584cb6a5dc6dd5f88e34a81a8fb2519e5846f05742b9",
+        "currentHash": "e34f1ed22ecb5591cc8e584cb6a5dc6dd5f88e34a81a8fb2519e5846f05742b9"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:PlayerProvider/variable:scheduleNews",
+        "sourceLine": 817,
+        "evidenceRevision": "7a457151da7719720f507437f244eec1d15dab17",
+        "match": true,
+        "oldHash": "370ad5d90c03ecabcdb4e5c4fe2370a0b4f3b70d65f610c9c10d51379af4a0cc",
+        "currentHash": "370ad5d90c03ecabcdb4e5c4fe2370a0b4f3b70d65f610c9c10d51379af4a0cc"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:PlayerProvider/variable:stopNews",
+        "sourceLine": 138,
+        "evidenceRevision": "7a457151da7719720f507437f244eec1d15dab17",
+        "match": true,
+        "oldHash": "b0eb19a6ab02ad1f6f58e309ca148876f880057e237970150fa76177cdca8b2c",
+        "currentHash": "b0eb19a6ab02ad1f6f58e309ca148876f880057e237970150fa76177cdca8b2c"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:PlayerProvider/variable:musicCommand",
+        "sourceLine": 79,
+        "evidenceRevision": "7a457151da7719720f507437f244eec1d15dab17",
+        "match": true,
+        "oldHash": "bafc42a1bd32457b3359bfeac52b8070a5a2497dfbfa9fb7d8fb70763f01b472",
+        "currentHash": "bafc42a1bd32457b3359bfeac52b8070a5a2497dfbfa9fb7d8fb70763f01b472"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:PlayerProvider/effect:music",
+        "sourceLine": 372,
+        "evidenceRevision": "7a457151da7719720f507437f244eec1d15dab17",
+        "match": false,
+        "oldHash": "7779e10615ada2482fdb9962babbf720597024aa33112744c8ae97e61fdd9f6e",
+        "currentHash": "0416276766be0445d59d4bf6f63268fa30491663bd172a59909f99a730b526e4",
+        "review": "Current effect cleanup releases only known-unplayed delivery; track error string is shared. This turn guards onended with preparing before cadence/history/continuation. Source replacement paths establish the flag before changing the occurrence and clear/load outgoing source before releasing it. Final native held resource and genuine ended controls pass. Exact adversarial browser task ordering is not runtime-reproduced."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:PlayerProvider/effect:music/assignment:element.onended",
+        "sourceLine": 405,
+        "evidenceRevision": "7a457151da7719720f507437f244eec1d15dab17",
+        "match": false,
+        "oldHash": "0c582e1d5e7ce26288467158a8988a261ec30e5b4b333dd698f750c12dca3595",
+        "currentHash": "8885491f3fe4f97811967bb8619fc50c0f3d28c1377e3040bb6622eb0389392c",
+        "review": "Only the preparing guard is added to the otherwise retained actual-ended/counted-generation/schedule/continuation logic. It excludes outgoing source events while a new occurrence is being prepared; normal natural completions and third-song automatic placement still work in the final build."
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:PlayerProvider/effect:music/assignment:element.onerror",
+        "sourceLine": 420,
+        "evidenceRevision": "7a457151da7719720f507437f244eec1d15dab17",
+        "match": true,
+        "oldHash": "a8590c16ca2b490220cd79f574d2c33c54fe02d9f6462a24d7e9a1d7927138ba",
+        "currentHash": "a8590c16ca2b490220cd79f574d2c33c54fe02d9f6462a24d7e9a1d7927138ba"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:PlayerProvider/variable:scheduleNews/assignment:element.onended",
+        "sourceLine": 901,
+        "evidenceRevision": "7a457151da7719720f507437f244eec1d15dab17",
+        "match": true,
+        "oldHash": "83e9916a8d1dbb7b2160e6057d0b34d81cfd02dd39edcab608cf76de8567b016",
+        "currentHash": "83e9916a8d1dbb7b2160e6057d0b34d81cfd02dd39edcab608cf76de8567b016"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:PlayerProvider/variable:scheduleNews/assignment:element.onplay",
+        "sourceLine": 891,
+        "evidenceRevision": "7a457151da7719720f507437f244eec1d15dab17",
+        "match": true,
+        "oldHash": "9b5c27f1752f89ba017220d4ef30381cc22038900c2bac2e912b615d34692705",
+        "currentHash": "9b5c27f1752f89ba017220d4ef30381cc22038900c2bac2e912b615d34692705"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:PlayerProvider/variable:controlNews",
+        "sourceLine": 739,
+        "evidenceRevision": "7a457151da7719720f507437f244eec1d15dab17",
+        "match": true,
+        "oldHash": "d6ef1056053a7420d29ff6465d717c2a830ed49db9e223eea38c177f60a692b0",
+        "currentHash": "d6ef1056053a7420d29ff6465d717c2a830ed49db9e223eea38c177f60a692b0"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:PlayerProvider/property:removeQueue",
+        "sourceLine": 963,
+        "evidenceRevision": "7a457151da7719720f507437f244eec1d15dab17",
+        "match": true,
+        "oldHash": "7ef37727d059785e4bfed6a815affc7fdab788d010f72adc2a509d37ae6f06e3",
+        "currentHash": "7ef37727d059785e4bfed6a815affc7fdab788d010f72adc2a509d37ae6f06e3"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:PlayerProvider/property:toggleShuffle",
+        "sourceLine": 954,
+        "evidenceRevision": "7a457151da7719720f507437f244eec1d15dab17",
+        "match": true,
+        "oldHash": "e08e95c40978a2ad3c6e741327ae2b587791bb4c53caffd2e2b9138d0b053d3e",
+        "currentHash": "e08e95c40978a2ad3c6e741327ae2b587791bb4c53caffd2e2b9138d0b053d3e"
+      },
+      {
+        "file": "src/shared/news-pool.ts",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:canonicalArticleUrl",
+        "sourceLine": 5,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "7cacaaef56ac8569566ab27e69ae1cfd2aa27b9565ebf7dbb0c1eac70c235f30",
+        "currentHash": "7cacaaef56ac8569566ab27e69ae1cfd2aa27b9565ebf7dbb0c1eac70c235f30"
+      },
+      {
+        "file": "src/shared/news-pool.ts",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:eligibleNewsTakes",
+        "sourceLine": 37,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "d8429327e9cf04e53a02379c569027f945a0a69377fef0c91ace6032761291b5",
+        "currentHash": "d8429327e9cf04e53a02379c569027f945a0a69377fef0c91ace6032761291b5"
+      },
+      {
+        "file": "src/shared/news-pool.ts",
+        "records": [
+          "2026-10-18-scheduled-news-delivery"
+        ],
+        "node": "function:matchesNewsRoom",
+        "sourceLine": 23,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "9a7fcb213653483090bf397e3c86d41d7b394908269c5c41a2feb427d5263065",
+        "currentHash": "9a7fcb213653483090bf397e3c86d41d7b394908269c5c41a2feb427d5263065"
+      }
+    ],
+    "nodeCount": 86,
+    "sameNodes": 47,
+    "changedScopesReviewed": 39,
+    "exclusion": "Twelve unresolved evidence file versions are listed, principally old listening/endpoint/load-main/storage/player/control variants. They do not establish source freshness and are not transferred as current proof. Other resolved scopes from a record retain only their explicit node/behavior scope."
+  },
+  "native": {
+    "runtime": "macOS arm64 Electron43.7.0",
+    "contentSize": [
+      1280,
+      720
+    ],
+    "zoom": 1,
+    "method": "CUA native input only. Playwright owns launch/close and passive DOM/media/main-call telemetry; four owned processes. Actual current renderer/preload/main with isolated user data/key/network adapters and controlled main IPC gates. Real muted40-second WAV music and13.92-second MP3 speech. Natural ends use native slider Home/Prior/Right to39.2 then Play; no synthetic event, private counter manipulation or media-time JS setter. First shuffle observer lacks passive event capture; later runs capture native play/pause/ended and final run captures clicks.",
+    "snapshots": [
+      {
+        "name": "shuffle-start",
+        "rawSha256": "762f9dfda688999db72d6011f1f4448ffe859d546a393ece09446b75e7fd11ec",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 2,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "off",
+        "shuffle": true,
+        "transport": "Play",
+        "slider": {
+          "value": "12",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 12,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "9d74b8205a590bea2e5e5a2f73f14bf25a327de453638da72e603c6c718a79a0"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "ready"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 1,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 0,
+          "startPreparedNews": 0,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {},
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "shuffle-next-one",
+        "rawSha256": "fbcd025ac6615d8d55967151771503153c9b8afbb5efea0f54edd9e4c19ade33",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 1,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "off",
+        "shuffle": true,
+        "transport": "Play",
+        "slider": {
+          "value": "0",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "8ef08af3a486220cd57df3a976cc95418ce1ff599e95f5f36af918f2841735ca"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "ready"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 2,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 0,
+          "startPreparedNews": 0,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {},
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "shuffle-next-two",
+        "rawSha256": "ab1f0af1a5247e470e60a1b4f3a4607266758c95912f4aaaa51b16bdd9a36655",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 3,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "off",
+        "shuffle": true,
+        "transport": "Play",
+        "slider": {
+          "value": "0",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "f98f658a2c4cba3cd56e171fbe915ef6d451019e2a7d92a6d8025d5c00e32632"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "ready"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 3,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 0,
+          "startPreparedNews": 0,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {},
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "shuffle-previous-history",
+        "rawSha256": "96d4383682b6a66380d470647af20a89e9b22336c7093acb5b93890da62daacd",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 1,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "off",
+        "shuffle": true,
+        "transport": "Play",
+        "slider": {
+          "value": "0",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "668b2cffbb41c4a152d5fc399d175f41e9d9a5f6d11a2052878f339e9cad5141"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "ready"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 4,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 0,
+          "startPreparedNews": 0,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {},
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "shuffle-forward-history",
+        "rawSha256": "81fee1bec0ca0605625caea302cfd817e803b7540d833dbde929120078c6e9d4",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 3,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "off",
+        "shuffle": true,
+        "transport": "Play",
+        "slider": {
+          "value": "0",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "dd9b893b1e8a5324da747259d58027a1974aab5aefa7d2edc0e50132372931f9"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "ready"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 5,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 0,
+          "startPreparedNews": 0,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {},
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "shuffle-last-occurrence",
+        "rawSha256": "f53b01f7a061e6764f82e8448373220e873feec00dadb79e72bf3ef2b61c4162",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 0,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "off",
+        "shuffle": true,
+        "transport": "Play",
+        "slider": {
+          "value": "0",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "1a0fa2eb38202d65ebb95fd8974d29e4dd84c1508e0423c0aae118ceba38a415"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "ready"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 6,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 0,
+          "startPreparedNews": 0,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {},
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "shuffle-exhausted",
+        "rawSha256": "a4b7f8dfbbd07c2948302f8725bd6b3bec3e5a265006a3a311f00bda9778bd34",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 0,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "off",
+        "shuffle": true,
+        "transport": "Play",
+        "slider": {
+          "value": "0",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0,
+            "kind": "cleared",
+            "resourceSha256": null
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "ready"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 6,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 0,
+          "startPreparedNews": 0,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {},
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "shuffle-repeat-all-wrap",
+        "rawSha256": "7361cbda7cd28ad8615a557bf55367a149fc11da9bc17089e39e0deaf9d61886",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 1,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "all",
+        "shuffle": true,
+        "transport": "Play",
+        "slider": {
+          "value": "0",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "eb9cf73a3526cb52e10749d5f88075e43d54d95aefcb2de8eb4cef8459e88673"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "ready"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 7,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 0,
+          "startPreparedNews": 0,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {},
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "natural-shuffle-before",
+        "rawSha256": "4ab6b504602b991d07e37ad55d219f989de69d9feb77d7adb1e138dccd14118b",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 1,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "all",
+        "shuffle": true,
+        "transport": "Play",
+        "slider": {
+          "value": "39.2",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 39.2,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "eb9cf73a3526cb52e10749d5f88075e43d54d95aefcb2de8eb4cef8459e88673"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "ready"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 7,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 0,
+          "startPreparedNews": 0,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {},
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "natural-shuffle-after",
+        "rawSha256": "d2a831f9686f5b446ce29055360a82a8aeb7de23cdd7b438461b2793cd485e5b",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 3,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "all",
+        "shuffle": true,
+        "transport": "Pause",
+        "slider": {
+          "value": "14.1",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": false,
+            "ended": false,
+            "time": 14.091697,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "731fd55807acc01824c2488eb73a701511ddccf6ed7a46ef4258c7db8455315a"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "ready"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 8,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 0,
+          "startPreparedNews": 0,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {},
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "repeat-one-cadence-three",
+        "rawSha256": "5f133fdfcd7138e2a5e53cb55dc0f1f6e532c75338a4bfd457ff87bb35365702",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 2,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Play",
+        "slider": {
+          "value": "12",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 12,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "ede88e13990ca872b43122026d384cb9f241c53de2238fd60200d5dc7307bda1"
+          }
+        ],
+        "cadenceSongs": 3,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "ready"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 1,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 0,
+          "startPreparedNews": 0,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {},
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "repeat-one-natural-counts-once",
+        "rawSha256": "e29ce231c04adc03f8132543e77120b90b2f865a6b26ff9bc2c84005426636b4",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 2,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Pause",
+        "slider": {
+          "value": "12.5",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": false,
+            "ended": false,
+            "time": 12.506643,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "009b757d85ddd62187b943cd1512584357afb20025e7615d77868e21552aebda"
+          }
+        ],
+        "cadenceSongs": 2,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "ready"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 2,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 0,
+          "startPreparedNews": 0,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {
+          "play": 2,
+          "pause": 1,
+          "ended": 1
+        },
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "repeat-one-manual-skip-no-count",
+        "rawSha256": "eebe03ef76382123edbe4e0caa99fdea48c9a2e954151800c4f37034a717e25d",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 3,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Play",
+        "slider": {
+          "value": "0",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "ef2cfdbe7aa02df3f799c648b31cc2b969abe6090ce8a9abd68aad9adf4c353a"
+          }
+        ],
+        "cadenceSongs": 2,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "ready"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 3,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 0,
+          "startPreparedNews": 0,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {
+          "play": 2,
+          "pause": 2,
+          "ended": 1
+        },
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "repeat-one-endpoint-no-count",
+        "rawSha256": "6b77661734909f49fbe7350b6775dc581448c60cf67db63412b144480491c36d",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 3,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Play",
+        "slider": {
+          "value": "0",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "75b0a9be879e3a07e680ca5747bd412b9026c9d60ab38dd9b3358f6f84002075"
+          }
+        ],
+        "cadenceSongs": 2,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "ready"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 4,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 0,
+          "startPreparedNews": 0,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {
+          "play": 2,
+          "pause": 2,
+          "ended": 1
+        },
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "repeat-one-break-before-natural-end",
+        "rawSha256": "73c9be99b113ffa9980e8363ab962b26c0b0798cd41d3bffb10abddd8053a540",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 3,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Play",
+        "slider": {
+          "value": "39.2",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 39.2,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "75b0a9be879e3a07e680ca5747bd412b9026c9d60ab38dd9b3358f6f84002075"
+          },
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 13.92,
+            "readyState": 4,
+            "kind": "prepared",
+            "resourceSha256": "f4da716980fd2b699c41abbdb955be46ac2259356cb96579d0c57c34357cd32d"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "delivery": {
+          "status": "claimed",
+          "claimId": "f5cad896-0de2-4dd9-84fd-5fe77f4a5290",
+          "claimedAt": "2026-10-18T21:26:13.263Z"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 4,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 1,
+          "startPreparedNews": 0,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {
+          "play": 2,
+          "pause": 2,
+          "ended": 1
+        },
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "repeat-one-voice-started",
+        "rawSha256": "b55feb76da31d5fab96e2bfe134ab3866d1bb95ded8086149b99382e521de2dd",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 3,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Pause",
+        "slider": {
+          "value": "40",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": true,
+            "time": 40,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "75b0a9be879e3a07e680ca5747bd412b9026c9d60ab38dd9b3358f6f84002075"
+          },
+          {
+            "paused": false,
+            "ended": false,
+            "time": 4.746606,
+            "duration": 13.92,
+            "readyState": 4,
+            "kind": "prepared",
+            "resourceSha256": "f4da716980fd2b699c41abbdb955be46ac2259356cb96579d0c57c34357cd32d"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "delivery": {
+          "status": "played",
+          "claimId": "f5cad896-0de2-4dd9-84fd-5fe77f4a5290",
+          "claimedAt": "2026-10-18T21:26:13.263Z",
+          "startedAt": "2026-10-18T21:26:25.949Z",
+          "playedAt": "2026-10-18T21:26:25.952Z"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 4,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 1,
+          "startPreparedNews": 1,
+          "markPreparedNewsPlayed": 1,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [
+          {
+            "type": "play",
+            "time": 0,
+            "at": 1792358785951,
+            "resourceSha256": "f4da716980fd2b699c41abbdb955be46ac2259356cb96579d0c57c34357cd32d"
+          }
+        ],
+        "allMediaEventCounts": {
+          "play": 4,
+          "pause": 3,
+          "ended": 2
+        },
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "repeat-one-paused-rewind",
+        "rawSha256": "4b2496300908143a6f25fe3102406b996523e2d2e986ab18db36c66ac8d3f76c",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 3,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Play",
+        "slider": {
+          "value": "0",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "75b0a9be879e3a07e680ca5747bd412b9026c9d60ab38dd9b3358f6f84002075"
+          },
+          {
+            "paused": true,
+            "ended": false,
+            "time": 11.743457,
+            "duration": 13.92,
+            "readyState": 4,
+            "kind": "prepared",
+            "resourceSha256": "f4da716980fd2b699c41abbdb955be46ac2259356cb96579d0c57c34357cd32d"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "delivery": {
+          "status": "played",
+          "claimId": "f5cad896-0de2-4dd9-84fd-5fe77f4a5290",
+          "claimedAt": "2026-10-18T21:26:13.263Z",
+          "startedAt": "2026-10-18T21:26:25.949Z",
+          "playedAt": "2026-10-18T21:26:25.952Z"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 4,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 1,
+          "startPreparedNews": 1,
+          "markPreparedNewsPlayed": 1,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [
+          {
+            "type": "play",
+            "time": 0,
+            "at": 1792358785951,
+            "resourceSha256": "f4da716980fd2b699c41abbdb955be46ac2259356cb96579d0c57c34357cd32d"
+          },
+          {
+            "type": "pause",
+            "time": 11.743457,
+            "at": 1792358797754,
+            "resourceSha256": "f4da716980fd2b699c41abbdb955be46ac2259356cb96579d0c57c34357cd32d"
+          }
+        ],
+        "allMediaEventCounts": {
+          "play": 4,
+          "pause": 4,
+          "ended": 2
+        },
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "repeat-one-rewind-music-first",
+        "rawSha256": "6c53046f56a70afc7a480bd5da929356dc096ea8b46b77e21b01e6bd619a0d3c",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 3,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Pause",
+        "slider": {
+          "value": "3.2",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": false,
+            "ended": false,
+            "time": 3.175629,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "75b0a9be879e3a07e680ca5747bd412b9026c9d60ab38dd9b3358f6f84002075"
+          },
+          {
+            "paused": true,
+            "ended": false,
+            "time": 11.743457,
+            "duration": 13.92,
+            "readyState": 4,
+            "kind": "prepared",
+            "resourceSha256": "f4da716980fd2b699c41abbdb955be46ac2259356cb96579d0c57c34357cd32d"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "delivery": {
+          "status": "played",
+          "claimId": "f5cad896-0de2-4dd9-84fd-5fe77f4a5290",
+          "claimedAt": "2026-10-18T21:26:13.263Z",
+          "startedAt": "2026-10-18T21:26:25.949Z",
+          "playedAt": "2026-10-18T21:26:25.952Z"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 4,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 1,
+          "startPreparedNews": 1,
+          "markPreparedNewsPlayed": 1,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [
+          {
+            "type": "play",
+            "time": 0,
+            "at": 1792358785951,
+            "resourceSha256": "f4da716980fd2b699c41abbdb955be46ac2259356cb96579d0c57c34357cd32d"
+          },
+          {
+            "type": "pause",
+            "time": 11.743457,
+            "at": 1792358797754,
+            "resourceSha256": "f4da716980fd2b699c41abbdb955be46ac2259356cb96579d0c57c34357cd32d"
+          }
+        ],
+        "allMediaEventCounts": {
+          "play": 5,
+          "pause": 4,
+          "ended": 2
+        },
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "repeat-one-retained-break-completed",
+        "rawSha256": "74daf83afba1176f9596517677c8144094e72df6e46c1798eced481a1e8a11dc",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 3,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Pause",
+        "slider": {
+          "value": "17",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": false,
+            "ended": false,
+            "time": 17.25136,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "b4f80dc8f360a6fd3ea1ea3d92bdbeb629d203e01eb00da06a99368f93676ae4"
+          },
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0,
+            "kind": "cleared",
+            "resourceSha256": null
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "delivery": {
+          "status": "played",
+          "claimId": "f5cad896-0de2-4dd9-84fd-5fe77f4a5290",
+          "claimedAt": "2026-10-18T21:26:13.263Z",
+          "startedAt": "2026-10-18T21:26:25.949Z",
+          "playedAt": "2026-10-18T21:26:25.952Z"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 5,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 1,
+          "startPreparedNews": 1,
+          "markPreparedNewsPlayed": 1,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [
+          {
+            "type": "play",
+            "time": 0,
+            "at": 1792358785951,
+            "resourceSha256": "f4da716980fd2b699c41abbdb955be46ac2259356cb96579d0c57c34357cd32d"
+          },
+          {
+            "type": "pause",
+            "time": 11.743457,
+            "at": 1792358797754,
+            "resourceSha256": "f4da716980fd2b699c41abbdb955be46ac2259356cb96579d0c57c34357cd32d"
+          },
+          {
+            "type": "play",
+            "time": 11.743466,
+            "at": 1792358822201,
+            "resourceSha256": "f4da716980fd2b699c41abbdb955be46ac2259356cb96579d0c57c34357cd32d"
+          },
+          {
+            "type": "pause",
+            "time": 13.92,
+            "at": 1792358824456,
+            "resourceSha256": "f4da716980fd2b699c41abbdb955be46ac2259356cb96579d0c57c34357cd32d"
+          },
+          {
+            "type": "ended",
+            "time": 13.92,
+            "at": 1792358824456,
+            "resourceSha256": "f4da716980fd2b699c41abbdb955be46ac2259356cb96579d0c57c34357cd32d"
+          }
+        ],
+        "allMediaEventCounts": {
+          "play": 8,
+          "pause": 7,
+          "ended": 4
+        },
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "over-music-start-held",
+        "rawSha256": "ab2dacc547d6e85862e941a7bd6206cb528d27626bef08ab1986b659192d3882",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 2,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Pause",
+        "slider": {
+          "value": "32.5",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": false,
+            "ended": false,
+            "time": 32.703753,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "96d5ed57779e7c53ebecd0a3c863aa76c867aa30f056882b6e5a309b2711ffd0"
+          },
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 13.92,
+            "readyState": 4,
+            "kind": "prepared",
+            "resourceSha256": "7a3f7ddfe9b34ad0d0bae745520d2d582e835765c4287a30f4c95c6dc4dbed13"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "delivery": {
+          "status": "claimed",
+          "claimId": "aa3042b9-7080-4166-894a-4a44734dd919",
+          "claimedAt": "2026-10-18T21:28:23.521Z"
+        },
+        "heldMainCalls": [
+          "startPreparedNews"
+        ],
+        "calls": {
+          "preparePlayback": 1,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 1,
+          "startPreparedNews": 1,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {
+          "play": 1
+        },
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "over-music-rewind-before-gate-release",
+        "rawSha256": "fe8774eeac0aa357d1174c56d010c6fa35dc63ee9e4f04bbb0ff1cf2706bd1be",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 2,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Play",
+        "slider": {
+          "value": "0",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "96d5ed57779e7c53ebecd0a3c863aa76c867aa30f056882b6e5a309b2711ffd0"
+          },
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 13.92,
+            "readyState": 4,
+            "kind": "prepared",
+            "resourceSha256": "7a3f7ddfe9b34ad0d0bae745520d2d582e835765c4287a30f4c95c6dc4dbed13"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "delivery": {
+          "status": "claimed",
+          "claimId": "aa3042b9-7080-4166-894a-4a44734dd919",
+          "claimedAt": "2026-10-18T21:28:23.521Z"
+        },
+        "heldMainCalls": [
+          "startPreparedNews"
+        ],
+        "calls": {
+          "preparePlayback": 1,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 1,
+          "startPreparedNews": 1,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {
+          "play": 1,
+          "pause": 1
+        },
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "over-music-late-gate-stays-silent",
+        "rawSha256": "a16bd31d39ac8c82f779c8ea356fdf8fee76a69af6167bd09fb6144bba48c262",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 2,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Play",
+        "slider": {
+          "value": "0",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "96d5ed57779e7c53ebecd0a3c863aa76c867aa30f056882b6e5a309b2711ffd0"
+          },
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 13.92,
+            "readyState": 4,
+            "kind": "prepared",
+            "resourceSha256": "7a3f7ddfe9b34ad0d0bae745520d2d582e835765c4287a30f4c95c6dc4dbed13"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "delivery": {
+          "status": "started",
+          "claimId": "aa3042b9-7080-4166-894a-4a44734dd919",
+          "claimedAt": "2026-10-18T21:28:23.521Z",
+          "startedAt": "2026-10-18T21:28:44.593Z"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 1,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 1,
+          "startPreparedNews": 1,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {
+          "play": 1,
+          "pause": 1
+        },
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "over-music-late-gate-music-first",
+        "rawSha256": "a109af1d6f696a6080b008f978116a34fb475e870662acff877a018ae40c8888",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 2,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Pause",
+        "slider": {
+          "value": "3.7",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": false,
+            "ended": false,
+            "time": 3.959684,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "96d5ed57779e7c53ebecd0a3c863aa76c867aa30f056882b6e5a309b2711ffd0"
+          },
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 13.92,
+            "readyState": 4,
+            "kind": "prepared",
+            "resourceSha256": "7a3f7ddfe9b34ad0d0bae745520d2d582e835765c4287a30f4c95c6dc4dbed13"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "delivery": {
+          "status": "started",
+          "claimId": "aa3042b9-7080-4166-894a-4a44734dd919",
+          "claimedAt": "2026-10-18T21:28:23.521Z",
+          "startedAt": "2026-10-18T21:28:44.593Z"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 1,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 1,
+          "startPreparedNews": 1,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {
+          "play": 2,
+          "pause": 1
+        },
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "over-music-start-after-retained-gate",
+        "rawSha256": "595ec2fa92eb34276f270126ba9c09d98ffe10efb6ac5f83f1e2765efac8aad9",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 2,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Pause",
+        "slider": {
+          "value": "32.7",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": false,
+            "ended": false,
+            "time": 32.824478,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "96d5ed57779e7c53ebecd0a3c863aa76c867aa30f056882b6e5a309b2711ffd0"
+          },
+          {
+            "paused": false,
+            "ended": false,
+            "time": 4.653071,
+            "duration": 13.92,
+            "readyState": 4,
+            "kind": "prepared",
+            "resourceSha256": "7a3f7ddfe9b34ad0d0bae745520d2d582e835765c4287a30f4c95c6dc4dbed13"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "delivery": {
+          "status": "played",
+          "claimId": "aa3042b9-7080-4166-894a-4a44734dd919",
+          "claimedAt": "2026-10-18T21:28:23.521Z",
+          "startedAt": "2026-10-18T21:28:44.593Z",
+          "playedAt": "2026-10-18T21:30:19.264Z"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 1,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 1,
+          "startPreparedNews": 1,
+          "markPreparedNewsPlayed": 1,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [
+          {
+            "type": "play",
+            "time": 0,
+            "at": 1792359019264,
+            "resourceSha256": "7a3f7ddfe9b34ad0d0bae745520d2d582e835765c4287a30f4c95c6dc4dbed13"
+          }
+        ],
+        "allMediaEventCounts": {
+          "play": 4,
+          "pause": 2
+        },
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "over-music-repeat-one-completed",
+        "rawSha256": "b6bbfbe7e7a5e730be063427fd2e338cf3c6e3f0295b53148952fc32f40ce885",
+        "version": "PR121 before the ended guard",
+        "queueIndex": 2,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Pause",
+        "slider": {
+          "value": "35.6",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": false,
+            "ended": false,
+            "time": 35.559584,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "a13c8a950cc977030c8263a569d0d4a78379a582d3d1f5b5d9b874a51a49d6f3"
+          },
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0,
+            "kind": "cleared",
+            "resourceSha256": null
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "delivery": {
+          "status": "played",
+          "claimId": "aa3042b9-7080-4166-894a-4a44734dd919",
+          "claimedAt": "2026-10-18T21:28:23.521Z",
+          "startedAt": "2026-10-18T21:28:44.593Z",
+          "playedAt": "2026-10-18T21:30:19.264Z"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 2,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 1,
+          "startPreparedNews": 1,
+          "markPreparedNewsPlayed": 1,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [
+          {
+            "type": "play",
+            "time": 0,
+            "at": 1792359019264,
+            "resourceSha256": "7a3f7ddfe9b34ad0d0bae745520d2d582e835765c4287a30f4c95c6dc4dbed13"
+          },
+          {
+            "type": "pause",
+            "time": 13.92,
+            "at": 1792359033259,
+            "resourceSha256": "7a3f7ddfe9b34ad0d0bae745520d2d582e835765c4287a30f4c95c6dc4dbed13"
+          },
+          {
+            "type": "ended",
+            "time": 13.92,
+            "at": 1792359033259,
+            "resourceSha256": "7a3f7ddfe9b34ad0d0bae745520d2d582e835765c4287a30f4c95c6dc4dbed13"
+          }
+        ],
+        "allMediaEventCounts": {
+          "play": 5,
+          "pause": 4,
+          "ended": 2
+        },
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "final-next-resource-held",
+        "rawSha256": "68a45e91144a129f0ecec2481346af94bb9cd31e6896b7cd608fe55004800554",
+        "version": "final ended guard",
+        "queueIndex": 3,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Play",
+        "slider": {
+          "value": "0",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0,
+            "kind": "cleared",
+            "resourceSha256": null
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "ready"
+        },
+        "heldMainCalls": [
+          "preparePlayback"
+        ],
+        "calls": {
+          "preparePlayback": 2,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 0,
+          "startPreparedNews": 0,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {},
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "final-next-resource-ready-paused",
+        "rawSha256": "fcfaf5373180f3fbdc7dce851de3d878e1583a056afc8348e100fc5c64e33610",
+        "version": "final ended guard",
+        "queueIndex": 3,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Play",
+        "slider": {
+          "value": "0",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "72ea08993002a2763835454d30353665304247f6031e897cdc3425ae1defdcd5"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "ready"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 2,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 0,
+          "startPreparedNews": 0,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {},
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "final-guard-natural-once",
+        "rawSha256": "13bc3480dc55df961df2755baecd4f9995e5e5eb87580160668695b5635fb428",
+        "version": "final ended guard",
+        "queueIndex": 3,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Play",
+        "slider": {
+          "value": "34.5",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 34.455089,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "0b76dca267a5df498d123f581ed42c7f56c074d1988aa6bc325d32d8788ebdb9"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "ready"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 3,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 0,
+          "startPreparedNews": 0,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {
+          "play": 2,
+          "pause": 2,
+          "ended": 1
+        },
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "final-guard-cadence-two",
+        "rawSha256": "02e12ce1d10bfc3a852d4ab7d887996de45df7bdb71ae054196f0dd9d7818c39",
+        "version": "final ended guard",
+        "queueIndex": 3,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Play",
+        "slider": {
+          "value": "34.5",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 34.455089,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "0b76dca267a5df498d123f581ed42c7f56c074d1988aa6bc325d32d8788ebdb9"
+          }
+        ],
+        "cadenceSongs": 2,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "ready"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 3,
+          "nextRoomNews": 0,
+          "claimPreparedNews": 0,
+          "startPreparedNews": 0,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {
+          "play": 2,
+          "pause": 2,
+          "ended": 1
+        },
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "final-automatic-reserved",
+        "rawSha256": "afca178fb68cafd2a8f8d20653dd8786c77c188e30a32bbf6ce00144d53137a7",
+        "version": "final ended guard",
+        "queueIndex": 3,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Play",
+        "slider": {
+          "value": "12.5",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 12.460314,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "5b731d341fac481bc206d2531082c7d10082ed7119dde4c6266b567134a181d3"
+          },
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 13.92,
+            "readyState": 4,
+            "kind": "prepared",
+            "resourceSha256": "21557f4cd9b2ac4299cabfd58da0d2dce56ff26255d5f892af5d4f27fa24cc67"
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "claimed",
+          "claimId": "8d839bf5-74d7-413a-be2b-014aede07018",
+          "claimedAt": "2026-10-18T21:33:13.456Z"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 4,
+          "nextRoomNews": 1,
+          "claimPreparedNews": 1,
+          "startPreparedNews": 0,
+          "markPreparedNewsPlayed": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [],
+        "allMediaEventCounts": {
+          "play": 4,
+          "pause": 4,
+          "ended": 2
+        },
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "final-automatic-break-completed",
+        "rawSha256": "dce4f22bdf84c64c64857cb29b30dd8ba8a1c68165c1e63b177b1183d994f959",
+        "version": "final ended guard",
+        "queueIndex": 3,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Pause",
+        "slider": {
+          "value": "5.6",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": false,
+            "ended": false,
+            "time": 5.748702,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "b608eeed28acfe02a89dd62f2fb134028fd2a80356f578c313a2d2464f5ccad3"
+          },
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0,
+            "kind": "cleared",
+            "resourceSha256": null
+          }
+        ],
+        "cadenceSongs": null,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "played",
+          "claimId": "8d839bf5-74d7-413a-be2b-014aede07018",
+          "claimedAt": "2026-10-18T21:33:13.456Z",
+          "startedAt": "2026-10-18T21:33:41.225Z",
+          "playedAt": "2026-10-18T21:33:41.228Z"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 5,
+          "nextRoomNews": 1,
+          "claimPreparedNews": 1,
+          "startPreparedNews": 1,
+          "markPreparedNewsPlayed": 1,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [
+          {
+            "type": "play",
+            "time": 0,
+            "at": 1792359221228,
+            "resourceSha256": "21557f4cd9b2ac4299cabfd58da0d2dce56ff26255d5f892af5d4f27fa24cc67"
+          },
+          {
+            "type": "pause",
+            "time": 13.92,
+            "at": 1792359235219,
+            "resourceSha256": "21557f4cd9b2ac4299cabfd58da0d2dce56ff26255d5f892af5d4f27fa24cc67"
+          },
+          {
+            "type": "ended",
+            "time": 13.92,
+            "at": 1792359235219,
+            "resourceSha256": "21557f4cd9b2ac4299cabfd58da0d2dce56ff26255d5f892af5d4f27fa24cc67"
+          }
+        ],
+        "allMediaEventCounts": {
+          "play": 7,
+          "pause": 6,
+          "ended": 4
+        },
+        "playedToEnd": false,
+        "externalAttempts": 0
+      },
+      {
+        "name": "final-automatic-cadence-reset",
+        "rawSha256": "dfe4444d8ee3b9fb1fe8b42a7d012b5171803911ae7e873cf0278b52bd63ea75",
+        "version": "final ended guard",
+        "queueIndex": 3,
+        "queueTrackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "repeat": "one",
+        "shuffle": false,
+        "transport": "Play",
+        "slider": {
+          "value": "12.8",
+          "max": "40"
+        },
+        "audio": [
+          {
+            "paused": true,
+            "ended": false,
+            "time": 12.825758,
+            "duration": 40,
+            "readyState": 4,
+            "kind": "music",
+            "resourceSha256": "b608eeed28acfe02a89dd62f2fb134028fd2a80356f578c313a2d2464f5ccad3"
+          },
+          {
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0,
+            "kind": "cleared",
+            "resourceSha256": null
+          }
+        ],
+        "cadenceSongs": 3,
+        "selectedTakeId": null,
+        "delivery": {
+          "status": "played",
+          "claimId": "8d839bf5-74d7-413a-be2b-014aede07018",
+          "claimedAt": "2026-10-18T21:33:13.456Z",
+          "startedAt": "2026-10-18T21:33:41.225Z",
+          "playedAt": "2026-10-18T21:33:41.228Z"
+        },
+        "heldMainCalls": [],
+        "calls": {
+          "preparePlayback": 5,
+          "nextRoomNews": 1,
+          "claimPreparedNews": 1,
+          "startPreparedNews": 1,
+          "markPreparedNewsPlayed": 1,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "nativeVoiceEvents": [
+          {
+            "type": "play",
+            "time": 0,
+            "at": 1792359221228,
+            "resourceSha256": "21557f4cd9b2ac4299cabfd58da0d2dce56ff26255d5f892af5d4f27fa24cc67"
+          },
+          {
+            "type": "pause",
+            "time": 13.92,
+            "at": 1792359235219,
+            "resourceSha256": "21557f4cd9b2ac4299cabfd58da0d2dce56ff26255d5f892af5d4f27fa24cc67"
+          },
+          {
+            "type": "ended",
+            "time": 13.92,
+            "at": 1792359235219,
+            "resourceSha256": "21557f4cd9b2ac4299cabfd58da0d2dce56ff26255d5f892af5d4f27fa24cc67"
+          }
+        ],
+        "allMediaEventCounts": {
+          "play": 7,
+          "pause": 7,
+          "ended": 4
+        },
+        "playedToEnd": true,
+        "externalAttempts": 0
+      }
+    ],
+    "terminalReports": [
+      {
+        "name": "shuffle-native-report",
+        "sha256": "bf8f3532858a4ed277aa325aeebdd721f43bc978ee604e7cba6abf34a42a1304",
+        "result": "observed",
+        "pageErrors": [],
+        "terminalExit": 0
+      },
+      {
+        "name": "repeat-one-native-report",
+        "sha256": "100ca27bc75e8adadfa23aa62023b1905882c299c200b44aea17b7676eae5283",
+        "result": "observed",
+        "pageErrors": [],
+        "terminalExit": 0
+      },
+      {
+        "name": "over-music-gate-native-report",
+        "sha256": "75e4160ee185f43d0e939ac53d9d2902da71bac0a28c2d45cb4de4203eb07658",
+        "result": "observed",
+        "pageErrors": [],
+        "terminalExit": 0
+      },
+      {
+        "name": "final-guard-native-report",
+        "sha256": "0401806d526dd72e3c77b4869cf6f56b59626f66d722ba88e6d55ca3999f26b4",
+        "result": "observed",
+        "pageErrors": [],
+        "terminalExit": 0
+      }
+    ],
+    "versions": "First three runs use PR121 source before the one-line ended guard. Final run uses current final build and covers held replacement loading, paused release, real natural cadence, automatic token reservation/delivery/continuation and countdown reset. Earlier source-current speech handling remains unchanged except the additional music-ending guard. No whole final-bundle rerun of all old matrices is claimed.",
+    "cleanup": "All four owned observers terminal exit0; owned localhost5199 server stopped with terminal143. No external/provider request or real Jellyfin change."
+  },
+  "retainedEvidence": [
+    "2026-10-16-dj-handoff.json",
+    "2026-10-16-retained-dj-break.json",
+    "2026-10-17-news-eligibility-handoff.json",
+    "2026-10-17-queue-removal-focus.json",
+    "2026-10-18-scheduled-news-delivery.json",
+    "2026-10-18-selected-take-invariant.json",
+    "2026-10-18-uncertain-work-invariant.json",
+    "2026-10-18-secret-invariant.json"
+  ],
+  "review": {
+    "Steve": "Identified outgoing-ended/current-index window; accepted preparing guard after auditing all occurrence replacement paths. No observed exact browser ordering claimed.",
+    "Elena": "Independently found the window and accepted existing preparation ownership after direct challenge. Fresh over-music/repeat retained speech supported its recorded scope.",
+    "Morgan": "Use existing preparation flag before any completion mutation, with explicit source proof and final native positive controls. No extra source-token model or event-injection harness.",
+    "finalArtifactReview": "Steve and Elena independently reviewed actual artifact/raw snapshots/current source. Both found no actionable overclaim or blocker, confirmed source hashes and explicitly bounded event-order/native/listener limits. Subsequent inspector correction selects assigned handler functions only, excluding cleanup assignment chains; current music error-handler differences are now explicitly reviewed rather than mislabeled unchanged."
+  },
+  "validation": {
+    "productionBuildAndTypeScript": "passed",
+    "fullESLint": "passed",
+    "unitTests": "not added or run",
+    "nativeSnapshots": 32,
+    "terminalNativeProcesses": 4,
+    "sourceAndArtifactHashes": "verified",
+    "checklistRows": 191,
+    "active": 189,
+    "deferred": 2,
+    "openChecks": 25,
+    "listenerChecks": 14,
+    "otherProofChecks": 11,
+    "dispositionChanges": 0
+  },
+  "sourceSha256": {
+    "src/renderer/player.tsx": "aa7d866e5724945a3f06773a984f6983ccc6544ee08b02991fd54c0f53f25f0c",
+    "src/renderer/dj-playback.tsx": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+    "src/renderer/components/Player/Player.component.tsx": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+    "src/renderer/components/Player/DJPopover.component.tsx": "7a9858830d98a053b2a3d805e6a2b6521aa483154c00306b0a6cfb4fb96fd981",
+    "src/renderer/components/Queue/Queue.component.tsx": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082",
+    "src/main/media.ts": "c2dbac7a2c6892e44794cffde7cd5118f6999f712b1f6f06533b3a9f44245fe2",
+    "src/main/prepared-news.ts": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+    "src/shared/news-pool.ts": "d8a190d01563d458a34bd2a89e9bbce8aa7533a7e678b44d88559951768f9da5"
+  },
+  "buildSha256": {
+    "out/main/index.js": "749f13c9bb422039897c8eda1781c57e4a2ae99681b2b5215f1bd571133ac978",
+    "out/preload/index.cjs": "9b78be58d4f9bd70fb5b6d3315d888ee9442cfbf09bfab2b2f902de015e902f2",
+    "out/renderer/assets/index-BJOU1xVm.js": "b8a16c94e7c2d0225b376f2b4ef956e92572b10867e6450a7bf28936d2d45082",
+    "out/renderer/assets/index-B9cR7bvN.css": "78fcc2ec135ead9b4d1badd479acfb6d54ca4a41dc08f9be074474ddebe05f76"
+  },
+  "inspectorSha256": {
+    "resolve.py": "8b356d0250e193a29d4ba104a4279814849162a3c36ae6ef8d0c6950b9083649",
+    "scopes.mjs": "b9a662f8989b3ca1406f868dca4c847ccdac0525c86e40aa5f5ca9e9e5e36df7"
+  },
+  "fixtureSha256": {
+    "build.mjs": "00039af439182adc79c38aa0a1996b14acb7e2fbe9947d4790f7d9247eeb91a0",
+    "bootstrap.mjs": "830fecd2e1c41fed9a63ca4a2844dbdf1ab473a1feb83be10704da8f00f94aca",
+    "server.mjs": "b8a36e436518b9aad59e95a5303a3907a9f880fc98a367d815e9ac69de7988a6",
+    "observe.cjs": "4311e4b11494a72d799d7298165adbc0e269129c7c9106a4022c4d94d84f1f5c",
+    "snapshot.py": "fa94ad1c2d5961ee8eaca2186a4c4f30eace89dd105979f4dbfe6182be1b262e"
+  },
+  "conclusion": "CI6 documented engineering obligations now have individual current source/retained/fresh native-service adjudications. The identified outgoing-ended preparation window is guarded. Complete atomic requirement denominator and named listener/live/platform requirements remain unachieved under Q13; the goal stays active.",
+  "limits": [
+    "No forced native reproduction of the exact queued music-ended event interleaving; source guard and adjacent real-event controls retain those distinct meanings.",
+    "No browser-event model establishes arbitrary task scheduling after a later source has itself ended. A delayed old event observing a genuinely ended current resource is not proven as a reproduced case here.",
+    "Old unresolvable source hashes are explicitly excluded; finite matrices and source review do not prove every network timing or arbitrary concurrent mutation.",
+    "Controlled conversion-route WAV in retained matrices is not live-codec/audible/system proof; separately recorded live evidence keeps its own limits.",
+    "No new regular listener, audible content/mix, real provider/server, VoiceOver/hardware, sleep/power-loss, physical disk-fault or platform-matrix result.",
+    "Only1280x720 normal zoom baseline; smaller windows/enlarged zoom remain deferred. No overall90percent or whole-goal completion claim."
+  ]
+}

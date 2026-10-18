@@ -403,7 +403,8 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     element.ontimeupdate = () => { if (!newsSchedule.current?.trackEnded) setPosition(offset.current + element.currentTime); void checkScheduledNews(); };
     const newsClock = window.setInterval(() => void checkScheduledNews(), 25);
     element.onended = () => {
-      if (!element.ended || consumedEnd.current === generation.current) return;
+      // A queue change can precede replacement of the outgoing audio source.
+      if (preparing.current || !element.ended || consumedEnd.current === generation.current) return;
       if (countedSongGeneration.current !== generation.current) {
         countedSongGeneration.current = generation.current;
         setCompletedSongs(value => value + 1);
