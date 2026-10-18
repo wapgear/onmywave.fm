@@ -1,0 +1,714 @@
+{
+  "date": "2026-10-18",
+  "sourceCommit": "3a2b8daf812546c7427044da9571edca7220c958",
+  "scope": "Q06 essential-control accessible names, visible focus and keyboard operation, including named news-source checkbox groups. Current source audit composed with existing native OS interaction evidence.",
+  "decision": "Q06 Controlled against the recorded current source and named native host/baseline. Root source/evidence audit plus independent Steve and Elena reviews find no remaining essential-control gap. This is controlled engineering acceptance, not VoiceOver, all-platform or observed-listener acceptance.",
+  "method": {
+    "source": "Fresh TypeScript AST traversal from renderer main.tsx resolves relative TS/TSX imports, includes native interactive tags, interactive roles and explicit tabIndex targets. All35 family hashes/counts match current family evidence map. Inspect source names, native semantics and custom keyboard handlers against selected native records.",
+    "native": "Reuse dated native CUA app interactions and screenshots/accessibility projections in selected records, with later corrections superseding specific earlier failures. No fresh native run, build or lint is needed for this documentation-only audit. Current production code is the verified PR108 tree.",
+    "composition": "Native shared-control behavior can establish unchanged callers when their differences are resource endpoint/label/active mode rather than DOM or focus handling. Preserve each evidence record limits; a source count or link alone is not proof.",
+    "host": "macOS27.2 build26B5101f,arm64. Current baseline1280x720/100% app zoom. Earlier records state their own OS/window scope."
+  },
+  "inventory": {
+    "modules": 55,
+    "families": 35,
+    "definitions": 234,
+    "tagCounts": {
+      "button": 162,
+      "h1": 3,
+      "select": 10,
+      "input": 31,
+      "summary": 8,
+      "h2": 3,
+      "div": 2,
+      "tr": 1,
+      "span": 2,
+      "textarea": 6,
+      "li": 1,
+      "section": 3,
+      "p": 1,
+      "h3": 1
+    },
+    "meaning": "Source definitions, not runtime instance or acceptance denominator counts. Generated field helpers, mapped rows/options and conditional states share definitions. Unmounted NewsTest/NewsDemo excluded by import graph."
+  },
+  "sourceModules": [
+    {
+      "file": "src/renderer/main.tsx",
+      "sha256": "863a6596bde95ba270f0d554a2ac2bd0c3819ca832f1bfd577d0edf9bb69a7cc"
+    },
+    {
+      "file": "src/renderer/App.tsx",
+      "sha256": "795807fd4f17bedd6f8f1faa883b008b2ed0619ff06b5361c182490664ad826c"
+    },
+    {
+      "file": "src/shared/types.ts",
+      "sha256": "f98356fc4473975a77f5f8d0afbe3278bd623e9d94e5c8de85f3db1cd65e2e05"
+    },
+    {
+      "file": "src/shared/dj-playback.ts",
+      "sha256": "7e807ff052f50332ff9c78b083c450a9f5c116f68fc36de93480165ec1e6e55b"
+    },
+    {
+      "file": "src/shared/workflow.ts",
+      "sha256": "22bbb66493579cc57e09c69119943adec0fa2373d823820a2579bd4996e6cc77"
+    },
+    {
+      "file": "src/renderer/api.ts",
+      "sha256": "a44175c0fa1b6d5bb3b5fe611e652334f974aa73a93b37b42b0ab2ad45debeca"
+    },
+    {
+      "file": "src/renderer/useRetryFocus.ts",
+      "sha256": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c"
+    },
+    {
+      "file": "src/renderer/player.tsx",
+      "sha256": "682513a44f59cf746c6464d24163181473d80e79addc33edd19aa2dfc9e810d4"
+    },
+    {
+      "file": "src/shared/news-transitions.ts",
+      "sha256": "dae2314678e39262b7e89986412320c33d96cf8af3dc841188fe5e604eda8c90"
+    },
+    {
+      "file": "src/renderer/audio.ts",
+      "sha256": "48884e62f20bea6779e716f685407f780eaaca8a06b86006e686c4d4bdcdc0aa"
+    },
+    {
+      "file": "src/renderer/NewsRecovery.tsx",
+      "sha256": "5d51f3d77587b4cef19fdc08e16ecbe6d614097ab07a0bf23452990fed097772"
+    },
+    {
+      "file": "src/renderer/dj-playback.tsx",
+      "sha256": "d5fce424eb2f78b8fe546e00b6584b1f877981b42ae12eb531df9d93ae031824"
+    },
+    {
+      "file": "src/renderer/components/Player/Player.component.tsx",
+      "sha256": "13cde7bdf704f5eb153d872508af3840c7fc7fd9befbd9b62e829d2a5233e27f"
+    },
+    {
+      "file": "src/renderer/components/Shared.tsx",
+      "sha256": "16726cf323f44324a124ee5fb29a7270ae514f8dc04f87f153f6b0a5e289ff5e"
+    },
+    {
+      "file": "src/renderer/components/Player/DJPopover.component.tsx",
+      "sha256": "7a9858830d98a053b2a3d805e6a2b6521aa483154c00306b0a6cfb4fb96fd981"
+    },
+    {
+      "file": "src/shared/news-preparation-status.ts",
+      "sha256": "27803f7289d4cf64a0d350a361fe9682231e518e93bd4a71e3590a4df771eae9"
+    },
+    {
+      "file": "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx",
+      "sha256": "2f750a0a07c76a2d1d77bbe28a28c2c572e90fbac5d9c66391922b2f99e70e33"
+    },
+    {
+      "file": "src/renderer/components/Queue/Queue.component.tsx",
+      "sha256": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082"
+    },
+    {
+      "file": "src/renderer/components/Inspector/Inspector.component.tsx",
+      "sha256": "8fd6dd9e51fe39038a893e4e66dc93656713e3434399d0b5210df870d3f5d235"
+    },
+    {
+      "file": "src/renderer/components/LibrarySelection.tsx",
+      "sha256": "612e117abee02b6c69090402331261928792cfc7a0aa445756f764d319de0083"
+    },
+    {
+      "file": "src/renderer/pages/Settings/SettingsEdits.tsx",
+      "sha256": "44e576f60c8a96d9fcc00df839244beefd8144215e0801b03803c20d9b34d56e"
+    },
+    {
+      "file": "src/renderer/components/ProviderKeys/ProviderKeyEdits.tsx",
+      "sha256": "99b9e06d6c62a90d36195ef7ae832444dd64c7cad8153db4fd66fd7feefe04d2"
+    },
+    {
+      "file": "src/renderer/pages/Connection/Connection.page.tsx",
+      "sha256": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815"
+    },
+    {
+      "file": "src/renderer/components/LibraryChooser.tsx",
+      "sha256": "0c91c760e8d10904fc699de951c43a2120c73148cbee800574fd5850e2ed8662"
+    },
+    {
+      "file": "src/renderer/pages/Songs/Songs.page.tsx",
+      "sha256": "a15a3adc08b8ebb2bd4d96b00c8462d94922bef67eb2fad655c6c428af0eb942"
+    },
+    {
+      "file": "src/renderer/components/FilterSelect/FilterSelect.component.tsx",
+      "sha256": "b6c4242190b3d107c5145f464db5f3b4912736c70c940a3344c73aa26463ec26"
+    },
+    {
+      "file": "src/renderer/components/TrackTable/TrackTable.component.tsx",
+      "sha256": "158caa15a4fe11170ac048c1752d4b9327006595646f5a86acd27c5b1c0216e5"
+    },
+    {
+      "file": "src/shared/playlist-entries.ts",
+      "sha256": "bb58ab3747844f5080fae78be9a9431bc9cb841fbbb704866cd7e064b5a1292c"
+    },
+    {
+      "file": "src/renderer/pages/Songs/VirtualSongs.component.tsx",
+      "sha256": "4484149d94156d3f6f9b5bcb5b201285a1264e2e28125f50e10a4d401f593206"
+    },
+    {
+      "file": "src/renderer/pages/Albums/Albums.page.tsx",
+      "sha256": "09a1292143de4e0f24a233a41b50e90fae8f19d394afae2f5171384f59fc9667"
+    },
+    {
+      "file": "src/renderer/components/CollectionHeading/CollectionHeading.component.tsx",
+      "sha256": "3a055f26b529958fd7a010c1318de66c54e4c6c77118207b3eed745c020e5548"
+    },
+    {
+      "file": "src/renderer/pages/Albums/VirtualAlbums.component.tsx",
+      "sha256": "0a533939261b44ee2eeafa2a6127db399d597764a5b14b8e656bf1cc969b5ec9"
+    },
+    {
+      "file": "src/renderer/pages/Playlists/Playlists.page.tsx",
+      "sha256": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc"
+    },
+    {
+      "file": "src/renderer/pages/Stations/Stations.page.tsx",
+      "sha256": "af0c5219948700ed27fab50a9490184856a2055983fae09a64781dd2ee8f8bc2"
+    },
+    {
+      "file": "src/renderer/components/InfoHelp/InfoHelp.component.tsx",
+      "sha256": "be2433410cfe2387f36bae23bc6e993a3f54942e9f7979c1854908a83b508cc8"
+    },
+    {
+      "file": "src/renderer/components/ConfigurationTabs/ConfigurationTabs.component.tsx",
+      "sha256": "20df1037126e5f9596bf917f3d5fbc455f41f236626bdbd9176fdc3ba4242a9f"
+    },
+    {
+      "file": "src/renderer/pages/Stations/components/RoomSetup.component.tsx",
+      "sha256": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330"
+    },
+    {
+      "file": "src/renderer/pages/Stations/components/PreparedTakes.component.tsx",
+      "sha256": "2acd8dc806c843d6578d0412be6650dc4e03da373c1d51af2850f890b68407a1"
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx",
+      "sha256": "c4ad3a4578a806ddde343831a2e2015bd85f9321a9c0d0f23ee3c79b7d1461e8"
+    },
+    {
+      "file": "src/renderer/pages/Stations/components/NewsBucket.component.tsx",
+      "sha256": "61e5027abd4def319532645a9a3b1425a4b6531860a2609b113c18670c0fa2f3"
+    },
+    {
+      "file": "src/shared/news-pool.ts",
+      "sha256": "2f8ac1bde20b4a9adfd3beedf015e2d7e843dda584e7713be29e1a4c7ad3fa77"
+    },
+    {
+      "file": "src/renderer/pages/Settings/Settings.page.tsx",
+      "sha256": "13f585e3995c35a21b1105f787095003d794b14ca885f609e58be1af33756cbe"
+    },
+    {
+      "file": "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx",
+      "sha256": "cfead3feb18d94ec60d2ac25573ddfedb7a2ad0b8bbc0331d1ccd4caaefebd6b"
+    },
+    {
+      "file": "src/renderer/components/ProviderKeys/TwitterSetupHelp.component.tsx",
+      "sha256": "3135481586c31f6b4decd8eabba1eda09a74578163ff4da6dd55fb148de3459f"
+    },
+    {
+      "file": "src/renderer/pages/Sources/Sources.page.tsx",
+      "sha256": "0010c35635ef75c8648bb4aded6b754603738cc0c345d493fa9624d8f4481fb8"
+    },
+    {
+      "file": "src/shared/sources.ts",
+      "sha256": "1da2117a59995911c14d098c8c814811ec309fb0d81c2fbf24b53721404e8f18"
+    },
+    {
+      "file": "src/renderer/pages/DJs/DJs.page.tsx",
+      "sha256": "b04a570f45ae65e795c87fa5a866755e2e620bc056223cab5a97e5db24c7faa1"
+    },
+    {
+      "file": "src/renderer/pages/DJs/components/DJEditor.component.tsx",
+      "sha256": "64457abf271353499f45a9b719a643b90a330e87fdd86311981255cd1caa04ef"
+    },
+    {
+      "file": "src/renderer/pages/DJs/components/DJEditor.presets.ts",
+      "sha256": "1994c54feef51b032cfb15038b9422f3fcb6243a7bf6df1a453ccf3db597ed5a"
+    },
+    {
+      "file": "src/renderer/pages/DJs/components/VoicePreview.component.tsx",
+      "sha256": "d2cbca679984903fdc0692488dff67069fad302e4e3adcd8352915b5eb209581"
+    },
+    {
+      "file": "src/shared/voice-previews.ts",
+      "sha256": "4ebe9fe7dad73cc2195573ec729cb99440313fe8eea24e5b0201154cc8095bfe"
+    },
+    {
+      "file": "src/renderer/pages/DJs/components/DJPreview.component.tsx",
+      "sha256": "496eaaac54e8fedb02e33bd2c07b01bc5c4a0b23fcb57940729c32a5bd11c3b8"
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx",
+      "sha256": "637cd8e97ae915639bcec77ac344ec28159ebc22e40b5e4fa74df4f826e14645"
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/NewsTransitions.component.tsx",
+      "sha256": "69051db733a1e1ed35621d7ac6f7e11908b6faba52d3d1a09515d97cddfc0c9b"
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/NewsTransitionPreview.component.tsx",
+      "sha256": "b44dc08192dd9d4a354a8f921c1b5e17c6a0cf2291b26b8aa3bd285d55b2ff31"
+    }
+  ],
+  "inventoryGeneratorSha256": "9513be227beed2c658185e698405e05c6d25de1937bdce6eda989c1047bdb8b5",
+  "rawInventorySha256": "b20b9bd245e1c1bb79ceef8647281591544397daeb2d49a939ccb647ca7b3377",
+  "families": [
+    {
+      "file": "src/renderer/NewsRecovery.tsx",
+      "definitions": 1,
+      "sha256": "5d51f3d77587b4cef19fdc08e16ecbe6d614097ab07a0bf23452990fed097772",
+      "review": "Named recovery action and busy label; guarded removal/Dismiss/settings handoff has native results for startup, chooser and music.",
+      "nativeEvidence": [
+        "2026-10-18-news-notice-focus.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/components/Shared.tsx",
+      "definitions": 3,
+      "sha256": "16726cf323f44324a124ee5fb29a7270ae514f8dc04f87f153f6b0a5e289ff5e",
+      "review": "Retry and Close have names, native buttons and busy guards. Dialog and page headings have title text. Shared dialog trap/return and read Retry are exercised in owner records.",
+      "nativeEvidence": [
+        "2026-10-17-read-retry-focus.json",
+        "2026-10-17-dialog-keyboard-cycles.json",
+        "2026-10-18-shared-editor-focus.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/components/Player/DJPopover.component.tsx",
+      "definitions": 9,
+      "sha256": "7a9858830d98a053b2a3d805e6a2b6521aa483154c00306b0a6cfb4fb96fd981",
+      "review": "Trigger, Close, profile select and schedule/pool actions have explicit or textual names. Current record supersedes terminal-pool and destination gaps; disabled retained actions remain inert until blur.",
+      "nativeEvidence": [
+        "2026-10-18-player-dj-controls-focus.json",
+        "2026-10-16-player-dj-setup.json",
+        "2026-10-18-player-navigation-focus.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/components/Player/Player.component.tsx",
+      "definitions": 13,
+      "sha256": "13cde7bdf704f5eb153d872508af3840c7fc7fd9befbd9b62e829d2a5233e27f",
+      "review": "Transport, seek, volume and queue controls use explicit labels and native keys. Retry/options and captured speech actions retain current focus with named pending/end states.",
+      "nativeEvidence": [
+        "2026-10-18-options-save-focus.json",
+        "2026-10-18-playlist-player-recovery-focus.json",
+        "2026-10-16-listening-controls.json",
+        "2026-10-18-player-navigation-focus.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx",
+      "definitions": 7,
+      "sha256": "2f750a0a07c76a2d1d77bbe28a28c2c572e90fbac5d9c66391922b2f99e70e33",
+      "review": "Name/select/checkbox have labels. Named save/review/close actions retain focus during write/readback and uncertain recovery; shared dialog owns trap/return.",
+      "nativeEvidence": [
+        "2026-10-18-add-playlist-focus.json",
+        "2026-10-17-read-retry-focus.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/components/Queue/Queue.component.tsx",
+      "definitions": 4,
+      "sha256": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082",
+      "review": "Play/remove labels include song title; history summary is named. Native removal tests establish next occurrence/current-song/queue-close fallback.",
+      "nativeEvidence": [
+        "2026-10-17-queue-removal-focus.json",
+        "2026-10-16-listening-controls.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/components/Inspector/Inspector.component.tsx",
+      "definitions": 1,
+      "sha256": "8fd6dd9e51fe39038a893e4e66dc93656713e3434399d0b5210df870d3f5d235",
+      "review": "Programmatic detail heading names the song or Untitled song. Existing drawer entry/Close return uses named controls.",
+      "nativeEvidence": [
+        "2026-10-17-collection-entry-focus.json",
+        "2026-10-17-read-retry-focus.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/components/LibraryChooser.tsx",
+      "definitions": 4,
+      "sha256": "0c91c760e8d10904fc699de951c43a2120c73148cbee800574fd5850e2ed8662",
+      "review": "Libraries are checkbox labels in a named group. Try again, account change and Save labels remain named during read/save; authentication and selection handoffs verified.",
+      "nativeEvidence": [
+        "2026-10-18-authentication-handoff-focus.json",
+        "2026-10-18-account-form-focus.json",
+        "2026-10-17-library-retry-focus.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/pages/Connection/Connection.page.tsx",
+      "definitions": 6,
+      "sha256": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815",
+      "review": "Server, username and password inputs have labels. Connect/back and page headings have text. Read-only/busy form and authenticated screen replacements verified.",
+      "nativeEvidence": [
+        "2026-10-18-authentication-handoff-focus.json",
+        "2026-10-18-account-form-focus.json",
+        "2026-10-18-news-notice-focus.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/components/FilterSelect/FilterSelect.component.tsx",
+      "definitions": 6,
+      "sha256": "b6c4242190b3d107c5145f464db5f3b4912736c70c940a3344c73aa26463ec26",
+      "review": "Trigger names label plus selected value; search, dialog and listbox are named. Options use supplied text, empty choice or Use custom text. Arrow/Home/End/Enter/Escape/Tab behavior has native evidence.",
+      "nativeEvidence": [
+        "2026-10-16-filter-keyboard.json",
+        "2026-10-17-catalog-view-concurrency.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/components/TrackTable/TrackTable.component.tsx",
+      "definitions": 17,
+      "sha256": "158caa15a4fe11170ac048c1752d4b9327006595646f5a86acd27c5b1c0216e5",
+      "review": "Rows name song and artist with fallbacks. Selection/play/actions labels include song context, menu and toolbar buttons have text. Arrow/selection/Enter/child controls and playlist entry actions have native evidence.",
+      "nativeEvidence": [
+        "2026-10-18-keyboard-target-names.json",
+        "2026-10-17-song-keyboard-visibility.json",
+        "2026-10-17-playlist-identities.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/pages/Songs/VirtualSongs.component.tsx",
+      "definitions": 2,
+      "sha256": "4484149d94156d3f6f9b5bcb5b201285a1264e2e28125f50e10a4d401f593206",
+      "review": "Load more and paging Retry are named. Successful recovery uses appended/retained visible row; defensive count group has a computed native name and direct focus proof.",
+      "nativeEvidence": [
+        "2026-10-18-keyboard-target-names.json",
+        "2026-10-17-read-retry-focus.json",
+        "2026-10-17-song-keyboard-visibility.json",
+        "2026-10-18-setup-management-focus.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/pages/Songs/Songs.page.tsx",
+      "definitions": 3,
+      "sha256": "a15a3adc08b8ebb2bd4d96b00c8462d94922bef67eb2fad655c6c428af0eb942",
+      "review": "Search and sort/refresh controls are named. Pending Refresh retains its focused button; successful/error recovery and keyboard-visible rows are recorded.",
+      "nativeEvidence": [
+        "2026-10-17-library-refresh-focus.json",
+        "2026-10-17-keyboard-recovery-focus.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/components/CollectionHeading/CollectionHeading.component.tsx",
+      "definitions": 1,
+      "sha256": "3a055f26b529958fd7a010c1318de66c54e4c6c77118207b3eed745c020e5548",
+      "review": "Long-title disclosure uses a named native details summary, Show full title. Native disclosure activation and full-title visibility are recorded; the heading also retains its title attribute.",
+      "nativeEvidence": [
+        "2026-10-17-long-metadata.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/pages/Albums/VirtualAlbums.component.tsx",
+      "definitions": 3,
+      "sha256": "0a533939261b44ee2eeafa2a6127db399d597764a5b14b8e656bf1cc969b5ec9",
+      "review": "Album tile text and artwork name the album, native arrows reveal tiles; Load more/paging Retry named. Defensive count group composition follows Songs.",
+      "nativeEvidence": [
+        "2026-10-18-keyboard-target-names.json",
+        "2026-10-17-read-retry-focus.json",
+        "2026-10-17-collection-entry-focus.json",
+        "2026-10-18-setup-management-focus.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/pages/Albums/Albums.page.tsx",
+      "definitions": 5,
+      "sha256": "09a1292143de4e0f24a233a41b50e90fae8f19d394afae2f5171384f59fc9667",
+      "review": "Search, Back, Play, Queue and Add actions are named. Cold entry reaches Back before read completion, recovery preserves user ownership.",
+      "nativeEvidence": [
+        "2026-10-17-collection-entry-focus.json",
+        "2026-10-17-read-retry-focus.json",
+        "2026-10-16-album-artist-search.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/pages/Playlists/Playlists.page.tsx",
+      "definitions": 13,
+      "sha256": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+      "review": "Create/rename names, collection tiles, Back and recovery controls are textual/labelled. Pending/uncertain dialogs retain focus; entry/removal/reorder and read-only/unknown controls have native controlled results.",
+      "nativeEvidence": [
+        "2026-10-18-playlist-create-focus.json",
+        "2026-10-18-playlist-player-recovery-focus.json",
+        "2026-10-16-playlist-permissions.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/components/InfoHelp/InfoHelp.component.tsx",
+      "definitions": 1,
+      "sha256": "be2433410cfe2387f36bae23bc6e993a3f54942e9f7979c1854908a83b508cc8",
+      "review": "Provider/manual callers supply explicit help names; shared dialog heading and Close name match. Open, Escape/Close and trigger return verified.",
+      "nativeEvidence": [
+        "2026-10-18-keyboard-help-audit.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/components/ConfigurationTabs/ConfigurationTabs.component.tsx",
+      "definitions": 1,
+      "sha256": "20df1037126e5f9596bf917f3d5fbc455f41f236626bdbd9176fdc3ba4242a9f",
+      "review": "Tablist and tabs are named; panels reference the matching tab. Roving tab index and Arrow/Home/End selection have native recorded use.",
+      "nativeEvidence": [
+        "2026-10-17-player-command-focus.json",
+        "2026-10-18-keyboard-target-names.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/pages/Stations/components/RoomSetup.component.tsx",
+      "definitions": 5,
+      "sha256": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330",
+      "review": "News sources group references visible heading; each checkbox has source label. DJ chooser and interests/mood fields have labels. Native Space toggling and management round trips verified.",
+      "nativeEvidence": [
+        "2026-10-18-radio-setup-save-focus.json",
+        "2026-10-16-first-dj-setup.json",
+        "2026-10-18-setup-management-focus.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/pages/Stations/components/PreparedTakes.component.tsx",
+      "definitions": 12,
+      "sha256": "2acd8dc806c843d6578d0412be6650dc4e03da373c1d51af2850f890b68407a1",
+      "review": "Saved-take targets name date, audition controls have explicit action labels, selection/schedule/clear/Stop and provenance summaries/links have text. Pending/failure/unavailable/end focus is covered by take records.",
+      "nativeEvidence": [
+        "2026-10-18-prepared-take-focus.json",
+        "2026-10-18-saved-take-review-focus.json",
+        "2026-10-18-keyboard-target-names.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx",
+      "definitions": 10,
+      "sha256": "c4ad3a4578a806ddde343831a2e2015bd85f9321a9c0d0f23ee3c79b7d1461e8",
+      "review": "Inputs/selects and preparation toggle have visible labels. Save/Resume/Off have textual busy/unavailable states and current-owner retention; later Tab/navigation wins.",
+      "nativeEvidence": [
+        "2026-10-18-preparation-controls-focus.json",
+        "2026-10-18-radio-setup-save-focus.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/pages/Stations/components/NewsBucket.component.tsx",
+      "definitions": 7,
+      "sha256": "61e5027abd4def319532645a9a3b1425a4b6531860a2609b113c18670c0fa2f3",
+      "review": "News settings/setup, Review draft, Show more and source/reference buttons have text. History expansion targets the named article link and source metadata; preparation statuses are readouts, not additional controls.",
+      "nativeEvidence": [
+        "2026-10-17-reviewed-history-focus.json",
+        "2026-10-18-player-dj-controls-focus.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/pages/Stations/Stations.page.tsx",
+      "definitions": 36,
+      "sha256": "af0c5219948700ed27fab50a9490184856a2055983fae09a64781dd2ee8f8bc2",
+      "review": "Profile options, manual tools, text/script fields, preparation/cancel/reconciliation and confirmation actions are named. Later profile-dialog, manual-preparation, saved-take and history records supersede older BODY observations.",
+      "nativeEvidence": [
+        "2026-10-18-manual-preparation-focus.json",
+        "2026-10-18-saved-take-review-focus.json",
+        "2026-10-18-profile-dialog-focus.json",
+        "2026-10-18-keyboard-target-names.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/components/ProviderKeys/TwitterSetupHelp.component.tsx",
+      "definitions": 4,
+      "sha256": "3135481586c31f6b4decd8eabba1eda09a74578163ff4da6dd55fb148de3459f",
+      "review": "Native details summary and three textual link buttons are named; inline failure remains beside its current action and does not move focus.",
+      "nativeEvidence": [
+        "2026-10-18-keyboard-help-audit.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx",
+      "definitions": 4,
+      "sha256": "cfead3feb18d94ec60d2ac25573ddfedb7a2ad0b8bbc0331d1ccd4caaefebd6b",
+      "review": "Provider input has explicit label. Save/Remove and status target are named; read Retry and pending/success/error paths retain/reveal current focus.",
+      "nativeEvidence": [
+        "2026-10-18-account-form-focus.json",
+        "2026-10-18-keyboard-target-names.json",
+        "2026-10-17-provider-edit-navigation.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/pages/Sources/Sources.page.tsx",
+      "definitions": 12,
+      "sha256": "0010c35635ef75c8648bb4aded6b754603738cc0c345d493fa9624d8f4481fb8",
+      "review": "Add/edit/delete controls name source/action; source editor fields have labels across kinds. Shared modal and pending-save/delete controls have native keyboard evidence.",
+      "nativeEvidence": [
+        "2026-10-18-shared-editor-focus.json",
+        "2026-10-17-dialog-keyboard-cycles.json",
+        "2026-10-16-source-deletion.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/pages/DJs/components/VoicePreview.component.tsx",
+      "definitions": 3,
+      "sha256": "d2cbca679984903fdc0692488dff67069fad302e4e3adcd8352915b5eb209581",
+      "review": "Shared preview group names host/voice; Generate/Replay/Stop/Regenerate names include label. Saved-DJ pending/failure/readback/success and tab-away use same DOM/focus code as editor voice caller.",
+      "nativeEvidence": [
+        "2026-10-18-voice-preview-focus.json",
+        "2026-10-18-keyboard-target-names.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/pages/DJs/components/DJEditor.component.tsx",
+      "definitions": 15,
+      "sha256": "64457abf271353499f45a9b719a643b90a330e87fdd86311981255cd1caa04ef",
+      "review": "Modes, presets and gender choices have labels/groups. Name/voice/host fields use enclosing labels; Find/results/save actions have text. Predefined/Simple/Advanced keyboard cycles and search/save recovery recorded.",
+      "nativeEvidence": [
+        "2026-10-18-voice-search-focus.json",
+        "2026-10-18-shared-editor-focus.json",
+        "2026-10-17-dialog-keyboard-cycles.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/pages/DJs/DJs.page.tsx",
+      "definitions": 6,
+      "sha256": "b04a570f45ae65e795c87fa5a866755e2e620bc056223cab5a97e5db24c7faa1",
+      "review": "New/edit/duplicate/delete actions and preview labels name context; shared dialogs and save/delete focus follow current retained-action pattern.",
+      "nativeEvidence": [
+        "2026-10-18-shared-editor-focus.json",
+        "2026-10-18-voice-preview-focus.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx",
+      "definitions": 5,
+      "sha256": "637cd8e97ae915639bcec77ac344ec28159ebc22e40b5e4fa74df4f826e14645",
+      "review": "Frequency/volume/seek checkbox and heading have labels/text. Explicit Save retains visible focus during pending, failure and clean terminal; player navigation targets this heading.",
+      "nativeEvidence": [
+        "2026-10-18-general-settings-save-focus.json",
+        "2026-10-17-general-settings-navigation.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/NewsTransitionPreview.component.tsx",
+      "definitions": 1,
+      "sha256": "b44dc08192dd9d4a354a8f921c1b5e17c6a0cf2291b26b8aa3bd285d55b2ff31",
+      "review": "Preview/Stop transition button has text and native activation; keyboard state follows the stable button. Audible transition quality remains separate.",
+      "nativeEvidence": [
+        "2026-10-17-transition-demo.json",
+        "2026-10-17-general-settings-navigation.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/NewsTransitions.component.tsx",
+      "definitions": 5,
+      "sha256": "69051db733a1e1ed35621d7ac6f7e11908b6faba52d3d1a09515d97cddfc0c9b",
+      "review": "Transition inputs/selects have enclosing labels; named Save retains busy/error/success focus and later user intent. Preview uses the shared named transition action.",
+      "nativeEvidence": [
+        "2026-10-18-general-settings-save-focus.json",
+        "2026-10-17-transition-demo.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/pages/Settings/Settings.page.tsx",
+      "definitions": 5,
+      "sha256": "13f585e3995c35a21b1105f787095003d794b14ca885f609e58be1af33756cbe",
+      "review": "Section navigation, Back, Sign out and confirmation actions have text. Library/key and sign-out pending/failure/return paths are recorded; setup Back is explicit only for its detour.",
+      "nativeEvidence": [
+        "2026-10-18-signout-focus.json",
+        "2026-10-18-account-form-focus.json",
+        "2026-10-17-general-settings-navigation.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    },
+    {
+      "file": "src/renderer/App.tsx",
+      "definitions": 4,
+      "sha256": "795807fd4f17bedd6f8f1faa883b008b2ed0619ff06b5361c182490664ad826c",
+      "review": "Main navigation and drawer Close have names; startup title has text. Native authentication, collection, notice, setup-management and player destinations cover explicit route focus.",
+      "nativeEvidence": [
+        "2026-10-18-authentication-handoff-focus.json",
+        "2026-10-18-news-notice-focus.json",
+        "2026-10-17-collection-entry-focus.json",
+        "2026-10-18-player-navigation-focus.json",
+        "2026-10-18-setup-management-focus.json"
+      ],
+      "status": "Source and scoped native composition reviewed"
+    }
+  ],
+  "supersession": [
+    {
+      "earlier": "2026-10-18-radio-setup-save-focus.json",
+      "later": "2026-10-18-profile-dialog-focus.json",
+      "result": "Profile-switch pending/failure BODY focus corrected and natively verified; do not reopen old failure as current."
+    },
+    {
+      "earlier": "2026-10-18-keyboard-family-evidence.csv",
+      "later": "2026-10-18-setup-management-focus.json",
+      "result": "Native source-group name/Space, explicit setup entry/return and normal successful paging without new results covered. Defensive count fallback is not an additional essential action."
+    },
+    {
+      "earlier": "2026-10-18-player-dj-controls-focus.json",
+      "later": "2026-10-18-player-navigation-focus.json",
+      "result": "Retained Pool check ended/unavailable-profile state now native, inert and Tab-removable. Player route destination focus corrected."
+    }
+  ],
+  "coverageLimits": [
+    "Saved-DJ preview async replay supplies shared-control lifecycle evidence; editor voice-resource async replay is not independently repeated. Editor modes have their own native keyboard cycle evidence.",
+    "Dynamic valid song/article/source/host labels use returned/saved content; source ingestion rejects untitled feed/Hacker News stories and source/DJ saves require names. This is not exhaustive malformed-store corruption testing.",
+    "No exhaustive interleaving/ABA/overlay/window race suite or forced defensive count fallback. Current helper guards retain source and selected native cancellation evidence.",
+    "Q09 full VoiceOver, M16 physical media controls, Q10 platform matrix, V11 display/font matrix, P05 actual server permission configurations, U listener/audible rows remain open independently.",
+    "No deferred sub1280x720 or200% zoom checks run.",
+    "No90% or goal completion claim. Q13 complete requirement/critical-invariant audit remains Review."
+  ],
+  "review": {
+    "Steve": "Supports Q06 Controlled after correcting CollectionHeading wording; verified55 source hashes,35 families/234 definitions, menu native Enter/Escape proof and provenance-button composition.",
+    "Elena": "No concrete essential-control gap; shared editor preview endpoint/caller async difference is a retained coverage limit. Verified55 module hashes and35 distinct families; identified the same CollectionHeading wording correction.",
+    "correction": "Both flagged CollectionHeading as a native details/summary Show full title control. The final family review now describes that source accurately.",
+    "root": "Reviewed current definitions and native records, including source-group Space, retained pool terminal, successful paging, named recovery targets and exact player routes. Older failures are explicitly superseded."
+  },
+  "acceptance": {
+    "Q06": "Controlled",
+    "total": 191,
+    "active": 189,
+    "deferred": 2,
+    "Controlled": 140,
+    "Live": 23,
+    "Review": 14,
+    "Dated": 1,
+    "External": 11,
+    "open": 26,
+    "listener": 14,
+    "otherProof": 12,
+    "changedRows": [
+      "Q06: Review -> Controlled"
+    ],
+    "goal": "Active; Q13 Review; no overall acceptance percentage or90% claim"
+  }
+}

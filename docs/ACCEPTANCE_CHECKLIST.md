@@ -22,7 +22,7 @@ The inventory is provisional until every source paragraph and STAR result is rec
 
 Current acceptance baseline, requested by Anton on16 October2026:1280×720 at normal100% app zoom. Smaller-window and enlarged-zoom checks are postponed. Existing behavior and historical evidence stay; do not repeat or expand deferred checks. V14/V15 remain as future-work rows.
 
-Current inventory: 191 rows, 189 active and 2 explicitly deferred. 15 Review, 1 Dated, 0 Recorded, 139 Controlled, 23 Live, 11 External, 2 Deferred. 27 active checks remain. These are review dispositions, not an acceptance percentage. Of those 27 open rows, 14 require observed listener evidence and 13 have other proof requirements. The [listener protocol](LISTENER_ACCEPTANCE.md) maps every open U row to uncoached tasks and lists the other evidence needed. Preparing the protocol changes no row disposition.
+Current inventory: 191 rows, 189 active and 2 explicitly deferred. 14 Review, 1 Dated, 0 Recorded, 140 Controlled, 23 Live, 11 External, 2 Deferred. 26 active checks remain. These are review dispositions, not an acceptance percentage. Of those 26 open rows, 14 require observed listener evidence and 12 have other proof requirements. The [listener protocol](LISTENER_ACCEPTANCE.md) maps every open U row to uncoached tasks and lists the other evidence needed. Preparing the protocol changes no row disposition.
 
 ## Platform, scope and presentation
 
@@ -280,7 +280,7 @@ Source: REQUIREMENTS: Design acceptance, stack, settings, acceptance and release
 | Q03 | Actual shared-provider Keychain adapter supports isolated read/write/independent clear without exposing secrets to renderer. | S+O | Controlled |
 | Q04 | Media URLs/handles reject revoked/missing/cross-account resources and off-origin redirects without leaking tokens. | S+N | Controlled |
 | Q05 | Local secret/recovery files have appropriate private modes and no inspection/test touches personal entries. | I+S+O | Controlled |
-| Q06 | All essential controls have accessible names, visible focus and keyboard operation; source checkbox groups have names. | N+O | Review |
+| Q06 | All essential controls have accessible names, visible focus and keyboard operation; source checkbox groups have names. | N+O | Controlled |
 | Q07 | Filter/song-action Tab/Escape, dialogs and setup detours restore logical focus, including removed-opener fallback to page heading. | N | Controlled |
 | Q08 | Interactive recovery actions are outside live status/error announcements; loading/error/empty states remain actionable. | N+O | Controlled |
 | Q09 | Full VoiceOver interaction works through music, setup, pending/failure/recovery and dialogs. | N+O | External |
@@ -806,3 +806,14 @@ Final native CUA checks at1280×720 normal zoom verify keyboard settings entry w
 Build including TypeScript, full ESLint and scoped native predicates pass. Two observer reports end without page errors, and the owned catalog stops. Copied instrumented main/storage, disposable safeStorage/catalog, a null shared-key adapter, stopped scheduler and muted media retain their controlled limits. External/provider attempts and HTTP writes stay zero; ordinary local playback timer saves continue. Navigation leaves saved playback, DJ preferences and room profiles unchanged.
 
 The [successor family map](verification/2026-10-18-player-keyboard-family-evidence.csv) retains35 families/234 definitions across55 reachable modules and reconciles all current family hashes. App, Player and DJPopover changed; the other32 hashes match the preceding map. It links the new pool/player and prior setup/group/paging evidence without rewriting historical records. Q06 remains Review pending the consolidated essential-control evidence audit. All191 dispositions stay unchanged:189 active,2 Deferred,27 open comprising14 listener and13 other-proof. No full VoiceOver, observed listener, audible/live-provider/server, media-key, platform/release or deferred viewport/zoom acceptance follows.
+
+
+## Current essential keyboard acceptance, 18 October 2026
+
+The [Q06 audit](verification/2026-10-18-q06-keyboard-acceptance.json) reviews the complete reachable essential-control families against the current PR #108 source tree. A fresh TypeScript import/JSX traversal confirms 55 renderer modules, 35 family files and 234 source definitions. Counts identify source scope, not rendered instances or proof of keyboard behavior. Each family has an explicit naming/operation adjudication and linked native evidence, with current module hashes.
+
+Source review and the recorded native macOS interactions jointly establish names, visible keyboard focus, native/custom key operation, busy/error/success retention and the named News sources checkbox group. Later records supersede the old profile-confirmation BODY result, setup-management/source-group and successful paging gaps, and the final retained pool/player-route gaps. Dynamic provenance buttons use generated story titles and normal native button semantics. The track menu has native Enter/Escape evidence. The shared voice-preview lifecycle is composed with native editor-mode keyboard cycles; a separate editor-endpoint async replay remains a coverage limit, not a different control or focus implementation. Defensive count destinations have direct computed-name/focus evidence and reviewed fallback selection, without a forced unnatural state.
+
+Steve and Elena independently reviewed the current criterion and consolidated artifact, finding no remaining concrete essential-control gap. Both caught a wording error describing Show full title as a button; the final artifact correctly records its native details/summary disclosure. Q06 moves from Review to Controlled for the recorded source and native host at the agreed baseline. No production code changes or new runtime/build/lint pass are claimed in this documentation-only audit. Current source is the verified PR #108 tree; JSON, hashes, references, counts and whitespace are checked here.
+
+The inventory is now 191 rows,189 active and2 Deferred:140 Controlled,23 Live,14 Review,1 Dated,11 External.26 active checks remain,14 listener and12 other-proof. Q09 VoiceOver, M16 hardware media keys, Q10 platform matrix, V11 display legibility, P05 actual server permissions and the listener/audible rows remain open. Q13 stays Review; this result establishes neither goal completion nor an overall90% claim. Historical records retain their dated counts and narrower limits.
