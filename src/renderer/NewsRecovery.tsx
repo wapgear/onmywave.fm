@@ -3,6 +3,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { LoaderCircle, Radio, RotateCw } from 'lucide-react';
 import type { NewsRecoveryStatus } from '../shared/types';
 import { unwrap } from './api';
+import { useRetryFocus } from './useRetryFocus';
 import './NewsRecovery.styles.css';
 
 type RecoveryContextValue = {
@@ -80,8 +81,9 @@ export function useNewsRecovery() {
   return value;
 }
 
-export function NewsRecoveryNotice({ onOpenSettings }: { onOpenSettings?: () => void }) {
+export function NewsRecoveryNotice({ onOpenSettings, focusTarget, settingsTarget }: { onOpenSettings?: () => void; focusTarget: () => HTMLElement | null; settingsTarget?: () => HTMLElement | null }) {
   const recovery = useNewsRecovery();
+  const { retryRef, retry: focusAfterAction } = useRetryFocus({ ownerKey: 'news-recovery-notice', target: focusTarget, canFocusSuccess: () => recovery.status.phase === 'ready' });
   const success = recovery.status.phase === 'ready' && recovery.recovered && !recovery.dismissed;
   if (recovery.status.phase === 'ready' && !success) return null;
   const checking = recovery.status.phase === 'recovering';
@@ -94,9 +96,14 @@ export function NewsRecoveryNotice({ onOpenSettings }: { onOpenSettings?: () => 
   return <aside className="news-recovery-notice" aria-label="News and DJ availability">
     <Radio size={17} aria-hidden="true" />
     <p role="status" aria-live="polite" aria-atomic="true">{message}</p>
-    <button type="button" aria-disabled={checking} onClick={() => {
+    <button ref={retryRef} type="button" aria-disabled={checking} onClick={() => {
       if (checking) return;
-      if (success) { if (onOpenSettings) onOpenSettings(); else recovery.dismiss(); }
+      if (success) {
+        void focusAfterAction(async () => {
+          if (onOpenSettings) onOpenSettings(); else recovery.dismiss();
+          return { isError: false };
+        }, onOpenSettings ? settingsTarget : undefined);
+      }
       else recovery.retry();
     }}>{checking ? <LoaderCircle size={14} className="spinning" aria-hidden="true" /> : success && onOpenSettings ? null : <RotateCw size={14} aria-hidden="true" />}{action}</button>
   </aside>;

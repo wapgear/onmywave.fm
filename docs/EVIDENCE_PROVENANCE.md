@@ -159,3 +159,6 @@ The [authentication handoff record](verification/2026-10-18-authentication-hando
 
 
 The [keyboard target-name record](verification/2026-10-18-keyboard-target-names.json) preserves scoped native projections, accessibility nodes, five terminal observer reports, source/bundle/fixture hashes and explicit phase limits. Pointer focus proves count names, not keyboard recovery-to-count. The final keyboard provider/preview/history checks separately establish visible focus. Seeded history metadata proves presentation only. The 233-definition inventory expands source scope without changing acceptance dispositions.
+
+
+The [news-notice record](verification/2026-10-18-news-notice-focus.json) distinguishes original focus loss, scoped chooser/music fixes, rejected full-window focus visibility and the corrected title-heading replay. It retains six terminal observer outcomes, native projections/AX and final source/bundle/fixture hashes. Substituted recovery phases prove UI behavior only; missing intermediate hashes and untested caller transitions remain explicit. No acceptance disposition changes.
