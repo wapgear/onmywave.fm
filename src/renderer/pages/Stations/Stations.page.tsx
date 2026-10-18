@@ -441,7 +441,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
       {differs && <p className="notice">Your draft or setup differs from the selected take. Your saved choice remains unchanged.</p>}
         <ErrorNotice error={library.error} retryRef={savedRetryFocus.retryRef} retrying={library.isFetching} retry={() => savedRetryFocus.retry(() => library.refetch())} />
       {library.isPending && <p className="loading" role="status">Opening saved audio…</p>}
-      {library.data && <PreparedTakes active={tab === 'saved'} library={library.data} refresh={() => void refresh()} loadDraft={loadDraft} />}
+      {library.data && <PreparedTakes active={tab === 'saved'} library={library.data} refresh={refresh} loadDraft={loadDraft} />}
       {!!preparationHistory.length && <details id="preparation-history" className="room-request-history" ref={requestHistory}><summary>Preparation history</summary>{preparationHistory.slice(-historyLimit).reverse().map(value => <p key={value.requestId} id={`preparation-request-${value.requestId}`} tabIndex={-1}><strong>{value.kind === 'script' ? 'News text' : 'Audio take'} · {value.status === 'skipped' ? 'No relevant story' : value.status === 'partial-coverage' ? 'Incomplete source coverage' : value.status}</strong><span>{preparationOrigin(value)}</span><span>{value.error || (value.status === 'skipped' ? 'No audio was generated for this attempt.' : 'No automatic provider retry. Completed results remain in saved audio.')}</span></p>)}{preparationHistory.length > historyLimit && <button className="room-link" onClick={showOlderPreparations}>Show older preparations</button>}</details>}
       </section>
     </div>
