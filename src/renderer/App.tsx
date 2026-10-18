@@ -11,7 +11,7 @@ import { AddPlaylist } from './components/AddPlaylist/AddPlaylist.component';
 import { Queue } from './components/Queue/Queue.component';
 import './components/Drawer/Drawer.styles.css';
 import { Inspector } from './components/Inspector/Inspector.component';
-import { LibrarySelectionProvider } from './components/LibrarySelection';
+import { LibrarySelectionProvider, type ConnectionTransition } from './components/LibrarySelection';
 import { SettingsEditsProvider } from './pages/Settings/SettingsEdits';
 import { ProviderKeyEditsProvider } from './components/ProviderKeys/ProviderKeyEdits';
 import { ErrorNotice } from './components/Shared';
@@ -29,6 +29,21 @@ export default function App() {
   const connectionQuery = useQuery({ queryKey: ['connection'], queryFn: async () => unwrap(await window.wave.getConnection()), retry: false });
   const connectionRetryFocus = useRetryFocus({ ownerKey: 'connection-startup', target: () => document.querySelector<HTMLElement>('.page-heading h1, .connection-card h1'), canFocusSuccess: () => connectionQuery.isSuccess && !connectionQuery.isFetching });
   const [expired, setExpired] = useState(false);
+  const { retryFrom: transitionWithFocus } = useRetryFocus({ ownerKey: 'connection-transition', target: () => null, canFocusSuccess: () => connectionQuery.isSuccess && !connectionQuery.isFetching && !!connectionQuery.data && !expired });
+  const runConnectionTransition: ConnectionTransition = (source, operation) => {
+    let destination: Connection | undefined;
+    return transitionWithFocus(source, async () => {
+      destination = await operation();
+      return { isError: !destination };
+    }, () => {
+      const current = client.getQueryData<Connection | null>(['connection']);
+      const expected = destination;
+      if (!expected || current?.id !== expected.id || current.selectedLibraryIds.length !== expected.selectedLibraryIds.length
+        || current.selectedLibraryIds.some(id => !expected.selectedLibraryIds.includes(id))) return null;
+      const heading = document.querySelector<HTMLElement>(expected.selectedLibraryIds.length ? '.page-heading h1' : '.connection-card h1');
+      return heading?.checkVisibility() ? heading : null;
+    }, undefined, () => source);
+  };
   useEffect(() => { const expire = () => setExpired(true); window.addEventListener('wave:auth-expired', expire); return () => window.removeEventListener('wave:auth-expired', expire); }, []);
   async function setConnection(connection: Connection | null, clearExpiry = true) {
     const accountData = { predicate: (query: { queryKey: readonly unknown[] }) => query.queryKey[0] !== 'connection' };
@@ -40,18 +55,18 @@ export default function App() {
   const connection = connectionQuery.data ?? null;
   return <ProviderKeyEditsProvider sessionId={connection?.id ?? null}><NewsRecoveryProvider><SettingsEditsProvider>{connectionQuery.isPending || connectionQuery.error
       ? <main className="startup"><span className="wordmark">onmywave.fm</span>{connectionQuery.isPending && <p role="status">Opening your library…</p>}<ErrorNotice error={connectionQuery.error} retryRef={connectionRetryFocus.retryRef} retrying={connectionQuery.isFetching} retry={() => connectionRetryFocus.retry(() => connectionQuery.refetch())} /><NewsRecoveryNotice /></main>
-      : <SessionContent key={connection?.id ?? 'signed-out'} connection={connection} expired={expired && !!connection} setConnection={setConnection} />}</SettingsEditsProvider></NewsRecoveryProvider></ProviderKeyEditsProvider>;
+      : <SessionContent key={connection?.id ?? 'signed-out'} connection={connection} expired={expired && !!connection} setConnection={setConnection} runConnectionTransition={runConnectionTransition} />}</SettingsEditsProvider></NewsRecoveryProvider></ProviderKeyEditsProvider>;
 }
 type RadioDrafts = {
   roomDraft: RoomDraft; setRoomDraft: Dispatch<SetStateAction<RoomDraft>>;
   roomSetupDraft: RoomSetupDraft; setRoomSetupDraft: Dispatch<SetStateAction<RoomSetupDraft>>;
 };
-function SessionContent({ connection, expired, setConnection }: { connection: Connection | null; expired: boolean; setConnection: (connection: Connection | null, clearExpiry?: boolean) => Promise<void> }) {
+function SessionContent({ connection, expired, setConnection, runConnectionTransition }: { connection: Connection | null; expired: boolean; setConnection: (connection: Connection | null, clearExpiry?: boolean) => Promise<void>; runConnectionTransition: ConnectionTransition }) {
   const playlistRecovery = usePlaylistRecovery();
   const [roomDraft, setRoomDraft] = useState<RoomDraft>(null);
   const [roomSetupDraft, setRoomSetupDraft] = useState<RoomSetupDraft>({ setup: null, moodDraft: null });
   const librariesSelected = (value: Connection) => setConnection(value, false);
-  const content = !connection || expired || !connection.selectedLibraryIds.length ? <ConnectionPage key={`${connection?.id ?? 'new'}-${expired}`} connection={connection} expired={expired} connected={setConnection} librariesSelected={librariesSelected} />
+  const content = !connection || expired || !connection.selectedLibraryIds.length ? <ConnectionPage key={`${connection?.id ?? 'new'}-${expired}`} connection={connection} expired={expired} connected={setConnection} librariesSelected={librariesSelected} runConnectionTransition={runConnectionTransition} />
     : <PlayerProvider key={connection.id} connection={connection}><DJPlaybackProvider><ReadyApp key={connection.id} connection={connection} update={librariesSelected} disconnected={() => setConnection(null)} playlistRecovery={playlistRecovery} roomDraft={roomDraft} setRoomDraft={setRoomDraft} roomSetupDraft={roomSetupDraft} setRoomSetupDraft={setRoomSetupDraft} /></DJPlaybackProvider></PlayerProvider>;
   return <LibrarySelectionProvider connection={connection} expired={expired}>{content}</LibrarySelectionProvider>;
 }

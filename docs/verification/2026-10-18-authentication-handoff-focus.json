@@ -1,0 +1,2182 @@
+{
+  "date": "2026-10-18",
+  "scope": "Successful authentication and initial library-selection focus across keyed screens; default Settings save regression",
+  "base": "9965d476cc3fa1fbda8af4db0fc982424199e909",
+  "environment": {
+    "viewport": [
+      1280,
+      720
+    ],
+    "zoom": 1,
+    "input": "Native CUA only",
+    "renderer": "One final production renderer/preload for all 18 final projections",
+    "main": "Copied instrumented main/storage from account-form fixture; not unmodified current production main",
+    "storage": "Actual disposable encrypted connection/library persistence and local state; placeholder readiness keys, null shared-key adapter, stopped scheduler",
+    "server": "Owned localhost catalog/auth fixture. Fake usernames and empty fixture passwords only; each observer makes one allowed localhost authentication POST",
+    "media": "Muted; no automatic Play; restored sameaccount queue paused at 12 seconds",
+    "processes": "Four observer reports terminal observed with no page errors; owned catalog terminal exit 143"
+  },
+  "sourceHashes": {
+    "src/renderer/App.tsx": "8903ec7d663ead3efb15a4e8b6243acb26ce9495deec84e103f7952311112b77",
+    "src/renderer/components/LibrarySelection.tsx": "612e117abee02b6c69090402331261928792cfc7a0aa445756f764d319de0083",
+    "src/renderer/components/LibraryChooser.tsx": "0c91c760e8d10904fc699de951c43a2120c73148cbee800574fd5850e2ed8662",
+    "src/renderer/pages/Connection/Connection.page.tsx": "3580a1038b25efa4a8a5d0ddb00141f245f1c3304372bbc5d1001a612a0b0b01",
+    "src/renderer/useRetryFocus.ts": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c"
+  },
+  "baselineBundles": {
+    "index-D4xV2lEk.js": "7ea2182e8b8e2d39a3dec505f89eb5854eaa7c9ad275a3f0b55646bbc35b0a88"
+  },
+  "finalBundles": {
+    "index-D_v8spar.js": "92c539ebc5a2fcc129168a73a6e72162461474176e1821b9134e55dee08782fa"
+  },
+  "fixtureHashes": {
+    "baseline-bootstrap.mjs": "4e6538ed5e64d49b6a97016110228eb46bc340a29c24eef7337c31dadd33fab1",
+    "bootstrap.mjs": "4e6538ed5e64d49b6a97016110228eb46bc340a29c24eef7337c31dadd33fab1",
+    "observe.cjs": "31171041265d93ea489b644352c46a67565f6e732f97894837ed5fbf51497c55",
+    "server.mjs": "f4b7bfedddf38623b7b5baf456e7cf83b72d19dd271f9c3bacd3b7d9e5e0f4d7",
+    "out/main/index.js": "576624282916408675d3a7ee10b7528d3334dc477ed0de6f259d0339a53bd57a"
+  },
+  "review": {
+    "proposal": "Independent Steve/Elena proposals and challenge converge on persistent App-owned existing helper with opt-in chooser transition",
+    "correction": "Both reviews identified done no-op falsely considered applied. Explicit false result now prevents it; both final source reviews support corrected diff without remaining reservations",
+    "sameaccountDrafts": "Existing SessionContent identity key unchanged; source review only, no new draft-specific runtime replay"
+  },
+  "checks": {
+    "productionBuildIncludingTypeScript": "passed",
+    "fullESLint": "passed",
+    "whitespace": "passed",
+    "scopedNativePredicates": "passed"
+  },
+  "observerReports": {
+    "before": {
+      "sha256": "d582978c67d80b0fc6c1dddb230ca2fc03ed0203e5069e224fb87cbdd68cc716",
+      "result": "observed",
+      "errors": []
+    },
+    "final": {
+      "sha256": "fd5241d7cbb1ad2b0ad5ac747186b1e9aa3a29d955b535100faa42a40ab36f61",
+      "result": "observed",
+      "errors": []
+    },
+    "final-account": {
+      "sha256": "4ee07c522c4341776c735a037140a2acb089f45fc93a67653f1d49a4b8098e3e",
+      "result": "observed",
+      "errors": []
+    },
+    "final-tab": {
+      "sha256": "e958754d6c060deaeedbe7293dd2141e0d46dadbec986f85b61dee18fe1fc7ba",
+      "result": "observed",
+      "errors": []
+    }
+  },
+  "limits": [
+    "Baseline uses existing selected account chooser; no new cold signed-out/expired-auth replay",
+    "No explicit library-query failure after successful sign-in; held and empty discovery verified",
+    "No new pointer/overlay/window-loss, injected stale false-return/ABA, or same-account radio-draft replay; current helper/provider guards reviewed in source",
+    "Tab-away completion intentionally claims no late heading handoff; removed action leaves document focus, not a surviving-control focus result",
+    "No full Q06/control-family acceptance, unit, VoiceOver, listener, audible/live-provider/server, OS fault or platform-matrix result; deferred viewport/zoom not checked"
+  ],
+  "acceptance": {
+    "rows": 191,
+    "active": 189,
+    "deferred": 2,
+    "open": 27,
+    "listenerOpen": 14,
+    "otherProofOpen": 13,
+    "dispositionsChanged": false
+  },
+  "snapshots": [
+    {
+      "name": "account-chooser-loading",
+      "rawSha256": "42ee3bc7ad21542b31bce96c5df2826079a5f3d72f05999114220c3986f39438",
+      "focus": {
+        "tag": "H1",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 420,
+          "y": 188,
+          "width": 440,
+          "height": 46.796875,
+          "top": 188,
+          "right": 860,
+          "bottom": 234.796875,
+          "left": 420
+        },
+        "insideDrawer": false,
+        "name": "Choose your libraries",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "Choose your libraries",
+          "focused": true,
+          "tabIndex": -1,
+          "rect": {
+            "x": 420,
+            "y": 188,
+            "width": 440,
+            "height": 46.796875,
+            "top": 188,
+            "right": 860,
+            "bottom": 234.796875,
+            "left": 420
+          }
+        }
+      ],
+      "libraries": [],
+      "notices": [],
+      "headings": [
+        "Choose your libraries"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792330006523,
+          "mode": "hold"
+        },
+        {
+          "name": "connect",
+          "at": 1792330022568,
+          "mode": "hold"
+        },
+        {
+          "name": "connect",
+          "at": 1792330043776,
+          "mode": "hold"
+        },
+        {
+          "name": "libraries",
+          "at": 1792330052598,
+          "mode": "hold"
+        }
+      ],
+      "held": [
+        "libraries",
+        "libraries"
+      ],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 1,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": null,
+      "position": null
+    },
+    {
+      "name": "account-connect-failure",
+      "rawSha256": "1c7975414bb9aacf1ac0c91986620ecffbe013d52cbdabdea3f18561b7c4facc",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 416,
+          "y": 667.78125,
+          "width": 440,
+          "height": 44,
+          "top": 667.78125,
+          "right": 856,
+          "bottom": 711.78125,
+          "left": 416
+        },
+        "insideDrawer": false,
+        "name": "Connect to Jellyfin",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "Use another account or server",
+          "focused": false,
+          "tabIndex": -1,
+          "rect": {
+            "x": 416,
+            "y": 161,
+            "width": 440,
+            "height": 93.59375,
+            "top": 161,
+            "right": 856,
+            "bottom": 254.59375,
+            "left": 416
+          }
+        }
+      ],
+      "libraries": [],
+      "notices": [
+        {
+          "rect": {
+            "x": 416,
+            "y": 595.984375,
+            "width": 440,
+            "height": 45.796875,
+            "top": 595.984375,
+            "right": 856,
+            "bottom": 641.78125,
+            "left": 416
+          },
+          "error": "connect unavailable.",
+          "button": null
+        }
+      ],
+      "headings": [
+        "Use another account or server"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792330006523,
+          "mode": "hold"
+        },
+        {
+          "name": "connect",
+          "at": 1792330022568,
+          "mode": "hold"
+        }
+      ],
+      "held": [
+        "libraries"
+      ],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 0,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": null,
+      "position": null
+    },
+    {
+      "name": "account-connect-pending",
+      "rawSha256": "4ef0f9e9d419b7f48877f8e3e304eaa1016473a048b8a1a62407e9a1b56a0a08",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 416,
+          "y": 628.984375,
+          "width": 440,
+          "height": 44,
+          "top": 628.984375,
+          "right": 856,
+          "bottom": 672.984375,
+          "left": 416
+        },
+        "insideDrawer": false,
+        "name": "Connecting\u2026",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "Use another account or server",
+          "focused": false,
+          "tabIndex": -1,
+          "rect": {
+            "x": 416,
+            "y": 188,
+            "width": 440,
+            "height": 93.59375,
+            "top": 188,
+            "right": 856,
+            "bottom": 281.59375,
+            "left": 416
+          }
+        }
+      ],
+      "libraries": [],
+      "notices": [],
+      "headings": [
+        "Use another account or server"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792330006523,
+          "mode": "hold"
+        },
+        {
+          "name": "connect",
+          "at": 1792330022568,
+          "mode": "hold"
+        }
+      ],
+      "held": [
+        "libraries",
+        "connect"
+      ],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 0,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": null,
+      "position": null
+    },
+    {
+      "name": "account-connect-retry",
+      "rawSha256": "55037dba622831d1d1fb2a897a7e0fd5a97cf58d66acd715004b29372893acfd",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 416,
+          "y": 601.984375,
+          "width": 440,
+          "height": 44,
+          "top": 601.984375,
+          "right": 856,
+          "bottom": 645.984375,
+          "left": 416
+        },
+        "insideDrawer": false,
+        "name": "Connecting\u2026",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "Use another account or server",
+          "focused": false,
+          "tabIndex": -1,
+          "rect": {
+            "x": 416,
+            "y": 161,
+            "width": 440,
+            "height": 93.59375,
+            "top": 161,
+            "right": 856,
+            "bottom": 254.59375,
+            "left": 416
+          }
+        }
+      ],
+      "libraries": [],
+      "notices": [],
+      "headings": [
+        "Use another account or server"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792330006523,
+          "mode": "hold"
+        },
+        {
+          "name": "connect",
+          "at": 1792330022568,
+          "mode": "hold"
+        },
+        {
+          "name": "connect",
+          "at": 1792330043776,
+          "mode": "hold"
+        }
+      ],
+      "held": [
+        "libraries",
+        "connect"
+      ],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 0,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": null,
+      "position": null
+    },
+    {
+      "name": "account-empty",
+      "rawSha256": "ec7b9aab56c71ea4e4ad98302101327f19dc37699c77f5148902f7b588858dbc",
+      "focus": {
+        "tag": "H1",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 416,
+          "y": 188,
+          "width": 440,
+          "height": 46.796875,
+          "top": 188,
+          "right": 856,
+          "bottom": 234.796875,
+          "left": 416
+        },
+        "insideDrawer": false,
+        "name": "Choose your libraries",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "Choose your libraries",
+          "focused": true,
+          "tabIndex": -1,
+          "rect": {
+            "x": 416,
+            "y": 188,
+            "width": 440,
+            "height": 46.796875,
+            "top": 188,
+            "right": 856,
+            "bottom": 234.796875,
+            "left": 416
+          }
+        }
+      ],
+      "libraries": [],
+      "notices": [],
+      "headings": [
+        "Choose your libraries",
+        "No music libraries available"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792330006523,
+          "mode": "hold"
+        },
+        {
+          "name": "connect",
+          "at": 1792330022568,
+          "mode": "hold"
+        },
+        {
+          "name": "connect",
+          "at": 1792330043776,
+          "mode": "hold"
+        },
+        {
+          "name": "libraries",
+          "at": 1792330052598,
+          "mode": "hold"
+        }
+      ],
+      "held": [],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 1,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": null,
+      "position": null
+    },
+    {
+      "name": "account-save-tab-away",
+      "rawSha256": "950af3ed56dbbfb556c4f0a41a482e10d6ab5feacf0d8e3e1ed270d497e52618",
+      "focus": {
+        "tag": "BODY",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "top": 0,
+          "right": 1280,
+          "bottom": 720,
+          "left": 0
+        },
+        "insideDrawer": false,
+        "name": "document body",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "Choose your libraries",
+          "focused": false,
+          "tabIndex": -1,
+          "rect": {
+            "x": 420,
+            "y": 188,
+            "width": 440,
+            "height": 46.796875,
+            "top": 188,
+            "right": 860,
+            "bottom": 234.796875,
+            "left": 420
+          }
+        }
+      ],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": true
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "notices": [],
+      "headings": [
+        "Choose your libraries"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792330006523,
+          "mode": "hold"
+        },
+        {
+          "name": "connect",
+          "at": 1792330022568,
+          "mode": "hold"
+        },
+        {
+          "name": "connect",
+          "at": 1792330043776,
+          "mode": "hold"
+        },
+        {
+          "name": "libraries",
+          "at": 1792330052598,
+          "mode": "hold"
+        },
+        {
+          "name": "libraries",
+          "at": 1792330081476,
+          "mode": "normal"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792330087360,
+          "mode": "hold"
+        }
+      ],
+      "held": [
+        "selectLibraries"
+      ],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 1,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": null,
+      "position": null
+    },
+    {
+      "name": "account-tab-complete",
+      "rawSha256": "6bb3d6c60a5b24da9593c5a32c0432206fca9150ca5970d7c08dc2f2e91c508e",
+      "focus": {
+        "tag": "BODY",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "top": 0,
+          "right": 1280,
+          "bottom": 720,
+          "left": 0
+        },
+        "insideDrawer": false,
+        "name": "document body",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "All songs",
+          "focused": false,
+          "tabIndex": -1,
+          "rect": {
+            "x": 238,
+            "y": 48.078125,
+            "width": 118.8671875,
+            "height": 36.3984375,
+            "top": 48.078125,
+            "right": 356.8671875,
+            "bottom": 84.4765625,
+            "left": 238
+          }
+        }
+      ],
+      "libraries": [],
+      "notices": [],
+      "headings": [
+        "All songs"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792330006523,
+          "mode": "hold"
+        },
+        {
+          "name": "connect",
+          "at": 1792330022568,
+          "mode": "hold"
+        },
+        {
+          "name": "connect",
+          "at": 1792330043776,
+          "mode": "hold"
+        },
+        {
+          "name": "libraries",
+          "at": 1792330052598,
+          "mode": "hold"
+        },
+        {
+          "name": "libraries",
+          "at": 1792330081476,
+          "mode": "normal"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792330087360,
+          "mode": "hold"
+        }
+      ],
+      "held": [],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 1,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "position": 0
+    },
+    {
+      "name": "before-auth-success",
+      "rawSha256": "7e5e843a77fa4803effa6d31d32237a0cbc33f2fd49bbc5ca11726ff458df69f",
+      "focus": {
+        "tag": "BODY",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "top": 0,
+          "right": 1280,
+          "bottom": 720,
+          "left": 0
+        },
+        "insideDrawer": false,
+        "name": "document body",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "Choose your libraries",
+          "focused": false,
+          "tabIndex": -1,
+          "rect": {
+            "x": 420,
+            "y": 188,
+            "width": 440,
+            "height": 46.796875,
+            "top": 188,
+            "right": 860,
+            "bottom": 234.796875,
+            "left": 420
+          }
+        }
+      ],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": false
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "notices": [],
+      "headings": [
+        "Choose your libraries"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792329585734,
+          "mode": "normal"
+        },
+        {
+          "name": "connect",
+          "at": 1792329657102,
+          "mode": "hold"
+        },
+        {
+          "name": "libraries",
+          "at": 1792329696992,
+          "mode": "normal"
+        }
+      ],
+      "held": [],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 1,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": null,
+      "position": null
+    },
+    {
+      "name": "before-connect-pending",
+      "rawSha256": "43b4a0404d27a63a4f308104e9f36ca34e261344271c9813c2dc26734541bcf7",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 416,
+          "y": 628.984375,
+          "width": 440,
+          "height": 44,
+          "top": 628.984375,
+          "right": 856,
+          "bottom": 672.984375,
+          "left": 416
+        },
+        "insideDrawer": false,
+        "name": "Connecting\u2026",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "Use another account or server",
+          "focused": false,
+          "tabIndex": -1,
+          "rect": {
+            "x": 416,
+            "y": 188,
+            "width": 440,
+            "height": 93.59375,
+            "top": 188,
+            "right": 856,
+            "bottom": 281.59375,
+            "left": 416
+          }
+        }
+      ],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": false
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "notices": [],
+      "headings": [
+        "Use another account or server"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792329585734,
+          "mode": "normal"
+        },
+        {
+          "name": "connect",
+          "at": 1792329657102,
+          "mode": "hold"
+        }
+      ],
+      "held": [
+        "connect"
+      ],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 0,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": null,
+      "position": null
+    },
+    {
+      "name": "before-libraries-success",
+      "rawSha256": "0a6a6730e08369659957ec33e93137f7383d3055ce69c03f09d2f997b71e3f92",
+      "focus": {
+        "tag": "BODY",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "top": 0,
+          "right": 1280,
+          "bottom": 720,
+          "left": 0
+        },
+        "insideDrawer": false,
+        "name": "document body",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "All songs",
+          "focused": false,
+          "tabIndex": -1,
+          "rect": {
+            "x": 238,
+            "y": 48.078125,
+            "width": 118.8671875,
+            "height": 36.3984375,
+            "top": 48.078125,
+            "right": 356.8671875,
+            "bottom": 84.4765625,
+            "left": 238
+          }
+        }
+      ],
+      "libraries": [],
+      "notices": [],
+      "headings": [
+        "All songs"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792329585734,
+          "mode": "normal"
+        },
+        {
+          "name": "connect",
+          "at": 1792329657102,
+          "mode": "hold"
+        },
+        {
+          "name": "libraries",
+          "at": 1792329696992,
+          "mode": "normal"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792329708430,
+          "mode": "normal"
+        },
+        {
+          "name": "libraries",
+          "at": 1792329708435,
+          "mode": "normal"
+        }
+      ],
+      "held": [],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 1,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "position": 12
+    },
+    {
+      "name": "final-auth-success",
+      "rawSha256": "86a70233320779fc50c803da61db312823e6f7e5e0e54ab767ab676c6bd37d47",
+      "focus": {
+        "tag": "H1",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 420,
+          "y": 188,
+          "width": 440,
+          "height": 46.796875,
+          "top": 188,
+          "right": 860,
+          "bottom": 234.796875,
+          "left": 420
+        },
+        "insideDrawer": false,
+        "name": "Choose your libraries",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "Choose your libraries",
+          "focused": true,
+          "tabIndex": -1,
+          "rect": {
+            "x": 420,
+            "y": 188,
+            "width": 440,
+            "height": 46.796875,
+            "top": 188,
+            "right": 860,
+            "bottom": 234.796875,
+            "left": 420
+          }
+        }
+      ],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": false
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "notices": [],
+      "headings": [
+        "Choose your libraries"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792329859602,
+          "mode": "normal"
+        },
+        {
+          "name": "connect",
+          "at": 1792329867996,
+          "mode": "hold"
+        },
+        {
+          "name": "libraries",
+          "at": 1792329876745,
+          "mode": "normal"
+        }
+      ],
+      "held": [],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 1,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": null,
+      "position": null
+    },
+    {
+      "name": "final-connect-pending",
+      "rawSha256": "15fc0b147a3efc0419bc6dcbca1f87c6f5ec245d7804905ac72ff86b9e2278e0",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 416,
+          "y": 628.984375,
+          "width": 440,
+          "height": 44,
+          "top": 628.984375,
+          "right": 856,
+          "bottom": 672.984375,
+          "left": 416
+        },
+        "insideDrawer": false,
+        "name": "Connecting\u2026",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "Use another account or server",
+          "focused": false,
+          "tabIndex": -1,
+          "rect": {
+            "x": 416,
+            "y": 188,
+            "width": 440,
+            "height": 93.59375,
+            "top": 188,
+            "right": 856,
+            "bottom": 281.59375,
+            "left": 416
+          }
+        }
+      ],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": false
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "notices": [],
+      "headings": [
+        "Use another account or server"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792329859602,
+          "mode": "normal"
+        },
+        {
+          "name": "connect",
+          "at": 1792329867996,
+          "mode": "hold"
+        }
+      ],
+      "held": [
+        "connect"
+      ],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 0,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": null,
+      "position": null
+    },
+    {
+      "name": "final-libraries-failure",
+      "rawSha256": "7b5aa3a138be786065b51721f7ceff0626d1d5a6680898c8813a6305a5792ef4",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 751.5703125,
+          "y": 543.484375,
+          "width": 104.4296875,
+          "height": 34,
+          "top": 543.484375,
+          "right": 856,
+          "bottom": 577.484375,
+          "left": 751.5703125
+        },
+        "insideDrawer": false,
+        "name": "Save libraries",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "Choose your libraries",
+          "focused": false,
+          "tabIndex": -1,
+          "rect": {
+            "x": 416,
+            "y": 188,
+            "width": 440,
+            "height": 46.796875,
+            "top": 188,
+            "right": 856,
+            "bottom": 234.796875,
+            "left": 416
+          }
+        }
+      ],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": true
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "notices": [
+        {
+          "rect": {
+            "x": 416,
+            "y": 477.6875,
+            "width": 440,
+            "height": 45.796875,
+            "top": 477.6875,
+            "right": 856,
+            "bottom": 523.484375,
+            "left": 416
+          },
+          "error": "selectLibraries unavailable.",
+          "button": null
+        }
+      ],
+      "headings": [
+        "Choose your libraries"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792329859602,
+          "mode": "normal"
+        },
+        {
+          "name": "connect",
+          "at": 1792329867996,
+          "mode": "hold"
+        },
+        {
+          "name": "libraries",
+          "at": 1792329876745,
+          "mode": "normal"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792329889415,
+          "mode": "hold"
+        }
+      ],
+      "held": [],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 1,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": null,
+      "position": null
+    },
+    {
+      "name": "final-libraries-pending",
+      "rawSha256": "274acc1cb0c138616872f1eae69ced6582806be3e09b13847ff800f78570ac7d",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 734.6015625,
+          "y": 481.6875,
+          "width": 125.3984375,
+          "height": 34,
+          "top": 481.6875,
+          "right": 860,
+          "bottom": 515.6875,
+          "left": 734.6015625
+        },
+        "insideDrawer": false,
+        "name": "Saving libraries\u2026",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "Choose your libraries",
+          "focused": false,
+          "tabIndex": -1,
+          "rect": {
+            "x": 420,
+            "y": 188,
+            "width": 440,
+            "height": 46.796875,
+            "top": 188,
+            "right": 860,
+            "bottom": 234.796875,
+            "left": 420
+          }
+        }
+      ],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": true
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "notices": [],
+      "headings": [
+        "Choose your libraries"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792329859602,
+          "mode": "normal"
+        },
+        {
+          "name": "connect",
+          "at": 1792329867996,
+          "mode": "hold"
+        },
+        {
+          "name": "libraries",
+          "at": 1792329876745,
+          "mode": "normal"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792329889415,
+          "mode": "hold"
+        }
+      ],
+      "held": [
+        "selectLibraries"
+      ],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 1,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": null,
+      "position": null
+    },
+    {
+      "name": "final-libraries-retry",
+      "rawSha256": "d5b9493301a2cf7f9b895adb567d068df085778bf6d1d734b078ac156500729b",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 734.6015625,
+          "y": 481.6875,
+          "width": 125.3984375,
+          "height": 34,
+          "top": 481.6875,
+          "right": 860,
+          "bottom": 515.6875,
+          "left": 734.6015625
+        },
+        "insideDrawer": false,
+        "name": "Saving libraries\u2026",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "Choose your libraries",
+          "focused": false,
+          "tabIndex": -1,
+          "rect": {
+            "x": 420,
+            "y": 188,
+            "width": 440,
+            "height": 46.796875,
+            "top": 188,
+            "right": 860,
+            "bottom": 234.796875,
+            "left": 420
+          }
+        }
+      ],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": true
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "notices": [],
+      "headings": [
+        "Choose your libraries"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792329859602,
+          "mode": "normal"
+        },
+        {
+          "name": "connect",
+          "at": 1792329867996,
+          "mode": "hold"
+        },
+        {
+          "name": "libraries",
+          "at": 1792329876745,
+          "mode": "normal"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792329889415,
+          "mode": "hold"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792329920535,
+          "mode": "hold"
+        }
+      ],
+      "held": [
+        "selectLibraries"
+      ],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 1,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": null,
+      "position": null
+    },
+    {
+      "name": "final-music-success",
+      "rawSha256": "f3a0162ccec69531082b26de6fa89eb37e21922bdcdc58e3d775acafc42a4efc",
+      "focus": {
+        "tag": "H1",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 48.078125,
+          "width": 118.8671875,
+          "height": 36.3984375,
+          "top": 48.078125,
+          "right": 356.8671875,
+          "bottom": 84.4765625,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "All songs",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "All songs",
+          "focused": true,
+          "tabIndex": -1,
+          "rect": {
+            "x": 238,
+            "y": 48.078125,
+            "width": 118.8671875,
+            "height": 36.3984375,
+            "top": 48.078125,
+            "right": 356.8671875,
+            "bottom": 84.4765625,
+            "left": 238
+          }
+        }
+      ],
+      "libraries": [],
+      "notices": [],
+      "headings": [
+        "All songs"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792329859602,
+          "mode": "normal"
+        },
+        {
+          "name": "connect",
+          "at": 1792329867996,
+          "mode": "hold"
+        },
+        {
+          "name": "libraries",
+          "at": 1792329876745,
+          "mode": "normal"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792329889415,
+          "mode": "hold"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792329920535,
+          "mode": "hold"
+        }
+      ],
+      "held": [],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 1,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "position": 12
+    },
+    {
+      "name": "final-settings-failure",
+      "rawSha256": "c00c86e430c3c25f15144a3c367e7ee0d29140d925e1d57f8422d26ba0cc55c9",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 853.5703125,
+          "y": 425.78125,
+          "width": 104.4296875,
+          "height": 34,
+          "top": 425.78125,
+          "right": 958,
+          "bottom": 459.78125,
+          "left": 853.5703125
+        },
+        "insideDrawer": false,
+        "name": "Save libraries",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "Settings",
+          "focused": false,
+          "tabIndex": -1,
+          "rect": {
+            "x": 238,
+            "y": -209.703125,
+            "width": 108.640625,
+            "height": 36.3984375,
+            "top": -209.703125,
+            "right": 346.640625,
+            "bottom": -173.3046875,
+            "left": 238
+          }
+        }
+      ],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": true
+        },
+        {
+          "name": "Recent music",
+          "checked": true
+        }
+      ],
+      "notices": [
+        {
+          "rect": {
+            "x": 238,
+            "y": 359.984375,
+            "width": 720,
+            "height": 45.796875,
+            "top": 359.984375,
+            "right": 958,
+            "bottom": 405.78125,
+            "left": 238
+          },
+          "error": "selectLibraries unavailable.",
+          "button": null
+        }
+      ],
+      "headings": [
+        "Settings",
+        "Account",
+        "Music libraries",
+        "DJ playback",
+        "DJ transitions",
+        "About"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792329859602,
+          "mode": "normal"
+        },
+        {
+          "name": "connect",
+          "at": 1792329867996,
+          "mode": "hold"
+        },
+        {
+          "name": "libraries",
+          "at": 1792329876745,
+          "mode": "normal"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792329889415,
+          "mode": "hold"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792329920535,
+          "mode": "hold"
+        },
+        {
+          "name": "libraries",
+          "at": 1792329968619,
+          "mode": "normal"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792329970008,
+          "mode": "hold"
+        }
+      ],
+      "held": [],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 1,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "position": 12
+    },
+    {
+      "name": "final-settings-pending",
+      "rawSha256": "36e2b48939d0fec04fd88be5bebdd170ff7e7737806b4f42aea0046ccf8d7295",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 832.6015625,
+          "y": 363.984375,
+          "width": 125.3984375,
+          "height": 34,
+          "top": 363.984375,
+          "right": 958,
+          "bottom": 397.984375,
+          "left": 832.6015625
+        },
+        "insideDrawer": false,
+        "name": "Saving libraries\u2026",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "Settings",
+          "focused": false,
+          "tabIndex": -1,
+          "rect": {
+            "x": 238,
+            "y": -209.703125,
+            "width": 108.640625,
+            "height": 36.3984375,
+            "top": -209.703125,
+            "right": 346.640625,
+            "bottom": -173.3046875,
+            "left": 238
+          }
+        }
+      ],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": true
+        },
+        {
+          "name": "Recent music",
+          "checked": true
+        }
+      ],
+      "notices": [],
+      "headings": [
+        "Settings",
+        "Account",
+        "Music libraries",
+        "DJ playback",
+        "DJ transitions",
+        "About"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792329859602,
+          "mode": "normal"
+        },
+        {
+          "name": "connect",
+          "at": 1792329867996,
+          "mode": "hold"
+        },
+        {
+          "name": "libraries",
+          "at": 1792329876745,
+          "mode": "normal"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792329889415,
+          "mode": "hold"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792329920535,
+          "mode": "hold"
+        },
+        {
+          "name": "libraries",
+          "at": 1792329968619,
+          "mode": "normal"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792329970008,
+          "mode": "hold"
+        }
+      ],
+      "held": [
+        "selectLibraries"
+      ],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 1,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "position": 12
+    },
+    {
+      "name": "final-settings-success",
+      "rawSha256": "6d71a9812cf20fd70ca8229ab3b31878834fa3edfd7d873c71e88023f9d76566",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 843.703125,
+          "y": 363.984375,
+          "width": 114.296875,
+          "height": 34,
+          "top": 363.984375,
+          "right": 958,
+          "bottom": 397.984375,
+          "left": 843.703125
+        },
+        "insideDrawer": false,
+        "name": "Libraries saved",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "Settings",
+          "focused": false,
+          "tabIndex": -1,
+          "rect": {
+            "x": 238,
+            "y": -209.703125,
+            "width": 108.640625,
+            "height": 36.3984375,
+            "top": -209.703125,
+            "right": 346.640625,
+            "bottom": -173.3046875,
+            "left": 238
+          }
+        }
+      ],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": true
+        },
+        {
+          "name": "Recent music",
+          "checked": true
+        }
+      ],
+      "notices": [],
+      "headings": [
+        "Settings",
+        "Account",
+        "Music libraries",
+        "DJ playback",
+        "DJ transitions",
+        "About"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792329859602,
+          "mode": "normal"
+        },
+        {
+          "name": "connect",
+          "at": 1792329867996,
+          "mode": "hold"
+        },
+        {
+          "name": "libraries",
+          "at": 1792329876745,
+          "mode": "normal"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792329889415,
+          "mode": "hold"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792329920535,
+          "mode": "hold"
+        },
+        {
+          "name": "libraries",
+          "at": 1792329968619,
+          "mode": "normal"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792329970008,
+          "mode": "hold"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792329996859,
+          "mode": "normal"
+        },
+        {
+          "name": "libraries",
+          "at": 1792329996865,
+          "mode": "normal"
+        }
+      ],
+      "held": [],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 1,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": "Play",
+      "position": 12
+    },
+    {
+      "name": "tab-connect-away",
+      "rawSha256": "2964c6ecbef9eaa5a0394dd436f04e297f91875146e25b5d88f6560d1aaa3e3f",
+      "focus": {
+        "tag": "MAIN",
+        "visible": true,
+        "outline": {
+          "style": "auto",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "top": 0,
+          "right": 1280,
+          "bottom": 720,
+          "left": 0
+        },
+        "insideDrawer": false,
+        "name": "connection page",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "Use another account or server",
+          "focused": false,
+          "tabIndex": -1,
+          "rect": {
+            "x": 416,
+            "y": 188,
+            "width": 440,
+            "height": 93.59375,
+            "top": 188,
+            "right": 856,
+            "bottom": 281.59375,
+            "left": 416
+          }
+        }
+      ],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": false
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "notices": [],
+      "headings": [
+        "Use another account or server"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792330127389,
+          "mode": "normal"
+        },
+        {
+          "name": "connect",
+          "at": 1792330151014,
+          "mode": "hold"
+        }
+      ],
+      "held": [
+        "connect"
+      ],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 0,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": null,
+      "position": null
+    },
+    {
+      "name": "tab-connect-complete",
+      "rawSha256": "36e951177c7c5ae0f58235182515d246ab73cf38469ce8640af82b1a87ca6902",
+      "focus": {
+        "tag": "BODY",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "top": 0,
+          "right": 1280,
+          "bottom": 720,
+          "left": 0
+        },
+        "insideDrawer": false,
+        "name": "document body",
+        "type": null,
+        "role": null
+      },
+      "connectionHeadings": [
+        {
+          "text": "Choose your libraries",
+          "focused": false,
+          "tabIndex": -1,
+          "rect": {
+            "x": 420,
+            "y": 188,
+            "width": 440,
+            "height": 46.796875,
+            "top": 188,
+            "right": 860,
+            "bottom": 234.796875,
+            "left": 420
+          }
+        }
+      ],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": false
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "notices": [],
+      "headings": [
+        "Choose your libraries"
+      ],
+      "calls": [
+        {
+          "name": "libraries",
+          "at": 1792330127389,
+          "mode": "normal"
+        },
+        {
+          "name": "connect",
+          "at": 1792330151014,
+          "mode": "hold"
+        },
+        {
+          "name": "libraries",
+          "at": 1792330160749,
+          "mode": "normal"
+        }
+      ],
+      "held": [],
+      "externalAttempts": 0,
+      "ownedAuthPosts": 1,
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "transport": null,
+      "position": null
+    }
+  ]
+}

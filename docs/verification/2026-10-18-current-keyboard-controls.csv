@@ -225,6 +225,6 @@ src/renderer/pages/Settings/Settings.page.tsx,30,button,,"descendant content, in
 src/renderer/pages/Settings/Settings.page.tsx,35,button,,"descendant content, inspect",{savingLibraries || disconnect.isPending},,native or enclosing handler
 src/renderer/pages/Settings/Settings.page.tsx,40,button,,"descendant content, inspect",,{disconnect.isPending || undefined},native or enclosing handler
 src/renderer/pages/Settings/Settings.page.tsx,40,button,,"descendant content, inspect",{savingLibraries},{disconnect.isPending || undefined},native or enclosing handler
-src/renderer/App.tsx,175,button,,"descendant content, inspect",,,native or enclosing handler
-src/renderer/App.tsx,175,button,,"descendant content, inspect",,,native or enclosing handler
-src/renderer/App.tsx,177,button,,{drawer === 'queue' ? 'Close queue' : 'Close song details'},,,native or enclosing handler
+src/renderer/App.tsx,190,button,,"descendant content, inspect",,,native or enclosing handler
+src/renderer/App.tsx,190,button,,"descendant content, inspect",,,native or enclosing handler
+src/renderer/App.tsx,192,button,,{drawer === 'queue' ? 'Close queue' : 'Close song details'},,,native or enclosing handler
