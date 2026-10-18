@@ -19,7 +19,7 @@ import './Stations.styles.css';
 
 export type RoomDraft = { scriptId: string; script: string } | null;
 type AudioCompletion = { requestId: string; takeId: string; reused: boolean; profileName?: string; reviewError?: string };
-export type RoomSetupDraft = { audioCompletion?: AudioCompletion; setup: ListeningRoom | null; moodDraft: string | null; newsInterests?: string; workflow?: { roomId: string; patch: Partial<WorkflowDraft> }; stopError?: string; operationError?: string; manualPreparation?: ManualPreparation; preparationCancelError?: string; tab?: string };
+export type RoomSetupDraft = { audioCompletion?: AudioCompletion; setup: ListeningRoom | null; moodDraft: string | null; newsInterests?: string; workflow?: { roomId: string; patch: Partial<WorkflowDraft> }; stopError?: string; operationError?: string; operationErrorTarget?: 'setup'; manualPreparation?: ManualPreparation; preparationCancelError?: string; tab?: string };
 type ScriptReplacement = { kind: 'load'; draft: NonNullable<RoomDraft>; reveal: boolean } | { kind: 'prepare' };
 type PreparationInput = { kind: 'script'; input: { profileId?: string; requestId: string; djId: string; sourceIds: string[] } } | { kind: 'audio'; input: { profileId?: string; requestId: string; scriptId: string; script: string; djId: string; newVariation?: boolean } };
 type Preparation = PreparationInput & { reconcile?: boolean };
@@ -37,10 +37,11 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   const newsRecoveryReady = newsRecovery.status.phase === 'ready';
   const client = useQueryClient();
   const configurationPending = useIsMutating({ mutationKey: ['roomConfiguration'] }) > 0;
+  const saveSubmission = useRef(false);
   const configurationMutation = {
     mutationKey: ['roomConfiguration'],
-    onMutate: () => setConfigDraft(current => ({ ...current, operationError: undefined })),
-    onError: (error: unknown) => setConfigDraft(current => ({ ...current, operationError: errorMessage(error) })),
+    onMutate: () => setConfigDraft(current => ({ ...current, operationError: undefined, operationErrorTarget: undefined })),
+    onError: (error: unknown) => setConfigDraft(current => ({ ...current, operationError: errorMessage(error), operationErrorTarget: undefined })),
   };
   const automation = useDJPlayback();
   const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()), enabled: newsRecoveryReady, refetchInterval: newsRecoveryReady ? 10000 : false });
@@ -139,7 +140,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
     ...(!activeProfile?.enabled ? [{ message: 'This profile is not available for preparation or playback.', action: { label: 'Review room options', run: () => { const options = document.querySelector<HTMLDetailsElement>('.room-advanced'); if (options) { options.open = true; options.querySelector('summary')?.focus(); options.scrollIntoView({ block: 'center' }); } } } }] : []),
   ];
   async function refresh() { await client.invalidateQueries({ queryKey: ['preparedNews'] }); }
-  const persist = useMutation({ ...configurationMutation, mutationFn: async (includeWorkflow: boolean) => {
+  const persist = useMutation({ ...configurationMutation, onError: undefined, mutationFn: async (includeWorkflow: boolean) => {
     const submittedDraft = configDraft;
     const latest = unwrap(await window.wave.getLocalState());
     if (latest.activeRoomProfileId !== activeProfile?.id) throw new Error('The active room changed before these settings were saved. Review the room and try again.');
@@ -197,7 +198,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
       if (missing) throw new Error(missing);
     }
     await persistSetup(true);
-  } });
+  }, onError: (error: unknown) => setConfigDraft(current => ({ ...current, operationError: errorMessage(error), operationErrorTarget: 'setup' })), onSettled: () => { saveSubmission.current = false; } });
   const source = useMutation({ mutationFn: async (url: string) => unwrap(await window.wave.openSource(url)) });
   const prepare = useMutation({
     meta: { aiOperation: true },
@@ -383,7 +384,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
       <p className="form-hint">Choose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.</p>
       <ErrorNotice error={configDraft.stopError ? new Error(configDraft.stopError) : null} />
       {profileNotice && <p className="form-hint room-profile-notice" role="status">{profileNotice}</p>}
-      {!newProfileOpen && !switchTarget && <ErrorNotice error={configDraft.operationError ? new Error(configDraft.operationError) : null} />}
+      {!newProfileOpen && !switchTarget && !(tab === 'settings' && configDraft.operationErrorTarget === 'setup') && <ErrorNotice error={configDraft.operationError ? new Error(configDraft.operationError) : null} />}
       <ConfigurationTabs id="room" label="News bucket and configuration" tabs={[{ id: 'bucket', label: 'News bucket' }, { id: 'settings', label: 'Settings' }, { id: 'saved', label: 'Saved audio' }]} value={tab} onChange={setTab} />
       {restoredInterruption && tab !== 'saved' && <div className="notice"><span role="status"><strong>A previous {restoredInterruption.kind === 'script' ? 'text' : 'audio'} preparation did not finish.</strong> {preparationOrigin(restoredInterruption)}. It was not restarted automatically. A provider request may have been charged. Review its saved status before starting a new attempt.</span><button aria-controls="preparation-history" onClick={reviewPreparationHistory}>Review preparation history</button></div>}
       {setupDirty && tab !== 'settings' && <div className="room-unsaved"><p>Unsaved room and preparation settings.</p><button onClick={() => setTab('settings')}>Review settings</button></div>}
@@ -406,7 +407,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
       <ErrorNotice error={library.error} retryRef={settingsRetryFocus.retryRef} retrying={library.isFetching} retry={() => settingsRetryFocus.retry(() => library.refetch())} />
       {preparationStatusUnknown && <p className="form-hint" role="status">Preparation activity must be confirmed before editing setup. Wait for status to load, or retry the failed status check.</p>}
       {state.data && <RoomSetup sources={sources} djs={state.data.djs} room={room} mood={mood} newsInterests={newsInterests} busy={setupBusy} setSetup={setSetup} setMoodDraft={setMoodDraft} setNewsInterests={setNewsInterests} configureSources={configureSources} configureDJ={configureDJ} />}
-      {activeProfile && <WorkflowPreferences room={activeProfile} value={workflowDraft as WorkflowDraft} dirty={setupDirty} disabled={setupBusy} saving={save.isPending} saveError={null} activationReady={workflowReady} statusLoading={workflowStatusLoading} statusError={workflowStatusError} profileStatusUnknown={state.isPending || !!state.error} issues={preparationIssues} onChange={updateWorkflow} onSave={() => save.mutate()} onResume={() => resume.mutate()} onTurnOff={() => turnOff.mutate({ roomId: activeProfile.id, name: activeProfile.name, workflow: configDraft.workflow })} stopping={turnOff.isPending} stopDisabled={configurationPending} onRetryStatus={() => { void aiStatus.refetch(); void elevenStatus.refetch(); if (xKeyRequired) void xStatus.refetch(); }} />}
+      {activeProfile && <WorkflowPreferences key={activeProfile.id} room={activeProfile} value={workflowDraft as WorkflowDraft} dirty={setupDirty} disabled={setupBusy} saving={save.isPending} saveError={configDraft.operationErrorTarget === 'setup' && configDraft.operationError ? new Error(configDraft.operationError) : null} activationReady={workflowReady} statusLoading={workflowStatusLoading} statusError={workflowStatusError} profileStatusUnknown={state.isPending || !!state.error} issues={preparationIssues} onChange={updateWorkflow} onSave={() => { if (saveSubmission.current || save.isPending || configurationPending) return; saveSubmission.current = true; save.mutate(); }} onResume={() => resume.mutate()} onTurnOff={() => turnOff.mutate({ roomId: activeProfile.id, name: activeProfile.name, workflow: configDraft.workflow })} stopping={turnOff.isPending} stopDisabled={configurationPending} onRetryStatus={() => { void aiStatus.refetch(); void elevenStatus.refetch(); if (xKeyRequired) void xStatus.refetch(); }} />}
       {setupDirty && <p className="form-hint">Save setup and preparation together to keep these choices in this room profile.</p>}
       {(!textKeyReady || !audioKeyReady) && <p className="form-hint">News preparation needs OpenAI and ElevenLabs keys. <button className="room-link" onClick={configureSettings}>Provider keys</button></p>}
       <details className="room-script room-testing-tools" ref={manualTools}><summary>Testing tools · Prepare a story manually</summary><div className="room-script-content" aria-labelledby="script-title"><div className="room-section-heading"><div><span className="eyebrow">Manual testing</span><h2 id="script-title">Prepare a story</h2></div><InfoHelp label="About manual preparation"><p>Use these tools to test a script or voice. Text and audio requests use your provider accounts and save completed results locally.</p><p>DJ playback only picks saved recordings. The news workflow prepares stories on its own schedule.</p></InfoHelp></div><p>Prepare text, review it, then generate an audio take.</p><p className="form-hint">Manual text preparation uses OpenAI outside automatic preparation limits. It can incur charges even when no recording is made.</p>
