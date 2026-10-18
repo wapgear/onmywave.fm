@@ -46,3 +46,5 @@
   .player-center { grid-column: 1 / -1; grid-row: 2; }
 }
 @media (prefers-reduced-motion: reduce) { .player-bar * { transition: none !important; animation: none !important; } }
+
+.radio-speaking button[aria-disabled="true"],.radio-speaking button[aria-disabled="true"]:hover{color:var(--muted);background:var(--surface);cursor:default}.radio-speaking button[aria-disabled="true"]:active{translate:0 0}

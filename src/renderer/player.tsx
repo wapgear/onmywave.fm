@@ -23,9 +23,10 @@ type PlayerState = {
   toggle(): void; next(): void; previous(): void; seek(seconds: number): void;
   setVolume(value: number): void; toggleShuffle(): void; cycleRepeat(): void;
   removeQueue(key: string): void; retry(): void;
-  newsPhase: 'idle' | NewsPhase | 'paused'; activeNewsId?: string;
+  newsPhase: 'idle' | NewsPhase | 'paused'; activeNewsId?: string; newsRunId?: number;
   newsLoading: boolean; activeNews?: NewsBreak; lastNews: HeardNews | null;
   scheduleNews(news: NewsBreak, duckVolume: number): Promise<void>; stopNews(): void;
+  controlNews(runId: number, action: 'toggle' | 'stop'): boolean;
 };
 const PlayerContext = createContext<PlayerState | null>(null);
 const trackLoadError = 'This track could not be played. Check your connection, then retry or skip.';
@@ -61,6 +62,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const [attempt, setAttempt] = useState(0);
   const [newsPhase, setNewsPhase] = useState<PlayerState['newsPhase']>('idle');
   const [activeNewsId, setActiveNewsId] = useState<string>();
+  const [newsRunId, setNewsRunId] = useState<number>();
   const [activeNews, setActiveNews] = useState<NewsBreak>();
   const [newsLoading, setNewsLoading] = useState(false);
   const [lastNews, setLastNews] = useState<HeardNews | null>(null);
@@ -122,6 +124,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     ++newsGeneration.current;
     newsActive.current = false;
     newsSchedule.current = null;
+    setNewsRunId(undefined);
     cancelPreload.current?.();
     cancelPreload.current = null;
     if (speech.current) {
@@ -622,6 +625,14 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       });
     } else { requestPlayback(false); element.pause(); }
   }, [stopNews, requestPlayback, load, continueAfterSong, musicCommand]);
+  const controlNews = (runId: number, action: 'toggle' | 'stop') => {
+    const planned = newsSchedule.current;
+    if (!planned || planned.token !== runId || planned.token !== newsGeneration.current) return false;
+    if (action === 'toggle') toggle();
+    else if (planned.trackEnded) continueAfterSong();
+    else stopNews();
+    return true;
+  };
   const previous = useCallback(() => {
     musicCommand();
     const state = live.current;
@@ -743,6 +754,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       if (audio.current!.ended || (settings.mode === 'over-music' && offset.current + audio.current!.currentTime > scheduledAt)) throw new Error('It is too late for this transition. Choose News bulletin in Settings > General > DJ transitions, or try the next song.');
       const planned: ScheduledNews = { token, key, duration: element.duration, bed: Math.max(0, Math.min(0.08, Number.isFinite(duckVolume) ? duckVolume : 0.05)), phase: 'waiting', trackEnded: false, settings, elapsed: 0, lastTick: performance.now(), startLevel: 1, speechAttempt: 0 };
       newsSchedule.current = planned;
+      setNewsRunId(token);
       setActiveNewsId(news.id);
       setNewsLoading(false);
       setNewsPhase('waiting');
@@ -781,7 +793,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   return <PlayerContext.Provider value={{
     queue, current, currentKey, playing, requestedPlaying, busy, position, duration, error, volume, shuffle, repeat, completedSongs,
     optionsError, retryOptions: () => setOptionsSaveAttempt(value => value + 1),
-    newsPhase, activeNewsId, newsLoading, activeNews, lastNews, scheduleNews, stopNews: () => { const ended = newsSchedule.current?.trackEnded; if (ended) continueAfterSong(); else stopNews(); },
+    newsPhase, activeNewsId, newsRunId, newsLoading, activeNews, lastNews, scheduleNews, stopNews: () => { const ended = newsSchedule.current?.trackEnded; if (ended) continueAfterSong(); else stopNews(); }, controlNews,
     canRetry: !!current || !!restore || !!error,
     musicCommandRevision, getMusicCommandRevision, pauseForPreview: () => { if (playIntent.current) toggle('preview'); },
     play, playQueueEntry: key => {

@@ -1,0 +1,4956 @@
+{
+  "date": "2026-10-18",
+  "scope": "Partial Q06 DJ popover and break controls; acceptance dispositions unchanged.",
+  "baseline": {
+    "snapshots": [
+      {
+        "name": "before-enable-failure",
+        "rawSha256": "16bcc7a8836b21fb9a04bfbc4441a29cf1b3deae9720548e5eeca5e421f7a265",
+        "focus": {
+          "tag": "BODY",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 720,
+            "top": 0,
+            "right": 1280,
+            "bottom": 720,
+            "left": 0
+          },
+          "insideDrawer": false,
+          "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedAll songsYour Jellyfin libraryGenreAny genreAny genreJazzRockTagAny tagAny tagArchiveLiveStudioSortDate addedDate addedTitleArtistAlbumYearNewest first#TitleAlbumActions1Song 10000Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details2Song 09999Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details3Song 09998Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details4Song 09997Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details5Song 09996Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details6Song 09995Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details7Song 09994Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details8Song 09993Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details9Song 09992Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details10Song 09991Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details11Song 09990Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details12Song 09989Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details13Song 09988Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details14Song 09987Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details15Song 09986Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details80 of 10,000 songs loadedLoad more songsSong 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJsaveDJPlayback unavailable.Automatic news preparation \u00b7 My roomPreparation paused. Fixture prior preparation failure. Preparation stays paused until you resume it in News settings.Open News bucketQuick configurationNews profileChoose a news profileMy roomEvening profileFixture host \u00b7 Fixture feedDJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+          "type": null,
+          "role": null
+        }
+      },
+      {
+        "name": "before-enable-pending",
+        "rawSha256": "75f1a4f38901908716e4cbc52169f5bbe5c0900320f1975dba817a08fed351a5",
+        "focus": {
+          "tag": "BODY",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 720,
+            "top": 0,
+            "right": 1280,
+            "bottom": 720,
+            "left": 0
+          },
+          "insideDrawer": false,
+          "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedAll songsYour Jellyfin libraryGenreAny genreAny genreJazzRockTagAny tagAny tagArchiveLiveStudioSortDate addedDate addedTitleArtistAlbumYearNewest first#TitleAlbumActions1Song 10000Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details2Song 09999Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details3Song 09998Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details4Song 09997Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details5Song 09996Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details6Song 09995Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details7Song 09994Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details8Song 09993Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details9Song 09992Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details10Song 09991Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details11Song 09990Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details12Song 09989Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details13Song 09988Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details14Song 09987Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details15Song 09986Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details80 of 10,000 songs loadedLoad more songsSong 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparation \u00b7 My roomPreparation paused. Fixture prior preparation failure. Preparation stays paused until you resume it in News settings.Open News bucketQuick configurationNews profileChoose a news profileMy roomEvening profileFixture host \u00b7 Fixture feedDJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+          "type": null,
+          "role": null
+        }
+      },
+      {
+        "name": "before-player-cancel-terminal",
+        "rawSha256": "50aeaa73774f69ab5cd5ba8ce5c0ed1876e58463591912caf6590666303567b4",
+        "focus": {
+          "tag": "BODY",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 720,
+            "top": 0,
+            "right": 1280,
+            "bottom": 720,
+            "left": 0
+          },
+          "insideDrawer": false,
+          "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedNews bucketSetup profileMy room \u00b7 ActiveEvening profileSave as newAdvanced room optionsMake this profile available for DJ playback and preparationChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.News bucketSettingsSaved audioYour radioWhat your DJ will saySee what is ready to hear, what was prepared, and where each story came from.DJ playback is offPlayback is off. The ready queue below remains available for this profile.My roomAutomatic news preparationNews settingsPreparation paused. Fixture prior preparation failure. Preparation stays paused until you resume it in News settings.Scheduled checks started today0 / 8Automatic recordings saved today0 / 3Ready for this profile0Only scheduled preparation is counted for this profile in your Mac's local day. Checks can use paid text generation even when no recording is made.No scheduled check has been recorded for this profile yet.PlaybackNext DJ breakAutomatic DJ playback is offStories prepared for this profile stay visible in its ready queue below.Saved newsReady for My room0 recordingsThese recordings match your current setup and are fresh enough to play. Older and already heard stories stay out. The DJ chooses one when a break is due.No fresh matching recordings are ready for this profile. Set up news preparationIn preparationDrafts for My room0No drafts are waiting for audio.Article historyReviewed across all profiles0 storiesReviewed stories are excluded from future news selection in every profile.No stories have been reviewed yet.Manual preparation \u00b7 My roomAudio preparation finished. Review the saved take below.News sources and hostNews sourcesManage sourcesFixture feedNews interests \u00b7 OptionalDJFixture hostChoose a DJFixture hostManage DJsMoodCuriousSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.Automatic news preparationPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running. Automatically prepare newsCheck sources every1 hour3 hours6 hoursNews selectionMajor developments onlyRelevant storiesMaximum automatic recordings per dayUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.Saving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.Save setupTurn off automatic preparationTakes effect immediately and asks this profile's automatic check to stop. Other unsaved edits stay here. A provider request already sent may still complete.Preparation paused. Fixture prior preparation failure. Preparation stays paused until you resume it in News settings.Resume preparationTesting tools \u00b7 Prepare a story manuallyManual testingPrepare a storyPrepare text, review it, then generate an audio take.Manual text preparation uses OpenAI outside automatic preparation limits. It can incur charges even when no recording is made.Prepare news textSaved draftFixture host \u00b7 10/18/2026, 1:36:01 PMFixture host \u00b7 10/18/2026, 1:36:01 PMReview the scriptA fixture story for native keyboard verification. Review this saved text before listening.13 / 55 words10/18/2026, 1:36:01 PMSources and preparation settingsPrepared for Fixture host \u00b7 CuriousNews interests: Any topics from selected sourcesManual audioGenerate a complete takeA new audio take uses ElevenLabs outside automatic preparation limits and can use credits or incur charges. Reusing or auditioning a saved take makes no provider request.Generate audio takeGenerate another takeSaved audio takesListen or choose a take for a DJ break.RefreshSelected takeFixture host \u00b7 10/18/2026, 1:36:02 PMElevenLabs \u00b7 JBFqnCBsd6RMkjVDRZzbSchedule DJ breakClear selectionThe break waits for the end of this song. Choose its placement and timing in Settings \u2192 General \u2192 DJ transitions. Pause keeps your place. Seeking follows the Keep the DJ setting; changing songs cancels this placement.Fixture host10/18/2026, 1:36:02 PM \u00b7 ElevenLabs \u00b7 JBFqnCBsd6RMkjVDRZzbSelectedListenDuration checked on listenSelectedA fixture story for native keyboard verification. Review this saved text before listening.Saved mood, settings, and sourcesMoodCuriousNews interestsAny topics from selected sourcesWriting DJFixture hostAudio modeleleven_v4DeliveryDefault deliveryVoiceJBFqnCBsd6RMkjVDRZzbLanguageEnglishPersonalityConciseConfigured feedsFixture feedLoad script into draftAI-generated voice \u00b7 Saved locallyAudio take saved \u00b7 My room. Review it to listen or choose it for a DJ break.Review saved takeSong 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparation \u00b7 Evening profilePreparation off. Saved recordings remain available. Enable news preparation in News settings.News bucket currently shows My room. Choose Evening profile in its Setup profile menu to edit the preparation shown here.Open News bucketQuick configurationNews profileChoose a news profileMy roomEvening profileFixture host \u00b7 Fixture feedDJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+          "type": null,
+          "role": null
+        }
+      },
+      {
+        "name": "before-pool-paused-error",
+        "rawSha256": "b00aae51c2f9c2b0e561dbe58b99668c6ec40ef7ba1e2f8ba8032ae7d9f53d28",
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 1012.9921875,
+            "y": 39.75,
+            "width": 34,
+            "height": 34,
+            "top": 39.75,
+            "right": 1046.9921875,
+            "bottom": 73.75,
+            "left": 1012.9921875
+          },
+          "insideDrawer": false,
+          "name": "Close DJ controls",
+          "type": null,
+          "role": null
+        }
+      },
+      {
+        "name": "before-pool-retry",
+        "rawSha256": "f3f73ea7770535a5f65c29fb0f6e2b57ee7e5149c091af619ae330f8dd38da4d",
+        "focus": {
+          "tag": "BODY",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 720,
+            "top": 0,
+            "right": 1280,
+            "bottom": 720,
+            "left": 0
+          },
+          "insideDrawer": false,
+          "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedAll songsYour Jellyfin libraryGenreAny genreAny genreJazzRockTagAny tagAny tagArchiveLiveStudioSortDate addedDate addedTitleArtistAlbumYearNewest first#TitleAlbumActions1Song 10000Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details2Song 09999Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details3Song 09998Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details4Song 09997Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details5Song 09996Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details6Song 09995Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details7Song 09994Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details8Song 09993Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details9Song 09992Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details10Song 09991Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details11Song 09990Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details12Song 09989Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details13Song 09988Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details14Song 09987Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details15Song 09986Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details80 of 10,000 songs loadedLoad more songsSong 00002Artist 0010:32\u22129:27DJWaiting for musicDJ breaksWaiting for musicDJ scheduleCheck for a news break every 1 song while enabled. Music continues when nothing qualifies.Disable DJNext break in 1 song. Skips do not count.Automatic news preparation \u00b7 My roomPreparation paused. Fixture prior preparation failure. Preparation stays paused until you resume it in News settings.Open News bucketQuick configurationNews profileChoose a news profileMy roomEvening profileFixture host \u00b7 Fixture feedDJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsThe DJ checks saved news when a break is due. An empty pool is skipped.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+          "type": null,
+          "role": null
+        }
+      },
+      {
+        "name": "before-profile-pending",
+        "rawSha256": "edb33653621aa979dd19f8a87980c5c15b8e5a249e52a8a4253b8a33017cdada",
+        "focus": {
+          "tag": "BODY",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 720,
+            "top": 0,
+            "right": 1280,
+            "bottom": 720,
+            "left": 0
+          },
+          "insideDrawer": false,
+          "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedAll songsYour Jellyfin libraryGenreAny genreAny genreJazzRockTagAny tagAny tagArchiveLiveStudioSortDate addedDate addedTitleArtistAlbumYearNewest first#TitleAlbumActions1Song 10000Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details2Song 09999Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details3Song 09998Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details4Song 09997Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details5Song 09996Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details6Song 09995Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details7Song 09994Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details8Song 09993Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details9Song 09992Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details10Song 09991Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details11Song 09990Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details12Song 09989Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details13Song 09988Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details14Song 09987Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details15Song 09986Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details80 of 10,000 songs loadedLoad more songsSong 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparation \u00b7 My roomPreparation paused. Fixture prior preparation failure. Preparation stays paused until you resume it in News settings.Open News bucketQuick configurationNews profileChoose a news profileMy roomEvening profileFixture host \u00b7 Fixture feedDJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+          "type": null,
+          "role": null
+        }
+      },
+      {
+        "name": "before-profile-success",
+        "rawSha256": "d472c4cb5647142f2291938d96b7a85d9f076df3d90980670b6558b4b95ba545",
+        "focus": {
+          "tag": "BODY",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 720,
+            "top": 0,
+            "right": 1280,
+            "bottom": 720,
+            "left": 0
+          },
+          "insideDrawer": false,
+          "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedAll songsYour Jellyfin libraryGenreAny genreAny genreJazzRockTagAny tagAny tagArchiveLiveStudioSortDate addedDate addedTitleArtistAlbumYearNewest first#TitleAlbumActions1Song 10000Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details2Song 09999Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details3Song 09998Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details4Song 09997Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details5Song 09996Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details6Song 09995Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details7Song 09994Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details8Song 09993Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details9Song 09992Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details10Song 09991Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details11Song 09990Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details12Song 09989Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details13Song 09988Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details14Song 09987Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details15Song 09986Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details80 of 10,000 songs loadedLoad more songsSong 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparation \u00b7 Evening profilePreparation off. Saved recordings remain available. Enable news preparation in News settings.News bucket currently shows My room. Choose Evening profile in its Setup profile menu to edit the preparation shown here.Open News bucketQuick configurationNews profileChoose a news profileMy roomEvening profileFixture host \u00b7 Fixture feedDJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+          "type": null,
+          "role": null
+        }
+      }
+    ],
+    "result": "Baseline enable/profile writes and player cancellation/pool retry drop focus to BODY."
+  },
+  "runtime": {
+    "viewport": [
+      1280,
+      720
+    ],
+    "appZoom": 1,
+    "input": "Native CUA only",
+    "renderer": "Production bundle",
+    "main": "Copied instrumented main/storage and disposable safeStorage/catalog",
+    "services": "Fixed text and bundled demo MP3 only for publishing saved take; actual execute/storage/index path",
+    "externalProviderAttempts": 0,
+    "httpWrites": 0,
+    "audio": "Muted; no audible quality claim"
+  },
+  "sourceHashes": {
+    "src/renderer/dj-playback.tsx": "d5fce424eb2f78b8fe546e00b6584b1f877981b42ae12eb531df9d93ae031824",
+    "src/renderer/player.tsx": "263aaf35508917e0af2a96b50cdb7881dbe238e77acd0982dae726f9e068ebb5",
+    "src/renderer/components/Player/DJPopover.component.tsx": "487640aca4cbd79a52ae99f9b03b5ecc57e1ea7da07a437dd9029657bba72d90",
+    "src/renderer/components/Player/Player.component.tsx": "bf2cb1f9ee4c8a4167ff7185571892b95e77a5d987e35a0ae94816eb5cb8884d",
+    "src/renderer/pages/Stations/Stations.page.tsx": "9630598a4aebfbbdb1b693ed6735ab855e8453d0668b824dbf21b5e52511bb34",
+    "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": "2acd8dc806c843d6578d0412be6650dc4e03da373c1d51af2850f890b68407a1",
+    "src/renderer/components/Player/Player.styles.css": "6301b0c615100c1010329f77c1f166ab8382395613c5c436fa0a02750590dd4e",
+    "src/renderer/components/Player/DJPopover.styles.css": "c3e8b63e467ab77914166ec35180dbffadd9bec9e51daf8a244c57aee9c9bd82"
+  },
+  "fixtureHashes": {
+    "capture.py": "83193e9b53ecf266123a48c24d779d6a69da2c59d5f232cf0e281c199eb0771e",
+    "server.mjs": "33b1beafab299247920af0bee234c85d500ecb207a2527bf3c25a2feb9dcc7da",
+    "edit-ui.py": "b96d6322c8c9e780cd81abb695e37d4befceeeb6705ea66351b5d37c410346a3",
+    "bootstrap.mjs": "049b716ef4dd261564bd639edc5a7436f2a5d2dd4697752e754046561a5267a6",
+    "observe.cjs": "8265bb7b04219be41d185fc890f3070dd7be82475088a9b193c62636d8916c4d",
+    "before-bootstrap.mjs": "ed0ba7d535563955e01801c53bb395d0cf5692e70154a417e0bfef66435fef70"
+  },
+  "checks": "Parsed native snapshot predicates pass for focus/visibility, one queued read, actual saved enable/disable/profile, held readback, terminal inert labels, zero provider/HTTP writes and terminal observer reports without page errors. Final production build/typecheck and full ESLint exit 0; diff whitespace check passes.",
+  "snapshots": [
+    {
+      "name": "final-enable-pending",
+      "phase": "before queued wording correction",
+      "rawSha256": "664a579d8001087333ad9564a75c84524357ec8918dc5b21574b7ae3062318f3",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 947.9453125,
+          "y": 100.5,
+          "width": 99.046875,
+          "height": 34,
+          "top": 100.5,
+          "right": 1046.9921875,
+          "bottom": 134.5,
+          "left": 947.9453125
+        },
+        "insideDrawer": false,
+        "name": "Enabling DJ\u2026",
+        "type": null,
+        "role": null
+      },
+      "overlays": [
+        {
+          "tag": "DIV",
+          "name": "DJ controls"
+        }
+      ],
+      "transport": "Play",
+      "playerNews": {},
+      "djSettings": {
+        "enabled": false,
+        "roomId": "default-room",
+        "everySongs": 3,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T11:47:14.793Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:47:14.793Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Enabling DJ\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 947.9453125,
+            "y": 100.5,
+            "width": 99.046875,
+            "height": 34,
+            "top": 100.5,
+            "right": 1046.9921875,
+            "bottom": 134.5,
+            "left": 947.9453125
+          }
+        },
+        {
+          "tag": "SELECT",
+          "name": "Choose a news profileMy roomEvening profile",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "value": "default-room",
+          "active": false,
+          "rect": {
+            "x": 736.9921875,
+            "y": 443.25,
+            "width": 310,
+            "height": 38.5,
+            "top": 443.25,
+            "right": 1046.9921875,
+            "bottom": 481.75,
+            "left": 736.9921875
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324035221,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324035221,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324036126,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324045449,
+            "mode": "hold",
+            "input": {
+              "enabled": true
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324052227,
+            "mode": "normal"
+          }
+        ],
+        "held": [
+          "saveDJPlayback"
+        ],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 0,
+        "fixtureSpeechResults": 0,
+        "readCallCounts": {
+          "getConnection": 1,
+          "getLocalState": 4,
+          "getNewsRecoveryStatus": 27,
+          "getPlaybackPreferences": 1,
+          "libraryFilters": 1,
+          "preparePlayback": 1,
+          "saveDJPlayback": 1,
+          "savePlayback": 6,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-enable-failure",
+      "phase": "before queued wording correction",
+      "rawSha256": "b895478fd224fe099ae57991c0ff8b63e027141e656b8297a6f6a9f8a063ec25",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 966.578125,
+          "y": 100.5,
+          "width": 80.4140625,
+          "height": 34,
+          "top": 100.5,
+          "right": 1046.9921875,
+          "bottom": 134.5,
+          "left": 966.578125
+        },
+        "insideDrawer": false,
+        "name": "Enable DJ",
+        "type": null,
+        "role": null
+      },
+      "overlays": [
+        {
+          "tag": "DIV",
+          "name": "DJ controls"
+        }
+      ],
+      "transport": "Play",
+      "playerNews": {},
+      "djSettings": {
+        "enabled": false,
+        "roomId": "default-room",
+        "everySongs": 3,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T11:47:14.793Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:47:14.793Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Enable DJ",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 966.578125,
+            "y": 100.5,
+            "width": 80.4140625,
+            "height": 34,
+            "top": 100.5,
+            "right": 1046.9921875,
+            "bottom": 134.5,
+            "left": 966.578125
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324035221,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324035221,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324036126,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324045449,
+            "mode": "hold",
+            "input": {
+              "enabled": true
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324052227,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324062230,
+            "mode": "normal"
+          }
+        ],
+        "held": [],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 0,
+        "fixtureSpeechResults": 0,
+        "readCallCounts": {
+          "getConnection": 1,
+          "getLocalState": 5,
+          "getNewsRecoveryStatus": 34,
+          "getPlaybackPreferences": 1,
+          "libraryFilters": 1,
+          "preparePlayback": 1,
+          "saveDJPlayback": 1,
+          "savePlayback": 7,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-enable-unconfirmed",
+      "phase": "before queued wording correction",
+      "rawSha256": "8610e7e1627e3c9b1674abf9de3a2574582674b942fde236e79e84712b53f193",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 963.28125,
+          "y": 100.5,
+          "width": 83.7109375,
+          "height": 34,
+          "top": 100.5,
+          "right": 1046.9921875,
+          "bottom": 134.5,
+          "left": 963.28125
+        },
+        "insideDrawer": false,
+        "name": "Disable DJ",
+        "type": null,
+        "role": null
+      },
+      "overlays": [
+        {
+          "tag": "DIV",
+          "name": "DJ controls"
+        }
+      ],
+      "transport": "Play",
+      "playerNews": {},
+      "djSettings": {
+        "enabled": true,
+        "roomId": "default-room",
+        "everySongs": 3,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T11:47:14.793Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:47:14.793Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Disable DJ",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 963.28125,
+            "y": 100.5,
+            "width": 83.7109375,
+            "height": 34,
+            "top": 100.5,
+            "right": 1046.9921875,
+            "bottom": 134.5,
+            "left": 963.28125
+          }
+        },
+        {
+          "tag": "SELECT",
+          "name": "Choose a news profileMy roomEvening profile",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "value": "default-room",
+          "active": false,
+          "rect": {
+            "x": 736.9921875,
+            "y": 548.84375,
+            "width": 310,
+            "height": 38.5,
+            "top": 548.84375,
+            "right": 1046.9921875,
+            "bottom": 587.34375,
+            "left": 736.9921875
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324035221,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324035221,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324036126,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324045449,
+            "mode": "hold",
+            "input": {
+              "enabled": true
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324052227,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324062230,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324069668,
+            "mode": "hold",
+            "input": {
+              "enabled": true
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324072233,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324078922,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324079928,
+            "mode": "fail"
+          }
+        ],
+        "held": [],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 0,
+        "fixtureSpeechResults": 0,
+        "readCallCounts": {
+          "getConnection": 1,
+          "getLocalState": 8,
+          "getNewsRecoveryStatus": 51,
+          "getPlaybackPreferences": 1,
+          "libraryFilters": 1,
+          "preparePlayback": 1,
+          "saveDJPlayback": 2,
+          "savePlayback": 10,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-disable-unconfirmed-pending",
+      "phase": "before queued wording correction",
+      "rawSha256": "77927ea8ff92e3dc44c44cc528605da42f7a9062f07447c7aeb6f724fb8ec873",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 944.6484375,
+          "y": 100.5,
+          "width": 102.34375,
+          "height": 34,
+          "top": 100.5,
+          "right": 1046.9921875,
+          "bottom": 134.5,
+          "left": 944.6484375
+        },
+        "insideDrawer": false,
+        "name": "Disabling DJ\u2026",
+        "type": null,
+        "role": null
+      },
+      "overlays": [
+        {
+          "tag": "DIV",
+          "name": "DJ controls"
+        }
+      ],
+      "transport": "Play",
+      "playerNews": {},
+      "djSettings": {
+        "enabled": true,
+        "roomId": "default-room",
+        "everySongs": 3,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T11:47:14.793Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:47:14.793Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Disabling DJ\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 944.6484375,
+            "y": 100.5,
+            "width": 102.34375,
+            "height": 34,
+            "top": 100.5,
+            "right": 1046.9921875,
+            "bottom": 134.5,
+            "left": 944.6484375
+          }
+        },
+        {
+          "tag": "SELECT",
+          "name": "Choose a news profileMy roomEvening profile",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "value": "default-room",
+          "active": false,
+          "rect": {
+            "x": 736.9921875,
+            "y": 572.234375,
+            "width": 310,
+            "height": 38.5,
+            "top": 572.234375,
+            "right": 1046.9921875,
+            "bottom": 610.734375,
+            "left": 736.9921875
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324035221,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324035221,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324036126,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324045449,
+            "mode": "hold",
+            "input": {
+              "enabled": true
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324052227,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324062230,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324069668,
+            "mode": "hold",
+            "input": {
+              "enabled": true
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324072233,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324078922,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324079928,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324089935,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324090945,
+            "mode": "fail"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324091188,
+            "mode": "hold",
+            "input": {
+              "enabled": false
+            }
+          }
+        ],
+        "held": [
+          "saveDJPlayback"
+        ],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 0,
+        "fixtureSpeechResults": 0,
+        "readCallCounts": {
+          "getConnection": 1,
+          "getLocalState": 10,
+          "getNewsRecoveryStatus": 66,
+          "getPlaybackPreferences": 1,
+          "libraryFilters": 1,
+          "preparePlayback": 1,
+          "saveDJPlayback": 3,
+          "savePlayback": 13,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-disable-unconfirmed",
+      "phase": "before queued wording correction",
+      "rawSha256": "489b06743164ef266a752d36d956797f85ca8e1d63c8b449af6f5be0fa63d12b",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 966.578125,
+          "y": 100.5,
+          "width": 80.4140625,
+          "height": 34,
+          "top": 100.5,
+          "right": 1046.9921875,
+          "bottom": 134.5,
+          "left": 966.578125
+        },
+        "insideDrawer": false,
+        "name": "Enable DJ",
+        "type": null,
+        "role": null
+      },
+      "overlays": [
+        {
+          "tag": "DIV",
+          "name": "DJ controls"
+        }
+      ],
+      "transport": "Play",
+      "playerNews": {},
+      "djSettings": {
+        "enabled": false,
+        "roomId": "default-room",
+        "everySongs": 3,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T11:47:14.793Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:47:14.793Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Enable DJ",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 966.578125,
+            "y": 100.5,
+            "width": 80.4140625,
+            "height": 34,
+            "top": 100.5,
+            "right": 1046.9921875,
+            "bottom": 134.5,
+            "left": 966.578125
+          }
+        },
+        {
+          "tag": "SELECT",
+          "name": "Choose a news profileMy roomEvening profile",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "value": "default-room",
+          "active": false,
+          "rect": {
+            "x": 736.9921875,
+            "y": 548.84375,
+            "width": 310,
+            "height": 38.5,
+            "top": 548.84375,
+            "right": 1046.9921875,
+            "bottom": 587.34375,
+            "left": 736.9921875
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324035221,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324035221,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324036126,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324045449,
+            "mode": "hold",
+            "input": {
+              "enabled": true
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324052227,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324062230,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324069668,
+            "mode": "hold",
+            "input": {
+              "enabled": true
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324072233,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324078922,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324079928,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324089935,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324090945,
+            "mode": "fail"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324091188,
+            "mode": "hold",
+            "input": {
+              "enabled": false
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324099903,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324100905,
+            "mode": "fail"
+          }
+        ],
+        "held": [],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 0,
+        "fixtureSpeechResults": 0,
+        "readCallCounts": {
+          "getConnection": 1,
+          "getLocalState": 12,
+          "getNewsRecoveryStatus": 73,
+          "getPlaybackPreferences": 1,
+          "libraryFilters": 1,
+          "preparePlayback": 1,
+          "saveDJPlayback": 3,
+          "savePlayback": 15,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-status-confirmed",
+      "phase": "before queued wording correction",
+      "rawSha256": "1a59065b5b489e6ae76f6e9c089f507a48f8a4dea7658c795c8d2b5ce238cbb2",
+      "focus": {
+        "tag": "SELECT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 736.9921875,
+          "y": 400.0625,
+          "width": 310,
+          "height": 38.5,
+          "top": 400.0625,
+          "right": 1046.9921875,
+          "bottom": 438.5625,
+          "left": 736.9921875
+        },
+        "insideDrawer": false,
+        "name": "Choose a news profileMy roomEvening profile",
+        "type": null,
+        "label": "News profile",
+        "role": null
+      },
+      "overlays": [
+        {
+          "tag": "DIV",
+          "name": "DJ controls"
+        }
+      ],
+      "transport": "Play",
+      "playerNews": {},
+      "djSettings": {
+        "enabled": false,
+        "roomId": "default-room",
+        "everySongs": 3,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T11:47:14.793Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:47:14.793Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "SELECT",
+          "name": "Choose a news profileMy roomEvening profile",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "value": "default-room",
+          "active": true,
+          "rect": {
+            "x": 736.9921875,
+            "y": 400.0625,
+            "width": 310,
+            "height": 38.5,
+            "top": 400.0625,
+            "right": 1046.9921875,
+            "bottom": 438.5625,
+            "left": 736.9921875
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324035221,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324035221,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324036126,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324045449,
+            "mode": "hold",
+            "input": {
+              "enabled": true
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324052227,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324062230,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324069668,
+            "mode": "hold",
+            "input": {
+              "enabled": true
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324072233,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324078922,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324079928,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324089935,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324090945,
+            "mode": "fail"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324091188,
+            "mode": "hold",
+            "input": {
+              "enabled": false
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324099903,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324100905,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324109697,
+            "mode": "normal"
+          }
+        ],
+        "held": [],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 0,
+        "fixtureSpeechResults": 0,
+        "readCallCounts": {
+          "getConnection": 1,
+          "getLocalState": 13,
+          "getNewsRecoveryStatus": 79,
+          "getPlaybackPreferences": 1,
+          "libraryFilters": 1,
+          "preparePlayback": 1,
+          "saveDJPlayback": 3,
+          "savePlayback": 16,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-profile-pending",
+      "phase": "before queued wording correction",
+      "rawSha256": "b2f3c305969d920a4e31c0d042a632fc3c3fef0f8e513e9d9e2888ab1454a823",
+      "focus": {
+        "tag": "SELECT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 736.9921875,
+          "y": 400.0625,
+          "width": 310,
+          "height": 38.5,
+          "top": 400.0625,
+          "right": 1046.9921875,
+          "bottom": 438.5625,
+          "left": 736.9921875
+        },
+        "insideDrawer": false,
+        "name": "Choose a news profileMy roomEvening profile",
+        "type": null,
+        "label": "News profile",
+        "role": null
+      },
+      "overlays": [
+        {
+          "tag": "DIV",
+          "name": "DJ controls"
+        }
+      ],
+      "transport": "Play",
+      "playerNews": {},
+      "djSettings": {
+        "enabled": false,
+        "roomId": "default-room",
+        "everySongs": 3,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T11:47:14.793Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:47:14.793Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Enable DJ",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false,
+          "rect": {
+            "x": 966.578125,
+            "y": 100.5,
+            "width": 80.4140625,
+            "height": 34,
+            "top": 100.5,
+            "right": 1046.9921875,
+            "bottom": 134.5,
+            "left": 966.578125
+          }
+        },
+        {
+          "tag": "SELECT",
+          "name": "Choose a news profileMy roomEvening profile",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "value": "default-room",
+          "active": true,
+          "rect": {
+            "x": 736.9921875,
+            "y": 400.0625,
+            "width": 310,
+            "height": 38.5,
+            "top": 400.0625,
+            "right": 1046.9921875,
+            "bottom": 438.5625,
+            "left": 736.9921875
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324035221,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324035221,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324036126,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324045449,
+            "mode": "hold",
+            "input": {
+              "enabled": true
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324052227,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324062230,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324069668,
+            "mode": "hold",
+            "input": {
+              "enabled": true
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324072233,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324078922,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324079928,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324089935,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324090945,
+            "mode": "fail"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324091188,
+            "mode": "hold",
+            "input": {
+              "enabled": false
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324099903,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324100905,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324109697,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324116028,
+            "mode": "hold",
+            "input": {
+              "roomId": "radio-two"
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324119701,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324129702,
+            "mode": "normal"
+          }
+        ],
+        "held": [
+          "saveDJPlayback"
+        ],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 0,
+        "fixtureSpeechResults": 0,
+        "readCallCounts": {
+          "getConnection": 1,
+          "getLocalState": 15,
+          "getNewsRecoveryStatus": 100,
+          "getPlaybackPreferences": 1,
+          "libraryFilters": 1,
+          "preparePlayback": 1,
+          "saveDJPlayback": 4,
+          "savePlayback": 20,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-profile-readback-pending",
+      "phase": "before queued wording correction",
+      "rawSha256": "4269b24e4810ae6f08aec56309fa756a7ee7ecda01924a3b98b4a763096a8f83",
+      "focus": {
+        "tag": "SELECT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 736.9921875,
+          "y": 400.0625,
+          "width": 310,
+          "height": 38.5,
+          "top": 400.0625,
+          "right": 1046.9921875,
+          "bottom": 438.5625,
+          "left": 736.9921875
+        },
+        "insideDrawer": false,
+        "name": "Choose a news profileMy roomEvening profile",
+        "type": null,
+        "label": "News profile",
+        "role": null
+      },
+      "overlays": [
+        {
+          "tag": "DIV",
+          "name": "DJ controls"
+        }
+      ],
+      "transport": "Play",
+      "playerNews": {},
+      "djSettings": {
+        "enabled": false,
+        "roomId": "radio-two",
+        "everySongs": 3,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T11:47:14.793Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:47:14.793Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Enable DJ",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false,
+          "rect": {
+            "x": 966.578125,
+            "y": 100.5,
+            "width": 80.4140625,
+            "height": 34,
+            "top": 100.5,
+            "right": 1046.9921875,
+            "bottom": 134.5,
+            "left": 966.578125
+          }
+        },
+        {
+          "tag": "SELECT",
+          "name": "Choose a news profileMy roomEvening profile",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "value": "default-room",
+          "active": true,
+          "rect": {
+            "x": 736.9921875,
+            "y": 400.0625,
+            "width": 310,
+            "height": 38.5,
+            "top": 400.0625,
+            "right": 1046.9921875,
+            "bottom": 438.5625,
+            "left": 736.9921875
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Checking\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": false,
+          "rect": {
+            "x": 938.9609375,
+            "y": 590.125,
+            "width": 92.03125,
+            "height": 34,
+            "top": 590.125,
+            "right": 1030.9921875,
+            "bottom": 624.125,
+            "left": 938.9609375
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324035221,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324035221,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324036126,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324045449,
+            "mode": "hold",
+            "input": {
+              "enabled": true
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324052227,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324062230,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324069668,
+            "mode": "hold",
+            "input": {
+              "enabled": true
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324072233,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324078922,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324079928,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324089935,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324090945,
+            "mode": "fail"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324091188,
+            "mode": "hold",
+            "input": {
+              "enabled": false
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324099903,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324100905,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324109697,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324116028,
+            "mode": "hold",
+            "input": {
+              "roomId": "radio-two"
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324119701,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324129702,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324134084,
+            "mode": "hold"
+          }
+        ],
+        "held": [
+          "getLocalState"
+        ],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 0,
+        "fixtureSpeechResults": 0,
+        "readCallCounts": {
+          "getConnection": 1,
+          "getLocalState": 16,
+          "getNewsRecoveryStatus": 112,
+          "getPlaybackPreferences": 1,
+          "libraryFilters": 1,
+          "preparePlayback": 1,
+          "saveDJPlayback": 4,
+          "savePlayback": 23,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-profile-closed",
+      "phase": "before queued wording correction",
+      "rawSha256": "2b71e20afc085b07b691d504605111e0f22fbd3fc7e8c616e32f6ebe65c49974",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 1004.109375,
+          "y": 644,
+          "width": 71.8828125,
+          "height": 32,
+          "top": 644,
+          "right": 1075.9921875,
+          "bottom": 676,
+          "left": 1004.109375
+        },
+        "insideDrawer": false,
+        "name": "DJ: Off. Open DJ controls",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "transport": "Play",
+      "playerNews": {},
+      "djSettings": {
+        "enabled": false,
+        "roomId": "radio-two",
+        "everySongs": 3,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T11:47:14.793Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:47:14.793Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Enable DJ",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          }
+        },
+        {
+          "tag": "SELECT",
+          "name": "Choose a news profileMy roomEvening profile",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "value": "default-room",
+          "active": false,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Checking\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": false,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324035221,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324035221,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324036126,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324045449,
+            "mode": "hold",
+            "input": {
+              "enabled": true
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324052227,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324062230,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324069668,
+            "mode": "hold",
+            "input": {
+              "enabled": true
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324072233,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324078922,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324079928,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324089935,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324090945,
+            "mode": "fail"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324091188,
+            "mode": "hold",
+            "input": {
+              "enabled": false
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324099903,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324100905,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324109697,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324116028,
+            "mode": "hold",
+            "input": {
+              "roomId": "radio-two"
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324119701,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324129702,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324134084,
+            "mode": "hold"
+          }
+        ],
+        "held": [
+          "getLocalState"
+        ],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 0,
+        "fixtureSpeechResults": 0,
+        "readCallCounts": {
+          "getConnection": 1,
+          "getLocalState": 16,
+          "getNewsRecoveryStatus": 117,
+          "getPlaybackPreferences": 1,
+          "libraryFilters": 1,
+          "preparePlayback": 1,
+          "saveDJPlayback": 4,
+          "savePlayback": 24,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-profile-confirmed-reopened",
+      "phase": "before queued wording correction",
+      "rawSha256": "b4adfdba5cf2f286f0cd8de465e7c19375fcab34da3e08481b81581c02d70033",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 1012.9921875,
+          "y": 39.75,
+          "width": 34,
+          "height": 34,
+          "top": 39.75,
+          "right": 1046.9921875,
+          "bottom": 73.75,
+          "left": 1012.9921875
+        },
+        "insideDrawer": false,
+        "name": "Close DJ controls",
+        "type": null,
+        "role": null
+      },
+      "overlays": [
+        {
+          "tag": "DIV",
+          "name": "DJ controls"
+        }
+      ],
+      "transport": "Play",
+      "playerNews": {},
+      "djSettings": {
+        "enabled": false,
+        "roomId": "radio-two",
+        "everySongs": 3,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T11:47:14.793Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:47:14.793Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Close DJ controls",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 1012.9921875,
+            "y": 39.75,
+            "width": 34,
+            "height": 34,
+            "top": 39.75,
+            "right": 1046.9921875,
+            "bottom": 73.75,
+            "left": 1012.9921875
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324035221,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324035221,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324036126,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324045449,
+            "mode": "hold",
+            "input": {
+              "enabled": true
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324052227,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324062230,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324069668,
+            "mode": "hold",
+            "input": {
+              "enabled": true
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324072233,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324078922,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324079928,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324089935,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324090945,
+            "mode": "fail"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324091188,
+            "mode": "hold",
+            "input": {
+              "enabled": false
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324099903,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324100905,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324109697,
+            "mode": "normal"
+          },
+          {
+            "name": "saveDJPlayback",
+            "at": 1792324116028,
+            "mode": "hold",
+            "input": {
+              "roomId": "radio-two"
+            }
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324119701,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324129702,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324134084,
+            "mode": "hold"
+          }
+        ],
+        "held": [],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 0,
+        "fixtureSpeechResults": 0,
+        "readCallCounts": {
+          "getConnection": 1,
+          "getLocalState": 16,
+          "getNewsRecoveryStatus": 125,
+          "getPlaybackPreferences": 1,
+          "libraryFilters": 1,
+          "preparePlayback": 1,
+          "saveDJPlayback": 4,
+          "savePlayback": 25,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-pool-queued",
+      "phase": "queued wording correction, before final focused terminal edge correction",
+      "rawSha256": "3e9aae637b67414c26336f4c1acd680081ddf534b3e0f92d398c1a58aad3b5f6",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 919.1484375,
+          "y": 255.875,
+          "width": 127.84375,
+          "height": 34,
+          "top": 255.875,
+          "right": 1046.9921875,
+          "bottom": 289.875,
+          "left": 919.1484375
+        },
+        "insideDrawer": false,
+        "name": "Pool check queued",
+        "type": null,
+        "role": null
+      },
+      "overlays": [
+        {
+          "tag": "DIV",
+          "name": "DJ controls"
+        }
+      ],
+      "transport": "Play",
+      "playerNews": {},
+      "djSettings": {
+        "enabled": true,
+        "roomId": "default-room",
+        "everySongs": 1,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T11:50:07.171Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:50:07.171Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Pool check queued",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 919.1484375,
+            "y": 255.875,
+            "width": 127.84375,
+            "height": 34,
+            "top": 255.875,
+            "right": 1046.9921875,
+            "bottom": 289.875,
+            "left": 919.1484375
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324207575,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324207575,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324208462,
+            "mode": "normal"
+          },
+          {
+            "name": "nextRoomNews",
+            "at": 1792324212586,
+            "mode": "fail"
+          }
+        ],
+        "held": [],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 0,
+        "fixtureSpeechResults": 0,
+        "readCallCounts": {
+          "getConnection": 1,
+          "getLocalState": 3,
+          "getNewsRecoveryStatus": 18,
+          "getPlaybackPreferences": 1,
+          "libraryFilters": 1,
+          "nextRoomNews": 1,
+          "preparePlayback": 1,
+          "savePlayback": 4,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-pool-checking-reopened",
+      "phase": "queued wording correction, before final focused terminal edge correction",
+      "rawSha256": "95cc28f89f8c45c2d0f6bcd5266be76f098e2b7abb230fc3cc69e54c2b21ac68",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1012.9921875,
+          "y": 39.75,
+          "width": 34,
+          "height": 34,
+          "top": 39.75,
+          "right": 1046.9921875,
+          "bottom": 73.75,
+          "left": 1012.9921875
+        },
+        "insideDrawer": false,
+        "name": "Close DJ controls",
+        "type": null,
+        "role": null
+      },
+      "overlays": [
+        {
+          "tag": "DIV",
+          "name": "DJ controls"
+        }
+      ],
+      "transport": "Pause",
+      "playerNews": {},
+      "djSettings": {
+        "enabled": true,
+        "roomId": "default-room",
+        "everySongs": 1,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T11:50:07.171Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:50:07.171Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Close DJ controls",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 1012.9921875,
+            "y": 39.75,
+            "width": 34,
+            "height": 34,
+            "top": 39.75,
+            "right": 1046.9921875,
+            "bottom": 73.75,
+            "left": 1012.9921875
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324207575,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324207575,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324208462,
+            "mode": "normal"
+          },
+          {
+            "name": "nextRoomNews",
+            "at": 1792324212586,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324224644,
+            "mode": "normal"
+          },
+          {
+            "name": "nextRoomNews",
+            "at": 1792324234586,
+            "mode": "hold"
+          }
+        ],
+        "held": [
+          "nextRoomNews"
+        ],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 0,
+        "fixtureSpeechResults": 0,
+        "readCallCounts": {
+          "getConnection": 1,
+          "getLocalState": 4,
+          "getNewsRecoveryStatus": 33,
+          "getPlaybackPreferences": 1,
+          "libraryFilters": 1,
+          "nextRoomNews": 2,
+          "preparePlayback": 1,
+          "savePlayback": 7,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-pool-empty",
+      "phase": "queued wording correction, before final focused terminal edge correction",
+      "rawSha256": "adb42fbdb0eb34d6f71d5f91b2bd57c2ee726551b6fffd8a6348723674453b7e",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1012.9921875,
+          "y": 39.75,
+          "width": 34,
+          "height": 34,
+          "top": 39.75,
+          "right": 1046.9921875,
+          "bottom": 73.75,
+          "left": 1012.9921875
+        },
+        "insideDrawer": false,
+        "name": "Close DJ controls",
+        "type": null,
+        "role": null
+      },
+      "overlays": [
+        {
+          "tag": "DIV",
+          "name": "DJ controls"
+        }
+      ],
+      "transport": "Pause",
+      "playerNews": {},
+      "djSettings": {
+        "enabled": true,
+        "roomId": "default-room",
+        "everySongs": 1,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T11:50:07.171Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:50:07.171Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Close DJ controls",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 1012.9921875,
+            "y": 39.75,
+            "width": 34,
+            "height": 34,
+            "top": 39.75,
+            "right": 1046.9921875,
+            "bottom": 73.75,
+            "left": 1012.9921875
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324207575,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324207575,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324208462,
+            "mode": "normal"
+          },
+          {
+            "name": "nextRoomNews",
+            "at": 1792324212586,
+            "mode": "fail"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324224644,
+            "mode": "normal"
+          },
+          {
+            "name": "nextRoomNews",
+            "at": 1792324234586,
+            "mode": "hold"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324245503,
+            "mode": "normal"
+          }
+        ],
+        "held": [],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 0,
+        "fixtureSpeechResults": 0,
+        "readCallCounts": {
+          "getConnection": 1,
+          "getLocalState": 5,
+          "getNewsRecoveryStatus": 40,
+          "getPlaybackPreferences": 1,
+          "libraryFilters": 1,
+          "nextRoomNews": 2,
+          "preparePlayback": 1,
+          "savePlayback": 8,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-player-cancel-terminal",
+      "phase": "queued wording correction, before final focused terminal edge correction",
+      "rawSha256": "58d0e9e1875ae3eaa81341af7eada72faac46c30b5c8be0d107c45ed902f9b01",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1142.25,
+          "y": 566,
+          "width": 99.75,
+          "height": 28,
+          "top": 566,
+          "right": 1242,
+          "bottom": 594,
+          "left": 1142.25
+        },
+        "insideDrawer": false,
+        "name": "Break cancelled",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "transport": "Play",
+      "playerNews": {
+        "text": "Scheduled DJ break cancelled.Break cancelled"
+      },
+      "djSettings": {
+        "enabled": false,
+        "roomId": "default-room",
+        "everySongs": 3,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsInterests": "",
+            "newsEnabled": true,
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:50:47.298Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Save setup",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Break cancelled",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 1142.25,
+            "y": 566,
+            "width": 99.75,
+            "height": 28,
+            "top": 566,
+            "right": 1242,
+            "bottom": 594,
+            "left": 1142.25
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324247642,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324247642,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324248569,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324262039,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324264872,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324264878,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324274881,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324278842,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324284891,
+            "mode": "normal"
+          }
+        ],
+        "held": [],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 1,
+        "fixtureSpeechResults": 1,
+        "readCallCounts": {
+          "getAiStatus": 1,
+          "getConnection": 1,
+          "getElevenLabsStatus": 1,
+          "getLocalState": 9,
+          "getNewsRecoveryStatus": 41,
+          "getPlaybackPreferences": 1,
+          "getPreparedNews": 6,
+          "libraryFilters": 1,
+          "prepareNewsScript": 1,
+          "preparePlayback": 1,
+          "renderNewsTake": 1,
+          "savePlayback": 8,
+          "saveWorkflowDraft": 1,
+          "selectNewsTake": 1,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-player-resumed",
+      "phase": "queued wording correction, before final focused terminal edge correction",
+      "rawSha256": "2553ff52671a3ffabdadf0c268675c7dc993a0f5b73e71bbcda646a9dad01e7e",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1105.25,
+          "y": 566,
+          "width": 43.1953125,
+          "height": 28,
+          "top": 566,
+          "right": 1148.4453125,
+          "bottom": 594,
+          "left": 1105.25
+        },
+        "insideDrawer": false,
+        "name": "Pause",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "transport": "Pause",
+      "playerNews": {
+        "text": "DJ break scheduled for the end of this song.PauseCancel break"
+      },
+      "djSettings": {
+        "enabled": false,
+        "roomId": "default-room",
+        "everySongs": 3,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsInterests": "",
+            "newsEnabled": true,
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:50:47.298Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Save setup",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Pause",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 1105.25,
+            "y": 566,
+            "width": 43.1953125,
+            "height": 28,
+            "top": 566,
+            "right": 1148.4453125,
+            "bottom": 594,
+            "left": 1105.25
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324247642,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324247642,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324248569,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324262039,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324264872,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324264878,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324274881,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324278842,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324284891,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324290889,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324294896,
+            "mode": "normal"
+          }
+        ],
+        "held": [],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 1,
+        "fixtureSpeechResults": 1,
+        "readCallCounts": {
+          "getAiStatus": 1,
+          "getConnection": 1,
+          "getElevenLabsStatus": 1,
+          "getLocalState": 11,
+          "getNewsRecoveryStatus": 51,
+          "getPlaybackPreferences": 1,
+          "getPreparedNews": 7,
+          "libraryFilters": 1,
+          "prepareNewsScript": 1,
+          "preparePlayback": 1,
+          "renderNewsTake": 1,
+          "savePlayback": 10,
+          "saveWorkflowDraft": 1,
+          "selectNewsTake": 1,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-player-paused",
+      "phase": "queued wording correction, before final focused terminal edge correction",
+      "rawSha256": "8170fdaa439ead2fa17eaf82f77185865aa71cbd0e1b1f194b70dd015dd5cf2d",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1094.390625,
+          "y": 566,
+          "width": 54.0546875,
+          "height": 28,
+          "top": 566,
+          "right": 1148.4453125,
+          "bottom": 594,
+          "left": 1094.390625
+        },
+        "insideDrawer": false,
+        "name": "Resume",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "transport": "Play",
+      "playerNews": {
+        "text": "DJ break scheduled for the end of this song.ResumeCancel break"
+      },
+      "djSettings": {
+        "enabled": false,
+        "roomId": "default-room",
+        "everySongs": 3,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsInterests": "",
+            "newsEnabled": true,
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:50:47.298Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Save setup",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Resume",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 1094.390625,
+            "y": 566,
+            "width": 54.0546875,
+            "height": 28,
+            "top": 566,
+            "right": 1148.4453125,
+            "bottom": 594,
+            "left": 1094.390625
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324247642,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324247642,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324248569,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324262039,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324264872,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324264878,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324274881,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324278842,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324284891,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324290889,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324294896,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324304899,
+            "mode": "normal"
+          }
+        ],
+        "held": [],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 1,
+        "fixtureSpeechResults": 1,
+        "readCallCounts": {
+          "getAiStatus": 1,
+          "getConnection": 1,
+          "getElevenLabsStatus": 1,
+          "getLocalState": 12,
+          "getNewsRecoveryStatus": 61,
+          "getPlaybackPreferences": 1,
+          "getPreparedNews": 8,
+          "libraryFilters": 1,
+          "prepareNewsScript": 1,
+          "preparePlayback": 1,
+          "renderNewsTake": 1,
+          "savePlayback": 12,
+          "saveWorkflowDraft": 1,
+          "selectNewsTake": 1,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-player-speech-paused",
+      "phase": "queued wording correction, before final focused terminal edge correction",
+      "rawSha256": "abab637dec6ffa5d2ac6803576f9db6dba432e41e8034fee4d42963b608622e8",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1124.796875,
+          "y": 566,
+          "width": 54.0546875,
+          "height": 28,
+          "top": 566,
+          "right": 1178.8515625,
+          "bottom": 594,
+          "left": 1124.796875
+        },
+        "insideDrawer": false,
+        "name": "Resume",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "transport": "Play",
+      "playerNews": {
+        "text": "DJ break paused. Use the player to resume.ResumeStop DJ"
+      },
+      "djSettings": {
+        "enabled": false,
+        "roomId": "default-room",
+        "everySongs": 3,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsInterests": "",
+            "newsEnabled": true,
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:50:47.298Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Save setup",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Resume",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 1124.796875,
+            "y": 566,
+            "width": 54.0546875,
+            "height": 28,
+            "top": 566,
+            "right": 1178.8515625,
+            "bottom": 594,
+            "left": 1124.796875
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324247642,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324247642,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324248569,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324262039,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324264872,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324264878,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324274881,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324278842,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324284891,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324290889,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324294896,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324304899,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324314903,
+            "mode": "normal"
+          }
+        ],
+        "held": [],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 1,
+        "fixtureSpeechResults": 1,
+        "readCallCounts": {
+          "getAiStatus": 1,
+          "getConnection": 1,
+          "getElevenLabsStatus": 1,
+          "getLocalState": 13,
+          "getNewsRecoveryStatus": 74,
+          "getPlaybackPreferences": 1,
+          "getPreparedNews": 10,
+          "libraryFilters": 1,
+          "prepareNewsScript": 1,
+          "preparePlayback": 1,
+          "renderNewsTake": 1,
+          "savePlayback": 15,
+          "saveWorkflowDraft": 1,
+          "selectNewsTake": 1,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-player-speech-resumed",
+      "phase": "queued wording correction, before final focused terminal edge correction",
+      "rawSha256": "371ac149133d5468e115d8fef8f6d75942e26bfd8a2b86d35fc788f6ccf21910",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1135.65625,
+          "y": 566,
+          "width": 43.1953125,
+          "height": 28,
+          "top": 566,
+          "right": 1178.8515625,
+          "bottom": 594,
+          "left": 1135.65625
+        },
+        "insideDrawer": false,
+        "name": "Pause",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "transport": "Pause",
+      "playerNews": {
+        "text": "Your DJ is on air.PauseStop DJ"
+      },
+      "djSettings": {
+        "enabled": false,
+        "roomId": "default-room",
+        "everySongs": 3,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsInterests": "",
+            "newsEnabled": true,
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:50:47.298Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Save setup",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Pause",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 1135.65625,
+            "y": 566,
+            "width": 43.1953125,
+            "height": 28,
+            "top": 566,
+            "right": 1178.8515625,
+            "bottom": 594,
+            "left": 1135.65625
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324247642,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324247642,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324248569,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324262039,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324264872,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324264878,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324274881,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324278842,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324284891,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324290889,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324294896,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324304899,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324314903,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324324907,
+            "mode": "normal"
+          }
+        ],
+        "held": [],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 1,
+        "fixtureSpeechResults": 1,
+        "readCallCounts": {
+          "getAiStatus": 1,
+          "getConnection": 1,
+          "getElevenLabsStatus": 1,
+          "getLocalState": 14,
+          "getNewsRecoveryStatus": 83,
+          "getPlaybackPreferences": 1,
+          "getPreparedNews": 11,
+          "libraryFilters": 1,
+          "prepareNewsScript": 1,
+          "preparePlayback": 1,
+          "renderNewsTake": 1,
+          "savePlayback": 17,
+          "saveWorkflowDraft": 1,
+          "selectNewsTake": 1,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-player-natural-end",
+      "phase": "queued wording correction, before final focused terminal edge correction",
+      "rawSha256": "77d7031c4cd6a60fd44c148060ab870e1443ebf701e1b7b78b6c5f81f7aee176",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1161.6640625,
+          "y": 566,
+          "width": 80.3359375,
+          "height": 28,
+          "top": 566,
+          "right": 1242,
+          "bottom": 594,
+          "left": 1161.6640625
+        },
+        "insideDrawer": false,
+        "name": "Break ended",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "transport": "Pause",
+      "playerNews": {
+        "text": "DJ break ended.Break ended"
+      },
+      "djSettings": {
+        "enabled": false,
+        "roomId": "default-room",
+        "everySongs": 3,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsInterests": "",
+            "newsEnabled": true,
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:50:47.298Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Save setup",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Break ended",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 1161.6640625,
+            "y": 566,
+            "width": 80.3359375,
+            "height": 28,
+            "top": 566,
+            "right": 1242,
+            "bottom": 594,
+            "left": 1161.6640625
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324247642,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324247642,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324248569,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324262039,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324264872,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324264878,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324274881,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324278842,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324284891,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324290889,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324294896,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324304899,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324314903,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324324907,
+            "mode": "normal"
+          }
+        ],
+        "held": [],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 1,
+        "fixtureSpeechResults": 1,
+        "readCallCounts": {
+          "getAiStatus": 1,
+          "getConnection": 1,
+          "getElevenLabsStatus": 1,
+          "getLocalState": 14,
+          "getNewsRecoveryStatus": 89,
+          "getPlaybackPreferences": 1,
+          "getPreparedNews": 11,
+          "libraryFilters": 1,
+          "prepareNewsScript": 1,
+          "preparePlayback": 2,
+          "renderNewsTake": 1,
+          "savePlayback": 19,
+          "saveWorkflowDraft": 1,
+          "selectNewsTake": 1,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-player-natural-end-repeat",
+      "phase": "queued wording correction, before final focused terminal edge correction",
+      "rawSha256": "d9b03b03f1fab416100822e97984c65c7bccd4247332cdcd484149a76a87e43d",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1161.6640625,
+          "y": 566,
+          "width": 80.3359375,
+          "height": 28,
+          "top": 566,
+          "right": 1242,
+          "bottom": 594,
+          "left": 1161.6640625
+        },
+        "insideDrawer": false,
+        "name": "Break ended",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "transport": "Pause",
+      "playerNews": {
+        "text": "DJ break ended.Break ended"
+      },
+      "djSettings": {
+        "enabled": false,
+        "roomId": "default-room",
+        "everySongs": 3,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsInterests": "",
+            "newsEnabled": true,
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:50:47.298Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Save setup",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Break ended",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 1161.6640625,
+            "y": 566,
+            "width": 80.3359375,
+            "height": 28,
+            "top": 566,
+            "right": 1242,
+            "bottom": 594,
+            "left": 1161.6640625
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324247642,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324247642,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324248569,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324262039,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324264872,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324264878,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324274881,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324278842,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324284891,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324290889,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324294896,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324304899,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324314903,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324324907,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324334919,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324344920,
+            "mode": "normal"
+          }
+        ],
+        "held": [],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 1,
+        "fixtureSpeechResults": 1,
+        "readCallCounts": {
+          "getAiStatus": 1,
+          "getConnection": 1,
+          "getElevenLabsStatus": 1,
+          "getLocalState": 16,
+          "getNewsRecoveryStatus": 102,
+          "getPlaybackPreferences": 1,
+          "getPreparedNews": 12,
+          "libraryFilters": 1,
+          "prepareNewsScript": 1,
+          "preparePlayback": 2,
+          "renderNewsTake": 1,
+          "savePlayback": 21,
+          "saveWorkflowDraft": 1,
+          "selectNewsTake": 1,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-saved-take-cancel-terminal",
+      "phase": "queued wording correction, before final focused terminal edge correction",
+      "rawSha256": "63a14acceb9bc3754b2f25069d90d974d3fd7ec3f74cc8f3bac3c47debcaab58",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 354.203125,
+          "y": 192.53125,
+          "width": 110.359375,
+          "height": 34,
+          "top": 192.53125,
+          "right": 464.5625,
+          "bottom": 226.53125,
+          "left": 354.203125
+        },
+        "insideDrawer": false,
+        "name": "Break stopped",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "transport": "Pause",
+      "playerNews": {},
+      "djSettings": {
+        "enabled": false,
+        "roomId": "default-room",
+        "everySongs": 3,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsInterests": "",
+            "newsEnabled": true,
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:50:47.298Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Save setup",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324247642,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324247642,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324248569,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324262039,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324264872,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324264878,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324274881,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324278842,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324284891,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324290889,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324294896,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324304899,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324314903,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324324907,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324334919,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324344920,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324352432,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324354923,
+            "mode": "normal"
+          }
+        ],
+        "held": [],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 1,
+        "fixtureSpeechResults": 1,
+        "readCallCounts": {
+          "getAiStatus": 1,
+          "getConnection": 1,
+          "getElevenLabsStatus": 1,
+          "getLocalState": 18,
+          "getNewsRecoveryStatus": 113,
+          "getPlaybackPreferences": 1,
+          "getPreparedNews": 14,
+          "libraryFilters": 1,
+          "prepareNewsScript": 1,
+          "preparePlayback": 2,
+          "renderNewsTake": 1,
+          "savePlayback": 23,
+          "saveWorkflowDraft": 1,
+          "selectNewsTake": 1,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    },
+    {
+      "name": "final-player-stop-terminal",
+      "phase": "queued wording correction, before final focused terminal edge correction",
+      "rawSha256": "9f20e0b1ee67dd89ba05330cdd9e1cd6ad188e2207806d4f084891405dd7410c",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1150.8359375,
+          "y": 566,
+          "width": 91.1640625,
+          "height": 28,
+          "top": 566,
+          "right": 1242,
+          "bottom": 594,
+          "left": 1150.8359375
+        },
+        "insideDrawer": false,
+        "name": "Break stopped",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "transport": "Play",
+      "playerNews": {
+        "text": "DJ break stopped.Break stopped"
+      },
+      "djSettings": {
+        "enabled": false,
+        "roomId": "default-room",
+        "everySongs": 3,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "automaticProfiles": [
+        {
+          "id": "default-room",
+          "workflow": {
+            "newsInterests": "",
+            "newsEnabled": true,
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        {
+          "id": "radio-two",
+          "workflow": {
+            "newsEnabled": false,
+            "nextNewsCheckAt": "2026-10-19T11:50:47.298Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Save setup",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": false,
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 0,
+            "height": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "left": 0
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Break stopped",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 1150.8359375,
+            "y": 566,
+            "width": 91.1640625,
+            "height": 28,
+            "top": 566,
+            "right": 1242,
+            "bottom": 594,
+            "left": 1150.8359375
+          }
+        }
+      ],
+      "main": {
+        "readCalls": [
+          {
+            "name": "getLocalState",
+            "at": 1792324247642,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324247642,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324248569,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324262039,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324264872,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324264878,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324274881,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324278842,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324284891,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324290889,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324294896,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324304899,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324314903,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324324907,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324334919,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324344920,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324352432,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324354923,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324364057,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324364933,
+            "mode": "normal"
+          },
+          {
+            "name": "getLocalState",
+            "at": 1792324374942,
+            "mode": "normal"
+          }
+        ],
+        "held": [],
+        "providers": 0,
+        "writes": 0,
+        "fixtureSources": 0,
+        "sourceHeld": 0,
+        "tickError": false,
+        "fixtureScriptResults": 1,
+        "fixtureSpeechResults": 1,
+        "readCallCounts": {
+          "getAiStatus": 1,
+          "getConnection": 1,
+          "getElevenLabsStatus": 1,
+          "getLocalState": 21,
+          "getNewsRecoveryStatus": 131,
+          "getPlaybackPreferences": 1,
+          "getPreparedNews": 15,
+          "libraryFilters": 1,
+          "prepareNewsScript": 1,
+          "preparePlayback": 2,
+          "renderNewsTake": 1,
+          "savePlayback": 27,
+          "saveWorkflowDraft": 1,
+          "selectNewsTake": 1,
+          "song": 4,
+          "songs": 1
+        }
+      }
+    }
+  ],
+  "limitations": [
+    "Enable/readback/profile cases precede the final queued-message-only correction; prior bundle bytes were not retained and no final-bundle rerun is claimed for those cases.",
+    "Same-take overlapping run protection has source review, without a dedicated native overlapping-run result.",
+    "Natural audio end is real decoded local demo audio with muted output. No listener, audible, VoiceOver, live server/provider, OS failure or platform matrix proof.",
+    "Strict scroll stability and deferred zoom/smaller windows are not checked.",
+    "All191 dispositions unchanged:189 active,2 Deferred,27 open comprising14 listener and13 other-proof. Q06 remains Review for a full conditional-control audit.",
+    "Final focused pool check-ended label and unavailable-profile retention are source-reviewed corrections after the runtime projections; reviewed and final bundle hashes are separate."
+  ],
+  "reviewedBundleHashes": {
+    "out/renderer/index.html": "6bdd2aa57563d72409b72dfb01ae6fd7c62f1f7a85807f82e8bd4939ffa0b4ae",
+    "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/demo/news-break.json": "fad8cf445ffac400596faa134c1ca357b28a6de86dec5e8389597b1277050c46",
+    "out/renderer/demo/transcript.md": "d64810c60028cc5d69ff10c156b07f8cf5d78cee42ae34e5e6cc0e6553f3fb44",
+    "out/renderer/demo/news-break.mp3": "718a35bc38f30397b7b43965db4a4bf5211d59c0a5f37c4e23ef38428a614f74",
+    "out/renderer/voice-previews/TX3LPaxmHKxFdv7VOQHJ.mp3": "f8018932908f1c3cfaed40a94b13fe4d498489f3fd1d37d3fa86984af721e40c",
+    "out/renderer/voice-previews/cgSgspJ2msm6clMCkdW9.mp3": "addac5c0fecee048baed846784c7f599fa0bcce636556e7a6bc63daa43ffee9f",
+    "out/renderer/voice-previews/JBFqnCBsd6RMkjVDRZzb.mp3": "ac1804ae2ee825f7414d819e2036369297bf9fc01a816b4f3d9c51e7357d32cf",
+    "out/renderer/voice-previews/manifest.json": "15811b8afa01189660b5da6e6e0f54958a4889b644d9ef18d1474e10acead7dc",
+    "out/renderer/voice-previews/EXAVITQu4vr4xnSDxMaL.mp3": "fef86e7100a94578dd2dcee7db9085fcf5c6f50b07aeceeabae05dd09b17a539",
+    "out/renderer/voice-previews/onwK4e9ZLuTAKqWW03F9.mp3": "9c91149960d8c492f19a7d53522af8a4597b490e90f0fe8dd7022653c9824c52",
+    "out/renderer/voice-previews/cjVigY5qzO86Huf0OWal.mp3": "3f485d54b0932999ab76225e4af338b37c2becac438c8595023bc13984bfc8e5",
+    "out/renderer/voice-previews/FGY2WhTYpPnrIDTdsKH5.mp3": "97fc724a7c41b0c02884aec975e2e4a749daabb1fc57a8229b34e8180e1fe418",
+    "out/renderer/assets/inter-cyrillic-ext-500-normal-BmqWE9Dz.woff": "e250c05aebcf49971e0b25f476992dd463c28c0292ebb204d9db542fb5066ca7",
+    "out/renderer/assets/manrope-greek-600-normal-BoRV6lzK.woff2": "18d69aa241a76095c4c5f8c224abe6519ff60db3b4085e843d59fb4965a4eebd",
+    "out/renderer/assets/inter-cyrillic-500-normal-CxZf_p3X.woff": "5be18e0345781cb882a267798518553c0e915174fc70731ab5f085ca64ba1ebc",
+    "out/renderer/assets/inter-greek-500-normal-Xzm54t5V.woff": "86d55a4b1b9cbced7e61e76d5d44cf49d0bd1c814d3df2de67b7136ab4fdcece",
+    "out/renderer/assets/inter-greek-500-normal-BIZE56-Y.woff2": "cc197d79d33a3615a047baae85f4d1957f6f98b8898313658e160b1d519b1b6f",
+    "out/renderer/assets/inter-latin-500-normal-BL9OpVg8.woff": "9b42c108da48b5ed55a3072e815ffee2d271562e6c0dd6998910e8f9c09e0a3d",
+    "out/renderer/assets/index-C5hN824i.css": "2a6d2e39ea615c978477eb0d9eab67a7cbfd47b624038a15fb14f6787a166290",
+    "out/renderer/assets/inter-vietnamese-500-normal-mJboJaSs.woff": "18a4a09f751671cd8929d7c66e8fe7d820b511c36e51cf6047ffceab88eec4a4",
+    "out/renderer/assets/inter-latin-ext-500-normal-CV4jyFjo.woff2": "2c6fbc42d315528beb06c1096df45487bf4186c4b78b8111d12c9c951f8acca2",
+    "out/renderer/assets/manrope-latin-600-normal-BqgrALkZ.woff": "8d1f509774bca963fa02faf674678ce9244474306361ca2798583fa600346df6",
+    "out/renderer/assets/inter-vietnamese-400-normal-DMkecbls.woff2": "547ad9fdaeb0ae43487f4b8a02e47c36553c0c0cb73c8aa98f93b7b615f6b55d",
+    "out/renderer/assets/manrope-greek-600-normal-CF2i9ZRY.woff": "59fa49c299110657ee3dbc02beed32f5fda899423686058a0ce7e499851e6e7a",
+    "out/renderer/assets/manrope-vietnamese-600-normal-C1J5PCl_.woff2": "bce46331a74572cd723ddb8200a11c00e71370fad490f045564989527469aa3d",
+    "out/renderer/assets/inter-latin-ext-400-normal-77YHD8bZ.woff": "22ae8360fbad24d2af7c6c9898a346c881774dc87f7cf94bd262c48ad58d7116",
+    "out/renderer/assets/manrope-vietnamese-600-normal-lA7a_7Ok.woff": "628a1c849748530c6f7c02c18bdd3191bc19264e20ad2308a8a954605cdb620b",
+    "out/renderer/assets/inter-greek-ext-500-normal-2j5mBUwD.woff": "c85d11bde719108cc9a4f6f5b008087f6c36493b47395580d4f5336182b0f0c7",
+    "out/renderer/assets/manrope-cyrillic-600-normal-DvRl3Mj-.woff2": "80b86efbef1c9fb66557cc4cc7b6db42db2fd631f1a9b8735f3bbefbb5128799",
+    "out/renderer/assets/inter-greek-ext-500-normal-C4iEst2y.woff2": "75a9ec9383a3b7a7bf7cfb94f64edf38d9cfdc5f7ffa0cbed2733627a6e4426d",
+    "out/renderer/assets/inter-cyrillic-ext-400-normal-DQukG94-.woff": "5cb2f1cc0936f89a42ceae34f5a5720248dc5b8114c12b1c33a7d2ef01a9b6b9",
+    "out/renderer/assets/inter-cyrillic-400-normal-HOLc17fK.woff": "6e441a6c94788318fa02b6d0a633aa29eebe27b69c6567eb1e59b4edc68ed70e",
+    "out/renderer/assets/inter-greek-400-normal-B4URO6DV.woff2": "c15ddd00a9927b56f5c655a41f976f79bd848a20cce91fc14227751872a1cc27",
+    "out/renderer/assets/inter-greek-ext-400-normal-DGGRlc-M.woff2": "eadedd9e13c2582430a9fb1519eb86152fdabb483a6f66d90f8d8a52e977a1b7",
+    "out/renderer/assets/inter-latin-ext-500-normal-BxGbmqWO.woff": "30d2903ce97f8a89ea0e9c083b42cb8bf97e7bbb5607e7f00352815f19cb0d5b",
+    "out/renderer/assets/inter-vietnamese-400-normal-Bbgyi5SW.woff": "54aa42d325bcdfd623ecb9eac4a5e3c6420c63d7b86e9d8545fb479f653beb57",
+    "out/renderer/assets/manrope-latin-600-normal-4f0koTD-.woff2": "f7ac6258da20ab7541939b59851155753d1d24f1b30cbcb949077a3faa3d1593",
+    "out/renderer/assets/manrope-latin-ext-600-normal-_gBojHdJ.woff2": "ff679412842fc3b5ce2dfad626db5261a4e663dcfd1bf1209bdfc61c2b2f37e6",
+    "out/renderer/assets/inter-cyrillic-500-normal-BasfLYem.woff2": "b77a86ec16aadc157f4a99e8898d71cd75ea264753d9bdf13f962f8c3988cbb0",
+    "out/renderer/assets/inter-cyrillic-ext-400-normal-BQZuk6qB.woff2": "ef572f9187a8be018d9d9c2c6b77c1f6cb2af4199f02fc16c292ea10ab25a2cc",
+    "out/renderer/assets/inter-greek-400-normal-q2sYcFCs.woff": "bdae9d28729e8c68587d5d54e216d771a40d7a6800e824586a6e2f570c2f10df",
+    "out/renderer/assets/inter-cyrillic-400-normal-obahsSVq.woff2": "f0bb586459ce8f09b238285040f17e3e9e9538b2c5a7aae0775194e33c36c3c3",
+    "out/renderer/assets/manrope-latin-ext-600-normal-u5Pl7hTU.woff": "80ff78480448f4c2c0f586cb016928554b8cd84b2b95dec5e5f7579274f757a0",
+    "out/renderer/assets/inter-cyrillic-ext-500-normal-B0yAr1jD.woff2": "1c2db92d3cd9b237ca7c9c07af556d542f28ded1db54cd4382cf776501c5291f",
+    "out/renderer/assets/index-bqBShOL-.js": "8c363a8e3ae60947dd708a9e748a4ade27b5c636282f23b79fe03f6ff7d22229",
+    "out/renderer/assets/inter-latin-ext-400-normal-C1nco2VV.woff2": "6744a7f509ebc6ab220a6cd4ea77e898adf014f03d88dcda5d45d8a9feefb4e9",
+    "out/renderer/assets/inter-latin-400-normal-CyCys3Eg.woff": "e20fa0b4fd2dd26e4d14b3ac3cc922509c3a63fa5e910e90c614544aa042dd45",
+    "out/renderer/assets/manrope-cyrillic-600-normal-It4mZcQk.woff": "716a12f36cf789e399e0ad0bd205e3d1c66e4de66fe0c7e94a59ab7f007fce89",
+    "out/renderer/assets/inter-vietnamese-500-normal-DOriooB6.woff2": "44e36aa5a8f12130029a29bb0e6695d0262b67446ce321e878b1fb56162b5de6",
+    "out/renderer/assets/inter-latin-400-normal-C38fXH4l.woff2": "8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc",
+    "out/renderer/assets/inter-greek-ext-400-normal-KugGGMne.woff": "4f2b6f92ddfece8812e79774d446218aa6e0773ff8c2d31130fe2bdc23bd22d0",
+    "out/renderer/assets/inter-latin-500-normal-Cerq10X2.woff2": "f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f"
+  },
+  "finalBundleHashes": {
+    "out/renderer/index.html": "bccaeffa3bb60a545efea24c9f449ee23853545ce228ce4aaf1838317cab14c7",
+    "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/demo/news-break.json": "fad8cf445ffac400596faa134c1ca357b28a6de86dec5e8389597b1277050c46",
+    "out/renderer/demo/transcript.md": "d64810c60028cc5d69ff10c156b07f8cf5d78cee42ae34e5e6cc0e6553f3fb44",
+    "out/renderer/demo/news-break.mp3": "718a35bc38f30397b7b43965db4a4bf5211d59c0a5f37c4e23ef38428a614f74",
+    "out/renderer/voice-previews/TX3LPaxmHKxFdv7VOQHJ.mp3": "f8018932908f1c3cfaed40a94b13fe4d498489f3fd1d37d3fa86984af721e40c",
+    "out/renderer/voice-previews/cgSgspJ2msm6clMCkdW9.mp3": "addac5c0fecee048baed846784c7f599fa0bcce636556e7a6bc63daa43ffee9f",
+    "out/renderer/voice-previews/JBFqnCBsd6RMkjVDRZzb.mp3": "ac1804ae2ee825f7414d819e2036369297bf9fc01a816b4f3d9c51e7357d32cf",
+    "out/renderer/voice-previews/manifest.json": "15811b8afa01189660b5da6e6e0f54958a4889b644d9ef18d1474e10acead7dc",
+    "out/renderer/voice-previews/EXAVITQu4vr4xnSDxMaL.mp3": "fef86e7100a94578dd2dcee7db9085fcf5c6f50b07aeceeabae05dd09b17a539",
+    "out/renderer/voice-previews/onwK4e9ZLuTAKqWW03F9.mp3": "9c91149960d8c492f19a7d53522af8a4597b490e90f0fe8dd7022653c9824c52",
+    "out/renderer/voice-previews/cjVigY5qzO86Huf0OWal.mp3": "3f485d54b0932999ab76225e4af338b37c2becac438c8595023bc13984bfc8e5",
+    "out/renderer/voice-previews/FGY2WhTYpPnrIDTdsKH5.mp3": "97fc724a7c41b0c02884aec975e2e4a749daabb1fc57a8229b34e8180e1fe418",
+    "out/renderer/assets/inter-cyrillic-ext-500-normal-BmqWE9Dz.woff": "e250c05aebcf49971e0b25f476992dd463c28c0292ebb204d9db542fb5066ca7",
+    "out/renderer/assets/manrope-greek-600-normal-BoRV6lzK.woff2": "18d69aa241a76095c4c5f8c224abe6519ff60db3b4085e843d59fb4965a4eebd",
+    "out/renderer/assets/inter-cyrillic-500-normal-CxZf_p3X.woff": "5be18e0345781cb882a267798518553c0e915174fc70731ab5f085ca64ba1ebc",
+    "out/renderer/assets/inter-greek-500-normal-Xzm54t5V.woff": "86d55a4b1b9cbced7e61e76d5d44cf49d0bd1c814d3df2de67b7136ab4fdcece",
+    "out/renderer/assets/inter-greek-500-normal-BIZE56-Y.woff2": "cc197d79d33a3615a047baae85f4d1957f6f98b8898313658e160b1d519b1b6f",
+    "out/renderer/assets/inter-latin-500-normal-BL9OpVg8.woff": "9b42c108da48b5ed55a3072e815ffee2d271562e6c0dd6998910e8f9c09e0a3d",
+    "out/renderer/assets/index-C5hN824i.css": "2a6d2e39ea615c978477eb0d9eab67a7cbfd47b624038a15fb14f6787a166290",
+    "out/renderer/assets/inter-vietnamese-500-normal-mJboJaSs.woff": "18a4a09f751671cd8929d7c66e8fe7d820b511c36e51cf6047ffceab88eec4a4",
+    "out/renderer/assets/inter-latin-ext-500-normal-CV4jyFjo.woff2": "2c6fbc42d315528beb06c1096df45487bf4186c4b78b8111d12c9c951f8acca2",
+    "out/renderer/assets/manrope-latin-600-normal-BqgrALkZ.woff": "8d1f509774bca963fa02faf674678ce9244474306361ca2798583fa600346df6",
+    "out/renderer/assets/inter-vietnamese-400-normal-DMkecbls.woff2": "547ad9fdaeb0ae43487f4b8a02e47c36553c0c0cb73c8aa98f93b7b615f6b55d",
+    "out/renderer/assets/manrope-greek-600-normal-CF2i9ZRY.woff": "59fa49c299110657ee3dbc02beed32f5fda899423686058a0ce7e499851e6e7a",
+    "out/renderer/assets/manrope-vietnamese-600-normal-C1J5PCl_.woff2": "bce46331a74572cd723ddb8200a11c00e71370fad490f045564989527469aa3d",
+    "out/renderer/assets/index-CkakqlEI.js": "6b1c1395f9d7b01bf25f9e3779c5eb2705295f1d26acc219463b04f169ea89ba",
+    "out/renderer/assets/inter-latin-ext-400-normal-77YHD8bZ.woff": "22ae8360fbad24d2af7c6c9898a346c881774dc87f7cf94bd262c48ad58d7116",
+    "out/renderer/assets/manrope-vietnamese-600-normal-lA7a_7Ok.woff": "628a1c849748530c6f7c02c18bdd3191bc19264e20ad2308a8a954605cdb620b",
+    "out/renderer/assets/inter-greek-ext-500-normal-2j5mBUwD.woff": "c85d11bde719108cc9a4f6f5b008087f6c36493b47395580d4f5336182b0f0c7",
+    "out/renderer/assets/manrope-cyrillic-600-normal-DvRl3Mj-.woff2": "80b86efbef1c9fb66557cc4cc7b6db42db2fd631f1a9b8735f3bbefbb5128799",
+    "out/renderer/assets/inter-greek-ext-500-normal-C4iEst2y.woff2": "75a9ec9383a3b7a7bf7cfb94f64edf38d9cfdc5f7ffa0cbed2733627a6e4426d",
+    "out/renderer/assets/inter-cyrillic-ext-400-normal-DQukG94-.woff": "5cb2f1cc0936f89a42ceae34f5a5720248dc5b8114c12b1c33a7d2ef01a9b6b9",
+    "out/renderer/assets/inter-cyrillic-400-normal-HOLc17fK.woff": "6e441a6c94788318fa02b6d0a633aa29eebe27b69c6567eb1e59b4edc68ed70e",
+    "out/renderer/assets/inter-greek-400-normal-B4URO6DV.woff2": "c15ddd00a9927b56f5c655a41f976f79bd848a20cce91fc14227751872a1cc27",
+    "out/renderer/assets/inter-greek-ext-400-normal-DGGRlc-M.woff2": "eadedd9e13c2582430a9fb1519eb86152fdabb483a6f66d90f8d8a52e977a1b7",
+    "out/renderer/assets/inter-latin-ext-500-normal-BxGbmqWO.woff": "30d2903ce97f8a89ea0e9c083b42cb8bf97e7bbb5607e7f00352815f19cb0d5b",
+    "out/renderer/assets/inter-vietnamese-400-normal-Bbgyi5SW.woff": "54aa42d325bcdfd623ecb9eac4a5e3c6420c63d7b86e9d8545fb479f653beb57",
+    "out/renderer/assets/manrope-latin-600-normal-4f0koTD-.woff2": "f7ac6258da20ab7541939b59851155753d1d24f1b30cbcb949077a3faa3d1593",
+    "out/renderer/assets/manrope-latin-ext-600-normal-_gBojHdJ.woff2": "ff679412842fc3b5ce2dfad626db5261a4e663dcfd1bf1209bdfc61c2b2f37e6",
+    "out/renderer/assets/inter-cyrillic-500-normal-BasfLYem.woff2": "b77a86ec16aadc157f4a99e8898d71cd75ea264753d9bdf13f962f8c3988cbb0",
+    "out/renderer/assets/inter-cyrillic-ext-400-normal-BQZuk6qB.woff2": "ef572f9187a8be018d9d9c2c6b77c1f6cb2af4199f02fc16c292ea10ab25a2cc",
+    "out/renderer/assets/inter-greek-400-normal-q2sYcFCs.woff": "bdae9d28729e8c68587d5d54e216d771a40d7a6800e824586a6e2f570c2f10df",
+    "out/renderer/assets/inter-cyrillic-400-normal-obahsSVq.woff2": "f0bb586459ce8f09b238285040f17e3e9e9538b2c5a7aae0775194e33c36c3c3",
+    "out/renderer/assets/manrope-latin-ext-600-normal-u5Pl7hTU.woff": "80ff78480448f4c2c0f586cb016928554b8cd84b2b95dec5e5f7579274f757a0",
+    "out/renderer/assets/inter-cyrillic-ext-500-normal-B0yAr1jD.woff2": "1c2db92d3cd9b237ca7c9c07af556d542f28ded1db54cd4382cf776501c5291f",
+    "out/renderer/assets/inter-latin-ext-400-normal-C1nco2VV.woff2": "6744a7f509ebc6ab220a6cd4ea77e898adf014f03d88dcda5d45d8a9feefb4e9",
+    "out/renderer/assets/inter-latin-400-normal-CyCys3Eg.woff": "e20fa0b4fd2dd26e4d14b3ac3cc922509c3a63fa5e910e90c614544aa042dd45",
+    "out/renderer/assets/manrope-cyrillic-600-normal-It4mZcQk.woff": "716a12f36cf789e399e0ad0bd205e3d1c66e4de66fe0c7e94a59ab7f007fce89",
+    "out/renderer/assets/inter-vietnamese-500-normal-DOriooB6.woff2": "44e36aa5a8f12130029a29bb0e6695d0262b67446ce321e878b1fb56162b5de6",
+    "out/renderer/assets/inter-latin-400-normal-C38fXH4l.woff2": "8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc",
+    "out/renderer/assets/inter-greek-ext-400-normal-KugGGMne.woff": "4f2b6f92ddfece8812e79774d446218aa6e0773ff8c2d31130fe2bdc23bd22d0",
+    "out/renderer/assets/inter-latin-500-normal-Cerq10X2.woff2": "f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f"
+  },
+  "processes": "All four observer handles confirmed exit 0. Owned catalog PID37261 verified by exact command and stopped."
+}
