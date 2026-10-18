@@ -21,8 +21,8 @@
     "STARStories": 27,
     "STARResultFragments": 265,
     "structuralLines": 47,
-    "semanticFragmentsReviewed": 79,
-    "proofFragmentsReviewed": 77,
+    "semanticFragmentsReviewed": 80,
+    "proofFragmentsReviewed": 78,
     "partitionComplete": true,
     "semanticDenominatorComplete": false,
     "overallScore": null,
@@ -38,7 +38,7 @@
     "listenerOpenChecks": 14,
     "otherProofOpenChecks": 11,
     "contextFragmentsReviewed": 1,
-    "canonicalReviewGroups": 16,
+    "canonicalReviewGroups": 17,
     "acceptedCanonicalGroups": 0
   },
   "STARContexts": [
@@ -718,7 +718,7 @@
   },
   "clauseLedger": {
     "file": "2026-10-18-requirement-clauses.csv",
-    "sha256": "7b15bbb95679fc4efa3b8eed86b4a4574791fd235baff1409ea40cffc2df98e6",
+    "sha256": "44ce5e7f1f90ba379d34490d1ce394e8db71818a9ff7be30ed4f65de474507ea",
     "columns": "Candidate navigation, semantic review and actual proof review are distinct. Empty evidence/canonical IDs do not establish completion."
   },
   "scopeReviews": [
@@ -758,6 +758,11 @@
       "file": "2026-10-19-core-music-obligations.json",
       "sha256": "f0c68482736426fd3627921a26a4f110b2fccf996bf6e6ea5470294b74953e78",
       "meaning": "Nine core-music canonical groups,52 exact fragments including all17 M5 result fragments;current source/dated evidence review only,no accepted groups."
+    },
+    {
+      "file": "2026-10-19-playlist-song-identity.json",
+      "sha256": "4a95e41aa9a21f2daad4eeb14b5546c6d9c6fbd43df3f0965a222dc5a8970434",
+      "meaning": "PLID01 exact duplicate-option clause,current contradiction/fix and8 service cases;native/live/full-M6 acceptance remains scoped."
     }
   ],
   "generatorMeaning": "Original mechanical partition generator only. Later deliberate semantic/proof annotations are authoritative and must be preserved; rerunning the original generator alone would discard them."
