@@ -780,5 +780,12 @@
       "meaning": "Eleven playback groups,94 new fragments plus retained VOL01 clauses and six whole STAR contexts;source/dated proof review and paired MediaSession decision only,no accepted groups."
     }
   ],
-  "generatorMeaning": "Original mechanical partition generator only. Later deliberate semantic/proof annotations are authoritative and must be preserved; rerunning the original generator alone would discard them."
+  "generatorMeaning": "Original mechanical partition generator only. Later deliberate semantic/proof annotations are authoritative and must be preserved; rerunning the original generator alone would discard them.",
+  "runtimeFollowUps": [
+    {
+      "file": "2026-10-19-current-radio-setup.json",
+      "sha256": "6b883b61dfb5f7a1f4291748bb27297a6a65050e7a06effef244101a0b14baec",
+      "meaning": "R2 controlled native ordinary setup with ongoing music, missing keys, retained drafts and explicit off-state save. No semantic counts or acceptance dispositions changed."
+    }
+  ]
 }

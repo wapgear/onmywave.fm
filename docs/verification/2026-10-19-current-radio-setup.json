@@ -1,0 +1,133 @@
+{
+  "date": "2026-10-19",
+  "baseCommit": "b5a6033a0c91b73f02a3857ddeecbd3cac17fa08",
+  "scope": "Current R2 ordinary setup journey with ongoing music and missing provider keys. Runtime follow-up only; no new semantic denominator or accepted checklist row.",
+  "method": {
+    "native": "Actual current main/storage, production renderer and preload in a disposable Electron process. Protected localhost connection and local state; no real account or media changes.",
+    "input": "CUA only for all UI input. Playwright launches/reloads/closes and passively observes DOM, Audio events, IPC and persisted state. 1280x720 at 100% zoom.",
+    "substitutions": "Local synthetic catalog and 40-second silent WAV; native media clock and natural repeat-one endings. Shared-key reader returns null, shared writes reject; external main fetches recorded and blocked. Output muted. No media time, rate, events or playback methods manipulated.",
+    "recordingCorrection": "Initial recorder reload raced initial navigation and exited failed before the journey. Excluded initial-failed-report.json; recorder then waited for All songs before installing passive observation and reload. No product patch."
+  },
+  "journey": [
+    "Play restored paused Song 00002; open News bucket settings.",
+    "Draft interests and mood; create RSS source Science desk; return to setup, retain draft and focus on Manage sources; select the source.",
+    "Create Quiet & warm from a predefined preset without generating a preview; return with draft and focus on Manage DJs; select host and six-hour cadence.",
+    "Visit Albums and return to News bucket settings; fields remain drafted and profile remains unsaved.",
+    "Explicit Save setup stores all choices with preparation off. Save stays focused and disabled after success.",
+    "Open News bucket tab; focus moves to that tab and both off states remain visible."
+  ],
+  "observations": {
+    "draftSurvivedSourceHostAndMusicNavigation": true,
+    "originalProfileUnchangedBeforeExplicitSave": true,
+    "saved": {
+      "source": "Science desk",
+      "host": "Quiet & warm",
+      "interests": "Science and astronomy",
+      "mood": "Calm and curious",
+      "everyHours": 6,
+      "preparationEnabled": false,
+      "djPlaybackEnabled": false
+    },
+    "workflowSaveCalls": 1,
+    "music": "All six snapshots show Pause transport and unpaused native audio. Same queue, index, volume and repeat mode; recorded pauses only occur at natural 40-second endings followed by repeat.",
+    "naturalEndings": 5,
+    "ipcNames": [
+      "albums",
+      "getAiStatus",
+      "getConnection",
+      "getDJVoicePreview",
+      "getElevenLabsStatus",
+      "getLocalState",
+      "getNewsRecoveryStatus",
+      "getPlaybackPreferences",
+      "getPreparedNews",
+      "getVoicePreview",
+      "libraryFilters",
+      "preparePlayback",
+      "saveDjs",
+      "saveNewsSources",
+      "savePlayback",
+      "saveWorkflowDraft",
+      "song",
+      "songs"
+    ],
+    "fetches": [
+      "http://127.0.0.1:5215/Audio/000000000000000000000000000003e9/stream",
+      "http://127.0.0.1:5215/Items/000000000000000000000000000186a0/Images/Primary",
+      "http://127.0.0.1:5215/Items/00000000000000000000000000018a86/Images/Primary",
+      "http://127.0.0.1:5215/Items/00000000000000000000000000018a87/Images/Primary",
+      "http://127.0.0.1:5215/Items/Filters",
+      "http://127.0.0.1:5215/Users/00000000000000000000000000000001/Items",
+      "http://127.0.0.1:5215/Users/00000000000000000000000000000001/Items/000000000000000000000000000003e9"
+    ],
+    "sourceFetches": 0,
+    "externalMainFetches": 0,
+    "rendererErrors": []
+  },
+  "requirementLinks": [
+    {
+      "id": "RAD-L092-result-01",
+      "proof": "Ongoing native playback through the recorded journey; no audible-quality claim."
+    },
+    {
+      "id": "RAD-L092-result-02",
+      "proof": "Interests, mood, selected source/host and cadence survive the observed navigation and persist only on explicit profile save."
+    },
+    {
+      "id": "RAD-L092-result-04",
+      "proof": "Successful Save retains focus; subsequent News bucket tab navigation wins. Pending/failure and other navigation variants not exercised here."
+    },
+    {
+      "id": "RAD-L092-result-07",
+      "proof": "Missing provider keys do not prevent this configured-but-off save. Other incomplete-field combinations not exercised."
+    },
+    {
+      "id": "RAD-L092-result-09",
+      "proof": "Both opt-ins remain off throughout this journey. Copy/switch and activation variants not exercised."
+    }
+  ],
+  "sourceSha256": {
+    "src/main/index.ts": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+    "src/main/storage.ts": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+    "src/main/news-workflow.ts": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+    "src/renderer/player.tsx": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+    "src/renderer/pages/Stations/components/RoomSetup.component.tsx": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": "0cd2699a1bc6131ebc898ae216f434223684746e209e275edd43008e56a191d1",
+    "out/renderer/index.html": "f5bd865b615d3cb18c1f2cc84924793c18318fc30e02e1fe91bf42fa8e362d41",
+    "out/preload/index.cjs": "9b78be58d4f9bd70fb5b6d3315d888ee9442cfbf09bfab2b2f902de015e902f2"
+  },
+  "fixtureSha256": {
+    "/private/tmp/radio-setup-current/build.mjs": "077f2422fbeb6ef37de52d78d25620808de54942ace4190b934d71e1c4065825",
+    "/private/tmp/radio-setup-current/bootstrap.mjs": "6eb711e2b4a8dc60cdff60bba0255f2972dd7105d780f7dff5762aac590d466f",
+    "/private/tmp/radio-setup-current/observe.cjs": "69bf9ac0477e3f577681325d6df517a935fe92b223737fe704c525b0ac0b9ccb",
+    "/private/tmp/radio-setup-current/server.mjs": "c189356e671f0762bf06f524e8684f6fd0f60d0f60d206cf241e0ea419d00b67",
+    "/private/tmp/radio-setup-current/out/main/index.js": "fd8b4dea42eed68136ed421305ecdc9e582f5fc548dc8ca8b75d1ed5abf54e5d",
+    "/private/tmp/radio-setup-current/report.json": "42adb0e3ca61ce29992f3294be26d14e35ca303cf7c6874c0e2d0963e8a4944e",
+    "/private/tmp/radio-setup-current/requests.jsonl": "804727bfd04a80153e6f654215bcd3baf997d0fe7a5289dd8e924f63c7fa0871",
+    "/private/tmp/radio-setup-current/draft-before-management.json": "94cd7b4e4c6da6b6c3b3cda1856cb4fd9c69c2fdc0ad3e376d1a9c312d877091",
+    "/private/tmp/radio-setup-current/complete-draft-before-music-detour.json": "9fed40a70870baea605af5ee4178bfa275c49b1f33d392e3d273161c0fc0e16e",
+    "/private/tmp/radio-setup-current/music-detour-albums.json": "91ee5c80b7e19b6b93bf8d9bb8106868e410ff5a2f491fbbbca2de054082a933",
+    "/private/tmp/radio-setup-current/draft-after-music-detour.json": "646ccc72b6299d06c5d13c54d0975cc960528eb292fc2abaa919a40bc3246d0a",
+    "/private/tmp/radio-setup-current/saved-setup.json": "23a62b3fb5818755ff7c9050493b89af12c9bbd972fe4371031fe86fc5c95e03",
+    "/private/tmp/radio-setup-current/saved-bucket.json": "980093aade4d3ddcf0de160ce6d82a7053d901f17b9987b0203ccbfbe989ccfe"
+  },
+  "validation": {
+    "observer": "Exit 0, result observed, zero renderer errors. Owned fixture server stopped with exit 130.",
+    "buildLint": "No app code changed. Current app source matches PR135 validated build/type/lint source; intervening PR136 was documentation only. No repeated full build/lint or unit tests.",
+    "ledger": "Requirement text, exact fragments and all existing semantic/proof annotations remain unchanged. Evidence links identify partial examples, not whole-fragment acceptance."
+  },
+  "adjudication": {
+    "accepted": false,
+    "knownOpenChecks": 25,
+    "listenerOpenChecks": 14,
+    "otherProofOpenChecks": 11,
+    "semanticDenominatorComplete": false,
+    "overallScore": null
+  },
+  "limits": [
+    "Controlled native setup journey, not live Jellyfin or a first-time-listener study. Silent muted media cannot establish audible quality.",
+    "No paid provider execution, preview generation, automatic preparation or DJ speech. getVoicePreview/getDJVoicePreview are cached metadata reads; preparePlayback is music stream preparation.",
+    "No pending/failure/retry/copy/switch/delete/readback-refresh variants. Prior dated evidence retains its own scope.",
+    "No smaller viewport, 200% zoom or native OS media-control acceptance."
+  ]
+}
