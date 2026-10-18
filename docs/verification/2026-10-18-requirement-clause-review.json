@@ -21,8 +21,8 @@
     "STARStories": 27,
     "STARResultFragments": 265,
     "structuralLines": 47,
-    "semanticFragmentsReviewed": 313,
-    "proofFragmentsReviewed": 311,
+    "semanticFragmentsReviewed": 317,
+    "proofFragmentsReviewed": 315,
     "partitionComplete": true,
     "semanticDenominatorComplete": false,
     "overallScore": null,
@@ -38,7 +38,7 @@
     "listenerOpenChecks": 14,
     "otherProofOpenChecks": 11,
     "contextFragmentsReviewed": 1,
-    "canonicalReviewGroups": 51,
+    "canonicalReviewGroups": 52,
     "acceptedCanonicalGroups": 0
   },
   "STARContexts": [
@@ -718,7 +718,7 @@
   },
   "clauseLedger": {
     "file": "2026-10-18-requirement-clauses.csv",
-    "sha256": "b76dabe11cb324be2f9c860e2721ff97305a92365ed1e206737a683fef02b5f9",
+    "sha256": "8abc9a26acabc4146cffc708e69439d653b54902c1a9dc6ac7084fe10290e3a5",
     "columns": "Candidate navigation, semantic review and actual proof review are distinct. Empty evidence/canonical IDs do not establish completion."
   },
   "scopeReviews": [
@@ -788,6 +788,11 @@
       "file": "2026-10-19-source-host-obligations.json",
       "sha256": "7d6b68eec79df592ae53b13a6d3a38ed940af551782d02685647a445862b71c0",
       "meaning": "Six source/host/search groups,29 exact fragments;current source and dated evidence review only,no accepted groups."
+    },
+    {
+      "file": "2026-10-19-account-switch-server-draft.json",
+      "sha256": "85c1853be94f5254f51fb1581932c8e3294c6607efd3b989af76a41826b11a0d",
+      "meaning": "AS01 four exact clauses;native abandoned-server prefill contradiction/fix and retained Back/failed-form behavior. Whole M11 remains incomplete."
     }
   ],
   "generatorMeaning": "Original mechanical partition generator only. Later deliberate semantic/proof annotations are authoritative and must be preserved; rerunning the original generator alone would discard them.",

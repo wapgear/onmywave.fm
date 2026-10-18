@@ -1,0 +1,251 @@
+{
+  "date": "2026-10-19",
+  "baseCommit": "fb08aebeb6dfc32a1c1ca6e1bce1c5822cd130d3",
+  "scope": "Fix current-server prefill on each initial library chooser account-switch entry. Adjacent Back/failed-attempt behavior verified;full M11/account recovery remains partial.",
+  "problem": "The account-switch form initializes its server once. Editing another address then Back leaves that abandoned draft in state;reopening clears credentials but previously retained the abandoned server instead of the current connection server.",
+  "change": "Set serverUrl from the current connection inside the existing onChangeAccount handler. Leave Back selection retention,failed-form edits,authentication and persistence paths unchanged.",
+  "method": {
+    "input": "Native CUA only at1280x720/100%. Playwright launches/reloads/closes and passively records DOM/native audio/IPC/fetch.",
+    "fixture": "Current actual main/storage with disposable protected localhost connection,initial zero selected libraries,synthetic catalog,production renderer/preload. Shared-key reader null;external main fetch blocked. No real account/server or provider changes.",
+    "failure": "Enter the same localhost server with /abandoned path;its public-info endpoint returns actual404. Failure occurs before credential authentication. This is a failed server discovery attempt,not a rejected-password test.",
+    "secrets": "Password values omitted from observation. No password entered in this bounded check;unchanged explicit password clearing is source-reviewed."
+  },
+  "groups": [
+    {
+      "id": "AS01",
+      "actor": "Listener reconsidering an account/server change",
+      "trigger": "Open Use another account or server from initial library selection,repeatedly after Back or a failed attempt",
+      "outcome": "Each entry uses the current committed server and cleared credentials;Back preserves current library edits and returns focus.",
+      "fragments": [
+        "REQ-L140-text-03",
+        "REQ-L140-text-04",
+        "REQ-L140-text-09",
+        "RAD-L142-result-07"
+      ],
+      "mandatoryVariants": [
+        "Current connected-server prefill on each entry",
+        "Username/password cleared on entry",
+        "Back retains checkbox draft and opener focus",
+        "Failed attempt retains form values/current account",
+        "Successful authentication replaces account and resets old checkbox edits"
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false,
+      "judgment": "Direct native before/after reproduces and fixes repeated-entry address reset. Back retains the checked Archive library. One real localhost404 public-info attempt retains fields/Connect focus;Back and reopen reset server/username,then retained library Save reaches All songs with music paused. Existing login onSuccess still calls selection.reset only after accepted authentication.",
+      "remaining": [
+        "No new successful different/same-account authentication or pending/empty/failed library-discovery matrix.",
+        "Password clearing has unchanged source evidence;not a new nonempty-password native case.",
+        "Full M11 concurrency/auth-expiry/focus and live/VoiceOver/listener/platform acceptance retain their separate proof."
+      ]
+    }
+  ],
+  "snapshots": {
+    "before-abandoned-server.json": {
+      "sha256": "b11793526ac13a3ee459687b091cd73687b48691724bc1b3fbfe0edc55a7e6f8",
+      "headings": [
+        "Use another account or server"
+      ],
+      "focus": {
+        "tag": "INPUT",
+        "name": ""
+      },
+      "fields": [
+        {
+          "tag": "INPUT",
+          "id": "",
+          "value": "http://127.0.0.1:5999"
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "value": ""
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "value": "[omitted]"
+        }
+      ]
+    },
+    "after-back-chooser.json": {
+      "sha256": "c226cc165aebf2bbe935b41c3013ee416880870ca4b4d2e896fc7b8e41d23a29",
+      "headings": [
+        "Choose your libraries"
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Use another account or server"
+      },
+      "fields": [
+        {
+          "tag": "INPUT",
+          "id": "",
+          "value": "on",
+          "checked": true
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "value": "on",
+          "checked": false
+        }
+      ]
+    },
+    "after-reopen.json": {
+      "sha256": "d218f5a4cf0f6b98fa797bdbe4516b7a2a5e79e0c4abb780ac63623de6cf9be3",
+      "headings": [
+        "Use another account or server"
+      ],
+      "focus": {
+        "tag": "INPUT",
+        "name": ""
+      },
+      "fields": [
+        {
+          "tag": "INPUT",
+          "id": "",
+          "value": "http://127.0.0.1:5216"
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "value": ""
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "value": "[omitted]"
+        }
+      ]
+    },
+    "after-failed-signin.json": {
+      "sha256": "419133b8c3c482f0958fe422ef213f414aa570da91a097643224713fbfab5a93",
+      "headings": [
+        "Use another account or server"
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Connect to Jellyfin"
+      },
+      "fields": [
+        {
+          "tag": "INPUT",
+          "id": "",
+          "value": "http://127.0.0.1:5216/abandoned"
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "value": "Failed listener"
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "value": "[omitted]"
+        }
+      ]
+    },
+    "after-failure-back-reopen.json": {
+      "sha256": "b07e5762e07536e4bcfb9d1a3b7dc1ddd68ff69b4c0cba86dfe33a5ba576beff",
+      "headings": [
+        "Use another account or server"
+      ],
+      "focus": {
+        "tag": "INPUT",
+        "name": ""
+      },
+      "fields": [
+        {
+          "tag": "INPUT",
+          "id": "",
+          "value": "http://127.0.0.1:5216"
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "value": ""
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "value": "[omitted]"
+        }
+      ]
+    },
+    "after-saved-library.json": {
+      "sha256": "a80b65c7d19a9b683db724e7542ec6ff80765ec74dff01a2dfedab362ee5e8b2",
+      "headings": [
+        "All songs"
+      ],
+      "focus": {
+        "tag": "H1",
+        "name": "All songs"
+      },
+      "fields": [
+        {
+          "tag": "INPUT",
+          "id": "",
+          "value": ""
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "value": "on",
+          "checked": false
+        },
+        {
+          "tag": "INPUT",
+          "id": "",
+          "value": "on",
+          "checked": false
+        }
+      ]
+    }
+  },
+  "validation": {
+    "nativeReports": "Both observer processes exit0,observed,zero renderer errors. Final library save reaches All songs heading and paused Play. Owned local server stopped130.",
+    "buildTypecheck": "npm run build exit0,includes TypeScript and voice resource check.",
+    "lint": "npm run lint exit0.",
+    "diff": "Exact one-handler insertion checked against base source;no authentication/persistence contract change.",
+    "unitTests": "Not added or run."
+  },
+  "sourceSha256": {
+    "src/renderer/pages/Connection/Connection.page.tsx": "0b6db7b41b5e9bcf0100e82b7f9c9998b3111d99601db1a940e671b7adf2dbd3"
+  },
+  "baselineSourceSha256": {
+    "src/renderer/pages/Connection/Connection.page.tsx": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815"
+  },
+  "bundleSha256": {
+    "out/preload/index.cjs": "9b78be58d4f9bd70fb5b6d3315d888ee9442cfbf09bfab2b2f902de015e902f2",
+    "out/renderer/assets/index-DWHXy0eC.js": "3f38747eb189b1a69c82c073b2ddbec87dbb3798b91c4fe6aa18d52f66e97b74"
+  },
+  "fixtureSha256": {
+    "/private/tmp/account-switch-server-current/build.mjs": "abe13a3ed283df18b00cf96d3268d890a5270b84001d9593b1358da051c7035e",
+    "/private/tmp/account-switch-server-current/bootstrap.mjs": "35a005fd134752b2984749d1abac7add281159da448585fa6885fa46331fa353",
+    "/private/tmp/account-switch-server-current/observe.cjs": "192616bcb8f6cc1212ad844cac013a23e8806d74cea441ceb517eae1e6bbb068",
+    "/private/tmp/account-switch-server-current/server.mjs": "0cad8e8c82dd772e3160ca9b9ae978ddc6e59d9096e85400ed3a6e8af3866269",
+    "/private/tmp/account-switch-server-current/out/main/index.js": "0449ed4c462d810886924e984554db30678dc00ead6c5ffda86e9084362620bd",
+    "/private/tmp/account-switch-server-current/before-report.json": "749f5be383dd97d02529671f4f1995f9ff4131c9fd9239fbb4610a02b927426c",
+    "/private/tmp/account-switch-server-current/report.json": "ceb0a2476b8cfce507b6d0f6d1ee63c2ef98dbcd705356f8456da0d9a1cb910b",
+    "/private/tmp/account-switch-server-current/requests.jsonl": "3338d422adc8b858bf1e3c47c67fa31577008401854c5cb91d9d562002d629ee",
+    "/private/tmp/account-switch-server-current/build.log": "544efbd18e4672ead919b002f8af800c03e99f7d3cb57a38946f19b5562e8fe9",
+    "/private/tmp/account-switch-server-current/lint.log": "6f1680e0ff047e07a06dcf9afc079770fad3f871d47a52ee12dccaaa84366d63"
+  },
+  "adjudication": {
+    "acceptedCanonicalGroups": 0,
+    "knownOpenChecks": 25,
+    "semanticDenominatorComplete": false,
+    "overallScore": null
+  },
+  "limits": [
+    "Native current-server re-entry bug fix,not complete connection/server/authentication acceptance.",
+    "No new live-server/provider,audible,VoiceOver,OS or listener study.",
+    "No smaller viewport/enlarged zoom,packaging or release check."
+  ],
+  "fragmentTextSha256": {
+    "REQ-L140-text-03": "a7ae14def3b152560f17d95d8f2d7fe587541f8a431f896b0e5fa907705fe350",
+    "REQ-L140-text-04": "c9ac8a5a3fe73a80ce81f34c7aa426f119b9be686d529d8896325f30436b5673",
+    "REQ-L140-text-09": "87fd9675ff8e4783aeae09ff8fd7e4a8f6c7d662ee7e20630e32b4d40bbbc5bd",
+    "RAD-L142-result-07": "a5bf05e346a7efbe91c2679cc0811f0a1fd81f559d0c0133f02d41e02c5bdedc"
+  }
+}
