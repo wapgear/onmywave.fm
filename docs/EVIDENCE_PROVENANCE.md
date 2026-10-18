@@ -165,3 +165,6 @@ The [news-notice record](verification/2026-10-18-news-notice-focus.json) disting
 
 
 The [help audit](verification/2026-10-18-keyboard-help-audit.json) separates unchanged provider/manual help checks, the off-screen console failure and the final inline-feedback cases. It retains two terminal observers, source/bundle/fixture hashes, AX projections and precise stale-request/Tab limits. The 35-family evidence map links scoped records without treating file references or source counts as acceptance. No disposition changes.
+
+
+The [setup-management record](verification/2026-10-18-setup-management-focus.json) separates base body-focus loss, the rejected stale-scroll route fix and accepted entry/return geometry. It retains three terminal observer reports, two changed-bundle phases, source/fixture hashes and source-group/paging AX projections. Only App changes from the dated 35-family map; all other family hashes match. No row disposition changes or forced defensive fallback result is claimed.
