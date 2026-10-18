@@ -4,7 +4,7 @@ import type { Song } from '../../../shared/types';
 import { unwrap, WaveError } from '../../api';
 import { Dialog, ErrorNotice } from '../Shared';
 import { useRetryFocus } from '../../useRetryFocus';
-export function AddPlaylist({ songs, close, checkPlaylists }: { songs: Song[]; close: () => void; checkPlaylists: () => void }) {
+export function AddPlaylist({ connectionId, songs, close, checkPlaylists }: { connectionId: string; songs: Song[]; close: () => void; checkPlaylists: () => void }) {
   const client = useQueryClient();
   const mounted = useRef(true);
   const nameInput = useRef<HTMLInputElement>(null);
@@ -14,6 +14,10 @@ export function AddPlaylist({ songs, close, checkPlaylists }: { songs: Song[]; c
   const playlists = useQuery({ queryKey: ['playlists'], queryFn: async () => unwrap(await window.wave.playlists()) });
   const retryFocus = useRetryFocus({ ownerKey: 'add-playlist:destinations', target: () => destinationInput.current, canFocusSuccess: () => playlists.isSuccess && !playlists.isFetching });
   const [destination, setDestination] = useState('new');
+  const permission = useQuery({ queryKey: ['playlistPermission', connectionId, destination], queryFn: async () => unwrap(await window.wave.playlistPermission(destination)), enabled: destination !== 'new', staleTime: 0, refetchOnWindowFocus: false, refetchOnReconnect: false });
+  const permissionBlocked = destination !== 'new' && (permission.isPending || permission.isFetching || !!permission.error || permission.data === false);
+  const permissionRetry = useRetryFocus({ ownerKey: `add-playlist:permission:${connectionId}:${destination}`, target: () => destinationInput.current, canFocusSuccess: () => permission.isSuccess && !permission.isFetching });
+
   const [name, setName] = useState('');
   const [skipExisting, setSkipExisting] = useState(true);
   const save = useMutation({ mutationFn: async () => {
@@ -31,14 +35,16 @@ export function AddPlaylist({ songs, close, checkPlaylists }: { songs: Song[]; c
   const review = () => { if (!inFlight.current && !save.isPending) checkPlaylists(); };
   const blockPointer = (event: PointerEvent) => { if (locked()) event.preventDefault(); };
   const blockKey = (event: KeyboardEvent) => { if (locked() && event.key !== 'Tab' && event.key !== 'Escape') event.preventDefault(); };
-  return <Dialog title={`Add ${songs.length === 1 ? 'song' : `${songs.length} songs`} to playlist`} close={cancel} closeDisabled={save.isPending} initialFocusRef={nameInput}><form onSubmit={event => { event.preventDefault(); if (locked() || additionBlocked || (destination === 'new' && (!name.trim() || creationBlocked))) return; inFlight.current = true; save.mutate(); }}>
+  return <Dialog title={`Add ${songs.length === 1 ? 'song' : `${songs.length} songs`} to playlist`} close={cancel} closeDisabled={save.isPending} initialFocusRef={nameInput}><form onSubmit={event => { event.preventDefault(); if (locked() || additionBlocked || permissionBlocked || (destination === 'new' && (!name.trim() || creationBlocked))) return; inFlight.current = true; save.mutate(); }}>
     <label>Playlist<select ref={destinationInput} aria-disabled={save.isPending || uncertain || undefined} onPointerDown={blockPointer} onKeyDown={blockKey} onClick={event => { if (locked()) event.preventDefault(); }} value={destination} onChange={event => { if (locked()) event.currentTarget.value = destination; else setDestination(event.target.value); }}><option value="new" disabled={creationBlocked}>Create a new playlist</option>{playlists.data?.items.map(item => <option key={item.id} value={item.id} disabled={!!item.recoveryStatus}>{item.name}{item.recoveryStatus ? item.recoveryStatus === 'review' ? ' · Review needed' : ' · Editing unavailable' : ''}</option>)}</select></label>
     {destination === 'new' && <label>Playlist name<input ref={nameInput} autoFocus required maxLength={160} readOnly={save.isPending || uncertain} value={name} onChange={event => setName(event.target.value)} placeholder="A name for your collection" /></label>}
     {destination !== 'new' && <label className="checkbox-label"><input type="checkbox" aria-disabled={save.isPending || uncertain || undefined} onPointerDown={blockPointer} onKeyDown={blockKey} onClick={event => { if (locked()) event.preventDefault(); }} checked={skipExisting} onChange={event => { if (locked()) event.currentTarget.checked = skipExisting; else setSkipExisting(event.target.checked); }} />Skip songs already in this playlist</label>}
     <p className="form-hint">Changes are saved to Jellyfin. Your account must have permission to edit the selected playlist.</p>
+    {destination !== 'new' && <p className="form-hint" role="status">{permission.isPending || permission.isFetching ? 'Checking edit permission…' : permission.error ? 'Edit permission could not be checked. Try again before adding songs.' : permission.data === false ? 'Your account can listen to this playlist but cannot edit it.' : permission.data === null ? 'Jellyfin could not confirm edit permission. The server will check each change.' : 'Your account can edit this playlist.'}</p>}
+    {destination !== 'new' && <ErrorNotice error={permission.error} retryRef={permissionRetry.retryRef} retrying={permission.isFetching} retry={() => permissionRetry.retry(() => permission.refetch())} />}
     {blockedPlaylists && !creation && <p className="form-hint">Some playlists need review before you can add songs. <button type="button" className="room-link" aria-disabled={save.isPending || undefined} onClick={review}>Review playlists</button></p>}
     {creation && <p className="form-hint">{creation.status === 'unavailable' ? 'Playlist editing recovery is unavailable. You can still open and play your playlists.' : 'A playlist may already have been created. Review your playlists before creating another. You can choose an existing playlist.'} <button type="button" className="room-link" aria-disabled={save.isPending || undefined} onClick={review}>Review playlists</button></p>}
     <ErrorNotice error={playlists.error} retryRef={retryFocus.retryRef} retrying={playlists.isFetching} retry={() => retryFocus.retry(() => playlists.refetch())} /><ErrorNotice error={save.error} />{uncertain && <p className="form-hint">The change may already be saved. Check the refreshed playlists and their songs before trying again.</p>}
-    <div className="modal-actions"><button type="button" aria-disabled={save.isPending || undefined} onClick={uncertain ? review : cancel}>{uncertain ? 'Close and check playlists' : 'Cancel'}</button><button className="primary" disabled={!save.isPending && !uncertain && (additionBlocked || (destination === 'new' && (!name.trim() || creationBlocked)))} aria-disabled={save.isPending || uncertain || undefined} aria-busy={save.isPending || undefined}>{save.isPending ? 'Saving…' : destination === 'new' ? 'Create playlist' : 'Add songs'}</button></div>
+    <div className="modal-actions"><button type="button" aria-disabled={save.isPending || undefined} onClick={uncertain ? review : cancel}>{uncertain ? 'Close and check playlists' : 'Cancel'}</button><button className="primary" disabled={!save.isPending && !uncertain && (additionBlocked || (destination === 'new' && (!name.trim() || creationBlocked)))} aria-disabled={save.isPending || uncertain || permissionBlocked || undefined} aria-busy={save.isPending || undefined}>{save.isPending ? 'Saving…' : destination === 'new' ? 'Create playlist' : 'Add songs'}</button></div>
   </form></Dialog>;
 }

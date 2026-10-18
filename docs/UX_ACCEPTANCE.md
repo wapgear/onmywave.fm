@@ -1977,3 +1977,10 @@ The [native record](verification/2026-10-18-player-navigation-focus.json) reprod
 ## Current requirement and story indexing, 18 October 2026
 
 The [current source reconciliation](verification/2026-10-18-current-prd-reconciliation.json) refreshes the dated source map after the keyboard and pending-operation revisions. All 294 nonblank lines in both current PRDs, 27 STAR results, seven parent criteria and 191 check IDs remain represented with exact text and hashes. Mapping the 47 changed/new lines neither adds acceptance points nor promotes a compound requirement based on a broad keyboard check. The source requirements themselves remain unchanged. Q13 stays Review; 26 checks remain open and there is no overall acceptance or usability percentage claim.
+
+
+## Live access and playlist destination permissions, 18 October 2026
+
+The [current record](verification/2026-10-18-live-access-permissions.json) covers actual empty-access recovery after an administrator grant without reauthentication, and the live read-only playlist destination defect. The selected destination now receives one targeted permission lookup, scoped to account and playlist, instead of loading every entry. Pending, refreshing and read-only states explain why Add songs is blocked; the action keeps keyboard focus. Unknown optional permission failures retain server authorization, while authentication failures request reconnection. Existing mutation and recovery guards remain authoritative.
+
+Native keyboard checks establish the blocked action and retained focus with zero app writes. A controlled503 establishes pending-to-unknown focus retention, and a controlled401 establishes normal reconnect. Eleven focused actual-service adapter cases cover boolean/missing/unavailable/auth responses and stale200/401/503 replies across account replacement. Independent paired review, final build/type/lint and guarded server cleanup pass. Only C06 moves to Live; P05 still needs a genuinely unavailable live lookup configuration.25 checks remain:14 observed-listener and11 other-proof. Deferred viewport/zoom, audible quality and broader hardware proof remain separate.

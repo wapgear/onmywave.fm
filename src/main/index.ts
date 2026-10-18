@@ -223,6 +223,7 @@ function registerIpc() {
       if (!current) throw new ServiceError('unauthorized', 'Sign in to Jellyfin.');
       await acknowledgePlaylistRecovery(playlistCreationRecoveryKey(current.serverUrl, current.userId), input.markerId, input.receipt, () => epoch === playlistSessionEpoch);
     },
+    playlistPermission: (input: string) => service.playlistPermission(input),
     playlist: async (input: string) => {
       const current = service.exportSession(), epoch = playlistSessionEpoch;
       if (!current) throw new ServiceError('unauthorized', 'Sign in to Jellyfin.');

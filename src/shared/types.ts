@@ -125,6 +125,7 @@ export interface WaveApi {
   albumTracks(id: string): Promise<Result<Song[]>>;
   song(id: string): Promise<Result<Song>>;
   playlists(): Promise<Result<PlaylistLibrary>>;
+  playlistPermission(id: string): Promise<Result<boolean | null>>;
   playlist(id: string): Promise<Result<PlaylistDetail>>;
   acknowledgePlaylistRecovery(input: { id: string; markerId: string; receipt: string }): Promise<Result<void>>;
   acknowledgePlaylistCreation(input: { markerId: string; receipt: string }): Promise<Result<void>>;

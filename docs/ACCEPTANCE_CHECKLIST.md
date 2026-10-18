@@ -59,7 +59,7 @@ Source: REQUIREMENTS: Jellyfin connection; RADIO_EXPERIENCE: Entry and first use
 | C03 | Account-switch form retains server, clears credentials and Back restores checkbox choices and focus. | N | Controlled |
 | C04 | Failed replacement authentication retains the committed account; successful authentication resets checkbox drafts and refreshes selection even for the same account. | N+S | Controlled |
 | C05 | Unavailable selected libraries are explained and excluded from saved IDs and selected counts. | N+S | Controlled |
-| C06 | Empty access disables empty Save and Try again recovers after access is granted without reauthentication. | N+L | Dated |
+| C06 | Empty access disables empty Save and Try again recovers after access is granted without reauthentication. | N+L | Live |
 | C07 | Library saves cannot overlap account switching, sign-in or sign-out; submitted choices, pending state and save failures survive music navigation. | N+S | Controlled |
 | C08 | Expiry during a library save explains the wait and enables sign-in only after that save settles. | N+S | Controlled |
 | C09 | Older success/failure cannot replace a newer account or undo sign-out, including a held pause write, uncommitted credentials and failed sign-out. | N+S | Controlled |
@@ -831,3 +831,12 @@ The requirements, story text and row denominator are unchanged. Every compound c
 The [bounded media-tool check](verification/2026-10-18-native-media-tool-limits.json) verifies ordinary native Play/Pause in a muted isolated session, with advancing position and matching MediaSession state. The native input tool rejects XF86AudioPlay with keyNotFound before dispatch. Computer Use denies Control Center access without a reason, so no system panel was inspected or operated and no alternate route bypassed that denial. These results establish a tooling boundary, not failed application media-key behavior.
 
 M16 remains External, and M17 retains its existing native/live converted-codec evidence while its distinct OS-mediated control proof remains missing. An operator or explicitly authorized native system-control route must provide those actual events. Repeating renderer handlers or ordinary app shortcuts cannot close either gap. The owned observer and catalog stop; no provider/external request or HTTP write occurs. Source, fixture, bundle and raw hashes are recorded. No production source or disposition changes; 26 checks remain open.
+
+
+## Live access recovery and read-only destination, 18 October 2026
+
+The [live access/permission record](verification/2026-10-18-live-access-permissions.json) closes C06. A temporary restricted account initially sees no music libraries and cannot save an empty selection. After a real administrator grants it a music library, native Retry recovers to the focused unchecked library; selecting and saving reaches All songs without reauthentication. The same protected token survives and only one test authentication occurs.
+
+Actual read-only playlist detail correctly restricts edits. The live test found Add to playlist still enabled its Add songs action for that same destination. A cheap selected-destination permission query now blocks pending, refreshing and confirmed read-only submissions with an explanation, while retaining keyboard focus. Optional unavailable lookup results allow Jellyfin to authorize attempts; controlled401 reaches the normal reconnect flow. Eleven focused service cases include stale-session success and failure rejection. Build/TypeScript and full lint pass.
+
+Guarded cleanup deletes only the disposable private playlist and account, confirms their absence and verifies the original playlists, administrator policy and protected connection unchanged. P05 remains Review for an actual unavailable-permission server configuration; controlled503 coverage does not replace it. Inventory:191 rows,189 active,2 Deferred;140 Controlled,24 Live,14 Review,0 Dated,11 External.25 checks remain open:14 listener and11 other-proof.
