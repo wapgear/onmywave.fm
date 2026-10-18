@@ -107,6 +107,6 @@ export function VirtualSongs({ total, hasNext, fetching, nextError, loadNext, on
     if (row) setFocusedKey(row.dataset.trackKey ?? null);
   }} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setFocusedKey(null); }}>
     <TrackTable {...table} rowWindow={{ indices: visible.map(row => row.index), rowHeight: ROW_HEIGHT, focusRow }} />
-    <div className="song-load-status"><span ref={status} tabIndex={-1}>{table.rows.length.toLocaleString()} of {total.toLocaleString()} songs loaded</span>{fetching && <span role="status">Loading songs…</span>}<ErrorNotice error={nextError} retryRef={retryFocus.retryRef} retrying={fetching} retry={retryNextPage} />{!nextError && hasNext && !fetching && <button onClick={() => void loadNext()}>Load more songs</button>}</div>
+    <div className="song-load-status"><span ref={status} tabIndex={-1} role="group" aria-label={`${table.rows.length.toLocaleString()} of ${total.toLocaleString()} songs loaded`}>{table.rows.length.toLocaleString()} of {total.toLocaleString()} songs loaded</span>{fetching && <span role="status">Loading songs…</span>}<ErrorNotice error={nextError} retryRef={retryFocus.retryRef} retrying={fetching} retry={retryNextPage} />{!nextError && hasNext && !fetching && <button onClick={() => void loadNext()}>Load more songs</button>}</div>
   </div>;
 }
