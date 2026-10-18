@@ -37,7 +37,7 @@ function ArtworkImage({ url, name, className = '' }: { url?: string; name: strin
   return url && !failed ? <img className={`artwork ${className}`} src={url} alt={name} loading="lazy" onError={() => setFailed(true)} /> : <div className={`artwork artwork-fallback ${className}`} role="img" aria-label={`No artwork for ${name}`}><Music2 size={24} strokeWidth={1.4} /></div>;
 }
 const shouldRestoreFocus = (restoreFocusRef?: { readonly current: boolean }) => restoreFocusRef?.current !== false;
-export function Dialog({ title, children, close, wide = false, initialFocusRef, restoreFocusRef }: { title: string; children: ReactNode; close: () => void; wide?: boolean; initialFocusRef?: { readonly current: HTMLElement | null }; restoreFocusRef?: { readonly current: boolean } }) {
+export function Dialog({ title, children, close, wide = false, initialFocusRef, restoreFocusRef, closeDisabled = false }: { title: string; children: ReactNode; close: () => void; wide?: boolean; initialFocusRef?: { readonly current: HTMLElement | null }; restoreFocusRef?: { readonly current: boolean }; closeDisabled?: boolean }) {
   const ref = useRef<HTMLDialogElement>(null);
   const titleId = useId();
   const opener = useRef<HTMLElement | null>(null);
@@ -58,7 +58,7 @@ export function Dialog({ title, children, close, wide = false, initialFocusRef, 
       });
     };
   }, [initialFocusRef, restoreFocusRef]);
-  return <dialog ref={ref} aria-labelledby={titleId} className={wide ? 'modal modal-wide' : 'modal'} onCancel={(event) => { event.preventDefault(); close(); }} onClick={(event) => { if (event.target !== event.currentTarget) return; const rect = event.currentTarget.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) close(); }}><div className="modal-heading"><h2 id={titleId}>{title}</h2><button className="icon-button" onClick={close} aria-label="Close dialog"><X size={20} /></button></div>{children}</dialog>;
+  return <dialog ref={ref} aria-labelledby={titleId} className={wide ? 'modal modal-wide' : 'modal'} onCancel={(event) => { event.preventDefault(); if (!closeDisabled) close(); }} onClick={(event) => { if (closeDisabled || event.target !== event.currentTarget) return; const rect = event.currentTarget.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) close(); }}><div className="modal-heading"><h2 id={titleId}>{title}</h2><button className="icon-button" aria-disabled={closeDisabled || undefined} onClick={() => { if (!closeDisabled) close(); }} aria-label="Close dialog"><X size={20} /></button></div>{children}</dialog>;
 }
 export function PageHeading({ title, subtitle, children, headingRef }: { title: string; subtitle?: string; children?: ReactNode; headingRef?: RefObject<HTMLHeadingElement | null> }) {
   return <header className="page-heading"><div><h1 ref={headingRef} tabIndex={-1}>{title}</h1>{subtitle && <p>{subtitle}</p>}</div>{children}</header>;
