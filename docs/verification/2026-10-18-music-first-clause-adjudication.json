@@ -32,13 +32,15 @@
       ],
       "evidence": [
         "2026-10-17-radio-opt-in-contracts.json:/native/cases",
-        "2026-10-18-paid-authorization-invariant.json:/obligations/0"
+        "2026-10-18-paid-authorization-invariant.json:/obligations/0",
+        "2026-10-18-current-first-use-music.json"
       ],
-      "judgment": "Both default functions and normalizers explicitly produce false. Historical native cases cover off-state setup/restart, not a fresh current first-launch/reconnect matrix. Independent activation is reviewed under MF03/MF04.",
+      "judgment": "Fresh current default storage, full controlled first-use native flow and same-data paused process restart directly show both flags off and no AI dispatch. Missing/invalid legacy normalization remains static source evidence; independent activation is reviewed under MF03/MF04.",
       "remaining": [
-        "Current first-use evidence must show both flags and no unintended dispatch through the whole R1 action."
+        "Missing/invalid legacy option variants need direct evidence before accepting the entire all-variants group."
       ],
-      "scopeNote": "The table fragments also describe effects and exclusions. Link them to MF03/MF04 as well; default proof alone never accepts the whole fragment."
+      "scopeNote": "The table fragments also describe effects and exclusions. Link them to MF03/MF04 as well; default proof alone never accepts the whole fragment.",
+      "currentEngineeringFollowup": "Fresh default storage, complete native connect/select/album action, no AI setup/dispatch, real natural continuation and paused restart pass in this fixture."
     },
     {
       "id": "MF02",
@@ -70,13 +72,14 @@
       "evidence": [
         "2026-10-17-radio-opt-in-contracts.json:/native/cases",
         "2026-10-17-keyless-radio.json:/savedPlayback",
-        "2026-10-18-paid-authorization-invariant.json:/obligations/0"
+        "2026-10-18-paid-authorization-invariant.json:/obligations/0",
+        "2026-10-18-current-first-use-music.json"
       ],
-      "judgment": "Controlled records establish keyless saved playback and ordinary saves without opt-in. They do not establish one complete current uncoached connect/select/album first-use session. News-source requests here means news collection, not the Jellyfin requests needed to play music.",
+      "judgment": "Current complete controlled R1 engineering journey now directly passes. This does not establish unassisted listener success or live-server/audio-quality acceptance.",
       "remaining": [
-        "Fresh current full R1 engineering journey with dispatch observation",
         "Observed first-attempt listener success under the existing cohort protocol"
-      ]
+      ],
+      "currentEngineeringFollowup": "Fresh default storage, complete native connect/select/album action, no AI setup/dispatch, real natural continuation and paused restart pass in this fixture."
     },
     {
       "id": "MF03",
@@ -275,7 +278,8 @@
     "2026-10-17-keyless-radio.json": "4b2b78eb3d70dd78747acd7ba32200e31fa2c5e94d0f77dc635eb1c576da0ed6",
     "2026-10-18-uncertain-work-invariant.json": "acff28d5fa03710a1cd5bfdb0e218a5e5d1de65f70d2a9bbd8124e86a8132271",
     "2026-10-18-scheduled-news-delivery.json": "e4e41973e48e3bdd2fa898a8df4aac5ee9765fc2af3ad403cf15c5db54ceb187",
-    "2026-10-18-queue-heard-invariant.json": "29df0671a73b99dc16518bf31499f5f89141cd585bcbe5bd3576c82e32271ec2"
+    "2026-10-18-queue-heard-invariant.json": "29df0671a73b99dc16518bf31499f5f89141cd585bcbe5bd3576c82e32271ec2",
+    "2026-10-18-current-first-use-music.json": "de71ba3a7837c079629189a831a6fba9c84fc3ff6ae7a552d466d666f52d682a"
   },
   "summary": {
     "canonicalReviewGroups": 6,
@@ -283,5 +287,12 @@
     "acceptedGroups": 0,
     "remainingKnownChecks": 25,
     "overallScore": null
-  }
+  },
+  "followupEvidence": [
+    {
+      "file": "2026-10-18-current-first-use-music.json",
+      "sha256": "de71ba3a7837c079629189a831a6fba9c84fc3ff6ae7a552d466d666f52d682a",
+      "scope": "Fresh current controlled first-use native flow; source-identical production renderer and instrumented actual main. Human acceptance and remaining variants stay open."
+    }
+  ]
 }
