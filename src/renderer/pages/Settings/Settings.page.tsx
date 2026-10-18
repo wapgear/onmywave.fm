@@ -12,14 +12,14 @@ import { NewsTransitions } from './components/NewsTransitions.component';
 import './Settings.styles.css';
 export type SettingsSection = 'general' | 'keys' | 'sources' | 'djs';
 const sections: { id: SettingsSection; label: string }[] = [{ id: 'general', label: 'General' }, { id: 'keys', label: 'Provider keys' }, { id: 'sources', label: 'Sources' }, { id: 'djs', label: 'DJs' }];
-export function SettingsPage({ connection, update, disconnected, section, onSectionChange, returnToSetup }: { connection: Connection; update: (value: Connection) => void; disconnected: () => void; section?: SettingsSection; onSectionChange?: (value: SettingsSection) => void; returnToSetup?: () => void }) {
+export function SettingsPage({ connection, update, disconnected, section, onSectionChange, returnToSetup }: { connection: Connection; update: (value: Connection) => void; disconnected: () => void | Promise<void>; section?: SettingsSection; onSectionChange?: (value: SettingsSection) => void; returnToSetup?: () => void }) {
   const [confirm, setConfirm] = useState(false);
   const [localSection, setLocalSection] = useState<SettingsSection>('general');
   const activeSection = section ?? localSection;
   const savingProviderKey = useIsMutating({ mutationKey: ['providerKey'] }) > 0;
   const savingLibraries = useIsMutating({ mutationKey: ['selectLibraries', connection.id] }) > 0;
   const disconnectInFlight = useRef(false);
-  const disconnect = useMutation({ mutationFn: async () => unwrap(await window.wave.disconnect()), onSuccess: disconnected, onSettled: () => { disconnectInFlight.current = false; } });
+  const disconnect = useMutation({ meta: { authAttempt: true }, mutationFn: async () => unwrap(await window.wave.disconnect()), onSuccess: disconnected, onSettled: () => { disconnectInFlight.current = false; } });
   const closeConfirmation = () => { if (!disconnectInFlight.current && !disconnect.isPending) setConfirm(false); };
   function confirmDisconnect() {
     if (savingLibraries || disconnectInFlight.current || disconnect.isPending) return;

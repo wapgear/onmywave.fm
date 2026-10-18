@@ -509,6 +509,7 @@ function registerIpc() {
   };
   for (const [name, operation] of Object.entries(operations)) {
     ipcMain.handle(`wave:${name}`, async (event, input: unknown) => {
+      const authRevision = service.connection()?.authRevision;
       try {
         if (!window || event.sender !== window.webContents || event.senderFrame !== window.webContents.mainFrame) throw new ServiceError('forbidden', 'Request denied.');
         if (input !== undefined && JSON.stringify(input).length > 8_000_000) invalid();
@@ -518,7 +519,7 @@ function registerIpc() {
       } catch (error) {
         if (error instanceof StorageError) newsUnavailable();
         const known = error instanceof ServiceError;
-        const safeError: ApiError = known ? { code: error.code, message: error.message }
+        const safeError: ApiError = known ? { code: error.code, message: error.message, ...(error.code === 'unauthorized' && authRevision !== undefined ? { authRevision } : {}) }
           : { code: 'server', message: 'The operation could not be completed. Please try again.' };
         return { ok: false, error: safeError };
       }

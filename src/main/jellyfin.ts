@@ -49,6 +49,7 @@ const stringArray = (value: unknown): string[] => Array.isArray(value) ? value.f
 
 export class JellyfinService {
   private session: Session | null = null;
+  private authRevision = 0;
   private connectionIntent = 0;
   private sessionRevision = 0;
   private connectionWrites = Promise.resolve();
@@ -58,7 +59,7 @@ export class JellyfinService {
   constructor(private deps: Deps) {}
   connection(): Connection | null {
     const s = this.session;
-    return s ? { id: `${s.serverUrl}|${s.userId}`, serverUrl: s.serverUrl, serverVersion: s.serverVersion, userName: s.userName, selectedLibraryIds: [...s.selectedLibraryIds], sessionOnly: s.sessionOnly } : null;
+    return s ? { authRevision: this.authRevision, id: `${s.serverUrl}|${s.userId}`, serverUrl: s.serverUrl, serverVersion: s.serverVersion, userName: s.userName, selectedLibraryIds: [...s.selectedLibraryIds], sessionOnly: s.sessionOnly } : null;
   }
   exportSession(): Session | null { return this.session ? { ...this.session, selectedLibraryIds: [...this.session.selectedLibraryIds] } : null; }
   cancelPendingSignIns(): void { ++this.connectionIntent; }
@@ -66,6 +67,7 @@ export class JellyfinService {
     const restored = session ? { ...session, serverUrl: serverAddress(session.serverUrl), userId: validId(session.userId), selectedLibraryIds: ids(session.selectedLibraryIds) } : null;
     ++this.connectionIntent;
     this.session = restored;
+    ++this.authRevision;
     this.catalogSnapshots.clear();
     this.catalogLoads.clear();
     ++this.sessionRevision;
@@ -86,7 +88,7 @@ export class JellyfinService {
         this.catalogSnapshots.clear();
         this.catalogLoads.clear();
         committed = true;
-        if (notify) this.deps.onConnectionChanged?.();
+        if (notify) { ++this.authRevision; this.deps.onConnectionChanged?.(); }
         return saved;
       };
       try {

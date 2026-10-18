@@ -3,12 +3,12 @@
   "baseCommit": "8650ff1dce5b2b55557ba27fc211961155a1c244",
   "scope": "Current exact-text source navigation with a separate candidate clause review. No atomic denominator or acceptance promotion is inferred from navigation or punctuation fragments.",
   "sourceFiles": {
-    "REQUIREMENTS.md": "73a6a749c958f23b739e83b204e21a0f71886fcd49367134aff00e84ca5ab11f",
-    "docs/RADIO_EXPERIENCE.md": "cba2f2386f8e9680e348f6c606f87eaa5a6f43447187f4dd087972668e75f0eb"
+    "REQUIREMENTS.md": "4fdaca7c1cdd5bf3f70aa8963c1c6d3fff5f06d896ec44303ee4eb8378df9d35",
+    "docs/RADIO_EXPERIENCE.md": "43bec7b6ca8b7f4286a11beacf59c2e55751a9ee4bbaa68ff40d158a6dab49d8"
   },
   "map": {
     "file": "2026-10-18-current-prd-source-map.csv",
-    "sha256": "c8adc4cb7722abb979858f0977e50b8da46341fbb4910bd1f6a1a7f9b737506c",
+    "sha256": "22068101e6765037cc653a3b7f1968310f4c9bc24b17dd81ea29ac4f4d370b65",
     "nonblankLines": 294,
     "classes": {
       "structure": 47,
@@ -413,7 +413,7 @@
     "sourceLineCoverage": "All294 nonblank lines of both current PRDs are reproduced once with exact current text/hash.",
     "checks": "Navigation references all191 current unique checklist IDs; these links alone are not evidence of passing clauses.",
     "stories": "Exactly27 unique STAR IDs retain their complete expected result.",
-    "app": "No production source, new build/lint/native result or listener result in this documentation-only revision.",
+    "app": "The19October auth-expiry revision changes production behavior;see its build/lint,native and bridge proof. Earlier documentation-only revisions remain historical.",
     "acceptance": "191 rows,189 active,2 deferred;25 known open,14 listener/11 other-proof. Q13 remains Review; no overall percentage or completion claim."
   },
   "limits": [
@@ -461,5 +461,28 @@
     "record": "2026-10-18-requirement-clause-review.json",
     "ledger": "2026-10-18-requirement-clauses.csv",
     "status": "Candidate text partition only; semantic denominator and proof acceptance remain incomplete."
+  },
+  "authExpiryRevision": {
+    "date": "2026-10-19",
+    "record": "2026-10-19-account-expiry-boundary.json",
+    "changedLines": [
+      [
+        "REQUIREMENTS.md",
+        3
+      ],
+      [
+        "REQUIREMENTS.md",
+        144
+      ],
+      [
+        "docs/RADIO_EXPERIENCE.md",
+        3
+      ],
+      [
+        "docs/RADIO_EXPERIENCE.md",
+        13
+      ]
+    ],
+    "meaning": "Clarify current-session expiry ownership and pending auth transitions after a reproduced contradiction. Initial reconciliation and prior dated evidence retain their scope."
   }
 }

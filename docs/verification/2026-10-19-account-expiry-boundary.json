@@ -1,0 +1,360 @@
+{
+  "date": "2026-10-19",
+  "baseCommit": "5589b4afc50dc38fb142762c059d85f6ffcc2a66",
+  "scope": "Fix current-account expiry ownership and defer it across sign-in/sign-out,including the proven main-commit/renderer-cache gap. Account requirement review found and fixed a real UI contradiction;broader semantic review remains incomplete.",
+  "reproduction": {
+    "service": "Actual JellyfinService+HTTP+MutationCache initially triggered expiry for the newer account from an old held rename401.",
+    "native": "Hold original library401 at actual IPC reply; main commits new account while Connect reply is held; releasing old401 remounts Welcome back for Original listener. Releasing accepted Connect leaves that old screen,although main has New listener.",
+    "beforeIsControlled": "Real native renderer/preload/main/service and HTTP401,with deterministic IPC reply gates. No synthetic auth event or direct UI-state mutation."
+  },
+  "implementation": {
+    "identity": "Runtime-only authRevision advances on restore and successful auth commit/disconnect. Library-only commits keep the same authentication identity. No token is exposed or stored format changed.",
+    "bridge": "Capture revision when each IPC invocation starts; attach only to unauthorized ApiError. Service error codes,write recovery and request classification remain unchanged. Covers Jellyfin JSON/status requests and media operation replies at one boundary.",
+    "renderer": "WaveError retains revision. Global query/mutation expiry only emits for the current cached revision. App rechecks it and defers matching expiry while an authAttempt is pending. Successful account update clears deferred expiry;failure flushes only if the same revision stays current.",
+    "signout": "Disconnect participates in authAttempt bookkeeping. Settings/ReadyApp preserve and await the async cache-clear promise before transition settlement. Already-expired retry remains on its current sign-in screen while pending."
+  },
+  "decision": {
+    "BorisInitial": "Central session-object stale401 guard.",
+    "NadiaInitial": "Central session-object stale401 guard.",
+    "challenge": "Object identity also changes on library save;classification-before-account-change still leaves reply-delivery gap. Runtime auth generation and IPC-delivery ownership cover both without error-code changes.",
+    "Morgan": "Use one IPC metadata seam,not nested request wrapper changes. Native reproduction proves pending auth must defer expiry,not merely compare cached account.",
+    "reviewFinding": "Boris identified analogous disconnect gap;add transition metadata and await connection-cache cleanup.",
+    "finalReview": {
+      "Boris": "Accept;no blocker in final diff and focused evidence.",
+      "Nadia": "Accept;no blocker including signout promise/deferral boundary."
+    }
+  },
+  "native": {
+    "baseline": "1280x720,100% app zoom;copied distinct native Electron app,production renderer/preload,bundled actual main and service,real local safeStorage,disposable localhost accounts and null shared-key adapter.",
+    "input": "CUA native field edits/clicks only. Playwright lifecycle and passive DOM/main readback. Backend gates hold actual replies,not UI commands or events.",
+    "snapshots": {
+      "before-corrected-new-committed": {
+        "sha256": "f434baac41261e4a96414573a70a241de558a5fcadffa901ea4dbd2372a07363",
+        "headings": [
+          "Use another account or server"
+        ],
+        "mainUser": "New listener",
+        "authRevision": null,
+        "replyHeld": true
+      },
+      "before-stale-expiry-interrupts-connect": {
+        "sha256": "a0a32b6df2a08df282177363dadd910323e48f49f422cba80e45846633bad986",
+        "headings": [
+          "Welcome back"
+        ],
+        "mainUser": "New listener",
+        "authRevision": null,
+        "replyHeld": true
+      },
+      "before-accepted-new-account-lost-in-ui": {
+        "sha256": "b67db5693149cb867ea0e68239979ea210d11e2bfec39436c7bcc266d0de7815",
+        "headings": [
+          "Welcome back"
+        ],
+        "mainUser": "New listener",
+        "authRevision": null,
+        "replyHeld": false
+      },
+      "final-new-committed-reply-held": {
+        "sha256": "8d07faa55960de422d87e61761dc906c1512264034408b3cfda09c7a6f23360f",
+        "headings": [
+          "Use another account or server"
+        ],
+        "mainUser": "New listener",
+        "authRevision": 2,
+        "replyHeld": true
+      },
+      "final-old-error-does-not-remount": {
+        "sha256": "8e1000c904a7686c6fcfca112a63197200bda3b6a826c79add461d5e99fa08bb",
+        "headings": [
+          "Use another account or server"
+        ],
+        "mainUser": "New listener",
+        "authRevision": 2,
+        "replyHeld": true
+      },
+      "final-new-account-chooser": {
+        "sha256": "be1f798f5802a1de2924e762e953b334d85222c1a4642421e51ac3f72d2a7e4a",
+        "headings": [
+          "Choose your libraries"
+        ],
+        "mainUser": "New listener",
+        "authRevision": 2,
+        "replyHeld": false
+      },
+      "final-library-save-keeps-auth-revision": {
+        "sha256": "453df521a6d743fc5ab407f2b2ac1a930f82ee73cf425a394bf884c5502aabba",
+        "headings": [
+          "All songs"
+        ],
+        "mainUser": "New listener",
+        "authRevision": 2,
+        "replyHeld": false
+      },
+      "final-current-401-after-library-save": {
+        "sha256": "6e84772272566917ca69556ae5c96855e7141830b9111402bb5c39b7e9ba6ab3",
+        "headings": [
+          "Welcome back"
+        ],
+        "mainUser": "New listener",
+        "authRevision": 2,
+        "replyHeld": false
+      },
+      "final-expired-same-account-retry-pending": {
+        "sha256": "44bf505a9811f19519a93289da9a1aa8dee5ddc10faa6994165841e13d22279e",
+        "headings": [
+          "Welcome back"
+        ],
+        "mainUser": "New listener",
+        "authRevision": 3,
+        "replyHeld": true
+      },
+      "final-same-account-retry-completed": {
+        "sha256": "45ebe5c550489f27f722ccd5e17fbc9b7c3dd19e1b6594827cd42ad7cb7df9c1",
+        "headings": [
+          "Choose your libraries"
+        ],
+        "mainUser": "New listener",
+        "authRevision": 3,
+        "replyHeld": false
+      },
+      "final-failed-auth-reply-held": {
+        "sha256": "fd605a57f6895b66b3f4e51cff808a1d3e2272c8e1bfe440e3fa5e43c24ead87",
+        "headings": [
+          "Use another account or server"
+        ],
+        "mainUser": "Original listener",
+        "authRevision": 1,
+        "replyHeld": true
+      },
+      "final-failed-auth-expiry-deferred": {
+        "sha256": "1726664737609db76276f828e9b6f3ae775515668020ec058f053bd95d1d9198",
+        "headings": [
+          "Use another account or server"
+        ],
+        "mainUser": "Original listener",
+        "authRevision": 1,
+        "replyHeld": true
+      },
+      "final-failed-auth-current-expiry-applied": {
+        "sha256": "68c88337a72c0f381f55b83e8e94d59945658f559ea3d262cb8c323724e24150",
+        "headings": [
+          "Welcome back"
+        ],
+        "mainUser": "Original listener",
+        "authRevision": 1,
+        "replyHeld": false
+      },
+      "final-signout-main-null-reply-held": {
+        "sha256": "da055005344ff411f94348a4e008e9abfd8b12f72007a384a69cdc30f17cf942",
+        "headings": [
+          "Settings",
+          "Account",
+          "Music libraries",
+          "DJ playback",
+          "DJ transitions",
+          "About",
+          "Sign out of Jellyfin?"
+        ],
+        "mainUser": null,
+        "authRevision": null,
+        "replyHeld": true
+      },
+      "final-signout-old-errors-do-not-remount": {
+        "sha256": "bddc7913d3453ed326d71f8f791d5a8a00a802b777dee4a20126664aca8ac85f",
+        "headings": [
+          "Settings",
+          "Account",
+          "Music libraries",
+          "DJ playback",
+          "DJ transitions",
+          "About",
+          "Sign out of Jellyfin?"
+        ],
+        "mainUser": null,
+        "authRevision": null,
+        "replyHeld": true
+      },
+      "final-signout-completed": {
+        "sha256": "f268f3dd49836b3c9643aaee55aee6f0128d942667e61e42db88f4dc0fd4297a",
+        "headings": [
+          "A home for your music."
+        ],
+        "mainUser": null,
+        "authRevision": null,
+        "replyHeld": false
+      }
+    },
+    "successfulProcesses": {
+      "before-corrected-report.json": "e0e5c019665058843ca364a7c2e25799df2a68829a63af098842c8802034e9ac",
+      "final-success-report.json": "96f359dc15d28a7f11854331bdbd0eca4cdf27a9ba57df0a4a78c78dda924c25",
+      "final-failed-auth-report.json": "1a2c7fd40f48b428d1d2e52f86f21018eed3f1d8fccb1626652c769ec36d657c",
+      "final-signout-report.json": "60c6c4fbe201ab00d61a2f2e010faa26a805af26d8fd224b12aaca64584fce0d"
+    },
+    "coverage": [
+      "Native bug reproduced before fix.",
+      "OldA error during accepted B reply stays Connecting;B chooser receives focus after success.",
+      "Library save keeps revision2;real current401 still opens Welcome back.",
+      "Same-account retry remains Welcome back while pending and reaches fresh chooser with revision3.",
+      "Failed replacement leaves old account committed;deferred genuine expiry applies after settlement.",
+      "Main-null signout reply held;old catalog errors do not remount;completion reaches signed-out screen."
+    ]
+  },
+  "service": {
+    "method": "Actual TypeScript-extracted IPC handler and renderer QueryClient/cache onError,actual WaveError unwrap,JellyfinService and owned HTTP responses. No UI actions or service request/error substitutions.",
+    "cases": [
+      {
+        "case": "current-mutation401",
+        "error": "unauthorized",
+        "authRevision": 1,
+        "expiryEvents": 1
+      },
+      {
+        "case": "old-mutation401-new-account",
+        "error": "unauthorized",
+        "authRevision": 1,
+        "expiryEvents": 0
+      },
+      {
+        "case": "already-classified401-delivered-after-new-cache",
+        "error": "unauthorized",
+        "authRevision": 1,
+        "expiryEvents": 0
+      },
+      {
+        "case": "old401-same-account-reconnect",
+        "error": "unauthorized",
+        "authRevision": 1,
+        "expiryEvents": 0
+      },
+      {
+        "case": "current401-after-library-save",
+        "error": "unauthorized",
+        "authRevision": 1,
+        "expiryEvents": 1
+      },
+      {
+        "case": "old401-after-disconnect",
+        "error": "unauthorized",
+        "authRevision": 1,
+        "expiryEvents": 0
+      },
+      {
+        "case": "old401-after-restore",
+        "error": "unauthorized",
+        "authRevision": 1,
+        "expiryEvents": 0
+      },
+      {
+        "case": "current-read401",
+        "error": "unauthorized",
+        "authRevision": 1,
+        "expiryEvents": 1
+      },
+      {
+        "case": "old-read401",
+        "error": "unauthorized",
+        "authRevision": 1,
+        "expiryEvents": 0
+      },
+      {
+        "case": "old403-preserved",
+        "error": "forbidden",
+        "authRevision": null,
+        "expiryEvents": 0
+      },
+      {
+        "case": "old500-preserved",
+        "error": "server",
+        "authRevision": null,
+        "expiryEvents": 0
+      },
+      {
+        "case": "old-interrupted-write-preserved",
+        "error": "uncertain-write",
+        "authRevision": null,
+        "expiryEvents": 0
+      }
+    ]
+  },
+  "sourceSha256": {
+    "src/main/index.ts": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+    "src/main/jellyfin.ts": "ad380aa5fc6e6963254831e5f5d5d67210053977a374e3473c62435d56dc26c8",
+    "src/renderer/App.tsx": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+    "src/renderer/api.ts": "9c2f347ebb911d73915cbc4178a03f33e8dfcfcec4ff4a8b2ef4cd1e94ca4e18",
+    "src/renderer/main.tsx": "fa6dae583c41c04186cb71ec7b3b68af716ba82fc46cb788b1b433d106141065",
+    "src/renderer/pages/Settings/Settings.page.tsx": "bfd9e02f6187a9581e9de3e5d941f66a35be7cf5477b68594b740ee25ebbf101",
+    "src/shared/types.ts": "a4777ac71292ab6adddcb1fce211ad14c7e324fe1ccd5ed278fb1f290dfcaea0",
+    "src/renderer/pages/Connection/Connection.page.tsx": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815"
+  },
+  "fixtureSha256": {
+    "/private/tmp/account-expiry-native-current/build.mjs": "bd7556bc9d0441bf7dfada6d3115ca192980713a79000a01183cfcce93064268",
+    "/private/tmp/account-expiry-native-current/bootstrap.mjs": "f66c4ac7b158149c8afdbff19f49df74cc1dda252d352b52e2fe7cea0c9233f5",
+    "/private/tmp/account-expiry-native-current/server.mjs": "4f75cc35a9515f5e6acdbabf1e5c98cfb6a1a0cc743b1b7889c4b466acc13aa5",
+    "/private/tmp/account-expiry-native-current/observe.cjs": "98960e688c7e1581441a462864931e3e97db3fe923d36f673fc994b5e416e151",
+    "/private/tmp/stale-account-errors-current/verify.mjs": "8eafba6b4bc00d8471f268d7d1d7eb0bbd21c256205729a9a08e584291df1717",
+    "/private/tmp/stale-account-errors-current/verification.json": "f22d18e488b6b91fb9fa2f429475dde8be1493fc692a7a8a1edd66183b4a908e"
+  },
+  "validation": {
+    "productionBuildTypeScript": "passed on final app source",
+    "fullLint": "passed on final app source",
+    "native": "Three final successful processes plus one corrected before reproduction,16 scoped snapshots;zero renderer errors.",
+    "bridge": "12 actual-service/HTTP,actual TypeScript-extracted IPC handler,actual renderer QueryClient/cache handler and WaveError cases pass. Stale/current/same/restore/disconnect/library-only/read/non401/interrupted-write covered.",
+    "privacy": "authRevision is a nonsecret runtime integer;exportSession assertions exclude it. No credential or token output included.",
+    "unitTests": "not added or run",
+    "cleanup": "All owned observers terminal exit0;catalog servers stopped130. Per-case HTTP servers close in finally."
+  },
+  "requirements": {
+    "canonicalGroup": "AUTH01",
+    "actor": "Listener changing or recovering an account",
+    "trigger": "A Jellyfin expiry reply overlaps sign-in,sign-out,reconnect or a library-only save",
+    "outcome": "Only current authentication may expire the UI. Pending account changes retain their page and completion;successful change discards old expiry;failed change applies genuine current expiry after settlement.",
+    "fragments": [
+      "REQ-L144-text-28",
+      "REQ-L144-text-29",
+      "REQ-L144-text-30",
+      "REQ-L144-text-31",
+      "REQ-L144-text-32",
+      "RAD-L013-text-14"
+    ],
+    "variants": [
+      "Current expiry with no auth change",
+      "Stale expiry after another/same account commits",
+      "Main commit before connect reply/cache update",
+      "Failed replacement then genuine expiry",
+      "Library-only save keeps current401 meaningful",
+      "Already-expired retry stays stable",
+      "Successful sign-out under late errors",
+      "Failed sign-out with deferred expiry"
+    ],
+    "checks": [
+      "C09",
+      "C11",
+      "C12",
+      "C15",
+      "Q06"
+    ],
+    "proofState": "reviewed-partial",
+    "remaining": [
+      "Failed signout plus deferred401 combined runtime variant is source-reviewed through the shared failure path,not separately replayed.",
+      "Full account/session lifecycle and listener acceptance remain in their existing broader scopes."
+    ],
+    "accepted": false
+  },
+  "limits": [
+    "Controlled native/service reproduction does not establish live-server compatibility,OS fault,power-loss,VoiceOver or uncoached usability.",
+    "No provider request,paid preparation,audible-media or hardware test.",
+    "No smaller viewport or200% zoom.",
+    "Initial seed missed required stored id;closed without behavior acceptance. First network-held old request hit deadline before intended race;excluded. Corrected accepted before run holds an actual HTTP401 at IPC reply boundary.",
+    "Fixture evolved: first final process used library-only error hold;later final processes broadened it to catalog errors/failed auth and disconnect. Final fixture hashes are not asserted as exact hashes of every historical adapter.",
+    "The bridge/cache matrix does not mount App;native processes provide pending-transition App evidence. It does not rerun playlist multi-batch recovery;service classifications and recovery code remain unchanged.",
+    "No full semantic denominator,whole account group,90percent or goal-completion claim.",
+    "The preparePlayback-named bridge read case exercises the actual IPC metadata path with an authenticated service read;it does not decode or fail a native stream/transcode."
+  ],
+  "buildSha256": {
+    "out/main/index.js": "5e0ab1e09c4f64b2a8c2dc2a17c9060cdffc3f10d9485398062e973c71763213",
+    "out/preload/index.cjs": "9b78be58d4f9bd70fb5b6d3315d888ee9442cfbf09bfab2b2f902de015e902f2",
+    "out/renderer/assets/index-BxYSxxHo.js": "0663a0d60d21f5c957193f8cb997610ff8349e1b0e8dfde7258de2752060b273",
+    "out/renderer/assets/index-CTTY7D_T.css": "311365026a2a43358e39a1d34174216b1bb7d4faea839db0b11092e497b58f0f"
+  }
+}
