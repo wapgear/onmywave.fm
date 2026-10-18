@@ -1,0 +1,917 @@
+{
+  "date": "2026-10-18",
+  "baseCommit": "76e2fed6e06616bc750cc619705ef5cbe6ebfccc",
+  "scope": [
+    "CI1 partial",
+    "R2",
+    "D01",
+    "D02",
+    "Q08"
+  ],
+  "problem": "Native baseline commits a new source, then failed follow-up getLocalState closes its dialog while leaving the source list empty. Shared DJ save/delete uses the same void-return/readback pattern.",
+  "decision": "Mechanical extension of the already-reviewed PR118 canonical snapshot contract. Root owns all edits and review; no new design alternative or independent paired review claimed.",
+  "changes": [
+    "saveDjs and saveNewsSources return their exact normalized committed LocalStateSnapshot via existing serialized updateLocalStateAndGet.",
+    "Sources save/delete, DJEditor save/duplicate and DJs delete all consume the receipt with existing confirmLocalState before refresh and normal dismissal.",
+    "Existing normalization, affected-profile markers, cleanup, playback invalidation, duplicate guards, validation/failure draft handling and dismissal rules remain. No extra write or provider action."
+  ],
+  "sourceSha256": {
+    "src/main/index.ts": "cdf2e042029210ba20b20dd529e838760c6158fe73bb8046118b93fff9085657",
+    "src/shared/types.ts": "05a3ae42a216e752b17897dae2268a0954f40a3127fc74a7053db578a3ead9e2",
+    "src/renderer/pages/Sources/Sources.page.tsx": "081ee16883dec3792c492c710414a0bb5f0ff98c6c17f8f7b448f8ad540bc73a",
+    "src/renderer/pages/DJs/DJs.page.tsx": "7e9111ce7c77f3b8f003b1378ec2a8bb4d5e9bae6f4216204974046c30c483fc",
+    "src/renderer/pages/DJs/components/DJEditor.component.tsx": "5c440c3fc2199e4f0d7de7ddb01f481707e8ac1d3470e8296e3f90a17691210d",
+    "src/renderer/local-state-cache.ts": "3408412238143901b1a1101577bbc097734c4f2f7998f34961a6fc6aae15b801",
+    "src/main/storage.ts": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f"
+  },
+  "baselineSourceSha256": {
+    "src/main/index.ts": "8b636e631b0acc0c92a49a4e0561ac096431eed30cb143a2af052aeb03695ee3",
+    "src/shared/types.ts": "d4e5e6f7acc4baadaee62e4ae656ca54b18347875c0692f46c2a3aa0d4dd71de",
+    "src/renderer/pages/Sources/Sources.page.tsx": "0010c35635ef75c8648bb4aded6b754603738cc0c345d493fa9624d8f4481fb8",
+    "src/renderer/pages/DJs/DJs.page.tsx": "b04a570f45ae65e795c87fa5a866755e2e620bc056223cab5a97e5db24c7faa1",
+    "src/renderer/pages/DJs/components/DJEditor.component.tsx": "64457abf271353499f45a9b719a643b90a330e87fdd86311981255cd1caa04ef"
+  },
+  "native": {
+    "contentSize": [
+      1280,
+      720
+    ],
+    "zoom": 1,
+    "runtime": "macOS arm64 Electron43.7.0",
+    "method": "CUA-only user input; Playwright owned lifecycle and passive DOM telemetry. Actual current main/preload/renderer with main IPC result gates. Gates hold/fail getLocalState after a successful real temp-file write. Dummy encrypted localhost connection, fresh synthetic state, scheduler stopped, audio muted.",
+    "snapshots": [
+      {
+        "name": "baseline-source-pending",
+        "rawSha256": "76339478aa52e43176236352ff62e4513f15e2e6820a20bcd062f7befc4b383f",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Saving\u2026",
+          "outline": "solid"
+        },
+        "names": [],
+        "dialogs": [
+          {
+            "text": "Add source\nName\nSource type\nRSS / Atom\nTwitter / X\nHacker News\nRSS or Atom URL\nCancel\nSaving\u2026",
+            "inputs": [
+              {
+                "label": "Name",
+                "value": "Evening source",
+                "disabled": false
+              },
+              {
+                "label": "Source typeRSS / AtomTwitter / XHacker News",
+                "value": "rss",
+                "disabled": false
+              },
+              {
+                "label": "RSS or Atom URL",
+                "value": "https://example.invalid/news.xml",
+                "disabled": false
+              }
+            ],
+            "buttons": [
+              {
+                "name": "",
+                "disabled": false,
+                "ariaDisabled": "true",
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Cancel",
+                "disabled": false,
+                "ariaDisabled": "true",
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Saving\u2026",
+                "disabled": false,
+                "ariaDisabled": "true",
+                "busy": "true",
+                "focused": true
+              }
+            ]
+          }
+        ],
+        "notices": [],
+        "headings": [
+          "Settings",
+          "Sources",
+          "Choose where your news comes from",
+          "Add source"
+        ],
+        "savedSources": [
+          {
+            "id": "3410b774-f54b-4cfa-805d-2b91311fc80e",
+            "name": "Evening source",
+            "kind": "rss",
+            "url": "https://example.invalid/news.xml"
+          }
+        ],
+        "savedDJNames": [],
+        "transport": "Play",
+        "held": [
+          "getLocalState"
+        ],
+        "calls": {
+          "saveNewsSources": 1,
+          "saveDjs": 0,
+          "getLocalState": 5
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "baseline-source-failed-readback",
+        "rawSha256": "17a77380693191a12779a7bd8ad2cf8c5e5591fa6a53bc2b042e0128a307e8bc",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Add source",
+          "outline": "solid"
+        },
+        "names": [],
+        "dialogs": [],
+        "notices": [
+          "getLocalState unavailable.\nTry again"
+        ],
+        "headings": [
+          "Settings",
+          "Sources"
+        ],
+        "savedSources": [
+          {
+            "id": "3410b774-f54b-4cfa-805d-2b91311fc80e",
+            "name": "Evening source",
+            "kind": "rss",
+            "url": "https://example.invalid/news.xml"
+          }
+        ],
+        "savedDJNames": [],
+        "transport": "Play",
+        "held": [],
+        "calls": {
+          "saveNewsSources": 1,
+          "saveDjs": 0,
+          "getLocalState": 6
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "final-source-save-pending",
+        "rawSha256": "bb80d6124e4e68644687be83491ada6dbfd4a6c253114246cfaf6689faac618d",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Saving\u2026",
+          "outline": "solid"
+        },
+        "names": [
+          "Evening source"
+        ],
+        "dialogs": [
+          {
+            "text": "Edit source\nName\nSource type\nRSS / Atom\nTwitter / X\nHacker News\nRSS or Atom URL\nCancel\nSaving\u2026",
+            "inputs": [
+              {
+                "label": "Name",
+                "value": "Evening source",
+                "disabled": false
+              },
+              {
+                "label": "Source typeRSS / AtomTwitter / XHacker News",
+                "value": "rss",
+                "disabled": false
+              },
+              {
+                "label": "RSS or Atom URL",
+                "value": "https://example.invalid/news.xml",
+                "disabled": false
+              }
+            ],
+            "buttons": [
+              {
+                "name": "",
+                "disabled": false,
+                "ariaDisabled": "true",
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Cancel",
+                "disabled": false,
+                "ariaDisabled": "true",
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Saving\u2026",
+                "disabled": false,
+                "ariaDisabled": "true",
+                "busy": "true",
+                "focused": true
+              }
+            ]
+          }
+        ],
+        "notices": [],
+        "headings": [
+          "Settings",
+          "Sources",
+          "Evening source",
+          "Edit source"
+        ],
+        "savedSources": [
+          {
+            "id": "cf79064c-5e8b-4fe9-ad4d-c92e22717a36",
+            "name": "Evening source",
+            "kind": "rss",
+            "url": "https://example.invalid/news.xml"
+          }
+        ],
+        "savedDJNames": [],
+        "transport": "Play",
+        "held": [
+          "getLocalState"
+        ],
+        "calls": {
+          "saveNewsSources": 1,
+          "saveDjs": 0,
+          "getLocalState": 4
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "final-source-save-failed-readback",
+        "rawSha256": "612507f53f463497e3aec59462b92f7d0e162e923da05e916c51e8686715ebfc",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Add source",
+          "outline": "solid"
+        },
+        "names": [
+          "Evening source"
+        ],
+        "dialogs": [],
+        "notices": [
+          "getLocalState unavailable.\nTry again"
+        ],
+        "headings": [
+          "Settings",
+          "Sources",
+          "Evening source"
+        ],
+        "savedSources": [
+          {
+            "id": "cf79064c-5e8b-4fe9-ad4d-c92e22717a36",
+            "name": "Evening source",
+            "kind": "rss",
+            "url": "https://example.invalid/news.xml"
+          }
+        ],
+        "savedDJNames": [],
+        "transport": "Play",
+        "held": [],
+        "calls": {
+          "saveNewsSources": 1,
+          "saveDjs": 0,
+          "getLocalState": 5
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "final-source-retry-read",
+        "rawSha256": "d275660ece4898c11b8a5aa3017d0a0c3e14b7f830d5698dea65b53b1d309283",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Edit Evening source",
+          "outline": "none"
+        },
+        "names": [
+          "Evening source"
+        ],
+        "dialogs": [],
+        "notices": [],
+        "headings": [
+          "Settings",
+          "Sources",
+          "Evening source"
+        ],
+        "savedSources": [
+          {
+            "id": "cf79064c-5e8b-4fe9-ad4d-c92e22717a36",
+            "name": "Evening source",
+            "kind": "rss",
+            "url": "https://example.invalid/news.xml"
+          }
+        ],
+        "savedDJNames": [],
+        "transport": "Play",
+        "held": [],
+        "calls": {
+          "saveNewsSources": 1,
+          "saveDjs": 0,
+          "getLocalState": 6
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "final-source-delete-pending",
+        "rawSha256": "bb631cc9cf9d5f8fe1ffe5fc8b14338a9cbc45412c5bc0d03ab5ab5b75cccf9d",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Deleting\u2026",
+          "outline": "none"
+        },
+        "names": [],
+        "dialogs": [
+          {
+            "text": "Delete Evening source?\n\nThis removes Evening source from your saved sources. Saved scripts and audio takes keep their source information.\n\nCancel\nDeleting\u2026",
+            "inputs": [],
+            "buttons": [
+              {
+                "name": "",
+                "disabled": false,
+                "ariaDisabled": "true",
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Cancel",
+                "disabled": false,
+                "ariaDisabled": "true",
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Deleting\u2026",
+                "disabled": false,
+                "ariaDisabled": "true",
+                "busy": "true",
+                "focused": true
+              }
+            ]
+          }
+        ],
+        "notices": [],
+        "headings": [
+          "Settings",
+          "Sources",
+          "Choose where your news comes from",
+          "Delete Evening source?"
+        ],
+        "savedSources": [],
+        "savedDJNames": [],
+        "transport": "Play",
+        "held": [
+          "getLocalState"
+        ],
+        "calls": {
+          "saveNewsSources": 2,
+          "saveDjs": 0,
+          "getLocalState": 8
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "final-source-delete-failed-readback",
+        "rawSha256": "783489c8ded4c0d0e2db83ad9e1d2e115585e6c4b7c72df1c7821acbeb869628",
+        "focus": {
+          "tag": "H1",
+          "name": "Sources",
+          "outline": "none"
+        },
+        "names": [],
+        "dialogs": [],
+        "notices": [
+          "getLocalState unavailable.\nTry again"
+        ],
+        "headings": [
+          "Settings",
+          "Sources"
+        ],
+        "savedSources": [],
+        "savedDJNames": [],
+        "transport": "Play",
+        "held": [],
+        "calls": {
+          "saveNewsSources": 2,
+          "saveDjs": 0,
+          "getLocalState": 9
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "final-source-delete-recovered",
+        "rawSha256": "3f6ad3c8c5bb7fa2e574beda74a091404e5475ccf67bd4445ee77aa308bccbbe",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "DJs",
+          "outline": "none"
+        },
+        "names": [],
+        "dialogs": [],
+        "notices": [],
+        "headings": [
+          "Settings",
+          "DJs",
+          "Choose a host for your news"
+        ],
+        "savedSources": [],
+        "savedDJNames": [],
+        "transport": "Play",
+        "held": [],
+        "calls": {
+          "saveNewsSources": 2,
+          "saveDjs": 0,
+          "getLocalState": 10
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "final-dj-save-pending",
+        "rawSha256": "e4dd0a80d5309f37a623b6ed2746bbbc2670418b5ccf75ee04c48e6e40959abb",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Saving\u2026",
+          "outline": "none"
+        },
+        "names": [
+          "Evening host"
+        ],
+        "dialogs": [
+          {
+            "text": "Create a DJ\nPredefined\nSimple\nAdvanced\n\nStart with a ready-made personality and voice.\n\nEnthusiastic\nCurious, upbeat, delighted to share.\nEnergetic\nFast, punchy, ready to turn it up.\nQuiet & warm\nSoft, unhurried, easy company.\nProfessor\nThoughtful context, clearly explained.\nNerdy\nDeep cuts, details, a little dry wit.\nMan\nWoman\nElevenLabs \u00b7 Sarah\nApply preset\nPreview voice\nSarah \u00b7 voice sample\n\nSaved locally. Replaying does not make a provider request.\n\nApplies the personality, description, voice and delivery. Voice access depends on your ElevenLabs account. You can listen after saving.\n\nSelected voice: Sarah You can tweak this DJ in Advanced.\n\nName\n\nSaving a DJ does not generate audio, start playback, or change a selected take.\n\nCancel\nSaving\u2026",
+            "inputs": [
+              {
+                "label": "Describe your DJUse short descriptive keywords. Searches the names, descriptions and labels of voices available to your ElevenLabs account.",
+                "value": "",
+                "disabled": false
+              },
+              {
+                "label": "Voice preferenceAny voiceManWoman",
+                "value": "any",
+                "disabled": false
+              },
+              {
+                "label": "Name",
+                "value": "Evening host",
+                "disabled": false
+              },
+              {
+                "label": "PersonalityA quiet, warm companion. Speak gently and without rushing. Keep commentary brief, thoughtful and relaxed, leaving plenty of space for the music.",
+                "value": "A quiet, warm companion. Speak gently and without rushing. Keep commentary brief, thoughtful and relaxed, leaving plenty of space for the music.",
+                "disabled": false
+              },
+              {
+                "label": "Language",
+                "value": "",
+                "disabled": false
+              },
+              {
+                "label": "ElevenLabs voice IDFind this ID in your ElevenLabs voice library. Your existing voice is kept when you edit this DJ.",
+                "value": "EXAVITQu4vr4xnSDxMaL",
+                "disabled": false
+              },
+              {
+                "label": "Short description",
+                "value": "Soft, unhurried, easy company.",
+                "disabled": false
+              },
+              {
+                "label": "Host instructions",
+                "value": "",
+                "disabled": false
+              },
+              {
+                "label": "Music preferences",
+                "value": "",
+                "disabled": false
+              },
+              {
+                "label": "Exclusions",
+                "value": "",
+                "disabled": false
+              },
+              {
+                "label": "News interests",
+                "value": "",
+                "disabled": false
+              },
+              {
+                "label": "Delivery tagsOptional bracketed tags supported by your voice provider.",
+                "value": "",
+                "disabled": false
+              },
+              {
+                "label": "Music level under the voice5%Applied when you schedule a saved take over music.",
+                "value": "0.05",
+                "disabled": false
+              }
+            ],
+            "buttons": [
+              {
+                "name": "",
+                "disabled": false,
+                "ariaDisabled": "true",
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Predefined",
+                "disabled": false,
+                "ariaDisabled": null,
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Simple",
+                "disabled": false,
+                "ariaDisabled": null,
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Advanced",
+                "disabled": false,
+                "ariaDisabled": null,
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "EnthusiasticCurious, upbeat, delighted to share.",
+                "disabled": false,
+                "ariaDisabled": null,
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "EnergeticFast, punchy, ready to turn it up.",
+                "disabled": false,
+                "ariaDisabled": null,
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Quiet & warmSoft, unhurried, easy company.",
+                "disabled": false,
+                "ariaDisabled": null,
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "ProfessorThoughtful context, clearly explained.",
+                "disabled": false,
+                "ariaDisabled": null,
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "NerdyDeep cuts, details, a little dry wit.",
+                "disabled": false,
+                "ariaDisabled": null,
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Man",
+                "disabled": false,
+                "ariaDisabled": null,
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Woman",
+                "disabled": false,
+                "ariaDisabled": null,
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Apply preset",
+                "disabled": false,
+                "ariaDisabled": null,
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Preview voice",
+                "disabled": false,
+                "ariaDisabled": null,
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Find voices",
+                "disabled": true,
+                "ariaDisabled": null,
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Preview voice",
+                "disabled": true,
+                "ariaDisabled": "true",
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Preview voice",
+                "disabled": true,
+                "ariaDisabled": "true",
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Cancel",
+                "disabled": false,
+                "ariaDisabled": "true",
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Saving\u2026",
+                "disabled": false,
+                "ariaDisabled": "true",
+                "busy": "true",
+                "focused": true
+              }
+            ]
+          }
+        ],
+        "notices": [],
+        "headings": [
+          "Settings",
+          "DJs",
+          "Evening host",
+          "Create a DJ"
+        ],
+        "savedSources": [],
+        "savedDJNames": [
+          "Evening host"
+        ],
+        "transport": "Play",
+        "held": [
+          "getLocalState"
+        ],
+        "calls": {
+          "saveNewsSources": 2,
+          "saveDjs": 1,
+          "getLocalState": 12
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "final-dj-save-failed-readback",
+        "rawSha256": "43ce6655a58d9cf76cc23c4a23b9300455401da09fd4043e28353b97a9a5f7ad",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "New DJ",
+          "outline": "none"
+        },
+        "names": [
+          "Evening host"
+        ],
+        "dialogs": [],
+        "notices": [
+          "getLocalState unavailable.\nTry again"
+        ],
+        "headings": [
+          "Settings",
+          "DJs",
+          "Evening host"
+        ],
+        "savedSources": [],
+        "savedDJNames": [
+          "Evening host"
+        ],
+        "transport": "Play",
+        "held": [],
+        "calls": {
+          "saveNewsSources": 2,
+          "saveDjs": 1,
+          "getLocalState": 13
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "final-dj-retry-read",
+        "rawSha256": "bccfd0e615817c7ce0b6266216e971c71a2d699d2e6c2e0a2d2662843ed606b1",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Edit Evening host",
+          "outline": "none"
+        },
+        "names": [
+          "Evening host"
+        ],
+        "dialogs": [],
+        "notices": [],
+        "headings": [
+          "Settings",
+          "DJs",
+          "Evening host"
+        ],
+        "savedSources": [],
+        "savedDJNames": [
+          "Evening host"
+        ],
+        "transport": "Play",
+        "held": [],
+        "calls": {
+          "saveNewsSources": 2,
+          "saveDjs": 1,
+          "getLocalState": 14
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "final-dj-delete-pending",
+        "rawSha256": "3dd628f80235403df5652ec8e74820f74ebf0d0f013b5d1e9e2e3bc3be6f6445",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Deleting\u2026",
+          "outline": "none"
+        },
+        "names": [],
+        "dialogs": [
+          {
+            "text": "Delete Evening host?\n\nThis removes Evening host from your saved DJs. Saved scripts and audio takes keep their original DJ information.\n\nCancel\nDeleting\u2026",
+            "inputs": [],
+            "buttons": [
+              {
+                "name": "",
+                "disabled": false,
+                "ariaDisabled": "true",
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Cancel",
+                "disabled": false,
+                "ariaDisabled": "true",
+                "busy": null,
+                "focused": false
+              },
+              {
+                "name": "Deleting\u2026",
+                "disabled": false,
+                "ariaDisabled": "true",
+                "busy": "true",
+                "focused": true
+              }
+            ]
+          }
+        ],
+        "notices": [],
+        "headings": [
+          "Settings",
+          "DJs",
+          "Choose a host for your news",
+          "Delete Evening host?"
+        ],
+        "savedSources": [],
+        "savedDJNames": [],
+        "transport": "Play",
+        "held": [
+          "getLocalState"
+        ],
+        "calls": {
+          "saveNewsSources": 2,
+          "saveDjs": 2,
+          "getLocalState": 16
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "final-dj-delete-failed-readback",
+        "rawSha256": "8d067b62d1fc7a23ab451f4870ceb50c85a85603fe1dfc9da5661cfa5c7d3399",
+        "focus": {
+          "tag": "H1",
+          "name": "DJs",
+          "outline": "none"
+        },
+        "names": [],
+        "dialogs": [],
+        "notices": [
+          "getLocalState unavailable.\nTry again"
+        ],
+        "headings": [
+          "Settings",
+          "DJs"
+        ],
+        "savedSources": [],
+        "savedDJNames": [],
+        "transport": "Play",
+        "held": [],
+        "calls": {
+          "saveNewsSources": 2,
+          "saveDjs": 2,
+          "getLocalState": 17
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "final-dj-delete-recovered",
+        "rawSha256": "15f6a4daa228cd9b35698947082e49ff750a93ab0e62e5a098d922ffd0487b34",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "New DJ",
+          "outline": "none"
+        },
+        "names": [],
+        "dialogs": [],
+        "notices": [],
+        "headings": [
+          "Settings",
+          "DJs",
+          "Choose a host for your news"
+        ],
+        "savedSources": [],
+        "savedDJNames": [],
+        "transport": "Play",
+        "held": [],
+        "calls": {
+          "saveNewsSources": 2,
+          "saveDjs": 2,
+          "getLocalState": 18
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      }
+    ],
+    "result": "All four native source/DJ save/delete flows retain committed list changes after failed refresh. Explicit Retry succeeds with unchanged mutation counts: two source writes, two DJ writes. Surviving add/new opener or heading receives focus after dialog closure; read Retry reaches appropriate result/add action. Paused duplicate queue and DJ playback settings unchanged.",
+    "driverCorrection": "New DJ Save is initially unavailable until Apply preset supplies a voice. The first Return on the name does not save or dispatch. Applied the actual bundled preset, then explicitly saved; no provider request."
+  },
+  "serviceChecks": {
+    "result": "pass",
+    "rows": [
+      "source save returns canonical normalized committed data",
+      "DJ save receipt includes saved host and previous sources",
+      "DJ edit receipt includes affected run setup marker",
+      "DJ deletion receipt includes cleaned room and disabled playback",
+      "source deletion receipt includes cleaned room and disabled playback",
+      "invalid DJ save preserves committed state and revision",
+      "invalid source save produces no commit",
+      "saved JSON excludes runtime revision"
+    ],
+    "counts": {
+      "writes": 0,
+      "external": 0
+    }
+  },
+  "retainedOrderingProof": {
+    "record": "2026-10-18-radio-configuration-readback.json",
+    "storageAndCacheSourceMatch": true,
+    "meaning": "Existing exact source and10 storage/cache checks cover monotonic observed-snapshot ordering, failed storage writes, absent cache and fresh-process reload. Not rerun for counts."
+  },
+  "validation": {
+    "buildTypecheck": "pass",
+    "fullLint": "pass",
+    "initialCompileCorrection": "Initial edit added a parenthesis to the preceding getLocalState call on the one-line DJ deletion mutation. TypeScript caught it; corrected before passing build/native/service checks.",
+    "noUnitFramework": true
+  },
+  "sourceMapUpdate": {
+    "changed": [
+      {
+        "source": "REQUIREMENTS.md",
+        "line": 279,
+        "oldSha256": "04af3e948595f20eb0ed409f3f2c0a0ca89441a62ef92661d5fbcf49c701653d",
+        "newSha256": "6c74c3518bee4ba5e6265f44f59b679decbcde6b9f8fbf7e77ba0ecbe5d31040",
+        "checks": "S11 S13 S14 D01 D20 Q06"
+      },
+      {
+        "source": "docs/RADIO_EXPERIENCE.md",
+        "line": 92,
+        "oldSha256": "23c5a506b0d2e8b0eaa7ce23011c3c7ec9033fa4345e70f4e13a879f44b856a3",
+        "newSha256": "213e75e575abf4cc562397fe150982af9945add7eaaf4cc041c3a59f90d5d3e3",
+        "checks": "R03 R04 R06 R08 R09 D01 D02 S01 S02 S03 V07 Q06 Q08"
+      }
+    ],
+    "nonblankLines": 294,
+    "uniqueChecks": 191,
+    "sourceFiles": {
+      "REQUIREMENTS.md": "2b4af58ff315e55e5cb6f1ef2f58a320e755fa63ba453575fe736fb2a3035ea1",
+      "docs/RADIO_EXPERIENCE.md": "8d3f339e73182400b2a39238c0c1eaaf9bd37c92b70ac047251612ada27a9788"
+    },
+    "mapSha256": "a367494619d7743a3d31864521b7894e306cf19b0a35d51592353e833675b8c8"
+  },
+  "cleanup": "Native baseline/final and main-service processes completed; owned localhost5196 server stopped and terminal143 observed. Synthetic source and DJ deleted through native UI; no real server/provider used.",
+  "limits": [
+    "CI1 broader lifetime adjudication remains open; this closes another concrete failed-readback gap.",
+    "Service checks call actual registered main operation functions with fixture storage setup, not the renderer authorization wrapper; native flows traverse actual preload/IPC wrapper.",
+    "No live provider, audible quality, listener, OS/platform or deferred viewport/zoom proof.",
+    "All191 dispositions unchanged;25 open checks,14 listener and11 other-proof."
+  ]
+}

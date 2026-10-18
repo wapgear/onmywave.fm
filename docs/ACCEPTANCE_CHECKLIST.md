@@ -905,3 +905,10 @@ The [configuration readback record](verification/2026-10-18-radio-configuration-
 At 1280×720 and 100%, native setup retains the saved mood and outlined Save through failed refresh, ignores repeat submission and lets Tab leave. Copy creates one unavailable profile with preparation off; switch shows that copied profile despite failed refresh. Later read recovery repeats none of those writes and preserves the paused duplicate queue. Ten focused storage/cache checks include failed writes, delayed replies/reads and fresh-process reload; ten actual main-operation checks cover canonical setup, resume, copy, switch, off, availability and General results. Production build/TypeScript and full lint pass.
 
 REQUIREMENTS and STAR R2/M14 now explicitly describe confirmed values and read-only recovery. The current navigation map refreshes those three source lines and retains all 294 nonblank lines; it remains a navigation map rather than an atomic denominator. CI1 and Q13 remain under broader review. All 191 dispositions and 25 open checks remain unchanged, 14 listener and 11 other-proof.
+
+
+## Confirmed shared edits after failed refresh, 18 October 2026
+
+The [shared-editor readback record](verification/2026-10-18-shared-editor-readback.json) reproduces a committed source disappearing from the visible list after its follow-up read fails. Sources and DJs now return the exact committed snapshot and use the existing monotonic cache helper before refreshing. Native source and DJ save/delete flows keep their changes visible during failed readback; explicit read Retry repeats none of their four total writes. Eight actual main-operation checks cover normalized sources, DJ changes, affected run markers, cleaned profile references, playback disablement and invalid-save rejection. Production build/TypeScript and full lint pass.
+
+REQUIREMENTS and STAR R2 explicitly retain shared changes through failed refresh. The navigation map remains current for all 294 nonblank source lines and 191 check links. CI1 remains under the broader lifetime review. All 191 dispositions and 25 open checks remain unchanged, 14 listener and 11 other-proof.

@@ -3,6 +3,7 @@ import { useId, useLayoutEffect, useRef, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { DJ, DJVoice, DJVoiceSearch, NewsSettings } from '../../../../shared/types';
 import { unwrap } from '../../../api';
+import { confirmLocalState } from '../../../local-state-cache';
 import { Dialog, ErrorNotice } from '../../../components/Shared';
 import { ConfigurationTabs } from '../../../components/ConfigurationTabs/ConfigurationTabs.component';
 import { djPresets } from './DJEditor.presets';
@@ -58,7 +59,7 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
       const next = { ...draft, name: draft.name.trim() };
       const local = unwrap(await window.wave.getLocalState());
       const djs = local.djs.some(dj => dj.id === next.id) ? local.djs.map(dj => dj.id === next.id ? next : dj) : [...local.djs, next];
-      unwrap(await window.wave.saveDjs(djs));
+      await confirmLocalState(client, unwrap(await window.wave.saveDjs(djs)));
       await Promise.all([client.invalidateQueries({ queryKey: ['localState'] }), client.invalidateQueries({ queryKey: ['djVoicePreview', next.id] })]);
     },
     onSuccess: close,
