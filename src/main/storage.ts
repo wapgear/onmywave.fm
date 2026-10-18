@@ -7,7 +7,7 @@ import { renameSync, unlinkSync } from 'node:fs';
 import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { defaultWorkflowDraft, isWorkflowDraft, normalizeWorkflowDraft } from '../shared/workflow';
-import type { LocalState, ListeningRoom, RoomProfile } from '../shared/types';
+import type { LocalState, LocalStateSnapshot, ListeningRoom, RoomProfile } from '../shared/types';
 import { readSharedProviderKey, writeSharedProviderKey } from './keychain';
 import { normalizePlaybackPreferences } from './playback-preferences';
 import { StorageError } from './storage-error';
@@ -18,6 +18,7 @@ export type StoredConnection = {
 };
 const emptyState = (): LocalState => ({ preparationErrorVersion: 1, djPlayback: defaultDJPlaybackSettings(), roomProfiles: [{ enabled: true, id: 'default-room', name: 'My room', room: { djId: null, sourceIds: [] }, mood: '', workflowDraft: defaultWorkflowDraft() }], activeRoomProfileId: 'default-room', newsTransitions: defaultNewsTransitionSettings(), djs: [], vibe: '', playback: null, playbackPreferences: {}, sources: [], listeningRoom: { djId: null, sourceIds: [] }, workflowDraft: defaultWorkflowDraft() });
 let localState: LocalState | undefined;
+let localStateRevision = 0;
 let localStateLoading: Promise<void> | undefined;
 let localStateMigrationPending = false;
 let localStateMigration: Promise<void> | undefined;
@@ -163,7 +164,7 @@ function synchronizeRoomProfiles(state: LocalState): LocalState {
   return { ...state, listeningRoom, roomProfiles, djPlayback: valid ? state.djPlayback : { ...state.djPlayback, enabled: false, roomId: selected?.id ?? null } };
 }
 
-export async function getLocalState(): Promise<LocalState> {
+export async function getLocalState(): Promise<LocalStateSnapshot> {
   if (!localState) {
     localStateLoading ??= (async () => {
     try {
@@ -204,17 +205,23 @@ export async function getLocalState(): Promise<LocalState> {
     localStateMigration ??= atomicWrite('local-state.json', JSON.stringify(localState)).catch(() => { throw new StorageError('Local settings could not be saved. Your existing settings were preserved.'); }).then(() => { localStateMigrationPending = false; }).finally(() => { localStateMigration = undefined; });
     await localStateMigration;
   }
-  return structuredClone(localState!);
+  return { ...structuredClone(localState!), revision: localStateRevision };
 }
 
-export function updateLocalState(patch: Partial<LocalState> | ((state: LocalState) => Partial<LocalState>)): Promise<void> {
+export async function updateLocalState(patch: Partial<LocalState> | ((state: LocalState) => Partial<LocalState>)): Promise<void> {
+  await updateLocalStateAndGet(patch);
+}
+
+export function updateLocalStateAndGet(patch: Partial<LocalState> | ((state: LocalState) => Partial<LocalState>)): Promise<LocalStateSnapshot> {
   const next = writes.then(async () => {
-    const current = await getLocalState();
+    await getLocalState();
+    const current = structuredClone(localState!);
     const state = synchronizeRoomProfiles({ ...current, ...(typeof patch === 'function' ? patch(current) : patch) });
     try { await atomicWrite('local-state.json', JSON.stringify(state)); }
     catch { throw new StorageError('Local settings could not be saved. Your existing settings were preserved.'); }
     localState = state;
+    return { ...structuredClone(state), revision: ++localStateRevision };
   });
-  writes = next.catch(() => {});
+  writes = next.then(() => {}, () => {});
   return next;
 }

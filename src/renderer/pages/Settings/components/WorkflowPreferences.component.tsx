@@ -50,7 +50,7 @@ export function WorkflowPreferences({ active, resuming, resumeError, stopError, 
   const blockedSave = value.newsEnabled && !mayEnable;
   const needsRepair = !!room?.workflowDraft.newsEnabled && blockedSave;
   const saveUnavailable = !recoveryReady || blockedSave;
-  const saveDisabled = !saving && (saveUnavailable || disabled || (!dirty && !ownsSaveFocus));
+  const saveDisabled = !saving && !ownsSaveFocus && (saveUnavailable || disabled || !dirty);
   const saveAriaDisabled = saveUnavailable || disabled || saving || !dirty;
   const needsResume = !!room?.enabled && !!room.workflowDraft.newsEnabled && !!(room.workflowDraft.newsWorkflowError || room.workflowDraft.newsWorkflowPaused);
   const resumeAllowed = needsResume && recoveryReady && !disabled && !saving && !dirty && mayEnable && !resuming;

@@ -3,6 +3,7 @@ import { useIsMutating, useMutation, useQuery, useQueryClient } from '@tanstack/
 import { Headphones, LoaderCircle, Newspaper } from 'lucide-react';
 import type { ApiError, ListeningRoom, NewsProgress, PreparedNewsRequest, PreparedNewsTake } from '../../../shared/types';
 import { WaveError, unwrap } from '../../api';
+import { confirmLocalState } from '../../local-state-cache';
 import { Dialog, ErrorNotice, PageHeading, errorMessage } from '../../components/Shared';
 import { FilterSelect } from '../../components/FilterSelect/FilterSelect.component';
 import { InfoHelp } from '../../components/InfoHelp/InfoHelp.component';
@@ -154,7 +155,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
     const latest = unwrap(await window.wave.getLocalState());
     if (latest.activeRoomProfileId !== activeProfile?.id) throw new Error('The active room changed before these settings were saved. Review the room and try again.');
     const workflow = includeWorkflow && configDraft.workflow?.roomId === latest.activeRoomProfileId ? configDraft.workflow.patch : {};
-    unwrap(await window.wave.saveWorkflowDraft({ expectedProfileId: latest.activeRoomProfileId, workflowDraft: { ...latest.workflowDraft, ...workflow, newsInterests }, room, mood: mood.trim() }));
+    await confirmLocalState(client, unwrap(await window.wave.saveWorkflowDraft({ expectedProfileId: latest.activeRoomProfileId, workflowDraft: { ...latest.workflowDraft, ...workflow, newsInterests }, room, mood: mood.trim() })));
     await client.invalidateQueries({ queryKey: ['localState'] });
     setConfigDraft(current => ({ ...current,
       ...(current.stopError === submittedDraft.stopError ? { stopError: undefined } : {}),
@@ -174,7 +175,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
     if (missing) throw new Error(missing);
     const current = unwrap(await window.wave.getLocalState());
     if (current.activeRoomProfileId !== profile.id) throw new Error('The active room changed. Reopen its settings before resuming preparation.');
-    unwrap(await window.wave.saveWorkflowDraft({ expectedProfileId: profile.id, workflowDraft: profile.workflowDraft, room: profile.room, mood: profile.mood, resumePreparation: true }));
+    await confirmLocalState(client, unwrap(await window.wave.saveWorkflowDraft({ expectedProfileId: profile.id, workflowDraft: profile.workflowDraft, room: profile.room, mood: profile.mood, resumePreparation: true })));
     await client.invalidateQueries({ queryKey: ['localState'] });
   }, onError: error => setConfigDraft(current => ({ ...current, operationError: errorMessage(error), operationErrorTarget: 'resume' })), onSettled: () => { workflowActionInFlight.current = false; } });
   async function getWorkflowReadinessError(): Promise<string | null> {
@@ -271,7 +272,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   const runningProfiles = running ? state.data?.roomProfiles.filter(profile => profile.workflowDraft.newsLastRun?.requestId === running.requestId && profile.workflowDraft.newsLastRun.outcome === 'running') ?? [] : [];
   const runningProfile = runningProfiles.length === 1 ? runningProfiles[0] : undefined;
   const turnOff = useMutation({ mutationKey: ['roomConfiguration'], onMutate: input => setConfigDraft(current => ({ ...current, stopError: undefined, stopErrorOrigin: input.origin })), mutationFn: async (input: { roomId: string; name: string; workflow: RoomSetupDraft['workflow']; origin: 'settings' | 'progress' }) => {
-    unwrap(await window.wave.disableNewsPreparation(input.roomId));
+    await confirmLocalState(client, unwrap(await window.wave.disableNewsPreparation(input.roomId)));
   }, onSuccess: async (_result, input) => {
     await Promise.all([client.invalidateQueries({ queryKey: ['localState'] }), refresh()]);
     setConfigDraft(current => {
@@ -286,10 +287,10 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
     if (action.kind === 'copy') {
       const latest = unwrap(await window.wave.getLocalState());
       const workflow = configDraft.workflow?.roomId === latest.activeRoomProfileId ? configDraft.workflow.patch : {};
-      unwrap(await window.wave.saveRoomProfile({ name: profileName.trim(), room, mood: mood.trim(), workflowDraft: { ...latest.workflowDraft, ...workflow, newsInterests } }));
+      await confirmLocalState(client, unwrap(await window.wave.saveRoomProfile({ name: profileName.trim(), room, mood: mood.trim(), workflowDraft: { ...latest.workflowDraft, ...workflow, newsInterests } })));
     } else {
       if (action.saveChanges) await persistSetup(true);
-      unwrap(await window.wave.activateRoomProfile(action.id));
+      await confirmLocalState(client, unwrap(await window.wave.activateRoomProfile(action.id)));
     }
     await client.invalidateQueries({ queryKey: ['localState'] });
     if (action.kind === 'copy') {
@@ -302,7 +303,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
     }
   }, onSettled: () => { profileSubmission.current = false; } });
   const enableProfile = useMutation({ ...configurationMutation, mutationFn: async (input: { id: string; enabled: boolean }) => {
-    unwrap(await window.wave.setRoomProfileEnabled(input));
+    await confirmLocalState(client, unwrap(await window.wave.setRoomProfileEnabled(input)));
     await client.invalidateQueries({ queryKey: ['localState'] });
   }, onError: error => setConfigDraft(current => ({ ...current, operationError: errorMessage(error), operationErrorTarget: 'availability' })), onSettled: () => { workflowActionInFlight.current = false; } });
   const setupBusy = preparationStatusUnknown || cancellationPending || configurationPending || manualPending || (!!running && !runningProfile);

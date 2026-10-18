@@ -1,0 +1,1606 @@
+{
+  "date": "2026-10-18",
+  "baseCommit": "eb8f572acde0fa03b268f96b7971b2a62ed8f558",
+  "scope": [
+    "CI1 partial",
+    "D21",
+    "D22",
+    "D06",
+    "D08",
+    "Q08",
+    "R2",
+    "M14"
+  ],
+  "problem": "A successful setup save cleared the submitted overlay after a failed invalidation, displaying blank mood although disk had Warm evening host. Copy/switch and workflow status paths relied on the same void response/readback pattern.",
+  "decision": {
+    "frontend": "Steve and Elena independently recommend exact canonical committed data over reconstructing normalized workflow fields or treating failed readback as a failed write. Challenge rejects throwOnError-only, especially duplicate copies.",
+    "backend": "Boris and Nadia independently recommend exact writer transaction snapshot with runtime revision. Root chooses full LocalStateSnapshot plus central monotonic query sharing over partial projection/CAS complexity.",
+    "reservation": "Revision orders only observed committed/read snapshots. An unseen later commit is unknown when refresh fails; the status error and existing read recovery remain. No latest-disk guarantee is made from an old receipt.",
+    "review": "Steve and Elena final source reviews find no actionable issue, including inert focused Save guards. Nadia finds none. Boris requested the direct player caller consume its snapshot; root addressed it, and Boris final review finds no new actionable issue. Reviewers use reported checks rather than rerunning them.",
+    "ownership": "Root implements all files; pairs read-only."
+  },
+  "implementation": [
+    "Storage captures normalized snapshot only after atomic commit and increments runtime revision in the same serialized queue. Existing void wrapper uses this path too; revision is never persisted.",
+    "Seven APIs return exact committed snapshots: setup/resume, preparation off, copy, switch, availability, General playback, General transitions. No extra post-write storage read is needed to describe that write.",
+    "All affected Stations and General consumers plus direct player save apply only into an existing cache. localState query structural sharing rejects older snapshots from replies or reads.",
+    "Existing saved-state refresh, readiness/error gates, draft equality guards and mutation locks remain. Setup Save retains already-owned focus when status becomes unavailable, remains inert via submit guard/aria-disabled, and returns to native disabled after blur."
+  ],
+  "sourceSha256": {
+    "src/main/storage.ts": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+    "src/main/index.ts": "8b636e631b0acc0c92a49a4e0561ac096431eed30cb143a2af052aeb03695ee3",
+    "src/shared/types.ts": "d4e5e6f7acc4baadaee62e4ae656ca54b18347875c0692f46c2a3aa0d4dd71de",
+    "src/renderer/local-state-cache.ts": "3408412238143901b1a1101577bbc097734c4f2f7998f34961a6fc6aae15b801",
+    "src/renderer/main.tsx": "93eaf626f62d66c274b74e098672afb222d3c588a78eaac53d4b9b309a0cb2e3",
+    "src/renderer/dj-playback.tsx": "17c889d6939a34ed06202091f4a8ae4cd8e84c6422dbe9da6341315b79b135dc",
+    "src/renderer/pages/Settings/SettingsEdits.tsx": "0319d54594b8e7658485e8a9dbc33b78b050633623f8cb1665872b2e75387f89",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": "0cd2699a1bc6131ebc898ae216f434223684746e209e275edd43008e56a191d1",
+    "src/renderer/pages/Stations/Stations.page.tsx": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573"
+  },
+  "baselineStationsSha256": "af0c5219948700ed27fab50a9490184856a2055983fae09a64781dd2ee8f8bc2",
+  "verification": {
+    "storageAndCache": {
+      "rows": [
+        "initial snapshot has runtime revision zero",
+        "queued receipts retain their own committed value",
+        "disk excludes runtime revision",
+        "receipt isolated from storage cache",
+        "failed write preserves value and revision",
+        "legacy void write participates in same revision sequence",
+        "older delayed receipt cannot replace newer cache",
+        "older read cannot replace newer cache",
+        "absent cache is not seeded by old completion",
+        "fresh process reloads saved state with reset runtime revision"
+      ],
+      "result": "pass"
+    },
+    "mainOperations": {
+      "result": "pass",
+      "rows": [
+        "setup receipt carries trimmed committed mood and active mirror",
+        "setup preserves saved pause and assessment count",
+        "explicit resume result clears durable pause",
+        "copy receipt includes generated identity and forced-off clean profile",
+        "activation receipt names actual target and mirrors it",
+        "disable receipt includes saved off and no next check",
+        "availability receipt includes synchronized playback disablement",
+        "General playback receipt includes canonical preferences",
+        "General transition receipt includes canonical timings",
+        "rejected profile save preserves revision and current target"
+      ],
+      "counts": {
+        "writes": 0,
+        "external": 0
+      },
+      "lastRevision": 11
+    },
+    "native": {
+      "contentSize": [
+        1280,
+        720
+      ],
+      "zoom": 1,
+      "runtime": "macOS arm64 Electron43.7.0",
+      "input": "CUA native only; Playwright launches, owns lifecycle and reads passive telemetry. Main IPC result gates hold/fail reads/writes; synthetic localhost catalog, encrypted dummy connection, fresh local state, scheduler stopped and audio muted.",
+      "snapshots": [
+        {
+          "name": "baseline-pending",
+          "rawSha256": "44f8002f779e509e5c70101310905dd5aa262d76feae76b3db070ae688fd696b",
+          "moodControl": {
+            "id": "station-mood",
+            "value": "Warm evening host",
+            "disabled": false
+          },
+          "focus": {
+            "tag": "BUTTON",
+            "name": "Saving\u2026",
+            "outline": "none"
+          },
+          "headings": [
+            "News bucket",
+            "News sources and host",
+            "Automatic news preparation"
+          ],
+          "notices": [],
+          "setupText": "News bucket\nSetup profile\nMy room \u00b7 Active\nSave as new\nAdvanced room options\n\nUpdating room settings\u2026 You can keep browsing and listening.\n\nChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.\n\nNews bucket\nSettings\nSaved audio\nNews sources and host\nNews sources\nManage sources\n\nAdd your first source with Manage sources.\n\nNews interests \u00b7 Optional\nDJ\nChoose a DJ\nManage DJs\nMood\n\nSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.\n\nAutomatic news preparation\n\nPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running.\n\nAutomatically prepare news\nCheck sources every\n1 hour\n3 hours\n6 hours\nNews selection\nMajor developments only\nRelevant stories\nMaximum automatic recordings per day\n\nUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.\n\nSaving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.\n\nUnsaved profile changes. Your changes apply after you save.\n\nFinish setup before enabling preparation\nChoose at least one news source.Manage sources\nAdd your first DJ.Manage DJs\nOpenAI key is missing.Provider keys\nElevenLabs key is missing.Provider keys\nSaving\u2026\n\nPreparation off. Saved recordings remain available. Enable news preparation in News settings.\n\nSave setup and preparation together to keep these choices in this room profile.\n\nNews preparation needs OpenAI and ElevenLabs keys. Provider keys\n\nTesting tools \u00b7 Prepare a story manually",
+          "saved": {
+            "vibe": "Warm evening host",
+            "listeningRoom": {
+              "djId": null,
+              "sourceIds": []
+            },
+            "workflowDraft": {
+              "newsInterests": "",
+              "newsEnabled": false,
+              "everyHours": 3,
+              "importance": "major",
+              "maxNewsClipsPerDay": 3,
+              "morning": {
+                "includeWeather": false,
+                "city": "",
+                "localTime": "08:00",
+                "timeZone": "Europe/Madrid",
+                "units": "celsius"
+              }
+            },
+            "roomProfiles": [
+              {
+                "enabled": true,
+                "id": "default-room",
+                "name": "My room",
+                "room": {
+                  "djId": null,
+                  "sourceIds": []
+                },
+                "mood": "Warm evening host",
+                "workflowDraft": {
+                  "newsInterests": "",
+                  "newsEnabled": false,
+                  "everyHours": 3,
+                  "importance": "major",
+                  "maxNewsClipsPerDay": 3,
+                  "morning": {
+                    "includeWeather": false,
+                    "city": "",
+                    "localTime": "08:00",
+                    "timeZone": "Europe/Madrid",
+                    "units": "celsius"
+                  }
+                }
+              }
+            ],
+            "activeRoomProfileId": "default-room",
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 3,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "playback": {
+              "connectionId": "http://127.0.0.1:5195|00000000000000000000000000000001",
+              "trackIds": [
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003ea",
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003eb"
+              ],
+              "currentIndex": 2,
+              "position": 12,
+              "volume": 0.42,
+              "shuffle": false,
+              "repeat": "off"
+            }
+          },
+          "transport": "Play",
+          "held": [
+            "getLocalState"
+          ],
+          "calls": {
+            "saveWorkflowDraft": 1,
+            "saveRoomProfile": 0,
+            "activateRoomProfile": 0,
+            "getLocalState": 5
+          },
+          "writes": 0,
+          "external": 0
+        },
+        {
+          "name": "baseline-failed-readback",
+          "rawSha256": "25c47b644ebb0fa89a6888cbd8e2254339a8a65f163f5fc0d3d5cfe7099ed139",
+          "moodControl": {
+            "id": "station-mood",
+            "value": "",
+            "disabled": false
+          },
+          "focus": {
+            "tag": "BODY",
+            "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedNews bucketgetLocalState unavailable.Try againSetup profileMy room \u00b7 ActiveSave as newAdvanced room optionsMake this profile available for DJ playback and preparationChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.News bucketSettingsSaved audioAutomatic preparation status could not be refreshed. Recordings below are matched against the last saved profile. Retry the failed status check before editing setup.Your radioWhat your DJ will saySee what is ready to hear, what was prepared, and where each story came from.DJ playback is offPlayback is off. The ready queue below remains available for this profile.My roomAutomatic news preparationNews settingsCurrent automatic preparation status could not be confirmed. Last saved automatic setting: off. Retry the failed status check above.Choose sources, a host, and a mood in News settings to finish setup. Music and saved audio remain available.PlaybackNext DJ breakAutomatic DJ playback is offStories prepared for this profile stay visible in its ready queue below.Last loaded saved newsLast loaded matches for My room0 recordingsThese are the last loaded matches for the saved setup. Refresh status to confirm which recordings are ready now.No matching recordings were in the last loaded results. Set up news preparationLast loaded draftsDrafts for My room0 last loadedNo drafts were waiting for audio when last loaded.Last loaded article historyReviewed across all profiles0 stories last loadedReviewed stories are excluded from future news selection in every profile.No reviewed stories were in the last loaded history.Preparation activity must be confirmed before editing setup. Wait for status to load, or retry the failed status check.News sources and hostNews sourcesManage sourcesAdd your first source with Manage sources.News interests \u00b7 OptionalDJChoose a DJChoose a DJNo matching optionsManage DJsMoodSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.Automatic news preparationPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running. Automatically prepare newsCheck sources every1 hour3 hours6 hoursNews selectionMajor developments onlyRelevant storiesMaximum automatic recordings per dayUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.Saving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.Finish setup before enabling preparationChoose at least one news source.Manage sourcesAdd your first DJ.Manage DJsAdd a mood for the host.Review moodOpenAI key is missing.Provider keysElevenLabs key is missing.Provider keysSave setupCurrent automatic preparation status could not be confirmed. Last saved automatic setting: off. Retry the failed status check above.News preparation needs OpenAI and ElevenLabs keys. Provider keysTesting tools \u00b7 Prepare a story manuallyManual testingPrepare a storyPrepare text, review it, then generate an audio take.Manual text preparation uses OpenAI outside automatic preparation limits. It can incur charges even when no recording is made.Prepare news textChoose sources and a DJ, and describe your station mood first.Saved audio takesListen or choose a take for a DJ break.RefreshNo saved audio yetPrepare a story to save your first recording.Song 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationCould not refresh; showing the last saved status.Choose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomgetLocalState unavailable.Try againChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+            "outline": "none"
+          },
+          "headings": [
+            "News bucket",
+            "News sources and host",
+            "Automatic news preparation"
+          ],
+          "notices": [
+            "getLocalState unavailable.\nTry again"
+          ],
+          "setupText": "News bucket\ngetLocalState unavailable.\nTry again\nSetup profile\nMy room \u00b7 Active\nSave as new\nAdvanced room options\n\nChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.\n\nNews bucket\nSettings\nSaved audio\n\nPreparation activity must be confirmed before editing setup. Wait for status to load, or retry the failed status check.\n\nNews sources and host\nNews sources\nManage sources\n\nAdd your first source with Manage sources.\n\nNews interests \u00b7 Optional\nDJ\nChoose a DJ\nManage DJs\nMood\n\nSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.\n\nAutomatic news preparation\n\nPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running.\n\nAutomatically prepare news\nCheck sources every\n1 hour\n3 hours\n6 hours\nNews selection\nMajor developments only\nRelevant stories\nMaximum automatic recordings per day\n\nUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.\n\nSaving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.\n\nFinish setup before enabling preparation\nChoose at least one news source.Manage sources\nAdd your first DJ.Manage DJs\nAdd a mood for the host.Review mood\nOpenAI key is missing.Provider keys\nElevenLabs key is missing.Provider keys\nSave setup\n\nCurrent automatic preparation status could not be confirmed. Last saved automatic setting: off. Retry the failed status check above.\n\nNews preparation needs OpenAI and ElevenLabs keys. Provider keys\n\nTesting tools \u00b7 Prepare a story manually",
+          "saved": {
+            "vibe": "Warm evening host",
+            "listeningRoom": {
+              "djId": null,
+              "sourceIds": []
+            },
+            "workflowDraft": {
+              "newsInterests": "",
+              "newsEnabled": false,
+              "everyHours": 3,
+              "importance": "major",
+              "maxNewsClipsPerDay": 3,
+              "morning": {
+                "includeWeather": false,
+                "city": "",
+                "localTime": "08:00",
+                "timeZone": "Europe/Madrid",
+                "units": "celsius"
+              }
+            },
+            "roomProfiles": [
+              {
+                "enabled": true,
+                "id": "default-room",
+                "name": "My room",
+                "room": {
+                  "djId": null,
+                  "sourceIds": []
+                },
+                "mood": "Warm evening host",
+                "workflowDraft": {
+                  "newsInterests": "",
+                  "newsEnabled": false,
+                  "everyHours": 3,
+                  "importance": "major",
+                  "maxNewsClipsPerDay": 3,
+                  "morning": {
+                    "includeWeather": false,
+                    "city": "",
+                    "localTime": "08:00",
+                    "timeZone": "Europe/Madrid",
+                    "units": "celsius"
+                  }
+                }
+              }
+            ],
+            "activeRoomProfileId": "default-room",
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 3,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "playback": {
+              "connectionId": "http://127.0.0.1:5195|00000000000000000000000000000001",
+              "trackIds": [
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003ea",
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003eb"
+              ],
+              "currentIndex": 2,
+              "position": 12,
+              "volume": 0.42,
+              "shuffle": false,
+              "repeat": "off"
+            }
+          },
+          "transport": "Play",
+          "held": [],
+          "calls": {
+            "saveWorkflowDraft": 1,
+            "saveRoomProfile": 0,
+            "activateRoomProfile": 0,
+            "getLocalState": 12
+          },
+          "writes": 0,
+          "external": 0
+        },
+        {
+          "name": "intermediate-failed-readback",
+          "rawSha256": "4267592cf7ec95f539072634662f2203e5d74c554954259eba8b6e08a360803d",
+          "moodControl": {
+            "id": "station-mood",
+            "value": "Warm evening host",
+            "disabled": false
+          },
+          "focus": {
+            "tag": "BODY",
+            "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedNews bucketgetLocalState unavailable.Try againSetup profileMy room \u00b7 ActiveSave as newAdvanced room optionsMake this profile available for DJ playback and preparationChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.News bucketSettingsSaved audioAutomatic preparation status could not be refreshed. Recordings below are matched against the last saved profile. Retry the failed status check before editing setup.Your radioWhat your DJ will saySee what is ready to hear, what was prepared, and where each story came from.DJ playback is offPlayback is off. The ready queue below remains available for this profile.My roomAutomatic news preparationNews settingsCurrent automatic preparation status could not be confirmed. Last saved automatic setting: off. Retry the failed status check above.Choose sources, a host, and a mood in News settings to finish setup. Music and saved audio remain available.PlaybackNext DJ breakAutomatic DJ playback is offStories prepared for this profile stay visible in its ready queue below.Last loaded saved newsLast loaded matches for My room0 recordingsThese are the last loaded matches for the saved setup. Refresh status to confirm which recordings are ready now.No matching recordings were in the last loaded results. Set up news preparationLast loaded draftsDrafts for My room0 last loadedNo drafts were waiting for audio when last loaded.Last loaded article historyReviewed across all profiles0 stories last loadedReviewed stories are excluded from future news selection in every profile.No reviewed stories were in the last loaded history.Preparation activity must be confirmed before editing setup. Wait for status to load, or retry the failed status check.News sources and hostNews sourcesManage sourcesAdd your first source with Manage sources.News interests \u00b7 OptionalDJChoose a DJChoose a DJNo matching optionsManage DJsMoodWarm evening hostSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.Automatic news preparationPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running. Automatically prepare newsCheck sources every1 hour3 hours6 hoursNews selectionMajor developments onlyRelevant storiesMaximum automatic recordings per dayUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.Saving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.Finish setup before enabling preparationChoose at least one news source.Manage sourcesAdd your first DJ.Manage DJsOpenAI key is missing.Provider keysElevenLabs key is missing.Provider keysSave setupCurrent automatic preparation status could not be confirmed. Last saved automatic setting: off. Retry the failed status check above.News preparation needs OpenAI and ElevenLabs keys. Provider keysTesting tools \u00b7 Prepare a story manuallyManual testingPrepare a storyPrepare text, review it, then generate an audio take.Manual text preparation uses OpenAI outside automatic preparation limits. It can incur charges even when no recording is made.Prepare news textChoose sources and a DJ, and describe your station mood first.Saved audio takesListen or choose a take for a DJ break.RefreshNo saved audio yetPrepare a story to save your first recording.Song 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationCould not refresh; showing the last saved status.Choose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomgetLocalState unavailable.Try againChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+            "outline": "none"
+          },
+          "headings": [
+            "News bucket",
+            "News sources and host",
+            "Automatic news preparation"
+          ],
+          "notices": [
+            "getLocalState unavailable.\nTry again"
+          ],
+          "setupText": "News bucket\ngetLocalState unavailable.\nTry again\nSetup profile\nMy room \u00b7 Active\nSave as new\nAdvanced room options\n\nChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.\n\nNews bucket\nSettings\nSaved audio\n\nPreparation activity must be confirmed before editing setup. Wait for status to load, or retry the failed status check.\n\nNews sources and host\nNews sources\nManage sources\n\nAdd your first source with Manage sources.\n\nNews interests \u00b7 Optional\nDJ\nChoose a DJ\nManage DJs\nMood\n\nSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.\n\nAutomatic news preparation\n\nPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running.\n\nAutomatically prepare news\nCheck sources every\n1 hour\n3 hours\n6 hours\nNews selection\nMajor developments only\nRelevant stories\nMaximum automatic recordings per day\n\nUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.\n\nSaving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.\n\nFinish setup before enabling preparation\nChoose at least one news source.Manage sources\nAdd your first DJ.Manage DJs\nOpenAI key is missing.Provider keys\nElevenLabs key is missing.Provider keys\nSave setup\n\nCurrent automatic preparation status could not be confirmed. Last saved automatic setting: off. Retry the failed status check above.\n\nNews preparation needs OpenAI and ElevenLabs keys. Provider keys\n\nTesting tools \u00b7 Prepare a story manually",
+          "saved": {
+            "vibe": "Warm evening host",
+            "listeningRoom": {
+              "djId": null,
+              "sourceIds": []
+            },
+            "workflowDraft": {
+              "newsInterests": "",
+              "newsEnabled": false,
+              "everyHours": 3,
+              "importance": "major",
+              "maxNewsClipsPerDay": 3,
+              "morning": {
+                "includeWeather": false,
+                "city": "",
+                "localTime": "08:00",
+                "timeZone": "Europe/Madrid",
+                "units": "celsius"
+              }
+            },
+            "roomProfiles": [
+              {
+                "enabled": true,
+                "id": "default-room",
+                "name": "My room",
+                "room": {
+                  "djId": null,
+                  "sourceIds": []
+                },
+                "mood": "Warm evening host",
+                "workflowDraft": {
+                  "newsInterests": "",
+                  "newsEnabled": false,
+                  "everyHours": 3,
+                  "importance": "major",
+                  "maxNewsClipsPerDay": 3,
+                  "morning": {
+                    "includeWeather": false,
+                    "city": "",
+                    "localTime": "08:00",
+                    "timeZone": "Europe/Madrid",
+                    "units": "celsius"
+                  }
+                }
+              }
+            ],
+            "activeRoomProfileId": "default-room",
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 3,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "playback": {
+              "connectionId": "http://127.0.0.1:5195|00000000000000000000000000000001",
+              "trackIds": [
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003ea",
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003eb"
+              ],
+              "currentIndex": 2,
+              "position": 12,
+              "volume": 0.42,
+              "shuffle": false,
+              "repeat": "off"
+            }
+          },
+          "transport": "Play",
+          "held": [],
+          "calls": {
+            "saveWorkflowDraft": 1,
+            "saveRoomProfile": 0,
+            "activateRoomProfile": 0,
+            "getLocalState": 10
+          },
+          "writes": 0,
+          "external": 0
+        },
+        {
+          "name": "final-pending",
+          "rawSha256": "f739e60df2b8a1be5a3af56c8c4bb722e06380c52b1cc0f39394a3ce9decc65b",
+          "moodControl": {
+            "id": "station-mood",
+            "value": "Warm evening host",
+            "disabled": false
+          },
+          "focus": {
+            "tag": "BUTTON",
+            "name": "Saving\u2026",
+            "outline": "none"
+          },
+          "headings": [
+            "News bucket",
+            "News sources and host",
+            "Automatic news preparation"
+          ],
+          "notices": [],
+          "setupText": "News bucket\nSetup profile\nMy room \u00b7 Active\nSave as new\nAdvanced room options\n\nUpdating room settings\u2026 You can keep browsing and listening.\n\nChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.\n\nNews bucket\nSettings\nSaved audio\nNews sources and host\nNews sources\nManage sources\n\nAdd your first source with Manage sources.\n\nNews interests \u00b7 Optional\nDJ\nChoose a DJ\nManage DJs\nMood\n\nSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.\n\nAutomatic news preparation\n\nPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running.\n\nAutomatically prepare news\nCheck sources every\n1 hour\n3 hours\n6 hours\nNews selection\nMajor developments only\nRelevant stories\nMaximum automatic recordings per day\n\nUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.\n\nSaving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.\n\nFinish setup before enabling preparation\nChoose at least one news source.Manage sources\nAdd your first DJ.Manage DJs\nOpenAI key is missing.Provider keys\nElevenLabs key is missing.Provider keys\nSaving\u2026\n\nPreparation off. Saved recordings remain available. Enable news preparation in News settings.\n\nNews preparation needs OpenAI and ElevenLabs keys. Provider keys\n\nTesting tools \u00b7 Prepare a story manually",
+          "saved": {
+            "vibe": "Warm evening host",
+            "listeningRoom": {
+              "djId": null,
+              "sourceIds": []
+            },
+            "workflowDraft": {
+              "newsInterests": "",
+              "newsEnabled": false,
+              "everyHours": 3,
+              "importance": "major",
+              "maxNewsClipsPerDay": 3,
+              "morning": {
+                "includeWeather": false,
+                "city": "",
+                "localTime": "08:00",
+                "timeZone": "Europe/Madrid",
+                "units": "celsius"
+              }
+            },
+            "roomProfiles": [
+              {
+                "enabled": true,
+                "id": "default-room",
+                "name": "My room",
+                "room": {
+                  "djId": null,
+                  "sourceIds": []
+                },
+                "mood": "Warm evening host",
+                "workflowDraft": {
+                  "newsInterests": "",
+                  "newsEnabled": false,
+                  "everyHours": 3,
+                  "importance": "major",
+                  "maxNewsClipsPerDay": 3,
+                  "morning": {
+                    "includeWeather": false,
+                    "city": "",
+                    "localTime": "08:00",
+                    "timeZone": "Europe/Madrid",
+                    "units": "celsius"
+                  }
+                }
+              }
+            ],
+            "activeRoomProfileId": "default-room",
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 3,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "playback": {
+              "connectionId": "http://127.0.0.1:5195|00000000000000000000000000000001",
+              "trackIds": [
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003ea",
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003eb"
+              ],
+              "currentIndex": 2,
+              "position": 12,
+              "volume": 0.42,
+              "shuffle": false,
+              "repeat": "off"
+            }
+          },
+          "transport": "Play",
+          "held": [
+            "getLocalState"
+          ],
+          "calls": {
+            "saveWorkflowDraft": 1,
+            "saveRoomProfile": 0,
+            "activateRoomProfile": 0,
+            "getLocalState": 5
+          },
+          "writes": 0,
+          "external": 0
+        },
+        {
+          "name": "final-refresh-failed-focus",
+          "rawSha256": "393f3a1698adee74cd309a2965b97506056bfe7a2678757cb13719427030cd1c",
+          "moodControl": {
+            "id": "station-mood",
+            "value": "Warm evening host",
+            "disabled": false
+          },
+          "focus": {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "outline": "solid"
+          },
+          "headings": [
+            "News bucket",
+            "News sources and host",
+            "Automatic news preparation"
+          ],
+          "notices": [
+            "getLocalState unavailable.\nTry again"
+          ],
+          "setupText": "News bucket\ngetLocalState unavailable.\nTry again\nSetup profile\nMy room \u00b7 Active\nSave as new\nAdvanced room options\n\nChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.\n\nNews bucket\nSettings\nSaved audio\n\nPreparation activity must be confirmed before editing setup. Wait for status to load, or retry the failed status check.\n\nNews sources and host\nNews sources\nManage sources\n\nAdd your first source with Manage sources.\n\nNews interests \u00b7 Optional\nDJ\nChoose a DJ\nManage DJs\nMood\n\nSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.\n\nAutomatic news preparation\n\nPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running.\n\nAutomatically prepare news\nCheck sources every\n1 hour\n3 hours\n6 hours\nNews selection\nMajor developments only\nRelevant stories\nMaximum automatic recordings per day\n\nUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.\n\nSaving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.\n\nFinish setup before enabling preparation\nChoose at least one news source.Manage sources\nAdd your first DJ.Manage DJs\nOpenAI key is missing.Provider keys\nElevenLabs key is missing.Provider keys\nSave setup\n\nCurrent automatic preparation status could not be confirmed. Last saved automatic setting: off. Retry the failed status check above.\n\nNews preparation needs OpenAI and ElevenLabs keys. Provider keys\n\nTesting tools \u00b7 Prepare a story manually",
+          "saved": {
+            "vibe": "Warm evening host",
+            "listeningRoom": {
+              "djId": null,
+              "sourceIds": []
+            },
+            "workflowDraft": {
+              "newsInterests": "",
+              "newsEnabled": false,
+              "everyHours": 3,
+              "importance": "major",
+              "maxNewsClipsPerDay": 3,
+              "morning": {
+                "includeWeather": false,
+                "city": "",
+                "localTime": "08:00",
+                "timeZone": "Europe/Madrid",
+                "units": "celsius"
+              }
+            },
+            "roomProfiles": [
+              {
+                "enabled": true,
+                "id": "default-room",
+                "name": "My room",
+                "room": {
+                  "djId": null,
+                  "sourceIds": []
+                },
+                "mood": "Warm evening host",
+                "workflowDraft": {
+                  "newsInterests": "",
+                  "newsEnabled": false,
+                  "everyHours": 3,
+                  "importance": "major",
+                  "maxNewsClipsPerDay": 3,
+                  "morning": {
+                    "includeWeather": false,
+                    "city": "",
+                    "localTime": "08:00",
+                    "timeZone": "Europe/Madrid",
+                    "units": "celsius"
+                  }
+                }
+              }
+            ],
+            "activeRoomProfileId": "default-room",
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 3,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "playback": {
+              "connectionId": "http://127.0.0.1:5195|00000000000000000000000000000001",
+              "trackIds": [
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003ea",
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003eb"
+              ],
+              "currentIndex": 2,
+              "position": 12,
+              "volume": 0.42,
+              "shuffle": false,
+              "repeat": "off"
+            }
+          },
+          "transport": "Play",
+          "held": [],
+          "calls": {
+            "saveWorkflowDraft": 1,
+            "saveRoomProfile": 0,
+            "activateRoomProfile": 0,
+            "getLocalState": 12
+          },
+          "writes": 0,
+          "external": 0
+        },
+        {
+          "name": "final-focus-left-recovered",
+          "rawSha256": "5723cceb83a822a8007a7cf8afe2029caeadce66da740dc3846ed36ec8a15e6b",
+          "moodControl": {
+            "id": "station-mood",
+            "value": "Warm evening host",
+            "disabled": false
+          },
+          "focus": {
+            "tag": "BUTTON",
+            "name": "Provider keys",
+            "outline": "solid"
+          },
+          "headings": [
+            "News bucket",
+            "News sources and host",
+            "Automatic news preparation"
+          ],
+          "notices": [],
+          "setupText": "News bucket\nSetup profile\nMy room \u00b7 Active\nSave as new\nAdvanced room options\n\nChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.\n\nNews bucket\nSettings\nSaved audio\nNews sources and host\nNews sources\nManage sources\n\nAdd your first source with Manage sources.\n\nNews interests \u00b7 Optional\nDJ\nChoose a DJ\nManage DJs\nMood\n\nSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.\n\nAutomatic news preparation\n\nPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running.\n\nAutomatically prepare news\nCheck sources every\n1 hour\n3 hours\n6 hours\nNews selection\nMajor developments only\nRelevant stories\nMaximum automatic recordings per day\n\nUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.\n\nSaving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.\n\nFinish setup before enabling preparation\nChoose at least one news source.Manage sources\nAdd your first DJ.Manage DJs\nOpenAI key is missing.Provider keys\nElevenLabs key is missing.Provider keys\nSave setup\n\nPreparation off. Saved recordings remain available. Enable news preparation in News settings.\n\nNews preparation needs OpenAI and ElevenLabs keys. Provider keys\n\nTesting tools \u00b7 Prepare a story manually",
+          "saved": {
+            "vibe": "Warm evening host",
+            "listeningRoom": {
+              "djId": null,
+              "sourceIds": []
+            },
+            "workflowDraft": {
+              "newsInterests": "",
+              "newsEnabled": false,
+              "everyHours": 3,
+              "importance": "major",
+              "maxNewsClipsPerDay": 3,
+              "morning": {
+                "includeWeather": false,
+                "city": "",
+                "localTime": "08:00",
+                "timeZone": "Europe/Madrid",
+                "units": "celsius"
+              }
+            },
+            "roomProfiles": [
+              {
+                "enabled": true,
+                "id": "default-room",
+                "name": "My room",
+                "room": {
+                  "djId": null,
+                  "sourceIds": []
+                },
+                "mood": "Warm evening host",
+                "workflowDraft": {
+                  "newsInterests": "",
+                  "newsEnabled": false,
+                  "everyHours": 3,
+                  "importance": "major",
+                  "maxNewsClipsPerDay": 3,
+                  "morning": {
+                    "includeWeather": false,
+                    "city": "",
+                    "localTime": "08:00",
+                    "timeZone": "Europe/Madrid",
+                    "units": "celsius"
+                  }
+                }
+              }
+            ],
+            "activeRoomProfileId": "default-room",
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 3,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "playback": {
+              "connectionId": "http://127.0.0.1:5195|00000000000000000000000000000001",
+              "trackIds": [
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003ea",
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003eb"
+              ],
+              "currentIndex": 2,
+              "position": 12,
+              "volume": 0.42,
+              "shuffle": false,
+              "repeat": "off"
+            }
+          },
+          "transport": "Play",
+          "held": [],
+          "calls": {
+            "saveWorkflowDraft": 1,
+            "saveRoomProfile": 0,
+            "activateRoomProfile": 0,
+            "getLocalState": 14
+          },
+          "writes": 0,
+          "external": 0
+        },
+        {
+          "name": "final-copy-pending",
+          "rawSha256": "1721b03a6b08c8422f85227111cef9ae6084755376f7202974d35bd253ee1ac8",
+          "moodControl": {
+            "id": "station-mood",
+            "value": "Warm evening host",
+            "disabled": false
+          },
+          "focus": {
+            "tag": "INPUT",
+            "name": "",
+            "label": "Name",
+            "outline": "solid"
+          },
+          "headings": [
+            "News bucket",
+            "News sources and host",
+            "Automatic news preparation",
+            "Save a new listening room"
+          ],
+          "notices": [],
+          "setupText": "News bucket\nSetup profile\nMy room \u00b7 Active\nSave as new\nAdvanced room options\n\nUpdating room settings\u2026 You can keep browsing and listening.\n\nChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.\n\nNews bucket\nSettings\nSaved audio\nNews sources and host\nNews sources\nManage sources\n\nAdd your first source with Manage sources.\n\nNews interests \u00b7 Optional\nDJ\nChoose a DJ\nManage DJs\nMood\n\nSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.\n\nAutomatic news preparation\n\nPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running.\n\nAutomatically prepare news\nCheck sources every\n1 hour\n3 hours\n6 hours\nNews selection\nMajor developments only\nRelevant stories\nMaximum automatic recordings per day\n\nUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.\n\nSaving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.\n\nFinish setup before enabling preparation\nChoose at least one news source.Manage sources\nAdd your first DJ.Manage DJs\nOpenAI key is missing.Provider keys\nElevenLabs key is missing.Provider keys\nSave setup\n\nPreparation off. Saved recordings remain available. Enable news preparation in News settings.\n\nNews preparation needs OpenAI and ElevenLabs keys. Provider keys\n\nTesting tools \u00b7 Prepare a story manually\nSave a new listening room\nName\n\nCopies your setup with automatic preparation off. Choose the new room, then make it available in Advanced room options before enabling preparation or DJ breaks. You can finish incomplete setup later.\n\nCancel\nSaving\u2026",
+          "saved": {
+            "vibe": "Warm evening host",
+            "listeningRoom": {
+              "djId": null,
+              "sourceIds": []
+            },
+            "workflowDraft": {
+              "newsInterests": "",
+              "newsEnabled": false,
+              "everyHours": 3,
+              "importance": "major",
+              "maxNewsClipsPerDay": 3,
+              "morning": {
+                "includeWeather": false,
+                "city": "",
+                "localTime": "08:00",
+                "timeZone": "Europe/Madrid",
+                "units": "celsius"
+              }
+            },
+            "roomProfiles": [
+              {
+                "enabled": true,
+                "id": "default-room",
+                "name": "My room",
+                "room": {
+                  "djId": null,
+                  "sourceIds": []
+                },
+                "mood": "Warm evening host",
+                "workflowDraft": {
+                  "newsInterests": "",
+                  "newsEnabled": false,
+                  "everyHours": 3,
+                  "importance": "major",
+                  "maxNewsClipsPerDay": 3,
+                  "morning": {
+                    "includeWeather": false,
+                    "city": "",
+                    "localTime": "08:00",
+                    "timeZone": "Europe/Madrid",
+                    "units": "celsius"
+                  }
+                }
+              }
+            ],
+            "activeRoomProfileId": "default-room",
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 3,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "playback": {
+              "connectionId": "http://127.0.0.1:5195|00000000000000000000000000000001",
+              "trackIds": [
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003ea",
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003eb"
+              ],
+              "currentIndex": 2,
+              "position": 12,
+              "volume": 0.42,
+              "shuffle": false,
+              "repeat": "off"
+            }
+          },
+          "transport": "Play",
+          "held": [
+            "saveRoomProfile"
+          ],
+          "calls": {
+            "saveWorkflowDraft": 1,
+            "saveRoomProfile": 1,
+            "activateRoomProfile": 0,
+            "getLocalState": 17
+          },
+          "writes": 0,
+          "external": 0
+        },
+        {
+          "name": "final-copy-refresh-failed",
+          "rawSha256": "7cfd24b31c6f7550f9331cc8ff7e43799be8739165e2b4b7e829a5e0bfeb08f0",
+          "moodControl": {
+            "id": "station-mood",
+            "value": "Warm evening host",
+            "disabled": false
+          },
+          "focus": {
+            "tag": "H1",
+            "name": "News bucket",
+            "outline": "solid"
+          },
+          "headings": [
+            "News bucket",
+            "News sources and host",
+            "Automatic news preparation"
+          ],
+          "notices": [
+            "getLocalState unavailable.\nTry again"
+          ],
+          "setupText": "News bucket\ngetLocalState unavailable.\nTry again\nSetup profile\nMy room \u00b7 Active\nEvening copy\nSave as new\nAdvanced room options\n\nChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.\n\nSaved Evening copy with preparation off. Choose it from Setup profile, then use Review room options to make it available.\n\nNews bucket\nSettings\nSaved audio\n\nPreparation activity must be confirmed before editing setup. Wait for status to load, or retry the failed status check.\n\nNews sources and host\nNews sources\nManage sources\n\nAdd your first source with Manage sources.\n\nNews interests \u00b7 Optional\nDJ\nChoose a DJ\nManage DJs\nMood\n\nSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.\n\nAutomatic news preparation\n\nPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running.\n\nAutomatically prepare news\nCheck sources every\n1 hour\n3 hours\n6 hours\nNews selection\nMajor developments only\nRelevant stories\nMaximum automatic recordings per day\n\nUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.\n\nSaving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.\n\nFinish setup before enabling preparation\nChoose at least one news source.Manage sources\nAdd your first DJ.Manage DJs\nOpenAI key is missing.Provider keys\nElevenLabs key is missing.Provider keys\nSave setup\n\nCurrent automatic preparation status could not be confirmed. Last saved automatic setting: off. Retry the failed status check above.\n\nNews preparation needs OpenAI and ElevenLabs keys. Provider keys\n\nTesting tools \u00b7 Prepare a story manually",
+          "saved": {
+            "vibe": "Warm evening host",
+            "listeningRoom": {
+              "djId": null,
+              "sourceIds": []
+            },
+            "workflowDraft": {
+              "newsInterests": "",
+              "newsEnabled": false,
+              "everyHours": 3,
+              "importance": "major",
+              "maxNewsClipsPerDay": 3,
+              "morning": {
+                "includeWeather": false,
+                "city": "",
+                "localTime": "08:00",
+                "timeZone": "Europe/Madrid",
+                "units": "celsius"
+              }
+            },
+            "roomProfiles": [
+              {
+                "enabled": true,
+                "id": "default-room",
+                "name": "My room",
+                "room": {
+                  "djId": null,
+                  "sourceIds": []
+                },
+                "mood": "Warm evening host",
+                "workflowDraft": {
+                  "newsInterests": "",
+                  "newsEnabled": false,
+                  "everyHours": 3,
+                  "importance": "major",
+                  "maxNewsClipsPerDay": 3,
+                  "morning": {
+                    "includeWeather": false,
+                    "city": "",
+                    "localTime": "08:00",
+                    "timeZone": "Europe/Madrid",
+                    "units": "celsius"
+                  }
+                }
+              },
+              {
+                "enabled": false,
+                "id": "3a58799b-fed0-4c2e-a878-0e6614ca7a62",
+                "name": "Evening copy",
+                "room": {
+                  "djId": null,
+                  "sourceIds": []
+                },
+                "mood": "Warm evening host",
+                "workflowDraft": {
+                  "newsInterests": "",
+                  "newsEnabled": false,
+                  "everyHours": 3,
+                  "importance": "major",
+                  "maxNewsClipsPerDay": 3,
+                  "morning": {
+                    "includeWeather": false,
+                    "city": "",
+                    "localTime": "08:00",
+                    "timeZone": "Europe/Madrid",
+                    "units": "celsius"
+                  }
+                }
+              }
+            ],
+            "activeRoomProfileId": "default-room",
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 3,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "playback": {
+              "connectionId": "http://127.0.0.1:5195|00000000000000000000000000000001",
+              "trackIds": [
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003ea",
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003eb"
+              ],
+              "currentIndex": 2,
+              "position": 12,
+              "volume": 0.42,
+              "shuffle": false,
+              "repeat": "off"
+            }
+          },
+          "transport": "Play",
+          "held": [],
+          "calls": {
+            "saveWorkflowDraft": 1,
+            "saveRoomProfile": 1,
+            "activateRoomProfile": 0,
+            "getLocalState": 23
+          },
+          "writes": 0,
+          "external": 0
+        },
+        {
+          "name": "final-copy-recovered",
+          "rawSha256": "f7b3b43a135ea54078c8d9c7d49b8ee465423bbd6e4c7fba84d32c726ed61507",
+          "moodControl": {
+            "id": "station-mood",
+            "value": "Warm evening host",
+            "disabled": false
+          },
+          "focus": {
+            "tag": "H1",
+            "name": "News bucket",
+            "outline": "solid"
+          },
+          "headings": [
+            "News bucket",
+            "News sources and host",
+            "Automatic news preparation"
+          ],
+          "notices": [],
+          "setupText": "News bucket\nSetup profile\nMy room \u00b7 Active\nEvening copy\nSave as new\nAdvanced room options\n\nChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.\n\nSaved Evening copy with preparation off. Choose it from Setup profile, then use Review room options to make it available.\n\nNews bucket\nSettings\nSaved audio\nNews sources and host\nNews sources\nManage sources\n\nAdd your first source with Manage sources.\n\nNews interests \u00b7 Optional\nDJ\nChoose a DJ\nManage DJs\nMood\n\nSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.\n\nAutomatic news preparation\n\nPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running.\n\nAutomatically prepare news\nCheck sources every\n1 hour\n3 hours\n6 hours\nNews selection\nMajor developments only\nRelevant stories\nMaximum automatic recordings per day\n\nUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.\n\nSaving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.\n\nFinish setup before enabling preparation\nChoose at least one news source.Manage sources\nAdd your first DJ.Manage DJs\nOpenAI key is missing.Provider keys\nElevenLabs key is missing.Provider keys\nSave setup\n\nPreparation off. Saved recordings remain available. Enable news preparation in News settings.\n\nNews preparation needs OpenAI and ElevenLabs keys. Provider keys\n\nTesting tools \u00b7 Prepare a story manually",
+          "saved": {
+            "vibe": "Warm evening host",
+            "listeningRoom": {
+              "djId": null,
+              "sourceIds": []
+            },
+            "workflowDraft": {
+              "newsInterests": "",
+              "newsEnabled": false,
+              "everyHours": 3,
+              "importance": "major",
+              "maxNewsClipsPerDay": 3,
+              "morning": {
+                "includeWeather": false,
+                "city": "",
+                "localTime": "08:00",
+                "timeZone": "Europe/Madrid",
+                "units": "celsius"
+              }
+            },
+            "roomProfiles": [
+              {
+                "enabled": true,
+                "id": "default-room",
+                "name": "My room",
+                "room": {
+                  "djId": null,
+                  "sourceIds": []
+                },
+                "mood": "Warm evening host",
+                "workflowDraft": {
+                  "newsInterests": "",
+                  "newsEnabled": false,
+                  "everyHours": 3,
+                  "importance": "major",
+                  "maxNewsClipsPerDay": 3,
+                  "morning": {
+                    "includeWeather": false,
+                    "city": "",
+                    "localTime": "08:00",
+                    "timeZone": "Europe/Madrid",
+                    "units": "celsius"
+                  }
+                }
+              },
+              {
+                "enabled": false,
+                "id": "3a58799b-fed0-4c2e-a878-0e6614ca7a62",
+                "name": "Evening copy",
+                "room": {
+                  "djId": null,
+                  "sourceIds": []
+                },
+                "mood": "Warm evening host",
+                "workflowDraft": {
+                  "newsInterests": "",
+                  "newsEnabled": false,
+                  "everyHours": 3,
+                  "importance": "major",
+                  "maxNewsClipsPerDay": 3,
+                  "morning": {
+                    "includeWeather": false,
+                    "city": "",
+                    "localTime": "08:00",
+                    "timeZone": "Europe/Madrid",
+                    "units": "celsius"
+                  }
+                }
+              }
+            ],
+            "activeRoomProfileId": "default-room",
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 3,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "playback": {
+              "connectionId": "http://127.0.0.1:5195|00000000000000000000000000000001",
+              "trackIds": [
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003ea",
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003eb"
+              ],
+              "currentIndex": 2,
+              "position": 12,
+              "volume": 0.42,
+              "shuffle": false,
+              "repeat": "off"
+            }
+          },
+          "transport": "Play",
+          "held": [],
+          "calls": {
+            "saveWorkflowDraft": 1,
+            "saveRoomProfile": 1,
+            "activateRoomProfile": 0,
+            "getLocalState": 25
+          },
+          "writes": 0,
+          "external": 0
+        },
+        {
+          "name": "final-switch-pending",
+          "rawSha256": "ec2486c0262b523cb1afe72762e873879e3216a9e6b6c34611ef1b9564581560",
+          "moodControl": {
+            "id": "station-mood",
+            "value": "Warm evening host",
+            "disabled": false
+          },
+          "focus": {
+            "tag": "BODY",
+            "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedNews bucketSetup profileMy room \u00b7 ActiveEvening copySave as newAdvanced room optionsMake this profile available for DJ playback and preparationUpdating room settings\u2026 You can keep browsing and listening.Choose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.News bucketSettingsSaved audioYour radioWhat your DJ will saySee what is ready to hear, what was prepared, and where each story came from.DJ playback is offPlayback is off. The ready queue below remains available for this profile.My roomAutomatic news preparationNews settingsPreparation off. Saved recordings remain available. Enable news preparation in News settings.Scheduled checks started today0 / 8Automatic recordings saved today0 / 3Ready for this profile0Only scheduled preparation is counted for this profile in your Mac's local day. Checks can use paid text generation even when no recording is made.No scheduled check has been recorded for this profile yet.Choose sources, a host, and a mood in News settings to finish setup. Music and saved audio remain available.PlaybackNext DJ breakAutomatic DJ playback is offStories prepared for this profile stay visible in its ready queue below.Saved newsReady for My room0 recordingsThese recordings match your current setup and are fresh enough to play. Older and already heard stories stay out. The DJ chooses one when a break is due.No fresh matching recordings are ready for this profile. Set up news preparationIn preparationDrafts for My room0No drafts are waiting for audio.Article historyReviewed across all profiles0 storiesReviewed stories are excluded from future news selection in every profile.No stories have been reviewed yet.News sources and hostNews sourcesManage sourcesAdd your first source with Manage sources.News interests \u00b7 OptionalDJChoose a DJChoose a DJNo matching optionsManage DJsMoodWarm evening hostSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.Automatic news preparationPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running. Automatically prepare newsCheck sources every1 hour3 hours6 hoursNews selectionMajor developments onlyRelevant storiesMaximum automatic recordings per dayUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.Saving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.Finish setup before enabling preparationChoose at least one news source.Manage sourcesAdd your first DJ.Manage DJsOpenAI key is missing.Provider keysElevenLabs key is missing.Provider keysSave setupPreparation off. Saved recordings remain available. Enable news preparation in News settings.News preparation needs OpenAI and ElevenLabs keys. Provider keysTesting tools \u00b7 Prepare a story manuallyManual testingPrepare a storyPrepare text, review it, then generate an audio take.Manual text preparation uses OpenAI outside automatic preparation limits. It can incur charges even when no recording is made.Prepare news textChoose sources and a DJ, and describe your station mood first.Saved audio takesListen or choose a take for a DJ break.RefreshNo saved audio yetPrepare a story to save your first recording.Song 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+            "outline": "none"
+          },
+          "headings": [
+            "News bucket",
+            "News sources and host",
+            "Automatic news preparation"
+          ],
+          "notices": [],
+          "setupText": "News bucket\nSetup profile\nMy room \u00b7 Active\nEvening copy\nSave as new\nAdvanced room options\n\nUpdating room settings\u2026 You can keep browsing and listening.\n\nChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.\n\nNews bucket\nSettings\nSaved audio\nNews sources and host\nNews sources\nManage sources\n\nAdd your first source with Manage sources.\n\nNews interests \u00b7 Optional\nDJ\nChoose a DJ\nManage DJs\nMood\n\nSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.\n\nAutomatic news preparation\n\nPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running.\n\nAutomatically prepare news\nCheck sources every\n1 hour\n3 hours\n6 hours\nNews selection\nMajor developments only\nRelevant stories\nMaximum automatic recordings per day\n\nUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.\n\nSaving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.\n\nFinish setup before enabling preparation\nChoose at least one news source.Manage sources\nAdd your first DJ.Manage DJs\nOpenAI key is missing.Provider keys\nElevenLabs key is missing.Provider keys\nSave setup\n\nPreparation off. Saved recordings remain available. Enable news preparation in News settings.\n\nNews preparation needs OpenAI and ElevenLabs keys. Provider keys\n\nTesting tools \u00b7 Prepare a story manually",
+          "saved": {
+            "vibe": "Warm evening host",
+            "listeningRoom": {
+              "djId": null,
+              "sourceIds": []
+            },
+            "workflowDraft": {
+              "newsInterests": "",
+              "newsEnabled": false,
+              "everyHours": 3,
+              "importance": "major",
+              "maxNewsClipsPerDay": 3,
+              "morning": {
+                "includeWeather": false,
+                "city": "",
+                "localTime": "08:00",
+                "timeZone": "Europe/Madrid",
+                "units": "celsius"
+              }
+            },
+            "roomProfiles": [
+              {
+                "enabled": true,
+                "id": "default-room",
+                "name": "My room",
+                "room": {
+                  "djId": null,
+                  "sourceIds": []
+                },
+                "mood": "Warm evening host",
+                "workflowDraft": {
+                  "newsInterests": "",
+                  "newsEnabled": false,
+                  "everyHours": 3,
+                  "importance": "major",
+                  "maxNewsClipsPerDay": 3,
+                  "morning": {
+                    "includeWeather": false,
+                    "city": "",
+                    "localTime": "08:00",
+                    "timeZone": "Europe/Madrid",
+                    "units": "celsius"
+                  }
+                }
+              },
+              {
+                "enabled": false,
+                "id": "3a58799b-fed0-4c2e-a878-0e6614ca7a62",
+                "name": "Evening copy",
+                "room": {
+                  "djId": null,
+                  "sourceIds": []
+                },
+                "mood": "Warm evening host",
+                "workflowDraft": {
+                  "newsInterests": "",
+                  "newsEnabled": false,
+                  "everyHours": 3,
+                  "importance": "major",
+                  "maxNewsClipsPerDay": 3,
+                  "morning": {
+                    "includeWeather": false,
+                    "city": "",
+                    "localTime": "08:00",
+                    "timeZone": "Europe/Madrid",
+                    "units": "celsius"
+                  }
+                }
+              }
+            ],
+            "activeRoomProfileId": "default-room",
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 3,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "playback": {
+              "connectionId": "http://127.0.0.1:5195|00000000000000000000000000000001",
+              "trackIds": [
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003ea",
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003eb"
+              ],
+              "currentIndex": 2,
+              "position": 12,
+              "volume": 0.42,
+              "shuffle": false,
+              "repeat": "off"
+            }
+          },
+          "transport": "Play",
+          "held": [
+            "activateRoomProfile"
+          ],
+          "calls": {
+            "saveWorkflowDraft": 1,
+            "saveRoomProfile": 1,
+            "activateRoomProfile": 1,
+            "getLocalState": 26
+          },
+          "writes": 0,
+          "external": 0
+        },
+        {
+          "name": "final-switch-refresh-failed",
+          "rawSha256": "0d928aa07ed6e51b1534473180f2810345b4691dcb9fbdbbbfb499c424b17536",
+          "moodControl": {
+            "id": "station-mood",
+            "value": "Warm evening host",
+            "disabled": false
+          },
+          "focus": {
+            "tag": "BODY",
+            "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedNews bucketgetLocalState unavailable.Try againSetup profileMy roomEvening copy \u00b7 ActiveSave as newAdvanced room optionsMake this profile available for DJ playback and preparationChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.Room switched. Your script and selected audio are unchanged.News bucketSettingsSaved audioAutomatic preparation status could not be refreshed. Recordings below are matched against the last saved profile. Retry the failed status check before editing setup.Your radioWhat your DJ will saySee what is ready to hear, what was prepared, and where each story came from.DJ playback is offPlayback is off. The ready queue below remains available for this profile.Evening copyAutomatic news preparationNews settingsCurrent automatic preparation status could not be confirmed. Last saved automatic setting: off. Retry the failed status check above.Choose sources, a host, and a mood in News settings to finish setup. Music and saved audio remain available.PlaybackNext DJ breakAutomatic DJ playback is offStories prepared for this profile stay visible in its ready queue below.Last loaded saved newsLast loaded matches for Evening copy0 recordingsThese are the last loaded matches for the saved setup. Refresh status to confirm which recordings are ready now.No matching recordings were in the last loaded results. Set up news preparationLast loaded draftsDrafts for Evening copy0 last loadedNo drafts were waiting for audio when last loaded.Last loaded article historyReviewed across all profiles0 stories last loadedReviewed stories are excluded from future news selection in every profile.No reviewed stories were in the last loaded history.Preparation activity must be confirmed before editing setup. Wait for status to load, or retry the failed status check.News sources and hostNews sourcesManage sourcesAdd your first source with Manage sources.News interests \u00b7 OptionalDJChoose a DJChoose a DJNo matching optionsManage DJsMoodWarm evening hostSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.Automatic news preparationPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running. Automatically prepare newsCheck sources every1 hour3 hours6 hoursNews selectionMajor developments onlyRelevant storiesMaximum automatic recordings per dayUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.Saving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.Finish setup before enabling preparationChoose at least one news source.Manage sourcesAdd your first DJ.Manage DJsOpenAI key is missing.Provider keysElevenLabs key is missing.Provider keysThis profile is not available for preparation or playback.Review room optionsSave setupThis profile is unavailable for playback. You can save preparation as off; make the profile available before enabling it.Current automatic preparation status could not be confirmed. Last saved automatic setting: off. Retry the failed status check above.News preparation needs OpenAI and ElevenLabs keys. Provider keysTesting tools \u00b7 Prepare a story manuallyManual testingPrepare a storyPrepare text, review it, then generate an audio take.Manual text preparation uses OpenAI outside automatic preparation limits. It can incur charges even when no recording is made.Prepare news textChoose sources and a DJ, and describe your station mood first.Saved audio takesListen or choose a take for a DJ break.RefreshNo saved audio yetPrepare a story to save your first recording.Song 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationCould not refresh; showing the last saved status.Choose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomgetLocalState unavailable.Try againChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+            "outline": "none"
+          },
+          "headings": [
+            "News bucket",
+            "News sources and host",
+            "Automatic news preparation"
+          ],
+          "notices": [
+            "getLocalState unavailable.\nTry again"
+          ],
+          "setupText": "News bucket\ngetLocalState unavailable.\nTry again\nSetup profile\nMy room\nEvening copy \u00b7 Active\nSave as new\nAdvanced room options\n\nChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.\n\nRoom switched. Your script and selected audio are unchanged.\n\nNews bucket\nSettings\nSaved audio\n\nPreparation activity must be confirmed before editing setup. Wait for status to load, or retry the failed status check.\n\nNews sources and host\nNews sources\nManage sources\n\nAdd your first source with Manage sources.\n\nNews interests \u00b7 Optional\nDJ\nChoose a DJ\nManage DJs\nMood\n\nSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.\n\nAutomatic news preparation\n\nPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running.\n\nAutomatically prepare news\nCheck sources every\n1 hour\n3 hours\n6 hours\nNews selection\nMajor developments only\nRelevant stories\nMaximum automatic recordings per day\n\nUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.\n\nSaving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.\n\nFinish setup before enabling preparation\nChoose at least one news source.Manage sources\nAdd your first DJ.Manage DJs\nOpenAI key is missing.Provider keys\nElevenLabs key is missing.Provider keys\nThis profile is not available for preparation or playback.Review room options\nSave setup\n\nThis profile is unavailable for playback. You can save preparation as off; make the profile available before enabling it.\n\nCurrent automatic preparation status could not be confirmed. Last saved automatic setting: off. Retry the failed status check above.\n\nNews preparation needs OpenAI and ElevenLabs keys. Provider keys\n\nTesting tools \u00b7 Prepare a story manually",
+          "saved": {
+            "vibe": "Warm evening host",
+            "listeningRoom": {
+              "djId": null,
+              "sourceIds": []
+            },
+            "workflowDraft": {
+              "newsInterests": "",
+              "newsEnabled": false,
+              "everyHours": 3,
+              "importance": "major",
+              "maxNewsClipsPerDay": 3,
+              "morning": {
+                "includeWeather": false,
+                "city": "",
+                "localTime": "08:00",
+                "timeZone": "Europe/Madrid",
+                "units": "celsius"
+              }
+            },
+            "roomProfiles": [
+              {
+                "enabled": true,
+                "id": "default-room",
+                "name": "My room",
+                "room": {
+                  "djId": null,
+                  "sourceIds": []
+                },
+                "mood": "Warm evening host",
+                "workflowDraft": {
+                  "newsInterests": "",
+                  "newsEnabled": false,
+                  "everyHours": 3,
+                  "importance": "major",
+                  "maxNewsClipsPerDay": 3,
+                  "morning": {
+                    "includeWeather": false,
+                    "city": "",
+                    "localTime": "08:00",
+                    "timeZone": "Europe/Madrid",
+                    "units": "celsius"
+                  }
+                }
+              },
+              {
+                "enabled": false,
+                "id": "3a58799b-fed0-4c2e-a878-0e6614ca7a62",
+                "name": "Evening copy",
+                "room": {
+                  "djId": null,
+                  "sourceIds": []
+                },
+                "mood": "Warm evening host",
+                "workflowDraft": {
+                  "newsInterests": "",
+                  "newsEnabled": false,
+                  "everyHours": 3,
+                  "importance": "major",
+                  "maxNewsClipsPerDay": 3,
+                  "morning": {
+                    "includeWeather": false,
+                    "city": "",
+                    "localTime": "08:00",
+                    "timeZone": "Europe/Madrid",
+                    "units": "celsius"
+                  }
+                }
+              }
+            ],
+            "activeRoomProfileId": "3a58799b-fed0-4c2e-a878-0e6614ca7a62",
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 3,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "playback": {
+              "connectionId": "http://127.0.0.1:5195|00000000000000000000000000000001",
+              "trackIds": [
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003ea",
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003eb"
+              ],
+              "currentIndex": 2,
+              "position": 12,
+              "volume": 0.42,
+              "shuffle": false,
+              "repeat": "off"
+            }
+          },
+          "transport": "Play",
+          "held": [],
+          "calls": {
+            "saveWorkflowDraft": 1,
+            "saveRoomProfile": 1,
+            "activateRoomProfile": 1,
+            "getLocalState": 32
+          },
+          "writes": 0,
+          "external": 0
+        },
+        {
+          "name": "final-read-recovery-pending",
+          "rawSha256": "cf5493707cac16b6431de937bfae91dfbe6c205db730e4877ad7b659453cfb8a",
+          "moodControl": {
+            "id": "station-mood",
+            "value": "Warm evening host",
+            "disabled": false
+          },
+          "focus": {
+            "tag": "BUTTON",
+            "name": "Checking\u2026",
+            "outline": "none"
+          },
+          "headings": [
+            "News bucket",
+            "News sources and host",
+            "Automatic news preparation"
+          ],
+          "notices": [
+            "getLocalState unavailable.\nChecking\u2026\nChecking\u2026"
+          ],
+          "setupText": "News bucket\ngetLocalState unavailable.\nChecking\u2026\nChecking\u2026\nSetup profile\nMy room\nEvening copy \u00b7 Active\nSave as new\nAdvanced room options\n\nChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.\n\nRoom switched. Your script and selected audio are unchanged.\n\nNews bucket\nSettings\nSaved audio\n\nPreparation activity must be confirmed before editing setup. Wait for status to load, or retry the failed status check.\n\nNews sources and host\nNews sources\nManage sources\n\nAdd your first source with Manage sources.\n\nNews interests \u00b7 Optional\nDJ\nChoose a DJ\nManage DJs\nMood\n\nSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.\n\nAutomatic news preparation\n\nPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running.\n\nAutomatically prepare news\nCheck sources every\n1 hour\n3 hours\n6 hours\nNews selection\nMajor developments only\nRelevant stories\nMaximum automatic recordings per day\n\nUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.\n\nSaving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.\n\nFinish setup before enabling preparation\nChoose at least one news source.Manage sources\nAdd your first DJ.Manage DJs\nOpenAI key is missing.Provider keys\nElevenLabs key is missing.Provider keys\nThis profile is not available for preparation or playback.Review room options\nSave setup\n\nThis profile is unavailable for playback. You can save preparation as off; make the profile available before enabling it.\n\nCurrent automatic preparation status could not be confirmed. Last saved automatic setting: off. Retry the failed status check above.\n\nNews preparation needs OpenAI and ElevenLabs keys. Provider keys\n\nTesting tools \u00b7 Prepare a story manually",
+          "saved": {
+            "vibe": "Warm evening host",
+            "listeningRoom": {
+              "djId": null,
+              "sourceIds": []
+            },
+            "workflowDraft": {
+              "newsInterests": "",
+              "newsEnabled": false,
+              "everyHours": 3,
+              "importance": "major",
+              "maxNewsClipsPerDay": 3,
+              "morning": {
+                "includeWeather": false,
+                "city": "",
+                "localTime": "08:00",
+                "timeZone": "Europe/Madrid",
+                "units": "celsius"
+              }
+            },
+            "roomProfiles": [
+              {
+                "enabled": true,
+                "id": "default-room",
+                "name": "My room",
+                "room": {
+                  "djId": null,
+                  "sourceIds": []
+                },
+                "mood": "Warm evening host",
+                "workflowDraft": {
+                  "newsInterests": "",
+                  "newsEnabled": false,
+                  "everyHours": 3,
+                  "importance": "major",
+                  "maxNewsClipsPerDay": 3,
+                  "morning": {
+                    "includeWeather": false,
+                    "city": "",
+                    "localTime": "08:00",
+                    "timeZone": "Europe/Madrid",
+                    "units": "celsius"
+                  }
+                }
+              },
+              {
+                "enabled": false,
+                "id": "3a58799b-fed0-4c2e-a878-0e6614ca7a62",
+                "name": "Evening copy",
+                "room": {
+                  "djId": null,
+                  "sourceIds": []
+                },
+                "mood": "Warm evening host",
+                "workflowDraft": {
+                  "newsInterests": "",
+                  "newsEnabled": false,
+                  "everyHours": 3,
+                  "importance": "major",
+                  "maxNewsClipsPerDay": 3,
+                  "morning": {
+                    "includeWeather": false,
+                    "city": "",
+                    "localTime": "08:00",
+                    "timeZone": "Europe/Madrid",
+                    "units": "celsius"
+                  }
+                }
+              }
+            ],
+            "activeRoomProfileId": "3a58799b-fed0-4c2e-a878-0e6614ca7a62",
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 3,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "playback": {
+              "connectionId": "http://127.0.0.1:5195|00000000000000000000000000000001",
+              "trackIds": [
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003ea",
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003eb"
+              ],
+              "currentIndex": 2,
+              "position": 12,
+              "volume": 0.42,
+              "shuffle": false,
+              "repeat": "off"
+            }
+          },
+          "transport": "Play",
+          "held": [
+            "getLocalState"
+          ],
+          "calls": {
+            "saveWorkflowDraft": 1,
+            "saveRoomProfile": 1,
+            "activateRoomProfile": 1,
+            "getLocalState": 33
+          },
+          "writes": 0,
+          "external": 0
+        },
+        {
+          "name": "final-read-recovered",
+          "rawSha256": "4b8e766baa81f3b9d967e3fe9a77d4f3047df6b3280751767c90a889de26b1be",
+          "moodControl": {
+            "id": "station-mood",
+            "value": "Warm evening host",
+            "disabled": false
+          },
+          "focus": {
+            "tag": "H1",
+            "name": "News bucket",
+            "outline": "none"
+          },
+          "headings": [
+            "News bucket",
+            "News sources and host",
+            "Automatic news preparation"
+          ],
+          "notices": [],
+          "setupText": "News bucket\nSetup profile\nMy room\nEvening copy \u00b7 Active\nSave as new\nAdvanced room options\n\nChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.\n\nRoom switched. Your script and selected audio are unchanged.\n\nNews bucket\nSettings\nSaved audio\nNews sources and host\nNews sources\nManage sources\n\nAdd your first source with Manage sources.\n\nNews interests \u00b7 Optional\nDJ\nChoose a DJ\nManage DJs\nMood\n\nSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.\n\nAutomatic news preparation\n\nPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running.\n\nAutomatically prepare news\nCheck sources every\n1 hour\n3 hours\n6 hours\nNews selection\nMajor developments only\nRelevant stories\nMaximum automatic recordings per day\n\nUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.\n\nSaving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.\n\nFinish setup before enabling preparation\nChoose at least one news source.Manage sources\nAdd your first DJ.Manage DJs\nOpenAI key is missing.Provider keys\nElevenLabs key is missing.Provider keys\nThis profile is not available for preparation or playback.Review room options\nSave setup\n\nThis profile is unavailable for playback. You can save preparation as off; make the profile available before enabling it.\n\nRoom unavailable. Make this room available in its advanced options to prepare or play news automatically.\n\nNews preparation needs OpenAI and ElevenLabs keys. Provider keys\n\nTesting tools \u00b7 Prepare a story manually",
+          "saved": {
+            "vibe": "Warm evening host",
+            "listeningRoom": {
+              "djId": null,
+              "sourceIds": []
+            },
+            "workflowDraft": {
+              "newsInterests": "",
+              "newsEnabled": false,
+              "everyHours": 3,
+              "importance": "major",
+              "maxNewsClipsPerDay": 3,
+              "morning": {
+                "includeWeather": false,
+                "city": "",
+                "localTime": "08:00",
+                "timeZone": "Europe/Madrid",
+                "units": "celsius"
+              }
+            },
+            "roomProfiles": [
+              {
+                "enabled": true,
+                "id": "default-room",
+                "name": "My room",
+                "room": {
+                  "djId": null,
+                  "sourceIds": []
+                },
+                "mood": "Warm evening host",
+                "workflowDraft": {
+                  "newsInterests": "",
+                  "newsEnabled": false,
+                  "everyHours": 3,
+                  "importance": "major",
+                  "maxNewsClipsPerDay": 3,
+                  "morning": {
+                    "includeWeather": false,
+                    "city": "",
+                    "localTime": "08:00",
+                    "timeZone": "Europe/Madrid",
+                    "units": "celsius"
+                  }
+                }
+              },
+              {
+                "enabled": false,
+                "id": "3a58799b-fed0-4c2e-a878-0e6614ca7a62",
+                "name": "Evening copy",
+                "room": {
+                  "djId": null,
+                  "sourceIds": []
+                },
+                "mood": "Warm evening host",
+                "workflowDraft": {
+                  "newsInterests": "",
+                  "newsEnabled": false,
+                  "everyHours": 3,
+                  "importance": "major",
+                  "maxNewsClipsPerDay": 3,
+                  "morning": {
+                    "includeWeather": false,
+                    "city": "",
+                    "localTime": "08:00",
+                    "timeZone": "Europe/Madrid",
+                    "units": "celsius"
+                  }
+                }
+              }
+            ],
+            "activeRoomProfileId": "3a58799b-fed0-4c2e-a878-0e6614ca7a62",
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 3,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "playback": {
+              "connectionId": "http://127.0.0.1:5195|00000000000000000000000000000001",
+              "trackIds": [
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003ea",
+                "000000000000000000000000000003e9",
+                "000000000000000000000000000003eb"
+              ],
+              "currentIndex": 2,
+              "position": 12,
+              "volume": 0.42,
+              "shuffle": false,
+              "repeat": "off"
+            }
+          },
+          "transport": "Play",
+          "held": [],
+          "calls": {
+            "saveWorkflowDraft": 1,
+            "saveRoomProfile": 1,
+            "activateRoomProfile": 1,
+            "getLocalState": 33
+          },
+          "writes": 0,
+          "external": 0
+        }
+      ],
+      "result": "Setup mood persists on failed readback; focused Save remains outlined and repeat Return causes no extra save; Tab leaves inert Save. Copy creates exactly one unavailable/off profile and closes its dialog despite readback failure. Switch displays copied target and saved mood despite readback failure. Later held read recovery restores healthy status with no repeated setup/copy/switch. Paused duplicate queue and listening options identical.",
+      "recoveryLimit": "Automatic 10-second reads raced early recovery clicks; those snapshots are recorded as read recovery, not an exclusive explicit Retry dispatch. The final focused Checking action settles to the heading."
+    },
+    "buildTypecheck": "pass",
+    "fullLint": "pass",
+    "unitFramework": "none added or run",
+    "cleanup": "Owned native observers and service process exited normally; owned localhost server stopped, terminal143. No real Jellyfin/provider mutation or temporary real account/profile."
+  },
+  "sourceMapUpdate": {
+    "changed": [
+      {
+        "source": "REQUIREMENTS.md",
+        "line": 87,
+        "checks": "R10 D21 D22 V10 R03 R04 R06 D08 Q08",
+        "oldSha256": "4b36123a2266faef65bab8ba99c193a9a1c8ae78bced61bbd7896742dea28555",
+        "newSha256": "4474d5d0f03b4345a9ce53bf3c2b587ffb648d6d5256da8d79b3c23a862ba141"
+      },
+      {
+        "source": "docs/RADIO_EXPERIENCE.md",
+        "line": 92,
+        "checks": "R03 R04 R06 R08 R09 D01 D02 S01 S02 S03 V07 Q06 Q08",
+        "oldSha256": "8117dbe0a4a39c3c2f1dba2def4bb2c057bb0010d5a9dd316769e91c16f6da2c",
+        "newSha256": "23c5a506b0d2e8b0eaa7ce23011c3c7ec9033fa4345e70f4e13a879f44b856a3"
+      },
+      {
+        "source": "docs/RADIO_EXPERIENCE.md",
+        "line": 145,
+        "checks": "D11 D12 D13 Q06 D21 D22 Q08",
+        "oldSha256": "190b50d9defecb985580b9272e2bdd47bcb6fdeebe014d553bd0e0d39a8137bd",
+        "newSha256": "cb05af344cc943f9c8e5fd0452a5b4bc6b541e3dde5fcfc0999cdd9d2110cb3d"
+      }
+    ],
+    "nonblankLines": 294,
+    "sourceFiles": {
+      "REQUIREMENTS.md": "ad67b8fc63dfaffa8672ddd612cee5d8b7dcc0ada1710ffc5e4fd2b0ae69f95b",
+      "docs/RADIO_EXPERIENCE.md": "66013bd94bc2b95ed066bdfb09259601e7d58d4c3fdd7c6fcc95826d4e13a6bd"
+    },
+    "mapSha256": "c79c5190274ed5122173881fa2221d1e9a0f5fd1fd93eed7d0bbee61c58446b1"
+  },
+  "limits": [
+    "No complete cross-lifetime CI1 adjudication yet",
+    "No live provider, audible quality, listener or OS acceptance result",
+    "Resume/off/availability normalization side effects use focused actual main operation checks, not fresh native user-input paths",
+    "No fresh native account transition or new DJ profile race; absent-cache and stale-response cases use actual QueryClient/storage",
+    "All191 dispositions unchanged,25 open checks,14 listener and11 other-proof; no overall90percent claim"
+  ],
+  "productionBundles": {
+    "out/main/index.js": "f0fe7d27c70f097817d778bd49078a85e006b8ef78933c7146b21a4cd55a07d6",
+    "out/preload/index.cjs": "6b26aab0c4b76c2fdd99165fa7b13e32645307dbacd6690fb9435d62a3abf9d1",
+    "out/renderer/assets/index-j-puD8Ja.js": "b4d0c4bfa4aab7d4cb28ddcf804d5aee468d4e39a4eb3f14cf6d0811d560e08c",
+    "out/renderer/assets/index-B9cR7bvN.css": "78fcc2ec135ead9b4d1badd479acfb6d54ca4a41dc08f9be074474ddebe05f76"
+  }
+}

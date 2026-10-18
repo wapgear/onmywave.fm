@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import type { DJ, DJPlaybackSettings, NewsSource, PreparedNewsTake, RoomProfile } from '../shared/types';
 import { defaultDJPlaybackSettings } from '../shared/dj-playback';
 import { unwrap } from './api';
+import { confirmLocalState } from './local-state-cache';
 import { usePlayer } from './player';
 import { useNewsRecovery } from './NewsRecovery';
 
@@ -156,7 +157,7 @@ function useDJPlaybackController() {
     writeInFlight.current = true;
     let saved = false;
     try {
-      unwrap(await window.wave.saveDJPlayback(patch));
+      await confirmLocalState(client, unwrap(await window.wave.saveDJPlayback(patch)));
       saved = true;
       setUnconfirmed(patch);
       try {
