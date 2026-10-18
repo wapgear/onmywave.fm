@@ -174,3 +174,6 @@ The [player-navigation record](verification/2026-10-18-player-navigation-focus.j
 
 
 The [Q06 consolidated audit](verification/2026-10-18-q06-keyboard-acceptance.json) reviews35 essential-control families and records all 55 current renderer-module hashes. A fresh AST reproduces 234 source definitions. It composes reviewed source with selected native evidence and names specific superseding corrections; neither counts nor references alone are acceptance proof. Shared preview caller differences and platform/race limits remain explicit. Independent reviews support Q06 Controlled after correcting the native title disclosure wording. No new runtime, build or lint run occurs for this documentation-only change. The authoritative checklist now has 26 open checks; historical records retain their original counts.
+
+
+The [18 October PRD reconciliation](verification/2026-10-18-current-prd-reconciliation.json) records the exact current hashes and a complete line-for-line successor to the dated source map. It retains every nonblank source line and all compound story results. Its 47 changed/new lines are textual freshness, not new tests or acceptance points. No source requirement, check or proof kind changes; Q13 remains open pending individual invariant/evidence review.

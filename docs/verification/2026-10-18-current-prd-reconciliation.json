@@ -1,0 +1,424 @@
+{
+  "date": "2026-10-18",
+  "baseCommit": "8d3e00a2407847249d750682e092f3d981317d7f",
+  "scope": "Current PRD source-to-check navigation reconciliation following the keyboard and pending-operation revisions. Partial Q13 only; no new app behavior, atomic metric denominator or acceptance promotion.",
+  "sourceFiles": {
+    "REQUIREMENTS.md": "42db2474698bf14a8f738ab63c179b3dc40dee4cf81cc50300d275a3f6f28afa",
+    "docs/RADIO_EXPERIENCE.md": "2cba1d330db8df81cf9902affdf325f401575b17798d61f0729b1a755650222d"
+  },
+  "map": {
+    "file": "2026-10-18-current-prd-source-map.csv",
+    "sha256": "39d17be2d05f5921749df75591424bb594eb9da854d8aebcd0408b65aecb5450",
+    "nonblankLines": 294,
+    "classes": {
+      "structure": 47,
+      "reference": 15,
+      "contract": 201,
+      "exclusion": 4,
+      "STAR": 27
+    },
+    "STARResults": 27,
+    "uniqueChecks": 191,
+    "meaning": "Every nonblank source line retains exact current location/text/hash, classification and navigation checks. Compound lines and checks retain every clause. This is not one atomic metric per line or proof of each clause."
+  },
+  "changedOrAddedLines": [
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 89,
+      "kind": "contract",
+      "story": "",
+      "checks": "V07 V13 Q06 Q07 Q08 M03 M19 P04",
+      "sha256": "ac746c625ac9b584da0d19f269154c913bd2be0693ea2c70a8098f8555e74091"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 91,
+      "kind": "contract",
+      "story": "",
+      "checks": "Q06 Q08 B14 B16 C06",
+      "sha256": "750adc172a1524db74019111e7ac0c82cd287057afc7d2ad13a2864a97e15cab"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 136,
+      "kind": "contract",
+      "story": "",
+      "checks": "C03 C04 C05 C07 Q06",
+      "sha256": "b366b2e0b0a51c0923e1cd10c14408c78f7eae5598d2bef2d35c6e10ce23bee7"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 138,
+      "kind": "contract",
+      "story": "",
+      "checks": "C01 C03 C04 C05 C07 Q06",
+      "sha256": "05ac51260b1df0726439984d29ce3c13ec6e68b3dc48eccef38de24b8179d4ea"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 146,
+      "kind": "contract",
+      "story": "",
+      "checks": "B01 B02 B07 B09 B10 B11 B13 Q06",
+      "sha256": "34ea94542547f7f68d6dfdd3b8ccade36bd2f229a9f32e631401dd49e8ca93f1"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 188,
+      "kind": "contract",
+      "story": "",
+      "checks": "P02 P09 P11 P13 Q06",
+      "sha256": "8c5e0f3273f1a90260c289c85336e4fd43ebe27a0c3a58f1b0a4a5eae5ef0f5e"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 192,
+      "kind": "contract",
+      "story": "",
+      "checks": "P03 P06 P11 P14 Q06",
+      "sha256": "40d4007f750ab2bee25146e0042159388a5dea5b7332c6eddd0bf177c1bd49d5"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 194,
+      "kind": "contract",
+      "story": "",
+      "checks": "P04 P10 P19 Q06",
+      "sha256": "ce323615a5fc58fd1c6ca46ffb0867e7593112d0bb5907395b168547438e674d"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 206,
+      "kind": "contract",
+      "story": "",
+      "checks": "P07 P10 P11 P12 P13 Q06",
+      "sha256": "2ac152f8f9cda2000a97810eaae0dfd18043567e097bca231358c099c844da2e"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 214,
+      "kind": "contract",
+      "story": "",
+      "checks": "M11 M12 M14 M15 Q06",
+      "sha256": "da4cd8520627ff8cf292b0157bb31a9adcd8370f030acfd58c638cd997757016"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 216,
+      "kind": "contract",
+      "story": "",
+      "checks": "M11 M12 M13 Q06",
+      "sha256": "37c45327d8dba26008c6c0dc7b517ffeff5cd9bfc88bc812eb7ad65a2f8b14e6"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 243,
+      "kind": "contract",
+      "story": "",
+      "checks": "T01 T02 T03 T04 T05 T06 T12 Q06",
+      "sha256": "0c7fbf28bb142ed5926ba4f698b061828cbc6c6e08b153493adddb64219eec9a"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 245,
+      "kind": "contract",
+      "story": "",
+      "checks": "D04 D05 D06 D07 D08 D09 D22 M08 Q06",
+      "sha256": "4bfa7646cda99e56a89e6454a2662bc0cc7d779de0581ad9089b21184f14a2c2"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 246,
+      "kind": "contract",
+      "story": "",
+      "checks": "A07 A10 A12 A13 R06 R09 R10 R13 Q06",
+      "sha256": "0e1b9e32f8a938cdad03ed21f2dfc2ece86e4de46acb3c22aeeb38bb52483cf3"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 257,
+      "kind": "contract",
+      "story": "",
+      "checks": "T01 T02 T07 T08 T09 T10 T11 T13 T14 T15 C14 Q06",
+      "sha256": "ee506ee7143d65d081220e61ca72e8defa1ba02fc1a5ea9543df89c027cd40dc"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 258,
+      "kind": "contract",
+      "story": "",
+      "checks": "T07 T09 T10 T11 T13 T15 D06 Q06",
+      "sha256": "2563ab9cb1fe1e6c3da7be570f0ff26fb8a42e21bde01097a63fa7698a59b85c"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 265,
+      "kind": "structure",
+      "story": "",
+      "checks": "",
+      "sha256": "19a47f6b6cad15c4aac23de276fc4579b37f1721cf308716661731d27726df17"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 267,
+      "kind": "contract",
+      "story": "",
+      "checks": "D01 D02 D14 D18 Q06",
+      "sha256": "447a03813090d91b44528f45a7142c8d757c58629932fb1fde071313c62576a6"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 271,
+      "kind": "contract",
+      "story": "",
+      "checks": "Q03 Q06 Q15 Q16",
+      "sha256": "a4f74df4009d4517db8cc28fc513f747f6daafe1b395790c35b582fe0b26bade"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 277,
+      "kind": "contract",
+      "story": "",
+      "checks": "R03 R04 R05 R07 R08 R09 R10 Q03 Q06 Q15 Q16 D21 D22",
+      "sha256": "c68964cedf8fcc0c57aa4cf6ad12f3f8d871d723a1d0bc886f0a61b724b62889"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 279,
+      "kind": "contract",
+      "story": "",
+      "checks": "S11 S13 S14 D01 D20 Q06",
+      "sha256": "04af3e948595f20eb0ed409f3f2c0a0ca89441a62ef92661d5fbcf49c701653d"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 281,
+      "kind": "contract",
+      "story": "",
+      "checks": "R03 R05 R06 R10 Q06",
+      "sha256": "fa5dba7e63e34e542d7cbc2a12b2d9980811c56f1f4a0bef5629a460e22bcc3d"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 283,
+      "kind": "contract",
+      "story": "",
+      "checks": "C09 C14 A14 A15 A16 A17 A18 Q06",
+      "sha256": "14d1f2da2fb86d85fdda19055798b0f7c72dbb698ce128e2e9d24bc74c27151f"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 316,
+      "kind": "contract",
+      "story": "",
+      "checks": "D14 D15 D16 D17 D18 Q06",
+      "sha256": "9bf346bde1bc3a8427a75936ffcb6dd8ee40ad98c6b80994c2f84b1af00ff998"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 323,
+      "kind": "contract",
+      "story": "",
+      "checks": "B05 B06 Q06 Q08",
+      "sha256": "e9470e56099c22ddc1527c37547f6f9b7e2b1886b08543f9c2a68a2acfa092b4"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 326,
+      "kind": "contract",
+      "story": "",
+      "checks": "R01 A10 A16 A19 Q06 Q08 T10",
+      "sha256": "38d7ccdc27d6d1a830d3f5181117b08542b538a11be8945bbf8a3bc6c9d5f7ac"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 329,
+      "kind": "contract",
+      "story": "",
+      "checks": "S03 Q06",
+      "sha256": "54d44c2c425f85c9ae7bf31b075ab31fbe7b6e8d649a3cd406a432e04e93f42f"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 332,
+      "kind": "contract",
+      "story": "",
+      "checks": "R04 R08 Q06",
+      "sha256": "5ba3007656583f71c2a59b00eeb7f064d5afce467ea63591bebd026f3eb13860"
+    },
+    {
+      "source": "REQUIREMENTS.md",
+      "line": 334,
+      "kind": "contract",
+      "story": "",
+      "checks": "R02 D07 D21 Q06",
+      "sha256": "36dc403b7a7908e41f8a517fa3c1b50d6393e72696af77e88acab58ff7172787"
+    },
+    {
+      "source": "docs/RADIO_EXPERIENCE.md",
+      "line": 29,
+      "kind": "contract",
+      "story": "",
+      "checks": "R01 A10 A16 A19 Q06 Q08 T10",
+      "sha256": "66a66330ae1c587a7e5fdf2eadaf54d5ad6a84e7fbfea5a9c29c243f6e716afe"
+    },
+    {
+      "source": "docs/RADIO_EXPERIENCE.md",
+      "line": 92,
+      "kind": "STAR",
+      "story": "R2",
+      "checks": "R03 R04 R06 R08 R09 D01 D02 S01 S02 S03 V07 Q06",
+      "sha256": "8117dbe0a4a39c3c2f1dba2def4bb2c057bb0010d5a9dd316769e91c16f6da2c"
+    },
+    {
+      "source": "docs/RADIO_EXPERIENCE.md",
+      "line": 94,
+      "kind": "STAR",
+      "story": "R4",
+      "checks": "D04 D05 D06 D07 D09 M08 A04 T11 Q06",
+      "sha256": "b9b55fda8bab93847b1050e08bdf87efcb77d6ff0bab4de024094bd81692ca6b"
+    },
+    {
+      "source": "docs/RADIO_EXPERIENCE.md",
+      "line": 96,
+      "kind": "STAR",
+      "story": "R6",
+      "checks": "A01 A02 A03 A07 A09 A10 Q06",
+      "sha256": "3e13a06cd7dba643351c47f88591e62eb4a357f6d1a12e1c076264d94ee0e8a1"
+    },
+    {
+      "source": "docs/RADIO_EXPERIENCE.md",
+      "line": 97,
+      "kind": "STAR",
+      "story": "R7",
+      "checks": "A04 A13 D08 T11 Q06",
+      "sha256": "1860151981c5a13e42652ce513f7faaa722a92786351eb1a7cbc35abf8b1cf0b"
+    },
+    {
+      "source": "docs/RADIO_EXPERIENCE.md",
+      "line": 98,
+      "kind": "STAR",
+      "story": "R8",
+      "checks": "S07 S08 T07 T09 T10 T11 T13 T14 T15 Q06",
+      "sha256": "f350e0e9084632ad87031d35cab22c236c7dd7c115218963fcbd23a72f09e48a"
+    },
+    {
+      "source": "docs/RADIO_EXPERIENCE.md",
+      "line": 99,
+      "kind": "STAR",
+      "story": "R9",
+      "checks": "R02 R05 R10 R13 A06 A11 D07 Q03 Q15 Q16 Q06",
+      "sha256": "be6c6cfe466a6295fe4187382a7cdc76042bd536c8b9d5bf6a60b3efa69fa9e6"
+    },
+    {
+      "source": "docs/RADIO_EXPERIENCE.md",
+      "line": 100,
+      "kind": "STAR",
+      "story": "R10",
+      "checks": "A10 A19 T02 T03 T04 T05 T06 T12 Q08 C19 Q06",
+      "sha256": "2f4d2010b03dd4c71349a5bbb3991d52fe121477b8680246ef61b01851740cc3"
+    },
+    {
+      "source": "docs/RADIO_EXPERIENCE.md",
+      "line": 102,
+      "kind": "STAR",
+      "story": "R12",
+      "checks": "V07 V08 V09 V10 V11 V12 V13 V14 V15 V16 Q06 Q07 Q08 Q09 Q10 Q11 D21 D22",
+      "sha256": "7ec527af225e608b9987fffa07eae29f1e5f73c5d19314f55fa2303d9768748c"
+    },
+    {
+      "source": "docs/RADIO_EXPERIENCE.md",
+      "line": 132,
+      "kind": "STAR",
+      "story": "M1",
+      "checks": "M03 M19 Q06",
+      "sha256": "1bc965ea4aeb2539330ec4f617b6f7e9374cc184487106bd94f5c349784de6e5"
+    },
+    {
+      "source": "docs/RADIO_EXPERIENCE.md",
+      "line": 135,
+      "kind": "STAR",
+      "story": "M4",
+      "checks": "M14 M15 C12 Q06",
+      "sha256": "c118f2e4edf32aba5897540ef69b62518dd923421347b44480b23ce29a7d1730"
+    },
+    {
+      "source": "docs/RADIO_EXPERIENCE.md",
+      "line": 136,
+      "kind": "STAR",
+      "story": "M5",
+      "checks": "B02 B03 B04 B07 B09 B15 B16 B17 Q06",
+      "sha256": "127a2bfcee3357a6ee41c035ed71d9a5e0f62398fa232b2a8781c8060f19edab"
+    },
+    {
+      "source": "docs/RADIO_EXPERIENCE.md",
+      "line": 137,
+      "kind": "STAR",
+      "story": "M6",
+      "checks": "P05 P06 P07 P08 P09 P10 P11 P12 P13 P14 P15 P16 P17 P18 P19 Q06",
+      "sha256": "6381e6a04d333a32315f9e91074fcb71c74997eb3f88afe4c5b4ab59bba79294"
+    },
+    {
+      "source": "docs/RADIO_EXPERIENCE.md",
+      "line": 140,
+      "kind": "STAR",
+      "story": "M9",
+      "checks": "V10 M04 M11 M12 M13 Q06",
+      "sha256": "fc62e71f8f667e700223b1d164811d926f8abc68d90930ec6c25e25599435c6b"
+    },
+    {
+      "source": "docs/RADIO_EXPERIENCE.md",
+      "line": 141,
+      "kind": "STAR",
+      "story": "M10",
+      "checks": "C05 C06 V07 Q06",
+      "sha256": "0c38c7927e6b46f6957d8e55808169d4b40bf0eb6d4bb423bb3540c66d4380c6"
+    },
+    {
+      "source": "docs/RADIO_EXPERIENCE.md",
+      "line": 142,
+      "kind": "STAR",
+      "story": "M11",
+      "checks": "C02 C03 C04 C05 C06 C07 C08 Q06",
+      "sha256": "73be17a4ace67c994669513b93b95c8d6e8d3956ee1e2901238f356962f8466f"
+    },
+    {
+      "source": "docs/RADIO_EXPERIENCE.md",
+      "line": 145,
+      "kind": "STAR",
+      "story": "M14",
+      "checks": "D11 D12 D13 Q06",
+      "sha256": "190b50d9defecb985580b9272e2bdd47bcb6fdeebe014d553bd0e0d39a8137bd"
+    },
+    {
+      "source": "docs/RADIO_EXPERIENCE.md",
+      "line": 146,
+      "kind": "STAR",
+      "story": "M15",
+      "checks": "A14 A15 A16 A17 A18 A19 C09 C14 Q06",
+      "sha256": "ae9c5e96330c2530af9d84b57a84048fdc16159b5b1e9e843dcf480c424547f3"
+    }
+  ],
+  "review": {
+    "method": "Retain exact unchanged text mappings. Manually map all changed/new requirement paragraphs and changed STAR results to their domain criteria plus Q06 where keyboard behavior expanded. Do not accept closest-string similarity as semantic evidence. Structural headings remain structure; no requirement text omitted.",
+    "findings": [
+      "The17 October map no longer matched47 changed/new lines, including pending/recovery controls, focus targets, authentication, source management and player routes.",
+      "Current mapping accounts for these additions without changing the191-row inventory or deleting prior source requirements.",
+      "The latest Q06 record provides current essential-control evidence, but Q13 still requires individually reviewed domain invariants and all named proof kinds. A navigation link to Controlled Q06 does not promote a whole story or parent gate."
+    ],
+    "parentCriteria": "All7 acceptance parent criteria remain indexed in REQUIREMENTS. Their exact clauses remain mandatory.",
+    "sourceChange": "None. Existing requirements and27 STAR result texts are preserved byte for byte."
+  },
+  "verification": {
+    "sourceLineCoverage": "Every nonblank line of both current PRDs reproduced exactly once; line SHA256 matches.",
+    "checks": "Referenced check set equals all191 current unique IDs; every ID exists.",
+    "stories": "Exactly27 unique STAR IDs match the current source table.",
+    "app": "No production code changed; no new build/lint/native result claimed.",
+    "acceptance": "Unchanged,26 open:14 listener/12 other-proof; Q13 Review; no90%/goal completion claim."
+  },
+  "limits": [
+    "The47-line change count is textual freshness, not47 new behaviors or tests.",
+    "Current source indexing does not establish each compound requirement or invariant passing.",
+    "Existing evidence retains its recorded sources, substitutions, platform/OS/listener/live-service and deferred baseline limits."
+  ]
+}
