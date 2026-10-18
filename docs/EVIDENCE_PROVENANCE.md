@@ -150,3 +150,6 @@ The [playlist/player recovery-focus record](verification/2026-10-18-playlist-pla
 
 
 The [voice-search record](verification/2026-10-18-voice-search-focus.json) retains one baseline and thirteen final native projections, source/bundle/fixture/raw hashes and terminal observer reports. Search results are substituted at the copied IPC gate, so no live ElevenLabs or voice-quality result is implied. All final cases use one renderer. The refreshed source inventory changes neither its 218-definition count nor any acceptance disposition.
+
+
+The [options-save record](verification/2026-10-18-options-save-focus.json) retains three baseline and 22 final native projections, source/bundle/fixture/raw hashes and five terminal observer reports. One readiness-only run predates a lint-only destructuring correction; all 22 final cases use one subsequent renderer. Actual disposable preference/session writes and delayed receipts establish scoped persistence/focus behavior. The selective receipt case isolates stale completion; the earlier mixed batch does not. Baseline bootstrap hash was not retained before adding hold-after; final basic and selective-ID variants are hashed separately. All acceptance dispositions remain unchanged.

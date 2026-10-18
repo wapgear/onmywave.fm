@@ -1,7 +1,7 @@
 import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { ListMusic, Pause, Play, Repeat, Repeat1, Shuffle, SkipBack, SkipForward, Volume1, Volume2, VolumeX, RotateCw, LoaderCircle } from 'lucide-react';
 import { usePlayer } from '../../player';
-import type { PlaybackRetrySettlement } from '../../player';
+import type { OptionsSaveSettlement, PlaybackRetrySettlement } from '../../player';
 import { useRetryFocus } from '../../useRetryFocus';
 import { useNewsRecovery } from '../../NewsRecovery';
 import { Artwork } from '../Shared';
@@ -39,6 +39,18 @@ export function Player({ queueOpen, toggleQueue, openRoom, openSettings }: { que
   const [mutedVolume, setMutedVolume] = useState(0.75);
   const playControl = useRef<HTMLButtonElement>(null);
   const nextControl = useRef<HTMLButtonElement>(null);
+  const volumeControl = useRef<HTMLInputElement>(null);
+  const optionsKey = String(player.optionsRevision);
+  const optionsAttempt = useRef<{ key: string } | null>(null);
+  const [retryingOptionsKey, setRetryingOptionsKey] = useState<string | null>(null);
+  const [optionsSettlement, setOptionsSettlement] = useState<OptionsSaveSettlement | null>(null);
+  const retryingOptions = retryingOptionsKey === optionsKey;
+  const { retryRef: optionsRetryRef, retry: retryOptionsWithFocus } = useRetryFocus({
+    ownerKey: `player:options:${optionsKey}`,
+    target: () => volumeControl.current,
+    canFocusSuccess: () => !player.optionsError && (!retryingOptions || (optionsSettlement?.outcome === 'success'
+      && optionsSettlement.generation === player.getOptionsSaveGeneration())),
+  });
   const retryingRef = useRef<{ key?: string; kind: 'track' | 'restore' } | null>(null);
   const [retrying, setRetrying] = useState(false);
   const [retryingKey, setRetryingKey] = useState<string | undefined>();
@@ -82,6 +94,22 @@ export function Player({ queueOpen, toggleQueue, openRoom, openSettings }: { que
       }
     });
   }
+  function retryOptions() {
+    if (optionsAttempt.current?.key === optionsKey) return;
+    const currentAttempt = { key: optionsKey };
+    optionsAttempt.current = currentAttempt;
+    setRetryingOptionsKey(optionsKey);
+    setOptionsSettlement(null);
+    void retryOptionsWithFocus(async () => {
+      const settlement = await player.retryOptions();
+      if (optionsAttempt.current === currentAttempt) setOptionsSettlement(settlement);
+      return { isError: settlement.outcome === 'failure' };
+    }, undefined, () => {
+      if (optionsAttempt.current !== currentAttempt) return;
+      optionsAttempt.current = null;
+      setRetryingOptionsKey(null);
+    });
+  }
   return <>
     <div ref={notices} className="player-notices">
       {visibleRuns.map(runId => {
@@ -95,7 +123,7 @@ export function Player({ queueOpen, toggleQueue, openRoom, openSettings }: { que
         }}>{!current ? activeRun !== undefined ? 'Previous break ended' : breakFocus?.ended === 'cancelled' ? 'Break cancelled' : breakFocus?.ended === 'stopped' ? 'Break stopped' : 'Break ended' : action === 'stop' ? player.newsPhase === 'waiting' ? 'Cancel break' : 'Stop DJ' : player.newsPhase === 'paused' || (player.newsPhase === 'waiting' && !player.requestedPlaying) ? 'Resume' : 'Pause'}</button>)}</div>;
       })}
       {(player.error || showRetrying) && <div className="playback-error"><span role={showRetrying ? 'status' : 'alert'}>{showRetrying ? 'Retrying playback…' : player.error}</span><button ref={retryRef} aria-disabled={showRetrying || undefined} aria-busy={showRetrying || undefined} onClick={retryPlayback} disabled={!showRetrying && (player.busy || !player.canRetry)}>{showRetrying ? <LoaderCircle size={14} className="player-spin" /> : <RotateCw size={14} />}{showRetrying ? 'Retrying…' : 'Retry'}</button><button onClick={event => { if (document.activeElement === event.currentTarget) nextControl.current?.focus({ preventScroll: true }); player.next(); }} disabled={!player.current}>Skip track</button></div>}
-      {player.optionsError && <div className="playback-error player-options-error"><span role="alert">{player.optionsError}</span><button onClick={player.retryOptions}><RotateCw size={14} /> Retry saving options</button></div>}
+      {(player.optionsError || retryingOptions) && <div className="playback-error player-options-error"><span role={retryingOptions ? 'status' : 'alert'}>{retryingOptions ? 'Saving player options…' : player.optionsError}</span><button ref={optionsRetryRef} aria-disabled={retryingOptions || undefined} aria-busy={retryingOptions || undefined} onClick={retryOptions}>{retryingOptions ? <LoaderCircle size={14} className="player-spin" /> : <RotateCw size={14} />}{retryingOptions ? 'Saving options…' : 'Retry saving options'}</button></div>}
     </div>
     <footer className="player-bar" aria-label="Music player">
       <div className="player-song"><div className="player-artwork"><Artwork url={player.current?.imageUrl} name={player.current?.name ?? 'No song selected'} /></div><div><strong title={player.current?.name}>{player.current?.name ?? 'Your music, ready when you are'}</strong><span title={player.current?.artists.join(', ')}>{player.current ? player.current.artists.join(', ') || 'Unknown artist' : 'Choose a song to begin'}</span></div></div>
@@ -109,7 +137,7 @@ export function Player({ queueOpen, toggleQueue, openRoom, openSettings }: { que
         </div>
         <div className="player-progress"><span>{formatTime(position)}</span><input type="range" min="0" max={Math.max(1, duration)} step="0.1" value={duration ? position : 0} style={fill(duration ? position / duration * 100 : 0)} disabled={!player.current || !duration} aria-label="Playback position" aria-valuetext={duration ? `${formatTime(position)} of ${formatTime(duration)}` : `${formatTime(position)} elapsed; duration unavailable`} onChange={event => setSeekDraft({ key: player.currentKey, value: Number(event.target.value) })} onBlur={commitSeek} onPointerUp={commitSeek} onPointerCancel={() => setSeekDraft(null)} onKeyUp={event => { if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown'].includes(event.key)) commitSeek(); }} /><span aria-label={player.current && !duration ? 'Duration unavailable' : 'Time remaining'}>{duration || !player.current ? `−${formatTime(Math.max(0, duration - position))}` : '--:--'}</span></div>
       </div>
-      <div className="player-tools"><DJPopover openRoom={openRoom} openSettings={openSettings} />{player.busy && <><span className="sr-only" role="status">Loading audio</span><LoaderCircle size={15} className="player-spin" aria-hidden="true" /></>}<button className="player-icon" title={player.volume ? 'Mute' : 'Unmute'} aria-label={player.volume ? 'Mute' : 'Unmute'} onClick={() => { if (player.volume) { setMutedVolume(player.volume); player.setVolume(0); } else player.setVolume(mutedVolume); }}><Volume size={18} /></button><input className="player-volume" type="range" min="0" max="1" step="0.01" value={player.volume} style={fill(player.volume * 100)} onChange={event => player.setVolume(Number(event.target.value))} aria-label="Volume" aria-valuetext={`${Math.round(player.volume * 100)} percent`} /><button className={`player-icon ${queueOpen ? 'is-active' : ''}`} onClick={toggleQueue} title="Playing Next" aria-label={`${queueOpen ? 'Hide' : 'Show'} queue, ${player.queue.length} ${player.queue.length === 1 ? 'track' : 'tracks'}`} aria-controls="listening-drawer" aria-expanded={queueOpen}><ListMusic size={21} /></button></div>
+      <div className="player-tools"><DJPopover openRoom={openRoom} openSettings={openSettings} />{player.busy && <><span className="sr-only" role="status">Loading audio</span><LoaderCircle size={15} className="player-spin" aria-hidden="true" /></>}<button className="player-icon" title={player.volume ? 'Mute' : 'Unmute'} aria-label={player.volume ? 'Mute' : 'Unmute'} onClick={() => { if (player.volume) { setMutedVolume(player.volume); player.setVolume(0); } else player.setVolume(mutedVolume); }}><Volume size={18} /></button><input ref={volumeControl} className="player-volume" type="range" min="0" max="1" step="0.01" value={player.volume} style={fill(player.volume * 100)} onChange={event => player.setVolume(Number(event.target.value))} aria-label="Volume" aria-valuetext={`${Math.round(player.volume * 100)} percent`} /><button className={`player-icon ${queueOpen ? 'is-active' : ''}`} onClick={toggleQueue} title="Playing Next" aria-label={`${queueOpen ? 'Hide' : 'Show'} queue, ${player.queue.length} ${player.queue.length === 1 ? 'track' : 'tracks'}`} aria-controls="listening-drawer" aria-expanded={queueOpen}><ListMusic size={21} /></button></div>
     </footer>
   </>;
 }

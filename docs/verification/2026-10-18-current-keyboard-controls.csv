@@ -11,19 +11,19 @@ src/renderer/components/Player/DJPopover.component.tsx,146,button,,"descendant c
 src/renderer/components/Player/DJPopover.component.tsx,148,select,,"label for id, inspect",{profileUnavailable && !ownsProfileFocus},{profileUnavailable || undefined},"{event => { if (profileUnavailable && [' ', 'Enter', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown'].includes(event.key)) event.preventDefault(); }}"
 src/renderer/components/Player/DJPopover.component.tsx,160,button,,"descendant content, inspect",,,native or enclosing handler
 src/renderer/components/Player/DJPopover.component.tsx,160,button,,"descendant content, inspect",,,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,91,button,,"descendant content, inspect",,{!current || undefined},native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,97,button,,"descendant content, inspect",{!showRetrying && (player.busy || !player.canRetry)},{showRetrying || undefined},native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,97,button,,"descendant content, inspect",{!player.current},,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,98,button,,"descendant content, inspect",,,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,104,button,,"""Shuffle""",,,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,105,button,,"""Previous track""",{!player.current},,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,106,button,,{player.requestedPlaying ? 'Pause' : 'Play'},{!player.current},,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,107,button,,"""Next track""",{!player.current},,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,108,button,,{`Repeat: ${player.repeat}`},,,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,110,input,,"""Playback position""",{!player.current || !duration},,"{event => { if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown'].includes(event.key)) commitSeek(); }}"
-src/renderer/components/Player/Player.component.tsx,112,button,,{player.volume ? 'Mute' : 'Unmute'},,,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,112,input,,"""Volume""",,,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,112,button,,"{`${queueOpen ? 'Hide' : 'Show'} queue, ${player.queue.length} ${player.queue.length === 1 ? 'track' : 'tracks'}`}",,,native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,119,button,,"descendant content, inspect",,{!current || undefined},native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,125,button,,"descendant content, inspect",{!showRetrying && (player.busy || !player.canRetry)},{showRetrying || undefined},native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,125,button,,"descendant content, inspect",{!player.current},,native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,126,button,,"descendant content, inspect",,{retryingOptions || undefined},native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,132,button,,"""Shuffle""",,,native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,133,button,,"""Previous track""",{!player.current},,native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,134,button,,{player.requestedPlaying ? 'Pause' : 'Play'},{!player.current},,native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,135,button,,"""Next track""",{!player.current},,native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,136,button,,{`Repeat: ${player.repeat}`},,,native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,138,input,,"""Playback position""",{!player.current || !duration},,"{event => { if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown'].includes(event.key)) commitSeek(); }}"
+src/renderer/components/Player/Player.component.tsx,140,button,,{player.volume ? 'Mute' : 'Unmute'},,,native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,140,input,,"""Volume""",,,native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,140,button,,"{`${queueOpen ? 'Hide' : 'Show'} queue, ${player.queue.length} ${player.queue.length === 1 ? 'track' : 'tracks'}`}",,,native or enclosing handler
 src/renderer/components/AddPlaylist/AddPlaylist.component.tsx,35,select,,enclosing label,,{save.isPending || uncertain || undefined},{blockKey}
 src/renderer/components/AddPlaylist/AddPlaylist.component.tsx,36,input,,enclosing label,,,native or enclosing handler
 src/renderer/components/AddPlaylist/AddPlaylist.component.tsx,37,input,,enclosing label,,{save.isPending || uncertain || undefined},{blockKey}
