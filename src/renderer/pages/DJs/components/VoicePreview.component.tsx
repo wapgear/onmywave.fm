@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useId, useLayoutEffect, useRef, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { LoaderCircle, Play, Square } from 'lucide-react';
 import { PRESET_VOICE_IDS } from '../../../../shared/voice-previews';
@@ -24,7 +24,8 @@ export function VoicePreview({ resource, label, playbackId, activeId, onStart, a
   const recovery = useNewsRecovery();
   const recoveryReady = recovery.status.phase === 'ready';
   const audio = useRef<HTMLAudioElement>(null);
-  const previewLabel = useRef<HTMLSpanElement>(null);
+  const previewGroup = useRef<HTMLDivElement>(null);
+  const labelId = useId();
   const mounted = useRef(false);
   const currentVoiceId = useRef(voiceId);
   const loadedVoiceId = useRef('');
@@ -42,7 +43,7 @@ export function VoicePreview({ resource, label, playbackId, activeId, onStart, a
   const queryKey = resource.kind === 'dj' ? ['djVoicePreview', resource.djId, voiceId, resource.delivery] : ['voicePreview', voiceId];
   const valid = validVoiceId(voiceId);
   const preview = useQuery({ queryKey, enabled: active && valid && recoveryReady, queryFn: async () => unwrap(await (resource.kind === 'dj' ? window.wave.getDJVoicePreview(resource.djId) : window.wave.getVoicePreview(voiceId))), retry: false, refetchOnWindowFocus: false, refetchOnReconnect: false });
-  const retryFocus = useRetryFocus({ ownerKey: identity, target: () => previewLabel.current, canFocusSuccess: () => active && recoveryReady && preview.isSuccess && !preview.isFetching });
+  const retryFocus = useRetryFocus({ ownerKey: identity, target: () => previewGroup.current, canFocusSuccess: () => active && recoveryReady && preview.isSuccess && !preview.isFetching });
   const shared = preview.data;
   const playable = shared?.available && shared.audioUrl ? shared : null;
   const playing = playingVoiceId === voiceId;
@@ -142,12 +143,12 @@ export function VoicePreview({ resource, label, playbackId, activeId, onStart, a
     onBlur: () => setFocusedAction(null),
   });
   const buttonLabel = playing ? 'Stop preview' : savedDJ ? canPlay && !audioFailed ? 'Preview saved DJ' : attempted || audioFailed ? 'Retry DJ preview' : 'Generate DJ preview' : audioFailed && bundled ? 'Try preview again' : audioFailed ? 'Regenerate preview' : canPlay ? 'Preview voice' : bundled ? 'Preview voice' : attempted ? 'Retry preview' : 'Generate preview';
-  return <div className="dj-voice-preview">
+  return <div ref={previewGroup} tabIndex={-1} role="group" aria-labelledby={labelId} className="dj-voice-preview">
     <button type="button"  {...focusProps('preview')} disabled={previewUnavailable && !ownsFocus('preview')} aria-disabled={previewUnavailable || undefined} aria-busy={pending || undefined} onClick={start} aria-label={`${pending ? 'Loading preview' : buttonLabel} for ${label}`}>
       {pending ? <LoaderCircle size={14} className="spinning" /> : playing ? <Square size={14} /> : <Play size={14} />}{pending ? 'Loading…' : buttonLabel}
     </button>
     {savedDJ && (canPlay || ownsFocus('regenerate')) && <button type="button" {...focusProps('regenerate')} disabled={regenerateUnavailable && !ownsFocus('regenerate')} aria-disabled={regenerateUnavailable || undefined} aria-busy={prepare.isPending || undefined} onClick={() => { if (!regenerateUnavailable) generate(true); }} aria-label={`${prepare.isPending ? 'Regenerating DJ preview' : canPlay ? 'Regenerate DJ preview' : 'Preview unavailable'} for ${label}`}>{prepare.isPending ? 'Regenerating…' : canPlay ? 'Regenerate DJ preview' : 'Preview unavailable'}</button>}
-    <span ref={previewLabel} tabIndex={-1} className="dj-voice-preview-label">{label} · {savedDJ ? 'DJ delivery preview' : 'voice sample'}</span>
+    <span id={labelId} className="dj-voice-preview-label">{label} · {savedDJ ? 'DJ delivery preview' : 'voice sample'}</span>
     <p className="dj-preview-hint" role="status">{!valid ? 'Enter a valid ElevenLabs voice ID to preview it.' : prepare.isPending ? 'Preparing the voice preview and checking its saved status…' : preview.isPending ? savedDJ ? 'Checking saved DJ delivery preview…' : 'Checking saved voice sample…' : savedDJ ? playable ? shared?.stale ? 'Outdated preview. This recording uses earlier voice or delivery settings. Regenerate makes a new ElevenLabs request.' : 'Saved locally with this DJ’s voice and delivery. Replay needs no provider request; regeneration uses ElevenLabs.' : attempted ? 'No playable DJ preview is saved. Retry makes a new ElevenLabs request.' : 'Generate a fixed sample with this DJ’s saved voice and delivery using ElevenLabs. Saving this DJ does not generate audio.' : playable ? audioFailed ? bundled ? 'The bundled sample could not play; no provider request will be made.' : 'The saved sample failed to play. Regenerate it once to replace it.' : 'Saved locally. Replaying does not make a provider request.' : bundled ? 'The bundled preset sample is unavailable; synthesis is disabled for preset voices.' : attempted ? 'No playable sample is saved. Retry makes a new ElevenLabs request.' : 'Generate once with ElevenLabs; this sample is then shared by voice ID.'}</p>
     {!bundled && valid && <p className="dj-preview-hint">Generating or regenerating a preview uses ElevenLabs outside automatic news limits and can use credits or incur charges. Replaying saved audio makes no provider request.</p>}
     <audio ref={audio} preload="none" aria-label={`${label} ${savedDJ ? 'DJ delivery preview' : 'voice sample'}`} onPlay={() => { if (!active || (activeId && activeId !== playbackId) || loadedGeneration.current !== playGeneration.current || loadedVoiceId.current !== currentVoiceId.current || !requestIsCurrent()) { audio.current?.pause(); return; } setFailedVoiceId(null); onStart?.(playbackId); player.pauseForPreview(); setPlayingVoiceId(currentVoiceId.current); }} onPause={() => setPlayingVoiceId(null)} onEnded={() => setPlayingVoiceId(null)} onError={() => { setPlayingVoiceId(null); setFailedVoiceId(currentVoiceId.current); setPlayError(new Error(bundled ? 'The bundled voice sample could not be opened.' : 'The saved voice sample could not be opened. Regenerate it to replace the file.')); }} />

@@ -156,3 +156,6 @@ The [options-save record](verification/2026-10-18-options-save-focus.json) retai
 
 
 The [authentication handoff record](verification/2026-10-18-authentication-handoff-focus.json) retains three baseline and eighteen final native projections, source/bundle/fixture/raw hashes and four terminal observer reports. All final cases use one renderer. Actual disposable encrypted authentication/library persistence uses four allowed localhost fixture auth POSTs; external/provider attempts stay zero. Tab-away cases establish cancellation of a late heading handoff, not retained focus after the source disappears. Same-account drafts and stale/no-op callback guards have source review only. All acceptance dispositions remain unchanged.
+
+
+The [keyboard target-name record](verification/2026-10-18-keyboard-target-names.json) preserves scoped native projections, accessibility nodes, five terminal observer reports, source/bundle/fixture hashes and explicit phase limits. Pointer focus proves count names, not keyboard recovery-to-count. The final keyboard provider/preview/history checks separately establish visible focus. Seeded history metadata proves presentation only. The 233-definition inventory expands source scope without changing acceptance dispositions.
