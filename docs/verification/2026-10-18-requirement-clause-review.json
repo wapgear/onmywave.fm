@@ -21,8 +21,8 @@
     "STARStories": 27,
     "STARResultFragments": 265,
     "structuralLines": 47,
-    "semanticFragmentsReviewed": 431,
-    "proofFragmentsReviewed": 429,
+    "semanticFragmentsReviewed": 433,
+    "proofFragmentsReviewed": 431,
     "partitionComplete": true,
     "semanticDenominatorComplete": false,
     "overallScore": null,
@@ -38,7 +38,7 @@
     "listenerOpenChecks": 14,
     "otherProofOpenChecks": 11,
     "contextFragmentsReviewed": 1,
-    "canonicalReviewGroups": 67,
+    "canonicalReviewGroups": 68,
     "acceptedCanonicalGroups": 0
   },
   "STARContexts": [
@@ -718,7 +718,7 @@
   },
   "clauseLedger": {
     "file": "2026-10-18-requirement-clauses.csv",
-    "sha256": "9ed97d0530cc353ff5b5d540d5b927a084e69e46c418aad18a5463e53c06c22a",
+    "sha256": "5a9ed2057bd761986698e26ee6ee691fd10d6a40fc8d4e6a418cf0e219dbe23e",
     "columns": "Candidate navigation, semantic review and actual proof review are distinct. Empty evidence/canonical IDs do not establish completion."
   },
   "scopeReviews": [
@@ -803,6 +803,11 @@
       "file": "2026-10-19-connection-obligations.json",
       "sha256": "54763e9f4d0891c522004e8b1a354c56a4999bc30f1b68f65d28dc35378dd4b5",
       "meaning": "Fourteen connection groups,113 new exact fragments plus10 intact prior dependencies and five full STAR contexts. Source/dated evidence review only;no accepted groups."
+    },
+    {
+      "file": "2026-10-19-workflow-deferral-ownership.json",
+      "sha256": "d6d58766bd1e22c437f92e950da463143aff1a07b065071c36b91484dcda6f51",
+      "meaning": "WF01 two exact clauses,current storage/scheduler contradiction and ownership fix. Broader native/live/signout/restart requirements remain incomplete."
     }
   ],
   "generatorMeaning": "Original mechanical partition generator only. Later deliberate semantic/proof annotations are authoritative and must be preserved; rerunning the original generator alone would discard them.",
