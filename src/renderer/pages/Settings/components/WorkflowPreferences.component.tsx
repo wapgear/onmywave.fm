@@ -8,6 +8,10 @@ import './WorkflowPreferences.styles.css';
 
 export type PreparationIssue = { message: string; action?: { label: string; run: () => void } };
 type Props = {
+  active: boolean;
+  resuming: boolean;
+  resumeError: unknown;
+  stopError: unknown;
   room?: RoomProfile;
   value: WorkflowDraft;
   dirty: boolean;
@@ -28,10 +32,14 @@ type Props = {
   onRetryStatus: () => void;
 };
 
-export function WorkflowPreferences({ room, value, dirty, disabled, saving, saveError, activationReady, statusLoading, statusError, profileStatusUnknown, issues, onChange, onSave, onResume, onTurnOff, stopping, stopDisabled, onRetryStatus }: Props) {
+export function WorkflowPreferences({ active, resuming, resumeError, stopError, room, value, dirty, disabled, saving, saveError, activationReady, statusLoading, statusError, profileStatusUnknown, issues, onChange, onSave, onResume, onTurnOff, stopping, stopDisabled, onRetryStatus }: Props) {
   const saveButton = useRef<HTMLButtonElement>(null);
   const saveFeedback = useRef<HTMLDivElement>(null);
   const [ownsSaveFocus, setOwnsSaveFocus] = useState(false);
+  const stopButton = useRef<HTMLButtonElement>(null);
+  const resumeButton = useRef<HTMLButtonElement>(null);
+  const [focusedAction, setFocusedAction] = useState<{ key: 'off' | 'resume'; element: HTMLButtonElement } | null>(null);
+  const ownsAction = (key: 'off' | 'resume') => active && focusedAction?.key === key && document.activeElement === focusedAction.element;
   const recovery = useNewsRecovery();
   const recoveryReady = recovery.status.phase === 'ready';
   const status = room ? newsPreparationStatus(room) : null;
@@ -44,6 +52,19 @@ export function WorkflowPreferences({ room, value, dirty, disabled, saving, save
   const saveUnavailable = !recoveryReady || blockedSave;
   const saveDisabled = !saving && (saveUnavailable || disabled || (!dirty && !ownsSaveFocus));
   const saveAriaDisabled = saveUnavailable || disabled || saving || !dirty;
+  const needsResume = !!room?.enabled && !!room.workflowDraft.newsEnabled && !!(room.workflowDraft.newsWorkflowError || room.workflowDraft.newsWorkflowPaused);
+  const resumeAllowed = needsResume && recoveryReady && !disabled && !saving && !dirty && mayEnable && !resuming;
+  const stopAllowed = recoveryReady && !!room?.workflowDraft.newsEnabled && !stopping && !stopDisabled;
+  const preparationResumed = !!room?.enabled && !!room.workflowDraft.newsEnabled && !needsResume;
+  const stopErrorMessage = stopError ? errorMessage(stopError) : '';
+  const resumeErrorMessage = resumeError ? errorMessage(resumeError) : '';
+  useLayoutEffect(() => {
+    const focused = document.activeElement;
+    if (!(focused instanceof HTMLElement) || !focused.checkVisibility() || document.visibilityState !== 'visible' || !document.hasFocus()) return;
+    if ((stopErrorMessage && focused === stopButton.current) || (resumeErrorMessage && focused === resumeButton.current)) {
+      focused.closest('.news-workflow-action')?.scrollIntoView({ block: 'center', inline: 'nearest' });
+    }
+  }, [stopErrorMessage, resumeErrorMessage]);
   const saveErrorMessage = saveError ? errorMessage(saveError) : '';
   const lastSaveErrorMessage = useRef(saveErrorMessage);
 
@@ -98,8 +119,8 @@ export function WorkflowPreferences({ room, value, dirty, disabled, saving, save
         <button ref={saveButton} className="primary settings-save news-workflow-save" disabled={saveDisabled} aria-disabled={saveAriaDisabled || undefined} aria-busy={saving || undefined} onFocus={() => setOwnsSaveFocus(true)} onBlur={() => setOwnsSaveFocus(false)}>{saving ? 'Saving…' : activating ? 'Save setup and enable preparation' : 'Save setup'}</button>
       </div>
       {!room.enabled && <p className="notice">This profile is unavailable for playback. You can save preparation as off; make the profile available before enabling it.</p>}
-      {room.workflowDraft.newsEnabled && <div className="news-workflow-stop">
-        <button type="button" disabled={!recoveryReady || stopping || stopDisabled} onClick={onTurnOff}>{stopping ? 'Turning off…' : 'Turn off automatic preparation'}</button>
+      {(room.workflowDraft.newsEnabled || ownsAction('off') || Boolean(stopError)) && <div className="news-workflow-stop news-workflow-action">
+        <button ref={stopButton} type="button" disabled={!stopAllowed && !ownsAction('off')} aria-disabled={!stopAllowed || undefined} aria-busy={stopping || undefined} onFocus={event => setFocusedAction({ key: 'off', element: event.currentTarget })} onBlur={() => setFocusedAction(null)} onClick={() => { if (stopAllowed) onTurnOff(); }}>{stopping ? 'Turning off…' : room.workflowDraft.newsEnabled ? 'Turn off automatic preparation' : 'Automatic preparation off'}</button><ErrorNotice error={stopError} />
         <p className="form-hint">Takes effect immediately and asks this profile's automatic check to stop. Other unsaved edits stay here. A provider request already sent may still complete.</p>
       </div>}
       {status && <p className="settings-description">{!recoveryReady
@@ -107,7 +128,7 @@ export function WorkflowPreferences({ room, value, dirty, disabled, saving, save
         : profileStatusUnknown
           ? <>Current automatic preparation status could not be confirmed. Last saved automatic setting: {room.workflowDraft.newsEnabled ? 'on' : 'off'}. Retry the failed status check above.</>
           : <>{status.label}. {status.detail}</>}</p>}
-      {room.enabled && room.workflowDraft.newsEnabled && (room.workflowDraft.newsWorkflowError || room.workflowDraft.newsWorkflowPaused) && <button type="button" disabled={!recoveryReady || disabled || saving || dirty || !mayEnable} onClick={onResume}>Resume preparation</button>}
+      {(needsResume || ownsAction('resume') || Boolean(resumeError)) && <div className="news-workflow-action"><button ref={resumeButton} type="button" disabled={!resumeAllowed && !ownsAction('resume')} aria-disabled={!resumeAllowed || undefined} aria-busy={resuming || undefined} onFocus={event => setFocusedAction({ key: 'resume', element: event.currentTarget })} onBlur={() => setFocusedAction(null)} onClick={() => { if (resumeAllowed) onResume(); }}>{resuming ? 'Resuming…' : preparationResumed ? 'Preparation resumed' : 'Resume preparation'}</button><ErrorNotice error={resumeError} /></div>}
       {dirty && (room.workflowDraft.newsWorkflowError || room.workflowDraft.newsWorkflowPaused) && <p className="form-hint">Save your changes before resuming preparation. Resume remains a separate action.</p>}
       {!dirty && !mayEnable && room.enabled && room.workflowDraft.newsEnabled && (room.workflowDraft.newsWorkflowError || room.workflowDraft.newsWorkflowPaused) && <p className="form-hint">Resolve the listed setup or key issues before resuming preparation.</p>}
       <ErrorNotice error={statusError ? new Error('Provider key status could not be checked.') : null} />
