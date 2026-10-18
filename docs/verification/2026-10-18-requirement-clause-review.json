@@ -21,8 +21,8 @@
     "STARStories": 27,
     "STARResultFragments": 265,
     "structuralLines": 47,
-    "semanticFragmentsReviewed": 168,
-    "proofFragmentsReviewed": 166,
+    "semanticFragmentsReviewed": 170,
+    "proofFragmentsReviewed": 168,
     "partitionComplete": true,
     "semanticDenominatorComplete": false,
     "overallScore": null,
@@ -38,7 +38,7 @@
     "listenerOpenChecks": 14,
     "otherProofOpenChecks": 11,
     "contextFragmentsReviewed": 1,
-    "canonicalReviewGroups": 26,
+    "canonicalReviewGroups": 27,
     "acceptedCanonicalGroups": 0
   },
   "STARContexts": [
@@ -718,7 +718,7 @@
   },
   "clauseLedger": {
     "file": "2026-10-18-requirement-clauses.csv",
-    "sha256": "237566e112e3372304dbefc0d5ddbd590d975aa3c006b89e21424777d3e3e365",
+    "sha256": "112ca687f1016bf56f01cb9e345e47c5d4000eaa024e360d1dcb4e47ccf8eb97",
     "columns": "Candidate navigation, semantic review and actual proof review are distinct. Empty evidence/canonical IDs do not establish completion."
   },
   "scopeReviews": [
@@ -768,6 +768,11 @@
       "file": "2026-10-19-playlist-obligations.json",
       "sha256": "af2ce81d69aad939fb1cb7af300371d41484e6e3ced591d11b7b244cffbf092d",
       "meaning": "Nine playlist groups,88 new exact fragments and existing PLID01 dependency cover all Playlists/M6 source;source/dated proof review only,no accepted groups."
+    },
+    {
+      "file": "2026-10-19-keyboard-volume-startup.json",
+      "sha256": "d62f5798613f171def2b1cd9c7f0955a3f64403a99ad3c5e47881b8f99ea1fd0",
+      "meaning": "VOL01 two exact clauses,current native startup-volume contradiction/fix and restart;other startup-control/failure variants remain explicit."
     }
   ],
   "generatorMeaning": "Original mechanical partition generator only. Later deliberate semantic/proof annotations are authoritative and must be preserved; rerunning the original generator alone would discard them."

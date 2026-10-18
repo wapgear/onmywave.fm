@@ -113,6 +113,15 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const duration = current && Number.isFinite(current.duration) && current.duration > 0 ? current.duration : 0;
   const live = useRef({ queue, index, current, repeat, shuffle, position, volume, recoveryReady });
   useLayoutEffect(() => { live.current = { queue, index, current, repeat, shuffle, position, volume, recoveryReady }; }, [queue, index, current, repeat, shuffle, position, volume, recoveryReady]);
+  const changeVolume = useCallback((value: number) => {
+    const next = Math.max(0, Math.min(1, value));
+    if (next === live.current.volume) return;
+    ++optionsSaveGeneration.current;
+    setOptionsRevision(revision => revision + 1);
+    preferenceEdits.current.volume = true;
+    live.current.volume = next;
+    setVolume(next);
+  }, []);
 
   const fadeMusic = useCallback((to: number, seconds = 1, followPlayback = false): Promise<boolean> => {
     cancelAnimationFrame(fadeFrame.current);
@@ -771,13 +780,13 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       else if (event.metaKey) {
         if (event.key === 'ArrowLeft' && live.current.current) { event.preventDefault(); previous(); }
         else if (event.key === 'ArrowRight' && live.current.current) { event.preventDefault(); skipNext(); }
-        else if (event.key === 'ArrowUp' && !interactive) { event.preventDefault(); setVolume(value => Math.min(1, value + 0.05)); }
-        else if (event.key === 'ArrowDown' && !interactive) { event.preventDefault(); setVolume(value => Math.max(0, value - 0.05)); }
+        else if (event.key === 'ArrowUp' && !interactive) { event.preventDefault(); changeVolume(live.current.volume + 0.05); }
+        else if (event.key === 'ArrowDown' && !interactive) { event.preventDefault(); changeVolume(live.current.volume - 0.05); }
       }
     };
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [skipNext, previous, toggle]);
+  }, [skipNext, previous, toggle, changeVolume]);
 
   useEffect(() => {
     if (!('mediaSession' in navigator)) return;
@@ -950,7 +959,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       setQueue(items => [...items, ...entries(songs)]);
       setReadyConnection(connection?.id ?? null);
     }, toggle, next: skipNext, previous, seek,
-    setVolume: value => { const next = Math.max(0, Math.min(1, value)); if (next === live.current.volume) return; ++optionsSaveGeneration.current; setOptionsRevision(revision => revision + 1); preferenceEdits.current.volume = true; setVolume(next); },
+    setVolume: changeVolume,
     toggleShuffle: () => {
       ++optionsSaveGeneration.current;
       setOptionsRevision(revision => revision + 1);
