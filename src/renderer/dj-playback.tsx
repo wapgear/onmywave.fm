@@ -42,6 +42,10 @@ function useDJPlaybackController() {
     let published = false;
     const attempted = new Set<string>();
     let recoveryBlocked = false;
+    const release = (take: PreparedNewsTake) => {
+      const claimId = take.deliveryState?.claimId;
+      if (claimId) void window.wave.releasePreparedNews({ id: take.id, claimId }).then(unwrap).catch(() => {});
+    };
     const cycle: PlaybackView = { configKey, baseline: live.current.player.completedSongs, pending: null, preparing: false, placing: false, waiting: false, failure: null, retryPhase: null, retryMessage: null };
     const publish = () => { if (!cancelled) setView({ ...cycle }); };
     retry.current = () => {
@@ -65,7 +69,7 @@ function useDJPlaybackController() {
         // return tail; both are released only after the player clears it.
         if (knownSpeech) return;
         if (p.newsPhase !== 'idle' && !recoveryBlocked) p.stopNews();
-        if (cycle.pending && ownedNews) void window.wave.releasePreparedNews(ownedNews).then(unwrap).catch(() => {});
+        if (cycle.pending && ownedNews) release(cycle.pending);
         cycle.pending = null; ownedNews = null; cycle.preparing = false; cycle.placing = false;
         recoveryBlocked = true;
         publish();
@@ -94,7 +98,7 @@ function useDJPlaybackController() {
         ownedNews = take.id;
         cycle.placing = true;
         publish();
-        void p.scheduleNews(take, take.renderingDJ.news?.duckVolume ?? 0.05).catch(cause => {
+        void p.scheduleNews(take, take.renderingDJ.news?.duckVolume ?? 0.05, take.deliveryState?.claimId).catch(cause => {
           if (cancelled) return;
           const message = cause instanceof Error ? cause.message : 'The DJ break could not be scheduled.';
           // A late result waits for another ending without repeating provider calls.
@@ -102,7 +106,7 @@ function useDJPlaybackController() {
             excluded.add(take.id);
             cycle.pending = null;
             ownedNews = null;
-            void window.wave.releasePreparedNews(take.id).then(unwrap).catch(() => {});
+            release(take);
           }
         }).finally(() => { cycle.placing = false; publish(); });
         return;
@@ -118,11 +122,11 @@ function useDJPlaybackController() {
       publish();
       void window.wave.nextRoomNews({ roomId: profile.id, excludedIds: [...excluded] }).then(unwrap).then(take => {
         if (cancelled) {
-          if (take) void window.wave.releasePreparedNews(take.id).then(unwrap).catch(() => {});
+          if (take) release(take);
           return;
         }
         if (!live.current.recoveryReady) {
-          if (take) void window.wave.releasePreparedNews(take.id).then(unwrap).catch(() => {});
+          if (take) release(take);
           return;
         }
         cycle.pending = take;
@@ -143,7 +147,7 @@ function useDJPlaybackController() {
     return () => {
       cancelled = true;
       window.clearInterval(timer);
-      if (ownedNews) void window.wave.releasePreparedNews(ownedNews).then(unwrap).catch(() => {});
+      if (ownedNews && cycle.pending) release(cycle.pending);
       if (ownedNews && live.current.player.activeNews?.id === ownedNews) live.current.player.stopNews();
     };
   }, [configKey]);

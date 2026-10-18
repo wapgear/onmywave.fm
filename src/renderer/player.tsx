@@ -3,14 +3,14 @@ import { useQuery } from '@tanstack/react-query';
 import { normalizeDJPlaybackSettings } from '../shared/dj-playback';
 import { defaultNewsTransitionSettings, normalizeNewsTransitionSettings } from '../shared/news-transitions';
 import type { NewsTransitionSettings } from '../shared/news-transitions';
-import type { Connection, NewsBreak, PlaybackSnapshot, PlaybackPreferences, Song } from '../shared/types';
+import type { Connection, NewsBreak, PreparedNewsClaim, PlaybackSnapshot, PlaybackPreferences, Song } from '../shared/types';
 import { unwrap, WaveError } from './api';
 import { freshAudioUrl } from './audio';
 import { useNewsRecovery } from './NewsRecovery';
 
 type HeardNews = { news: NewsBreak; startedAt: string; status: 'playing' | 'completed' | 'interrupted' };
 type NewsPhase = 'waiting' | 'fading' | 'lead-in' | 'speaking' | 'tail';
-type ScheduledNews = { token: number; key: string; duration: number; bed: number; phase: NewsPhase; trackEnded: boolean; settings: NewsTransitionSettings; elapsed: number; lastTick: number; startLevel: number; speechAttempt: number };
+type ScheduledNews = { token: number; key: string; duration: number; bed: number; phase: NewsPhase; trackEnded: boolean; settings: NewsTransitionSettings; elapsed: number; lastTick: number; startLevel: number; speechAttempt: number; starting: boolean; prepareSpeech(): Promise<void>; playSpeech(): Promise<void>; cancelDelivery(): void };
 
 type QueueEntry = { key: string; song: Song };
 type LoadSettlement = { key?: string; generation: number; outcome: 'success' | 'failure' | 'superseded' };
@@ -27,8 +27,8 @@ type PlayerState = {
   setVolume(value: number): void; toggleShuffle(): void; cycleRepeat(): void;
   removeQueue(key: string): void; retry(): Promise<PlaybackRetrySettlement>; getPlaybackGeneration(): number; getResumeGeneration(): number;
   newsPhase: 'idle' | NewsPhase | 'paused'; activeNewsId?: string; newsRunId?: number;
-  newsLoading: boolean; activeNews?: NewsBreak; lastNews: HeardNews | null;
-  scheduleNews(news: NewsBreak, duckVolume: number): Promise<void>; stopNews(): void;
+  newsNotice: string | null; newsLoading: boolean; activeNews?: NewsBreak; lastNews: HeardNews | null;
+  scheduleNews(news: NewsBreak, duckVolume: number, claimId?: string): Promise<void>; stopNews(): void;
   controlNews(runId: number, action: 'toggle' | 'stop'): boolean;
 };
 const PlayerContext = createContext<PlayerState | null>(null);
@@ -69,12 +69,16 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const [newsRunId, setNewsRunId] = useState<number>();
   const [activeNews, setActiveNews] = useState<NewsBreak>();
   const [newsLoading, setNewsLoading] = useState(false);
+  const [newsNotice, setNewsNotice] = useState<string | null>(null);
+  const newsNoticeRevision = useRef(0);
   const [lastNews, setLastNews] = useState<HeardNews | null>(null);
   const [completedSongs, setCompletedSongs] = useState(0);
   const commandRevision = useRef(0);
   const [musicCommandRevision, setMusicCommandRevision] = useState(0);
   const cancelRestoreRetry = useRef<(() => void) | null>(null);
   const musicCommand = useCallback(() => {
+    ++newsNoticeRevision.current;
+    setNewsNotice(null);
     setMusicCommandRevision(++commandRevision.current);
     cancelRestoreRetry.current?.();
     cancelRestoreRetry.current = null;
@@ -134,6 +138,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const stopNews = useCallback((preserveBed = false) => {
     ++newsGeneration.current;
     newsActive.current = false;
+    newsSchedule.current?.cancelDelivery();
     newsSchedule.current = null;
     setNewsRunId(undefined);
     cancelPreload.current?.();
@@ -337,10 +342,14 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       if (!overMusic && !planned.trackEnded) return;
       enter('lead-in');
     }
-    if (planned.phase === 'lead-in' && planned.elapsed >= settings.leadInSeconds) {
-      enter('speaking');
+    if (planned.phase === 'lead-in' && planned.elapsed >= settings.leadInSeconds && !planned.starting) {
+      planned.starting = true;
       const attempt = ++planned.speechAttempt;
-      void voice.play().then(() => {
+      void planned.prepareSpeech().then(async () => {
+        if (planned.token !== newsGeneration.current || newsSchedule.current !== planned || attempt !== planned.speechAttempt
+          || planned.phase !== 'lead-in' || live.current.queue[live.current.index]?.key !== planned.key || !playIntent.current) return;
+        enter('speaking');
+        await planned.playSpeech();
         if (planned.token !== newsGeneration.current || attempt !== planned.speechAttempt) return;
         if (!playIntent.current) { voice.pause(); setNewsPhase('paused'); setPlaying(false); }
         else setPlaying(true);
@@ -348,9 +357,9 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         if (planned.token !== newsGeneration.current || attempt !== planned.speechAttempt) return;
         const ended = planned.trackEnded;
         stopNews();
-        setError('The news break could not start. Your music can continue.');
+        setNewsNotice('The DJ break could not start. You can try again from Saved audio.');
         if (ended) continueAfterSong();
-      });
+      }).finally(() => { planned.starting = false; });
     }
     if (planned.phase === 'tail' && planned.elapsed >= settings.postSpeechSeconds && planned.trackEnded) {
       const seconds = settings.fadeInSeconds;
@@ -423,6 +432,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       ++lifecycle.current;
       ++speechLifecycle.current;
       clearInterval(newsClock);
+      scheduled.current?.cancelDelivery();
       scheduled.current = null;
       deferredFade.current = null;
       activeNews.current = false;
@@ -696,13 +706,13 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         setPlaying(true);
         const attempt = ++planned.speechAttempt;
         const resume = async () => {
-          if (planned.phase === 'speaking') await voice.play();
+          if (planned.phase === 'speaking') await planned.playSpeech();
           if (planned.token !== newsGeneration.current || attempt !== planned.speechAttempt) return;
           if (!playIntent.current) { voice.pause(); return; }
           if (element && !element.ended && !planned.trackEnded) await element.play();
           if (planned.token === newsGeneration.current && !playIntent.current) { voice.pause(); element?.pause(); }
         };
-        void resume().catch(cause => { if (planned.token === newsGeneration.current && attempt === planned.speechAttempt && playIntent.current && !(cause instanceof DOMException && cause.name === 'AbortError')) { const ended = planned.trackEnded; stopNews(); setError('The news break could not resume.'); if (ended) continueAfterSong(); } });
+        void resume().catch(cause => { if (planned.token === newsGeneration.current && attempt === planned.speechAttempt && playIntent.current && !(cause instanceof DOMException && cause.name === 'AbortError')) { const ended = planned.trackEnded; stopNews(); setNewsNotice('The DJ break could not resume. You can try again from Saved audio.'); if (ended) continueAfterSong(); } });
       } else {
         ++planned.speechAttempt;
         requestPlayback(false);
@@ -803,7 +813,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     setIndex(Math.min(Math.max(0, start), songs.length - 1));
     setReadyConnection(connection?.id ?? null);
   };
-  const scheduleNews = async (news: NewsBreak, duckVolume = 0.05) => {
+  const scheduleNews = async (news: NewsBreak, duckVolume = 0.05, claimId?: string) => {
     if (!live.current.recoveryReady) throw new Error('News data is unavailable. Recover it before scheduling a DJ break.');
     const state = live.current;
     const key = state.queue[state.index]?.key;
@@ -819,6 +829,14 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     element.preload = 'auto';
     element.volume = state.volume * djSettings.voiceVolume;
     speech.current = element;
+    ++newsNoticeRevision.current;
+    setNewsNotice(null);
+    let delivery: PreparedNewsClaim | null = null;
+    let playInvoked = false;
+    let startPromise: Promise<void> | null = null;
+    const cancelDelivery = () => {
+      if (delivery && !playInvoked) void window.wave.releasePreparedNews({ ...delivery, neverPlayInvoked: true }).then(unwrap).catch(() => {});
+    };
     try {
       const saved = unwrap(await window.wave.getLocalState());
       if (token !== newsGeneration.current || !live.current.recoveryReady) throw new Error('The scheduled news break was cancelled because news data is unavailable.');
@@ -852,7 +870,17 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       const scheduledAt = songDuration - budget;
       if (settings.mode === 'over-music' && scheduledAt < songDuration / 2) throw new Error('This break is too long for the song ending. Choose News bulletin in Settings > General > DJ transitions to play it between songs.');
       if (audio.current!.ended || (settings.mode === 'over-music' && offset.current + audio.current!.currentTime > scheduledAt)) throw new Error('It is too late for this transition. Choose News bulletin in Settings > General > DJ transitions, or try the next song.');
-      const planned: ScheduledNews = { token, key, duration: element.duration, bed: Math.max(0, Math.min(0.08, Number.isFinite(duckVolume) ? duckVolume : 0.05)), phase: 'waiting', trackEnded: false, settings, elapsed: 0, lastTick: performance.now(), startLevel: 1, speechAttempt: 0 };
+      if ('signature' in news) {
+        const reserved = unwrap(await window.wave.claimPreparedNews({ id: news.id, claimId }));
+        if (reserved.deliveryState?.status === 'claimed' && reserved.deliveryState.claimId) delivery = { id: news.id, claimId: reserved.deliveryState.claimId };
+        if (token !== newsGeneration.current || !live.current.recoveryReady || live.current.queue[live.current.index]?.key !== key) throw new Error('The scheduled news break was cancelled.');
+        if (audio.current!.ended || (settings.mode === 'over-music' && offset.current + audio.current!.currentTime > scheduledAt)) throw new Error('It is too late for this transition. Choose News bulletin in Settings > General > DJ transitions, or try the next song.');
+      }
+      const planned: ScheduledNews = { token, key, duration: element.duration, bed: Math.max(0, Math.min(0.08, Number.isFinite(duckVolume) ? duckVolume : 0.05)), phase: 'waiting', trackEnded: false, settings, elapsed: 0, lastTick: performance.now(), startLevel: 1, speechAttempt: 0, starting: false,
+        prepareSpeech: () => startPromise ??= delivery ? window.wave.startPreparedNews(delivery).then(unwrap) : Promise.resolve(),
+        playSpeech: () => { playInvoked = true; return element.play(); },
+        cancelDelivery,
+      };
       newsSchedule.current = planned;
       setNewsRunId(token);
       setActiveNewsId(news.id);
@@ -864,7 +892,10 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         if (heard) return;
         heard = true;
         setLastNews({ news, startedAt: new Date().toISOString(), status: 'playing' });
-        if ('deliveryState' in news) void window.wave.markPreparedNewsPlayed(news.id).then(unwrap).catch(() => setError('Could not save DJ playback history.'));
+        const noticeRevision = newsNoticeRevision.current;
+        if (delivery) void window.wave.markPreparedNewsPlayed(delivery).then(unwrap).catch(() => {
+          if (noticeRevision === newsNoticeRevision.current) setNewsNotice('The DJ break started, but its history could not be saved. This story stays out of automatic breaks. You can still replay it yourself.');
+        });
       };
       element.onended = () => {
         if (token !== newsGeneration.current || newsSchedule.current !== planned) return;
@@ -879,11 +910,12 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         if (token !== newsGeneration.current || newsSchedule.current !== planned) return;
         const ended = planned.trackEnded;
         stopNews();
-        setError('The news audio could not play. Your music can continue.');
+        setNewsNotice('The DJ audio could not play. You can try again from Saved audio.');
         if (ended) continueAfterSong();
       };
       void checkScheduledNews();
     } catch (cause) {
+      cancelDelivery();
       if (token === newsGeneration.current) stopNews();
       throw cause;
     }
@@ -893,7 +925,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   return <PlayerContext.Provider value={{
     queue, current, currentKey, playing, requestedPlaying, busy, position, duration, error, volume, shuffle, repeat, completedSongs,
     optionsError, optionsRevision, retryOptions: saveOptions, getOptionsSaveGeneration: () => optionsSaveGeneration.current,
-    newsPhase, activeNewsId, newsRunId, newsLoading, activeNews, lastNews, scheduleNews, stopNews: () => { const ended = newsSchedule.current?.trackEnded; if (ended) continueAfterSong(); else stopNews(); }, controlNews,
+    newsPhase, activeNewsId, newsRunId, newsLoading, newsNotice, activeNews, lastNews, scheduleNews, stopNews: () => { const ended = newsSchedule.current?.trackEnded; if (ended) continueAfterSong(); else stopNews(); }, controlNews,
     canRetry: !!current || !!restore || !!error,
     musicCommandRevision, getMusicCommandRevision, pauseForPreview: () => { if (playIntent.current) toggle('preview'); },
     play, playQueueEntry: key => {

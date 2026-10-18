@@ -1,14 +1,14 @@
 {
   "date": "2026-10-18",
   "baseCommit": "8d3e00a2407847249d750682e092f3d981317d7f",
-  "scope": "Current PRD source-to-check navigation reconciliation following the keyboard and pending-operation revisions. Partial Q13 only; no new app behavior, atomic metric denominator or acceptance promotion.",
+  "scope": "Current PRD source-to-check navigation reconciliation, including confirmed configuration readback and scheduled-delivery protection. Partial Q13 only; this source map is not an atomic metric denominator or acceptance promotion.",
   "sourceFiles": {
-    "REQUIREMENTS.md": "42db2474698bf14a8f738ab63c179b3dc40dee4cf81cc50300d275a3f6f28afa",
-    "docs/RADIO_EXPERIENCE.md": "2cba1d330db8df81cf9902affdf325f401575b17798d61f0729b1a755650222d"
+    "REQUIREMENTS.md": "0ea47edfb0038a3cfae70e2434f81a49255f44213bd55880e46d612f6b6e0513",
+    "docs/RADIO_EXPERIENCE.md": "299e57977c88ccdaea8159983696966f0622bd524842c035d31a4752a91f8f21"
   },
   "map": {
     "file": "2026-10-18-current-prd-source-map.csv",
-    "sha256": "39d17be2d05f5921749df75591424bb594eb9da854d8aebcd0408b65aecb5450",
+    "sha256": "529795bb8e9ddff6736d9a593b1bdba0d4682d0d5da851c371c03db453dca9e7",
     "nonblankLines": 294,
     "classes": {
       "structure": 47,
@@ -188,7 +188,7 @@
       "kind": "contract",
       "story": "",
       "checks": "S11 S13 S14 D01 D20 Q06",
-      "sha256": "04af3e948595f20eb0ed409f3f2c0a0ca89441a62ef92661d5fbcf49c701653d"
+      "sha256": "6c74c3518bee4ba5e6265f44f59b679decbcde6b9f8fbf7e77ba0ecbe5d31040"
     },
     {
       "source": "REQUIREMENTS.md",
@@ -268,7 +268,7 @@
       "kind": "STAR",
       "story": "R2",
       "checks": "R03 R04 R06 R08 R09 D01 D02 S01 S02 S03 V07 Q06",
-      "sha256": "8117dbe0a4a39c3c2f1dba2def4bb2c057bb0010d5a9dd316769e91c16f6da2c"
+      "sha256": "213e75e575abf4cc562397fe150982af9945add7eaaf4cc041c3a59f90d5d3e3"
     },
     {
       "source": "docs/RADIO_EXPERIENCE.md",
@@ -276,7 +276,7 @@
       "kind": "STAR",
       "story": "R4",
       "checks": "D04 D05 D06 D07 D09 M08 A04 T11 Q06",
-      "sha256": "b9b55fda8bab93847b1050e08bdf87efcb77d6ff0bab4de024094bd81692ca6b"
+      "sha256": "b16e47db44c790bd8392a3c43375c79749cbdcded6e455cd8884c683f5fbde8f"
     },
     {
       "source": "docs/RADIO_EXPERIENCE.md",
@@ -388,7 +388,7 @@
       "kind": "STAR",
       "story": "M14",
       "checks": "D11 D12 D13 Q06",
-      "sha256": "190b50d9defecb985580b9272e2bdd47bcb6fdeebe014d553bd0e0d39a8137bd"
+      "sha256": "cb05af344cc943f9c8e5fd0452a5b4bc6b541e3dde5fcfc0999cdd9d2110cb3d"
     },
     {
       "source": "docs/RADIO_EXPERIENCE.md",
@@ -420,5 +420,14 @@
     "The47-line change count is textual freshness, not47 new behaviors or tests.",
     "Current source indexing does not establish each compound requirement or invariant passing.",
     "Existing evidence retains its recorded sources, substitutions, platform/OS/listener/live-service and deferred baseline limits."
-  ]
+  ],
+  "scheduledDeliveryRevision": {
+    "sourceLines": [
+      "REQUIREMENTS.md:263",
+      "docs/RADIO_EXPERIENCE.md:48",
+      "docs/RADIO_EXPERIENCE.md:94"
+    ],
+    "record": "2026-10-18-scheduled-news-delivery.json",
+    "meaning": "Every existing compound clause remains authoritative. Token reservation, durable start, crash ambiguity and persistent DJ feedback extend the delivery contract and R4 STAR result; no acceptance points are inferred from line counts."
+  }
 }

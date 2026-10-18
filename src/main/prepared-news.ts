@@ -196,9 +196,46 @@ export async function getPreparedNews(): Promise<PreparedNewsLibrary> {
 export async function reconcilePreparedNews() {
   await writes;
   await recoverCompletedAudio();
-  await change(current => ({ ...current, takes: current.takes.map(take => take.deliveryState?.status === 'claimed'
-    ? { ...take, deliveryState: { status: 'ready' as const } } : take) }));
+  await change(current => ({ ...current, takes: current.takes.map(take => {
+    const delivery = take.deliveryState;
+    if (delivery?.status !== 'claimed') return take;
+    // A token-bearing claim cannot have reached speech.play without first being
+    // durably changed to started. Legacy claims predate that gate and are ambiguous.
+    if (validId(delivery.claimId)) return { ...take, deliveryState: { status: 'ready' as const } };
+    return { ...take, deliveryState: { status: 'started' as const, startedAt: delivery.claimedAt || new Date().toISOString() } };
+  }) }));
 }
+
+function canonicalArticleUrls(take: PreparedNewsTake): Set<string> {
+  return new Set(take.articles.map(article => canonicalArticleUrl(article.url)).filter((url): url is string => Boolean(url)));
+}
+
+function overlapsClaimedArticles(take: PreparedNewsTake, takes: PreparedNewsTake[]): boolean {
+  const urls = canonicalArticleUrls(take);
+  if (!urls.size) return false;
+  return takes.some(other => other.id !== take.id && other.deliveryState?.status === 'claimed'
+    && [...canonicalArticleUrls(other)].some(url => urls.has(url)));
+}
+
+function overlapsReservedArticles(take: PreparedNewsTake, takes: PreparedNewsTake[]): boolean {
+  const urls = canonicalArticleUrls(take);
+  if (!urls.size) return false;
+  return takes.some(other => other.id !== take.id && ['claimed', 'started', 'played'].includes(other.deliveryState?.status ?? '')
+    && [...canonicalArticleUrls(other)].some(url => urls.has(url)));
+}
+
+async function releaseClaimAfterFailure(id: string, claimId: string, failure: unknown) {
+  try { await releasePreparedNews({ id, claimId }); }
+  catch {
+    const message = `${failure instanceof Error ? failure.message : 'The saved take could not be confirmed.'} The playback reservation could not be released. Restart the app before retrying.`;
+    const wrapped = failure instanceof StorageError ? new StorageError(message)
+      : failure instanceof ServiceError ? new ServiceError(failure.code, message)
+        : new ServiceError('server', message);
+    (wrapped as Error & { cause?: unknown }).cause = failure;
+    throw wrapped;
+  }
+}
+
 export async function nextRoomNews(input: { roomId: string; excludedIds: string[] }, canClaim = () => true): Promise<PreparedNewsTake | null> {
   if (!input || !validId(input.roomId) || !Array.isArray(input.excludedIds) || input.excludedIds.length > 500 || input.excludedIds.some(id => !validId(id))) invalid();
   await writes;
@@ -218,33 +255,99 @@ export async function nextRoomNews(input: { roomId: string; excludedIds: string[
     const latestNews = await getPreparedNews();
     if (!eligibleNewsTakes(latestNews.takes, latestState, input.roomId).some(take => take.id === candidate.id && !excluded.has(take.id))) continue;
     let claimed = false;
+    let claimId: string | undefined;
     await change(current => {
       const take = current.takes.find(value => value.id === candidate.id);
-      if (!canClaim() || !take || (take.deliveryState && take.deliveryState.status !== 'ready')) return current;
-      take.deliveryState = { status: 'claimed', claimedAt: new Date().toISOString() };
+      if (!canClaim() || !take || (take.deliveryState && take.deliveryState.status !== 'ready') || overlapsReservedArticles(take, current.takes)) return current;
+      claimId = randomUUID();
+      take.deliveryState = { status: 'claimed', claimId, claimedAt: new Date().toISOString() };
       claimed = true;
       return current;
     });
     if (claimed) {
-      const finalState = await getLocalState();
-      const finalProfile = finalState.roomProfiles.find(value => value.id === input.roomId);
-      const finalTake = (await getPreparedNews()).takes.find(value => value.id === candidate.id);
-      if (canClaim() && finalProfile?.enabled && finalTake?.available && matchesNewsRoom(finalTake, finalState, input.roomId)) return { ...finalTake, available: true, deliveryState: { status: 'claimed', claimedAt: new Date().toISOString() } };
-      await releasePreparedNews(candidate.id);
+      try {
+        const finalState = await getLocalState();
+        const finalProfile = finalState.roomProfiles.find(value => value.id === input.roomId);
+        const finalTake = (await getPreparedNews()).takes.find(value => value.id === candidate.id);
+        if (canClaim() && finalProfile?.enabled && finalTake?.available && matchesNewsRoom(finalTake, finalState, input.roomId)
+          && finalTake.deliveryState?.status === 'claimed' && finalTake.deliveryState.claimId === claimId) return finalTake;
+      } catch (error) {
+        await releaseClaimAfterFailure(candidate.id, claimId!, error);
+        throw error;
+      }
+      await releaseClaimAfterFailure(candidate.id, claimId!, new ServiceError('invalid', 'The saved take no longer matches this playback profile.'));
       return null;
     }
   }
   return null;
 }
-export async function releasePreparedNews(id: string) {
-  if (!validId(id)) invalid();
-  await change(current => ({ ...current, takes: current.takes.map(take => take.id === id && take.deliveryState?.status === 'claimed'
-    ? { ...take, deliveryState: { status: 'ready' as const } } : take) }));
+
+export async function claimPreparedNews(input: { id: string; claimId?: string }): Promise<PreparedNewsTake> {
+  if (!input || !validId(input.id) || (input.claimId !== undefined && !validId(input.claimId))) invalid();
+  await writes;
+  await recoverCompletedAudio();
+  const readable = await getPreparedNews();
+  const available = readable.takes.some(take => take.id === input.id && take.available);
+  if (!available) invalid('Choose an available saved take.');
+  let result: PreparedNewsTake | undefined;
+  await change(current => {
+    const take = current.takes.find(value => value.id === input.id);
+    if (!take) throw new ServiceError('not-found', 'This saved take no longer exists.');
+    const delivery = take.deliveryState;
+    if (delivery?.status === 'claimed') {
+      if (!input.claimId || delivery.claimId !== input.claimId || !validId(delivery.claimId)) invalid('This saved take is reserved by another playback.');
+      result = { ...structuredClone(take), available: true };
+      return current;
+    }
+    if (delivery?.status === 'started' || delivery?.status === 'played') {
+      if (input.claimId) invalid('This take has already started playback.');
+      // An explicit manual replay does not reopen automatic eligibility.
+      result = { ...structuredClone(take), available: true };
+      return current;
+    }
+    if (delivery !== undefined && delivery.status !== 'ready') invalid('This saved take cannot be scheduled.');
+    if (overlapsClaimedArticles(take, current.takes)) invalid('A matching story is already reserved for playback.');
+    const claimId = randomUUID();
+    const claimedAt = new Date().toISOString();
+    take.deliveryState = { status: 'claimed', claimId, claimedAt };
+    result = { ...structuredClone(take), available: true };
+    return current;
+  });
+  if (!result) invalid('This saved take could not be reserved.');
+  return result!;
 }
-export async function markPreparedNewsPlayed(id: string) {
-  if (!validId(id)) invalid();
-  await change(current => ({ ...current, takes: current.takes.map(take => take.id === id && take.deliveryState?.status === 'claimed'
-    ? { ...take, deliveryState: { status: 'played' as const, playedAt: new Date().toISOString() } } : take) }));
+
+export async function startPreparedNews(input: { id: string; claimId: string }) {
+  if (!input || !validId(input.id) || !validId(input.claimId)) invalid();
+  let matched = false;
+  await change(current => ({ ...current, takes: current.takes.map(take => {
+    if (take.id !== input.id) return take;
+    const delivery = take.deliveryState;
+    if (delivery?.status === 'started' && delivery.claimId === input.claimId) { matched = true; return take; }
+    if (delivery?.status !== 'claimed' || delivery.claimId !== input.claimId) return take;
+    matched = true;
+    return { ...take, deliveryState: { status: 'started' as const, claimId: input.claimId, claimedAt: delivery.claimedAt, startedAt: new Date().toISOString() } };
+  }) }));
+  if (!matched) invalid('This saved take reservation is no longer current.');
+}
+
+export async function releasePreparedNews(input: { id: string; claimId: string; neverPlayInvoked?: boolean }) {
+  if (!input || !validId(input.id) || !validId(input.claimId) || (input.neverPlayInvoked !== undefined && typeof input.neverPlayInvoked !== 'boolean')) invalid();
+  await change(current => ({ ...current, takes: current.takes.map(take => {
+    if (take.id !== input.id || take.deliveryState?.claimId !== input.claimId) return take;
+    if (take.deliveryState.status === 'claimed' || (take.deliveryState.status === 'started' && input.neverPlayInvoked === true)) {
+      return { ...take, deliveryState: { status: 'ready' as const } };
+    }
+    return take;
+  }) }));
+}
+
+export async function markPreparedNewsPlayed(input: { id: string; claimId: string }) {
+  if (!input || !validId(input.id) || !validId(input.claimId)) invalid();
+  await change(current => ({ ...current, takes: current.takes.map(take => {
+    if (take.id !== input.id || take.deliveryState?.claimId !== input.claimId || take.deliveryState.status !== 'started') return take;
+    return { ...take, deliveryState: { ...take.deliveryState, status: 'played' as const, playedAt: new Date().toISOString() } };
+  }) }));
 }
 export async function selectNewsTake(id: string | null) {
   if (id !== null && (!validId(id) || !await preparedAudio(id))) invalid('Choose an available saved take.');

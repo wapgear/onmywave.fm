@@ -1,0 +1,1136 @@
+{
+  "date": "2026-10-18",
+  "baseCommit": "fa6bb896434d63d14dd7db99c72082c85519a753",
+  "scope": "Repair scheduled saved-news delivery and its feedback during the current CI6 audit. This is scoped engineering proof, not complete CI6 adjudication or listener/audible acceptance.",
+  "baseline": [
+    {
+      "case": "ready",
+      "marker": {
+        "status": "ready"
+      },
+      "nextAutomaticId": "take-seed"
+    },
+    {
+      "case": "legacy",
+      "marker": null,
+      "nextAutomaticId": "take-seed"
+    },
+    {
+      "case": "claimed",
+      "marker": {
+        "status": "played",
+        "playedAt": "2026-10-18T20:56:04.933Z"
+      },
+      "nextAutomaticId": null
+    }
+  ],
+  "defects": [
+    "Manual saved takes were not reserved, and onplay required a deliveryState property that older takes can lack. The old claimed-only marker did not consume ready/manual takes.",
+    "A failed onplay marker left a claimed take that startup restored to ready, allowing automatic heard-news replay.",
+    "Automatic canonical-URL exclusion was not checked atomically against claimed/started/played variants.",
+    "Post-claim validation failures could strand a reservation without returning its identity.",
+    "News failures shared music Retry/Skip controls and their explanation disappeared during automatic song load."
+  ],
+  "decision": {
+    "protocol": "Reserve ready saved take with a unique claim token; save started before invoking voice.play. Exact token guards start/mark/release. Actual onplay alone sets session Last heard and requests final played marker. Audition does not reserve or consume.",
+    "manualReplay": "Explicit manual scheduling of started/played returns unchanged consumed state and bypasses an eligibility lease. Cancel never makes consumed news ready.",
+    "cancellation": "Release exact claimed, or exact started only when this player explicitly knows play was never invoked. Pause/rewind retain schedule; late gate results respect token/object/attempt/phase/track/play intent. Audio owner cleanup also cancels delivery.",
+    "restart": "Token-bearing unstarted claim becomes ready; started/played remains consumed. Legacy tokenless claimed is conservatively started because an older player may already have spoken before marker failure.",
+    "reservation": "Automatic CAS excludes canonical URLs in claimed/started/played; manual new lease rejects active claimed overlap. Explicit manual replay remains intentional. Failed final verification releases only its exact lease; failed cleanup reports original context and restart guidance.",
+    "feedback": "Separate non-actionable DJ status above player persists through automatic continuation and clears next explicit music command or new schedule. Marker errors respect a revision captured at onplay. Saved audio explains uncertain started history without asserting that audio was heard.",
+    "tradeoff": "Disk history and sound cannot commit atomically. Crash after durable start but before sound can omit unheard news; avoid automatic replay and leave explicit saved replay available. No exactly-once sound guarantee."
+  },
+  "review": {
+    "backend": "Independent Boris/Nadia proposals and challenge settled token leases/durable start. Nadia found and Boris fixed final-read release leak and atomic consumed-URL race; final review found no blocker and independently reran the original68 checks. Added dual-failure cleanup case subsequently passes.",
+    "frontend": "Independent Steve/Elena proposals and challenge settled pause/rewind/cancel behavior. Steve found missing audio-owner cleanup release; fixed. Both endorsed separate DJ notice after native failure reproduction; actual final logic review found no blocker. Marker wording refined from played to started.",
+    "alternative": "Consumed manual replay bypasses the eligible lease without changing persisted state, rather than storing/restoring prior state. Shared recovery/history remains separate from Last heard."
+  },
+  "service": {
+    "method": "Bundle actual prepared-news/service dependencies, substitute Electron userData and local-state/key adapters. Eleven fresh processes use real temp files and actual queued atomic index writes/renames. Synthetic3-byte audio tests service availability only, not decoding. A fixture checkpoint before automatic CAS forces competing start; controlled final-state read hooks and a directory at the target index force write/release failures. No UI, provider dispatch or external server.",
+    "scenarioCount": 11,
+    "assertionCount": 74,
+    "results": [
+      {
+        "case": "manual-ready",
+        "checks": [
+          "manual saved take is reserved",
+          "durable started before marker",
+          "actual marker consumes",
+          "restart does not replay canonical variants",
+          "explicit replay retains consumed state",
+          "canceled explicit replay cannot reopen",
+          "selected take unchanged",
+          "saved text and provenance unchanged",
+          "no preparation jobs created"
+        ]
+      },
+      {
+        "case": "manual-legacy",
+        "checks": [
+          "manual saved take is reserved",
+          "durable started before marker",
+          "actual marker consumes",
+          "restart does not replay canonical variants",
+          "explicit replay retains consumed state",
+          "canceled explicit replay cannot reopen",
+          "selected take unchanged",
+          "saved text and provenance unchanged",
+          "no preparation jobs created"
+        ]
+      },
+      {
+        "case": "token-guards",
+        "checks": [
+          "new reservation has unique token",
+          "stale start rejects",
+          "stale updates preserve new claim",
+          "matching start idempotent",
+          "ordinary cleanup cannot reopen started",
+          "known never-play cancellation releases",
+          "old ID-only marker rejected",
+          "selected take unchanged",
+          "saved text and provenance unchanged",
+          "no preparation jobs created"
+        ]
+      },
+      {
+        "case": "variants",
+        "checks": [
+          "claimed URL blocks automatic variant",
+          "claimed URL blocks second manual lease",
+          "release frees variant",
+          "started URL blocks automatic variant",
+          "played URL blocks automatic variant",
+          "selected take unchanged",
+          "saved text and provenance unchanged",
+          "no preparation jobs created"
+        ]
+      },
+      {
+        "case": "restart-new",
+        "checks": [
+          "new unstarted claim safely released",
+          "new unstarted claim eligible again",
+          "selected take unchanged",
+          "saved text and provenance unchanged",
+          "no preparation jobs created"
+        ]
+      },
+      {
+        "case": "restart-legacy",
+        "checks": [
+          "legacy ambiguous claim conservatively consumed",
+          "legacy restart excludes URL",
+          "selected take unchanged",
+          "saved text and provenance unchanged",
+          "no preparation jobs created"
+        ]
+      },
+      {
+        "case": "write-failure",
+        "checks": [
+          "start persistence failure rejects",
+          "failed start keeps cached claim",
+          "failed start can be canceled",
+          "selected take unchanged",
+          "saved text and provenance unchanged",
+          "no preparation jobs created"
+        ]
+      },
+      {
+        "case": "marker-failure",
+        "checks": [
+          "final marker persistence failure reports",
+          "failed marker restart keeps started",
+          "failed marker does not repeat story",
+          "selected take unchanged",
+          "saved text and provenance unchanged",
+          "no preparation jobs created"
+        ]
+      },
+      {
+        "case": "final-read-failure",
+        "checks": [
+          "final read failure reports original",
+          "post-claim read failure releases exact lease",
+          "selected take unchanged",
+          "saved text and provenance unchanged",
+          "no preparation jobs created"
+        ]
+      },
+      {
+        "case": "atomic-overlap",
+        "checks": [
+          "CAS blocks URL that became started after eligibility",
+          "candidate remains ready",
+          "selected take unchanged",
+          "saved text and provenance unchanged",
+          "no preparation jobs created"
+        ]
+      },
+      {
+        "case": "cleanup-failure",
+        "checks": [
+          "cleanup failure reports original and restart",
+          "failed release keeps reservation honest",
+          "restart releases known unstarted stranded claim",
+          "selected take unchanged",
+          "saved text and provenance unchanged",
+          "no preparation jobs created"
+        ]
+      }
+    ],
+    "harnessSha256": {
+      "verify.mjs": "5c93334882fcf31ee57f9d69487591f32ca77e9c8915cef262a25681cd3272c1",
+      "verify-case.mjs": "5ba4aeef4bd123ee7e72b334a5d215f5818c699a3fd69e226277054d964b3683"
+    },
+    "baselineHarnessSha256": {
+      "baseline.mjs": "8d2a5fefd7473cf7896ff70db8aaa29482f94db436673aeb10bf34de3d8c5c27",
+      "baseline-case.mjs": "363f7f9c2344e5b3361cbfafc65856db4e5cfaabe797237e90674ae94ccc0304"
+    }
+  },
+  "native": {
+    "runtime": "macOS arm64 Electron43.7.0",
+    "contentSize": [
+      1280,
+      720
+    ],
+    "zoom": 1,
+    "method": "CUA native input only. Playwright owned launch/close and passive DOM/audio/main-call observation. Actual production renderer/preload and bundled main with isolated path/key adapters, stopped workflow scheduler, controlled IPC hold/failure gates. Real decoded13.92-second local MP3; output muted. Local synthetic600-second WAV catalog. Endpoint seeks use visible slider+End, not media mutation. Same-data ordinary process restart.",
+    "snapshots": [
+      {
+        "name": "manual-legacy-reserved",
+        "rawSha256": "0bbd1fce677ff6e649ee9a612ba0738dd1f8d276d323a461fca38e53ef841fd1",
+        "delivery": {
+          "status": "claimed",
+          "claimId": "af29d714-2afb-4850-b42f-ef1dd1323991",
+          "claimedAt": "2026-10-18T21:07:07.423Z"
+        },
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "audio": [
+          {
+            "src": "wave-media://audio/353643a7-84f0-424c-bc1b-0bdad11282e5",
+            "paused": false,
+            "ended": false,
+            "time": 21.625359,
+            "duration": 600,
+            "readyState": 4
+          },
+          {
+            "src": "wave-media://prepared/d728d9c8-036f-4b36-b237-afc670cfd843?play=d01bffff-bff0-4075-b8b7-fcc5a3ec8e7d",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 13.92,
+            "readyState": 4
+          }
+        ],
+        "queueIndex": 2,
+        "transport": "Pause",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Break active",
+          "outline": "none"
+        },
+        "heldMainCalls": [],
+        "externalAttempts": 0,
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "heardCompleted": false,
+        "readyPoolEmpty": false,
+        "uncertainExplanation": false,
+        "djNotice": null,
+        "musicRetry": false
+      },
+      {
+        "name": "start-gate-held",
+        "rawSha256": "7600481b8a8cae359fcd646e96fcdb800c6eb696e5d2cc5985b2ae60ead3776d",
+        "delivery": {
+          "status": "claimed",
+          "claimId": "af29d714-2afb-4850-b42f-ef1dd1323991",
+          "claimedAt": "2026-10-18T21:07:07.423Z"
+        },
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "audio": [
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          },
+          {
+            "src": "wave-media://prepared/d728d9c8-036f-4b36-b237-afc670cfd843?play=d01bffff-bff0-4075-b8b7-fcc5a3ec8e7d",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 13.92,
+            "readyState": 4
+          }
+        ],
+        "queueIndex": 2,
+        "transport": "Pause",
+        "focus": {
+          "tag": "INPUT",
+          "name": "Playback position",
+          "outline": "solid"
+        },
+        "heldMainCalls": [
+          "startPreparedNews"
+        ],
+        "externalAttempts": 0,
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "heardCompleted": false,
+        "readyPoolEmpty": false,
+        "uncertainExplanation": false,
+        "djNotice": null,
+        "musicRetry": false
+      },
+      {
+        "name": "start-gate-released-paused",
+        "rawSha256": "ab4e1d56d0a6766458391e9c14a904532a9bbc1263383deea0877f1d0a301dee",
+        "delivery": {
+          "status": "started",
+          "claimId": "af29d714-2afb-4850-b42f-ef1dd1323991",
+          "claimedAt": "2026-10-18T21:07:07.423Z",
+          "startedAt": "2026-10-18T21:07:25.639Z"
+        },
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "audio": [
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          },
+          {
+            "src": "wave-media://prepared/d728d9c8-036f-4b36-b237-afc670cfd843?play=d01bffff-bff0-4075-b8b7-fcc5a3ec8e7d",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 13.92,
+            "readyState": 4
+          }
+        ],
+        "queueIndex": 2,
+        "transport": "Play",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Resume",
+          "outline": "none"
+        },
+        "heldMainCalls": [],
+        "externalAttempts": 0,
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "heardCompleted": false,
+        "readyPoolEmpty": false,
+        "uncertainExplanation": false,
+        "djNotice": null,
+        "musicRetry": false
+      },
+      {
+        "name": "unheard-start-canceled",
+        "rawSha256": "b003d08eb6fccf7caeb41db16f4cf1a2fdcb129bd266ccee25fd3b6fe6621531",
+        "delivery": {
+          "status": "ready"
+        },
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "audio": [
+          {
+            "src": "wave-media://audio/4af34e2a-fd08-45a4-a87f-6c3b768a44b6",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 600,
+            "readyState": 4
+          },
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          }
+        ],
+        "queueIndex": 3,
+        "transport": "Play",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Break stopped",
+          "outline": "none"
+        },
+        "heldMainCalls": [],
+        "externalAttempts": 0,
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "heardCompleted": false,
+        "readyPoolEmpty": false,
+        "uncertainExplanation": false,
+        "djNotice": null,
+        "musicRetry": false
+      },
+      {
+        "name": "pending-gate-canceled",
+        "rawSha256": "311899812bf5c33280cfdacdbba7249805fbd24a90b86de74d3b7fe95f60bf8d",
+        "delivery": {
+          "status": "ready"
+        },
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "audio": [
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          },
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          },
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          }
+        ],
+        "queueIndex": 3,
+        "transport": "Play",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Break stopped",
+          "outline": "none"
+        },
+        "heldMainCalls": [
+          "startPreparedNews"
+        ],
+        "externalAttempts": 0,
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "heardCompleted": false,
+        "readyPoolEmpty": false,
+        "uncertainExplanation": false,
+        "djNotice": null,
+        "musicRetry": false
+      },
+      {
+        "name": "pending-gate-late-result",
+        "rawSha256": "5f6f6a15ea25d9744f82b98764d3246dfe770b87be7bb343f1ab7cc742af8544",
+        "delivery": {
+          "status": "ready"
+        },
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "audio": [
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          },
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          },
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          }
+        ],
+        "queueIndex": 3,
+        "transport": "Play",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Break stopped",
+          "outline": "none"
+        },
+        "heldMainCalls": [],
+        "externalAttempts": 0,
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "heardCompleted": false,
+        "readyPoolEmpty": false,
+        "uncertainExplanation": false,
+        "djNotice": null,
+        "musicRetry": false
+      },
+      {
+        "name": "actual-start-marker-failed",
+        "rawSha256": "e67aecdcecbbc34126aa426568ba005625e9a42b659c6e830ffa00cb78b9c311",
+        "delivery": {
+          "status": "started",
+          "claimId": "2cfbbcce-e52c-4dfb-8f8b-1d961c389f9d",
+          "claimedAt": "2026-10-18T21:08:23.329Z",
+          "startedAt": "2026-10-18T21:08:26.622Z"
+        },
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "audio": [
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          },
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          },
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          },
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          },
+          {
+            "src": "wave-media://prepared/d728d9c8-036f-4b36-b237-afc670cfd843?play=3c8ca0eb-20f3-4b01-a7a3-95d57a793d22",
+            "paused": false,
+            "ended": false,
+            "time": 4.078123,
+            "duration": 13.92,
+            "readyState": 4
+          }
+        ],
+        "queueIndex": 2,
+        "transport": "Pause",
+        "focus": {
+          "tag": "INPUT",
+          "name": "Playback position",
+          "outline": "solid"
+        },
+        "heldMainCalls": [],
+        "externalAttempts": 0,
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "heardCompleted": false,
+        "readyPoolEmpty": false,
+        "uncertainExplanation": false,
+        "djNotice": null,
+        "musicRetry": true
+      },
+      {
+        "name": "actual-complete-queue-advanced",
+        "rawSha256": "371f4f95e019acf524e3bddbf535a35fe1112b7613e87d552557e1f9650453b0",
+        "delivery": {
+          "status": "started",
+          "claimId": "2cfbbcce-e52c-4dfb-8f8b-1d961c389f9d",
+          "claimedAt": "2026-10-18T21:08:23.329Z",
+          "startedAt": "2026-10-18T21:08:26.622Z"
+        },
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "audio": [
+          {
+            "src": "wave-media://audio/83406081-7c83-4919-a8a1-46e367f3f094",
+            "paused": false,
+            "ended": false,
+            "time": 10.793961,
+            "duration": 600,
+            "readyState": 4
+          },
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          },
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          },
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          },
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          }
+        ],
+        "queueIndex": 3,
+        "transport": "Pause",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Close DJ controls",
+          "outline": "none"
+        },
+        "heldMainCalls": [],
+        "externalAttempts": 0,
+        "headings": [
+          "News bucket",
+          "What your DJ will say",
+          "DJ breaks"
+        ],
+        "heardCompleted": true,
+        "readyPoolEmpty": true,
+        "uncertainExplanation": false,
+        "djNotice": null,
+        "musicRetry": false
+      },
+      {
+        "name": "restart-consumed-excluded",
+        "rawSha256": "e447ce6767c837f27f1a00a9282b4b3e432f5e94b1ffe174d781971509126135",
+        "delivery": {
+          "status": "started",
+          "claimId": "2cfbbcce-e52c-4dfb-8f8b-1d961c389f9d",
+          "claimedAt": "2026-10-18T21:08:23.329Z",
+          "startedAt": "2026-10-18T21:08:26.622Z"
+        },
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "audio": [
+          {
+            "src": "wave-media://audio/35213016-ee86-4855-a2c0-10fbfdd41e1b",
+            "paused": true,
+            "ended": false,
+            "time": 10.864805,
+            "duration": 600,
+            "readyState": 4
+          }
+        ],
+        "queueIndex": 3,
+        "transport": "Play",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "News bucket",
+          "outline": "none"
+        },
+        "heldMainCalls": [],
+        "externalAttempts": 0,
+        "headings": [
+          "News bucket",
+          "What your DJ will say"
+        ],
+        "heardCompleted": false,
+        "readyPoolEmpty": true,
+        "uncertainExplanation": false,
+        "djNotice": null,
+        "musicRetry": false
+      },
+      {
+        "name": "explicit-replay-canceled",
+        "rawSha256": "0153a1eb6bb6ef808fbd3fae38cac1d803589766da4b5bbdecdef67efa68abab",
+        "delivery": {
+          "status": "started",
+          "claimId": "2cfbbcce-e52c-4dfb-8f8b-1d961c389f9d",
+          "claimedAt": "2026-10-18T21:08:23.329Z",
+          "startedAt": "2026-10-18T21:08:26.622Z"
+        },
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "audio": [
+          {
+            "src": "wave-media://audio/35213016-ee86-4855-a2c0-10fbfdd41e1b",
+            "paused": true,
+            "ended": false,
+            "time": 10.864805,
+            "duration": 600,
+            "readyState": 4
+          },
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          }
+        ],
+        "queueIndex": 3,
+        "transport": "Play",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Break cancelled",
+          "outline": "none"
+        },
+        "heldMainCalls": [],
+        "externalAttempts": 0,
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "heardCompleted": false,
+        "readyPoolEmpty": false,
+        "uncertainExplanation": false,
+        "djNotice": null,
+        "musicRetry": false
+      },
+      {
+        "name": "final-uncertain-history-note",
+        "rawSha256": "c777cd721eac6f9e8dcc5ab990f6942d4d9bbbf047cd0f57fc04aeeca4ea5826",
+        "delivery": {
+          "status": "started",
+          "claimId": "2cfbbcce-e52c-4dfb-8f8b-1d961c389f9d",
+          "claimedAt": "2026-10-18T21:08:23.329Z",
+          "startedAt": "2026-10-18T21:08:26.622Z"
+        },
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "audio": [
+          {
+            "src": "wave-media://audio/82d2d1a4-8b2d-4754-8e09-897dfcf8744c",
+            "paused": true,
+            "ended": false,
+            "time": 10.864805,
+            "duration": 600,
+            "readyState": 4
+          }
+        ],
+        "queueIndex": 3,
+        "transport": "Play",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Saved audio",
+          "outline": "none"
+        },
+        "heldMainCalls": [],
+        "externalAttempts": 0,
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "heardCompleted": false,
+        "readyPoolEmpty": false,
+        "uncertainExplanation": true,
+        "djNotice": null,
+        "musicRetry": false
+      },
+      {
+        "name": "start-gate-failure-before-notice-fix",
+        "rawSha256": "e5e16081254c931366dc471bef67815e2802bf37143cc523e2f6b05393e76b91",
+        "delivery": {
+          "status": "ready"
+        },
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "audio": [
+          {
+            "src": "wave-media://audio/ba8b02d4-1f0a-4d16-b11c-7f3eed583f4e",
+            "paused": false,
+            "ended": false,
+            "time": 44.090503,
+            "duration": 600,
+            "readyState": 4
+          },
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          }
+        ],
+        "queueIndex": 3,
+        "transport": "Pause",
+        "focus": {
+          "tag": "INPUT",
+          "name": "Playback position",
+          "outline": "solid"
+        },
+        "heldMainCalls": [],
+        "externalAttempts": 0,
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "heardCompleted": false,
+        "readyPoolEmpty": false,
+        "uncertainExplanation": false,
+        "djNotice": null,
+        "musicRetry": false
+      },
+      {
+        "name": "notice-generation-before-fix",
+        "rawSha256": "a8d26a8143f0496832e7be5235c40c3749c98034e65ee66841b9e39f3cb60bd5",
+        "delivery": {
+          "status": "ready"
+        },
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "audio": [
+          {
+            "src": "wave-media://audio/b201cffc-bd2c-4fab-ba4d-6cbf5640db87",
+            "paused": false,
+            "ended": false,
+            "time": 20.571709,
+            "duration": 600,
+            "readyState": 4
+          },
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          }
+        ],
+        "queueIndex": 3,
+        "transport": "Pause",
+        "focus": {
+          "tag": "INPUT",
+          "name": "Playback position",
+          "outline": "solid"
+        },
+        "heldMainCalls": [],
+        "externalAttempts": 0,
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "heardCompleted": false,
+        "readyPoolEmpty": false,
+        "uncertainExplanation": false,
+        "djNotice": null,
+        "musicRetry": false
+      },
+      {
+        "name": "final-start-failure-notice",
+        "rawSha256": "b74980efc697e8d22f9de7f7e139659c6d75a8176182d80be345a014f8401b81",
+        "delivery": {
+          "status": "ready"
+        },
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "audio": [
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          },
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          }
+        ],
+        "queueIndex": 3,
+        "transport": "Play",
+        "focus": {
+          "tag": "INPUT",
+          "name": "Playback position",
+          "outline": "solid"
+        },
+        "heldMainCalls": [],
+        "externalAttempts": 0,
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "heardCompleted": false,
+        "readyPoolEmpty": false,
+        "uncertainExplanation": false,
+        "djNotice": "The DJ break could not start. Music continues.",
+        "musicRetry": false
+      },
+      {
+        "name": "final-notice-cleared",
+        "rawSha256": "8930c1325bea5c42e948fa9f13752e640b977875da80c5bd304da4a3e3c20ec7",
+        "delivery": {
+          "status": "ready"
+        },
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "audio": [
+          {
+            "src": "wave-media://audio/d4a5bc7c-e43b-464c-a108-5b176d7defba",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": 600,
+            "readyState": 4
+          },
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          }
+        ],
+        "queueIndex": 2,
+        "transport": "Play",
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Previous track",
+          "outline": "none"
+        },
+        "heldMainCalls": [],
+        "externalAttempts": 0,
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "heardCompleted": false,
+        "readyPoolEmpty": false,
+        "uncertainExplanation": false,
+        "djNotice": null,
+        "musicRetry": false
+      },
+      {
+        "name": "final-marker-failure-notice",
+        "rawSha256": "07747e5533dc1d3bb53c8ac58d6783b53d16da9646a2cca2d84a75851cf46864",
+        "delivery": {
+          "status": "started",
+          "claimId": "a9112e0b-bf1e-425f-8f4b-4bc2503b2dfe",
+          "claimedAt": "2026-10-18T21:14:59.831Z",
+          "startedAt": "2026-10-18T21:15:03.615Z"
+        },
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "audio": [
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          },
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          },
+          {
+            "src": "wave-media://prepared/d728d9c8-036f-4b36-b237-afc670cfd843?play=9e98c2d4-00e1-4971-8a86-fbb0cbf1d98a",
+            "paused": false,
+            "ended": false,
+            "time": 8.59385,
+            "duration": 13.92,
+            "readyState": 4
+          }
+        ],
+        "queueIndex": 2,
+        "transport": "Pause",
+        "focus": {
+          "tag": "INPUT",
+          "name": "Playback position",
+          "outline": "solid"
+        },
+        "heldMainCalls": [],
+        "externalAttempts": 0,
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "heardCompleted": false,
+        "readyPoolEmpty": false,
+        "uncertainExplanation": false,
+        "djNotice": "The DJ break played, but its history could not be saved. This story stays out of automatic breaks. You can still replay it yourself.",
+        "musicRetry": false
+      },
+      {
+        "name": "final-marker-notice-after-continuation",
+        "rawSha256": "54ff69f15931495bf1919269b399b1ca246e99053da8ef0df1b1c89395e3b6db",
+        "delivery": {
+          "status": "started",
+          "claimId": "a9112e0b-bf1e-425f-8f4b-4bc2503b2dfe",
+          "claimedAt": "2026-10-18T21:14:59.831Z",
+          "startedAt": "2026-10-18T21:15:03.615Z"
+        },
+        "selectedTakeId": "d728d9c8-036f-4b36-b237-afc670cfd843",
+        "audio": [
+          {
+            "src": "wave-media://audio/6d465288-8003-4be4-959c-35944a2f702c",
+            "paused": false,
+            "ended": false,
+            "time": 11.061024,
+            "duration": 600,
+            "readyState": 4
+          },
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          },
+          {
+            "src": "",
+            "paused": true,
+            "ended": false,
+            "time": 0,
+            "duration": null,
+            "readyState": 0
+          }
+        ],
+        "queueIndex": 3,
+        "transport": "Pause",
+        "focus": {
+          "tag": "INPUT",
+          "name": "Playback position",
+          "outline": "solid"
+        },
+        "heldMainCalls": [],
+        "externalAttempts": 0,
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "heardCompleted": false,
+        "readyPoolEmpty": false,
+        "uncertainExplanation": true,
+        "djNotice": "The DJ break played, but its history could not be saved. This story stays out of automatic breaks. You can still replay it yourself.",
+        "musicRetry": false
+      }
+    ],
+    "terminalReports": [
+      {
+        "name": "final-corrected-native-report.json",
+        "rawSha256": "37b11de011b808cccf56d4771ff3425a51a2529af9ce8eb25609805442780824",
+        "result": "observed",
+        "pageErrors": [],
+        "terminal": "owned observer exit0"
+      },
+      {
+        "name": "final-note-native-report.json",
+        "rawSha256": "cab941418cdc66bc494da8ee350e47ab091533548f16adac3049fc7d7158218f",
+        "result": "observed",
+        "pageErrors": [],
+        "terminal": "owned observer exit0"
+      },
+      {
+        "name": "final-notice-native-report.json",
+        "rawSha256": "6551441ddadc3eb603575923b2109b70a6146807db94006d7f6ec14eb3e55f66",
+        "result": "observed",
+        "pageErrors": [],
+        "terminal": "owned observer exit0"
+      },
+      {
+        "name": "final-start-failure-native-report.json",
+        "rawSha256": "dcf60ad751901f4a2f208ab0a15c93df6f3a2d5c7af75544748ec66da33f5e4c",
+        "result": "observed",
+        "pageErrors": [],
+        "terminal": "owned observer exit0"
+      },
+      {
+        "name": "native-report.json",
+        "rawSha256": "30293ef0d6cb756b8196f0cccc097f81be25ea0164388b78c345515387179dcb",
+        "result": "observed",
+        "pageErrors": [],
+        "terminal": "owned observer exit0"
+      },
+      {
+        "name": "restart-native-report.json",
+        "rawSha256": "8393a11839aabe7024e11d21886f18dc6e758894d01f71e463a32504d619f16d",
+        "result": "observed",
+        "pageErrors": [],
+        "terminal": "owned observer exit0"
+      }
+    ],
+    "cleanup": "All six owned observers exited0; localhost5198 server stopped with terminal143. No real Jellyfin account/playlist or external/provider modification.",
+    "versionScope": "Early delivery/native restart checks predate cleanup, final notice and post-reservation deadline corrections. Later native runs cover uncertain-history help and final notice behavior. Last build adds only reviewed copy precision: started rather than played, retry from Saved audio rather than unconditional music-continues text, and backend failed-release restart guidance. No blanket final-bundle rerun of all cases is claimed. Intermediate native bundle hashes were not retained."
+  },
+  "validation": {
+    "productionBuildAndTypecheck": "passed",
+    "fullESLint": "passed",
+    "whitespace": "passed after CSV line endings corrected to LF",
+    "bridgeMembers": 64,
+    "unitTests": "not added or run",
+    "checklistRows": 191,
+    "active": 189,
+    "deferred": 2,
+    "controlled": 140,
+    "live": 24,
+    "review": 14,
+    "external": 11,
+    "dispositionChanges": 0,
+    "openChecks": 25,
+    "listenerChecks": 14,
+    "otherProofChecks": 11
+  },
+  "sourceSha256": {
+    "src/main/index.ts": "aaa4568e65b5d8397b26a767ead775ce848e91038a58b9e3e486a29a0a6e22ec",
+    "src/main/prepared-news.ts": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+    "src/preload/index.ts": "458378616e402bc07202f269fa94092d8ee8685e2dd9bba7fcaf0c7ca58e31c1",
+    "src/renderer/components/Player/Player.component.tsx": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+    "src/renderer/dj-playback.tsx": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+    "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": "fd9488789ef2042e6146938d8117e29df0823aae6611013952eb1b4debe83c92",
+    "src/renderer/player.tsx": "01d43abd5752dfbb7a0f8d5c035e77719f2479cff425af0e45c940a479a464c8",
+    "src/shared/news-pool.ts": "d8a190d01563d458a34bd2a89e9bbce8aa7533a7e678b44d88559951768f9da5",
+    "src/shared/types.ts": "1275f91f29509c8ade9c54fd950516c86bde50c639e291a001b4a2929f407db0"
+  },
+  "buildSha256": {
+    "out/main/index.js": "749f13c9bb422039897c8eda1781c57e4a2ae99681b2b5215f1bd571133ac978",
+    "out/preload/index.cjs": "9b78be58d4f9bd70fb5b6d3315d888ee9442cfbf09bfab2b2f902de015e902f2",
+    "out/renderer/assets/index-BVdQeGsW.js": "c4af2809e76eb87c1c2d4021e444c63821bf42c30d5dc5e28938ec5ee2d98008",
+    "out/renderer/assets/index-B9cR7bvN.css": "78fcc2ec135ead9b4d1badd479acfb6d54ca4a41dc08f9be074474ddebe05f76"
+  },
+  "limits": [
+    "CI6 still requires complete current queue advancement/repeat/shuffle/error/seek adjudication composed with retained evidence. This fix and focused duplicate-queue continuation are not that complete audit.",
+    "No held browser Audio.play promise experiment; actual decoded playback, existing onplay pause fence and reviewed callback guards have their recorded scope.",
+    "No fresh live provider/server, real billing, audible quality, regular listener, VoiceOver, hardware, arbitrary OS/disk failure, crash/power-loss or full platform matrix proof.",
+    "1280x720 normal zoom only; smaller viewports and200percent remain deferred.",
+    "Current source map remains navigation over294 nonblank lines, not an atomic metric denominator; Q13 and goal remain incomplete."
+  ]
+}
