@@ -77,3 +77,8 @@ input[type=checkbox]{accent-color:var(--accent)}
 .modal select[aria-disabled="true"], .modal input[type=checkbox][aria-disabled="true"] { cursor:progress; color:var(--muted); }
 .modal .room-link[aria-disabled="true"] { cursor:progress; color:var(--muted); text-decoration:none; }
 .modal .room-link[aria-disabled="true"]:active { translate:0 0; }
+
+.connect-button[aria-disabled="true"],.library-choice-footer button[aria-disabled="true"],.provider-key-actions button[aria-disabled="true"]{cursor:default;color:var(--muted);background:var(--surface)}
+.connect-button[aria-disabled="true"]:active,.library-choice-footer button[aria-disabled="true"]:active,.provider-key-actions button[aria-disabled="true"]:active{translate:0 0}
+
+.connect-button{scroll-margin-block:8px}

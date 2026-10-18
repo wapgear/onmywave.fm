@@ -1,0 +1,2113 @@
+{
+  "date": "2026-10-18",
+  "scope": "Partial Q06 pending Connect, library save and provider key Save/Remove; current control audit remains open.",
+  "baseline": [
+    {
+      "name": "before-library-pending",
+      "sha256": "498c906d020dbbc216fe6565f5580327b797ac66fb9dcd1ca313aa733833bb67",
+      "focus": "BODY"
+    },
+    {
+      "name": "before-key-failure",
+      "sha256": "b9db35ced5297e018320c4720bca8dd4ba3a6711a68c3c44bed64ff8ad5fca79",
+      "focus": "BODY"
+    },
+    {
+      "name": "before-key-pending",
+      "sha256": "27c02094e7301027ca812c6baa8338ae48323ae1dace175fa62c98927bf98f45",
+      "focus": "BODY"
+    }
+  ],
+  "baselineBundleHashes": {
+    "out/renderer/index.html": "de30c28b76d0455ea1efbc63df0e482dedf8d912c1eff55137844f7d16370e85",
+    "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/demo/news-break.json": "fad8cf445ffac400596faa134c1ca357b28a6de86dec5e8389597b1277050c46",
+    "out/renderer/demo/transcript.md": "d64810c60028cc5d69ff10c156b07f8cf5d78cee42ae34e5e6cc0e6553f3fb44",
+    "out/renderer/demo/news-break.mp3": "718a35bc38f30397b7b43965db4a4bf5211d59c0a5f37c4e23ef38428a614f74",
+    "out/renderer/voice-previews/TX3LPaxmHKxFdv7VOQHJ.mp3": "f8018932908f1c3cfaed40a94b13fe4d498489f3fd1d37d3fa86984af721e40c",
+    "out/renderer/voice-previews/cgSgspJ2msm6clMCkdW9.mp3": "addac5c0fecee048baed846784c7f599fa0bcce636556e7a6bc63daa43ffee9f",
+    "out/renderer/voice-previews/JBFqnCBsd6RMkjVDRZzb.mp3": "ac1804ae2ee825f7414d819e2036369297bf9fc01a816b4f3d9c51e7357d32cf",
+    "out/renderer/voice-previews/manifest.json": "15811b8afa01189660b5da6e6e0f54958a4889b644d9ef18d1474e10acead7dc",
+    "out/renderer/voice-previews/EXAVITQu4vr4xnSDxMaL.mp3": "fef86e7100a94578dd2dcee7db9085fcf5c6f50b07aeceeabae05dd09b17a539",
+    "out/renderer/voice-previews/onwK4e9ZLuTAKqWW03F9.mp3": "9c91149960d8c492f19a7d53522af8a4597b490e90f0fe8dd7022653c9824c52",
+    "out/renderer/voice-previews/cjVigY5qzO86Huf0OWal.mp3": "3f485d54b0932999ab76225e4af338b37c2becac438c8595023bc13984bfc8e5",
+    "out/renderer/voice-previews/FGY2WhTYpPnrIDTdsKH5.mp3": "97fc724a7c41b0c02884aec975e2e4a749daabb1fc57a8229b34e8180e1fe418",
+    "out/renderer/assets/inter-cyrillic-ext-500-normal-BmqWE9Dz.woff": "e250c05aebcf49971e0b25f476992dd463c28c0292ebb204d9db542fb5066ca7",
+    "out/renderer/assets/manrope-greek-600-normal-BoRV6lzK.woff2": "18d69aa241a76095c4c5f8c224abe6519ff60db3b4085e843d59fb4965a4eebd",
+    "out/renderer/assets/inter-cyrillic-500-normal-CxZf_p3X.woff": "5be18e0345781cb882a267798518553c0e915174fc70731ab5f085ca64ba1ebc",
+    "out/renderer/assets/inter-greek-500-normal-Xzm54t5V.woff": "86d55a4b1b9cbced7e61e76d5d44cf49d0bd1c814d3df2de67b7136ab4fdcece",
+    "out/renderer/assets/inter-greek-500-normal-BIZE56-Y.woff2": "cc197d79d33a3615a047baae85f4d1957f6f98b8898313658e160b1d519b1b6f",
+    "out/renderer/assets/inter-latin-500-normal-BL9OpVg8.woff": "9b42c108da48b5ed55a3072e815ffee2d271562e6c0dd6998910e8f9c09e0a3d",
+    "out/renderer/assets/inter-vietnamese-500-normal-mJboJaSs.woff": "18a4a09f751671cd8929d7c66e8fe7d820b511c36e51cf6047ffceab88eec4a4",
+    "out/renderer/assets/inter-latin-ext-500-normal-CV4jyFjo.woff2": "2c6fbc42d315528beb06c1096df45487bf4186c4b78b8111d12c9c951f8acca2",
+    "out/renderer/assets/manrope-latin-600-normal-BqgrALkZ.woff": "8d1f509774bca963fa02faf674678ce9244474306361ca2798583fa600346df6",
+    "out/renderer/assets/inter-vietnamese-400-normal-DMkecbls.woff2": "547ad9fdaeb0ae43487f4b8a02e47c36553c0c0cb73c8aa98f93b7b615f6b55d",
+    "out/renderer/assets/index-CDJNUJ8j.js": "214f3e046051be8d2ba14720f41ce5323fd11460f01ec1dbe0b7ad6dbba10078",
+    "out/renderer/assets/manrope-greek-600-normal-CF2i9ZRY.woff": "59fa49c299110657ee3dbc02beed32f5fda899423686058a0ce7e499851e6e7a",
+    "out/renderer/assets/manrope-vietnamese-600-normal-C1J5PCl_.woff2": "bce46331a74572cd723ddb8200a11c00e71370fad490f045564989527469aa3d",
+    "out/renderer/assets/inter-latin-ext-400-normal-77YHD8bZ.woff": "22ae8360fbad24d2af7c6c9898a346c881774dc87f7cf94bd262c48ad58d7116",
+    "out/renderer/assets/manrope-vietnamese-600-normal-lA7a_7Ok.woff": "628a1c849748530c6f7c02c18bdd3191bc19264e20ad2308a8a954605cdb620b",
+    "out/renderer/assets/inter-greek-ext-500-normal-2j5mBUwD.woff": "c85d11bde719108cc9a4f6f5b008087f6c36493b47395580d4f5336182b0f0c7",
+    "out/renderer/assets/manrope-cyrillic-600-normal-DvRl3Mj-.woff2": "80b86efbef1c9fb66557cc4cc7b6db42db2fd631f1a9b8735f3bbefbb5128799",
+    "out/renderer/assets/inter-greek-ext-500-normal-C4iEst2y.woff2": "75a9ec9383a3b7a7bf7cfb94f64edf38d9cfdc5f7ffa0cbed2733627a6e4426d",
+    "out/renderer/assets/inter-cyrillic-ext-400-normal-DQukG94-.woff": "5cb2f1cc0936f89a42ceae34f5a5720248dc5b8114c12b1c33a7d2ef01a9b6b9",
+    "out/renderer/assets/inter-cyrillic-400-normal-HOLc17fK.woff": "6e441a6c94788318fa02b6d0a633aa29eebe27b69c6567eb1e59b4edc68ed70e",
+    "out/renderer/assets/inter-greek-400-normal-B4URO6DV.woff2": "c15ddd00a9927b56f5c655a41f976f79bd848a20cce91fc14227751872a1cc27",
+    "out/renderer/assets/inter-greek-ext-400-normal-DGGRlc-M.woff2": "eadedd9e13c2582430a9fb1519eb86152fdabb483a6f66d90f8d8a52e977a1b7",
+    "out/renderer/assets/inter-latin-ext-500-normal-BxGbmqWO.woff": "30d2903ce97f8a89ea0e9c083b42cb8bf97e7bbb5607e7f00352815f19cb0d5b",
+    "out/renderer/assets/inter-vietnamese-400-normal-Bbgyi5SW.woff": "54aa42d325bcdfd623ecb9eac4a5e3c6420c63d7b86e9d8545fb479f653beb57",
+    "out/renderer/assets/manrope-latin-600-normal-4f0koTD-.woff2": "f7ac6258da20ab7541939b59851155753d1d24f1b30cbcb949077a3faa3d1593",
+    "out/renderer/assets/manrope-latin-ext-600-normal-_gBojHdJ.woff2": "ff679412842fc3b5ce2dfad626db5261a4e663dcfd1bf1209bdfc61c2b2f37e6",
+    "out/renderer/assets/inter-cyrillic-500-normal-BasfLYem.woff2": "b77a86ec16aadc157f4a99e8898d71cd75ea264753d9bdf13f962f8c3988cbb0",
+    "out/renderer/assets/inter-cyrillic-ext-400-normal-BQZuk6qB.woff2": "ef572f9187a8be018d9d9c2c6b77c1f6cb2af4199f02fc16c292ea10ab25a2cc",
+    "out/renderer/assets/inter-greek-400-normal-q2sYcFCs.woff": "bdae9d28729e8c68587d5d54e216d771a40d7a6800e824586a6e2f570c2f10df",
+    "out/renderer/assets/inter-cyrillic-400-normal-obahsSVq.woff2": "f0bb586459ce8f09b238285040f17e3e9e9538b2c5a7aae0775194e33c36c3c3",
+    "out/renderer/assets/manrope-latin-ext-600-normal-u5Pl7hTU.woff": "80ff78480448f4c2c0f586cb016928554b8cd84b2b95dec5e5f7579274f757a0",
+    "out/renderer/assets/index-B3FxMrNX.css": "baf9325acb40ea236349e7bd4665a0641404b1458380af7a597f7bd5e707a1f7",
+    "out/renderer/assets/inter-cyrillic-ext-500-normal-B0yAr1jD.woff2": "1c2db92d3cd9b237ca7c9c07af556d542f28ded1db54cd4382cf776501c5291f",
+    "out/renderer/assets/inter-latin-ext-400-normal-C1nco2VV.woff2": "6744a7f509ebc6ab220a6cd4ea77e898adf014f03d88dcda5d45d8a9feefb4e9",
+    "out/renderer/assets/inter-latin-400-normal-CyCys3Eg.woff": "e20fa0b4fd2dd26e4d14b3ac3cc922509c3a63fa5e910e90c614544aa042dd45",
+    "out/renderer/assets/manrope-cyrillic-600-normal-It4mZcQk.woff": "716a12f36cf789e399e0ad0bd205e3d1c66e4de66fe0c7e94a59ab7f007fce89",
+    "out/renderer/assets/inter-vietnamese-500-normal-DOriooB6.woff2": "44e36aa5a8f12130029a29bb0e6695d0262b67446ce321e878b1fb56162b5de6",
+    "out/renderer/assets/inter-latin-400-normal-C38fXH4l.woff2": "8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc",
+    "out/renderer/assets/inter-greek-ext-400-normal-KugGGMne.woff": "4f2b6f92ddfece8812e79774d446218aa6e0773ff8c2d31130fe2bdc23bd22d0",
+    "out/renderer/assets/inter-latin-500-normal-Cerq10X2.woff2": "f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f"
+  },
+  "rejectedIntermediate": [
+    {
+      "name": "intermediate-library-success-remount",
+      "sha256": "48dcb3001fa541f23d051d6f129418bd5dd049376f091ba1787783747075b043",
+      "focus": {
+        "tag": "BODY",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "top": 0,
+          "right": 1280,
+          "bottom": 720,
+          "left": 0
+        },
+        "insideDrawer": false,
+        "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedSettingsGeneralProvider keysSourcesDJsAccountSigned in asFixtur",
+        "type": null,
+        "role": null
+      }
+    },
+    {
+      "name": "intermediate-connect-clipped-error",
+      "sha256": "190fcac7cc6fbdccc023786efbad7ff3d5a0991dc668ac27757db073a0cc905c",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 416,
+          "y": 694.78125,
+          "width": 440,
+          "height": 44,
+          "top": 694.78125,
+          "right": 856,
+          "bottom": 738.78125,
+          "left": 416
+        },
+        "insideDrawer": false,
+        "name": "Connect to Jellyfin",
+        "type": null,
+        "role": null
+      }
+    }
+  ],
+  "snapshots": [
+    {
+      "name": "final-connect-failure-after-tab",
+      "phase": "final renderer",
+      "sha256": "d9bc4f5e7213152097b58fc715603d42ca8bea2ca0d6592cf4bedf9d4fb321a3",
+      "focus": {
+        "tag": "MAIN",
+        "visible": true,
+        "outline": {
+          "style": "auto",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "top": 0,
+          "right": 1280,
+          "bottom": 720,
+          "left": 0
+        },
+        "insideDrawer": false,
+        "name": "onmywave.fmYour music, on your waveUse another account or serverSign in with another Jellyfin account or server. You can go back to your cur",
+        "type": null,
+        "role": null
+      },
+      "notices": [
+        {
+          "rect": {
+            "x": 416,
+            "y": 595.984375,
+            "width": 440,
+            "height": 45.796875,
+            "top": 595.984375,
+            "right": 856,
+            "bottom": 641.78125,
+            "left": 416
+          },
+          "error": "connect unavailable.",
+          "button": null
+        }
+      ],
+      "held": [],
+      "calls": [
+        {
+          "name": "connect",
+          "at": 1792325608967,
+          "mode": "hold"
+        },
+        {
+          "name": "connect",
+          "at": 1792325639117,
+          "mode": "hold"
+        }
+      ],
+      "providerStatuses": [],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": false
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "activeControls": [],
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "providers": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-connect-failure",
+      "phase": "before final Connect error reveal",
+      "sha256": "e20c042afa13b842ab3d50a0dac3a2fb2ac881244ed695489f93a47b7f3ef112",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 416,
+          "y": 694.78125,
+          "width": 440,
+          "height": 44,
+          "top": 694.78125,
+          "right": 856,
+          "bottom": 738.78125,
+          "left": 416
+        },
+        "insideDrawer": false,
+        "name": "Connect to Jellyfin",
+        "type": null,
+        "role": null
+      },
+      "notices": [
+        {
+          "rect": {
+            "x": 416,
+            "y": 622.984375,
+            "width": 440,
+            "height": 45.796875,
+            "top": 622.984375,
+            "right": 856,
+            "bottom": 668.78125,
+            "left": 416
+          },
+          "error": "connect unavailable.",
+          "button": null
+        }
+      ],
+      "held": [],
+      "calls": [
+        {
+          "name": "connect",
+          "at": 1792325543634,
+          "mode": "hold"
+        }
+      ],
+      "providerStatuses": [],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": false
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "activeControls": [
+        {
+          "tag": "BUTTON",
+          "name": "Connect to Jellyfin",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 416,
+            "y": 694.78125,
+            "width": 440,
+            "height": 44,
+            "top": 694.78125,
+            "right": 856,
+            "bottom": 738.78125,
+            "left": 416
+          }
+        }
+      ],
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "providers": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-connect-pending",
+      "phase": "before final Connect error reveal",
+      "sha256": "acff3bac34c448f318e99c24904a0c3d78588d560e8cea1dcd83c267ef093ecf",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 416,
+          "y": 628.984375,
+          "width": 440,
+          "height": 44,
+          "top": 628.984375,
+          "right": 856,
+          "bottom": 672.984375,
+          "left": 416
+        },
+        "insideDrawer": false,
+        "name": "Connecting\u2026",
+        "type": null,
+        "role": null
+      },
+      "notices": [],
+      "held": [
+        "connect"
+      ],
+      "calls": [
+        {
+          "name": "connect",
+          "at": 1792325543634,
+          "mode": "hold"
+        }
+      ],
+      "providerStatuses": [],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": false
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "activeControls": [
+        {
+          "tag": "BUTTON",
+          "name": "Connecting\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 416,
+            "y": 628.984375,
+            "width": 440,
+            "height": 44,
+            "top": 628.984375,
+            "right": 856,
+            "bottom": 672.984375,
+            "left": 416
+          }
+        }
+      ],
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "providers": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-connect-tab-away",
+      "phase": "final renderer",
+      "sha256": "127d8364fda37060db3e649413defeb46535812937214b4dbce02801b6ac961f",
+      "focus": {
+        "tag": "MAIN",
+        "visible": true,
+        "outline": {
+          "style": "auto",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "top": 0,
+          "right": 1280,
+          "bottom": 720,
+          "left": 0
+        },
+        "insideDrawer": false,
+        "name": "onmywave.fmYour music, on your waveUse another account or serverSign in with another Jellyfin account or server. You can go back to your cur",
+        "type": null,
+        "role": null
+      },
+      "notices": [],
+      "held": [
+        "connect"
+      ],
+      "calls": [
+        {
+          "name": "connect",
+          "at": 1792325608967,
+          "mode": "hold"
+        },
+        {
+          "name": "connect",
+          "at": 1792325639117,
+          "mode": "hold"
+        }
+      ],
+      "providerStatuses": [],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": false
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "activeControls": [],
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "providers": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-connect-visible-failure",
+      "phase": "final renderer",
+      "sha256": "da12c37bf46bbcf889576770118cef7e6738f821ab5223e243cb4395cbdbf242",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 416,
+          "y": 667.78125,
+          "width": 440,
+          "height": 44,
+          "top": 667.78125,
+          "right": 856,
+          "bottom": 711.78125,
+          "left": 416
+        },
+        "insideDrawer": false,
+        "name": "Connect to Jellyfin",
+        "type": null,
+        "role": null
+      },
+      "notices": [
+        {
+          "rect": {
+            "x": 416,
+            "y": 595.984375,
+            "width": 440,
+            "height": 45.796875,
+            "top": 595.984375,
+            "right": 856,
+            "bottom": 641.78125,
+            "left": 416
+          },
+          "error": "connect unavailable.",
+          "button": null
+        }
+      ],
+      "held": [],
+      "calls": [
+        {
+          "name": "connect",
+          "at": 1792325608967,
+          "mode": "hold"
+        }
+      ],
+      "providerStatuses": [],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": false
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "activeControls": [
+        {
+          "tag": "BUTTON",
+          "name": "Connect to Jellyfin",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 416,
+            "y": 667.78125,
+            "width": 440,
+            "height": 44,
+            "top": 667.78125,
+            "right": 856,
+            "bottom": 711.78125,
+            "left": 416
+          }
+        }
+      ],
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "providers": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-connect-visible-pending",
+      "phase": "final renderer",
+      "sha256": "3be1ca1c95c6251a9132ec39085fb96ba4896e4445e5d6f08493fe01950aeff5",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 416,
+          "y": 628.984375,
+          "width": 440,
+          "height": 44,
+          "top": 628.984375,
+          "right": 856,
+          "bottom": 672.984375,
+          "left": 416
+        },
+        "insideDrawer": false,
+        "name": "Connecting\u2026",
+        "type": null,
+        "role": null
+      },
+      "notices": [],
+      "held": [
+        "connect"
+      ],
+      "calls": [
+        {
+          "name": "connect",
+          "at": 1792325608967,
+          "mode": "hold"
+        }
+      ],
+      "providerStatuses": [],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": false
+        },
+        {
+          "name": "Recent music",
+          "checked": false
+        }
+      ],
+      "activeControls": [
+        {
+          "tag": "BUTTON",
+          "name": "Connecting\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 416,
+            "y": 628.984375,
+            "width": 440,
+            "height": 44,
+            "top": 628.984375,
+            "right": 856,
+            "bottom": 672.984375,
+            "left": 416
+          }
+        }
+      ],
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "providers": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-library-blur",
+      "phase": "final renderer",
+      "sha256": "f3d9a60781351d064298e4511de169e20db462e0e43e442248e6195bd7f1c60f",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 353.8515625,
+          "y": 527.078125,
+          "width": 76,
+          "height": 38,
+          "top": 527.078125,
+          "right": 429.8515625,
+          "bottom": 565.078125,
+          "left": 353.8515625
+        },
+        "insideDrawer": false,
+        "name": "",
+        "type": "number",
+        "label": "Check news everysongs",
+        "role": null
+      },
+      "notices": [],
+      "held": [],
+      "calls": [
+        {
+          "name": "selectLibraries",
+          "at": 1792325487120,
+          "mode": "hold"
+        }
+      ],
+      "providerStatuses": [],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": true
+        },
+        {
+          "name": "Recent music",
+          "checked": true
+        }
+      ],
+      "activeControls": [],
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "providers": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-library-failure",
+      "phase": "before chooser key correction",
+      "sha256": "b422b408b03fc15656b3c97f46c368502c8a34d6082bfde2243c4acc11dd18c0",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 853.5703125,
+          "y": 425.78125,
+          "width": 104.4296875,
+          "height": 34,
+          "top": 425.78125,
+          "right": 958,
+          "bottom": 459.78125,
+          "left": 853.5703125
+        },
+        "insideDrawer": false,
+        "name": "Save libraries",
+        "type": null,
+        "role": null
+      },
+      "notices": [
+        {
+          "rect": {
+            "x": 238,
+            "y": 359.984375,
+            "width": 720,
+            "height": 45.796875,
+            "top": 359.984375,
+            "right": 958,
+            "bottom": 405.78125,
+            "left": 238
+          },
+          "error": "selectLibraries unavailable.",
+          "button": null
+        }
+      ],
+      "held": [],
+      "calls": [
+        {
+          "name": "selectLibraries",
+          "at": 1792325311751,
+          "mode": "hold"
+        }
+      ],
+      "providerStatuses": [],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": true
+        },
+        {
+          "name": "Recent music",
+          "checked": true
+        }
+      ],
+      "activeControls": [
+        {
+          "tag": "BUTTON",
+          "name": "Save libraries",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 853.5703125,
+            "y": 425.78125,
+            "width": 104.4296875,
+            "height": 34,
+            "top": 425.78125,
+            "right": 958,
+            "bottom": 459.78125,
+            "left": 853.5703125
+          }
+        }
+      ],
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "providers": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-library-pending",
+      "phase": "before chooser key correction",
+      "sha256": "c0b8e09a4f3f45db8f74bacc8401ee5e0f6b0aaefa486c802910b43853815f95",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 832.6015625,
+          "y": 363.984375,
+          "width": 125.3984375,
+          "height": 34,
+          "top": 363.984375,
+          "right": 958,
+          "bottom": 397.984375,
+          "left": 832.6015625
+        },
+        "insideDrawer": false,
+        "name": "Saving libraries\u2026",
+        "type": null,
+        "role": null
+      },
+      "notices": [],
+      "held": [
+        "selectLibraries"
+      ],
+      "calls": [
+        {
+          "name": "selectLibraries",
+          "at": 1792325311751,
+          "mode": "hold"
+        }
+      ],
+      "providerStatuses": [],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": true
+        },
+        {
+          "name": "Recent music",
+          "checked": true
+        }
+      ],
+      "activeControls": [
+        {
+          "tag": "BUTTON",
+          "name": "Saving libraries\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 832.6015625,
+            "y": 363.984375,
+            "width": 125.3984375,
+            "height": 34,
+            "top": 363.984375,
+            "right": 958,
+            "bottom": 397.984375,
+            "left": 832.6015625
+          }
+        }
+      ],
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "providers": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-library-retained-pending",
+      "phase": "final renderer",
+      "sha256": "d0f6e73e417f045533d3ff79f1eda6334106c19562daf33c6fe1b8630ed744aa",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 832.6015625,
+          "y": 363.984375,
+          "width": 125.3984375,
+          "height": 34,
+          "top": 363.984375,
+          "right": 958,
+          "bottom": 397.984375,
+          "left": 832.6015625
+        },
+        "insideDrawer": false,
+        "name": "Saving libraries\u2026",
+        "type": null,
+        "role": null
+      },
+      "notices": [],
+      "held": [
+        "selectLibraries"
+      ],
+      "calls": [
+        {
+          "name": "selectLibraries",
+          "at": 1792325487120,
+          "mode": "hold"
+        }
+      ],
+      "providerStatuses": [],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": true
+        },
+        {
+          "name": "Recent music",
+          "checked": true
+        }
+      ],
+      "activeControls": [
+        {
+          "tag": "BUTTON",
+          "name": "Saving libraries\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 832.6015625,
+            "y": 363.984375,
+            "width": 125.3984375,
+            "height": 34,
+            "top": 363.984375,
+            "right": 958,
+            "bottom": 397.984375,
+            "left": 832.6015625
+          }
+        }
+      ],
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "providers": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-library-retained-success",
+      "phase": "final renderer",
+      "sha256": "245362d59ebf97674bd627bd0b38561f920037a113877200fca1346cf00a0157",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 843.703125,
+          "y": 363.984375,
+          "width": 114.296875,
+          "height": 34,
+          "top": 363.984375,
+          "right": 958,
+          "bottom": 397.984375,
+          "left": 843.703125
+        },
+        "insideDrawer": false,
+        "name": "Libraries saved",
+        "type": null,
+        "role": null
+      },
+      "notices": [],
+      "held": [],
+      "calls": [
+        {
+          "name": "selectLibraries",
+          "at": 1792325487120,
+          "mode": "hold"
+        }
+      ],
+      "providerStatuses": [],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": true
+        },
+        {
+          "name": "Recent music",
+          "checked": true
+        }
+      ],
+      "activeControls": [
+        {
+          "tag": "BUTTON",
+          "name": "Libraries saved",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 843.703125,
+            "y": 363.984375,
+            "width": 114.296875,
+            "height": 34,
+            "top": 363.984375,
+            "right": 958,
+            "bottom": 397.984375,
+            "left": 843.703125
+          }
+        }
+      ],
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "providers": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-library-retry",
+      "phase": "before chooser key correction",
+      "sha256": "695eb0a4572d21007d4d5bbe7c6c447093fcb39c3a67f8a4454e0caa61c271b0",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 832.6015625,
+          "y": 363.984375,
+          "width": 125.3984375,
+          "height": 34,
+          "top": 363.984375,
+          "right": 958,
+          "bottom": 397.984375,
+          "left": 832.6015625
+        },
+        "insideDrawer": false,
+        "name": "Saving libraries\u2026",
+        "type": null,
+        "role": null
+      },
+      "notices": [],
+      "held": [
+        "selectLibraries"
+      ],
+      "calls": [
+        {
+          "name": "selectLibraries",
+          "at": 1792325311751,
+          "mode": "hold"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792325339720,
+          "mode": "hold"
+        }
+      ],
+      "providerStatuses": [],
+      "libraries": [
+        {
+          "name": "Archive music",
+          "checked": true
+        },
+        {
+          "name": "Recent music",
+          "checked": true
+        }
+      ],
+      "activeControls": [
+        {
+          "tag": "BUTTON",
+          "name": "Saving libraries\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 832.6015625,
+            "y": 363.984375,
+            "width": 125.3984375,
+            "height": 34,
+            "top": 363.984375,
+            "right": 958,
+            "bottom": 397.984375,
+            "left": 832.6015625
+          }
+        }
+      ],
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "providers": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "reviewed-remove-failure",
+      "phase": "before final Connect error reveal",
+      "sha256": "654e9c5810f5a204a8a35fd3af68bdd61ff449683e69aa79a1d77ec5c73d348f",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 324.96875,
+          "y": 339,
+          "width": 96.71875,
+          "height": 34,
+          "top": 339,
+          "right": 421.6875,
+          "bottom": 373,
+          "left": 324.96875
+        },
+        "insideDrawer": false,
+        "name": "Remove key",
+        "type": "button",
+        "role": null
+      },
+      "notices": [
+        {
+          "rect": {
+            "x": 238,
+            "y": 385,
+            "width": 520,
+            "height": 45.796875,
+            "top": 385,
+            "right": 758,
+            "bottom": 430.796875,
+            "left": 238
+          },
+          "error": "setOpenAiKey unavailable.",
+          "button": null
+        }
+      ],
+      "held": [],
+      "calls": [
+        {
+          "name": "selectLibraries",
+          "at": 1792325311751,
+          "mode": "hold"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792325339720,
+          "mode": "hold"
+        },
+        {
+          "name": "setOpenAiKey",
+          "at": 1792325375908,
+          "mode": "hold"
+        }
+      ],
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "libraries": [],
+      "activeControls": [
+        {
+          "tag": "BUTTON",
+          "name": "Remove key",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 324.96875,
+            "y": 339,
+            "width": 96.71875,
+            "height": 34,
+            "top": 339,
+            "right": 421.6875,
+            "bottom": 373,
+            "left": 324.96875
+          }
+        }
+      ],
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "providers": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "reviewed-remove-pending",
+      "phase": "before final Connect error reveal",
+      "sha256": "0acfa78d106f6063f0523d1b7812312aa419c4302942d8c10a9cf50fbf22bf51",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 358.328125,
+          "y": 339,
+          "width": 112.328125,
+          "height": 34,
+          "top": 339,
+          "right": 470.65625,
+          "bottom": 373,
+          "left": 358.328125
+        },
+        "insideDrawer": false,
+        "name": "Updating key\u2026",
+        "type": "button",
+        "role": null
+      },
+      "notices": [],
+      "held": [
+        "setOpenAiKey"
+      ],
+      "calls": [
+        {
+          "name": "selectLibraries",
+          "at": 1792325311751,
+          "mode": "hold"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792325339720,
+          "mode": "hold"
+        },
+        {
+          "name": "setOpenAiKey",
+          "at": 1792325375908,
+          "mode": "hold"
+        }
+      ],
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "Key saved",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": false,
+          "buttons": [
+            {
+              "name": "Updating key\u2026",
+              "disabled": true
+            },
+            {
+              "name": "Updating key\u2026",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "libraries": [],
+      "activeControls": [
+        {
+          "tag": "BUTTON",
+          "name": "Updating key\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 358.328125,
+            "y": 339,
+            "width": 112.328125,
+            "height": 34,
+            "top": 339,
+            "right": 470.65625,
+            "bottom": 373,
+            "left": 358.328125
+          }
+        }
+      ],
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "providers": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "reviewed-remove-retry",
+      "phase": "before final Connect error reveal",
+      "sha256": "cac5601c414ea42ad433a5f26dea197703ed70d80bd57f038c148cb2b6ecf88d",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 358.328125,
+          "y": 339,
+          "width": 112.328125,
+          "height": 34,
+          "top": 339,
+          "right": 470.65625,
+          "bottom": 373,
+          "left": 358.328125
+        },
+        "insideDrawer": false,
+        "name": "Updating key\u2026",
+        "type": "button",
+        "role": null
+      },
+      "notices": [],
+      "held": [
+        "setOpenAiKey"
+      ],
+      "calls": [
+        {
+          "name": "selectLibraries",
+          "at": 1792325311751,
+          "mode": "hold"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792325339720,
+          "mode": "hold"
+        },
+        {
+          "name": "setOpenAiKey",
+          "at": 1792325375908,
+          "mode": "hold"
+        },
+        {
+          "name": "setOpenAiKey",
+          "at": 1792325405096,
+          "mode": "hold"
+        }
+      ],
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "Key saved",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": false,
+          "buttons": [
+            {
+              "name": "Updating key\u2026",
+              "disabled": true
+            },
+            {
+              "name": "Updating key\u2026",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "libraries": [],
+      "activeControls": [
+        {
+          "tag": "BUTTON",
+          "name": "Updating key\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 358.328125,
+            "y": 339,
+            "width": 112.328125,
+            "height": 34,
+            "top": 339,
+            "right": 470.65625,
+            "bottom": 373,
+            "left": 358.328125
+          }
+        }
+      ],
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "providers": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "reviewed-remove-success",
+      "phase": "before final Connect error reveal",
+      "sha256": "fe9461aaf33c156ab569487ddf61906e991d1ecf6a76dbef23d539aed96df615",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 324.96875,
+          "y": 339,
+          "width": 102.109375,
+          "height": 34,
+          "top": 339,
+          "right": 427.078125,
+          "bottom": 373,
+          "left": 324.96875
+        },
+        "insideDrawer": false,
+        "name": "Key removed",
+        "type": "button",
+        "role": null
+      },
+      "notices": [],
+      "held": [],
+      "calls": [
+        {
+          "name": "selectLibraries",
+          "at": 1792325311751,
+          "mode": "hold"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792325339720,
+          "mode": "hold"
+        },
+        {
+          "name": "setOpenAiKey",
+          "at": 1792325375908,
+          "mode": "hold"
+        },
+        {
+          "name": "setOpenAiKey",
+          "at": 1792325405096,
+          "mode": "hold"
+        }
+      ],
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Key removed",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "libraries": [],
+      "activeControls": [
+        {
+          "tag": "BUTTON",
+          "name": "Key removed",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 324.96875,
+            "y": 339,
+            "width": 102.109375,
+            "height": 34,
+            "top": 339,
+            "right": 427.078125,
+            "bottom": 373,
+            "left": 324.96875
+          }
+        }
+      ],
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "providers": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "reviewed-save-key-pending",
+      "phase": "before final Connect error reveal",
+      "sha256": "59fa5d72679dab2f7fda7c8ba0ee91d3ab31def7b33d2115f5279d28d9d6fd08",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 339,
+          "width": 112.328125,
+          "height": 34,
+          "top": 339,
+          "right": 350.328125,
+          "bottom": 373,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Updating key\u2026",
+        "type": "button",
+        "role": null
+      },
+      "notices": [],
+      "held": [
+        "setOpenAiKey"
+      ],
+      "calls": [
+        {
+          "name": "selectLibraries",
+          "at": 1792325311751,
+          "mode": "hold"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792325339720,
+          "mode": "hold"
+        },
+        {
+          "name": "setOpenAiKey",
+          "at": 1792325375908,
+          "mode": "hold"
+        },
+        {
+          "name": "setOpenAiKey",
+          "at": 1792325405096,
+          "mode": "hold"
+        },
+        {
+          "name": "setOpenAiKey",
+          "at": 1792325430546,
+          "mode": "hold"
+        }
+      ],
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": false,
+          "inputEnabled": false,
+          "buttons": [
+            {
+              "name": "Updating key\u2026",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "libraries": [],
+      "activeControls": [
+        {
+          "tag": "BUTTON",
+          "name": "Updating key\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 238,
+            "y": 339,
+            "width": 112.328125,
+            "height": 34,
+            "top": 339,
+            "right": 350.328125,
+            "bottom": 373,
+            "left": 238
+          }
+        }
+      ],
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "providers": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "reviewed-save-key-success",
+      "phase": "before final Connect error reveal",
+      "sha256": "8b98fff575f43834cde875c2c7173d90ea7e6a45dae2a1cca90ca1970c0d5990",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 339,
+          "width": 86.21875,
+          "height": 34,
+          "top": 339,
+          "right": 324.21875,
+          "bottom": 373,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Key saved",
+        "type": "button",
+        "role": null
+      },
+      "notices": [],
+      "held": [],
+      "calls": [
+        {
+          "name": "selectLibraries",
+          "at": 1792325311751,
+          "mode": "hold"
+        },
+        {
+          "name": "selectLibraries",
+          "at": 1792325339720,
+          "mode": "hold"
+        },
+        {
+          "name": "setOpenAiKey",
+          "at": 1792325375908,
+          "mode": "hold"
+        },
+        {
+          "name": "setOpenAiKey",
+          "at": 1792325405096,
+          "mode": "hold"
+        },
+        {
+          "name": "setOpenAiKey",
+          "at": 1792325430546,
+          "mode": "hold"
+        }
+      ],
+      "providerStatuses": [
+        {
+          "name": "OpenAI \u00b7 information and preparation",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Key saved",
+              "disabled": false
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "ElevenLabs \u00b7 voice",
+          "status": "Key saved",
+          "hasRemove": true,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "Remove key",
+              "disabled": false
+            }
+          ]
+        },
+        {
+          "name": "Twitter / X \u00b7 recent search",
+          "status": "No key configured",
+          "hasRemove": false,
+          "inputEmpty": true,
+          "inputEnabled": true,
+          "buttons": [
+            {
+              "name": "Save key",
+              "disabled": true
+            },
+            {
+              "name": "X developer console",
+              "disabled": false
+            },
+            {
+              "name": "Official token guide \u2197",
+              "disabled": false
+            },
+            {
+              "name": "API pricing \u2197",
+              "disabled": false
+            }
+          ]
+        }
+      ],
+      "libraries": [],
+      "activeControls": [
+        {
+          "tag": "BUTTON",
+          "name": "Key saved",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 238,
+            "y": 339,
+            "width": 86.21875,
+            "height": 34,
+            "top": 339,
+            "right": 324.21875,
+            "bottom": 373,
+            "left": 238
+          }
+        }
+      ],
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "providers": 0,
+      "httpWrites": 0
+    }
+  ],
+  "sourceHashes": {
+    "src/renderer/components/LibraryChooser.tsx": "4763e065984e0be974156f39732ee1f69fa74fc4e59a9d25c3b73d33d7199b7c",
+    "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx": "f50dbff52577b24e3722f7b562955025563cb36a72cac0ffcabb3c562a882655",
+    "src/renderer/pages/Connection/Connection.page.tsx": "08359f09953a74c34f569c5327c93a843e19504613938555e90fbef5931552b8",
+    "src/renderer/pages/Settings/Settings.page.tsx": "13f585e3995c35a21b1105f787095003d794b14ca885f609e58be1af33756cbe",
+    "src/renderer/styles.css": "452b45ad01038ed95363bf83593f4f54cbc50cadb727648b8f261fbeb2b8a82f"
+  },
+  "finalBundleHashes": {
+    "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2",
+    "out/renderer/index.html": "a69ec0d5ff37a908f6e262c7407adcdfd63e915859482bcb5210ff6f730a06c8",
+    "out/renderer/assets/index-D95UqVlK.js": "f9f94d632f5af9dd9b928bb41ca7b065fb62a02d627e63fd15745556a886c81f",
+    "out/renderer/assets/index-CJtRjCuF.css": "a546a2eda315573b6b332a594352c7d6f6a89b125befc8579e769abc70749b28"
+  },
+  "fixtureHashes": {
+    "bootstrap.mjs": "049b716ef4dd261564bd639edc5a7436f2a5d2dd4697752e754046561a5267a6",
+    "observe.cjs": "39b7b7c3f465169fb6a621e3c2b9217f3508d85d534cc13cfddf522acb9baaeb",
+    "server.mjs": "33b1beafab299247920af0bee234c85d500ecb207a2527bf3c25a2feb9dcc7da",
+    "out/main/index.js": "576624282916408675d3a7ee10b7528d3334dc477ed0de6f259d0339a53bd57a",
+    "capture.py": "83193e9b53ecf266123a48c24d779d6a69da2c59d5f232cf0e281c199eb0771e"
+  },
+  "runtime": {
+    "input": "Native CUA only",
+    "viewport": [
+      1280,
+      720
+    ],
+    "zoom": 1,
+    "main": "Copied instrumented main/storage with disposable safeStorage and local catalog, null shared-key adapter and stopped interval",
+    "writes": "Actual disposable library selection and local fixture key removal/replacement; only a fake placeholder is typed. No real credentials or provider/server writes.",
+    "media": "Muted, initially paused fixture queue",
+    "calls": "IPC pre-operation hold/fail gates; connect is never released to actual authentication."
+  },
+  "validation": "Final build/TypeScript/full ESLint and parsed native predicates pass. Production renderer/preload. Live fixture catalog stopped after observers confirmed exit0 without page errors.",
+  "limitations": [
+    "Initial connection observer waited for the wrong heading and timed out; before-connect.json is a failed harness run, not a connection baseline pass. Readiness corrected to Choose your libraries.",
+    "An intermediate actual library save remounted the chooser and lost focus. Final Settings key correction is replayed natively.",
+    "An intermediate connection error clipped the retained button below720px. Final guarded reveal is replayed with button bottom below714px.",
+    "Provider checks precede later Settings key/Connect reveal corrections. Their component/controller source is unchanged, but no final-bundle rerun of those cases is claimed; prior intermediate bundle hashes were not retained.",
+    "This run does not prove successful authentication-to-chooser/main handoff, forced route/window changes, actual OS failure, all providers, VoiceOver, listener or audible/live-provider quality.",
+    "All191 dispositions unchanged:189 active,2 Deferred,27 open comprising14 listener and13 other-proof. Q06 remains Review."
+  ],
+  "processes": "Observers before/final/final-library/final-connect/final-connect-visible confirmed terminal exit0; earlier before-connect is terminal failed readiness. Catalog PID40638 verified by exact command and stopped."
+}
