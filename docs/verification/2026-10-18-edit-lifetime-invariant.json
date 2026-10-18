@@ -1,0 +1,2842 @@
+{
+  "date": "2026-10-18",
+  "baseCommit": "c441f78e9a3abe5bb628e964f3a446e5a7fd5300",
+  "scope": "CI1 individual engineering adjudication of documented edit lifetimes; no product change or checklist promotion.",
+  "obligations": [
+    {
+      "id": "CI1.1",
+      "title": "Atomic committed settings",
+      "behavior": "Latest queued local state merges before atomic replacement; failed writes preserve prior state. Exact committed replies cannot replace newer observed cache state.",
+      "requirement": "REQUIREMENTS:87;D22",
+      "currentSource": "Serialized storage updateLocalState/updateLocalStateAndGet; monotonic local-state-cache helper.",
+      "evidence": [
+        "2026-10-18-radio-configuration-readback.json"
+      ],
+      "judgment": "Current exact source and focused storage/cache/main-operation proof; ordinary fresh process, not physical-disk failure or power loss."
+    },
+    {
+      "id": "CI1.2",
+      "title": "Radio setup drafts",
+      "behavior": "Setup fields, pending saves and errors survive music/shared-management navigation; wrong-profile/older completion preserves newer drafts.",
+      "requirement": "REQUIREMENTS:87,277;R2,R10",
+      "currentSource": "Account-owned SessionContent configDraft; submitted-reference equality; expected profile checked again inside queued commit.",
+      "evidence": [
+        "2026-10-16-setup-save-order.json",
+        "2026-10-18-radio-setup-save-focus.json",
+        "2026-10-18-setup-management-focus.json",
+        "2026-10-18-radio-configuration-readback.json"
+      ],
+      "judgment": "Retained guarded native/service cases composed with current source and fresh unsaved mood detours."
+    },
+    {
+      "id": "CI1.3",
+      "title": "General device preferences",
+      "behavior": "General drafts/pending/failures survive navigation and music-account changes; separate forms block own duplicates and preserve newer unrelated playback choices.",
+      "requirement": "REQUIREMENTS:87;D21,D22",
+      "currentSource": "SettingsEditsProvider above account key; independent useEdit owners and synchronous input/write locks; canonical queued field patch results.",
+      "evidence": [
+        "2026-10-17-general-settings-navigation.json",
+        "2026-10-18-general-settings-save-focus.json",
+        "2026-10-18-general-settings-readback.json",
+        "2026-10-18-radio-configuration-readback.json"
+      ],
+      "judgment": "Retained actual account/navigation and field-race cases plus current receipt proof. Fresh native cadence draft survives page detours and is discarded only at relaunch."
+    },
+    {
+      "id": "CI1.4",
+      "title": "Account-scoped drafts",
+      "behavior": "Radio script/setup and inline playlist state survive same-account expiry/recovery; sign-out or another identity discards that owner and old callbacks cannot edit its replacement.",
+      "requirement": "REQUIREMENTS:140,277;R10,A14",
+      "currentSource": "SessionContent identity key owns radio states/recovery above its conditional ReadyApp/ConnectionPage. Old setters belong to the old owner.",
+      "evidence": [
+        "2026-10-16-setup-save-order.json",
+        "2026-10-17-library-save-navigation.json",
+        "2026-10-18-uncertain-work-invariant.json"
+      ],
+      "judgment": "Current ownership/callback inspection composed with retained account and recovery cases; no fresh complete multi-account sweep."
+    },
+    {
+      "id": "CI1.5",
+      "title": "Library choice lifetime",
+      "behavior": "Library checkbox drafts/pending/errors survive navigation; accepted authentication resets them, and expiry/stale callbacks cannot reopen the wrong session.",
+      "requirement": "REQUIREMENTS:140;C03-C08",
+      "currentSource": "LibrarySelectionProvider revision, current account/expiry, active owner and accepted completion checks; serialized connection/library writes.",
+      "evidence": [
+        "2026-10-17-library-save-navigation.json",
+        "2026-10-18-authentication-handoff-focus.json",
+        "2026-10-18-live-access-permissions.json"
+      ],
+      "judgment": "Original native/service cases retained with current auth-handoff helper match. Live C06 is an actual grant, not arbitrary permission configurations."
+    },
+    {
+      "id": "CI1.6",
+      "title": "Provider-key lifetime",
+      "behavior": "Masked key drafts/pending/errors survive navigation; identity changes clear text/settled errors while active device-wide writes remain locked. Confirmed key/status reads stay authoritative.",
+      "requirement": "REQUIREMENTS:273,277;Q15,Q16",
+      "currentSource": "Above-account ProviderKeyEdits with explicit session revision; submission/useIsMutating lock; provider read revision.",
+      "evidence": [
+        "2026-10-17-provider-edit-navigation.json",
+        "2026-10-17-credential-read-order.json",
+        "2026-10-18-secret-invariant.json"
+      ],
+      "judgment": "Current key owner exactly matches tested source; retain protected OS-storage boundaries. No personal key accessed."
+    },
+    {
+      "id": "CI1.7",
+      "title": "Script and audio integrity",
+      "behavior": "Dirty script replacement needs consent; cancel/failure preserve text and late text completion cannot overwrite a newer draft. Committed takes/artifacts retain their documented restart/cancellation lifetime.",
+      "requirement": "REQUIREMENTS:252-260;T07,A19,CI4",
+      "currentSource": "requestScript/prepareText confirmation, captured draft identity guard; durable prepared-news scripts/takes/selection/request identity.",
+      "evidence": [
+        "2026-10-16-script-replacement.json",
+        "2026-10-18-manual-preparation-focus.json",
+        "2026-10-18-selected-take-invariant.json",
+        "2026-10-18-uncertain-work-invariant.json"
+      ],
+      "judgment": "Current matching confirmation/identity nodes and current CI4/CI5 data proof compose. No new billed generation, audio quality or forced crash."
+    },
+    {
+      "id": "CI1.8",
+      "title": "Profile operations",
+      "behavior": "Copy/switch/availability/preparation-off preserve unrelated drafts and show committed profile after failed refresh without write replay. Copies remain off/unavailable.",
+      "requirement": "REQUIREMENTS:87,277,281;R05,R06,A12",
+      "currentSource": "Canonical serialized operations; clear only submitted matching references; independent UI guards.",
+      "evidence": [
+        "2026-10-16-profile-drafts-status.json",
+        "2026-10-16-copied-profiles.json",
+        "2026-10-18-radio-configuration-readback.json"
+      ],
+      "judgment": "Current actual operations and native failed-readback setup/copy/switch. Resume/off/availability side effects use main-operation/source evidence, not new native permutations."
+    },
+    {
+      "id": "CI1.9",
+      "title": "Dialog-local edits",
+      "behavior": "Shared source/DJ and playlist dialogs keep drafts/items through definite failure/pending; ordinary dismissal may discard local drafts. Confirmed shared changes remain visible after failed readback.",
+      "requirement": "REQUIREMENTS:188,192,279;D01,D02,P01-P05",
+      "currentSource": "Modal-local drafts, duplicate and pending-dismissal guards; shared receipt/cache helper; playlist uncertainty journal.",
+      "evidence": [
+        "2026-10-18-shared-editor-focus.json",
+        "2026-10-18-shared-editor-readback.json",
+        "2026-10-18-add-playlist-focus.json",
+        "2026-10-18-playlist-create-focus.json",
+        "2026-10-18-uncertain-work-invariant.json"
+      ],
+      "judgment": "PR119 current native/service result plus retained failure/pending proof. No claim unsaved names survive Cancel or Quit."
+    },
+    {
+      "id": "CI1.10",
+      "title": "Durable playlist recovery",
+      "behavior": "Confirmed playlist data stays server-owned; uncertain edits retain account-owned recovery through navigation/restart, and old receipts cannot authorize another account.",
+      "requirement": "REQUIREMENTS:188-208;P07-P10,CI5",
+      "currentSource": "SessionContent usePlaylistRecovery plus opaque durable journal, account-bound read/acknowledgement receipts and no automatic replay.",
+      "evidence": [
+        "2026-10-16-playlist-recovery-current.json",
+        "2026-10-18-playlist-player-recovery-focus.json",
+        "2026-10-18-uncertain-work-invariant.json"
+      ],
+      "judgment": "Current owner/journal source matches retained native/service/restart evidence. Not arbitrary live mutation, crash or missing permission configuration proof."
+    },
+    {
+      "id": "CI1.11",
+      "title": "Temporary music selections",
+      "behavior": "Song/open-album selections survive navigation; explicit album Back/open, library/account changes and restart end temporary album lifetime.",
+      "requirement": "REQUIREMENTS:146,182;B15",
+      "currentSource": "ReadyApp SongsView/AlbumsView; parent-selected maps; explicit Back/open reset; updateLibraries reset; account/process initialization.",
+      "evidence": [
+        "2026-10-16-music-browsing.json"
+      ],
+      "judgment": "Fresh current native selection/Back/relaunch checks below. Library/account reset uses current inspected ownership plus retained cases. Unresolved old TrackTable hash is excluded from current table proof."
+    },
+    {
+      "id": "CI1.12",
+      "title": "Window and process lifetime",
+      "behavior": "macOS Close hides the same window without saving/discarding drafts or canceling authorized work; activation restores it. Quit ends transient drafts and relaunch restores durable music paused.",
+      "requirement": "REQUIREMENTS:15;V10,D21",
+      "currentSource": "Current close interception, activate and before-quit exactly match accepted lifecycle source; React owners live with window/process; durable storage/journals remain separate.",
+      "evidence": [
+        "2026-10-17-window-session-retention.json",
+        "2026-10-18-selected-take-invariant.json",
+        "2026-10-18-uncertain-work-invariant.json"
+      ],
+      "judgment": "Retained actual native Close/activate and quit exit; fresh owned-process quit/relaunch against same data restores identical saved duplicate queue/options paused while clearing drafts/selections. Not paid-hidden-work, power loss or desktop chrome acceptance."
+    }
+  ],
+  "freshness": {
+    "method": "Resolve selected evidence source hashes to exact current or Git file bytes, rather than assuming baseCommit is tested source. Compare named syntax nodes using TypeScript printer with comments/formatting normalized. Matching nodes alone do not establish untested paths; changed scopes receive explicit review.",
+    "sourceVersions": [
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-17-general-settings-navigation"
+        ],
+        "evidenceHash": "3ffef8d8f579c3ecfe4675c92805b2831b67b3c0a7021a23a409e0c24a6d27bb",
+        "currentHash": "cdf2e042029210ba20b20dd529e838760c6158fe73bb8046118b93fff9085657",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "5e3e70fa22252040b89bd02dc87b542c853a8104"
+      },
+      {
+        "file": "src/shared/types.ts",
+        "records": [
+          "2026-10-17-general-settings-navigation"
+        ],
+        "evidenceHash": "f98356fc4473975a77f5f8d0afbe3278bd623e9d94e5c8de85f3db1cd65e2e05",
+        "currentHash": "05a3ae42a216e752b17897dae2268a0954f40a3127fc74a7053db578a3ead9e2",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "5e3e70fa22252040b89bd02dc87b542c853a8104"
+      },
+      {
+        "file": "src/shared/dj-playback.ts",
+        "records": [
+          "2026-10-17-general-settings-navigation"
+        ],
+        "evidenceHash": "7e807ff052f50332ff9c78b083c450a9f5c116f68fc36de93480165ec1e6e55b",
+        "currentHash": "7e807ff052f50332ff9c78b083c450a9f5c116f68fc36de93480165ec1e6e55b",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-17-general-settings-navigation",
+          "2026-10-17-window-session-retention"
+        ],
+        "evidenceHash": "3286d6259addd3cd1030b30c1c34ba1362440449d5bc8fab9023f0bdfa277532",
+        "currentHash": "eae93435308b21d89e771bc920b389b753743923b1d9e907abed0f5d551551f7",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "5e3e70fa22252040b89bd02dc87b542c853a8104"
+      },
+      {
+        "file": "src/renderer/dj-playback.tsx",
+        "records": [
+          "2026-10-17-general-settings-navigation"
+        ],
+        "evidenceHash": "1bc155fb425d6c48181a847e9bf1d6b0fccdb9296b60d48ee99d732fe6e0904f",
+        "currentHash": "17c889d6939a34ed06202091f4a8ae4cd8e84c6422dbe9da6341315b79b135dc",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "5e3e70fa22252040b89bd02dc87b542c853a8104"
+      },
+      {
+        "file": "src/renderer/pages/Settings/SettingsEdits.tsx",
+        "records": [
+          "2026-10-17-general-settings-navigation",
+          "2026-10-17-window-session-retention"
+        ],
+        "evidenceHash": "44e576f60c8a96d9fcc00df839244beefd8144215e0801b03803c20d9b34d56e",
+        "currentHash": "0319d54594b8e7658485e8a9dbc33b78b050633623f8cb1665872b2e75387f89",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "5e3e70fa22252040b89bd02dc87b542c853a8104"
+      },
+      {
+        "file": "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx",
+        "records": [
+          "2026-10-17-general-settings-navigation"
+        ],
+        "evidenceHash": "25cd14a23388f356f2bc10d36266ffed46ab7c6638785e844c82dd2d9478e0e5",
+        "currentHash": "637cd8e97ae915639bcec77ac344ec28159ebc22e40b5e4fa74df4f826e14645",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "5e3e70fa22252040b89bd02dc87b542c853a8104"
+      },
+      {
+        "file": "src/renderer/pages/Settings/components/NewsTransitions.component.tsx",
+        "records": [
+          "2026-10-17-general-settings-navigation"
+        ],
+        "evidenceHash": "33f3798d7812323e1d997a98f760bbdb344ce0dd0ae7c8b8a0cc8d1d61766e0e",
+        "currentHash": "69051db733a1e1ed35621d7ac6f7e11908b6faba52d3d1a09515d97cddfc0c9b",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "5e3e70fa22252040b89bd02dc87b542c853a8104"
+      },
+      {
+        "file": "src/renderer/pages/Settings/components/NewsTransitionPreview.component.tsx",
+        "records": [
+          "2026-10-17-general-settings-navigation"
+        ],
+        "evidenceHash": "b44dc08192dd9d4a354a8f921c1b5e17c6a0cf2291b26b8aa3bd285d55b2ff31",
+        "currentHash": "b44dc08192dd9d4a354a8f921c1b5e17c6a0cf2291b26b8aa3bd285d55b2ff31",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-17-window-session-retention"
+        ],
+        "evidenceHash": "e4ab045607c0e17eed5cdf82594fdedad4c84430f9e3f5eaa72cb84e9bb465c4",
+        "currentHash": "cdf2e042029210ba20b20dd529e838760c6158fe73bb8046118b93fff9085657",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "8c929f10089bb43d5215cf7acb73396a0873cc39"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "records": [
+          "2026-10-17-window-session-retention"
+        ],
+        "evidenceHash": "1a958a21936d3079f4a4d9c8e6987d47ffed8cf11cf6feee8cf4a4a7f2646f19",
+        "currentHash": "682513a44f59cf746c6464d24163181473d80e79addc33edd19aa2dfc9e810d4",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "5627007e4d7b2cb87c1e0caa219a41dc0acf2f1e"
+      },
+      {
+        "file": "src/renderer/styles.css",
+        "records": [
+          "2026-10-17-window-session-retention"
+        ],
+        "evidenceHash": "5a235c72cbcbff30bf790e1fa7044ea6a9abc9727ecbda08389d9a059a196d32",
+        "currentHash": "59a887c4f754a3e54d9fea94420cf39ffc99a825211113e85b98df2cd2b53693",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "9a2a734f131d282b82e7ab53491a63b19a1e8952"
+      },
+      {
+        "file": "src/renderer/components/LibrarySelection.tsx",
+        "records": [
+          "2026-10-17-library-save-navigation"
+        ],
+        "evidenceHash": "97db6216b4fada46621ce20658e1bc1d47b76fe0819a0db75e446ea82965e342",
+        "currentHash": "612e117abee02b6c69090402331261928792cfc7a0aa445756f764d319de0083",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "95ea99574f471e5a4414e71588705e982eb66b23"
+      },
+      {
+        "file": "src/renderer/components/LibraryChooser.tsx",
+        "records": [
+          "2026-10-17-library-save-navigation"
+        ],
+        "evidenceHash": "18c22d71b890eae73fe8ef20241300dc55160e8372e6ac1ab9f5d998d301cf36",
+        "currentHash": "0c91c760e8d10904fc699de951c43a2120c73148cbee800574fd5850e2ed8662",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "95ea99574f471e5a4414e71588705e982eb66b23"
+      },
+      {
+        "file": "src/renderer/pages/Connection/Connection.page.tsx",
+        "records": [
+          "2026-10-17-library-save-navigation"
+        ],
+        "evidenceHash": "6a19c2827c5b0afde7b13eabd72b1431f6045db325a8fac1bbc8c35e25af965a",
+        "currentHash": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "95ea99574f471e5a4414e71588705e982eb66b23"
+      },
+      {
+        "file": "src/renderer/pages/Settings/Settings.page.tsx",
+        "records": [
+          "2026-10-17-library-save-navigation"
+        ],
+        "evidenceHash": "ce0c41cd58f82a801b651940cb641945c12ed4c83b765377f6be8d809d1e5d9f",
+        "currentHash": "13f585e3995c35a21b1105f787095003d794b14ca885f609e58be1af33756cbe",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-17-library-save-navigation"
+        ],
+        "evidenceHash": "295282dd8549fec72a32bcf1b16cd4095f4a4c2e9baa41044dd0b65fc60d98ab",
+        "currentHash": "eae93435308b21d89e771bc920b389b753743923b1d9e907abed0f5d551551f7",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "95ea99574f471e5a4414e71588705e982eb66b23"
+      },
+      {
+        "file": "src/renderer/main.tsx",
+        "records": [
+          "2026-10-17-library-save-navigation",
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "evidenceHash": "863a6596bde95ba270f0d554a2ac2bd0c3819ca832f1bfd577d0edf9bb69a7cc",
+        "currentHash": "93eaf626f62d66c274b74e098672afb222d3c588a78eaac53d4b9b309a0cb2e3",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "2b42ec2426fb9b20e1ba9eb5e78271dd7d4da634"
+      },
+      {
+        "file": "src/main/jellyfin.ts",
+        "records": [
+          "2026-10-17-library-save-navigation"
+        ],
+        "evidenceHash": "22f083327dfdcbb0952d9750662df95d13c31e09a83f628f8c1e3393072f90eb",
+        "currentHash": "6e1191d733752c57787c1c9465085e014a0500e0543e56a22467019892ad74ab",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "d418520c194bef06b977914e68e7b23a76beb0f6"
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-17-library-save-navigation",
+          "2026-10-16-setup-save-order",
+          "2026-10-16-playlist-recovery-current"
+        ],
+        "evidenceHash": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+        "currentHash": "cdf2e042029210ba20b20dd529e838760c6158fe73bb8046118b93fff9085657",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/main/storage.ts",
+        "records": [
+          "2026-10-17-library-save-navigation",
+          "2026-10-16-setup-save-order"
+        ],
+        "evidenceHash": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+        "currentHash": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-17-provider-edit-navigation"
+        ],
+        "evidenceHash": "668a4ed0d7c49132608b91bb899085cd78b6b631cadfd5c3bd2c92d0dc75936c",
+        "currentHash": "eae93435308b21d89e771bc920b389b753743923b1d9e907abed0f5d551551f7",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "965f4be58bc678286d0edfc72c0489ad1c004e9d"
+      },
+      {
+        "file": "src/renderer/components/ProviderKeys/ProviderKeyEdits.tsx",
+        "records": [
+          "2026-10-17-provider-edit-navigation"
+        ],
+        "evidenceHash": "99b9e06d6c62a90d36195ef7ae832444dd64c7cad8153db4fd66fd7feefe04d2",
+        "currentHash": "99b9e06d6c62a90d36195ef7ae832444dd64c7cad8153db4fd66fd7feefe04d2",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx",
+        "records": [
+          "2026-10-17-provider-edit-navigation"
+        ],
+        "evidenceHash": "c9291d31f6f3f606c39f55c88b0e84346f7e0dbb39c3de0ddf4d78d1a3f3d91e",
+        "currentHash": "cfead3feb18d94ec60d2ac25573ddfedb7a2ad0b8bbc0331d1ccd4caaefebd6b",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "965f4be58bc678286d0edfc72c0489ad1c004e9d"
+      },
+      {
+        "file": "src/renderer/pages/Settings/Settings.page.tsx",
+        "records": [
+          "2026-10-17-provider-edit-navigation"
+        ],
+        "evidenceHash": "8845debd083583827cafa76205dc0498a3cc5af04acb701aa2ae1277b1465441",
+        "currentHash": "13f585e3995c35a21b1105f787095003d794b14ca885f609e58be1af33756cbe",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "965f4be58bc678286d0edfc72c0489ad1c004e9d"
+      },
+      {
+        "file": "src/main/news-workflow.ts",
+        "records": [
+          "2026-10-16-setup-save-order"
+        ],
+        "evidenceHash": "7cab5b92c6d4d1476526a75831069de80623ef5b6ca4686345bacfaf01103fb0",
+        "currentHash": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/preload/index.ts",
+        "records": [
+          "2026-10-16-setup-save-order"
+        ],
+        "evidenceHash": "0c7edf2153d5210b24a0fac9db667fd254e324366d4737653578ef067c1eac63",
+        "currentHash": "0fa1d3378a0982b3b73e4d696f072c9aae72e693019dbc48f917d278e9f75e17",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/shared/types.ts",
+        "records": [
+          "2026-10-16-setup-save-order"
+        ],
+        "evidenceHash": "71e36cce9f904d7327f8d85c38f8ce050c7955877888ed9dde27e4105a6c57f0",
+        "currentHash": "05a3ae42a216e752b17897dae2268a0954f40a3127fc74a7053db578a3ead9e2",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/shared/workflow.ts",
+        "records": [
+          "2026-10-16-setup-save-order"
+        ],
+        "evidenceHash": "19e2afad8909330c33195420af54cbbbe836f0bc81bde166cfdf42dd3230e6ac",
+        "currentHash": "22bbb66493579cc57e09c69119943adec0fa2373d823820a2579bd4996e6cc77",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-16-setup-save-order"
+        ],
+        "evidenceHash": "7aa25c18baaa834b112e44819333221f1d45aeda269c5ce22c5aed4715199596",
+        "currentHash": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/renderer/pages/Stations/components/RoomSetup.component.tsx",
+        "records": [
+          "2026-10-16-setup-save-order"
+        ],
+        "evidenceHash": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330",
+        "currentHash": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-16-script-replacement"
+        ],
+        "evidenceHash": "0cf19990bdc722484d269a1077e3620b4d554d72fd845f83586f0763060a1755",
+        "currentHash": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "dce80d63bb9d87f4203013163a21822c52f94b43"
+      },
+      {
+        "file": "src/renderer/pages/Stations/components/PreparedTakes.component.tsx",
+        "records": [
+          "2026-10-16-script-replacement"
+        ],
+        "evidenceHash": "47911b90b37a4f0d72ea85529f3585546399c435f9bb8923981591fa13eba002",
+        "currentHash": "2acd8dc806c843d6578d0412be6650dc4e03da373c1d51af2850f890b68407a1",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "54a9851eb2fa09e22005200f27e8080a33459c06"
+      },
+      {
+        "file": "src/renderer/pages/Stations/components/NewsBucket.component.tsx",
+        "records": [
+          "2026-10-16-script-replacement"
+        ],
+        "evidenceHash": "de83e49585e17339bca32a0866b4c5126e95ceacb1cc4bf9e80d81a50221f5a7",
+        "currentHash": "61e5027abd4def319532645a9a3b1425a4b6531860a2609b113c18670c0fa2f3",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "152ab7848c09b71255024400dae00e38386a1365"
+      },
+      {
+        "file": "src/renderer/components/Shared.tsx",
+        "records": [
+          "2026-10-16-script-replacement"
+        ],
+        "evidenceHash": "303972b169cf42303085a3db1988c04899870a69a6e7591ee4292656785ed2af",
+        "currentHash": "16726cf323f44324a124ee5fb29a7270ae514f8dc04f87f153f6b0a5e289ff5e",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-16-script-replacement"
+        ],
+        "evidenceHash": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+        "currentHash": "eae93435308b21d89e771bc920b389b753743923b1d9e907abed0f5d551551f7",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/renderer/pages/Sources/Sources.page.tsx",
+        "records": [
+          "2026-10-18-shared-editor-focus"
+        ],
+        "evidenceHash": "0010c35635ef75c8648bb4aded6b754603738cc0c345d493fa9624d8f4481fb8",
+        "currentHash": "081ee16883dec3792c492c710414a0bb5f0ff98c6c17f8f7b448f8ad540bc73a",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "3371a9df0e000b9afe7d8c9286e7dd0b0111ee8a"
+      },
+      {
+        "file": "src/renderer/pages/DJs/DJs.page.tsx",
+        "records": [
+          "2026-10-18-shared-editor-focus"
+        ],
+        "evidenceHash": "b04a570f45ae65e795c87fa5a866755e2e620bc056223cab5a97e5db24c7faa1",
+        "currentHash": "7e9111ce7c77f3b8f003b1378ec2a8bb4d5e9bae6f4216204974046c30c483fc",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "3371a9df0e000b9afe7d8c9286e7dd0b0111ee8a"
+      },
+      {
+        "file": "src/renderer/pages/DJs/components/DJEditor.component.tsx",
+        "records": [
+          "2026-10-18-shared-editor-focus"
+        ],
+        "evidenceHash": "0aa1a7de1fd6110bb384d56337a0c91f807286b3ff27d1e1894c6e3f28eadbfc",
+        "currentHash": "5c440c3fc2199e4f0d7de7ddb01f481707e8ac1d3470e8296e3f90a17691210d",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "3371a9df0e000b9afe7d8c9286e7dd0b0111ee8a"
+      },
+      {
+        "file": "src/main/playlist-recovery.ts",
+        "records": [
+          "2026-10-16-playlist-recovery-current",
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "evidenceHash": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+        "currentHash": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/main/jellyfin.ts",
+        "records": [
+          "2026-10-16-playlist-recovery-current"
+        ],
+        "evidenceHash": "f4d2e4d8ae75807447bd5b4f64b97938594f3935834932bb7d1bec43a8360448",
+        "currentHash": "6e1191d733752c57787c1c9465085e014a0500e0543e56a22467019892ad74ab",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/renderer/pages/Playlists/Playlists.page.tsx",
+        "records": [
+          "2026-10-16-playlist-recovery-current"
+        ],
+        "evidenceHash": "8bea51f6cb40f8b4ca0714e8af6b344b7e0a6e40278e018935b6a0d5e7f4e721",
+        "currentHash": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx",
+        "records": [
+          "2026-10-16-playlist-recovery-current"
+        ],
+        "evidenceHash": "7ec7af5dedfed6f3a29e6584c2b5b2559df4477682b1fcdd19d9ee7456e18d7c",
+        "currentHash": "53afdb4d78cca027bce5865b5180dab1a27d5873ad1541b988eea50cd7802ecd",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7"
+      },
+      {
+        "file": "src/main/storage.ts",
+        "records": [
+          "2026-10-18-radio-configuration-readback",
+          "2026-10-18-shared-editor-readback"
+        ],
+        "evidenceHash": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "currentHash": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-18-radio-configuration-readback"
+        ],
+        "evidenceHash": "8b636e631b0acc0c92a49a4e0561ac096431eed30cb143a2af052aeb03695ee3",
+        "currentHash": "cdf2e042029210ba20b20dd529e838760c6158fe73bb8046118b93fff9085657",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "76e2fed6e06616bc750cc619705ef5cbe6ebfccc"
+      },
+      {
+        "file": "src/shared/types.ts",
+        "records": [
+          "2026-10-18-radio-configuration-readback"
+        ],
+        "evidenceHash": "d4e5e6f7acc4baadaee62e4ae656ca54b18347875c0692f46c2a3aa0d4dd71de",
+        "currentHash": "05a3ae42a216e752b17897dae2268a0954f40a3127fc74a7053db578a3ead9e2",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "76e2fed6e06616bc750cc619705ef5cbe6ebfccc"
+      },
+      {
+        "file": "src/renderer/local-state-cache.ts",
+        "records": [
+          "2026-10-18-radio-configuration-readback",
+          "2026-10-18-shared-editor-readback"
+        ],
+        "evidenceHash": "3408412238143901b1a1101577bbc097734c4f2f7998f34961a6fc6aae15b801",
+        "currentHash": "3408412238143901b1a1101577bbc097734c4f2f7998f34961a6fc6aae15b801",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/main.tsx",
+        "records": [
+          "2026-10-18-radio-configuration-readback"
+        ],
+        "evidenceHash": "93eaf626f62d66c274b74e098672afb222d3c588a78eaac53d4b9b309a0cb2e3",
+        "currentHash": "93eaf626f62d66c274b74e098672afb222d3c588a78eaac53d4b9b309a0cb2e3",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/dj-playback.tsx",
+        "records": [
+          "2026-10-18-radio-configuration-readback"
+        ],
+        "evidenceHash": "17c889d6939a34ed06202091f4a8ae4cd8e84c6422dbe9da6341315b79b135dc",
+        "currentHash": "17c889d6939a34ed06202091f4a8ae4cd8e84c6422dbe9da6341315b79b135dc",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/pages/Settings/SettingsEdits.tsx",
+        "records": [
+          "2026-10-18-radio-configuration-readback"
+        ],
+        "evidenceHash": "0319d54594b8e7658485e8a9dbc33b78b050633623f8cb1665872b2e75387f89",
+        "currentHash": "0319d54594b8e7658485e8a9dbc33b78b050633623f8cb1665872b2e75387f89",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx",
+        "records": [
+          "2026-10-18-radio-configuration-readback"
+        ],
+        "evidenceHash": "0cd2699a1bc6131ebc898ae216f434223684746e209e275edd43008e56a191d1",
+        "currentHash": "0cd2699a1bc6131ebc898ae216f434223684746e209e275edd43008e56a191d1",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-radio-configuration-readback"
+        ],
+        "evidenceHash": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573",
+        "currentHash": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-18-shared-editor-readback"
+        ],
+        "evidenceHash": "cdf2e042029210ba20b20dd529e838760c6158fe73bb8046118b93fff9085657",
+        "currentHash": "cdf2e042029210ba20b20dd529e838760c6158fe73bb8046118b93fff9085657",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/shared/types.ts",
+        "records": [
+          "2026-10-18-shared-editor-readback"
+        ],
+        "evidenceHash": "05a3ae42a216e752b17897dae2268a0954f40a3127fc74a7053db578a3ead9e2",
+        "currentHash": "05a3ae42a216e752b17897dae2268a0954f40a3127fc74a7053db578a3ead9e2",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/pages/Sources/Sources.page.tsx",
+        "records": [
+          "2026-10-18-shared-editor-readback"
+        ],
+        "evidenceHash": "081ee16883dec3792c492c710414a0bb5f0ff98c6c17f8f7b448f8ad540bc73a",
+        "currentHash": "081ee16883dec3792c492c710414a0bb5f0ff98c6c17f8f7b448f8ad540bc73a",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/pages/DJs/DJs.page.tsx",
+        "records": [
+          "2026-10-18-shared-editor-readback"
+        ],
+        "evidenceHash": "7e9111ce7c77f3b8f003b1378ec2a8bb4d5e9bae6f4216204974046c30c483fc",
+        "currentHash": "7e9111ce7c77f3b8f003b1378ec2a8bb4d5e9bae6f4216204974046c30c483fc",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/pages/DJs/components/DJEditor.component.tsx",
+        "records": [
+          "2026-10-18-shared-editor-readback"
+        ],
+        "evidenceHash": "5c440c3fc2199e4f0d7de7ddb01f481707e8ac1d3470e8296e3f90a17691210d",
+        "currentHash": "5c440c3fc2199e4f0d7de7ddb01f481707e8ac1d3470e8296e3f90a17691210d",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-manual-preparation-focus"
+        ],
+        "evidenceHash": "8f80666ae958110426893893fa36b93dde4ba594e99026704b8646b7a172e660",
+        "currentHash": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "970b395d65e2044e7e56a74ae42a67877ea5c6d6"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.styles.css",
+        "records": [
+          "2026-10-18-manual-preparation-focus"
+        ],
+        "evidenceHash": "f5a796066ead14627bafdc841a0d4ab6ecbe4ca3896aa918201a27d57172932c",
+        "currentHash": "43d01e1661741e926ce3d1d5275ca23c383dbf4bf142b4b7c6e54e8b96dd5fea",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "970b395d65e2044e7e56a74ae42a67877ea5c6d6"
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-18-authentication-handoff-focus"
+        ],
+        "evidenceHash": "8903ec7d663ead3efb15a4e8b6243acb26ce9495deec84e103f7952311112b77",
+        "currentHash": "eae93435308b21d89e771bc920b389b753743923b1d9e907abed0f5d551551f7",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "41754c2ed483ea22bfe06232491287180263215b"
+      },
+      {
+        "file": "src/renderer/components/LibrarySelection.tsx",
+        "records": [
+          "2026-10-18-authentication-handoff-focus"
+        ],
+        "evidenceHash": "612e117abee02b6c69090402331261928792cfc7a0aa445756f764d319de0083",
+        "currentHash": "612e117abee02b6c69090402331261928792cfc7a0aa445756f764d319de0083",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/components/LibraryChooser.tsx",
+        "records": [
+          "2026-10-18-authentication-handoff-focus"
+        ],
+        "evidenceHash": "0c91c760e8d10904fc699de951c43a2120c73148cbee800574fd5850e2ed8662",
+        "currentHash": "0c91c760e8d10904fc699de951c43a2120c73148cbee800574fd5850e2ed8662",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/pages/Connection/Connection.page.tsx",
+        "records": [
+          "2026-10-18-authentication-handoff-focus"
+        ],
+        "evidenceHash": "3580a1038b25efa4a8a5d0ddb00141f245f1c3304372bbc5d1001a612a0b0b01",
+        "currentHash": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "41754c2ed483ea22bfe06232491287180263215b"
+      },
+      {
+        "file": "src/renderer/useRetryFocus.ts",
+        "records": [
+          "2026-10-18-authentication-handoff-focus"
+        ],
+        "evidenceHash": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c",
+        "currentHash": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "evidenceHash": "14c20e3fe63d51bf176873e7a52e1c07dcea8d9467dc3e01531f2f6072c36633",
+        "currentHash": "cdf2e042029210ba20b20dd529e838760c6158fe73bb8046118b93fff9085657",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "22509178bdb3267177fdac33fd43713af35f0243"
+      },
+      {
+        "file": "src/main/news.ts",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "evidenceHash": "f2933aac8c9d2334e84a6850c7023207fbd1b86f905bd3844977ad5cb0be7a48",
+        "currentHash": "f2933aac8c9d2334e84a6850c7023207fbd1b86f905bd3844977ad5cb0be7a48",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/main/dj-previews.ts",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "evidenceHash": "56d36390dbf9ba2a3177c46ff2a20d4478fa20bc37d6220bc1459b6e592722b3",
+        "currentHash": "56d36390dbf9ba2a3177c46ff2a20d4478fa20bc37d6220bc1459b6e592722b3",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/main/prepared-news.ts",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "evidenceHash": "da830c4e4c95caa62fa103367d7d4eef268ef32970d837fbe1b0d94c1b1809b3",
+        "currentHash": "da830c4e4c95caa62fa103367d7d4eef268ef32970d837fbe1b0d94c1b1809b3",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/main/news-workflow.ts",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "evidenceHash": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+        "currentHash": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/main/jellyfin.ts",
+        "records": [
+          "2026-10-18-uncertain-work-invariant",
+          "2026-10-18-live-access-permissions"
+        ],
+        "evidenceHash": "6e1191d733752c57787c1c9465085e014a0500e0543e56a22467019892ad74ab",
+        "currentHash": "6e1191d733752c57787c1c9465085e014a0500e0543e56a22467019892ad74ab",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/main/media.ts",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "evidenceHash": "a6d1893e85c7d2b2206664054232ba21f62ed9fc6b2ca67546e2886b7073942f",
+        "currentHash": "c2dbac7a2c6892e44794cffde7cd5118f6999f712b1f6f06533b3a9f44245fe2",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "22509178bdb3267177fdac33fd43713af35f0243"
+      },
+      {
+        "file": "src/main/storage.ts",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "evidenceHash": "79819d117064ff2284949b031af80761e3996f9ad236a13075e9341833c89f14",
+        "currentHash": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "0cf09ed08004bc8ddacc6ce25f8bf316bafe2254"
+      },
+      {
+        "file": "src/preload/index.ts",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "evidenceHash": "0fa1d3378a0982b3b73e4d696f072c9aae72e693019dbc48f917d278e9f75e17",
+        "currentHash": "0fa1d3378a0982b3b73e4d696f072c9aae72e693019dbc48f917d278e9f75e17",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/shared/types.ts",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "evidenceHash": "ce4e7f6aaac5a3b91fc464c16f1315ddb578b88df352f08188e6173245a623a3",
+        "currentHash": "05a3ae42a216e752b17897dae2268a0954f40a3127fc74a7053db578a3ead9e2",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "22509178bdb3267177fdac33fd43713af35f0243"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "evidenceHash": "af0c5219948700ed27fab50a9490184856a2055983fae09a64781dd2ee8f8bc2",
+        "currentHash": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "76f3b89db9528a1c8fc7177fdecb3da730f9e2c0"
+      },
+      {
+        "file": "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx",
+        "records": [
+          "2026-10-18-uncertain-work-invariant",
+          "2026-10-18-live-access-permissions"
+        ],
+        "evidenceHash": "53afdb4d78cca027bce5865b5180dab1a27d5873ad1541b988eea50cd7802ecd",
+        "currentHash": "53afdb4d78cca027bce5865b5180dab1a27d5873ad1541b988eea50cd7802ecd",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/pages/Playlists/Playlists.page.tsx",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "evidenceHash": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+        "currentHash": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/renderer/pages/DJs/components/VoicePreview.component.tsx",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "evidenceHash": "d2cbca679984903fdc0692488dff67069fad302e4e3adcd8352915b5eb209581",
+        "currentHash": "d2cbca679984903fdc0692488dff67069fad302e4e3adcd8352915b5eb209581",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-18-live-access-permissions"
+        ],
+        "evidenceHash": "1b7ead1138761424fccd5e35dd432b7ba0c3e7d7e43eec18fd408f49e6e8362c",
+        "currentHash": "cdf2e042029210ba20b20dd529e838760c6158fe73bb8046118b93fff9085657",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "eeedc0e6004c52e52114460065117767fbb05235"
+      },
+      {
+        "file": "src/shared/types.ts",
+        "records": [
+          "2026-10-18-live-access-permissions"
+        ],
+        "evidenceHash": "0637a467d043774954160f8f22b4d3074cc853534593b36f68e718c60f5040c5",
+        "currentHash": "05a3ae42a216e752b17897dae2268a0954f40a3127fc74a7053db578a3ead9e2",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "eeedc0e6004c52e52114460065117767fbb05235"
+      },
+      {
+        "file": "src/preload/index.ts",
+        "records": [
+          "2026-10-18-live-access-permissions"
+        ],
+        "evidenceHash": "6a5e85fafc04caea2b62b6f4bef794bffe166b72322ecd677697413639ec6f9f",
+        "currentHash": "0fa1d3378a0982b3b73e4d696f072c9aae72e693019dbc48f917d278e9f75e17",
+        "wholeFileMatch": false,
+        "resolvedGitRevision": "eeedc0e6004c52e52114460065117767fbb05235"
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-18-live-access-permissions"
+        ],
+        "evidenceHash": "eae93435308b21d89e771bc920b389b753743923b1d9e907abed0f5d551551f7",
+        "currentHash": "eae93435308b21d89e771bc920b389b753743923b1d9e907abed0f5d551551f7",
+        "wholeFileMatch": true,
+        "resolvedGitRevision": null
+      }
+    ],
+    "count": 82,
+    "currentWholeFileMatches": 30,
+    "nodeComparisons": [
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-17-general-settings-navigation"
+        ],
+        "node": "function:createWindow",
+        "sourceLine": 527,
+        "evidenceRevision": "5e3e70fa22252040b89bd02dc87b542c853a8104",
+        "match": false,
+        "oldHash": "f08e1a13a4c0fd4f909822c5101318d842ef48b2bfe2faa7ebb28c8fdb316607",
+        "currentHash": "711a01c03161a41b72a4589696a5e212b79aeca36ef4ea7e79fe33b49fa1d0fc",
+        "changedScopeReview": "Earlier sources lacked close-to-hide. Current function exactly matches accepted window-retention source."
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-17-general-settings-navigation"
+        ],
+        "node": "call:app.on:activate",
+        "sourceLine": 579,
+        "evidenceRevision": "5e3e70fa22252040b89bd02dc87b542c853a8104",
+        "match": false,
+        "oldHash": "3f7be1b845b04ddbc0effc6edd7b919cda0c3466c8b3955e6269565864021173",
+        "currentHash": "b87da8d530c953695d382127f96087de8bb67c48dbbd50e5d661fdbac4a8a4a8",
+        "changedScopeReview": "Earlier handler lacked restore/show of the same hidden window. Current handler exactly matches window-retention source."
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-17-general-settings-navigation"
+        ],
+        "node": "call:app.on:before-quit",
+        "sourceLine": 589,
+        "evidenceRevision": "5e3e70fa22252040b89bd02dc87b542c853a8104",
+        "match": true,
+        "oldHash": "d65556ebe1c7237d3cdaa3c9a062821b5d219626761ab2ef308c9847f243054a",
+        "currentHash": "d65556ebe1c7237d3cdaa3c9a062821b5d219626761ab2ef308c9847f243054a"
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-17-general-settings-navigation",
+          "2026-10-17-window-session-retention"
+        ],
+        "node": "function:App",
+        "sourceLine": 27,
+        "evidenceRevision": "5e3e70fa22252040b89bd02dc87b542c853a8104",
+        "match": false,
+        "oldHash": "af45454c1b8fd6128dac4ebe34e471989df9f0a74bc26ae1c47c57c02c365051",
+        "currentHash": "48ff75c5017c0d5965a0e3246540a423d8cadbf0cf64a1e7673b606d0f378416",
+        "changedScopeReview": "General/key providers moved above the account-keyed owner; subsequent startup/auth focus helpers do not relocate them. Current App matches live-access source; fresh navigation/relaunch exercises their visible lifetime."
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-17-general-settings-navigation",
+          "2026-10-17-window-session-retention"
+        ],
+        "node": "function:App/function:setConnection",
+        "sourceLine": 48,
+        "evidenceRevision": "5e3e70fa22252040b89bd02dc87b542c853a8104",
+        "match": true,
+        "oldHash": "153b1044580f9620234e196a8560ca16ef8c503b57f411dc7221fa731375240f",
+        "currentHash": "153b1044580f9620234e196a8560ca16ef8c503b57f411dc7221fa731375240f"
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-17-general-settings-navigation",
+          "2026-10-17-window-session-retention"
+        ],
+        "node": "function:SessionContent",
+        "sourceLine": 64,
+        "evidenceRevision": "5e3e70fa22252040b89bd02dc87b542c853a8104",
+        "match": false,
+        "oldHash": "25127fd849afca5afe2a67692db9005cbb85891e4f3a44e7e3c4704b3890fc8d",
+        "currentHash": "b07f821cf075d138ddf1317115e9e07b975e5895071886f7d8e916397cd9c4a9",
+        "changedScopeReview": "LibrarySelectionProvider and guarded transition callbacks were added; setup/script/recovery state remains above conditional expiry/page children and keyed by account identity."
+      },
+      {
+        "file": "src/renderer/pages/Settings/SettingsEdits.tsx",
+        "records": [
+          "2026-10-17-general-settings-navigation",
+          "2026-10-17-window-session-retention"
+        ],
+        "node": "function:useEdit",
+        "sourceLine": 10,
+        "evidenceRevision": "5e3e70fa22252040b89bd02dc87b542c853a8104",
+        "match": false,
+        "oldHash": "6d4a0d6ca41fecfa3dfdcd0ccbb67c3a868e7422edc91551496d5cdba6ad9352",
+        "currentHash": "9be4289b4541ccb88d1c850a3177906ab19f249a8b81d288176629b76c6a5b55",
+        "changedScopeReview": "Canonical receipt replaces empty-success/readback dependency; synchronous guards and above-account ownership remain. PR118 and fresh native draft detours cover the changed scope."
+      },
+      {
+        "file": "src/renderer/pages/Settings/SettingsEdits.tsx",
+        "records": [
+          "2026-10-17-general-settings-navigation",
+          "2026-10-17-window-session-retention"
+        ],
+        "node": "function:useSettingsEdits",
+        "sourceLine": 30,
+        "evidenceRevision": "5e3e70fa22252040b89bd02dc87b542c853a8104",
+        "match": true,
+        "oldHash": "1e8dbb3c685d8b2dcb9199556c6c461246486ea2916f84f67e49087fe08e9214",
+        "currentHash": "1e8dbb3c685d8b2dcb9199556c6c461246486ea2916f84f67e49087fe08e9214"
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-17-window-session-retention"
+        ],
+        "node": "function:createWindow",
+        "sourceLine": 527,
+        "evidenceRevision": "8c929f10089bb43d5215cf7acb73396a0873cc39",
+        "match": true,
+        "oldHash": "711a01c03161a41b72a4589696a5e212b79aeca36ef4ea7e79fe33b49fa1d0fc",
+        "currentHash": "711a01c03161a41b72a4589696a5e212b79aeca36ef4ea7e79fe33b49fa1d0fc"
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-17-window-session-retention"
+        ],
+        "node": "call:app.on:activate",
+        "sourceLine": 579,
+        "evidenceRevision": "8c929f10089bb43d5215cf7acb73396a0873cc39",
+        "match": true,
+        "oldHash": "b87da8d530c953695d382127f96087de8bb67c48dbbd50e5d661fdbac4a8a4a8",
+        "currentHash": "b87da8d530c953695d382127f96087de8bb67c48dbbd50e5d661fdbac4a8a4a8"
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-17-window-session-retention"
+        ],
+        "node": "call:app.on:before-quit",
+        "sourceLine": 589,
+        "evidenceRevision": "8c929f10089bb43d5215cf7acb73396a0873cc39",
+        "match": true,
+        "oldHash": "d65556ebe1c7237d3cdaa3c9a062821b5d219626761ab2ef308c9847f243054a",
+        "currentHash": "d65556ebe1c7237d3cdaa3c9a062821b5d219626761ab2ef308c9847f243054a"
+      },
+      {
+        "file": "src/renderer/components/LibrarySelection.tsx",
+        "records": [
+          "2026-10-17-library-save-navigation"
+        ],
+        "node": "function:useSelection",
+        "sourceLine": 9,
+        "evidenceRevision": "95ea99574f471e5a4414e71588705e982eb66b23",
+        "match": false,
+        "oldHash": "8c3e31012e422cff09845ef3fe4c2c74a624912892f1726a19688ec8ef5d294d",
+        "currentHash": "65942b163dcce0cf897f2e2b0bf2450e81c0dfe2db03ebd3cc75fdf0cf3ef6a2",
+        "changedScopeReview": "Success now awaits accepted connection completion; submit returns only a current, same-account, non-expired accepted result. Reset/active/submission guards remain; current helper matches auth-handoff source."
+      },
+      {
+        "file": "src/renderer/components/LibrarySelection.tsx",
+        "records": [
+          "2026-10-17-library-save-navigation"
+        ],
+        "node": "function:useSelection/variable:save",
+        "sourceLine": 18,
+        "evidenceRevision": "95ea99574f471e5a4414e71588705e982eb66b23",
+        "match": false,
+        "oldHash": "80849ac0da992ed6e4a654160f4f4be01f7d588c3061151ee8db96fdd8d9548b",
+        "currentHash": "402884ff4d2cb0d8984c19dbcfbaf07d24f78bccdca25322ef50b42db5d79b05",
+        "changedScopeReview": "Awaiting done extends pending through accepted connection publication; account, revision and expiry gates remain."
+      },
+      {
+        "file": "src/renderer/components/LibrarySelection.tsx",
+        "records": [
+          "2026-10-17-library-save-navigation"
+        ],
+        "node": "function:useSelection/variable:current",
+        "sourceLine": 14,
+        "evidenceRevision": "95ea99574f471e5a4414e71588705e982eb66b23",
+        "match": true,
+        "oldHash": "50f9c562ea7e6129526e97c462aad3fc315d8d98832091ab41caea8e80d0865a",
+        "currentHash": "50f9c562ea7e6129526e97c462aad3fc315d8d98832091ab41caea8e80d0865a"
+      },
+      {
+        "file": "src/renderer/components/LibrarySelection.tsx",
+        "records": [
+          "2026-10-17-library-save-navigation"
+        ],
+        "node": "function:useSelection/variable:submitting",
+        "sourceLine": 13,
+        "evidenceRevision": "95ea99574f471e5a4414e71588705e982eb66b23",
+        "match": true,
+        "oldHash": "614937c43d98bdda3529d22edefd5e8cc0bc9f835225f2177985f24adbe5fa0e",
+        "currentHash": "614937c43d98bdda3529d22edefd5e8cc0bc9f835225f2177985f24adbe5fa0e"
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-17-library-save-navigation"
+        ],
+        "node": "function:App",
+        "sourceLine": 27,
+        "evidenceRevision": "95ea99574f471e5a4414e71588705e982eb66b23",
+        "match": false,
+        "oldHash": "786ea8bf859ed49271e7074ab80d94360c73349af8d0c522373f0d5ece94b247",
+        "currentHash": "48ff75c5017c0d5965a0e3246540a423d8cadbf0cf64a1e7673b606d0f378416",
+        "changedScopeReview": "General/key providers moved above the account-keyed owner; subsequent startup/auth focus helpers do not relocate them. Current App matches live-access source; fresh navigation/relaunch exercises their visible lifetime."
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-17-library-save-navigation"
+        ],
+        "node": "function:App/function:setConnection",
+        "sourceLine": 48,
+        "evidenceRevision": "95ea99574f471e5a4414e71588705e982eb66b23",
+        "match": true,
+        "oldHash": "153b1044580f9620234e196a8560ca16ef8c503b57f411dc7221fa731375240f",
+        "currentHash": "153b1044580f9620234e196a8560ca16ef8c503b57f411dc7221fa731375240f"
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-17-library-save-navigation"
+        ],
+        "node": "function:SessionContent",
+        "sourceLine": 64,
+        "evidenceRevision": "95ea99574f471e5a4414e71588705e982eb66b23",
+        "match": false,
+        "oldHash": "25127fd849afca5afe2a67692db9005cbb85891e4f3a44e7e3c4704b3890fc8d",
+        "currentHash": "b07f821cf075d138ddf1317115e9e07b975e5895071886f7d8e916397cd9c4a9",
+        "changedScopeReview": "LibrarySelectionProvider and guarded transition callbacks were added; setup/script/recovery state remains above conditional expiry/page children and keyed by account identity."
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-17-library-save-navigation",
+          "2026-10-16-setup-save-order",
+          "2026-10-16-playlist-recovery-current"
+        ],
+        "node": "function:createWindow",
+        "sourceLine": 527,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "f08e1a13a4c0fd4f909822c5101318d842ef48b2bfe2faa7ebb28c8fdb316607",
+        "currentHash": "711a01c03161a41b72a4589696a5e212b79aeca36ef4ea7e79fe33b49fa1d0fc",
+        "changedScopeReview": "Earlier sources lacked close-to-hide. Current function exactly matches accepted window-retention source."
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-17-library-save-navigation",
+          "2026-10-16-setup-save-order",
+          "2026-10-16-playlist-recovery-current"
+        ],
+        "node": "call:app.on:activate",
+        "sourceLine": 579,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "3f7be1b845b04ddbc0effc6edd7b919cda0c3466c8b3955e6269565864021173",
+        "currentHash": "b87da8d530c953695d382127f96087de8bb67c48dbbd50e5d661fdbac4a8a4a8",
+        "changedScopeReview": "Earlier handler lacked restore/show of the same hidden window. Current handler exactly matches window-retention source."
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-17-library-save-navigation",
+          "2026-10-16-setup-save-order",
+          "2026-10-16-playlist-recovery-current"
+        ],
+        "node": "call:app.on:before-quit",
+        "sourceLine": 589,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "f27ec668a4292658d22e85f6f189a025e3fc214fa418c9d2c0119e38cde55f5c",
+        "currentHash": "d65556ebe1c7237d3cdaa3c9a062821b5d219626761ab2ef308c9847f243054a",
+        "changedScopeReview": "Earlier cleanup predates current generation/recovery shutdown gates. Current handler matches window-retention source; CI5 retains cleanup and cancellation limits."
+      },
+      {
+        "file": "src/main/storage.ts",
+        "records": [
+          "2026-10-17-library-save-navigation",
+          "2026-10-16-setup-save-order"
+        ],
+        "node": "function:writeConnection",
+        "sourceLine": 126,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": true,
+        "oldHash": "c1fae39f9340ff88ac2635b6f12c49fffb060c2b16a7287a5aa0d0af7ecac51c",
+        "currentHash": "c1fae39f9340ff88ac2635b6f12c49fffb060c2b16a7287a5aa0d0af7ecac51c"
+      },
+      {
+        "file": "src/main/storage.ts",
+        "records": [
+          "2026-10-17-library-save-navigation",
+          "2026-10-16-setup-save-order"
+        ],
+        "node": "function:readConnection",
+        "sourceLine": 114,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": true,
+        "oldHash": "32cf6c697bf3da815206fa9a27eef45e9cc5da6053d12cbbf39a7ce14bce3083",
+        "currentHash": "32cf6c697bf3da815206fa9a27eef45e9cc5da6053d12cbbf39a7ce14bce3083"
+      },
+      {
+        "file": "src/main/storage.ts",
+        "records": [
+          "2026-10-17-library-save-navigation",
+          "2026-10-16-setup-save-order"
+        ],
+        "node": "function:writeProviderKey",
+        "sourceLine": 76,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "62366ba36e640598ec5bb3996b48959b405faea28a6addd8ccb0c48e9bdeea20",
+        "currentHash": "263af40945fd558bcfb86a25da3aa7ae5c05ee5675846307fd5fe951a23bf983",
+        "changedScopeReview": "Post-commit provider revision suppresses older key reads. Credential commit and draft owner remain; read-order/CI3 evidence cover this change."
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-17-provider-edit-navigation"
+        ],
+        "node": "function:App",
+        "sourceLine": 27,
+        "evidenceRevision": "965f4be58bc678286d0edfc72c0489ad1c004e9d",
+        "match": false,
+        "oldHash": "2b909a0ce82d874472261c71169376952b0e9d5c5e412b70114c668cc6241dda",
+        "currentHash": "48ff75c5017c0d5965a0e3246540a423d8cadbf0cf64a1e7673b606d0f378416",
+        "changedScopeReview": "General/key providers moved above the account-keyed owner; subsequent startup/auth focus helpers do not relocate them. Current App matches live-access source; fresh navigation/relaunch exercises their visible lifetime."
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-17-provider-edit-navigation"
+        ],
+        "node": "function:App/function:setConnection",
+        "sourceLine": 48,
+        "evidenceRevision": "965f4be58bc678286d0edfc72c0489ad1c004e9d",
+        "match": true,
+        "oldHash": "153b1044580f9620234e196a8560ca16ef8c503b57f411dc7221fa731375240f",
+        "currentHash": "153b1044580f9620234e196a8560ca16ef8c503b57f411dc7221fa731375240f"
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-17-provider-edit-navigation"
+        ],
+        "node": "function:SessionContent",
+        "sourceLine": 64,
+        "evidenceRevision": "965f4be58bc678286d0edfc72c0489ad1c004e9d",
+        "match": false,
+        "oldHash": "25127fd849afca5afe2a67692db9005cbb85891e4f3a44e7e3c4704b3890fc8d",
+        "currentHash": "b07f821cf075d138ddf1317115e9e07b975e5895071886f7d8e916397cd9c4a9",
+        "changedScopeReview": "LibrarySelectionProvider and guarded transition callbacks were added; setup/script/recovery state remains above conditional expiry/page children and keyed by account identity."
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-16-setup-save-order"
+        ],
+        "node": "function:StationsPage/variable:persist",
+        "sourceLine": 153,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "d66033f6c6d476c5033d731f3e9eccc80fb1d70673e22012a309d6c9f4137ee2",
+        "currentHash": "4de7be31dfd7e617d02d35065480c8bd8d7956ed092e3aa3780ec7d60b7c3219",
+        "changedScopeReview": "Canonical receipt is applied before clearing only still-identical submitted fields. Errors route through the outer owned feedback. Profile checks and reference guards remain; current PR118 record covers this node."
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-16-setup-save-order"
+        ],
+        "node": "function:StationsPage/function:prepareText",
+        "sourceLine": 378,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "ff59680b1c26a527babe6e34c7b243f735b593e136eecd4d4db78d4b5db7f53a",
+        "currentHash": "25b06519db07c5bd159aabd9623657038487e45c193da0638c4965a3b7124d48",
+        "changedScopeReview": "Adds dirty-script confirmation; the newer script-replacement record exactly matches this function."
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-16-setup-save-order"
+        ],
+        "node": "function:StationsPage/variable:prepare",
+        "sourceLine": 213,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "6ad44452e7e01001cd6b7be4570d2b5f0ed1d57533a080ef3c64aca9268ee27e",
+        "currentHash": "0098d9fc8c9186553c3c904cb822dc397c224e425b7ff7c0abd4927194fc3c07",
+        "changedScopeReview": "Adds readiness, shared mutation lock and owned completion feedback. Script replacement still compares current draft identity with captured draft. Newer manual/CI5 records match this node."
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-16-script-replacement"
+        ],
+        "node": "function:StationsPage/variable:persist",
+        "sourceLine": 153,
+        "evidenceRevision": "dce80d63bb9d87f4203013163a21822c52f94b43",
+        "match": false,
+        "oldHash": "d66033f6c6d476c5033d731f3e9eccc80fb1d70673e22012a309d6c9f4137ee2",
+        "currentHash": "4de7be31dfd7e617d02d35065480c8bd8d7956ed092e3aa3780ec7d60b7c3219",
+        "changedScopeReview": "Canonical receipt is applied before clearing only still-identical submitted fields. Errors route through the outer owned feedback. Profile checks and reference guards remain; current PR118 record covers this node."
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-16-script-replacement"
+        ],
+        "node": "function:StationsPage/function:requestScript",
+        "sourceLine": 403,
+        "evidenceRevision": "dce80d63bb9d87f4203013163a21822c52f94b43",
+        "match": true,
+        "oldHash": "6915df2fbd2a3570bdd20fd2abaf676c9188f62d17033884a97d90459cb486fd",
+        "currentHash": "6915df2fbd2a3570bdd20fd2abaf676c9188f62d17033884a97d90459cb486fd"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-16-script-replacement"
+        ],
+        "node": "function:StationsPage/function:prepareText",
+        "sourceLine": 378,
+        "evidenceRevision": "dce80d63bb9d87f4203013163a21822c52f94b43",
+        "match": true,
+        "oldHash": "25b06519db07c5bd159aabd9623657038487e45c193da0638c4965a3b7124d48",
+        "currentHash": "25b06519db07c5bd159aabd9623657038487e45c193da0638c4965a3b7124d48"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-16-script-replacement"
+        ],
+        "node": "function:StationsPage/function:applyScript",
+        "sourceLine": 399,
+        "evidenceRevision": "dce80d63bb9d87f4203013163a21822c52f94b43",
+        "match": true,
+        "oldHash": "5839f977ce488c8fa4e675d176abb9c328f2e3e3eee7093932f4e486cc0ebfdc",
+        "currentHash": "5839f977ce488c8fa4e675d176abb9c328f2e3e3eee7093932f4e486cc0ebfdc"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-16-script-replacement"
+        ],
+        "node": "function:StationsPage/variable:prepare",
+        "sourceLine": 213,
+        "evidenceRevision": "dce80d63bb9d87f4203013163a21822c52f94b43",
+        "match": false,
+        "oldHash": "6ad44452e7e01001cd6b7be4570d2b5f0ed1d57533a080ef3c64aca9268ee27e",
+        "currentHash": "0098d9fc8c9186553c3c904cb822dc397c224e425b7ff7c0abd4927194fc3c07",
+        "changedScopeReview": "Adds readiness, shared mutation lock and owned completion feedback. Script replacement still compares current draft identity with captured draft. Newer manual/CI5 records match this node."
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-16-script-replacement"
+        ],
+        "node": "function:StationsPage/variable:scriptDirty",
+        "sourceLine": 122,
+        "evidenceRevision": "dce80d63bb9d87f4203013163a21822c52f94b43",
+        "match": true,
+        "oldHash": "e43716b270691c90c51472d675fe9fe2a92063dd982ed630ee3297c89994b85f",
+        "currentHash": "e43716b270691c90c51472d675fe9fe2a92063dd982ed630ee3297c89994b85f"
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-16-script-replacement"
+        ],
+        "node": "function:App",
+        "sourceLine": 27,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "3929b161e40e0ad6ded326f765b810ae756d0f2806311eb7ef781d9346396c6f",
+        "currentHash": "48ff75c5017c0d5965a0e3246540a423d8cadbf0cf64a1e7673b606d0f378416",
+        "changedScopeReview": "General/key providers moved above the account-keyed owner; subsequent startup/auth focus helpers do not relocate them. Current App matches live-access source; fresh navigation/relaunch exercises their visible lifetime."
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-16-script-replacement"
+        ],
+        "node": "function:App/function:setConnection",
+        "sourceLine": 48,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "9343198f19639f7b44826ad3c22e83799fc08a3a4fa7039c8c19c5ffd644e2e8",
+        "currentHash": "153b1044580f9620234e196a8560ca16ef8c503b57f411dc7221fa731375240f",
+        "changedScopeReview": "Library-save completion can preserve expiry; query removal still precedes connection publication. Current auth-handoff and library-save evidence cover stale/expiry guards."
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-16-script-replacement"
+        ],
+        "node": "function:SessionContent",
+        "sourceLine": 64,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": false,
+        "oldHash": "ca29f25ae5e76ea8ce4cee25cf53b6f8d4238ccf6a8c65e48e85e4045b4c3bea",
+        "currentHash": "b07f821cf075d138ddf1317115e9e07b975e5895071886f7d8e916397cd9c4a9",
+        "changedScopeReview": "LibrarySelectionProvider and guarded transition callbacks were added; setup/script/recovery state remains above conditional expiry/page children and keyed by account identity."
+      },
+      {
+        "file": "src/renderer/pages/Sources/Sources.page.tsx",
+        "records": [
+          "2026-10-18-shared-editor-focus"
+        ],
+        "node": "function:SourcesPage/variable:mutation",
+        "sourceLine": 29,
+        "evidenceRevision": "3371a9df0e000b9afe7d8c9286e7dd0b0111ee8a",
+        "match": false,
+        "oldHash": "e1f894aa96530eb8e10ca07d350f989cd51f417142c2974b4d93f3c43deec2b5",
+        "currentHash": "7538a197aad634db87519d44558481fd8a995cebd07ad3d39dd3905fe8a7f6dd",
+        "changedScopeReview": "Adds canonical receipt before readback. Current PR119 native/service proof covers the change; normalization, draft/failure/pending-dismissal guards remain."
+      },
+      {
+        "file": "src/renderer/pages/DJs/components/DJEditor.component.tsx",
+        "records": [
+          "2026-10-18-shared-editor-focus"
+        ],
+        "node": "function:DJEditor/variable:save",
+        "sourceLine": 54,
+        "evidenceRevision": "3371a9df0e000b9afe7d8c9286e7dd0b0111ee8a",
+        "match": false,
+        "oldHash": "a9716c9ea62154d1ddc5fbc4c3c48fbf46642a4771bd66d50ecc9d9e64334672",
+        "currentHash": "e0e72cab98a5378ad1f33c4be23c1d69f152fd61d18b622342008411379f92d5",
+        "changedScopeReview": "Adds canonical receipt before normal dismissal. Current PR119 native/service proof covers the change; draft validation and duplicate/pending guards remain."
+      },
+      {
+        "file": "src/renderer/pages/Playlists/Playlists.page.tsx",
+        "records": [
+          "2026-10-16-playlist-recovery-current"
+        ],
+        "node": "function:usePlaylistRecovery",
+        "sourceLine": 13,
+        "evidenceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "match": true,
+        "oldHash": "d94a42e1e957f5eca1adbc3067b5f078bf3355800cd50259fc3f8e7041f4de7b",
+        "currentHash": "d94a42e1e957f5eca1adbc3067b5f078bf3355800cd50259fc3f8e7041f4de7b"
+      },
+      {
+        "file": "src/main/storage.ts",
+        "records": [
+          "2026-10-18-radio-configuration-readback",
+          "2026-10-18-shared-editor-readback"
+        ],
+        "node": "function:writeConnection",
+        "sourceLine": 126,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "c1fae39f9340ff88ac2635b6f12c49fffb060c2b16a7287a5aa0d0af7ecac51c",
+        "currentHash": "c1fae39f9340ff88ac2635b6f12c49fffb060c2b16a7287a5aa0d0af7ecac51c"
+      },
+      {
+        "file": "src/main/storage.ts",
+        "records": [
+          "2026-10-18-radio-configuration-readback",
+          "2026-10-18-shared-editor-readback"
+        ],
+        "node": "function:readConnection",
+        "sourceLine": 114,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "32cf6c697bf3da815206fa9a27eef45e9cc5da6053d12cbbf39a7ce14bce3083",
+        "currentHash": "32cf6c697bf3da815206fa9a27eef45e9cc5da6053d12cbbf39a7ce14bce3083"
+      },
+      {
+        "file": "src/main/storage.ts",
+        "records": [
+          "2026-10-18-radio-configuration-readback",
+          "2026-10-18-shared-editor-readback"
+        ],
+        "node": "function:writeProviderKey",
+        "sourceLine": 76,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "263af40945fd558bcfb86a25da3aa7ae5c05ee5675846307fd5fe951a23bf983",
+        "currentHash": "263af40945fd558bcfb86a25da3aa7ae5c05ee5675846307fd5fe951a23bf983"
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-18-radio-configuration-readback"
+        ],
+        "node": "function:createWindow",
+        "sourceLine": 527,
+        "evidenceRevision": "76e2fed6e06616bc750cc619705ef5cbe6ebfccc",
+        "match": true,
+        "oldHash": "711a01c03161a41b72a4589696a5e212b79aeca36ef4ea7e79fe33b49fa1d0fc",
+        "currentHash": "711a01c03161a41b72a4589696a5e212b79aeca36ef4ea7e79fe33b49fa1d0fc"
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-18-radio-configuration-readback"
+        ],
+        "node": "call:app.on:activate",
+        "sourceLine": 579,
+        "evidenceRevision": "76e2fed6e06616bc750cc619705ef5cbe6ebfccc",
+        "match": true,
+        "oldHash": "b87da8d530c953695d382127f96087de8bb67c48dbbd50e5d661fdbac4a8a4a8",
+        "currentHash": "b87da8d530c953695d382127f96087de8bb67c48dbbd50e5d661fdbac4a8a4a8"
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-18-radio-configuration-readback"
+        ],
+        "node": "call:app.on:before-quit",
+        "sourceLine": 589,
+        "evidenceRevision": "76e2fed6e06616bc750cc619705ef5cbe6ebfccc",
+        "match": true,
+        "oldHash": "d65556ebe1c7237d3cdaa3c9a062821b5d219626761ab2ef308c9847f243054a",
+        "currentHash": "d65556ebe1c7237d3cdaa3c9a062821b5d219626761ab2ef308c9847f243054a"
+      },
+      {
+        "file": "src/renderer/pages/Settings/SettingsEdits.tsx",
+        "records": [
+          "2026-10-18-radio-configuration-readback"
+        ],
+        "node": "function:useEdit",
+        "sourceLine": 10,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "9be4289b4541ccb88d1c850a3177906ab19f249a8b81d288176629b76c6a5b55",
+        "currentHash": "9be4289b4541ccb88d1c850a3177906ab19f249a8b81d288176629b76c6a5b55"
+      },
+      {
+        "file": "src/renderer/pages/Settings/SettingsEdits.tsx",
+        "records": [
+          "2026-10-18-radio-configuration-readback"
+        ],
+        "node": "function:useSettingsEdits",
+        "sourceLine": 30,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "1e8dbb3c685d8b2dcb9199556c6c461246486ea2916f84f67e49087fe08e9214",
+        "currentHash": "1e8dbb3c685d8b2dcb9199556c6c461246486ea2916f84f67e49087fe08e9214"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-radio-configuration-readback"
+        ],
+        "node": "function:StationsPage/variable:persist",
+        "sourceLine": 153,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "4de7be31dfd7e617d02d35065480c8bd8d7956ed092e3aa3780ec7d60b7c3219",
+        "currentHash": "4de7be31dfd7e617d02d35065480c8bd8d7956ed092e3aa3780ec7d60b7c3219"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-radio-configuration-readback"
+        ],
+        "node": "function:StationsPage/function:requestScript",
+        "sourceLine": 403,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "6915df2fbd2a3570bdd20fd2abaf676c9188f62d17033884a97d90459cb486fd",
+        "currentHash": "6915df2fbd2a3570bdd20fd2abaf676c9188f62d17033884a97d90459cb486fd"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-radio-configuration-readback"
+        ],
+        "node": "function:StationsPage/function:prepareText",
+        "sourceLine": 378,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "25b06519db07c5bd159aabd9623657038487e45c193da0638c4965a3b7124d48",
+        "currentHash": "25b06519db07c5bd159aabd9623657038487e45c193da0638c4965a3b7124d48"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-radio-configuration-readback"
+        ],
+        "node": "function:StationsPage/function:applyScript",
+        "sourceLine": 399,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "5839f977ce488c8fa4e675d176abb9c328f2e3e3eee7093932f4e486cc0ebfdc",
+        "currentHash": "5839f977ce488c8fa4e675d176abb9c328f2e3e3eee7093932f4e486cc0ebfdc"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-radio-configuration-readback"
+        ],
+        "node": "function:StationsPage/variable:prepare",
+        "sourceLine": 213,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "0098d9fc8c9186553c3c904cb822dc397c224e425b7ff7c0abd4927194fc3c07",
+        "currentHash": "0098d9fc8c9186553c3c904cb822dc397c224e425b7ff7c0abd4927194fc3c07"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-radio-configuration-readback"
+        ],
+        "node": "function:StationsPage/variable:scriptDirty",
+        "sourceLine": 122,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "e43716b270691c90c51472d675fe9fe2a92063dd982ed630ee3297c89994b85f",
+        "currentHash": "e43716b270691c90c51472d675fe9fe2a92063dd982ed630ee3297c89994b85f"
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-18-shared-editor-readback"
+        ],
+        "node": "function:createWindow",
+        "sourceLine": 527,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "711a01c03161a41b72a4589696a5e212b79aeca36ef4ea7e79fe33b49fa1d0fc",
+        "currentHash": "711a01c03161a41b72a4589696a5e212b79aeca36ef4ea7e79fe33b49fa1d0fc"
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-18-shared-editor-readback"
+        ],
+        "node": "call:app.on:activate",
+        "sourceLine": 579,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "b87da8d530c953695d382127f96087de8bb67c48dbbd50e5d661fdbac4a8a4a8",
+        "currentHash": "b87da8d530c953695d382127f96087de8bb67c48dbbd50e5d661fdbac4a8a4a8"
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-18-shared-editor-readback"
+        ],
+        "node": "call:app.on:before-quit",
+        "sourceLine": 589,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "d65556ebe1c7237d3cdaa3c9a062821b5d219626761ab2ef308c9847f243054a",
+        "currentHash": "d65556ebe1c7237d3cdaa3c9a062821b5d219626761ab2ef308c9847f243054a"
+      },
+      {
+        "file": "src/renderer/pages/Sources/Sources.page.tsx",
+        "records": [
+          "2026-10-18-shared-editor-readback"
+        ],
+        "node": "function:SourcesPage/variable:mutation",
+        "sourceLine": 29,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "7538a197aad634db87519d44558481fd8a995cebd07ad3d39dd3905fe8a7f6dd",
+        "currentHash": "7538a197aad634db87519d44558481fd8a995cebd07ad3d39dd3905fe8a7f6dd"
+      },
+      {
+        "file": "src/renderer/pages/DJs/components/DJEditor.component.tsx",
+        "records": [
+          "2026-10-18-shared-editor-readback"
+        ],
+        "node": "function:DJEditor/variable:save",
+        "sourceLine": 54,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "e0e72cab98a5378ad1f33c4be23c1d69f152fd61d18b622342008411379f92d5",
+        "currentHash": "e0e72cab98a5378ad1f33c4be23c1d69f152fd61d18b622342008411379f92d5"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-manual-preparation-focus"
+        ],
+        "node": "function:StationsPage/variable:persist",
+        "sourceLine": 153,
+        "evidenceRevision": "970b395d65e2044e7e56a74ae42a67877ea5c6d6",
+        "match": false,
+        "oldHash": "31937c327e92a36406927979735fe0f33dab81353c0ecdf683cebce5476b0c65",
+        "currentHash": "4de7be31dfd7e617d02d35065480c8bd8d7956ed092e3aa3780ec7d60b7c3219",
+        "changedScopeReview": "Canonical receipt is applied before clearing only still-identical submitted fields. Errors route through the outer owned feedback. Profile checks and reference guards remain; current PR118 record covers this node."
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-manual-preparation-focus"
+        ],
+        "node": "function:StationsPage/function:requestScript",
+        "sourceLine": 403,
+        "evidenceRevision": "970b395d65e2044e7e56a74ae42a67877ea5c6d6",
+        "match": true,
+        "oldHash": "6915df2fbd2a3570bdd20fd2abaf676c9188f62d17033884a97d90459cb486fd",
+        "currentHash": "6915df2fbd2a3570bdd20fd2abaf676c9188f62d17033884a97d90459cb486fd"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-manual-preparation-focus"
+        ],
+        "node": "function:StationsPage/function:prepareText",
+        "sourceLine": 378,
+        "evidenceRevision": "970b395d65e2044e7e56a74ae42a67877ea5c6d6",
+        "match": true,
+        "oldHash": "25b06519db07c5bd159aabd9623657038487e45c193da0638c4965a3b7124d48",
+        "currentHash": "25b06519db07c5bd159aabd9623657038487e45c193da0638c4965a3b7124d48"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-manual-preparation-focus"
+        ],
+        "node": "function:StationsPage/function:applyScript",
+        "sourceLine": 399,
+        "evidenceRevision": "970b395d65e2044e7e56a74ae42a67877ea5c6d6",
+        "match": true,
+        "oldHash": "5839f977ce488c8fa4e675d176abb9c328f2e3e3eee7093932f4e486cc0ebfdc",
+        "currentHash": "5839f977ce488c8fa4e675d176abb9c328f2e3e3eee7093932f4e486cc0ebfdc"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-manual-preparation-focus"
+        ],
+        "node": "function:StationsPage/variable:prepare",
+        "sourceLine": 213,
+        "evidenceRevision": "970b395d65e2044e7e56a74ae42a67877ea5c6d6",
+        "match": true,
+        "oldHash": "0098d9fc8c9186553c3c904cb822dc397c224e425b7ff7c0abd4927194fc3c07",
+        "currentHash": "0098d9fc8c9186553c3c904cb822dc397c224e425b7ff7c0abd4927194fc3c07"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-manual-preparation-focus"
+        ],
+        "node": "function:StationsPage/variable:scriptDirty",
+        "sourceLine": 122,
+        "evidenceRevision": "970b395d65e2044e7e56a74ae42a67877ea5c6d6",
+        "match": true,
+        "oldHash": "e43716b270691c90c51472d675fe9fe2a92063dd982ed630ee3297c89994b85f",
+        "currentHash": "e43716b270691c90c51472d675fe9fe2a92063dd982ed630ee3297c89994b85f"
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-18-authentication-handoff-focus"
+        ],
+        "node": "function:App",
+        "sourceLine": 27,
+        "evidenceRevision": "41754c2ed483ea22bfe06232491287180263215b",
+        "match": false,
+        "oldHash": "37af9759070270b3d8e2060639cb27b16ce29231a318e4eb6dfcae217c41b4b2",
+        "currentHash": "48ff75c5017c0d5965a0e3246540a423d8cadbf0cf64a1e7673b606d0f378416",
+        "changedScopeReview": "General/key providers moved above the account-keyed owner; subsequent startup/auth focus helpers do not relocate them. Current App matches live-access source; fresh navigation/relaunch exercises their visible lifetime."
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-18-authentication-handoff-focus"
+        ],
+        "node": "function:App/function:setConnection",
+        "sourceLine": 48,
+        "evidenceRevision": "41754c2ed483ea22bfe06232491287180263215b",
+        "match": true,
+        "oldHash": "153b1044580f9620234e196a8560ca16ef8c503b57f411dc7221fa731375240f",
+        "currentHash": "153b1044580f9620234e196a8560ca16ef8c503b57f411dc7221fa731375240f"
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-18-authentication-handoff-focus"
+        ],
+        "node": "function:SessionContent",
+        "sourceLine": 64,
+        "evidenceRevision": "41754c2ed483ea22bfe06232491287180263215b",
+        "match": true,
+        "oldHash": "b07f821cf075d138ddf1317115e9e07b975e5895071886f7d8e916397cd9c4a9",
+        "currentHash": "b07f821cf075d138ddf1317115e9e07b975e5895071886f7d8e916397cd9c4a9"
+      },
+      {
+        "file": "src/renderer/components/LibrarySelection.tsx",
+        "records": [
+          "2026-10-18-authentication-handoff-focus"
+        ],
+        "node": "function:useSelection",
+        "sourceLine": 9,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "65942b163dcce0cf897f2e2b0bf2450e81c0dfe2db03ebd3cc75fdf0cf3ef6a2",
+        "currentHash": "65942b163dcce0cf897f2e2b0bf2450e81c0dfe2db03ebd3cc75fdf0cf3ef6a2"
+      },
+      {
+        "file": "src/renderer/components/LibrarySelection.tsx",
+        "records": [
+          "2026-10-18-authentication-handoff-focus"
+        ],
+        "node": "function:useSelection/variable:save",
+        "sourceLine": 18,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "402884ff4d2cb0d8984c19dbcfbaf07d24f78bccdca25322ef50b42db5d79b05",
+        "currentHash": "402884ff4d2cb0d8984c19dbcfbaf07d24f78bccdca25322ef50b42db5d79b05"
+      },
+      {
+        "file": "src/renderer/components/LibrarySelection.tsx",
+        "records": [
+          "2026-10-18-authentication-handoff-focus"
+        ],
+        "node": "function:useSelection/variable:current",
+        "sourceLine": 14,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "50f9c562ea7e6129526e97c462aad3fc315d8d98832091ab41caea8e80d0865a",
+        "currentHash": "50f9c562ea7e6129526e97c462aad3fc315d8d98832091ab41caea8e80d0865a"
+      },
+      {
+        "file": "src/renderer/components/LibrarySelection.tsx",
+        "records": [
+          "2026-10-18-authentication-handoff-focus"
+        ],
+        "node": "function:useSelection/variable:submitting",
+        "sourceLine": 13,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "614937c43d98bdda3529d22edefd5e8cc0bc9f835225f2177985f24adbe5fa0e",
+        "currentHash": "614937c43d98bdda3529d22edefd5e8cc0bc9f835225f2177985f24adbe5fa0e"
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "node": "function:createWindow",
+        "sourceLine": 527,
+        "evidenceRevision": "22509178bdb3267177fdac33fd43713af35f0243",
+        "match": true,
+        "oldHash": "711a01c03161a41b72a4589696a5e212b79aeca36ef4ea7e79fe33b49fa1d0fc",
+        "currentHash": "711a01c03161a41b72a4589696a5e212b79aeca36ef4ea7e79fe33b49fa1d0fc"
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "node": "call:app.on:activate",
+        "sourceLine": 579,
+        "evidenceRevision": "22509178bdb3267177fdac33fd43713af35f0243",
+        "match": true,
+        "oldHash": "b87da8d530c953695d382127f96087de8bb67c48dbbd50e5d661fdbac4a8a4a8",
+        "currentHash": "b87da8d530c953695d382127f96087de8bb67c48dbbd50e5d661fdbac4a8a4a8"
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "node": "call:app.on:before-quit",
+        "sourceLine": 589,
+        "evidenceRevision": "22509178bdb3267177fdac33fd43713af35f0243",
+        "match": true,
+        "oldHash": "d65556ebe1c7237d3cdaa3c9a062821b5d219626761ab2ef308c9847f243054a",
+        "currentHash": "d65556ebe1c7237d3cdaa3c9a062821b5d219626761ab2ef308c9847f243054a"
+      },
+      {
+        "file": "src/main/storage.ts",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "node": "function:writeConnection",
+        "sourceLine": 126,
+        "evidenceRevision": "0cf09ed08004bc8ddacc6ce25f8bf316bafe2254",
+        "match": true,
+        "oldHash": "c1fae39f9340ff88ac2635b6f12c49fffb060c2b16a7287a5aa0d0af7ecac51c",
+        "currentHash": "c1fae39f9340ff88ac2635b6f12c49fffb060c2b16a7287a5aa0d0af7ecac51c"
+      },
+      {
+        "file": "src/main/storage.ts",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "node": "function:readConnection",
+        "sourceLine": 114,
+        "evidenceRevision": "0cf09ed08004bc8ddacc6ce25f8bf316bafe2254",
+        "match": true,
+        "oldHash": "32cf6c697bf3da815206fa9a27eef45e9cc5da6053d12cbbf39a7ce14bce3083",
+        "currentHash": "32cf6c697bf3da815206fa9a27eef45e9cc5da6053d12cbbf39a7ce14bce3083"
+      },
+      {
+        "file": "src/main/storage.ts",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "node": "function:writeProviderKey",
+        "sourceLine": 76,
+        "evidenceRevision": "0cf09ed08004bc8ddacc6ce25f8bf316bafe2254",
+        "match": true,
+        "oldHash": "263af40945fd558bcfb86a25da3aa7ae5c05ee5675846307fd5fe951a23bf983",
+        "currentHash": "263af40945fd558bcfb86a25da3aa7ae5c05ee5675846307fd5fe951a23bf983"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "node": "function:StationsPage/variable:persist",
+        "sourceLine": 153,
+        "evidenceRevision": "76f3b89db9528a1c8fc7177fdecb3da730f9e2c0",
+        "match": false,
+        "oldHash": "31937c327e92a36406927979735fe0f33dab81353c0ecdf683cebce5476b0c65",
+        "currentHash": "4de7be31dfd7e617d02d35065480c8bd8d7956ed092e3aa3780ec7d60b7c3219",
+        "changedScopeReview": "Canonical receipt is applied before clearing only still-identical submitted fields. Errors route through the outer owned feedback. Profile checks and reference guards remain; current PR118 record covers this node."
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "node": "function:StationsPage/function:requestScript",
+        "sourceLine": 403,
+        "evidenceRevision": "76f3b89db9528a1c8fc7177fdecb3da730f9e2c0",
+        "match": true,
+        "oldHash": "6915df2fbd2a3570bdd20fd2abaf676c9188f62d17033884a97d90459cb486fd",
+        "currentHash": "6915df2fbd2a3570bdd20fd2abaf676c9188f62d17033884a97d90459cb486fd"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "node": "function:StationsPage/function:prepareText",
+        "sourceLine": 378,
+        "evidenceRevision": "76f3b89db9528a1c8fc7177fdecb3da730f9e2c0",
+        "match": true,
+        "oldHash": "25b06519db07c5bd159aabd9623657038487e45c193da0638c4965a3b7124d48",
+        "currentHash": "25b06519db07c5bd159aabd9623657038487e45c193da0638c4965a3b7124d48"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "node": "function:StationsPage/function:applyScript",
+        "sourceLine": 399,
+        "evidenceRevision": "76f3b89db9528a1c8fc7177fdecb3da730f9e2c0",
+        "match": true,
+        "oldHash": "5839f977ce488c8fa4e675d176abb9c328f2e3e3eee7093932f4e486cc0ebfdc",
+        "currentHash": "5839f977ce488c8fa4e675d176abb9c328f2e3e3eee7093932f4e486cc0ebfdc"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "node": "function:StationsPage/variable:prepare",
+        "sourceLine": 213,
+        "evidenceRevision": "76f3b89db9528a1c8fc7177fdecb3da730f9e2c0",
+        "match": true,
+        "oldHash": "0098d9fc8c9186553c3c904cb822dc397c224e425b7ff7c0abd4927194fc3c07",
+        "currentHash": "0098d9fc8c9186553c3c904cb822dc397c224e425b7ff7c0abd4927194fc3c07"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "node": "function:StationsPage/variable:scriptDirty",
+        "sourceLine": 122,
+        "evidenceRevision": "76f3b89db9528a1c8fc7177fdecb3da730f9e2c0",
+        "match": true,
+        "oldHash": "e43716b270691c90c51472d675fe9fe2a92063dd982ed630ee3297c89994b85f",
+        "currentHash": "e43716b270691c90c51472d675fe9fe2a92063dd982ed630ee3297c89994b85f"
+      },
+      {
+        "file": "src/renderer/pages/Playlists/Playlists.page.tsx",
+        "records": [
+          "2026-10-18-uncertain-work-invariant"
+        ],
+        "node": "function:usePlaylistRecovery",
+        "sourceLine": 13,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "d94a42e1e957f5eca1adbc3067b5f078bf3355800cd50259fc3f8e7041f4de7b",
+        "currentHash": "d94a42e1e957f5eca1adbc3067b5f078bf3355800cd50259fc3f8e7041f4de7b"
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-18-live-access-permissions"
+        ],
+        "node": "function:createWindow",
+        "sourceLine": 527,
+        "evidenceRevision": "eeedc0e6004c52e52114460065117767fbb05235",
+        "match": true,
+        "oldHash": "711a01c03161a41b72a4589696a5e212b79aeca36ef4ea7e79fe33b49fa1d0fc",
+        "currentHash": "711a01c03161a41b72a4589696a5e212b79aeca36ef4ea7e79fe33b49fa1d0fc"
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-18-live-access-permissions"
+        ],
+        "node": "call:app.on:activate",
+        "sourceLine": 579,
+        "evidenceRevision": "eeedc0e6004c52e52114460065117767fbb05235",
+        "match": true,
+        "oldHash": "b87da8d530c953695d382127f96087de8bb67c48dbbd50e5d661fdbac4a8a4a8",
+        "currentHash": "b87da8d530c953695d382127f96087de8bb67c48dbbd50e5d661fdbac4a8a4a8"
+      },
+      {
+        "file": "src/main/index.ts",
+        "records": [
+          "2026-10-18-live-access-permissions"
+        ],
+        "node": "call:app.on:before-quit",
+        "sourceLine": 589,
+        "evidenceRevision": "eeedc0e6004c52e52114460065117767fbb05235",
+        "match": true,
+        "oldHash": "d65556ebe1c7237d3cdaa3c9a062821b5d219626761ab2ef308c9847f243054a",
+        "currentHash": "d65556ebe1c7237d3cdaa3c9a062821b5d219626761ab2ef308c9847f243054a"
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-18-live-access-permissions"
+        ],
+        "node": "function:App",
+        "sourceLine": 27,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "48ff75c5017c0d5965a0e3246540a423d8cadbf0cf64a1e7673b606d0f378416",
+        "currentHash": "48ff75c5017c0d5965a0e3246540a423d8cadbf0cf64a1e7673b606d0f378416"
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-18-live-access-permissions"
+        ],
+        "node": "function:App/function:setConnection",
+        "sourceLine": 48,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "153b1044580f9620234e196a8560ca16ef8c503b57f411dc7221fa731375240f",
+        "currentHash": "153b1044580f9620234e196a8560ca16ef8c503b57f411dc7221fa731375240f"
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "records": [
+          "2026-10-18-live-access-permissions"
+        ],
+        "node": "function:SessionContent",
+        "sourceLine": 64,
+        "evidenceRevision": null,
+        "match": true,
+        "oldHash": "b07f821cf075d138ddf1317115e9e07b975e5895071886f7d8e916397cd9c4a9",
+        "currentHash": "b07f821cf075d138ddf1317115e9e07b975e5895071886f7d8e916397cd9c4a9"
+      }
+    ],
+    "nodeCount": 93,
+    "samePrintedNodes": 65,
+    "changedNodesReviewed": 28,
+    "excludedHistoricalSource": "Expanded discovery could not resolve TrackTable hash df34c595244bc9ef00519fbad74f09b370bee7a3d68777a1ba2c77f26e3c1053 from2026-10-16-music-browsing to Git bytes. It is excluded from current table proof. Fresh native checks below establish current selection lifetime only, not historical keyboard/metadata scope."
+  },
+  "native": {
+    "contentSize": [
+      1280,
+      720
+    ],
+    "zoom": 1,
+    "runtime": "macOS arm64 Electron43.7.0",
+    "method": "CUA native input; Playwright owned launch/close and passive telemetry. Current production renderer/preload and actual main source with isolated path/key/network adapters and unused fault gates. Dummy encrypted localhost account, fresh state, scheduler stopped, audio muted. Relaunch uses same data with fixture seed skipped.",
+    "snapshots": [
+      {
+        "name": "album-selected",
+        "rawSha256": "6856f98b06bca547f9ed58a4e55dfbbef51c85dee982ecf9a05cd0872dff1602",
+        "headings": [
+          "Album 0001"
+        ],
+        "selection": {
+          "toolbar": "1 selectedPlayAdd to playlistClear",
+          "checked": [
+            "Select Song 00002"
+          ],
+          "rowNames": [
+            "Song 00002, Artist 001"
+          ]
+        },
+        "focus": {
+          "tag": "INPUT",
+          "name": "Select Song 00002",
+          "outline": "none"
+        },
+        "generalInputs": [],
+        "radioMood": null,
+        "savedCadence": 3,
+        "savedMood": "",
+        "savedPlayback": {
+          "connectionId": "http://127.0.0.1:5197|00000000000000000000000000000001",
+          "trackIds": [
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003ea",
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003eb"
+          ],
+          "currentIndex": 2,
+          "position": 12,
+          "volume": 0.42,
+          "shuffle": false,
+          "repeat": "off"
+        },
+        "transport": "Play",
+        "calls": {
+          "saveDJPlayback": 0,
+          "saveWorkflowDraft": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "songs-return-selected",
+        "rawSha256": "9547089b7802fe1b047f8ce4dc94afbb6b512daa986306b244a30b3daec135a1",
+        "headings": [
+          "All songs"
+        ],
+        "selection": {
+          "toolbar": "1 selectedPlayAdd to playlistClear",
+          "checked": [
+            "Select Song 10000"
+          ],
+          "rowNames": [
+            "Song 10000, Artist 100"
+          ]
+        },
+        "focus": {
+          "tag": "BUTTON",
+          "name": "All songs",
+          "outline": "none"
+        },
+        "generalInputs": [],
+        "radioMood": null,
+        "savedCadence": 3,
+        "savedMood": "",
+        "savedPlayback": {
+          "connectionId": "http://127.0.0.1:5197|00000000000000000000000000000001",
+          "trackIds": [
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003ea",
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003eb"
+          ],
+          "currentIndex": 2,
+          "position": 12,
+          "volume": 0.42,
+          "shuffle": false,
+          "repeat": "off"
+        },
+        "transport": "Play",
+        "calls": {
+          "saveDJPlayback": 0,
+          "saveWorkflowDraft": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "general-unsaved",
+        "rawSha256": "19477754aad7ed7a5026ebc35e962ef52836d6439307a4e37c6a303c49a458a0",
+        "headings": [
+          "Settings",
+          "Account",
+          "Music libraries",
+          "DJ playback",
+          "DJ transitions",
+          "About"
+        ],
+        "selection": {
+          "checked": [],
+          "rowNames": []
+        },
+        "focus": {
+          "tag": "INPUT",
+          "name": "",
+          "label": "Check news everysongs",
+          "outline": "solid"
+        },
+        "generalInputs": [
+          {
+            "label": "Check news everysongs",
+            "value": "7",
+            "checked": false,
+            "disabled": false
+          },
+          {
+            "label": "Keep the DJ when seeking or rewinding",
+            "value": "on",
+            "checked": true,
+            "disabled": false
+          },
+          {
+            "label": "DJ voice volume70%",
+            "value": "0.7",
+            "checked": false,
+            "disabled": false
+          }
+        ],
+        "radioMood": null,
+        "savedCadence": 3,
+        "savedMood": "",
+        "savedPlayback": {
+          "connectionId": "http://127.0.0.1:5197|00000000000000000000000000000001",
+          "trackIds": [
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003ea",
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003eb"
+          ],
+          "currentIndex": 2,
+          "position": 12,
+          "volume": 0.42,
+          "shuffle": false,
+          "repeat": "off"
+        },
+        "transport": "Play",
+        "calls": {
+          "saveDJPlayback": 0,
+          "saveWorkflowDraft": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "radio-unsaved",
+        "rawSha256": "cc838966d3348686e6b47a3cab49f9b1737eb8bdc4a29e9e0aa0cc8d1bc5ceec",
+        "headings": [
+          "News bucket",
+          "News sources and host",
+          "Automatic news preparation"
+        ],
+        "selection": {
+          "checked": [],
+          "rowNames": []
+        },
+        "focus": {
+          "tag": "TEXTAREA",
+          "name": "Late night host",
+          "label": "MoodLate night host",
+          "outline": "solid"
+        },
+        "generalInputs": [],
+        "radioMood": {
+          "id": "station-mood",
+          "value": "Late night host",
+          "disabled": false
+        },
+        "savedCadence": 3,
+        "savedMood": "",
+        "savedPlayback": {
+          "connectionId": "http://127.0.0.1:5197|00000000000000000000000000000001",
+          "trackIds": [
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003ea",
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003eb"
+          ],
+          "currentIndex": 2,
+          "position": 12,
+          "volume": 0.42,
+          "shuffle": false,
+          "repeat": "off"
+        },
+        "transport": "Play",
+        "calls": {
+          "saveDJPlayback": 0,
+          "saveWorkflowDraft": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "album-return-selected",
+        "rawSha256": "c9d02535154ccd1263d3943e0d1c0e4242f6513c1f1df9d19159bbbe99551f93",
+        "headings": [
+          "Album 0001"
+        ],
+        "selection": {
+          "toolbar": "1 selectedPlayAdd to playlistClear",
+          "checked": [
+            "Select Song 00002"
+          ],
+          "rowNames": [
+            "Song 00002, Artist 001"
+          ]
+        },
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Albums",
+          "outline": "none"
+        },
+        "generalInputs": [],
+        "radioMood": null,
+        "savedCadence": 3,
+        "savedMood": "",
+        "savedPlayback": {
+          "connectionId": "http://127.0.0.1:5197|00000000000000000000000000000001",
+          "trackIds": [
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003ea",
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003eb"
+          ],
+          "currentIndex": 2,
+          "position": 12,
+          "volume": 0.42,
+          "shuffle": false,
+          "repeat": "off"
+        },
+        "transport": "Play",
+        "calls": {
+          "saveDJPlayback": 0,
+          "saveWorkflowDraft": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "album-back-clears",
+        "rawSha256": "8ac7d1704884a20d85372d3f146958dc29827185e1d764a3f1bd722054f17af4",
+        "headings": [
+          "Album 0001"
+        ],
+        "selection": {
+          "checked": [],
+          "rowNames": []
+        },
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Back to albums",
+          "outline": "none"
+        },
+        "generalInputs": [],
+        "radioMood": null,
+        "savedCadence": 3,
+        "savedMood": "",
+        "savedPlayback": {
+          "connectionId": "http://127.0.0.1:5197|00000000000000000000000000000001",
+          "trackIds": [
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003ea",
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003eb"
+          ],
+          "currentIndex": 2,
+          "position": 12,
+          "volume": 0.42,
+          "shuffle": false,
+          "repeat": "off"
+        },
+        "transport": "Play",
+        "calls": {
+          "saveDJPlayback": 0,
+          "saveWorkflowDraft": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "general-return-unsaved",
+        "rawSha256": "cfbe62a0ca4823bcb485bfb92d6c017f416f998b87149f5c0c90f2f6b7a7c322",
+        "headings": [
+          "Settings",
+          "Account",
+          "Music libraries",
+          "DJ playback",
+          "DJ transitions",
+          "About"
+        ],
+        "selection": {
+          "checked": [],
+          "rowNames": []
+        },
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Settings",
+          "outline": "none"
+        },
+        "generalInputs": [
+          {
+            "label": "Check news everysongs",
+            "value": "7",
+            "checked": false,
+            "disabled": false
+          },
+          {
+            "label": "Keep the DJ when seeking or rewinding",
+            "value": "on",
+            "checked": true,
+            "disabled": false
+          },
+          {
+            "label": "DJ voice volume70%",
+            "value": "0.7",
+            "checked": false,
+            "disabled": false
+          }
+        ],
+        "radioMood": null,
+        "savedCadence": 3,
+        "savedMood": "",
+        "savedPlayback": {
+          "connectionId": "http://127.0.0.1:5197|00000000000000000000000000000001",
+          "trackIds": [
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003ea",
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003eb"
+          ],
+          "currentIndex": 2,
+          "position": 12,
+          "volume": 0.42,
+          "shuffle": false,
+          "repeat": "off"
+        },
+        "transport": "Play",
+        "calls": {
+          "saveDJPlayback": 0,
+          "saveWorkflowDraft": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "radio-return-unsaved",
+        "rawSha256": "cb02a3044fa79a297110dc8e356446edea9b8f4f2b04d3dda243f2aee5f9c0ac",
+        "headings": [
+          "News bucket",
+          "News sources and host",
+          "Automatic news preparation"
+        ],
+        "selection": {
+          "checked": [],
+          "rowNames": []
+        },
+        "focus": {
+          "tag": "BUTTON",
+          "name": "News bucket",
+          "outline": "none"
+        },
+        "generalInputs": [],
+        "radioMood": {
+          "id": "station-mood",
+          "value": "Late night host",
+          "disabled": false
+        },
+        "savedCadence": 3,
+        "savedMood": "",
+        "savedPlayback": {
+          "connectionId": "http://127.0.0.1:5197|00000000000000000000000000000001",
+          "trackIds": [
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003ea",
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003eb"
+          ],
+          "currentIndex": 2,
+          "position": 12,
+          "volume": 0.42,
+          "shuffle": false,
+          "repeat": "off"
+        },
+        "transport": "Play",
+        "calls": {
+          "saveDJPlayback": 0,
+          "saveWorkflowDraft": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "restart-songs-clear-paused",
+        "rawSha256": "e2ec023de5bd886b2d06470757de94a5bcb13ec88b00899982f68d1ce2b81206",
+        "headings": [
+          "All songs"
+        ],
+        "selection": {
+          "checked": [],
+          "rowNames": []
+        },
+        "focus": {
+          "tag": "BODY",
+          "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedAll songsYour Jellyfin libraryGenreAny genreAny genreJazzRockTagAny tagAny tagArchiveLiveStudioSortDate addedDate addedTitleArtistAlbumYearNewest first#TitleAlbumActions1Song 10000Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details2Song 09999Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details3Song 09998Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details4Song 09997Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details5Song 09996Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details6Song 09995Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details7Song 09994Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details8Song 09993Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details9Song 09992Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details10Song 09991Artist 100Album 100010:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details11Song 09990Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details12Song 09989Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details13Song 09988Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details14Song 09987Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details15Song 09986Artist 100Album 099910:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong details80 of 10,000 songs loadedLoad more songsSong 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+          "outline": "none"
+        },
+        "generalInputs": [],
+        "radioMood": null,
+        "savedCadence": 3,
+        "savedMood": "",
+        "savedPlayback": {
+          "connectionId": "http://127.0.0.1:5197|00000000000000000000000000000001",
+          "trackIds": [
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003ea",
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003eb"
+          ],
+          "currentIndex": 2,
+          "position": 12,
+          "volume": 0.42,
+          "shuffle": false,
+          "repeat": "off"
+        },
+        "transport": "Play",
+        "calls": {
+          "saveDJPlayback": 0,
+          "saveWorkflowDraft": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "restart-general-saved-value",
+        "rawSha256": "0daef63510d65aad9783ecca2dfb74c432ef058e3ae129c4eee54c02a1a4c2a7",
+        "headings": [
+          "Settings",
+          "Account",
+          "Music libraries",
+          "DJ playback",
+          "DJ transitions",
+          "About"
+        ],
+        "selection": {
+          "checked": [],
+          "rowNames": []
+        },
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Settings",
+          "outline": "none"
+        },
+        "generalInputs": [
+          {
+            "label": "Check news everysongs",
+            "value": "3",
+            "checked": false,
+            "disabled": false
+          },
+          {
+            "label": "Keep the DJ when seeking or rewinding",
+            "value": "on",
+            "checked": true,
+            "disabled": false
+          },
+          {
+            "label": "DJ voice volume70%",
+            "value": "0.7",
+            "checked": false,
+            "disabled": false
+          }
+        ],
+        "radioMood": null,
+        "savedCadence": 3,
+        "savedMood": "",
+        "savedPlayback": {
+          "connectionId": "http://127.0.0.1:5197|00000000000000000000000000000001",
+          "trackIds": [
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003ea",
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003eb"
+          ],
+          "currentIndex": 2,
+          "position": 12,
+          "volume": 0.42,
+          "shuffle": false,
+          "repeat": "off"
+        },
+        "transport": "Play",
+        "calls": {
+          "saveDJPlayback": 0,
+          "saveWorkflowDraft": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "restart-radio-saved-value",
+        "rawSha256": "7054e20d12a1338db1b355ff30d39038ef2563b42546eca4c73ede2b30065a48",
+        "headings": [
+          "News bucket",
+          "News sources and host",
+          "Automatic news preparation"
+        ],
+        "selection": {
+          "checked": [],
+          "rowNames": []
+        },
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Settings",
+          "outline": "none"
+        },
+        "generalInputs": [],
+        "radioMood": {
+          "id": "station-mood",
+          "value": "",
+          "disabled": false
+        },
+        "savedCadence": 3,
+        "savedMood": "",
+        "savedPlayback": {
+          "connectionId": "http://127.0.0.1:5197|00000000000000000000000000000001",
+          "trackIds": [
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003ea",
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003eb"
+          ],
+          "currentIndex": 2,
+          "position": 12,
+          "volume": 0.42,
+          "shuffle": false,
+          "repeat": "off"
+        },
+        "transport": "Play",
+        "calls": {
+          "saveDJPlayback": 0,
+          "saveWorkflowDraft": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      },
+      {
+        "name": "restart-album-selection-clear",
+        "rawSha256": "52f4bc0d8c3e4cfc241d153deeab8a724b3ad35d8820c16585ff6aa27640a381",
+        "headings": [
+          "Album 0001"
+        ],
+        "selection": {
+          "checked": [],
+          "rowNames": []
+        },
+        "focus": {
+          "tag": "BUTTON",
+          "name": "Back to albums",
+          "outline": "none"
+        },
+        "generalInputs": [],
+        "radioMood": null,
+        "savedCadence": 3,
+        "savedMood": "",
+        "savedPlayback": {
+          "connectionId": "http://127.0.0.1:5197|00000000000000000000000000000001",
+          "trackIds": [
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003ea",
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003eb"
+          ],
+          "currentIndex": 2,
+          "position": 12,
+          "volume": 0.42,
+          "shuffle": false,
+          "repeat": "off"
+        },
+        "transport": "Play",
+        "calls": {
+          "saveDJPlayback": 0,
+          "saveWorkflowDraft": 0,
+          "prepareNewsScript": 0,
+          "renderNewsTake": 0
+        },
+        "serverWrites": 0,
+        "externalRequests": 0
+      }
+    ],
+    "results": "Both observer processes observed, no pageerror, terminal exit0. Page detours retain separate song/album selections, cadence7 draft and mood draft. Explicit album Back/open clears its selection and restores tile/Back context. Same-data relaunch discards temporary drafts/selections, shows saved cadence3/empty mood and restores identical duplicate queue/index/position/volume/options paused. No setup/preference save or text/audio preparation.",
+    "cleanup": "Both native handles terminal; owned localhost5197 server stopped with terminal143. No real server/provider changes."
+  },
+  "sourceSha256": {
+    "src/main/storage.ts": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+    "src/main/index.ts": "cdf2e042029210ba20b20dd529e838760c6158fe73bb8046118b93fff9085657",
+    "src/main/playlist-recovery.ts": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+    "src/main/prepared-news.ts": "da830c4e4c95caa62fa103367d7d4eef268ef32970d837fbe1b0d94c1b1809b3",
+    "src/renderer/App.tsx": "eae93435308b21d89e771bc920b389b753743923b1d9e907abed0f5d551551f7",
+    "src/renderer/components/LibrarySelection.tsx": "612e117abee02b6c69090402331261928792cfc7a0aa445756f764d319de0083",
+    "src/renderer/components/ProviderKeys/ProviderKeyEdits.tsx": "99b9e06d6c62a90d36195ef7ae832444dd64c7cad8153db4fd66fd7feefe04d2",
+    "src/renderer/pages/Albums/Albums.page.tsx": "09a1292143de4e0f24a233a41b50e90fae8f19d394afae2f5171384f59fc9667",
+    "src/renderer/pages/Songs/Songs.page.tsx": "a15a3adc08b8ebb2bd4d96b00c8462d94922bef67eb2fad655c6c428af0eb942",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+    "src/renderer/pages/Stations/Stations.page.tsx": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573",
+    "src/renderer/pages/Settings/SettingsEdits.tsx": "0319d54594b8e7658485e8a9dbc33b78b050633623f8cb1665872b2e75387f89",
+    "src/renderer/local-state-cache.ts": "3408412238143901b1a1101577bbc097734c4f2f7998f34961a6fc6aae15b801"
+  },
+  "inspectorSha256": {
+    "resolve.py": "2963a8b8660e67b11933aa2ef17182b3063cc511701c3e5de0c7fbc2ecbfa3b2",
+    "scopes.mjs": "95de98c96f881afb0faa654d7f286fb5e011a9422f7a38bf635448461b2e565c"
+  },
+  "validation": {
+    "newApplicationCode": "none",
+    "freshNativeSnapshots": 12,
+    "retainedBuild": "PR118/119 build/type/lint and focused storage/service records; no redundant build/unit/OS test run.",
+    "checklistRows": 191,
+    "dispositionChanges": 0,
+    "openChecks": 25,
+    "listenerChecks": 14,
+    "otherProofChecks": 11
+  },
+  "conclusion": "CI1 documented edit-lifetime obligations have individual current engineering adjudications with explicit retained/fresh source and runtime scopes. Full Q13 and goal acceptance remain unproven: CI6 joint queue/heard-replay review, complete atomic denominator and named listener/live/platform proof remain.",
+  "limits": [
+    "Account and Close/activation permutations are retained native/service proof composed with current reviewed owners; not every cross-product permutation is freshly replayed.",
+    "Ordinary lifecycle only, not forced crash, power loss or arbitrary physical-disk failure. Atomic rollback service/source proof retains those exact limits.",
+    "Runtime revision orders observed snapshots only; an unseen later commit still needs successful read recovery.",
+    "No new observed listener, audible quality, hardware/VoiceOver/display/platform, live provider/server or smaller/enlarged-zoom result.",
+    "Historical records remain unchanged; unresolved TrackTable source is excluded rather than counted current. No overall90percent claim."
+  ]
+}
