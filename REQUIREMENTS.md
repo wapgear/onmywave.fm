@@ -297,6 +297,7 @@ Use Electron development or production-preview mode for testing. Do not package,
 ### Per-DJ voice previews
 
 - Disclose possible ElevenLabs credits/charges beside custom voice-sample and saved-DJ preview generation controls, including that these are outside automatic news limits and cached/bundled replay makes no request.
+- Voice-preview Generate and Regenerate keep their current focused action while preparation and saved-status refresh are pending. Announce busy/unavailable state, ignore repeated activation, and keep failures beside the preview for explicit retry. Other controls retain their normal Tab behavior. Completion must not reclaim later focus or override a newer music command. Preview replay keeps its current control through Stop and natural completion.
 - Keep neutral voice samples in the editor separate from the saved DJ delivery preview. Offer voice preview and explicit regeneration for each saved DJ. First generation uses a fixed short sample with ElevenLabs only and persists the recording locally.
 - Replay cached previews across restarts without provider requests or keys. Changes to the saved voice or delivery tags mark the cached DJ recording as outdated without automatic regeneration. Keep the old recording replayable while it is outdated.
 - Deduplicate concurrent generation for the same DJ. Persist an attempt marker before dispatch and require explicit regeneration after missing audio, failure, or interruption. Preserve the last successful recording if regeneration fails.

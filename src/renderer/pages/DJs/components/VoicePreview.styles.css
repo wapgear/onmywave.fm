@@ -1,1 +1,3 @@
 .dj-voice-preview{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px;max-width:560px}.dj-voice-preview>button{display:inline-flex;align-items:center;gap:6px;min-height:30px;padding:5px 11px;font-size:12px}.dj-voice-preview-label{font-size:11px;color:var(--muted);min-width:0;max-width:100%;overflow-wrap:anywhere}.dj-voice-preview .dj-preview-hint{flex-basis:100%;font-size:11px;line-height:1.6;white-space:normal;color:var(--muted);margin:0}.dj-voice-preview .notice{flex-basis:100%;font-size:12px;white-space:normal}
+
+.dj-voice-preview>button[aria-disabled=true]{opacity:.7;cursor:default;transform:none}.dj-voice-preview>button[aria-disabled=true]:active{translate:none}

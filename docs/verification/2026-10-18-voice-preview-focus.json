@@ -1,0 +1,1333 @@
+{
+  "date": "2026-10-18",
+  "scope": "Shared VoicePreview pending/retry focus, partial Q06. Current source inventory is not a computed accessible-name or whole-app keyboard pass.",
+  "mechanicalChange": "Reuse current-owner aria-disabled control pattern, synchronous repeat guard and awaited query refresh; no independent paired design/review.",
+  "runtime": {
+    "viewport": [
+      1280,
+      720
+    ],
+    "appZoom": 1,
+    "input": "CUA native only",
+    "media": "Muted native local MP3",
+    "backend": "Copied instrumented main/storage, actual saved-preview service/cache/immutable files; renderPreparedSpeech alone returns bundled demo bytes",
+    "providers": "Placeholder readiness keys; shared adapter null; external requests blocked",
+    "scheduler": "Stopped interval"
+  },
+  "baseline": [
+    {
+      "name": "before-preview-pending",
+      "sha256": "cfae7eed94ca42b854f4c0bfe324996649ba620f3a7626ea5d000dc38ed8a432",
+      "focus": "BODY"
+    },
+    {
+      "name": "before-preview-failure",
+      "sha256": "ce844e168d8bf1d47840bfd9e3256ac493b422489c90ee92f7c7e696149c1dfd",
+      "focus": "BODY"
+    }
+  ],
+  "baselineBundles": {
+    "out/renderer/index.html": "bccaeffa3bb60a545efea24c9f449ee23853545ce228ce4aaf1838317cab14c7",
+    "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/demo/news-break.json": "fad8cf445ffac400596faa134c1ca357b28a6de86dec5e8389597b1277050c46",
+    "out/renderer/demo/transcript.md": "d64810c60028cc5d69ff10c156b07f8cf5d78cee42ae34e5e6cc0e6553f3fb44",
+    "out/renderer/demo/news-break.mp3": "718a35bc38f30397b7b43965db4a4bf5211d59c0a5f37c4e23ef38428a614f74",
+    "out/renderer/voice-previews/TX3LPaxmHKxFdv7VOQHJ.mp3": "f8018932908f1c3cfaed40a94b13fe4d498489f3fd1d37d3fa86984af721e40c",
+    "out/renderer/voice-previews/cgSgspJ2msm6clMCkdW9.mp3": "addac5c0fecee048baed846784c7f599fa0bcce636556e7a6bc63daa43ffee9f",
+    "out/renderer/voice-previews/JBFqnCBsd6RMkjVDRZzb.mp3": "ac1804ae2ee825f7414d819e2036369297bf9fc01a816b4f3d9c51e7357d32cf",
+    "out/renderer/voice-previews/manifest.json": "15811b8afa01189660b5da6e6e0f54958a4889b644d9ef18d1474e10acead7dc",
+    "out/renderer/voice-previews/EXAVITQu4vr4xnSDxMaL.mp3": "fef86e7100a94578dd2dcee7db9085fcf5c6f50b07aeceeabae05dd09b17a539",
+    "out/renderer/voice-previews/onwK4e9ZLuTAKqWW03F9.mp3": "9c91149960d8c492f19a7d53522af8a4597b490e90f0fe8dd7022653c9824c52",
+    "out/renderer/voice-previews/cjVigY5qzO86Huf0OWal.mp3": "3f485d54b0932999ab76225e4af338b37c2becac438c8595023bc13984bfc8e5",
+    "out/renderer/voice-previews/FGY2WhTYpPnrIDTdsKH5.mp3": "97fc724a7c41b0c02884aec975e2e4a749daabb1fc57a8229b34e8180e1fe418",
+    "out/renderer/assets/inter-cyrillic-ext-500-normal-BmqWE9Dz.woff": "e250c05aebcf49971e0b25f476992dd463c28c0292ebb204d9db542fb5066ca7",
+    "out/renderer/assets/manrope-greek-600-normal-BoRV6lzK.woff2": "18d69aa241a76095c4c5f8c224abe6519ff60db3b4085e843d59fb4965a4eebd",
+    "out/renderer/assets/inter-cyrillic-500-normal-CxZf_p3X.woff": "5be18e0345781cb882a267798518553c0e915174fc70731ab5f085ca64ba1ebc",
+    "out/renderer/assets/inter-greek-500-normal-Xzm54t5V.woff": "86d55a4b1b9cbced7e61e76d5d44cf49d0bd1c814d3df2de67b7136ab4fdcece",
+    "out/renderer/assets/inter-greek-500-normal-BIZE56-Y.woff2": "cc197d79d33a3615a047baae85f4d1957f6f98b8898313658e160b1d519b1b6f",
+    "out/renderer/assets/inter-latin-500-normal-BL9OpVg8.woff": "9b42c108da48b5ed55a3072e815ffee2d271562e6c0dd6998910e8f9c09e0a3d",
+    "out/renderer/assets/index-C5hN824i.css": "2a6d2e39ea615c978477eb0d9eab67a7cbfd47b624038a15fb14f6787a166290",
+    "out/renderer/assets/inter-vietnamese-500-normal-mJboJaSs.woff": "18a4a09f751671cd8929d7c66e8fe7d820b511c36e51cf6047ffceab88eec4a4",
+    "out/renderer/assets/inter-latin-ext-500-normal-CV4jyFjo.woff2": "2c6fbc42d315528beb06c1096df45487bf4186c4b78b8111d12c9c951f8acca2",
+    "out/renderer/assets/manrope-latin-600-normal-BqgrALkZ.woff": "8d1f509774bca963fa02faf674678ce9244474306361ca2798583fa600346df6",
+    "out/renderer/assets/inter-vietnamese-400-normal-DMkecbls.woff2": "547ad9fdaeb0ae43487f4b8a02e47c36553c0c0cb73c8aa98f93b7b615f6b55d",
+    "out/renderer/assets/manrope-greek-600-normal-CF2i9ZRY.woff": "59fa49c299110657ee3dbc02beed32f5fda899423686058a0ce7e499851e6e7a",
+    "out/renderer/assets/manrope-vietnamese-600-normal-C1J5PCl_.woff2": "bce46331a74572cd723ddb8200a11c00e71370fad490f045564989527469aa3d",
+    "out/renderer/assets/index-CkakqlEI.js": "6b1c1395f9d7b01bf25f9e3779c5eb2705295f1d26acc219463b04f169ea89ba",
+    "out/renderer/assets/inter-latin-ext-400-normal-77YHD8bZ.woff": "22ae8360fbad24d2af7c6c9898a346c881774dc87f7cf94bd262c48ad58d7116",
+    "out/renderer/assets/manrope-vietnamese-600-normal-lA7a_7Ok.woff": "628a1c849748530c6f7c02c18bdd3191bc19264e20ad2308a8a954605cdb620b",
+    "out/renderer/assets/inter-greek-ext-500-normal-2j5mBUwD.woff": "c85d11bde719108cc9a4f6f5b008087f6c36493b47395580d4f5336182b0f0c7",
+    "out/renderer/assets/manrope-cyrillic-600-normal-DvRl3Mj-.woff2": "80b86efbef1c9fb66557cc4cc7b6db42db2fd631f1a9b8735f3bbefbb5128799",
+    "out/renderer/assets/inter-greek-ext-500-normal-C4iEst2y.woff2": "75a9ec9383a3b7a7bf7cfb94f64edf38d9cfdc5f7ffa0cbed2733627a6e4426d",
+    "out/renderer/assets/inter-cyrillic-ext-400-normal-DQukG94-.woff": "5cb2f1cc0936f89a42ceae34f5a5720248dc5b8114c12b1c33a7d2ef01a9b6b9",
+    "out/renderer/assets/inter-cyrillic-400-normal-HOLc17fK.woff": "6e441a6c94788318fa02b6d0a633aa29eebe27b69c6567eb1e59b4edc68ed70e",
+    "out/renderer/assets/inter-greek-400-normal-B4URO6DV.woff2": "c15ddd00a9927b56f5c655a41f976f79bd848a20cce91fc14227751872a1cc27",
+    "out/renderer/assets/inter-greek-ext-400-normal-DGGRlc-M.woff2": "eadedd9e13c2582430a9fb1519eb86152fdabb483a6f66d90f8d8a52e977a1b7",
+    "out/renderer/assets/inter-latin-ext-500-normal-BxGbmqWO.woff": "30d2903ce97f8a89ea0e9c083b42cb8bf97e7bbb5607e7f00352815f19cb0d5b",
+    "out/renderer/assets/inter-vietnamese-400-normal-Bbgyi5SW.woff": "54aa42d325bcdfd623ecb9eac4a5e3c6420c63d7b86e9d8545fb479f653beb57",
+    "out/renderer/assets/manrope-latin-600-normal-4f0koTD-.woff2": "f7ac6258da20ab7541939b59851155753d1d24f1b30cbcb949077a3faa3d1593",
+    "out/renderer/assets/manrope-latin-ext-600-normal-_gBojHdJ.woff2": "ff679412842fc3b5ce2dfad626db5261a4e663dcfd1bf1209bdfc61c2b2f37e6",
+    "out/renderer/assets/inter-cyrillic-500-normal-BasfLYem.woff2": "b77a86ec16aadc157f4a99e8898d71cd75ea264753d9bdf13f962f8c3988cbb0",
+    "out/renderer/assets/inter-cyrillic-ext-400-normal-BQZuk6qB.woff2": "ef572f9187a8be018d9d9c2c6b77c1f6cb2af4199f02fc16c292ea10ab25a2cc",
+    "out/renderer/assets/inter-greek-400-normal-q2sYcFCs.woff": "bdae9d28729e8c68587d5d54e216d771a40d7a6800e824586a6e2f570c2f10df",
+    "out/renderer/assets/inter-cyrillic-400-normal-obahsSVq.woff2": "f0bb586459ce8f09b238285040f17e3e9e9538b2c5a7aae0775194e33c36c3c3",
+    "out/renderer/assets/manrope-latin-ext-600-normal-u5Pl7hTU.woff": "80ff78480448f4c2c0f586cb016928554b8cd84b2b95dec5e5f7579274f757a0",
+    "out/renderer/assets/inter-cyrillic-ext-500-normal-B0yAr1jD.woff2": "1c2db92d3cd9b237ca7c9c07af556d542f28ded1db54cd4382cf776501c5291f",
+    "out/renderer/assets/inter-latin-ext-400-normal-C1nco2VV.woff2": "6744a7f509ebc6ab220a6cd4ea77e898adf014f03d88dcda5d45d8a9feefb4e9",
+    "out/renderer/assets/inter-latin-400-normal-CyCys3Eg.woff": "e20fa0b4fd2dd26e4d14b3ac3cc922509c3a63fa5e910e90c614544aa042dd45",
+    "out/renderer/assets/manrope-cyrillic-600-normal-It4mZcQk.woff": "716a12f36cf789e399e0ad0bd205e3d1c66e4de66fe0c7e94a59ab7f007fce89",
+    "out/renderer/assets/inter-vietnamese-500-normal-DOriooB6.woff2": "44e36aa5a8f12130029a29bb0e6695d0262b67446ce321e878b1fb56162b5de6",
+    "out/renderer/assets/inter-latin-400-normal-C38fXH4l.woff2": "8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc",
+    "out/renderer/assets/inter-greek-ext-400-normal-KugGGMne.woff": "4f2b6f92ddfece8812e79774d446218aa6e0773ff8c2d31130fe2bdc23bd22d0",
+    "out/renderer/assets/inter-latin-500-normal-Cerq10X2.woff2": "f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f"
+  },
+  "snapshots": [
+    {
+      "name": "final-generate-failure",
+      "sha256": "a28f86963f6476b8a283e1d4e12c297ceffbe264df0ae49be5f68682c8bb7082",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 314,
+          "y": 358.796875,
+          "width": 161.0390625,
+          "height": 30,
+          "top": 358.796875,
+          "right": 475.0390625,
+          "bottom": 388.796875,
+          "left": 314
+        },
+        "insideDrawer": false,
+        "name": "Generate DJ preview for Fixture host",
+        "type": "button",
+        "role": null
+      },
+      "transport": "Play",
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Generate DJ preview for Fixture host",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 314,
+            "y": 358.796875,
+            "width": 161.0390625,
+            "height": 30,
+            "top": 358.796875,
+            "right": 475.0390625,
+            "bottom": 388.796875,
+            "left": 314
+          }
+        }
+      ],
+      "notices": [
+        {
+          "rect": {
+            "x": 314,
+            "y": 505.171875,
+            "width": 560,
+            "height": 45.796875,
+            "top": 505.171875,
+            "right": 874,
+            "bottom": 550.96875,
+            "left": 314
+          },
+          "error": "prepareDJVoicePreview unavailable.",
+          "button": null
+        }
+      ],
+      "held": [],
+      "generationCalls": [
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324764842,
+          "mode": "hold"
+        }
+      ],
+      "fixtureSpeechResults": 0,
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-generate-pending",
+      "sha256": "d009f9bc9a97859809f33ff8886be7e25101a0d8f559fb9eb2d5e0660ce892b7",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 314,
+          "y": 358.796875,
+          "width": 97.9140625,
+          "height": 30,
+          "top": 358.796875,
+          "right": 411.9140625,
+          "bottom": 388.796875,
+          "left": 314
+        },
+        "insideDrawer": false,
+        "name": "Loading preview for Fixture host",
+        "type": "button",
+        "role": null
+      },
+      "transport": "Play",
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Loading preview for Fixture host",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 314,
+            "y": 358.796875,
+            "width": 97.9140625,
+            "height": 30,
+            "top": 358.796875,
+            "right": 411.9140625,
+            "bottom": 388.796875,
+            "left": 314
+          }
+        }
+      ],
+      "notices": [],
+      "held": [
+        "prepareDJVoicePreview"
+      ],
+      "generationCalls": [
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324764842,
+          "mode": "hold"
+        }
+      ],
+      "fixtureSpeechResults": 0,
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-generate-readback-pending",
+      "sha256": "f5ac60dcc40ff3b6e55589daf2129fe51ea970d1c3c397cf1b66332aeb4fba40",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 314,
+          "y": 358.796875,
+          "width": 97.9140625,
+          "height": 30,
+          "top": 358.796875,
+          "right": 411.9140625,
+          "bottom": 388.796875,
+          "left": 314
+        },
+        "insideDrawer": false,
+        "name": "Loading preview for Fixture host",
+        "type": "button",
+        "role": null
+      },
+      "transport": "Play",
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Loading preview for Fixture host",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 314,
+            "y": 358.796875,
+            "width": 97.9140625,
+            "height": 30,
+            "top": 358.796875,
+            "right": 411.9140625,
+            "bottom": 388.796875,
+            "left": 314
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Regenerating DJ preview for Fixture host",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": false,
+          "rect": {
+            "x": 419.9140625,
+            "y": 358.796875,
+            "width": 107.8984375,
+            "height": 30,
+            "top": 358.796875,
+            "right": 527.8125,
+            "bottom": 388.796875,
+            "left": 419.9140625
+          }
+        }
+      ],
+      "notices": [],
+      "held": [
+        "getDJVoicePreview"
+      ],
+      "generationCalls": [
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324764842,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324789114,
+          "mode": "hold"
+        }
+      ],
+      "fixtureSpeechResults": 1,
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-generate-retry",
+      "sha256": "996fa8691b79a77314a4917d9848153145730da6b4fc1555d0e9fc9c878d2f4a",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 314,
+          "y": 358.796875,
+          "width": 97.9140625,
+          "height": 30,
+          "top": 358.796875,
+          "right": 411.9140625,
+          "bottom": 388.796875,
+          "left": 314
+        },
+        "insideDrawer": false,
+        "name": "Loading preview for Fixture host",
+        "type": "button",
+        "role": null
+      },
+      "transport": "Play",
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Loading preview for Fixture host",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 314,
+            "y": 358.796875,
+            "width": 97.9140625,
+            "height": 30,
+            "top": 358.796875,
+            "right": 411.9140625,
+            "bottom": 388.796875,
+            "left": 314
+          }
+        }
+      ],
+      "notices": [],
+      "held": [
+        "prepareDJVoicePreview"
+      ],
+      "generationCalls": [
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324764842,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324789114,
+          "mode": "hold"
+        }
+      ],
+      "fixtureSpeechResults": 0,
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-generate-success",
+      "sha256": "92aaae689e1394798c818910a124a28f45248b0f7a1e6bf0c57469d7cbb9207b",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 314,
+          "y": 358.796875,
+          "width": 116.109375,
+          "height": 30,
+          "top": 358.796875,
+          "right": 430.109375,
+          "bottom": 388.796875,
+          "left": 314
+        },
+        "insideDrawer": false,
+        "name": "Stop preview for Fixture host",
+        "type": "button",
+        "role": null
+      },
+      "transport": "Play",
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Stop preview for Fixture host",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 314,
+            "y": 358.796875,
+            "width": 116.109375,
+            "height": 30,
+            "top": 358.796875,
+            "right": 430.109375,
+            "bottom": 388.796875,
+            "left": 314
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Regenerate DJ preview for Fixture host",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false,
+          "rect": {
+            "x": 438.109375,
+            "y": 358.796875,
+            "width": 153.984375,
+            "height": 30,
+            "top": 358.796875,
+            "right": 592.09375,
+            "bottom": 388.796875,
+            "left": 438.109375
+          }
+        }
+      ],
+      "notices": [],
+      "held": [],
+      "generationCalls": [
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324764842,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324789114,
+          "mode": "hold"
+        }
+      ],
+      "fixtureSpeechResults": 1,
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-regenerate-complete-away",
+      "sha256": "cff68d6c06bbebeb312ddea859196ca753d067089302e66ecb88ed86298d2e09",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1108,
+          "y": 379.5859375,
+          "width": 34,
+          "height": 34,
+          "top": 379.5859375,
+          "right": 1142,
+          "bottom": 413.5859375,
+          "left": 1108
+        },
+        "insideDrawer": false,
+        "name": "Edit Fixture host",
+        "type": null,
+        "role": null
+      },
+      "transport": "Play",
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Stop preview for Fixture host",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false,
+          "rect": {
+            "x": 314,
+            "y": 358.796875,
+            "width": 116.109375,
+            "height": 30,
+            "top": 358.796875,
+            "right": 430.109375,
+            "bottom": 388.796875,
+            "left": 314
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Regenerate DJ preview for Fixture host",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false,
+          "rect": {
+            "x": 438.109375,
+            "y": 358.796875,
+            "width": 153.984375,
+            "height": 30,
+            "top": 358.796875,
+            "right": 592.09375,
+            "bottom": 388.796875,
+            "left": 438.109375
+          }
+        }
+      ],
+      "notices": [],
+      "held": [],
+      "generationCalls": [
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324764842,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324789114,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324828026,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324853531,
+          "mode": "hold"
+        }
+      ],
+      "fixtureSpeechResults": 2,
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-regenerate-failure",
+      "sha256": "f6a9b1e9858c78294b130e04f765737b68248ed89c7209907e8e0046f55ed937",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 465.0078125,
+          "y": 358.796875,
+          "width": 153.984375,
+          "height": 30,
+          "top": 358.796875,
+          "right": 618.9921875,
+          "bottom": 388.796875,
+          "left": 465.0078125
+        },
+        "insideDrawer": false,
+        "name": "Regenerate DJ preview for Fixture host",
+        "type": "button",
+        "role": null
+      },
+      "transport": "Play",
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Preview saved DJ for Fixture host",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false,
+          "rect": {
+            "x": 314,
+            "y": 358.796875,
+            "width": 143.0078125,
+            "height": 30,
+            "top": 358.796875,
+            "right": 457.0078125,
+            "bottom": 388.796875,
+            "left": 314
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Regenerate DJ preview for Fixture host",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 465.0078125,
+            "y": 358.796875,
+            "width": 153.984375,
+            "height": 30,
+            "top": 358.796875,
+            "right": 618.9921875,
+            "bottom": 388.796875,
+            "left": 465.0078125
+          }
+        }
+      ],
+      "notices": [
+        {
+          "rect": {
+            "x": 314,
+            "y": 505.171875,
+            "width": 560,
+            "height": 45.796875,
+            "top": 505.171875,
+            "right": 874,
+            "bottom": 550.96875,
+            "left": 314
+          },
+          "error": "prepareDJVoicePreview unavailable.",
+          "button": null
+        }
+      ],
+      "held": [],
+      "generationCalls": [
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324764842,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324789114,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324828026,
+          "mode": "hold"
+        }
+      ],
+      "fixtureSpeechResults": 1,
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-regenerate-music-complete",
+      "sha256": "8350f289e3754cf9837fb60d1c2ded39f78d0a8fbbeefd11291d969dad67534a",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 621.272216796875,
+          "y": 627.780029296875,
+          "width": 37.43994140625,
+          "height": 37.43994140625,
+          "top": 627.780029296875,
+          "right": 658.712158203125,
+          "bottom": 665.219970703125,
+          "left": 621.272216796875
+        },
+        "insideDrawer": false,
+        "name": "Pause",
+        "type": null,
+        "role": null
+      },
+      "transport": "Pause",
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Preview saved DJ for Fixture host",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false,
+          "rect": {
+            "x": 314,
+            "y": 358.796875,
+            "width": 143.0078125,
+            "height": 30,
+            "top": 358.796875,
+            "right": 457.0078125,
+            "bottom": 388.796875,
+            "left": 314
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Regenerate DJ preview for Fixture host",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": false,
+          "rect": {
+            "x": 465.0078125,
+            "y": 358.796875,
+            "width": 153.984375,
+            "height": 30,
+            "top": 358.796875,
+            "right": 618.9921875,
+            "bottom": 388.796875,
+            "left": 465.0078125
+          }
+        }
+      ],
+      "notices": [],
+      "held": [],
+      "generationCalls": [
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324764842,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324789114,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324828026,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324853531,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324880789,
+          "mode": "hold"
+        }
+      ],
+      "fixtureSpeechResults": 3,
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-regenerate-music-priority",
+      "sha256": "4f639d831cd884e189916efff11a40a9f839bf41b4e02dcda59a4c69de5eae69",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 621.272216796875,
+          "y": 627.780029296875,
+          "width": 37.43994140625,
+          "height": 37.43994140625,
+          "top": 627.780029296875,
+          "right": 658.712158203125,
+          "bottom": 665.219970703125,
+          "left": 621.272216796875
+        },
+        "insideDrawer": false,
+        "name": "Pause",
+        "type": null,
+        "role": null
+      },
+      "transport": "Pause",
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Loading preview for Fixture host",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": false,
+          "rect": {
+            "x": 314,
+            "y": 358.796875,
+            "width": 97.9140625,
+            "height": 30,
+            "top": 358.796875,
+            "right": 411.9140625,
+            "bottom": 388.796875,
+            "left": 314
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Regenerating DJ preview for Fixture host",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": false,
+          "rect": {
+            "x": 419.9140625,
+            "y": 358.796875,
+            "width": 107.8984375,
+            "height": 30,
+            "top": 358.796875,
+            "right": 527.8125,
+            "bottom": 388.796875,
+            "left": 419.9140625
+          }
+        }
+      ],
+      "notices": [],
+      "held": [
+        "prepareDJVoicePreview"
+      ],
+      "generationCalls": [
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324764842,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324789114,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324828026,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324853531,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324880789,
+          "mode": "hold"
+        }
+      ],
+      "fixtureSpeechResults": 2,
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-regenerate-pending",
+      "sha256": "1ea08084efa84b9f48a7d30608dd06a6e86b9b4ce0970004124198edc67baea6",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 419.9140625,
+          "y": 358.796875,
+          "width": 107.8984375,
+          "height": 30,
+          "top": 358.796875,
+          "right": 527.8125,
+          "bottom": 388.796875,
+          "left": 419.9140625
+        },
+        "insideDrawer": false,
+        "name": "Regenerating DJ preview for Fixture host",
+        "type": "button",
+        "role": null
+      },
+      "transport": "Play",
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Loading preview for Fixture host",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": false,
+          "rect": {
+            "x": 314,
+            "y": 358.796875,
+            "width": 97.9140625,
+            "height": 30,
+            "top": 358.796875,
+            "right": 411.9140625,
+            "bottom": 388.796875,
+            "left": 314
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Regenerating DJ preview for Fixture host",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 419.9140625,
+            "y": 358.796875,
+            "width": 107.8984375,
+            "height": 30,
+            "top": 358.796875,
+            "right": 527.8125,
+            "bottom": 388.796875,
+            "left": 419.9140625
+          }
+        }
+      ],
+      "notices": [],
+      "held": [
+        "prepareDJVoicePreview"
+      ],
+      "generationCalls": [
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324764842,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324789114,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324828026,
+          "mode": "hold"
+        }
+      ],
+      "fixtureSpeechResults": 1,
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-regenerate-tab-away",
+      "sha256": "4e16ab6fc914d210cdc38a029e3772dda24368c8061291e6818606a3c051a900",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1108,
+          "y": 370.7890625,
+          "width": 34,
+          "height": 34,
+          "top": 370.7890625,
+          "right": 1142,
+          "bottom": 404.7890625,
+          "left": 1108
+        },
+        "insideDrawer": false,
+        "name": "Edit Fixture host",
+        "type": null,
+        "role": null
+      },
+      "transport": "Play",
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Loading preview for Fixture host",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": false,
+          "rect": {
+            "x": 314,
+            "y": 358.796875,
+            "width": 97.9140625,
+            "height": 30,
+            "top": 358.796875,
+            "right": 411.9140625,
+            "bottom": 388.796875,
+            "left": 314
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "name": "Regenerating DJ preview for Fixture host",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": false,
+          "rect": {
+            "x": 419.9140625,
+            "y": 358.796875,
+            "width": 107.8984375,
+            "height": 30,
+            "top": 358.796875,
+            "right": 527.8125,
+            "bottom": 388.796875,
+            "left": 419.9140625
+          }
+        }
+      ],
+      "notices": [],
+      "held": [
+        "prepareDJVoicePreview"
+      ],
+      "generationCalls": [
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324764842,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324789114,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324828026,
+          "mode": "hold"
+        },
+        {
+          "name": "prepareDJVoicePreview",
+          "at": 1792324853531,
+          "mode": "hold"
+        }
+      ],
+      "fixtureSpeechResults": 1,
+      "externalAttempts": 0,
+      "httpWrites": 0
+    }
+  ],
+  "sources": {
+    "src/renderer/pages/DJs/components/VoicePreview.component.tsx": "a638313a2138c7f1251ccd8764faa90ac223fda2c1a67ccb9e21e6ff89b9fb2c",
+    "src/renderer/pages/DJs/components/VoicePreview.styles.css": "a6dd25249ef1d29add2819087e07c374272bf731b7a726ecc0c4e663f0c215a4",
+    "src/main/dj-previews.ts": "56d36390dbf9ba2a3177c46ff2a20d4478fa20bc37d6220bc1459b6e592722b3"
+  },
+  "finalBundles": {
+    "out/renderer/index.html": "de30c28b76d0455ea1efbc63df0e482dedf8d912c1eff55137844f7d16370e85",
+    "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/demo/news-break.json": "fad8cf445ffac400596faa134c1ca357b28a6de86dec5e8389597b1277050c46",
+    "out/renderer/demo/transcript.md": "d64810c60028cc5d69ff10c156b07f8cf5d78cee42ae34e5e6cc0e6553f3fb44",
+    "out/renderer/demo/news-break.mp3": "718a35bc38f30397b7b43965db4a4bf5211d59c0a5f37c4e23ef38428a614f74",
+    "out/renderer/voice-previews/TX3LPaxmHKxFdv7VOQHJ.mp3": "f8018932908f1c3cfaed40a94b13fe4d498489f3fd1d37d3fa86984af721e40c",
+    "out/renderer/voice-previews/cgSgspJ2msm6clMCkdW9.mp3": "addac5c0fecee048baed846784c7f599fa0bcce636556e7a6bc63daa43ffee9f",
+    "out/renderer/voice-previews/JBFqnCBsd6RMkjVDRZzb.mp3": "ac1804ae2ee825f7414d819e2036369297bf9fc01a816b4f3d9c51e7357d32cf",
+    "out/renderer/voice-previews/manifest.json": "15811b8afa01189660b5da6e6e0f54958a4889b644d9ef18d1474e10acead7dc",
+    "out/renderer/voice-previews/EXAVITQu4vr4xnSDxMaL.mp3": "fef86e7100a94578dd2dcee7db9085fcf5c6f50b07aeceeabae05dd09b17a539",
+    "out/renderer/voice-previews/onwK4e9ZLuTAKqWW03F9.mp3": "9c91149960d8c492f19a7d53522af8a4597b490e90f0fe8dd7022653c9824c52",
+    "out/renderer/voice-previews/cjVigY5qzO86Huf0OWal.mp3": "3f485d54b0932999ab76225e4af338b37c2becac438c8595023bc13984bfc8e5",
+    "out/renderer/voice-previews/FGY2WhTYpPnrIDTdsKH5.mp3": "97fc724a7c41b0c02884aec975e2e4a749daabb1fc57a8229b34e8180e1fe418",
+    "out/renderer/assets/inter-cyrillic-ext-500-normal-BmqWE9Dz.woff": "e250c05aebcf49971e0b25f476992dd463c28c0292ebb204d9db542fb5066ca7",
+    "out/renderer/assets/manrope-greek-600-normal-BoRV6lzK.woff2": "18d69aa241a76095c4c5f8c224abe6519ff60db3b4085e843d59fb4965a4eebd",
+    "out/renderer/assets/inter-cyrillic-500-normal-CxZf_p3X.woff": "5be18e0345781cb882a267798518553c0e915174fc70731ab5f085ca64ba1ebc",
+    "out/renderer/assets/inter-greek-500-normal-Xzm54t5V.woff": "86d55a4b1b9cbced7e61e76d5d44cf49d0bd1c814d3df2de67b7136ab4fdcece",
+    "out/renderer/assets/inter-greek-500-normal-BIZE56-Y.woff2": "cc197d79d33a3615a047baae85f4d1957f6f98b8898313658e160b1d519b1b6f",
+    "out/renderer/assets/inter-latin-500-normal-BL9OpVg8.woff": "9b42c108da48b5ed55a3072e815ffee2d271562e6c0dd6998910e8f9c09e0a3d",
+    "out/renderer/assets/inter-vietnamese-500-normal-mJboJaSs.woff": "18a4a09f751671cd8929d7c66e8fe7d820b511c36e51cf6047ffceab88eec4a4",
+    "out/renderer/assets/inter-latin-ext-500-normal-CV4jyFjo.woff2": "2c6fbc42d315528beb06c1096df45487bf4186c4b78b8111d12c9c951f8acca2",
+    "out/renderer/assets/manrope-latin-600-normal-BqgrALkZ.woff": "8d1f509774bca963fa02faf674678ce9244474306361ca2798583fa600346df6",
+    "out/renderer/assets/inter-vietnamese-400-normal-DMkecbls.woff2": "547ad9fdaeb0ae43487f4b8a02e47c36553c0c0cb73c8aa98f93b7b615f6b55d",
+    "out/renderer/assets/index-CDJNUJ8j.js": "214f3e046051be8d2ba14720f41ce5323fd11460f01ec1dbe0b7ad6dbba10078",
+    "out/renderer/assets/manrope-greek-600-normal-CF2i9ZRY.woff": "59fa49c299110657ee3dbc02beed32f5fda899423686058a0ce7e499851e6e7a",
+    "out/renderer/assets/manrope-vietnamese-600-normal-C1J5PCl_.woff2": "bce46331a74572cd723ddb8200a11c00e71370fad490f045564989527469aa3d",
+    "out/renderer/assets/inter-latin-ext-400-normal-77YHD8bZ.woff": "22ae8360fbad24d2af7c6c9898a346c881774dc87f7cf94bd262c48ad58d7116",
+    "out/renderer/assets/manrope-vietnamese-600-normal-lA7a_7Ok.woff": "628a1c849748530c6f7c02c18bdd3191bc19264e20ad2308a8a954605cdb620b",
+    "out/renderer/assets/inter-greek-ext-500-normal-2j5mBUwD.woff": "c85d11bde719108cc9a4f6f5b008087f6c36493b47395580d4f5336182b0f0c7",
+    "out/renderer/assets/manrope-cyrillic-600-normal-DvRl3Mj-.woff2": "80b86efbef1c9fb66557cc4cc7b6db42db2fd631f1a9b8735f3bbefbb5128799",
+    "out/renderer/assets/inter-greek-ext-500-normal-C4iEst2y.woff2": "75a9ec9383a3b7a7bf7cfb94f64edf38d9cfdc5f7ffa0cbed2733627a6e4426d",
+    "out/renderer/assets/inter-cyrillic-ext-400-normal-DQukG94-.woff": "5cb2f1cc0936f89a42ceae34f5a5720248dc5b8114c12b1c33a7d2ef01a9b6b9",
+    "out/renderer/assets/inter-cyrillic-400-normal-HOLc17fK.woff": "6e441a6c94788318fa02b6d0a633aa29eebe27b69c6567eb1e59b4edc68ed70e",
+    "out/renderer/assets/inter-greek-400-normal-B4URO6DV.woff2": "c15ddd00a9927b56f5c655a41f976f79bd848a20cce91fc14227751872a1cc27",
+    "out/renderer/assets/inter-greek-ext-400-normal-DGGRlc-M.woff2": "eadedd9e13c2582430a9fb1519eb86152fdabb483a6f66d90f8d8a52e977a1b7",
+    "out/renderer/assets/inter-latin-ext-500-normal-BxGbmqWO.woff": "30d2903ce97f8a89ea0e9c083b42cb8bf97e7bbb5607e7f00352815f19cb0d5b",
+    "out/renderer/assets/inter-vietnamese-400-normal-Bbgyi5SW.woff": "54aa42d325bcdfd623ecb9eac4a5e3c6420c63d7b86e9d8545fb479f653beb57",
+    "out/renderer/assets/manrope-latin-600-normal-4f0koTD-.woff2": "f7ac6258da20ab7541939b59851155753d1d24f1b30cbcb949077a3faa3d1593",
+    "out/renderer/assets/manrope-latin-ext-600-normal-_gBojHdJ.woff2": "ff679412842fc3b5ce2dfad626db5261a4e663dcfd1bf1209bdfc61c2b2f37e6",
+    "out/renderer/assets/inter-cyrillic-500-normal-BasfLYem.woff2": "b77a86ec16aadc157f4a99e8898d71cd75ea264753d9bdf13f962f8c3988cbb0",
+    "out/renderer/assets/inter-cyrillic-ext-400-normal-BQZuk6qB.woff2": "ef572f9187a8be018d9d9c2c6b77c1f6cb2af4199f02fc16c292ea10ab25a2cc",
+    "out/renderer/assets/inter-greek-400-normal-q2sYcFCs.woff": "bdae9d28729e8c68587d5d54e216d771a40d7a6800e824586a6e2f570c2f10df",
+    "out/renderer/assets/inter-cyrillic-400-normal-obahsSVq.woff2": "f0bb586459ce8f09b238285040f17e3e9e9538b2c5a7aae0775194e33c36c3c3",
+    "out/renderer/assets/manrope-latin-ext-600-normal-u5Pl7hTU.woff": "80ff78480448f4c2c0f586cb016928554b8cd84b2b95dec5e5f7579274f757a0",
+    "out/renderer/assets/index-B3FxMrNX.css": "baf9325acb40ea236349e7bd4665a0641404b1458380af7a597f7bd5e707a1f7",
+    "out/renderer/assets/inter-cyrillic-ext-500-normal-B0yAr1jD.woff2": "1c2db92d3cd9b237ca7c9c07af556d542f28ded1db54cd4382cf776501c5291f",
+    "out/renderer/assets/inter-latin-ext-400-normal-C1nco2VV.woff2": "6744a7f509ebc6ab220a6cd4ea77e898adf014f03d88dcda5d45d8a9feefb4e9",
+    "out/renderer/assets/inter-latin-400-normal-CyCys3Eg.woff": "e20fa0b4fd2dd26e4d14b3ac3cc922509c3a63fa5e910e90c614544aa042dd45",
+    "out/renderer/assets/manrope-cyrillic-600-normal-It4mZcQk.woff": "716a12f36cf789e399e0ad0bd205e3d1c66e4de66fe0c7e94a59ab7f007fce89",
+    "out/renderer/assets/inter-vietnamese-500-normal-DOriooB6.woff2": "44e36aa5a8f12130029a29bb0e6695d0262b67446ce321e878b1fb56162b5de6",
+    "out/renderer/assets/inter-latin-400-normal-C38fXH4l.woff2": "8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc",
+    "out/renderer/assets/inter-greek-ext-400-normal-KugGGMne.woff": "4f2b6f92ddfece8812e79774d446218aa6e0773ff8c2d31130fe2bdc23bd22d0",
+    "out/renderer/assets/inter-latin-500-normal-Cerq10X2.woff2": "f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f"
+  },
+  "fixtures": {
+    "bootstrap.mjs": "049b716ef4dd261564bd639edc5a7436f2a5d2dd4697752e754046561a5267a6",
+    "observe.cjs": "b603785e2662e74cd1c8d564225bde786b10b0f6bec23edb79cfc67090c20e8d",
+    "server.mjs": "33b1beafab299247920af0bee234c85d500ecb207a2527bf3c25a2feb9dcc7da",
+    "out/main/index.js": "576624282916408675d3a7ee10b7528d3334dc477ed0de6f259d0339a53bd57a",
+    "capture.py": "83193e9b53ecf266123a48c24d779d6a69da2c59d5f232cf0e281c199eb0771e",
+    "inventory.cjs": "2f3c476c1ae8aa6e9fac7e3e7c2d21357eefc91617f19d41ac7d617112f36cb7"
+  },
+  "inventory": {
+    "artifact": "2026-10-18-current-keyboard-controls.csv",
+    "sha256": "b188b47656c83e7d68bd201272d8c2ddac3f08860d93e39fee41d81891248220",
+    "reachableModules": 55,
+    "controlDefinitions": 218,
+    "moduleHashes": [
+      {
+        "file": "src/renderer/main.tsx",
+        "sha256": "863a6596bde95ba270f0d554a2ac2bd0c3819ca832f1bfd577d0edf9bb69a7cc"
+      },
+      {
+        "file": "src/renderer/App.tsx",
+        "sha256": "a598265408255fc79db070fe71a98abe75f473fccbb2e8b208ddce0cd4140866"
+      },
+      {
+        "file": "src/shared/types.ts",
+        "sha256": "f98356fc4473975a77f5f8d0afbe3278bd623e9d94e5c8de85f3db1cd65e2e05"
+      },
+      {
+        "file": "src/shared/dj-playback.ts",
+        "sha256": "7e807ff052f50332ff9c78b083c450a9f5c116f68fc36de93480165ec1e6e55b"
+      },
+      {
+        "file": "src/shared/workflow.ts",
+        "sha256": "22bbb66493579cc57e09c69119943adec0fa2373d823820a2579bd4996e6cc77"
+      },
+      {
+        "file": "src/renderer/api.ts",
+        "sha256": "a44175c0fa1b6d5bb3b5fe611e652334f974aa73a93b37b42b0ab2ad45debeca"
+      },
+      {
+        "file": "src/renderer/useRetryFocus.ts",
+        "sha256": "8695ab8ecfdb3299d6828636ef38d607a3ab163deaf6a9be9c8f88ef768391cc"
+      },
+      {
+        "file": "src/renderer/player.tsx",
+        "sha256": "263aaf35508917e0af2a96b50cdb7881dbe238e77acd0982dae726f9e068ebb5"
+      },
+      {
+        "file": "src/shared/news-transitions.ts",
+        "sha256": "dae2314678e39262b7e89986412320c33d96cf8af3dc841188fe5e604eda8c90"
+      },
+      {
+        "file": "src/renderer/audio.ts",
+        "sha256": "48884e62f20bea6779e716f685407f780eaaca8a06b86006e686c4d4bdcdc0aa"
+      },
+      {
+        "file": "src/renderer/NewsRecovery.tsx",
+        "sha256": "0041da77053a53592d90f9fb0e1bf86c7868c48bd7bd5567118df605550fb35d"
+      },
+      {
+        "file": "src/renderer/dj-playback.tsx",
+        "sha256": "d5fce424eb2f78b8fe546e00b6584b1f877981b42ae12eb531df9d93ae031824"
+      },
+      {
+        "file": "src/renderer/components/Player/Player.component.tsx",
+        "sha256": "bf2cb1f9ee4c8a4167ff7185571892b95e77a5d987e35a0ae94816eb5cb8884d"
+      },
+      {
+        "file": "src/renderer/components/Shared.tsx",
+        "sha256": "16726cf323f44324a124ee5fb29a7270ae514f8dc04f87f153f6b0a5e289ff5e"
+      },
+      {
+        "file": "src/renderer/components/Player/DJPopover.component.tsx",
+        "sha256": "487640aca4cbd79a52ae99f9b03b5ecc57e1ea7da07a437dd9029657bba72d90"
+      },
+      {
+        "file": "src/shared/news-preparation-status.ts",
+        "sha256": "27803f7289d4cf64a0d350a361fe9682231e518e93bd4a71e3590a4df771eae9"
+      },
+      {
+        "file": "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx",
+        "sha256": "2f750a0a07c76a2d1d77bbe28a28c2c572e90fbac5d9c66391922b2f99e70e33"
+      },
+      {
+        "file": "src/renderer/components/Queue/Queue.component.tsx",
+        "sha256": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082"
+      },
+      {
+        "file": "src/renderer/components/Inspector/Inspector.component.tsx",
+        "sha256": "8fd6dd9e51fe39038a893e4e66dc93656713e3434399d0b5210df870d3f5d235"
+      },
+      {
+        "file": "src/renderer/components/LibrarySelection.tsx",
+        "sha256": "97db6216b4fada46621ce20658e1bc1d47b76fe0819a0db75e446ea82965e342"
+      },
+      {
+        "file": "src/renderer/pages/Settings/SettingsEdits.tsx",
+        "sha256": "44e576f60c8a96d9fcc00df839244beefd8144215e0801b03803c20d9b34d56e"
+      },
+      {
+        "file": "src/renderer/components/ProviderKeys/ProviderKeyEdits.tsx",
+        "sha256": "99b9e06d6c62a90d36195ef7ae832444dd64c7cad8153db4fd66fd7feefe04d2"
+      },
+      {
+        "file": "src/renderer/pages/Connection/Connection.page.tsx",
+        "sha256": "6136e0df35aacd3f100e54b94b6b5f5641eda872fb6a6667cc0ecbe6882f480b"
+      },
+      {
+        "file": "src/renderer/components/LibraryChooser.tsx",
+        "sha256": "2c73cbbfc771e1b55e5597ff370c718c1a4c4245bf3f399c44d30462ba39cad6"
+      },
+      {
+        "file": "src/renderer/pages/Songs/Songs.page.tsx",
+        "sha256": "a15a3adc08b8ebb2bd4d96b00c8462d94922bef67eb2fad655c6c428af0eb942"
+      },
+      {
+        "file": "src/renderer/components/FilterSelect/FilterSelect.component.tsx",
+        "sha256": "b6c4242190b3d107c5145f464db5f3b4912736c70c940a3344c73aa26463ec26"
+      },
+      {
+        "file": "src/renderer/components/TrackTable/TrackTable.component.tsx",
+        "sha256": "7eaa496b789e8068a9722726f96eef6710acbf113dd0bbbc15272834d74ddc6e"
+      },
+      {
+        "file": "src/shared/playlist-entries.ts",
+        "sha256": "bb58ab3747844f5080fae78be9a9431bc9cb841fbbb704866cd7e064b5a1292c"
+      },
+      {
+        "file": "src/renderer/pages/Songs/VirtualSongs.component.tsx",
+        "sha256": "c5ff704c72883ecd6b2208576efaca1c3f21c871e386f1550caf802900f2b480"
+      },
+      {
+        "file": "src/renderer/pages/Albums/Albums.page.tsx",
+        "sha256": "09a1292143de4e0f24a233a41b50e90fae8f19d394afae2f5171384f59fc9667"
+      },
+      {
+        "file": "src/renderer/components/CollectionHeading/CollectionHeading.component.tsx",
+        "sha256": "3a055f26b529958fd7a010c1318de66c54e4c6c77118207b3eed745c020e5548"
+      },
+      {
+        "file": "src/renderer/pages/Albums/VirtualAlbums.component.tsx",
+        "sha256": "5d772745b013aa70e8a1df418322f5a82eaac772377cd487d7c5ba8dc6478ebc"
+      },
+      {
+        "file": "src/renderer/pages/Playlists/Playlists.page.tsx",
+        "sha256": "b7776090d61317ad92f967df2cfff4ca1e4e1d073f3a94b84b986ee44ac25cf0"
+      },
+      {
+        "file": "src/renderer/pages/Stations/Stations.page.tsx",
+        "sha256": "9630598a4aebfbbdb1b693ed6735ab855e8453d0668b824dbf21b5e52511bb34"
+      },
+      {
+        "file": "src/renderer/components/InfoHelp/InfoHelp.component.tsx",
+        "sha256": "be2433410cfe2387f36bae23bc6e993a3f54942e9f7979c1854908a83b508cc8"
+      },
+      {
+        "file": "src/renderer/components/ConfigurationTabs/ConfigurationTabs.component.tsx",
+        "sha256": "20df1037126e5f9596bf917f3d5fbc455f41f236626bdbd9176fdc3ba4242a9f"
+      },
+      {
+        "file": "src/renderer/pages/Stations/components/RoomSetup.component.tsx",
+        "sha256": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330"
+      },
+      {
+        "file": "src/renderer/pages/Stations/components/PreparedTakes.component.tsx",
+        "sha256": "2acd8dc806c843d6578d0412be6650dc4e03da373c1d51af2850f890b68407a1"
+      },
+      {
+        "file": "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx",
+        "sha256": "c4ad3a4578a806ddde343831a2e2015bd85f9321a9c0d0f23ee3c79b7d1461e8"
+      },
+      {
+        "file": "src/renderer/pages/Stations/components/NewsBucket.component.tsx",
+        "sha256": "61e5027abd4def319532645a9a3b1425a4b6531860a2609b113c18670c0fa2f3"
+      },
+      {
+        "file": "src/shared/news-pool.ts",
+        "sha256": "2f8ac1bde20b4a9adfd3beedf015e2d7e843dda584e7713be29e1a4c7ad3fa77"
+      },
+      {
+        "file": "src/renderer/pages/Settings/Settings.page.tsx",
+        "sha256": "2ab83e237a470dc453f005bbda2eec6bb9d77fdedf86401b1b9dab710cafa1b7"
+      },
+      {
+        "file": "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx",
+        "sha256": "2047e3687136763f88a041d2ba746ff423e7175392ae3f52cf13f4ab9cfc44e4"
+      },
+      {
+        "file": "src/renderer/components/ProviderKeys/TwitterSetupHelp.component.tsx",
+        "sha256": "49a4b7bd305c502937618daa3acb00fc85100267a60df492cac37efb13254317"
+      },
+      {
+        "file": "src/renderer/pages/Sources/Sources.page.tsx",
+        "sha256": "0010c35635ef75c8648bb4aded6b754603738cc0c345d493fa9624d8f4481fb8"
+      },
+      {
+        "file": "src/shared/sources.ts",
+        "sha256": "1da2117a59995911c14d098c8c814811ec309fb0d81c2fbf24b53721404e8f18"
+      },
+      {
+        "file": "src/renderer/pages/DJs/DJs.page.tsx",
+        "sha256": "b04a570f45ae65e795c87fa5a866755e2e620bc056223cab5a97e5db24c7faa1"
+      },
+      {
+        "file": "src/renderer/pages/DJs/components/DJEditor.component.tsx",
+        "sha256": "0aa1a7de1fd6110bb384d56337a0c91f807286b3ff27d1e1894c6e3f28eadbfc"
+      },
+      {
+        "file": "src/renderer/pages/DJs/components/DJEditor.presets.ts",
+        "sha256": "1994c54feef51b032cfb15038b9422f3fcb6243a7bf6df1a453ccf3db597ed5a"
+      },
+      {
+        "file": "src/renderer/pages/DJs/components/VoicePreview.component.tsx",
+        "sha256": "a638313a2138c7f1251ccd8764faa90ac223fda2c1a67ccb9e21e6ff89b9fb2c"
+      },
+      {
+        "file": "src/shared/voice-previews.ts",
+        "sha256": "4ebe9fe7dad73cc2195573ec729cb99440313fe8eea24e5b0201154cc8095bfe"
+      },
+      {
+        "file": "src/renderer/pages/DJs/components/DJPreview.component.tsx",
+        "sha256": "496eaaac54e8fedb02e33bd2c07b01bc5c4a0b23fcb57940729c32a5bd11c3b8"
+      },
+      {
+        "file": "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx",
+        "sha256": "637cd8e97ae915639bcec77ac344ec28159ebc22e40b5e4fa74df4f826e14645"
+      },
+      {
+        "file": "src/renderer/pages/Settings/components/NewsTransitions.component.tsx",
+        "sha256": "69051db733a1e1ed35621d7ac6f7e11908b6faba52d3d1a09515d97cddfc0c9b"
+      },
+      {
+        "file": "src/renderer/pages/Settings/components/NewsTransitionPreview.component.tsx",
+        "sha256": "b44dc08192dd9d4a354a8f921c1b5e17c6a0cf2291b26b8aa3bd285d55b2ff31"
+      }
+    ],
+    "exclusions": "NewsTest and NewsDemo have no import path from renderer main; audio elements have no native controls. Roles are filtered to interactive literal roles. Dynamic rendered instances and spread-provided attributes require source/runtime review."
+  },
+  "validation": "Production build/TypeScript, full ESLint, diff whitespace and parsed native predicates pass. All recorded cases use the final source/bundle. Both observers confirmed exit 0 with no page errors.",
+  "limitations": [
+    "Only saved-DJ generation/regeneration is replayed natively here; bundled/custom editor voice callers use the same component but no new native caller-specific result is claimed.",
+    "Readback failure, unavailable preview terminal, route/window hiding and physical OS/media/VoiceOver remain outside this native replay.",
+    "No audible/provider quality or observed listener acceptance. No unit tests. Smaller/enlarged viewports deferred.",
+    "All191 dispositions unchanged:189 active,2 Deferred,27 open comprising14 listener and13 other-proof. Q06 stays Review until the current control-family evidence reconciliation is complete."
+  ],
+  "processes": "Observer sessions47001 and72421 confirmed terminal exit0. Catalog39771 verified by exact command then stopped."
+}

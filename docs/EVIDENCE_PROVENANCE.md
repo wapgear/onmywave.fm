@@ -138,3 +138,6 @@ The [saved-take review record](verification/2026-10-18-saved-take-review-focus.j
 
 
 The [player DJ control record](verification/2026-10-18-player-dj-controls-focus.json) retains 22 scoped native projections and raw hashes, baseline focus evidence, real disposable settings/publication results and separate renderer phases. It distinguishes failed writes from saved-but-unconfirmed readback, queued versus actual pool reads, and muted decoded audio completion. Final terminal pool wording and same-take overlapping-run guards have source review only. No complete Q06 or new listener, audible, VoiceOver, live-server/provider or platform pass is claimed; all 191 dispositions remain unchanged.
+
+
+The [voice-preview record](verification/2026-10-18-voice-preview-focus.json) separates two baseline and eleven final native projections, includes source/bundle/fixture/raw hashes, and records shared-component source limits. Actual preview cache publication uses bundled bytes substituted only at speech rendering; no external request is made. Its current import-graph inventory lists 218 interactive definitions and does not claim computed runtime naming or whole-Q06 acceptance. All dispositions remain unchanged.
