@@ -1,0 +1,1353 @@
+{
+  "date": "2026-10-19",
+  "baseCommit": "4becb5447c17ee5d27ddf228ef7c2291b2f13a5a",
+  "scope": "Entire Playback source section and complete M1/M2/M3/M4/M8/M9 results.94 new semantic/partial-proof reviews plus two existing VOL01 clauses.",
+  "groups": [
+    {
+      "id": "PB01",
+      "actor": "Listener controlling or reopening music",
+      "trigger": "Use transport,keyboard or choose another song",
+      "outcome": "Controls preserve intent;only explicit Play starts paused music.",
+      "fragments": [
+        "REQ-L218-text-01",
+        "REQ-L218-text-02",
+        "REQ-L218-text-03",
+        "REQ-L218-text-04",
+        "REQ-L218-text-05",
+        "REQ-L218-text-06",
+        "REQ-L218-text-12",
+        "REQ-L218-text-13",
+        "REQ-L218-text-14",
+        "RAD-L133-result-01",
+        "RAD-L133-result-02",
+        "RAD-L133-result-03",
+        "RAD-L133-result-04",
+        "RAD-L133-result-05",
+        "RAD-L133-result-06"
+      ],
+      "mandatoryVariants": [
+        "Play/Pause/Previous/Next/seek/volume",
+        "Paused Next/Previous and seek",
+        "Command arrows from content/buttons/tabs",
+        "Plain tab arrows retain tab semantics",
+        "Space only from noninteractive content",
+        "Fields/sliders/menus/dialogs/popovers retain own controls",
+        "Explicit Play versus paused selection",
+        "Delayed preview does not start after a later music command"
+      ],
+      "checks": [
+        "M01",
+        "M06",
+        "Q06"
+      ],
+      "source": [
+        "src/renderer/player.tsx:toggle,previous,skipNext,seek,handleKey,play",
+        "src/renderer/pages/DJs/components/VoicePreview.component.tsx:requestIsCurrent",
+        "src/renderer/components/ConfigurationTabs/ConfigurationTabs.component.tsx"
+      ],
+      "evidence": [
+        "2026-10-16-listening-controls.json",
+        "2026-10-17-dj-listening-controls.json",
+        "2026-10-18-q06-keyboard-acceptance.json"
+      ],
+      "judgment": "Current player stores requested play intent separately from media event state. Track changes preserve it;Play explicitly sets it. Keyboard guards distinguish fields,interactive targets and overlays. Preview checks music-command generation before sound. Volume startup edits additionally depend on VOL01.",
+      "remaining": [
+        "Dated native checks retain their modified-rate/adapter phases and exact states. No new hardware/audible/listener or all-key-context runtime pass."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "PB02",
+      "actor": "Listener controlling or reopening music",
+      "trigger": "Inspect/remove repeated queue occurrences",
+      "outcome": "Remove only the chosen occurrence and move owned focus to the next visible action.",
+      "fragments": [
+        "REQ-L222-text-01",
+        "RAD-L132-result-01",
+        "RAD-L132-result-02",
+        "RAD-L132-result-03",
+        "RAD-L132-result-04",
+        "RAD-L132-result-05"
+      ],
+      "mandatoryVariants": [
+        "Duplicate song IDs with unique occurrence keys",
+        "Remove before current keeps current key",
+        "Paused stays paused",
+        "Next visible Remove then previous then Close",
+        "Collapsed Earlier history excluded",
+        "Focus elsewhere unchanged",
+        "Upcoming order versus shuffle presentation"
+      ],
+      "checks": [
+        "M03",
+        "M19",
+        "Q06"
+      ],
+      "source": [
+        "src/renderer/player.tsx:entries,removeQueue",
+        "src/renderer/components/Queue/Queue.component.tsx"
+      ],
+      "evidence": [
+        "2026-10-16-listening-controls.json",
+        "2026-10-17-queue-removal-focus.json"
+      ],
+      "judgment": "Queue entries use generated occurrence keys. Removal filters by key and adjusts current index around the removed occurrence. Queue focus selects only visible Remove actions before mutation and leaves unrelated focus untouched. Shuffle is labeled as unordered remaining choices rather than a predicted next order.",
+      "remaining": [
+        "Four-occurrence and focused native cases do not establish arbitrary queue sizes or all concurrent commands."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "PB03",
+      "actor": "Listener controlling or reopening music",
+      "trigger": "Natural song/DJ boundary or manual skip",
+      "outcome": "Follow repeat/shuffle once without changing pause intent,conversion mode or heard-news ownership.",
+      "fragments": [
+        "REQ-L218-text-01",
+        "REQ-L218-text-08",
+        "REQ-L218-text-09",
+        "REQ-L218-text-10",
+        "REQ-L218-text-11",
+        "RAD-L134-result-01",
+        "RAD-L134-result-02",
+        "RAD-L134-result-03",
+        "RAD-L134-result-04"
+      ],
+      "mandatoryVariants": [
+        "Shuffle each occurrence once",
+        "Previous actual shuffle history",
+        "Repeat off exhaustion",
+        "Repeat all wrap",
+        "Repeat one same occurrence",
+        "Ended-song DJ completion/failure/Stop",
+        "Manual Next skips repeat one",
+        "Converted mode retained",
+        "Pause intent retained",
+        "Natural completion counted once",
+        "Heard news not replayed"
+      ],
+      "checks": [
+        "M05",
+        "M07",
+        "M08",
+        "M18",
+        "D06"
+      ],
+      "source": [
+        "src/renderer/player.tsx:next,continueAfterSong,onended,seek,controlNews",
+        "src/renderer/dj-playback.tsx"
+      ],
+      "evidence": [
+        "2026-10-16-listening-controls.json",
+        "2026-10-18-queue-heard-invariant.json",
+        "2026-10-19-keyless-natural-radio.json"
+      ],
+      "judgment": "Natural continuation routes through continueAfterSong,which reloads repeat-one with current conversion mode;manual Next routes directly through next. Shuffle history uses occurrence keys. Preparation/current-generation guards protect cadence;delivery and heard exclusion retain their separate CI6 obligations. Explicit endpoint seek is not counted as natural completion.",
+      "remaining": [
+        "CI6 record explicitly lacks a forced reproduction of one queued outgoing-ended interleaving. Audible quality,listener understanding and OS controls remain separate."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "PB04",
+      "actor": "Listener controlling or reopening music",
+      "trigger": "Track load/restore fails and listener retries or skips",
+      "outcome": "Keep the queue and current intent;settle only the owned retry and suppress stale load results.",
+      "fragments": [
+        "REQ-L214-text-01",
+        "REQ-L214-text-02",
+        "REQ-L214-text-03",
+        "REQ-L214-text-04",
+        "REQ-L214-text-05",
+        "REQ-L214-text-06",
+        "REQ-L230-text-01",
+        "REQ-L230-text-02",
+        "REQ-L230-text-03",
+        "RAD-L135-result-01",
+        "RAD-L135-result-02",
+        "RAD-L135-result-03",
+        "RAD-L135-result-04",
+        "RAD-L135-result-05",
+        "RAD-L135-result-06",
+        "RAD-L135-result-07"
+      ],
+      "mandatoryVariants": [
+        "One supported conversion fallback",
+        "Terminal plain error with Retry/Skip",
+        "Late old success/failure",
+        "Duplicate current occurrence",
+        "Stable pending/error Retry focus",
+        "Successful exact request hands focus to transport",
+        "Later navigation/music/overlay/window wins",
+        "Saved-session Retry restores paused",
+        "Enqueue supersedes pending restore",
+        "Skip immediately focuses Next"
+      ],
+      "checks": [
+        "M14",
+        "M15",
+        "Q06"
+      ],
+      "source": [
+        "src/renderer/player.tsx:load,onerror,retry,restoreSession,musicCommand",
+        "src/renderer/components/Player/Player.component.tsx:retryPlayback,nextControl",
+        "src/renderer/useRetryFocus.ts"
+      ],
+      "evidence": [
+        "2026-10-16-playback-load-recovery.json",
+        "2026-10-17-live-duration-recovery.json",
+        "2026-10-18-playlist-player-recovery-focus.json"
+      ],
+      "judgment": "Load checks generation before mutating current media/result state. Native errors select conversion only once;terminal conversion failure pauses. Retry settlements carry occurrence,load/restore generation and command revision;the UI handoff checks all of them. Enqueue explicitly cancels restore retry.",
+      "remaining": [
+        "Recovery-focus evidence is phase-scoped and names residual duplicate/window variants. Controlled fallback faults are not real live outages."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "PB05",
+      "actor": "Listener controlling or reopening music",
+      "trigger": "Music lacks metadata or a catalog total",
+      "outcome": "Show usable fallbacks and an offset-aware finite total only for the current occurrence.",
+      "fragments": [
+        "REQ-L220-text-01",
+        "RAD-L139-result-01",
+        "RAD-L139-result-02",
+        "RAD-L139-result-03",
+        "RAD-L139-result-04",
+        "RAD-L139-result-05",
+        "RAD-L139-result-06",
+        "RAD-L139-result-07"
+      ],
+      "mandatoryVariants": [
+        "Untitled/Unknown artist",
+        "Unavailable table/queue length",
+        "Current-resource finite positive total",
+        "Converted offset and already-MP3 start position",
+        "Preserve valid catalog metadata",
+        "Unknown elapsed advances without total",
+        "App/system seeks unavailable until known",
+        "Finite recovery does not unpause"
+      ],
+      "checks": [
+        "B06",
+        "M02",
+        "M09",
+        "M10",
+        "M17"
+      ],
+      "source": [
+        "src/main/jellyfin.ts:songItem",
+        "src/main/media.ts:preparePlayback",
+        "src/renderer/player.tsx:load,ondurationchange,ontimeupdate,mediaSession",
+        "src/renderer/components/Player/Player.component.tsx"
+      ],
+      "evidence": [
+        "2026-10-16-unknown-duration.json",
+        "2026-10-17-live-duration-recovery.json",
+        "2026-10-17-live-codec-seeking.json"
+      ],
+      "judgment": "Current load guards measured duration by occurrence,generation,source and finite-positive value;offset adds into global duration/position. UI disables unknown seeking and MediaSession unregisters seek handlers while total is absent. MUS04/MUS05 already retain the source-section obligations;this adds complete M8 result context.",
+      "remaining": [
+        "M17 actual OS-mediated seek proof remains missing. Native/app position is not acoustic-position or platform timeline proof."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "PB06",
+      "actor": "Listener controlling or reopening music",
+      "trigger": "Quit/relaunch or retry failed saved-session reads",
+      "outcome": "Restore the single last queue and selected duplicate paused without overwriting pending recovery.",
+      "fragments": [
+        "REQ-L228-text-01",
+        "REQ-L228-text-02",
+        "REQ-L228-text-04",
+        "REQ-L228-text-05",
+        "REQ-L228-text-07",
+        "REQ-L228-text-12",
+        "REQ-L228-text-13",
+        "RAD-L140-result-03",
+        "RAD-L140-result-05",
+        "RAD-L140-result-14"
+      ],
+      "mandatoryVariants": [
+        "Saved queue order/duplicate index/position",
+        "Paused after relaunch",
+        "No resume prompt",
+        "Unavailable songs omitted safely",
+        "No placeholder save during pending/failed restore",
+        "Explain retained queue and Retry",
+        "Explicit Play/enqueue may replace",
+        "One last queue only"
+      ],
+      "checks": [
+        "M11",
+        "M12"
+      ],
+      "source": [
+        "src/renderer/player.tsx:restoreSession,startup effect,readyConnection,save,play,enqueue",
+        "src/main/index.ts:savePlayback"
+      ],
+      "evidence": [
+        "2026-10-16-listening-controls.json",
+        "2026-10-16-restore-options.json",
+        "2026-10-18-current-first-use-music.json"
+      ],
+      "judgment": "Startup reads state/options before marking its connection ready;session saving is gated by readiness. Restoration preserves input sequence and computes the selected surviving index,sets paused intent,and recreates occurrence keys. Explicit Play/enqueue supersede restore generations.",
+      "remaining": [
+        "Ordinary quit/reopen is not force-kill or power-loss durability. Current first-use restart is a simple album path,not every recovery/duplicate variant."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "PB07",
+      "actor": "Listener controlling or reopening music",
+      "trigger": "Change options with an empty/loading player or open another account",
+      "outcome": "Keep account options independent from the one last queue and retain early explicit edits.",
+      "fragments": [
+        "REQ-L228-text-03",
+        "REQ-L228-text-09",
+        "REQ-L228-text-10",
+        "REQ-L228-text-11",
+        "RAD-L140-result-04",
+        "RAD-L140-result-06",
+        "RAD-L140-result-11",
+        "RAD-L140-result-12",
+        "RAD-L140-result-13"
+      ],
+      "mandatoryVariants": [
+        "Volume/shuffle/repeat with empty queue",
+        "Early edits while startup loads",
+        "Failed restoration quit/reopen",
+        "Account-specific option hash key",
+        "Other account empty player preserves previous queue",
+        "Return to queue owner restores own options",
+        "VOL01 keyboard volume uses same edit path"
+      ],
+      "checks": [
+        "M12",
+        "M13"
+      ],
+      "source": [
+        "src/main/playback-preferences.ts",
+        "src/main/index.ts:getPlaybackPreferences,savePlaybackPreferences,savePlayback",
+        "src/renderer/player.tsx:preferenceEdits,saveOptions,startup"
+      ],
+      "evidence": [
+        "2026-10-16-restore-options.json",
+        "2026-10-16-account-player-options.json",
+        "2026-10-19-keyboard-volume-startup.json"
+      ],
+      "judgment": "Account-keyed options live separately from playback. Empty saves from another account do not overwrite the last queue owner. Startup respects explicit edit flags. Current keyboard-volume fix joins the public option-edit path;other controls already mark their edits. Existing VOL01 clauses remain linked without overwriting its bounded runtime evidence.",
+      "remaining": [
+        "Current volume run uses a successful delayed options read and empty queue. Failed restore and other controls retain earlier separate native scopes."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "PB08",
+      "actor": "Listener controlling or reopening music",
+      "trigger": "Preference save fails or a prior receipt returns",
+      "outcome": "Retry only preferences with exact pending/focus/generation ownership until matching confirmation.",
+      "fragments": [
+        "REQ-L216-text-01",
+        "REQ-L216-text-02",
+        "REQ-L216-text-03",
+        "REQ-L216-text-04",
+        "REQ-L216-text-05",
+        "REQ-L216-text-06",
+        "REQ-L216-text-07",
+        "REQ-L228-text-08",
+        "RAD-L140-result-07",
+        "RAD-L140-result-08",
+        "RAD-L140-result-09",
+        "RAD-L140-result-10"
+      ],
+      "mandatoryVariants": [
+        "Separate options Retry",
+        "No queue restore/replace/play",
+        "Immediate repeat guard",
+        "Pending/error feedback retains focused action",
+        "Success to Volume only while owned",
+        "Navigation/option edit/overlay/window revokes handoff",
+        "Old options/session receipts cannot clear newer failure",
+        "Matching later session save can resolve warning"
+      ],
+      "checks": [
+        "M12",
+        "Q06"
+      ],
+      "source": [
+        "src/renderer/player.tsx:optionsSaveGeneration,saveOptions,session-save receipt",
+        "src/renderer/components/Player/Player.component.tsx:retryOptions",
+        "src/renderer/useRetryFocus.ts"
+      ],
+      "evidence": [
+        "2026-10-18-options-save-focus.json",
+        "2026-10-16-restore-options.json",
+        "2026-10-19-keyboard-volume-startup.json"
+      ],
+      "judgment": "Preference-only writes patch only explicitly edited fields and are generation-guarded. Session success clears the options warning only when the captured generation is still current and no same-generation options write was pending. UI settlement/focus uses options generation and live ownership.",
+      "remaining": [
+        "Named focus record excludes forced window/overlay and some simultaneous-new-attempt variants. Source review is not a new runtime replay of those cases."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "PB09",
+      "actor": "Listener controlling or reopening music",
+      "trigger": "Navigate,background or close/activate the macOS window",
+      "outcome": "Keep the same live session;explicit Quit remains the shutdown/discard boundary.",
+      "fragments": [
+        "REQ-L224-text-01",
+        "RAD-L140-result-01",
+        "RAD-L140-result-02"
+      ],
+      "mandatoryVariants": [
+        "Music/news/Settings navigation",
+        "Background playback",
+        "Red close/Command-W hides",
+        "Current page/drafts/pending operations retained",
+        "Activation restores same window/minimized state",
+        "No implicit save/retry on activation",
+        "Explicit Quit stops work/discards unsaved drafts"
+      ],
+      "checks": [
+        "M04",
+        "V10"
+      ],
+      "source": [
+        "src/renderer/App.tsx:PlayerProvider ownership",
+        "src/main/index.ts:createWindow close,activate,before-quit"
+      ],
+      "evidence": [
+        "2026-10-17-window-session-retention.json",
+        "2026-10-17-native-window.json"
+      ],
+      "judgment": "PlayerProvider spans ordinary page navigation. macOS Close prevents destruction and hides the window;activation shows/focuses/restores it. before-quit marks closing,stops workflow,cancels news and revokes media. This retains source L15 window contract through complete M9 context.",
+      "remaining": [
+        "Native draft cases cover selected General forms,not every paid/provider operation. Actual paid continuation/cancellation and normal titlebar dragging retain their open scopes."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "PB10",
+      "actor": "Listener controlling or reopening music",
+      "trigger": "Catalog goes offline or authentication changes",
+      "outcome": "Offer honest retry/sign-in and preserve or clear transient drafts according to account ownership.",
+      "fragments": [
+        "REQ-L230-text-04",
+        "REQ-L230-text-05",
+        "REQ-L230-text-06",
+        "REQ-L230-text-07",
+        "REQ-L230-text-08"
+      ],
+      "mandatoryVariants": [
+        "Offline preserves session",
+        "Expiry prefilled server/username,empty password",
+        "Saved music restored paused",
+        "Same account retains radio/script/manual state through library selection",
+        "No implicit save/redispatch",
+        "Different account/sign-out clears unsaved drafts",
+        "Quit discards transient drafts",
+        "Current auth expiry only"
+      ],
+      "checks": [
+        "C12",
+        "C13",
+        "C14"
+      ],
+      "source": [
+        "src/renderer/App.tsx:App,SessionContent,ReadyApp",
+        "src/renderer/pages/Connection/Connection.page.tsx",
+        "src/renderer/pages/Stations/Stations.page.tsx"
+      ],
+      "evidence": [
+        "2026-10-16-account-boundary-current.json",
+        "2026-10-19-account-expiry-boundary.json",
+        "2026-10-19-failed-signout-expiry.json"
+      ],
+      "judgment": "Connection ID keys the transient SessionContent boundary. Expiry changes its ready content without changing the same-account draft owner;different ID/sign-out remounts it. Player restoration remains paused. Current auth-revision/deferred-expiry logic protects the accepted account transition.",
+      "remaining": [
+        "Account-expiry fixes prove named races,not all playlist/manual-operation permutations. Broader account lifecycle remains separately required."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    },
+    {
+      "id": "PB11",
+      "actor": "Listener controlling or reopening music",
+      "trigger": "Control actual music through macOS or verify connected-server recovery",
+      "outcome": "Integrate system transport with correct available controls and prove live behavior at its actual boundary.",
+      "fragments": [
+        "REQ-L226-text-01",
+        "REQ-L232-text-01"
+      ],
+      "mandatoryVariants": [
+        "Actual paused/playing hardware controls",
+        "Active DJ speech transport",
+        "Unknown total disables system seeks",
+        "Converted seek/global position",
+        "Connected-server recovery/persistence",
+        "Supported runtime/hardware versions"
+      ],
+      "checks": [
+        "M16",
+        "M17",
+        "Q10"
+      ],
+      "source": [
+        "src/renderer/player.tsx:mediaSession handlers",
+        "src/main/media.ts"
+      ],
+      "evidence": [
+        "2026-10-18-native-media-tool-limits.json",
+        "2026-10-17-live-codec-seeking.json",
+        "2026-10-16-live-jellyfin.json"
+      ],
+      "judgment": "Current code supplies metadata/playbackState/finite-duration-gated actions. It does not call setPositionState. Absence alone does not prove a platform defect because user agents can infer a timeline;the paired review below defers a change pending actual platform evidence.",
+      "remaining": [
+        "M16/M17/Q10 remain External. Denied Control Center and rejected media-key synthesis are not bypassed. App/API observations do not replace actual OS-mediated commands."
+      ],
+      "proofState": "reviewed-partial",
+      "accepted": false
+    }
+  ],
+  "STARContexts": [
+    {
+      "id": "M1",
+      "sourceId": "RAD-L132",
+      "story": "I can manage repeated songs individually",
+      "situationAndTask": "I queued a favorite twice and want to remove one occurrence",
+      "action": "Open the queue, select or remove that occurrence",
+      "expectedResult": "The other copy remains; removing an earlier entry does not change the current occurrence; paused music stays paused; removing a focused occurrence moves focus to the next visible Remove action, then the previous, or Close queue when none remain; collapsed Earlier history is skipped and other focus is left alone",
+      "resultFragments": [
+        "RAD-L132-result-01",
+        "RAD-L132-result-02",
+        "RAD-L132-result-03",
+        "RAD-L132-result-04",
+        "RAD-L132-result-05"
+      ],
+      "contextReviewState": "pending"
+    },
+    {
+      "id": "M2",
+      "sourceId": "RAD-L133",
+      "story": "I can choose the next song while keeping the room quiet",
+      "situationAndTask": "Music is paused and I want a different selection ready, including while a voice preview is being generated",
+      "action": "Press Next or Previous, use Command-Left/Right from a player button or configuration tab, or seek within the selection",
+      "expectedResult": "The selected song and position stay paused; Play starts music explicitly. Modified transport arrows leave configuration tabs selected; plain Left/Right arrows navigate them. Fields, sliders, menus and open dialogs/popovers retain their own keyboard behavior. A delayed preview stays quiet and remains saved for explicit replay",
+      "resultFragments": [
+        "RAD-L133-result-01",
+        "RAD-L133-result-02",
+        "RAD-L133-result-03",
+        "RAD-L133-result-04",
+        "RAD-L133-result-05",
+        "RAD-L133-result-06"
+      ],
+      "contextReviewState": "pending"
+    },
+    {
+      "id": "M3",
+      "sourceId": "RAD-L134",
+      "story": "I can predict shuffle and repeat",
+      "situationAndTask": "I want variety or to replay my queue or one song",
+      "action": "Enable shuffle and choose repeat off, all, or one",
+      "expectedResult": "Shuffle visits each queue occurrence once per cycle; Previous returns through actual shuffle history; repeat off stops at exhaustion, all wraps, and one repeats the current occurrence, including after an ended-song DJ break completes, fails or is stopped; manual Next still skips",
+      "resultFragments": [
+        "RAD-L134-result-01",
+        "RAD-L134-result-02",
+        "RAD-L134-result-03",
+        "RAD-L134-result-04"
+      ],
+      "contextReviewState": "pending"
+    },
+    {
+      "id": "M4",
+      "sourceId": "RAD-L135",
+      "story": "I can recover when a track cannot play",
+      "situationAndTask": "A connection or format fails during listening",
+      "action": "Read the error, Retry or choose another track",
+      "expectedResult": "Retry retains focused pending/error controls and moves to the persistent transport only for the same successful request; later navigation and music commands win. Saved-session Retry restores paused Play, and adding new music supersedes a pending restore. Skip hands focus to Next immediately. Keep the current song and queue; try format conversion once where supported, then stop with a useful error instead of retrying forever; a late old success or failure cannot replace my newer song or duplicate occurrence, change its playing/paused intent or show a stale error",
+      "resultFragments": [
+        "RAD-L135-result-01",
+        "RAD-L135-result-02",
+        "RAD-L135-result-03",
+        "RAD-L135-result-04",
+        "RAD-L135-result-05",
+        "RAD-L135-result-06",
+        "RAD-L135-result-07"
+      ],
+      "contextReviewState": "pending"
+    },
+    {
+      "id": "M8",
+      "sourceId": "RAD-L139",
+      "story": "I can listen when track details are incomplete",
+      "situationAndTask": "My library contains a song without a title, artist or duration",
+      "action": "Play the song and use transport normally; seek once a finite total is known",
+      "expectedResult": "Untitled and Unknown artist identify missing details; music tables and the queue identify unavailable lengths; current audio supplies a missing total for this queue occurrence, including conversion offsets; conversion begins at the requested song position even for an MP3 source; otherwise elapsed time advances with an unavailable total and disabled app/system seeking, while transport remains available; a later finite total enables seeking without unpausing; catalog metadata stays unchanged",
+      "resultFragments": [
+        "RAD-L139-result-01",
+        "RAD-L139-result-02",
+        "RAD-L139-result-03",
+        "RAD-L139-result-04",
+        "RAD-L139-result-05",
+        "RAD-L139-result-06",
+        "RAD-L139-result-07"
+      ],
+      "contextReviewState": "pending"
+    },
+    {
+      "id": "M9",
+      "sourceId": "RAD-L140",
+      "story": "I can reopen with my listening choices intact",
+      "situationAndTask": "I close the macOS window, quit with repeated songs queued, or adjust the player while the queue is empty",
+      "action": "Activate the app after closing its window, launch after quitting, or change volume, shuffle and repeat before playing",
+      "expectedResult": "Closing hides the same window and keeps playback intent, current page, drafts and pending actions; activation restores it without saving or retrying work; after quitting restore queue order, the selected duplicate and its position paused; retain options even with an empty queue; loading failures explain that the saved queue is kept for Retry; early control edits survive startup and failed-restoration quit/reopen; an options-save failure has its own retry without starting music or restoring/replacing the saved queue; that exact Retry keeps focused pending/error feedback, rejects repeated activation and conditionally focuses Volume on success; later navigation or option edits win, and old preference/session receipts cannot clear a newer failure; a later confirmed session save of the current options can resolve the warning under the same focus guards; merely opening another account does not replace the saved queue; each server/account retains its own volume, shuffle and repeat across restart, even while its player is empty; returning to the queue owner restores its options; explicit Play/enqueue may replace the single last queue",
+      "resultFragments": [
+        "RAD-L140-result-01",
+        "RAD-L140-result-02",
+        "RAD-L140-result-03",
+        "RAD-L140-result-04",
+        "RAD-L140-result-05",
+        "RAD-L140-result-06",
+        "RAD-L140-result-07",
+        "RAD-L140-result-08",
+        "RAD-L140-result-09",
+        "RAD-L140-result-10",
+        "RAD-L140-result-11",
+        "RAD-L140-result-12",
+        "RAD-L140-result-13",
+        "RAD-L140-result-14"
+      ],
+      "contextReviewState": "pending"
+    }
+  ],
+  "externalCanonicalDependencies": [
+    {
+      "id": "VOL01",
+      "fragments": [
+        "REQ-L218-text-07",
+        "REQ-L228-text-06"
+      ],
+      "record": "2026-10-19-keyboard-volume-startup.json",
+      "meaning": "Existing keyboard volume/startup obligation retained byte-for-byte and not recounted."
+    },
+    {
+      "id": "MUS04/MUS05",
+      "record": "2026-10-19-core-music-obligations.json",
+      "meaning": "Existing metadata/duration source obligations complement the complete M8 story;no repeated annotation or acceptance."
+    }
+  ],
+  "sourceSha256": {
+    "src/renderer/player.tsx": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+    "src/renderer/App.tsx": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+    "src/renderer/components/Player/Player.component.tsx": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+    "src/renderer/components/Queue/Queue.component.tsx": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082",
+    "src/renderer/components/ConfigurationTabs/ConfigurationTabs.component.tsx": "20df1037126e5f9596bf917f3d5fbc455f41f236626bdbd9176fdc3ba4242a9f",
+    "src/renderer/pages/DJs/components/VoicePreview.component.tsx": "d2cbca679984903fdc0692488dff67069fad302e4e3adcd8352915b5eb209581",
+    "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": "fd9488789ef2042e6146938d8117e29df0823aae6611013952eb1b4debe83c92",
+    "src/renderer/pages/Settings/components/NewsTransitionPreview.component.tsx": "b44dc08192dd9d4a354a8f921c1b5e17c6a0cf2291b26b8aa3bd285d55b2ff31",
+    "src/renderer/useRetryFocus.ts": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c",
+    "src/main/media.ts": "c2dbac7a2c6892e44794cffde7cd5118f6999f712b1f6f06533b3a9f44245fe2",
+    "src/main/index.ts": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+    "src/main/storage.ts": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+    "src/main/playback-preferences.ts": "015bbe70cc718f2449061cf25066ecd85e9d2bf281a0cb7d6dd7949fddc5ea4f"
+  },
+  "evidenceSha256": {
+    "2026-10-16-account-boundary-current.json": "55835a34bffcfcbc49a25f6f33cefeaef190e223714ef2b521372c9a6cec0e36",
+    "2026-10-16-account-player-options.json": "117fab1d65e98105168034fa066da7bee1af9907e1def21189a743437a50997d",
+    "2026-10-16-listening-controls.json": "e097b09a3be742ec30a5ad7016098ea16340ac8abf0183234c52002540ce1af5",
+    "2026-10-16-live-jellyfin.json": "d637bfa513cf876c240cb361ee95822ebb3b1ee556f46795e2376d890c6d91a6",
+    "2026-10-16-playback-load-recovery.json": "c37356c2f5421179aff54a7869059a5ec13da332700c8a84a96d8f0ef6196bf3",
+    "2026-10-16-restore-options.json": "d06f66a0a63ac06df3e82b7e95736039e56ebcc21306710eb9da4833b20e4f86",
+    "2026-10-16-unknown-duration.json": "96ac3283401f7fe371bcf496c7cec8d1b1ddb4a42e1b1961a31fb177bdcaa1ab",
+    "2026-10-17-dj-listening-controls.json": "2b58b54f0fb10ec5726cfd9813f2160fa46086ecf8e096f9107606bd2f821186",
+    "2026-10-17-live-codec-seeking.json": "ac855992b116ffd4d2d48d7ebd57104fdcd915e9a7b9aa9677ea1fbf484a9f24",
+    "2026-10-17-live-duration-recovery.json": "8ea810f9427f6142125a3f01dfdc294daf1de2042a4e4af6d3238a9c8c458331",
+    "2026-10-17-native-window.json": "2b407d7ce631fc7bed17aa4e2f9e8d45455b2dec9b9c2604e9abc5992fe11f3c",
+    "2026-10-17-queue-removal-focus.json": "ace208938161f773b3c11997e8be0f841a57cf8c84343214c68b8264de7131d0",
+    "2026-10-17-window-session-retention.json": "1a04b95be726aaca5ce25269b4fb8039a693380433eef211ccf30ce565989c23",
+    "2026-10-18-current-first-use-music.json": "de71ba3a7837c079629189a831a6fba9c84fc3ff6ae7a552d466d666f52d682a",
+    "2026-10-18-native-media-tool-limits.json": "7dcad7284c65670a66d58392a15bd009965b4297ebc715feaff8fc712abbc73a",
+    "2026-10-18-options-save-focus.json": "1391c53424cc88615ee16dc7f9407fcd7cd2d9927dea40102957a30467081a31",
+    "2026-10-18-playlist-player-recovery-focus.json": "dbdf01c6026f4cdf656cd0be6dfb8a104f5937a365d9263bff9bddefb574bcb8",
+    "2026-10-18-q06-keyboard-acceptance.json": "575fe36f9f3963003db2d116d88c733a6e1681882518825293a4bd48082a8f44",
+    "2026-10-18-queue-heard-invariant.json": "29df0671a73b99dc16518bf31499f5f89141cd585bcbe5bd3576c82e32271ec2",
+    "2026-10-19-account-expiry-boundary.json": "e8a4137ef4d80d9fb377850ef31571f6194881327ea476556d41d69d59433985",
+    "2026-10-19-failed-signout-expiry.json": "44139ece674c09f5503ac10c98322c92e9bb1fc3bd597f97c651636535121b15",
+    "2026-10-19-keyboard-volume-startup.json": "d62f5798613f171def2b1cd9c7f0955a3f64403a99ad3c5e47881b8f99ea1fd0",
+    "2026-10-19-keyless-natural-radio.json": "59edffe51a860a69685d0f1394ec5dc234db5f1f88dd3e06a3e66f9705590866"
+  },
+  "sourceFreshnessComparisons": {
+    "2026-10-16-account-boundary-current.json": {
+      "src/renderer/App.tsx": {
+        "recorded": "7c1661c1de25fc6f7f6afee09527b1615782cfd19a6cdc0008f8e84291c176cf",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": false
+      },
+      "src/renderer/pages/Stations/Stations.page.tsx": {
+        "recorded": "2627f57cb89db0ac5ed73dc85f4bea39987387b07844f5f840e34de81b89fa92",
+        "current": "d6e5344d45cd58b0f19d6c1f390079f82a132c01854c0df8f2445f327adcc573",
+        "matches": false
+      },
+      "src/renderer/pages/Settings/Settings.page.tsx": {
+        "recorded": "ce0c41cd58f82a801b651940cb641945c12ed4c83b765377f6be8d809d1e5d9f",
+        "current": "bfd9e02f6187a9581e9de3e5d941f66a35be7cf5477b68594b740ee25ebbf101",
+        "matches": false
+      },
+      "src/main/index.ts": {
+        "recorded": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/main/prepared-news.ts": {
+        "recorded": "c5f75f9818c3537fbf2cc177d5980328926b1d73202a3952f0da84258df11dd2",
+        "current": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+        "matches": false
+      }
+    },
+    "2026-10-16-account-player-options.json": {},
+    "2026-10-16-listening-controls.json": {},
+    "2026-10-16-live-jellyfin.json": {},
+    "2026-10-16-playback-load-recovery.json": {},
+    "2026-10-16-restore-options.json": {},
+    "2026-10-16-unknown-duration.json": {},
+    "2026-10-17-dj-listening-controls.json": {
+      "src/renderer/player.tsx": {
+        "recorded": "481d350ef35d5e11d77848f661419f5eea265cbf643db234c665174255ec562c",
+        "current": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+        "matches": false
+      },
+      "src/renderer/dj-playback.tsx": {
+        "recorded": "31e217aa382a88dcfddbfb0b06b0294825d4acdb7a9bc0127dd8e367adf85c5f",
+        "current": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+        "matches": false
+      },
+      "src/renderer/components/Player/Player.component.tsx": {
+        "recorded": "66f946823cd41e86f27ed6a53d21998cf7543c929066bc8152ccad2e59c89041",
+        "current": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+        "matches": false
+      },
+      "src/renderer/components/Player/DJPopover.component.tsx": {
+        "recorded": "6ffca314f80c990adb9c1fbf81f970560cd5d2debc786e855098f89551e2e4ec",
+        "current": "7a9858830d98a053b2a3d805e6a2b6521aa483154c00306b0a6cfb4fb96fd981",
+        "matches": false
+      },
+      "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx": {
+        "recorded": "be6052babfe16f1b501be68e15feceebba30e960e5596c32329d605c3cc666ae",
+        "current": "637cd8e97ae915639bcec77ac344ec28159ebc22e40b5e4fa74df4f826e14645",
+        "matches": false
+      },
+      "src/shared/dj-playback.ts": {
+        "recorded": "14581d724b465452a8db6314f92134b9d1b1c9709b1def8b805c2f455ffc9a01",
+        "current": "7e807ff052f50332ff9c78b083c450a9f5c116f68fc36de93480165ec1e6e55b",
+        "matches": false
+      },
+      "src/main/prepared-news.ts": {
+        "recorded": "0d0d40b27e899d04bea54d064d62017643c58211997f8c3e36f896b26c24bd2d",
+        "current": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+        "matches": false
+      },
+      "src/main/storage.ts": {
+        "recorded": "8b1ecddb5e7c6eafc74cf8fe9ff5a359d7cec3d336d72f335bd67554be92950a",
+        "current": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "matches": false
+      },
+      "src/main/news-workflow.ts": {
+        "recorded": "16e61a8e65a69bf97a59101befcd6a66e23cdb69350c9e2b854ed3e2772e11a2",
+        "current": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+        "matches": false
+      },
+      "src/main/index.ts": {
+        "recorded": "357b51c2fadb62492520bb3b3529bac8cb8e92f4412b551ce7282b447d2adc68",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/main/media.ts": {
+        "recorded": "6768544bd3215e37187a12293571c894a1023619ebe8f09e25403bdec0bfb671",
+        "current": "c2dbac7a2c6892e44794cffde7cd5118f6999f712b1f6f06533b3a9f44245fe2",
+        "matches": false
+      },
+      "src/preload/index.ts": {
+        "recorded": "0c7edf2153d5210b24a0fac9db667fd254e324366d4737653578ef067c1eac63",
+        "current": "458378616e402bc07202f269fa94092d8ee8685e2dd9bba7fcaf0c7ca58e31c1",
+        "matches": false
+      }
+    },
+    "2026-10-17-live-codec-seeking.json": {},
+    "2026-10-17-live-duration-recovery.json": {
+      "src/main/media.ts": {
+        "recorded": "d3abe363979e9953edb6cb279b777183c184cd27d027ed7584788a1b94ac0e0e",
+        "current": "c2dbac7a2c6892e44794cffde7cd5118f6999f712b1f6f06533b3a9f44245fe2",
+        "matches": false
+      },
+      "src/main/jellyfin.ts": {
+        "recorded": "4daf9866e8034ca89ffd209035b1b8795f5127082bcea0fa825182b66d103483",
+        "current": "59f19ce18dd13f9037c4e88e94de205f3e0e0e4a15b01943afb805c2e155b6c0",
+        "matches": false
+      },
+      "src/renderer/player.tsx": {
+        "recorded": "7b43bb2c3f336f71c753a242693ee833318d53b09519a88e28f44ce0a6e90f4e",
+        "current": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+        "matches": false
+      },
+      "src/renderer/components/Shared.tsx": {
+        "recorded": "5793ae1a38deec754cf3a48aeb2dfe0b246e20d9525faa9deb8ab73e1d17cc48",
+        "current": "16726cf323f44324a124ee5fb29a7270ae514f8dc04f87f153f6b0a5e289ff5e",
+        "matches": false
+      },
+      "src/renderer/components/Queue/Queue.component.tsx": {
+        "recorded": "4bf608d628f7f631b0d27982a1f43b99c0e0b367cfb06c3d30e55e1f1dca8111",
+        "current": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082",
+        "matches": false
+      },
+      "src/renderer/components/TrackTable/TrackTable.component.tsx": {
+        "recorded": "9563223e9360042d9e93133f9a99e2cd1db2435a7f73df2645d8280d0a917923",
+        "current": "158caa15a4fe11170ac048c1752d4b9327006595646f5a86acd27c5b1c0216e5",
+        "matches": false
+      }
+    },
+    "2026-10-17-native-window.json": {},
+    "2026-10-17-queue-removal-focus.json": {
+      "src/renderer/components/Queue/Queue.component.tsx": {
+        "recorded": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082",
+        "current": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082",
+        "matches": true
+      },
+      "src/renderer/components/Player/Player.component.tsx": {
+        "recorded": "8ee20d8917df31c5b880d850d0445a3cf9610969885844b7c67e3e50eb3d65c2",
+        "current": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+        "matches": false
+      },
+      "src/renderer/player.tsx": {
+        "recorded": "1a958a21936d3079f4a4d9c8e6987d47ffed8cf11cf6feee8cf4a4a7f2646f19",
+        "current": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+        "matches": false
+      },
+      "src/renderer/styles.css": {
+        "recorded": "5a235c72cbcbff30bf790e1fa7044ea6a9abc9727ecbda08389d9a059a196d32",
+        "current": "43da67b986692d802df012ddb0c01c03293edc3851930370e0d2a974a72c79b6",
+        "matches": false
+      },
+      "src/renderer/components/Drawer/Drawer.styles.css": {
+        "recorded": "f6a585dbc6dd4070b31efd16762d9a79c77ffa46388f79ae8bc8f4a99264d292",
+        "current": "f6a585dbc6dd4070b31efd16762d9a79c77ffa46388f79ae8bc8f4a99264d292",
+        "matches": true
+      },
+      "src/renderer/components/Player/Player.styles.css": {
+        "recorded": "c14c24b2b563243706fd7deecf0e7e1307965a3830d6208d313b8d0ac25d8114",
+        "current": "6e1d3fc6940e0f0bc2dd7b94667feba86ed566e3ce1c695d29a1a3b2968bb9c6",
+        "matches": false
+      }
+    },
+    "2026-10-17-window-session-retention.json": {},
+    "2026-10-18-current-first-use-music.json": {
+      "src/main/index.ts": {
+        "recorded": "aaa4568e65b5d8397b26a767ead775ce848e91038a58b9e3e486a29a0a6e22ec",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/main/storage.ts": {
+        "recorded": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "current": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "matches": true
+      },
+      "src/main/news-workflow.ts": {
+        "recorded": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+        "current": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+        "matches": true
+      },
+      "src/main/jellyfin.ts": {
+        "recorded": "6e1191d733752c57787c1c9465085e014a0500e0543e56a22467019892ad74ab",
+        "current": "59f19ce18dd13f9037c4e88e94de205f3e0e0e4a15b01943afb805c2e155b6c0",
+        "matches": false
+      },
+      "src/main/media.ts": {
+        "recorded": "c2dbac7a2c6892e44794cffde7cd5118f6999f712b1f6f06533b3a9f44245fe2",
+        "current": "c2dbac7a2c6892e44794cffde7cd5118f6999f712b1f6f06533b3a9f44245fe2",
+        "matches": true
+      },
+      "src/renderer/App.tsx": {
+        "recorded": "eae93435308b21d89e771bc920b389b753743923b1d9e907abed0f5d551551f7",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": false
+      },
+      "src/renderer/player.tsx": {
+        "recorded": "aa7d866e5724945a3f06773a984f6983ccc6544ee08b02991fd54c0f53f25f0c",
+        "current": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+        "matches": false
+      },
+      "src/renderer/dj-playback.tsx": {
+        "recorded": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+        "current": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+        "matches": true
+      },
+      "src/renderer/pages/Connection/Connection.page.tsx": {
+        "recorded": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815",
+        "current": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815",
+        "matches": true
+      },
+      "src/renderer/pages/Albums/Albums.page.tsx": {
+        "recorded": "09a1292143de4e0f24a233a41b50e90fae8f19d394afae2f5171384f59fc9667",
+        "current": "09a1292143de4e0f24a233a41b50e90fae8f19d394afae2f5171384f59fc9667",
+        "matches": true
+      },
+      "src/shared/dj-playback.ts": {
+        "recorded": "7e807ff052f50332ff9c78b083c450a9f5c116f68fc36de93480165ec1e6e55b",
+        "current": "7e807ff052f50332ff9c78b083c450a9f5c116f68fc36de93480165ec1e6e55b",
+        "matches": true
+      },
+      "src/shared/workflow.ts": {
+        "recorded": "22bbb66493579cc57e09c69119943adec0fa2373d823820a2579bd4996e6cc77",
+        "current": "22bbb66493579cc57e09c69119943adec0fa2373d823820a2579bd4996e6cc77",
+        "matches": true
+      }
+    },
+    "2026-10-18-native-media-tool-limits.json": {
+      "src/renderer/player.tsx": {
+        "recorded": "682513a44f59cf746c6464d24163181473d80e79addc33edd19aa2dfc9e810d4",
+        "current": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+        "matches": false
+      },
+      "src/renderer/components/Player/Player.component.tsx": {
+        "recorded": "13cde7bdf704f5eb153d872508af3840c7fc7fd9befbd9b62e829d2a5233e27f",
+        "current": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+        "matches": false
+      },
+      "src/main/index.ts": {
+        "recorded": "e4ab045607c0e17eed5cdf82594fdedad4c84430f9e3f5eaa72cb84e9bb465c4",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      }
+    },
+    "2026-10-18-options-save-focus.json": {
+      "src/renderer/player.tsx": {
+        "recorded": "682513a44f59cf746c6464d24163181473d80e79addc33edd19aa2dfc9e810d4",
+        "current": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+        "matches": false
+      },
+      "src/renderer/components/Player/Player.component.tsx": {
+        "recorded": "450e178394a6a145487854c9c6ea39ccb3886f4c183ff3b5f226fe23128b0901",
+        "current": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+        "matches": false
+      },
+      "src/renderer/useRetryFocus.ts": {
+        "recorded": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c",
+        "current": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c",
+        "matches": true
+      },
+      "src/main/index.ts": {
+        "recorded": "e4ab045607c0e17eed5cdf82594fdedad4c84430f9e3f5eaa72cb84e9bb465c4",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/renderer/App.tsx": {
+        "recorded": "a598265408255fc79db070fe71a98abe75f473fccbb2e8b208ddce0cd4140866",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": false
+      }
+    },
+    "2026-10-18-playlist-player-recovery-focus.json": {
+      "src/renderer/useRetryFocus.ts": {
+        "recorded": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c",
+        "current": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c",
+        "matches": true
+      },
+      "src/renderer/player.tsx": {
+        "recorded": "f18e166b2a750dfc2c9f9a108380757683f475cbe5cd33717af5be281292a600",
+        "current": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+        "matches": false
+      },
+      "src/renderer/components/Player/Player.component.tsx": {
+        "recorded": "ff91b28a23255a7467201630ed605fc6dd73231c340470e8827c6382e6cb74f2",
+        "current": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+        "matches": false
+      },
+      "src/renderer/components/Player/Player.styles.css": {
+        "recorded": "6e1d3fc6940e0f0bc2dd7b94667feba86ed566e3ce1c695d29a1a3b2968bb9c6",
+        "current": "6e1d3fc6940e0f0bc2dd7b94667feba86ed566e3ce1c695d29a1a3b2968bb9c6",
+        "matches": true
+      },
+      "src/renderer/components/TrackTable/TrackTable.component.tsx": {
+        "recorded": "062f3dc8c72be8d68df268eba642ef2d93b89ac500c73303688ec98653433ec9",
+        "current": "158caa15a4fe11170ac048c1752d4b9327006595646f5a86acd27c5b1c0216e5",
+        "matches": false
+      },
+      "src/renderer/pages/Playlists/Playlists.page.tsx": {
+        "recorded": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+        "current": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+        "matches": true
+      },
+      "src/renderer/styles.css": {
+        "recorded": "59a887c4f754a3e54d9fea94420cf39ffc99a825211113e85b98df2cd2b53693",
+        "current": "43da67b986692d802df012ddb0c01c03293edc3851930370e0d2a974a72c79b6",
+        "matches": false
+      }
+    },
+    "2026-10-18-q06-keyboard-acceptance.json": {},
+    "2026-10-18-queue-heard-invariant.json": {
+      "src/renderer/player.tsx": {
+        "recorded": "aa7d866e5724945a3f06773a984f6983ccc6544ee08b02991fd54c0f53f25f0c",
+        "current": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+        "matches": false
+      },
+      "src/renderer/dj-playback.tsx": {
+        "recorded": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+        "current": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+        "matches": true
+      },
+      "src/renderer/components/Player/Player.component.tsx": {
+        "recorded": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+        "current": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+        "matches": true
+      },
+      "src/renderer/components/Player/DJPopover.component.tsx": {
+        "recorded": "7a9858830d98a053b2a3d805e6a2b6521aa483154c00306b0a6cfb4fb96fd981",
+        "current": "7a9858830d98a053b2a3d805e6a2b6521aa483154c00306b0a6cfb4fb96fd981",
+        "matches": true
+      },
+      "src/renderer/components/Queue/Queue.component.tsx": {
+        "recorded": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082",
+        "current": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082",
+        "matches": true
+      },
+      "src/main/media.ts": {
+        "recorded": "c2dbac7a2c6892e44794cffde7cd5118f6999f712b1f6f06533b3a9f44245fe2",
+        "current": "c2dbac7a2c6892e44794cffde7cd5118f6999f712b1f6f06533b3a9f44245fe2",
+        "matches": true
+      },
+      "src/main/prepared-news.ts": {
+        "recorded": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+        "current": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+        "matches": true
+      },
+      "src/shared/news-pool.ts": {
+        "recorded": "d8a190d01563d458a34bd2a89e9bbce8aa7533a7e678b44d88559951768f9da5",
+        "current": "d8a190d01563d458a34bd2a89e9bbce8aa7533a7e678b44d88559951768f9da5",
+        "matches": true
+      }
+    },
+    "2026-10-19-account-expiry-boundary.json": {
+      "src/main/index.ts": {
+        "recorded": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": true
+      },
+      "src/main/jellyfin.ts": {
+        "recorded": "ad380aa5fc6e6963254831e5f5d5d67210053977a374e3473c62435d56dc26c8",
+        "current": "59f19ce18dd13f9037c4e88e94de205f3e0e0e4a15b01943afb805c2e155b6c0",
+        "matches": false
+      },
+      "src/renderer/App.tsx": {
+        "recorded": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": true
+      },
+      "src/renderer/api.ts": {
+        "recorded": "9c2f347ebb911d73915cbc4178a03f33e8dfcfcec4ff4a8b2ef4cd1e94ca4e18",
+        "current": "9c2f347ebb911d73915cbc4178a03f33e8dfcfcec4ff4a8b2ef4cd1e94ca4e18",
+        "matches": true
+      },
+      "src/renderer/main.tsx": {
+        "recorded": "fa6dae583c41c04186cb71ec7b3b68af716ba82fc46cb788b1b433d106141065",
+        "current": "fa6dae583c41c04186cb71ec7b3b68af716ba82fc46cb788b1b433d106141065",
+        "matches": true
+      },
+      "src/renderer/pages/Settings/Settings.page.tsx": {
+        "recorded": "bfd9e02f6187a9581e9de3e5d941f66a35be7cf5477b68594b740ee25ebbf101",
+        "current": "bfd9e02f6187a9581e9de3e5d941f66a35be7cf5477b68594b740ee25ebbf101",
+        "matches": true
+      },
+      "src/shared/types.ts": {
+        "recorded": "a4777ac71292ab6adddcb1fce211ad14c7e324fe1ccd5ed278fb1f290dfcaea0",
+        "current": "a4777ac71292ab6adddcb1fce211ad14c7e324fe1ccd5ed278fb1f290dfcaea0",
+        "matches": true
+      },
+      "src/renderer/pages/Connection/Connection.page.tsx": {
+        "recorded": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815",
+        "current": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815",
+        "matches": true
+      }
+    },
+    "2026-10-19-failed-signout-expiry.json": {
+      "src/main/index.ts": {
+        "recorded": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": true
+      },
+      "src/main/jellyfin.ts": {
+        "recorded": "ad380aa5fc6e6963254831e5f5d5d67210053977a374e3473c62435d56dc26c8",
+        "current": "59f19ce18dd13f9037c4e88e94de205f3e0e0e4a15b01943afb805c2e155b6c0",
+        "matches": false
+      },
+      "src/renderer/App.tsx": {
+        "recorded": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": true
+      },
+      "src/renderer/api.ts": {
+        "recorded": "9c2f347ebb911d73915cbc4178a03f33e8dfcfcec4ff4a8b2ef4cd1e94ca4e18",
+        "current": "9c2f347ebb911d73915cbc4178a03f33e8dfcfcec4ff4a8b2ef4cd1e94ca4e18",
+        "matches": true
+      },
+      "src/renderer/main.tsx": {
+        "recorded": "fa6dae583c41c04186cb71ec7b3b68af716ba82fc46cb788b1b433d106141065",
+        "current": "fa6dae583c41c04186cb71ec7b3b68af716ba82fc46cb788b1b433d106141065",
+        "matches": true
+      },
+      "src/renderer/pages/Settings/Settings.page.tsx": {
+        "recorded": "bfd9e02f6187a9581e9de3e5d941f66a35be7cf5477b68594b740ee25ebbf101",
+        "current": "bfd9e02f6187a9581e9de3e5d941f66a35be7cf5477b68594b740ee25ebbf101",
+        "matches": true
+      },
+      "src/shared/types.ts": {
+        "recorded": "a4777ac71292ab6adddcb1fce211ad14c7e324fe1ccd5ed278fb1f290dfcaea0",
+        "current": "a4777ac71292ab6adddcb1fce211ad14c7e324fe1ccd5ed278fb1f290dfcaea0",
+        "matches": true
+      },
+      "src/renderer/pages/Connection/Connection.page.tsx": {
+        "recorded": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815",
+        "current": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815",
+        "matches": true
+      }
+    },
+    "2026-10-19-keyboard-volume-startup.json": {
+      "src/renderer/player.tsx": {
+        "recorded": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+        "current": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+        "matches": true
+      },
+      "src/renderer/components/Player/Player.component.tsx": {
+        "recorded": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+        "current": "5b7ff9ae695085d37af33e5f76f54ff490ea0a73ec115a125c3eea2b4b6e3457",
+        "matches": true
+      },
+      "src/main/playback-preferences.ts": {
+        "recorded": "015bbe70cc718f2449061cf25066ecd85e9d2bf281a0cb7d6dd7949fddc5ea4f",
+        "current": "015bbe70cc718f2449061cf25066ecd85e9d2bf281a0cb7d6dd7949fddc5ea4f",
+        "matches": true
+      },
+      "src/main/storage.ts": {
+        "recorded": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "current": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "matches": true
+      },
+      "src/main/index.ts": {
+        "recorded": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": true
+      }
+    },
+    "2026-10-19-keyless-natural-radio.json": {
+      "src/main/index.ts": {
+        "recorded": "aaa4568e65b5d8397b26a767ead775ce848e91038a58b9e3e486a29a0a6e22ec",
+        "current": "dec42277a48052bbfeb7c4c2740e88aeed9d16549724d74d029fa3a5bd550932",
+        "matches": false
+      },
+      "src/main/storage.ts": {
+        "recorded": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "current": "6b161416787e2eb8f767b4985532c0c7dfaefb1279627ee5066de5fa827bf47f",
+        "matches": true
+      },
+      "src/main/prepared-news.ts": {
+        "recorded": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+        "current": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+        "matches": true
+      },
+      "src/main/news-workflow.ts": {
+        "recorded": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+        "current": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+        "matches": true
+      },
+      "src/renderer/App.tsx": {
+        "recorded": "27df7f378c734791390ebc4e0237ae5771fea9a48ffbb541a177182e43efc0fa",
+        "current": "a963724a01b592e67ca22e2feb66a29e86f5d171d7e11970845aba27cb14fa39",
+        "matches": false
+      },
+      "src/renderer/player.tsx": {
+        "recorded": "aa7d866e5724945a3f06773a984f6983ccc6544ee08b02991fd54c0f53f25f0c",
+        "current": "05334425a360098305e804c000e3b1e7a9bf84f2eda462aa21a993b1d3c1be31",
+        "matches": false
+      },
+      "src/renderer/dj-playback.tsx": {
+        "recorded": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+        "current": "eb2b2f7b8ab860074faa8717a6e889b5f78b24ea91787461153a454f81419e52",
+        "matches": true
+      },
+      "src/renderer/components/Player/DJPopover.component.tsx": {
+        "recorded": "7a9858830d98a053b2a3d805e6a2b6521aa483154c00306b0a6cfb4fb96fd981",
+        "current": "7a9858830d98a053b2a3d805e6a2b6521aa483154c00306b0a6cfb4fb96fd981",
+        "matches": true
+      },
+      "src/shared/news-pool.ts": {
+        "recorded": "d8a190d01563d458a34bd2a89e9bbce8aa7533a7e678b44d88559951768f9da5",
+        "current": "d8a190d01563d458a34bd2a89e9bbce8aa7533a7e678b44d88559951768f9da5",
+        "matches": true
+      },
+      "src/preload/index.ts": {
+        "recorded": "458378616e402bc07202f269fa94092d8ee8685e2dd9bba7fcaf0c7ca58e31c1",
+        "current": "458378616e402bc07202f269fa94092d8ee8685e2dd9bba7fcaf0c7ca58e31c1",
+        "matches": true
+      }
+    }
+  },
+  "fragmentTextSha256": {
+    "RAD-L132-result-01": "6e7a7014e4b200bff0fa347146927ab97489c6f55233650ca2b422f12b3308e8",
+    "RAD-L132-result-02": "42d0629e9f9e20e5c456b3d742e2703a3121ad4335d3d2aff9a9824a9294d8e4",
+    "RAD-L132-result-03": "5e594ebb6ef07efacf495e4ca17760cd15ac8544d1b445f7573f2ece68168f14",
+    "RAD-L132-result-04": "66da31f5043f92904591117266f1b5f846112ea02ab025542a0ab478a78af7b5",
+    "RAD-L132-result-05": "01b36183cfee1cf34aeea0b92691df58a2d1c3127fb0df65e7fa133c45ce0b28",
+    "RAD-L133-result-01": "8df8afa0c1275dd0b04074d5e100e7c30639536aa7c4b6f58ba7cc37f97cd1c6",
+    "RAD-L133-result-02": "c54349a7752be4e1a40769c9b19488650334e36c79e7b5ab213347357bc099e5",
+    "RAD-L133-result-03": "5a016f9c7d30c29a7b777c664f9febfe31d7378097693eb47b4b79a6f321ab8c",
+    "RAD-L133-result-04": "3f6f9a8793a5dc8f517f5d16dcdf85a550a67aa57ce946da0908ece2ccfb756c",
+    "RAD-L133-result-05": "711672eb08e177257821861537fd396ab5fecdf09f8f2d1ee39668f59a49614a",
+    "RAD-L133-result-06": "575f99dc881f54a6741dbc9fcc754d94947a9da0fd97e84711c8bc74f6a62a16",
+    "RAD-L134-result-01": "ea722e883119cdcf430d58b58be31041b98ec66b9527397becff93d0ed036195",
+    "RAD-L134-result-02": "992b09fa9e31b0ff2f22539e98ce9c43392443c2a494df61b588f857b0f3933c",
+    "RAD-L134-result-03": "64c854f4b81267e96c90ff918f6edb75bf3814279aad0a733eb206cd5b7c1f06",
+    "RAD-L134-result-04": "49d678a96b26a9cc734b6125a1699f9ea01c10edbffe3bfb40247539a145cb7a",
+    "RAD-L135-result-01": "040957c90b4ff02927ca795735de6cbdbf2d83dd483a36574c2a0896c5148b3b",
+    "RAD-L135-result-02": "9a07149c8c7471d09a212a1f53d98d372c92202a5e88f1b81b52cb172d99f07d",
+    "RAD-L135-result-03": "1f1ca1f4415573e54d81643c996a7a058f01dfe1de184a55cfaaccdbc77f5a1c",
+    "RAD-L135-result-04": "dd919b9723f31b76e6111d23cdbe647e58662be787ab892a62f0a57df2cec704",
+    "RAD-L135-result-05": "361d818f5a950492d729d6d1b98cc075cb4f1926320b8d3120ad546949a38430",
+    "RAD-L135-result-06": "c1c3a63e4ac4f7d4a2b68f232a757d605bdb9d5c1ab12d09bf5663630bd6c92d",
+    "RAD-L135-result-07": "6d45aa0deb12d735c497fcb5a4047fd6ecdac871cd88d616d16e4d90e341efb4",
+    "RAD-L139-result-01": "36efccd0ec130eb1908dde40020ecafe1ed911370a16db63f4dd0fb6ece06eb3",
+    "RAD-L139-result-02": "502943913d70bb7effca75c1b42a3306669891b276482a5d5ba7a95b8de4f5b0",
+    "RAD-L139-result-03": "475497ac642373fa5f8e4475dd98c3e35a9383b8de725391452d4ddf93d72e97",
+    "RAD-L139-result-04": "89cc68fbd7589d82a2d59257f9a58f5c0becdefc8a8b387b9467344471a4d959",
+    "RAD-L139-result-05": "f59dc0e02c5dbba7d30c3fc654150450717ec9cf2e9be01f47f60a4599459a4d",
+    "RAD-L139-result-06": "b441a834236da53e1b1fe28d6c4bb64d6bccf4535aedab9e6882b7817e850c6b",
+    "RAD-L139-result-07": "24d29622fa794e92e6ea7ee038bcf5cfebf3eaf69f0c2e6e3a9f7c65a7815369",
+    "RAD-L140-result-01": "fde2f8860c5a159779bc21b29fabf6afe0648283069997f8ca8dd95c8f7debf8",
+    "RAD-L140-result-02": "e6356475fac99d742481c7f5c8613567a0df679d297fb10854ae9bfc490892a7",
+    "RAD-L140-result-03": "701d8105982a77e0b8db384b46e51a44bed7c615e32c4f4d313eb9adae6d0b66",
+    "RAD-L140-result-04": "5201f6c54b8219e8535b0b74172ba7d42a4facbc07c475ec0c13024ae6efdefc",
+    "RAD-L140-result-05": "07ecb6363016dee08c6afe6d810ce274726f758e3aad25171b019458e08ed82d",
+    "RAD-L140-result-06": "3ce82a8307495851be8fd51ebe0b6a74d70ff094db79f4d65c52e2346a03f5a9",
+    "RAD-L140-result-07": "7319eab70b4cabd03eed47435e1f7ebe870ca3d48e7e8769f9a3090b85ace811",
+    "RAD-L140-result-08": "bba49c87b8705666678cc84f741e866e61adb2c2693579ec60ba992cf34eb226",
+    "RAD-L140-result-09": "d750960fa98f2fedcb669a0947a323f5d935b3fee216c126d502e9ba14debc7a",
+    "RAD-L140-result-10": "0cb431e684432d187ca7d3328d4fcfd85d26f8a93ee62811d7069e5cb4af1c60",
+    "RAD-L140-result-11": "02b2cd1020de7639b88be91501335614174f71da8b526e64a4832e2f3b16a681",
+    "RAD-L140-result-12": "4045db3bd5552b8db1f150b631ce709344490b149d06c1d542daa90d1534b21a",
+    "RAD-L140-result-13": "4d99ff4d8f5d666c385574f46722162159b724fd9ef7c04f98f014d3508df404",
+    "RAD-L140-result-14": "e20ebf74d3ac808c0cdbc6edae2527216c6de06872a3ace590473e15555c854a",
+    "REQ-L214-text-01": "30f65dad7972f6d497143be2aeb28f276b0661bbfc3863bcbc2cac4b456886fe",
+    "REQ-L214-text-02": "70a2d30c667ca4b0f61f147c3646791e0c2f7e21ee90f836f11a0879340dc551",
+    "REQ-L214-text-03": "e02f039ce932d8941ceb4dec7567d07fc5ade634614f4301edadc4320f51824d",
+    "REQ-L214-text-04": "219a85e05216f71488e1e0bfbf2c0067767617265b94f88c57e6b35d30eaf2cd",
+    "REQ-L214-text-05": "20823882168543a279b45bf418de498c6f7f616055cdf20f761b71c50fe07973",
+    "REQ-L214-text-06": "12d9ae8fb83a83594b81183266dd92489f94b62cd7540e0f5e89066fba5d9d05",
+    "REQ-L216-text-01": "b3becd02374f071f898c8bf8ce479965fdad33e191ed5223d60583e5bde01551",
+    "REQ-L216-text-02": "fe3315be31a9c18abef1c29700b8452b2209047527482309e26413a09800a37f",
+    "REQ-L216-text-03": "5ea4d66f3e577794c4fccae2cb80ebfb923c120117108168dbce490fdf07b166",
+    "REQ-L216-text-04": "048a6e1b412addfd9142c633d2c088698ac508a48ea30c7e7c81b9a00c834036",
+    "REQ-L216-text-05": "290e9a6cc0be579f7c6b0ed6713f86a7d4ebbaa10b54e812d5af964e90072a4e",
+    "REQ-L216-text-06": "3dbe447317a0ebfd3bcf2dc2d9a57fbf4e008f40c9a5b303aa172d748931b89c",
+    "REQ-L216-text-07": "74f150e15986c93394ff1f34967ebd55e35e7d5e9a45b535726db8dc875977fa",
+    "REQ-L218-text-01": "891943e070db85441e69838422a549c5e2da3d4c63acaca593c2b93358decd2b",
+    "REQ-L218-text-02": "fecc116ab8360c576319298224e50176775bd408e87b7027b96c3e1b8c408125",
+    "REQ-L218-text-03": "5bac93081233ad30e2b65d3cfd40bed52b44be8355da30a98762e6ae240076ff",
+    "REQ-L218-text-04": "da155552ac2fda7aedaaf81fd06df7d75e23dc1a6919b8dba1b622ea806bd167",
+    "REQ-L218-text-05": "c63dc4ec2374b491cd1cb06cfcfdd981a4ff77c5f484d55e05b1cb386be391bd",
+    "REQ-L218-text-06": "025e52b071395ac5e2d6896962774814d282496c26c319993025ec621fee9824",
+    "REQ-L218-text-08": "f808662ed31945a72682f14e452c4668bbf2c00f41ab722a82fe4eb81f83dfcf",
+    "REQ-L218-text-09": "2bfdb0b372dfc35dce2ec5cbfe252efb4849e7fa51e131afa1db3f432ea6adf0",
+    "REQ-L218-text-10": "25fcaafac825217167661127d053dfb44f495799676aa93ecd34fd0ffa229534",
+    "REQ-L218-text-11": "eacd246cb3b6991963e73912dd9b1dbae0e7cc2eca8c7526143e9d9674951ea5",
+    "REQ-L218-text-12": "342f71a0ac4e359792e1cfd9d871b029b01d62a85afee7bda91288d8d00773f8",
+    "REQ-L218-text-13": "8dd774212d0e273abff4f133966fd7c81eb780b1ecb426a9c3c88af015e8a057",
+    "REQ-L218-text-14": "e0a04d061aa0adeffc144a7fac98c82a08ad38b2fdf1e8cf8ae87be395d24cfb",
+    "REQ-L220-text-01": "9170ae1e74ae38c3d242c0b6d25251b5bc92624eaf15779547cfc0e8d9ec6dc2",
+    "REQ-L222-text-01": "208a469221f0eca4e3909e34cb59612cbf764ff1eff8418e3ee1357603a27c56",
+    "REQ-L224-text-01": "beeb12df3e03b3a7142840cc8241f4bb6851bf6ad59d6143faf1463b6b368e8d",
+    "REQ-L226-text-01": "63370a558842262f9525d4021366131753b4708a81d74272caf312830b257368",
+    "REQ-L228-text-01": "0fcdad04ffc940c55e57d41acdd6a53abdc3d90528e353e38d4b304723313a92",
+    "REQ-L228-text-02": "2b98fc958f1096fab2a563715a4c8cac7ce661c06f2a80eeb59ff0b3737898d1",
+    "REQ-L228-text-03": "cdb9ef42eaab8019e0518a1e4175744e2fdde249ea1b9eaea450b6a2343b79be",
+    "REQ-L228-text-04": "707e95da72a06a47212b1d71a8d9779d67feaa7d2536a77bddf4744273420bd5",
+    "REQ-L228-text-05": "6837b48e006ee05427ef699726e84356ae7004bfd5d1ba6402a72a95bcaf4cca",
+    "REQ-L228-text-07": "8333d15872a0ced2262e05c9833874fc311f17e232ff63f335a7cdb78bfa71b3",
+    "REQ-L228-text-08": "a3bd24d5db532c213ccccf48b6fa6ffa1ce2ad61bb4e682e77cbd92cb260dba3",
+    "REQ-L228-text-09": "6caea90a1289c66f32e89514d18b15466e9e28961873dd086887546b3a5f8b8b",
+    "REQ-L228-text-10": "57fc8bee7575ce028e0c6c7d8138f7f205bb6f83e3b13aa14af15fa4d21a2284",
+    "REQ-L228-text-11": "ca08467c8be3fa40ce36127dd701304234f40bfd6545793b13d79c13d8736bae",
+    "REQ-L228-text-12": "d2d20ef3fe4db516ecadbea81a169e6a6b13436d3d17e0e4b95418a9381068af",
+    "REQ-L228-text-13": "6837b48e006ee05427ef699726e84356ae7004bfd5d1ba6402a72a95bcaf4cca",
+    "REQ-L230-text-01": "f5908ccf0bc01849cc708da0a14682051237682e5e01c40e41a29a4e825a3666",
+    "REQ-L230-text-02": "4d4f50b3a39a778ce38cfbe6ac7b75b886330830cdcfde175be04220734de30b",
+    "REQ-L230-text-03": "601008310b464cc070d3587b891bba6354b45af17481856fb55bf7bbb2e22ab5",
+    "REQ-L230-text-04": "b3a2d9e240e1ba6ebba0fde626bca230075ce53bf0fc0fe0893d4920c71c282d",
+    "REQ-L230-text-05": "287e22ff48d9868b9a562f978e1b78fb0584f3d326da28cc7e26d18600793288",
+    "REQ-L230-text-06": "a8367be4af3d14370fb1625a0eaff9639fce3bf1d8dd7957d9d6c65b7970e566",
+    "REQ-L230-text-07": "987b7c41911b27c1604629ba28bee73a1774da5ae4373c3dd33ef46ffcd50483",
+    "REQ-L230-text-08": "6ddd87992327f5442ee82db07342ae124ec71b7a17b4d1360e20bb4f5d7163a9",
+    "REQ-L232-text-01": "a57001a73619373af739a0129192f799fccc10dcef3908d6d4349f2b73693239"
+  },
+  "mediaTimelineReview": {
+    "mode": "Independent Steve/Elena proposals,one challenge/revision round,root Morgan decision;read-only,no delegated edits.",
+    "currentSource": "App reports metadata,playbackState and seek handlers,with seeks removed for unknown total. No src call to setPositionState exists.",
+    "initialProposals": {
+      "Steve": "Publish finite offset-aware app position/duration and clear unknown state;retain music ownership.",
+      "Elena": "Publish finite app timeline and initially proposed zero rate to freeze paused position."
+    },
+    "challenge": "The W3C API rejects zero playbackRate. A user agent may infer a timeline from media elements,so missing app declaration is not proof of incorrect platform behavior. Actual playback state may be guessed playing during preview/audition despite declared paused,so publishing rate1 music position may extrapolate a paused track.",
+    "revisions": {
+      "Steve": "Defers code until concrete native/platform evidence. If later justified,publish only while the actual music element advances and clear on pause/load/end/unknown ownership.",
+      "Elena": "Corrects zero-rate and app-only inference claims;also defers pending native evidence. Same advancing-music/clear boundary if later implemented."
+    },
+    "decision": "Accept both revised recommendations with explicit limitation. Keep production implementation unchanged;do not add an unproven timeline publisher that may misreport paused music. M16/M17 remain open and denied/rejected OS control routes are not bypassed.",
+    "primarySource": {
+      "url": "https://w3c.github.io/mediasession/",
+      "sections": [
+        "4.1 Playback State",
+        "4.5 Position State",
+        "5 setPositionState"
+      ],
+      "retrieved": "2026-10-19",
+      "meaning": "Platform timeline display/inference is user-agent dependent;zero rate is rejected;declared paused can coexist with guessed playing. These constrain a future implementation,not an OS test result."
+    },
+    "remaining": "Need an allowed actual operator/platform timeline/control observation for converted offset and paused music with secondary audio before concluding a platform defect or accepting M17.",
+    "finalArtifactReview": {
+      "Steve": "Reviewed mediaTimelineReview and PB11;accurate proposal/revision/limits,no actionable factual error.",
+      "Elena": "Reviewed same bounded sections;accurate and no actionable factual error. Clearing declared state does not itself prove the user agent stops inferring a timeline.",
+      "scope": "Review of this decision text only,not acceptance of the eleven playback groups."
+    }
+  },
+  "summary": {
+    "canonicalReviewGroups": 11,
+    "newLinkedFragments": 94,
+    "existingDependencyFragments": 2,
+    "wholeSTARStories": 6,
+    "wholeSTARResultFragments": 43,
+    "acceptedGroups": 0,
+    "knownOpenChecks": 25,
+    "semanticDenominatorComplete": false,
+    "overallScore": null
+  },
+  "method": [
+    "Read current playback,restore,queue,option,media action,window and focus owners;preserve independent conditions and cross-links for compound fragments.",
+    "Retain full six STAR contexts and43 result fragments. Historical native/live evidence remains scoped to its versions,adapters,phases and limits;current hashes/matches are source review only.",
+    "Compare supported top-level source hash maps explicitly. Empty maps mean no supported field was extracted,not that source is unchanged. Existing VOL01 annotations remain unchanged."
+  ],
+  "limits": [
+    "No new native/service/live/audible/OS/VoiceOver/listener run. No application code change or repeated build/type/lint/unit check.",
+    "Some old listening-control evidence uses altered playback rate and some uses media-time controls;those are historical limitations,not a current CUA-only natural-completion result.",
+    "M16/M17/Q10 and listener/audible checks remain open. Source review and API reasoning do not establish hardware integration,subjective quality or whole-story acceptance.",
+    "All7 parent criteria and unreviewed PRD/radio conditions retain scope. No deferred smaller-window/enlarged-zoom work,complete denominator,overall percentage or goal completion."
+  ]
+}
