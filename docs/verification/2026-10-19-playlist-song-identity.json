@@ -1,0 +1,353 @@
+{
+  "date": "2026-10-19",
+  "baseCommit": "e9d1d9166f11234ca6d582235ab5f6555ecb42b3",
+  "scope": "Playlist Skip songs already in this playlist identity mismatch. Focused service fix to existing REQ-L208 and P06.",
+  "problem": "Catalog deduplication recognizes Jellyfin GUID case/hyphen variants as one item,but addition preflight compared raw strings. A matching existing song could be posted again despite the skip option.",
+  "before": {
+    "phase": "before",
+    "result": "reproduced duplicate additions despite skip",
+    "method": "Actual JellyfinService against owned local HTTP;playlistWrite adapter records guard/reservation calls rather than emulating disk durability.",
+    "cases": [
+      {
+        "name": "existing uppercase GUID is skipped",
+        "postedTrackIds": [
+          [
+            "aabbccdd00112233445566778899aabb"
+          ]
+        ],
+        "entryReads": 1,
+        "recoveryReservationCalls": 1,
+        "outerGuardCalls": 1,
+        "error": null
+      },
+      {
+        "name": "existing hyphenated GUID is skipped",
+        "postedTrackIds": [
+          [
+            "aabbccdd00112233445566778899aabb"
+          ]
+        ],
+        "entryReads": 1,
+        "recoveryReservationCalls": 1,
+        "outerGuardCalls": 1,
+        "error": null
+      }
+    ],
+    "realServerWrites": 0
+  },
+  "implementation": "Reuse existing itemIdentity for both fetched song IDs and selected IDs in duplicate preflight. Keep first selected spelling and displayed order. Leave unchecked skip behavior unchanged so deliberate repeats remain available. Empty remainder returns before recovery reservation.",
+  "after": {
+    "phase": "after",
+    "result": "passed",
+    "method": "Actual JellyfinService against owned local HTTP;playlistWrite adapter records guard/reservation calls rather than emulating disk durability.",
+    "cases": [
+      {
+        "name": "existing uppercase GUID is skipped",
+        "postedTrackIds": [],
+        "entryReads": 1,
+        "recoveryReservationCalls": 0,
+        "outerGuardCalls": 1,
+        "error": null
+      },
+      {
+        "name": "existing hyphenated GUID is skipped",
+        "postedTrackIds": [],
+        "entryReads": 1,
+        "recoveryReservationCalls": 0,
+        "outerGuardCalls": 1,
+        "error": null
+      },
+      {
+        "name": "selection identity variants deduplicate in displayed order",
+        "postedTrackIds": [
+          [
+            "aabbccdd-0011-2233-4455-66778899aabb",
+            "bbbbbbbb00112233445566778899aabb",
+            "cccccccc00112233445566778899aabb"
+          ]
+        ],
+        "entryReads": 1,
+        "recoveryReservationCalls": 1,
+        "outerGuardCalls": 1,
+        "error": null
+      },
+      {
+        "name": "mixed present and new variants",
+        "postedTrackIds": [
+          [
+            "aabbccdd00112233445566778899aabb",
+            "cccccccc00112233445566778899aabb"
+          ]
+        ],
+        "entryReads": 1,
+        "recoveryReservationCalls": 1,
+        "outerGuardCalls": 1,
+        "error": null
+      },
+      {
+        "name": "unchecked skip preserves deliberate repeated songs",
+        "postedTrackIds": [
+          [
+            "aabbccdd00112233445566778899aabb",
+            "AABBCCDD00112233445566778899AABB",
+            "aabbccdd-0011-2233-4455-66778899aabb",
+            "bbbbbbbb00112233445566778899aabb"
+          ]
+        ],
+        "entryReads": 0,
+        "recoveryReservationCalls": 1,
+        "outerGuardCalls": 1,
+        "error": null
+      },
+      {
+        "name": "empty selection leaves no reservation",
+        "postedTrackIds": [],
+        "entryReads": 1,
+        "recoveryReservationCalls": 0,
+        "outerGuardCalls": 1,
+        "error": null
+      },
+      {
+        "name": "failed duplicate read leaves no reservation",
+        "postedTrackIds": [],
+        "entryReads": 1,
+        "recoveryReservationCalls": 0,
+        "outerGuardCalls": 1,
+        "error": "server"
+      },
+      {
+        "name": "multiple batches keep one reservation and order",
+        "postedTrackIds": [
+          [
+            "000000000000000000000000000003e8",
+            "000000000000000000000000000003e9",
+            "000000000000000000000000000003ea",
+            "000000000000000000000000000003eb",
+            "000000000000000000000000000003ec",
+            "000000000000000000000000000003ed",
+            "000000000000000000000000000003ee",
+            "000000000000000000000000000003ef",
+            "000000000000000000000000000003f0",
+            "000000000000000000000000000003f1",
+            "000000000000000000000000000003f2",
+            "000000000000000000000000000003f3",
+            "000000000000000000000000000003f4",
+            "000000000000000000000000000003f5",
+            "000000000000000000000000000003f6",
+            "000000000000000000000000000003f7",
+            "000000000000000000000000000003f8",
+            "000000000000000000000000000003f9",
+            "000000000000000000000000000003fa",
+            "000000000000000000000000000003fb",
+            "000000000000000000000000000003fc",
+            "000000000000000000000000000003fd",
+            "000000000000000000000000000003fe",
+            "000000000000000000000000000003ff",
+            "00000000000000000000000000000400",
+            "00000000000000000000000000000401",
+            "00000000000000000000000000000402",
+            "00000000000000000000000000000403",
+            "00000000000000000000000000000404",
+            "00000000000000000000000000000405",
+            "00000000000000000000000000000406",
+            "00000000000000000000000000000407",
+            "00000000000000000000000000000408",
+            "00000000000000000000000000000409",
+            "0000000000000000000000000000040a",
+            "0000000000000000000000000000040b",
+            "0000000000000000000000000000040c",
+            "0000000000000000000000000000040d",
+            "0000000000000000000000000000040e",
+            "0000000000000000000000000000040f",
+            "00000000000000000000000000000410",
+            "00000000000000000000000000000411",
+            "00000000000000000000000000000412",
+            "00000000000000000000000000000413",
+            "00000000000000000000000000000414",
+            "00000000000000000000000000000415",
+            "00000000000000000000000000000416",
+            "00000000000000000000000000000417",
+            "00000000000000000000000000000418",
+            "00000000000000000000000000000419",
+            "0000000000000000000000000000041a",
+            "0000000000000000000000000000041b",
+            "0000000000000000000000000000041c",
+            "0000000000000000000000000000041d",
+            "0000000000000000000000000000041e",
+            "0000000000000000000000000000041f",
+            "00000000000000000000000000000420",
+            "00000000000000000000000000000421",
+            "00000000000000000000000000000422",
+            "00000000000000000000000000000423",
+            "00000000000000000000000000000424",
+            "00000000000000000000000000000425",
+            "00000000000000000000000000000426",
+            "00000000000000000000000000000427",
+            "00000000000000000000000000000428",
+            "00000000000000000000000000000429",
+            "0000000000000000000000000000042a",
+            "0000000000000000000000000000042b",
+            "0000000000000000000000000000042c",
+            "0000000000000000000000000000042d",
+            "0000000000000000000000000000042e",
+            "0000000000000000000000000000042f",
+            "00000000000000000000000000000430",
+            "00000000000000000000000000000431",
+            "00000000000000000000000000000432",
+            "00000000000000000000000000000433",
+            "00000000000000000000000000000434",
+            "00000000000000000000000000000435",
+            "00000000000000000000000000000436",
+            "00000000000000000000000000000437",
+            "00000000000000000000000000000438",
+            "00000000000000000000000000000439",
+            "0000000000000000000000000000043a",
+            "0000000000000000000000000000043b",
+            "0000000000000000000000000000043c",
+            "0000000000000000000000000000043d",
+            "0000000000000000000000000000043e",
+            "0000000000000000000000000000043f",
+            "00000000000000000000000000000440",
+            "00000000000000000000000000000441",
+            "00000000000000000000000000000442",
+            "00000000000000000000000000000443",
+            "00000000000000000000000000000444",
+            "00000000000000000000000000000445",
+            "00000000000000000000000000000446",
+            "00000000000000000000000000000447",
+            "00000000000000000000000000000448",
+            "00000000000000000000000000000449",
+            "0000000000000000000000000000044a",
+            "0000000000000000000000000000044b"
+          ],
+          [
+            "0000000000000000000000000000044c"
+          ]
+        ],
+        "entryReads": 1,
+        "recoveryReservationCalls": 1,
+        "outerGuardCalls": 1,
+        "error": null
+      }
+    ],
+    "realServerWrites": 0
+  },
+  "requirements": {
+    "canonicalGroup": "PLID01",
+    "actor": "Listener adding songs to a playlist",
+    "trigger": "Choose whether to skip songs already present",
+    "outcome": "With skipping on,omit existing and repeated selected identities while retaining chosen order. With skipping off,retain intended repeats.",
+    "fragments": [
+      "REQ-L208-text-01"
+    ],
+    "checks": [
+      "P03",
+      "P06",
+      "P08"
+    ],
+    "mandatoryVariants": [
+      "Existing compact/uppercase/hyphenated GUID represents the same song",
+      "Mixed existing and new songs",
+      "Repeated identities inside the chosen selection",
+      "First remaining selection spelling and row order",
+      "Unchecked skip retains deliberate repeated songs",
+      "Empty remainder makes no write or recovery reservation",
+      "Failed duplicate read makes no write or recovery reservation",
+      "Multiple batches use one reservation and preserve order"
+    ],
+    "proofState": "reviewed-partial",
+    "accepted": false,
+    "remaining": [
+      "Controlled service coverage does not replace the existing native option/dialog and live-server proof scopes.",
+      "Broader M6 playlist permission,recovery,focus and listener acceptance remain separately required."
+    ]
+  },
+  "freshness": {
+    "changedClassMethods": [
+      "addPlaylistItems"
+    ],
+    "unchangedClassMethods": [
+      "constructor",
+      "connection",
+      "exportSession",
+      "cancelPendingSignIns",
+      "restore",
+      "persistSession",
+      "requireSession",
+      "request",
+      "authenticatedRequest",
+      "requestJson",
+      "json",
+      "connect",
+      "disconnect",
+      "libraries",
+      "libraryFilters",
+      "selectLibraries",
+      "songItem",
+      "albumItem",
+      "catalog",
+      "searchCatalog",
+      "songs",
+      "albums",
+      "allItems",
+      "album",
+      "albumTracks",
+      "song",
+      "playlistItem",
+      "playlists",
+      "entries",
+      "validateEntryChanges",
+      "playlistPermission",
+      "playlist",
+      "serialize",
+      "runPlaylistWrite",
+      "createPlaylist",
+      "renamePlaylist",
+      "removePlaylistEntries",
+      "movePlaylistEntry"
+    ],
+    "meaning": "TypeScript member-text comparison against base main finds only addPlaylistItems changed. Existing catalog,auth,permission,entry-mutation methods retain exact text;this is source freshness,not re-execution of historical runs.",
+    "unchangedRendererPreloadSha256": {
+      "out/preload/index.cjs": "9b78be58d4f9bd70fb5b6d3315d888ee9442cfbf09bfab2b2f902de015e902f2",
+      "out/renderer/assets/index-BxYSxxHo.js": "0663a0d60d21f5c957193f8cb997610ff8349e1b0e8dfde7258de2752060b273",
+      "out/renderer/assets/index-CTTY7D_T.css": "311365026a2a43358e39a1d34174216b1bb7d4faea839db0b11092e497b58f0f"
+    }
+  },
+  "sourceSha256": {
+    "src/main/jellyfin.ts": "59f19ce18dd13f9037c4e88e94de205f3e0e0e4a15b01943afb805c2e155b6c0",
+    "src/main/playlist-recovery.ts": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+    "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": "53afdb4d78cca027bce5865b5180dab1a27d5873ad1541b988eea50cd7802ecd"
+  },
+  "fixtureSha256": {
+    "/private/tmp/playlist-song-identity-current/verify.mjs": "2e724b02e13afe7ec97186539a94f04bdecf467bbec06bfb339d71b007429595",
+    "/private/tmp/playlist-song-identity-current/before.json": "3e17fbc1b6814495abe36507f5bdd6e5414872d8a015368b790dd0a155074b6e",
+    "/private/tmp/playlist-song-identity-current/after.json": "50fa681ed57db3253679abb93ea293d7dcfeb2233bb3df8bd18164905828df6b",
+    "/private/tmp/playlist-song-identity-current/before-service.mjs": "164fe308498c179e3b6bc41b2f5fee69dc67df7c766a8d774ee85d14aa7803ca",
+    "/private/tmp/playlist-song-identity-current/after-service.mjs": "537c6afdf92a39cf7c1dfb6d428e9c7681e1179f5b9e1337b623436db54dcb1e",
+    "/private/tmp/playlist-song-identity-current/compare.cjs": "77e0bc1afbc5bb75b4b0643e3cfe4b35438357cec1f97c8a5696b368a1f3ddae",
+    "/private/tmp/playlist-song-identity-current/method-freshness.json": "6824e41b91713eb0040da578e1b6ebca0f551f9255b3ad999895a7303c03ab6e"
+  },
+  "buildSha256": {
+    "out/main/index.js": "872efec946a53c7e7342a84902593764098880caf38952fe5cbab095dc9ebf29"
+  },
+  "validation": {
+    "reproduction": "Two actual-service/owned HTTP cases confirm unwanted POST and reservation before the fix.",
+    "fixed": "Eight actual-service/owned HTTP cases pass. The playlistWrite adapter counts guard/reservation invocations;it does not emulate or establish disk durability.",
+    "productionBuildTypeScript": "npm run build passed,session67239 exit0.",
+    "fullLint": "npm run lint passed,session44292 exit0.",
+    "cleanup": "Each owned HTTP server closes in finally;both verification processes exit0. No personal Jellyfin mutation.",
+    "unitTests": "Not added or run."
+  },
+  "acceptance": {
+    "knownOpenChecks": 25,
+    "listenerOpenChecks": 14,
+    "otherProofOpenChecks": 11,
+    "rowDispositionsChanged": false,
+    "overallScore": null
+  },
+  "limits": [
+    "No new native UI,live-server,OS,audible or listener result. Local dummy GUIDs and disposable HTTP data only.",
+    "The service adapter observes reserve calls,not durable intent atomicity or process-crash recovery. Those contracts and historical proof retain their existing scopes.",
+    "No smaller viewport or200% zoom. No full semantic denominator or goal-completion claim."
+  ]
+}

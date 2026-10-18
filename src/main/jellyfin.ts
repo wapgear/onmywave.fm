@@ -433,7 +433,15 @@ export class JellyfinService {
     const id = validId(input.id), selection = ids(input.trackIds), session = this.requireSession();
     return this.serialize(id, async () => {
       let tracks = selection;
-      if (input.skipExisting) { const present = new Set((await this.entries(id)).map(entry => entry.song.id)); tracks = selection.filter(track => { if (present.has(track)) return false; present.add(track); return true; }); }
+      if (input.skipExisting) {
+        const present = new Set((await this.entries(id)).map(entry => itemIdentity(entry.song.id)));
+        tracks = selection.filter(track => {
+          const identity = itemIdentity(track);
+          if (present.has(identity)) return false;
+          present.add(identity);
+          return true;
+        });
+      }
       if (!tracks.length) return;
       const write = async () => {
         for (let index = 0; index < tracks.length; index += 100) {
