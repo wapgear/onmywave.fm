@@ -3,7 +3,9 @@ import { useIsMutating, useMutation } from '@tanstack/react-query';
 import type { Connection } from '../../shared/types';
 import { unwrap } from '../api';
 
-type Submission = { ids: string[]; accountId: string; revision: number; done: (connection: Connection) => void };
+export type ConnectionTransition = (source: HTMLButtonElement | null, operation: () => Promise<Connection | undefined>) => Promise<void>;
+export type LibrarySelectionDone = (connection: Connection) => void | false | Promise<void | false>;
+type Submission = { ids: string[]; accountId: string; revision: number; done: LibrarySelectionDone };
 function useSelection(connection: Connection | null, expired: boolean) {
   const [selected, setSelected] = useState(connection?.selectedLibraryIds ?? []);
   const active = useRef(false);
@@ -16,10 +18,10 @@ function useSelection(connection: Connection | null, expired: boolean) {
   const save = useMutation({
     mutationKey: ['selectLibraries', connection?.id],
     mutationFn: async ({ ids }: Submission) => unwrap(await window.wave.selectLibraries(ids)),
-    onSuccess: (value, input) => {
+    onSuccess: async (value, input) => {
       if (!active.current || input.revision !== revision.current || value.id !== input.accountId || current.current.accountId !== input.accountId) return;
       setSelected(value.selectedLibraryIds);
-      if (!current.current.expired) input.done(value);
+      if (!current.current.expired) await input.done(value);
     },
     onSettled: () => { submitting.current = false; },
   });
@@ -30,10 +32,14 @@ function useSelection(connection: Connection | null, expired: boolean) {
       save.reset();
       setSelected(old => old.includes(id) ? old.filter(value => value !== id) : [...old, id]);
     },
-    submit(ids: string[], done: Submission['done']) {
+    async submit(ids: string[], done: Submission['done']): Promise<Connection | undefined> {
       if (submitting.current || pending || !connection || !ids.length) return;
       submitting.current = true;
-      save.mutate({ ids: [...ids], accountId: connection.id, revision: revision.current, done });
+      let applied = false;
+      const input: Submission = { ids: [...ids], accountId: connection.id, revision: revision.current, done: async value => { applied = (await done(value)) !== false; } };
+      const value = await save.mutateAsync(input);
+      return applied && active.current && input.revision === revision.current && value.id === input.accountId
+        && current.current.accountId === input.accountId && !current.current.expired ? value : undefined;
     },
     reset(value: Connection) {
       ++revision.current;
