@@ -6,7 +6,7 @@ import { unwrap } from './api';
 import { usePlayer } from './player';
 import { useNewsRecovery } from './NewsRecovery';
 
-type PlaybackView = { configKey: string; pending: PreparedNewsTake | null; preparing: boolean; placing: boolean; waiting: boolean; failure: string | null; baseline: number };
+type PlaybackView = { configKey: string; pending: PreparedNewsTake | null; preparing: boolean; placing: boolean; waiting: boolean; failure: string | null; baseline: number; retryPhase: 'queued' | 'checking' | 'ready' | 'empty' | null; retryMessage: string | null };
 function useDJPlaybackController() {
   const player = usePlayer();
   const recovery = useNewsRecovery();
@@ -14,6 +14,13 @@ function useDJPlaybackController() {
   const client = useQueryClient();
   const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()), enabled: recoveryReady });
   const settings = state.data?.djPlayback ?? defaultDJPlaybackSettings();
+  const writeInFlight = useRef(false);
+  const [unconfirmedUpdate, setUnconfirmedUpdate] = useState<Partial<DJPlaybackSettings> | null>(null);
+  const unconfirmedUpdateRef = useRef<Partial<DJPlaybackSettings> | null>(null);
+  const setUnconfirmed = (patch: Partial<DJPlaybackSettings> | null) => {
+    unconfirmedUpdateRef.current = patch;
+    setUnconfirmedUpdate(patch);
+  };
   const rooms = state.data?.roomProfiles.filter(room => room.enabled) ?? [];
   const room = rooms.find(room => room.id === settings.roomId);
   const dj = state.data?.djs.find(dj => dj.id === room?.room.djId);
@@ -34,9 +41,16 @@ function useDJPlaybackController() {
     let published = false;
     const attempted = new Set<string>();
     let recoveryBlocked = false;
-    const cycle: PlaybackView = { configKey, baseline: live.current.player.completedSongs, pending: null, preparing: false, placing: false, waiting: false, failure: null };
+    const cycle: PlaybackView = { configKey, baseline: live.current.player.completedSongs, pending: null, preparing: false, placing: false, waiting: false, failure: null, retryPhase: null, retryMessage: null };
     const publish = () => { if (!cancelled) setView({ ...cycle }); };
-    retry.current = () => { cycle.failure = null; attempted.clear(); publish(); };
+    retry.current = () => {
+      if (writeInFlight.current || cycle.retryPhase === 'queued' || cycle.retryPhase === 'checking') return;
+      cycle.retryMessage = `Saved news check queued until music is playing and a break is due.${cycle.failure ? ` Previous error: ${cycle.failure}` : ''}`;
+      cycle.failure = null;
+      cycle.retryPhase = 'queued';
+      attempted.clear();
+      publish();
+    };
     const tick = () => {
       if (!published) { published = true; publish(); }
       const p = live.current.player;
@@ -57,6 +71,7 @@ function useDJPlaybackController() {
         return;
       }
       recoveryBlocked = false;
+      if (writeInFlight.current) return;
       if (!config.enabled || !profile || live.current.queryError || cycle.failure) return;
       if (!heard && cycle.pending && p.lastNews?.news.id === cycle.pending.id) {
         heard = true;
@@ -93,6 +108,11 @@ function useDJPlaybackController() {
       }
       if (checking || p.completedSongs - cycle.baseline < config.everySongs - (skipped ? 0 : 1)) return;
       checking = true;
+      const retrying = cycle.retryPhase === 'queued';
+      if (retrying) {
+        cycle.retryPhase = 'checking';
+        cycle.retryMessage = 'Checking the saved news pool…';
+      }
       cycle.preparing = true;
       publish();
       void window.wave.nextRoomNews({ roomId: profile.id, excludedIds: [...excluded] }).then(unwrap).then(take => {
@@ -107,8 +127,15 @@ function useDJPlaybackController() {
         cycle.pending = take;
         ownedNews = take?.id ?? null;
         if (!take) { cycle.baseline = live.current.player.completedSongs; skipped = true; }
+        if (retrying) {
+          cycle.retryPhase = take ? 'ready' : 'empty';
+          cycle.retryMessage = take ? 'A saved news break is ready.' : 'No eligible saved news is available yet.';
+        }
       }).catch(cause => {
-        if (!cancelled) cycle.failure = cause instanceof Error ? cause.message : 'The saved news pool could not be checked.';
+        if (!cancelled) {
+          cycle.failure = cause instanceof Error ? cause.message : 'The saved news pool could not be checked.';
+          if (retrying) { cycle.retryPhase = null; cycle.retryMessage = null; }
+        }
       }).finally(() => { checking = false; cycle.preparing = false; publish(); });
     };
     const timer = window.setInterval(tick, 100);
@@ -121,15 +148,48 @@ function useDJPlaybackController() {
   }, [configKey]);
   const current = view?.configKey === configKey ? view : null;
   const completed = Math.max(0, player.completedSongs - (current?.baseline ?? player.completedSongs));
-  const update = useMutation({ mutationFn: async (patch: Partial<DJPlaybackSettings>) => {
+  const savePlaybackSettings = async (patch: Partial<DJPlaybackSettings>) => {
+    if (writeInFlight.current) throw new Error('A DJ playback setting is already being saved.');
+    const safeDisable = patch.enabled === false && Object.keys(patch).every(key => key === 'enabled');
+    if (unconfirmedUpdateRef.current && !safeDisable) throw new Error('Refresh DJ playback status before changing this setting.');
     if (!live.current.recoveryReady) throw new Error('News data is unavailable. Recover it before changing DJ playback.');
-    unwrap(await window.wave.saveDJPlayback(patch));
-    await client.invalidateQueries({ queryKey: ['localState'] });
-    if (patch.enabled === false) live.current.player.stopNews();
-  } });
+    writeInFlight.current = true;
+    let saved = false;
+    try {
+      unwrap(await window.wave.saveDJPlayback(patch));
+      saved = true;
+      setUnconfirmed(patch);
+      try {
+        await client.invalidateQueries({ queryKey: ['localState'] }, { throwOnError: true });
+        const confirmed = client.getQueryData<{ djPlayback?: DJPlaybackSettings }>(['localState'])?.djPlayback;
+        if (!confirmed || Object.entries(patch).some(([key, value]) => confirmed[key as keyof DJPlaybackSettings] !== value)) {
+          throw new Error('The refreshed settings do not match the saved change.');
+        }
+        setUnconfirmed(null);
+      } catch {
+        throw new Error('The setting was saved, but its current status could not be confirmed. Refresh DJ playback status to check it.');
+      }
+    } finally {
+      if (saved && patch.enabled === false) live.current.player.stopNews();
+      writeInFlight.current = false;
+    }
+  };
+  const update = useMutation({ mutationFn: savePlaybackSettings });
+  const updatePlayback = (patch: Partial<DJPlaybackSettings>) => update.mutate(patch);
+  const refreshPlaybackStatus = async () => {
+    if (writeInFlight.current) return state.refetch();
+    const result = await state.refetch();
+    if (!result.isError && !writeInFlight.current) {
+      setUnconfirmed(null);
+      update.reset();
+    }
+    return result;
+  };
   const error = current?.failure ?? (settings.enabled && !room ? 'Choose an available News bucket.' : null);
   return { state, settings, rooms, room, sources, pending: recoveryReady ? current?.pending ?? null : null, preparing: recoveryReady && (current?.preparing ?? false), placing: recoveryReady && (current?.placing ?? false), waitingForPreparation: recoveryReady && (current?.waiting ?? false),
-    error: recoveryReady ? error : null, update, songsUntilBreak: Math.max(1, settings.everySongs - completed), retry: () => { if (recoveryReady) retry.current(); }, recoveryStatus: recovery.status.phase };
+    error: recoveryReady ? error : null, update, updatePlayback, unconfirmedUpdate, refreshPlaybackStatus,
+    retryPhase: current?.retryPhase ?? null, retryMessage: current?.retryMessage ?? null,
+    songsUntilBreak: Math.max(1, settings.everySongs - completed), retry: () => { if (recoveryReady) retry.current(); }, recoveryStatus: recovery.status.phase };
 }
 const DJPlaybackContext = createContext<ReturnType<typeof useDJPlaybackController> | null>(null);
 export function DJPlaybackProvider({ children }: { children: ReactNode }) {

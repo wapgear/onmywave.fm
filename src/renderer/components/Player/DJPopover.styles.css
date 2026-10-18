@@ -23,6 +23,14 @@
 .dj-popover .dj-preparation-link:hover { background: transparent; text-decoration: underline; }
 .dj-popover button { font-size: 11px; }
 .dj-control > button { flex-shrink: 0; }
+.dj-popover .dj-action-status { margin: 8px 0 0; }
+.dj-action-feedback { margin-top: 8px; }
+.dj-action-feedback > p { margin: 0 0 6px; }
+.dj-pool-retry { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 10px; min-width: 0; color: var(--muted); font-size: 11px; line-height: 1.5; overflow-wrap: anywhere; }
+.dj-pool-retry > span { min-width: 0; flex: 1 1 160px; }
+.dj-pool-retry-button { flex: 0 1 auto; }
+.dj-popover button[aria-disabled="true"] { cursor: not-allowed; }
+.dj-popover button[aria-busy="true"] { cursor: progress; }
 .dj-take-label { display: block; margin-bottom: 6px; font-size: 11px; color: var(--muted); }
 .dj-popover select { width: 100%; min-width: 0; font-size: 12px; }
 .dj-story ul { padding: 0; margin: 10px 0 0; list-style: none; }

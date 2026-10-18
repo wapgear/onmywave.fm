@@ -411,7 +411,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   const [reviewFocused, setReviewFocused] = useState<HTMLButtonElement | null>(null);
   const ownsReviewFocus = reviewFocused !== null && document.activeElement === reviewFocused;
   const [confirmedReview, setConfirmedReview] = useState<{ requestId: string; takeId: string } | null>(null);
-  const reviewFocus = useRetryFocus({
+  const { retryRef: reviewRetryRef, retry: retryReviewFocus } = useRetryFocus({
     ownerKey: `saved-take-review:${audioCompletion?.requestId}:${audioCompletion?.takeId}:${activeProfile?.id}:${newsRecoveryReady}`,
     target: () => audioCompletion ? document.getElementById(`prepared-take-${audioCompletion.takeId}`) : null,
     canFocusSuccess: () => !!audioCompletion && tab === 'saved' && library.isSuccess && !library.isFetching
@@ -436,7 +436,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   function reviewSavedTake(completion: AudioCompletion) {
     if (reviewInFlight.current || reviewPending || reviewAudio.isPending) return;
     reviewInFlight.current = true;
-    void reviewFocus.retry(async () => {
+    void retryReviewFocus(async () => {
       try { await reviewAudio.mutateAsync(completion); return { isError: false }; }
       catch { return { isError: true }; }
     }, undefined, () => { reviewInFlight.current = false; });
@@ -465,7 +465,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
     });
   }
   const audioResult = audioCompletion && !manualPending && <div className="room-audio-result">
-    <div className="notice"><span role="status">{audioCompletion.reconciled ? 'Saved audio result found' : audioCompletion.reused ? 'Matching saved audio reused' : 'Audio take saved'} · {audioCompletion.profileName ?? 'Previous setup'}. Review it to listen or choose it for a DJ break.</span><button ref={reviewFocus.retryRef} className="room-review-take" disabled={reviewPending && !ownsReviewFocus} aria-disabled={reviewPending || undefined} aria-busy={reviewPending || undefined} onFocus={event => setReviewFocused(event.currentTarget)} onBlur={() => setReviewFocused(null)} onClick={() => reviewSavedTake(audioCompletion)}>{reviewPending ? 'Opening saved take…' : 'Review saved take'}</button></div>
+    <div className="notice"><span role="status">{audioCompletion.reconciled ? 'Saved audio result found' : audioCompletion.reused ? 'Matching saved audio reused' : 'Audio take saved'} · {audioCompletion.profileName ?? 'Previous setup'}. Review it to listen or choose it for a DJ break.</span><button ref={reviewRetryRef} className="room-review-take" disabled={reviewPending && !ownsReviewFocus} aria-disabled={reviewPending || undefined} aria-busy={reviewPending || undefined} onFocus={event => setReviewFocused(event.currentTarget)} onBlur={() => setReviewFocused(null)} onClick={() => reviewSavedTake(audioCompletion)}>{reviewPending ? 'Opening saved take…' : 'Review saved take'}</button></div>
     <ErrorNotice error={audioCompletion.reviewError ? new Error(audioCompletion.reviewError) : null} />
   </div>;
   const manualFeedback = manualRequest && <div className="room-manual-feedback room-background-error">
