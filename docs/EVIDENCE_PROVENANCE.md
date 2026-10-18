@@ -144,3 +144,6 @@ The [voice-preview record](verification/2026-10-18-voice-preview-focus.json) sep
 
 
 The [account-form record](verification/2026-10-18-account-form-focus.json) separates baseline, rejected intermediate and 18 reviewed/final native projections. It records scoped failure/retry, actual disposable local key/library results, held requests and current-focus geometry, retaining the Connect observer readiness failure. Provider cases precede later Settings/Connect fixes; no missing intermediate bundle hash is invented. All 191 acceptance dispositions remain unchanged.
+
+
+The [playlist/player recovery-focus record](verification/2026-10-18-playlist-player-recovery-focus.json) retains 42 scoped native projections, nine terminal observer reports and separate baseline/reviewed/final hashes. Actual marker/receipt transitions, local DELETE counts and lost-response removal remain distinct from focus outcomes. It records the singular-count/Skip renderer phase limits and missing intermediate hash, without inventing a final-bundle rerun. Unobserved variants remain explicit and all 191 dispositions are unchanged.

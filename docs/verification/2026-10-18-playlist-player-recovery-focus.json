@@ -1,0 +1,6000 @@
+{
+  "date": "2026-10-18",
+  "scope": "Partial Q06 playlist recovery/removal and music Retry/Skip including saved-session retry. No whole-app or VoiceOver acceptance.",
+  "baselineCommit": "71674f4a469c083fa0e88fb09f80a831a94699e7",
+  "baseline": [
+    {
+      "name": "before-detail-ack-terminal",
+      "sha256": "90d34b461ce0f1e98b412044fbec4a2d9575e24c41e55a1fafd00c8f1abfd869",
+      "focus": {
+        "tag": "BODY",
+        "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedPlaylistsPlaylist \u00b7 3 s"
+      },
+      "phase": "baseline origin/main71674 renderer"
+    },
+    {
+      "name": "before-list-ack-pending",
+      "sha256": "a945c8a16dcbf7d2bf9e0e2a6c518a6f96c3c790f0b14c0709327315797af027",
+      "focus": {
+        "tag": "BODY",
+        "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedPlaylistsYour collectio"
+      },
+      "phase": "baseline origin/main71674 renderer"
+    },
+    {
+      "name": "before-list-refresh-pending",
+      "sha256": "0e13a569242374d3c0f3477b3dff14fc099bcfadd894781f7c6a9e45947d1162",
+      "focus": {
+        "tag": "BODY",
+        "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedPlaylistsYour collectio"
+      },
+      "phase": "baseline origin/main71674 renderer"
+    },
+    {
+      "name": "before-player-error",
+      "sha256": "87039366fe4462139c4b188215af2f0f36d6ebfe4c40f509892fb7f33ca19dbd",
+      "focus": {
+        "tag": "BODY",
+        "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedAll songsYour Jellyfin "
+      },
+      "phase": "baseline origin/main71674 renderer"
+    },
+    {
+      "name": "before-player-retry-pending",
+      "sha256": "05531949b6c75144078fb190d0b3968e510084c9a96697fb4727fc8d6f559b2c",
+      "focus": {
+        "tag": "BODY",
+        "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedAll songsYour Jellyfin "
+      },
+      "phase": "baseline origin/main71674 renderer"
+    },
+    {
+      "name": "before-playlist-recovery",
+      "sha256": "13f5dfb030414920a40eb4d5024dfc07ee76867fb8f85eaab2dab02e1e1c2528",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Playlists"
+      },
+      "phase": "baseline origin/main71674 renderer"
+    },
+    {
+      "name": "before-remove-pending",
+      "sha256": "1e462f388bd88b5309d3776ca486a98b07459c74a86fad8426b9bb09912675ee",
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Actions for Song 00002"
+      },
+      "phase": "baseline origin/main71674 renderer"
+    },
+    {
+      "name": "before-remove-terminal",
+      "sha256": "05eb38b59ac1cb156c5a48db0e915f4d9787db43a9b2efdca0edb17f0d1ccf22",
+      "focus": {
+        "tag": "BODY",
+        "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedPlaylistsPlaylist \u00b7 2 s"
+      },
+      "phase": "baseline origin/main71674 renderer"
+    },
+    {
+      "name": "before-skip-pending",
+      "sha256": "ba3986159dbed70de2cb192c00547f806404160a0a0e18241440fbbb09131716",
+      "focus": {
+        "tag": "BODY",
+        "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedAll songsYour Jellyfin "
+      },
+      "phase": "singular-count renderer before final Skip correction"
+    }
+  ],
+  "baselineBundles": {
+    "out/renderer/index.html": "a69ec0d5ff37a908f6e262c7407adcdfd63e915859482bcb5210ff6f730a06c8",
+    "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "out/renderer/demo/news-break.json": "fad8cf445ffac400596faa134c1ca357b28a6de86dec5e8389597b1277050c46",
+    "out/renderer/demo/transcript.md": "d64810c60028cc5d69ff10c156b07f8cf5d78cee42ae34e5e6cc0e6553f3fb44",
+    "out/renderer/demo/news-break.mp3": "718a35bc38f30397b7b43965db4a4bf5211d59c0a5f37c4e23ef38428a614f74",
+    "out/renderer/voice-previews/TX3LPaxmHKxFdv7VOQHJ.mp3": "f8018932908f1c3cfaed40a94b13fe4d498489f3fd1d37d3fa86984af721e40c",
+    "out/renderer/voice-previews/cgSgspJ2msm6clMCkdW9.mp3": "addac5c0fecee048baed846784c7f599fa0bcce636556e7a6bc63daa43ffee9f",
+    "out/renderer/voice-previews/JBFqnCBsd6RMkjVDRZzb.mp3": "ac1804ae2ee825f7414d819e2036369297bf9fc01a816b4f3d9c51e7357d32cf",
+    "out/renderer/voice-previews/manifest.json": "15811b8afa01189660b5da6e6e0f54958a4889b644d9ef18d1474e10acead7dc",
+    "out/renderer/voice-previews/EXAVITQu4vr4xnSDxMaL.mp3": "fef86e7100a94578dd2dcee7db9085fcf5c6f50b07aeceeabae05dd09b17a539",
+    "out/renderer/voice-previews/onwK4e9ZLuTAKqWW03F9.mp3": "9c91149960d8c492f19a7d53522af8a4597b490e90f0fe8dd7022653c9824c52",
+    "out/renderer/voice-previews/cjVigY5qzO86Huf0OWal.mp3": "3f485d54b0932999ab76225e4af338b37c2becac438c8595023bc13984bfc8e5",
+    "out/renderer/voice-previews/FGY2WhTYpPnrIDTdsKH5.mp3": "97fc724a7c41b0c02884aec975e2e4a749daabb1fc57a8229b34e8180e1fe418",
+    "out/renderer/assets/inter-cyrillic-ext-500-normal-BmqWE9Dz.woff": "e250c05aebcf49971e0b25f476992dd463c28c0292ebb204d9db542fb5066ca7",
+    "out/renderer/assets/manrope-greek-600-normal-BoRV6lzK.woff2": "18d69aa241a76095c4c5f8c224abe6519ff60db3b4085e843d59fb4965a4eebd",
+    "out/renderer/assets/inter-cyrillic-500-normal-CxZf_p3X.woff": "5be18e0345781cb882a267798518553c0e915174fc70731ab5f085ca64ba1ebc",
+    "out/renderer/assets/inter-greek-500-normal-Xzm54t5V.woff": "86d55a4b1b9cbced7e61e76d5d44cf49d0bd1c814d3df2de67b7136ab4fdcece",
+    "out/renderer/assets/index-D95UqVlK.js": "f9f94d632f5af9dd9b928bb41ca7b065fb62a02d627e63fd15745556a886c81f",
+    "out/renderer/assets/inter-greek-500-normal-BIZE56-Y.woff2": "cc197d79d33a3615a047baae85f4d1957f6f98b8898313658e160b1d519b1b6f",
+    "out/renderer/assets/inter-latin-500-normal-BL9OpVg8.woff": "9b42c108da48b5ed55a3072e815ffee2d271562e6c0dd6998910e8f9c09e0a3d",
+    "out/renderer/assets/inter-vietnamese-500-normal-mJboJaSs.woff": "18a4a09f751671cd8929d7c66e8fe7d820b511c36e51cf6047ffceab88eec4a4",
+    "out/renderer/assets/inter-latin-ext-500-normal-CV4jyFjo.woff2": "2c6fbc42d315528beb06c1096df45487bf4186c4b78b8111d12c9c951f8acca2",
+    "out/renderer/assets/manrope-latin-600-normal-BqgrALkZ.woff": "8d1f509774bca963fa02faf674678ce9244474306361ca2798583fa600346df6",
+    "out/renderer/assets/inter-vietnamese-400-normal-DMkecbls.woff2": "547ad9fdaeb0ae43487f4b8a02e47c36553c0c0cb73c8aa98f93b7b615f6b55d",
+    "out/renderer/assets/manrope-greek-600-normal-CF2i9ZRY.woff": "59fa49c299110657ee3dbc02beed32f5fda899423686058a0ce7e499851e6e7a",
+    "out/renderer/assets/manrope-vietnamese-600-normal-C1J5PCl_.woff2": "bce46331a74572cd723ddb8200a11c00e71370fad490f045564989527469aa3d",
+    "out/renderer/assets/inter-latin-ext-400-normal-77YHD8bZ.woff": "22ae8360fbad24d2af7c6c9898a346c881774dc87f7cf94bd262c48ad58d7116",
+    "out/renderer/assets/manrope-vietnamese-600-normal-lA7a_7Ok.woff": "628a1c849748530c6f7c02c18bdd3191bc19264e20ad2308a8a954605cdb620b",
+    "out/renderer/assets/inter-greek-ext-500-normal-2j5mBUwD.woff": "c85d11bde719108cc9a4f6f5b008087f6c36493b47395580d4f5336182b0f0c7",
+    "out/renderer/assets/manrope-cyrillic-600-normal-DvRl3Mj-.woff2": "80b86efbef1c9fb66557cc4cc7b6db42db2fd631f1a9b8735f3bbefbb5128799",
+    "out/renderer/assets/inter-greek-ext-500-normal-C4iEst2y.woff2": "75a9ec9383a3b7a7bf7cfb94f64edf38d9cfdc5f7ffa0cbed2733627a6e4426d",
+    "out/renderer/assets/index-CJtRjCuF.css": "a546a2eda315573b6b332a594352c7d6f6a89b125befc8579e769abc70749b28",
+    "out/renderer/assets/inter-cyrillic-ext-400-normal-DQukG94-.woff": "5cb2f1cc0936f89a42ceae34f5a5720248dc5b8114c12b1c33a7d2ef01a9b6b9",
+    "out/renderer/assets/inter-cyrillic-400-normal-HOLc17fK.woff": "6e441a6c94788318fa02b6d0a633aa29eebe27b69c6567eb1e59b4edc68ed70e",
+    "out/renderer/assets/inter-greek-400-normal-B4URO6DV.woff2": "c15ddd00a9927b56f5c655a41f976f79bd848a20cce91fc14227751872a1cc27",
+    "out/renderer/assets/inter-greek-ext-400-normal-DGGRlc-M.woff2": "eadedd9e13c2582430a9fb1519eb86152fdabb483a6f66d90f8d8a52e977a1b7",
+    "out/renderer/assets/inter-latin-ext-500-normal-BxGbmqWO.woff": "30d2903ce97f8a89ea0e9c083b42cb8bf97e7bbb5607e7f00352815f19cb0d5b",
+    "out/renderer/assets/inter-vietnamese-400-normal-Bbgyi5SW.woff": "54aa42d325bcdfd623ecb9eac4a5e3c6420c63d7b86e9d8545fb479f653beb57",
+    "out/renderer/assets/manrope-latin-600-normal-4f0koTD-.woff2": "f7ac6258da20ab7541939b59851155753d1d24f1b30cbcb949077a3faa3d1593",
+    "out/renderer/assets/manrope-latin-ext-600-normal-_gBojHdJ.woff2": "ff679412842fc3b5ce2dfad626db5261a4e663dcfd1bf1209bdfc61c2b2f37e6",
+    "out/renderer/assets/inter-cyrillic-500-normal-BasfLYem.woff2": "b77a86ec16aadc157f4a99e8898d71cd75ea264753d9bdf13f962f8c3988cbb0",
+    "out/renderer/assets/inter-cyrillic-ext-400-normal-BQZuk6qB.woff2": "ef572f9187a8be018d9d9c2c6b77c1f6cb2af4199f02fc16c292ea10ab25a2cc",
+    "out/renderer/assets/inter-greek-400-normal-q2sYcFCs.woff": "bdae9d28729e8c68587d5d54e216d771a40d7a6800e824586a6e2f570c2f10df",
+    "out/renderer/assets/inter-cyrillic-400-normal-obahsSVq.woff2": "f0bb586459ce8f09b238285040f17e3e9e9538b2c5a7aae0775194e33c36c3c3",
+    "out/renderer/assets/manrope-latin-ext-600-normal-u5Pl7hTU.woff": "80ff78480448f4c2c0f586cb016928554b8cd84b2b95dec5e5f7579274f757a0",
+    "out/renderer/assets/inter-cyrillic-ext-500-normal-B0yAr1jD.woff2": "1c2db92d3cd9b237ca7c9c07af556d542f28ded1db54cd4382cf776501c5291f",
+    "out/renderer/assets/inter-latin-ext-400-normal-C1nco2VV.woff2": "6744a7f509ebc6ab220a6cd4ea77e898adf014f03d88dcda5d45d8a9feefb4e9",
+    "out/renderer/assets/inter-latin-400-normal-CyCys3Eg.woff": "e20fa0b4fd2dd26e4d14b3ac3cc922509c3a63fa5e910e90c614544aa042dd45",
+    "out/renderer/assets/manrope-cyrillic-600-normal-It4mZcQk.woff": "716a12f36cf789e399e0ad0bd205e3d1c66e4de66fe0c7e94a59ab7f007fce89",
+    "out/renderer/assets/inter-vietnamese-500-normal-DOriooB6.woff2": "44e36aa5a8f12130029a29bb0e6695d0262b67446ce321e878b1fb56162b5de6",
+    "out/renderer/assets/inter-latin-400-normal-C38fXH4l.woff2": "8909904ab6c872eb994093482a88a28eca2cd95912d7b6fecd72103b0dc07edc",
+    "out/renderer/assets/inter-greek-ext-400-normal-KugGGMne.woff": "4f2b6f92ddfece8812e79774d446218aa6e0773ff8c2d31130fe2bdc23bd22d0",
+    "out/renderer/assets/inter-latin-500-normal-Cerq10X2.woff2": "f3779f1efccc4bdcdf9c0a02ab95bf6bd092ed09c48c08cedc725889edd1d19f"
+  },
+  "reviewedMainBundles": {
+    "out/renderer/index.html": "56ad3e6d24ae1852afc43d24ad2aa7664f4e8aad674cab3254b95d441d01495c",
+    "out/renderer/assets/index-kKqIk7e4.js": "9a06c1d6df0841c4d95728661f742c1976c24a5030920e1486cf7fbe1788c689",
+    "out/renderer/assets/index-C42DKuKz.css": "c671f661cc7805e30b3f1c5ace48adae9bbc210582bf3bfddce03e3fffb89049",
+    "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2"
+  },
+  "snapshots": [
+    {
+      "name": "final-detail-ack-pending",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "49ac704d27fd544390c21193dae34a56d30a8ea20ba5fb359b30e8545c0c441d",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 378.796875,
+          "y": 314.796875,
+          "width": 101.34375,
+          "height": 34,
+          "top": 314.796875,
+          "right": 480.140625,
+          "bottom": 348.796875,
+          "left": 378.796875
+        },
+        "insideDrawer": false,
+        "name": "Confirming\u2026",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 23.6,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 23.636498,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [
+        {
+          "key": "d17bf2d0844f00c610cb2615147bf5d678495548e06cced30b3c83845a9651f3",
+          "markerId": "66b9b31e-6a59-4553-bb6c-6d03e52d6cc6"
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Confirming\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 378.796875,
+            "y": 314.796875,
+            "width": 101.34375,
+            "height": 34,
+            "top": 314.796875,
+            "right": 480.140625,
+            "bottom": 348.796875,
+            "left": 378.796875
+          }
+        }
+      ],
+      "held": [
+        "acknowledgePlaylistRecovery"
+      ],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326867736,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326879059,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326894308,
+          "mode": "fail"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326905634,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326913726,
+          "mode": "hold"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326940877,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326947179,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792327033253,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327033254,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327052140,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327061486,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327061486,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistRecovery",
+          "at": 1792327081070,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-detail-ack-success",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "93f3c2e57c1c8e6aad6217b14c712b00be98c5b9c9b145856f38278f60cc3ec1",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 46,
+          "width": 85.2265625,
+          "height": 34,
+          "top": 46,
+          "right": 323.2265625,
+          "bottom": 80,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Back to playlists",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 23.6,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 23.636498,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [],
+      "controls": [],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326867736,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326879059,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326894308,
+          "mode": "fail"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326905634,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326913726,
+          "mode": "hold"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326940877,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326947179,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792327033253,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327033254,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327052140,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327061486,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327061486,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistRecovery",
+          "at": 1792327081070,
+          "mode": "hold"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327090744,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327090745,
+          "mode": "normal"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-detail-entry",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "7051c65c27bfd7b8f82da2a628d9bee1bc0d825ec0cc4761ec6a8fc761d2e8df",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 46,
+          "width": 85.2265625,
+          "height": 34,
+          "top": 46,
+          "right": 323.2265625,
+          "bottom": 80,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Back to playlists",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 23.6,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 23.636498,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [
+        {
+          "key": "d17bf2d0844f00c610cb2615147bf5d678495548e06cced30b3c83845a9651f3",
+          "markerId": "66b9b31e-6a59-4553-bb6c-6d03e52d6cc6"
+        }
+      ],
+      "controls": [],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326867736,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326879059,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326894308,
+          "mode": "fail"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326905634,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326913726,
+          "mode": "hold"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326940877,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326947179,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792327033253,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327033254,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327052140,
+          "mode": "normal"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-detail-refresh-pending",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "3826613d6154a2b1e63b5c8805492904be3e5619d685ac55503b5193a989dc9a",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 254,
+          "y": 314.796875,
+          "width": 99.4609375,
+          "height": 34,
+          "top": 314.796875,
+          "right": 353.4609375,
+          "bottom": 348.796875,
+          "left": 254
+        },
+        "insideDrawer": false,
+        "name": "Refreshing\u2026",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 23.6,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 23.636498,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [
+        {
+          "key": "d17bf2d0844f00c610cb2615147bf5d678495548e06cced30b3c83845a9651f3",
+          "markerId": "66b9b31e-6a59-4553-bb6c-6d03e52d6cc6"
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Refreshing\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 254,
+            "y": 314.796875,
+            "width": 99.4609375,
+            "height": 34,
+            "top": 314.796875,
+            "right": 353.4609375,
+            "bottom": 348.796875,
+            "left": 254
+          }
+        }
+      ],
+      "held": [
+        "playlist"
+      ],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326867736,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326879059,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326894308,
+          "mode": "fail"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326905634,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326913726,
+          "mode": "hold"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326940877,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326947179,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792327033253,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327033254,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327052140,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327061486,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327061486,
+          "mode": "normal"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-enqueue-cancels-restore",
+      "phase": "plural-count renderer, before Skip-only correction",
+      "sha256": "0c520814329575b9927d8fb8c5aa9c83698bb14c89f661d113bba73c410992f2",
+      "focus": {
+        "rowKey": "00000000000000000000000000002af7",
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1214,
+          "y": 248.5,
+          "width": 28,
+          "height": 30,
+          "top": 248.5,
+          "right": 1242,
+          "bottom": 278.5,
+          "left": 1214
+        },
+        "insideDrawer": false,
+        "name": "Actions for Song 10000",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 10000",
+      "transport": "Play",
+      "position": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "00000000000000000000000000002af7"
+        ],
+        "currentIndex": 0,
+        "position": 0,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": null,
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Actions for Song 10000",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 1214,
+            "y": 248.5,
+            "width": 28,
+            "height": 30,
+            "top": 248.5,
+            "right": 1242,
+            "bottom": 278.5,
+            "left": 1214
+          }
+        }
+      ],
+      "held": [
+        "song",
+        "song",
+        "song",
+        "song"
+      ],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792327298798,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327298846,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327298846,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327298846,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327298846,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327308698,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327308698,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327308698,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327308698,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792327319961,
+          "mode": "fail"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-enqueue-new-retry",
+      "phase": "plural-count renderer, before Skip-only correction",
+      "sha256": "40053bf96f325847c226da36082450efc71b553e1af21d947e8b478816ea0bcc",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1080.6953125,
+          "y": 566,
+          "width": 86.078125,
+          "height": 28,
+          "top": 566,
+          "right": 1166.7734375,
+          "bottom": 594,
+          "left": 1080.6953125
+        },
+        "insideDrawer": false,
+        "name": "Retrying\u2026",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 10000",
+      "transport": "Pause",
+      "position": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "00000000000000000000000000002af7"
+        ],
+        "currentIndex": 0,
+        "position": 0,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": null,
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Retrying\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 1080.6953125,
+            "y": 566,
+            "width": 86.078125,
+            "height": 28,
+            "top": 566,
+            "right": 1166.7734375,
+            "bottom": 594,
+            "left": 1080.6953125
+          }
+        }
+      ],
+      "held": [
+        "song",
+        "song",
+        "song",
+        "song",
+        "preparePlayback"
+      ],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792327298798,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327298846,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327298846,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327298846,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327298846,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327308698,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327308698,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327308698,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327308698,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792327319961,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792327328131,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-enqueue-new-success",
+      "phase": "plural-count renderer, before Skip-only correction",
+      "sha256": "fa7a81f825c7b9227f64a55165e388317b27f9b3e9605bb5aea8d3a287423246",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 621.9921875,
+          "y": 628.5,
+          "width": 36,
+          "height": 36,
+          "top": 628.5,
+          "right": 657.9921875,
+          "bottom": 664.5,
+          "left": 621.9921875
+        },
+        "insideDrawer": false,
+        "name": "Pause",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 10000",
+      "transport": "Pause",
+      "position": 8.3,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "00000000000000000000000000002af7"
+        ],
+        "currentIndex": 0,
+        "position": 8.045186,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": null,
+      "controls": [],
+      "held": [
+        "song",
+        "song",
+        "song",
+        "song"
+      ],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792327298798,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327298846,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327298846,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327298846,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327298846,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327308698,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327308698,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327308698,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327308698,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792327319961,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792327328131,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-enqueue-old-settled",
+      "phase": "plural-count renderer, before Skip-only correction",
+      "sha256": "effb0008654c07be39430b5be2cdc617731e867a681afdcfbd1b100feea7cf9c",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 621.9921875,
+          "y": 628.5,
+          "width": 36,
+          "height": 36,
+          "top": 628.5,
+          "right": 657.9921875,
+          "bottom": 664.5,
+          "left": 621.9921875
+        },
+        "insideDrawer": false,
+        "name": "Pause",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 10000",
+      "transport": "Pause",
+      "position": 23.2,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "00000000000000000000000000002af7"
+        ],
+        "currentIndex": 0,
+        "position": 22.920066,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": null,
+      "controls": [],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792327298798,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327298846,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327298846,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327298846,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327298846,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327308698,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327308698,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327308698,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327308698,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792327319961,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792327328131,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-list-ack-failure",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "fc9a80dc812f10f9ae7ea57bb7e0fa2272b3eee9b498e19a8fa1c14ac6e8b1fb",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 385.015625,
+          "y": 242.59375,
+          "width": 152.8046875,
+          "height": 34,
+          "top": 242.59375,
+          "right": 537.8203125,
+          "bottom": 276.59375,
+          "left": 385.015625
+        },
+        "insideDrawer": false,
+        "name": "I checked my playlists",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 23.6,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 23.636498,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [
+        {
+          "key": "e30655adf297f7e3fa90f34b8bd436fdde418af630a812bdb3a828299556184c",
+          "markerId": "f63f1f65-17ed-49f0-9301-d16dcd2aad5c"
+        },
+        {
+          "key": "d17bf2d0844f00c610cb2615147bf5d678495548e06cced30b3c83845a9651f3",
+          "markerId": "66b9b31e-6a59-4553-bb6c-6d03e52d6cc6"
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "I checked my playlists",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 385.015625,
+            "y": 242.59375,
+            "width": 152.8046875,
+            "height": 34,
+            "top": 242.59375,
+            "right": 537.8203125,
+            "bottom": 276.59375,
+            "left": 385.015625
+          }
+        }
+      ],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326867736,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326879059,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326894308,
+          "mode": "fail"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326905634,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326913726,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-list-ack-pending",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "192d8a4db73415cd99db3e2b9438d46f69e7a5d1631638a415108e578516c636",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 385.015625,
+          "y": 176.796875,
+          "width": 101.34375,
+          "height": 34,
+          "top": 176.796875,
+          "right": 486.359375,
+          "bottom": 210.796875,
+          "left": 385.015625
+        },
+        "insideDrawer": false,
+        "name": "Confirming\u2026",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 23.6,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 23.636498,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [
+        {
+          "key": "e30655adf297f7e3fa90f34b8bd436fdde418af630a812bdb3a828299556184c",
+          "markerId": "f63f1f65-17ed-49f0-9301-d16dcd2aad5c"
+        },
+        {
+          "key": "d17bf2d0844f00c610cb2615147bf5d678495548e06cced30b3c83845a9651f3",
+          "markerId": "66b9b31e-6a59-4553-bb6c-6d03e52d6cc6"
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Confirming\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 385.015625,
+            "y": 176.796875,
+            "width": 101.34375,
+            "height": 34,
+            "top": 176.796875,
+            "right": 486.359375,
+            "bottom": 210.796875,
+            "left": 385.015625
+          }
+        }
+      ],
+      "held": [
+        "acknowledgePlaylistCreation"
+      ],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326867736,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326879059,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326894308,
+          "mode": "fail"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326905634,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326913726,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-list-ack-return-locked",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "c2d2063db3204ea9e45c64650864e55db92ef267c68a4e1b7c859faefd27bfe2",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 211.5,
+          "width": 176,
+          "height": 44,
+          "top": 211.5,
+          "right": 192,
+          "bottom": 255.5,
+          "left": 16
+        },
+        "insideDrawer": false,
+        "name": "Playlists",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 23.6,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 23.636498,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [
+        {
+          "key": "e30655adf297f7e3fa90f34b8bd436fdde418af630a812bdb3a828299556184c",
+          "markerId": "f63f1f65-17ed-49f0-9301-d16dcd2aad5c"
+        },
+        {
+          "key": "d17bf2d0844f00c610cb2615147bf5d678495548e06cced30b3c83845a9651f3",
+          "markerId": "66b9b31e-6a59-4553-bb6c-6d03e52d6cc6"
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Confirming\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": false,
+          "rect": {
+            "x": 385.015625,
+            "y": 176.796875,
+            "width": 101.34375,
+            "height": 34,
+            "top": 176.796875,
+            "right": 486.359375,
+            "bottom": 210.796875,
+            "left": 385.015625
+          }
+        }
+      ],
+      "held": [
+        "acknowledgePlaylistCreation"
+      ],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326867736,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326879059,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326894308,
+          "mode": "fail"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326905634,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326913726,
+          "mode": "hold"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326940877,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326947179,
+          "mode": "normal"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-list-ack-success",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "50eb70590352d4d7c7cae0a49708b8d353e81aabfb33fdfc61e086682e790689",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 134,
+          "width": 329.328125,
+          "height": 86,
+          "top": 134,
+          "right": 567.328125,
+          "bottom": 220,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Fixture editable3 songsReview needed",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 23.6,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 23.636498,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [
+        {
+          "key": "d17bf2d0844f00c610cb2615147bf5d678495548e06cced30b3c83845a9651f3",
+          "markerId": "66b9b31e-6a59-4553-bb6c-6d03e52d6cc6"
+        }
+      ],
+      "controls": [],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326867736,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326879059,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326894308,
+          "mode": "fail"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326905634,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326913726,
+          "mode": "hold"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326940877,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326947179,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792327033253,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327033254,
+          "mode": "normal"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-list-before-detail",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "623b1940e0aa252d11d2c13c191d54e04e0ca779b509f7651c66bb985881ced4",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 134,
+          "width": 329.328125,
+          "height": 86,
+          "top": 134,
+          "right": 567.328125,
+          "bottom": 220,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Fixture editable3 songsReview needed",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 23.6,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 23.636498,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [
+        {
+          "key": "d17bf2d0844f00c610cb2615147bf5d678495548e06cced30b3c83845a9651f3",
+          "markerId": "66b9b31e-6a59-4553-bb6c-6d03e52d6cc6"
+        }
+      ],
+      "controls": [],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326867736,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326879059,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326894308,
+          "mode": "fail"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326905634,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326913726,
+          "mode": "hold"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326940877,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326947179,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792327033253,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327033254,
+          "mode": "normal"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-list-old-receipt-settled",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "a61e2a85897986eeccc838b01bceeaefaf2c53ddc0115c79ee1098abbf657cb6",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 211.5,
+          "width": 176,
+          "height": 44,
+          "top": 211.5,
+          "right": 192,
+          "bottom": 255.5,
+          "left": 16
+        },
+        "insideDrawer": false,
+        "name": "Playlists",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 23.6,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 23.636498,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [
+        {
+          "key": "e30655adf297f7e3fa90f34b8bd436fdde418af630a812bdb3a828299556184c",
+          "markerId": "f63f1f65-17ed-49f0-9301-d16dcd2aad5c"
+        },
+        {
+          "key": "d17bf2d0844f00c610cb2615147bf5d678495548e06cced30b3c83845a9651f3",
+          "markerId": "66b9b31e-6a59-4553-bb6c-6d03e52d6cc6"
+        }
+      ],
+      "controls": [],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326867736,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326879059,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326894308,
+          "mode": "fail"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326905634,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326913726,
+          "mode": "hold"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326940877,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326947179,
+          "mode": "normal"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-list-refresh-failure",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "823049fa6d96026731d7e124327de02b175565c2e0eb36c7e47b82ed377e3571",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 254,
+          "y": 256.796875,
+          "width": 121.015625,
+          "height": 34,
+          "top": 256.796875,
+          "right": 375.015625,
+          "bottom": 290.796875,
+          "left": 254
+        },
+        "insideDrawer": false,
+        "name": "Refresh playlists",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 23.6,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 23.636498,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [
+        {
+          "key": "e30655adf297f7e3fa90f34b8bd436fdde418af630a812bdb3a828299556184c",
+          "markerId": "f63f1f65-17ed-49f0-9301-d16dcd2aad5c"
+        },
+        {
+          "key": "d17bf2d0844f00c610cb2615147bf5d678495548e06cced30b3c83845a9651f3",
+          "markerId": "66b9b31e-6a59-4553-bb6c-6d03e52d6cc6"
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Refresh playlists",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 254,
+            "y": 256.796875,
+            "width": 121.015625,
+            "height": 34,
+            "top": 256.796875,
+            "right": 375.015625,
+            "bottom": 290.796875,
+            "left": 254
+          }
+        }
+      ],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326867736,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326879059,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326894308,
+          "mode": "fail"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-list-refresh-pending",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "dd4883a4e50c3f2207e53a131bc646f5d835c12e418501912179a7ce9787ab65",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 254,
+          "y": 176.796875,
+          "width": 99.4609375,
+          "height": 34,
+          "top": 176.796875,
+          "right": 353.4609375,
+          "bottom": 210.796875,
+          "left": 254
+        },
+        "insideDrawer": false,
+        "name": "Refreshing\u2026",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 23.6,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 23.636498,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [
+        {
+          "key": "e30655adf297f7e3fa90f34b8bd436fdde418af630a812bdb3a828299556184c",
+          "markerId": "f63f1f65-17ed-49f0-9301-d16dcd2aad5c"
+        },
+        {
+          "key": "d17bf2d0844f00c610cb2615147bf5d678495548e06cced30b3c83845a9651f3",
+          "markerId": "66b9b31e-6a59-4553-bb6c-6d03e52d6cc6"
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Refreshing\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 254,
+            "y": 176.796875,
+            "width": 99.4609375,
+            "height": 34,
+            "top": 176.796875,
+            "right": 353.4609375,
+            "bottom": 210.796875,
+            "left": 254
+          }
+        }
+      ],
+      "held": [
+        "playlists"
+      ],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326867736,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326879059,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-list-refresh-success",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "e701015df2b4c3f555cfc912a4b30305fcf1c455848dd2e870ee925bb2e86061",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 254,
+          "y": 176.796875,
+          "width": 121.015625,
+          "height": 34,
+          "top": 176.796875,
+          "right": 375.015625,
+          "bottom": 210.796875,
+          "left": 254
+        },
+        "insideDrawer": false,
+        "name": "Refresh playlists",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 23.6,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 23.636498,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [
+        {
+          "key": "e30655adf297f7e3fa90f34b8bd436fdde418af630a812bdb3a828299556184c",
+          "markerId": "f63f1f65-17ed-49f0-9301-d16dcd2aad5c"
+        },
+        {
+          "key": "d17bf2d0844f00c610cb2615147bf5d678495548e06cced30b3c83845a9651f3",
+          "markerId": "66b9b31e-6a59-4553-bb6c-6d03e52d6cc6"
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Refresh playlists",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 254,
+            "y": 176.796875,
+            "width": 121.015625,
+            "height": 34,
+            "top": 176.796875,
+            "right": 375.015625,
+            "bottom": 210.796875,
+            "left": 254
+          }
+        }
+      ],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326867736,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326879059,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326894308,
+          "mode": "fail"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326905634,
+          "mode": "normal"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-other-entry",
+      "phase": "plural-count renderer, before Skip-only correction",
+      "sha256": "fef72577089ab200c3e741b042793d151e8fcd5ba744e0bd9a9525ec9798279d",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 46,
+          "width": 85.2265625,
+          "height": 34,
+          "top": 46,
+          "right": 323.2265625,
+          "bottom": 80,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Back to playlists",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": null,
+      "controls": [],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792327399020,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327399028,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327399028,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327399029,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327399029,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792327399102,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327420502,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327421071,
+          "mode": "normal"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-player-failure",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "942a97a8eb51a8362ec8b85e3fcfbb50b5275b4b5677c974927a24481a6acd35",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1109.296875,
+          "y": 566,
+          "width": 57.4765625,
+          "height": 28,
+          "top": 566,
+          "right": 1166.7734375,
+          "bottom": 594,
+          "left": 1109.296875
+        },
+        "insideDrawer": false,
+        "name": "Retry",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [
+        {
+          "key": "e30655adf297f7e3fa90f34b8bd436fdde418af630a812bdb3a828299556184c",
+          "markerId": "f63f1f65-17ed-49f0-9301-d16dcd2aad5c"
+        },
+        {
+          "key": "d17bf2d0844f00c610cb2615147bf5d678495548e06cced30b3c83845a9651f3",
+          "markerId": "66b9b31e-6a59-4553-bb6c-6d03e52d6cc6"
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Retry",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 1109.296875,
+            "y": 566,
+            "width": 57.4765625,
+            "height": 28,
+            "top": 566,
+            "right": 1166.7734375,
+            "bottom": 594,
+            "left": 1109.296875
+          }
+        }
+      ],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-player-pending",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "da524c28175f0a243eb466fd098cb009b136dfe626495cbbd6e2214a0862a51f",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1080.6953125,
+          "y": 566,
+          "width": 86.078125,
+          "height": 28,
+          "top": 566,
+          "right": 1166.7734375,
+          "bottom": 594,
+          "left": 1080.6953125
+        },
+        "insideDrawer": false,
+        "name": "Retrying\u2026",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Pause",
+      "position": 12,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [
+        {
+          "key": "e30655adf297f7e3fa90f34b8bd436fdde418af630a812bdb3a828299556184c",
+          "markerId": "f63f1f65-17ed-49f0-9301-d16dcd2aad5c"
+        },
+        {
+          "key": "d17bf2d0844f00c610cb2615147bf5d678495548e06cced30b3c83845a9651f3",
+          "markerId": "66b9b31e-6a59-4553-bb6c-6d03e52d6cc6"
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Retrying\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 1080.6953125,
+            "y": 566,
+            "width": 86.078125,
+            "height": 28,
+            "top": 566,
+            "right": 1166.7734375,
+            "bottom": 594,
+            "left": 1080.6953125
+          }
+        }
+      ],
+      "held": [
+        "preparePlayback"
+      ],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-player-retry",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "da3922992811e75813bf57ca8cc80ce3b31ef0264ea09ae5bfff27781820b55d",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1080.6953125,
+          "y": 566,
+          "width": 86.078125,
+          "height": 28,
+          "top": 566,
+          "right": 1166.7734375,
+          "bottom": 594,
+          "left": 1080.6953125
+        },
+        "insideDrawer": false,
+        "name": "Retrying\u2026",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Pause",
+      "position": 12,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [
+        {
+          "key": "e30655adf297f7e3fa90f34b8bd436fdde418af630a812bdb3a828299556184c",
+          "markerId": "f63f1f65-17ed-49f0-9301-d16dcd2aad5c"
+        },
+        {
+          "key": "d17bf2d0844f00c610cb2615147bf5d678495548e06cced30b3c83845a9651f3",
+          "markerId": "66b9b31e-6a59-4553-bb6c-6d03e52d6cc6"
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Retrying\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 1080.6953125,
+            "y": 566,
+            "width": 86.078125,
+            "height": 28,
+            "top": 566,
+            "right": 1166.7734375,
+            "bottom": 594,
+            "left": 1080.6953125
+          }
+        }
+      ],
+      "held": [
+        "preparePlayback"
+      ],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-player-success",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "4f30de1e9aa9deeca0b15ae0b5974c287606a310c424a991a3a5b9920012726c",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 621.9921875,
+          "y": 628.5,
+          "width": 36,
+          "height": 36,
+          "top": 628.5,
+          "right": 657.9921875,
+          "bottom": 664.5,
+          "left": 621.9921875
+        },
+        "insideDrawer": false,
+        "name": "Pause",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Pause",
+      "position": 18.1,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 17.024355,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [
+        {
+          "key": "e30655adf297f7e3fa90f34b8bd436fdde418af630a812bdb3a828299556184c",
+          "markerId": "f63f1f65-17ed-49f0-9301-d16dcd2aad5c"
+        },
+        {
+          "key": "d17bf2d0844f00c610cb2615147bf5d678495548e06cced30b3c83845a9651f3",
+          "markerId": "66b9b31e-6a59-4553-bb6c-6d03e52d6cc6"
+        }
+      ],
+      "controls": [],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-playlists-entry",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "11b85a2e27053a1bb6ec55cc5e31429b3f2e34a31385164a8376c88dc719d004",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 16,
+          "y": 211.5,
+          "width": 176,
+          "height": 44,
+          "top": 211.5,
+          "right": 192,
+          "bottom": 255.5,
+          "left": 16
+        },
+        "insideDrawer": false,
+        "name": "Playlists",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 23.6,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 23.636498,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [
+        {
+          "key": "e30655adf297f7e3fa90f34b8bd436fdde418af630a812bdb3a828299556184c",
+          "markerId": "f63f1f65-17ed-49f0-9301-d16dcd2aad5c"
+        },
+        {
+          "key": "d17bf2d0844f00c610cb2615147bf5d678495548e06cced30b3c83845a9651f3",
+          "markerId": "66b9b31e-6a59-4553-bb6c-6d03e52d6cc6"
+        }
+      ],
+      "controls": [],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326867736,
+          "mode": "normal"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-remove-complete-after-tab",
+      "phase": "plural-count renderer, before Skip-only correction",
+      "sha256": "589ceb0907aee64987186b07e343b60f67d5772f53ea326dc14a2de2a82452b4",
+      "focus": {
+        "rowKey": "entry-2",
+        "tag": "TR",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 320,
+          "width": 1012,
+          "height": 56,
+          "top": 320,
+          "right": 1250,
+          "bottom": 376,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "1Song 00003Artist 001Album 000110:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong detailsMove upMove downRemove from playlist",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [],
+      "controls": [],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792327399020,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327399028,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327399028,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327399029,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327399029,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792327399102,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327420502,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327421071,
+          "mode": "normal"
+        },
+        {
+          "name": "removePlaylistEntries",
+          "at": 1792327429902,
+          "mode": "hold"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327435498,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327435498,
+          "mode": "normal"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 1
+    },
+    {
+      "name": "final-remove-empty-success",
+      "phase": "plural-count renderer, before Skip-only correction",
+      "sha256": "f977df1d263196ec74b4207ce91ef7fcd04ca1764dc76b0aa61f541c85f3baf7",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 46,
+          "width": 85.2265625,
+          "height": 34,
+          "top": 46,
+          "right": 323.2265625,
+          "bottom": 80,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Back to playlists",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [],
+      "controls": [],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792327399020,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327399028,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327399028,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327399029,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327399029,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792327399102,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327420502,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327421071,
+          "mode": "normal"
+        },
+        {
+          "name": "removePlaylistEntries",
+          "at": 1792327429902,
+          "mode": "hold"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327435498,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327435498,
+          "mode": "normal"
+        },
+        {
+          "name": "removePlaylistEntries",
+          "at": 1792327448368,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327448373,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327448374,
+          "mode": "normal"
+        },
+        {
+          "name": "removePlaylistEntries",
+          "at": 1792327457651,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327457657,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327457657,
+          "mode": "normal"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 3
+    },
+    {
+      "name": "final-remove-first-pending",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "24632d17e68cf9dae6fd808bc696026674dce162a0be71ff73587a9f64cd7c24",
+      "focus": {
+        "rowKey": "entry-1",
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1222,
+          "y": 351.1953125,
+          "width": 28,
+          "height": 30,
+          "top": 351.1953125,
+          "right": 1250,
+          "bottom": 381.1953125,
+          "left": 1222
+        },
+        "insideDrawer": false,
+        "name": "Actions for Song 00002",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 23.6,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 23.636498,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Actions for Song 00002",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 1222,
+            "y": 351.1953125,
+            "width": 28,
+            "height": 30,
+            "top": 351.1953125,
+            "right": 1250,
+            "bottom": 381.1953125,
+            "left": 1222
+          }
+        }
+      ],
+      "held": [
+        "removePlaylistEntries"
+      ],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326867736,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326879059,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326894308,
+          "mode": "fail"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326905634,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326913726,
+          "mode": "hold"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326940877,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326947179,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792327033253,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327033254,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327052140,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327061486,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327061486,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistRecovery",
+          "at": 1792327081070,
+          "mode": "hold"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327090744,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327090745,
+          "mode": "normal"
+        },
+        {
+          "name": "removePlaylistEntries",
+          "at": 1792327110865,
+          "mode": "hold"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327114514,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327114514,
+          "mode": "normal"
+        },
+        {
+          "name": "removePlaylistEntries",
+          "at": 1792327129222,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 1
+    },
+    {
+      "name": "final-remove-first-success",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "e6f0dff50e1c085baa9f9db7535c9298bb04996c935e2f12d8f8b838f24e588d",
+      "focus": {
+        "rowKey": "entry-2",
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1222,
+          "y": 332.5,
+          "width": 28,
+          "height": 30,
+          "top": 332.5,
+          "right": 1250,
+          "bottom": 362.5,
+          "left": 1222
+        },
+        "insideDrawer": false,
+        "name": "Actions for Song 00003",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 23.6,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 23.636498,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Actions for Song 00003",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 1222,
+            "y": 332.5,
+            "width": 28,
+            "height": 30,
+            "top": 332.5,
+            "right": 1250,
+            "bottom": 362.5,
+            "left": 1222
+          }
+        }
+      ],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326867736,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326879059,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326894308,
+          "mode": "fail"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326905634,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326913726,
+          "mode": "hold"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326940877,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326947179,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792327033253,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327033254,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327052140,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327061486,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327061486,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistRecovery",
+          "at": 1792327081070,
+          "mode": "hold"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327090744,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327090745,
+          "mode": "normal"
+        },
+        {
+          "name": "removePlaylistEntries",
+          "at": 1792327110865,
+          "mode": "hold"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327114514,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327114514,
+          "mode": "normal"
+        },
+        {
+          "name": "removePlaylistEntries",
+          "at": 1792327129222,
+          "mode": "hold"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327133345,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327133345,
+          "mode": "normal"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 2
+    },
+    {
+      "name": "final-remove-last-pending",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "74a263a64aa1c7a161abc03550b1e2d01e9ba788ee24373d55f9842d671c2e27",
+      "focus": {
+        "rowKey": "entry-3",
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1222,
+          "y": 463.1953125,
+          "width": 28,
+          "height": 30,
+          "top": 463.1953125,
+          "right": 1250,
+          "bottom": 493.1953125,
+          "left": 1222
+        },
+        "insideDrawer": false,
+        "name": "Actions for Song 00004",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 23.6,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 23.636498,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Actions for Song 00004",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 1222,
+            "y": 463.1953125,
+            "width": 28,
+            "height": 30,
+            "top": 463.1953125,
+            "right": 1250,
+            "bottom": 493.1953125,
+            "left": 1222
+          }
+        }
+      ],
+      "held": [
+        "removePlaylistEntries"
+      ],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326867736,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326879059,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326894308,
+          "mode": "fail"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326905634,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326913726,
+          "mode": "hold"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326940877,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326947179,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792327033253,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327033254,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327052140,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327061486,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327061486,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistRecovery",
+          "at": 1792327081070,
+          "mode": "hold"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327090744,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327090745,
+          "mode": "normal"
+        },
+        {
+          "name": "removePlaylistEntries",
+          "at": 1792327110865,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-remove-last-success",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "4dd63e723d9d196783fa4eea368b8e69bfc0e9dabe720df1deccfa96e97a3c29",
+      "focus": {
+        "rowKey": "entry-2",
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1222,
+          "y": 388.5,
+          "width": 28,
+          "height": 30,
+          "top": 388.5,
+          "right": 1250,
+          "bottom": 418.5,
+          "left": 1222
+        },
+        "insideDrawer": false,
+        "name": "Actions for Song 00003",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 23.6,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 23.636498,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Actions for Song 00003",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 1222,
+            "y": 388.5,
+            "width": 28,
+            "height": 30,
+            "top": 388.5,
+            "right": 1250,
+            "bottom": 418.5,
+            "left": 1222
+          }
+        }
+      ],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326867736,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326879059,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326894308,
+          "mode": "fail"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326905634,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326913726,
+          "mode": "hold"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326940877,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326947179,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792327033253,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327033254,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327052140,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327061486,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327061486,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistRecovery",
+          "at": 1792327081070,
+          "mode": "hold"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327090744,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327090745,
+          "mode": "normal"
+        },
+        {
+          "name": "removePlaylistEntries",
+          "at": 1792327110865,
+          "mode": "hold"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327114514,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327114514,
+          "mode": "normal"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 1
+    },
+    {
+      "name": "final-remove-one-remaining",
+      "phase": "plural-count renderer, before Skip-only correction",
+      "sha256": "3ba8397c22fc4ec70b71cd1312fe2ab4ddd924a88a512ea927b28325c223983d",
+      "focus": {
+        "rowKey": "entry-3",
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1222,
+          "y": 332.5,
+          "width": 28,
+          "height": 30,
+          "top": 332.5,
+          "right": 1250,
+          "bottom": 362.5,
+          "left": 1222
+        },
+        "insideDrawer": false,
+        "name": "Actions for Song 00004",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Actions for Song 00004",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 1222,
+            "y": 332.5,
+            "width": 28,
+            "height": 30,
+            "top": 332.5,
+            "right": 1250,
+            "bottom": 362.5,
+            "left": 1222
+          }
+        }
+      ],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792327399020,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327399028,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327399028,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327399029,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327399029,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792327399102,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327420502,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327421071,
+          "mode": "normal"
+        },
+        {
+          "name": "removePlaylistEntries",
+          "at": 1792327429902,
+          "mode": "hold"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327435498,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327435498,
+          "mode": "normal"
+        },
+        {
+          "name": "removePlaylistEntries",
+          "at": 1792327448368,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327448373,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327448374,
+          "mode": "normal"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 2
+    },
+    {
+      "name": "final-remove-tab-away",
+      "phase": "plural-count renderer, before Skip-only correction",
+      "sha256": "754e6749f763ec20af317b374d42cb2e47d79af880fe11d67ea7c552c454aa1a",
+      "focus": {
+        "rowKey": "entry-2",
+        "tag": "TR",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 394.6953125,
+          "width": 1012,
+          "height": 56,
+          "top": 394.6953125,
+          "right": 1250,
+          "bottom": 450.6953125,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "2Song 00003Artist 001Album 000110:00\u2022\u2022\u2022Play songAdd to queueAdd to playlistSong detailsMove upMove downRemove from playlist",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": null,
+      "controls": [],
+      "held": [
+        "removePlaylistEntries"
+      ],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792327399020,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327399028,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327399028,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327399029,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327399029,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792327399102,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327420502,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327421071,
+          "mode": "normal"
+        },
+        {
+          "name": "removePlaylistEntries",
+          "at": 1792327429902,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-remove-uncertain-empty",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "91ab8a1b69ec0f9bdfbb2c635b649a45c6422fa47ff34075239f4425505d56a0",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 254,
+          "y": 380.59375,
+          "width": 114.796875,
+          "height": 34,
+          "top": 380.59375,
+          "right": 368.796875,
+          "bottom": 414.59375,
+          "left": 254
+        },
+        "insideDrawer": false,
+        "name": "Refresh playlist",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 23.6,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 23.636498,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [
+        {
+          "key": "d17bf2d0844f00c610cb2615147bf5d678495548e06cced30b3c83845a9651f3",
+          "markerId": "9696eca9-3099-40a8-add8-cd32f5b03c7a"
+        }
+      ],
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Refresh playlist",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 254,
+            "y": 380.59375,
+            "width": 114.796875,
+            "height": 34,
+            "top": 380.59375,
+            "right": 368.796875,
+            "bottom": 414.59375,
+            "left": 254
+          }
+        }
+      ],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326867736,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326879059,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326894308,
+          "mode": "fail"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326905634,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326913726,
+          "mode": "hold"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326940877,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326947179,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792327033253,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327033254,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327052140,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327061486,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327061486,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistRecovery",
+          "at": 1792327081070,
+          "mode": "hold"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327090744,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327090745,
+          "mode": "normal"
+        },
+        {
+          "name": "removePlaylistEntries",
+          "at": 1792327110865,
+          "mode": "hold"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327114514,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327114514,
+          "mode": "normal"
+        },
+        {
+          "name": "removePlaylistEntries",
+          "at": 1792327129222,
+          "mode": "hold"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327133345,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327133345,
+          "mode": "normal"
+        },
+        {
+          "name": "removePlaylistEntries",
+          "at": 1792327166573,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327166580,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327166581,
+          "mode": "normal"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 3
+    },
+    {
+      "name": "final-remove-uncertain-reviewed",
+      "phase": "reviewed main renderer, before singular-count/Skip corrections",
+      "sha256": "d2897697f977453dfdfec9ea50a53c2a2f66d4a714aebcd92cbe13f764e0628a",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 46,
+          "width": 85.2265625,
+          "height": 34,
+          "top": 46,
+          "right": 323.2265625,
+          "bottom": 80,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Back to playlists",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 23.6,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 23.636498,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": [],
+      "controls": [],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792326805474,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805482,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792326805483,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326805572,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326816932,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792326843516,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326867736,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326879059,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326894308,
+          "mode": "fail"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326905634,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326913726,
+          "mode": "hold"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792326940877,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792326947179,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistCreation",
+          "at": 1792327033253,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327033254,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327052140,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327061486,
+          "mode": "hold"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327061486,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistRecovery",
+          "at": 1792327081070,
+          "mode": "hold"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327090744,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327090745,
+          "mode": "normal"
+        },
+        {
+          "name": "removePlaylistEntries",
+          "at": 1792327110865,
+          "mode": "hold"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327114514,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327114514,
+          "mode": "normal"
+        },
+        {
+          "name": "removePlaylistEntries",
+          "at": 1792327129222,
+          "mode": "hold"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327133345,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327133345,
+          "mode": "normal"
+        },
+        {
+          "name": "removePlaylistEntries",
+          "at": 1792327166573,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327166580,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327166581,
+          "mode": "normal"
+        },
+        {
+          "name": "acknowledgePlaylistRecovery",
+          "at": 1792327183388,
+          "mode": "normal"
+        },
+        {
+          "name": "playlist",
+          "at": 1792327183390,
+          "mode": "normal"
+        },
+        {
+          "name": "playlists",
+          "at": 1792327183390,
+          "mode": "normal"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 3
+    },
+    {
+      "name": "final-restore-failure",
+      "phase": "plural-count renderer, before Skip-only correction",
+      "sha256": "2710c745403b348f382ebe5b7acff831614bc07c7e1f7216bdc7a5738c0f8a3f",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1109.296875,
+          "y": 566,
+          "width": 57.4765625,
+          "height": 28,
+          "top": 566,
+          "right": 1166.7734375,
+          "bottom": 594,
+          "left": 1109.296875
+        },
+        "insideDrawer": false,
+        "name": "Retry",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": null,
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Retry",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "active": true,
+          "rect": {
+            "x": 1109.296875,
+            "y": 566,
+            "width": 57.4765625,
+            "height": 28,
+            "top": 566,
+            "right": 1166.7734375,
+            "bottom": 594,
+            "left": 1109.296875
+          }
+        }
+      ],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792327239456,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327239461,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327239461,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327239462,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327239462,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327248504,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327248504,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327248504,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327248504,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-restore-pending",
+      "phase": "plural-count renderer, before Skip-only correction",
+      "sha256": "d22a541022b9b79958fe790aa8e0bd4496c6b5f205d3e0586327ad539bf54ff7",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1080.6953125,
+          "y": 566,
+          "width": 86.078125,
+          "height": 28,
+          "top": 566,
+          "right": 1166.7734375,
+          "bottom": 594,
+          "left": 1080.6953125
+        },
+        "insideDrawer": false,
+        "name": "Retrying\u2026",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": null,
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Retrying\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 1080.6953125,
+            "y": 566,
+            "width": 86.078125,
+            "height": 28,
+            "top": 566,
+            "right": 1166.7734375,
+            "bottom": 594,
+            "left": 1080.6953125
+          }
+        }
+      ],
+      "held": [
+        "song",
+        "song",
+        "song",
+        "song"
+      ],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792327239456,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327239461,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327239461,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327239462,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327239462,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327248504,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327248504,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327248504,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327248504,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-restore-retry",
+      "phase": "plural-count renderer, before Skip-only correction",
+      "sha256": "3df2f50a0f2b8b3a9d6d734b61b01b38b59b6179002f0edcbceaf353fdd0f068",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1080.6953125,
+          "y": 566,
+          "width": 86.078125,
+          "height": 28,
+          "top": 566,
+          "right": 1166.7734375,
+          "bottom": 594,
+          "left": 1080.6953125
+        },
+        "insideDrawer": false,
+        "name": "Retrying\u2026",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": null,
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Retrying\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 1080.6953125,
+            "y": 566,
+            "width": 86.078125,
+            "height": 28,
+            "top": 566,
+            "right": 1166.7734375,
+            "bottom": 594,
+            "left": 1080.6953125
+          }
+        }
+      ],
+      "held": [
+        "song",
+        "song",
+        "song",
+        "song"
+      ],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792327239456,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327239461,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327239461,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327239462,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327239462,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327248504,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327248504,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327248504,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327248504,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327277622,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327277622,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327277622,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327277623,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-restore-success",
+      "phase": "plural-count renderer, before Skip-only correction",
+      "sha256": "2292b2c3bad168d9f86b68d706d1708665c6649ecf312020c1beded26df49be1",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 621.9921875,
+          "y": 628.5,
+          "width": 36,
+          "height": 36,
+          "top": 628.5,
+          "right": 657.9921875,
+          "bottom": 664.5,
+          "left": 621.9921875
+        },
+        "insideDrawer": false,
+        "name": "Play",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": null,
+      "controls": [],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792327239456,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327239461,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327239461,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327239462,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327239462,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792327248504,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327248504,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327248504,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327248504,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327277622,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327277622,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327277622,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327277623,
+          "mode": "hold"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792327286730,
+          "mode": "normal"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-skip-failure",
+      "phase": "final Skip renderer",
+      "sha256": "75c83974deb4a5dc18846a349e2dc9bafba5e8226d47f5acc481167a04e1af24",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 667.9921875,
+          "y": 630.5,
+          "width": 32,
+          "height": 32,
+          "top": 630.5,
+          "right": 699.9921875,
+          "bottom": 662.5,
+          "left": 667.9921875
+        },
+        "insideDrawer": false,
+        "name": "Next track",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00004",
+      "transport": "Play",
+      "position": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 3,
+        "position": 0,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": null,
+      "controls": [],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792327590882,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327590900,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327590901,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327590901,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327590901,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792327590945,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792327599677,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-skip-pending",
+      "phase": "final Skip renderer",
+      "sha256": "41b265692cbb8e7305560f3f32048b1444c0cb478c126bd887c73ea5886ad3ae",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 667.9921875,
+          "y": 630.5,
+          "width": 32,
+          "height": 32,
+          "top": 630.5,
+          "right": 699.9921875,
+          "bottom": 662.5,
+          "left": 667.9921875
+        },
+        "insideDrawer": false,
+        "name": "Next track",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00004",
+      "transport": "Play",
+      "position": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 3,
+        "position": 0,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": null,
+      "controls": [],
+      "held": [
+        "preparePlayback"
+      ],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792327590882,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327590900,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327590901,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327590901,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327590901,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792327590945,
+          "mode": "fail"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792327599677,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-state-read-failure",
+      "phase": "plural-count renderer, before Skip-only correction",
+      "sha256": "0e885760c7dc53ec9e3e6b42d70e25f8d728192cf8b8f48907687188b9992604",
+      "focus": {
+        "tag": "BODY",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "top": 0,
+          "right": 1280,
+          "bottom": 720,
+          "left": 0
+        },
+        "insideDrawer": false,
+        "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedAll songsYour Jellyfin libraryGenreAny genreAny genreJazzRockTagAny tagAny tagArchi",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": null,
+      "controls": [],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792327361343,
+          "mode": "fail"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-state-retry-pending",
+      "phase": "plural-count renderer, before Skip-only correction",
+      "sha256": "d7bfa52b9fa4df2de3f4a03c827234aa55b25cf4e0be6a702fb552e21465ed2b",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1080.6953125,
+          "y": 566,
+          "width": 86.078125,
+          "height": 28,
+          "top": 566,
+          "right": 1166.7734375,
+          "bottom": 594,
+          "left": 1080.6953125
+        },
+        "insideDrawer": false,
+        "name": "Retrying\u2026",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": null,
+      "controls": [
+        {
+          "tag": "BUTTON",
+          "name": "Retrying\u2026",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": "true",
+          "active": true,
+          "rect": {
+            "x": 1080.6953125,
+            "y": 566,
+            "width": 86.078125,
+            "height": 28,
+            "top": 566,
+            "right": 1166.7734375,
+            "bottom": 594,
+            "left": 1080.6953125
+          }
+        }
+      ],
+      "held": [
+        "getPlaybackPreferences"
+      ],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792327361343,
+          "mode": "fail"
+        },
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792327372759,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-state-retry-success",
+      "phase": "plural-count renderer, before Skip-only correction",
+      "sha256": "ba32a4f09a0a2604ecfa0b8c94e57a495129d3db86d168fec766810df4eb314a",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 621.9921875,
+          "y": 628.5,
+          "width": 36,
+          "height": 36,
+          "top": 628.5,
+          "right": 657.9921875,
+          "bottom": 664.5,
+          "left": 621.9921875
+        },
+        "insideDrawer": false,
+        "name": "Play",
+        "type": null,
+        "role": null
+      },
+      "overlays": [],
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "playback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "recovery": null,
+      "controls": [],
+      "held": [],
+      "calls": [
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792327361343,
+          "mode": "fail"
+        },
+        {
+          "name": "getPlaybackPreferences",
+          "at": 1792327372759,
+          "mode": "hold"
+        },
+        {
+          "name": "song",
+          "at": 1792327387373,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327387374,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327387374,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792327387374,
+          "mode": "normal"
+        },
+        {
+          "name": "preparePlayback",
+          "at": 1792327387382,
+          "mode": "normal"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    }
+  ],
+  "sourceHashes": {
+    "src/renderer/useRetryFocus.ts": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c",
+    "src/renderer/player.tsx": "f18e166b2a750dfc2c9f9a108380757683f475cbe5cd33717af5be281292a600",
+    "src/renderer/components/Player/Player.component.tsx": "ff91b28a23255a7467201630ed605fc6dd73231c340470e8827c6382e6cb74f2",
+    "src/renderer/components/Player/Player.styles.css": "6e1d3fc6940e0f0bc2dd7b94667feba86ed566e3ce1c695d29a1a3b2968bb9c6",
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "062f3dc8c72be8d68df268eba642ef2d93b89ac500c73303688ec98653433ec9",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+    "src/renderer/styles.css": "59a887c4f754a3e54d9fea94420cf39ffc99a825211113e85b98df2cd2b53693"
+  },
+  "finalBundles": {
+    "out/renderer/index.html": "c7f2ceba901de1ae178c40063a12f5f525985d8c2a9c81d7201a359fbad74f78",
+    "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2",
+    "out/renderer/assets/index-C-2WfQBm.js": "acbe068a5b94371a252989adc26caa54cf3f8122ef976b583e1ba88e2679e82a",
+    "out/renderer/assets/index-C42DKuKz.css": "c671f661cc7805e30b3f1c5ace48adae9bbc210582bf3bfddce03e3fffb89049"
+  },
+  "fixtureHashes": {
+    "bootstrap.mjs": "e124a94359eceaf6169201f0404ad9132642015ce22dfa3b11c81869ceed5927",
+    "observe.cjs": "685baa6ca1a7f39b26280284c4a9a8b63b2a711ddf99e4667da3b9549293a2b2",
+    "server.mjs": "3287d4e91da5fe90741150e76f7e420a9222503cdc90a1331909001c078a2b79",
+    "out/main/index.js": "576624282916408675d3a7ee10b7528d3334dc477ed0de6f259d0339a53bd57a",
+    "capture.py": "83193e9b53ecf266123a48c24d779d6a69da2c59d5f232cf0e281c199eb0771e"
+  },
+  "observerReports": {
+    "before": {
+      "sha256": "bc76bad1756bfd677c05118e16e77cb182ff53221d113a8eb21a098612f1c56d",
+      "result": "observed",
+      "errors": []
+    },
+    "final-enqueue": {
+      "sha256": "7ae4922731d3c7fa5db525584a3cd79ff55f0841951cf5ea74896dc29dc844ef",
+      "result": "observed",
+      "errors": []
+    },
+    "final-skip": {
+      "sha256": "c2a22a2436e8896a510dbaa6726a2c72db0105931bc6ed4cd819e5c40d815b52",
+      "result": "observed",
+      "errors": []
+    },
+    "final-restore": {
+      "sha256": "08a1ae66d67bf321cb352548af6dbac58eebbf015e260965d8ce845fe652c864",
+      "result": "observed",
+      "errors": []
+    },
+    "before-remove": {
+      "sha256": "92bb23f973732e61d7ce3532d151c52c89daadba1fc52eef6c886e9924d910f6",
+      "result": "observed",
+      "errors": []
+    },
+    "final": {
+      "sha256": "92550ee899a9055cb0956ccbab2e2aa6f769b3cc627974b6d2347ae97d496812",
+      "result": "observed",
+      "errors": []
+    },
+    "before-skip": {
+      "sha256": "8a3fe38ae5f8d7c6f9f4ceef2d8c2aecade3f6adbf9d3333a6390f4372a28269",
+      "result": "observed",
+      "errors": []
+    },
+    "final-empty": {
+      "sha256": "a8a24c99f5c58b04e89abf5b24a291d28eb5df0c8658b7bec562f872e3acc266",
+      "result": "observed",
+      "errors": []
+    },
+    "final-state-retry": {
+      "sha256": "d8c13dbeddb5abe585ff062233726a749a756c81b44f0e4bcec65034330e95d8",
+      "result": "observed",
+      "errors": []
+    }
+  },
+  "runtime": {
+    "viewport": [
+      1280,
+      720
+    ],
+    "appZoom": 1,
+    "input": "Native CUA only; copied instrumented main/storage with production renderer/preload, disposable safeStorage/catalog, placeholder readiness keys and null shared-key adapter.",
+    "media": "Real native local WAV, muted. Restore stays paused; current-track Retry preserves existing explicit play intent.",
+    "playlistRecovery": "Actual seeded durable markers; actual service reads issue receipts, actual acknowledgements clear markers; six DELETEs across two playlists, one server removal deliberately destroys its response. No mutation is replayed automatically.",
+    "faults": "IPC pre-operation hold/fail gates, localhost response loss after mutation; preparation scheduler interval stopped.",
+    "externalProviderAttempts": 0,
+    "httpWrites": "Main run3 owned localhost DELETEs, separate empty-table run3 owned localhost DELETEs, baseline removal1. Other runtime runs0; no external write or generation."
+  },
+  "team": {
+    "decision": "Independent Steve/Elena proposals and challenge converged on existing guarded useRetryFocus with explicit arbitrary source/failure target for removal, captured occurrence order and receipt snapshots, stable pending rows, exact track/restore settlement.",
+    "review": "Cross review found unavailable-target fallback, misleading shared labels, and enqueue/restore invalidation; corrected before native final runs. Root integration caught type narrowing/refs lint, and added immediate Skip handoff plus singular playlist count.",
+    "ownership": "Steve player controller/component/styles; Elena playlist page/table; root shared hook/styles/integration/evidence."
+  },
+  "validation": {
+    "nativeProjectionCount": 42,
+    "parsedPredicates": "All scoped predicates pass: focus/geometry, duplicate guards, captured receipts, ordered occurrence fallback, later Tab, uncertain server removal without extra DELETE, restore/no-current/enqueue identity, final Skip.",
+    "build": "Final production build including TypeScript exit0",
+    "lint": "Final full ESLint exit0",
+    "whitespace": "git diff --check passed",
+    "processes": "Nine observer reports are terminal observed/exit0 without page errors. Catalog42526 stopped/restarted to reset disposable entries, final catalog42891 verified by exact command and stopped."
+  },
+  "limitations": [
+    "Main recovery/current-track cases precede singular-count/Skip-only corrections. Restore/enqueue/state/empty cases precede Skip-only correction; that intermediate renderer bundle hash was not retained. Final Skip renderer has only dedicated Skip replay. Exact phases are explicit; no final-bundle rerun of all42 cases claimed.",
+    "No dedicated runtime for same-song duplicate-row focus, different new marker ID, pending-marker fallback, forced window loss, hardware media or all restore-empty variants. Source guards cover their stated paths; this record does not establish broader acceptance.",
+    "Player options-save Retry, custom voice search and successful authentication handoff remain for current control-family reconciliation.",
+    "No unit, listener, audible, VoiceOver, live Jellyfin/provider, OS fault or platform matrix result. Deferred zoom/smaller viewport unchanged.",
+    "All191 dispositions unchanged:189 active,2 Deferred,27 open comprising14 listener and13 other-proof. Q06 stays Review.",
+    "The old acknowledgement result is not separately rendered after its origin unmounts. Superseded-receipt rejection is inferred from the real fresh read, unchanged recovery marker, normal released IPC and inspected receipt-validation code."
+  ]
+}

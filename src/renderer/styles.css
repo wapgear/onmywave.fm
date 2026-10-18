@@ -82,3 +82,5 @@ input[type=checkbox]{accent-color:var(--accent)}
 .connect-button[aria-disabled="true"]:active,.library-choice-footer button[aria-disabled="true"]:active,.provider-key-actions button[aria-disabled="true"]:active{translate:0 0}
 
 .connect-button{scroll-margin-block:8px}
+.playlist-recovery button[aria-disabled="true"]{cursor:default;color:var(--muted);background:var(--surface)}
+.playlist-recovery button[aria-disabled="true"]:active{translate:0 0}

@@ -38,7 +38,7 @@ export function useRetryFocus(options: RetryFocusOptions) {
   const removeListeners = useRef<() => void>(() => {});
   const passiveFocus = useRef<PassiveFocus | null>(null);
   const removePassiveListeners = useRef<() => void>(() => {});
-  const [completion, setCompletion] = useState<{ attempt: FocusAttempt; failed: boolean; target?: () => HTMLElement | null; onComplete?: () => void } | null>(null);
+  const [completion, setCompletion] = useState<{ attempt: FocusAttempt; failed: boolean; target?: () => HTMLElement | null; failureTarget?: () => HTMLElement | null; onComplete?: () => void } | null>(null);
 
   const cancel = useCallback(() => {
     if (attempt.current) attempt.current.cancelled = true;
@@ -150,7 +150,7 @@ export function useRetryFocus(options: RetryFocusOptions) {
         && (!completedAttempt.scope || completedAttempt.scope.isConnected);
       if (attempt.current === completedAttempt && !completedAttempt.cancelled && completedAttempt.ownerKey === next.ownerKey && ownsFocus && environmentAllowsFocus) {
         if (failed) {
-          const retryButton = retryRef.current;
+          const retryButton = completion.failureTarget?.() ?? retryRef.current;
           if (focusableTarget(retryButton, completedAttempt.scope) && active !== retryButton) focusAndReveal(retryButton);
         } else if (next.canFocusSuccess()) {
           const target = completion.target?.() ?? next.target();
@@ -173,8 +173,7 @@ export function useRetryFocus(options: RetryFocusOptions) {
     }
   }, [armPassiveFocus, completion]);
 
-  const retry = useCallback(async (operation: () => Promise<RetryResult>, target?: () => HTMLElement | null, onComplete?: () => void) => {
-    const button = retryRef.current;
+  const retryFrom = useCallback(async (button: HTMLButtonElement | null, operation: () => Promise<RetryResult>, target?: () => HTMLElement | null, onComplete?: () => void, failureTarget?: () => HTMLElement | null) => {
     const current = latest.current;
     if (!button || document.activeElement !== button || document.visibilityState !== 'visible' || !document.hasFocus()) {
       try { await operation(); } catch { /* Query errors remain available through the rendered error state. */ } finally { onComplete?.(); }
@@ -235,8 +234,9 @@ export function useRetryFocus(options: RetryFocusOptions) {
       onComplete?.();
       return;
     }
-    setCompletion({ attempt: currentAttempt, failed, target, onComplete });
+    setCompletion({ attempt: currentAttempt, failed, target, failureTarget, onComplete });
   }, [cancel]);
 
-  return { retryRef, retry };
+  const retry = useCallback((operation: () => Promise<RetryResult>, target?: () => HTMLElement | null, onComplete?: () => void) => retryFrom(retryRef.current, operation, target, onComplete), [retryFrom]);
+  return { retryRef, retry, retryFrom };
 }

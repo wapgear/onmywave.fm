@@ -1,6 +1,8 @@
 import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { ListMusic, Pause, Play, Repeat, Repeat1, Shuffle, SkipBack, SkipForward, Volume1, Volume2, VolumeX, RotateCw, LoaderCircle } from 'lucide-react';
 import { usePlayer } from '../../player';
+import type { PlaybackRetrySettlement } from '../../player';
+import { useRetryFocus } from '../../useRetryFocus';
 import { useNewsRecovery } from '../../NewsRecovery';
 import { Artwork } from '../Shared';
 import { DJPopover } from './DJPopover.component';
@@ -35,11 +37,51 @@ export function Player({ queueOpen, toggleQueue, openRoom, openSettings }: { que
   }, []);
   const [seekDraft, setSeekDraft] = useState<{ key?: string; value: number } | null>(null);
   const [mutedVolume, setMutedVolume] = useState(0.75);
+  const playControl = useRef<HTMLButtonElement>(null);
+  const nextControl = useRef<HTMLButtonElement>(null);
+  const retryingRef = useRef<{ key?: string; kind: 'track' | 'restore' } | null>(null);
+  const [retrying, setRetrying] = useState(false);
+  const [retryingKey, setRetryingKey] = useState<string | undefined>();
+  const [retryingKind, setRetryingKind] = useState<'track' | 'restore' | null>(null);
+  const [retrySettlement, setRetrySettlement] = useState<PlaybackRetrySettlement | null>(null);
+  const { retryRef, retry } = useRetryFocus({
+    ownerKey: `player:retry:${retrying && retryingKind === 'restore' ? 'restore' : player.currentKey ?? 'restore'}`,
+    target: () => playControl.current,
+    canFocusSuccess: () => {
+      if (retrySettlement?.outcome !== 'success' || retrySettlement.key !== player.currentKey
+        || retrySettlement.commandRevision !== player.getMusicCommandRevision()) return false;
+      if (retrySettlement.kind === 'restore') return retrySettlement.generation === player.getResumeGeneration();
+      return retrySettlement.generation === player.getPlaybackGeneration() && !player.busy && !player.error;
+    },
+  });
   const duration = player.duration;
   const draftSeek = seekDraft?.key === player.currentKey ? seekDraft?.value : undefined;
   const position = duration ? Math.min(draftSeek ?? player.position, duration) : player.position;
   const Volume = player.volume === 0 ? VolumeX : player.volume < 0.5 ? Volume1 : Volume2;
+  const showRetrying = retrying && (retryingKind === 'restore' || retryingKey === player.currentKey);
   function commitSeek() { if (draftSeek !== undefined) player.seek(draftSeek); setSeekDraft(null); }
+  function retryPlayback() {
+    const kind: 'track' | 'restore' = player.currentKey ? 'track' : 'restore';
+    if (retryingRef.current && (retryingRef.current.kind === 'restore' || (kind === 'track' && retryingRef.current.key === player.currentKey))) return;
+    const currentAttempt = { key: player.currentKey, kind };
+    retryingRef.current = currentAttempt;
+    setRetrying(true);
+    setRetryingKey(player.currentKey);
+    setRetryingKind(kind);
+    setRetrySettlement(null);
+    void retry(async () => {
+      const settlement = await player.retry();
+      setRetrySettlement(settlement);
+      return { isError: settlement.outcome === 'failure' };
+    }, undefined, () => {
+      if (retryingRef.current === currentAttempt) {
+        retryingRef.current = null;
+        setRetrying(false);
+        setRetryingKey(undefined);
+        setRetryingKind(null);
+      }
+    });
+  }
   return <>
     <div ref={notices} className="player-notices">
       {visibleRuns.map(runId => {
@@ -52,7 +94,7 @@ export function Player({ queueOpen, toggleQueue, openRoom, openSettings }: { que
           if (handled && action === 'stop') setBreakFocus(value => value?.runId === runId ? { ...value, ended: player.newsPhase === 'waiting' ? 'cancelled' : 'stopped' } : value);
         }}>{!current ? activeRun !== undefined ? 'Previous break ended' : breakFocus?.ended === 'cancelled' ? 'Break cancelled' : breakFocus?.ended === 'stopped' ? 'Break stopped' : 'Break ended' : action === 'stop' ? player.newsPhase === 'waiting' ? 'Cancel break' : 'Stop DJ' : player.newsPhase === 'paused' || (player.newsPhase === 'waiting' && !player.requestedPlaying) ? 'Resume' : 'Pause'}</button>)}</div>;
       })}
-      {player.error && <div className="playback-error"><span role="alert">{player.error}</span><button onClick={player.retry} disabled={player.busy || !player.canRetry}><RotateCw size={14} /> Retry</button><button onClick={player.next} disabled={!player.current}>Skip track</button></div>}
+      {(player.error || showRetrying) && <div className="playback-error"><span role={showRetrying ? 'status' : 'alert'}>{showRetrying ? 'Retrying playback…' : player.error}</span><button ref={retryRef} aria-disabled={showRetrying || undefined} aria-busy={showRetrying || undefined} onClick={retryPlayback} disabled={!showRetrying && (player.busy || !player.canRetry)}>{showRetrying ? <LoaderCircle size={14} className="player-spin" /> : <RotateCw size={14} />}{showRetrying ? 'Retrying…' : 'Retry'}</button><button onClick={event => { if (document.activeElement === event.currentTarget) nextControl.current?.focus({ preventScroll: true }); player.next(); }} disabled={!player.current}>Skip track</button></div>}
       {player.optionsError && <div className="playback-error player-options-error"><span role="alert">{player.optionsError}</span><button onClick={player.retryOptions}><RotateCw size={14} /> Retry saving options</button></div>}
     </div>
     <footer className="player-bar" aria-label="Music player">
@@ -61,8 +103,8 @@ export function Player({ queueOpen, toggleQueue, openRoom, openSettings }: { que
         <div className="player-transport">
           <button className={`player-icon secondary-transport ${player.shuffle ? 'is-active' : ''}`} onClick={player.toggleShuffle} title={`Shuffle ${player.shuffle ? 'on' : 'off'}`} aria-label="Shuffle" aria-pressed={player.shuffle}><Shuffle size={16} /></button>
           <button className="player-icon" onClick={player.previous} disabled={!player.current} title="Previous track (⌘←)" aria-label="Previous track"><SkipBack size={19} fill="currentColor" /></button>
-          <button className="player-play" onClick={player.toggle} disabled={!player.current} title={`${player.requestedPlaying ? 'Pause' : 'Play'} (Space)`} aria-label={player.requestedPlaying ? 'Pause' : 'Play'}>{player.requestedPlaying ? <Pause size={21} fill="currentColor" /> : <Play size={21} fill="currentColor" />}</button>
-          <button className="player-icon" onClick={player.next} disabled={!player.current} title="Next track (⌘→)" aria-label="Next track"><SkipForward size={19} fill="currentColor" /></button>
+          <button ref={playControl} className="player-play" onClick={player.toggle} disabled={!player.current} title={`${player.requestedPlaying ? 'Pause' : 'Play'} (Space)`} aria-label={player.requestedPlaying ? 'Pause' : 'Play'}>{player.requestedPlaying ? <Pause size={21} fill="currentColor" /> : <Play size={21} fill="currentColor" />}</button>
+          <button ref={nextControl} className="player-icon" onClick={player.next} disabled={!player.current} title="Next track (⌘→)" aria-label="Next track"><SkipForward size={19} fill="currentColor" /></button>
           <button className={`player-icon secondary-transport ${player.repeat !== 'off' ? 'is-active' : ''}`} onClick={player.cycleRepeat} title={`Repeat ${player.repeat}`} aria-label={`Repeat: ${player.repeat}`} aria-pressed={player.repeat !== 'off'}>{player.repeat === 'one' ? <Repeat1 size={16} /> : <Repeat size={16} />}</button>
         </div>
         <div className="player-progress"><span>{formatTime(position)}</span><input type="range" min="0" max={Math.max(1, duration)} step="0.1" value={duration ? position : 0} style={fill(duration ? position / duration * 100 : 0)} disabled={!player.current || !duration} aria-label="Playback position" aria-valuetext={duration ? `${formatTime(position)} of ${formatTime(duration)}` : `${formatTime(position)} elapsed; duration unavailable`} onChange={event => setSeekDraft({ key: player.currentKey, value: Number(event.target.value) })} onBlur={commitSeek} onPointerUp={commitSeek} onPointerCancel={() => setSeekDraft(null)} onKeyUp={event => { if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown'].includes(event.key)) commitSeek(); }} /><span aria-label={player.current && !duration ? 'Duration unavailable' : 'Time remaining'}>{duration || !player.current ? `−${formatTime(Math.max(0, duration - position))}` : '--:--'}</span></div>
