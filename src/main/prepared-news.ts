@@ -123,9 +123,6 @@ export async function releaseReviewedCandidates(requestId: string, candidates: N
   const urls = new Set(candidates.map(article => canonicalArticleUrl(article.url)).filter((url): url is string => Boolean(url)));
   await change(current => ({ ...current, reviewedArticles: (current.reviewedArticles ?? []).filter(article => article.requestId !== requestId || article.status !== 'submitted' || !urls.has(article.canonicalUrl)) }));
 }
-export async function savePreparedScript(script: PreparedNewsScript) {
-  await change(current => ({ ...current, scripts: current.scripts.some(value => value.id === script.id) ? current.scripts : [...current.scripts, script] }));
-}
 export async function reviewedArticleUrls() {
   return (await load()).reviewedArticles.map(article => article.canonicalUrl);
 }

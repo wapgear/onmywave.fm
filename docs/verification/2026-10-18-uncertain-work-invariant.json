@@ -1,0 +1,508 @@
+{
+  "date": "2026-10-18",
+  "baseCommit": "6d23500a03fba76c06629f159cb7c0cdb5d70172",
+  "scope": "CI5 no automatic replay of uncertain paid work or playlist mutation; current-service audit plus removal of obsolete exposed combined preview. Q13 partial, no whole-goal/90% claim.",
+  "finding": {
+    "path": "prepareNewsBreak -> NewsService.generate",
+    "evidence": "Only renderer caller was unimported/unmounted NewsTest. Main/preload still exposed generation with an in-memory overlap guard but no durable request replay identity. Baseline controlled service invocation loses a text response, then reuses its request ID and dispatches again.",
+    "baseline": {
+      "first": "server",
+      "second": "complete",
+      "sameRequestId": true,
+      "feeds": 2,
+      "text": 2,
+      "voice": 1,
+      "other": 0,
+      "scope": "Actual old NewsService.generate under controlled network responses; proves same-ID service replay can dispatch again. No real provider calls or claim of current mounted UI retries."
+    },
+    "qualification": "This is a latent exposed alternate paid path. It is not evidence that the current mounted UI automatically retries or that real providers charged twice."
+  },
+  "decision": {
+    "alternatives": [
+      "Keep the unused API and qualify the invariant claim.",
+      "Build another durable combined preview using the existing request protocol.",
+      "Remove the unused API, component and single-purpose helpers; retain active durable staged preparation."
+    ],
+    "selected": "Remove the unused alternate path. No current PRD requirement or product caller needs a song-bound one-shot combined preview. Adding a parallel durable workflow would recreate functionality already provided by manual text/audio preparation and saved voice previews.",
+    "Boris": "Supports removal; explicitly distinguishes latent repeatable API from current UI automatic retry. Final diff review found no actionable regression.",
+    "Nadia": "Supports removal after independent caller/PRD review; retain shared NewsBreak/progress and active cancellation. Final diff review found no actionable regression.",
+    "challenge": "Both examined retaining or durably routing a required combined feature. No current consumer/requirement found. Preserve current visible renderer and cancellation/progress contracts; remove only the obsolete path and helpers used solely by it."
+  },
+  "change": {
+    "removed": [
+      "prepareNewsBreak/cancelNewsBreak operations, preload methods and WaveApi entries",
+      "Unmounted NewsTest component",
+      "Unused NewsService.generate and its script-publication callback option",
+      "Single-caller savePreparedScript helper",
+      "Transient speech registry/producer/route and its obsolete cancellation state"
+    ],
+    "preserved": [
+      "PreparedNewsTake/NewsBreak and current player scheduling",
+      "Manual/automatic text and audio request persistence/reconciliation",
+      "Saved-DJ/custom voice preview generation and local replay",
+      "NewsProgress/onNewsProgress for active prepared requests",
+      "news.cancel, request-scoped cancellation, sign-out/recovery generation gates"
+    ],
+    "apiMembers": 62
+  },
+  "obligations": [
+    {
+      "id": "CI5.1",
+      "behavior": "Manual text/audio reservations precede provider work; an uncertain same-ID replay or saved-result lookup must not dispatch, including after restart. Unknown reconcile-only requests create no reservation.",
+      "evidence": "Prepared group, first/restart processes; current execute rejects old incomplete requests and unknown reconcileOnly before work.",
+      "judgment": "controlled pass"
+    },
+    {
+      "id": "CI5.2",
+      "behavior": "Preview attempts persist before dispatch and deduplicate concurrent callers. Failure, missing files or changed saved voice cannot trigger implicit regeneration; explicit regeneration preserves prior successful audio on failure.",
+      "evidence": "Preview group, five processes; both saved-DJ and custom voice wrappers share generatePreview, persisted attempted marker and in-flight ownership. Saved-DJ path exercised; custom wrapper reviewed.",
+      "judgment": "controlled pass with stated custom-wrapper composition"
+    },
+    {
+      "id": "CI5.3",
+      "behavior": "A failed automatic request blocks further due ticks and restart dispatch until explicit recovery/Resume.",
+      "evidence": "Scheduler failure/restart processes retain newsWorkflowError; setting next due date in past still dispatches zero repeat work. Existing Resume owner/source logic inspected separately.",
+      "judgment": "controlled pass"
+    },
+    {
+      "id": "CI5.4",
+      "behavior": "Playlist creation/addition/removal/reorder reserve intent before dispatch and retain uncertainty across replay/restart, including partial batches. A fresh postwrite read and explicit acknowledgement are required to clear. Account invalidation revokes receipts; storage failure prevents new dispatch.",
+      "evidence": "Playlist and playlist-mutations groups, four processes; actual JellyfinService and playlist-recovery share ServiceError identity in one bundle. Creation with missing confirmation ID, lost remove/move responses and second-batch403 remain uncertain.",
+      "judgment": "controlled pass"
+    },
+    {
+      "id": "CI5.5",
+      "behavior": "UI mutations do not automatically retry and error/status refreshes stay reads rather than resubmitting generation or playlist writes. No alternate exposed combined generation path bypasses the durable flow.",
+      "evidence": "Renderer mutation retry:false, explicit captured-request handlers, saved-result reconcile flag, preview regenerate intent and playlist submit/review guards inspected. Old capability removed in source/preload; active renderer JS/CSS byte-identical after build.",
+      "judgment": "source/build-supported composition with retained native evidence"
+    }
+  ],
+  "runtime": {
+    "rows": [
+      {
+        "name": "unknown text reconciliation never dispatches",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "unknown audio reconciliation never dispatches",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "unknown reconciliation creates no durable reservation",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "manual text reserved before dispatch",
+        "passed": true,
+        "dispatches": 1
+      },
+      {
+        "name": "manual audio reserved before dispatch",
+        "passed": true,
+        "dispatches": 2
+      },
+      {
+        "name": "one dispatch for each explicitly authorized failed request",
+        "passed": true,
+        "dispatches": 2
+      },
+      {
+        "name": "first failed text replay/check never dispatches",
+        "passed": true,
+        "dispatches": 2
+      },
+      {
+        "name": "first failed audio replay/check never dispatches",
+        "passed": true,
+        "dispatches": 2
+      },
+      {
+        "name": "first failed text replay/check never dispatches",
+        "passed": true,
+        "dispatches": 2
+      },
+      {
+        "name": "first failed audio replay/check never dispatches",
+        "passed": true,
+        "dispatches": 2
+      },
+      {
+        "name": "first both uncertain reservations remain durable",
+        "passed": true,
+        "dispatches": 2
+      },
+      {
+        "name": "restart failed text replay/check never dispatches",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "restart failed audio replay/check never dispatches",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "restart failed text replay/check never dispatches",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "restart failed audio replay/check never dispatches",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "restart both uncertain reservations remain durable",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "preview attempt persisted before dispatch",
+        "passed": true,
+        "dispatches": 1
+      },
+      {
+        "name": "concurrent failed previews dispatch once",
+        "passed": true,
+        "dispatches": 1
+      },
+      {
+        "name": "first attempted preview status/replay cannot dispatch",
+        "passed": true,
+        "dispatches": 1
+      },
+      {
+        "name": "restart attempted preview status/replay cannot dispatch",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "preview attempt persisted before dispatch",
+        "passed": true,
+        "dispatches": 1
+      },
+      {
+        "name": "only explicit preview regeneration dispatches anew",
+        "passed": true,
+        "dispatches": 1
+      },
+      {
+        "name": "stale cached preview stays available without automatic regeneration",
+        "passed": true,
+        "dispatches": 1
+      },
+      {
+        "name": "failed regeneration preserves last successful clip",
+        "passed": true,
+        "dispatches": 2
+      },
+      {
+        "name": "missing preview file becomes unavailable without regeneration",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "missing attempted preview status/replay cannot dispatch",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "missing-restart attempted preview status/replay cannot dispatch",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "playlist intent persisted before held dispatch",
+        "passed": true,
+        "dispatches": 1
+      },
+      {
+        "name": "lost playlist response is uncertain",
+        "passed": true,
+        "dispatches": 1
+      },
+      {
+        "name": "read begun during write cannot authorize acknowledgement",
+        "passed": true,
+        "dispatches": 1
+      },
+      {
+        "name": "same-session repeat blocked before dispatch",
+        "passed": true,
+        "dispatches": 1
+      },
+      {
+        "name": "restart unresolved addition blocked before dispatch",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "restart cannot invent review receipt",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "fresh postrestart read creates review receipt",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "account invalidation revokes read receipt",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "only explicit acknowledgement clears unresolved intent",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "one explicit new addition after acknowledgement",
+        "passed": true,
+        "dispatches": 1
+      },
+      {
+        "name": "failed durable reservation prevents new dispatch",
+        "passed": true,
+        "dispatches": 1
+      },
+      {
+        "name": "creation intent persisted before dispatch",
+        "passed": true,
+        "dispatches": 1
+      },
+      {
+        "name": "first creation uncertainty blocks replay",
+        "passed": true,
+        "dispatches": 1
+      },
+      {
+        "name": "first creation repeat cannot dispatch",
+        "passed": true,
+        "dispatches": 1
+      },
+      {
+        "name": "removal intent persisted before dispatch",
+        "passed": true,
+        "dispatches": 2
+      },
+      {
+        "name": "first removal uncertainty blocks replay",
+        "passed": true,
+        "dispatches": 2
+      },
+      {
+        "name": "first removal repeat cannot dispatch",
+        "passed": true,
+        "dispatches": 2
+      },
+      {
+        "name": "reorder intent persisted before dispatch",
+        "passed": true,
+        "dispatches": 3
+      },
+      {
+        "name": "first reorder uncertainty blocks replay",
+        "passed": true,
+        "dispatches": 3
+      },
+      {
+        "name": "first reorder repeat cannot dispatch",
+        "passed": true,
+        "dispatches": 3
+      },
+      {
+        "name": "first partial addition retains whole-operation uncertainty",
+        "passed": true,
+        "dispatches": 5
+      },
+      {
+        "name": "first partial addition never repeats saved first batch",
+        "passed": true,
+        "dispatches": 5
+      },
+      {
+        "name": "restart creation uncertainty blocks replay",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "restart creation repeat cannot dispatch",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "restart removal uncertainty blocks replay",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "restart removal repeat cannot dispatch",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "restart reorder uncertainty blocks replay",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "restart reorder repeat cannot dispatch",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "restart partial addition retains whole-operation uncertainty",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "restart partial addition never repeats saved first batch",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "scheduler and request reserved before paid work",
+        "passed": true,
+        "dispatches": 1
+      },
+      {
+        "name": "failure automatic failure retains a blocking error",
+        "passed": true,
+        "dispatches": 1
+      },
+      {
+        "name": "failure due ticks cannot retry failed automatic request",
+        "passed": true,
+        "dispatches": 1
+      },
+      {
+        "name": "restart automatic failure retains a blocking error",
+        "passed": true,
+        "dispatches": 0
+      },
+      {
+        "name": "restart due ticks cannot retry failed automatic request",
+        "passed": true,
+        "dispatches": 0
+      }
+    ],
+    "passed": 62,
+    "externalRequests": 0,
+    "scope": "Current source modules; real temporary files and fresh Node subprocesses, substituted Electron/state/key/atomic-write/provider/network adapters."
+  },
+  "buildBoundary": {
+    "rendererIdentical": true,
+    "rendererFiles": {
+      "out/renderer/assets/index-C1_VIzOn.js": "6e512586dcba51773a0100db6a84e277111c90178c36755045b8e5d711d7248c",
+      "out/renderer/assets/index-B9cR7bvN.css": "78fcc2ec135ead9b4d1badd479acfb6d54ca4a41dc08f9be074474ddebe05f76"
+    },
+    "preloadRemoved": [
+      "prepareNewsBreak",
+      "cancelNewsBreak"
+    ],
+    "preloadRetained": [
+      "prepareNewsScript",
+      "renderNewsTake",
+      "prepareDJVoicePreview",
+      "onNewsProgress"
+    ],
+    "preloadSha256": "6b26aab0c4b76c2fdd99165fa7b13e32645307dbacd6690fb9435d62a3abf9d1",
+    "serviceCases": 58
+  },
+  "retainedEvidence": [
+    {
+      "file": "2026-10-16-recording-recovery.json",
+      "scope": "Dated native controlled publication, interrupted manual text and unknown reconciliation; completed publication/count retained."
+    },
+    {
+      "file": "2026-10-16-playlist-recovery-current.json",
+      "scope": "Dated native uncertain dialogs, read/acknowledgement and restart restrictions."
+    },
+    {
+      "file": "2026-10-17-playlist-boundaries.json",
+      "scope": "Dated controlled/native playlist boundaries and account-owned state."
+    },
+    {
+      "file": "2026-10-17-playlist-creation-batches.json",
+      "scope": "Dated creation/batch and durable-intent evidence."
+    },
+    {
+      "file": "2026-10-17-dj-previews.json",
+      "scope": "Dated saved voice preview behavior; current common preview module rerun here."
+    },
+    {
+      "file": "2026-10-18-voice-preview-focus.json",
+      "scope": "Native focus retained through explicit voice-preview work; active renderer unchanged by this removal."
+    }
+  ],
+  "sourceReview": [
+    "Current text dispatch callers are prepared-news manual/automatic paths, both through execute with durable request records.",
+    "Current speech dispatch callers are renderNewsTake, prepareRoomNews and generatePreview; each reserves a durable request or attempt before dispatch.",
+    "Prepared reconciliation rejects unknown/incomplete IDs before work, whereas complete artifacts return saved data. Scheduler failures retain a blocking error or pause.",
+    "Playlist uncertain-marker checks precede operation execution. Receipts require matching marker/epoch and nonpending fresh reads; acknowledgement is explicit.",
+    "Only obsolete NewsTest called the removed bridge. Other unmounted sample components are retained because they were unrelated.",
+    "Full source operation inventory and compiled preload no longer expose the obsolete methods. Visible renderer JS/CSS remain identical; this is stronger than assuming a deleted unimported component is harmless."
+  ],
+  "sourceHashes": {
+    "src/main/index.ts": "14c20e3fe63d51bf176873e7a52e1c07dcea8d9467dc3e01531f2f6072c36633",
+    "src/main/news.ts": "f2933aac8c9d2334e84a6850c7023207fbd1b86f905bd3844977ad5cb0be7a48",
+    "src/main/dj-previews.ts": "56d36390dbf9ba2a3177c46ff2a20d4478fa20bc37d6220bc1459b6e592722b3",
+    "src/main/prepared-news.ts": "da830c4e4c95caa62fa103367d7d4eef268ef32970d837fbe1b0d94c1b1809b3",
+    "src/main/news-workflow.ts": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+    "src/main/playlist-recovery.ts": "56096744192e216e74fc22b469929b3bc4dfee5f2c508273948c2d4c5c24e2ca",
+    "src/main/jellyfin.ts": "6e1191d733752c57787c1c9465085e014a0500e0543e56a22467019892ad74ab",
+    "src/main/media.ts": "a6d1893e85c7d2b2206664054232ba21f62ed9fc6b2ca67546e2886b7073942f",
+    "src/main/storage.ts": "79819d117064ff2284949b031af80761e3996f9ad236a13075e9341833c89f14",
+    "src/preload/index.ts": "0fa1d3378a0982b3b73e4d696f072c9aae72e693019dbc48f917d278e9f75e17",
+    "src/shared/types.ts": "ce4e7f6aaac5a3b91fc464c16f1315ddb578b88df352f08188e6173245a623a3",
+    "src/renderer/main.tsx": "863a6596bde95ba270f0d554a2ac2bd0c3819ca832f1bfd577d0edf9bb69a7cc",
+    "src/renderer/pages/Stations/Stations.page.tsx": "af0c5219948700ed27fab50a9490184856a2055983fae09a64781dd2ee8f8bc2",
+    "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": "53afdb4d78cca027bce5865b5180dab1a27d5873ad1541b988eea50cd7802ecd",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc",
+    "src/renderer/pages/DJs/components/VoicePreview.component.tsx": "d2cbca679984903fdc0692488dff67069fad302e4e3adcd8352915b5eb209581"
+  },
+  "baselineSource": {
+    "src/main/index.ts": "1b7ead1138761424fccd5e35dd432b7ba0c3e7d7e43eec18fd408f49e6e8362c",
+    "src/main/news.ts": "1e4ad32295113c727788c870e3de69e742cb128db0feada82c429c75887f9aaa",
+    "src/main/media.ts": "d3abe363979e9953edb6cb279b777183c184cd27d027ed7584788a1b94ac0e0e",
+    "src/main/prepared-news.ts": "c437802be1bedd736f3a5e4de15966c319a6250a00090f4877e66b7c65a5be6b",
+    "src/preload/index.ts": "6a5e85fafc04caea2b62b6f4bef794bffe166b72322ecd677697413639ec6f9f",
+    "src/shared/types.ts": "0637a467d043774954160f8f22b4d3074cc853534593b36f68e718c60f5040c5",
+    "src/renderer/pages/DJs/components/NewsTest.component.tsx": "347302ea66d6bbf27cf7417b170476e5d67c78f476a0b5db0cffaffe5d233be9"
+  },
+  "fixtureHashes": {
+    "build.mjs": "fdcc5ce569d293a959a7b9496c3c3ade8fa946b297ed080b2bee6adc80aa949d",
+    "check.mjs": "521db9674868a3059f35fb673730dd04751ac4f1a3cbe8c8f12c1dba4214d7bc",
+    "service.mjs": "f4fb3e6731438959cb5fcee007dc38cdf85c9f69bd19f39fa6307e6a736a4371",
+    "report.json": "c6d510722f0f4d1f393b7cb47294a2646bcb0cfdc505d4269629b658b3ea71fe",
+    "baseline-replay.mjs": "5c5625105b1902ad68a765ec5cfc91a466e5a9bff42a4403cacb937a362be04a",
+    "baseline-news.mjs": "ebf48e4295a0b335a816321b7fd2e6c32212be2805827312708d3cf96e030725",
+    "baseline-replay-report.json": "31ef823b5a293c2bcd4e6ee9bd71b3d232d6bcf33b484b9578b54a286bc4a8c1",
+    "build-boundary-report.json": "daa544e601729919e29a0c0fb2f4ff8a3c4c4377a23d4e119c20e4aa2fe96034"
+  },
+  "fixtureCorrections": "The initial58-check audit was extended with missing-preview/restart and unknown-reconciliation reservation checks, producing62 final assertions. The fixture uses exported PLAYLIST_CREATION rather than a guessed sentinel. Final source was recompiled after removal before replay. An exploratory API-count script first assumed a type alias; corrected interface AST inspection yields62 members.",
+  "validation": {
+    "productionBuildAndTypeScript": "pass",
+    "fullESLint": "pass",
+    "focusedIntegrationAssertions": 62,
+    "freshSubprocesses": 13,
+    "externalRequests": 0,
+    "nativeReplay": "None new. Current renderer identical; retained native records stay dated.",
+    "inventory": "191 rows,189 active,2 Deferred;140 Controlled,24 Live,14 Review,11 External.25 open:14 listener/11 other-proof.",
+    "unitFrameworkOrSuite": "none added/run",
+    "whitespace": "pass"
+  },
+  "conclusion": "CI5 named data/dispatch obligations individually supported in the controlled source and integration scope. Q13 remains Review because this is not the full atomic requirement denominator or all-seven-invariant adjudication.",
+  "limits": [
+    "Substituted Electron path, local-state/key/atomic-write adapters, provider methods and network responses. Real temporary filesystem and current service/recovery/scheduler logic; not live billing, live Jellyfin writes or OS-protected persistence proof.",
+    "atomicWrite uses a fixture file writer/failure gate here. Production storage atomicity and native recovery retain their separate dated evidence; this is not arbitrary crash/power-loss or disk corruption testing.",
+    "Scheduler time is tested by changing its saved due date, not actual Mac sleep/wake.",
+    "Custom voice wrapper shares the inspected marker path; current runtime matrix directly exercises saved-DJ preview.",
+    "No new observed listener, audible quality, VoiceOver, OS hardware, unsupported display, smaller-window or enlarged-zoom result.",
+    "Current UI automatic replay was not observed; the removed latent bridge is an alternate capability with weaker durable identity."
+  ]
+}

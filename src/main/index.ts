@@ -11,14 +11,14 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { acknowledgePlaylistRecovery, beginPlaylistRead, finishPlaylistRead, invalidatePlaylistReceipts, playlistRecoveryKey, playlistCreationRecoveryKey, playlistRecoveryStatuses, withPlaylistRecovery } from './playlist-recovery';
 import { JellyfinService, ServiceError, PLAYLIST_CREATION } from './jellyfin';
 import { getLocalState, openAIKeyStatus, readDeviceIdentity, readConnection, readOpenAIKey, updateLocalState, withProviderKeys, writeConnection, writeOpenAIKey, readElevenLabsKey, elevenLabsKeyStatus, writeElevenLabsKey } from './storage';
-import { preparePlayback, registerMedia, registerSpeechAudio, revokeMedia, revokeSpeechAudio } from './media';
+import { preparePlayback, registerMedia, revokeMedia } from './media';
 import { NewsService, validateNewsSettings } from './news';
-import { getPreparedNews, prepareNewsScript, renderNewsTake, selectNewsTake, cancelPreparedNews, cancelActivePreparedNews, isPreparedNewsActive, nextRoomNews, releasePreparedNews, markPreparedNewsPlayed, reconcilePreparedNews, submitReviewedCandidates, completeReviewedCandidates, interruptReviewedCandidates, releaseReviewedCandidates, savePreparedScript, reviewedArticleUrls } from './prepared-news';
+import { getPreparedNews, prepareNewsScript, renderNewsTake, selectNewsTake, cancelPreparedNews, cancelActivePreparedNews, isPreparedNewsActive, nextRoomNews, releasePreparedNews, markPreparedNewsPlayed, reconcilePreparedNews } from './prepared-news';
 import { pauseNewsWorkflow, startNewsWorkflow, stopNewsWorkflow, invalidateNewsWorkflow, checkNewsWorkflow } from './news-workflow';
 import { isNewsTransitionSettings, normalizeNewsTransitionSettings } from '../shared/news-transitions';
 import { isWorkflowDraft, normalizeWorkflowDraft } from '../shared/workflow';
 import type { WorkflowDraft } from '../shared/workflow';
-import type { ApiError, DJ, NewsBreak, NewsProgress, PlaybackSnapshot, PlaybackPreferences, NewsSource, ListeningRoom, LocalState } from '../shared/types';
+import type { ApiError, DJ, PlaybackSnapshot, PlaybackPreferences, NewsSource, ListeningRoom, LocalState } from '../shared/types';
 import { defaultPlaybackPreferences, playbackPreferenceKey } from './playback-preferences';
 import { StorageError } from './storage-error';
 import type { NewsRecoveryStatus } from '../shared/types';
@@ -40,15 +40,9 @@ let newsRecoveryEpoch = 0;
 let newsRecoveryFailed = false;
 let closing = false;
 const news = new NewsService({ canGenerate: () => !closing && newsRecoveryStatus.phase === 'ready' && !signingOut && !!service.connection(), getApiKey: readOpenAIKey, getTwitterKey: readTwitterKey, getElevenApiKey: readElevenLabsKey, onProgress: value => {
-  if ((activeNews === value.requestId || isPreparedNewsActive(value.requestId)) && window && !window.isDestroyed()) window.webContents.send('wave:newsProgress', value);
+  if (isPreparedNewsActive(value.requestId) && window && !window.isDestroyed()) window.webContents.send('wave:newsProgress', value);
 } });
-let activeNews: string | null = null;
-let newsGeneration = 0;
-let preparingNewsPreview = false;
-function cancelNews(requestId?: string) {
-  news.cancel(requestId);
-  if (!requestId || requestId === activeNews) { ++newsGeneration; activeNews = null; revokeSpeechAudio(); }
-}
+function cancelNews() { news.cancel(); }
 let playlistSessionEpoch = 0;
 let service: JellyfinService;
 let deviceId: string;
@@ -154,7 +148,7 @@ function recoverNews(): Promise<NewsRecoveryStatus> {
   })().finally(() => { newsRecoveryAttempt = null; });
   return newsRecoveryAttempt;
 }
-const newsOperations = new Set(['getPreparedNews', 'nextRoomNews', 'selectNewsTake', 'prepareNewsScript', 'renderNewsTake', 'prepareNewsBreak', 'prepareDJVoicePreview', 'prepareVoicePreview', 'searchDJVoices']);
+const newsOperations = new Set(['getPreparedNews', 'nextRoomNews', 'selectNewsTake', 'prepareNewsScript', 'renderNewsTake', 'prepareDJVoicePreview', 'prepareVoicePreview', 'searchDJVoices']);
 
 function registerIpc() {
   const operations: Record<string, (input: never) => unknown> = {
@@ -398,7 +392,7 @@ function registerIpc() {
     },
     activateRoomProfile: async (input: string) => {
       profileId(input);
-      if (activeNews || (await getPreparedNews()).requests.some(request => request.status === 'running')) throw new ServiceError('invalid', 'Wait for preparation to finish before switching configurations.');
+      if ((await getPreparedNews()).requests.some(request => request.status === 'running')) throw new ServiceError('invalid', 'Wait for preparation to finish before switching configurations.');
       await updateLocalState(state => {
         const profile = state.roomProfiles.find(value => value.id === input);
         if (!profile) throw new ServiceError('not-found', 'This configuration no longer exists.');
@@ -502,49 +496,6 @@ function registerIpc() {
       cancelNews();
       return writeOpenAIKey(input);
     },
-    prepareNewsBreak: async (input: { requestId: string; djId: string; songId: string }): Promise<NewsBreak> => {
-      if (!isRecord(input) || !text(input.requestId, 128) || !/^[a-zA-Z0-9-]+$/.test(input.requestId) || !text(input.djId, 128) || !text(input.songId, 128)) invalid();
-      const lifecycle = news.generationSignal();
-      if (preparingNewsPreview) throw new ServiceError('invalid', 'Another DJ preview is running. Finish or cancel it first.');
-      preparingNewsPreview = true;
-      const generation = newsGeneration;
-      activeNews = input.requestId;
-      const checkActive = () => { if (newsGeneration !== generation || activeNews !== input.requestId) throw new ServiceError('invalid', 'News rendering was cancelled.'); };
-      try {
-        const dj = (await getLocalState()).djs.find(dj => dj.id === input.djId);
-        checkActive();
-        if (!dj?.news) throw new ServiceError('invalid', 'Save a DJ with news sources before testing a break.');
-        validateDjs([dj]);
-        const music = await service.song(input.songId);
-        checkActive();
-        const progress = (value: NewsProgress) => {
-          if (newsGeneration === generation && activeNews === input.requestId && window && !window.isDestroyed()) window.webContents.send('wave:newsProgress', value);
-        };
-        progress({ requestId: input.requestId, phase: 'feeds', message: 'Fetching your feeds and writing a personalized bulletin…' });
-        const excluded = await reviewedArticleUrls();
-        checkActive();
-        lifecycle.throwIfAborted();
-        const result = await news.generate({ ...input, dj, music, settings: dj.news, engine: 'elevenlabs-v4', excludeArticleUrls: excluded,
-          onCandidates: candidates => submitReviewedCandidates(input.requestId, candidates), onReleaseCandidates: candidates => releaseReviewedCandidates(input.requestId, candidates), onReview: url => completeReviewedCandidates(input.requestId, url),
-          onPreparedScript: async result => {
-            const state = await getLocalState();
-            const sources = dj.news!.feedUrls.map((url, index) => state.sources.find(source => source.url === url) ?? { id: `preview-${index}`, name: new URL(url).hostname, url, kind: 'rss' as const });
-            await savePreparedScript({ ...result, id: input.requestId, createdAt: new Date().toISOString(), provenance: { dj, mood: state.vibe, sources, newsInterests: dj.news!.interests } });
-          } });
-        const script = result;
-        const bytes = result.audio;
-        const mime = result.mimeType;
-        checkActive();
-        const audioUrl = registerSpeechAudio(bytes, mime);
-        return { requestId: input.requestId, script: script.script, articles: script.articles, warnings: script.warnings,
-          id: input.requestId, audioUrl, engine: result.engine, createdAt: new Date().toISOString() };
-      } catch (error) {
-        await interruptReviewedCandidates(input.requestId);
-        if (newsGeneration === generation && activeNews === input.requestId) { activeNews = null; revokeSpeechAudio(); }
-        throw error;
-      } finally { preparingNewsPreview = false; }
-    },
-    cancelNewsBreak: (input: string) => { if (!text(input, 128)) invalid(); cancelNews(input); },
     openSource: async (input: string) => {
       if (!text(input, 4096)) invalid();
       let url: URL;

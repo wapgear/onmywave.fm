@@ -9,31 +9,13 @@ import type { PlaybackResource } from '../shared/types';
 type Session = { id: string; serverUrl: string; userId: string; token: string };
 type Resource = { connectionId: string; path: string };
 const resources = new Map<string, Resource>();
-const speechClips = new Map<string, { bytes: Buffer; mime: string }>();
 const activeRequests = new Set<AbortController>();
 const itemId = (id: string) => /^[a-zA-Z0-9_-]{1,128}$/.test(id);
 
 export function revokeMedia() {
   resources.clear();
-  speechClips.clear();
   for (const controller of activeRequests) controller.abort();
   activeRequests.clear();
-}
-
-export function registerSpeechAudio(bytes: Buffer, mime: string): string {
-  if (!bytes.length || bytes.length > 32 * 1024 * 1024 || !['audio/mpeg', 'audio/wav'].includes(mime)) throw new ServiceError('invalid', 'Speech audio is empty or exceeds the size limit.');
-  speechClips.clear();
-  const id = randomUUID();
-  speechClips.set(id, { bytes, mime });
-  return `wave-media://speech/${id}`;
-}
-
-export function revokeSpeechAudio() { speechClips.clear(); }
-
-function speechResponse(request: Request, id: string): Response {
-  const clip = speechClips.get(id);
-  if (!clip) return new Response(null, { status: 404 });
-  return clipResponse(request, clip);
 }
 
 function clipResponse(request: Request, clip: { bytes: Buffer; mime: string }): Response {
@@ -81,7 +63,6 @@ export function registerMedia(getSession: () => Session | null, deviceId: string
     if (request.method !== 'GET' && request.method !== 'HEAD') return new Response(null, { status: 405 });
     const url = new URL(request.url);
     const id = url.pathname.slice(1);
-    if (url.hostname === 'speech') return speechResponse(request, id);
     if (url.hostname === 'voice-preview') {
       const bytes = await bundledVoiceAudio(id);
       return bytes ? clipResponse(request, { bytes, mime: 'audio/mpeg' }) : new Response(null, { status: 404 });
