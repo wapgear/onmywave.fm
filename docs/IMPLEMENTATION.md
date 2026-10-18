@@ -2,6 +2,10 @@
 
 The historical sections below preserve earlier work and evidence. The current dated entry links the latest implementation and acceptance findings; earlier sections are not the current feature contract or acceptance status. Use [REQUIREMENTS](../REQUIREMENTS.md), [the radio PRD and STAR stories](RADIO_EXPERIENCE.md), and [the acceptance checklist](ACCEPTANCE_CHECKLIST.md) for the current application. Earlier speech-engine, station-placeholder, packaging and verification descriptions below retain their historical scope. Routine verification now uses development or production-preview Electron and never packages, signs, notarizes or publishes the app.
 
+## Current dated evidence, 18 October 2026
+
+Custom voice search retains its focused busy action, ignores repeated activation and leaves later navigation alone. The [voice-search record](verification/2026-10-18-voice-search-focus.json) contains one baseline and thirteen final native projections with controlled IPC results, no external requests, and unchanged paused playback. Build/TypeScript, full ESLint and scoped predicates pass. The current 218-definition inventory is refreshed. Q06 and all 27 open acceptance rows remain open.
+
 ## Current dated evidence, 17 October 2026
 
 The current collection-navigation revision focuses Back immediately when a focused album/playlist tile opens its detail, without later read-driven focus. Playlist Back restores the exact tile or list heading; sidebar return preserves existing focus and scroll. The [collection-entry record](verification/2026-10-17-collection-entry-focus.json) separates4 before,11 intermediate and11 final snapshots, with unchanged song-details drawer regression checks. Final build/TypeScript/full ESLint, native predicates and both source reviews pass. Creation-to-detail and complete control coverage keep Q06 Review; all191 dispositions and27 remaining checks are unchanged.

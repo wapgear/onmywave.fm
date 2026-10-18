@@ -34,8 +34,9 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
   const search = useQuery({ queryKey: ['djVoices', searchInput], queryFn: async () => unwrap(await window.wave.searchDJVoices(searchInput!)), enabled: !!searchInput, retry: false, staleTime: 60_000, refetchOnWindowFocus: false, refetchOnReconnect: false });
   const currentResults = searchInput?.prompt === prompt.trim() && searchInput.gender === gender;
   function findVoices() {
+    if (!prompt.trim() || search.isFetching) return;
     const input = { prompt: prompt.trim(), gender };
-    if (input.prompt === searchInput?.prompt && input.gender === searchInput.gender) void search.refetch();
+    if (input.prompt === searchInput?.prompt && input.gender === searchInput.gender) void search.refetch({ cancelRefetch: false });
     else setSearchInput(input);
   }
   function applyPreset() {
@@ -86,7 +87,7 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
       </div>
       <div role="tabpanel" id={`${modeId}-panel-simple`} aria-labelledby={`${modeId}-tab-simple`} hidden={mode !== 'simple'}>
         <label>Describe your DJ<textarea rows={3} maxLength={500} value={prompt} placeholder="Warm narrator, energetic presenter, or a voice name…" onChange={event => setPrompt(event.target.value)} onKeyDown={event => { if (event.key === 'Enter' && (event.metaKey || event.ctrlKey) && prompt.trim() && !search.isFetching) { event.preventDefault(); findVoices(); } }} /><span className="form-hint">Use short descriptive keywords. Searches the names, descriptions and labels of voices available to your ElevenLabs account.</span></label>
-        <div className="dj-search-controls"><label>Voice preference<select value={gender} onChange={event => setGender(event.target.value as DJVoiceSearch['gender'])}><option value="any">Any voice</option><option value="male">Man</option><option value="female">Woman</option></select></label><button type="button" className="primary" disabled={!prompt.trim() || search.isFetching} onClick={findVoices}>{search.isFetching ? 'Searching…' : 'Find voices'}</button></div>
+        <div className="dj-search-controls"><label>Voice preference<select value={gender} onChange={event => setGender(event.target.value as DJVoiceSearch['gender'])}><option value="any">Any voice</option><option value="male">Man</option><option value="female">Woman</option></select></label><button type="button" className="primary" disabled={!prompt.trim()} aria-disabled={search.isFetching || undefined} aria-busy={search.isFetching || undefined} onClick={findVoices}>{search.isFetching ? 'Searching…' : 'Find voices'}</button></div>
         {search.isFetching && <p role="status">Searching ElevenLabs…</p>}
         {currentResults && !search.isFetching && <><ErrorNotice error={search.error} />{search.data && <div className="dj-voice-results" role="group" aria-label="ElevenLabs voice results">{search.data.length ? search.data.map(voice => <button type="button" key={voice.id} aria-pressed={news.elevenVoiceId === voice.id} onClick={() => chooseVoice(voice)}><strong>{voice.name}</strong><span>{voice.description || 'ElevenLabs voice'}</span><small>{news.elevenVoiceId === voice.id ? 'Selected' : 'Use this voice'}</small></button>) : <p role="status">No voices found. Try fewer keywords, change the voice preference, or use a predefined host.</p>}</div>}</>}
         {news.elevenVoiceId && <VoicePreview key={news.elevenVoiceId} resource={{ kind: 'voice', voiceId: news.elevenVoiceId }} label={selectedVoice?.name ?? `Voice ${news.elevenVoiceId}`} playbackId="dj-editor" activeId={previewingVoice} onStart={setPreviewingVoice} active={mode === 'simple'} />}

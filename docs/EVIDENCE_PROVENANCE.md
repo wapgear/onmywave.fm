@@ -147,3 +147,6 @@ The [account-form record](verification/2026-10-18-account-form-focus.json) separ
 
 
 The [playlist/player recovery-focus record](verification/2026-10-18-playlist-player-recovery-focus.json) retains 42 scoped native projections, nine terminal observer reports and separate baseline/reviewed/final hashes. Actual marker/receipt transitions, local DELETE counts and lost-response removal remain distinct from focus outcomes. It records the singular-count/Skip renderer phase limits and missing intermediate hash, without inventing a final-bundle rerun. Unobserved variants remain explicit and all 191 dispositions are unchanged.
+
+
+The [voice-search record](verification/2026-10-18-voice-search-focus.json) retains one baseline and thirteen final native projections, source/bundle/fixture/raw hashes and terminal observer reports. Search results are substituted at the copied IPC gate, so no live ElevenLabs or voice-quality result is implied. All final cases use one renderer. The refreshed source inventory changes neither its 218-definition count nor any acceptance disposition.

@@ -11,19 +11,19 @@ src/renderer/components/Player/DJPopover.component.tsx,146,button,,"descendant c
 src/renderer/components/Player/DJPopover.component.tsx,148,select,,"label for id, inspect",{profileUnavailable && !ownsProfileFocus},{profileUnavailable || undefined},"{event => { if (profileUnavailable && [' ', 'Enter', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown'].includes(event.key)) event.preventDefault(); }}"
 src/renderer/components/Player/DJPopover.component.tsx,160,button,,"descendant content, inspect",,,native or enclosing handler
 src/renderer/components/Player/DJPopover.component.tsx,160,button,,"descendant content, inspect",,,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,49,button,,"descendant content, inspect",,{!current || undefined},native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,55,button,,"descendant content, inspect",{player.busy || !player.canRetry},,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,55,button,,"descendant content, inspect",{!player.current},,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,56,button,,"descendant content, inspect",,,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,62,button,,"""Shuffle""",,,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,63,button,,"""Previous track""",{!player.current},,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,64,button,,{player.requestedPlaying ? 'Pause' : 'Play'},{!player.current},,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,65,button,,"""Next track""",{!player.current},,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,66,button,,{`Repeat: ${player.repeat}`},,,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,68,input,,"""Playback position""",{!player.current || !duration},,"{event => { if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown'].includes(event.key)) commitSeek(); }}"
-src/renderer/components/Player/Player.component.tsx,70,button,,{player.volume ? 'Mute' : 'Unmute'},,,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,70,input,,"""Volume""",,,native or enclosing handler
-src/renderer/components/Player/Player.component.tsx,70,button,,"{`${queueOpen ? 'Hide' : 'Show'} queue, ${player.queue.length} ${player.queue.length === 1 ? 'track' : 'tracks'}`}",,,native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,91,button,,"descendant content, inspect",,{!current || undefined},native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,97,button,,"descendant content, inspect",{!showRetrying && (player.busy || !player.canRetry)},{showRetrying || undefined},native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,97,button,,"descendant content, inspect",{!player.current},,native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,98,button,,"descendant content, inspect",,,native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,104,button,,"""Shuffle""",,,native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,105,button,,"""Previous track""",{!player.current},,native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,106,button,,{player.requestedPlaying ? 'Pause' : 'Play'},{!player.current},,native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,107,button,,"""Next track""",{!player.current},,native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,108,button,,{`Repeat: ${player.repeat}`},,,native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,110,input,,"""Playback position""",{!player.current || !duration},,"{event => { if (['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown'].includes(event.key)) commitSeek(); }}"
+src/renderer/components/Player/Player.component.tsx,112,button,,{player.volume ? 'Mute' : 'Unmute'},,,native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,112,input,,"""Volume""",,,native or enclosing handler
+src/renderer/components/Player/Player.component.tsx,112,button,,"{`${queueOpen ? 'Hide' : 'Show'} queue, ${player.queue.length} ${player.queue.length === 1 ? 'track' : 'tracks'}`}",,,native or enclosing handler
 src/renderer/components/AddPlaylist/AddPlaylist.component.tsx,35,select,,enclosing label,,{save.isPending || uncertain || undefined},{blockKey}
 src/renderer/components/AddPlaylist/AddPlaylist.component.tsx,36,input,,enclosing label,,,native or enclosing handler
 src/renderer/components/AddPlaylist/AddPlaylist.component.tsx,37,input,,enclosing label,,{save.isPending || uncertain || undefined},{blockKey}
@@ -35,15 +35,15 @@ src/renderer/components/Queue/Queue.component.tsx,24,button,,{`Play ${item.song.
 src/renderer/components/Queue/Queue.component.tsx,25,button,,{`Remove ${item.song.name} from queue`},,,native or enclosing handler
 src/renderer/components/Queue/Queue.component.tsx,30,button,,{`${player.requestedPlaying ? 'Pause' : 'Play'} ${current.song.name}`},,,native or enclosing handler
 src/renderer/components/Queue/Queue.component.tsx,32,summary,,"descendant content, inspect",,,native or enclosing handler
-src/renderer/components/LibraryChooser.tsx,24,input,,enclosing label,,,native or enclosing handler
-src/renderer/components/LibraryChooser.tsx,25,button,,"descendant content, inspect",{disabled || selection.pending},{libraries.isFetching},native or enclosing handler
-src/renderer/components/LibraryChooser.tsx,28,button,,"descendant content, inspect",{!canSave},,native or enclosing handler
-src/renderer/components/LibraryChooser.tsx,29,button,,"descendant content, inspect",{disabled || selection.pending},,native or enclosing handler
-src/renderer/pages/Connection/Connection.page.tsx,40,input,,enclosing label,{loginBlocked},,native or enclosing handler
-src/renderer/pages/Connection/Connection.page.tsx,40,input,,enclosing label,{loginBlocked},,native or enclosing handler
-src/renderer/pages/Connection/Connection.page.tsx,40,input,,enclosing label,{loginBlocked},,native or enclosing handler
-src/renderer/pages/Connection/Connection.page.tsx,40,button,,"descendant content, inspect",{loginBlocked || !serverUrl.trim() || !username.trim()},,native or enclosing handler
-src/renderer/pages/Connection/Connection.page.tsx,40,button,,"descendant content, inspect",{loginBlocked},,native or enclosing handler
+src/renderer/components/LibraryChooser.tsx,27,input,,enclosing label,,,native or enclosing handler
+src/renderer/components/LibraryChooser.tsx,28,button,,"descendant content, inspect",{disabled || selection.pending},{libraries.isFetching},native or enclosing handler
+src/renderer/components/LibraryChooser.tsx,31,button,,"descendant content, inspect",{!canSave && !ownsSaveFocus},{!canSave || undefined},native or enclosing handler
+src/renderer/components/LibraryChooser.tsx,32,button,,"descendant content, inspect",{disabled || selection.pending},,native or enclosing handler
+src/renderer/pages/Connection/Connection.page.tsx,48,input,,enclosing label,{loginBlocked},,native or enclosing handler
+src/renderer/pages/Connection/Connection.page.tsx,48,input,,enclosing label,{loginBlocked},,native or enclosing handler
+src/renderer/pages/Connection/Connection.page.tsx,48,input,,enclosing label,{loginBlocked},,native or enclosing handler
+src/renderer/pages/Connection/Connection.page.tsx,48,button,,"descendant content, inspect",{!canLogin && !ownsConnectFocus},{!canLogin || undefined},native or enclosing handler
+src/renderer/pages/Connection/Connection.page.tsx,48,button,,"descendant content, inspect",{loginBlocked},,native or enclosing handler
 src/renderer/components/FilterSelect/FilterSelect.component.tsx,59,button,,{`${label}: ${selectedLabel || emptyLabel || 'Any'}`},{disabled},,native or enclosing handler
 src/renderer/components/FilterSelect/FilterSelect.component.tsx,67,input,,{`Search ${label.toLowerCase()}`},,,native or enclosing handler
 src/renderer/components/FilterSelect/FilterSelect.component.tsx,68,div,"""listbox""",{label},,,native or enclosing handler
@@ -78,19 +78,19 @@ src/renderer/pages/Albums/Albums.page.tsx,46,button,,"""Back to albums""",,,nati
 src/renderer/pages/Albums/Albums.page.tsx,46,button,,"descendant content, inspect",{!tracks.data?.length},,native or enclosing handler
 src/renderer/pages/Albums/Albums.page.tsx,46,button,,"descendant content, inspect",{!tracks.data?.length},,native or enclosing handler
 src/renderer/pages/Albums/Albums.page.tsx,46,button,,"descendant content, inspect",{!tracks.data?.length},,native or enclosing handler
-src/renderer/pages/Playlists/Playlists.page.tsx,65,button,,"descendant content, inspect",{creationBlocked},,native or enclosing handler
-src/renderer/pages/Playlists/Playlists.page.tsx,72,button,,"descendant content, inspect",{creation.status === 'pending' || playlists.isFetching || acknowledgeCreation.isPending},,native or enclosing handler
-src/renderer/pages/Playlists/Playlists.page.tsx,72,button,,"descendant content, inspect",{creation.status !== 'review' || !creation.receipt || playlists.isFetching || !!playlists.error || acknowledgeCreation.isPending},,native or enclosing handler
-src/renderer/pages/Playlists/Playlists.page.tsx,73,button,,"descendant content, inspect",,,native or enclosing handler
-src/renderer/pages/Playlists/Playlists.page.tsx,157,button,,"""Back to playlists""",,,native or enclosing handler
-src/renderer/pages/Playlists/Playlists.page.tsx,157,button,,"descendant content, inspect",{!data.entries.length},,native or enclosing handler
-src/renderer/pages/Playlists/Playlists.page.tsx,157,button,,"descendant content, inspect",{!data.entries.length},,native or enclosing handler
-src/renderer/pages/Playlists/Playlists.page.tsx,157,button,,"descendant content, inspect",{data.canEdit === false || editBlocked},,native or enclosing handler
-src/renderer/pages/Playlists/Playlists.page.tsx,160,button,,"descendant content, inspect",{edit.pending || durable?.status === 'pending' || acknowledge.isPending || playlist.isFetching},,native or enclosing handler
-src/renderer/pages/Playlists/Playlists.page.tsx,160,button,,"descendant content, inspect",{!reviewReady || edit.pending || acknowledge.isPending || playlist.isFetching || !!playlist.error},,native or enclosing handler
-src/renderer/pages/Playlists/Playlists.page.tsx,239,input,,enclosing label,,,native or enclosing handler
-src/renderer/pages/Playlists/Playlists.page.tsx,239,button,,"descendant content, inspect",,{mutation.isPending || undefined},native or enclosing handler
-src/renderer/pages/Playlists/Playlists.page.tsx,239,button,,"descendant content, inspect",{!name.trim()},{mutation.isPending || uncertain || undefined},native or enclosing handler
+src/renderer/pages/Playlists/Playlists.page.tsx,75,button,,"descendant content, inspect",{creationBlocked},,native or enclosing handler
+src/renderer/pages/Playlists/Playlists.page.tsx,82,button,,"descendant content, inspect",,{!!creationActionPending || creation.status === 'pending' || playlists.isFetching || creationAcknowledgePending || undefined},native or enclosing handler
+src/renderer/pages/Playlists/Playlists.page.tsx,102,button,,"descendant content, inspect",,{!!creationActionPending || creation.status !== 'review' || !creation.receipt || playlists.isFetching || !!playlists.error || creationAcknowledgePending || undefined},native or enclosing handler
+src/renderer/pages/Playlists/Playlists.page.tsx,122,button,,"descendant content, inspect",,,native or enclosing handler
+src/renderer/pages/Playlists/Playlists.page.tsx,266,button,,"""Back to playlists""",,,native or enclosing handler
+src/renderer/pages/Playlists/Playlists.page.tsx,266,button,,"descendant content, inspect",{!data.entries.length},,native or enclosing handler
+src/renderer/pages/Playlists/Playlists.page.tsx,266,button,,"descendant content, inspect",{!data.entries.length},,native or enclosing handler
+src/renderer/pages/Playlists/Playlists.page.tsx,266,button,,"descendant content, inspect",{data.canEdit === false || editBlocked},,native or enclosing handler
+src/renderer/pages/Playlists/Playlists.page.tsx,269,button,,"descendant content, inspect",,{!!reviewActionPending || recoveryAcknowledgePending || edit.pending || durable?.status === 'pending' || playlist.isFetching || undefined},native or enclosing handler
+src/renderer/pages/Playlists/Playlists.page.tsx,282,button,,"descendant content, inspect",,{!!reviewActionPending || !reviewReady || edit.pending || recoveryAcknowledgePending || playlist.isFetching || !!playlist.error || undefined},native or enclosing handler
+src/renderer/pages/Playlists/Playlists.page.tsx,379,input,,enclosing label,,,native or enclosing handler
+src/renderer/pages/Playlists/Playlists.page.tsx,379,button,,"descendant content, inspect",,{mutation.isPending || undefined},native or enclosing handler
+src/renderer/pages/Playlists/Playlists.page.tsx,379,button,,"descendant content, inspect",{!name.trim()},{mutation.isPending || uncertain || undefined},native or enclosing handler
 src/renderer/components/InfoHelp/InfoHelp.component.tsx,10,button,,{label},,,native or enclosing handler
 src/renderer/components/ConfigurationTabs/ConfigurationTabs.component.tsx,13,button,"""tab""","label for id, inspect",,,"{event => {
         if (event.metaKey || event.ctrlKey || event.altKey || event.shiftKey) return;
@@ -173,9 +173,9 @@ src/renderer/components/ProviderKeys/TwitterSetupHelp.component.tsx,14,summary,,
 src/renderer/components/ProviderKeys/TwitterSetupHelp.component.tsx,17,button,,"descendant content, inspect",,,native or enclosing handler
 src/renderer/components/ProviderKeys/TwitterSetupHelp.component.tsx,23,button,,"descendant content, inspect",,,native or enclosing handler
 src/renderer/components/ProviderKeys/TwitterSetupHelp.component.tsx,23,button,,"descendant content, inspect",,,native or enclosing handler
-src/renderer/components/ProviderKeys/ProviderKeys.component.tsx,22,input,,enclosing label,{busy},,native or enclosing handler
-src/renderer/components/ProviderKeys/ProviderKeys.component.tsx,22,button,,"descendant content, inspect",{busy || !key.trim()},,native or enclosing handler
-src/renderer/components/ProviderKeys/ProviderKeys.component.tsx,22,button,,"descendant content, inspect",{busy},,native or enclosing handler
+src/renderer/components/ProviderKeys/ProviderKeys.component.tsx,30,input,,enclosing label,{busy},,native or enclosing handler
+src/renderer/components/ProviderKeys/ProviderKeys.component.tsx,30,button,,"descendant content, inspect",{saveUnavailable && !ownsFocus('save')},{saveUnavailable || undefined},native or enclosing handler
+src/renderer/components/ProviderKeys/ProviderKeys.component.tsx,30,button,,"descendant content, inspect",{removeUnavailable && !ownsFocus('remove')},{removeUnavailable || undefined},native or enclosing handler
 src/renderer/pages/Sources/Sources.page.tsx,55,button,,"descendant content, inspect",{!state.data || mutation.isPending},,native or enclosing handler
 src/renderer/pages/Sources/Sources.page.tsx,58,button,,{`Edit ${source.name}`},{mutation.isPending},,native or enclosing handler
 src/renderer/pages/Sources/Sources.page.tsx,58,button,,{`Delete ${source.name}`},{mutation.isPending},,native or enclosing handler
@@ -190,21 +190,21 @@ src/renderer/pages/Sources/Sources.page.tsx,61,button,,"descendant content, insp
 src/renderer/pages/Sources/Sources.page.tsx,61,button,,"descendant content, inspect",,{mutation.isPending || undefined},native or enclosing handler
 src/renderer/pages/DJs/components/VoicePreview.component.tsx,146,button,,{`${pending ? 'Loading preview' : buttonLabel} for ${label}`},{previewUnavailable && !ownsFocus('preview')},{previewUnavailable || undefined},native or enclosing handler
 src/renderer/pages/DJs/components/VoicePreview.component.tsx,149,button,,{`${prepare.isPending ? 'Regenerating DJ preview' : canPlay ? 'Regenerate DJ preview' : 'Preview unavailable'} for ${label}`},{regenerateUnavailable && !ownsFocus('regenerate')},{regenerateUnavailable || undefined},native or enclosing handler
-src/renderer/pages/DJs/components/DJEditor.component.tsx,75,textarea,,enclosing label,,,native or enclosing handler
-src/renderer/pages/DJs/components/DJEditor.component.tsx,76,input,,enclosing label,,,native or enclosing handler
-src/renderer/pages/DJs/components/DJEditor.component.tsx,82,button,,"descendant content, inspect",,,native or enclosing handler
+src/renderer/pages/DJs/components/DJEditor.component.tsx,76,textarea,,enclosing label,,,native or enclosing handler
+src/renderer/pages/DJs/components/DJEditor.component.tsx,77,input,,enclosing label,,,native or enclosing handler
 src/renderer/pages/DJs/components/DJEditor.component.tsx,83,button,,"descendant content, inspect",,,native or enclosing handler
-src/renderer/pages/DJs/components/DJEditor.component.tsx,83,button,,"descendant content, inspect",,,native or enclosing handler
-src/renderer/pages/DJs/components/DJEditor.component.tsx,88,textarea,,enclosing label,,,{event => { if (event.key === 'Enter' && (event.metaKey || event.ctrlKey) && prompt.trim() && !search.isFetching) { event.preventDefault(); findVoices(); } }}
-src/renderer/pages/DJs/components/DJEditor.component.tsx,89,select,,enclosing label,,,native or enclosing handler
-src/renderer/pages/DJs/components/DJEditor.component.tsx,89,button,,"descendant content, inspect",{!prompt.trim() || search.isFetching},,native or enclosing handler
-src/renderer/pages/DJs/components/DJEditor.component.tsx,91,button,,"descendant content, inspect",,,native or enclosing handler
-src/renderer/pages/DJs/components/DJEditor.component.tsx,101,input,,enclosing label,,,native or enclosing handler
-src/renderer/pages/DJs/components/DJEditor.component.tsx,110,textarea,,enclosing label,,,native or enclosing handler
-src/renderer/pages/DJs/components/DJEditor.component.tsx,112,input,,enclosing label,,,native or enclosing handler
+src/renderer/pages/DJs/components/DJEditor.component.tsx,84,button,,"descendant content, inspect",,,native or enclosing handler
+src/renderer/pages/DJs/components/DJEditor.component.tsx,84,button,,"descendant content, inspect",,,native or enclosing handler
+src/renderer/pages/DJs/components/DJEditor.component.tsx,89,textarea,,enclosing label,,,{event => { if (event.key === 'Enter' && (event.metaKey || event.ctrlKey) && prompt.trim() && !search.isFetching) { event.preventDefault(); findVoices(); } }}
+src/renderer/pages/DJs/components/DJEditor.component.tsx,90,select,,enclosing label,,,native or enclosing handler
+src/renderer/pages/DJs/components/DJEditor.component.tsx,90,button,,"descendant content, inspect",{!prompt.trim()},{search.isFetching || undefined},native or enclosing handler
+src/renderer/pages/DJs/components/DJEditor.component.tsx,92,button,,"descendant content, inspect",,,native or enclosing handler
+src/renderer/pages/DJs/components/DJEditor.component.tsx,102,input,,enclosing label,,,native or enclosing handler
+src/renderer/pages/DJs/components/DJEditor.component.tsx,111,textarea,,enclosing label,,,native or enclosing handler
 src/renderer/pages/DJs/components/DJEditor.component.tsx,113,input,,enclosing label,,,native or enclosing handler
-src/renderer/pages/DJs/components/DJEditor.component.tsx,119,button,,"descendant content, inspect",,{save.isPending || undefined},native or enclosing handler
-src/renderer/pages/DJs/components/DJEditor.component.tsx,119,button,,"descendant content, inspect",{!draft.name.trim() || !news.elevenVoiceId?.trim()},{save.isPending || undefined},native or enclosing handler
+src/renderer/pages/DJs/components/DJEditor.component.tsx,114,input,,enclosing label,,,native or enclosing handler
+src/renderer/pages/DJs/components/DJEditor.component.tsx,120,button,,"descendant content, inspect",,{save.isPending || undefined},native or enclosing handler
+src/renderer/pages/DJs/components/DJEditor.component.tsx,120,button,,"descendant content, inspect",{!draft.name.trim() || !news.elevenVoiceId?.trim()},{save.isPending || undefined},native or enclosing handler
 src/renderer/pages/DJs/DJs.page.tsx,38,button,,"descendant content, inspect",{!state.data},,native or enclosing handler
 src/renderer/pages/DJs/DJs.page.tsx,39,button,,{`Edit ${dj.name}`},,,native or enclosing handler
 src/renderer/pages/DJs/DJs.page.tsx,39,button,,{`Duplicate ${dj.name}`},,,native or enclosing handler
