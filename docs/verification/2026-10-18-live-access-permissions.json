@@ -1,0 +1,550 @@
+{
+  "date": "2026-10-18",
+  "scope": "C06 live empty-access recovery; P05 live read-only discovery and AddPlaylist repair",
+  "baseline": "c66b1e7b779afc54ae35eabb2b36e93791025da9",
+  "input": "Native CUA only; passive Playwright DOM/CDP AX and lifecycle. 1280x720 at100%. No smaller/200% checks.",
+  "authorization": "User approved one temporary restricted account and one disposable private read-only playlist, followed by guarded deletion.",
+  "serverReports": {
+    "create": {
+      "action": "create",
+      "musicLibraries": 0,
+      "userRestricted": true,
+      "authentications": 1,
+      "result": "passed"
+    },
+    "grant": {
+      "action": "grant",
+      "musicLibraries": 1,
+      "result": "passed"
+    },
+    "playlist": {
+      "action": "playlist",
+      "canEdit": false,
+      "entries": 1,
+      "visible": true,
+      "result": "passed"
+    },
+    "cleanup": {
+      "action": "cleanup",
+      "playlistRemoved": true,
+      "accountRemoved": true,
+      "originalPlaylistsUnchanged": true,
+      "adminPolicyUnchanged": true,
+      "originalConnectionUnchanged": true,
+      "result": "passed"
+    }
+  },
+  "behavior": {
+    "C06": "Initially zero music libraries and disabled Save. Retry before access remains usable. Real administrator grants only the temporary user one music library. No renderer refresh until native Retry. Retry focuses the unchecked Music checkbox, Save remains disabled until native Space; Tab/Enter saves and reaches All songs. Same protected token throughout, one test authentication.",
+    "P05baseline": "Actual permission endpoint returns CanEdit false; detail disables Rename and hides Move/Remove. Add dialog wrongly enables Add songs for that destination. No submission attempted.",
+    "repair": "Targeted selected-playlist permission read shares full detail parsing without fetching entries. Account/destination query keys, zero staleTime, no focus/reconnect refetch. Pending/refetch/false/errors block form submission using aria-disabled, preserving keyboard focus and existing muted modal styles. Optional failures remain null and permit authoritative server attempts;401 reaches ordinary reconnect flow. Existing serialized mutation/recovery unchanged.",
+    "finalNative": "Actual200 false read; Add songs has aria-disabled true, native Tab reaches it, Return stays focused and makes zero server writes. Controlled503 shows checking then unknown and enables Add without moving its focus. Controlled401 reaches Welcome back and server URL focus; not misclassified as unknown.",
+    "finalDelta": "Last source delta adds captured-session rejection in the error path as well as successful path. Actual-service fixture checks cover old200/401/503 after account replacement; renderer is byte-identical to final native run."
+  },
+  "native": [
+    {
+      "name": "empty",
+      "rawSha256": "e736d540408c73bc5ea730960b87a7759fd65d35c8a80569bf7444e8fc2acd30",
+      "headings": [
+        "Choose your libraries",
+        "No music libraries available"
+      ],
+      "libraries": [],
+      "buttons": [
+        {
+          "name": "Try again",
+          "disabled": false,
+          "ariaDisabled": "false",
+          "busy": "false",
+          "focused": false
+        },
+        {
+          "name": "Save libraries",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "focused": false
+        }
+      ],
+      "focus": {
+        "tag": "BODY",
+        "outline": "none"
+      },
+      "main": {
+        "blockedWrites": 0,
+        "external": 0,
+        "selectedLibraries": 0,
+        "tokenUnchanged": true
+      },
+      "permissionRequests": []
+    },
+    {
+      "name": "empty-retry",
+      "rawSha256": "cabe07caf21b60b0adb3d0d4e8d300a65ed2b4a7fd50e5db3324ec7306ed4e16",
+      "headings": [
+        "Choose your libraries",
+        "No music libraries available"
+      ],
+      "libraries": [],
+      "buttons": [
+        {
+          "name": "Try again",
+          "disabled": false,
+          "ariaDisabled": "false",
+          "busy": "false",
+          "focused": true
+        },
+        {
+          "name": "Save libraries",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "focused": false
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid"
+      },
+      "main": {
+        "blockedWrites": 0,
+        "external": 0,
+        "selectedLibraries": 0,
+        "tokenUnchanged": true
+      },
+      "permissionRequests": []
+    },
+    {
+      "name": "granted-before-retry",
+      "rawSha256": "cabe07caf21b60b0adb3d0d4e8d300a65ed2b4a7fd50e5db3324ec7306ed4e16",
+      "headings": [
+        "Choose your libraries",
+        "No music libraries available"
+      ],
+      "libraries": [],
+      "buttons": [
+        {
+          "name": "Try again",
+          "disabled": false,
+          "ariaDisabled": "false",
+          "busy": "false",
+          "focused": true
+        },
+        {
+          "name": "Save libraries",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "focused": false
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid"
+      },
+      "main": {
+        "blockedWrites": 0,
+        "external": 0,
+        "selectedLibraries": 0,
+        "tokenUnchanged": true
+      },
+      "permissionRequests": []
+    },
+    {
+      "name": "recovered-checkbox",
+      "rawSha256": "68b7e37ced83bc47f9739557c3c9082f7e9c4f815d3f68c7cca58ab35da60cde",
+      "headings": [
+        "Choose your libraries"
+      ],
+      "libraries": [
+        {
+          "checked": false,
+          "disabled": false,
+          "focused": true
+        }
+      ],
+      "buttons": [
+        {
+          "name": "Save libraries",
+          "disabled": true,
+          "ariaDisabled": "true",
+          "busy": null,
+          "focused": false
+        }
+      ],
+      "focus": {
+        "tag": "INPUT",
+        "outline": "solid"
+      },
+      "main": {
+        "blockedWrites": 0,
+        "external": 0,
+        "selectedLibraries": 0,
+        "tokenUnchanged": true
+      },
+      "permissionRequests": []
+    },
+    {
+      "name": "music-after-library-save",
+      "rawSha256": "b8d19369468fa37136e451bb9578f9e25aacc33eceb89e78f6be70dac38e898a",
+      "headings": [
+        "All songs"
+      ],
+      "libraries": [],
+      "buttons": [],
+      "focus": {
+        "tag": "H1",
+        "outline": "solid"
+      },
+      "main": {
+        "blockedWrites": 0,
+        "external": 0,
+        "selectedLibraries": 1,
+        "tokenUnchanged": true
+      },
+      "permissionRequests": []
+    },
+    {
+      "name": "readonly-detail",
+      "rawSha256": "ccec528cc393de4b3d6133d002377eb9d58f6a28f51d9f1c6fa84b3f486edc0d",
+      "headings": [
+        "Disposable playlist"
+      ],
+      "libraries": [],
+      "buttons": [],
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "none"
+      },
+      "main": {
+        "blockedWrites": 0,
+        "external": 0,
+        "selectedLibraries": 1,
+        "tokenUnchanged": true
+      },
+      "permissionRequests": [
+        {
+          "kind": "playlist-permission",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "name": "readonly-menu",
+      "rawSha256": "66ccb41c2ab82926deaf66a211a55c1e6b8ff3be1ffc337b17489bc66941aeba",
+      "headings": [
+        "Disposable playlist"
+      ],
+      "libraries": [],
+      "buttons": [],
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "none"
+      },
+      "main": {
+        "blockedWrites": 0,
+        "external": 0,
+        "selectedLibraries": 1,
+        "tokenUnchanged": true
+      },
+      "permissionRequests": [
+        {
+          "kind": "playlist-permission",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "name": "readonly-add-enabled",
+      "rawSha256": "52d65eb2b98431eb92fde9e89782d473d6eeed412c87209727dcbb71024d67d1",
+      "headings": [
+        "Disposable playlist",
+        "Add song to playlist"
+      ],
+      "libraries": [],
+      "buttons": [
+        {
+          "name": "Add songs",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "focused": false
+        }
+      ],
+      "focus": {
+        "tag": "SELECT",
+        "outline": "solid"
+      },
+      "main": {
+        "blockedWrites": 0,
+        "external": 0,
+        "selectedLibraries": 1,
+        "tokenUnchanged": true
+      },
+      "permissionRequests": [
+        {
+          "kind": "playlist-permission",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "name": "fixed-readonly-submit",
+      "rawSha256": "5b4f866350cc96d72427e4186b26583b29fb6e6f065b1d0e5ff31a1b782a1bf3",
+      "headings": [
+        "All songs",
+        "Add song to playlist"
+      ],
+      "libraries": [],
+      "buttons": [
+        {
+          "name": "Add songs",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "focused": true
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid"
+      },
+      "main": {
+        "blockedWrites": 0,
+        "external": 0,
+        "selectedLibraries": 1,
+        "tokenUnchanged": true
+      },
+      "permissionRequests": [
+        {
+          "kind": "playlist-permission",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "name": "permission-pending",
+      "rawSha256": "a9f534dc06f84afe4fd9d24f0fad87e4f294534ffc02faebee41a983fe5417c3",
+      "headings": [
+        "All songs",
+        "Add song to playlist"
+      ],
+      "libraries": [],
+      "buttons": [
+        {
+          "name": "Add songs",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "focused": false
+        }
+      ],
+      "focus": {
+        "tag": "SELECT",
+        "outline": "solid"
+      },
+      "main": {
+        "blockedWrites": 0,
+        "external": 0,
+        "selectedLibraries": 1,
+        "tokenUnchanged": true
+      },
+      "permissionRequests": [
+        {
+          "kind": "playlist-permission",
+          "status": null
+        }
+      ]
+    },
+    {
+      "name": "permission-unknown",
+      "rawSha256": "21e9464b9da94b3f6c893756b7db5ffabc3fdcd4bb099cc35573f68a2eba43da",
+      "headings": [
+        "All songs",
+        "Add song to playlist"
+      ],
+      "libraries": [],
+      "buttons": [
+        {
+          "name": "Add songs",
+          "disabled": false,
+          "ariaDisabled": null,
+          "busy": null,
+          "focused": true
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid"
+      },
+      "main": {
+        "blockedWrites": 0,
+        "external": 0,
+        "selectedLibraries": 1,
+        "tokenUnchanged": true
+      },
+      "permissionRequests": [
+        {
+          "kind": "playlist-permission",
+          "status": 503,
+          "substituted": true
+        }
+      ]
+    },
+    {
+      "name": "final-live-readonly",
+      "rawSha256": "5b4f866350cc96d72427e4186b26583b29fb6e6f065b1d0e5ff31a1b782a1bf3",
+      "headings": [
+        "All songs",
+        "Add song to playlist"
+      ],
+      "libraries": [],
+      "buttons": [
+        {
+          "name": "Add songs",
+          "disabled": false,
+          "ariaDisabled": "true",
+          "busy": null,
+          "focused": true
+        }
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "outline": "solid"
+      },
+      "main": {
+        "blockedWrites": 0,
+        "external": 0,
+        "selectedLibraries": 1,
+        "tokenUnchanged": true
+      },
+      "permissionRequests": [
+        {
+          "kind": "playlist-permission",
+          "status": 200
+        }
+      ]
+    },
+    {
+      "name": "final-expired",
+      "rawSha256": "b85b705bde4b00af04c85c22c9c95aecc0f6428012b03276e24d89e768d5d4c0",
+      "headings": [
+        "Welcome back"
+      ],
+      "libraries": [],
+      "buttons": [],
+      "focus": {
+        "tag": "INPUT",
+        "outline": "solid"
+      },
+      "main": {
+        "blockedWrites": 0,
+        "external": 0,
+        "selectedLibraries": 1,
+        "tokenUnchanged": true
+      },
+      "permissionRequests": [
+        {
+          "kind": "playlist-permission",
+          "status": 200
+        },
+        {
+          "kind": "playlist-permission",
+          "status": 401,
+          "substituted": true
+        }
+      ]
+    }
+  ],
+  "service": {
+    "results": [
+      {
+        "name": "editable",
+        "passed": true,
+        "requests": 1
+      },
+      {
+        "name": "readonly",
+        "passed": true,
+        "requests": 1
+      },
+      {
+        "name": "missing",
+        "passed": true,
+        "requests": 1
+      },
+      {
+        "name": "nonboolean",
+        "passed": true,
+        "requests": 1
+      },
+      {
+        "name": "unavailable",
+        "passed": true,
+        "requests": 1
+      },
+      {
+        "name": "notfound",
+        "passed": true,
+        "requests": 1
+      },
+      {
+        "name": "forbidden",
+        "passed": true,
+        "requests": 1
+      },
+      {
+        "name": "unauthorized",
+        "passed": true,
+        "requests": 1
+      },
+      {
+        "name": "stale-session-200",
+        "passed": true
+      },
+      {
+        "name": "stale-session-401",
+        "passed": true
+      },
+      {
+        "name": "stale-session-503",
+        "passed": true
+      }
+    ]
+  },
+  "reviews": "Independent Steve/Elena proposals, direct challenge and code reviews. Refresh gate refined; existing modal aria-disabled styling confirmed.",
+  "fixtureLimits": [
+    "Real reads use production Authorization and safeStorage, isolated appData; shared keychain adapter returns null/blocks writes; provider origins and all native server writes blocked, audio muted.",
+    "503/401 responses are controlled permission-endpoint substitutions, not real server unavailable/expired configurations.",
+    "First observer readiness attempt corrected unsupported telemetry import before native input. A later quit/reset race briefly overlapped two owned observers; both terminated with exit0, and a single fresh observer supplied final-live-readonly/final-expired. Overlap-period optional400 is excluded.",
+    "No real unknown-permission configuration or audible/listener/VoiceOver/platform proof.",
+    "Private fixtures retain encrypted credentials and resource journal locally; committed record excludes tokens, IDs, private media names and server address."
+  ],
+  "processes": "All owned observers terminal exit0; manager cleanup terminal exit0; actual Jellyfin service left running.",
+  "acceptance": {
+    "C06": "Live",
+    "P05": "Review: actual read-only complete, actual unavailable-permission config still missing",
+    "counts": "191 rows,189 active,2 Deferred;140 Controlled,24 Live,14 Review,0 Dated,11 External.25 open:14 listener and11 other-proof."
+  },
+  "sourceHashes": {
+    "src/main/jellyfin.ts": "6e1191d733752c57787c1c9465085e014a0500e0543e56a22467019892ad74ab",
+    "src/main/index.ts": "1b7ead1138761424fccd5e35dd432b7ba0c3e7d7e43eec18fd408f49e6e8362c",
+    "src/shared/types.ts": "0637a467d043774954160f8f22b4d3074cc853534593b36f68e718c60f5040c5",
+    "src/preload/index.ts": "6a5e85fafc04caea2b62b6f4bef794bffe166b72322ecd677697413639ec6f9f",
+    "src/renderer/App.tsx": "eae93435308b21d89e771bc920b389b753743923b1d9e907abed0f5d551551f7",
+    "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": "53afdb4d78cca027bce5865b5180dab1a27d5873ad1541b988eea50cd7802ecd"
+  },
+  "fixtureHashes": {
+    "manage.mjs": "5988476d51614148e95ffcb946e74ecee9b9188a0955db962317a99e2552e767",
+    "build.mjs": "72f0ba622df07fd2e5e10cab0971e3e33c0e8f52a34871e1d74b5c53cea056c6",
+    "bootstrap.mjs": "0552318be428c75baa4543bfc91df58c44078a5d320a89d28acbf93beceb52d2",
+    "observe.cjs": "103c936304872586b2c7d4dd7aa221753ef4cd06556495393b600e16d13c2950",
+    "service-check.mjs": "770f8c670d04295e9289a5cea7926b0c81f42d22a3fefff6bc8a449524d8a2b9"
+  },
+  "baselineBundles": {
+    "out/renderer/assets/index-fts6GN4_.js": "0790ffbffc259113301bd01c2fa08ea1339f6c79c005200cd885368b2abd4648",
+    "out/renderer/assets/index-B9cR7bvN.css": "78fcc2ec135ead9b4d1badd479acfb6d54ca4a41dc08f9be074474ddebe05f76",
+    "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb"
+  },
+  "validation": "Final production build including TypeScript, full ESLint, focused11 actual-service adapter cases, native runs, cleanup invariants, inventory and whitespace. No unit framework/test suite added."
+}

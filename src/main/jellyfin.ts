@@ -373,13 +373,19 @@ export class JellyfinService {
     if (targets.some(entry => !editable.has(entry))) throw new ServiceError('invalid', 'Jellyfin cannot identify this playlist entry separately. Refresh the playlist; repeated or unavailable entries cannot be moved or removed safely.');
     return current;
   }
+  async playlistPermission(value: string): Promise<boolean | null> {
+    const id = validId(value), s = this.requireSession();
+    let canEdit: boolean | null = null;
+    try { const permission = await this.json(`/Playlists/${id}/Users/${s.userId}`); canEdit = typeof permission?.CanEdit === 'boolean' ? permission.CanEdit : null; }
+    catch (error) { if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.'); if (!(error instanceof ServiceError) || !['not-found', 'forbidden', 'unsupported', 'server', 'offline', 'timeout'].includes(error.code)) throw error; }
+    if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
+    return canEdit;
+  }
   async playlist(value: string): Promise<PlaylistDetail> {
     const id = validId(value), s = this.requireSession();
     const item = await this.json(`/Users/${s.userId}/Items/${id}`);
     if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
-    let canEdit: boolean | null = null;
-    try { const permission = await this.json(`/Playlists/${id}/Users/${s.userId}`); canEdit = typeof permission?.CanEdit === 'boolean' ? permission.CanEdit : null; }
-    catch (error) { if (!(error instanceof ServiceError) || !['not-found', 'forbidden', 'unsupported', 'server', 'offline', 'timeout'].includes(error.code)) throw error; }
+    const canEdit = await this.playlistPermission(id);
     if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
     const entries = await this.entries(id);
     if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');

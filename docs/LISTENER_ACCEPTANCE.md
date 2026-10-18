@@ -69,15 +69,14 @@ After a session, link evidence to each relevant inventory row and retain its nam
 
 ## Other evidence still required
 
-These twelve open checks do not contain a U proof requirement. Several still need a human operator, real service or device. No app change is presumed from an unverified check.
+These eleven open checks do not contain a U proof requirement. Several still need a human operator, real service or device. No app change is presumed from an unverified check.
 
 | Check | Evidence that would close the gap |
 | --- | --- |
 | V10 | Actual native titlebar dragging and traffic-light/window behavior in desktop context, complementing the existing minimize/restore/full-screen evidence |
 | V11 | Actual bundled-font/translucency legibility on standard and Retina display scales |
 | V12 | Implemented app captured with real desktop context, clearly distinguished from the generated concept |
-| C06 | Empty access followed by a real Jellyfin access grant, with Retry recovering without reauthentication |
-| P05 | Live read-only permission behavior and the unknown-lookup branch, matched with the existing controlled permission evidence |
+| P05 | Actual unavailable-permission configuration; live read-only behavior now passes in the [access/permission record](verification/2026-10-18-live-access-permissions.json), with controlled unknown/auth branches |
 | M16 | Physical media controls on the actual paused/playing music and active-speech session; the [native-tool check](verification/2026-10-18-native-media-tool-limits.json) rejects media-key synthesis and denies Control Center access, so actual operator/system input is still needed |
 | M17 | Distinct OS-mediated seek/control proof for live converted audio; five named codec/container groups already have native/live partial evidence in the [codec record](verification/2026-10-17-live-codec-seeking.json) |
 | A05 | Actual sleep/quit/return behavior and one coalesced due check, with dispatch/history evidence and no backlog |
@@ -93,3 +92,5 @@ Q08 was closed separately on 17 October 2026 using the [source/native macOS reco
 
 
 Q06 was closed separately on 18 October 2026 using the [current essential keyboard audit](verification/2026-10-18-q06-keyboard-acceptance.json). It is removed from the other-proof list. All fourteen listener rows and Q09 VoiceOver remain open. No listener session or score changes.
+
+C06 closed on18 October2026 after actual restricted-account access grant and native Retry without reauthentication. Guarded cleanup preserved original data and access.25 checks remain:14 listener and11 other-proof.
