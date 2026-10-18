@@ -365,6 +365,21 @@ These links are navigation aids, not extra denominator rows. Each story requires
 
 Completion requires no lost committed or unsaved edits within the documented lifetime; no unrequested paid work; no credential exposure; no silent replacement of a selected take; no automatic retry of uncertain paid work or playlist mutation; no duplicate queue advance or heard-news replay; and keyboard access to every essential action. Relevant rows must be reviewed together across cancellation, navigation, account change and process restart. A green build does not prove these invariants.
 
+Current invariant review index,18 October2026. Each record retains its tested scope; this table does not change any acceptance row or replace the exact source clauses.
+
+| Invariant | Current evidence and remaining proof |
+| --- | --- |
+| CI1 Committed and unsaved edits | Domain records exist; full current cross-lifetime adjudication remains to be consolidated. |
+| CI2 No unrequested paid work | [Authorization review](verification/2026-10-18-paid-authorization-invariant.json) supports engineering gates and current disclosure wording. Observed cost/opt-in understanding remains missing. |
+| CI3 No credential exposure | [Secret-boundary record](verification/2026-10-17-secret-boundaries.json) retains its dated scope; the complete current sink and lifetime review remains open. |
+| CI4 No silent selected-take replacement | [Current selection audit](verification/2026-10-18-selected-take-invariant.json) individually reviews controlled data-preservation obligations. |
+| CI5 No automatic uncertain retries | [Current uncertain-work audit](verification/2026-10-18-uncertain-work-invariant.json) reviews durable request/attempt/playlist recovery and removes the obsolete alternate API. |
+| CI6 No duplicate advance or heard-news replay | Domain playback records exist; current joint state/dispatch adjudication and listener/audible limits remain to be reviewed. |
+| CI7 Essential keyboard access | [Q06 audit](verification/2026-10-18-q06-keyboard-acceptance.json) establishes its controlled essential-control scope. Full VoiceOver Q09 remains External. |
+
+Q13 remains Review. The complete atomic source denominator and all named proof kinds remain required before completion or any overall90% claim.
+
+
 ## Next evidence review
 
 Reconcile each Review/Dated/Recorded row with its source and existing evidence before choosing the next implementation round. Record a concrete contradiction or missing interaction and its smallest useful reproduction. Keep external proof requirements visible. Do not rerun already sufficient checks merely to increase counts.
@@ -858,3 +873,10 @@ The [CI5 record](verification/2026-10-18-uncertain-work-invariant.json) separate
 The audit found an obsolete combined prepareNewsBreak bridge that bypassed durable request identity. Its only renderer caller was the unmounted NewsTest component. A controlled service replay reused an ID after a lost response and dispatched again. This is a latent callable path, not evidence the current UI auto-retries. Independent Boris/Nadia proposals and challenge favor removal over adding another generation workflow. The obsolete handler, bridge, component and single-purpose transient helpers are removed; current staged preparation and saved voice previews remain.
 
 Production build/TypeScript, full lint and all62 final assertions pass. The renderer JS/CSS are byte-identical before/after; compiled preload retains current preparation/progress methods and removes the two obsolete methods. The bridge now has62 members. Both final reviewers find no actionable regression. No new native, live billing/server-write, audible or OS result is claimed. Q13 remains Review for the broader atomic denominator and remaining invariant adjudication. All191 checklist dispositions remain unchanged;25 checks remain open,14 listener and11 other-proof.
+
+
+## Paid-work authorization invariant review, 18 October 2026
+
+The [CI2 review](verification/2026-10-18-paid-authorization-invariant.json) separates seven obligations for default-off behavior, explicit authorization, independent playback, limits, cancellation/sign-out, recovery and listener understanding. It traces current generation entry points and resolves retained test records to their actual source hashes. Of24 relevant function/method/property nodes,21 match their tested text exactly. Three changes are reviewed individually: sign-out failure handling closes the recovery gate, DJ playback saves merge validated patches, and speech rejects non-audio responses. None adds a paid dispatch or retry.
+
+Existing native opt-in,21-case sign-out and startup-recovery evidence retain their scope rather than being rerun for counts. Current manual/preview controls disclose costs and limit scope; wording presence does not establish comprehension. Observed listener cost/opt-in understanding remains unachieved. No production source change, new runtime/build/lint or provider call is claimed. The seven-invariant index now separates current CI2/CI4/CI5 adjudication from the unresolved CI1/CI3/CI6 and VoiceOver work. Q13 stays Review and25 acceptance checks remain open,14 listener and11 other-proof.

@@ -1,0 +1,424 @@
+{
+  "date": "2026-10-18",
+  "baseCommit": "22509178bdb3267177fdac33fd43713af35f0243",
+  "scope": "CI2 no unrequested paid work: individual engineering authorization obligations, exact tested-source freshness and explicit remaining comprehension proof. Q13 partial; no production change or new runtime pass.",
+  "obligations": [
+    {
+      "id": "CI2.1",
+      "behavior": "Music-first startup, navigation, saved host/setup edits and copying profiles do not authorize generation. Preparation and DJ playback default off; copies start unavailable and preparation off.",
+      "source": "defaultWorkflowDraft/defaultDJPlaybackSettings; saveRoomProfile explicitly resets newsEnabled, availability, counters and run metadata. Ordinary local saves call storage, not text/speech providers.",
+      "evidence": [
+        "2026-10-17-radio-opt-in-contracts.json:/native/cases",
+        "2026-10-16-copied-profiles.json"
+      ],
+      "judgment": "controlled engineering evidence retained; current defaults and operation sources reviewed"
+    },
+    {
+      "id": "CI2.2",
+      "behavior": "Automatic preparation requires an explicit saved opt-in and current prerequisites. Playback opt-in independently claims saved news and never generates it.",
+      "source": "saveWorkflowDraft validates profile/sources/DJ/mood and configured required keys under withProviderKeys. saveDJPlayback persists only playback preferences; renderer DJ controller calls nextRoomNews, which claims existing eligible audio.",
+      "evidence": [
+        "2026-10-17-radio-opt-in-contracts.json:/review/R09",
+        "2026-10-17-keyless-radio.json"
+      ],
+      "judgment": "controlled source/native composition, not observed understanding"
+    },
+    {
+      "id": "CI2.3",
+      "behavior": "Manual text/audio and preview generation require explicit actions; they disclose provider cost and scheduled-limit scope. Cached replay and saved-result checks do not generate.",
+      "source": "Stations explicit preparation mutation carries captured request/reconcileOnly; VoicePreview explicit Generate/Regenerate mutation is separate from status/read/playback. Costs are adjacent to those controls.",
+      "evidence": [
+        "2026-10-17-radio-opt-in-contracts.json:/review/A03",
+        "2026-10-18-uncertain-work-invariant.json"
+      ],
+      "judgment": "engineering dispatch and wording supported; cost/opt-in comprehension not observed"
+    },
+    {
+      "id": "CI2.4",
+      "behavior": "Scheduled cadence, daily check and recording limits apply to each enabled profile; setup edits or partial/no-news results do not silently authorize extra work. Failure blocks retry until explicit repair/Resume.",
+      "source": "processProfile checks opted-in availability, pause/error, due date and daily limits again in serialized reservation; captures producer inputs and persists request before dispatch. finishRun changes only matching running reservation.",
+      "evidence": [
+        "2026-10-18-uncertain-work-invariant.json:/runtime",
+        "2026-10-17-radio-opt-in-contracts.json:/setup/caps"
+      ],
+      "judgment": "controlled scheduler/counter coverage retained; actual sleep/wake and listener limit understanding remain separate"
+    },
+    {
+      "id": "CI2.5",
+      "behavior": "Cancellation/sign-out prevents further provider dispatch, including an older callback released after rapid sign-in. Sign-out durably pauses all enabled profiles, preserves completed publications and requires per-profile Resume.",
+      "source": "disconnect increments preparationEpoch, invalidates workflow, cancels prepared work and aborts the generation signal before async pause/credential writes. Older signals remain aborted after resumeGeneration creates a new one. Delayed setup/Resume verifies captured epoch in queued commit.",
+      "evidence": [
+        "2026-10-17-signout-current.json:/actualMainServiceStorageMatrix",
+        "2026-10-17-signout-current.json:/native",
+        "2026-10-17-signout-recovery.json"
+      ],
+      "judgment": "21-case engineering boundary matrix and native sign-out/restart retained with reviewed current-source differences; not a new runtime replay"
+    },
+    {
+      "id": "CI2.6",
+      "behavior": "Recovery reads, missing saved audio and window reopening cannot restart paid work. Healthy opted-in startup can perform its due scheduled check; recovery after detected storage failure requires explicit Resume.",
+      "source": "recoverNews single-flights local reads/reconciliation, durably pauses enabled profiles after detected failure and omits immediate check for that case. Existing requested generation gates require connected account, ready news data and no shutdown/sign-out. Status/cached reads do not invoke provider generation.",
+      "evidence": [
+        "2026-10-17-news-startup-recovery.json",
+        "2026-10-18-uncertain-work-invariant.json"
+      ],
+      "judgment": "controlled recovery source/native composition; unchanged recovery/generation gate nodes match exact tested source"
+    },
+    {
+      "id": "CI2.7",
+      "behavior": "An ordinary listener understands the two opt-ins, independent stopping and possible costs before enabling or manually generating.",
+      "source": "Current source contains explanations beside player, workflow settings and paid actions. Presence is distinct from comprehension.",
+      "evidence": [
+        "2026-10-17-radio-opt-in-contracts.json:/review/D03",
+        "../LISTENER_ACCEPTANCE.md"
+      ],
+      "judgment": "not achieved: no observed listener session. A02/A13 and other applicable U rows remain open."
+    }
+  ],
+  "freshness": {
+    "method": "Resolve each retained record sourceSha256 to an exact committed file revision, then extract TypeScript function/method/property nodes and compare their exact text. Record.base can precede the tested implementation and is not accepted as tested-source identity. Current line hashes and full source hashes retained.",
+    "nodes": [
+      {
+        "record": "2026-10-17-news-startup-recovery.json",
+        "testedSourceRevision": "66f3136fb1dea266fb9e4cae791596fe6bb36b8d",
+        "file": "src/main/index.ts",
+        "name": "newsUnavailable",
+        "currentLine": 103,
+        "exactMatch": true,
+        "beforeSha256": "41e48e8bdffe4d5829430ecf3365a37656d67b99b4098d8c5d4aa316919f365f",
+        "currentSha256": "41e48e8bdffe4d5829430ecf3365a37656d67b99b4098d8c5d4aa316919f365f"
+      },
+      {
+        "record": "2026-10-17-news-startup-recovery.json",
+        "testedSourceRevision": "66f3136fb1dea266fb9e4cae791596fe6bb36b8d",
+        "file": "src/main/index.ts",
+        "name": "recoverNews",
+        "currentLine": 117,
+        "exactMatch": true,
+        "beforeSha256": "b767db9c3dc1633b5b3e6b4ed0bf17f40e50954e3d16011b8a70a0038ec7ea53",
+        "currentSha256": "b767db9c3dc1633b5b3e6b4ed0bf17f40e50954e3d16011b8a70a0038ec7ea53"
+      },
+      {
+        "record": "2026-10-17-news-startup-recovery.json",
+        "testedSourceRevision": "66f3136fb1dea266fb9e4cae791596fe6bb36b8d",
+        "file": "src/main/index.ts",
+        "name": "canGenerate",
+        "currentLine": 42,
+        "exactMatch": true,
+        "beforeSha256": "9c6114da15cc859669ec327b7105fe612586b2a4cb996215a4aa7b66a34421af",
+        "currentSha256": "9c6114da15cc859669ec327b7105fe612586b2a4cb996215a4aa7b66a34421af"
+      },
+      {
+        "record": "2026-10-17-signout-current.json",
+        "testedSourceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "file": "src/main/index.ts",
+        "name": "disconnect",
+        "currentLine": 165,
+        "exactMatch": false,
+        "beforeSha256": "50084e8a91da7091bf4a604fdcd357ac5f3364bc6ab1a3b129048c250124b01c",
+        "currentSha256": "e873fcb83e0763cd96b3a442d8bcf48e02f09c07c90957185f2ca9c50bebaf12"
+      },
+      {
+        "record": "2026-10-17-signout-current.json",
+        "testedSourceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "file": "src/main/index.ts",
+        "name": "saveWorkflowDraft",
+        "currentLine": 309,
+        "exactMatch": true,
+        "beforeSha256": "318c409bc1e1ef4c7108ba03ff723cbd3cbbe8eafa7432b1837bc244f97ebbd0",
+        "currentSha256": "318c409bc1e1ef4c7108ba03ff723cbd3cbbe8eafa7432b1837bc244f97ebbd0"
+      },
+      {
+        "record": "2026-10-17-radio-opt-in-contracts.json",
+        "testedSourceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "file": "src/main/index.ts",
+        "name": "saveWorkflowDraft",
+        "currentLine": 309,
+        "exactMatch": true,
+        "beforeSha256": "318c409bc1e1ef4c7108ba03ff723cbd3cbbe8eafa7432b1837bc244f97ebbd0",
+        "currentSha256": "318c409bc1e1ef4c7108ba03ff723cbd3cbbe8eafa7432b1837bc244f97ebbd0"
+      },
+      {
+        "record": "2026-10-17-radio-opt-in-contracts.json",
+        "testedSourceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "file": "src/main/index.ts",
+        "name": "disableNewsPreparation",
+        "currentLine": 371,
+        "exactMatch": true,
+        "beforeSha256": "c64bed502e586278fb319c1cd897dc148e06ca7ea6dbad1fb1d547310382c0b8",
+        "currentSha256": "c64bed502e586278fb319c1cd897dc148e06ca7ea6dbad1fb1d547310382c0b8"
+      },
+      {
+        "record": "2026-10-17-radio-opt-in-contracts.json",
+        "testedSourceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "file": "src/main/index.ts",
+        "name": "saveRoomProfile",
+        "currentLine": 382,
+        "exactMatch": true,
+        "beforeSha256": "ea342ea35c2a84b4decde34130b4bbbc5c33119c642394148c9f1b63e34862eb",
+        "currentSha256": "ea342ea35c2a84b4decde34130b4bbbc5c33119c642394148c9f1b63e34862eb"
+      },
+      {
+        "record": "2026-10-17-radio-opt-in-contracts.json",
+        "testedSourceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "file": "src/main/index.ts",
+        "name": "setRoomProfileEnabled",
+        "currentLine": 441,
+        "exactMatch": true,
+        "beforeSha256": "be58a94b72f69c87a37e678e634530c7a224593076621f03394694e75b2cebae",
+        "currentSha256": "be58a94b72f69c87a37e678e634530c7a224593076621f03394694e75b2cebae"
+      },
+      {
+        "record": "2026-10-17-radio-opt-in-contracts.json",
+        "testedSourceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "file": "src/main/index.ts",
+        "name": "saveDJPlayback",
+        "currentLine": 450,
+        "exactMatch": false,
+        "beforeSha256": "81c8412cce68b96e1e6ec63328e617be4390daa8a43bee05ab9f90b4d2bc3fb2",
+        "currentSha256": "f50accee5eba840047b2bf74116b34575fb58b4da0986e215ee97023d79a9cc6"
+      },
+      {
+        "record": "2026-10-17-radio-opt-in-contracts.json",
+        "testedSourceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "file": "src/main/index.ts",
+        "name": "saveDjs",
+        "currentLine": 251,
+        "exactMatch": true,
+        "beforeSha256": "2d4a554af08eadac597bf26fdc2ffc295f135337875594ef949bac44bee88fc9",
+        "currentSha256": "2d4a554af08eadac597bf26fdc2ffc295f135337875594ef949bac44bee88fc9"
+      },
+      {
+        "record": "2026-10-17-radio-opt-in-contracts.json",
+        "testedSourceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "file": "src/main/index.ts",
+        "name": "saveVibe",
+        "currentLine": 262,
+        "exactMatch": true,
+        "beforeSha256": "8aa4cbf8d5118df8473b7153c63f325d82b1a06f283a98d09c151ca8cabc3ca0",
+        "currentSha256": "8aa4cbf8d5118df8473b7153c63f325d82b1a06f283a98d09c151ca8cabc3ca0"
+      },
+      {
+        "record": "2026-10-17-radio-opt-in-contracts.json",
+        "testedSourceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "file": "src/main/index.ts",
+        "name": "saveNewsSources",
+        "currentLine": 420,
+        "exactMatch": true,
+        "beforeSha256": "6521cc71c02b18721a13c8523af73a76cf8486f2a57a6ad1a7aa248fd0e6e091",
+        "currentSha256": "6521cc71c02b18721a13c8523af73a76cf8486f2a57a6ad1a7aa248fd0e6e091"
+      },
+      {
+        "record": "2026-10-17-radio-opt-in-contracts.json",
+        "testedSourceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "file": "src/main/index.ts",
+        "name": "saveListeningRoom",
+        "currentLine": 434,
+        "exactMatch": true,
+        "beforeSha256": "22531cdd90da912a20fa4eb8ec09629b65b80456378ee3f64d5b4c53ee4357ef",
+        "currentSha256": "22531cdd90da912a20fa4eb8ec09629b65b80456378ee3f64d5b4c53ee4357ef"
+      },
+      {
+        "record": "2026-10-17-radio-opt-in-contracts.json",
+        "testedSourceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "file": "src/main/dj-previews.ts",
+        "name": "getVoicePreview",
+        "currentLine": 86,
+        "exactMatch": true,
+        "beforeSha256": "cc5af2523aa6a3805b602ff2ff894669e14a858e0fcabbc729aecec7a16230ab",
+        "currentSha256": "cc5af2523aa6a3805b602ff2ff894669e14a858e0fcabbc729aecec7a16230ab"
+      },
+      {
+        "record": "2026-10-17-radio-opt-in-contracts.json",
+        "testedSourceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "file": "src/main/dj-previews.ts",
+        "name": "getDJVoicePreview",
+        "currentLine": 93,
+        "exactMatch": true,
+        "beforeSha256": "d7d9ec5528ce52e16b0fd27ebadd140c5162bff251c970a6c87d9373b20e447b",
+        "currentSha256": "d7d9ec5528ce52e16b0fd27ebadd140c5162bff251c970a6c87d9373b20e447b"
+      },
+      {
+        "record": "2026-10-17-radio-opt-in-contracts.json",
+        "testedSourceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "file": "src/main/dj-previews.ts",
+        "name": "prepareVoicePreview",
+        "currentLine": 117,
+        "exactMatch": true,
+        "beforeSha256": "2c1fc4d6db39d3f0399ea5e5f751f4e6dc99f8561753ee2d32ec3dcca1cb28f0",
+        "currentSha256": "2c1fc4d6db39d3f0399ea5e5f751f4e6dc99f8561753ee2d32ec3dcca1cb28f0"
+      },
+      {
+        "record": "2026-10-17-radio-opt-in-contracts.json",
+        "testedSourceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "file": "src/main/dj-previews.ts",
+        "name": "prepareDJVoicePreview",
+        "currentLine": 98,
+        "exactMatch": true,
+        "beforeSha256": "9c9d3f54bd00032f3ee01596de0f7e2dff50017a45aa3144e69270794a15faed",
+        "currentSha256": "9c9d3f54bd00032f3ee01596de0f7e2dff50017a45aa3144e69270794a15faed"
+      },
+      {
+        "record": "2026-10-17-radio-opt-in-contracts.json",
+        "testedSourceRevision": "e2122c15a8e5fb7b3c9629e67d17a968f8c95ce7",
+        "file": "src/main/dj-previews.ts",
+        "name": "generatePreview",
+        "currentLine": 136,
+        "exactMatch": true,
+        "beforeSha256": "08801a1ce27e68522371b8a552595a5e28e05b1da7e891f6327ca8b2f4994254",
+        "currentSha256": "08801a1ce27e68522371b8a552595a5e28e05b1da7e891f6327ca8b2f4994254"
+      },
+      {
+        "record": "2026-10-17-signout-current.json",
+        "testedSourceRevision": "152ab7848c09b71255024400dae00e38386a1365",
+        "file": "src/main/news.ts",
+        "name": "generationSignal",
+        "currentLine": 68,
+        "exactMatch": true,
+        "beforeSha256": "70f4808bee7dfa37b9969da5a8d8b94c7f328f3650fc5d67003cd3c868907cde",
+        "currentSha256": "70f4808bee7dfa37b9969da5a8d8b94c7f328f3650fc5d67003cd3c868907cde"
+      },
+      {
+        "record": "2026-10-17-signout-current.json",
+        "testedSourceRevision": "152ab7848c09b71255024400dae00e38386a1365",
+        "file": "src/main/news.ts",
+        "name": "cancelGeneration",
+        "currentLine": 72,
+        "exactMatch": true,
+        "beforeSha256": "4a253a733d7c44c67333ae948d5b1744770f0c2872c04279c0997a9551bcb790",
+        "currentSha256": "4a253a733d7c44c67333ae948d5b1744770f0c2872c04279c0997a9551bcb790"
+      },
+      {
+        "record": "2026-10-17-signout-current.json",
+        "testedSourceRevision": "152ab7848c09b71255024400dae00e38386a1365",
+        "file": "src/main/news.ts",
+        "name": "resumeGeneration",
+        "currentLine": 73,
+        "exactMatch": true,
+        "beforeSha256": "5f0a901005350cf6b1ad6b78b3610483823dd6d6e243f46da6ba1e6338a91c90",
+        "currentSha256": "5f0a901005350cf6b1ad6b78b3610483823dd6d6e243f46da6ba1e6338a91c90"
+      },
+      {
+        "record": "2026-10-17-signout-current.json",
+        "testedSourceRevision": "152ab7848c09b71255024400dae00e38386a1365",
+        "file": "src/main/news.ts",
+        "name": "renderPreparedSpeech",
+        "currentLine": 292,
+        "exactMatch": false,
+        "beforeSha256": "b9979208828de0f03129a2db3aea51b276e0abc883e5081a5e13fc25596b733b",
+        "currentSha256": "8b6acb299276fa68c99c341e36d1bc0a08e3dfa7ea2a1c9427ba3a1477177fcd"
+      },
+      {
+        "record": "2026-10-17-signout-current.json",
+        "testedSourceRevision": "152ab7848c09b71255024400dae00e38386a1365",
+        "file": "src/main/news.ts",
+        "name": "run",
+        "currentLine": 77,
+        "exactMatch": true,
+        "beforeSha256": "3158f899280aa3c9474da7c92db7d82a55e54f43584e866f37d4ad4d4bb6128e",
+        "currentSha256": "3158f899280aa3c9474da7c92db7d82a55e54f43584e866f37d4ad4d4bb6128e"
+      }
+    ],
+    "summary": {
+      "compared": 24,
+      "exact": 21,
+      "changed": 3
+    },
+    "changedNodeReviews": [
+      {
+        "file": "src/main/index.ts",
+        "name": "disconnect",
+        "review": "Pause/cancel/epoch ordering is unchanged. Added a safe specific failure message and StorageError newsUnavailable handling, which further closes generation/recovery gates; does not dispatch. Existing sign-out-recovery and startup-recovery records cover those paths."
+      },
+      {
+        "file": "src/main/index.ts",
+        "name": "saveDJPlayback",
+        "review": "Changed full-value save to validated patch merged against latest state, with requireNewsReady for enabled playback. It persists DJ playback only; no paid provider call or producer opt-in change. This preserves separate preparation authorization."
+      },
+      {
+        "file": "src/main/news.ts",
+        "name": "renderPreparedSpeech",
+        "review": "Added rejection of non-audio content types after response status checks. Generation-signal/key checks and the sole fetch remain unchanged. No retry or new dispatch was introduced."
+      }
+    ]
+  },
+  "dispatchInventory": {
+    "paidTextCallers": [
+      "prepared-news.prepareNewsScript -> execute -> NewsService.prepareScript",
+      "prepared-news.prepareRoomNews -> execute -> NewsService.prepareScript"
+    ],
+    "paidSpeechCallers": [
+      "prepared-news.renderNewsTake -> execute -> NewsService.renderPreparedSpeech",
+      "prepared-news.prepareRoomNews -> execute -> NewsService.renderPreparedSpeech",
+      "dj-previews.generatePreview -> durable attempted marker -> NewsService.renderPreparedSpeech"
+    ],
+    "rendererEntryPoints": [
+      "Stations captured manual action or explicit saved-result check",
+      "VoicePreview explicit Generate/Regenerate",
+      "Explicit enabled workflow save/Resume allows scheduler reservation"
+    ],
+    "nonGenerationPaths": [
+      "DJ enable/profile selection and nextRoomNews claim saved audio",
+      "getPreparedNews/status/preview reads and local cached playback",
+      "Local host/source/mood/preferences saves and profile copy",
+      "Recovery read, cancellation and window hide/show"
+    ],
+    "removedAlternatePath": "PR114 removed unmounted combined prepareNewsBreak API and single-purpose generator. Current dispatch inventory has no corresponding alternate bridge."
+  },
+  "evidence": [
+    {
+      "file": "2026-10-17-radio-opt-in-contracts.json",
+      "sha256": "c54ad7b4ca22909587981486baef916b0d1a894b11d1f48a04f4ef44f854c5e5"
+    },
+    {
+      "file": "2026-10-17-signout-current.json",
+      "sha256": "a90a01db1ead57cd1e77b17e5f997ac40ee2ed012bebfdc751d8e1a5503e1767"
+    },
+    {
+      "file": "2026-10-17-signout-recovery.json",
+      "sha256": "a610da5b9d6cdb00ba7078da4c3cfefe5beb36988de49adecdb07e530f4f6bc9"
+    },
+    {
+      "file": "2026-10-17-news-startup-recovery.json",
+      "sha256": "4fbc5ed26b4baf09abd2f14af23c8899f0dd7b9b6c61e19603f749337d881d3c"
+    },
+    {
+      "file": "2026-10-17-keyless-radio.json",
+      "sha256": "4b2b78eb3d70dd78747acd7ba32200e31fa2c5e94d0f77dc635eb1c576da0ed6"
+    },
+    {
+      "file": "2026-10-16-copied-profiles.json",
+      "sha256": "f400791c348418bdf334d3858af56c406c92f66c27206c3e4ad259093060c06f"
+    },
+    {
+      "file": "2026-10-18-uncertain-work-invariant.json",
+      "sha256": "acff28d5fa03710a1cd5bfdb0e218a5e5d1de65f70d2a9bbd8124e86a8132271"
+    }
+  ],
+  "sourceHashes": {
+    "src/main/index.ts": "14c20e3fe63d51bf176873e7a52e1c07dcea8d9467dc3e01531f2f6072c36633",
+    "src/main/news.ts": "f2933aac8c9d2334e84a6850c7023207fbd1b86f905bd3844977ad5cb0be7a48",
+    "src/main/prepared-news.ts": "da830c4e4c95caa62fa103367d7d4eef268ef32970d837fbe1b0d94c1b1809b3",
+    "src/main/news-workflow.ts": "3df6ed5c638d447665b99310cc1a017c518c3b38980f52cbc2cf8856bffaf271",
+    "src/main/dj-previews.ts": "56d36390dbf9ba2a3177c46ff2a20d4478fa20bc37d6220bc1459b6e592722b3",
+    "src/main/storage.ts": "79819d117064ff2284949b031af80761e3996f9ad236a13075e9341833c89f14",
+    "src/shared/workflow.ts": "22bbb66493579cc57e09c69119943adec0fa2373d823820a2579bd4996e6cc77",
+    "src/shared/dj-playback.ts": "7e807ff052f50332ff9c78b083c450a9f5c116f68fc36de93480165ec1e6e55b",
+    "src/renderer/main.tsx": "863a6596bde95ba270f0d554a2ac2bd0c3819ca832f1bfd577d0edf9bb69a7cc",
+    "src/renderer/dj-playback.tsx": "d5fce424eb2f78b8fe546e00b6584b1f877981b42ae12eb531df9d93ae031824",
+    "src/renderer/pages/Stations/Stations.page.tsx": "af0c5219948700ed27fab50a9490184856a2055983fae09a64781dd2ee8f8bc2",
+    "src/renderer/pages/DJs/components/VoicePreview.component.tsx": "d2cbca679984903fdc0692488dff67069fad302e4e3adcd8352915b5eb209581",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": "c4ad3a4578a806ddde343831a2e2015bd85f9321a9c0d0f23ee3c79b7d1461e8",
+    "src/renderer/components/Player/DJPopover.component.tsx": "7a9858830d98a053b2a3d805e6a2b6521aa483154c00306b0a6cfb4fb96fd981"
+  },
+  "inspectorSha256": "c3c48192c2de96d0fc248c89b4ef652e6c5661772b88a722a9a884ebd87a48e9",
+  "verification": "Inspected24 exact-source nodes,21 unchanged and3 explicitly reviewed; source hashes, evidence references, JSON pointers, dispatch callers,191 dispositions and whitespace checked. No new app/runtime/build/lint claim: production bytes remain PR114 passing snapshot.",
+  "inspectorCorrection": "Initial inspector assumed record.base always represented tested source and found newly added recovery functions absent. Corrected to resolve each record sourceSha256 against committed history, preserving preimplementation base semantics rather than treating missing old nodes as a current pass.",
+  "remaining": "Observed cost/opt-in understanding remains unproven, as do actual sleep/wake and named live/provider/hardware scopes in their own rows. CI2 is not a whole product acceptance pass.25 checks remain:14 listener and11 other-proof;Q13 Review.",
+  "limits": [
+    "This is a source/evidence adjudication; no provider, server, protected credential, audio or native UI operation ran.",
+    "Historical native/service records retain their own substituted-provider/storage/process and baseline limits. Exact node equality does not replay a whole application or prove every call combination.",
+    "Current cost wording is not evidence an ordinary listener understood it. The deferred pilot and validation cohort remain required.",
+    "The seven-invariant summary is a review index, not a new denominator, percentage or substitute for all original requirement clauses."
+  ]
+}
