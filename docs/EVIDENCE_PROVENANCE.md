@@ -123,3 +123,6 @@ The [18 October profile confirmation record](verification/2026-10-18-profile-dia
 
 
 The [shared editor focus record](verification/2026-10-18-shared-editor-focus.json) separates four renderer phases and24 native projections, retains the failed clipping intermediates and records final source/bundle/fixture/raw hashes. Source/DJ deletion owners were unchanged during later DJ-editor scrolling corrections; their earlier checks are not a final-bundle rerun. All191 acceptance dispositions remain unchanged.
+
+
+The [saved-take focus record](verification/2026-10-18-prepared-take-focus.json) separates2 baseline,17 reviewed and4 final-Stop projections with source/bundle/fixture/raw hashes. A selection-error CUA observation has no valid retained raw snapshot and is explicitly excluded. Final Stop verification is scoped separately from earlier selection/scheduling checks; all191 dispositions remain unchanged.

@@ -1,0 +1,6016 @@
+{
+  "date": "2026-10-18",
+  "scope": "Saved-take selection, clearing, scheduling and explicit Stop focus. Full Q06 remains unproven.",
+  "decision": {
+    "Steve": "Independent stable-vs-handoff proposal, supports stable controls with explicit labels and no completion focus; found selection/scheduling concurrency blocker. Supports final mutual guards and generic stopped transient. Final source review no blocker.",
+    "Elena": "Independent stable-row plus scoped-handoff proposal; accepted no-handoff after challenge. Supports mutual guards and actual active saved-take Stop. Final source review no blocker.",
+    "Morgan": "Stable nodes with focused-only native-availability exceptions; no completion focus. Both pending keys and synchronous refs serialize selection/scheduling. Await authoritative selection refresh. Keep actual saved active-take Stop independently of selection and retain inert stopped control only until blur."
+  },
+  "verification": {
+    "build": "Final npm run build exit0 including TypeScript",
+    "lint": "Final npm run lint exit0",
+    "snapshotCounts": {
+      "baseline": 2,
+      "reviewedBeforeStopRetention": 17,
+      "finalStopRetention": 4
+    },
+    "nativeFailureWithoutProjection": "CUA screenshot/AX showed the selection failure with focus on Use this take and the row-adjacent error. Its attempted raw snapshot reviewed-select-failure-visible.json is empty due to observation write/copy race and is excluded from projections/hashes. This is native observed evidence only, not a retained raw projection.",
+    "phases": "Initial focus-only build was inspected but not submission-tested; paired review rejected its independent select/schedule guards. Reviewed build exercises selection/failure/retry/readback/navigation, schedule/failure/retry, clear/failure/retry and confirms old Stop BODY failure. Final build changes only Stop retention and rechecks schedule/clear/stop/repeated activation/blur. Earlier checks are not claimed rerun on final bundle.",
+    "selectionCalls": "Reviewed runtime has5 selectNewsTake calls: injected failure, retry, change to take2, injected clear failure and clear retry. Final Stop run starts with a seeded selected take2 and makes one actual clear.",
+    "scheduleFailure": "Injected getLocalState failure also affects ordinary status queries, so a separate top-level query error appears in addition to the local schedule error. Restoring the gate clears it on the ordinary query path. This is not a dedicated schedule IPC or actual OS failure.",
+    "snapshots": {
+      "baseline": [
+        {
+          "name": "before-select-pending",
+          "rawSha256": "3a1f80ed0f5d2e2342b5c09c253a86ab434afe898ea13beef55466969e5b60ab",
+          "focus": {
+            "tag": "BODY",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 720,
+              "top": 0,
+              "right": 1280,
+              "bottom": 720,
+              "left": 0
+            },
+            "insideDrawer": false,
+            "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedNews bucketSetup profileMy room \u00b7 ActiveSave as newAdvanced room optionsMake this p",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": 79.6953125,
+                "width": 71.734375,
+                "height": 34,
+                "top": 79.6953125,
+                "right": 1198,
+                "bottom": 113.6953125,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:13:56 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 308.640625,
+                "width": 84.921875,
+                "height": 34,
+                "top": 308.640625,
+                "right": 322.921875,
+                "bottom": 342.640625,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 308.640625,
+                "width": 101.3125,
+                "height": 34,
+                "top": 308.640625,
+                "right": 1198,
+                "bottom": 342.640625,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 443.1875,
+                "width": 145.875,
+                "height": 34,
+                "top": 443.1875,
+                "right": 383.875,
+                "bottom": 477.1875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:12:56 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 586.3359375,
+                "width": 84.921875,
+                "height": 34,
+                "top": 586.3359375,
+                "right": 322.921875,
+                "bottom": 620.3359375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 586.3359375,
+                "width": 101.3125,
+                "height": 34,
+                "top": 586.3359375,
+                "right": 1198,
+                "bottom": 620.3359375,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 720.8828125,
+                "width": 145.875,
+                "height": 34,
+                "top": 720.8828125,
+                "right": 383.875,
+                "bottom": 754.8828125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:11:56 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 864.03125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 864.03125,
+                "right": 322.921875,
+                "bottom": 898.03125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 864.03125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 864.03125,
+                "right": 1198,
+                "bottom": 898.03125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1034.375,
+                "width": 145.875,
+                "height": 34,
+                "top": 1034.375,
+                "right": 383.875,
+                "bottom": 1068.375,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": null,
+          "held": [
+            "selectNewsTake"
+          ],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792318512356,
+              "mode": "hold"
+            }
+          ],
+          "transport": "Play"
+        },
+        {
+          "name": "before-select-success-body",
+          "rawSha256": "69c1f60769c43863ff710823697dfd675f2e8d6848856fc18ce03e79eff15fd7",
+          "focus": {
+            "tag": "BODY",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 720,
+              "top": 0,
+              "right": 1280,
+              "bottom": 720,
+              "left": 0
+            },
+            "insideDrawer": false,
+            "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedNews bucketSetup profileMy room \u00b7 ActiveSave as newAdvanced room optionsMake this p",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": 79.4921875,
+                "width": 71.734375,
+                "height": 34,
+                "top": 79.4921875,
+                "right": 1198,
+                "bottom": 113.4921875,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Schedule DJ break",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 919.015625,
+                "y": 182.109375,
+                "width": 158.359375,
+                "height": 34,
+                "top": 182.109375,
+                "right": 1077.375,
+                "bottom": 216.109375,
+                "left": 919.015625
+              }
+            },
+            {
+              "name": "Clear selection",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1085.375,
+                "y": 182.109375,
+                "width": 112.625,
+                "height": 34,
+                "top": 182.109375,
+                "right": 1198,
+                "bottom": 216.109375,
+                "left": 1085.375
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:13:56 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 395.1796875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 395.1796875,
+                "right": 322.921875,
+                "bottom": 429.1796875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 529.7265625,
+                "width": 145.875,
+                "height": 34,
+                "top": 529.7265625,
+                "right": 383.875,
+                "bottom": 563.7265625,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:12:56 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 672.875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 672.875,
+                "right": 322.921875,
+                "bottom": 706.875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 672.875,
+                "width": 101.3125,
+                "height": 34,
+                "top": 672.875,
+                "right": 1198,
+                "bottom": 706.875,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 807.421875,
+                "width": 145.875,
+                "height": 34,
+                "top": 807.421875,
+                "right": 383.875,
+                "bottom": 841.421875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:11:56 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 950.5703125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 950.5703125,
+                "right": 322.921875,
+                "bottom": 984.5703125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 950.5703125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 950.5703125,
+                "right": 1198,
+                "bottom": 984.5703125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1120.9140625,
+                "width": 145.875,
+                "height": 34,
+                "top": 1120.9140625,
+                "right": 383.875,
+                "bottom": 1154.9140625,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": "fixture-take-1",
+          "held": [],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792318512356,
+              "mode": "hold"
+            }
+          ],
+          "transport": "Play"
+        }
+      ],
+      "reviewedBeforeStopRetention": [
+        {
+          "name": "reviewed-clear-failure",
+          "rawSha256": "b6271098b624fd36cb4b2525eb5192637f9d28a342e3f438518503f367c063e2",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 1085.375,
+              "y": 296.2890625,
+              "width": 112.625,
+              "height": 34,
+              "top": 296.2890625,
+              "right": 1198,
+              "bottom": 330.2890625,
+              "left": 1085.375
+            },
+            "insideDrawer": false,
+            "name": "Clear selection",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": 205.9921875,
+                "width": 71.734375,
+                "height": 34,
+                "top": 205.9921875,
+                "right": 1198,
+                "bottom": 239.9921875,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Break active",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 956.4609375,
+                "y": 296.2890625,
+                "width": 120.9140625,
+                "height": 34,
+                "top": 296.2890625,
+                "right": 1077.375,
+                "bottom": 330.2890625,
+                "left": 956.4609375
+              }
+            },
+            {
+              "name": "Clear selection",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": true,
+              "rect": {
+                "x": 1085.375,
+                "y": 296.2890625,
+                "width": 112.625,
+                "height": 34,
+                "top": 296.2890625,
+                "right": 1198,
+                "bottom": 330.2890625,
+                "left": 1085.375
+              }
+            },
+            {
+              "name": "Cancel scheduled break",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 731.9609375,
+                "y": 439.0859375,
+                "width": 165.1796875,
+                "height": 34,
+                "top": 439.0859375,
+                "right": 897.140625,
+                "bottom": 473.0859375,
+                "left": 731.9609375
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:17:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 632.828125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 632.828125,
+                "right": 322.921875,
+                "bottom": 666.828125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 632.828125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 632.828125,
+                "right": 1198,
+                "bottom": 666.828125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 767.375,
+                "width": 145.875,
+                "height": 34,
+                "top": 767.375,
+                "right": 383.875,
+                "bottom": 801.375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:16:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 910.5234375,
+                "width": 84.921875,
+                "height": 34,
+                "top": 910.5234375,
+                "right": 322.921875,
+                "bottom": 944.5234375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Selected",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1120.390625,
+                "y": 910.5234375,
+                "width": 77.609375,
+                "height": 34,
+                "top": 910.5234375,
+                "right": 1198,
+                "bottom": 944.5234375,
+                "left": 1120.390625
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1045.0703125,
+                "width": 145.875,
+                "height": 34,
+                "top": 1045.0703125,
+                "right": 383.875,
+                "bottom": 1079.0703125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:15:12 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1188.21875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 1188.21875,
+                "right": 322.921875,
+                "bottom": 1222.21875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 1188.21875,
+                "width": 101.3125,
+                "height": 34,
+                "top": 1188.21875,
+                "right": 1198,
+                "bottom": 1222.21875,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1358.5625,
+                "width": 145.875,
+                "height": 34,
+                "top": 1358.5625,
+                "right": 383.875,
+                "bottom": 1392.5625,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [
+            {
+              "rect": {
+                "x": 956.4609375,
+                "y": 342.2890625,
+                "width": 241.5390625,
+                "height": 45.796875,
+                "top": 342.2890625,
+                "right": 1198,
+                "bottom": 388.0859375,
+                "left": 956.4609375
+              },
+              "error": "selectNewsTake unavailable.",
+              "button": null
+            }
+          ],
+          "selectedTakeId": "fixture-take-2",
+          "held": [],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792318706784,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318735525,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318783055,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318878877,
+              "mode": "hold"
+            }
+          ],
+          "transport": "Play"
+        },
+        {
+          "name": "reviewed-clear-pending",
+          "rawSha256": "7ac20ff3da66a4f34589721510fa48bb449eda27c75f9ea0489f8a16c48f618d",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 1112.109375,
+              "y": 308.609375,
+              "width": 85.890625,
+              "height": 34,
+              "top": 308.609375,
+              "right": 1198,
+              "bottom": 342.609375,
+              "left": 1112.109375
+            },
+            "insideDrawer": false,
+            "name": "Clearing\u2026",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": 205.9921875,
+                "width": 71.734375,
+                "height": 34,
+                "top": 205.9921875,
+                "right": 1198,
+                "bottom": 239.9921875,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Break active",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 983.1953125,
+                "y": 308.609375,
+                "width": 120.9140625,
+                "height": 34,
+                "top": 308.609375,
+                "right": 1104.109375,
+                "bottom": 342.609375,
+                "left": 983.1953125
+              }
+            },
+            {
+              "name": "Clearing\u2026",
+              "disabled": false,
+              "ariaDisabled": "true",
+              "busy": "true",
+              "active": true,
+              "rect": {
+                "x": 1112.109375,
+                "y": 308.609375,
+                "width": 85.890625,
+                "height": 34,
+                "top": 308.609375,
+                "right": 1198,
+                "bottom": 342.609375,
+                "left": 1112.109375
+              }
+            },
+            {
+              "name": "Cancel scheduled break",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 731.9609375,
+                "y": 385.9375,
+                "width": 165.1796875,
+                "height": 34,
+                "top": 385.9375,
+                "right": 897.140625,
+                "bottom": 419.9375,
+                "left": 731.9609375
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:17:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 611.4765625,
+                "width": 84.921875,
+                "height": 34,
+                "top": 611.4765625,
+                "right": 322.921875,
+                "bottom": 645.4765625,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 611.4765625,
+                "width": 101.3125,
+                "height": 34,
+                "top": 611.4765625,
+                "right": 1198,
+                "bottom": 645.4765625,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 746.0234375,
+                "width": 145.875,
+                "height": 34,
+                "top": 746.0234375,
+                "right": 383.875,
+                "bottom": 780.0234375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:16:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 889.171875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 889.171875,
+                "right": 322.921875,
+                "bottom": 923.171875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Selected",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1120.390625,
+                "y": 889.171875,
+                "width": 77.609375,
+                "height": 34,
+                "top": 889.171875,
+                "right": 1198,
+                "bottom": 923.171875,
+                "left": 1120.390625
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1023.71875,
+                "width": 145.875,
+                "height": 34,
+                "top": 1023.71875,
+                "right": 383.875,
+                "bottom": 1057.71875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:15:12 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1166.8671875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 1166.8671875,
+                "right": 322.921875,
+                "bottom": 1200.8671875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 1166.8671875,
+                "width": 101.3125,
+                "height": 34,
+                "top": 1166.8671875,
+                "right": 1198,
+                "bottom": 1200.8671875,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1337.2109375,
+                "width": 145.875,
+                "height": 34,
+                "top": 1337.2109375,
+                "right": 383.875,
+                "bottom": 1371.2109375,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": "fixture-take-2",
+          "held": [
+            "selectNewsTake"
+          ],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792318706784,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318735525,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318783055,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318878877,
+              "mode": "hold"
+            }
+          ],
+          "transport": "Play"
+        },
+        {
+          "name": "reviewed-clear-success-active-break",
+          "rawSha256": "db4cfef3ce08d043ea6b5aa22a56f2a3d6be66e765e482ddb83db7a0f60d23a7",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 1074.734375,
+              "y": 231.2421875,
+              "width": 123.265625,
+              "height": 34,
+              "top": 231.2421875,
+              "right": 1198,
+              "bottom": 265.2421875,
+              "left": 1074.734375
+            },
+            "insideDrawer": false,
+            "name": "No take selected",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": 140.1953125,
+                "width": 71.734375,
+                "height": 34,
+                "top": 140.1953125,
+                "right": 1198,
+                "bottom": 174.1953125,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Schedule DJ break",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 908.375,
+                "y": 231.2421875,
+                "width": 158.359375,
+                "height": 34,
+                "top": 231.2421875,
+                "right": 1066.734375,
+                "bottom": 265.2421875,
+                "left": 908.375
+              }
+            },
+            {
+              "name": "No take selected",
+              "disabled": false,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": true,
+              "rect": {
+                "x": 1074.734375,
+                "y": 231.2421875,
+                "width": 123.265625,
+                "height": 34,
+                "top": 231.2421875,
+                "right": 1198,
+                "bottom": 265.2421875,
+                "left": 1074.734375
+              }
+            },
+            {
+              "name": "Cancel scheduled break",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 731.9609375,
+                "y": 296.9921875,
+                "width": 165.1796875,
+                "height": 34,
+                "top": 296.9921875,
+                "right": 897.140625,
+                "bottom": 330.9921875,
+                "left": 731.9609375
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:17:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 427.140625,
+                "width": 84.921875,
+                "height": 34,
+                "top": 427.140625,
+                "right": 322.921875,
+                "bottom": 461.140625,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 427.140625,
+                "width": 101.3125,
+                "height": 34,
+                "top": 427.140625,
+                "right": 1198,
+                "bottom": 461.140625,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 561.6875,
+                "width": 145.875,
+                "height": 34,
+                "top": 561.6875,
+                "right": 383.875,
+                "bottom": 595.6875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:16:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 704.8359375,
+                "width": 84.921875,
+                "height": 34,
+                "top": 704.8359375,
+                "right": 322.921875,
+                "bottom": 738.8359375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 704.8359375,
+                "width": 101.3125,
+                "height": 34,
+                "top": 704.8359375,
+                "right": 1198,
+                "bottom": 738.8359375,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 839.3828125,
+                "width": 145.875,
+                "height": 34,
+                "top": 839.3828125,
+                "right": 383.875,
+                "bottom": 873.3828125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:15:12 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 982.53125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 982.53125,
+                "right": 322.921875,
+                "bottom": 1016.53125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 982.53125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 982.53125,
+                "right": 1198,
+                "bottom": 1016.53125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1152.875,
+                "width": 145.875,
+                "height": 34,
+                "top": 1152.875,
+                "right": 383.875,
+                "bottom": 1186.875,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": null,
+          "held": [],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792318706784,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318735525,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318783055,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318878877,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318902415,
+              "mode": "normal"
+            }
+          ],
+          "transport": "Play"
+        },
+        {
+          "name": "reviewed-empty-missing",
+          "rawSha256": "1b2b6676d0ed720ac1528f66a14b36262e841ec7e7a494bda2061fd667c895f1",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 438.140625,
+              "y": 266.6953125,
+              "width": 104.3125,
+              "height": 34,
+              "top": 266.6953125,
+              "right": 542.453125,
+              "bottom": 300.6953125,
+              "left": 438.140625
+            },
+            "insideDrawer": false,
+            "name": "Saved audio",
+            "type": "button",
+            "role": "tab"
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": 337.6953125,
+                "width": 71.734375,
+                "height": 34,
+                "top": 337.6953125,
+                "right": 1198,
+                "bottom": 371.6953125,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Schedule DJ break",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 908.375,
+                "y": 428.7421875,
+                "width": 158.359375,
+                "height": 34,
+                "top": 428.7421875,
+                "right": 1066.734375,
+                "bottom": 462.7421875,
+                "left": 908.375
+              }
+            },
+            {
+              "name": "No take selected",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1074.734375,
+                "y": 428.7421875,
+                "width": 123.265625,
+                "height": 34,
+                "top": 428.7421875,
+                "right": 1198,
+                "bottom": 462.7421875,
+                "left": 1074.734375
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:17:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 566.640625,
+                "width": 84.921875,
+                "height": 34,
+                "top": 566.640625,
+                "right": 322.921875,
+                "bottom": 600.640625,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 566.640625,
+                "width": 101.3125,
+                "height": 34,
+                "top": 566.640625,
+                "right": 1198,
+                "bottom": 600.640625,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 701.1875,
+                "width": 145.875,
+                "height": 34,
+                "top": 701.1875,
+                "right": 383.875,
+                "bottom": 735.1875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:16:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 844.3359375,
+                "width": 84.921875,
+                "height": 34,
+                "top": 844.3359375,
+                "right": 322.921875,
+                "bottom": 878.3359375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 844.3359375,
+                "width": 101.3125,
+                "height": 34,
+                "top": 844.3359375,
+                "right": 1198,
+                "bottom": 878.3359375,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 978.8828125,
+                "width": 145.875,
+                "height": 34,
+                "top": 978.8828125,
+                "right": 383.875,
+                "bottom": 1012.8828125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:15:12 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1122.03125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 1122.03125,
+                "right": 322.921875,
+                "bottom": 1156.03125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 1122.03125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 1122.03125,
+                "right": 1198,
+                "bottom": 1156.03125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1292.375,
+                "width": 145.875,
+                "height": 34,
+                "top": 1292.375,
+                "right": 383.875,
+                "bottom": 1326.375,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": null,
+          "held": [],
+          "selectionCalls": [],
+          "transport": "Play"
+        },
+        {
+          "name": "reviewed-navigation-settled",
+          "rawSha256": "e61b547293d43e56d0592dae895c84c334462187db90b6d0e886029a2b96bd65",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 16,
+              "y": 263.5,
+              "width": 176,
+              "height": 44,
+              "top": 263.5,
+              "right": 192,
+              "bottom": 307.5,
+              "left": 16
+            },
+            "insideDrawer": false,
+            "name": "News bucket",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": -284.5078125,
+                "width": 71.734375,
+                "height": 34,
+                "top": -284.5078125,
+                "right": 1198,
+                "bottom": -250.5078125,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Schedule DJ break",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 919.015625,
+                "y": -181.890625,
+                "width": 158.359375,
+                "height": 34,
+                "top": -181.890625,
+                "right": 1077.375,
+                "bottom": -147.890625,
+                "left": 919.015625
+              }
+            },
+            {
+              "name": "Clear selection",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1085.375,
+                "y": -181.890625,
+                "width": 112.625,
+                "height": 34,
+                "top": -181.890625,
+                "right": 1198,
+                "bottom": -147.890625,
+                "left": 1085.375
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:17:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 31.1796875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 31.1796875,
+                "right": 322.921875,
+                "bottom": 65.1796875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 31.1796875,
+                "width": 101.3125,
+                "height": 34,
+                "top": 31.1796875,
+                "right": 1198,
+                "bottom": 65.1796875,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 165.7265625,
+                "width": 145.875,
+                "height": 34,
+                "top": 165.7265625,
+                "right": 383.875,
+                "bottom": 199.7265625,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:16:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 308.875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 308.875,
+                "right": 322.921875,
+                "bottom": 342.875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Selected",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1120.390625,
+                "y": 308.875,
+                "width": 77.609375,
+                "height": 34,
+                "top": 308.875,
+                "right": 1198,
+                "bottom": 342.875,
+                "left": 1120.390625
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 443.421875,
+                "width": 145.875,
+                "height": 34,
+                "top": 443.421875,
+                "right": 383.875,
+                "bottom": 477.421875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:15:12 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 586.5703125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 586.5703125,
+                "right": 322.921875,
+                "bottom": 620.5703125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 586.5703125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 586.5703125,
+                "right": 1198,
+                "bottom": 620.5703125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 756.9140625,
+                "width": 145.875,
+                "height": 34,
+                "top": 756.9140625,
+                "right": 383.875,
+                "bottom": 790.9140625,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": "fixture-take-2",
+          "held": [],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792318706784,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318735525,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318783055,
+              "mode": "hold"
+            }
+          ],
+          "transport": "Play"
+        },
+        {
+          "name": "reviewed-retry-pending",
+          "rawSha256": "6da22edfea19ea630634d12e6deb2069f6228c0c23cee2c112a96e1749104a26",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 1106.890625,
+              "y": 352.4375,
+              "width": 91.109375,
+              "height": 34,
+              "top": 352.4375,
+              "right": 1198,
+              "bottom": 386.4375,
+              "left": 1106.890625
+            },
+            "insideDrawer": false,
+            "name": "Selecting\u2026",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": 79.6953125,
+                "width": 71.734375,
+                "height": 34,
+                "top": 79.6953125,
+                "right": 1198,
+                "bottom": 113.6953125,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Schedule DJ break",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 908.375,
+                "y": 170.7421875,
+                "width": 158.359375,
+                "height": 34,
+                "top": 170.7421875,
+                "right": 1066.734375,
+                "bottom": 204.7421875,
+                "left": 908.375
+              }
+            },
+            {
+              "name": "No take selected",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1074.734375,
+                "y": 170.7421875,
+                "width": 123.265625,
+                "height": 34,
+                "top": 170.7421875,
+                "right": 1198,
+                "bottom": 204.7421875,
+                "left": 1074.734375
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:17:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 352.4375,
+                "width": 84.921875,
+                "height": 34,
+                "top": 352.4375,
+                "right": 322.921875,
+                "bottom": 386.4375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Selecting\u2026",
+              "disabled": false,
+              "ariaDisabled": "true",
+              "busy": "true",
+              "active": true,
+              "rect": {
+                "x": 1106.890625,
+                "y": 352.4375,
+                "width": 91.109375,
+                "height": 34,
+                "top": 352.4375,
+                "right": 1198,
+                "bottom": 386.4375,
+                "left": 1106.890625
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 486.984375,
+                "width": 145.875,
+                "height": 34,
+                "top": 486.984375,
+                "right": 383.875,
+                "bottom": 520.984375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:16:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 630.1328125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 630.1328125,
+                "right": 322.921875,
+                "bottom": 664.1328125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 630.1328125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 630.1328125,
+                "right": 1198,
+                "bottom": 664.1328125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 764.6796875,
+                "width": 145.875,
+                "height": 34,
+                "top": 764.6796875,
+                "right": 383.875,
+                "bottom": 798.6796875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:15:12 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 907.828125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 907.828125,
+                "right": 322.921875,
+                "bottom": 941.828125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 907.828125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 907.828125,
+                "right": 1198,
+                "bottom": 941.828125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1078.171875,
+                "width": 145.875,
+                "height": 34,
+                "top": 1078.171875,
+                "right": 383.875,
+                "bottom": 1112.171875,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": null,
+          "held": [
+            "selectNewsTake"
+          ],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792318706784,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318735525,
+              "mode": "hold"
+            }
+          ],
+          "transport": "Play"
+        },
+        {
+          "name": "reviewed-return-pending",
+          "rawSha256": "55d3acb0b9353898f154c6ebffb0f2e0c2d17fde4a7658d0ed92dd30e83ea523",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 16,
+              "y": 263.5,
+              "width": 176,
+              "height": 44,
+              "top": 263.5,
+              "right": 192,
+              "bottom": 307.5,
+              "left": 16
+            },
+            "insideDrawer": false,
+            "name": "News bucket",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": -316.5078125,
+                "width": 71.734375,
+                "height": 34,
+                "top": -316.5078125,
+                "right": 1198,
+                "bottom": -282.5078125,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Schedule DJ break",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 919.015625,
+                "y": -213.890625,
+                "width": 158.359375,
+                "height": 34,
+                "top": -213.890625,
+                "right": 1077.375,
+                "bottom": -179.890625,
+                "left": 919.015625
+              }
+            },
+            {
+              "name": "Clear selection",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1085.375,
+                "y": -213.890625,
+                "width": 112.625,
+                "height": 34,
+                "top": -213.890625,
+                "right": 1198,
+                "bottom": -179.890625,
+                "left": 1085.375
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:17:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 30.9765625,
+                "width": 84.921875,
+                "height": 34,
+                "top": 30.9765625,
+                "right": 322.921875,
+                "bottom": 64.9765625,
+                "left": 238
+              }
+            },
+            {
+              "name": "Selected",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1120.390625,
+                "y": 30.9765625,
+                "width": 77.609375,
+                "height": 34,
+                "top": 30.9765625,
+                "right": 1198,
+                "bottom": 64.9765625,
+                "left": 1120.390625
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 165.5234375,
+                "width": 145.875,
+                "height": 34,
+                "top": 165.5234375,
+                "right": 383.875,
+                "bottom": 199.5234375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:16:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 308.671875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 308.671875,
+                "right": 322.921875,
+                "bottom": 342.671875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 308.671875,
+                "width": 101.3125,
+                "height": 34,
+                "top": 308.671875,
+                "right": 1198,
+                "bottom": 342.671875,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 443.21875,
+                "width": 145.875,
+                "height": 34,
+                "top": 443.21875,
+                "right": 383.875,
+                "bottom": 477.21875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:15:12 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 586.3671875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 586.3671875,
+                "right": 322.921875,
+                "bottom": 620.3671875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 586.3671875,
+                "width": 101.3125,
+                "height": 34,
+                "top": 586.3671875,
+                "right": 1198,
+                "bottom": 620.3671875,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 756.7109375,
+                "width": 145.875,
+                "height": 34,
+                "top": 756.7109375,
+                "right": 383.875,
+                "bottom": 790.7109375,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": "fixture-take-1",
+          "held": [
+            "selectNewsTake"
+          ],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792318706784,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318735525,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318783055,
+              "mode": "hold"
+            }
+          ],
+          "transport": "Play"
+        },
+        {
+          "name": "reviewed-schedule-blurred",
+          "rawSha256": "4edc7679b62d783e5d9a42735ff07a4068a4c95dfd9d7f6af80df9bae155fffc",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 1085.375,
+              "y": 308.609375,
+              "width": 112.625,
+              "height": 34,
+              "top": 308.609375,
+              "right": 1198,
+              "bottom": 342.609375,
+              "left": 1085.375
+            },
+            "insideDrawer": false,
+            "name": "Clear selection",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": 205.9921875,
+                "width": 71.734375,
+                "height": 34,
+                "top": 205.9921875,
+                "right": 1198,
+                "bottom": 239.9921875,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Break active",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 956.4609375,
+                "y": 308.609375,
+                "width": 120.9140625,
+                "height": 34,
+                "top": 308.609375,
+                "right": 1077.375,
+                "bottom": 342.609375,
+                "left": 956.4609375
+              }
+            },
+            {
+              "name": "Clear selection",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": true,
+              "rect": {
+                "x": 1085.375,
+                "y": 308.609375,
+                "width": 112.625,
+                "height": 34,
+                "top": 308.609375,
+                "right": 1198,
+                "bottom": 342.609375,
+                "left": 1085.375
+              }
+            },
+            {
+              "name": "Cancel scheduled break",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 731.9609375,
+                "y": 385.9375,
+                "width": 165.1796875,
+                "height": 34,
+                "top": 385.9375,
+                "right": 897.140625,
+                "bottom": 419.9375,
+                "left": 731.9609375
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:17:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 579.6796875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 579.6796875,
+                "right": 322.921875,
+                "bottom": 613.6796875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 579.6796875,
+                "width": 101.3125,
+                "height": 34,
+                "top": 579.6796875,
+                "right": 1198,
+                "bottom": 613.6796875,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 714.2265625,
+                "width": 145.875,
+                "height": 34,
+                "top": 714.2265625,
+                "right": 383.875,
+                "bottom": 748.2265625,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:16:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 857.375,
+                "width": 84.921875,
+                "height": 34,
+                "top": 857.375,
+                "right": 322.921875,
+                "bottom": 891.375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Selected",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1120.390625,
+                "y": 857.375,
+                "width": 77.609375,
+                "height": 34,
+                "top": 857.375,
+                "right": 1198,
+                "bottom": 891.375,
+                "left": 1120.390625
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 991.921875,
+                "width": 145.875,
+                "height": 34,
+                "top": 991.921875,
+                "right": 383.875,
+                "bottom": 1025.921875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:15:12 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1135.0703125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 1135.0703125,
+                "right": 322.921875,
+                "bottom": 1169.0703125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 1135.0703125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 1135.0703125,
+                "right": 1198,
+                "bottom": 1169.0703125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1305.4140625,
+                "width": 145.875,
+                "height": 34,
+                "top": 1305.4140625,
+                "right": 383.875,
+                "bottom": 1339.4140625,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": "fixture-take-2",
+          "held": [],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792318706784,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318735525,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318783055,
+              "mode": "hold"
+            }
+          ],
+          "transport": "Play"
+        },
+        {
+          "name": "reviewed-schedule-failure-visible",
+          "rawSha256": "b3f552cd2282411c823d99bf84a513477d23479a007acbaf40a32bf04c348737",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 919.015625,
+              "y": 296.2890625,
+              "width": 158.359375,
+              "height": 34,
+              "top": 296.2890625,
+              "right": 1077.375,
+              "bottom": 330.2890625,
+              "left": 919.015625
+            },
+            "insideDrawer": false,
+            "name": "Schedule DJ break",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": 205.9921875,
+                "width": 71.734375,
+                "height": 34,
+                "top": 205.9921875,
+                "right": 1198,
+                "bottom": 239.9921875,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Schedule DJ break",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": true,
+              "rect": {
+                "x": 919.015625,
+                "y": 296.2890625,
+                "width": 158.359375,
+                "height": 34,
+                "top": 296.2890625,
+                "right": 1077.375,
+                "bottom": 330.2890625,
+                "left": 919.015625
+              }
+            },
+            {
+              "name": "Clear selection",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1085.375,
+                "y": 296.2890625,
+                "width": 112.625,
+                "height": 34,
+                "top": 296.2890625,
+                "right": 1198,
+                "bottom": 330.2890625,
+                "left": 1085.375
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:17:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 574.828125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 574.828125,
+                "right": 322.921875,
+                "bottom": 608.828125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 574.828125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 574.828125,
+                "right": 1198,
+                "bottom": 608.828125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 709.375,
+                "width": 145.875,
+                "height": 34,
+                "top": 709.375,
+                "right": 383.875,
+                "bottom": 743.375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:16:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 852.5234375,
+                "width": 84.921875,
+                "height": 34,
+                "top": 852.5234375,
+                "right": 322.921875,
+                "bottom": 886.5234375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Selected",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1120.390625,
+                "y": 852.5234375,
+                "width": 77.609375,
+                "height": 34,
+                "top": 852.5234375,
+                "right": 1198,
+                "bottom": 886.5234375,
+                "left": 1120.390625
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 987.0703125,
+                "width": 145.875,
+                "height": 34,
+                "top": 987.0703125,
+                "right": 383.875,
+                "bottom": 1021.0703125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:15:12 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1130.21875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 1130.21875,
+                "right": 322.921875,
+                "bottom": 1164.21875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 1130.21875,
+                "width": 101.3125,
+                "height": 34,
+                "top": 1130.21875,
+                "right": 1198,
+                "bottom": 1164.21875,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1300.5625,
+                "width": 145.875,
+                "height": 34,
+                "top": 1300.5625,
+                "right": 383.875,
+                "bottom": 1334.5625,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [
+            {
+              "rect": {
+                "x": 238,
+                "y": -143.5,
+                "width": 960,
+                "height": 60,
+                "top": -143.5,
+                "right": 1198,
+                "bottom": -83.5,
+                "left": 238
+              },
+              "error": "getLocalState unavailable.",
+              "status": "",
+              "button": {
+                "name": "Try again",
+                "disabled": false,
+                "busy": null,
+                "ariaDisabled": null,
+                "type": "button",
+                "active": false,
+                "translate": "none",
+                "insideLiveRegion": false
+              }
+            },
+            {
+              "rect": {
+                "x": 919.015625,
+                "y": 342.2890625,
+                "width": 278.984375,
+                "height": 45.796875,
+                "top": 342.2890625,
+                "right": 1198,
+                "bottom": 388.0859375,
+                "left": 919.015625
+              },
+              "error": "getLocalState unavailable.",
+              "button": null
+            }
+          ],
+          "selectedTakeId": "fixture-take-2",
+          "held": [],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792318706784,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318735525,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318783055,
+              "mode": "hold"
+            }
+          ],
+          "transport": "Play"
+        },
+        {
+          "name": "reviewed-schedule-pending",
+          "rawSha256": "f0a4f65e3a77b1882fcda72ccc1d814094b31d71ead089ad64c47534c7afb2aa",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 952.6484375,
+              "y": 308.609375,
+              "width": 124.7265625,
+              "height": 34,
+              "top": 308.609375,
+              "right": 1077.375,
+              "bottom": 342.609375,
+              "left": 952.6484375
+            },
+            "insideDrawer": false,
+            "name": "Scheduling\u2026",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": 205.9921875,
+                "width": 71.734375,
+                "height": 34,
+                "top": 205.9921875,
+                "right": 1198,
+                "bottom": 239.9921875,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Scheduling\u2026",
+              "disabled": false,
+              "ariaDisabled": "true",
+              "busy": "true",
+              "active": true,
+              "rect": {
+                "x": 952.6484375,
+                "y": 308.609375,
+                "width": 124.7265625,
+                "height": 34,
+                "top": 308.609375,
+                "right": 1077.375,
+                "bottom": 342.609375,
+                "left": 952.6484375
+              }
+            },
+            {
+              "name": "Clear selection",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1085.375,
+                "y": 308.609375,
+                "width": 112.625,
+                "height": 34,
+                "top": 308.609375,
+                "right": 1198,
+                "bottom": 342.609375,
+                "left": 1085.375
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:17:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 521.6796875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 521.6796875,
+                "right": 322.921875,
+                "bottom": 555.6796875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 521.6796875,
+                "width": 101.3125,
+                "height": 34,
+                "top": 521.6796875,
+                "right": 1198,
+                "bottom": 555.6796875,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 656.2265625,
+                "width": 145.875,
+                "height": 34,
+                "top": 656.2265625,
+                "right": 383.875,
+                "bottom": 690.2265625,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:16:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 799.375,
+                "width": 84.921875,
+                "height": 34,
+                "top": 799.375,
+                "right": 322.921875,
+                "bottom": 833.375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Selected",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1120.390625,
+                "y": 799.375,
+                "width": 77.609375,
+                "height": 34,
+                "top": 799.375,
+                "right": 1198,
+                "bottom": 833.375,
+                "left": 1120.390625
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 933.921875,
+                "width": 145.875,
+                "height": 34,
+                "top": 933.921875,
+                "right": 383.875,
+                "bottom": 967.921875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:15:12 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1077.0703125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 1077.0703125,
+                "right": 322.921875,
+                "bottom": 1111.0703125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 1077.0703125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 1077.0703125,
+                "right": 1198,
+                "bottom": 1111.0703125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1247.4140625,
+                "width": 145.875,
+                "height": 34,
+                "top": 1247.4140625,
+                "right": 383.875,
+                "bottom": 1281.4140625,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": "fixture-take-2",
+          "held": [
+            "getLocalState",
+            "getLocalState"
+          ],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792318706784,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318735525,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318783055,
+              "mode": "hold"
+            }
+          ],
+          "transport": "Play"
+        },
+        {
+          "name": "reviewed-schedule-success-focus",
+          "rawSha256": "a4c93db403a9954152ba5b2f8839288d9a4f211cda6af5ec011cc9c9e98b2089",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 956.4609375,
+              "y": 308.609375,
+              "width": 120.9140625,
+              "height": 34,
+              "top": 308.609375,
+              "right": 1077.375,
+              "bottom": 342.609375,
+              "left": 956.4609375
+            },
+            "insideDrawer": false,
+            "name": "Break active",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": 205.9921875,
+                "width": 71.734375,
+                "height": 34,
+                "top": 205.9921875,
+                "right": 1198,
+                "bottom": 239.9921875,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Break active",
+              "disabled": false,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": true,
+              "rect": {
+                "x": 956.4609375,
+                "y": 308.609375,
+                "width": 120.9140625,
+                "height": 34,
+                "top": 308.609375,
+                "right": 1077.375,
+                "bottom": 342.609375,
+                "left": 956.4609375
+              }
+            },
+            {
+              "name": "Clear selection",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1085.375,
+                "y": 308.609375,
+                "width": 112.625,
+                "height": 34,
+                "top": 308.609375,
+                "right": 1198,
+                "bottom": 342.609375,
+                "left": 1085.375
+              }
+            },
+            {
+              "name": "Cancel scheduled break",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 731.9609375,
+                "y": 385.9375,
+                "width": 165.1796875,
+                "height": 34,
+                "top": 385.9375,
+                "right": 897.140625,
+                "bottom": 419.9375,
+                "left": 731.9609375
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:17:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 579.6796875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 579.6796875,
+                "right": 322.921875,
+                "bottom": 613.6796875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 579.6796875,
+                "width": 101.3125,
+                "height": 34,
+                "top": 579.6796875,
+                "right": 1198,
+                "bottom": 613.6796875,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 714.2265625,
+                "width": 145.875,
+                "height": 34,
+                "top": 714.2265625,
+                "right": 383.875,
+                "bottom": 748.2265625,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:16:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 857.375,
+                "width": 84.921875,
+                "height": 34,
+                "top": 857.375,
+                "right": 322.921875,
+                "bottom": 891.375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Selected",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1120.390625,
+                "y": 857.375,
+                "width": 77.609375,
+                "height": 34,
+                "top": 857.375,
+                "right": 1198,
+                "bottom": 891.375,
+                "left": 1120.390625
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 991.921875,
+                "width": 145.875,
+                "height": 34,
+                "top": 991.921875,
+                "right": 383.875,
+                "bottom": 1025.921875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:15:12 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1135.0703125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 1135.0703125,
+                "right": 322.921875,
+                "bottom": 1169.0703125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 1135.0703125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 1135.0703125,
+                "right": 1198,
+                "bottom": 1169.0703125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1305.4140625,
+                "width": 145.875,
+                "height": 34,
+                "top": 1305.4140625,
+                "right": 383.875,
+                "bottom": 1339.4140625,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": "fixture-take-2",
+          "held": [],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792318706784,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318735525,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318783055,
+              "mode": "hold"
+            }
+          ],
+          "transport": "Play"
+        },
+        {
+          "name": "reviewed-select-pending",
+          "rawSha256": "77eb8bf8ed980c801b38cb13f6cd585e43a413c5e8d6f3da3953b97464c509c9",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 1106.890625,
+              "y": 352.4375,
+              "width": 91.109375,
+              "height": 34,
+              "top": 352.4375,
+              "right": 1198,
+              "bottom": 386.4375,
+              "left": 1106.890625
+            },
+            "insideDrawer": false,
+            "name": "Selecting\u2026",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": 79.6953125,
+                "width": 71.734375,
+                "height": 34,
+                "top": 79.6953125,
+                "right": 1198,
+                "bottom": 113.6953125,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Schedule DJ break",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 908.375,
+                "y": 170.7421875,
+                "width": 158.359375,
+                "height": 34,
+                "top": 170.7421875,
+                "right": 1066.734375,
+                "bottom": 204.7421875,
+                "left": 908.375
+              }
+            },
+            {
+              "name": "No take selected",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1074.734375,
+                "y": 170.7421875,
+                "width": 123.265625,
+                "height": 34,
+                "top": 170.7421875,
+                "right": 1198,
+                "bottom": 204.7421875,
+                "left": 1074.734375
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:17:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 352.4375,
+                "width": 84.921875,
+                "height": 34,
+                "top": 352.4375,
+                "right": 322.921875,
+                "bottom": 386.4375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Selecting\u2026",
+              "disabled": false,
+              "ariaDisabled": "true",
+              "busy": "true",
+              "active": true,
+              "rect": {
+                "x": 1106.890625,
+                "y": 352.4375,
+                "width": 91.109375,
+                "height": 34,
+                "top": 352.4375,
+                "right": 1198,
+                "bottom": 386.4375,
+                "left": 1106.890625
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 486.984375,
+                "width": 145.875,
+                "height": 34,
+                "top": 486.984375,
+                "right": 383.875,
+                "bottom": 520.984375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:16:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 630.1328125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 630.1328125,
+                "right": 322.921875,
+                "bottom": 664.1328125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 630.1328125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 630.1328125,
+                "right": 1198,
+                "bottom": 664.1328125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 764.6796875,
+                "width": 145.875,
+                "height": 34,
+                "top": 764.6796875,
+                "right": 383.875,
+                "bottom": 798.6796875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:15:12 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 907.828125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 907.828125,
+                "right": 322.921875,
+                "bottom": 941.828125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 907.828125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 907.828125,
+                "right": 1198,
+                "bottom": 941.828125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1078.171875,
+                "width": 145.875,
+                "height": 34,
+                "top": 1078.171875,
+                "right": 383.875,
+                "bottom": 1112.171875,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": null,
+          "held": [
+            "selectNewsTake"
+          ],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792318706784,
+              "mode": "hold"
+            }
+          ],
+          "transport": "Play"
+        },
+        {
+          "name": "reviewed-selected-blurred",
+          "rawSha256": "3522936038200e8418050a1fb031f6ad383bab8d9cf405422dde5f7d65b92efe",
+          "focus": {
+            "tag": "SUMMARY",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 238,
+              "y": 485.2265625,
+              "width": 960,
+              "height": 28.5,
+              "top": 485.2265625,
+              "right": 1198,
+              "bottom": 513.7265625,
+              "left": 238
+            },
+            "insideDrawer": false,
+            "name": "Saved mood, settings, and sources",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": 79.4921875,
+                "width": 71.734375,
+                "height": 34,
+                "top": 79.4921875,
+                "right": 1198,
+                "bottom": 113.4921875,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Schedule DJ break",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 919.015625,
+                "y": 182.109375,
+                "width": 158.359375,
+                "height": 34,
+                "top": 182.109375,
+                "right": 1077.375,
+                "bottom": 216.109375,
+                "left": 919.015625
+              }
+            },
+            {
+              "name": "Clear selection",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1085.375,
+                "y": 182.109375,
+                "width": 112.625,
+                "height": 34,
+                "top": 182.109375,
+                "right": 1198,
+                "bottom": 216.109375,
+                "left": 1085.375
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:17:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 395.1796875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 395.1796875,
+                "right": 322.921875,
+                "bottom": 429.1796875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Selected",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1120.390625,
+                "y": 395.1796875,
+                "width": 77.609375,
+                "height": 34,
+                "top": 395.1796875,
+                "right": 1198,
+                "bottom": 429.1796875,
+                "left": 1120.390625
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 529.7265625,
+                "width": 145.875,
+                "height": 34,
+                "top": 529.7265625,
+                "right": 383.875,
+                "bottom": 563.7265625,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:16:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 672.875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 672.875,
+                "right": 322.921875,
+                "bottom": 706.875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 672.875,
+                "width": 101.3125,
+                "height": 34,
+                "top": 672.875,
+                "right": 1198,
+                "bottom": 706.875,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 807.421875,
+                "width": 145.875,
+                "height": 34,
+                "top": 807.421875,
+                "right": 383.875,
+                "bottom": 841.421875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:15:12 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 950.5703125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 950.5703125,
+                "right": 322.921875,
+                "bottom": 984.5703125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 950.5703125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 950.5703125,
+                "right": 1198,
+                "bottom": 984.5703125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1120.9140625,
+                "width": 145.875,
+                "height": 34,
+                "top": 1120.9140625,
+                "right": 383.875,
+                "bottom": 1154.9140625,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": "fixture-take-1",
+          "held": [],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792318706784,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318735525,
+              "mode": "hold"
+            }
+          ],
+          "transport": "Play"
+        },
+        {
+          "name": "reviewed-selected-focus",
+          "rawSha256": "517aa805149650bc6e617519194e9ccaed4b1f8cf3baaab8a04fe051a4bb2199",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 1120.390625,
+              "y": 395.1796875,
+              "width": 77.609375,
+              "height": 34,
+              "top": 395.1796875,
+              "right": 1198,
+              "bottom": 429.1796875,
+              "left": 1120.390625
+            },
+            "insideDrawer": false,
+            "name": "Selected",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": 79.4921875,
+                "width": 71.734375,
+                "height": 34,
+                "top": 79.4921875,
+                "right": 1198,
+                "bottom": 113.4921875,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Schedule DJ break",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 919.015625,
+                "y": 182.109375,
+                "width": 158.359375,
+                "height": 34,
+                "top": 182.109375,
+                "right": 1077.375,
+                "bottom": 216.109375,
+                "left": 919.015625
+              }
+            },
+            {
+              "name": "Clear selection",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1085.375,
+                "y": 182.109375,
+                "width": 112.625,
+                "height": 34,
+                "top": 182.109375,
+                "right": 1198,
+                "bottom": 216.109375,
+                "left": 1085.375
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:17:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 395.1796875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 395.1796875,
+                "right": 322.921875,
+                "bottom": 429.1796875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Selected",
+              "disabled": false,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": true,
+              "rect": {
+                "x": 1120.390625,
+                "y": 395.1796875,
+                "width": 77.609375,
+                "height": 34,
+                "top": 395.1796875,
+                "right": 1198,
+                "bottom": 429.1796875,
+                "left": 1120.390625
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 529.7265625,
+                "width": 145.875,
+                "height": 34,
+                "top": 529.7265625,
+                "right": 383.875,
+                "bottom": 563.7265625,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:16:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 672.875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 672.875,
+                "right": 322.921875,
+                "bottom": 706.875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 672.875,
+                "width": 101.3125,
+                "height": 34,
+                "top": 672.875,
+                "right": 1198,
+                "bottom": 706.875,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 807.421875,
+                "width": 145.875,
+                "height": 34,
+                "top": 807.421875,
+                "right": 383.875,
+                "bottom": 841.421875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:15:12 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 950.5703125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 950.5703125,
+                "right": 322.921875,
+                "bottom": 984.5703125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 950.5703125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 950.5703125,
+                "right": 1198,
+                "bottom": 984.5703125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1120.9140625,
+                "width": 145.875,
+                "height": 34,
+                "top": 1120.9140625,
+                "right": 383.875,
+                "bottom": 1154.9140625,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": "fixture-take-1",
+          "held": [],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792318706784,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318735525,
+              "mode": "hold"
+            }
+          ],
+          "transport": "Play"
+        },
+        {
+          "name": "reviewed-selection-blocks-schedule",
+          "rawSha256": "f9b73a6abea2a72cda9af1147bd52d05040abb7a4994680139eb51b988927960",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 1106.890625,
+              "y": 308.671875,
+              "width": 91.109375,
+              "height": 34,
+              "top": 308.671875,
+              "right": 1198,
+              "bottom": 342.671875,
+              "left": 1106.890625
+            },
+            "insideDrawer": false,
+            "name": "Selecting\u2026",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": -316.5078125,
+                "width": 71.734375,
+                "height": 34,
+                "top": -316.5078125,
+                "right": 1198,
+                "bottom": -282.5078125,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Schedule DJ break",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 919.015625,
+                "y": -213.890625,
+                "width": 158.359375,
+                "height": 34,
+                "top": -213.890625,
+                "right": 1077.375,
+                "bottom": -179.890625,
+                "left": 919.015625
+              }
+            },
+            {
+              "name": "Clear selection",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1085.375,
+                "y": -213.890625,
+                "width": 112.625,
+                "height": 34,
+                "top": -213.890625,
+                "right": 1198,
+                "bottom": -179.890625,
+                "left": 1085.375
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:17:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 30.9765625,
+                "width": 84.921875,
+                "height": 34,
+                "top": 30.9765625,
+                "right": 322.921875,
+                "bottom": 64.9765625,
+                "left": 238
+              }
+            },
+            {
+              "name": "Selected",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1120.390625,
+                "y": 30.9765625,
+                "width": 77.609375,
+                "height": 34,
+                "top": 30.9765625,
+                "right": 1198,
+                "bottom": 64.9765625,
+                "left": 1120.390625
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 165.5234375,
+                "width": 145.875,
+                "height": 34,
+                "top": 165.5234375,
+                "right": 383.875,
+                "bottom": 199.5234375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:16:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 308.671875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 308.671875,
+                "right": 322.921875,
+                "bottom": 342.671875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Selecting\u2026",
+              "disabled": false,
+              "ariaDisabled": "true",
+              "busy": "true",
+              "active": true,
+              "rect": {
+                "x": 1106.890625,
+                "y": 308.671875,
+                "width": 91.109375,
+                "height": 34,
+                "top": 308.671875,
+                "right": 1198,
+                "bottom": 342.671875,
+                "left": 1106.890625
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 443.21875,
+                "width": 145.875,
+                "height": 34,
+                "top": 443.21875,
+                "right": 383.875,
+                "bottom": 477.21875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:15:12 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 586.3671875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 586.3671875,
+                "right": 322.921875,
+                "bottom": 620.3671875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 586.3671875,
+                "width": 101.3125,
+                "height": 34,
+                "top": 586.3671875,
+                "right": 1198,
+                "bottom": 620.3671875,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 756.7109375,
+                "width": 145.875,
+                "height": 34,
+                "top": 756.7109375,
+                "right": 383.875,
+                "bottom": 790.7109375,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": "fixture-take-1",
+          "held": [
+            "selectNewsTake"
+          ],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792318706784,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318735525,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318783055,
+              "mode": "hold"
+            }
+          ],
+          "transport": "Play"
+        },
+        {
+          "name": "reviewed-selection-readback",
+          "rawSha256": "0fffef90d2064a0cf84ea75e48d0f56b75c5b30494382fc0f85fc429639c22e9",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 1106.890625,
+              "y": 352.4375,
+              "width": 91.109375,
+              "height": 34,
+              "top": 352.4375,
+              "right": 1198,
+              "bottom": 386.4375,
+              "left": 1106.890625
+            },
+            "insideDrawer": false,
+            "name": "Selecting\u2026",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": 79.6953125,
+                "width": 71.734375,
+                "height": 34,
+                "top": 79.6953125,
+                "right": 1198,
+                "bottom": 113.6953125,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Schedule DJ break",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 908.375,
+                "y": 170.7421875,
+                "width": 158.359375,
+                "height": 34,
+                "top": 170.7421875,
+                "right": 1066.734375,
+                "bottom": 204.7421875,
+                "left": 908.375
+              }
+            },
+            {
+              "name": "No take selected",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1074.734375,
+                "y": 170.7421875,
+                "width": 123.265625,
+                "height": 34,
+                "top": 170.7421875,
+                "right": 1198,
+                "bottom": 204.7421875,
+                "left": 1074.734375
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:17:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 352.4375,
+                "width": 84.921875,
+                "height": 34,
+                "top": 352.4375,
+                "right": 322.921875,
+                "bottom": 386.4375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Selecting\u2026",
+              "disabled": false,
+              "ariaDisabled": "true",
+              "busy": "true",
+              "active": true,
+              "rect": {
+                "x": 1106.890625,
+                "y": 352.4375,
+                "width": 91.109375,
+                "height": 34,
+                "top": 352.4375,
+                "right": 1198,
+                "bottom": 386.4375,
+                "left": 1106.890625
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 486.984375,
+                "width": 145.875,
+                "height": 34,
+                "top": 486.984375,
+                "right": 383.875,
+                "bottom": 520.984375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:16:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 630.1328125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 630.1328125,
+                "right": 322.921875,
+                "bottom": 664.1328125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 630.1328125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 630.1328125,
+                "right": 1198,
+                "bottom": 664.1328125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 764.6796875,
+                "width": 145.875,
+                "height": 34,
+                "top": 764.6796875,
+                "right": 383.875,
+                "bottom": 798.6796875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:15:12 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 907.828125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 907.828125,
+                "right": 322.921875,
+                "bottom": 941.828125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 907.828125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 907.828125,
+                "right": 1198,
+                "bottom": 941.828125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1078.171875,
+                "width": 145.875,
+                "height": 34,
+                "top": 1078.171875,
+                "right": 383.875,
+                "bottom": 1112.171875,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": "fixture-take-1",
+          "held": [
+            "getPreparedNews"
+          ],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792318706784,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318735525,
+              "mode": "hold"
+            }
+          ],
+          "transport": "Play"
+        },
+        {
+          "name": "reviewed-stop-body",
+          "rawSha256": "a8a282ecc7aa4c0f10912edb84fd69fdbf84bcab50b647a5da8260b2553c6e31",
+          "focus": {
+            "tag": "BODY",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 720,
+              "top": 0,
+              "right": 1280,
+              "bottom": 720,
+              "left": 0
+            },
+            "insideDrawer": false,
+            "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedNews bucketSetup profileMy room \u00b7 ActiveSave as newAdvanced room optionsMake this p",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": 140.1953125,
+                "width": 71.734375,
+                "height": 34,
+                "top": 140.1953125,
+                "right": 1198,
+                "bottom": 174.1953125,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Schedule DJ break",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 908.375,
+                "y": 231.2421875,
+                "width": 158.359375,
+                "height": 34,
+                "top": 231.2421875,
+                "right": 1066.734375,
+                "bottom": 265.2421875,
+                "left": 908.375
+              }
+            },
+            {
+              "name": "No take selected",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1074.734375,
+                "y": 231.2421875,
+                "width": 123.265625,
+                "height": 34,
+                "top": 231.2421875,
+                "right": 1198,
+                "bottom": 265.2421875,
+                "left": 1074.734375
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:17:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 369.140625,
+                "width": 84.921875,
+                "height": 34,
+                "top": 369.140625,
+                "right": 322.921875,
+                "bottom": 403.140625,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 369.140625,
+                "width": 101.3125,
+                "height": 34,
+                "top": 369.140625,
+                "right": 1198,
+                "bottom": 403.140625,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 503.6875,
+                "width": 145.875,
+                "height": 34,
+                "top": 503.6875,
+                "right": 383.875,
+                "bottom": 537.6875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:16:12 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 646.8359375,
+                "width": 84.921875,
+                "height": 34,
+                "top": 646.8359375,
+                "right": 322.921875,
+                "bottom": 680.8359375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 646.8359375,
+                "width": 101.3125,
+                "height": 34,
+                "top": 646.8359375,
+                "right": 1198,
+                "bottom": 680.8359375,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 781.3828125,
+                "width": 145.875,
+                "height": 34,
+                "top": 781.3828125,
+                "right": 383.875,
+                "bottom": 815.3828125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:15:12 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 924.53125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 924.53125,
+                "right": 322.921875,
+                "bottom": 958.53125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 924.53125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 924.53125,
+                "right": 1198,
+                "bottom": 958.53125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1094.875,
+                "width": 145.875,
+                "height": 34,
+                "top": 1094.875,
+                "right": 383.875,
+                "bottom": 1128.875,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": null,
+          "held": [],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792318706784,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318735525,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318783055,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318878877,
+              "mode": "hold"
+            },
+            {
+              "name": "selectNewsTake",
+              "at": 1792318902415,
+              "mode": "normal"
+            }
+          ],
+          "transport": "Play"
+        }
+      ],
+      "finalStopRetention": [
+        {
+          "name": "stop-final-scheduled",
+          "rawSha256": "6b17ae6aaac99ddc0b2a9b33d0f8ba513e6a317d0cfb2febb32fcc967c2660c6",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 956.4609375,
+              "y": 506.109375,
+              "width": 120.9140625,
+              "height": 34,
+              "top": 506.109375,
+              "right": 1077.375,
+              "bottom": 540.109375,
+              "left": 956.4609375
+            },
+            "insideDrawer": false,
+            "name": "Break active",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": 403.4921875,
+                "width": 71.734375,
+                "height": 34,
+                "top": 403.4921875,
+                "right": 1198,
+                "bottom": 437.4921875,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Break active",
+              "disabled": false,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": true,
+              "rect": {
+                "x": 956.4609375,
+                "y": 506.109375,
+                "width": 120.9140625,
+                "height": 34,
+                "top": 506.109375,
+                "right": 1077.375,
+                "bottom": 540.109375,
+                "left": 956.4609375
+              }
+            },
+            {
+              "name": "Clear selection",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1085.375,
+                "y": 506.109375,
+                "width": 112.625,
+                "height": 34,
+                "top": 506.109375,
+                "right": 1198,
+                "bottom": 540.109375,
+                "left": 1085.375
+              }
+            },
+            {
+              "name": "Cancel scheduled break",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 734.3828125,
+                "y": 583.4375,
+                "width": 165.1796875,
+                "height": 34,
+                "top": 583.4375,
+                "right": 899.5625,
+                "bottom": 617.4375,
+                "left": 734.3828125
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:22:29 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 777.1796875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 777.1796875,
+                "right": 322.921875,
+                "bottom": 811.1796875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 777.1796875,
+                "width": 101.3125,
+                "height": 34,
+                "top": 777.1796875,
+                "right": 1198,
+                "bottom": 811.1796875,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 911.7265625,
+                "width": 145.875,
+                "height": 34,
+                "top": 911.7265625,
+                "right": 383.875,
+                "bottom": 945.7265625,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:21:29 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1054.875,
+                "width": 84.921875,
+                "height": 34,
+                "top": 1054.875,
+                "right": 322.921875,
+                "bottom": 1088.875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Selected",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1120.390625,
+                "y": 1054.875,
+                "width": 77.609375,
+                "height": 34,
+                "top": 1054.875,
+                "right": 1198,
+                "bottom": 1088.875,
+                "left": 1120.390625
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1189.421875,
+                "width": 145.875,
+                "height": 34,
+                "top": 1189.421875,
+                "right": 383.875,
+                "bottom": 1223.421875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:20:29 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1332.5703125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 1332.5703125,
+                "right": 322.921875,
+                "bottom": 1366.5703125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 1332.5703125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 1332.5703125,
+                "right": 1198,
+                "bottom": 1366.5703125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1502.9140625,
+                "width": 145.875,
+                "height": 34,
+                "top": 1502.9140625,
+                "right": 383.875,
+                "bottom": 1536.9140625,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": "fixture-take-2",
+          "held": [],
+          "selectionCalls": [],
+          "transport": "Play"
+        },
+        {
+          "name": "stop-final-cleared-active",
+          "rawSha256": "cf82c37c0285187ff40d140cc5f85e758fb3da27e26a2f186a9dc4c603f8ab1e",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 1074.734375,
+              "y": 207.2421875,
+              "width": 123.265625,
+              "height": 34,
+              "top": 207.2421875,
+              "right": 1198,
+              "bottom": 241.2421875,
+              "left": 1074.734375
+            },
+            "insideDrawer": false,
+            "name": "No take selected",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": 116.1953125,
+                "width": 71.734375,
+                "height": 34,
+                "top": 116.1953125,
+                "right": 1198,
+                "bottom": 150.1953125,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Schedule DJ break",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 908.375,
+                "y": 207.2421875,
+                "width": 158.359375,
+                "height": 34,
+                "top": 207.2421875,
+                "right": 1066.734375,
+                "bottom": 241.2421875,
+                "left": 908.375
+              }
+            },
+            {
+              "name": "No take selected",
+              "disabled": false,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": true,
+              "rect": {
+                "x": 1074.734375,
+                "y": 207.2421875,
+                "width": 123.265625,
+                "height": 34,
+                "top": 207.2421875,
+                "right": 1198,
+                "bottom": 241.2421875,
+                "left": 1074.734375
+              }
+            },
+            {
+              "name": "Cancel scheduled break",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 734.3828125,
+                "y": 272.9921875,
+                "width": 165.1796875,
+                "height": 34,
+                "top": 272.9921875,
+                "right": 899.5625,
+                "bottom": 306.9921875,
+                "left": 734.3828125
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:22:29 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 403.140625,
+                "width": 84.921875,
+                "height": 34,
+                "top": 403.140625,
+                "right": 322.921875,
+                "bottom": 437.140625,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 403.140625,
+                "width": 101.3125,
+                "height": 34,
+                "top": 403.140625,
+                "right": 1198,
+                "bottom": 437.140625,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 537.6875,
+                "width": 145.875,
+                "height": 34,
+                "top": 537.6875,
+                "right": 383.875,
+                "bottom": 571.6875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:21:29 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 680.8359375,
+                "width": 84.921875,
+                "height": 34,
+                "top": 680.8359375,
+                "right": 322.921875,
+                "bottom": 714.8359375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 680.8359375,
+                "width": 101.3125,
+                "height": 34,
+                "top": 680.8359375,
+                "right": 1198,
+                "bottom": 714.8359375,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 815.3828125,
+                "width": 145.875,
+                "height": 34,
+                "top": 815.3828125,
+                "right": 383.875,
+                "bottom": 849.3828125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:20:29 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 958.53125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 958.53125,
+                "right": 322.921875,
+                "bottom": 992.53125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 958.53125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 958.53125,
+                "right": 1198,
+                "bottom": 992.53125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1128.875,
+                "width": 145.875,
+                "height": 34,
+                "top": 1128.875,
+                "right": 383.875,
+                "bottom": 1162.875,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": null,
+          "held": [],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792319024480,
+              "mode": "normal"
+            }
+          ],
+          "transport": "Play"
+        },
+        {
+          "name": "stop-final-stopped-focus",
+          "rawSha256": "c6e95b3d7fb32491d0749023a1f0145932aa524f761875d026f5882ac0f74289",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 354.203125,
+              "y": 272.9921875,
+              "width": 110.359375,
+              "height": 34,
+              "top": 272.9921875,
+              "right": 464.5625,
+              "bottom": 306.9921875,
+              "left": 354.203125
+            },
+            "insideDrawer": false,
+            "name": "Break stopped",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": 116.1953125,
+                "width": 71.734375,
+                "height": 34,
+                "top": 116.1953125,
+                "right": 1198,
+                "bottom": 150.1953125,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Schedule DJ break",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 908.375,
+                "y": 207.2421875,
+                "width": 158.359375,
+                "height": 34,
+                "top": 207.2421875,
+                "right": 1066.734375,
+                "bottom": 241.2421875,
+                "left": 908.375
+              }
+            },
+            {
+              "name": "No take selected",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1074.734375,
+                "y": 207.2421875,
+                "width": 123.265625,
+                "height": 34,
+                "top": 207.2421875,
+                "right": 1198,
+                "bottom": 241.2421875,
+                "left": 1074.734375
+              }
+            },
+            {
+              "name": "Break stopped",
+              "disabled": false,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": true,
+              "rect": {
+                "x": 354.203125,
+                "y": 272.9921875,
+                "width": 110.359375,
+                "height": 34,
+                "top": 272.9921875,
+                "right": 464.5625,
+                "bottom": 306.9921875,
+                "left": 354.203125
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:22:29 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 403.140625,
+                "width": 84.921875,
+                "height": 34,
+                "top": 403.140625,
+                "right": 322.921875,
+                "bottom": 437.140625,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 403.140625,
+                "width": 101.3125,
+                "height": 34,
+                "top": 403.140625,
+                "right": 1198,
+                "bottom": 437.140625,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 537.6875,
+                "width": 145.875,
+                "height": 34,
+                "top": 537.6875,
+                "right": 383.875,
+                "bottom": 571.6875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:21:29 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 680.8359375,
+                "width": 84.921875,
+                "height": 34,
+                "top": 680.8359375,
+                "right": 322.921875,
+                "bottom": 714.8359375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 680.8359375,
+                "width": 101.3125,
+                "height": 34,
+                "top": 680.8359375,
+                "right": 1198,
+                "bottom": 714.8359375,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 815.3828125,
+                "width": 145.875,
+                "height": 34,
+                "top": 815.3828125,
+                "right": 383.875,
+                "bottom": 849.3828125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:20:29 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 958.53125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 958.53125,
+                "right": 322.921875,
+                "bottom": 992.53125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 958.53125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 958.53125,
+                "right": 1198,
+                "bottom": 992.53125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1128.875,
+                "width": 145.875,
+                "height": 34,
+                "top": 1128.875,
+                "right": 383.875,
+                "bottom": 1162.875,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": null,
+          "held": [],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792319024480,
+              "mode": "normal"
+            }
+          ],
+          "transport": "Play"
+        },
+        {
+          "name": "stop-final-blurred",
+          "rawSha256": "780bd7352d6a7cc4144fec329f5d272380a3a1c995ed7f75e729a9813953f240",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 238,
+              "y": 345.140625,
+              "width": 84.921875,
+              "height": 34,
+              "top": 345.140625,
+              "right": 322.921875,
+              "bottom": 379.140625,
+              "left": 238
+            },
+            "insideDrawer": false,
+            "name": "Audition take from 10/18/2026, 12:22:29 PM",
+            "type": null,
+            "role": null
+          },
+          "controls": [
+            {
+              "name": "Refresh",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1126.265625,
+                "y": 116.1953125,
+                "width": 71.734375,
+                "height": 34,
+                "top": 116.1953125,
+                "right": 1198,
+                "bottom": 150.1953125,
+                "left": 1126.265625
+              }
+            },
+            {
+              "name": "Schedule DJ break",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 908.375,
+                "y": 207.2421875,
+                "width": 158.359375,
+                "height": 34,
+                "top": 207.2421875,
+                "right": 1066.734375,
+                "bottom": 241.2421875,
+                "left": 908.375
+              }
+            },
+            {
+              "name": "No take selected",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1074.734375,
+                "y": 207.2421875,
+                "width": 123.265625,
+                "height": 34,
+                "top": 207.2421875,
+                "right": 1198,
+                "bottom": 241.2421875,
+                "left": 1074.734375
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:22:29 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": true,
+              "rect": {
+                "x": 238,
+                "y": 345.140625,
+                "width": 84.921875,
+                "height": 34,
+                "top": 345.140625,
+                "right": 322.921875,
+                "bottom": 379.140625,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 345.140625,
+                "width": 101.3125,
+                "height": 34,
+                "top": 345.140625,
+                "right": 1198,
+                "bottom": 379.140625,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 479.6875,
+                "width": 145.875,
+                "height": 34,
+                "top": 479.6875,
+                "right": 383.875,
+                "bottom": 513.6875,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:21:29 PM",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 622.8359375,
+                "width": 84.921875,
+                "height": 34,
+                "top": 622.8359375,
+                "right": 322.921875,
+                "bottom": 656.8359375,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 622.8359375,
+                "width": 101.3125,
+                "height": 34,
+                "top": 622.8359375,
+                "right": 1198,
+                "bottom": 656.8359375,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 757.3828125,
+                "width": 145.875,
+                "height": 34,
+                "top": 757.3828125,
+                "right": 383.875,
+                "bottom": 791.3828125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Audition take from 10/18/2026, 12:20:29 PM",
+              "disabled": true,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 900.53125,
+                "width": 84.921875,
+                "height": 34,
+                "top": 900.53125,
+                "right": 322.921875,
+                "bottom": 934.53125,
+                "left": 238
+              }
+            },
+            {
+              "name": "Use this take",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 1096.6875,
+                "y": 900.53125,
+                "width": 101.3125,
+                "height": 34,
+                "top": 900.53125,
+                "right": 1198,
+                "bottom": 934.53125,
+                "left": 1096.6875
+              }
+            },
+            {
+              "name": "Load script into draft",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "active": false,
+              "rect": {
+                "x": 238,
+                "y": 1070.875,
+                "width": 145.875,
+                "height": 34,
+                "top": 1070.875,
+                "right": 383.875,
+                "bottom": 1104.875,
+                "left": 238
+              }
+            }
+          ],
+          "notices": [],
+          "selectedTakeId": null,
+          "held": [],
+          "selectionCalls": [
+            {
+              "name": "selectNewsTake",
+              "at": 1792319024480,
+              "mode": "normal"
+            }
+          ],
+          "transport": "Play"
+        }
+      ]
+    }
+  },
+  "sourceHashes": {
+    "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": "8378d2191ac380f10bb63384fad4bb90e846320e0543187f86b72b06c512404c",
+    "src/renderer/pages/Stations/components/PreparedTakes.styles.css": "c806e6a76dde1eedb5ade89d9c48318d4e6d081af268d155a8934f29504cfc4b",
+    "src/renderer/pages/Stations/Stations.page.tsx": "079c6773b05aae6959ee467ebd44dbd816fcf3c0760e466bc081348db79d5d24"
+  },
+  "unchangedPlayerSha256": "1a958a21936d3079f4a4d9c8e6987d47ffed8cf11cf6feee8cf4a4a7f2646f19",
+  "bundles": {
+    "baseline": {
+      "out/renderer/assets/index-CmkkmMpt.js": "866120f00355c982fcba1677d4a052e1ca2313a2113b91918348944db211b966",
+      "out/renderer/assets/index-B3M1WwkU.css": "17b7abec42f2f3b3e2f3440d30aa2cd146f5797b216f62462abcc441580811bc"
+    },
+    "inspectedFocusOnly": {
+      "out/renderer/assets/index-BoBVDw7H.js": "f4fff9dbfe5207d93f187c547c5a3fedee5710f2f627b4ffc027d6d55d681521",
+      "out/renderer/assets/index-DvtzGWPT.css": "51298ba805bf80a3e9657a68e5acdb0b62a0ddad2119c7302bfda7a652283059"
+    },
+    "reviewed": {
+      "out/renderer/assets/index-BNjZy20Z.js": "3e304de69039175d946c039dd9d0a74f285460438a6d79ae839b5917129824e4",
+      "out/renderer/assets/index-DvtzGWPT.css": "51298ba805bf80a3e9657a68e5acdb0b62a0ddad2119c7302bfda7a652283059"
+    },
+    "final": {
+      "out/renderer/assets/index-B3NzFrQU.js": "6a8760580a1b2a8a4d35ba2263f3f61459a0100b3a12b3cf3691a7a6cbb15d27",
+      "out/renderer/assets/index-DvtzGWPT.css": "51298ba805bf80a3e9657a68e5acdb0b62a0ddad2119c7302bfda7a652283059"
+    }
+  },
+  "fixture": {
+    "input": "Native CUA only at1280x720 normal zoom. Playwright launch/passive read-only observation.",
+    "runtime": "Production renderer/preload with copied instrumented actual main/storage, disposable safeStorage/catalog, null shared-key adapter, stopped scheduler and muted media.",
+    "seed": "Three saved-take records using a bundled local MP3 for two available files and a third absent file. No generated content or provider requests. Final Stop run explicitly seeds selected take2.",
+    "HTTPWrites": 0,
+    "providerRequests": 0,
+    "playbackUnchanged": {
+      "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+      "trackIds": [
+        "000000000000000000000000000003e9",
+        "000000000000000000000000000003ea",
+        "000000000000000000000000000003e9",
+        "000000000000000000000000000003eb"
+      ],
+      "currentIndex": 2,
+      "position": 12,
+      "volume": 0.42,
+      "shuffle": false,
+      "repeat": "off"
+    },
+    "hashes": {
+      "observe.cjs": "600eb98a2de9aa89d43144357926753b76de80af45837c6e1a446a02a4549208",
+      "bootstrap.mjs": "4c711efb702bc5659ddebde5f21f8336b31a44d495a8de75208a3ef162e2a084",
+      "selection-bootstrap.mjs": "3b899b0203ec306137605d08d65bf13654bf8cd63f2580e531aa8e443e24a996",
+      "server.mjs": "33b1beafab299247920af0bee234c85d500ecb207a2527bf3c25a2feb9dcc7da",
+      "out/main/index.js": "f3d043a00aac5a2bec9741c3cdb783a883789a7dd705fd838980879f22a481c5"
+    },
+    "preloadSha256": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+    "seedAudioSha256": "718a35bc38f30397b7b43965db4a4bf5211d59c0a5f37c4e23ef38428a614f74",
+    "processes": "All4 observers exited0. Exact owned catalog PID30008 stopped; session3447 exit143.",
+    "screenshots": "Row selection error, schedule error, clear-with-active-break and stopped-control focus inspected inline. No PNG retained."
+  },
+  "reports": {
+    "before": {
+      "sha256": "716f2f86cbde1fae5d4c662ce11669ec25113c12022130d718fa6e53793aab1e",
+      "result": "observed",
+      "errors": []
+    },
+    "first-correction-report": {
+      "sha256": "dc0c837cd077c5a926a25f22f5b551053d756d6178470a0da0016723bc6f072b",
+      "result": "observed",
+      "errors": []
+    },
+    "final-reviewed": {
+      "sha256": "54697a1c9384181368f637a44af146d073399e37f4bdb66533ac2d0a933509ce",
+      "result": "observed",
+      "errors": []
+    },
+    "stop-final": {
+      "sha256": "32292c1e752d993f4cf5218f50b5e155356aa1a235c57b95aecac9adcfa0daf9",
+      "result": "observed",
+      "errors": []
+    }
+  },
+  "acceptance": {
+    "rows": 191,
+    "active": 189,
+    "deferred": 2,
+    "open": 27,
+    "listener": 14,
+    "otherProof": 13,
+    "statusChanges": [],
+    "Q06": "Review; manual-preparation, automatic status/availability and player DJ conditional controls still require scoped review."
+  },
+  "limits": [
+    "No unit, AT/VoiceOver, listener, audible quality, live-provider/server, actual OS failure, platform-matrix, release or deferred viewport/zoom acceptance.",
+    "No full native pass for all speech phases, scheduling later replacement, no-song error, repaired-file paths, overlay/window hiding or schedule-pending page remount in this change. Prior evidence remains separate.",
+    "Final Stop phase rechecks only the final changed Stop behavior plus schedule and clear success. Other reviewed-phase branches are not relabeled as final-bundle runs."
+  ]
+}

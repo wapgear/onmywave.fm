@@ -22,7 +22,12 @@
 .prepared-take-heading p { color: var(--muted); font-size: 11px; margin-top: 5px; overflow-wrap: anywhere; }
 .prepared-selected { display: inline-flex; align-items: center; gap: 4px; color: var(--accent); font-size: 11px; white-space: nowrap; }
 .prepared-audition { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 16px 0; }
-.prepared-audition .prepared-use-take { margin-left: auto; }
+.prepared-audition .prepared-take-choice { margin-left: auto; max-width: 100%; }
+.prepared-take-choice .notice { max-width: 320px; margin-bottom: 0; }
+.prepared-selection-feedback { min-width: 0; max-width: 100%; }
+.prepared-takes button[aria-disabled="true"] { color: var(--muted); background: var(--surface); cursor: default; }
+.prepared-takes button[aria-busy="true"] { cursor: progress; }
+.prepared-takes button[aria-disabled="true"]:active { translate: 0 0; }
 .prepared-duration { color: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; }
 .prepared-script { white-space: pre-wrap; overflow-wrap: anywhere; font-size: 13px; line-height: 1.85; margin: 16px 0; }
 .prepared-missing { color: var(--muted); font-size: 12px; margin: 12px 0; }
