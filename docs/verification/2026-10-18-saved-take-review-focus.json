@@ -1,0 +1,3187 @@
+{
+  "date": "2026-10-18",
+  "scope": "Review saved take immediate navigation, scoped delayed focus, read/error recovery and missing audio/result. Partial Q06 only.",
+  "decision": {
+    "Steve": "Independent proposal favors immediate explicit Saved navigation and reuse of useRetryFocus. Supports after challenge/final source review. Preferred notice above panels; root verifies stable bottom placement natively. Did not rerun build/lint/native checks.",
+    "Elena": "Independent deferred-intent proposal; accepts immediate explicit navigation after challenge because the existing helper can guard only the later row focus. Final actual source review no blocker. Did not rerun build/lint/native checks.",
+    "Morgan": "Open Saved audio on explicit Review click. Keep one stable notice/button after all tab panels, preserving its manual completion position. Reuse unchanged useRetryFocus for request/take/profile/recovery-bound handoff; read mutation never navigates. Global savedTakeReview pending plus synchronous guard reject duplicates across route unmount. Confirm exact take from awaited refetch and retain completion-keyed errors. Native pending/error geometry confirms current action stays visible above player; top-placement alternative not needed in tested fixture."
+  },
+  "checks": {
+    "build": "npm run build including TypeScript exit0 session71451; build.log retained/hashed.",
+    "lint": "npm run lint exit0 session96141; lint.log retained/hashed.",
+    "diffCheck": "git diff --check exit0",
+    "snapshotCounts": {
+      "baseline": 4,
+      "final": 15,
+      "absentResult": 5
+    },
+    "predicates": "All24 parsed snapshots pass scoped assertions for baseline BODY focus/late tab steal, final immediate Saved view and native-enabled busy owner, exact one-take row handoff, Tab/other-tab/overlay ownership, global pending after music return, persistent single completion error, missing-result retry, unchanged selected ID/paused playback, one initial text/audio operation per run and zero external/HTTP attempts.",
+    "scopeOfExactRow": "Each run has one saved fixture take whose unique saved date matches its focused row. Missing-ID response contains no takes and cannot focus a substitute. No multiple-take ordering claim.",
+    "queryFailure": "Injected shared getPreparedNews failure also renders the existing library-query error, separately from the one completion-specific review error. This is no real disk-failure assertion.",
+    "windowAndProfile": "Window blur/hide, profile/recovery/completion replacement and overlay-generation cancellation use unchanged hook guards/source review; only the stated Tab/tab/music and open-overlay paths are native-tested here.",
+    "nativeActivation": "One native pointer attempt at missing-file retry focused the action without beginning its read; keyboard Return then starts it. Only the observed pending snapshot afterward is counted."
+  },
+  "fixture": {
+    "directory": "/private/tmp/saved-take-review-focus-current",
+    "runtime": "Production renderer/preload and copied instrumented actual main/storage with disposable safeStorage/catalog, placeholder provider keys, null shared-key adapter, stopped interval and muted media. Native CUA input at1280x720/normal app zoom; read-only DOM/main/file observation.",
+    "service": "Initial UI text/audio actions use fixed service text and bundled local demo MP3 bytes; actual execute/publication saves one take per run. No provider output, upstream read, paid request or audio-quality proof. Review itself performs only saved-library reads.",
+    "finalPhase": "reviewed-bootstrap.mjs bytes for baseline/final runtime; getPreparedNews IPC holds/failures. One verified disposable MP3 is removed while its saved index/provenance remains, then actual getPreparedNews marks it unavailable and Review focuses the recovery row.",
+    "absentResultPhase": "bootstrap.mjs adds omit-takes IPC mode: actual saved-library read runs, but controlled returned takes list is empty. Stored take is retained. Restoring normal mode permits exact row focus on explicit retry. This is not actual saved-index deletion.",
+    "cleanup": "Owned observers90519/17540/26154 exit0. Catalog21716 exit143 after exact PID35828 command verification. No owned app/catalog remains."
+  },
+  "sourceSha256": {
+    "src/renderer/pages/Stations/Stations.page.tsx": "3d2490a9846f66f02ef0a8db5b022e7c844286169de016cb4499cac3f6394b88",
+    "src/renderer/pages/Stations/Stations.styles.css": "43d01e1661741e926ce3d1d5275ca23c383dbf4bf142b4b7c6e54e8b96dd5fea"
+  },
+  "unchangedFocusHookSha256": "8695ab8ecfdb3299d6828636ef38d607a3ab163deaf6a9be9c8f88ef768391cc",
+  "bundles": {
+    "baseline": {
+      "out/renderer/assets/index-Da1r-Vu1.js": "9a529732dc60378bd78ce244dffb9156f7764768409c0106ee6679b83747b8aa",
+      "out/renderer/assets/index-Dp5HTjyz.css": "f1d86e9f0eead83de2d819e0b9b46e3052d5cab23a7615b476d22921d330981c"
+    },
+    "final": {
+      "out/renderer/assets/index-CcG0_BBi.css": "70747ec9659887eba87b785c7e278ef03ac6bac320f7e1e28ad916e45a1f9241",
+      "out/renderer/assets/index-C_IL3h6j.js": "fc3b374b73a06efaf17c9b8da51b84c72169be92944e7d9fd0ea8ce2d335ecbf"
+    }
+  },
+  "productionPreloadSha256": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+  "fixtureHashes": {
+    "reviewed-bootstrap.mjs": "f32aaff6705c260c39d2c9ad19305b7275ab2669e7114cb9537f78caf559d478",
+    "bootstrap.mjs": "d82cab2dad56b869659794bcceb6ce18ceeb9c6420aee52161504a5dc87bd426",
+    "observe.cjs": "db12ff883fa43d27d8e59d984676599b692d541ac3f18a9b81694eeee680746d",
+    "out/main/index.js": "840de9dc76223c9aa3ab5a9274f9dc4c7e0030199206f1ab7e9c2bc67f6af9ca",
+    "server.mjs": "33b1beafab299247920af0bee234c85d500ecb207a2527bf3c25a2feb9dcc7da",
+    "capture.py": "83193e9b53ecf266123a48c24d779d6a69da2c59d5f232cf0e281c199eb0771e",
+    "missing-file.json": "8802a00c82eb62557eb2ba80544a6d183166b5acbadf7bc27f0d88f3b01e7218",
+    "build.log": "63e4f4b16ebb8e52f7c9dcc14509fc3dd872bd3bd29eb49b7b449079e5ce030f",
+    "lint.log": "657a3e72c84e20cc029dc941ecd7afb7f4cac96cb830b69b0d0818472e5492f2"
+  },
+  "reports": {
+    "before": {
+      "rawSha256": "762f933f5b5756c6e6ab4d16bf880ef13b6ad00ac976dea2ffe10cf9a9c832b0",
+      "result": "observed",
+      "errors": []
+    },
+    "final": {
+      "rawSha256": "aebf369b4498c14df6315f56380c5fdc3a7db5e997521a2c9b8a5c6d0517af53",
+      "result": "observed",
+      "errors": []
+    },
+    "missing": {
+      "rawSha256": "306a2ed9e3d2a11d2a4dbd9c95077d352b74fbab91d3d9c47005723697c19b34",
+      "result": "observed",
+      "errors": []
+    }
+  },
+  "savedPlayback": {
+    "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+    "trackIds": [
+      "000000000000000000000000000003e9",
+      "000000000000000000000000000003ea",
+      "000000000000000000000000000003e9",
+      "000000000000000000000000000003eb"
+    ],
+    "currentIndex": 2,
+    "position": 12,
+    "volume": 0.42,
+    "shuffle": false,
+    "repeat": "off"
+  },
+  "snapshots": {
+    "baseline": [
+      {
+        "name": "before-audio-ready",
+        "rawSha256": "64adb9853d9ded4956e63853ef8d87be7fc99b969d655dd6920ebf66dbf62cea",
+        "observedAt": 1792322255282,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 473.5,
+            "width": 142.1640625,
+            "height": 34,
+            "top": 473.5,
+            "right": 380.1640625,
+            "bottom": 507.5,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Generate audio take",
+          "type": null,
+          "role": null
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "News sources and host",
+          "Automatic news preparation",
+          "Prepare a story"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Review saved take",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 1048.90625,
+              "y": 651.890625,
+              "width": 133.09375,
+              "height": 34,
+              "top": 651.890625,
+              "right": 1182,
+              "bottom": 685.890625,
+              "left": 1048.90625
+            }
+          }
+        ],
+        "notices": [],
+        "held": [],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322242302,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322244222,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322244857,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322254859,
+            "mode": "normal"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "ca70fa9c-dc21-425c-b5bb-89a75a1df4f1",
+          "requestId": "2fdd6277-e11f-4e52-a121-083023f22202",
+          "createdAt": "2026-10-18T11:17:24.851Z",
+          "scriptId": "38b8d937-7030-4ea4-aa7f-7779ada4cf35"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "before-review-late-result",
+        "rawSha256": "30c2fdde7de666dee5bcfc428457052ad19b77327e99fc6b020f495f73cf3688",
+        "observedAt": 1792322312244,
+        "focus": {
+          "tag": "LI",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 237.3828125,
+            "width": 960,
+            "height": 277.6953125,
+            "top": 237.3828125,
+            "right": 1198,
+            "bottom": 515.078125,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Saved take from 10/18/2026, 1:17:24 PM",
+          "type": null,
+          "role": null
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Review saved take",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 1048.90625,
+              "y": 25.5859375,
+              "width": 133.09375,
+              "height": 34,
+              "top": 25.5859375,
+              "right": 1182,
+              "bottom": 59.5859375,
+              "left": 1048.90625
+            }
+          }
+        ],
+        "notices": [],
+        "held": [],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322242302,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322244222,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322244857,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322254859,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322259358,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322285935,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322295937,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322305940,
+            "mode": "normal"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "ca70fa9c-dc21-425c-b5bb-89a75a1df4f1",
+          "requestId": "2fdd6277-e11f-4e52-a121-083023f22202",
+          "createdAt": "2026-10-18T11:17:24.851Z",
+          "scriptId": "38b8d937-7030-4ea4-aa7f-7779ada4cf35"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "before-review-navigated",
+        "rawSha256": "0ce8b16f74bb11165598bf0148cf24fe06703ef24751b2b67f15d03f3c3d2eaf",
+        "observedAt": 1792322275813,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 240,
+            "y": 266.6953125,
+            "width": 108.8984375,
+            "height": 34,
+            "top": 266.6953125,
+            "right": 348.8984375,
+            "bottom": 300.6953125,
+            "left": 240
+          },
+          "insideDrawer": false,
+          "name": "News bucket",
+          "type": "button",
+          "role": "tab"
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "What your DJ will say"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Opening saved take\u2026",
+            "disabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 1031.125,
+              "y": 1648.90625,
+              "width": 150.875,
+              "height": 34,
+              "top": 1648.90625,
+              "right": 1182,
+              "bottom": 1682.90625,
+              "left": 1031.125
+            }
+          }
+        ],
+        "notices": [],
+        "held": [
+          "getPreparedNews"
+        ],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322242302,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322244222,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322244857,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322254859,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322259358,
+            "mode": "hold"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "ca70fa9c-dc21-425c-b5bb-89a75a1df4f1",
+          "requestId": "2fdd6277-e11f-4e52-a121-083023f22202",
+          "createdAt": "2026-10-18T11:17:24.851Z",
+          "scriptId": "38b8d937-7030-4ea4-aa7f-7779ada4cf35"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "before-review-pending",
+        "rawSha256": "a3cdf9c7a4e65ce6703763d04a1c8cc7d29b8e8309689cc256d095b0666de718",
+        "observedAt": 1792322263930,
+        "focus": {
+          "tag": "BODY",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 720,
+            "top": 0,
+            "right": 1280,
+            "bottom": 720,
+            "left": 0
+          },
+          "insideDrawer": false,
+          "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedNews bucketSetup profileMy room \u00b7 ActiveSave as newAdvanced room optionsMake this profile available for DJ playback and preparationChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.News bucketSettingsSaved audioYour radioWhat your DJ will saySee what is ready to hear, what was prepared, and where each story came from.DJ playback is offPlayback is off. The ready queue below remains available for this profile.My roomAutomatic news preparationNews settingsPreparation paused. Fixture prior preparation failure. Preparation stays paused until you resume it in News settings.Scheduled checks started today0 / 8Automatic recordings saved today0 / 3Ready for this profile0Only scheduled preparation is counted for this profile in your Mac's local day. Checks can use paid text generation even when no recording is made.No scheduled check has been recorded for this profile yet.PlaybackNext DJ breakAutomatic DJ playback is offStories prepared for this profile stay visible in its ready queue below.Saved newsReady for My room0 recordingsThese recordings match your current setup and are fresh enough to play. Older and already heard stories stay out. The DJ chooses one when a break is due.No fresh matching recordings are ready for this profile. Set up news preparationIn preparationDrafts for My room0No drafts are waiting for audio.Article historyReviewed across all profiles0 storiesReviewed stories are excluded from future news selection in every profile.No stories have been reviewed yet.News sources and hostNews sourcesManage sourcesFixture feedNews interests \u00b7 OptionalDJFixture hostChoose a DJFixture hostManage DJsMoodCuriousSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.Automatic news preparationPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running. Automatically prepare newsCheck sources every1 hour3 hours6 hoursNews selectionMajor developments onlyRelevant storiesMaximum automatic recordings per dayUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.Saving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.Save setupTurn off automatic preparationTakes effect immediately and asks this profile's automatic check to stop. Other unsaved edits stay here. A provider request already sent may still complete.Preparation paused. Fixture prior preparation failure. Preparation stays paused until you resume it in News settings.Resume preparationTesting tools \u00b7 Prepare a story manuallyManual testingPrepare a storyPrepare text, review it, then generate an audio take.Manual text preparation uses OpenAI outside automatic preparation limits. It can incur charges even when no recording is made.Prepare news textSaved draftFixture host \u00b7 10/18/2026, 1:17:24 PMFixture host \u00b7 10/18/2026, 1:17:24 PMReview the scriptA fixture story for native keyboard verification. Review this saved text before listening.13 / 55 words10/18/2026, 1:17:24 PMSources and preparation settingsPrepared for Fixture host \u00b7 CuriousNews interests: Any topics from selected sourcesManual audioGenerate a complete takeA new audio take uses ElevenLabs outside automatic preparation limits and can use credits or incur charges. Reusing or auditioning a saved take makes no provider request.Generate audio takeGenerate another takeManual preparation \u00b7 My roomAudio preparation finished. Review the saved take below.Audio take saved \u00b7 My room. Review it to listen or choose it for a DJ break.Opening saved take\u2026Saved audio takesListen or choose a take for a DJ break.RefreshSelected takeChoose a saved take belowSchedule DJ breakNo take selectedFixture host10/18/2026, 1:17:24 PM \u00b7 ElevenLabs \u00b7 JBFqnCBsd6RMkjVDRZzbListenDuration checked on listenUse this takeA fixture story for native keyboard verification. Review this saved text before listening.Saved mood, settings, and sourcesMoodCuriousNews interestsAny topics from selected sourcesWriting DJFixture hostAudio modeleleven_v4DeliveryDefault deliveryVoiceJBFqnCBsd6RMkjVDRZzbLanguageEnglishPersonalityConciseConfigured feedsFixture feedLoad script into draftAI-generated voice \u00b7 Saved locallySong 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+          "type": null,
+          "role": null
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "News sources and host",
+          "Automatic news preparation",
+          "Prepare a story"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Opening saved take\u2026",
+            "disabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 1031.125,
+              "y": 504.890625,
+              "width": 150.875,
+              "height": 34,
+              "top": 504.890625,
+              "right": 1182,
+              "bottom": 538.890625,
+              "left": 1031.125
+            }
+          }
+        ],
+        "notices": [],
+        "held": [
+          "getPreparedNews"
+        ],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322242302,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322244222,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322244857,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322254859,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322259358,
+            "mode": "hold"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "ca70fa9c-dc21-425c-b5bb-89a75a1df4f1",
+          "requestId": "2fdd6277-e11f-4e52-a121-083023f22202",
+          "createdAt": "2026-10-18T11:17:24.851Z",
+          "scriptId": "38b8d937-7030-4ea4-aa7f-7779ada4cf35"
+        },
+        "selectedTakeId": null
+      }
+    ],
+    "final": [
+      {
+        "name": "final-ready",
+        "rawSha256": "b57c19d0ec3dbd26449ab27e41409650dc0a4a0ee94a5471a8d17ab9b1e610fc",
+        "observedAt": 1792322489304,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 473.5,
+            "width": 142.1640625,
+            "height": 34,
+            "top": 473.5,
+            "right": 380.1640625,
+            "bottom": 507.5,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Generate audio take",
+          "type": null,
+          "role": null
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "News sources and host",
+          "Automatic news preparation",
+          "Prepare a story"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Review saved take",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 1048.90625,
+              "y": 651.890625,
+              "width": 133.09375,
+              "height": 34,
+              "top": 651.890625,
+              "right": 1182,
+              "bottom": 685.890625,
+              "left": 1048.90625
+            }
+          }
+        ],
+        "notices": [],
+        "held": [],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322482248,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322484240,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322485129,
+            "mode": "normal"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "45a81ae7-375e-4445-bd8b-13d554bc129d",
+          "requestId": "113634ef-40ef-486c-aee8-24bee0807195",
+          "createdAt": "2026-10-18T11:21:25.126Z",
+          "scriptId": "13c1f64d-dc01-44f1-a4f1-dc43f269ffe1"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "final-review-failure",
+        "rawSha256": "3a31aeaf1fa8e5b569c38ff2b37721bf2a6c7b600fa21e3be3762aac88fce639",
+        "observedAt": 1792322530598,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 1048.90625,
+            "y": 439.078125,
+            "width": 133.09375,
+            "height": 34,
+            "top": 439.078125,
+            "right": 1182,
+            "bottom": 473.078125,
+            "left": 1048.90625
+          },
+          "insideDrawer": false,
+          "name": "Review saved take",
+          "type": null,
+          "role": null
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Review saved take",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": true,
+            "rect": {
+              "x": 1048.90625,
+              "y": 439.078125,
+              "width": 133.09375,
+              "height": 34,
+              "top": 439.078125,
+              "right": 1182,
+              "bottom": 473.078125,
+              "left": 1048.90625
+            }
+          }
+        ],
+        "notices": [
+          {
+            "rect": {
+              "x": 238,
+              "y": -133.4140625,
+              "width": 960,
+              "height": 60,
+              "top": -133.4140625,
+              "right": 1198,
+              "bottom": -73.4140625,
+              "left": 238
+            },
+            "error": "getPreparedNews unavailable.",
+            "status": "",
+            "button": {
+              "name": "Try again",
+              "disabled": false,
+              "busy": null,
+              "ariaDisabled": null,
+              "type": "button",
+              "active": false,
+              "translate": "none",
+              "insideLiveRegion": false
+            }
+          },
+          {
+            "rect": {
+              "x": 238,
+              "y": 506.078125,
+              "width": 960,
+              "height": 45.796875,
+              "top": 506.078125,
+              "right": 1198,
+              "bottom": 551.875,
+              "left": 238
+            },
+            "error": "Your audio result was saved, but saved takes could not be refreshed. Try reviewing it again.",
+            "button": null
+          }
+        ],
+        "held": [],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322482248,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322484240,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322485129,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322493386,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322521941,
+            "mode": "fail"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "45a81ae7-375e-4445-bd8b-13d554bc129d",
+          "requestId": "113634ef-40ef-486c-aee8-24bee0807195",
+          "createdAt": "2026-10-18T11:21:25.126Z",
+          "scriptId": "13c1f64d-dc01-44f1-a4f1-dc43f269ffe1"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "final-review-missing-file-pending",
+        "rawSha256": "ffb349eeeb74d6bae33761672382496835a65fbdb26fbcb151c369289bdf6985",
+        "observedAt": 1792322745443,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 1031.125,
+            "y": 505.078125,
+            "width": 150.875,
+            "height": 34,
+            "top": 505.078125,
+            "right": 1182,
+            "bottom": 539.078125,
+            "left": 1031.125
+          },
+          "insideDrawer": false,
+          "name": "Opening saved take\u2026",
+          "type": null,
+          "role": null
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Opening saved take\u2026",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": true,
+            "rect": {
+              "x": 1031.125,
+              "y": 505.078125,
+              "width": 150.875,
+              "height": 34,
+              "top": 505.078125,
+              "right": 1182,
+              "bottom": 539.078125,
+              "left": 1031.125
+            }
+          }
+        ],
+        "notices": [
+          {
+            "rect": {
+              "x": 238,
+              "y": -67.4140625,
+              "width": 960,
+              "height": 60,
+              "top": -67.4140625,
+              "right": 1198,
+              "bottom": -7.4140625,
+              "left": 238
+            },
+            "error": "getPreparedNews unavailable.",
+            "status": "Checking\u2026",
+            "button": {
+              "name": "Checking\u2026",
+              "disabled": false,
+              "busy": "true",
+              "ariaDisabled": "true",
+              "type": "button",
+              "active": false,
+              "translate": "none",
+              "insideLiveRegion": false
+            }
+          }
+        ],
+        "held": [
+          "getPreparedNews",
+          "getPreparedNews"
+        ],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322482248,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322484240,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322485129,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322493386,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322521941,
+            "mode": "fail"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322531942,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322535087,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322558577,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322568586,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322578588,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322583703,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322607686,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322611003,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322635641,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322641343,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322665737,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322668296,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322686287,
+            "mode": "fail"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322696288,
+            "mode": "fail"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322697291,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322736480,
+            "mode": "hold"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "45a81ae7-375e-4445-bd8b-13d554bc129d",
+          "requestId": "113634ef-40ef-486c-aee8-24bee0807195",
+          "createdAt": "2026-10-18T11:21:25.126Z",
+          "scriptId": "13c1f64d-dc01-44f1-a4f1-dc43f269ffe1"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "final-review-missing-file-success",
+        "rawSha256": "abf56113d5988712935db3630a7bebd6bc890d256f1554b36e145c5773297952",
+        "observedAt": 1792322769530,
+        "focus": {
+          "tag": "LI",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 121.3828125,
+            "width": 960,
+            "height": 313.4921875,
+            "top": 121.3828125,
+            "right": 1198,
+            "bottom": 434.875,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Saved take from 10/18/2026, 1:21:25 PM",
+          "type": null,
+          "role": null
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Review saved take",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 1048.90625,
+              "y": 504.875,
+              "width": 133.09375,
+              "height": 34,
+              "top": 504.875,
+              "right": 1182,
+              "bottom": 538.875,
+              "left": 1048.90625
+            }
+          }
+        ],
+        "notices": [],
+        "held": [],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322482248,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322484240,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322485129,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322493386,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322521941,
+            "mode": "fail"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322531942,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322535087,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322558577,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322568586,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322578588,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322583703,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322607686,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322611003,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322635641,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322641343,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322665737,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322668296,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322686287,
+            "mode": "fail"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322696288,
+            "mode": "fail"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322697291,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322736480,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322755587,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322765589,
+            "mode": "normal"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "45a81ae7-375e-4445-bd8b-13d554bc129d",
+          "requestId": "113634ef-40ef-486c-aee8-24bee0807195",
+          "createdAt": "2026-10-18T11:21:25.126Z",
+          "scriptId": "13c1f64d-dc01-44f1-a4f1-dc43f269ffe1"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "final-review-other-tab-pending",
+        "rawSha256": "d63a605d76110ea67bcb6f79b9060c5e480121e7feb07fcb059478c4d402e2ba",
+        "observedAt": 1792322625511,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 240,
+            "y": 266.6953125,
+            "width": 108.8984375,
+            "height": 34,
+            "top": 266.6953125,
+            "right": 348.8984375,
+            "bottom": 300.6953125,
+            "left": 240
+          },
+          "insideDrawer": false,
+          "name": "News bucket",
+          "type": "button",
+          "role": "tab"
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "What your DJ will say"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Opening saved take\u2026",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": false,
+            "rect": {
+              "x": 1031.125,
+              "y": 1648.90625,
+              "width": 150.875,
+              "height": 34,
+              "top": 1648.90625,
+              "right": 1182,
+              "bottom": 1682.90625,
+              "left": 1031.125
+            }
+          }
+        ],
+        "notices": [],
+        "held": [
+          "getPreparedNews",
+          "getPreparedNews"
+        ],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322482248,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322484240,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322485129,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322493386,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322521941,
+            "mode": "fail"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322531942,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322535087,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322558577,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322568586,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322578588,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322583703,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322607686,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322611003,
+            "mode": "hold"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "45a81ae7-375e-4445-bd8b-13d554bc129d",
+          "requestId": "113634ef-40ef-486c-aee8-24bee0807195",
+          "createdAt": "2026-10-18T11:21:25.126Z",
+          "scriptId": "13c1f64d-dc01-44f1-a4f1-dc43f269ffe1"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "final-review-other-tab-success",
+        "rawSha256": "c98f910fcbb7894e63976500be03d7a7472a13602eeaaffed705a9fcc715ff64",
+        "observedAt": 1792322633809,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 240,
+            "y": 266.6953125,
+            "width": 108.8984375,
+            "height": 34,
+            "top": 266.6953125,
+            "right": 348.8984375,
+            "bottom": 300.6953125,
+            "left": 240
+          },
+          "insideDrawer": false,
+          "name": "News bucket",
+          "type": "button",
+          "role": "tab"
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "What your DJ will say"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Review saved take",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 1048.90625,
+              "y": 1648.90625,
+              "width": 133.09375,
+              "height": 34,
+              "top": 1648.90625,
+              "right": 1182,
+              "bottom": 1682.90625,
+              "left": 1048.90625
+            }
+          }
+        ],
+        "notices": [],
+        "held": [],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322482248,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322484240,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322485129,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322493386,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322521941,
+            "mode": "fail"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322531942,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322535087,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322558577,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322568586,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322578588,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322583703,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322607686,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322611003,
+            "mode": "hold"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "45a81ae7-375e-4445-bd8b-13d554bc129d",
+          "requestId": "113634ef-40ef-486c-aee8-24bee0807195",
+          "createdAt": "2026-10-18T11:21:25.126Z",
+          "scriptId": "13c1f64d-dc01-44f1-a4f1-dc43f269ffe1"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "final-review-overlay-pending",
+        "rawSha256": "6da1a5ac4b129b76774efe95fb7bb62a8ce31102ea6ef3c31e966ffa24d4ad83",
+        "observedAt": 1792322655597,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 1012.9921875,
+            "y": 39.75,
+            "width": 34,
+            "height": 34,
+            "top": 39.75,
+            "right": 1046.9921875,
+            "bottom": 73.75,
+            "left": 1012.9921875
+          },
+          "insideDrawer": false,
+          "name": "Close DJ controls",
+          "type": null,
+          "role": null
+        },
+        "focusScope": "DJ controls",
+        "openOverlays": [
+          {
+            "tag": "DIV",
+            "name": "DJ controls"
+          }
+        ],
+        "headings": [
+          "News bucket",
+          "Saved audio takes",
+          "DJ breaks"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Opening saved take\u2026",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": false,
+            "rect": {
+              "x": 1031.125,
+              "y": 897.578125,
+              "width": 150.875,
+              "height": 34,
+              "top": 897.578125,
+              "right": 1182,
+              "bottom": 931.578125,
+              "left": 1031.125
+            }
+          }
+        ],
+        "notices": [],
+        "held": [
+          "getPreparedNews",
+          "getPreparedNews"
+        ],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322482248,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322484240,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322485129,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322493386,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322521941,
+            "mode": "fail"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322531942,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322535087,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322558577,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322568586,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322578588,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322583703,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322607686,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322611003,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322635641,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322641343,
+            "mode": "hold"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "45a81ae7-375e-4445-bd8b-13d554bc129d",
+          "requestId": "113634ef-40ef-486c-aee8-24bee0807195",
+          "createdAt": "2026-10-18T11:21:25.126Z",
+          "scriptId": "13c1f64d-dc01-44f1-a4f1-dc43f269ffe1"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "final-review-overlay-success",
+        "rawSha256": "476f6bb314e291f88c12546a1358ee0dc58c7f077bc4fd6bb613ef6c70036e36",
+        "observedAt": 1792322663580,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 1012.9921875,
+            "y": 39.75,
+            "width": 34,
+            "height": 34,
+            "top": 39.75,
+            "right": 1046.9921875,
+            "bottom": 73.75,
+            "left": 1012.9921875
+          },
+          "insideDrawer": false,
+          "name": "Close DJ controls",
+          "type": null,
+          "role": null
+        },
+        "focusScope": "DJ controls",
+        "openOverlays": [
+          {
+            "tag": "DIV",
+            "name": "DJ controls"
+          }
+        ],
+        "headings": [
+          "News bucket",
+          "Saved audio takes",
+          "DJ breaks"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Review saved take",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 1048.90625,
+              "y": 897.578125,
+              "width": 133.09375,
+              "height": 34,
+              "top": 897.578125,
+              "right": 1182,
+              "bottom": 931.578125,
+              "left": 1048.90625
+            }
+          }
+        ],
+        "notices": [],
+        "held": [],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322482248,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322484240,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322485129,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322493386,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322521941,
+            "mode": "fail"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322531942,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322535087,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322558577,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322568586,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322578588,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322583703,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322607686,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322611003,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322635641,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322641343,
+            "mode": "hold"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "45a81ae7-375e-4445-bd8b-13d554bc129d",
+          "requestId": "113634ef-40ef-486c-aee8-24bee0807195",
+          "createdAt": "2026-10-18T11:21:25.126Z",
+          "scriptId": "13c1f64d-dc01-44f1-a4f1-dc43f269ffe1"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "final-review-pending",
+        "rawSha256": "9a3c6a89de4802b7fe029fe8e0d2b8dc1d508df07fc94e14ad75bfb3c232df63",
+        "observedAt": 1792322520821,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 1031.125,
+            "y": 505.078125,
+            "width": 150.875,
+            "height": 34,
+            "top": 505.078125,
+            "right": 1182,
+            "bottom": 539.078125,
+            "left": 1031.125
+          },
+          "insideDrawer": false,
+          "name": "Opening saved take\u2026",
+          "type": null,
+          "role": null
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Opening saved take\u2026",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": true,
+            "rect": {
+              "x": 1031.125,
+              "y": 505.078125,
+              "width": 150.875,
+              "height": 34,
+              "top": 505.078125,
+              "right": 1182,
+              "bottom": 539.078125,
+              "left": 1031.125
+            }
+          }
+        ],
+        "notices": [],
+        "held": [
+          "getPreparedNews"
+        ],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322482248,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322484240,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322485129,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322493386,
+            "mode": "hold"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "45a81ae7-375e-4445-bd8b-13d554bc129d",
+          "requestId": "113634ef-40ef-486c-aee8-24bee0807195",
+          "createdAt": "2026-10-18T11:21:25.126Z",
+          "scriptId": "13c1f64d-dc01-44f1-a4f1-dc43f269ffe1"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "final-review-retry-pending",
+        "rawSha256": "3eb070087ae754bf1cc92dfe68b937ba59a37e9b7b97a24020bfd1baa74e7797",
+        "observedAt": 1792322548454,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 1031.125,
+            "y": 505.078125,
+            "width": 150.875,
+            "height": 34,
+            "top": 505.078125,
+            "right": 1182,
+            "bottom": 539.078125,
+            "left": 1031.125
+          },
+          "insideDrawer": false,
+          "name": "Opening saved take\u2026",
+          "type": null,
+          "role": null
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Opening saved take\u2026",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": true,
+            "rect": {
+              "x": 1031.125,
+              "y": 505.078125,
+              "width": 150.875,
+              "height": 34,
+              "top": 505.078125,
+              "right": 1182,
+              "bottom": 539.078125,
+              "left": 1031.125
+            }
+          }
+        ],
+        "notices": [
+          {
+            "rect": {
+              "x": 238,
+              "y": -67.4140625,
+              "width": 960,
+              "height": 60,
+              "top": -67.4140625,
+              "right": 1198,
+              "bottom": -7.4140625,
+              "left": 238
+            },
+            "error": "getPreparedNews unavailable.",
+            "status": "Checking\u2026",
+            "button": {
+              "name": "Checking\u2026",
+              "disabled": false,
+              "busy": "true",
+              "ariaDisabled": "true",
+              "type": "button",
+              "active": false,
+              "translate": "none",
+              "insideLiveRegion": false
+            }
+          }
+        ],
+        "held": [
+          "getPreparedNews",
+          "getPreparedNews"
+        ],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322482248,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322484240,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322485129,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322493386,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322521941,
+            "mode": "fail"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322531942,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322535087,
+            "mode": "hold"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "45a81ae7-375e-4445-bd8b-13d554bc129d",
+          "requestId": "113634ef-40ef-486c-aee8-24bee0807195",
+          "createdAt": "2026-10-18T11:21:25.126Z",
+          "scriptId": "13c1f64d-dc01-44f1-a4f1-dc43f269ffe1"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "final-review-return-failure",
+        "rawSha256": "d9ed46264a3a51321a177905b99f0771bd8181b3779c5446e689e92ecb26da80",
+        "observedAt": 1792322696509,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 16,
+            "y": 263.5,
+            "width": 176,
+            "height": 44,
+            "top": 263.5,
+            "right": 192,
+            "bottom": 307.5,
+            "left": 16
+          },
+          "insideDrawer": false,
+          "name": "News bucket",
+          "type": null,
+          "role": null
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Review saved take",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 1048.90625,
+              "y": 505.078125,
+              "width": 133.09375,
+              "height": 34,
+              "top": 505.078125,
+              "right": 1182,
+              "bottom": 539.078125,
+              "left": 1048.90625
+            }
+          }
+        ],
+        "notices": [
+          {
+            "rect": {
+              "x": 238,
+              "y": -67.4140625,
+              "width": 960,
+              "height": 60,
+              "top": -67.4140625,
+              "right": 1198,
+              "bottom": -7.4140625,
+              "left": 238
+            },
+            "error": "getPreparedNews unavailable.",
+            "status": "Checking\u2026",
+            "button": {
+              "name": "Checking\u2026",
+              "disabled": false,
+              "busy": "true",
+              "ariaDisabled": "true",
+              "type": "button",
+              "active": false,
+              "translate": "none",
+              "insideLiveRegion": false
+            }
+          },
+          {
+            "rect": {
+              "x": 238,
+              "y": 572.078125,
+              "width": 960,
+              "height": 45.796875,
+              "top": 572.078125,
+              "right": 1198,
+              "bottom": 617.875,
+              "left": 238
+            },
+            "error": "Your audio result was saved, but saved takes could not be refreshed. Try reviewing it again.",
+            "button": null
+          }
+        ],
+        "held": [],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322482248,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322484240,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322485129,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322493386,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322521941,
+            "mode": "fail"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322531942,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322535087,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322558577,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322568586,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322578588,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322583703,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322607686,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322611003,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322635641,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322641343,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322665737,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322668296,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322686287,
+            "mode": "fail"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322696288,
+            "mode": "fail"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "45a81ae7-375e-4445-bd8b-13d554bc129d",
+          "requestId": "113634ef-40ef-486c-aee8-24bee0807195",
+          "createdAt": "2026-10-18T11:21:25.126Z",
+          "scriptId": "13c1f64d-dc01-44f1-a4f1-dc43f269ffe1"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "final-review-return-pending",
+        "rawSha256": "3cac6fad0282de0519164720ab8e7b2da5210b9ed73ebd1844d69afa5b898f97",
+        "observedAt": 1792322685148,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 16,
+            "y": 263.5,
+            "width": 176,
+            "height": 44,
+            "top": 263.5,
+            "right": 192,
+            "bottom": 307.5,
+            "left": 16
+          },
+          "insideDrawer": false,
+          "name": "News bucket",
+          "type": null,
+          "role": null
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Opening saved take\u2026",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": false,
+            "rect": {
+              "x": 1031.125,
+              "y": 505.078125,
+              "width": 150.875,
+              "height": 34,
+              "top": 505.078125,
+              "right": 1182,
+              "bottom": 539.078125,
+              "left": 1031.125
+            }
+          }
+        ],
+        "notices": [],
+        "held": [
+          "getPreparedNews",
+          "getPreparedNews"
+        ],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322482248,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322484240,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322485129,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322493386,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322521941,
+            "mode": "fail"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322531942,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322535087,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322558577,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322568586,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322578588,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322583703,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322607686,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322611003,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322635641,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322641343,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322665737,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322668296,
+            "mode": "hold"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "45a81ae7-375e-4445-bd8b-13d554bc129d",
+          "requestId": "113634ef-40ef-486c-aee8-24bee0807195",
+          "createdAt": "2026-10-18T11:21:25.126Z",
+          "scriptId": "13c1f64d-dc01-44f1-a4f1-dc43f269ffe1"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "final-review-success",
+        "rawSha256": "c709a3034bfdaa15f814e02a6fd889f9a02b64a365808add31bedfe77edaeb65",
+        "observedAt": 1792322578837,
+        "focus": {
+          "tag": "LI",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 157.3828125,
+            "width": 960,
+            "height": 277.6953125,
+            "top": 157.3828125,
+            "right": 1198,
+            "bottom": 435.078125,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Saved take from 10/18/2026, 1:21:25 PM",
+          "type": null,
+          "role": null
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Review saved take",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 1048.90625,
+              "y": 505.078125,
+              "width": 133.09375,
+              "height": 34,
+              "top": 505.078125,
+              "right": 1182,
+              "bottom": 539.078125,
+              "left": 1048.90625
+            }
+          }
+        ],
+        "notices": [],
+        "held": [],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322482248,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322484240,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322485129,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322493386,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322521941,
+            "mode": "fail"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322531942,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322535087,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322558577,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322568586,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322578588,
+            "mode": "normal"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "45a81ae7-375e-4445-bd8b-13d554bc129d",
+          "requestId": "113634ef-40ef-486c-aee8-24bee0807195",
+          "createdAt": "2026-10-18T11:21:25.126Z",
+          "scriptId": "13c1f64d-dc01-44f1-a4f1-dc43f269ffe1"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "final-review-tab-pending",
+        "rawSha256": "c077a7950f7592c1aedaf41b8c73eeafa9921044aeab8744e146cefb219fe3dd",
+        "observedAt": 1792322597548,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 537.9921875,
+            "y": 630.5,
+            "width": 32,
+            "height": 32,
+            "top": 630.5,
+            "right": 569.9921875,
+            "bottom": 662.5,
+            "left": 537.9921875
+          },
+          "insideDrawer": false,
+          "name": "Shuffle",
+          "type": null,
+          "role": null
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Opening saved take\u2026",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": false,
+            "rect": {
+              "x": 1031.125,
+              "y": 505.078125,
+              "width": 150.875,
+              "height": 34,
+              "top": 505.078125,
+              "right": 1182,
+              "bottom": 539.078125,
+              "left": 1031.125
+            }
+          }
+        ],
+        "notices": [],
+        "held": [
+          "getPreparedNews"
+        ],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322482248,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322484240,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322485129,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322493386,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322521941,
+            "mode": "fail"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322531942,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322535087,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322558577,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322568586,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322578588,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322583703,
+            "mode": "hold"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "45a81ae7-375e-4445-bd8b-13d554bc129d",
+          "requestId": "113634ef-40ef-486c-aee8-24bee0807195",
+          "createdAt": "2026-10-18T11:21:25.126Z",
+          "scriptId": "13c1f64d-dc01-44f1-a4f1-dc43f269ffe1"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "final-review-tab-success",
+        "rawSha256": "762a912c5310b1732b4ddb8940496ff0837f4bedf762e17bf5cb62e370b5694b",
+        "observedAt": 1792322606372,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 537.9921875,
+            "y": 630.5,
+            "width": 32,
+            "height": 32,
+            "top": 630.5,
+            "right": 569.9921875,
+            "bottom": 662.5,
+            "left": 537.9921875
+          },
+          "insideDrawer": false,
+          "name": "Shuffle",
+          "type": null,
+          "role": null
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Review saved take",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 1048.90625,
+              "y": 505.078125,
+              "width": 133.09375,
+              "height": 34,
+              "top": 505.078125,
+              "right": 1182,
+              "bottom": 539.078125,
+              "left": 1048.90625
+            }
+          }
+        ],
+        "notices": [],
+        "held": [],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322482248,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322484240,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322485129,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322493386,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322521941,
+            "mode": "fail"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322531942,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322535087,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322558577,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322568586,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322578588,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322583703,
+            "mode": "hold"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "45a81ae7-375e-4445-bd8b-13d554bc129d",
+          "requestId": "113634ef-40ef-486c-aee8-24bee0807195",
+          "createdAt": "2026-10-18T11:21:25.126Z",
+          "scriptId": "13c1f64d-dc01-44f1-a4f1-dc43f269ffe1"
+        },
+        "selectedTakeId": null
+      }
+    ],
+    "absentResult": [
+      {
+        "name": "missing-ready",
+        "rawSha256": "3dc43f0bba3defa556297dd848d0aa7e08f7a115e3281647efdf2577d94e5c07",
+        "observedAt": 1792322800540,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 473.5,
+            "width": 142.1640625,
+            "height": 34,
+            "top": 473.5,
+            "right": 380.1640625,
+            "bottom": 507.5,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Generate audio take",
+          "type": null,
+          "role": null
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "News sources and host",
+          "Automatic news preparation",
+          "Prepare a story"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Review saved take",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 1048.90625,
+              "y": 651.890625,
+              "width": 133.09375,
+              "height": 34,
+              "top": 651.890625,
+              "right": 1182,
+              "bottom": 685.890625,
+              "left": 1048.90625
+            }
+          }
+        ],
+        "notices": [],
+        "held": [],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322793878,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322796052,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322796907,
+            "mode": "normal"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "c453bfc8-652a-4277-a2a5-e8b1c9a11cd2",
+          "requestId": "8e9b42d9-a147-4773-85fd-993525bf0d2f",
+          "createdAt": "2026-10-18T11:26:36.900Z",
+          "scriptId": "5c1718f2-b509-4815-a2d5-f32ee460408e"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "missing-review-failure",
+        "rawSha256": "8e09686691ac8f773fac5bd8600891791cfc94775ec865c907454cbd6f85ca33",
+        "observedAt": 1792322832046,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 1048.90625,
+            "y": 439.1796875,
+            "width": 133.09375,
+            "height": 34,
+            "top": 439.1796875,
+            "right": 1182,
+            "bottom": 473.1796875,
+            "left": 1048.90625
+          },
+          "insideDrawer": false,
+          "name": "Review saved take",
+          "type": null,
+          "role": null
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Review saved take",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": true,
+            "rect": {
+              "x": 1048.90625,
+              "y": 439.1796875,
+              "width": 133.09375,
+              "height": 34,
+              "top": 439.1796875,
+              "right": 1182,
+              "bottom": 473.1796875,
+              "left": 1048.90625
+            }
+          }
+        ],
+        "notices": [
+          {
+            "rect": {
+              "x": 238,
+              "y": 506.1796875,
+              "width": 960,
+              "height": 45.796875,
+              "top": 506.1796875,
+              "right": 1198,
+              "bottom": 551.9765625,
+              "left": 238
+            },
+            "error": "The completed take could not be found in saved audio. Try reviewing it again.",
+            "button": null
+          }
+        ],
+        "held": [],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322793878,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322796052,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322796907,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322804873,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322829670,
+            "mode": "omit-takes"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "c453bfc8-652a-4277-a2a5-e8b1c9a11cd2",
+          "requestId": "8e9b42d9-a147-4773-85fd-993525bf0d2f",
+          "createdAt": "2026-10-18T11:26:36.900Z",
+          "scriptId": "5c1718f2-b509-4815-a2d5-f32ee460408e"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "missing-review-pending",
+        "rawSha256": "1ad17ce062de7e500873563cade7ee10b3b7b44d083b2e3145d62cbc3ed273e5",
+        "observedAt": 1792322819541,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 1031.125,
+            "y": 505.078125,
+            "width": 150.875,
+            "height": 34,
+            "top": 505.078125,
+            "right": 1182,
+            "bottom": 539.078125,
+            "left": 1031.125
+          },
+          "insideDrawer": false,
+          "name": "Opening saved take\u2026",
+          "type": null,
+          "role": null
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Opening saved take\u2026",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": true,
+            "rect": {
+              "x": 1031.125,
+              "y": 505.078125,
+              "width": 150.875,
+              "height": 34,
+              "top": 505.078125,
+              "right": 1182,
+              "bottom": 539.078125,
+              "left": 1031.125
+            }
+          }
+        ],
+        "notices": [],
+        "held": [
+          "getPreparedNews"
+        ],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322793878,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322796052,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322796907,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322804873,
+            "mode": "hold"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "c453bfc8-652a-4277-a2a5-e8b1c9a11cd2",
+          "requestId": "8e9b42d9-a147-4773-85fd-993525bf0d2f",
+          "createdAt": "2026-10-18T11:26:36.900Z",
+          "scriptId": "5c1718f2-b509-4815-a2d5-f32ee460408e"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "missing-review-recovered",
+        "rawSha256": "ec1a2eb384f666392c9458c34919be771ca4387ef234aa3c7e9946adbfb5d2a3",
+        "observedAt": 1792322855212,
+        "focus": {
+          "tag": "LI",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 302.3828125,
+            "width": 960,
+            "height": 277.6953125,
+            "top": 302.3828125,
+            "right": 1198,
+            "bottom": 580.078125,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Saved take from 10/18/2026, 1:26:36 PM",
+          "type": null,
+          "role": null
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Review saved take",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 1048.90625,
+              "y": 650.078125,
+              "width": 133.09375,
+              "height": 34,
+              "top": 650.078125,
+              "right": 1182,
+              "bottom": 684.078125,
+              "left": 1048.90625
+            }
+          }
+        ],
+        "notices": [],
+        "held": [],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322793878,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322796052,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322796907,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322804873,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322829670,
+            "mode": "omit-takes"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322836407,
+            "mode": "hold"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "c453bfc8-652a-4277-a2a5-e8b1c9a11cd2",
+          "requestId": "8e9b42d9-a147-4773-85fd-993525bf0d2f",
+          "createdAt": "2026-10-18T11:26:36.900Z",
+          "scriptId": "5c1718f2-b509-4815-a2d5-f32ee460408e"
+        },
+        "selectedTakeId": null
+      },
+      {
+        "name": "missing-review-retry-pending",
+        "rawSha256": "f200966205497dce2c946ce5153ba9c060eef985af506a717f81ec73c1a621b2",
+        "observedAt": 1792322846568,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 1031.125,
+            "y": 505.1796875,
+            "width": 150.875,
+            "height": 34,
+            "top": 505.1796875,
+            "right": 1182,
+            "bottom": 539.1796875,
+            "left": 1031.125
+          },
+          "insideDrawer": false,
+          "name": "Opening saved take\u2026",
+          "type": null,
+          "role": null
+        },
+        "focusScope": null,
+        "openOverlays": [],
+        "headings": [
+          "News bucket",
+          "Saved audio takes"
+        ],
+        "reviewControls": [
+          {
+            "tag": "BUTTON",
+            "name": "Opening saved take\u2026",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": true,
+            "rect": {
+              "x": 1031.125,
+              "y": 505.1796875,
+              "width": 150.875,
+              "height": 34,
+              "top": 505.1796875,
+              "right": 1182,
+              "bottom": 539.1796875,
+              "left": 1031.125
+            }
+          }
+        ],
+        "notices": [],
+        "held": [
+          "getPreparedNews"
+        ],
+        "libraryReads": [
+          {
+            "name": "getPreparedNews",
+            "at": 1792322793878,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322796052,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322796907,
+            "mode": "normal"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322804873,
+            "mode": "hold"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322829670,
+            "mode": "omit-takes"
+          },
+          {
+            "name": "getPreparedNews",
+            "at": 1792322836407,
+            "mode": "hold"
+          }
+        ],
+        "generationCalls": {
+          "text": 1,
+          "audio": 1
+        },
+        "fixtureServiceResults": {
+          "text": 1,
+          "audio": 1
+        },
+        "savedTake": {
+          "id": "c453bfc8-652a-4277-a2a5-e8b1c9a11cd2",
+          "requestId": "8e9b42d9-a147-4773-85fd-993525bf0d2f",
+          "createdAt": "2026-10-18T11:26:36.900Z",
+          "scriptId": "5c1718f2-b509-4815-a2d5-f32ee460408e"
+        },
+        "selectedTakeId": null
+      }
+    ]
+  },
+  "acceptance": "All191 dispositions unchanged:189 active,2 Deferred,27 open with14 listener and13 other-proof. Q06 Review remains for player DJ controls and remaining conditional essential controls.",
+  "limitations": [
+    "No unit, AT/VoiceOver, listener, audible, live-provider/server, OS-failure, release/platform matrix or deferred viewport/zoom acceptance.",
+    "One saved-take fixture verifies scoped review paths; no whole-Q06 or strict layout-scroll-stability claim.",
+    "Raw local fixture files are transient; committed projections/hashes retain scoped evidence."
+  ]
+}
