@@ -1,0 +1,212 @@
+{
+  "date": "2026-10-19",
+  "baseCommit": "8d41934de35027eff9d4cbc1e642aecd1da409cb",
+  "scope": "Correct source-contract and native-rendered drag-region coverage in startup/sign-in/library chooser. Native movement remains inconclusive; V10 is not accepted.",
+  "problem": "Explicit drag surfaces existed only in ReadyApp although BrowserWindow uses hiddenInset chrome. Startup and ConnectionPage variants lacked any authored draggable region.",
+  "officialBasis": {
+    "https://www.electronjs.org/docs/latest/tutorial/custom-title-bar": "Custom titlebars need explicitly declared draggable regions.",
+    "https://www.electronjs.org/docs/latest/tutorial/custom-window-interactions": "app-region drag declares native hit regions; keep interactive controls outside them."
+  },
+  "change": "Relocate existing aria-hidden titlebar-drag-region to always-present App fragment, fixed instead of absolute. Keep right-of-sidebar position,effective24px height,z3,media rules and existing sidebar traffic-light-space. No extra component,dependency,drag IPC or native-window change.",
+  "decision": {
+    "SteveInitial": "Add startup/Connection regions while preserving ReadyApp.",
+    "ElenaInitial": "One shared fullwidth App-root24px strip.",
+    "challenge": "Steve supported shared placement while keeping sidebar clearance. Elena preferred per-route additions to avoid changing established ReadyApp/native-control geometry.",
+    "Morgan": "Use one shared strip but retain its exact existing sidebar-offset geometry. Resolves duplication and geometry concerns without expanding over traffic lights.",
+    "actualReview": {
+      "Steve": "No blocker; shared relocation preserves ReadyApp geometry and extends coverage without authored-control overlap. Native movement remains unproven.",
+      "Elena": "No blocker; relocation preserves ReadyApp geometry and fills missing root coverage. Native movement remains unproven."
+    }
+  },
+  "method": {
+    "input": "CUA only: native form fields,Connect,library checkbox/Save,and one pointer drag each before/after. Fresh AX state after actions; screenshots visually inspected.",
+    "observation": "Playwright launch/close and passive DOM/computed-style/native-window reads. Hold/release only startup getConnection via fixture backend gate.",
+    "fixture": "Disposable empty appData,actual main/preload/production renderer,scoped observer hooks,null shared-key adapter,owned localhost Jellyfin,unexpected external fetches blocked.",
+    "baseline": "1280x720 CSS viewport,100% app zoom,macOS arm64,Retina2. No deferred checks.",
+    "nativeMovement": "CUA drags [900,16] to [1000,66] before/after produce no native move event or bounds change. Existing capture/input mapping ambiguity remains; no reproduced before defect or verified after drag."
+  },
+  "snapshots": {
+    "before-signin": {
+      "sha256": "4f7257df2d3ffd316e760b78e8259f7885e2e2f13cc43f636bc9ed22f3c7fb8d",
+      "dragRegions": [],
+      "windowBounds": {
+        "x": 864,
+        "y": 382,
+        "width": 1280,
+        "height": 720
+      },
+      "moveEvents": [],
+      "nonzeroInputRectsBelowStrip": true
+    },
+    "before-signin-drag-attempt": {
+      "sha256": "53acbd6ca85d217d86ccafd8b1276702d739669345cef81618f4fa51fbb06d50",
+      "dragRegions": [],
+      "windowBounds": {
+        "x": 864,
+        "y": 382,
+        "width": 1280,
+        "height": 720
+      },
+      "moveEvents": [],
+      "nonzeroInputRectsBelowStrip": true
+    },
+    "final-startup-held": {
+      "sha256": "d573f50574c6dbf8c0068179538f61e867c2bc63b0128f481f2c789cc52bda52",
+      "dragRegions": [
+        {
+          "tag": "DIV",
+          "class": "titlebar-drag-region",
+          "rect": {
+            "x": 208,
+            "y": 0,
+            "width": 1072,
+            "height": 24,
+            "top": 0,
+            "right": 1280,
+            "bottom": 24,
+            "left": 208
+          }
+        }
+      ],
+      "windowBounds": {
+        "x": 864,
+        "y": 382,
+        "width": 1280,
+        "height": 720
+      },
+      "moveEvents": [],
+      "nonzeroInputRectsBelowStrip": true
+    },
+    "final-signin-drag-attempt": {
+      "sha256": "0a23aaca1d3ef84c77a722c42056b98b0f298b6d474ae521acfe9907da224c40",
+      "dragRegions": [
+        {
+          "tag": "DIV",
+          "class": "titlebar-drag-region",
+          "rect": {
+            "x": 208,
+            "y": 0,
+            "width": 1072,
+            "height": 24,
+            "top": 0,
+            "right": 1280,
+            "bottom": 24,
+            "left": 208
+          }
+        }
+      ],
+      "windowBounds": {
+        "x": 864,
+        "y": 382,
+        "width": 1280,
+        "height": 720
+      },
+      "moveEvents": [],
+      "nonzeroInputRectsBelowStrip": true
+    },
+    "final-library-chooser": {
+      "sha256": "44641adb74724e837ba6f1d9ecd6ab766e5dab7a30773705ca22bbd8951afbc5",
+      "dragRegions": [
+        {
+          "tag": "DIV",
+          "class": "titlebar-drag-region",
+          "rect": {
+            "x": 208,
+            "y": 0,
+            "width": 1072,
+            "height": 24,
+            "top": 0,
+            "right": 1280,
+            "bottom": 24,
+            "left": 208
+          }
+        }
+      ],
+      "windowBounds": {
+        "x": 864,
+        "y": 382,
+        "width": 1280,
+        "height": 720
+      },
+      "moveEvents": [],
+      "nonzeroInputRectsBelowStrip": true
+    },
+    "final-ready-library": {
+      "sha256": "4ad3df83db5c3bc0256f415e77adb4492108b86b49e39aa571b5d3ff0989e0c2",
+      "dragRegions": [
+        {
+          "tag": "DIV",
+          "class": "titlebar-drag-region",
+          "rect": {
+            "x": 208,
+            "y": 0,
+            "width": 1072,
+            "height": 24,
+            "top": 0,
+            "right": 1280,
+            "bottom": 24,
+            "left": 208
+          }
+        },
+        {
+          "tag": "DIV",
+          "class": "traffic-light-space",
+          "rect": {
+            "x": 16,
+            "y": 0,
+            "width": 176,
+            "height": 52,
+            "top": 0,
+            "right": 192,
+            "bottom": 52,
+            "left": 16
+          }
+        }
+      ],
+      "windowBounds": {
+        "x": 864,
+        "y": 382,
+        "width": 1280,
+        "height": 720
+      },
+      "moveEvents": [],
+      "nonzeroInputRectsBelowStrip": true
+    }
+  },
+  "checks": {
+    "productionBuildTypeScript": "passed",
+    "fullLint": "passed",
+    "native": "Two terminal successful processes,zero renderer errors; held startup,sign-in fields/Connect,chooser checkbox/Save and ReadyApp entry pass.",
+    "geometry": "One shared strip x208,y0,width1072,height24 in all four final states. ReadyApp sidebar drag spacer remains x16,y0,width176,height52.",
+    "accessibility": "Strip aria-hidden,non-focusable and omitted from AX content; normal form/library focus operates.",
+    "unitTests": "not added or run",
+    "whitespace": "passed",
+    "acceptance": "All191 dispositions unchanged;25 known open,14 listener/11 other-proof. V10 Review."
+  },
+  "beforeSourceSha256": {
+    "src/renderer/App.tsx": "eae93435308b21d89e771bc920b389b753743923b1d9e907abed0f5d551551f7",
+    "src/renderer/styles.css": "59a887c4f754a3e54d9fea94420cf39ffc99a825211113e85b98df2cd2b53693"
+  },
+  "sourceSha256": {
+    "src/renderer/App.tsx": "27df7f378c734791390ebc4e0237ae5771fea9a48ffbb541a177182e43efc0fa",
+    "src/renderer/styles.css": "43da67b986692d802df012ddb0c01c03293edc3851930370e0d2a974a72c79b6",
+    "src/main/index.ts": "aaa4568e65b5d8397b26a767ead775ce848e91038a58b9e3e486a29a0a6e22ec"
+  },
+  "finalFixtureSha256": {
+    "/private/tmp/titlebar-coverage-current/build.mjs": "1fc0a8c7f2d70c77261f9b401689751ca67acc56c960855960d3513593c55ba5",
+    "/private/tmp/titlebar-coverage-current/bootstrap.mjs": "f328e37bff6f4dd2fbc9b34c4ada2a9cb64c9f37fef120903b561aeef8303a27",
+    "/private/tmp/titlebar-coverage-current/observe.cjs": "8d602445baff7cdb0f05fb305dca9c0923c16f0c09a272dac921bffad2f7502e",
+    "/private/tmp/titlebar-coverage-current/final-native-report.json": "bc63c8af4accc9c8346bcfe3ac8f59a49db811c0bddd174381c0c54f0acc4260",
+    "/private/tmp/titlebar-coverage-current/out/main/index.js": "4d4dc15995df7e1c85aea4f84522ac200385cdb928fa723bd80021ce3084b86a"
+  },
+  "limits": [
+    "Native movement and normal traffic-light imagery remain unverified; screenshots activate window-sharing chrome.",
+    "Startup error,reconnect/account-switch share persistent root strip but receive no separate runtime variant.",
+    "Dialog/popover top-layer precedence and control clearance are source-reviewed,not exhaustively replayed.",
+    "Existing close/reopen/minimize/quit evidence retains scope and was not redundantly rerun.",
+    "No listener,VoiceOver,audible,live-provider or broader platform acceptance.",
+    "Final fixture hashes apply to final process only; before observer lacked later optional startup-hold branch.",
+    "Initial geometry predicate included two hidden zero-area input rectangles at y0; corrected to count only nonzero rectangles. No hidden input can occupy the strip."
+  ],
+  "cleanup": "Both observer processes exit0;owned catalog server stopped130."
+}
