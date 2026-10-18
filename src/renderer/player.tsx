@@ -15,11 +15,12 @@ type ScheduledNews = { token: number; key: string; duration: number; bed: number
 type QueueEntry = { key: string; song: Song };
 type LoadSettlement = { key?: string; generation: number; outcome: 'success' | 'failure' | 'superseded' };
 export type PlaybackRetrySettlement = { key?: string; generation: number; commandRevision: number; kind: 'track' | 'restore'; outcome: 'success' | 'failure' | 'superseded' };
+export type OptionsSaveSettlement = { generation: number; outcome: 'success' | 'failure' | 'superseded' };
 type PlayerState = {
   queue: QueueEntry[]; current?: Song; currentKey?: string; playing: boolean; requestedPlaying: boolean; busy: boolean;
   position: number; duration: number; error: string | null; volume: number; shuffle: boolean;
   repeat: PlaybackSnapshot['repeat']; canRetry: boolean; completedSongs: number;
-  optionsError: string | null; retryOptions(): void;
+  optionsError: string | null; optionsRevision: number; retryOptions(): Promise<OptionsSaveSettlement>; getOptionsSaveGeneration(): number;
   play(songs: Song[], index?: number): void; playQueueEntry(key: string): void; enqueue(songs: Song[]): void;
   musicCommandRevision: number; getMusicCommandRevision(): number; pauseForPreview(): void;
   toggle(): void; next(): void; previous(): void; seek(seconds: number): void;
@@ -59,8 +60,9 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const [readyConnection, setReadyConnection] = useState<string | null>(null);
   const preferenceEdits = useRef({ volume: false, shuffle: false, repeat: false });
   const [optionsError, setOptionsError] = useState<string | null>(null);
-  const [optionsSaveAttempt, setOptionsSaveAttempt] = useState(0);
-  const handledOptionsRetry = useRef(0);
+  const [optionsRevision, setOptionsRevision] = useState(0);
+  const optionsSaveGeneration = useRef(0);
+  const optionsInFlight = useRef<{ generation: number; promise: Promise<OptionsSaveSettlement> } | null>(null);
   const [attempt, setAttempt] = useState(0);
   const [newsPhase, setNewsPhase] = useState<PlayerState['newsPhase']>('idle');
   const [activeNewsId, setActiveNewsId] = useState<string>();
@@ -524,23 +526,34 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     };
   }, [connection?.id, restoreSession, restoreAttempt]);
 
-  useEffect(() => {
-    const retry = optionsSaveAttempt !== handledOptionsRetry.current;
-    handledOptionsRetry.current = optionsSaveAttempt;
-    if (!connection || (readyConnection === connection.id && !retry)) return;
+  const saveOptions = useCallback((): Promise<OptionsSaveSettlement> => {
+    const pending = optionsInFlight.current;
+    if (pending?.generation === optionsSaveGeneration.current) return pending.promise;
+    const generation = ++optionsSaveGeneration.current;
+    const state = live.current;
     const options: Partial<PlaybackPreferences> = {};
-    if (preferenceEdits.current.volume) options.volume = volume;
-    if (preferenceEdits.current.shuffle) options.shuffle = shuffle;
-    if (preferenceEdits.current.repeat) options.repeat = repeat;
-    if (!Object.keys(options).length) return;
-    let active = true;
-    void window.wave.savePlaybackPreferences({ connectionId: connection.id, options }).then(unwrap).then(saved => {
-      if (active && saved) setOptionsError(null);
-    }).catch(() => {
-      if (active) setOptionsError('Player options could not be saved. Your saved queue is unchanged.');
+    if (preferenceEdits.current.volume) options.volume = state.volume;
+    if (preferenceEdits.current.shuffle) options.shuffle = state.shuffle;
+    if (preferenceEdits.current.repeat) options.repeat = state.repeat;
+    if (!connection || !Object.keys(options).length) return Promise.resolve({ generation, outcome: 'superseded' });
+    const promise = window.wave.savePlaybackPreferences({ connectionId: connection.id, options }).then(unwrap).then((saved): OptionsSaveSettlement => {
+      if (generation !== optionsSaveGeneration.current || !saved) return { generation, outcome: 'superseded' };
+      setOptionsError(null);
+      return { generation, outcome: 'success' };
+    }).catch((): OptionsSaveSettlement => {
+      if (generation !== optionsSaveGeneration.current) return { generation, outcome: 'superseded' };
+      setOptionsError('Player options could not be saved. Your saved queue is unchanged.');
+      return { generation, outcome: 'failure' };
+    }).finally(() => {
+      if (optionsInFlight.current?.generation === generation) optionsInFlight.current = null;
     });
-    return () => { active = false; };
-  }, [connection, readyConnection, volume, shuffle, repeat, optionsSaveAttempt]);
+    optionsInFlight.current = { generation, promise };
+    return promise;
+  }, [connection]);
+  useEffect(() => () => { ++optionsSaveGeneration.current; }, [connection?.id]);
+  useEffect(() => {
+    if (connection && readyConnection !== connection.id) void saveOptions();
+  }, [connection, readyConnection, volume, shuffle, repeat, optionsRevision, saveOptions]);
 
   useEffect(() => {
     if (currentKey && current) {
@@ -558,17 +571,21 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     if (!connection || readyConnection !== connection.id) return;
     const save = () => {
       const state = live.current;
+      const optionsGeneration = optionsSaveGeneration.current;
+      const optionsPending = optionsInFlight.current?.generation === optionsGeneration;
       void window.wave.savePlayback({
         connectionId: connection.id, trackIds: state.queue.map(item => item.song.id),
         currentIndex: state.queue.length ? state.index : 0, position: state.queue.length ? state.position : 0, volume: state.volume,
         shuffle: state.shuffle, repeat: state.repeat,
-      }).then(unwrap).then(() => setOptionsError(null)).catch(() => setError('Playback continues, but the session could not be saved.'));
+      }).then(unwrap).then(() => {
+        if (!optionsPending && optionsGeneration === optionsSaveGeneration.current) setOptionsError(null);
+      }).catch(() => setError('Playback continues, but the session could not be saved.'));
     };
     save();
     const timer = window.setInterval(save, 5000);
     window.addEventListener('beforeunload', save);
     return () => { clearInterval(timer); window.removeEventListener('beforeunload', save); };
-  }, [connection, readyConnection, queue, index, volume, shuffle, repeat]);
+  }, [connection, readyConnection, queue, index, volume, shuffle, repeat, optionsRevision]);
 
   const seek = useCallback((seconds: number) => {
     musicCommand();
@@ -875,7 +892,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
 
   return <PlayerContext.Provider value={{
     queue, current, currentKey, playing, requestedPlaying, busy, position, duration, error, volume, shuffle, repeat, completedSongs,
-    optionsError, retryOptions: () => setOptionsSaveAttempt(value => value + 1),
+    optionsError, optionsRevision, retryOptions: saveOptions, getOptionsSaveGeneration: () => optionsSaveGeneration.current,
     newsPhase, activeNewsId, newsRunId, newsLoading, activeNews, lastNews, scheduleNews, stopNews: () => { const ended = newsSchedule.current?.trackEnded; if (ended) continueAfterSong(); else stopNews(); }, controlNews,
     canRetry: !!current || !!restore || !!error,
     musicCommandRevision, getMusicCommandRevision, pauseForPreview: () => { if (playIntent.current) toggle('preview'); },
@@ -900,14 +917,16 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       setQueue(items => [...items, ...entries(songs)]);
       setReadyConnection(connection?.id ?? null);
     }, toggle, next: skipNext, previous, seek,
-    setVolume: value => { preferenceEdits.current.volume = true; setVolume(Math.max(0, Math.min(1, value))); },
+    setVolume: value => { const next = Math.max(0, Math.min(1, value)); if (next === live.current.volume) return; ++optionsSaveGeneration.current; setOptionsRevision(revision => revision + 1); preferenceEdits.current.volume = true; setVolume(next); },
     toggleShuffle: () => {
+      ++optionsSaveGeneration.current;
+      setOptionsRevision(revision => revision + 1);
       preferenceEdits.current.shuffle = true;
       const key = live.current.queue[live.current.index]?.key;
       shuffleHistory.current = { keys: key ? [key] : [], cursor: key ? 0 : -1, visited: new Set(key ? [key] : []) };
       setShuffle(value => !value);
     },
-    cycleRepeat: () => { preferenceEdits.current.repeat = true; setRepeat(value => value === 'off' ? 'all' : value === 'all' ? 'one' : 'off'); },
+    cycleRepeat: () => { ++optionsSaveGeneration.current; setOptionsRevision(revision => revision + 1); preferenceEdits.current.repeat = true; setRepeat(value => value === 'off' ? 'all' : value === 'all' ? 'one' : 'off'); },
     removeQueue: key => {
       const removed = queue.findIndex(item => item.key === key);
       if (removed < 0) return;

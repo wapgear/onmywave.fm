@@ -1,0 +1,3176 @@
+{
+  "date": "2026-10-18",
+  "scope": "Options-only Retry focus, duplicate suppression and stale options/session receipt guards; Q06 remains Review",
+  "base": "d837ee22c908c8fc34bb8f3d06092fcd725dab1b",
+  "environment": {
+    "viewport": [
+      1280,
+      720
+    ],
+    "zoom": 1,
+    "input": "Native CUA only",
+    "renderer": "One final production renderer/preload for all 22 final projections",
+    "main": "Copied instrumented main/storage from playlist/player fixture; not unmodified current production main",
+    "storage": "Actual options/session writes in disposable safeStorage/local state, seeded failed restore; placeholder readiness keys, null shared-key adapter, stopped scheduler",
+    "media": "Muted; options-only checks restore no song; session cases explicitly restore paused queue",
+    "faults": "Hold before operation for repeat/failure/success; hold-after actual operation for delayed receipt versus newer edit/session result",
+    "processes": "Five observer reports terminal without page errors, including one readiness-only run before lint-only source correction; owned localhost catalog terminal exit143"
+  },
+  "review": {
+    "Steve": "Support after verifying main storage enqueue order and withdrawing unreachable account-ref reuse concern because App keys remount provider",
+    "Elena": "Accept with reservation: failed-save warning remains during a newer edit until matching save confirms success; coordinator retained conservative existing warning",
+    "decision": "Reuse existing focus helper and options API; no new main revision protocol because both writes enqueue synchronously before await"
+  },
+  "sourceHashes": {
+    "src/renderer/player.tsx": "682513a44f59cf746c6464d24163181473d80e79addc33edd19aa2dfc9e810d4",
+    "src/renderer/components/Player/Player.component.tsx": "450e178394a6a145487854c9c6ea39ccb3886f4c183ff3b5f226fe23128b0901",
+    "src/renderer/useRetryFocus.ts": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c",
+    "src/main/index.ts": "e4ab045607c0e17eed5cdf82594fdedad4c84430f9e3f5eaa72cb84e9bb465c4",
+    "src/renderer/App.tsx": "a598265408255fc79db070fe71a98abe75f473fccbb2e8b208ddce0cd4140866"
+  },
+  "baselineBundles": {
+    "index-BVj4zIC4.js": "9c1e5851008d3d6cfc16da58a0a306901da40818422382edb1d542339254ce17"
+  },
+  "finalBundles": {
+    "index-D4xV2lEk.js": "7ea2182e8b8e2d39a3dec505f89eb5854eaa7c9ad275a3f0b55646bbc35b0a88"
+  },
+  "fixtureHashes": {
+    "bootstrap-basic.mjs": "c299e7700f7aff7fbadb227fda4fcc866530d091301c8e1bc3c46f44dae16f66",
+    "bootstrap.mjs": "4e759eb90f1ba62afb7d84d2073041d9b481e2f7327a2d87f7c07844b441ff86",
+    "observe.cjs": "13510286db09b2e183790a433043c378209950ea21602e63a59c9dfef5904620",
+    "out/main/index.js": "576624282916408675d3a7ee10b7528d3334dc477ed0de6f259d0339a53bd57a",
+    "server.mjs": "8a8048585eb6de96100dae51c0c596c940bbdff964a77a760bb548f32d7fec2c"
+  },
+  "fixturePhaseLimits": [
+    "Baseline bootstrap hash was not retained before adding hold-after; final basic and selective-ID bootstrap hashes are retained",
+    "session-matching-save-recovery released a batch containing a current save as well as older receipts; it does not isolate the stale guard",
+    "order-old-success-ignored selectively releases only the receipt IDs captured before the newer failed Retry; later matching session receipts are released separately"
+  ],
+  "checks": {
+    "productionBuildIncludingTypeScript": "passed",
+    "fullESLint": "passed after destructuring focus hook return",
+    "whitespace": "passed",
+    "scopedNativePredicates": "passed"
+  },
+  "observerReports": {
+    "before": {
+      "sha256": "a14c1cd3f671450a4ef16f5bfac41a952a7805672a3c9cf36e6e01bc6e701676",
+      "result": "observed",
+      "errors": []
+    },
+    "final": {
+      "sha256": "360387fadf9746aa60e0aed81dfa318bd14890589ade4a5125b0ad4dbfd612b2",
+      "result": "observed",
+      "errors": []
+    },
+    "final-session": {
+      "sha256": "edcda48151c13928e2c9b386f0ae78a8803efc78163eedb4d04f8379464cd1bd",
+      "result": "observed",
+      "errors": []
+    },
+    "final-order": {
+      "sha256": "1ba0f0fc52a9ea52da3c0291a6353c7490b7b77096354a417a03afad5f735a97",
+      "result": "observed",
+      "errors": []
+    },
+    "readiness-only": {
+      "sha256": "b17a6db31d88641e4fda34f295acba3885ce36ec114655b48d629ca8e7072aa9",
+      "result": "observed",
+      "errors": []
+    }
+  },
+  "limitations": [
+    "No new account-switch/restart native replay; keyed remount and persistence contracts reviewed in source",
+    "No forced window-loss, new overlay, same-values rapid edit, simultaneous fresh Retry before old receipt releases or false-return IPC replay",
+    "Options full-save overlap is verified through older/newer receipt order; exact every-5-second dispatch timing varies",
+    "No successful authentication handoff or complete current-control/Q06 reconciliation",
+    "No unit, VoiceOver, listener, audible/live-provider/server, OS fault or platform matrix acceptance; deferred viewport/zoom untouched"
+  ],
+  "acceptance": {
+    "rows": 191,
+    "active": 189,
+    "deferred": 2,
+    "open": 27,
+    "listenerOpen": 14,
+    "otherProofOpen": 13,
+    "dispositionsChanged": false
+  },
+  "snapshots": [
+    {
+      "name": "before-options-error",
+      "rawSha256": "3be26cfefd2b77e93c2da5d2004ad2d04f9c2bb8efe273d86c3b7457724a6a8d",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 537.9921875,
+          "y": 630.5,
+          "width": 32,
+          "height": 32,
+          "top": 630.5,
+          "right": 569.9921875,
+          "bottom": 662.5,
+          "left": 537.9921875
+        },
+        "insideDrawer": false,
+        "name": "Shuffle",
+        "type": null,
+        "role": null
+      },
+      "optionsNotice": [
+        {
+          "text": "Player options could not be saved. Your saved queue is unchanged. Retry saving options",
+          "rect": {
+            "x": 232,
+            "y": 556,
+            "width": 1024,
+            "height": 48,
+            "top": 556,
+            "right": 1256,
+            "bottom": 604,
+            "left": 232
+          },
+          "buttons": [
+            {
+              "name": " Retry saving options",
+              "active": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null
+            }
+          ]
+        }
+      ],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "held": [],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792328626644,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328626644,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328626644,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328626644,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328637901,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328638475,
+          "mode": "fail"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "before-pending",
+      "rawSha256": "373484749abc22ce66a8b77acd48f5cbf8cd87eefcb269dfb394d2b50fc77378",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1097.7578125,
+          "y": 566,
+          "width": 144.2421875,
+          "height": 28,
+          "top": 566,
+          "right": 1242,
+          "bottom": 594,
+          "left": 1097.7578125
+        },
+        "insideDrawer": false,
+        "name": " Retry saving options",
+        "type": null,
+        "role": null
+      },
+      "optionsNotice": [
+        {
+          "text": "Player options could not be saved. Your saved queue is unchanged. Retry saving options",
+          "rect": {
+            "x": 232,
+            "y": 556,
+            "width": 1024,
+            "height": 48,
+            "top": 556,
+            "right": 1256,
+            "bottom": 604,
+            "left": 232
+          },
+          "buttons": [
+            {
+              "name": " Retry saving options",
+              "active": true,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null
+            }
+          ]
+        }
+      ],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "held": [
+        "savePlaybackPreferences",
+        "savePlaybackPreferences",
+        "savePlaybackPreferences"
+      ],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792328626644,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328626644,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328626644,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328626644,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328637901,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328638475,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328661151,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328661617,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328661634,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "before-success",
+      "rawSha256": "ad11a747f04e3a1d52e74d055b3ea708e53974538d54ae471808fdb5d8333499",
+      "focus": {
+        "tag": "BODY",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "top": 0,
+          "right": 1280,
+          "bottom": 720,
+          "left": 0
+        },
+        "insideDrawer": false,
+        "name": "document body",
+        "type": null,
+        "role": null
+      },
+      "optionsNotice": [],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "held": [],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792328626644,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328626644,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328626644,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328626644,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328637901,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328638475,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328661151,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328661617,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328661634,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-delayed-error",
+      "rawSha256": "174da04351a255a860d31415aadf99d39e859da370b53c86d909abacaaf6bb97",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 537.9921875,
+          "y": 630.5,
+          "width": 32,
+          "height": 32,
+          "top": 630.5,
+          "right": 569.9921875,
+          "bottom": 662.5,
+          "left": 537.9921875
+        },
+        "insideDrawer": false,
+        "name": "Shuffle",
+        "type": null,
+        "role": null
+      },
+      "optionsNotice": [
+        {
+          "text": "Player options could not be saved. Your saved queue is unchanged.Retry saving options",
+          "rect": {
+            "x": 232,
+            "y": 556,
+            "width": 1024,
+            "height": 48,
+            "top": 556,
+            "right": 1256,
+            "bottom": 604,
+            "left": 232
+          },
+          "buttons": [
+            {
+              "name": "Retry saving options",
+              "active": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null
+            }
+          ]
+        }
+      ],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.43,
+        "shuffle": true,
+        "repeat": "off"
+      },
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "held": [],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792328909926,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328913621,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328941836,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328968701,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329008663,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329018687,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329046706,
+          "mode": "fail"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-end",
+      "rawSha256": "320c6d9970b0c1d95a6a5f893c72fb4a9721e4e587f6940570cf8ffcecca04b0",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1121.9921875,
+          "y": 650,
+          "width": 84,
+          "height": 20,
+          "top": 650,
+          "right": 1205.9921875,
+          "bottom": 670,
+          "left": 1121.9921875
+        },
+        "insideDrawer": false,
+        "name": "Volume",
+        "type": "range",
+        "role": null
+      },
+      "optionsNotice": [
+        {
+          "text": "Player options could not be saved. Your saved queue is unchanged.Retry saving options",
+          "rect": {
+            "x": 232,
+            "y": 556,
+            "width": 1024,
+            "height": 48,
+            "top": 556,
+            "right": 1256,
+            "bottom": 604,
+            "left": 232
+          },
+          "buttons": [
+            {
+              "name": "Retry saving options",
+              "active": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null
+            }
+          ]
+        }
+      ],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.43,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "held": [],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792328909926,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328913621,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328941836,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328968701,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329008663,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329018687,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329046706,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329053929,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329069057,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329069571,
+          "mode": "fail"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-error",
+      "rawSha256": "5501586e53fd74dc99716829b455c0d01f8dc204391b2458d899643e3fac22c8",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 537.9921875,
+          "y": 630.5,
+          "width": 32,
+          "height": 32,
+          "top": 630.5,
+          "right": 569.9921875,
+          "bottom": 662.5,
+          "left": 537.9921875
+        },
+        "insideDrawer": false,
+        "name": "Shuffle",
+        "type": null,
+        "role": null
+      },
+      "optionsNotice": [
+        {
+          "text": "Player options could not be saved. Your saved queue is unchanged.Retry saving options",
+          "rect": {
+            "x": 232,
+            "y": 556,
+            "width": 1024,
+            "height": 48,
+            "top": 556,
+            "right": 1256,
+            "bottom": 604,
+            "left": 232
+          },
+          "buttons": [
+            {
+              "name": "Retry saving options",
+              "active": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null
+            }
+          ]
+        }
+      ],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "held": [],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792328909926,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328913621,
+          "mode": "fail"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-failure",
+      "rawSha256": "8379f62e9d9ac7ca0b6b8448e655c5eea9e4840ebfdb59acfffee27a3786d95c",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1097.7578125,
+          "y": 566,
+          "width": 144.2421875,
+          "height": 28,
+          "top": 566,
+          "right": 1242,
+          "bottom": 594,
+          "left": 1097.7578125
+        },
+        "insideDrawer": false,
+        "name": "Retry saving options",
+        "type": null,
+        "role": null
+      },
+      "optionsNotice": [
+        {
+          "text": "Player options could not be saved. Your saved queue is unchanged.Retry saving options",
+          "rect": {
+            "x": 232,
+            "y": 556,
+            "width": 1024,
+            "height": 48,
+            "top": 556,
+            "right": 1256,
+            "bottom": 604,
+            "left": 232
+          },
+          "buttons": [
+            {
+              "name": "Retry saving options",
+              "active": true,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null
+            }
+          ]
+        }
+      ],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "held": [],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792328909926,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328913621,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328941836,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-new-error",
+      "rawSha256": "7246b81aaa25d2bd4f96fc7070e26aedf0b623a2ad33579f61bbf41cd7ceeaca",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1121.9921875,
+          "y": 650,
+          "width": 84,
+          "height": 20,
+          "top": 650,
+          "right": 1205.9921875,
+          "bottom": 670,
+          "left": 1121.9921875
+        },
+        "insideDrawer": false,
+        "name": "Volume",
+        "type": "range",
+        "role": null
+      },
+      "optionsNotice": [
+        {
+          "text": "Player options could not be saved. Your saved queue is unchanged.Retry saving options",
+          "rect": {
+            "x": 232,
+            "y": 556,
+            "width": 1024,
+            "height": 48,
+            "top": 556,
+            "right": 1256,
+            "bottom": 604,
+            "left": 232
+          },
+          "buttons": [
+            {
+              "name": "Retry saving options",
+              "active": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null
+            }
+          ]
+        }
+      ],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": true,
+        "repeat": "off"
+      },
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "held": [],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792328909926,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328913621,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328941836,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328968701,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329008663,
+          "mode": "fail"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-newer-failure",
+      "rawSha256": "7ee8f2eb0c007cd59a07f7c89aefa846454df84a15b9545b7652a039df915ab3",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1121.9921875,
+          "y": 650,
+          "width": 84,
+          "height": 20,
+          "top": 650,
+          "right": 1205.9921875,
+          "bottom": 670,
+          "left": 1121.9921875
+        },
+        "insideDrawer": false,
+        "name": "Volume",
+        "type": "range",
+        "role": null
+      },
+      "optionsNotice": [
+        {
+          "text": "Player options could not be saved. Your saved queue is unchanged.Retry saving options",
+          "rect": {
+            "x": 232,
+            "y": 556,
+            "width": 1024,
+            "height": 48,
+            "top": 556,
+            "right": 1256,
+            "bottom": 604,
+            "left": 232
+          },
+          "buttons": [
+            {
+              "name": "Retry saving options",
+              "active": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null
+            }
+          ]
+        }
+      ],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.43,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "held": [
+        "savePlaybackPreferences"
+      ],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792328909926,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328913621,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328941836,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328968701,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329008663,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329018687,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329046706,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329053929,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329069057,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329069571,
+          "mode": "fail"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-old-receipt-ignored",
+      "rawSha256": "97aac123e89671f312e6247032098776f155287873a7cf707b9287a82475c717",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1121.9921875,
+          "y": 650,
+          "width": 84,
+          "height": 20,
+          "top": 650,
+          "right": 1205.9921875,
+          "bottom": 670,
+          "left": 1121.9921875
+        },
+        "insideDrawer": false,
+        "name": "Volume",
+        "type": "range",
+        "role": null
+      },
+      "optionsNotice": [
+        {
+          "text": "Player options could not be saved. Your saved queue is unchanged.Retry saving options",
+          "rect": {
+            "x": 232,
+            "y": 556,
+            "width": 1024,
+            "height": 48,
+            "top": 556,
+            "right": 1256,
+            "bottom": 604,
+            "left": 232
+          },
+          "buttons": [
+            {
+              "name": "Retry saving options",
+              "active": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null
+            }
+          ]
+        }
+      ],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.43,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "held": [],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792328909926,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328913621,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328941836,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328968701,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329008663,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329018687,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329046706,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329053929,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329069057,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329069571,
+          "mode": "fail"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-pending",
+      "rawSha256": "4cd1b8821e87c2a556a1afb2f3170c5e1f19ff4392888e6f0f6a2b57456749f8",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1119.21875,
+          "y": 566,
+          "width": 122.78125,
+          "height": 28,
+          "top": 566,
+          "right": 1242,
+          "bottom": 594,
+          "left": 1119.21875
+        },
+        "insideDrawer": false,
+        "name": "Saving options\u2026",
+        "type": null,
+        "role": null
+      },
+      "optionsNotice": [
+        {
+          "text": "Saving player options\u2026Saving options\u2026",
+          "rect": {
+            "x": 232,
+            "y": 556,
+            "width": 1024,
+            "height": 48,
+            "top": 556,
+            "right": 1256,
+            "bottom": 604,
+            "left": 232
+          },
+          "buttons": [
+            {
+              "name": "Saving options\u2026",
+              "active": true,
+              "nativeDisabled": false,
+              "ariaDisabled": "true",
+              "busy": "true"
+            }
+          ]
+        }
+      ],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "held": [
+        "savePlaybackPreferences"
+      ],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792328909926,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328913621,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328941836,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-receipt-held",
+      "rawSha256": "7748d1134ca7bdd0099bd70fae21219e56fbea128fe259c80d6f65855df1da1b",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1119.21875,
+          "y": 566,
+          "width": 122.78125,
+          "height": 28,
+          "top": 566,
+          "right": 1242,
+          "bottom": 594,
+          "left": 1119.21875
+        },
+        "insideDrawer": false,
+        "name": "Saving options\u2026",
+        "type": null,
+        "role": null
+      },
+      "optionsNotice": [
+        {
+          "text": "Saving player options\u2026Saving options\u2026",
+          "rect": {
+            "x": 232,
+            "y": 556,
+            "width": 1024,
+            "height": 48,
+            "top": 556,
+            "right": 1256,
+            "bottom": 604,
+            "left": 232
+          },
+          "buttons": [
+            {
+              "name": "Saving options\u2026",
+              "active": true,
+              "nativeDisabled": false,
+              "ariaDisabled": "true",
+              "busy": "true"
+            }
+          ]
+        }
+      ],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.43,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "held": [
+        "savePlaybackPreferences"
+      ],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792328909926,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328913621,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328941836,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328968701,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329008663,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329018687,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329046706,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329053929,
+          "mode": "hold-after"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-retry-pending",
+      "rawSha256": "e22490ada1bdd410fa838b7b7afd8bd1dea8897210c655139143d1e2274a1bb6",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1119.21875,
+          "y": 566,
+          "width": 122.78125,
+          "height": 28,
+          "top": 566,
+          "right": 1242,
+          "bottom": 594,
+          "left": 1119.21875
+        },
+        "insideDrawer": false,
+        "name": "Saving options\u2026",
+        "type": null,
+        "role": null
+      },
+      "optionsNotice": [
+        {
+          "text": "Saving player options\u2026Saving options\u2026",
+          "rect": {
+            "x": 232,
+            "y": 556,
+            "width": 1024,
+            "height": 48,
+            "top": 556,
+            "right": 1256,
+            "bottom": 604,
+            "left": 232
+          },
+          "buttons": [
+            {
+              "name": "Saving options\u2026",
+              "active": true,
+              "nativeDisabled": false,
+              "ariaDisabled": "true",
+              "busy": "true"
+            }
+          ]
+        }
+      ],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "held": [
+        "savePlaybackPreferences"
+      ],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792328909926,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328913621,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328941836,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328968701,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-success",
+      "rawSha256": "4e8f7507fe775569bf040302bd53c013ba3b0f65e24e12df0b3abf3850a39b0d",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1121.9921875,
+          "y": 650,
+          "width": 84,
+          "height": 20,
+          "top": 650,
+          "right": 1205.9921875,
+          "bottom": 670,
+          "left": 1121.9921875
+        },
+        "insideDrawer": false,
+        "name": "Volume",
+        "type": "range",
+        "role": null
+      },
+      "optionsNotice": [],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": true,
+        "repeat": "off"
+      },
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "held": [],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792328909926,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328913621,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328941836,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328968701,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-tab-away",
+      "rawSha256": "458735ee9dcfb0608c56cd00778b6dbca26dbeb9e49447ae88b539590eed674c",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 537.9921875,
+          "y": 630.5,
+          "width": 32,
+          "height": 32,
+          "top": 630.5,
+          "right": 569.9921875,
+          "bottom": 662.5,
+          "left": 537.9921875
+        },
+        "insideDrawer": false,
+        "name": "Shuffle",
+        "type": null,
+        "role": null
+      },
+      "optionsNotice": [
+        {
+          "text": "Saving player options\u2026Saving options\u2026",
+          "rect": {
+            "x": 232,
+            "y": 556,
+            "width": 1024,
+            "height": 48,
+            "top": 556,
+            "right": 1256,
+            "bottom": 604,
+            "left": 232
+          },
+          "buttons": [
+            {
+              "name": "Saving options\u2026",
+              "active": false,
+              "nativeDisabled": false,
+              "ariaDisabled": "true",
+              "busy": "true"
+            }
+          ]
+        }
+      ],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": true,
+        "repeat": "off"
+      },
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "held": [
+        "savePlaybackPreferences"
+      ],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792328909926,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328913621,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328941836,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328968701,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329008663,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329018687,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "final-tab-complete",
+      "rawSha256": "00040ae3ae8c0a2384aca1fe705d16953f9d1e48d21956675584cec0fe909437",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 537.9921875,
+          "y": 630.5,
+          "width": 32,
+          "height": 32,
+          "top": 630.5,
+          "right": 569.9921875,
+          "bottom": 662.5,
+          "left": 537.9921875
+        },
+        "insideDrawer": false,
+        "name": "Shuffle",
+        "type": null,
+        "role": null
+      },
+      "optionsNotice": [],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.43,
+        "shuffle": true,
+        "repeat": "off"
+      },
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "held": [],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792328909926,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792328909927,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328913621,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328941836,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792328968701,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329008663,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329018687,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "order-before-restore",
+      "rawSha256": "7dd3db9be7491da2651a08c23a0ec3a3f6c11f5aa564f5fa7033a4630d8060ae",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 537.9921875,
+          "y": 630.5,
+          "width": 32,
+          "height": 32,
+          "top": 630.5,
+          "right": 569.9921875,
+          "bottom": 662.5,
+          "left": 537.9921875
+        },
+        "insideDrawer": false,
+        "name": "Shuffle",
+        "type": null,
+        "role": null
+      },
+      "optionsNotice": [
+        {
+          "text": "Player options could not be saved. Your saved queue is unchanged.Retry saving options",
+          "rect": {
+            "x": 232,
+            "y": 556,
+            "width": 1024,
+            "height": 48,
+            "top": 556,
+            "right": 1256,
+            "bottom": 604,
+            "left": 232
+          },
+          "buttons": [
+            {
+              "name": "Retry saving options",
+              "active": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null
+            }
+          ]
+        }
+      ],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "held": [],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329212361,
+          "mode": "fail"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "order-current-session-pending",
+      "rawSha256": "be04cea673da035b65a3c6cf4e761535242592ccac872c952809c86f014e9004",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1097.7578125,
+          "y": 566,
+          "width": 144.2421875,
+          "height": 28,
+          "top": 566,
+          "right": 1242,
+          "bottom": 594,
+          "left": 1097.7578125
+        },
+        "insideDrawer": false,
+        "name": "Retry saving options",
+        "type": null,
+        "role": null
+      },
+      "optionsNotice": [
+        {
+          "text": "Player options could not be saved. Your saved queue is unchanged.Retry saving options",
+          "rect": {
+            "x": 232,
+            "y": 556,
+            "width": 1024,
+            "height": 48,
+            "top": 556,
+            "right": 1256,
+            "bottom": 604,
+            "left": 232
+          },
+          "buttons": [
+            {
+              "name": "Retry saving options",
+              "active": true,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null
+            }
+          ]
+        }
+      ],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": true,
+        "repeat": "off"
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "held": [
+        "savePlayback#2",
+        "savePlayback#3",
+        "savePlayback#4",
+        "savePlayback#5",
+        "savePlayback#6",
+        "savePlayback#7",
+        "savePlayback#8"
+      ],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329212361,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329220309,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329220310,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329220310,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329220311,
+          "mode": "normal"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329220318,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329225320,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329227023,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329230319,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329235320,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329240319,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329245319,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329250319,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329255319,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "order-current-success",
+      "rawSha256": "208ba2f47025807521c262cc651e747b04690b8ba734109122457ffc3e476dac",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1121.9921875,
+          "y": 650,
+          "width": 84,
+          "height": 20,
+          "top": 650,
+          "right": 1205.9921875,
+          "bottom": 670,
+          "left": 1121.9921875
+        },
+        "insideDrawer": false,
+        "name": "Volume",
+        "type": "range",
+        "role": null
+      },
+      "optionsNotice": [],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": true,
+        "repeat": "off"
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "held": [],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329212361,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329220309,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329220310,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329220310,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329220311,
+          "mode": "normal"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329220318,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329225320,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329227023,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329230319,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329235320,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329240319,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329245319,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329250319,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329255319,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329260319,
+          "mode": "normal"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329265319,
+          "mode": "normal"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "order-newer-failure",
+      "rawSha256": "8163d6407da39665c0ed2c6e7f61b8f85c7e4d183b7e09e4ba791adeb76c77ac",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1097.7578125,
+          "y": 566,
+          "width": 144.2421875,
+          "height": 28,
+          "top": 566,
+          "right": 1242,
+          "bottom": 594,
+          "left": 1097.7578125
+        },
+        "insideDrawer": false,
+        "name": "Retry saving options",
+        "type": null,
+        "role": null
+      },
+      "optionsNotice": [
+        {
+          "text": "Player options could not be saved. Your saved queue is unchanged.Retry saving options",
+          "rect": {
+            "x": 232,
+            "y": 556,
+            "width": 1024,
+            "height": 48,
+            "top": 556,
+            "right": 1256,
+            "bottom": 604,
+            "left": 232
+          },
+          "buttons": [
+            {
+              "name": "Retry saving options",
+              "active": true,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null
+            }
+          ]
+        }
+      ],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": true,
+        "repeat": "off"
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "held": [
+        "savePlayback#1",
+        "savePlayback#2",
+        "savePlayback#3"
+      ],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329212361,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329220309,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329220310,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329220310,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329220311,
+          "mode": "normal"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329220318,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329225320,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329227023,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329230319,
+          "mode": "hold-after"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "order-old-held",
+      "rawSha256": "a6d33c77c32bce5dd822f02ab769d3e03ba1d1a933ca15061288ee6aef726732",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 621.9921875,
+          "y": 628.5,
+          "width": 36,
+          "height": 36,
+          "top": 628.5,
+          "right": 657.9921875,
+          "bottom": 664.5,
+          "left": 621.9921875
+        },
+        "insideDrawer": false,
+        "name": "Play",
+        "type": null,
+        "role": null
+      },
+      "optionsNotice": [
+        {
+          "text": "Player options could not be saved. Your saved queue is unchanged.Retry saving options",
+          "rect": {
+            "x": 232,
+            "y": 556,
+            "width": 1024,
+            "height": 48,
+            "top": 556,
+            "right": 1256,
+            "bottom": 604,
+            "left": 232
+          },
+          "buttons": [
+            {
+              "name": "Retry saving options",
+              "active": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null
+            }
+          ]
+        }
+      ],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": true,
+        "repeat": "off"
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "held": [
+        "savePlayback#1"
+      ],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329212361,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329220309,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329220310,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329220310,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329220311,
+          "mode": "normal"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329220318,
+          "mode": "hold-after"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "order-old-success-ignored",
+      "rawSha256": "c10852d46853363cfb8f900a8d6fb2b55fd54159a212401ba5526ae9519be806",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1097.7578125,
+          "y": 566,
+          "width": 144.2421875,
+          "height": 28,
+          "top": 566,
+          "right": 1242,
+          "bottom": 594,
+          "left": 1097.7578125
+        },
+        "insideDrawer": false,
+        "name": "Retry saving options",
+        "type": null,
+        "role": null
+      },
+      "optionsNotice": [
+        {
+          "text": "Player options could not be saved. Your saved queue is unchanged.Retry saving options",
+          "rect": {
+            "x": 232,
+            "y": 556,
+            "width": 1024,
+            "height": 48,
+            "top": 556,
+            "right": 1256,
+            "bottom": 604,
+            "left": 232
+          },
+          "buttons": [
+            {
+              "name": "Retry saving options",
+              "active": true,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null
+            }
+          ]
+        }
+      ],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": true,
+        "repeat": "off"
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "held": [
+        "savePlayback#2",
+        "savePlayback#3",
+        "savePlayback#4",
+        "savePlayback#5"
+      ],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329207937,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329212361,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329220309,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329220310,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329220310,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329220311,
+          "mode": "normal"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329220318,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329225320,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329227023,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329230319,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329235320,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329240319,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "session-before-restore",
+      "rawSha256": "754b6684e69936eb21982f1853ac0b346ab04651353dbe5f98a781b12e7fef2c",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 537.9921875,
+          "y": 630.5,
+          "width": 32,
+          "height": 32,
+          "top": 630.5,
+          "right": 569.9921875,
+          "bottom": 662.5,
+          "left": 537.9921875
+        },
+        "insideDrawer": false,
+        "name": "Shuffle",
+        "type": null,
+        "role": null
+      },
+      "optionsNotice": [
+        {
+          "text": "Player options could not be saved. Your saved queue is unchanged.Retry saving options",
+          "rect": {
+            "x": 232,
+            "y": 556,
+            "width": 1024,
+            "height": 48,
+            "top": 556,
+            "right": 1256,
+            "bottom": 604,
+            "left": 232
+          },
+          "buttons": [
+            {
+              "name": "Retry saving options",
+              "active": false,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null
+            }
+          ]
+        }
+      ],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": false,
+        "repeat": "off"
+      },
+      "player": "Your music, ready when you are",
+      "transport": "Play",
+      "position": 0,
+      "held": [],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792329105371,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329105371,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329105371,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329105372,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329118308,
+          "mode": "fail"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "session-matching-save-recovery",
+      "rawSha256": "60f37fd015feb051c3063c34e52b74509a96bee3b91f907be0c9bb8a5a6afd6a",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1121.9921875,
+          "y": 650,
+          "width": 84,
+          "height": 20,
+          "top": 650,
+          "right": 1205.9921875,
+          "bottom": 670,
+          "left": 1121.9921875
+        },
+        "insideDrawer": false,
+        "name": "Volume",
+        "type": "range",
+        "role": null
+      },
+      "optionsNotice": [],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": true,
+        "repeat": "off"
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "held": [
+        "savePlayback",
+        "savePlayback",
+        "savePlayback",
+        "savePlayback",
+        "savePlayback",
+        "savePlayback",
+        "savePlayback",
+        "savePlayback",
+        "savePlayback",
+        "savePlayback",
+        "savePlayback"
+      ],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792329105371,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329105371,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329105371,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329105372,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329118308,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329127872,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329127873,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329127873,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329127873,
+          "mode": "normal"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329127882,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329132883,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329137883,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329142883,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329144189,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329147883,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329152883,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329157883,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329162884,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329167886,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329172883,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329177884,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329182883,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329187884,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329192884,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329197883,
+          "mode": "hold"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329202883,
+          "mode": "hold"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    },
+    {
+      "name": "session-newer-retry-failure",
+      "rawSha256": "0d23378678c070b5ff268c37fc6bcbf1d5026d19f77252e4abb7cd34d3e4ee6b",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1097.7578125,
+          "y": 566,
+          "width": 144.2421875,
+          "height": 28,
+          "top": 566,
+          "right": 1242,
+          "bottom": 594,
+          "left": 1097.7578125
+        },
+        "insideDrawer": false,
+        "name": "Retry saving options",
+        "type": null,
+        "role": null
+      },
+      "optionsNotice": [
+        {
+          "text": "Player options could not be saved. Your saved queue is unchanged.Retry saving options",
+          "rect": {
+            "x": 232,
+            "y": 556,
+            "width": 1024,
+            "height": 48,
+            "top": 556,
+            "right": 1256,
+            "bottom": 604,
+            "left": 232
+          },
+          "buttons": [
+            {
+              "name": "Retry saving options",
+              "active": true,
+              "nativeDisabled": false,
+              "ariaDisabled": null,
+              "busy": null
+            }
+          ]
+        }
+      ],
+      "savedPlayback": {
+        "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+        "trackIds": [
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003ea",
+          "000000000000000000000000000003e9",
+          "000000000000000000000000000003eb"
+        ],
+        "currentIndex": 2,
+        "position": 12,
+        "volume": 0.42,
+        "shuffle": true,
+        "repeat": "off"
+      },
+      "player": "Song 00002",
+      "transport": "Play",
+      "position": 12,
+      "held": [
+        "savePlayback",
+        "savePlayback",
+        "savePlayback",
+        "savePlayback",
+        "savePlayback"
+      ],
+      "calls": [
+        {
+          "name": "song",
+          "at": 1792329105371,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329105371,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329105371,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329105372,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329118308,
+          "mode": "fail"
+        },
+        {
+          "name": "song",
+          "at": 1792329127872,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329127873,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329127873,
+          "mode": "normal"
+        },
+        {
+          "name": "song",
+          "at": 1792329127873,
+          "mode": "normal"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329127882,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329132883,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329137883,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329142883,
+          "mode": "hold-after"
+        },
+        {
+          "name": "savePlaybackPreferences",
+          "at": 1792329144189,
+          "mode": "fail"
+        },
+        {
+          "name": "savePlayback",
+          "at": 1792329147883,
+          "mode": "hold-after"
+        }
+      ],
+      "externalAttempts": 0,
+      "httpWrites": 0
+    }
+  ]
+}

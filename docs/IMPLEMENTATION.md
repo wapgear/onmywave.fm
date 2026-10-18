@@ -4,6 +4,8 @@ The historical sections below preserve earlier work and evidence. The current da
 
 ## Current dated evidence, 18 October 2026
 
+Player options-save Retry now awaits the actual preference-only write, retains its focused busy action, blocks repeats and conditionally hands success to Volume. The [options-save record](verification/2026-10-18-options-save-focus.json) has three baseline and 22 final native projections, including delayed-receipt guards and a later matching session-save recovery. Build/TypeScript, full ESLint, paired source review and scoped predicates pass. All 27 open acceptance rows remain open; successful authentication handoff and full Q06 reconciliation are next.
+
 Custom voice search retains its focused busy action, ignores repeated activation and leaves later navigation alone. The [voice-search record](verification/2026-10-18-voice-search-focus.json) contains one baseline and thirteen final native projections with controlled IPC results, no external requests, and unchanged paused playback. Build/TypeScript, full ESLint and scoped predicates pass. The current 218-definition inventory is refreshed. Q06 and all 27 open acceptance rows remain open.
 
 ## Current dated evidence, 17 October 2026
