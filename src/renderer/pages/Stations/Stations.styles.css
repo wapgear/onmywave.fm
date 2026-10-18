@@ -23,3 +23,5 @@
 .room-host-choice{display:flex;align-items:flex-end;gap:16px;margin-top:24px;flex-wrap:wrap}.room-host-choice .filter-select{flex:1;min-width:180px}.room-host-choice>button{font-size:12px}.room-preparation>.settings-workflow{margin-bottom:28px}
 
 .room-request-history p:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+
+.room-availability{min-width:0}.room-availability input[aria-disabled="true"]{cursor:progress}.room-progress-stop{min-width:0;max-width:100%}.room-progress-stop>button[aria-disabled="true"]{color:var(--muted);background:var(--surface);cursor:default}.room-progress-stop>button[aria-busy="true"]{cursor:progress}.room-progress-stop>button[aria-disabled="true"]:active{translate:0 0}

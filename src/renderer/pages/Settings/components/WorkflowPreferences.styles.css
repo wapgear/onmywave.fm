@@ -9,3 +9,5 @@
 .news-workflow-save[aria-disabled="true"],.news-workflow-save[aria-disabled="true"]:hover{cursor:default;color:var(--muted);background:var(--surface)}
 .news-workflow-save[aria-busy="true"],.news-workflow-save[aria-busy="true"]:hover{cursor:progress}
 .news-workflow-save[aria-disabled="true"]:active{translate:0 0}
+
+.news-workflow-action{margin:12px 0;max-width:100%}.news-workflow-action>button[aria-disabled="true"]{color:var(--muted);background:var(--surface);cursor:default}.news-workflow-action>button[aria-busy="true"]{cursor:progress}.news-workflow-action>button[aria-disabled="true"]:active{translate:0 0}

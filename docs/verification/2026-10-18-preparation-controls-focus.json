@@ -1,0 +1,6039 @@
+{
+  "date": "2026-10-18",
+  "scope": "Automatic Resume, Off in Settings and root progress, and profile availability focus/feedback. Partial Q06 evidence only.",
+  "decision": {
+    "Morgan": "Keep stable current-focused controls through mutation/readback with aria unavailable/busy and guarded actions, no completion focus. Share a synchronous lock across these actions, retain App-owned origin-tagged errors. Availability shows saved state plus requested direction pending. Root progress retention says on/off from saved state when a check ends.",
+    "Steve": "Independent proposal/challenge and final actual source review support; earlier saved-vs-requested checkbox reservation resolved by explicit pending direction. Final no blocker or reservation; did not replay native/build/lint.",
+    "Elena": "Independent proposal/challenge and final actual source review support; exact element state avoids render ref reads/stale owner. Final no blocker; did not rerun build/lint."
+  },
+  "checks": {
+    "build": "Final npm run build including TypeScript exit0, session12742 in originating turn; no source changes afterward. Session no longer retained when queried during documentation.",
+    "lint": "Final npm run lint exit0, session36509 in originating turn. Initial lint found6 render ref reads, corrected before final build and all final native runs. Session no longer retained when queried during documentation.",
+    "nativeInput": "CUA native app at1280x720, normal app zoom1; screenshots visually inspected inline. Read-only Playwright/main/storage observation. No DOM input.",
+    "snapshotCounts": {
+      "baseline": 5,
+      "settingsAndAvailability": 23,
+      "progressOffSuccess": 5,
+      "progressNaturalCompletionAndOffFailure": 6
+    },
+    "predicates": "Parsed all snapshots; assertions passed for baseline BODY loss, native enabled exact focused actions, pending aria state, held readback, saved availability value, preserved draft4/saved3 after Off, single persistent errors, real running/no-news/interrupted workflow states, normal Tab/blur, unchanged paused playback, zero external/HTTP writes.",
+    "timedSourceExperiment": "First root-progress experiment held fetch and hit normal source timeout before interaction; progress-success.json is an experiment report, not a root-Off pass. Three raw snapshots retained by hashes separately. Replaced fixture hold with cancellable pre-feed NewsService.script gate before source timeout. No production change from this experiment.",
+    "availabilityAttempts": "3 actual setRoomProfileEnabled calls incl pre-operation failure, explicit retry to false, restore true.",
+    "settingsAttempts": "2 workflow resume calls and2 Off calls, each incl injected pre-operation failure and explicit retry.",
+    "progressAttempts": "One actual Resume and one Off per progress run. Success aborts actual running workflow; failure run releases synthetic empty RSS first, persists no-news while Off remains held, then fails Off before operation and preserves on state/error after Tab."
+  },
+  "fixture": {
+    "directory": "/private/tmp/automatic-controls-focus-current",
+    "rendererAndPreload": "Production final renderer/preload. Actual copied instrumented main/storage; no production main source changed.",
+    "pausedPhase": "paused-bootstrap.mjs, paused-observe.cjs and timed-source-main.js are preserved bytes for baseline/settings.",
+    "progressPhase": "bootstrap.mjs and observe.cjs with out/main/index.js pre-feed cancellable gate; stopped automatic interval, explicit actual scheduler tick, synthetic empty feed only when released.",
+    "isolation": "Disposable safeStorage/catalog, null shared-key adapter, placeholder local provider keys solely to exercise real readiness; all external requests blocked. No provider output or paid request stubbed as success. Muted media; paused queue unchanged.",
+    "cleanup": "All owned observer apps and catalog stopped; sessions76365 and66189 exit0, catalog69885 exit143 after exact PID31542 command verification."
+  },
+  "sourceSha256": {
+    "src/renderer/pages/Stations/Stations.page.tsx": "17bbbd080b04d2ad8269aa219a4bf8e9fb89ec8576190ed638f7c35367a7b0fb",
+    "src/renderer/pages/Stations/Stations.styles.css": "466168f6d85b3689ee3528140f1397c658a4ede5706924f620bbe26c76f9b823",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": "c4ad3a4578a806ddde343831a2e2015bd85f9321a9c0d0f23ee3c79b7d1461e8",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.styles.css": "6f10a91b993b79069d2ecfba2669e6d0d77077ff97ee60c7fc6aec799dbcba57"
+  },
+  "bundleHashes": {
+    "out/renderer/assets/index-DUKO6jtP.js": "8f019b1c6053551b30ee50e4948bdb1a47c221fa838be7e53e5ced6abf68faf6",
+    "out/renderer/assets/index-qAC2rWCH.css": "cbc8793786f7a751dcb70b7e4c4944622484a02052f4e1f6a131f3224c9cf632"
+  },
+  "baselineBundleHashes": {
+    "out/renderer/assets/index-B3NzFrQU.js": "6a8760580a1b2a8a4d35ba2263f3f61459a0100b3a12b3cf3691a7a6cbb15d27",
+    "out/renderer/assets/index-DvtzGWPT.css": "51298ba805bf80a3e9657a68e5acdb0b62a0ddad2119c7302bfda7a652283059"
+  },
+  "productionPreloadSha256": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb",
+  "fixtureHashes": {
+    "paused-bootstrap.mjs": "9b4763dcc735b485381f17ff668f9dc48914e790d3d155f182bcc766f7f7c158",
+    "paused-observe.cjs": "11c7afab077552ee861a66b5360946ad34d2a48a90c2534155c8b79ba9f2381d",
+    "timed-source-main.js": "f3d043a00aac5a2bec9741c3cdb783a883789a7dd705fd838980879f22a481c5",
+    "bootstrap.mjs": "8783de43de6c7f006927d38f12b1908e9b7a346f66adf2f2911588d45321c369",
+    "observe.cjs": "085fe933bcc49f0339aaf419a1a37deaa95e9859ad1267fe4cf592d91e6ee086",
+    "out/main/index.js": "13df7337bfd0d8ff862f442e27b5dda26b5203de5db2207bb3ae71825d508a8b",
+    "server.mjs": "33b1beafab299247920af0bee234c85d500ecb207a2527bf3c25a2feb9dcc7da",
+    "capture.py": "83193e9b53ecf266123a48c24d779d6a69da2c59d5f232cf0e281c199eb0771e"
+  },
+  "reports": {
+    "before": {
+      "rawSha256": "4dbeebe2366ad88cbb8c8e14c4f8d38c93f6501080320d73b88d31c0f0353cc9",
+      "result": "observed",
+      "errors": []
+    },
+    "final": {
+      "rawSha256": "b13d7bda13d9ff5386451ed2465fa5d842f23ecd33a0cf2004fa512c9520ca2c",
+      "result": "observed",
+      "errors": []
+    },
+    "progress-success": {
+      "rawSha256": "f3091ebed287eb59ab674ba06c6acbcb4c39cacb4cace295fcc284c270b8537a",
+      "result": "observed",
+      "errors": []
+    },
+    "progress-final": {
+      "rawSha256": "140a499557a1da00654fdda28d26cad25ac7cd1d53ca45f3836ba7193c2bad43",
+      "result": "observed",
+      "errors": []
+    },
+    "progress-failure": {
+      "rawSha256": "71c971201cd3c8dc9a8829f09457f3a052d3862037127b8046697ea63c233e42",
+      "result": "observed",
+      "errors": []
+    }
+  },
+  "timedSourceExperimentHashes": {
+    "progress-resumed-due": "f944e1e5b2f7f98316161144c911ad5dcd074d2d43766cec880724c22fec411a",
+    "progress-source-held": "c9400b3a515d6d1a514a0c77b16336645099836f14d0af9075accbd0e1035923",
+    "progress-source-timeout": "62c4b087754855188500398d3f4f91d1202c0b3bf1768b8884b8381c223bef07"
+  },
+  "savedPlayback": {
+    "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+    "trackIds": [
+      "000000000000000000000000000003e9",
+      "000000000000000000000000000003ea",
+      "000000000000000000000000000003e9",
+      "000000000000000000000000000003eb"
+    ],
+    "currentIndex": 2,
+    "position": 12,
+    "volume": 0.42,
+    "shuffle": false,
+    "repeat": "off"
+  },
+  "snapshots": {
+    "baseline": [
+      {
+        "name": "before-availability-pending",
+        "rawSha256": "a71b2854a002dfab0c2c34cda291337af1cf1bcd716d89e217a19f831219e441",
+        "observedAt": 1792319561961,
+        "focus": {
+          "tag": "BODY",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 720,
+            "top": 0,
+            "right": 1280,
+            "bottom": 720,
+            "left": 0
+          },
+          "insideDrawer": false,
+          "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedNews bucketSetup profileMy room \u00b7 ActiveSave as newAdvanced room optionsMake this profile available for DJ playback and preparationUpdating room settings\u2026 You can keep browsing and listening.Choose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.Automatic preparation turned off for My room. Other unsaved edits are kept.News bucketSettingsSaved audioYour radioWhat your DJ will saySee what is ready to hear, what was prepared, and where each story came from.DJ playback is offPlayback is off. The ready queue below remains available for this profile.My roomAutomatic news preparationNews settingsPreparation off. Saved recordings remain available. Enable news preparation in News settings.Scheduled checks started today0 / 8Automatic recordings saved today0 / 3Ready for this profile0Only scheduled preparation is counted for this profile in your Mac's local day. Checks can use paid text generation even when no recording is made.No scheduled check has been recorded for this profile yet.PlaybackNext DJ breakAutomatic DJ playback is offStories prepared for this profile stay visible in its ready queue below.Saved newsReady for My room0 recordingsThese recordings match your current setup and are fresh enough to play. Older and already heard stories stay out. The DJ chooses one when a break is due.No fresh matching recordings are ready for this profile. Set up news preparationIn preparationDrafts for My room0No drafts are waiting for audio.Article historyReviewed across all profiles0 storiesReviewed stories are excluded from future news selection in every profile.No stories have been reviewed yet.News sources and hostNews sourcesManage sourcesFixture feedNews interests \u00b7 OptionalDJFixture hostChoose a DJFixture hostManage DJsMoodCuriousSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.Automatic news preparationPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running. Automatically prepare newsCheck sources every1 hour3 hours6 hoursNews selectionMajor developments onlyRelevant storiesMaximum automatic recordings per dayUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.Saving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.Save setupPreparation off. Saved recordings remain available. Enable news preparation in News settings.Testing tools \u00b7 Prepare a story manuallyManual testingPrepare a storyPrepare text, review it, then generate an audio take.Manual text preparation uses OpenAI outside automatic preparation limits. It can incur charges even when no recording is made.Prepare news textSaved audio takesListen or choose a take for a DJ break.RefreshNo saved audio yetPrepare a story to save your first recording.Song 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+          "type": null,
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 244,
+              "width": 16,
+              "height": 16,
+              "top": 244,
+              "right": 254,
+              "bottom": 260,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 1475.6484375,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 1475.6484375,
+              "right": 339.3203125,
+              "bottom": 1509.6484375,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [
+          "setRoomProfileEnabled"
+        ],
+        "operationCounts": {
+          "saveWorkflowDraft": 1,
+          "disableNewsPreparation": 1,
+          "setRoomProfileEnabled": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "before-off-pending",
+        "rawSha256": "fa79d629c437142f3d24401c3cad16c8d4fda3c11c5570d985d8c3a18bd82567",
+        "observedAt": 1792319541158,
+        "focus": {
+          "tag": "BODY",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 720,
+            "top": 0,
+            "right": 1280,
+            "bottom": 720,
+            "left": 0
+          },
+          "insideDrawer": false,
+          "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedNews bucketSetup profileMy room \u00b7 ActiveSave as newAdvanced room optionsMake this profile available for DJ playback and preparationUpdating room settings\u2026 You can keep browsing and listening.Choose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.News bucketSettingsSaved audioYour radioWhat your DJ will saySee what is ready to hear, what was prepared, and where each story came from.DJ playback is offPlayback is off. The ready queue below remains available for this profile.My roomAutomatic news preparationNews settingsPreparation on. Next check: 10/19/2026, 12:29:42 PM. The app must be running and your Mac awake.Scheduled checks started today0 / 8Automatic recordings saved today0 / 3Ready for this profile0Only scheduled preparation is counted for this profile in your Mac's local day. Checks can use paid text generation even when no recording is made.No scheduled check has been recorded for this profile yet.PlaybackNext DJ breakAutomatic DJ playback is offStories prepared for this profile stay visible in its ready queue below.Saved newsReady for My room0 recordingsThese recordings match your current setup and are fresh enough to play. Older and already heard stories stay out. The DJ chooses one when a break is due.No fresh matching recordings are ready for this profile. Set up news preparationIn preparationDrafts for My room0No drafts are waiting for audio.Article historyReviewed across all profiles0 storiesReviewed stories are excluded from future news selection in every profile.No stories have been reviewed yet.News sources and hostNews sourcesManage sourcesFixture feedNews interests \u00b7 OptionalDJFixture hostChoose a DJFixture hostManage DJsMoodCuriousSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.Automatic news preparationPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running. Automatically prepare newsCheck sources every1 hour3 hours6 hoursNews selectionMajor developments onlyRelevant storiesMaximum automatic recordings per dayUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.Saving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.Save setupTurning off\u2026Takes effect immediately and asks this profile's automatic check to stop. Other unsaved edits stay here. A provider request already sent may still complete.Preparation on. Next check: 10/19/2026, 12:29:42 PM. The app must be running and your Mac awake.Testing tools \u00b7 Prepare a story manuallyManual testingPrepare a storyPrepare text, review it, then generate an audio take.Manual text preparation uses OpenAI outside automatic preparation limits. It can incur charges even when no recording is made.Prepare news textSaved audio takesListen or choose a take for a DJ break.RefreshNo saved audio yetPrepare a story to save your first recording.Song 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+          "type": null,
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -861,
+              "width": 16,
+              "height": 16,
+              "top": -861,
+              "right": 254,
+              "bottom": -845,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 309.953125,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 309.953125,
+              "right": 339.3203125,
+              "bottom": 343.953125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turning off\u2026",
+            "disabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 343.953125,
+              "width": 111.75,
+              "height": 34,
+              "top": 343.953125,
+              "right": 349.75,
+              "bottom": 377.953125,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:29:42.832Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [
+          "disableNewsPreparation"
+        ],
+        "operationCounts": {
+          "saveWorkflowDraft": 1,
+          "disableNewsPreparation": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "before-off-success",
+        "rawSha256": "8c5823eb4137480dd5daa451f4b8ea9d334bdaed5513ce29aa188e0259eeae19",
+        "observedAt": 1792319548705,
+        "focus": {
+          "tag": "BODY",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 720,
+            "top": 0,
+            "right": 1280,
+            "bottom": 720,
+            "left": 0
+          },
+          "insideDrawer": false,
+          "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedNews bucketSetup profileMy room \u00b7 ActiveSave as newAdvanced room optionsMake this profile available for DJ playback and preparationChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.Automatic preparation turned off for My room. Other unsaved edits are kept.News bucketSettingsSaved audioYour radioWhat your DJ will saySee what is ready to hear, what was prepared, and where each story came from.DJ playback is offPlayback is off. The ready queue below remains available for this profile.My roomAutomatic news preparationNews settingsPreparation off. Saved recordings remain available. Enable news preparation in News settings.Scheduled checks started today0 / 8Automatic recordings saved today0 / 3Ready for this profile0Only scheduled preparation is counted for this profile in your Mac's local day. Checks can use paid text generation even when no recording is made.No scheduled check has been recorded for this profile yet.PlaybackNext DJ breakAutomatic DJ playback is offStories prepared for this profile stay visible in its ready queue below.Saved newsReady for My room0 recordingsThese recordings match your current setup and are fresh enough to play. Older and already heard stories stay out. The DJ chooses one when a break is due.No fresh matching recordings are ready for this profile. Set up news preparationIn preparationDrafts for My room0No drafts are waiting for audio.Article historyReviewed across all profiles0 storiesReviewed stories are excluded from future news selection in every profile.No stories have been reviewed yet.News sources and hostNews sourcesManage sourcesFixture feedNews interests \u00b7 OptionalDJFixture hostChoose a DJFixture hostManage DJsMoodCuriousSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.Automatic news preparationPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running. Automatically prepare newsCheck sources every1 hour3 hours6 hoursNews selectionMajor developments onlyRelevant storiesMaximum automatic recordings per dayUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.Saving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.Save setupPreparation off. Saved recordings remain available. Enable news preparation in News settings.Testing tools \u00b7 Prepare a story manuallyManual testingPrepare a storyPrepare text, review it, then generate an audio take.Manual text preparation uses OpenAI outside automatic preparation limits. It can incur charges even when no recording is made.Prepare news textSaved audio takesListen or choose a take for a DJ break.RefreshNo saved audio yetPrepare a story to save your first recording.Song 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+          "type": null,
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -774.5,
+              "width": 16,
+              "height": 16,
+              "top": -774.5,
+              "right": 254,
+              "bottom": -758.5,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 404.453125,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 404.453125,
+              "right": 339.3203125,
+              "bottom": 438.453125,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "saveWorkflowDraft": 1,
+          "disableNewsPreparation": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "before-resume-pending",
+        "rawSha256": "a4daceb93f9485b106c4efc55d308d0db73007eb1ebc409df5275f5cf79812f5",
+        "observedAt": 1792319503874,
+        "focus": {
+          "tag": "BODY",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 720,
+            "top": 0,
+            "right": 1280,
+            "bottom": 720,
+            "left": 0
+          },
+          "insideDrawer": false,
+          "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedNews bucketSetup profileMy room \u00b7 ActiveSave as newAdvanced room optionsMake this profile available for DJ playback and preparationUpdating room settings\u2026 You can keep browsing and listening.Choose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.News bucketSettingsSaved audioYour radioWhat your DJ will saySee what is ready to hear, what was prepared, and where each story came from.DJ playback is offPlayback is off. The ready queue below remains available for this profile.My roomAutomatic news preparationNews settingsPreparation paused. Fixture prior preparation failure. Preparation stays paused until you resume it in News settings.Scheduled checks started today0 / 8Automatic recordings saved today0 / 3Ready for this profile0Only scheduled preparation is counted for this profile in your Mac's local day. Checks can use paid text generation even when no recording is made.No scheduled check has been recorded for this profile yet.PlaybackNext DJ breakAutomatic DJ playback is offStories prepared for this profile stay visible in its ready queue below.Saved newsReady for My room0 recordingsThese recordings match your current setup and are fresh enough to play. Older and already heard stories stay out. The DJ chooses one when a break is due.No fresh matching recordings are ready for this profile. Set up news preparationIn preparationDrafts for My room0No drafts are waiting for audio.Article historyReviewed across all profiles0 storiesReviewed stories are excluded from future news selection in every profile.No stories have been reviewed yet.News sources and hostNews sourcesManage sourcesFixture feedNews interests \u00b7 OptionalDJFixture hostChoose a DJFixture hostManage DJsMoodCuriousSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.Automatic news preparationPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running. Automatically prepare newsCheck sources every1 hour3 hours6 hoursNews selectionMajor developments onlyRelevant storiesMaximum automatic recordings per dayUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.Saving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.Save setupTurn off automatic preparationTakes effect immediately and asks this profile's automatic check to stop. Other unsaved edits stay here. A provider request already sent may still complete.Preparation paused. Fixture prior preparation failure. Preparation stays paused until you resume it in News settings.Resume preparationTesting tools \u00b7 Prepare a story manuallyManual testingPrepare a storyPrepare text, review it, then generate an audio take.Manual text preparation uses OpenAI outside automatic preparation limits. It can incur charges even when no recording is made.Prepare news textSaved audio takesListen or choose a take for a DJ break.RefreshNo saved audio yetPrepare a story to save your first recording.Song 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+          "type": null,
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -895,
+              "width": 16,
+              "height": 16,
+              "top": -895,
+              "right": 254,
+              "bottom": -879,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 275.953125,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 275.953125,
+              "right": 339.3203125,
+              "bottom": 309.953125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 309.953125,
+              "width": 229.25,
+              "height": 34,
+              "top": 309.953125,
+              "right": 467.25,
+              "bottom": 343.953125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Resume preparation",
+            "disabled": true,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 427.53125,
+              "width": 161.109375,
+              "height": 34,
+              "top": 427.53125,
+              "right": 399.109375,
+              "bottom": 461.53125,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:29:42.832Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [
+          "saveWorkflowDraft"
+        ],
+        "operationCounts": {
+          "saveWorkflowDraft": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "before-resume-success",
+        "rawSha256": "f5104c3f23a1c6aa8ebb2b8a61c66037dc8c8837bfede2695af2550b53867dd7",
+        "observedAt": 1792319531031,
+        "focus": {
+          "tag": "BODY",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1280,
+            "height": 720,
+            "top": 0,
+            "right": 1280,
+            "bottom": 720,
+            "left": 0
+          },
+          "insideDrawer": false,
+          "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedNews bucketSetup profileMy room \u00b7 ActiveSave as newAdvanced room optionsMake this profile available for DJ playback and preparationChoose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.News bucketSettingsSaved audioYour radioWhat your DJ will saySee what is ready to hear, what was prepared, and where each story came from.DJ playback is offPlayback is off. The ready queue below remains available for this profile.My roomAutomatic news preparationNews settingsPreparation on. Next check: 10/19/2026, 12:29:42 PM. The app must be running and your Mac awake.Scheduled checks started today0 / 8Automatic recordings saved today0 / 3Ready for this profile0Only scheduled preparation is counted for this profile in your Mac's local day. Checks can use paid text generation even when no recording is made.No scheduled check has been recorded for this profile yet.PlaybackNext DJ breakAutomatic DJ playback is offStories prepared for this profile stay visible in its ready queue below.Saved newsReady for My room0 recordingsThese recordings match your current setup and are fresh enough to play. Older and already heard stories stay out. The DJ chooses one when a break is due.No fresh matching recordings are ready for this profile. Set up news preparationIn preparationDrafts for My room0No drafts are waiting for audio.Article historyReviewed across all profiles0 storiesReviewed stories are excluded from future news selection in every profile.No stories have been reviewed yet.News sources and hostNews sourcesManage sourcesFixture feedNews interests \u00b7 OptionalDJFixture hostChoose a DJFixture hostManage DJsMoodCuriousSave these choices with the preparation settings below. Automatic preparation stays off until you explicitly enable and save it.Automatic news preparationPrepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the window can leave the app running. Automatically prepare newsCheck sources every1 hour3 hours6 hoursNews selectionMajor developments onlyRelevant storiesMaximum automatic recordings per dayUp to 8 scheduled checks per local day for this profile. Checks can use paid text generation even when no story qualifies. Automatic voice generation stops at the recording limit. Manual preparation and voice previews are outside these limits and can use additional provider credits.Saving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer token. Music keeps playing while news is prepared.Save setupTurn off automatic preparationTakes effect immediately and asks this profile's automatic check to stop. Other unsaved edits stay here. A provider request already sent may still complete.Preparation on. Next check: 10/19/2026, 12:29:42 PM. The app must be running and your Mac awake.Testing tools \u00b7 Prepare a story manuallyManual testingPrepare a storyPrepare text, review it, then generate an audio take.Manual text preparation uses OpenAI outside automatic preparation limits. It can incur charges even when no recording is made.Prepare news textSaved audio takesListen or choose a take for a DJ break.RefreshNo saved audio yetPrepare a story to save your first recording.Song 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+          "type": null,
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -842.5,
+              "width": 16,
+              "height": 16,
+              "top": -842.5,
+              "right": 254,
+              "bottom": -826.5,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 309.7578125,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 309.7578125,
+              "right": 339.3203125,
+              "bottom": 343.7578125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 343.7578125,
+              "width": 229.25,
+              "height": 34,
+              "top": 343.7578125,
+              "right": 467.25,
+              "bottom": 377.7578125,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:29:42.832Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "saveWorkflowDraft": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      }
+    ],
+    "settingsAndAvailability": [
+      {
+        "name": "final-availability-failure",
+        "rawSha256": "3df6c5413c785d7dc368b7d7180b3eb23af38ec2e7eb86bd8bb6c4435dd4eb5f",
+        "observedAt": 1792319789647,
+        "focus": {
+          "tag": "INPUT",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 244,
+            "width": 16,
+            "height": 16,
+            "top": 244,
+            "right": 254,
+            "bottom": 260,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "",
+          "type": "checkbox",
+          "label": "Make this profile available for DJ playback and preparation",
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": true,
+            "rect": {
+              "x": 238,
+              "y": 244,
+              "width": 16,
+              "height": 16,
+              "top": 244,
+              "right": 254,
+              "bottom": 260,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Resume preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ],
+        "errors": [
+          {
+            "rect": {
+              "x": 238,
+              "y": 272,
+              "width": 960,
+              "height": 45.796875,
+              "top": 272,
+              "right": 1198,
+              "bottom": 317.796875,
+              "left": 238
+            },
+            "error": "setRoomProfileEnabled unavailable.",
+            "button": null
+          }
+        ],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:35:51.661Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "setRoomProfileEnabled": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-availability-pending",
+        "rawSha256": "c2708fcdb7ff1f7e46f6444658aed2bc569cff670ad74cf586d16fab368e490b",
+        "observedAt": 1792319775682,
+        "focus": {
+          "tag": "INPUT",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 244,
+            "width": 16,
+            "height": 16,
+            "top": 244,
+            "right": 254,
+            "bottom": 260,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "",
+          "type": "checkbox",
+          "label": "Make this profile available for DJ playback and preparation",
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "checked": true,
+            "active": true,
+            "rect": {
+              "x": 238,
+              "y": 244,
+              "width": 16,
+              "height": 16,
+              "top": 244,
+              "right": 254,
+              "bottom": 260,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Resume preparation",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:35:51.661Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [
+          "setRoomProfileEnabled"
+        ],
+        "operationCounts": {
+          "setRoomProfileEnabled": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-availability-readback",
+        "rawSha256": "5185909dfd7ccaea390d4d4fc31aabe2f363b37fbc6d93cf8290f0d24802f642",
+        "observedAt": 1792319818025,
+        "focus": {
+          "tag": "INPUT",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 244,
+            "width": 16,
+            "height": 16,
+            "top": 244,
+            "right": 254,
+            "bottom": 260,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "",
+          "type": "checkbox",
+          "label": "Make this profile available for DJ playback and preparation",
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "checked": true,
+            "active": true,
+            "rect": {
+              "x": 238,
+              "y": 244,
+              "width": 16,
+              "height": 16,
+              "top": 244,
+              "right": 254,
+              "bottom": 260,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Resume preparation",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": false,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:35:51.661Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [
+          "getLocalState"
+        ],
+        "operationCounts": {
+          "setRoomProfileEnabled": 2
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-availability-restored",
+        "rawSha256": "af98403c420209e656fa92e3c5190c6d46893ec80278ff0ba9adce22eb00fdfb",
+        "observedAt": 1792319839235,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 354.046875,
+            "y": 300.6953125,
+            "width": 78.9921875,
+            "height": 34,
+            "top": 300.6953125,
+            "right": 433.0390625,
+            "bottom": 334.6953125,
+            "left": 354.046875
+          },
+          "insideDrawer": false,
+          "name": "Settings",
+          "type": "button",
+          "role": "tab"
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 244,
+              "width": 16,
+              "height": 16,
+              "top": 244,
+              "right": 254,
+              "bottom": 260,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 1430.2578125,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 1430.2578125,
+              "right": 339.3203125,
+              "bottom": 1464.2578125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 1476.2578125,
+              "width": 229.25,
+              "height": 34,
+              "top": 1476.2578125,
+              "right": 467.25,
+              "bottom": 1510.2578125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Resume preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 1617.8359375,
+              "width": 161.109375,
+              "height": 34,
+              "top": 1617.8359375,
+              "right": 399.109375,
+              "bottom": 1651.8359375,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:35:51.661Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "setRoomProfileEnabled": 3
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-availability-retry-pending",
+        "rawSha256": "46b41511492d80c0be02d6924a3cfde3d8f7be7ad28d236839dc7a8f56bb99e0",
+        "observedAt": 1792319803780,
+        "focus": {
+          "tag": "INPUT",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 244,
+            "width": 16,
+            "height": 16,
+            "top": 244,
+            "right": 254,
+            "bottom": 260,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "",
+          "type": "checkbox",
+          "label": "Make this profile available for DJ playback and preparation",
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "checked": true,
+            "active": true,
+            "rect": {
+              "x": 238,
+              "y": 244,
+              "width": 16,
+              "height": 16,
+              "top": 244,
+              "right": 254,
+              "bottom": 260,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Resume preparation",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:35:51.661Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [
+          "setRoomProfileEnabled"
+        ],
+        "operationCounts": {
+          "setRoomProfileEnabled": 2
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-availability-success",
+        "rawSha256": "1a2140f8f24e6fef8966765f1f5f2f838cf9a65aeff9a8abe8b1a8a77c417e64",
+        "observedAt": 1792319825189,
+        "focus": {
+          "tag": "INPUT",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 244,
+            "width": 16,
+            "height": 16,
+            "top": 244,
+            "right": 254,
+            "bottom": 260,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "",
+          "type": "checkbox",
+          "label": "Make this profile available for DJ playback and preparation",
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": false,
+            "active": true,
+            "rect": {
+              "x": 238,
+              "y": 244,
+              "width": 16,
+              "height": 16,
+              "top": 244,
+              "right": 254,
+              "bottom": 260,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Review room options",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": false,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:35:51.661Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "setRoomProfileEnabled": 2
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-draft-before-off",
+        "rawSha256": "33b6518ca740642667480a4b724f5fa5a6efc67fd72ef1d2311fde4395f01b5c",
+        "observedAt": 1792319930511,
+        "focus": {
+          "tag": "INPUT",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 60.265625,
+            "width": 100,
+            "height": 38,
+            "top": 60.265625,
+            "right": 338,
+            "bottom": 98.265625,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "",
+          "type": "number",
+          "label": "Maximum automatic recordings per day",
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -894,
+              "width": 16,
+              "height": 16,
+              "top": -894,
+              "right": 254,
+              "bottom": -878,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 352.0546875,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 352.0546875,
+              "right": 339.3203125,
+              "bottom": 386.0546875,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 398.0546875,
+              "width": 229.25,
+              "height": 34,
+              "top": 398.0546875,
+              "right": 467.25,
+              "bottom": 432.0546875,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:35:51.661Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "04",
+            "checked": false,
+            "active": true
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "setRoomProfileEnabled": 3,
+          "saveWorkflowDraft": 2
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-initial",
+        "rawSha256": "6d5a3926e230480fb82674af0fec782103a471dfcd9a8ff61026bb2ab5db0e33",
+        "observedAt": 1792319762516,
+        "focus": {
+          "tag": "SUMMARY",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 215,
+            "width": 960,
+            "height": 17,
+            "top": 215,
+            "right": 1198,
+            "bottom": 232,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Advanced room options",
+          "type": null,
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 244,
+              "width": 16,
+              "height": 16,
+              "top": 244,
+              "right": 254,
+              "bottom": 260,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Resume preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:35:51.661Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {},
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-off-blurred",
+        "rawSha256": "c7a8f13a3aed833dd4bd0f24d7ba8f3296113d270636b29bec271e258aa25834",
+        "observedAt": 1792320038136,
+        "focus": {
+          "tag": "SUMMARY",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 489.5390625,
+            "width": 960,
+            "height": 30.5,
+            "top": 489.5390625,
+            "right": 1198,
+            "bottom": 520.0390625,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Testing tools \u00b7 Prepare a story manually",
+          "type": null,
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -887,
+              "width": 16,
+              "height": 16,
+              "top": -887,
+              "right": 254,
+              "bottom": -871,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 385.75,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 385.75,
+              "right": 339.3203125,
+              "bottom": 419.75,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "04",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "setRoomProfileEnabled": 3,
+          "saveWorkflowDraft": 2,
+          "disableNewsPreparation": 2
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-off-error-other-tab",
+        "rawSha256": "d5c03a371454fc058465e4c5ddc5f19a84b9a7c562066acb4bec5d860c8ab9cd",
+        "observedAt": 1792319970695,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 240,
+            "y": 332.4921875,
+            "width": 108.8984375,
+            "height": 34,
+            "top": 332.4921875,
+            "right": 348.8984375,
+            "bottom": 366.4921875,
+            "left": 240
+          },
+          "insideDrawer": false,
+          "name": "News bucket",
+          "type": "button",
+          "role": "tab"
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 244,
+              "width": 16,
+              "height": 16,
+              "top": 244,
+              "right": 254,
+              "bottom": 260,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ],
+        "errors": [
+          {
+            "rect": {
+              "x": 238,
+              "y": 262.6953125,
+              "width": 960,
+              "height": 45.796875,
+              "top": 262.6953125,
+              "right": 1198,
+              "bottom": 308.4921875,
+              "left": 238
+            },
+            "error": "Could not turn off preparation for My room. disableNewsPreparation unavailable.",
+            "button": null
+          }
+        ],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:35:51.661Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "04",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "setRoomProfileEnabled": 3,
+          "saveWorkflowDraft": 2,
+          "disableNewsPreparation": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-off-error-return",
+        "rawSha256": "5ffef1e9638edbde02e32e4a24e813cfd614205f0b660f9f70e42ed23a39f7fd",
+        "observedAt": 1792319981087,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 354.046875,
+            "y": 266.6953125,
+            "width": 78.9921875,
+            "height": 34,
+            "top": 266.6953125,
+            "right": 433.0390625,
+            "bottom": 300.6953125,
+            "left": 354.046875
+          },
+          "insideDrawer": false,
+          "name": "Settings",
+          "type": "button",
+          "role": "tab"
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 244,
+              "width": 16,
+              "height": 16,
+              "top": 244,
+              "right": 254,
+              "bottom": 260,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 1490.0546875,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 1490.0546875,
+              "right": 339.3203125,
+              "bottom": 1524.0546875,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 1536.0546875,
+              "width": 229.25,
+              "height": 34,
+              "top": 1536.0546875,
+              "right": 467.25,
+              "bottom": 1570.0546875,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [
+          {
+            "rect": {
+              "x": 238,
+              "y": 1582.0546875,
+              "width": 660,
+              "height": 45.796875,
+              "top": 1582.0546875,
+              "right": 898,
+              "bottom": 1627.8515625,
+              "left": 238
+            },
+            "error": "Could not turn off preparation for My room. disableNewsPreparation unavailable.",
+            "button": null
+          }
+        ],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:35:51.661Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "04",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "setRoomProfileEnabled": 3,
+          "saveWorkflowDraft": 2,
+          "disableNewsPreparation": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-off-failure",
+        "rawSha256": "05584ee61dc8b5c31c69a20f0363bcc3f4e9d2cf32745d9e6741454069deaf4f",
+        "observedAt": 1792319959225,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 251.5546875,
+            "width": 229.25,
+            "height": 34,
+            "top": 251.5546875,
+            "right": 467.25,
+            "bottom": 285.5546875,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Turn off automatic preparation",
+          "type": "button",
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -1040.5,
+              "width": 16,
+              "height": 16,
+              "top": -1040.5,
+              "right": 254,
+              "bottom": -1024.5,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 205.5546875,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 205.5546875,
+              "right": 339.3203125,
+              "bottom": 239.5546875,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": true,
+            "rect": {
+              "x": 238,
+              "y": 251.5546875,
+              "width": 229.25,
+              "height": 34,
+              "top": 251.5546875,
+              "right": 467.25,
+              "bottom": 285.5546875,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [
+          {
+            "rect": {
+              "x": 238,
+              "y": 297.5546875,
+              "width": 660,
+              "height": 45.796875,
+              "top": 297.5546875,
+              "right": 898,
+              "bottom": 343.3515625,
+              "left": 238
+            },
+            "error": "Could not turn off preparation for My room. disableNewsPreparation unavailable.",
+            "button": null
+          }
+        ],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:35:51.661Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "04",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "setRoomProfileEnabled": 3,
+          "saveWorkflowDraft": 2,
+          "disableNewsPreparation": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-off-pending",
+        "rawSha256": "fd887a611b2561eddc357d3e2bec096a9261458b8d0a4db7befe021031049835",
+        "observedAt": 1792319942819,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 398.25,
+            "width": 111.75,
+            "height": 34,
+            "top": 398.25,
+            "right": 349.75,
+            "bottom": 432.25,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Turning off\u2026",
+          "type": "button",
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -912.5,
+              "width": 16,
+              "height": 16,
+              "top": -912.5,
+              "right": 254,
+              "bottom": -896.5,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 352.25,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 352.25,
+              "right": 339.3203125,
+              "bottom": 386.25,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turning off\u2026",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": true,
+            "rect": {
+              "x": 238,
+              "y": 398.25,
+              "width": 111.75,
+              "height": 34,
+              "top": 398.25,
+              "right": 349.75,
+              "bottom": 432.25,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:35:51.661Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "04",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [
+          "disableNewsPreparation"
+        ],
+        "operationCounts": {
+          "setRoomProfileEnabled": 3,
+          "saveWorkflowDraft": 2,
+          "disableNewsPreparation": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-off-readback",
+        "rawSha256": "39474cbeceb0af3a5e48bc45270fcf379510c849b865840bf18c761058e0ab95",
+        "observedAt": 1792320007178,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 313.25,
+            "width": 111.75,
+            "height": 34,
+            "top": 313.25,
+            "right": 349.75,
+            "bottom": 347.25,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Turning off\u2026",
+          "type": "button",
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -997.5,
+              "width": 16,
+              "height": 16,
+              "top": -997.5,
+              "right": 254,
+              "bottom": -981.5,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 267.25,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 267.25,
+              "right": 339.3203125,
+              "bottom": 301.25,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turning off\u2026",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": true,
+            "rect": {
+              "x": 238,
+              "y": 313.25,
+              "width": 111.75,
+              "height": 34,
+              "top": 313.25,
+              "right": 349.75,
+              "bottom": 347.25,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "04",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [
+          "getLocalState"
+        ],
+        "operationCounts": {
+          "setRoomProfileEnabled": 3,
+          "saveWorkflowDraft": 2,
+          "disableNewsPreparation": 2
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-off-retry-pending",
+        "rawSha256": "a9fe5fb46c97fa358ae337e2a774b5a310c0555449489037a1fad734edde1444",
+        "observedAt": 1792319994485,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 313.25,
+            "width": 111.75,
+            "height": 34,
+            "top": 313.25,
+            "right": 349.75,
+            "bottom": 347.25,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Turning off\u2026",
+          "type": "button",
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -997.5,
+              "width": 16,
+              "height": 16,
+              "top": -997.5,
+              "right": 254,
+              "bottom": -981.5,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 267.25,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 267.25,
+              "right": 339.3203125,
+              "bottom": 301.25,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turning off\u2026",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": true,
+            "rect": {
+              "x": 238,
+              "y": 313.25,
+              "width": 111.75,
+              "height": 34,
+              "top": 313.25,
+              "right": 349.75,
+              "bottom": 347.25,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:35:51.661Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "04",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [
+          "disableNewsPreparation"
+        ],
+        "operationCounts": {
+          "setRoomProfileEnabled": 3,
+          "saveWorkflowDraft": 2,
+          "disableNewsPreparation": 2
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-off-success",
+        "rawSha256": "6eb9ebf75a72180798c02f73184139c08707eb54b78c55e7b8927fbe0312d45f",
+        "observedAt": 1792320015584,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 336.25,
+            "width": 197.0703125,
+            "height": 34,
+            "top": 336.25,
+            "right": 435.0703125,
+            "bottom": 370.25,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Automatic preparation off",
+          "type": "button",
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -982.5,
+              "width": 16,
+              "height": 16,
+              "top": -982.5,
+              "right": 254,
+              "bottom": -966.5,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 290.25,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 290.25,
+              "right": 339.3203125,
+              "bottom": 324.25,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Automatic preparation off",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": true,
+            "rect": {
+              "x": 238,
+              "y": 336.25,
+              "width": 197.0703125,
+              "height": 34,
+              "top": 336.25,
+              "right": 435.0703125,
+              "bottom": 370.25,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "04",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "setRoomProfileEnabled": 3,
+          "saveWorkflowDraft": 2,
+          "disableNewsPreparation": 2
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-resume-blurred",
+        "rawSha256": "4a871b56dee7a23c76fcead0c85f9f8dea27054085aea093a12d91ebecd31c9f",
+        "observedAt": 1792319921789,
+        "focus": {
+          "tag": "SUMMARY",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 489.3359375,
+            "width": 960,
+            "height": 30.5,
+            "top": 489.3359375,
+            "right": 1198,
+            "bottom": 519.8359375,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Testing tools \u00b7 Prepare a story manually",
+          "type": null,
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -866.5,
+              "width": 16,
+              "height": 16,
+              "top": -866.5,
+              "right": 254,
+              "bottom": -850.5,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 285.7578125,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 285.7578125,
+              "right": 339.3203125,
+              "bottom": 319.7578125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 331.7578125,
+              "width": 229.25,
+              "height": 34,
+              "top": 331.7578125,
+              "right": 467.25,
+              "bottom": 365.7578125,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:35:51.661Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "setRoomProfileEnabled": 3,
+          "saveWorkflowDraft": 2
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-resume-error-return",
+        "rawSha256": "58d0a0695fe782fd1a2524bd62e82ec409ce7e5c6fd7262cea721fd768925ac5",
+        "observedAt": 1792319875640,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 16,
+            "y": 263.5,
+            "width": 176,
+            "height": 44,
+            "top": 263.5,
+            "right": 192,
+            "bottom": 307.5,
+            "left": 16
+          },
+          "insideDrawer": false,
+          "name": "News bucket",
+          "type": null,
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -970,
+              "width": 16,
+              "height": 16,
+              "top": -970,
+              "right": 254,
+              "bottom": -954,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 182.2578125,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 182.2578125,
+              "right": 339.3203125,
+              "bottom": 216.2578125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 228.2578125,
+              "width": 229.25,
+              "height": 34,
+              "top": 228.2578125,
+              "right": 467.25,
+              "bottom": 262.2578125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Resume preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 369.8359375,
+              "width": 161.109375,
+              "height": 34,
+              "top": 369.8359375,
+              "right": 399.109375,
+              "bottom": 403.8359375,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [
+          {
+            "rect": {
+              "x": 238,
+              "y": 415.8359375,
+              "width": 660,
+              "height": 45.796875,
+              "top": 415.8359375,
+              "right": 898,
+              "bottom": 461.6328125,
+              "left": 238
+            },
+            "error": "saveWorkflowDraft unavailable.",
+            "button": null
+          }
+        ],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:35:51.661Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "setRoomProfileEnabled": 3,
+          "saveWorkflowDraft": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-resume-failure",
+        "rawSha256": "36ccc3f6ad7cc644e6e0c1c6f844948ebe811a6720daa811a1cc2972de03cf71",
+        "observedAt": 1792319865452,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 369.8359375,
+            "width": 161.109375,
+            "height": 34,
+            "top": 369.8359375,
+            "right": 399.109375,
+            "bottom": 403.8359375,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Resume preparation",
+          "type": "button",
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -1004,
+              "width": 16,
+              "height": 16,
+              "top": -1004,
+              "right": 254,
+              "bottom": -988,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 182.2578125,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 182.2578125,
+              "right": 339.3203125,
+              "bottom": 216.2578125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 228.2578125,
+              "width": 229.25,
+              "height": 34,
+              "top": 228.2578125,
+              "right": 467.25,
+              "bottom": 262.2578125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Resume preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": true,
+            "rect": {
+              "x": 238,
+              "y": 369.8359375,
+              "width": 161.109375,
+              "height": 34,
+              "top": 369.8359375,
+              "right": 399.109375,
+              "bottom": 403.8359375,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [
+          {
+            "rect": {
+              "x": 238,
+              "y": 415.8359375,
+              "width": 660,
+              "height": 45.796875,
+              "top": 415.8359375,
+              "right": 898,
+              "bottom": 461.6328125,
+              "left": 238
+            },
+            "error": "saveWorkflowDraft unavailable.",
+            "button": null
+          }
+        ],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:35:51.661Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "setRoomProfileEnabled": 3,
+          "saveWorkflowDraft": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-resume-pending",
+        "rawSha256": "e861875aa813b1126becc362ad85639a6becb5767cbf8d852026ae339117a939",
+        "observedAt": 1792319855209,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 427.53125,
+            "width": 105.25,
+            "height": 34,
+            "top": 427.53125,
+            "right": 343.25,
+            "bottom": 461.53125,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Resuming\u2026",
+          "type": "button",
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -965,
+              "width": 16,
+              "height": 16,
+              "top": -965,
+              "right": 254,
+              "bottom": -949,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 239.953125,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 239.953125,
+              "right": 339.3203125,
+              "bottom": 273.953125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 285.953125,
+              "width": 229.25,
+              "height": 34,
+              "top": 285.953125,
+              "right": 467.25,
+              "bottom": 319.953125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Resuming\u2026",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": true,
+            "rect": {
+              "x": 238,
+              "y": 427.53125,
+              "width": 105.25,
+              "height": 34,
+              "top": 427.53125,
+              "right": 343.25,
+              "bottom": 461.53125,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:35:51.661Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [
+          "saveWorkflowDraft"
+        ],
+        "operationCounts": {
+          "setRoomProfileEnabled": 3,
+          "saveWorkflowDraft": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-resume-readback",
+        "rawSha256": "b99b59d9fc76a6fe1703eea7fe831e7aade98b128d56744a383f7fe312832089",
+        "observedAt": 1792319903826,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 427.53125,
+            "width": 105.25,
+            "height": 34,
+            "top": 427.53125,
+            "right": 343.25,
+            "bottom": 461.53125,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Resuming\u2026",
+          "type": "button",
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -931,
+              "width": 16,
+              "height": 16,
+              "top": -931,
+              "right": 254,
+              "bottom": -915,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 239.953125,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 239.953125,
+              "right": 339.3203125,
+              "bottom": 273.953125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 285.953125,
+              "width": 229.25,
+              "height": 34,
+              "top": 285.953125,
+              "right": 467.25,
+              "bottom": 319.953125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Resuming\u2026",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": true,
+            "rect": {
+              "x": 238,
+              "y": 427.53125,
+              "width": 105.25,
+              "height": 34,
+              "top": 427.53125,
+              "right": 343.25,
+              "bottom": 461.53125,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:35:51.661Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [
+          "getLocalState"
+        ],
+        "operationCounts": {
+          "setRoomProfileEnabled": 3,
+          "saveWorkflowDraft": 2
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-resume-retry-pending",
+        "rawSha256": "1bfd036c6b9630391e92ae0f590a4c56c8eb9f99bb908b734dca931f65576621",
+        "observedAt": 1792319889464,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 427.53125,
+            "width": 105.25,
+            "height": 34,
+            "top": 427.53125,
+            "right": 343.25,
+            "bottom": 461.53125,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Resuming\u2026",
+          "type": "button",
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -931,
+              "width": 16,
+              "height": 16,
+              "top": -931,
+              "right": 254,
+              "bottom": -915,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 239.953125,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 239.953125,
+              "right": 339.3203125,
+              "bottom": 273.953125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 285.953125,
+              "width": 229.25,
+              "height": 34,
+              "top": 285.953125,
+              "right": 467.25,
+              "bottom": 319.953125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Resuming\u2026",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": true,
+            "rect": {
+              "x": 238,
+              "y": 427.53125,
+              "width": 105.25,
+              "height": 34,
+              "top": 427.53125,
+              "right": 343.25,
+              "bottom": 461.53125,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:35:51.661Z",
+            "newsWorkflowError": "Fixture prior preparation failure.",
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [
+          "saveWorkflowDraft"
+        ],
+        "operationCounts": {
+          "setRoomProfileEnabled": 3,
+          "saveWorkflowDraft": 2
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "final-resume-success",
+        "rawSha256": "211d8e1293bc0e829fb88119d7c69b51b06a6c153c1de45bcaa0d5dbd486b473",
+        "observedAt": 1792319913778,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 427.3359375,
+            "width": 166.2890625,
+            "height": 34,
+            "top": 427.3359375,
+            "right": 404.2890625,
+            "bottom": 461.3359375,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Preparation resumed",
+          "type": "button",
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -912.5,
+              "width": 16,
+              "height": 16,
+              "top": -912.5,
+              "right": 254,
+              "bottom": -896.5,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 239.7578125,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 239.7578125,
+              "right": 339.3203125,
+              "bottom": 273.7578125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 285.7578125,
+              "width": 229.25,
+              "height": 34,
+              "top": 285.7578125,
+              "right": 467.25,
+              "bottom": 319.7578125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Preparation resumed",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": true,
+            "rect": {
+              "x": 238,
+              "y": 427.3359375,
+              "width": 166.2890625,
+              "height": 34,
+              "top": 427.3359375,
+              "right": 404.2890625,
+              "bottom": 461.3359375,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-19T10:35:51.661Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "setRoomProfileEnabled": 3,
+          "saveWorkflowDraft": 2
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      }
+    ],
+    "progressOffSuccess": [
+      {
+        "name": "progress-final-blurred",
+        "rawSha256": "67f4ba219ee14f31d68d957fa512354078d55d0ac672792e7302bfe5d46492af",
+        "observedAt": 1792320431977,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 537.9921875,
+            "y": 630.5,
+            "width": 32,
+            "height": 32,
+            "top": 630.5,
+            "right": 569.9921875,
+            "bottom": 662.5,
+            "left": 537.9921875
+          },
+          "insideDrawer": false,
+          "name": "Shuffle",
+          "type": null,
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -883,
+              "width": 16,
+              "height": 16,
+              "top": -883,
+              "right": 254,
+              "bottom": -867,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": false,
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            },
+            "newsLastRun": {
+              "requestId": "1f6633ed-0cc6-4c2e-93eb-9315ae67d6b8",
+              "startedAt": "2026-10-18T10:43:45.035Z",
+              "outcome": "interrupted",
+              "roomName": "My room",
+              "finishedAt": "2026-10-18T10:44:25.993Z",
+              "message": "Preparation stopped. A provider request may have been charged. Start an explicit new attempt to try again."
+            },
+            "newsAssessmentDate": "2026-10-18",
+            "newsAssessmentsToday": 1
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "saveWorkflowDraft": 1,
+          "disableNewsPreparation": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "progress-final-off-pending",
+        "rawSha256": "b3b7ad54f418bb44997c74d084abb257462b0fb080ec601971968eee6c76a7a6",
+        "observedAt": 1792320265872,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 1080.2109375,
+            "y": 477.5234375,
+            "width": 99.7890625,
+            "height": 34,
+            "top": 477.5234375,
+            "right": 1180,
+            "bottom": 511.5234375,
+            "left": 1080.2109375
+          },
+          "insideDrawer": false,
+          "name": "Turning off\u2026",
+          "type": null,
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -978.5,
+              "width": 16,
+              "height": 16,
+              "top": -978.5,
+              "right": 254,
+              "bottom": -962.5,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Cancel this check for My room",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 866.6640625,
+              "y": 477.5234375,
+              "width": 201.546875,
+              "height": 34,
+              "top": 477.5234375,
+              "right": 1068.2109375,
+              "bottom": 511.5234375,
+              "left": 866.6640625
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turning off\u2026",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": true,
+            "rect": {
+              "x": 1080.2109375,
+              "y": 477.5234375,
+              "width": 99.7890625,
+              "height": 34,
+              "top": 477.5234375,
+              "right": 1180,
+              "bottom": 511.5234375,
+              "left": 1080.2109375
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turning off\u2026",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-18T13:43:45.035Z",
+            "newsWorkflowPaused": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            },
+            "newsLastRun": {
+              "requestId": "1f6633ed-0cc6-4c2e-93eb-9315ae67d6b8",
+              "startedAt": "2026-10-18T10:43:45.035Z",
+              "outcome": "running",
+              "roomName": "My room"
+            },
+            "newsAssessmentDate": "2026-10-18",
+            "newsAssessmentsToday": 1
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [
+          "disableNewsPreparation"
+        ],
+        "operationCounts": {
+          "saveWorkflowDraft": 1,
+          "disableNewsPreparation": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "progress-final-off-success",
+        "rawSha256": "54059b72ebf9db13c133f058a9bc7b5f622f4611cbb98e5bccd0f0ee037aeb26",
+        "observedAt": 1792320275270,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 1007.0859375,
+            "y": 496.0234375,
+            "width": 172.9140625,
+            "height": 34,
+            "top": 496.0234375,
+            "right": 1180,
+            "bottom": 530.0234375,
+            "left": 1007.0859375
+          },
+          "insideDrawer": false,
+          "name": "Automatic preparation off",
+          "type": null,
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -968,
+              "width": 16,
+              "height": 16,
+              "top": -968,
+              "right": 254,
+              "bottom": -952,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Automatic preparation off",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": true,
+            "rect": {
+              "x": 1007.0859375,
+              "y": 496.0234375,
+              "width": 172.9140625,
+              "height": 34,
+              "top": 496.0234375,
+              "right": 1180,
+              "bottom": 530.0234375,
+              "left": 1007.0859375
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": false,
+            "newsWorkflowPaused": true,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            },
+            "newsLastRun": {
+              "requestId": "1f6633ed-0cc6-4c2e-93eb-9315ae67d6b8",
+              "startedAt": "2026-10-18T10:43:45.035Z",
+              "outcome": "interrupted",
+              "roomName": "My room",
+              "finishedAt": "2026-10-18T10:44:25.993Z",
+              "message": "Preparation stopped. A provider request may have been charged. Start an explicit new attempt to try again."
+            },
+            "newsAssessmentDate": "2026-10-18",
+            "newsAssessmentsToday": 1
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "saveWorkflowDraft": 1,
+          "disableNewsPreparation": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "progress-final-resumed",
+        "rawSha256": "ee018fdbd2f63f29fef6345c51790302c19d1779c3c81897b09813a982de34be",
+        "observedAt": 1792320224919,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 427.3359375,
+            "width": 166.2890625,
+            "height": 34,
+            "top": 427.3359375,
+            "right": 404.2890625,
+            "bottom": 461.3359375,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Preparation resumed",
+          "type": "button",
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -912.5,
+              "width": 16,
+              "height": 16,
+              "top": -912.5,
+              "right": 254,
+              "bottom": -896.5,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 239.7578125,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 239.7578125,
+              "right": 339.3203125,
+              "bottom": 273.7578125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 285.7578125,
+              "width": 229.25,
+              "height": 34,
+              "top": 285.7578125,
+              "right": 467.25,
+              "bottom": 319.7578125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Preparation resumed",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": true,
+            "rect": {
+              "x": 238,
+              "y": 427.3359375,
+              "width": 166.2890625,
+              "height": 34,
+              "top": 427.3359375,
+              "right": 404.2890625,
+              "bottom": 461.3359375,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-18T10:42:31.532Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "saveWorkflowDraft": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "progress-final-running",
+        "rawSha256": "0c53f187a6348745a8d4663ef6a41881bdb6530c730a99e862b5ddd4518becdd",
+        "observedAt": 1792320245924,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 16,
+            "y": 263.5,
+            "width": 176,
+            "height": 44,
+            "top": 263.5,
+            "right": 192,
+            "bottom": 307.5,
+            "left": 16
+          },
+          "insideDrawer": false,
+          "name": "News bucket",
+          "type": null,
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 244,
+              "width": 16,
+              "height": 16,
+              "top": 244,
+              "right": 254,
+              "bottom": 260,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Cancel this check for My room",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 765.953125,
+              "y": 1681.328125,
+              "width": 201.546875,
+              "height": 34,
+              "top": 1681.328125,
+              "right": 967.5,
+              "bottom": 1715.328125,
+              "left": 765.953125
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 979.5,
+              "y": 1681.328125,
+              "width": 200.5,
+              "height": 34,
+              "top": 1681.328125,
+              "right": 1180,
+              "bottom": 1715.328125,
+              "left": 979.5
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-18T13:43:45.035Z",
+            "newsWorkflowPaused": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            },
+            "newsLastRun": {
+              "requestId": "1f6633ed-0cc6-4c2e-93eb-9315ae67d6b8",
+              "startedAt": "2026-10-18T10:43:45.035Z",
+              "outcome": "running",
+              "roomName": "My room"
+            },
+            "newsAssessmentDate": "2026-10-18",
+            "newsAssessmentsToday": 1
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "saveWorkflowDraft": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      }
+    ],
+    "progressNaturalCompletionAndOffFailure": [
+      {
+        "name": "progress-failure-blurred",
+        "rawSha256": "b394287c1a0f272c45d26657af9196f8fa52fa00e3f7a28e802aa1bfaec0f7c1",
+        "observedAt": 1792320521586,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 537.9921875,
+            "y": 630.5,
+            "width": 32,
+            "height": 32,
+            "top": 630.5,
+            "right": 569.9921875,
+            "bottom": 662.5,
+            "left": 537.9921875
+          },
+          "insideDrawer": false,
+          "name": "Shuffle",
+          "type": null,
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -922.5,
+              "width": 16,
+              "height": 16,
+              "top": -922.5,
+              "right": 254,
+              "bottom": -906.5,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ],
+        "errors": [
+          {
+            "rect": {
+              "x": 238,
+              "y": -903.8046875,
+              "width": 960,
+              "height": 45.796875,
+              "top": -903.8046875,
+              "right": 1198,
+              "bottom": -858.0078125,
+              "left": 238
+            },
+            "error": "Could not turn off preparation for My room. disableNewsPreparation unavailable.",
+            "button": null
+          }
+        ],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-18T13:47:46.508Z",
+            "newsWorkflowPaused": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            },
+            "newsLastRun": {
+              "requestId": "2b089ca1-122b-4bed-ad1b-d11de025f65f",
+              "startedAt": "2026-10-18T10:47:46.508Z",
+              "outcome": "no-news",
+              "roomName": "My room",
+              "finishedAt": "2026-10-18T10:48:21.932Z",
+              "message": "No recent news. Music continues."
+            },
+            "newsAssessmentDate": "2026-10-18",
+            "newsAssessmentsToday": 1
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "saveWorkflowDraft": 1,
+          "disableNewsPreparation": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 1
+      },
+      {
+        "name": "progress-failure-local-error",
+        "rawSha256": "4db1328f20497ad2a8cb8761024e5dd272132d5a5b3d4d8d71163479b927985a",
+        "observedAt": 1792320514194,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 662.78125,
+            "y": 418.0234375,
+            "width": 200.5,
+            "height": 34,
+            "top": 418.0234375,
+            "right": 863.28125,
+            "bottom": 452.0234375,
+            "left": 662.78125
+          },
+          "insideDrawer": false,
+          "name": "Turn off automatic preparation",
+          "type": null,
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -1046.5,
+              "width": 16,
+              "height": 16,
+              "top": -1046.5,
+              "right": 254,
+              "bottom": -1030.5,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": true,
+            "rect": {
+              "x": 662.78125,
+              "y": 418.0234375,
+              "width": 200.5,
+              "height": 34,
+              "top": 418.0234375,
+              "right": 863.28125,
+              "bottom": 452.0234375,
+              "left": 662.78125
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ],
+        "errors": [
+          {
+            "rect": {
+              "x": 662.78125,
+              "y": 464.0234375,
+              "width": 517.21875,
+              "height": 45.796875,
+              "top": 464.0234375,
+              "right": 1180,
+              "bottom": 509.8203125,
+              "left": 662.78125
+            },
+            "error": "Could not turn off preparation for My room. disableNewsPreparation unavailable.",
+            "button": null
+          }
+        ],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-18T13:47:46.508Z",
+            "newsWorkflowPaused": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            },
+            "newsLastRun": {
+              "requestId": "2b089ca1-122b-4bed-ad1b-d11de025f65f",
+              "startedAt": "2026-10-18T10:47:46.508Z",
+              "outcome": "no-news",
+              "roomName": "My room",
+              "finishedAt": "2026-10-18T10:48:21.932Z",
+              "message": "No recent news. Music continues."
+            },
+            "newsAssessmentDate": "2026-10-18",
+            "newsAssessmentsToday": 1
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "saveWorkflowDraft": 1,
+          "disableNewsPreparation": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 1
+      },
+      {
+        "name": "progress-failure-natural-end",
+        "rawSha256": "9c17fc48188a333714e4fdfa72f41c90210a20ba4cd2b69202dc8d800ef42e80",
+        "observedAt": 1792320507497,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 1080.2109375,
+            "y": 496.21875,
+            "width": 99.7890625,
+            "height": 34,
+            "top": 496.21875,
+            "right": 1180,
+            "bottom": 530.21875,
+            "left": 1080.2109375
+          },
+          "insideDrawer": false,
+          "name": "Turning off\u2026",
+          "type": null,
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -987,
+              "width": 16,
+              "height": 16,
+              "top": -987,
+              "right": 254,
+              "bottom": -971,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turning off\u2026",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": true,
+            "rect": {
+              "x": 1080.2109375,
+              "y": 496.21875,
+              "width": 99.7890625,
+              "height": 34,
+              "top": 496.21875,
+              "right": 1180,
+              "bottom": 530.21875,
+              "left": 1080.2109375
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turning off\u2026",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-18T13:47:46.508Z",
+            "newsWorkflowPaused": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            },
+            "newsLastRun": {
+              "requestId": "2b089ca1-122b-4bed-ad1b-d11de025f65f",
+              "startedAt": "2026-10-18T10:47:46.508Z",
+              "outcome": "no-news",
+              "roomName": "My room",
+              "finishedAt": "2026-10-18T10:48:21.932Z",
+              "message": "No recent news. Music continues."
+            },
+            "newsAssessmentDate": "2026-10-18",
+            "newsAssessmentsToday": 1
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [
+          "disableNewsPreparation"
+        ],
+        "operationCounts": {
+          "saveWorkflowDraft": 1,
+          "disableNewsPreparation": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 1
+      },
+      {
+        "name": "progress-failure-off-pending",
+        "rawSha256": "fc7ba798bbbf06d9f381f96cf82a26fe197143441e098e5b00c3945b7ac8370f",
+        "observedAt": 1792320501807,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "solid",
+            "width": "1px"
+          },
+          "rect": {
+            "x": 1080.2109375,
+            "y": 477.5234375,
+            "width": 99.7890625,
+            "height": 34,
+            "top": 477.5234375,
+            "right": 1180,
+            "bottom": 511.5234375,
+            "left": 1080.2109375
+          },
+          "insideDrawer": false,
+          "name": "Turning off\u2026",
+          "type": null,
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -978.5,
+              "width": 16,
+              "height": 16,
+              "top": -978.5,
+              "right": 254,
+              "bottom": -962.5,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Cancel this check for My room",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 866.6640625,
+              "y": 477.5234375,
+              "width": 201.546875,
+              "height": 34,
+              "top": 477.5234375,
+              "right": 1068.2109375,
+              "bottom": 511.5234375,
+              "left": 866.6640625
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turning off\u2026",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": true,
+            "rect": {
+              "x": 1080.2109375,
+              "y": 477.5234375,
+              "width": 99.7890625,
+              "height": 34,
+              "top": 477.5234375,
+              "right": 1180,
+              "bottom": 511.5234375,
+              "left": 1080.2109375
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turning off\u2026",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": "true",
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-18T13:47:46.508Z",
+            "newsWorkflowPaused": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            },
+            "newsLastRun": {
+              "requestId": "2b089ca1-122b-4bed-ad1b-d11de025f65f",
+              "startedAt": "2026-10-18T10:47:46.508Z",
+              "outcome": "running",
+              "roomName": "My room"
+            },
+            "newsAssessmentDate": "2026-10-18",
+            "newsAssessmentsToday": 1
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": true,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [
+          "disableNewsPreparation"
+        ],
+        "operationCounts": {
+          "saveWorkflowDraft": 1,
+          "disableNewsPreparation": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "progress-failure-resumed",
+        "rawSha256": "60f69a4e7fe5b4a22f68216ee127449049288e4af14f7868d1ffcc1fe2d54aa4",
+        "observedAt": 1792320466393,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 238,
+            "y": 427.3359375,
+            "width": 166.2890625,
+            "height": 34,
+            "top": 427.3359375,
+            "right": 404.2890625,
+            "bottom": 461.3359375,
+            "left": 238
+          },
+          "insideDrawer": false,
+          "name": "Preparation resumed",
+          "type": "button",
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -912.5,
+              "width": 16,
+              "height": 16,
+              "top": -912.5,
+              "right": 254,
+              "bottom": -896.5,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 239.7578125,
+              "width": 101.3203125,
+              "height": 34,
+              "top": 239.7578125,
+              "right": 339.3203125,
+              "bottom": 273.7578125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": 285.7578125,
+              "width": 229.25,
+              "height": 34,
+              "top": 285.7578125,
+              "right": 467.25,
+              "bottom": 319.7578125,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Preparation resumed",
+            "disabled": false,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": true,
+            "rect": {
+              "x": 238,
+              "y": 427.3359375,
+              "width": 166.2890625,
+              "height": 34,
+              "top": 427.3359375,
+              "right": 404.2890625,
+              "bottom": 461.3359375,
+              "left": 238
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-18T10:46:29.124Z",
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            }
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "saveWorkflowDraft": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      },
+      {
+        "name": "progress-failure-running",
+        "rawSha256": "b37e7b0b829a75afaf79c8735d84f71ff22f5600d7730b76cab6382526911b91",
+        "observedAt": 1792320489714,
+        "focus": {
+          "tag": "BUTTON",
+          "visible": true,
+          "outline": {
+            "style": "none",
+            "width": "3px"
+          },
+          "rect": {
+            "x": 16,
+            "y": 263.5,
+            "width": 176,
+            "height": 44,
+            "top": 263.5,
+            "right": 192,
+            "bottom": 307.5,
+            "left": 16
+          },
+          "insideDrawer": false,
+          "name": "News bucket",
+          "type": null,
+          "role": null
+        },
+        "documentFocus": true,
+        "visibility": "visible",
+        "controls": [
+          {
+            "tag": "INPUT",
+            "name": "Make this profile available for DJ playback and preparation",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "checked": true,
+            "active": false,
+            "rect": {
+              "x": 238,
+              "y": -866.5,
+              "width": 16,
+              "height": 16,
+              "top": -866.5,
+              "right": 254,
+              "bottom": -850.5,
+              "left": 238
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Cancel this check for My room",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 765.953125,
+              "y": 570.828125,
+              "width": 201.546875,
+              "height": 34,
+              "top": 570.828125,
+              "right": 967.5,
+              "bottom": 604.828125,
+              "left": 765.953125
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 979.5,
+              "y": 570.828125,
+              "width": 200.5,
+              "height": 34,
+              "top": 570.828125,
+              "right": 1180,
+              "bottom": 604.828125,
+              "left": 979.5
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Save setup",
+            "disabled": true,
+            "ariaDisabled": "true",
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          },
+          {
+            "tag": "BUTTON",
+            "name": "Turn off automatic preparation",
+            "disabled": false,
+            "ariaDisabled": null,
+            "busy": null,
+            "active": false,
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 0,
+              "height": 0,
+              "top": 0,
+              "right": 0,
+              "bottom": 0,
+              "left": 0
+            }
+          }
+        ],
+        "errors": [],
+        "profile": {
+          "id": "default-room",
+          "name": "My room",
+          "enabled": true,
+          "room": {
+            "djId": "fixture-dj",
+            "sourceIds": [
+              "fixture-source"
+            ]
+          },
+          "mood": "Curious",
+          "workflowDraft": {
+            "newsEnabled": true,
+            "nextNewsCheckAt": "2026-10-18T13:47:46.508Z",
+            "newsWorkflowPaused": false,
+            "everyHours": 3,
+            "importance": "major",
+            "maxNewsClipsPerDay": 3,
+            "morning": {
+              "includeWeather": false,
+              "city": "",
+              "localTime": "08:00",
+              "timeZone": "Europe/Madrid",
+              "units": "celsius"
+            },
+            "newsLastRun": {
+              "requestId": "2b089ca1-122b-4bed-ad1b-d11de025f65f",
+              "startedAt": "2026-10-18T10:47:46.508Z",
+              "outcome": "running",
+              "roomName": "My room"
+            },
+            "newsAssessmentDate": "2026-10-18",
+            "newsAssessmentsToday": 1
+          }
+        },
+        "formNumbers": [
+          {
+            "tag": "INPUT",
+            "type": "number",
+            "label": "Maximum automatic recordings per day",
+            "disabled": false,
+            "nativeDisabled": false,
+            "ariaDisabled": null,
+            "readOnly": false,
+            "value": "3",
+            "checked": false,
+            "active": false
+          }
+        ],
+        "held": [],
+        "operationCounts": {
+          "saveWorkflowDraft": 1
+        },
+        "externalAttempts": 0,
+        "httpWrites": 0,
+        "fixtureFeedReads": 0
+      }
+    ]
+  },
+  "acceptance": "All191 dispositions unchanged:189 active,2 deferred,27 open with14 listener and13 other proof. Q06 Review remains for manual preparation/cancel, player DJ and other essential conditional controls.",
+  "limitations": [
+    "No unit tests, AT/VoiceOver, observed listener, audible quality, live provider/server, actual OS failure, release/platform matrix or deferred viewport/zoom acceptance.",
+    "This controlled native evidence does not establish a full Q06 pass or paid cancellation/charging semantics.",
+    "Raw fixture observations are transient local files; committed projections and hashes retain scoped evidence."
+  ]
+}

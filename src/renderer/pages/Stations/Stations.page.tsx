@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type Dispatch, type SetStateAction } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import { useIsMutating, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Headphones, LoaderCircle, Newspaper } from 'lucide-react';
 import type { ApiError, ListeningRoom, NewsProgress, PreparedNewsRequest, PreparedNewsTake } from '../../../shared/types';
@@ -19,7 +19,7 @@ import './Stations.styles.css';
 
 export type RoomDraft = { scriptId: string; script: string } | null;
 type AudioCompletion = { requestId: string; takeId: string; reused: boolean; profileName?: string; reviewError?: string };
-export type RoomSetupDraft = { audioCompletion?: AudioCompletion; setup: ListeningRoom | null; moodDraft: string | null; newsInterests?: string; workflow?: { roomId: string; patch: Partial<WorkflowDraft> }; stopError?: string; operationError?: string; operationErrorTarget?: 'setup'; manualPreparation?: ManualPreparation; preparationCancelError?: string; tab?: string };
+export type RoomSetupDraft = { audioCompletion?: AudioCompletion; setup: ListeningRoom | null; moodDraft: string | null; newsInterests?: string; workflow?: { roomId: string; patch: Partial<WorkflowDraft> }; stopError?: string; stopErrorOrigin?: 'settings' | 'progress'; operationError?: string; operationErrorTarget?: 'setup' | 'resume' | 'availability'; manualPreparation?: ManualPreparation; preparationCancelError?: string; tab?: string };
 type ScriptReplacement = { kind: 'load'; draft: NonNullable<RoomDraft>; reveal: boolean } | { kind: 'prepare' };
 type PreparationInput = { kind: 'script'; input: { profileId?: string; requestId: string; djId: string; sourceIds: string[] } } | { kind: 'audio'; input: { profileId?: string; requestId: string; scriptId: string; script: string; djId: string; newVariation?: boolean } };
 type Preparation = PreparationInput & { reconcile?: boolean };
@@ -38,6 +38,11 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   const client = useQueryClient();
   const configurationPending = useIsMutating({ mutationKey: ['roomConfiguration'] }) > 0;
   const saveSubmission = useRef(false);
+  const workflowActionInFlight = useRef(false);
+  const availabilityInput = useRef<HTMLInputElement>(null);
+  const progressStopButton = useRef<HTMLButtonElement>(null);
+  const [availabilityFocused, setAvailabilityFocused] = useState<HTMLInputElement | null>(null);
+  const [progressStopFocused, setProgressStopFocused] = useState<HTMLButtonElement | null>(null);
   const configurationMutation = {
     mutationKey: ['roomConfiguration'],
     onMutate: () => setConfigDraft(current => ({ ...current, operationError: undefined, operationErrorTarget: undefined })),
@@ -168,7 +173,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
     if (current.activeRoomProfileId !== profile.id) throw new Error('The active room changed. Reopen its settings before resuming preparation.');
     unwrap(await window.wave.saveWorkflowDraft({ expectedProfileId: profile.id, workflowDraft: profile.workflowDraft, room: profile.room, mood: profile.mood, resumePreparation: true }));
     await client.invalidateQueries({ queryKey: ['localState'] });
-  } });
+  }, onError: error => setConfigDraft(current => ({ ...current, operationError: errorMessage(error), operationErrorTarget: 'resume' })), onSettled: () => { workflowActionInFlight.current = false; } });
   async function getWorkflowReadinessError(): Promise<string | null> {
     const latest = unwrap(await window.wave.getLocalState());
     const selected = latest.sources.filter(value => room.sourceIds.includes(value.id));
@@ -252,7 +257,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   const preparing = manualPending || !!running;
   const runningProfiles = running ? state.data?.roomProfiles.filter(profile => profile.workflowDraft.newsLastRun?.requestId === running.requestId && profile.workflowDraft.newsLastRun.outcome === 'running') ?? [] : [];
   const runningProfile = runningProfiles.length === 1 ? runningProfiles[0] : undefined;
-  const turnOff = useMutation({ mutationKey: ['roomConfiguration'], onMutate: () => setConfigDraft(current => ({ ...current, stopError: undefined })), mutationFn: async (input: { roomId: string; name: string; workflow: RoomSetupDraft['workflow'] }) => {
+  const turnOff = useMutation({ mutationKey: ['roomConfiguration'], onMutate: input => setConfigDraft(current => ({ ...current, stopError: undefined, stopErrorOrigin: input.origin })), mutationFn: async (input: { roomId: string; name: string; workflow: RoomSetupDraft['workflow']; origin: 'settings' | 'progress' }) => {
     unwrap(await window.wave.disableNewsPreparation(input.roomId));
   }, onSuccess: async (_result, input) => {
     await Promise.all([client.invalidateQueries({ queryKey: ['localState'] }), refresh()]);
@@ -263,7 +268,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
       return { ...current, workflow: Object.keys(patch).length ? { roomId: input.roomId, patch } : undefined };
     });
     setProfileNotice(`Automatic preparation turned off for ${input.name}. Other unsaved edits are kept.`);
-  }, onError: (error, input) => setConfigDraft(current => ({ ...current, stopError: `Could not turn off preparation for ${input.name}. ${error instanceof Error ? error.message : 'Try again.'}` })) });
+  }, onError: (error, input) => setConfigDraft(current => ({ ...current, stopError: `Could not turn off preparation for ${input.name}. ${error instanceof Error ? error.message : 'Try again.'}`, stopErrorOrigin: input.origin })), onSettled: () => { workflowActionInFlight.current = false; } });
   const profiles = useMutation({ ...configurationMutation, mutationFn: async (action: { kind: 'copy' } | { kind: 'switch'; id: string; saveChanges: boolean }) => {
     if (action.kind === 'copy') {
       const latest = unwrap(await window.wave.getLocalState());
@@ -286,9 +291,35 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
   const enableProfile = useMutation({ ...configurationMutation, mutationFn: async (input: { id: string; enabled: boolean }) => {
     unwrap(await window.wave.setRoomProfileEnabled(input));
     await client.invalidateQueries({ queryKey: ['localState'] });
-  } });
+  }, onError: error => setConfigDraft(current => ({ ...current, operationError: errorMessage(error), operationErrorTarget: 'availability' })), onSettled: () => { workflowActionInFlight.current = false; } });
   const setupBusy = preparationStatusUnknown || cancellationPending || configurationPending || manualPending || (!!running && !runningProfile);
   const busy = setupBusy || preparing || turnOff.isPending || save.isPending || resume.isPending || profiles.isPending || enableProfile.isPending;
+  const ownsAvailabilityFocus = availabilityFocused !== null && document.activeElement === availabilityFocused;
+  const ownsProgressStopFocus = progressStopFocused !== null && tab !== 'settings' && document.activeElement === progressStopFocused;
+  const showProgressStop = tab !== 'settings' && !!activeProfile && ((!!activeProfile.workflowDraft.newsEnabled && runningProfile?.id === activeProfile.id) || ownsProgressStopFocus);
+  function turnOffPreparation(origin: 'settings' | 'progress') {
+    if (workflowActionInFlight.current || configurationPending || !newsRecoveryReady || !activeProfile?.workflowDraft.newsEnabled) return;
+    workflowActionInFlight.current = true;
+    turnOff.mutate({ roomId: activeProfile.id, name: activeProfile.name, workflow: configDraft.workflow, origin });
+  }
+  function resumePreparation() {
+    if (workflowActionInFlight.current || configurationPending || resume.isPending) return;
+    workflowActionInFlight.current = true;
+    resume.mutate();
+  }
+  function setProfileAvailability(enabled: boolean) {
+    if (workflowActionInFlight.current || busy || !activeProfile || enabled === activeProfile.enabled) return;
+    workflowActionInFlight.current = true;
+    enableProfile.mutate({ id: activeProfile.id, enabled });
+  }
+  useLayoutEffect(() => {
+    const focused = document.activeElement;
+    if (!(focused instanceof HTMLElement) || !focused.checkVisibility() || document.visibilityState !== 'visible' || !document.hasFocus()) return;
+    if ((configDraft.operationErrorTarget === 'availability' && configDraft.operationError && focused === availabilityInput.current)
+      || (configDraft.stopErrorOrigin === 'progress' && configDraft.stopError && focused === progressStopButton.current)) {
+      focused.closest('.room-availability, .room-active-progress')?.scrollIntoView({ block: 'center', inline: 'nearest' });
+    }
+  }, [configDraft.operationErrorTarget, configDraft.operationError, configDraft.stopErrorOrigin, configDraft.stopError]);
   function changeProfile(action: { kind: 'copy' } | { kind: 'switch'; id: string; saveChanges: boolean }) {
     if (profileSubmission.current || busy || (action.kind === 'copy' && !profileName.trim())) return;
     profileSubmission.current = true;
@@ -390,12 +421,12 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
       {state.isPending && <p className="loading" role="status">Opening your room…</p>}
       <ErrorNotice error={state.error} retryRef={stateRetryFocus.retryRef} retrying={state.isFetching} retry={() => stateRetryFocus.retry(() => state.refetch())} />
       {state.data && <><div className="room-profile-bar"><label htmlFor="room-profile">Setup profile<select id="room-profile" value={state.data.activeRoomProfileId} disabled={busy} onChange={event => chooseProfile(event.target.value)}>{state.data.roomProfiles.map(value => <option key={value.id} value={value.id}>{value.name}{value.id === state.data?.activeRoomProfileId ? ' · Active' : ''}</option>)}</select></label><button disabled={busy} onClick={() => { profiles.reset(); setProfileName(''); setNewProfileOpen(true); }}>Save as new</button></div>
-      {activeProfile && <details className="room-advanced"><summary>Advanced room options</summary><label className="room-dj-enabled"><input type="checkbox" checked={activeProfile.enabled} disabled={busy} onChange={event => enableProfile.mutate({ id: activeProfile.id, enabled: event.target.checked })} />Make this profile available for DJ playback and preparation</label></details>}
+      {activeProfile && <div className="room-availability"><details className="room-advanced"><summary>Advanced room options</summary><label className="room-dj-enabled"><input key={activeProfile.id} ref={availabilityInput} type="checkbox" checked={activeProfile.enabled} disabled={busy && !ownsAvailabilityFocus} aria-disabled={busy || undefined} aria-busy={enableProfile.isPending || undefined} onFocus={event => setAvailabilityFocused(event.currentTarget)} onBlur={() => setAvailabilityFocused(null)} onClick={event => { if (workflowActionInFlight.current || busy) event.preventDefault(); }} onKeyDown={event => { if ((workflowActionInFlight.current || busy) && (event.key === ' ' || event.key === 'Enter')) event.preventDefault(); }} onChange={event => setProfileAvailability(event.target.checked)} />Make this profile available for DJ playback and preparation</label>{enableProfile.isPending && enableProfile.variables.id === activeProfile.id && <p className="form-hint" role="status">Making this profile {enableProfile.variables.enabled ? 'available' : 'unavailable'}… Its saved setting stays shown until confirmed.</p>}</details><ErrorNotice error={configDraft.operationErrorTarget === 'availability' && configDraft.operationError ? new Error(configDraft.operationError) : null} /></div>}
       {configurationPending && <p className="form-hint" role="status">Updating room settings… You can keep browsing and listening.</p>}
       <p className="form-hint">Choose a profile to edit its sources, host, and preparation settings. Playback can use a different profile.</p>
-      <ErrorNotice error={configDraft.stopError ? new Error(configDraft.stopError) : null} />
+      <ErrorNotice error={configDraft.stopError && (configDraft.stopErrorOrigin === 'settings' ? tab !== 'settings' : !showProgressStop) ? new Error(configDraft.stopError) : null} />
       {profileNotice && <p className="form-hint room-profile-notice" role="status">{profileNotice}</p>}
-      {!newProfileOpen && !switchTarget && !(tab === 'settings' && configDraft.operationErrorTarget === 'setup') && <ErrorNotice error={configDraft.operationError ? new Error(configDraft.operationError) : null} />}
+      {!newProfileOpen && !switchTarget && configDraft.operationErrorTarget !== 'availability' && !(tab === 'settings' && (configDraft.operationErrorTarget === 'setup' || configDraft.operationErrorTarget === 'resume')) && <ErrorNotice error={configDraft.operationError ? new Error(configDraft.operationError) : null} />}
       <ConfigurationTabs id="room" label="News bucket and configuration" tabs={[{ id: 'bucket', label: 'News bucket' }, { id: 'settings', label: 'Settings' }, { id: 'saved', label: 'Saved audio' }]} value={tab} onChange={setTab} />
       {restoredInterruption && tab !== 'saved' && <div className="notice"><span role="status"><strong>A previous {restoredInterruption.kind === 'script' ? 'text' : 'audio'} preparation did not finish.</strong> {preparationOrigin(restoredInterruption)}. It was not restarted automatically. A provider request may have been charged. Review its saved status before starting a new attempt.</span><button aria-controls="preparation-history" onClick={reviewPreparationHistory}>Review preparation history</button></div>}
       {setupDirty && tab !== 'settings' && <div className="room-unsaved"><p>Unsaved room and preparation settings.</p><button onClick={() => setTab('settings')}>Review settings</button></div>}
@@ -409,7 +440,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
         {library.data && <NewsBucket library={library.data} localState={state.data} automation={automation} profileStatusUnknown={state.isPending || !!state.error} savedNewsStale={preparationStatusUnknown} openSource={url => source.mutate(url)} openPreparation={openPreparation} openDraft={loadScriptDraft} />}
         <ErrorNotice error={source.error} />
       </section>}
-      {preparing && <div className="news-progress room-active-progress"><LoaderCircle className="spinning" size={17} aria-hidden="true" /><span role="status">{manualPending ? manual.cancelRequested ? 'Cancellation requested. Waiting for preparation to stop…' : checkingSavedResult ? `Checking saved ${lastRequest?.kind === 'audio' ? 'audio' : 'text'} for ${manual.profileName ?? 'your room'}… No new provider request.` : manual.progress?.message ?? (manual.control.dispatched ? `Preparing ${lastRequest?.kind === 'audio' ? 'audio' : 'text'} for ${manual.profileName ?? 'your room'}…` : 'Saving setup before preparation…') : runningProfile ? `Preparing news for ${runningProfile.name}…` : 'Preparing…'}</span><button disabled={cancellationPending} onClick={() => cancel.mutate()}>{!manualPending && runningProfile ? `Cancel this check for ${runningProfile.name}` : 'Cancel preparation'}</button>{tab !== 'settings' && activeProfile?.workflowDraft.newsEnabled && runningProfile?.id === activeProfile.id && <button disabled={configurationPending} onClick={() => turnOff.mutate({ roomId: activeProfile.id, name: activeProfile.name, workflow: configDraft.workflow })}>{turnOff.isPending ? 'Turning off…' : 'Turn off automatic preparation'}</button>}</div>}
+      {(preparing || ownsProgressStopFocus) && <div className="news-progress room-active-progress">{preparing && <LoaderCircle className="spinning" size={17} aria-hidden="true" />}<span role="status">{!preparing ? activeProfile?.workflowDraft.newsEnabled ? 'Automatic preparation remains on.' : 'Automatic preparation turned off.' : manualPending ? manual.cancelRequested ? 'Cancellation requested. Waiting for preparation to stop…' : checkingSavedResult ? `Checking saved ${lastRequest?.kind === 'audio' ? 'audio' : 'text'} for ${manual.profileName ?? 'your room'}… No new provider request.` : manual.progress?.message ?? (manual.control.dispatched ? `Preparing ${lastRequest?.kind === 'audio' ? 'audio' : 'text'} for ${manual.profileName ?? 'your room'}…` : 'Saving setup before preparation…') : runningProfile ? `Preparing news for ${runningProfile.name}…` : 'Preparing…'}</span>{preparing && <button disabled={cancellationPending} onClick={() => cancel.mutate()}>{!manualPending && runningProfile ? `Cancel this check for ${runningProfile.name}` : 'Cancel preparation'}</button>}{showProgressStop && <div className="room-progress-stop"><button ref={progressStopButton} disabled={(!newsRecoveryReady || configurationPending || !activeProfile?.workflowDraft.newsEnabled) && !ownsProgressStopFocus} aria-disabled={!newsRecoveryReady || configurationPending || !activeProfile?.workflowDraft.newsEnabled || undefined} aria-busy={turnOff.isPending && turnOff.variables.origin === 'progress' || undefined} onFocus={event => setProgressStopFocused(event.currentTarget)} onBlur={() => setProgressStopFocused(null)} onClick={() => turnOffPreparation('progress')}>{turnOff.isPending && turnOff.variables.origin === 'progress' ? 'Turning off…' : activeProfile?.workflowDraft.newsEnabled ? 'Turn off automatic preparation' : 'Automatic preparation off'}</button><ErrorNotice error={configDraft.stopErrorOrigin === 'progress' && configDraft.stopError ? new Error(configDraft.stopError) : null} /></div>}</div>}
       {runningProfile && !preparationStatusUnknown && !manualPending && <p className="form-hint">This check keeps its original sources, host, mood and interests. Saved setup changes apply to future checks.</p>}
       {configDraft.preparationCancelError && <ErrorNotice error={new Error(configDraft.preparationCancelError)} />}
       {preparationError && <div className="room-background-error"><p className="form-hint">Manual preparation · {manual?.profileName ?? 'Previous setup'}</p>{noStory || (manual?.cancelRequested && !manual.control.dispatched) ? <p className="form-hint" role="status">{preparationError.message}</p> : <ErrorNotice error={preparationError} />}<div className="room-actions">{!noStory && lastRequest && manual?.control.dispatched && <button className="room-link" disabled={busy} onClick={() => startPreparation({ ...lastRequest, reconcile: true })}>Check saved result for this request</button>}<button className="room-link" onClick={() => { setTab('settings'); requestAnimationFrame(() => { if (manualTools.current) { manualTools.current.open = true; manualTools.current.querySelector('summary')?.focus(); manualTools.current.scrollIntoView({ block: 'start' }); } }); }}>Review preparation</button></div></div>}
@@ -418,7 +449,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
       <ErrorNotice error={library.error} retryRef={settingsRetryFocus.retryRef} retrying={library.isFetching} retry={() => settingsRetryFocus.retry(() => library.refetch())} />
       {preparationStatusUnknown && <p className="form-hint" role="status">Preparation activity must be confirmed before editing setup. Wait for status to load, or retry the failed status check.</p>}
       {state.data && <RoomSetup sources={sources} djs={state.data.djs} room={room} mood={mood} newsInterests={newsInterests} busy={setupBusy} setSetup={setSetup} setMoodDraft={setMoodDraft} setNewsInterests={setNewsInterests} configureSources={configureSources} configureDJ={configureDJ} />}
-      {activeProfile && <WorkflowPreferences key={activeProfile.id} room={activeProfile} value={workflowDraft as WorkflowDraft} dirty={setupDirty} disabled={setupBusy} saving={save.isPending} saveError={configDraft.operationErrorTarget === 'setup' && configDraft.operationError ? new Error(configDraft.operationError) : null} activationReady={workflowReady} statusLoading={workflowStatusLoading} statusError={workflowStatusError} profileStatusUnknown={state.isPending || !!state.error} issues={preparationIssues} onChange={updateWorkflow} onSave={() => { if (saveSubmission.current || save.isPending || configurationPending) return; saveSubmission.current = true; save.mutate(); }} onResume={() => resume.mutate()} onTurnOff={() => turnOff.mutate({ roomId: activeProfile.id, name: activeProfile.name, workflow: configDraft.workflow })} stopping={turnOff.isPending} stopDisabled={configurationPending} onRetryStatus={() => { void aiStatus.refetch(); void elevenStatus.refetch(); if (xKeyRequired) void xStatus.refetch(); }} />}
+      {activeProfile && <WorkflowPreferences key={activeProfile.id} active={tab === 'settings'} resuming={resume.isPending} resumeError={configDraft.operationErrorTarget === 'resume' && configDraft.operationError ? new Error(configDraft.operationError) : null} stopError={configDraft.stopErrorOrigin === 'settings' && configDraft.stopError ? new Error(configDraft.stopError) : null} room={activeProfile} value={workflowDraft as WorkflowDraft} dirty={setupDirty} disabled={setupBusy} saving={save.isPending} saveError={configDraft.operationErrorTarget === 'setup' && configDraft.operationError ? new Error(configDraft.operationError) : null} activationReady={workflowReady} statusLoading={workflowStatusLoading} statusError={workflowStatusError} profileStatusUnknown={state.isPending || !!state.error} issues={preparationIssues} onChange={updateWorkflow} onSave={() => { if (saveSubmission.current || save.isPending || configurationPending) return; saveSubmission.current = true; save.mutate(); }} onResume={resumePreparation} onTurnOff={() => turnOffPreparation('settings')} stopping={turnOff.isPending} stopDisabled={configurationPending} onRetryStatus={() => { void aiStatus.refetch(); void elevenStatus.refetch(); if (xKeyRequired) void xStatus.refetch(); }} />}
       {setupDirty && <p className="form-hint">Save setup and preparation together to keep these choices in this room profile.</p>}
       {(!textKeyReady || !audioKeyReady) && <p className="form-hint">News preparation needs OpenAI and ElevenLabs keys. <button className="room-link" onClick={configureSettings}>Provider keys</button></p>}
       <details className="room-script room-testing-tools" ref={manualTools}><summary>Testing tools · Prepare a story manually</summary><div className="room-script-content" aria-labelledby="script-title"><div className="room-section-heading"><div><span className="eyebrow">Manual testing</span><h2 id="script-title">Prepare a story</h2></div><InfoHelp label="About manual preparation"><p>Use these tools to test a script or voice. Text and audio requests use your provider accounts and save completed results locally.</p><p>DJ playback only picks saved recordings. The news workflow prepares stories on its own schedule.</p></InfoHelp></div><p>Prepare text, review it, then generate an audio take.</p><p className="form-hint">Manual text preparation uses OpenAI outside automatic preparation limits. It can incur charges even when no recording is made.</p>
