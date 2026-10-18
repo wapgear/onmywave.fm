@@ -1,0 +1,726 @@
+{
+  "date": "2026-10-18",
+  "baseMain": "3d1adbc22971f3c51835f9b05e63235dac000149",
+  "scope": "Player DJ navigation handoff and retained pool-ended control. Partial Q06 evidence.",
+  "problem": "Native DJ settings opened General Settings but focus returned to the persistent player DJ trigger. The route also incorrectly set Back to setup despite beginning in the player.",
+  "change": "After hiding its owned popover, DJPopover passes the persistent trigger through Player to ReadyApp. The existing guarded helper captures that exact active source after closure, targets DJ playback or News bucket heading, clears only destination scroll history and keeps player navigation outside setup-return mode.",
+  "decision": {
+    "proposals": "Steve and Elena independently proposed the same persistent helper and challenged synchronous native focus restoration versus local/deferred ownership. Both accepted with native replay as the reservation. Root owns implementation.",
+    "review": "Both find no actionable route defect. Steve withdrew a profile-confirmation evidence objection after inspecting the newer profile-dialog record that supersedes the old BODY result.",
+    "nativeResolution": "Keyboard route destinations prove post-close trigger ownership works in this macOS runtime; no deferred/local focus owner was needed."
+  },
+  "environment": {
+    "input": "Native CUA only at1280x720 and100% zoom",
+    "observation": "Passive DOM and CDP accessibility tree",
+    "renderer": "Production renderer/preload",
+    "main": "Copied instrumented main/storage; disposable safeStorage, null shared-key adapter, stopped scheduler, muted media",
+    "catalog": "Owned localhost5191,40 songs/12 albums; static startup message incorrectly still states20000/2000",
+    "faults": "nextRoomNews fails before operation. A later getLocalState read removes the selected room from its returned projection at the copied gate; actual saved room remains intact. This simulates an unavailable profile without renderer/DOM mutation."
+  },
+  "phases": {
+    "terminal": "Base main renderer. Native Play triggers one failing pool check, then Pause. Focus retained Pool check ended after the normal10s status poll; Return/Space inert, Tab removes the retained action. DJ settings baseline focus returns to player trigger.",
+    "navigation": "Final route-only production renderer. DJ settings keyboard entry, Tab to frequency, same-page scrolled reentry, footer News bucket, same-page primary repair link, Escape return and repeated settings entry. Terminal pool checks were not rerun on route-only diff."
+  },
+  "bundles": {
+    "terminal": {
+      "out/renderer/assets/index-aZeg_wOd.js": "088726df2403498e19d28eb107248340d241a252d155b68373eb9addc6fa79ca",
+      "out/renderer/assets/index-B9cR7bvN.css": "78fcc2ec135ead9b4d1badd479acfb6d54ca4a41dc08f9be074474ddebe05f76"
+    },
+    "navigation": {
+      "out/renderer/assets/index-fts6GN4_.js": "0790ffbffc259113301bd01c2fa08ea1339f6c79c005200cd885368b2abd4648",
+      "out/renderer/assets/index-B9cR7bvN.css": "78fcc2ec135ead9b4d1badd479acfb6d54ca4a41dc08f9be074474ddebe05f76",
+      "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb"
+    }
+  },
+  "sourceHashes": {
+    "src/renderer/App.tsx": "795807fd4f17bedd6f8f1faa883b008b2ed0619ff06b5361c182490664ad826c",
+    "src/renderer/components/Player/Player.component.tsx": "13cde7bdf704f5eb153d872508af3840c7fc7fd9befbd9b62e829d2a5233e27f",
+    "src/renderer/components/Player/DJPopover.component.tsx": "7a9858830d98a053b2a3d805e6a2b6521aa483154c00306b0a6cfb4fb96fd981",
+    "src/renderer/useRetryFocus.ts": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c"
+  },
+  "fixtureHashes": {
+    "bootstrap.mjs": "f48a11ba86301148ac5c88898a3d4ff4142b29da0e72f3b7050e892ce731193b",
+    "observe.cjs": "ac6cdb5ca4b98f3da066df7a0798c0339f021adb3815eb71167fb5d1d4b2eef9",
+    "server.mjs": "8553da39bda9a044ce1de8cb58b35b5a8602cea952f073b608ae1ece5d8e00fe",
+    "out/main/index.js": "576624282916408675d3a7ee10b7528d3334dc477ed0de6f259d0339a53bd57a"
+  },
+  "observerReports": {
+    "terminal": {
+      "sha256": "a3c224884c134920e2f0e3b7ceba7eab71c79c3a465db2962345471f3c92f102",
+      "result": "observed",
+      "pageErrors": []
+    },
+    "navigation": {
+      "sha256": "35c3a238059d45715c1346861326393720f77e78171ad3cd289ca173ad1bd32a",
+      "result": "observed",
+      "pageErrors": []
+    }
+  },
+  "observations": [
+    {
+      "name": "pool-retry-focused",
+      "rawSha256": "5e1731ba5890c15077419188b520f0077b2539664ff67b1e03857387820b9613",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 736.9921875,
+          "y": 216.78125,
+          "width": 149.7578125,
+          "height": 34,
+          "top": 216.78125,
+          "right": 886.75,
+          "bottom": 250.78125,
+          "left": 736.9921875
+        },
+        "insideDrawer": false,
+        "name": "Retry saved pool check",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 2679
+      },
+      "poolControl": {
+        "text": "Retry saved pool check",
+        "focused": true,
+        "disabled": false,
+        "ariaDisabled": null,
+        "rect": {
+          "x": 736.9921875,
+          "y": 216.78125,
+          "width": 149.7578125,
+          "height": 34,
+          "top": 216.78125,
+          "right": 886.75,
+          "bottom": 250.78125,
+          "left": 736.9921875
+        }
+      },
+      "counts": {
+        "nextRoomNews": 1,
+        "saveDJPlayback": 0,
+        "savePlayback": 8
+      },
+      "providerAttempts": 0,
+      "HTTPWrites": 0,
+      "transport": "Play"
+    },
+    {
+      "name": "pool-terminal-focused",
+      "rawSha256": "6b9882af2a587e5618b5d87f7d2619e03208a8828bfcb06bc4272439ad428f0f",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 925.6640625,
+          "y": 192.28125,
+          "width": 121.328125,
+          "height": 34,
+          "top": 192.28125,
+          "right": 1046.9921875,
+          "bottom": 226.28125,
+          "left": 925.6640625
+        },
+        "insideDrawer": false,
+        "name": "Pool check ended",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 2679
+      },
+      "poolControl": {
+        "text": "Pool check ended",
+        "focused": true,
+        "disabled": false,
+        "ariaDisabled": "true",
+        "rect": {
+          "x": 925.6640625,
+          "y": 192.28125,
+          "width": 121.328125,
+          "height": 34,
+          "top": 192.28125,
+          "right": 1046.9921875,
+          "bottom": 226.28125,
+          "left": 925.6640625
+        }
+      },
+      "counts": {
+        "nextRoomNews": 1,
+        "saveDJPlayback": 0,
+        "savePlayback": 11
+      },
+      "providerAttempts": 0,
+      "HTTPWrites": 0,
+      "transport": "Play"
+    },
+    {
+      "name": "pool-terminal-inert",
+      "rawSha256": "fcec57504852e5ee166203c3c1121d8720a35dbc8b8704056705d564f6d1258a",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 925.6640625,
+          "y": 192.28125,
+          "width": 121.328125,
+          "height": 34,
+          "top": 192.28125,
+          "right": 1046.9921875,
+          "bottom": 226.28125,
+          "left": 925.6640625
+        },
+        "insideDrawer": false,
+        "name": "Pool check ended",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 2679
+      },
+      "poolControl": {
+        "text": "Pool check ended",
+        "focused": true,
+        "disabled": false,
+        "ariaDisabled": "true",
+        "rect": {
+          "x": 925.6640625,
+          "y": 192.28125,
+          "width": 121.328125,
+          "height": 34,
+          "top": 192.28125,
+          "right": 1046.9921875,
+          "bottom": 226.28125,
+          "left": 925.6640625
+        }
+      },
+      "counts": {
+        "nextRoomNews": 1,
+        "saveDJPlayback": 0,
+        "savePlayback": 14
+      },
+      "providerAttempts": 0,
+      "HTTPWrites": 0,
+      "transport": "Play"
+    },
+    {
+      "name": "pool-terminal-blur",
+      "rawSha256": "e1231907252503ac9639ed6c651e5dff1474647973bcc3f5eab988513554e402",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 736.9921875,
+          "y": 309.46875,
+          "width": 98.8828125,
+          "height": 34,
+          "top": 309.46875,
+          "right": 835.875,
+          "bottom": 343.46875,
+          "left": 736.9921875
+        },
+        "insideDrawer": false,
+        "name": "Open News bucket",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 2679
+      },
+      "poolControl": null,
+      "counts": {
+        "nextRoomNews": 1,
+        "saveDJPlayback": 0,
+        "savePlayback": 16
+      },
+      "providerAttempts": 0,
+      "HTTPWrites": 0,
+      "transport": "Play"
+    },
+    {
+      "name": "player-settings-before-focus",
+      "rawSha256": "57dfcdebe53a974516731bfc37e2fcce932d7d1a0871efb9ad988593d7fad862",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 943.96875,
+          "y": 644,
+          "width": 132.0234375,
+          "height": 32,
+          "top": 644,
+          "right": 1075.9921875,
+          "bottom": 676,
+          "left": 943.96875
+        },
+        "insideDrawer": false,
+        "name": "DJ: Needs attention. Open DJ controls",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 2283
+      },
+      "poolControl": null,
+      "counts": {
+        "nextRoomNews": 1,
+        "saveDJPlayback": 0,
+        "savePlayback": 21
+      },
+      "providerAttempts": 0,
+      "HTTPWrites": 0,
+      "transport": "Play"
+    },
+    {
+      "name": "settings-keyboard",
+      "rawSha256": "5609b03b49476e12da8d6c4c77aa2f57e08028a60d8dbd8e0005256adc1b3a09",
+      "focus": {
+        "tag": "H2",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 620.984375,
+          "width": 720,
+          "height": 22,
+          "top": 620.984375,
+          "right": 958,
+          "bottom": 642.984375,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "DJ playback",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 104.5,
+        "scrollHeight": 2283
+      },
+      "poolControl": null,
+      "counts": {
+        "nextRoomNews": 0,
+        "saveDJPlayback": 0,
+        "savePlayback": 4
+      },
+      "providerAttempts": 0,
+      "HTTPWrites": 0,
+      "transport": "Play"
+    },
+    {
+      "name": "settings-scrolled",
+      "rawSha256": "e9bd0dfe20d9dbaf3d2462aab4d36fde8531907c7b208293c887a1f3321ad1d7",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 1012.9921875,
+          "y": 39.75,
+          "width": 34,
+          "height": 34,
+          "top": 39.75,
+          "right": 1046.9921875,
+          "bottom": 73.75,
+          "left": 1012.9921875
+        },
+        "insideDrawer": false,
+        "name": "Close DJ controls",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 1563,
+        "scrollHeight": 2283
+      },
+      "poolControl": null,
+      "counts": {
+        "nextRoomNews": 0,
+        "saveDJPlayback": 0,
+        "savePlayback": 6
+      },
+      "providerAttempts": 0,
+      "HTTPWrites": 0,
+      "transport": "Play"
+    },
+    {
+      "name": "settings-reentry",
+      "rawSha256": "4db888c354cd9a90957e7a9591884e7b2eabfe77bab42ba03130cbb7d633a969",
+      "focus": {
+        "tag": "H2",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 71.984375,
+          "width": 720,
+          "height": 22,
+          "top": 71.984375,
+          "right": 958,
+          "bottom": 93.984375,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "DJ playback",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 653.5,
+        "scrollHeight": 2283
+      },
+      "poolControl": null,
+      "counts": {
+        "nextRoomNews": 0,
+        "saveDJPlayback": 0,
+        "savePlayback": 9
+      },
+      "providerAttempts": 0,
+      "HTTPWrites": 0,
+      "transport": "Play"
+    },
+    {
+      "name": "settings-next-tab",
+      "rawSha256": "1a2b3edcd9fa0e354d20acea8dd25742985c56d6b84218ad0d0a46302da2248d",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 353.8515625,
+          "y": 144.078125,
+          "width": 76,
+          "height": 38,
+          "top": 144.078125,
+          "right": 429.8515625,
+          "bottom": 182.078125,
+          "left": 353.8515625
+        },
+        "insideDrawer": false,
+        "name": "",
+        "type": "number",
+        "label": "Check news everysong",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 653.5,
+        "scrollHeight": 2283
+      },
+      "poolControl": null,
+      "counts": {
+        "nextRoomNews": 0,
+        "saveDJPlayback": 0,
+        "savePlayback": 10
+      },
+      "providerAttempts": 0,
+      "HTTPWrites": 0,
+      "transport": "Play"
+    },
+    {
+      "name": "news-footer-keyboard",
+      "rawSha256": "4a3741ec1cf1e76356315698a9c634ac9327f86d207f8e8051007ef67ced8754",
+      "focus": {
+        "tag": "H1",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 60.796875,
+          "width": 162.3984375,
+          "height": 36.3984375,
+          "top": 60.796875,
+          "right": 400.3984375,
+          "bottom": 97.1953125,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "News bucket",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 1735
+      },
+      "poolControl": null,
+      "counts": {
+        "nextRoomNews": 0,
+        "saveDJPlayback": 0,
+        "savePlayback": 12
+      },
+      "providerAttempts": 0,
+      "HTTPWrites": 0,
+      "transport": "Play"
+    },
+    {
+      "name": "news-repair-keyboard",
+      "rawSha256": "6efaf1343c0be765d9cf67a12eec233ec025e0dd61ccf37041221cc36c98f898",
+      "focus": {
+        "tag": "H1",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 60.796875,
+          "width": 162.3984375,
+          "height": 36.3984375,
+          "top": 60.796875,
+          "right": 400.3984375,
+          "bottom": 97.1953125,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "News bucket",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 1735
+      },
+      "poolControl": null,
+      "counts": {
+        "nextRoomNews": 0,
+        "saveDJPlayback": 0,
+        "savePlayback": 14
+      },
+      "providerAttempts": 0,
+      "HTTPWrites": 0,
+      "transport": "Play"
+    },
+    {
+      "name": "dismiss-escape",
+      "rawSha256": "8030f49dbd658b3d9d61403cfb50e4c1220d62efa46f8212d319e2f03409883e",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "2px"
+        },
+        "rect": {
+          "x": 936.7734375,
+          "y": 644,
+          "width": 139.21875,
+          "height": 32,
+          "top": 644,
+          "right": 1075.9921875,
+          "bottom": 676,
+          "left": 936.7734375
+        },
+        "insideDrawer": false,
+        "name": "DJ: Waiting for music. Open DJ controls",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 1735
+      },
+      "poolControl": null,
+      "counts": {
+        "nextRoomNews": 0,
+        "saveDJPlayback": 0,
+        "savePlayback": 19
+      },
+      "providerAttempts": 0,
+      "HTTPWrites": 0,
+      "transport": "Play"
+    },
+    {
+      "name": "navigation-final",
+      "rawSha256": "23600d8be3217c266c2913107300b070838342f8aaa061783d42241003b0287a",
+      "focus": {
+        "tag": "H2",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 557.984375,
+          "width": 720,
+          "height": 22,
+          "top": 557.984375,
+          "right": 958,
+          "bottom": 579.984375,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "DJ playback",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 167.5,
+        "scrollHeight": 2283
+      },
+      "poolControl": null,
+      "counts": {
+        "nextRoomNews": 0,
+        "saveDJPlayback": 0,
+        "savePlayback": 32
+      },
+      "providerAttempts": 0,
+      "HTTPWrites": 0,
+      "transport": "Play"
+    }
+  ],
+  "checks": {
+    "build": "npm run build exit0 including TypeScript",
+    "lint": "npm run lint exit0",
+    "nativePredicates": "All retained focus, ring, visibility, unavailable/inert, Tab-removal, call-count and no-external-write assertions pass",
+    "poolCalls": "Exactly1 nextRoomNews across terminal/inert/blur, zero saveDJPlayback; regular savePlayback timer writes continue. No claim of zero local persistence.",
+    "accessibility": "Computed Pool check ended button name, focused/focusable=true and disabled=true through aria-disabled. Native disabled property remains false.",
+    "navigationPersistence": "Music stays paused, queue/position and saved DJ preferences unchanged during navigation; no automatic preparation or DJ save invoked.",
+    "processes": "Both observers exit0. Revalidated owned catalog PID56332 stopped, tool handle exit143."
+  },
+  "acceptance": {
+    "Q06": "Review pending consolidated essential-control evidence audit. This closes the specific terminal-pool and player-navigation gaps, not all accessibility or usability.",
+    "inventory": "234 source definitions,35 reachable control-family files,55 imported renderer TS/TSX modules. No rendered control definition added or removed.",
+    "remaining": "27 active checks,14 listener and13 other-proof. No disposition change."
+  },
+  "limits": [
+    "No new forced Tab/pointer/window/overlay cancellation race; shared guards source-reviewed and previous helper records retain their scopes.",
+    "No all-platform synchronous popover-focus claim.",
+    "No new VoiceOver, listener, audible, live provider/server, media-key, platform/release or deferred viewport/zoom proof.",
+    "Baseline preload hash was not separately retained in baseline-bundles; final preload is retained."
+  ],
+  "poolAX": {
+    "rawSha256": "8ae5ac62954a6a517108175eff6801c1400916520375c74834af7ee4c3b35e29",
+    "buttons": [
+      {
+        "nodeId": "1151",
+        "ignored": false,
+        "role": {
+          "type": "role",
+          "value": "button"
+        },
+        "chromeRole": {
+          "type": "internalRole",
+          "value": 9
+        },
+        "name": {
+          "type": "computedString",
+          "value": "Pool check ended",
+          "sources": [
+            {
+              "type": "relatedElement",
+              "attribute": "aria-labelledby"
+            },
+            {
+              "type": "attribute",
+              "attribute": "aria-label"
+            },
+            {
+              "type": "relatedElement",
+              "nativeSource": "label"
+            },
+            {
+              "type": "contents",
+              "value": {
+                "type": "computedString",
+                "value": "Pool check ended"
+              }
+            },
+            {
+              "type": "attribute",
+              "attribute": "title",
+              "superseded": true
+            }
+          ]
+        },
+        "properties": [
+          {
+            "name": "disabled",
+            "value": {
+              "type": "boolean",
+              "value": true
+            }
+          },
+          {
+            "name": "invalid",
+            "value": {
+              "type": "token",
+              "value": "false"
+            }
+          },
+          {
+            "name": "focusable",
+            "value": {
+              "type": "booleanOrUndefined",
+              "value": true
+            }
+          },
+          {
+            "name": "focused",
+            "value": {
+              "type": "booleanOrUndefined",
+              "value": true
+            }
+          }
+        ],
+        "parentId": "1152",
+        "childIds": [
+          "1154"
+        ],
+        "backendDOMNodeId": 1151
+      }
+    ]
+  },
+  "sourceTrace": {
+    "REQUIREMENTS.md": {
+      "text": "Player DJ links preserve keyboard context after closing their popover: News bucket and Open News bucket focus the News bucket heading, and DJ settings opens General Settings at the DJ playback heading. These explicit visits reveal the destination despite older scroll history, including re-entry on the same page. A player visit does not create a Back to setup detour. Later user focus, navigation, overlays and window changes take priority. Ordinary Close/Escape returns focus to the DJ trigger.",
+      "sha256": "36dc403b7a7908e41f8a517fa3c1b50d6393e72696af77e88acab58ff7172787"
+    },
+    "docs/UX_ACCEPTANCE.md": {
+      "text": "## Player DJ navigation context, 18 October 2026\n\nFor the existing listening and radio stories, opening DJ controls is a short detour from music. The listener chooses DJ settings to adjust actual playback, or either News bucket link to inspect preparation. Closing the popover focuses the named destination. Tab continues into that page, and saved scroll cannot hide the entry target. DJ settings opens General without an unrelated Back to setup action. Ordinary Escape still returns to the DJ trigger.\n\nThe [native record](verification/2026-10-18-player-navigation-focus.json) reproduces focus remaining on the player after settings navigation and verifies the corrected DJ playback heading, next Tab, scrolled same-page reentry, both News bucket links and Escape. It also verifies the retained Pool check ended action with a visible ring, computed unavailable state, inert Return/Space and removal after Tab. These are controlled keyboard results. Observed listener understanding, VoiceOver and platform acceptance retain their separate checks.",
+      "sha256": "e097ac00314651fac36da247c51a45e0ecd9230fc98506a7197d29bcac6429f6"
+    }
+  }
+}

@@ -96,6 +96,7 @@ function ReadyApp({ connection, update, disconnected, playlistRecovery, roomDraf
   const [settingsSection, setSettingsSection] = useState<SettingsSection>('general');
   const [returnToSetup, setReturnToSetup] = useState(false);
   const managementSection = useRef<SettingsSection | null>(null);
+  const playerDestination = useRef<'stations' | 'settings' | null>(null);
   const setupReturnTarget = useRef('');
   const restoreSetupFocus = useRef(false);
   const [drawer, setDrawer] = useState<Song | 'queue' | null>(null);
@@ -165,6 +166,13 @@ function ReadyApp({ connection, update, disconnected, playlistRecovery, roomDraf
       : Array.from(content.current?.querySelectorAll<HTMLElement>('.page-heading h1') ?? []).at(-1) ?? null,
     canFocusSuccess: () => page === 'settings' && returnToSetup && settingsSection === managementSection.current,
   });
+  const { retryFrom: enterPlayerDestination } = useRetryFocus({
+    ownerKey: 'player-navigation',
+    target: () => page === 'settings'
+      ? content.current?.querySelector<HTMLElement>('#dj-playback-title') ?? null
+      : content.current?.querySelector<HTMLElement>('.page-heading h1') ?? null,
+    canFocusSuccess: () => page === playerDestination.current && !returnToSetup && (page !== 'settings' || settingsSection === 'general'),
+  });
   useEffect(() => {
     const shortcut = (event: KeyboardEvent) => {
       if (event.defaultPrevented || document.querySelector('dialog[open]') || document.querySelector(':popover-open')) return;
@@ -175,6 +183,15 @@ function ReadyApp({ connection, update, disconnected, playlistRecovery, roomDraf
     return () => window.removeEventListener('keydown', shortcut);
   }, []);
   function navigate(next: PageName) { setPage(next); setDrawer(null); setReturnToSetup(false); }
+  function openPlayerDestination(next: 'stations' | 'settings', source: HTMLButtonElement | null) {
+    void enterPlayerDestination(source, async () => {
+      playerDestination.current = next;
+      scrollPositions.current.delete(next === 'settings' ? 'settings-general' : 'stations');
+      if (next === 'settings') setSettingsSection('general');
+      navigate(next);
+      return { isError: false };
+    });
+  }
   function openNewsSettings() {
     setRoomSetupDraft(current => ({ ...current, tab: 'settings' }));
     setPage('stations'); setDrawer(null); setReturnToSetup(false);
@@ -204,6 +221,6 @@ function ReadyApp({ connection, update, disconnected, playlistRecovery, roomDraf
 
   return <div className={`app-shell ${drawer ? 'has-drawer' : ''}`}><aside className="sidebar"><div className="traffic-light-space" /><div className="wordmark">onmywave.fm</div><nav aria-label="Main navigation">{navigation.map(item => <button key={item.id} className={page === item.id ? 'active' : ''} aria-current={page === item.id ? 'page' : undefined} onClick={() => navigate(item.id)}><item.icon size={21} strokeWidth={1.7} />{item.name}</button>)}</nav><div className="sidebar-bottom"><button className={`settings-nav ${page === 'settings' ? 'active' : ''}`} onClick={() => navigate('settings')} aria-current={page === 'settings' ? 'page' : undefined}><Settings size={20} strokeWidth={1.7} />Settings</button><p className={`connection-status ${networkError ? 'unreachable' : ''}`}><span />{networkError ? 'Server unreachable' : 'Jellyfin connected'}</p></div></aside>
     <div className="titlebar-drag-region" /><main ref={main} className="main-content" id="main-content"><div ref={content} className="page-content"><NewsRecoveryNotice onOpenSettings={openNewsSettings} focusTarget={() => content.current?.querySelector<HTMLElement>('.page-heading h1') ?? null} settingsTarget={() => content.current?.querySelector<HTMLElement>('#room-panel-settings') ?? null} />{page === 'songs' && <SongsPage view={songsView} setView={setSongsView} add={setAdding} details={openDrawer} />}{page === 'albums' && <AlbumsPage onOpenDetail={(id, origin) => requestCollectionFocus(`albums-${id}`, origin)} view={albumsView} setView={setAlbumsView} add={setAdding} details={openDrawer} />}{page === 'playlists' && <PlaylistsPage onCreateDetail={requestCreatedPlaylistFocus} onReturnFromDetail={(id, origin) => requestCollectionFocus('playlists-list', origin, id)} onOpenDetail={(id, origin) => requestCollectionFocus(`playlists-${id}`, origin)} recovery={playlistRecovery} id={playlistId} setId={setPlaylistId} add={setAdding} details={openDrawer} />}{page === 'stations' && <StationsPage draft={roomDraft} setDraft={setRoomDraft} configDraft={roomSetupDraft} setConfigDraft={setRoomSetupDraft} configureSources={() => configureRoom('sources')} configureDJ={() => configureRoom('djs')} configureSettings={() => configureRoom('keys')} />}{page === 'settings' && <SettingsPage section={settingsSection} onSectionChange={setSettingsSection} returnToSetup={returnToSetup ? () => { restoreSetupFocus.current = true; scrollPositions.current.delete('stations'); setRoomSetupDraft(current => ({ ...current, tab: 'settings' })); setPage('stations'); setReturnToSetup(false); } : undefined} connection={connection} update={updateLibraries} disconnected={() => { if (active.current) disconnected(); }} />}</div></main>
-    {drawer && <aside id="listening-drawer" className="side-drawer" aria-labelledby="drawer-title"><header className="drawer-heading"><h2 id="drawer-title">{drawer === 'queue' ? 'Playing Next' : 'Song details'}</h2><button ref={drawerClose} className="icon-button" onClick={closeDrawer} aria-label={drawer === 'queue' ? 'Close queue' : 'Close song details'}><span aria-hidden="true">×</span></button></header><div key={drawer === 'queue' ? 'queue' : drawer.id} className="drawer-body">{drawer === 'queue' ? <Queue /> : <Inspector key={drawer.id} song={drawer} />}</div></aside>}<Player openRoom={() => navigate('stations')} openSettings={() => configureRoom('general')} queueOpen={drawer === 'queue'} toggleQueue={() => drawer === 'queue' ? closeDrawer() : openDrawer('queue')} />{adding && <AddPlaylist songs={adding} close={() => setAdding(null)} checkPlaylists={() => { setAdding(null); setPlaylistId(null); navigate('playlists'); }} />}
+    {drawer && <aside id="listening-drawer" className="side-drawer" aria-labelledby="drawer-title"><header className="drawer-heading"><h2 id="drawer-title">{drawer === 'queue' ? 'Playing Next' : 'Song details'}</h2><button ref={drawerClose} className="icon-button" onClick={closeDrawer} aria-label={drawer === 'queue' ? 'Close queue' : 'Close song details'}><span aria-hidden="true">×</span></button></header><div key={drawer === 'queue' ? 'queue' : drawer.id} className="drawer-body">{drawer === 'queue' ? <Queue /> : <Inspector key={drawer.id} song={drawer} />}</div></aside>}<Player openRoom={source => openPlayerDestination('stations', source)} openSettings={source => openPlayerDestination('settings', source)} queueOpen={drawer === 'queue'} toggleQueue={() => drawer === 'queue' ? closeDrawer() : openDrawer('queue')} />{adding && <AddPlaylist songs={adding} close={() => setAdding(null)} checkPlaylists={() => { setAdding(null); setPlaylistId(null); navigate('playlists'); }} />}
   </div>;
 }

@@ -330,3 +330,5 @@ The X setup guide keeps its summary and three page-opening actions keyboard acce
 
 
 Entering shared management from news setup keeps keyboard context: Manage sources and Manage DJs focus their page heading; Provider keys repair focuses its selected Settings section. These explicit detours reveal the destination despite an older scroll position. Back to setup reveals and focuses the matching source/host control or preparation switch with the draft intact. Later user focus, navigation, overlays and window changes take priority over the entry handoff.
+
+Player DJ links preserve keyboard context after closing their popover: News bucket and Open News bucket focus the News bucket heading, and DJ settings opens General Settings at the DJ playback heading. These explicit visits reveal the destination despite older scroll history, including re-entry on the same page. A player visit does not create a Back to setup detour. Later user focus, navigation, overlays and window changes take priority. Ordinary Close/Escape returns focus to the DJ trigger.

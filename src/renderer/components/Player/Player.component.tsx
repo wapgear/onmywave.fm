@@ -14,7 +14,7 @@ export const formatTime = (seconds: number) => {
 };
 const fill = (percent: number): CSSProperties => ({ '--range-fill': `${Math.max(0, Math.min(100, percent))}%` }) as CSSProperties;
 
-export function Player({ queueOpen, toggleQueue, openRoom, openSettings }: { queueOpen: boolean; toggleQueue: () => void; openRoom: () => void; openSettings: () => void }) {
+export function Player({ queueOpen, toggleQueue, openRoom, openSettings }: { queueOpen: boolean; toggleQueue: () => void; openRoom: (source: HTMLButtonElement | null) => void; openSettings: (source: HTMLButtonElement | null) => void }) {
   const player = usePlayer();
   const recovery = useNewsRecovery();
   const knownSpeech = !!player.activeNews && player.lastNews?.news.id === player.activeNews.id && (player.newsPhase === 'speaking' || player.newsPhase === 'paused' || (player.newsPhase === 'tail' && player.lastNews.status === 'completed'));

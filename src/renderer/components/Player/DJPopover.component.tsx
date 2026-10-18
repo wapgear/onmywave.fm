@@ -11,7 +11,7 @@ import { useRetryFocus } from '../../useRetryFocus';
 import { ErrorNotice } from '../Shared';
 import './DJPopover.styles.css';
 
-export function DJPopover({ openRoom, openSettings }: { openRoom: () => void; openSettings: () => void }) {
+export function DJPopover({ openRoom, openSettings }: { openRoom: (source: HTMLButtonElement | null) => void; openSettings: (source: HTMLButtonElement | null) => void }) {
   const player = usePlayer();
   const automation = useDJPlayback();
   const recovery = useNewsRecovery();
@@ -72,7 +72,7 @@ export function DJPopover({ openRoom, openSettings }: { openRoom: () => void; op
     window.addEventListener('resize', position);
     return () => window.removeEventListener('resize', position);
   }, [open]);
-  function navigate(action: () => void) { suppressReturnFocus.current = true; popup.current?.hidePopover(); action(); }
+  function navigate(action: (source: HTMLButtonElement | null) => void) { suppressReturnFocus.current = true; popup.current?.hidePopover(); action(trigger.current); }
   const updating = automation.update.isPending;
   const unconfirmed = automation.unconfirmedUpdate;
   const unconfirmedEnabled = unconfirmed?.enabled;

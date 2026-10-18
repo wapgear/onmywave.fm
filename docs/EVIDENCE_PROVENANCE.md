@@ -168,3 +168,6 @@ The [help audit](verification/2026-10-18-keyboard-help-audit.json) separates unc
 
 
 The [setup-management record](verification/2026-10-18-setup-management-focus.json) separates base body-focus loss, the rejected stale-scroll route fix and accepted entry/return geometry. It retains three terminal observer reports, two changed-bundle phases, source/fixture hashes and source-group/paging AX projections. Only App changes from the dated 35-family map; all other family hashes match. No row disposition changes or forced defensive fallback result is claimed.
+
+
+The [player-navigation record](verification/2026-10-18-player-navigation-focus.json) separates base terminal-pool/route-focus behavior from the final route-only renderer. It retains thirteen native projections, computed pool accessibility state, two terminal observer reports and source/bundle/fixture/raw hashes. Baseline preload has no separate hash. Normal local playback timer saves continue; external/provider attempts and HTTP writes stay zero. The successor family map reconciles three changed family files and32 unchanged hashes without treating234 source definitions as runtime instances or broad acceptance. Q06 remains Review and no disposition changes.
