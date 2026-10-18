@@ -889,3 +889,10 @@ The [CI3 record](verification/2026-10-18-secret-invariant.json) individually rev
 The review found two raw error-forwarding paths in the media proxy's returned stream. With a synthetic upstream credential marker, read and cancellation exceptions reached the protocol Response body consumer. This establishes an unsanitized protocol boundary, not observed Chromium display leakage. Read errors now use fixed retry guidance; cancellation still aborts upstream and contains its rejection. Nine focused checks pass for first/later failure, cancellation, successful bytes/headers, ranges, request failures, denied bodies, redirects and revoked handles. Production build/TypeScript and full lint pass. No personal credentials, real server/provider request or new native/OS check runs.
 
 CI3 has a current scoped adjudication and the protocol defect is fixed. Q13 remains Review for the remaining invariant/denominator work. All191 dispositions stay unchanged;25 checks remain open,14 listener and11 other-proof.
+
+
+## Confirmed General settings after refresh failure, 18 October 2026
+
+The [native readback record](verification/2026-10-18-general-settings-readback.json) reproduces a successful cadence save displaying the previous value beside Saved when its subsequent local-state refresh fails. Both General forms now patch only their confirmed fields into the current existing cache before refreshing. Playback retains newer enable/profile choices; transitions use the canonical saved response. An absent cache is not recreated from a captured account snapshot.
+
+At 1280×720 and 100%, native keyboard saves retain cadence 7 and transition timing 2 after held refreshes fail. Explicit read Retry restores authoritative data without another save. A definite pre-operation transition write failure retains draft 3 and durable 2; explicit Save then commits 3. The independent form and paused duplicate queue stay unchanged. Production build/TypeScript and full lint pass. CI1 remains under broader review; all 191 dispositions and 25 open checks remain unchanged, 14 listener and 11 other-proof.

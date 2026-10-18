@@ -1,0 +1,1164 @@
+{
+  "date": "2026-10-18",
+  "baseCommit": "173364b1665abb1cfad4ebad4e992f7ef8a85515",
+  "scope": [
+    "D21",
+    "D22",
+    "Q08",
+    "CI1 partial"
+  ],
+  "baseline": {
+    "contentSize": [
+      1280,
+      720
+    ],
+    "zoom": 1,
+    "runtime": "macOS arm64 Electron 43.7.0",
+    "defect": "Durable cadence 7 reverted visually to cached 3 beside DJ playback saved after refresh failure."
+  },
+  "decision": "Cancel exact localState reads, patch only confirmed form fields into current existing cache, then refresh. Preserve latest unrelated fields. Never seed an absent cache with a captured state. Playback merges three submitted preference fields; transitions use canonical returned settings.",
+  "sourceSha256": {
+    "src/renderer/pages/Settings/SettingsEdits.tsx": "aa389e5554799b6979e03827f6b7822b1a44ecd9e7d40e4073db55e46a4b525b",
+    "src/renderer/pages/Settings/Settings.page.tsx": "13f585e3995c35a21b1105f787095003d794b14ca885f609e58be1af33756cbe"
+  },
+  "beforeSourceSha256": "44e576f60c8a96d9fcc00df839244beefd8144215e0801b03803c20d9b34d56e",
+  "snapshots": [
+    {
+      "name": "baseline-pending",
+      "sha256": "a162baf9edd4813987bd2a4e47072466ca3b09e6fc69a9261ecc8ab756f06156",
+      "forms": [
+        {
+          "text": "Check news every\nsongs\n\nOnly finished songs count. Choose 1 for testing. Empty news pools are skipped without generating anything.\n\nKeep the DJ when seeking or rewinding\n\nKeeps the break when you seek. Speech waits for the next suitable ending and resumes where it paused.\n\nDJ voice volume\n70%\n\nRelative to player volume. The default is 70%.\n\nSaving\u2026",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "checked": false,
+              "disabled": true
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "value": "on",
+              "checked": true,
+              "disabled": true
+            },
+            {
+              "label": "DJ voice volume70%",
+              "value": "0.7",
+              "checked": false,
+              "disabled": true
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Saving\u2026",
+              "disabled": false,
+              "ariaDisabled": "true",
+              "busy": "true",
+              "focused": true
+            }
+          ]
+        },
+        {
+          "text": "Transition style\nCustom\nNatural\nTight\nNews bulletin\nStart with a style, then adjust the timing below.\nPlay the DJ\nOver the end of a song\nBetween songs\nThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.\nLower music over\nseconds\nFade down before the DJ starts.\nBreathing room before speech\nseconds\nWait after the music fades or finishes.\nPause after speech\nseconds\nLeave a moment before music resumes.\nBring music back over\nseconds\nFade music up to your listening volume.\nHear this transition\nPreview transition\n\nUses the timings above, even before saving. Sample music and a saved AI voice, no generation needed. Your music pauses and stays paused. Changing songs or seeking stops the sample.\n\nSample song\n2 s\nLower music\n1.5 s\nQuiet music\n0.8 s\nDJ over music\nSaved sample\nQuiet music\n0.5 s\nNext song fades in\n1.5 s\n\nReady to preview.\n\nSave DJ transitions",
+          "inputs": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "value": "natural",
+              "disabled": false
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "value": "over-music",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "focused": false
+            },
+            {
+              "name": "Save DJ transitions",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "focused": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Saving\u2026",
+        "outline": "solid"
+      },
+      "savedPlayback": {
+        "enabled": false,
+        "roomId": null,
+        "everySongs": 7,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "savedTransitions": {
+        "mode": "over-music",
+        "fadeOutSeconds": 1.5,
+        "leadInSeconds": 0.8,
+        "postSpeechSeconds": 0.5,
+        "fadeInSeconds": 1.5
+      },
+      "transport": "Play",
+      "calls": {
+        "saveDJPlayback": 1,
+        "saveNewsTransitions": 0,
+        "getLocalState": 3
+      },
+      "held": [
+        "getLocalState"
+      ],
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "baseline-failed-readback",
+      "sha256": "46c3a146e8991a21a204d7ad4ca5e70370e446b957d85dead95b3fa7f291fe20",
+      "forms": [
+        {
+          "text": "Check news every\nsongs\n\nOnly finished songs count. Choose 1 for testing. Empty news pools are skipped without generating anything.\n\nKeep the DJ when seeking or rewinding\n\nKeeps the break when you seek. Speech waits for the next suitable ending and resumes where it paused.\n\nDJ voice volume\n70%\n\nRelative to player volume. The default is 70%.\n\nSave DJ playback\n\nDJ playback saved.",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "3",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "value": "on",
+              "checked": true,
+              "disabled": false
+            },
+            {
+              "label": "DJ voice volume70%",
+              "value": "0.7",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Save DJ playback",
+              "disabled": false,
+              "ariaDisabled": "true",
+              "busy": null,
+              "focused": true
+            }
+          ]
+        },
+        {
+          "text": "Transition style\nCustom\nNatural\nTight\nNews bulletin\nStart with a style, then adjust the timing below.\nPlay the DJ\nOver the end of a song\nBetween songs\nThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.\nLower music over\nseconds\nFade down before the DJ starts.\nBreathing room before speech\nseconds\nWait after the music fades or finishes.\nPause after speech\nseconds\nLeave a moment before music resumes.\nBring music back over\nseconds\nFade music up to your listening volume.\nHear this transition\nPreview transition\n\nUses the timings above, even before saving. Sample music and a saved AI voice, no generation needed. Your music pauses and stays paused. Changing songs or seeking stops the sample.\n\nSample song\n2 s\nLower music\n1.5 s\nQuiet music\n0.8 s\nDJ over music\nSaved sample\nQuiet music\n0.5 s\nNext song fades in\n1.5 s\n\nReady to preview.\n\nSave DJ transitions",
+          "inputs": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "value": "natural",
+              "disabled": false
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "value": "over-music",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "focused": false
+            },
+            {
+              "name": "Save DJ transitions",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "focused": false
+            }
+          ]
+        }
+      ],
+      "notices": [
+        "getLocalState unavailable.\nTry again",
+        "getLocalState unavailable.\nTry again"
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Save DJ playback",
+        "outline": "solid"
+      },
+      "savedPlayback": {
+        "enabled": false,
+        "roomId": null,
+        "everySongs": 7,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "savedTransitions": {
+        "mode": "over-music",
+        "fadeOutSeconds": 1.5,
+        "leadInSeconds": 0.8,
+        "postSpeechSeconds": 0.5,
+        "fadeInSeconds": 1.5
+      },
+      "transport": "Play",
+      "calls": {
+        "saveDJPlayback": 1,
+        "saveNewsTransitions": 0,
+        "getLocalState": 4
+      },
+      "held": [],
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "final-playback-pending",
+      "sha256": "03a65b6a696cd2a8876557f85a3fe4d7fad6ed7ece5b4b483393d4cfc335879e",
+      "forms": [
+        {
+          "text": "Check news every\nsongs\n\nOnly finished songs count. Choose 1 for testing. Empty news pools are skipped without generating anything.\n\nKeep the DJ when seeking or rewinding\n\nKeeps the break when you seek. Speech waits for the next suitable ending and resumes where it paused.\n\nDJ voice volume\n70%\n\nRelative to player volume. The default is 70%.\n\nSaving\u2026",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "checked": false,
+              "disabled": true
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "value": "on",
+              "checked": true,
+              "disabled": true
+            },
+            {
+              "label": "DJ voice volume70%",
+              "value": "0.7",
+              "checked": false,
+              "disabled": true
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Saving\u2026",
+              "disabled": false,
+              "ariaDisabled": "true",
+              "busy": "true",
+              "focused": true
+            }
+          ]
+        },
+        {
+          "text": "Transition style\nCustom\nNatural\nTight\nNews bulletin\nStart with a style, then adjust the timing below.\nPlay the DJ\nOver the end of a song\nBetween songs\nThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.\nLower music over\nseconds\nFade down before the DJ starts.\nBreathing room before speech\nseconds\nWait after the music fades or finishes.\nPause after speech\nseconds\nLeave a moment before music resumes.\nBring music back over\nseconds\nFade music up to your listening volume.\nHear this transition\nPreview transition\n\nUses the timings above, even before saving. Sample music and a saved AI voice, no generation needed. Your music pauses and stays paused. Changing songs or seeking stops the sample.\n\nSample song\n2 s\nLower music\n1.5 s\nQuiet music\n0.8 s\nDJ over music\nSaved sample\nQuiet music\n0.5 s\nNext song fades in\n1.5 s\n\nReady to preview.\n\nSave DJ transitions",
+          "inputs": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "value": "natural",
+              "disabled": false
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "value": "over-music",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "focused": false
+            },
+            {
+              "name": "Save DJ transitions",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "focused": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Saving\u2026",
+        "outline": "solid"
+      },
+      "savedPlayback": {
+        "enabled": false,
+        "roomId": null,
+        "everySongs": 7,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "savedTransitions": {
+        "mode": "over-music",
+        "fadeOutSeconds": 1.5,
+        "leadInSeconds": 0.8,
+        "postSpeechSeconds": 0.5,
+        "fadeInSeconds": 1.5
+      },
+      "transport": "Play",
+      "calls": {
+        "saveDJPlayback": 1,
+        "saveNewsTransitions": 0,
+        "getLocalState": 4
+      },
+      "held": [
+        "getLocalState"
+      ],
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "final-playback-refresh-failed",
+      "sha256": "659451a00d6438881c98a2b96a5445050bd29ecf6ef83c5ed7d98347222a2691",
+      "forms": [
+        {
+          "text": "Check news every\nsongs\n\nOnly finished songs count. Choose 1 for testing. Empty news pools are skipped without generating anything.\n\nKeep the DJ when seeking or rewinding\n\nKeeps the break when you seek. Speech waits for the next suitable ending and resumes where it paused.\n\nDJ voice volume\n70%\n\nRelative to player volume. The default is 70%.\n\nSave DJ playback\n\nDJ playback saved.",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "value": "on",
+              "checked": true,
+              "disabled": false
+            },
+            {
+              "label": "DJ voice volume70%",
+              "value": "0.7",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Save DJ playback",
+              "disabled": false,
+              "ariaDisabled": "true",
+              "busy": null,
+              "focused": true
+            }
+          ]
+        },
+        {
+          "text": "Transition style\nCustom\nNatural\nTight\nNews bulletin\nStart with a style, then adjust the timing below.\nPlay the DJ\nOver the end of a song\nBetween songs\nThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.\nLower music over\nseconds\nFade down before the DJ starts.\nBreathing room before speech\nseconds\nWait after the music fades or finishes.\nPause after speech\nseconds\nLeave a moment before music resumes.\nBring music back over\nseconds\nFade music up to your listening volume.\nHear this transition\nPreview transition\n\nUses the timings above, even before saving. Sample music and a saved AI voice, no generation needed. Your music pauses and stays paused. Changing songs or seeking stops the sample.\n\nSample song\n2 s\nLower music\n1.5 s\nQuiet music\n0.8 s\nDJ over music\nSaved sample\nQuiet music\n0.5 s\nNext song fades in\n1.5 s\n\nReady to preview.\n\nSave DJ transitions",
+          "inputs": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "value": "natural",
+              "disabled": false
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "value": "over-music",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "focused": false
+            },
+            {
+              "name": "Save DJ transitions",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "focused": false
+            }
+          ]
+        }
+      ],
+      "notices": [
+        "getLocalState unavailable.\nTry again",
+        "getLocalState unavailable.\nTry again"
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Save DJ playback",
+        "outline": "solid"
+      },
+      "savedPlayback": {
+        "enabled": false,
+        "roomId": null,
+        "everySongs": 7,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "savedTransitions": {
+        "mode": "over-music",
+        "fadeOutSeconds": 1.5,
+        "leadInSeconds": 0.8,
+        "postSpeechSeconds": 0.5,
+        "fadeInSeconds": 1.5
+      },
+      "transport": "Play",
+      "calls": {
+        "saveDJPlayback": 1,
+        "saveNewsTransitions": 0,
+        "getLocalState": 5
+      },
+      "held": [],
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "final-playback-refresh-retried",
+      "sha256": "c3e25267bb5c429e90f8cfca802e181accae09857e5bcb34e8dabb734cb5e90a",
+      "forms": [
+        {
+          "text": "Check news every\nsongs\n\nOnly finished songs count. Choose 1 for testing. Empty news pools are skipped without generating anything.\n\nKeep the DJ when seeking or rewinding\n\nKeeps the break when you seek. Speech waits for the next suitable ending and resumes where it paused.\n\nDJ voice volume\n70%\n\nRelative to player volume. The default is 70%.\n\nSave DJ playback\n\nDJ playback saved.",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "value": "on",
+              "checked": true,
+              "disabled": false
+            },
+            {
+              "label": "DJ voice volume70%",
+              "value": "0.7",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Save DJ playback",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "text": "Transition style\nCustom\nNatural\nTight\nNews bulletin\nStart with a style, then adjust the timing below.\nPlay the DJ\nOver the end of a song\nBetween songs\nThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.\nLower music over\nseconds\nFade down before the DJ starts.\nBreathing room before speech\nseconds\nWait after the music fades or finishes.\nPause after speech\nseconds\nLeave a moment before music resumes.\nBring music back over\nseconds\nFade music up to your listening volume.\nHear this transition\nPreview transition\n\nUses the timings above, even before saving. Sample music and a saved AI voice, no generation needed. Your music pauses and stays paused. Changing songs or seeking stops the sample.\n\nSample song\n2 s\nLower music\n1.5 s\nQuiet music\n0.8 s\nDJ over music\nSaved sample\nQuiet music\n0.5 s\nNext song fades in\n1.5 s\n\nReady to preview.\n\nSave DJ transitions",
+          "inputs": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "value": "natural",
+              "disabled": false
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "value": "over-music",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "focused": false
+            },
+            {
+              "name": "Save DJ transitions",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "focused": false
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "focus": {
+        "tag": "INPUT",
+        "name": "",
+        "label": "Check news everysongs",
+        "outline": "solid"
+      },
+      "savedPlayback": {
+        "enabled": false,
+        "roomId": null,
+        "everySongs": 7,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "savedTransitions": {
+        "mode": "over-music",
+        "fadeOutSeconds": 1.5,
+        "leadInSeconds": 0.8,
+        "postSpeechSeconds": 0.5,
+        "fadeInSeconds": 1.5
+      },
+      "transport": "Play",
+      "calls": {
+        "saveDJPlayback": 1,
+        "saveNewsTransitions": 0,
+        "getLocalState": 6
+      },
+      "held": [],
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "final-transitions-pending",
+      "sha256": "3b5b541c9d08549b54792b9125a64b2c3cb429d877ddecf7874a421779c058ab",
+      "forms": [
+        {
+          "text": "Check news every\nsongs\n\nOnly finished songs count. Choose 1 for testing. Empty news pools are skipped without generating anything.\n\nKeep the DJ when seeking or rewinding\n\nKeeps the break when you seek. Speech waits for the next suitable ending and resumes where it paused.\n\nDJ voice volume\n70%\n\nRelative to player volume. The default is 70%.\n\nSave DJ playback\n\nDJ playback saved.",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "value": "on",
+              "checked": true,
+              "disabled": false
+            },
+            {
+              "label": "DJ voice volume70%",
+              "value": "0.7",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Save DJ playback",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "text": "Transition style\nCustom\nNatural\nTight\nNews bulletin\nStart with a style, then adjust the timing below.\nPlay the DJ\nOver the end of a song\nBetween songs\nThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.\nLower music over\nseconds\nFade down before the DJ starts.\nBreathing room before speech\nseconds\nWait after the music fades or finishes.\nPause after speech\nseconds\nLeave a moment before music resumes.\nBring music back over\nseconds\nFade music up to your listening volume.\nHear this transition\nPreview transition\n\nUses the timings above, even before saving. Sample music and a saved AI voice, no generation needed. Your music pauses and stays paused. Changing songs or seeking stops the sample.\n\nSample song\n2 s\nLower music\n2 s\nQuiet music\n0.8 s\nDJ over music\nSaved sample\nQuiet music\n0.5 s\nNext song fades in\n1.5 s\n\nReady to preview.\n\nSaving\u2026",
+          "inputs": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "value": "custom",
+              "disabled": true
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "value": "over-music",
+              "disabled": true
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "2",
+              "checked": false,
+              "disabled": true
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "checked": false,
+              "disabled": true
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "checked": false,
+              "disabled": true
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "checked": false,
+              "disabled": true
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "focused": false
+            },
+            {
+              "name": "Saving\u2026",
+              "disabled": false,
+              "ariaDisabled": "true",
+              "busy": "true",
+              "focused": true
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Saving\u2026",
+        "outline": "solid"
+      },
+      "savedPlayback": {
+        "enabled": false,
+        "roomId": null,
+        "everySongs": 7,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "savedTransitions": {
+        "mode": "over-music",
+        "fadeOutSeconds": 2,
+        "leadInSeconds": 0.8,
+        "postSpeechSeconds": 0.5,
+        "fadeInSeconds": 1.5
+      },
+      "transport": "Play",
+      "calls": {
+        "saveDJPlayback": 1,
+        "saveNewsTransitions": 1,
+        "getLocalState": 7
+      },
+      "held": [
+        "getLocalState"
+      ],
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "final-transitions-refresh-failed",
+      "sha256": "b0f0882d630a26f2746978b5a07069747e9cf30f6dacad849fac77ea8e18b3eb",
+      "forms": [
+        {
+          "text": "Check news every\nsongs\n\nOnly finished songs count. Choose 1 for testing. Empty news pools are skipped without generating anything.\n\nKeep the DJ when seeking or rewinding\n\nKeeps the break when you seek. Speech waits for the next suitable ending and resumes where it paused.\n\nDJ voice volume\n70%\n\nRelative to player volume. The default is 70%.\n\nSave DJ playback\n\nDJ playback saved.",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "value": "on",
+              "checked": true,
+              "disabled": false
+            },
+            {
+              "label": "DJ voice volume70%",
+              "value": "0.7",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Save DJ playback",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "text": "Transition style\nCustom\nNatural\nTight\nNews bulletin\nStart with a style, then adjust the timing below.\nPlay the DJ\nOver the end of a song\nBetween songs\nThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.\nLower music over\nseconds\nFade down before the DJ starts.\nBreathing room before speech\nseconds\nWait after the music fades or finishes.\nPause after speech\nseconds\nLeave a moment before music resumes.\nBring music back over\nseconds\nFade music up to your listening volume.\nHear this transition\nPreview transition\n\nUses the timings above, even before saving. Sample music and a saved AI voice, no generation needed. Your music pauses and stays paused. Changing songs or seeking stops the sample.\n\nSample song\n2 s\nLower music\n2 s\nQuiet music\n0.8 s\nDJ over music\nSaved sample\nQuiet music\n0.5 s\nNext song fades in\n1.5 s\n\nReady to preview.\n\nSave DJ transitions\n\nDJ transitions saved.",
+          "inputs": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "value": "custom",
+              "disabled": false
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "value": "over-music",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "2",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "focused": false
+            },
+            {
+              "name": "Save DJ transitions",
+              "disabled": false,
+              "ariaDisabled": "true",
+              "busy": null,
+              "focused": true
+            }
+          ]
+        }
+      ],
+      "notices": [
+        "getLocalState unavailable.\nTry again",
+        "getLocalState unavailable.\nTry again"
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Save DJ transitions",
+        "outline": "solid"
+      },
+      "savedPlayback": {
+        "enabled": false,
+        "roomId": null,
+        "everySongs": 7,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "savedTransitions": {
+        "mode": "over-music",
+        "fadeOutSeconds": 2,
+        "leadInSeconds": 0.8,
+        "postSpeechSeconds": 0.5,
+        "fadeInSeconds": 1.5
+      },
+      "transport": "Play",
+      "calls": {
+        "saveDJPlayback": 1,
+        "saveNewsTransitions": 1,
+        "getLocalState": 8
+      },
+      "held": [],
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "final-transitions-write-failed",
+      "sha256": "6e54b436aa909b3fce6a99a71df9f030d1bdbba9e38814e002b184f2bde829bd",
+      "forms": [
+        {
+          "text": "Check news every\nsongs\n\nOnly finished songs count. Choose 1 for testing. Empty news pools are skipped without generating anything.\n\nKeep the DJ when seeking or rewinding\n\nKeeps the break when you seek. Speech waits for the next suitable ending and resumes where it paused.\n\nDJ voice volume\n70%\n\nRelative to player volume. The default is 70%.\n\nSave DJ playback\n\nDJ playback saved.",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "value": "on",
+              "checked": true,
+              "disabled": false
+            },
+            {
+              "label": "DJ voice volume70%",
+              "value": "0.7",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Save DJ playback",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "text": "Transition style\nCustom\nNatural\nTight\nNews bulletin\nStart with a style, then adjust the timing below.\nPlay the DJ\nOver the end of a song\nBetween songs\nThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.\nLower music over\nseconds\nFade down before the DJ starts.\nBreathing room before speech\nseconds\nWait after the music fades or finishes.\nPause after speech\nseconds\nLeave a moment before music resumes.\nBring music back over\nseconds\nFade music up to your listening volume.\nHear this transition\nPreview transition\n\nUses the timings above, even before saving. Sample music and a saved AI voice, no generation needed. Your music pauses and stays paused. Changing songs or seeking stops the sample.\n\nSample song\n2 s\nLower music\n3 s\nQuiet music\n0.8 s\nDJ over music\nSaved sample\nQuiet music\n0.5 s\nNext song fades in\n1.5 s\n\nReady to preview.\n\nSave DJ transitions\nsaveNewsTransitions unavailable.",
+          "inputs": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "value": "custom",
+              "disabled": false
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "value": "over-music",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "3",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "focused": false
+            },
+            {
+              "name": "Save DJ transitions",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "focused": true
+            }
+          ]
+        }
+      ],
+      "notices": [
+        "saveNewsTransitions unavailable."
+      ],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Save DJ transitions",
+        "outline": "solid"
+      },
+      "savedPlayback": {
+        "enabled": false,
+        "roomId": null,
+        "everySongs": 7,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "savedTransitions": {
+        "mode": "over-music",
+        "fadeOutSeconds": 2,
+        "leadInSeconds": 0.8,
+        "postSpeechSeconds": 0.5,
+        "fadeInSeconds": 1.5
+      },
+      "transport": "Play",
+      "calls": {
+        "saveDJPlayback": 1,
+        "saveNewsTransitions": 2,
+        "getLocalState": 9
+      },
+      "held": [],
+      "serverWrites": 0,
+      "externalRequests": 0
+    },
+    {
+      "name": "final-transitions-write-retried",
+      "sha256": "1a0979b6f2a56b6e20d8dff4abd743bdd84b17324b60970ad5034f749d734ca1",
+      "forms": [
+        {
+          "text": "Check news every\nsongs\n\nOnly finished songs count. Choose 1 for testing. Empty news pools are skipped without generating anything.\n\nKeep the DJ when seeking or rewinding\n\nKeeps the break when you seek. Speech waits for the next suitable ending and resumes where it paused.\n\nDJ voice volume\n70%\n\nRelative to player volume. The default is 70%.\n\nSave DJ playback\n\nDJ playback saved.",
+          "inputs": [
+            {
+              "label": "Check news everysongs",
+              "value": "7",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Keep the DJ when seeking or rewinding",
+              "value": "on",
+              "checked": true,
+              "disabled": false
+            },
+            {
+              "label": "DJ voice volume70%",
+              "value": "0.7",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Save DJ playback",
+              "disabled": true,
+              "ariaDisabled": "true",
+              "busy": null,
+              "focused": false
+            }
+          ]
+        },
+        {
+          "text": "Transition style\nCustom\nNatural\nTight\nNews bulletin\nStart with a style, then adjust the timing below.\nPlay the DJ\nOver the end of a song\nBetween songs\nThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.\nLower music over\nseconds\nFade down before the DJ starts.\nBreathing room before speech\nseconds\nWait after the music fades or finishes.\nPause after speech\nseconds\nLeave a moment before music resumes.\nBring music back over\nseconds\nFade music up to your listening volume.\nHear this transition\nPreview transition\n\nUses the timings above, even before saving. Sample music and a saved AI voice, no generation needed. Your music pauses and stays paused. Changing songs or seeking stops the sample.\n\nSample song\n2 s\nLower music\n3 s\nQuiet music\n0.8 s\nDJ over music\nSaved sample\nQuiet music\n0.5 s\nNext song fades in\n1.5 s\n\nReady to preview.\n\nSave DJ transitions\n\nDJ transitions saved.",
+          "inputs": [
+            {
+              "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+              "value": "custom",
+              "disabled": false
+            },
+            {
+              "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+              "value": "over-music",
+              "disabled": false
+            },
+            {
+              "label": "Lower music oversecondsFade down before the DJ starts.",
+              "value": "3",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+              "value": "0.8",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Pause after speechsecondsLeave a moment before music resumes.",
+              "value": "0.5",
+              "checked": false,
+              "disabled": false
+            },
+            {
+              "label": "Bring music back oversecondsFade music up to your listening volume.",
+              "value": "1.5",
+              "checked": false,
+              "disabled": false
+            }
+          ],
+          "buttons": [
+            {
+              "name": "Preview transition",
+              "disabled": false,
+              "ariaDisabled": null,
+              "busy": null,
+              "focused": false
+            },
+            {
+              "name": "Save DJ transitions",
+              "disabled": false,
+              "ariaDisabled": "true",
+              "busy": null,
+              "focused": true
+            }
+          ]
+        }
+      ],
+      "notices": [],
+      "focus": {
+        "tag": "BUTTON",
+        "name": "Save DJ transitions",
+        "outline": "solid"
+      },
+      "savedPlayback": {
+        "enabled": false,
+        "roomId": null,
+        "everySongs": 7,
+        "keepOnSeek": true,
+        "voiceVolume": 0.7
+      },
+      "savedTransitions": {
+        "mode": "over-music",
+        "fadeOutSeconds": 3,
+        "leadInSeconds": 0.8,
+        "postSpeechSeconds": 0.5,
+        "fadeInSeconds": 1.5
+      },
+      "transport": "Play",
+      "calls": {
+        "saveDJPlayback": 1,
+        "saveNewsTransitions": 3,
+        "getLocalState": 10
+      },
+      "held": [],
+      "serverWrites": 0,
+      "externalRequests": 0
+    }
+  ],
+  "verification": {
+    "buildTypecheck": "pass",
+    "fullLint": "pass",
+    "nativeInput": "CUA only; Playwright lifecycle and passive telemetry; main IPC fault gates",
+    "writeFailure": "Controlled safe failure before operation, not physical disk failure",
+    "isolation": "Fresh synthetic local state, localhost read-only catalog, scheduler stopped, audio muted, no provider calls or real server writes",
+    "assertions": [
+      "Both forms retain durable values after readback failure",
+      "Read Retry sends no extra save",
+      "Failed write retains draft and old durable setting",
+      "Explicit write retry commits draft",
+      "Playback and transition saves preserve each other",
+      "Paused duplicate queue and listening options unchanged"
+    ]
+  },
+  "limits": [
+    "No live Jellyfin, provider, audible or listener result",
+    "No fresh native account-transition or newer player-choice race; current merge source reviewed against retained D22 proof",
+    "CI1 cross-lifetime adjudication remains open; no checklist status changes",
+    "Smaller windows and 200 percent zoom deferred by user"
+  ]
+}
