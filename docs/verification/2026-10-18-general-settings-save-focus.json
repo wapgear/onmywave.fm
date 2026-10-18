@@ -1,0 +1,5258 @@
+{
+  "date": "2026-10-18",
+  "baseCommit": "68d846c514273e1a2000920be7ced23f04d4bd0a",
+  "scope": [
+    "Q06/R12 General Settings explicit saves",
+    "M14 DJ playback and transition save focus"
+  ],
+  "baseline": {
+    "contentSizePoints": [
+      1280,
+      720
+    ],
+    "appZoom": 1,
+    "runtime": "macOS arm64, Electron43.7.0, Retina display"
+  },
+  "before": "Return from cadence or transition timing disables the whole fieldset including Save, leaving BODY. Playback success also leaves BODY when its clean Save stays natively disabled.",
+  "implementation": [
+    "Keep existing native-disabled fields while saving. Move Save outside each fieldset and preserve its native focusability through save/readback with aria-disabled/aria-busy and muted/progress styling.",
+    "On an eligible explicit submit, synchronously focus and nearest-reveal Save only if the visible focused document active element belongs to that exact form and no dialog/popover is open. Existing useEdit synchronous write guard remains unchanged.",
+    "Local onFocus/onBlur ownership retains clean Save after success only while it owns focus; Tab returns it to native disabled. No completion focus effect. Section unmount discards local ownership while existing SettingsEdits retains the write/draft above pages.",
+    "Definite failure retains draft and enables explicit retry; normal saved status announcements remain."
+  ],
+  "pairedDecision": {
+    "Steve": "Independent persistent Save outside native-disabled fieldset proposal. Initially favored always-focusable clean Save; challenge adopts focus-owned clean retention to avoid dead Tab stops. Implemented playback component; reviewed integration without blocker.",
+    "Elena": "Independent native-locked fields and focus-owned Save retention proposal. Implemented transition component; reviewed integration without blocker.",
+    "Morgan": "Selected shared converged behavior; root removes redundant form ref and pre-focus retention assignment, preserves busy Save through pending, adds scoped styling and owns native verification. No new shared abstraction.",
+    "finalReview": "Steve and Elena independently reviewed final source, unchanged edit owner, bundle hashes, contract trace and evidence. Both found no blocker for this slice; Steve requested explicit source-only scope for page-level detours, retained in limits."
+  },
+  "phases": {
+    "before": {
+      "bundleHashes": {
+        "out/renderer/assets/index-B6xLThny.js": "3b14d85fde3308d581794262b9dfe1c9dede7e0a5347121e4c4ccf7d26936bbe",
+        "out/renderer/assets/index-xNvOC8FU.css": "40fa899bf92a922493225c00234d814cf468a7c27490fe9d4aa5cd90dd870b17",
+        "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2",
+        "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb"
+      },
+      "snapshots": [
+        {
+          "name": "before-playback-draft",
+          "rawSha256": "f7871fd1010438882c90bf7a09cda6f6e9cbfd7d17d73eea25f013d187f396fa",
+          "observedAt": 1792315067135,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "INPUT",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 353.8515625,
+              "y": 306.578125,
+              "width": 76,
+              "height": 38,
+              "top": 306.578125,
+              "right": 429.8515625,
+              "bottom": 344.578125,
+              "left": 353.8515625
+            },
+            "insideDrawer": false,
+            "name": "",
+            "type": "number",
+            "label": "Check news everysongs",
+            "role": null
+          },
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About"
+          ],
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Archive music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Recent music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save libraries",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Check news everysongs",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "4",
+                  "checked": false,
+                  "active": true
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Keep the DJ when seeking or rewinding",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "range",
+                  "label": "DJ voice volume70%",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.7",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save DJ playback",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "natural",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "custom",
+                      "label": "Custom",
+                      "disabled": true,
+                      "selected": false
+                    },
+                    {
+                      "value": "natural",
+                      "label": "Natural",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "tight",
+                      "label": "Tight",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "bulletin",
+                      "label": "News bulletin",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "over-music",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "over-music",
+                      "label": "Over the end of a song",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "between-songs",
+                      "label": "Between songs",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Lower music oversecondsFade down before the DJ starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.8",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Pause after speechsecondsLeave a moment before music resumes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Bring music back oversecondsFade music up to your listening volume.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Preview transition",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Save DJ transitions",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "playerTop": 616,
+          "savedPreferences": {
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 3,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "newsTransitions": {
+              "mode": "over-music",
+              "fadeOutSeconds": 1.5,
+              "leadInSeconds": 0.8,
+              "postSpeechSeconds": 0.5,
+              "fadeInSeconds": 1.5
+            }
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [],
+            "saves": []
+          }
+        },
+        {
+          "name": "before-playback-pending-body",
+          "rawSha256": "a1f310c971ed7635aeb90a0e11a953a00a0c09e98360dc03b3adebcf42880697",
+          "observedAt": 1792315077757,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BODY",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 720,
+              "top": 0,
+              "right": 1280,
+              "bottom": 720,
+              "left": 0
+            },
+            "insideDrawer": false,
+            "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedSettingsGeneralProvider keysSourcesDJsAccountSigned in asFixture listenerServerhttp://127.0.0.1:5191VersionJellyfin fixtureSign outMusic librariesChoose the libraries shown in your collection. Your listening queue stays available.Music librariesArchive musicRecent music1 library selectedSave librariesDJ playbackChoose how often the DJ checks saved news and how its voice plays.Check news everysongsOnly finished songs count. Choose 1 for testing. Empty news pools are skipped without generating anything.Keep the DJ when seeking or rewindingKeeps the break when you seek. Speech waits for the next suitable ending and resumes where it paused.DJ voice volume70%Relative to player volume. The default is 70%.Saving\u2026DJ transitionsGive news breaks room to breathe. Saved changes apply to the next break you schedule.Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.Lower music oversecondsFade down before the DJ starts.Breathing room before speechsecondsWait after the music fades or finishes.Pause after speechsecondsLeave a moment before music resumes.Bring music back oversecondsFade music up to your listening volume.Hear this transitionPreview transitionUses the timings above, even before saving. Sample music and a saved AI voice, no generation needed. Your music pauses and stays paused. Changing songs or seeking stops the sample.Sample song2 sLower music1.5 sQuiet music0.8 sDJ over musicSaved sampleQuiet music0.5 sNext song fades in1.5 sReady to preview.Save DJ transitionsAboutonmywave.fm Light for macOSSong 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+            "type": null,
+            "role": null
+          },
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About"
+          ],
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Archive music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Recent music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save libraries",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Check news everysongs",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "4",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Keep the DJ when seeking or rewinding",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "range",
+                  "label": "DJ voice volume70%",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.7",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Saving\u2026",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "natural",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "custom",
+                      "label": "Custom",
+                      "disabled": true,
+                      "selected": false
+                    },
+                    {
+                      "value": "natural",
+                      "label": "Natural",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "tight",
+                      "label": "Tight",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "bulletin",
+                      "label": "News bulletin",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "over-music",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "over-music",
+                      "label": "Over the end of a song",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "between-songs",
+                      "label": "Between songs",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Lower music oversecondsFade down before the DJ starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.8",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Pause after speechsecondsLeave a moment before music resumes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Bring music back oversecondsFade music up to your listening volume.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Preview transition",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Save DJ transitions",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "playerTop": 616,
+          "savedPreferences": {
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 3,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "newsTransitions": {
+              "mode": "over-music",
+              "fadeOutSeconds": 1.5,
+              "leadInSeconds": 0.8,
+              "postSpeechSeconds": 0.5,
+              "fadeInSeconds": 1.5
+            }
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [
+              "saveDJPlayback"
+            ],
+            "saves": [
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315071943,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "before-playback-success-body",
+          "rawSha256": "1a98205081d64b01bef6db41ff897c82d5d70791afab6dc16286212c10bd0ad6",
+          "observedAt": 1792315113715,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BODY",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 720,
+              "top": 0,
+              "right": 1280,
+              "bottom": 720,
+              "left": 0
+            },
+            "insideDrawer": false,
+            "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedSettingsGeneralProvider keysSourcesDJsAccountSigned in asFixture listenerServerhttp://127.0.0.1:5191VersionJellyfin fixtureSign outMusic librariesChoose the libraries shown in your collection. Your listening queue stays available.Music librariesArchive musicRecent music1 library selectedSave librariesDJ playbackChoose how often the DJ checks saved news and how its voice plays.Check news everysongsOnly finished songs count. Choose 1 for testing. Empty news pools are skipped without generating anything.Keep the DJ when seeking or rewindingKeeps the break when you seek. Speech waits for the next suitable ending and resumes where it paused.DJ voice volume70%Relative to player volume. The default is 70%.Save DJ playbackDJ playback saved.DJ transitionsGive news breaks room to breathe. Saved changes apply to the next break you schedule.Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.Lower music oversecondsFade down before the DJ starts.Breathing room before speechsecondsWait after the music fades or finishes.Pause after speechsecondsLeave a moment before music resumes.Bring music back oversecondsFade music up to your listening volume.Hear this transitionPreview transitionUses the timings above, even before saving. Sample music and a saved AI voice, no generation needed. Your music pauses and stays paused. Changing songs or seeking stops the sample.Sample song2 sLower music1.5 sQuiet music0.8 sDJ over musicSaved sampleQuiet music0.5 sNext song fades in1.5 sReady to preview.Save DJ transitionsAboutonmywave.fm Light for macOSSong 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 4 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+            "type": null,
+            "role": null
+          },
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About"
+          ],
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Archive music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Recent music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save libraries",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Check news everysongs",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "4",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Keep the DJ when seeking or rewinding",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "range",
+                  "label": "DJ voice volume70%",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.7",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save DJ playback",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "natural",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "custom",
+                      "label": "Custom",
+                      "disabled": true,
+                      "selected": false
+                    },
+                    {
+                      "value": "natural",
+                      "label": "Natural",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "tight",
+                      "label": "Tight",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "bulletin",
+                      "label": "News bulletin",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "over-music",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "over-music",
+                      "label": "Over the end of a song",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "between-songs",
+                      "label": "Between songs",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Lower music oversecondsFade down before the DJ starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.8",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Pause after speechsecondsLeave a moment before music resumes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Bring music back oversecondsFade music up to your listening volume.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Preview transition",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Save DJ transitions",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "playerTop": 616,
+          "savedPreferences": {
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 4,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "newsTransitions": {
+              "mode": "over-music",
+              "fadeOutSeconds": 1.5,
+              "leadInSeconds": 0.8,
+              "postSpeechSeconds": 0.5,
+              "fadeInSeconds": 1.5
+            }
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [],
+            "saves": [
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315071943,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "before-transitions-pending-body",
+          "rawSha256": "58db28f04558a11cfe00976ebd29169588ff33426565b41f1a76ec67614862c2",
+          "observedAt": 1792315138695,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BODY",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 0,
+              "y": 0,
+              "width": 1280,
+              "height": 720,
+              "top": 0,
+              "right": 1280,
+              "bottom": 720,
+              "left": 0
+            },
+            "insideDrawer": false,
+            "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedSettingsGeneralProvider keysSourcesDJsAccountSigned in asFixture listenerServerhttp://127.0.0.1:5191VersionJellyfin fixtureSign outMusic librariesChoose the libraries shown in your collection. Your listening queue stays available.Music librariesArchive musicRecent music1 library selectedSave librariesDJ playbackChoose how often the DJ checks saved news and how its voice plays.Check news everysongsOnly finished songs count. Choose 1 for testing. Empty news pools are skipped without generating anything.Keep the DJ when seeking or rewindingKeeps the break when you seek. Speech waits for the next suitable ending and resumes where it paused.DJ voice volume70%Relative to player volume. The default is 70%.Save DJ playbackDJ playback saved.DJ transitionsGive news breaks room to breathe. Saved changes apply to the next break you schedule.Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.Lower music oversecondsFade down before the DJ starts.Breathing room before speechsecondsWait after the music fades or finishes.Pause after speechsecondsLeave a moment before music resumes.Bring music back oversecondsFade music up to your listening volume.Hear this transitionPreview transitionUses the timings above, even before saving. Sample music and a saved AI voice, no generation needed. Your music pauses and stays paused. Changing songs or seeking stops the sample.Sample song2 sLower music2 sQuiet music0.8 sDJ over musicSaved sampleQuiet music0.5 sNext song fades in1.5 sReady to preview.Saving\u2026Aboutonmywave.fm Light for macOSSong 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 4 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparationChoose a news profile below to see its preparation status.Open News bucketQuick configurationNews profileChoose a news profileMy roomChoose a news profile above for DJ breaks.DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+            "type": null,
+            "role": null
+          },
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About"
+          ],
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Archive music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Recent music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save libraries",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Check news everysongs",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "4",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Keep the DJ when seeking or rewinding",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "range",
+                  "label": "DJ voice volume70%",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.7",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save DJ playback",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "value": "custom",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "custom",
+                      "label": "Custom",
+                      "disabled": true,
+                      "selected": true
+                    },
+                    {
+                      "value": "natural",
+                      "label": "Natural",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "tight",
+                      "label": "Tight",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "bulletin",
+                      "label": "News bulletin",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "value": "over-music",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "over-music",
+                      "label": "Over the end of a song",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "between-songs",
+                      "label": "Between songs",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Lower music oversecondsFade down before the DJ starts.",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "2",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.8",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Pause after speechsecondsLeave a moment before music resumes.",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Bring music back oversecondsFade music up to your listening volume.",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Preview transition",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "playerTop": 616,
+          "savedPreferences": {
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 4,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "newsTransitions": {
+              "mode": "over-music",
+              "fadeOutSeconds": 1.5,
+              "leadInSeconds": 0.8,
+              "postSpeechSeconds": 0.5,
+              "fadeInSeconds": 1.5
+            }
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [
+              "saveNewsTransitions"
+            ],
+            "saves": [
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315071943,
+                "mode": "hold"
+              },
+              {
+                "name": "saveNewsTransitions",
+                "at": 1792315133322,
+                "mode": "hold"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "final": {
+      "bundleHashes": {
+        "out/renderer/assets/index-CB30TbEb.js": "9a1ec51a77b1e0c3db5a232ba87979dfe36e8c1d47f1eef5e70bb45ba4e36b0e",
+        "out/renderer/assets/index-CDGpOogy.css": "9576f7f68ad54a7d6eba6feb802e6d4d69d9790906840deb70eda552385561ba",
+        "out/main/index.js": "0bc84a7d324ca69b35dcc9e817fc0f93b6b69f859e57f89bc0d8263806ae96c2",
+        "out/preload/index.cjs": "1ffe9794807c35cfa639d661fedc0364324954529f470b80086a8a22f6617beb"
+      },
+      "snapshots": [
+        {
+          "name": "final-playback-pending",
+          "rawSha256": "acaf377c7075fdcc9334666d74b29f3d8814b68cf4059218d0ce295d7bf684d1",
+          "observedAt": 1792315282061,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 238,
+              "y": 545.7734375,
+              "width": 84.859375,
+              "height": 34,
+              "top": 545.7734375,
+              "right": 322.859375,
+              "bottom": 579.7734375,
+              "left": 238
+            },
+            "insideDrawer": false,
+            "name": "Saving\u2026",
+            "type": null,
+            "role": null
+          },
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About"
+          ],
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Archive music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Recent music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save libraries",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Check news everysongs",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "4",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Keep the DJ when seeking or rewinding",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "range",
+                  "label": "DJ voice volume70%",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.7",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": true
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "natural",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "custom",
+                      "label": "Custom",
+                      "disabled": true,
+                      "selected": false
+                    },
+                    {
+                      "value": "natural",
+                      "label": "Natural",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "tight",
+                      "label": "Tight",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "bulletin",
+                      "label": "News bulletin",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "over-music",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "over-music",
+                      "label": "Over the end of a song",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "between-songs",
+                      "label": "Between songs",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Lower music oversecondsFade down before the DJ starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.8",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Pause after speechsecondsLeave a moment before music resumes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Bring music back oversecondsFade music up to your listening volume.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Preview transition",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Save DJ transitions",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "playerTop": 616,
+          "savedPreferences": {
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 3,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "newsTransitions": {
+              "mode": "over-music",
+              "fadeOutSeconds": 1.5,
+              "leadInSeconds": 0.8,
+              "postSpeechSeconds": 0.5,
+              "fadeInSeconds": 1.5
+            }
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [
+              "saveDJPlayback"
+            ],
+            "saves": [
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315272755,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "final-playback-readback",
+          "rawSha256": "946e1f841ab4ed0a2f39d282f26932f2032b3b7384ba5f598e29998410f54553",
+          "observedAt": 1792315286223,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 238,
+              "y": 545.7734375,
+              "width": 84.859375,
+              "height": 34,
+              "top": 545.7734375,
+              "right": 322.859375,
+              "bottom": 579.7734375,
+              "left": 238
+            },
+            "insideDrawer": false,
+            "name": "Saving\u2026",
+            "type": null,
+            "role": null
+          },
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About"
+          ],
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Archive music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Recent music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save libraries",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Check news everysongs",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "4",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Keep the DJ when seeking or rewinding",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "range",
+                  "label": "DJ voice volume70%",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.7",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": true
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "natural",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "custom",
+                      "label": "Custom",
+                      "disabled": true,
+                      "selected": false
+                    },
+                    {
+                      "value": "natural",
+                      "label": "Natural",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "tight",
+                      "label": "Tight",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "bulletin",
+                      "label": "News bulletin",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "over-music",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "over-music",
+                      "label": "Over the end of a song",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "between-songs",
+                      "label": "Between songs",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Lower music oversecondsFade down before the DJ starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.8",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Pause after speechsecondsLeave a moment before music resumes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Bring music back oversecondsFade music up to your listening volume.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Preview transition",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Save DJ transitions",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "playerTop": 616,
+          "savedPreferences": {
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 4,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "newsTransitions": {
+              "mode": "over-music",
+              "fadeOutSeconds": 1.5,
+              "leadInSeconds": 0.8,
+              "postSpeechSeconds": 0.5,
+              "fadeInSeconds": 1.5
+            }
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [
+              "getLocalState"
+            ],
+            "saves": [
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315272755,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "final-playback-success-focused",
+          "rawSha256": "aa7504a5c243eb5bc164621020a93f64f4f0a33a3aa5ae39d7d8da6c62c67a9e",
+          "observedAt": 1792315291723,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 238,
+              "y": 545.7734375,
+              "width": 146.1796875,
+              "height": 34,
+              "top": 545.7734375,
+              "right": 384.1796875,
+              "bottom": 579.7734375,
+              "left": 238
+            },
+            "insideDrawer": false,
+            "name": "Save DJ playback",
+            "type": null,
+            "role": null
+          },
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About"
+          ],
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Archive music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Recent music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save libraries",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Check news everysongs",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "4",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Keep the DJ when seeking or rewinding",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "range",
+                  "label": "DJ voice volume70%",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.7",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save DJ playback",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": true
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "natural",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "custom",
+                      "label": "Custom",
+                      "disabled": true,
+                      "selected": false
+                    },
+                    {
+                      "value": "natural",
+                      "label": "Natural",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "tight",
+                      "label": "Tight",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "bulletin",
+                      "label": "News bulletin",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "over-music",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "over-music",
+                      "label": "Over the end of a song",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "between-songs",
+                      "label": "Between songs",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Lower music oversecondsFade down before the DJ starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.8",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Pause after speechsecondsLeave a moment before music resumes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Bring music back oversecondsFade music up to your listening volume.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Preview transition",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Save DJ transitions",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "playerTop": 616,
+          "savedPreferences": {
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 4,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "newsTransitions": {
+              "mode": "over-music",
+              "fadeOutSeconds": 1.5,
+              "leadInSeconds": 0.8,
+              "postSpeechSeconds": 0.5,
+              "fadeInSeconds": 1.5
+            }
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [],
+            "saves": [
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315272755,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "final-playback-clean-blurred",
+          "rawSha256": "92e365ee905cb2e174127a857efa49f4bb8d9931a199c1eb66560a79ef89dfaf",
+          "observedAt": 1792315300083,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "SELECT",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 238,
+              "y": 306.0625,
+              "width": 348,
+              "height": 39.5,
+              "top": 306.0625,
+              "right": 586,
+              "bottom": 345.5625,
+              "left": 238
+            },
+            "insideDrawer": false,
+            "name": "CustomNaturalTightNews bulletin",
+            "type": null,
+            "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+            "role": null
+          },
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About"
+          ],
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Archive music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Recent music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save libraries",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Check news everysongs",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "4",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Keep the DJ when seeking or rewinding",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "range",
+                  "label": "DJ voice volume70%",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.7",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save DJ playback",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "natural",
+                  "active": true,
+                  "options": [
+                    {
+                      "value": "custom",
+                      "label": "Custom",
+                      "disabled": true,
+                      "selected": false
+                    },
+                    {
+                      "value": "natural",
+                      "label": "Natural",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "tight",
+                      "label": "Tight",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "bulletin",
+                      "label": "News bulletin",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "over-music",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "over-music",
+                      "label": "Over the end of a song",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "between-songs",
+                      "label": "Between songs",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Lower music oversecondsFade down before the DJ starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.8",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Pause after speechsecondsLeave a moment before music resumes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Bring music back oversecondsFade music up to your listening volume.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Preview transition",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Save DJ transitions",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "playerTop": 616,
+          "savedPreferences": {
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 4,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "newsTransitions": {
+              "mode": "over-music",
+              "fadeOutSeconds": 1.5,
+              "leadInSeconds": 0.8,
+              "postSpeechSeconds": 0.5,
+              "fadeInSeconds": 1.5
+            }
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [],
+            "saves": [
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315272755,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "final-playback-tab-away",
+          "rawSha256": "6d62ff4cabcb1117794bd81f0ec632a111495eb0b3b243074c301d2cfba41d9d",
+          "observedAt": 1792315326275,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "SELECT",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 238,
+              "y": 306.3671875,
+              "width": 348,
+              "height": 39.5,
+              "top": 306.3671875,
+              "right": 586,
+              "bottom": 345.8671875,
+              "left": 238
+            },
+            "insideDrawer": false,
+            "name": "CustomNaturalTightNews bulletin",
+            "type": null,
+            "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+            "role": null
+          },
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About"
+          ],
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Archive music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Recent music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save libraries",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Check news everysongs",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Keep the DJ when seeking or rewinding",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "range",
+                  "label": "DJ voice volume70%",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.7",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "natural",
+                  "active": true,
+                  "options": [
+                    {
+                      "value": "custom",
+                      "label": "Custom",
+                      "disabled": true,
+                      "selected": false
+                    },
+                    {
+                      "value": "natural",
+                      "label": "Natural",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "tight",
+                      "label": "Tight",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "bulletin",
+                      "label": "News bulletin",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "over-music",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "over-music",
+                      "label": "Over the end of a song",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "between-songs",
+                      "label": "Between songs",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Lower music oversecondsFade down before the DJ starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.8",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Pause after speechsecondsLeave a moment before music resumes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Bring music back oversecondsFade music up to your listening volume.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Preview transition",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Save DJ transitions",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "playerTop": 616,
+          "savedPreferences": {
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 4,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "newsTransitions": {
+              "mode": "over-music",
+              "fadeOutSeconds": 1.5,
+              "leadInSeconds": 0.8,
+              "postSpeechSeconds": 0.5,
+              "fadeInSeconds": 1.5
+            }
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [
+              "saveDJPlayback"
+            ],
+            "saves": [
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315272755,
+                "mode": "hold"
+              },
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315317387,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "final-playback-tab-settled",
+          "rawSha256": "b386d6987e3f3da6ba9034ad40cb5d1d53301534c37867d95bdab6ff09baeba7",
+          "observedAt": 1792315333020,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "SELECT",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 238,
+              "y": 325.0625,
+              "width": 348,
+              "height": 39.5,
+              "top": 325.0625,
+              "right": 586,
+              "bottom": 364.5625,
+              "left": 238
+            },
+            "insideDrawer": false,
+            "name": "CustomNaturalTightNews bulletin",
+            "type": null,
+            "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+            "role": null
+          },
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About"
+          ],
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Archive music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Recent music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save libraries",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Check news everysongs",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Keep the DJ when seeking or rewinding",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "range",
+                  "label": "DJ voice volume70%",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.7",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save DJ playback",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "natural",
+                  "active": true,
+                  "options": [
+                    {
+                      "value": "custom",
+                      "label": "Custom",
+                      "disabled": true,
+                      "selected": false
+                    },
+                    {
+                      "value": "natural",
+                      "label": "Natural",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "tight",
+                      "label": "Tight",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "bulletin",
+                      "label": "News bulletin",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "over-music",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "over-music",
+                      "label": "Over the end of a song",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "between-songs",
+                      "label": "Between songs",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Lower music oversecondsFade down before the DJ starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.8",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Pause after speechsecondsLeave a moment before music resumes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Bring music back oversecondsFade music up to your listening volume.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Preview transition",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Save DJ transitions",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "playerTop": 616,
+          "savedPreferences": {
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 5,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "newsTransitions": {
+              "mode": "over-music",
+              "fadeOutSeconds": 1.5,
+              "leadInSeconds": 0.8,
+              "postSpeechSeconds": 0.5,
+              "fadeInSeconds": 1.5
+            }
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [],
+            "saves": [
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315272755,
+                "mode": "hold"
+              },
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315317387,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "final-transitions-failed-draft",
+          "rawSha256": "285cc1d7b26eda773f58a1572bb3c697f68891bfe1c7794b830670e7f91986ae",
+          "observedAt": 1792315354358,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 238,
+              "y": 545.9296875,
+              "width": 155.15625,
+              "height": 34,
+              "top": 545.9296875,
+              "right": 393.15625,
+              "bottom": 579.9296875,
+              "left": 238
+            },
+            "insideDrawer": false,
+            "name": "Save DJ transitions",
+            "type": "submit",
+            "role": null
+          },
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About"
+          ],
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Archive music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Recent music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save libraries",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Check news everysongs",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Keep the DJ when seeking or rewinding",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "range",
+                  "label": "DJ voice volume70%",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.7",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save DJ playback",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "custom",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "custom",
+                      "label": "Custom",
+                      "disabled": true,
+                      "selected": true
+                    },
+                    {
+                      "value": "natural",
+                      "label": "Natural",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "tight",
+                      "label": "Tight",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "bulletin",
+                      "label": "News bulletin",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "over-music",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "over-music",
+                      "label": "Over the end of a song",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "between-songs",
+                      "label": "Between songs",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Lower music oversecondsFade down before the DJ starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "2",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.8",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Pause after speechsecondsLeave a moment before music resumes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Bring music back oversecondsFade music up to your listening volume.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Preview transition",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Save DJ transitions",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": true
+                }
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "playerTop": 616,
+          "savedPreferences": {
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 5,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "newsTransitions": {
+              "mode": "over-music",
+              "fadeOutSeconds": 1.5,
+              "leadInSeconds": 0.8,
+              "postSpeechSeconds": 0.5,
+              "fadeInSeconds": 1.5
+            }
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [],
+            "saves": [
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315272755,
+                "mode": "hold"
+              },
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315317387,
+                "mode": "hold"
+              },
+              {
+                "name": "saveNewsTransitions",
+                "at": 1792315348617,
+                "mode": "fail"
+              }
+            ]
+          }
+        },
+        {
+          "name": "final-transitions-retry-pending",
+          "rawSha256": "a1417c1e9074dd6cdf177932ed3a39f592bd392eb5b136949f59dd1c79067410",
+          "observedAt": 1792315366263,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 238,
+              "y": 545.9296875,
+              "width": 84.859375,
+              "height": 34,
+              "top": 545.9296875,
+              "right": 322.859375,
+              "bottom": 579.9296875,
+              "left": 238
+            },
+            "insideDrawer": false,
+            "name": "Saving\u2026",
+            "type": "submit",
+            "role": null
+          },
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About"
+          ],
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Archive music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Recent music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save libraries",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Check news everysongs",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Keep the DJ when seeking or rewinding",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "range",
+                  "label": "DJ voice volume70%",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.7",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save DJ playback",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "value": "custom",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "custom",
+                      "label": "Custom",
+                      "disabled": true,
+                      "selected": true
+                    },
+                    {
+                      "value": "natural",
+                      "label": "Natural",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "tight",
+                      "label": "Tight",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "bulletin",
+                      "label": "News bulletin",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "value": "over-music",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "over-music",
+                      "label": "Over the end of a song",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "between-songs",
+                      "label": "Between songs",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Lower music oversecondsFade down before the DJ starts.",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "2",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.8",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Pause after speechsecondsLeave a moment before music resumes.",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Bring music back oversecondsFade music up to your listening volume.",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Preview transition",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": true
+                }
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "playerTop": 616,
+          "savedPreferences": {
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 5,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "newsTransitions": {
+              "mode": "over-music",
+              "fadeOutSeconds": 1.5,
+              "leadInSeconds": 0.8,
+              "postSpeechSeconds": 0.5,
+              "fadeInSeconds": 1.5
+            }
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [
+              "saveNewsTransitions"
+            ],
+            "saves": [
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315272755,
+                "mode": "hold"
+              },
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315317387,
+                "mode": "hold"
+              },
+              {
+                "name": "saveNewsTransitions",
+                "at": 1792315348617,
+                "mode": "fail"
+              },
+              {
+                "name": "saveNewsTransitions",
+                "at": 1792315357206,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "final-transitions-readback",
+          "rawSha256": "c8cf091107107554e7ca1065ea75e5e55796c9d8d1dc6f1d2258da5b64f3073c",
+          "observedAt": 1792315370268,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 238,
+              "y": 545.9296875,
+              "width": 84.859375,
+              "height": 34,
+              "top": 545.9296875,
+              "right": 322.859375,
+              "bottom": 579.9296875,
+              "left": 238
+            },
+            "insideDrawer": false,
+            "name": "Saving\u2026",
+            "type": "submit",
+            "role": null
+          },
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About"
+          ],
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Archive music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Recent music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save libraries",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Check news everysongs",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Keep the DJ when seeking or rewinding",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "range",
+                  "label": "DJ voice volume70%",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.7",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save DJ playback",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "value": "custom",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "custom",
+                      "label": "Custom",
+                      "disabled": true,
+                      "selected": true
+                    },
+                    {
+                      "value": "natural",
+                      "label": "Natural",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "tight",
+                      "label": "Tight",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "bulletin",
+                      "label": "News bulletin",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "value": "over-music",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "over-music",
+                      "label": "Over the end of a song",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "between-songs",
+                      "label": "Between songs",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Lower music oversecondsFade down before the DJ starts.",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "2",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.8",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Pause after speechsecondsLeave a moment before music resumes.",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Bring music back oversecondsFade music up to your listening volume.",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Preview transition",
+                  "disabled": false,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Saving\u2026",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": "true",
+                  "busy": "true",
+                  "active": true
+                }
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "playerTop": 616,
+          "savedPreferences": {
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 5,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "newsTransitions": {
+              "mode": "over-music",
+              "fadeOutSeconds": 2,
+              "leadInSeconds": 0.8,
+              "postSpeechSeconds": 0.5,
+              "fadeInSeconds": 1.5
+            }
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [
+              "getLocalState"
+            ],
+            "saves": [
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315272755,
+                "mode": "hold"
+              },
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315317387,
+                "mode": "hold"
+              },
+              {
+                "name": "saveNewsTransitions",
+                "at": 1792315348617,
+                "mode": "fail"
+              },
+              {
+                "name": "saveNewsTransitions",
+                "at": 1792315357206,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "final-transitions-success-focused",
+          "rawSha256": "e151b583db6e49f5254e0d93f9ab270204496d6b123e3ee6f6b6f3b3329e58ef",
+          "observedAt": 1792315376878,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 238,
+              "y": 545.9296875,
+              "width": 155.15625,
+              "height": 34,
+              "top": 545.9296875,
+              "right": 393.15625,
+              "bottom": 579.9296875,
+              "left": 238
+            },
+            "insideDrawer": false,
+            "name": "Save DJ transitions",
+            "type": "submit",
+            "role": null
+          },
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About"
+          ],
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Archive music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Recent music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save libraries",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Check news everysongs",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Keep the DJ when seeking or rewinding",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "range",
+                  "label": "DJ voice volume70%",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.7",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save DJ playback",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "custom",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "custom",
+                      "label": "Custom",
+                      "disabled": true,
+                      "selected": true
+                    },
+                    {
+                      "value": "natural",
+                      "label": "Natural",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "tight",
+                      "label": "Tight",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "bulletin",
+                      "label": "News bulletin",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "over-music",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "over-music",
+                      "label": "Over the end of a song",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "between-songs",
+                      "label": "Between songs",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Lower music oversecondsFade down before the DJ starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "2",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.8",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Pause after speechsecondsLeave a moment before music resumes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Bring music back oversecondsFade music up to your listening volume.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Preview transition",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Save DJ transitions",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": true
+                }
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "playerTop": 616,
+          "savedPreferences": {
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 5,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "newsTransitions": {
+              "mode": "over-music",
+              "fadeOutSeconds": 2,
+              "leadInSeconds": 0.8,
+              "postSpeechSeconds": 0.5,
+              "fadeInSeconds": 1.5
+            }
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [],
+            "saves": [
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315272755,
+                "mode": "hold"
+              },
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315317387,
+                "mode": "hold"
+              },
+              {
+                "name": "saveNewsTransitions",
+                "at": 1792315348617,
+                "mode": "fail"
+              },
+              {
+                "name": "saveNewsTransitions",
+                "at": 1792315357206,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "final-transitions-clean-blurred",
+          "rawSha256": "0ad327b89165c584ebf6975862f91bf77c641b1d650f928a8a4b6b545f12090b",
+          "observedAt": 1792315383606,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "solid",
+              "width": "1px"
+            },
+            "rect": {
+              "x": 537.9921875,
+              "y": 630.5,
+              "width": 32,
+              "height": 32,
+              "top": 630.5,
+              "right": 569.9921875,
+              "bottom": 662.5,
+              "left": 537.9921875
+            },
+            "insideDrawer": false,
+            "name": "Shuffle",
+            "type": null,
+            "role": null
+          },
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About"
+          ],
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Archive music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Recent music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save libraries",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Check news everysongs",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Keep the DJ when seeking or rewinding",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "range",
+                  "label": "DJ voice volume70%",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.7",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save DJ playback",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "custom",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "custom",
+                      "label": "Custom",
+                      "disabled": true,
+                      "selected": true
+                    },
+                    {
+                      "value": "natural",
+                      "label": "Natural",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "tight",
+                      "label": "Tight",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "bulletin",
+                      "label": "News bulletin",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "over-music",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "over-music",
+                      "label": "Over the end of a song",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "between-songs",
+                      "label": "Between songs",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Lower music oversecondsFade down before the DJ starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "2",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.8",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Pause after speechsecondsLeave a moment before music resumes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Bring music back oversecondsFade music up to your listening volume.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Preview transition",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Save DJ transitions",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "playerTop": 616,
+          "savedPreferences": {
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 5,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "newsTransitions": {
+              "mode": "over-music",
+              "fadeOutSeconds": 2,
+              "leadInSeconds": 0.8,
+              "postSpeechSeconds": 0.5,
+              "fadeInSeconds": 1.5
+            }
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [],
+            "saves": [
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315272755,
+                "mode": "hold"
+              },
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315317387,
+                "mode": "hold"
+              },
+              {
+                "name": "saveNewsTransitions",
+                "at": 1792315348617,
+                "mode": "fail"
+              },
+              {
+                "name": "saveNewsTransitions",
+                "at": 1792315357206,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "final-transitions-section-away",
+          "rawSha256": "c49b4714a04d81edfa76127a687d4250dede00389bf8afe5324c40ce37eed4ea",
+          "observedAt": 1792315412879,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 312.203125,
+              "y": 134,
+              "width": 100.9921875,
+              "height": 34,
+              "top": 134,
+              "right": 413.1953125,
+              "bottom": 168,
+              "left": 312.203125
+            },
+            "insideDrawer": false,
+            "name": "Provider keys",
+            "type": null,
+            "role": null
+          },
+          "headings": [
+            "Settings",
+            "Provider keys"
+          ],
+          "playlistForm": [],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "playerTop": 616,
+          "savedPreferences": {
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 5,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "newsTransitions": {
+              "mode": "over-music",
+              "fadeOutSeconds": 2,
+              "leadInSeconds": 0.8,
+              "postSpeechSeconds": 0.5,
+              "fadeInSeconds": 1.5
+            }
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [
+              "saveNewsTransitions"
+            ],
+            "saves": [
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315272755,
+                "mode": "hold"
+              },
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315317387,
+                "mode": "hold"
+              },
+              {
+                "name": "saveNewsTransitions",
+                "at": 1792315348617,
+                "mode": "fail"
+              },
+              {
+                "name": "saveNewsTransitions",
+                "at": 1792315357206,
+                "mode": "hold"
+              },
+              {
+                "name": "saveNewsTransitions",
+                "at": 1792315408503,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "final-transitions-section-settled",
+          "rawSha256": "e817785494a2c7bdf2f74b36c163817e5bae6f7c919453f5801923af02a4adb1",
+          "observedAt": 1792315419535,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 312.203125,
+              "y": 134,
+              "width": 100.9921875,
+              "height": 34,
+              "top": 134,
+              "right": 413.1953125,
+              "bottom": 168,
+              "left": 312.203125
+            },
+            "insideDrawer": false,
+            "name": "Provider keys",
+            "type": null,
+            "role": null
+          },
+          "headings": [
+            "Settings",
+            "Provider keys"
+          ],
+          "playlistForm": [],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "playerTop": 616,
+          "savedPreferences": {
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 5,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "newsTransitions": {
+              "mode": "over-music",
+              "fadeOutSeconds": 3,
+              "leadInSeconds": 0.8,
+              "postSpeechSeconds": 0.5,
+              "fadeInSeconds": 1.5
+            }
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [],
+            "saves": [
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315272755,
+                "mode": "hold"
+              },
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315317387,
+                "mode": "hold"
+              },
+              {
+                "name": "saveNewsTransitions",
+                "at": 1792315348617,
+                "mode": "fail"
+              },
+              {
+                "name": "saveNewsTransitions",
+                "at": 1792315357206,
+                "mode": "hold"
+              },
+              {
+                "name": "saveNewsTransitions",
+                "at": 1792315408503,
+                "mode": "hold"
+              }
+            ]
+          }
+        },
+        {
+          "name": "final-transitions-section-return",
+          "rawSha256": "33fa18790ceb4b3e5ba6b4887ce36d3f1e42851bf0ddd031a69f64e4e6b4aef5",
+          "observedAt": 1792315427943,
+          "documentFocus": true,
+          "visibility": "visible",
+          "focus": {
+            "tag": "BUTTON",
+            "visible": true,
+            "outline": {
+              "style": "none",
+              "width": "3px"
+            },
+            "rect": {
+              "x": 238,
+              "y": 134,
+              "width": 68.203125,
+              "height": 34,
+              "top": 134,
+              "right": 306.203125,
+              "bottom": 168,
+              "left": 238
+            },
+            "insideDrawer": false,
+            "name": "General",
+            "type": null,
+            "role": null
+          },
+          "headings": [
+            "Settings",
+            "Account",
+            "Music libraries",
+            "DJ playback",
+            "DJ transitions",
+            "About"
+          ],
+          "playlistForm": [
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Archive music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Recent music",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save libraries",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Check news everysongs",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "checkbox",
+                  "label": "Keep the DJ when seeking or rewinding",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "on",
+                  "checked": true,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "range",
+                  "label": "DJ voice volume70%",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.7",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Save DJ playback",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            },
+            {
+              "inputs": [
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Transition styleCustomNaturalTightNews bulletinStart with a style, then adjust the timing below.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "custom",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "custom",
+                      "label": "Custom",
+                      "disabled": true,
+                      "selected": true
+                    },
+                    {
+                      "value": "natural",
+                      "label": "Natural",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "tight",
+                      "label": "Tight",
+                      "disabled": false,
+                      "selected": false
+                    },
+                    {
+                      "value": "bulletin",
+                      "label": "News bulletin",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "SELECT",
+                  "type": "select-one",
+                  "label": "Play the DJOver the end of a songBetween songsThe DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "value": "over-music",
+                  "active": false,
+                  "options": [
+                    {
+                      "value": "over-music",
+                      "label": "Over the end of a song",
+                      "disabled": false,
+                      "selected": true
+                    },
+                    {
+                      "value": "between-songs",
+                      "label": "Between songs",
+                      "disabled": false,
+                      "selected": false
+                    }
+                  ]
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Lower music oversecondsFade down before the DJ starts.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "3",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Breathing room before speechsecondsWait after the music fades or finishes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.8",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Pause after speechsecondsLeave a moment before music resumes.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "0.5",
+                  "checked": false,
+                  "active": false
+                },
+                {
+                  "tag": "INPUT",
+                  "type": "number",
+                  "label": "Bring music back oversecondsFade music up to your listening volume.",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "readOnly": false,
+                  "value": "1.5",
+                  "checked": false,
+                  "active": false
+                }
+              ],
+              "buttons": [
+                {
+                  "name": "Preview transition",
+                  "disabled": false,
+                  "nativeDisabled": false,
+                  "ariaDisabled": null,
+                  "busy": null,
+                  "active": false
+                },
+                {
+                  "name": "Save DJ transitions",
+                  "disabled": true,
+                  "nativeDisabled": true,
+                  "ariaDisabled": "true",
+                  "busy": null,
+                  "active": false
+                }
+              ]
+            }
+          ],
+          "playbackSnapshot": {
+            "connectionId": "http://127.0.0.1:5191|00000000000000000000000000000001",
+            "trackIds": [
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003ea",
+              "000000000000000000000000000003e9",
+              "000000000000000000000000000003eb"
+            ],
+            "currentIndex": 2,
+            "position": 12,
+            "volume": 0.42,
+            "shuffle": false,
+            "repeat": "off"
+          },
+          "transport": "Play",
+          "playerTop": 616,
+          "savedPreferences": {
+            "djPlayback": {
+              "enabled": false,
+              "roomId": null,
+              "everySongs": 5,
+              "keepOnSeek": true,
+              "voiceVolume": 0.7
+            },
+            "newsTransitions": {
+              "mode": "over-music",
+              "fadeOutSeconds": 3,
+              "leadInSeconds": 0.8,
+              "postSpeechSeconds": 0.5,
+              "fadeInSeconds": 1.5
+            }
+          },
+          "main": {
+            "writes": 0,
+            "providers": 0,
+            "held": [],
+            "saves": [
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315272755,
+                "mode": "hold"
+              },
+              {
+                "name": "saveDJPlayback",
+                "at": 1792315317387,
+                "mode": "hold"
+              },
+              {
+                "name": "saveNewsTransitions",
+                "at": 1792315348617,
+                "mode": "fail"
+              },
+              {
+                "name": "saveNewsTransitions",
+                "at": 1792315357206,
+                "mode": "hold"
+              },
+              {
+                "name": "saveNewsTransitions",
+                "at": 1792315408503,
+                "mode": "hold"
+              }
+            ]
+          }
+        }
+      ],
+      "saveAccounting": {
+        "saveDJPlayback": 2,
+        "saveNewsTransitions": 3,
+        "details": "Two successful playback writes, one deliberately failed transition IPC before operation, one successful explicit transition retry, and one successful transition write completing after section unmount. Repeated Return/Space produce no extra calls."
+      }
+    }
+  },
+  "checks": {
+    "productionBuild": "Passed including TypeScript on final source; exact current bundle hashes revalidated.",
+    "eslint": "Full ESLint passed on final source.",
+    "native": "14 final snapshots pass held write/readback, focused success, clean blur disabling, pending Tab/newer focus, retained transition failure/draft, explicit retry, and section departure/completion/return without focus reclaim. Successful submit targets have solid visible outline and lie above player.",
+    "savedFiles": "Actual disposable local-state file proves cadence4 then5 and transition fadeOut2 then3, with no write on the deliberate transition failure. Playback duplicate queue/current occurrence, position12, volume0.42, shuffle=false and repeat=off remain identical; transport stays paused.",
+    "processes": "Both observers exit0; exact owned server PID23264 stopped and session96000 exits143.",
+    "reports": {
+      "before": {
+        "rawSha256": "255c860418662ceea1bb3771d859fd7b3d67f057e278864aea0cd8d89739ce82",
+        "result": "observed",
+        "errors": []
+      },
+      "final": {
+        "rawSha256": "370a0d13af86102031a3509c5339da2fbdf377ef7c0f9142e703188c80230de2",
+        "result": "observed",
+        "errors": []
+      }
+    }
+  },
+  "fixture": {
+    "input": "Native CUA only; Playwright launches/observes. Distinct copied Electron identity avoids live development window.",
+    "runtime": "Production renderer/preload with copied instrumented actual main/storage, disposable safeStorage/catalog, null shared-key adapter, stopped scheduler and muted synthetic PCM media.",
+    "writes": "Zero HTTP write attempts and external/provider requests. Only actual disposable local preference/persistence writes occur.",
+    "failure": "IPC completion gate injects a transition save failure before its actual operation; not an OS disk-failure claim. Held getLocalState gates actual post-save readback.",
+    "hashes": {
+      "observe.cjs": "7461aabea93c5d847532f5a06034485230936f218b8518b1ca85d13880d09630",
+      "bootstrap.mjs": "a48fcb989e12c3db8d80605fb32f19bbf095e89bbd31422428eb9b8af8c1cadc",
+      "server.mjs": "5b0413122b80e6530934f9a18aae91c6e186386291b400b9571a0d34f8908d9d"
+    },
+    "observation": "Read-only actual DOM focus/form/geometry telemetry plus main read-call counts and actual disposable local-state file. Native-disabled state uses matches(:disabled) to include inherited fieldset locking.",
+    "correction": "An initial native select-all typing sequence appended34 to3; explicit BackSpace then4 corrected the draft before the save. No preference save used34."
+  },
+  "sourceHashes": {
+    "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx": "637cd8e97ae915639bcec77ac344ec28159ebc22e40b5e4fa74df4f826e14645",
+    "src/renderer/pages/Settings/components/NewsTransitions.component.tsx": "69051db733a1e1ed35621d7ac6f7e11908b6faba52d3d1a09515d97cddfc0c9b",
+    "src/renderer/pages/Settings/Settings.styles.css": "4c3c8facba5def49f470be638099a8c57634f7468e9107dc8a15605dd07808a7"
+  },
+  "unchangedOwnerHash": {
+    "src/renderer/pages/Settings/SettingsEdits.tsx": "44e576f60c8a96d9fcc00df839244beefd8144215e0801b03803c20d9b34d56e"
+  },
+  "acceptance": {
+    "rows": 191,
+    "active": 189,
+    "deferred": 2,
+    "open": 27,
+    "listener": 14,
+    "otherProof": 13,
+    "statusChanges": [],
+    "Q06": "Review for remaining essential controls and conditional states, including radio workflow/prepared takes and sign-out pending actions."
+  },
+  "limits": [
+    "No unit, VoiceOver/AT, listener, audible, live-provider/server, OS failure, platform matrix, release or deferred viewport/zoom acceptance.",
+    "No new hidden-window/overlay injection or transition-preview playback pass.",
+    "Pending-return deliberate refocus and playback failure share inspected source paths but have no separate new native case.",
+    "Prior source maps/provenance audit remain dated; current contract lines are retained separately.",
+    "Native detour proof covers Settings sections, not leaving Settings for a music page during a held save. Page-level behavior has source review of no completion focus effect and the above-page SettingsEdits owner only."
+  ],
+  "sourceTraceSupplement": [
+    {
+      "file": "REQUIREMENTS.md",
+      "line": 257,
+      "text": "Settings contains account/libraries, DJ playback and transitions, provider keys, shared sources, and reusable DJs. When explicitly saving General DJ playback or transition preferences, keep visible keyboard focus on Save while fields lock and readback completes. Ignore repeated save activation. Keep a failed draft editable for an explicit retry. A successful clean Save retains its current focus until the user moves on, then leaves the Tab order. Later Tab or section/page navigation wins; completing a save elsewhere must not reclaim focus. Saving or removing a provider key keeps its confirmed status authoritative over older status reads, including checks started while saving. Check only that provider again after a failed save, retain its entered draft and error while checking, and keep editing available. Keep masked key drafts, pending save/removal and failure feedback through music navigation and Settings section changes. These drafts exist only in memory. Keys apply to this app on this Mac across music accounts. Signing out or changing account identity clears entered key text and settled errors; an already-started key change can finish, and its provider remains locked until settlement. Its confirmed status applies globally, but its old-session failure must not reappear in the new account. Show this pending-write caveat in sign-out confirmation while a key change is saving. A status check never prepares text or audio. News bucket \u2192 Settings edits the chosen profile and its preparation schedule. Keep one combined draft for sources, host, mood, interests, and preparation preferences. Preserve it through music navigation and shared-management visits. Distinguish draft activation from saved running state, and offer save/discard/cancel for all fields before switching profiles. Save setup and workflow choices atomically. Gate enabled preparation on current sources, saved host, mood, and required key status; allow incomplete setup and disabling preparation without keys.",
+      "sha256": "d66bfb2dfb7ea6318a085932a04c3d6a51ea6675384ac6d103adacfa5182aa85"
+    },
+    {
+      "file": "docs/RADIO_EXPERIENCE.md",
+      "line": 145,
+      "text": "| M14 | I can configure DJ playback and compare transitions | I want to choose DJ cadence or hear talkover or between-song timing while music is playing or paused, or before choosing music | Adjust cadence or draft timings, explicitly save preferences or preview transitions; then Stop, change a timing or use music transport | Use sample music and bundled voice with no key/provider request; pause music without canceling the demo; leave music paused after completion/Stop; later transport wins even while paused, while volume/shuffle/repeat keep the demo; changed timings or leaving settings stop it without saving/restarting; late events cannot affect its replacement; explicit General preference saves focus and reveal Save before locking fields, ignore repeat activation and retain failed drafts for retry; successful clean Save keeps its current focus until Tab leaves it, then returns to disabled; later Tab or section navigation wins without completion reclaiming focus |",
+      "sha256": "7b87e6d5256a3d455debf0c6239d5ce8fb7903e01bf13fa79d8a94b726e57b0b"
+    }
+  ]
+}

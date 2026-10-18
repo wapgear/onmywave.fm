@@ -17,3 +17,6 @@
 .dj-song-interval { display: flex; flex-direction: row; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 12px; }
 .dj-song-interval input { width: 76px; }
 .dj-song-interval span { color: var(--muted); }
+.settings-save[aria-disabled="true"], .settings-save[aria-disabled="true"]:hover { cursor:default; color:var(--muted); background:var(--surface); }
+.settings-save[aria-busy="true"], .settings-save[aria-busy="true"]:hover { cursor:progress; }
+.settings-save[aria-disabled="true"]:active { translate:0 0; }

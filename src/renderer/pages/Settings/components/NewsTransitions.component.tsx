@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import type { NewsTransitionSettings } from '../../../../shared/types';
 import { defaultNewsTransitionSettings } from '../../../../shared/news-transitions';
@@ -25,6 +25,8 @@ export function NewsTransitions() {
   const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()) });
   const heading = useRef<HTMLHeadingElement>(null);
   const transitionStyle = useRef<HTMLSelectElement>(null);
+  const saveButton = useRef<HTMLButtonElement>(null);
+  const [ownsSaveFocus, setOwnsSaveFocus] = useState(false);
   const retryFocus = useRetryFocus({
     ownerKey: 'settings:general:news-transitions',
     target: () => transitionStyle.current && !transitionStyle.current.matches(':disabled') ? transitionStyle.current : heading.current,
@@ -40,7 +42,19 @@ export function NewsTransitions() {
     <p className="settings-description">Give news breaks room to breathe. Saved changes apply to the next break you schedule.</p>
     <ErrorNotice error={state.error} retryRef={retryFocus.retryRef} retrying={state.isFetching} retry={() => retryFocus.retry(() => state.refetch())} />
     {state.isPending && <p role="status">Loading transition settings…</p>}
-    <form onSubmit={event => { event.preventDefault(); if (!save.isPending) edit.submit(); }}>
+    <form onSubmit={event => {
+      event.preventDefault();
+      if (save.isPending || !draft || !state.data) return;
+      const button = saveButton.current;
+      const active = document.activeElement;
+      if (button && active instanceof HTMLElement && event.currentTarget.contains(active)
+        && document.visibilityState === 'visible' && document.hasFocus()
+        && !document.querySelector('dialog[open], :popover-open')) {
+        button.focus({ preventScroll: true });
+        button.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      }
+      edit.submit();
+    }}>
       <fieldset disabled={!state.data || save.isPending}>
         <div className="news-transition-grid">
           <label>Transition style<select ref={transitionStyle} value={preset?.id ?? 'custom'} onChange={event => {
@@ -51,8 +65,8 @@ export function NewsTransitions() {
           {fields.map(field => <label key={field.key}>{field.label}<div className="news-transition-time"><input type="number" min={0} max={field.max} step="0.1" required value={Number.isNaN(settings[field.key]) ? '' : settings[field.key]} onChange={event => change({ [field.key]: event.target.value === '' ? NaN : Number(event.target.value) })} /><span>seconds</span></div><span className="form-hint">{field.key === 'fadeOutSeconds' && settings.mode === 'between-songs' ? 'Fade the song ending before the bulletin.' : field.hint}</span></label>)}
         </div>
         <NewsTransitionPreview key={JSON.stringify(settings)} settings={settings} />
-        <button className="primary" disabled={!draft || save.isPending}>{save.isPending ? 'Saving…' : 'Save DJ transitions'}</button>
       </fieldset>
+      <button ref={saveButton} type="submit" className="primary settings-save" disabled={!save.isPending && (!state.data || (!draft && !ownsSaveFocus))} aria-disabled={save.isPending || !draft || !state.data || undefined} aria-busy={save.isPending || undefined} onFocus={() => setOwnsSaveFocus(true)} onBlur={() => setOwnsSaveFocus(false)}>{save.isPending ? 'Saving…' : 'Save DJ transitions'}</button>
       <ErrorNotice error={save.error} />
       {save.isSuccess && !draft && <p className="form-hint" role="status">DJ transitions saved.</p>}
     </form>
