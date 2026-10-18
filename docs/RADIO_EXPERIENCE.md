@@ -1,6 +1,6 @@
 # Personal radio experience
 
-Current product contract, 17 October 2026. This document and `REQUIREMENTS.md` replace earlier descriptions of a station placeholder, manual-only DJ tests, and a planned-only news runner. Implementation details and future extensions belong in `LISTENING_ROOM_WORKFLOW.md`.
+Current product contract, 18 October 2026. This document and `REQUIREMENTS.md` replace earlier descriptions of a station placeholder, manual-only DJ tests, and a planned-only news runner. Implementation details and future extensions belong in `LISTENING_ROOM_WORKFLOW.md`.
 
 ## Who this is for
 
