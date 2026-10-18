@@ -327,3 +327,6 @@ When a still-focused news recovery notice disappears after automatic readiness o
 
 
 The X setup guide keeps its summary and three page-opening actions keyboard accessible. If a help page cannot open, show a short alert beside that action while preserving its focus and page position. Starting any help action clears the prior error; a delayed older failure cannot replace the newer result. Help actions do not save credentials or prepare news.
+
+
+Entering shared management from news setup keeps keyboard context: Manage sources and Manage DJs focus their page heading; Provider keys repair focuses its selected Settings section. These explicit detours reveal the destination despite an older scroll position. Back to setup reveals and focuses the matching source/host control or preparation switch with the draft intact. Later user focus, navigation, overlays and window changes take priority over the entry handoff.

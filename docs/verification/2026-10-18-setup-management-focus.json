@@ -1,0 +1,3078 @@
+{
+  "date": "2026-10-18",
+  "baseMain": "90598e3c75bd3e6109730a5cf5f877b899fba1a5",
+  "scope": "Setup management entry/return focus and scroll visibility; source checkbox naming/Space; successful paging Retry without new results. Partial Q06.",
+  "environment": {
+    "viewport": "1280x720",
+    "zoom": 1,
+    "input": "Native CUA only",
+    "observation": "Passive Playwright DOM and CDP AX tree",
+    "renderer": "Production renderer/preload",
+    "main": "Copied instrumented main/storage; disposable safeStorage, muted media, stopped preparation scheduler",
+    "catalog": "Localhost5191;100 songs and60 albums. Static startup label incorrectly still says20000/2000.",
+    "faults": "Second catalog page fails, then returns empty success. OpenAI key-status reads fail during management runs so Provider keys repair is available. No provider request or server write is dispatched."
+  },
+  "phases": {
+    "terminal": "Base renderer. Successful empty next-page Retry chooses visible retained song/album, not defensive count fallback. Native source group named and Space toggled before/after. Keyboard Manage sources leaves BODY. Baseline bundle hash not retained.",
+    "management": "First route-focus fix, with saved management/Stations scroll still retained. Sources/DJs/keys initial entry passes. Re-entry after prior300px keys scroll hides the focused section at y-166; Back focuses preparation checkbox at y-515. These outcomes are rejected as final visibility proof.",
+    "management-final": "One final renderer. Explicit setup detours clear their destination scroll entry, Back clears Stations scroll before existing target focus/reveal. Sources/DJs/keys keyboard entry and Back pass; scrolled keys re-entry visible; unsaved mood survives a DJ-management round trip. Re-entry uses native pointer so its lack of focus-visible outline is expected; keyboard entry and Back independently show solid rings."
+  },
+  "observations": [
+    {
+      "name": "song-next-failed",
+      "rawSha256": "3c5debb54113e623fc09f9d9a06c34241a95cc377a544dbf980e97c16b56a9c4",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1145.2734375,
+          "y": 546,
+          "width": 80.7265625,
+          "height": 34,
+          "top": 546,
+          "right": 1226,
+          "bottom": 580,
+          "left": 1145.2734375
+        },
+        "insideDrawer": false,
+        "name": "Try again",
+        "type": "button",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 4229.5,
+        "scrollHeight": 4991
+      },
+      "headings": [
+        "All songs"
+      ],
+      "catalogReadouts": [
+        {
+          "text": "80 of 100 songs loadedJellyfin could not complete the request (503).Try again",
+          "rect": {
+            "x": 238,
+            "y": 486.5,
+            "width": 1004,
+            "height": 126.5,
+            "top": 486.5,
+            "right": 1242,
+            "bottom": 613,
+            "left": 238
+          }
+        }
+      ],
+      "sourceInputs": [],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "song-terminal-recovered",
+      "rawSha256": "dbd4a413c1c5d59392796a75349a89753bf11e7c1e7795287534c00c5bcfbfda",
+      "focus": {
+        "tag": "TR",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 72,
+          "width": 1004,
+          "height": 56,
+          "top": 72,
+          "right": 1242,
+          "bottom": 128,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Song 00030, Artist 001",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 4084,
+        "scrollHeight": 4919
+      },
+      "headings": [
+        "All songs"
+      ],
+      "catalogReadouts": [
+        {
+          "text": "80 of 100 songs loaded",
+          "rect": {
+            "x": 238,
+            "y": 632,
+            "width": 1004,
+            "height": 54.5,
+            "top": 632,
+            "right": 1242,
+            "bottom": 686.5,
+            "left": 238
+          }
+        }
+      ],
+      "sourceInputs": [],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "album-next-failed",
+      "rawSha256": "35ba3e0d577b7773d197e4613b8bd538b986f8e5b5050dea5e50d6be48a8decb",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 1145.2734375,
+          "y": 505,
+          "width": 80.7265625,
+          "height": 34,
+          "top": 505,
+          "right": 1226,
+          "bottom": 539,
+          "left": 1145.2734375
+        },
+        "insideDrawer": false,
+        "name": "Try again",
+        "type": "button",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 2420.5,
+        "scrollHeight": 3141
+      },
+      "headings": [
+        "Albums"
+      ],
+      "catalogReadouts": [
+        {
+          "text": "48 of 60 albumsJellyfin could not complete the request (503).Try again",
+          "rect": {
+            "x": 238,
+            "y": 445.5,
+            "width": 1004,
+            "height": 126.5,
+            "top": 445.5,
+            "right": 1242,
+            "bottom": 572,
+            "left": 238
+          }
+        }
+      ],
+      "sourceInputs": [],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "album-terminal-recovered",
+      "rawSha256": "99c65cc2e1aa2741762777c7c3cff4d73c1116d9107ad345baa23931c39d78d7",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 72.10009765625,
+          "width": 183.1953125,
+          "height": 251.1953125,
+          "top": 72.10009765625,
+          "right": 421.1953125,
+          "bottom": 323.29541015625,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Album 0041Artist 005 \u00b7 2024",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 2247.5,
+        "scrollHeight": 3069
+      },
+      "headings": [
+        "Albums"
+      ],
+      "catalogReadouts": [
+        {
+          "text": "48 of 60 albums",
+          "rect": {
+            "x": 238,
+            "y": 618.5,
+            "width": 1004,
+            "height": 54.5,
+            "top": 618.5,
+            "right": 1242,
+            "bottom": 673,
+            "left": 238
+          }
+        }
+      ],
+      "sourceInputs": [],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "management-entry-before",
+      "rawSha256": "634d2e05afd773a31027b1d5e7d5d9c6b97b43f5d93621c448cdf60248d5e0da",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 820.0234375,
+          "y": 388.6953125,
+          "width": 137.9765625,
+          "height": 34,
+          "top": 388.6953125,
+          "right": 958,
+          "bottom": 422.6953125,
+          "left": 820.0234375
+        },
+        "insideDrawer": false,
+        "name": "Manage sources",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 1876
+      },
+      "headings": [
+        "News bucket",
+        "News sources and host",
+        "Automatic news preparation"
+      ],
+      "catalogReadouts": [],
+      "sourceInputs": [
+        {
+          "tag": "INPUT",
+          "type": "checkbox",
+          "label": "Fixture feed",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "readOnly": false,
+          "value": "on",
+          "checked": true,
+          "active": false
+        }
+      ],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "management-entry-body",
+      "rawSha256": "9bce3ccd44b8dd3a4af15935cc3abf567b1f9a69a35866e72eb56d71d9268579",
+      "focus": {
+        "tag": "BODY",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 1280,
+          "height": 720,
+          "top": 0,
+          "right": 1280,
+          "bottom": 720,
+          "left": 0
+        },
+        "insideDrawer": false,
+        "name": "\n    onmywave.fmAll songsAlbumsPlaylistsNews bucketSettingsJellyfin connectedSettingsBack to setupGeneralProvider keysSourcesDJsSourcesNews for your prepared storiesAdd sourceChoose RSS feeds, Twitter / X searches, or Hacker News for your news workflow.Fixture feedhttps://example.com/feed.xmlRSS / AtomSelected in News bucketSong 00002Artist 0010:12\u22129:48DJOffDJ breaksOffDJ scheduleCheck for a news break every 3 songs while enabled. Music continues when nothing qualifies.Enable DJAutomatic news preparation \u00b7 My roomPreparation paused. Fixture prior preparation failure. Preparation stays paused until you resume it in News settings.Open News bucketQuick configurationNews profileChoose a news profileMy roomEvening profileFixture host \u00b7 Fixture feedDJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News bucket \u2192 Settings and uses provider credits.Upcoming newsEnable DJ to start your schedule.Last heard this sessionNo news has played in this session.News bucketDJ settings\n  \n\n",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 720
+      },
+      "headings": [
+        "Settings",
+        "Sources",
+        "Fixture feed"
+      ],
+      "catalogReadouts": [],
+      "sourceInputs": [],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "source-group-before",
+      "rawSha256": "9ff7419266e80cd6a944e235a74b644b6cbbfe8ff260ddccb0349c2a024bce94",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 442.6953125,
+          "width": 15,
+          "height": 15,
+          "top": 442.6953125,
+          "right": 253,
+          "bottom": 457.6953125,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "",
+        "type": "checkbox",
+        "label": "Fixture feed",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 1876
+      },
+      "headings": [
+        "News bucket",
+        "News sources and host",
+        "Automatic news preparation"
+      ],
+      "catalogReadouts": [],
+      "sourceInputs": [
+        {
+          "tag": "INPUT",
+          "type": "checkbox",
+          "label": "Fixture feed",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "readOnly": false,
+          "value": "on",
+          "checked": true,
+          "active": true
+        }
+      ],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "source-group-unchecked",
+      "rawSha256": "24bcc7477522d93539f62b20d57b85609041d378d39312ce01ff5e406b490605",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 442.6953125,
+          "width": 15,
+          "height": 15,
+          "top": 442.6953125,
+          "right": 253,
+          "bottom": 457.6953125,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "",
+        "type": "checkbox",
+        "label": "Fixture feed",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 2179
+      },
+      "headings": [
+        "News bucket",
+        "News sources and host",
+        "Automatic news preparation"
+      ],
+      "catalogReadouts": [],
+      "sourceInputs": [
+        {
+          "tag": "INPUT",
+          "type": "checkbox",
+          "label": "Fixture feed",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "readOnly": false,
+          "value": "on",
+          "checked": false,
+          "active": true
+        }
+      ],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "source-group-restored",
+      "rawSha256": "80e853ab0c6f06fef1722c72d4d29e5b32311575eb3c46f1ec9ac6e206b24856",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 442.6953125,
+          "width": 15,
+          "height": 15,
+          "top": 442.6953125,
+          "right": 253,
+          "bottom": 457.6953125,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "",
+        "type": "checkbox",
+        "label": "Fixture feed",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 1876
+      },
+      "headings": [
+        "News bucket",
+        "News sources and host",
+        "Automatic news preparation"
+      ],
+      "catalogReadouts": [],
+      "sourceInputs": [
+        {
+          "tag": "INPUT",
+          "type": "checkbox",
+          "label": "Fixture feed",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "readOnly": false,
+          "value": "on",
+          "checked": true,
+          "active": true
+        }
+      ],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": " ",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "final-manage-sources",
+      "rawSha256": "3cbb0962ad9ccfd9bfe7054870c21386d4c6783e350c027aa1af5b770c78c53f",
+      "focus": {
+        "tag": "H1",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 202.078125,
+          "width": 191.03125,
+          "height": 36.3984375,
+          "top": 202.078125,
+          "right": 429.03125,
+          "bottom": 238.4765625,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Sources",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 720
+      },
+      "headings": [
+        "Settings",
+        "Sources",
+        "Fixture feed"
+      ],
+      "catalogReadouts": [],
+      "sourceInputs": [],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "final-manage-djs",
+      "rawSha256": "42fc1ea87c4b9630e58f3a0ffa147c6cc141a61bb11cb52c7862a3d128c63e74",
+      "focus": {
+        "tag": "H1",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 202.078125,
+          "width": 290.8671875,
+          "height": 36.3984375,
+          "top": 202.078125,
+          "right": 528.8671875,
+          "bottom": 238.4765625,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "DJs",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 720
+      },
+      "headings": [
+        "Settings",
+        "DJs",
+        "Fixture host"
+      ],
+      "catalogReadouts": [],
+      "sourceInputs": [],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "final-manage-keys",
+      "rawSha256": "57db885c8f7a85e9d8b8f4450c7986a1425cdc5a9a354430a51986eaf329a2b1",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 312.203125,
+          "y": 134,
+          "width": 100.9921875,
+          "height": 34,
+          "top": 134,
+          "right": 413.1953125,
+          "bottom": 168,
+          "left": 312.203125
+        },
+        "insideDrawer": false,
+        "name": "Provider keys",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 1091
+      },
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "catalogReadouts": [],
+      "sourceInputs": [],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "keys-prior-scroll",
+      "rawSha256": "3bb6024bb8a6fa569776983f0aae1cdfcf560135b1cedab3fd5da1f5b4d0f682",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 312.203125,
+          "y": -166,
+          "width": 100.9921875,
+          "height": 34,
+          "top": -166,
+          "right": 413.1953125,
+          "bottom": -132,
+          "left": 312.203125
+        },
+        "insideDrawer": false,
+        "name": "Provider keys",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 300,
+        "scrollHeight": 1091
+      },
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "catalogReadouts": [],
+      "sourceInputs": [],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "final-keys-reentry",
+      "rawSha256": "e5e530c9ab3b31596324abe9f4545357c30fc912e7cd55dd61600ec30852894d",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 312.203125,
+          "y": -166,
+          "width": 100.9921875,
+          "height": 34,
+          "top": -166,
+          "right": 413.1953125,
+          "bottom": -132,
+          "left": 312.203125
+        },
+        "insideDrawer": false,
+        "name": "Provider keys",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 300,
+        "scrollHeight": 1091
+      },
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "catalogReadouts": [],
+      "sourceInputs": [],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "final-keys-back",
+      "rawSha256": "a41e89473b21e14dcd861269cbf1eac7452e56110ed70dabf2687e2b6d321735",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": -515.734375,
+          "width": 16,
+          "height": 16,
+          "top": -515.734375,
+          "right": 254,
+          "bottom": -499.734375,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "",
+        "type": "checkbox",
+        "label": " Automatically prepare news",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 1451.5,
+        "scrollHeight": 2172
+      },
+      "headings": [
+        "News bucket",
+        "News sources and host",
+        "Automatic news preparation"
+      ],
+      "catalogReadouts": [],
+      "sourceInputs": [
+        {
+          "tag": "INPUT",
+          "type": "checkbox",
+          "label": "Fixture feed",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "readOnly": false,
+          "value": "on",
+          "checked": true,
+          "active": false
+        }
+      ],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "accepted-manage-sources",
+      "rawSha256": "b816178d2a2d7d6d61dd96b055732ba7bb5814b1db94cf270029b5581c3d6719",
+      "focus": {
+        "tag": "H1",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 202.078125,
+          "width": 191.03125,
+          "height": 36.3984375,
+          "top": 202.078125,
+          "right": 429.03125,
+          "bottom": 238.4765625,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Sources",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 720
+      },
+      "headings": [
+        "Settings",
+        "Sources",
+        "Fixture feed"
+      ],
+      "catalogReadouts": [],
+      "sourceInputs": [],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "accepted-sources-back",
+      "rawSha256": "2b666e58f807f8c48166aefa7961327b5461a2cf4f2f326624ea0a65f69d3902",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 820.0234375,
+          "y": 388.6953125,
+          "width": 137.9765625,
+          "height": 34,
+          "top": 388.6953125,
+          "right": 958,
+          "bottom": 422.6953125,
+          "left": 820.0234375
+        },
+        "insideDrawer": false,
+        "name": "Manage sources",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 2172
+      },
+      "headings": [
+        "News bucket",
+        "News sources and host",
+        "Automatic news preparation"
+      ],
+      "catalogReadouts": [],
+      "sourceInputs": [
+        {
+          "tag": "INPUT",
+          "type": "checkbox",
+          "label": "Fixture feed",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "readOnly": false,
+          "value": "on",
+          "checked": true,
+          "active": false
+        }
+      ],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "accepted-manage-djs",
+      "rawSha256": "a7b4a72f471b35a062b5a4ec548ff825a76f6fcea2ec48a57cea8aeae89f7dbb",
+      "focus": {
+        "tag": "H1",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 202.078125,
+          "width": 290.8671875,
+          "height": 36.3984375,
+          "top": 202.078125,
+          "right": 528.8671875,
+          "bottom": 238.4765625,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "DJs",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 720
+      },
+      "headings": [
+        "Settings",
+        "DJs",
+        "Fixture host"
+      ],
+      "catalogReadouts": [],
+      "sourceInputs": [],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "accepted-djs-back",
+      "rawSha256": "84019413d6c50d0b8516fb4370069f7d030257f4e73a1912d7ec458cbc8f2762",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 388.5546875,
+          "y": 545.7890625,
+          "width": 98.984375,
+          "height": 34,
+          "top": 545.7890625,
+          "right": 487.5390625,
+          "bottom": 579.7890625,
+          "left": 388.5546875
+        },
+        "insideDrawer": false,
+        "name": "Manage DJs",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 51,
+        "scrollHeight": 2172
+      },
+      "headings": [
+        "News bucket",
+        "News sources and host",
+        "Automatic news preparation"
+      ],
+      "catalogReadouts": [],
+      "sourceInputs": [
+        {
+          "tag": "INPUT",
+          "type": "checkbox",
+          "label": "Fixture feed",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "readOnly": false,
+          "value": "on",
+          "checked": true,
+          "active": false
+        }
+      ],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "accepted-manage-keys",
+      "rawSha256": "3fe39d2ca38a318c51ccf603754298ffedf959c2ed50e75230536f32f965f89f",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 312.203125,
+          "y": 134,
+          "width": 100.9921875,
+          "height": 34,
+          "top": 134,
+          "right": 413.1953125,
+          "bottom": 168,
+          "left": 312.203125
+        },
+        "insideDrawer": false,
+        "name": "Provider keys",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 1091
+      },
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "catalogReadouts": [],
+      "sourceInputs": [],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "accepted-keys-prior-scroll",
+      "rawSha256": "88c0818274214831430dd8baccbab69a70f09adfb8d97943fc8fdfd9b54251db",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 312.203125,
+          "y": -166,
+          "width": 100.9921875,
+          "height": 34,
+          "top": -166,
+          "right": 413.1953125,
+          "bottom": -132,
+          "left": 312.203125
+        },
+        "insideDrawer": false,
+        "name": "Provider keys",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 300,
+        "scrollHeight": 1091
+      },
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "catalogReadouts": [],
+      "sourceInputs": [],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "accepted-keys-reentry",
+      "rawSha256": "338b0a242719354cdf180d49684bc1a62661ee62c0fdfef29a67df240891cc0c",
+      "focus": {
+        "tag": "BUTTON",
+        "visible": true,
+        "outline": {
+          "style": "none",
+          "width": "3px"
+        },
+        "rect": {
+          "x": 312.203125,
+          "y": 134,
+          "width": 100.9921875,
+          "height": 34,
+          "top": 134,
+          "right": 413.1953125,
+          "bottom": 168,
+          "left": 312.203125
+        },
+        "insideDrawer": false,
+        "name": "Provider keys",
+        "type": null,
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 0,
+        "scrollHeight": 1091
+      },
+      "headings": [
+        "Settings",
+        "Provider keys"
+      ],
+      "catalogReadouts": [],
+      "sourceInputs": [],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "accepted-keys-back",
+      "rawSha256": "399bc6652b051075807870499a0e94529a32d56a802cfde20e5ed94321a18ada",
+      "focus": {
+        "tag": "INPUT",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 563.765625,
+          "width": 16,
+          "height": 16,
+          "top": 563.765625,
+          "right": 254,
+          "bottom": 579.765625,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "",
+        "type": "checkbox",
+        "label": " Automatically prepare news",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 372,
+        "scrollHeight": 2172
+      },
+      "headings": [
+        "News bucket",
+        "News sources and host",
+        "Automatic news preparation"
+      ],
+      "catalogReadouts": [],
+      "sourceInputs": [
+        {
+          "tag": "INPUT",
+          "type": "checkbox",
+          "label": "Fixture feed",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "readOnly": false,
+          "value": "on",
+          "checked": true,
+          "active": false
+        }
+      ],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    },
+    {
+      "name": "accepted-draft-roundtrip",
+      "rawSha256": "b49145b2b6b6a0c7c4ea58995c79fe57515d439fd3d90715adf7e86eec578cbb",
+      "focus": {
+        "tag": "TEXTAREA",
+        "visible": true,
+        "outline": {
+          "style": "solid",
+          "width": "1px"
+        },
+        "rect": {
+          "x": 238,
+          "y": 305.2890625,
+          "width": 700,
+          "height": 61.59375,
+          "top": 305.2890625,
+          "right": 938,
+          "bottom": 366.8828125,
+          "left": 238
+        },
+        "insideDrawer": false,
+        "name": "Curious draft",
+        "type": null,
+        "label": "MoodCurious draft",
+        "role": null
+      },
+      "mainView": {
+        "scrollTop": 371,
+        "scrollHeight": 2284
+      },
+      "headings": [
+        "News bucket",
+        "News sources and host",
+        "Automatic news preparation"
+      ],
+      "catalogReadouts": [],
+      "sourceInputs": [
+        {
+          "tag": "INPUT",
+          "type": "checkbox",
+          "label": "Fixture feed",
+          "disabled": false,
+          "nativeDisabled": false,
+          "ariaDisabled": null,
+          "readOnly": false,
+          "value": "on",
+          "checked": true,
+          "active": false
+        }
+      ],
+      "main": {
+        "providers": 0,
+        "writes": 0,
+        "held": []
+      },
+      "keys": [
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": true,
+          "prevented": false
+        },
+        {
+          "key": "Enter",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        },
+        {
+          "key": "Tab",
+          "meta": false,
+          "ctrl": false,
+          "alt": false,
+          "shift": false,
+          "prevented": false
+        }
+      ],
+      "savedMood": "Curious"
+    }
+  ],
+  "accessibility": [
+    {
+      "name": "song-terminal-ax",
+      "sha256": "d6c20615c78fa163eef3b7db986dc70b40b0090fda555d0d6b9d7ee358f6b969",
+      "selected": [
+        {
+          "role": "RootWebArea",
+          "name": "onmywave.fm",
+          "focused": true,
+          "checked": null,
+          "childIds": [
+            "58"
+          ]
+        },
+        {
+          "role": "row",
+          "name": "Song 00030, Artist 001",
+          "focused": true,
+          "checked": null,
+          "childIds": [
+            "2844",
+            "2845",
+            "2846",
+            "2847",
+            "2848",
+            "2849"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "album-terminal-ax",
+      "sha256": "50ff6fa1b1374024e075652bb4b98f0b216c502d1d0ba788e29c9d60ecba96c9",
+      "selected": [
+        {
+          "role": "RootWebArea",
+          "name": "onmywave.fm",
+          "focused": true,
+          "checked": null,
+          "childIds": [
+            "58"
+          ]
+        },
+        {
+          "role": "button",
+          "name": "No artwork for Album 0041 Album 0041 Artist 005 \u00b7 2024",
+          "focused": true,
+          "checked": null,
+          "childIds": [
+            "4146",
+            "4147",
+            "4148"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "source-group-ax",
+      "sha256": "6b555abd1c7740ff6d76c853f616e08f0e5b047ba47e661f30821325398c7f50",
+      "selected": [
+        {
+          "role": "RootWebArea",
+          "name": "onmywave.fm",
+          "focused": true,
+          "checked": null,
+          "childIds": [
+            "58"
+          ]
+        },
+        {
+          "role": "heading",
+          "name": "News sources",
+          "focused": null,
+          "checked": null,
+          "childIds": [
+            "5508"
+          ]
+        },
+        {
+          "role": "group",
+          "name": "News sources",
+          "focused": null,
+          "checked": null,
+          "childIds": [
+            "5356"
+          ]
+        },
+        {
+          "role": "StaticText",
+          "name": "News sources",
+          "focused": null,
+          "checked": null,
+          "childIds": [
+            "-1000001558"
+          ]
+        },
+        {
+          "role": "InlineTextBox",
+          "name": "News sources",
+          "focused": null,
+          "checked": null,
+          "childIds": []
+        },
+        {
+          "role": "checkbox",
+          "name": "Fixture feed",
+          "focused": true,
+          "checked": "true",
+          "childIds": []
+        },
+        {
+          "role": "StaticText",
+          "name": "Fixture feed",
+          "focused": null,
+          "checked": null,
+          "childIds": [
+            "-1000001560"
+          ]
+        },
+        {
+          "role": "InlineTextBox",
+          "name": "Fixture feed",
+          "focused": null,
+          "checked": null,
+          "childIds": []
+        }
+      ]
+    },
+    {
+      "name": "final-sources-ax",
+      "sha256": "a571da2a275a1b0b2f6993c954da67b8127ecdd00bd26a285dc196a5d0195ffe",
+      "selected": [
+        {
+          "role": "RootWebArea",
+          "name": "onmywave.fm",
+          "focused": true,
+          "checked": null,
+          "childIds": [
+            "58"
+          ]
+        },
+        {
+          "role": "heading",
+          "name": "Sources",
+          "focused": true,
+          "checked": null,
+          "childIds": [
+            "1633"
+          ]
+        },
+        {
+          "role": "heading",
+          "name": "Fixture feed",
+          "focused": null,
+          "checked": null,
+          "childIds": [
+            "1637"
+          ]
+        },
+        {
+          "role": "StaticText",
+          "name": "Fixture feed",
+          "focused": null,
+          "checked": null,
+          "childIds": [
+            "-1000000364"
+          ]
+        },
+        {
+          "role": "InlineTextBox",
+          "name": "Fixture feed",
+          "focused": null,
+          "checked": null,
+          "childIds": []
+        }
+      ]
+    },
+    {
+      "name": "final-djs-ax",
+      "sha256": "8c1f1a7b55f4e880cf39a6ea18f0ca66dc5e390e8310e1fa5187127e5a7c8689",
+      "selected": [
+        {
+          "role": "RootWebArea",
+          "name": "onmywave.fm",
+          "focused": true,
+          "checked": null,
+          "childIds": [
+            "58"
+          ]
+        },
+        {
+          "role": "heading",
+          "name": "DJs",
+          "focused": true,
+          "checked": null,
+          "childIds": [
+            "2207"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "final-keys-ax",
+      "sha256": "93fa438fb18ae97d925d1035fc2f92b4736a5f9bdf0b909665a5fca2b2872297",
+      "selected": [
+        {
+          "role": "RootWebArea",
+          "name": "onmywave.fm",
+          "focused": true,
+          "checked": null,
+          "childIds": [
+            "58"
+          ]
+        },
+        {
+          "role": "button",
+          "name": "Provider keys",
+          "focused": true,
+          "checked": null,
+          "childIds": [
+            "2783"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "accepted-setup-ax",
+      "sha256": "74b257f4f55fcb141c5ea38ea5d2fc77ead19030575d920b4d14776fdae1e9aa",
+      "selected": [
+        {
+          "role": "RootWebArea",
+          "name": "onmywave.fm",
+          "focused": true,
+          "checked": null,
+          "childIds": [
+            "59"
+          ]
+        },
+        {
+          "role": "heading",
+          "name": "News sources",
+          "focused": null,
+          "checked": null,
+          "childIds": [
+            "3673"
+          ]
+        },
+        {
+          "role": "group",
+          "name": "News sources",
+          "focused": null,
+          "checked": null,
+          "childIds": [
+            "3507"
+          ]
+        },
+        {
+          "role": "checkbox",
+          "name": "Automatically prepare news",
+          "focused": true,
+          "checked": "true",
+          "childIds": []
+        },
+        {
+          "role": "StaticText",
+          "name": "News sources",
+          "focused": null,
+          "checked": null,
+          "childIds": [
+            "-1000000907"
+          ]
+        },
+        {
+          "role": "InlineTextBox",
+          "name": "News sources",
+          "focused": null,
+          "checked": null,
+          "childIds": []
+        },
+        {
+          "role": "checkbox",
+          "name": "Fixture feed",
+          "focused": null,
+          "checked": "true",
+          "childIds": []
+        },
+        {
+          "role": "StaticText",
+          "name": "Fixture feed",
+          "focused": null,
+          "checked": null,
+          "childIds": [
+            "-1000000909"
+          ]
+        },
+        {
+          "role": "InlineTextBox",
+          "name": "Fixture feed",
+          "focused": null,
+          "checked": null,
+          "childIds": []
+        }
+      ]
+    }
+  ],
+  "reports": [
+    {
+      "name": "terminal",
+      "result": "observed",
+      "errors": [],
+      "sha256": "4b7a112342d43c8295405498ca6ceacec40268adec2fc28495a44115a5a2122e"
+    },
+    {
+      "name": "management",
+      "result": "observed",
+      "errors": [],
+      "sha256": "2ffe4377a1a93f7cebf8f45090009b0f46617d34e9653a8f72177b81a8c89d94"
+    },
+    {
+      "name": "management-final",
+      "result": "observed",
+      "errors": [],
+      "sha256": "4ff330e0b2331da37229f763494fc0bbd8a038ffd60dcd8c8213887f6b70031d"
+    }
+  ],
+  "bundles": {
+    "management": {
+      "out/renderer/assets/index-DWaOH3CA.js": "65661bc700e0bba9c5a6f59ae73bdc38137f4fc2410c7d18eb6afafb96197ffc",
+      "out/renderer/assets/index-B9cR7bvN.css": "78fcc2ec135ead9b4d1badd479acfb6d54ca4a41dc08f9be074474ddebe05f76"
+    },
+    "final": {
+      "out/renderer/assets/index-aZeg_wOd.js": "088726df2403498e19d28eb107248340d241a252d155b68373eb9addc6fa79ca",
+      "out/renderer/assets/index-B9cR7bvN.css": "78fcc2ec135ead9b4d1badd479acfb6d54ca4a41dc08f9be074474ddebe05f76"
+    }
+  },
+  "sourceModules": [
+    {
+      "file": "src/renderer/main.tsx",
+      "sha256": "863a6596bde95ba270f0d554a2ac2bd0c3819ca832f1bfd577d0edf9bb69a7cc"
+    },
+    {
+      "file": "src/renderer/App.tsx",
+      "sha256": "88fb4e2afffdb02d6e4940b6ac95f31f0b30bcfecb152f56ceb6249464435c8c"
+    },
+    {
+      "file": "src/shared/types.ts",
+      "sha256": "f98356fc4473975a77f5f8d0afbe3278bd623e9d94e5c8de85f3db1cd65e2e05"
+    },
+    {
+      "file": "src/shared/dj-playback.ts",
+      "sha256": "7e807ff052f50332ff9c78b083c450a9f5c116f68fc36de93480165ec1e6e55b"
+    },
+    {
+      "file": "src/shared/workflow.ts",
+      "sha256": "22bbb66493579cc57e09c69119943adec0fa2373d823820a2579bd4996e6cc77"
+    },
+    {
+      "file": "src/renderer/api.ts",
+      "sha256": "a44175c0fa1b6d5bb3b5fe611e652334f974aa73a93b37b42b0ab2ad45debeca"
+    },
+    {
+      "file": "src/renderer/useRetryFocus.ts",
+      "sha256": "56f3ad7da37c42ed3fdfffebbce2a24fdde07f159b1a77febebe6aeb0481274c"
+    },
+    {
+      "file": "src/renderer/player.tsx",
+      "sha256": "682513a44f59cf746c6464d24163181473d80e79addc33edd19aa2dfc9e810d4"
+    },
+    {
+      "file": "src/shared/news-transitions.ts",
+      "sha256": "dae2314678e39262b7e89986412320c33d96cf8af3dc841188fe5e604eda8c90"
+    },
+    {
+      "file": "src/renderer/audio.ts",
+      "sha256": "48884e62f20bea6779e716f685407f780eaaca8a06b86006e686c4d4bdcdc0aa"
+    },
+    {
+      "file": "src/renderer/NewsRecovery.tsx",
+      "sha256": "5d51f3d77587b4cef19fdc08e16ecbe6d614097ab07a0bf23452990fed097772"
+    },
+    {
+      "file": "src/renderer/dj-playback.tsx",
+      "sha256": "d5fce424eb2f78b8fe546e00b6584b1f877981b42ae12eb531df9d93ae031824"
+    },
+    {
+      "file": "src/renderer/components/Player/Player.component.tsx",
+      "sha256": "450e178394a6a145487854c9c6ea39ccb3886f4c183ff3b5f226fe23128b0901"
+    },
+    {
+      "file": "src/renderer/components/Shared.tsx",
+      "sha256": "16726cf323f44324a124ee5fb29a7270ae514f8dc04f87f153f6b0a5e289ff5e"
+    },
+    {
+      "file": "src/renderer/components/Player/DJPopover.component.tsx",
+      "sha256": "487640aca4cbd79a52ae99f9b03b5ecc57e1ea7da07a437dd9029657bba72d90"
+    },
+    {
+      "file": "src/shared/news-preparation-status.ts",
+      "sha256": "27803f7289d4cf64a0d350a361fe9682231e518e93bd4a71e3590a4df771eae9"
+    },
+    {
+      "file": "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx",
+      "sha256": "2f750a0a07c76a2d1d77bbe28a28c2c572e90fbac5d9c66391922b2f99e70e33"
+    },
+    {
+      "file": "src/renderer/components/Queue/Queue.component.tsx",
+      "sha256": "21cc36ac9c124440ae9a34f2041a8386adaffe9c9d79da3335342950c19a4082"
+    },
+    {
+      "file": "src/renderer/components/Inspector/Inspector.component.tsx",
+      "sha256": "8fd6dd9e51fe39038a893e4e66dc93656713e3434399d0b5210df870d3f5d235"
+    },
+    {
+      "file": "src/renderer/components/LibrarySelection.tsx",
+      "sha256": "612e117abee02b6c69090402331261928792cfc7a0aa445756f764d319de0083"
+    },
+    {
+      "file": "src/renderer/pages/Settings/SettingsEdits.tsx",
+      "sha256": "44e576f60c8a96d9fcc00df839244beefd8144215e0801b03803c20d9b34d56e"
+    },
+    {
+      "file": "src/renderer/components/ProviderKeys/ProviderKeyEdits.tsx",
+      "sha256": "99b9e06d6c62a90d36195ef7ae832444dd64c7cad8153db4fd66fd7feefe04d2"
+    },
+    {
+      "file": "src/renderer/pages/Connection/Connection.page.tsx",
+      "sha256": "9b61e8252d46c0564d0de66df8c0d00c75750d79dfffb8a10aff15ac16483815"
+    },
+    {
+      "file": "src/renderer/components/LibraryChooser.tsx",
+      "sha256": "0c91c760e8d10904fc699de951c43a2120c73148cbee800574fd5850e2ed8662"
+    },
+    {
+      "file": "src/renderer/pages/Songs/Songs.page.tsx",
+      "sha256": "a15a3adc08b8ebb2bd4d96b00c8462d94922bef67eb2fad655c6c428af0eb942"
+    },
+    {
+      "file": "src/renderer/components/FilterSelect/FilterSelect.component.tsx",
+      "sha256": "b6c4242190b3d107c5145f464db5f3b4912736c70c940a3344c73aa26463ec26"
+    },
+    {
+      "file": "src/renderer/components/TrackTable/TrackTable.component.tsx",
+      "sha256": "158caa15a4fe11170ac048c1752d4b9327006595646f5a86acd27c5b1c0216e5"
+    },
+    {
+      "file": "src/shared/playlist-entries.ts",
+      "sha256": "bb58ab3747844f5080fae78be9a9431bc9cb841fbbb704866cd7e064b5a1292c"
+    },
+    {
+      "file": "src/renderer/pages/Songs/VirtualSongs.component.tsx",
+      "sha256": "4484149d94156d3f6f9b5bcb5b201285a1264e2e28125f50e10a4d401f593206"
+    },
+    {
+      "file": "src/renderer/pages/Albums/Albums.page.tsx",
+      "sha256": "09a1292143de4e0f24a233a41b50e90fae8f19d394afae2f5171384f59fc9667"
+    },
+    {
+      "file": "src/renderer/components/CollectionHeading/CollectionHeading.component.tsx",
+      "sha256": "3a055f26b529958fd7a010c1318de66c54e4c6c77118207b3eed745c020e5548"
+    },
+    {
+      "file": "src/renderer/pages/Albums/VirtualAlbums.component.tsx",
+      "sha256": "0a533939261b44ee2eeafa2a6127db399d597764a5b14b8e656bf1cc969b5ec9"
+    },
+    {
+      "file": "src/renderer/pages/Playlists/Playlists.page.tsx",
+      "sha256": "ad55426bce9915c3712d4d3b14f5adffd77022f527eb586bf4d8bfa77994ffbc"
+    },
+    {
+      "file": "src/renderer/pages/Stations/Stations.page.tsx",
+      "sha256": "af0c5219948700ed27fab50a9490184856a2055983fae09a64781dd2ee8f8bc2"
+    },
+    {
+      "file": "src/renderer/components/InfoHelp/InfoHelp.component.tsx",
+      "sha256": "be2433410cfe2387f36bae23bc6e993a3f54942e9f7979c1854908a83b508cc8"
+    },
+    {
+      "file": "src/renderer/components/ConfigurationTabs/ConfigurationTabs.component.tsx",
+      "sha256": "20df1037126e5f9596bf917f3d5fbc455f41f236626bdbd9176fdc3ba4242a9f"
+    },
+    {
+      "file": "src/renderer/pages/Stations/components/RoomSetup.component.tsx",
+      "sha256": "336ba4bea954b73452e312b95b0fc07ccbd2a328e5f8aebb88dbfda771c0f330"
+    },
+    {
+      "file": "src/renderer/pages/Stations/components/PreparedTakes.component.tsx",
+      "sha256": "2acd8dc806c843d6578d0412be6650dc4e03da373c1d51af2850f890b68407a1"
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx",
+      "sha256": "c4ad3a4578a806ddde343831a2e2015bd85f9321a9c0d0f23ee3c79b7d1461e8"
+    },
+    {
+      "file": "src/renderer/pages/Stations/components/NewsBucket.component.tsx",
+      "sha256": "61e5027abd4def319532645a9a3b1425a4b6531860a2609b113c18670c0fa2f3"
+    },
+    {
+      "file": "src/shared/news-pool.ts",
+      "sha256": "2f8ac1bde20b4a9adfd3beedf015e2d7e843dda584e7713be29e1a4c7ad3fa77"
+    },
+    {
+      "file": "src/renderer/pages/Settings/Settings.page.tsx",
+      "sha256": "13f585e3995c35a21b1105f787095003d794b14ca885f609e58be1af33756cbe"
+    },
+    {
+      "file": "src/renderer/components/ProviderKeys/ProviderKeys.component.tsx",
+      "sha256": "cfead3feb18d94ec60d2ac25573ddfedb7a2ad0b8bbc0331d1ccd4caaefebd6b"
+    },
+    {
+      "file": "src/renderer/components/ProviderKeys/TwitterSetupHelp.component.tsx",
+      "sha256": "3135481586c31f6b4decd8eabba1eda09a74578163ff4da6dd55fb148de3459f"
+    },
+    {
+      "file": "src/renderer/pages/Sources/Sources.page.tsx",
+      "sha256": "0010c35635ef75c8648bb4aded6b754603738cc0c345d493fa9624d8f4481fb8"
+    },
+    {
+      "file": "src/shared/sources.ts",
+      "sha256": "1da2117a59995911c14d098c8c814811ec309fb0d81c2fbf24b53721404e8f18"
+    },
+    {
+      "file": "src/renderer/pages/DJs/DJs.page.tsx",
+      "sha256": "b04a570f45ae65e795c87fa5a866755e2e620bc056223cab5a97e5db24c7faa1"
+    },
+    {
+      "file": "src/renderer/pages/DJs/components/DJEditor.component.tsx",
+      "sha256": "64457abf271353499f45a9b719a643b90a330e87fdd86311981255cd1caa04ef"
+    },
+    {
+      "file": "src/renderer/pages/DJs/components/DJEditor.presets.ts",
+      "sha256": "1994c54feef51b032cfb15038b9422f3fcb6243a7bf6df1a453ccf3db597ed5a"
+    },
+    {
+      "file": "src/renderer/pages/DJs/components/VoicePreview.component.tsx",
+      "sha256": "d2cbca679984903fdc0692488dff67069fad302e4e3adcd8352915b5eb209581"
+    },
+    {
+      "file": "src/shared/voice-previews.ts",
+      "sha256": "4ebe9fe7dad73cc2195573ec729cb99440313fe8eea24e5b0201154cc8095bfe"
+    },
+    {
+      "file": "src/renderer/pages/DJs/components/DJPreview.component.tsx",
+      "sha256": "496eaaac54e8fedb02e33bd2c07b01bc5c4a0b23fcb57940729c32a5bd11c3b8"
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/DJPlaybackSettings.component.tsx",
+      "sha256": "637cd8e97ae915639bcec77ac344ec28159ebc22e40b5e4fa74df4f826e14645"
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/NewsTransitions.component.tsx",
+      "sha256": "69051db733a1e1ed35621d7ac6f7e11908b6faba52d3d1a09515d97cddfc0c9b"
+    },
+    {
+      "file": "src/renderer/pages/Settings/components/NewsTransitionPreview.component.tsx",
+      "sha256": "b44dc08192dd9d4a354a8f921c1b5e17c6a0cf2291b26b8aa3bd285d55b2ff31"
+    }
+  ],
+  "fixtureHashes": {
+    "bootstrap.mjs": "66222bf0a047670bb6b070b0f353db6f63ee899aa472bdaf5b0039986c8133a6",
+    "observe.cjs": "b1caa3eb3359633e8c5b140aa7a5332a7f1f0d52de9fe44e5ac3209dbd355361",
+    "server.mjs": "05f84c238cc2e6ac8115b6b7d9f1314009d5363a5abc4ed83eaa64d56293e24f",
+    "inventory.cjs": "1b0de21b86b917088b64d7f2346a6f900dfed389fad72c7b9f263661a6adf73d",
+    "build.log": "603541c4acd67e6b3f0bc57f3a40ce6d29c5022be230427a11ad163d57fdf279",
+    "lint.log": "6f1680e0ff047e07a06dcf9afc079770fad3f871d47a52ee12dccaaa84366d63"
+  },
+  "familyReconciliation": {
+    "priorLedger": "2026-10-18-keyboard-family-evidence.csv",
+    "families": 35,
+    "definitions": 234,
+    "modules": 55,
+    "changedFamilies": [
+      {
+        "file": "src/renderer/App.tsx",
+        "oldSha256": "f304a255d1674496943e737f45f499a996ae8841ccac57bdce84fcefe3765a38",
+        "newSha256": "88fb4e2afffdb02d6e4940b6ac95f31f0b30bcfecb152f56ceb6249464435c8c"
+      }
+    ],
+    "remaining34FamilyHashesMatch": true,
+    "interpretation": "Historical CSVs remain dated evidence. Current App is reconciled through this route record; no source count is treated as acceptance."
+  },
+  "review": {
+    "Steve": "Supports persistent guarded route wrapper and exact destination. Final App review finds no blocking issue.",
+    "Elena": "Supports wrapper, warns Settings has its own preceding heading. Final review finds no blocking issue in destination or history resets.",
+    "closureAudit": "Both reviewers revise their earlier demand to force a count fallback: actual retained results plus named defensive fallback are adequate for that essential path; arbitrary branch-forcing is not required. Latest manual/preparation records compose; do not replay every race permutation.",
+    "remaining": "Final player Pool check ended retained state has source review but no native projection. Keep Q06 Review until the exact remaining conditional-player evidence is reconciled."
+  },
+  "validation": [
+    "Production build including TypeScript and full ESLint pass after final history correction; whitespace and scoped evidence predicates pass.",
+    "Final Sources/DJs/Provider keys keyboard entry and relevant Back targets are visible above player with solid outlines.",
+    "Provider keys prior scroll300 becomes0 on explicit re-entry; Back checkbox moves from rejected negative y to563..580.",
+    "Source group AX names News sources and Fixture feed; Space changes true\u2192false\u2192true, focus stays visible.",
+    "Actual empty-success paging Retry retains existing result focus for Songs and Albums. Count text still reflects original first-page totals; this substituted response does not establish changing-catalog total coherence.",
+    "Three observer reports terminal observed/no page errors. Owned catalog PID54506 revalidated and stopped; session92922 terminal143.",
+    "External/provider attempts and HTTP writes zero."
+  ],
+  "limits": [
+    "Player-footer general Settings caller is outside the new Stations source capture; no new footer-route focus result is claimed.",
+    "Window/overlay/Tab cancellation inherits unchanged helper; no new delayed-navigation takeover matrix.",
+    "No forced no-row/count-fallback, actual live catalog mutation, real permission configuration, VoiceOver, listener, audible/provider or platform acceptance.",
+    "Baseline/group/paging and intermediate AX results are not called final-bundle reruns; phase hashes/limits remain explicit.",
+    "Raw fixture files are temporary; retained projections and hashes define scope."
+  ],
+  "acceptance": {
+    "total": 191,
+    "active": 189,
+    "deferred": 2,
+    "open": 27,
+    "listener": 14,
+    "otherProof": 13,
+    "Q06": "Review"
+  }
+}
