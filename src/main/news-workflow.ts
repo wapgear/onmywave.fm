@@ -1,6 +1,6 @@
 import { StorageError } from './storage-error';
 import { randomUUID } from 'node:crypto';
-import type { LocalState, RoomProfile, WorkflowDraft } from '../shared/types';
+import type { LocalState, PreparedNewsTake, RoomProfile, WorkflowDraft } from '../shared/types';
 import { getLocalState, updateLocalState } from './storage';
 import { cancelPreparedNews, getPreparedNews, prepareRoomNews } from './prepared-news';
 import type { NewsService } from './news';
@@ -50,15 +50,21 @@ async function deferWorkflow(profile: RoomProfile, reason: 'limit' | 'busy'): Pr
   return applied;
 }
 
-async function finishRun(profileId: string, requestId: string, outcome: NonNullable<WorkflowDraft['newsLastRun']>['outcome'], message?: string) {
+function recordingTime(take: PreparedNewsTake | undefined, fallback: string): string {
+  if (typeof take?.recordedAt === 'string' && Number.isFinite(Date.parse(take.recordedAt))) return take.recordedAt;
+  if (typeof take?.createdAt === 'string' && Number.isFinite(Date.parse(take.createdAt))) return take.createdAt;
+  return fallback;
+}
+
+async function finishRun(profileId: string, requestId: string, outcome: NonNullable<WorkflowDraft['newsLastRun']>['outcome'], message?: string, finishedAt = new Date().toISOString()) {
   await updateLocalState(state => {
     const profile = state.roomProfiles.find(value => value.id === profileId);
     const run = profile?.workflowDraft.newsLastRun;
     if (!profile || run?.requestId !== requestId || run.outcome !== 'running') return {};
-    const date = dayKey();
+    const date = dayKey(new Date(finishedAt));
     const draft = profile.workflowDraft;
     const count = draft.newsClipDate === date ? draft.newsClipsToday ?? 0 : 0;
-    const workflowDraft: WorkflowDraft = { ...draft, newsLastRun: { ...run, outcome, finishedAt: new Date().toISOString(), ...(message ? { message: message.slice(0, 2000) } : {}) },
+    const workflowDraft: WorkflowDraft = { ...draft, newsLastRun: { ...run, outcome, finishedAt, ...(message ? { message: message.slice(0, 2000) } : {}) },
       ...(outcome === 'prepared' ? { newsClipDate: date, newsClipsToday: count + 1 } : {}),
       ...(outcome === 'interrupted' ? { newsWorkflowPaused: true } : {}),
       ...(outcome === 'failed' ? { newsWorkflowError: message?.slice(0, 2000) } : outcome === 'prepared' || outcome === 'no-news' || outcome === 'partial-coverage' || outcome === 'interrupted' ? { newsWorkflowError: undefined } : {}) };
@@ -119,8 +125,8 @@ async function processProfile(news: NewsService, profile: RoomProfile) {
   activeRequest = requestId;
   activeRoomId = current.id;
   try {
-    await prepareRoomNews(news, { requestId, roomId: current.id }, snapshot);
-    await finishRun(current.id, requestId, 'prepared');
+    const take = await prepareRoomNews(news, { requestId, roomId: current.id }, snapshot);
+    await finishRun(current.id, requestId, 'prepared', undefined, recordingTime(take, new Date().toISOString()));
   } catch (error) {
     if (error instanceof StorageError) throw error;
     const message = error instanceof ServiceError ? error.message : 'Could not prepare the news break. Check the connection and try again.';
@@ -182,11 +188,12 @@ export async function startNewsWorkflow(news: NewsService, allowed = () => true,
       const outcome: NonNullable<WorkflowDraft['newsLastRun']>['outcome'] = request?.status === 'complete' ? 'prepared' : request?.status === 'skipped' ? 'no-news' : request?.status === 'partial-coverage' ? 'partial-coverage' : 'interrupted';
       const message = outcome === 'interrupted' ? request?.error || 'The app stopped before this preparation completed.' : request?.error;
       const take = request?.status === 'complete' ? prepared.takes.find(value => value.id === request.artifactId) : undefined;
-      const date = take?.createdAt ? dayKey(new Date(take.createdAt)) : dayKey(new Date(run.startedAt));
+      const finishedAt = outcome === 'prepared' ? recordingTime(take, run.startedAt) : new Date().toISOString();
+      const date = dayKey(new Date(finishedAt));
       const count = profile.workflowDraft.newsClipDate === date ? profile.workflowDraft.newsClipsToday ?? 0 : 0;
       return { ...profile, workflowDraft: { ...profile.workflowDraft, newsWorkflowPaused: profile.workflowDraft.newsWorkflowPaused || outcome === 'interrupted',
         ...(outcome === 'prepared' ? { newsClipDate: date, newsClipsToday: count + 1 } : {}),
-        newsLastRun: { ...run, outcome, finishedAt: outcome === 'prepared' ? take?.createdAt || new Date().toISOString() : new Date().toISOString(), ...(message ? { message: message.slice(0, 2000) } : {}) } } };
+        newsLastRun: { ...run, outcome, finishedAt, ...(message ? { message: message.slice(0, 2000) } : {}) } } };
     });
     return { roomProfiles: changed, ...(state.activeRoomProfileId ? { workflowDraft: changed.find(profile => profile.id === state.activeRoomProfileId)?.workflowDraft } : {}) };
   });

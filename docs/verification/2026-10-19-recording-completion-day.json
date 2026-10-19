@@ -1,0 +1,261 @@
+{
+  "date": "2026-10-19",
+  "baseCommit": "5080b41173df1edab049e7cb4820485e98fa6072",
+  "scope": "Daily automatic recording event timestamp across speech completion,workflow settlement and process restart. Focused actual filesystem/scheduler/prepared-manifest integration;no new native or live-provider proof.",
+  "problem": "Automatic take.createdAt is the earlier script time. Uninterrupted settlement counted current day,while restart reconciliation counted take.createdAt. Speech crossing midnight or settlement delayed beyond midnight assigned the same recording to different days.",
+  "change": [
+    "Add optional recordedAt to PreparedNewsTake. publishTake captures it after the audio temporary file is written and before the recovery sidecar is serialized. Sidecar,index and returned saved copy carry the same timestamp. Both automatic and manual takes use this publication function.",
+    "Immediate prepared settlement and startup reconciliation resolve valid string recordedAt,then createdAt,then their fallback. Prepared history finishedAt and clip date use this event time. Request-ID/running guards still count once.",
+    "Retain script/take createdAt,article dates,provenance,signatures,sorting,freshness and existing audio/sidecar publication order. Existing records need no migration."
+  ],
+  "pairedDecision": {
+    "Boris": "Proposed recordedAt to avoid changing freshness/display dates. Challenge supported stamping/returning saved copy and shared validated resolver. Final actual diff/evidence review support,no blocker;no independent execution.",
+    "Nadia": "Independently proposed recordedAt in publication. Final actual diff/evidence review support,no blocker;reserved that timestamp precedes await load/sidecar write rather than exact commit. Date.parse validation accepts non-ISO dates. No independent execution.",
+    "Morgan": "Use additive optional recordedAt,existing publication protocol and one resolver. Root owns implementation. Avoid redefining createdAt because it also drives undated-story freshness."
+  },
+  "method": {
+    "productionModules": [
+      "storage.ts serialized filesystem state",
+      "prepared-news.ts real manifest,script,take,sidecar/audio publication/recovery",
+      "news-workflow.ts actual reservation,settlement and startup reconciliation"
+    ],
+    "adapters": "Electron userData targets disposable directories,safeStorage unavailable,and shared-key adapter returns a fixed fixture string. Controlled NewsService methods return one dated article and inert audio bytes. All fetch calls blocked and counted. No real credentials,paid providers or external server mutations.",
+    "clock": "Fixture-only Date clock in Europe/Madrid. Script is saved at2026-10-19 23:59:50;voice-crossing mode advances to20 October 00:00:10 inside controlled speech completion. Settlement-crossing mode advances after prepareRoomNews returns,before finishRun. OS clock unchanged.",
+    "crashBoundaries": [
+      "Actual child process.exit(72) after completed prepared library publication and before workflow settlement.",
+      "Actual child process.exit(73) after recovery sidecar rename and before final audio rename. Actual recovery promotes the matching audio temporary file."
+    ],
+    "restarts": "Two fresh child processes per case. Second restart is another local day later. Reconciliation allowed but automatic dispatch disabled. Both counter/date and last-run history remain unchanged. False-vs-omitted pause normalization is excluded from identity predicate.",
+    "legacy": "Five separately copied datasets seed a running local outcome with completed manifest,then remove/corrupt the optional timestamp or both timestamps,or remove the take. Tests exercise real startup fallback and disk persistence. This is seeded compatibility proof,not old production-data recovery.",
+    "manual": "Actual manual script + audio publication followed by same-signature reuse with a new request ID. One text/voice call,one saved take,recordedAt retained;automatic count remains2. Audio bytes are inert,not audible speech."
+  },
+  "results": {
+    "automaticCases": [
+      {
+        "mode": "same-day",
+        "action": "normal",
+        "expectedDay": "2026-10-19",
+        "expectedCount": 3,
+        "afterPassed": true,
+        "beforeDate": "2026-10-19",
+        "beforeCount": 3
+      },
+      {
+        "mode": "same-day",
+        "action": "crash",
+        "expectedDay": "2026-10-19",
+        "expectedCount": 3,
+        "afterPassed": true,
+        "beforeDate": "2026-10-19",
+        "beforeCount": 3
+      },
+      {
+        "mode": "same-day",
+        "action": "sidecar",
+        "expectedDay": "2026-10-19",
+        "expectedCount": 3,
+        "afterPassed": true,
+        "beforeDate": "2026-10-19",
+        "beforeCount": 3
+      },
+      {
+        "mode": "voice",
+        "action": "normal",
+        "expectedDay": "2026-10-20",
+        "expectedCount": 1,
+        "afterPassed": true,
+        "beforeDate": "2026-10-20",
+        "beforeCount": 1
+      },
+      {
+        "mode": "voice",
+        "action": "crash",
+        "expectedDay": "2026-10-20",
+        "expectedCount": 1,
+        "afterPassed": true,
+        "beforeDate": "2026-10-19",
+        "beforeCount": 3
+      },
+      {
+        "mode": "voice",
+        "action": "sidecar",
+        "expectedDay": "2026-10-20",
+        "expectedCount": 1,
+        "afterPassed": true,
+        "beforeDate": "2026-10-19",
+        "beforeCount": 3
+      },
+      {
+        "mode": "settlement",
+        "action": "normal",
+        "expectedDay": "2026-10-19",
+        "expectedCount": 3,
+        "afterPassed": true,
+        "beforeDate": "2026-10-20",
+        "beforeCount": 1
+      },
+      {
+        "mode": "settlement",
+        "action": "crash",
+        "expectedDay": "2026-10-19",
+        "expectedCount": 3,
+        "afterPassed": true,
+        "beforeDate": "2026-10-19",
+        "beforeCount": 3
+      },
+      {
+        "mode": "settlement",
+        "action": "sidecar",
+        "expectedDay": "2026-10-19",
+        "expectedCount": 3,
+        "afterPassed": true,
+        "beforeDate": "2026-10-19",
+        "beforeCount": 3
+      }
+    ],
+    "automaticCaseCount": 9,
+    "freshProcessRestarts": 18,
+    "legacyFallbacks": [
+      {
+        "variant": "missing",
+        "date": "2026-10-19",
+        "count": 3,
+        "finishedAt": "2026-10-19T21:59:50.000Z",
+        "diskMatches": true
+      },
+      {
+        "variant": "invalid",
+        "date": "2026-10-19",
+        "count": 3,
+        "finishedAt": "2026-10-19T21:59:50.000Z",
+        "diskMatches": true
+      },
+      {
+        "variant": "number",
+        "date": "2026-10-19",
+        "count": 3,
+        "finishedAt": "2026-10-19T21:59:50.000Z",
+        "diskMatches": true
+      },
+      {
+        "variant": "both-invalid",
+        "date": "2026-10-19",
+        "count": 3,
+        "finishedAt": "2026-10-19T21:59:50.000Z",
+        "diskMatches": true
+      },
+      {
+        "variant": "missing-take",
+        "date": "2026-10-19",
+        "count": 3,
+        "finishedAt": "2026-10-19T21:59:50.000Z",
+        "diskMatches": true
+      }
+    ],
+    "manual": {
+      "textCalls": 1,
+      "voiceCalls": 1,
+      "savedTakes": 1,
+      "scheduledClipCount": 2,
+      "diskMatches": true,
+      "recordedAt": "2026-10-19T22:00:10.000Z"
+    },
+    "baselineMisattributedCases": 3,
+    "externalRequests": 0,
+    "allAfterPredicatesPassed": true
+  },
+  "validation": {
+    "build": "npm run build exit0,including TypeScript and voice resource validation.",
+    "lint": "npm run lint exit0.",
+    "diffCheck": "git diff --check exit0.",
+    "unitTests": "No unit tests or framework added/run. Disposable actual filesystem/service integration.",
+    "native": "No new UI/native interaction in this change."
+  },
+  "sourceSha256": {
+    "src/main/news-workflow.ts": "671296d9478da1d7b17d390abb44e4900f684ae2cf253e732dc9b22bbaa8cd72",
+    "src/main/prepared-news.ts": "d1e6879c887f8a6d5c73c7f2e7131985d653cd80e64fd265f234a1b2f47f43e4",
+    "src/shared/types.ts": "de2d27bb36234b5ecc4d14e67652cb654ab54fd78976711876cf7c2ee74da554",
+    "src/shared/news-pool.ts": "d8a190d01563d458a34bd2a89e9bbce8aa7533a7e678b44d88559951768f9da5"
+  },
+  "fixtureSha256": {
+    "/private/tmp/recording-midnight-current/after-bundled.mjs": "223b11089b950ca40c0430f25bc13b5a0e138fd303ab56bb175ac564223584eb",
+    "/private/tmp/recording-midnight-current/after-same-day-crash-recover-again.json": "d54eb68865b35fcfde12b246c1de2ee7713281358a8d9450f72f80ac6d4571a9",
+    "/private/tmp/recording-midnight-current/after-same-day-crash-recover.json": "ce494405f327a6e6bb979c8fec2e0b7ce3acb02bf0cfbe6d16855e9b729b9b11",
+    "/private/tmp/recording-midnight-current/after-same-day-normal-recover-again.json": "7899b121fc661783d4c0e6af4fe41fee912c69e78496030950924a46af431d69",
+    "/private/tmp/recording-midnight-current/after-same-day-normal-recover.json": "573308854159bec70bfe33afd0178841b2da47401b0535a4b707c34e3300b3f2",
+    "/private/tmp/recording-midnight-current/after-same-day-normal.json": "1dad7d9998980b4b42693030791a1630c4bf701cbbb4241e8cabeccf06897e28",
+    "/private/tmp/recording-midnight-current/after-same-day-sidecar-recover-again.json": "7ab1062a645e56f3b478aa154cfcf1140696fa9ea71342a456ca06c360fe28a3",
+    "/private/tmp/recording-midnight-current/after-same-day-sidecar-recover.json": "a83bcfec2000860850faa7833b90699fc855e053cd549db680c0fda2bf2a0e39",
+    "/private/tmp/recording-midnight-current/after-settlement-crash-recover-again.json": "6bd518a79bb8f084dbfd1de316087f69f4ab99cc474f81948982c41b8bed1b29",
+    "/private/tmp/recording-midnight-current/after-settlement-crash-recover.json": "f881080953e890c223f8a7d3cd556bef5b949fbc4cf96614b1623e614e0cd66f",
+    "/private/tmp/recording-midnight-current/after-settlement-normal-recover-again.json": "8b4a0eb5de01aa5942c2b5cde01714e24da093ecad666237eb8ce1d9ca5bd13f",
+    "/private/tmp/recording-midnight-current/after-settlement-normal-recover.json": "f4826448abe6cd378a6b921c35bc585f5a969db455c2d887e800e10d4fc9fb4f",
+    "/private/tmp/recording-midnight-current/after-settlement-normal.json": "2aba7fa79b9a6138e90e456302fbf8f197b0518ad9a62c567f22d76b1956a764",
+    "/private/tmp/recording-midnight-current/after-settlement-sidecar-recover-again.json": "64400e3b738a2722e884306c602554882b7717a5274460d931db9ec242019a7a",
+    "/private/tmp/recording-midnight-current/after-settlement-sidecar-recover.json": "5e97b1d77464cf9cac3cec739ed5e35bc74f011097ad90fca63dc9b5281fc694",
+    "/private/tmp/recording-midnight-current/after-summary.json": "15d89d5a17001ccef72f0b3a61d6d18ce8b0d7a348d596d47af9158160545fe4",
+    "/private/tmp/recording-midnight-current/after-voice-crash-recover-again.json": "b9a630cf2a78f0d306d7a2214c3166e9f16a653c23c1a2fd70afd506b279771f",
+    "/private/tmp/recording-midnight-current/after-voice-crash-recover.json": "b3dddc2564131f65aba0b81ac2180a587bf9bcc64171c4ecce7c0abdae359dc8",
+    "/private/tmp/recording-midnight-current/after-voice-normal-recover-again.json": "1f9e2c4612a3ffb2dc75862222e2d12b7ce267359438415bd288adf972539803",
+    "/private/tmp/recording-midnight-current/after-voice-normal-recover.json": "f2ea295382b97547f081daa537369f9a97a7c2a77bba3387b7db34dcd256c408",
+    "/private/tmp/recording-midnight-current/after-voice-normal.json": "b8dce37b72a846224bf42bbd83264df764818c308dc631ecc4901a2ce98b6e84",
+    "/private/tmp/recording-midnight-current/after-voice-sidecar-recover-again.json": "75c72bdee433b085b7f71ffe1ee03f86e7d4d5dd42caf66a15f88db398a544df",
+    "/private/tmp/recording-midnight-current/after-voice-sidecar-recover.json": "f15ed469291b8655f79f0bd5469b3d63c9912a64f8d5358a5d560989a926a7e8",
+    "/private/tmp/recording-midnight-current/after.log": "872f6475c037d82b3c5a44a2bf10f7893e811e7287839f2551926eee914d6fcb",
+    "/private/tmp/recording-midnight-current/baseline-news-workflow.ts": "bfb496c6ef259fe804bdf3c63a9d59c5863a5061b927cc95adbdd6ae92161015",
+    "/private/tmp/recording-midnight-current/baseline-prepared-news.ts": "17436e9a0db50a58d4b31db08a9cabd44fe5d1862d420a593cc49998b3e2ca6c",
+    "/private/tmp/recording-midnight-current/before-bundled.mjs": "81efc1d0205c82c82862c50e89fbedfe2ab2ae7d41a76e518684e5ebe06b0e6d",
+    "/private/tmp/recording-midnight-current/before-same-day-crash-recover-again.json": "227e782126a6a20d884fdb2fd5398739751eea22ede80ec28bc8e353366b8fe0",
+    "/private/tmp/recording-midnight-current/before-same-day-crash-recover.json": "ef3fe2abd8147b1312d11faf5849eb8ccdc11aefe52e801091e76f1ac67be905",
+    "/private/tmp/recording-midnight-current/before-same-day-normal-recover-again.json": "1a80ce321ddf895ac94c878e0d15a6499f4d4ae349afe0ed2025688548bf9cfd",
+    "/private/tmp/recording-midnight-current/before-same-day-normal-recover.json": "2cc21d335bde4c703c1cef69dd8b12f1ee658d2d1906ce20f25fdb47e0e16f3e",
+    "/private/tmp/recording-midnight-current/before-same-day-normal.json": "46b408826aa45373be8cbf2fdc27b30569d1c8a8976d447a189e482a360451dc",
+    "/private/tmp/recording-midnight-current/before-same-day-sidecar-recover-again.json": "07f82aee112bf3e539a9a290d4acbeacac2af58aa9a1aae91b7fddc7906db4e1",
+    "/private/tmp/recording-midnight-current/before-same-day-sidecar-recover.json": "3c45c69a99166cd159649dc2db0931ae7a5b4325f6e5fd9ea7873f45c89886af",
+    "/private/tmp/recording-midnight-current/before-settlement-crash-recover-again.json": "df8a44e0e30a4edd512a3354272e17721fed71b7c78a87a5981562a006539285",
+    "/private/tmp/recording-midnight-current/before-settlement-crash-recover.json": "0d8dcf67558e91a4d5b946a7aaaa16cbf38ae83eaabf0851b50f54f09db3c854",
+    "/private/tmp/recording-midnight-current/before-settlement-normal-recover-again.json": "190dce68ae74b6ee7b958e0d583d52e080a7481b3e5302588f241964ebe4d0cc",
+    "/private/tmp/recording-midnight-current/before-settlement-normal-recover.json": "e49e0331bca888ac14ef5b54b65c9ac39c99a88d888fd7b1600a19d93045e2c0",
+    "/private/tmp/recording-midnight-current/before-settlement-normal.json": "6a37f410573f83f76e6fe17b406f6ca29a01a735ac105757e72d33d4c8025af5",
+    "/private/tmp/recording-midnight-current/before-settlement-sidecar-recover-again.json": "ab1b4c8a0c4712bf5fe408b83b438138286754db48735b3b2e0f2eafd79cb409",
+    "/private/tmp/recording-midnight-current/before-settlement-sidecar-recover.json": "b3cce76361a3c0b3e18932cf1c7f8adcdad4c35d4ba7e1ddce330037eb28a7f4",
+    "/private/tmp/recording-midnight-current/before-summary.json": "184ed499c3a9deab6bc0b6bf7f29738170347cf5bca364229bcc5e501809be93",
+    "/private/tmp/recording-midnight-current/before-voice-crash-recover-again.json": "ec6a3d339e27f95f634b2e1d244fb1a4348791ef241ebe4b3598fca5adffdc2a",
+    "/private/tmp/recording-midnight-current/before-voice-crash-recover.json": "6dea977201351a3d241ab522871b134c04be718ed6994c7ab197a0dd827a62a2",
+    "/private/tmp/recording-midnight-current/before-voice-normal-recover-again.json": "20e5ad12066013ab18ce66e6543e442ba7823a7f45068a5305712f103b5ac70b",
+    "/private/tmp/recording-midnight-current/before-voice-normal-recover.json": "37f84e9040eb4bafbbc037e1e512969bae79870a99b9617bdbd1f6f324ff6919",
+    "/private/tmp/recording-midnight-current/before-voice-normal.json": "2563c3c3177e8e0c5303c644bd63bb284d143e0d8383de954b44a99b078336fa",
+    "/private/tmp/recording-midnight-current/before-voice-sidecar-recover-again.json": "fde1fca2538b4ccd5d3e0e7484a129a0d6ce75810b0112c80ced247dae88c8e3",
+    "/private/tmp/recording-midnight-current/before-voice-sidecar-recover.json": "444311231cbf75b669cef4260a4a2d95dbab197f37529de03dc09888cd1ac904",
+    "/private/tmp/recording-midnight-current/before.log": "a16b8792e216d1001fc04565f69a6b4288e6d5c909fdf74859f5171f8515cc14",
+    "/private/tmp/recording-midnight-current/build.log": "914a3874fe3f238e061777d732e59c783f0b4d39abc5ba7ce30bf9f9c4f1a2f2",
+    "/private/tmp/recording-midnight-current/build.mjs": "9a04efe700f2658802534afad2db7e6e969f4d725b53204ddc7765376aa938d6",
+    "/private/tmp/recording-midnight-current/check.mjs": "5e478731b339123c3838122e0d50d4f37dc4cbd8d5ee601a431298ecf5a1cb4e",
+    "/private/tmp/recording-midnight-current/compare.mjs": "f4ad27d43400578619efd1fb55e41ec042218ea0645a385435b47b517d6d702d",
+    "/private/tmp/recording-midnight-current/comparison.json": "d0a209f84023d823f2dcd802fb4dbade6632f4e52d89a3ea22571467dd8f5b36",
+    "/private/tmp/recording-midnight-current/legacy-both-invalid.json": "a8e019399738dab65e93fa431d12d826cda89da081811031d2d7f22b24e1f19d",
+    "/private/tmp/recording-midnight-current/legacy-invalid.json": "723a75c576217006651ca5c651d5bd24f057d88c3b5941494b70b0c051d98f72",
+    "/private/tmp/recording-midnight-current/legacy-missing-take.json": "31bccd42547bc293f84ff5108c4f9f4a8a903f54c3213206591e5085eb93a6c4",
+    "/private/tmp/recording-midnight-current/legacy-missing.json": "a2374ee178bb58d564356d5e36520bb82eb950bf89e12cb80327ec1813359b4a",
+    "/private/tmp/recording-midnight-current/legacy-number.json": "c58b63d3095491c009971c630cc86d0c6107afa86d3cc3fba5e6d7664fac79db",
+    "/private/tmp/recording-midnight-current/legacy-summary.json": "c3b70ae259b455e3bfa415850d577a92126c7970c33f174c67ed0d573fa0f408",
+    "/private/tmp/recording-midnight-current/legacy.mjs": "56dc5295a49d9784f7e29be4c6477c47d16d0b207f84230603f58d407db17ed0",
+    "/private/tmp/recording-midnight-current/lint.log": "6f1680e0ff047e07a06dcf9afc079770fad3f871d47a52ee12dccaaa84366d63",
+    "/private/tmp/recording-midnight-current/manual.json": "c3f92c93d5229d9bd8df8d9da6f4176213ab33cf1d838f9eb8e1de3bb5183ca0",
+    "/private/tmp/recording-midnight-current/run.mjs": "4620f63f89b2abab8cd07dc9a8c4a6c2dda9194104c1aecedae88864406df265"
+  },
+  "adjudication": {
+    "knownOpenChecks": 25,
+    "semanticDenominatorComplete": false,
+    "overallScore": null,
+    "acceptedCanonicalGroups": 0,
+    "acceptanceStatusChanges": []
+  },
+  "limits": [
+    "Timestamp is captured just before sidecar write,not an exact filesystem rename time. A slow write may itself cross midnight;both settlement paths still use the same saved event timestamp.",
+    "Local date is derived in the current machine timezone. This does not prove behavior across a timezone change before recovery.",
+    "Legacy automatic recording completion times cannot be reconstructed;valid existing createdAt remains the best-known fallback.",
+    "Existing Saved recording UI continues using createdAt;freshness/sorting/queue semantics unchanged.",
+    "No live provider/editorial/audible,listener,actual OS midnight/sleep,media integration,packaging or release proof. A05 remains open."
+  ]
+}
