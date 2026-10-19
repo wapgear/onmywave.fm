@@ -1,0 +1,75 @@
+{
+  "date": "2026-10-19",
+  "issue": 22,
+  "tools": {
+    "oxlint": "1.88.0",
+    "oxfmt": "0.73.0",
+    "node": "24"
+  },
+  "scope": "Rust lint/format tooling, a mechanical source/style baseline, preserved ESLint/React Hooks rules, Electron boundary guardrails and read-only CI.",
+  "validation": {
+    "cleanInstall": "ELECTRON_SKIP_BINARY_DOWNLOAD=1 npm ci passed, same as CI environment. Production build needs no downloaded Electron executable.",
+    "combinedCheck": "npm run check passes: format check, Oxlint, existing ESLint and production build including TypeScript/voice assets.",
+    "formatIdempotence": "All105 matching files pass final formatter check. One long voice-search method chain needed a second initial formatting pass before stabilizing.",
+    "native": {
+      "cases": [
+        "Formatted Songs renders/searches while paused session restores",
+        "Album detail renders actions and tracks",
+        "Playlist detail renders entries/actions",
+        "DJ form opens/dismisses with controls intact",
+        "News bucket and setup render with saved source/host"
+      ],
+      "rendererErrors": [],
+      "externalAttempts": []
+    },
+    "guardProbes": [
+      {
+        "file": "src/renderer/__quality-probe.ts",
+        "expectedRule": "no-restricted-imports",
+        "blocked": true
+      },
+      {
+        "file": "src/main/__quality-probe.ts",
+        "expectedRule": "no-restricted-syntax",
+        "blocked": true
+      },
+      {
+        "file": "src/preload/__quality-probe.ts",
+        "expectedRule": "no-restricted-syntax",
+        "blocked": true
+      },
+      {
+        "file": "src/renderer/__quality-probe.tsx",
+        "expectedRule": "react-hooks/rules-of-hooks",
+        "blocked": true
+      }
+    ],
+    "compiledCode": {
+      "checked": 75,
+      "normalization": "Compiled JS with stable identifiers; coalesced adjacent literal React children text.",
+      "remainingDifferences": [
+        "src/renderer/components/TrackTable/TrackTable.component.tsx"
+      ],
+      "intentionalDifference": "TrackTable marks the already-hidden spacer cell aria-hidden for accessibility lint."
+    },
+    "security": "npm audit --omit=dev reports0. Full dependency audit retains the same pre-existing1 low/8 moderate development-tool advisories as base; no new advisories.",
+    "whitespace": "git diff --check passes."
+  },
+  "rules": "Oxlint correctness for eslint/typescript/unicorn/oxc/react/jsx-a11y/import/node. ESLint keeps every existing rule and rejects renderer Node/Electron imports, unsafe literal nodeIntegration/contextIsolation/sandbox flags including quoted keys, and preload sendSync.",
+  "exceptions": "Disable semantic-tag preference; narrowly scoped native dialog/popover keyboard delegation, deliberate initial form focus and audition caption exemptions. Preserve URLSearchParams snapshot iteration with explained Oxlint suppression because deletion mutates the iterator. Hidden table spacer cell gets explicit aria-hidden.",
+  "ci": "New Quality workflow on main pushes/PRs, Node24, clean npm ci, npm run check and production audit. Actions pinned to verified v6 commit SHAs; contents read only, cancellation byref and15-minute bound. No release/packaging/signing/publishing.",
+  "limits": [
+    "Native smoke covers five navigation/form flows at1280x720 with a synthetic localhost catalog, disposable appData and muted media; no live services, audible quality or VoiceOver acceptance.",
+    "Compiled comparison covers75 JS/TS files after coalescing adjacent literal React text;74 match. The explicit hidden-cell attribute accounts for the sole remaining difference. CSS formatting was not given a whole-stylesheet semantic-equivalence proof.",
+    "Source/style baseline touches many files mechanically. Concurrent feature PRs can need formatting-conflict resolution and npm run format when integrated.",
+    "No unit tests/framework or coverage gate added."
+  ],
+  "sourceSha256": {
+    "package.json": "5c8693ddc17f45a0ae0ce4a0075af8770ad5b0095b6efc7f443ea8feab267bea",
+    "package-lock.json": "477f807415a2e630ec634115ba18eac965b3ba34bf62f59f11c2fbf342ea706b",
+    "eslint.config.js": "a7fb80e79dd88e032bcde3f7ef061d5942fbd2064ccf913d4b3360c9296c1ef4",
+    ".oxlintrc.json": "36a5dc6a8c9a633aec6b7306a4326c3d1860be02e225f7a3f662b7d2ebd44b13",
+    ".oxfmtrc.json": "a9da32deb460e522eca1a821c4c19d2b6c38b693f1e7d84fe02c50eb183e0104",
+    ".github/workflows/quality.yml": "8f5fac04cef80895cba36d1df50f34f3c9050a33cc6c6e6770fda104f33497aa"
+  }
+}

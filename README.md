@@ -16,10 +16,14 @@ Enter the Jellyfin server address and sign in inside the app, then choose access
 ## Checks
 
 ```sh
-npm run typecheck
-npm run lint
-npm run build
+npm run check
 ```
+
+Use `npm run format` to apply Oxfmt and `npm run format:check` to verify formatting. `npm run lint` runs Oxlint followed by the existing ESLint TypeScript and React Hooks checks; `npm run check` adds formatting and the production build, which includes TypeScript. The Quality workflow runs the same checks and a production dependency audit for pull requests and main.
+
+Oxlint enables correctness rules for TypeScript, React, Node, imports and accessibility. The configuration keeps semantic-role preferences off and narrowly exempts existing native dialog/popover keyboard patterns, intentional initial form focus, and audition-only audio captions. The hidden virtual table spacer also marks its cell hidden. ESLint rejects Node/Electron imports in renderer code, unsafe literal window preferences in the main process, and synchronous preload IPC. These checks support the existing isolated renderer and typed bridge; they do not replace an Electron security review.
+
+Formatting covers source, scripts and configuration. Generated output, bundled media/metadata, lockfiles and dated verification documents are excluded. Imports and package fields are not reordered. Rule and formatting choices follow the [Oxlint plugin documentation](https://oxc.rs/docs/guide/usage/linter/plugins) and [Oxfmt configuration documentation](https://oxc.rs/docs/guide/usage/formatter/config.html).
 
 For local testing use `npm run dev` or `npm run preview`. Routine verification does not package, sign, notarize or publish the app.
 

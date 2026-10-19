@@ -1,0 +1,17 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "singleQuote": true,
+  "printWidth": 120,
+  "sortPackageJson": false,
+  "ignorePatterns": [
+    "out/**",
+    "release/**",
+    "node_modules/**",
+    "docs/**",
+    "resources/**",
+    "package-lock.json",
+    "*.md",
+    "LICENSE",
+    "src/renderer/public/**"
+  ]
+}
