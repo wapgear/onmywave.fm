@@ -8,7 +8,7 @@
   "main": "out/main/index.js",
   "type": "module",
   "scripts": {
-    "postinstall": "install-electron",
+    "postinstall": "install-electron && node scripts/install-git-hooks.mjs",
     "dev": "electron-vite dev",
     "build": "node scripts/prepare-voice-previews.mjs --check && npm run typecheck && electron-vite build",
     "preview": "electron-vite preview",
@@ -20,7 +20,8 @@
     "format": "oxfmt --write . && eslint . --fix --fix-type layout && oxlint --fix --config .oxlint-spacing.json",
     "format:check": "node scripts/check-format.mjs && oxlint --config .oxlint-spacing.json --max-warnings=0",
     "check": "npm run format:check && npm run lint && npm run build",
-    "release:mac": "bash scripts/release-mac.sh"
+    "release:mac": "bash scripts/release-mac.sh",
+    "hooks:install": "node scripts/install-git-hooks.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",

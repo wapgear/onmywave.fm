@@ -1,0 +1,12 @@
+#!/bin/sh
+set -eu
+
+cd "$(git rev-parse --show-toplevel)"
+if [ "$(git branch --show-current)" = main ]; then
+  echo 'Create a feature branch and submit a pull request instead of committing to main.' >&2
+  exit 1
+fi
+
+node scripts/check-commit-files.mjs
+git diff --cached --check
+npm run check

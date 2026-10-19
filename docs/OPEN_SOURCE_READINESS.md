@@ -1,6 +1,6 @@
 # Open source readiness
 
-Reviewed 19 October 2026 for `wapgear/onmywave.fm`, which GitHub currently reports as private. This records repository preparation, not a signed-off binary release or a legal opinion about asset ownership.
+Reviewed 19 October 2026 for `wapgear/onmywave.fm`, which is now public. This records repository preparation, not a signed-off binary release or a legal opinion about asset ownership.
 
 ## Prepared
 
@@ -13,12 +13,12 @@ Reviewed 19 October 2026 for `wapgear/onmywave.fm`, which GitHub currently repor
 - Existing CI checks formatting, lint, TypeScript, build, and production dependency advisories with read-only repository permissions and pinned Actions revisions.
 - Local environment files, credentials/certificates, dependencies, build output, and coverage output have ignore rules.
 
-## Before making the repository public
+## Open review items
 
 - [ ] Resolve bundled-media rights listed in [third party notices](../THIRD_PARTY_NOTICES.md). The ElevenLabs generation account/plan and the rights to redistribute those recordings are not recorded here. Review the [applicable ElevenLabs terms](https://elevenlabs.io/terms-of-use) and the terms that applied when the clips were created. Record evidence of permissions or replace the assets. Generated portraits and design-reference images also need an origin and rights record.
 - [ ] Visually review historical screenshots and evidence, including third party album artwork and desktop context. The new README screenshots avoid those inputs, but this cleanup did not approve all historical images for publication.
 - [ ] Run a dedicated secret scanner across all Git refs and review personal data in historical docs. The targeted review below is useful but is not an exhaustive scan. If a real credential is found, revoke it first, then plan any necessary history cleanup with collaborators.
-- [ ] Enable GitHub private vulnerability reporting, secret scanning/push protection where available, and branch protection requiring the Quality workflow. These are repository settings and were not changed locally. Verify the private-report URL in SECURITY.md works after enabling reporting.
+- [x] Enable private vulnerability reporting, secret scanning and push protection, Dependabot security updates, and a main ruleset requiring PRs and CI. Fork workflows require approval for outside collaborators; Actions require pinned commit SHAs. The checked-in ruleset is `.github/main-ruleset.json`. CodeQL produces alerts without being an initial merge gate.
 
 ## Before distributing binaries
 
@@ -36,4 +36,4 @@ A targeted text scan of tracked files and 1,648 historical Git blobs reachable f
 
 Fresh All songs and Albums captures were visually inspected. They show the current production renderer with stubbed IPC data, blocked external HTTP(S) requests, and disposable local storage. This is a documentation capture, not live Jellyfin, audio-quality, or provider verification.
 
-TrackTable context-menu and row-styling changes were prepared separately from this documentation cleanup. Historical verification records and product plans were retained because the acceptance documents link to them. The initial OSS cleanup changed no Git history, repository visibility, account settings, or releases. The subsequent naming change made the previous desktop repository private at `wapgear/onmywave-desktop-legacy` and renamed this source repository to `wapgear/onmywave.fm`. This source repository remains private.
+TrackTable context-menu and row-styling changes were prepared separately from this documentation cleanup. Historical verification records and product plans were retained because the acceptance documents link to them. The initial OSS cleanup changed no Git history, repository visibility, account settings, or releases. The subsequent naming change made the previous desktop repository private at `wapgear/onmywave-desktop-legacy` and renamed this source repository to `wapgear/onmywave.fm`. This source repository is now public. Repository security settings and branch rules were enabled in the subsequent protection change.
