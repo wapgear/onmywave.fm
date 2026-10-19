@@ -506,9 +506,9 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     };
     element.ontimeupdate = () => {
       if (!newsSchedule.current?.trackEnded) setPosition(offset.current + element.currentTime);
-      void checkScheduledNews();
+      checkScheduledNews();
     };
-    const newsClock = window.setInterval(() => void checkScheduledNews(), 25);
+    const newsClock = window.setInterval(() => checkScheduledNews(), 25);
     element.onended = () => {
       // A queue change can precede replacement of the outgoing audio source.
       if (preparing.current || !element.ended || consumedEnd.current === generation.current) return;
@@ -769,10 +769,12 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     if (currentKey && current) {
       const start = target.current;
       target.current = 0;
+      // Queue changes synchronize the external audio element, including its loading state.
+      // oxlint-disable-next-line react/set-state-in-effect
       void load(current, false, start);
     }
     // Queue occurrence identity changes only when a different occurrence starts.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // oxlint-disable-next-line hooks/exhaustive-deps
   }, [currentKey, attempt, load]);
 
   useEffect(() => {
@@ -1402,7 +1404,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         setNewsNotice('The DJ audio could not play. You can try again from Saved audio.');
         if (ended) continueAfterSong();
       };
-      void checkScheduledNews();
+      checkScheduledNews();
     } catch (cause) {
       cancelDelivery();
       if (token === newsGeneration.current) stopNews();

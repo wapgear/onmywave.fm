@@ -73,6 +73,8 @@ pnpm run format      # apply source formatting and spacing fixes
 pnpm audit
 ```
 
+Oxlint is the single lint runner, with type-aware TypeScript analysis and the existing React, Electron, and spacing rules. Oxfmt handles formatting. React Hooks and Stylistic plugins run inside Oxlint; the ESLint engine and CLI are not installed.
+
 The build validates bundled voice samples without making generation requests. `pnpm run preview` opens the built app. CI runs the same quality checks and full dependency audit.
 
 For an unsigned local macOS app directory:

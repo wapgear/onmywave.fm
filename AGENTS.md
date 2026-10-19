@@ -8,7 +8,7 @@ Work on a feature branch and submit a PR to `main`. Keep the installed pre-commi
 
 ## Formatting and ordering
 
-Oxfmt owns import sorting and ordinary formatting. ESLint Stylistic owns statement spacing. Oxlint requires exactly two blank lines after the final import, including before comments. Use one blank line:
+Oxfmt owns import sorting and ordinary formatting. Oxlint runs Stylistic for statement spacing. Oxlint requires exactly two blank lines after the final import, including before comments. Use one blank line:
 
 - Between top-level declarations and statements, including types, constants, functions, classes, and exports.
 - Before and after `useMemo`, `useCallback`, and `memo` declarations.
@@ -27,7 +27,7 @@ Keep render pure and props/state immutable. Derive values during render instead 
 
 Use `useMemo` and `useCallback` for measured work or required stable identity. Do not add them to every expression. Define components at module scope, use stable keys, and preserve accessible names, keyboard access, and focus behavior. Render untrusted source text as text; raw HTML is prohibited by lint.
 
-ESLint runs the recommended React Hooks checks plus component/hook factory validation. Oxlint explicitly checks JSX keys, duplicate props, unsafe HTML, children props, state mutation, and external-link protection. These checks supplement behavior review.
+Oxlint runs the recommended React Hooks checks plus component/hook factory validation through its JavaScript plugin host. It also runs type-aware correctness checks, including unhandled and misused promises. Oxlint explicitly checks JSX keys, duplicate props, unsafe HTML, children props, state mutation, and external-link protection. These checks supplement behavior review.
 
 ## Electron
 

@@ -179,7 +179,7 @@ function SessionContent({ connection, expired, setConnection, runConnectionTrans
           <ReadyApp
             key={connection.id}
             connection={connection}
-            update={librariesSelected}
+            update={(connection) => void librariesSelected(connection)}
             disconnected={() => setConnection(null)}
             playlistRecovery={playlistRecovery}
             roomSetupDraft={roomSetupDraft}

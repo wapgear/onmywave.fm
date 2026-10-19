@@ -516,7 +516,7 @@ export class JellyfinService {
         if (this.session !== s) throw new ServiceError('invalid', 'The library changed. Refresh your collection.');
         items = [...new Map(items.map((item) => [itemIdentity(item.Id), item])).values()];
         const total = items.length;
-        const compareText = (a: unknown, b: unknown) =>
+        const compareText = (a: string | undefined, b: string | undefined) =>
           String(a || '').localeCompare(String(b || ''), undefined, { numeric: true, sensitivity: 'base' });
         items.sort((a, b) => {
           let value = 0;
@@ -642,7 +642,7 @@ export class JellyfinService {
         add(songs.filter((item) => item.AlbumId && wanted.has(itemIdentity(item.AlbumId))));
       }
     }
-    const compareText = (a: unknown, b: unknown) =>
+    const compareText = (a: string | undefined, b: string | undefined) =>
       String(a || '').localeCompare(String(b || ''), undefined, { numeric: true, sensitivity: 'base' });
     const items = [...matches.values()].sort((a, b) => {
       let value = 0;

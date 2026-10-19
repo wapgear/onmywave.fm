@@ -58,7 +58,7 @@ The app lives in `desktop-light/` and uses Electron, Vite, React, and TanStack Q
 
 ## Verified
 
-Type checking, ESLint, and production builds pass. The full pnpm dependency audit reports zero vulnerabilities.
+Type checking, Oxlint, and production builds pass. The full pnpm dependency audit reports zero vulnerabilities.
 
 Manual checks against the configured Jellyfin server covered sign-in, library selection, artwork, browsing 475 songs and 424 albums, direct playback, seeking, navigation during playback, and paused restoration after restart. Playlist creation, adding selected songs, renaming while retaining entries, and editable detail views passed in the app. Focused service checks also covered duplicate skipping, entry movement and removal. Temporary verification playlists were cleaned up; the existing music playlist was preserved.
 

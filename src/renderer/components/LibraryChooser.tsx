@@ -91,7 +91,7 @@ export function LibraryChooser({
             disabled={disabled || selection.pending}
             aria-disabled={libraries.isFetching}
             aria-busy={libraries.isFetching}
-            onClick={retryLibraries}
+            onClick={() => void retryLibraries()}
           >
             {libraries.isFetching ? 'Checking libraries…' : 'Try again'}
           </button>

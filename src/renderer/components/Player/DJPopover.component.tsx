@@ -178,7 +178,7 @@ export function DJPopover({ openRoom, openSettings }: DJPopoverProps) {
     if (updating || (unconfirmed && (!('enabled' in patch) || patch.enabled !== false))) return;
     if ('enabled' in patch && patch.enabled && (!recoveryReady || !automation.room || playbackSetupMissing)) return;
     if ('roomId' in patch && !recoveryReady) return;
-    void automation.updatePlayback(patch);
+    automation.updatePlayback(patch);
   }
   function story(news: NewsBreak) {
     return (

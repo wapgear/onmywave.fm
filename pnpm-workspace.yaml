@@ -6,3 +6,11 @@ onlyBuiltDependencies:
 
 ignoredBuiltDependencies:
   - electron-winstaller
+
+# Oxlint hosts these plugins; they do not need the ESLint engine.
+autoInstallPeers: false
+peerDependencyRules:
+  ignoreMissing:
+    - eslint
+    # The supported target is macOS; Squirrel is a Windows packaging backend.
+    - electron-builder-squirrel-windows

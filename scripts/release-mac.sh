@@ -51,8 +51,8 @@ JS
 source="onmywave-${version}-source.tar.gz"
 COPYFILE_DISABLE=1 tar --exclude='.env*' -czf "release/$source" \
   src resources licenses scripts package.json pnpm-lock.yaml pnpm-workspace.yaml electron.vite.config.ts \
-  electron-builder.release.mjs tsconfig.json eslint.config.js .oxfmtrc.json \
-  .oxlintrc.json .oxlint-spacing.json .nvmrc AGENTS.md README.md LICENSE THIRD_PARTY_NOTICES.md
+  electron-builder.release.mjs tsconfig.json .oxlint-format.json .oxfmtrc.json \
+  .oxlintrc.json .nvmrc AGENTS.md README.md LICENSE THIRD_PARTY_NOTICES.md
 (
   cd release
   shasum -a 256 "onmywave-${version}-arm64.dmg" \

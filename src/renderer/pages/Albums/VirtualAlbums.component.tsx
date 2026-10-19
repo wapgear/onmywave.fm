@@ -48,7 +48,7 @@ export function VirtualAlbums({
   const getScrollElement = useCallback(() => grid.current?.closest<HTMLElement>('.main-content') ?? null, []);
 
   // TanStack Virtual mutates its instance; keep this component outside compiler memoization.
-  // eslint-disable-next-line react-hooks/incompatible-library
+  // oxlint-disable-next-line hooks/incompatible-library
   const virtualizer = useVirtualizer({
     count: Math.ceil(albums.length / layout.columns),
     getScrollElement,
