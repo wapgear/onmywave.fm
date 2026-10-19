@@ -27,7 +27,7 @@ import { ConnectionPage } from './pages/Connection/Connection.page';
 import { SongsPage, initialSongsView } from './pages/Songs/Songs.page';
 import { AlbumsPage, initialAlbumsView } from './pages/Albums/Albums.page';
 import { PlaylistsPage, usePlaylistRecovery } from './pages/Playlists/Playlists.page';
-import { StationsPage, type RoomDraft, type RoomSetupDraft } from './pages/Stations/Stations.page';
+import { StationsPage, type RoomSetupDraft } from './pages/Stations/Stations.page';
 import { SettingsPage, type SettingsSection } from './pages/Settings/Settings.page';
 import { NewsRecoveryNotice, NewsRecoveryProvider } from './NewsRecovery';
 type PageName = 'songs' | 'albums' | 'playlists' | 'stations' | 'settings';
@@ -152,12 +152,7 @@ export default function App() {
     </>
   );
 }
-type RadioDrafts = {
-  roomDraft: RoomDraft;
-  setRoomDraft: Dispatch<SetStateAction<RoomDraft>>;
-  roomSetupDraft: RoomSetupDraft;
-  setRoomSetupDraft: Dispatch<SetStateAction<RoomSetupDraft>>;
-};
+type RadioDrafts = { roomSetupDraft: RoomSetupDraft; setRoomSetupDraft: Dispatch<SetStateAction<RoomSetupDraft>> };
 function SessionContent({
   connection,
   expired,
@@ -170,7 +165,6 @@ function SessionContent({
   runConnectionTransition: ConnectionTransition;
 }) {
   const playlistRecovery = usePlaylistRecovery();
-  const [roomDraft, setRoomDraft] = useState<RoomDraft>(null);
   const [roomSetupDraft, setRoomSetupDraft] = useState<RoomSetupDraft>({ setup: null, moodDraft: null });
   const librariesSelected = (value: Connection) => setConnection(value, false);
   const content =
@@ -192,8 +186,6 @@ function SessionContent({
             update={librariesSelected}
             disconnected={() => setConnection(null)}
             playlistRecovery={playlistRecovery}
-            roomDraft={roomDraft}
-            setRoomDraft={setRoomDraft}
             roomSetupDraft={roomSetupDraft}
             setRoomSetupDraft={setRoomSetupDraft}
           />
@@ -211,8 +203,6 @@ function ReadyApp({
   update,
   disconnected,
   playlistRecovery,
-  roomDraft,
-  setRoomDraft,
   roomSetupDraft,
   setRoomSetupDraft,
 }: {
@@ -530,8 +520,6 @@ function ReadyApp({
           )}
           {page === 'stations' && (
             <StationsPage
-              draft={roomDraft}
-              setDraft={setRoomDraft}
               configDraft={roomSetupDraft}
               setConfigDraft={setRoomSetupDraft}
               configureSources={() => configureRoom('sources')}

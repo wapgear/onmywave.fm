@@ -1,5 +1,6 @@
 import type { DJ, ListeningRoom, NewsSource } from '../../../../shared/types';
 import { FilterSelect } from '../../../components/FilterSelect/FilterSelect.component';
+import { DJAvatar } from '../../../components/DJAvatar/DJAvatar.component';
 
 type Props = {
   sources: NewsSource[];
@@ -27,6 +28,7 @@ export function RoomSetup({
   configureSources,
   configureDJ,
 }: Props) {
+  const selectedDJ = djs.find((dj) => dj.id === room.djId);
   return (
     <section className="room-setup" aria-labelledby="news-setup-title">
       <div className="room-section-heading">
@@ -79,6 +81,7 @@ export function RoomSetup({
             choices={djs.map((value) => ({ value: value.id, label: value.name }))}
             onChange={(djId) => setSetup({ ...room, djId: djId || null })}
           />
+          {selectedDJ && <DJAvatar className="room-host-avatar" dj={selectedDJ} />}
           <button id="manage-room-djs" onClick={configureDJ}>
             Manage DJs
           </button>

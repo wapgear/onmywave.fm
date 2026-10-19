@@ -10,7 +10,7 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from 'react';
-import { ArrowDown, ArrowUp, Check, Clock3, Info, ListPlus, Play, Plus, Trash2 } from 'lucide-react';
+import { ArrowDown, ArrowUp, Check, Clock3, Info, ListPlus, Pause, Play, Plus, Trash2 } from 'lucide-react';
 import type { PlaylistEntry, Song } from '../../../shared/types';
 import { editablePlaylistEntryIds } from '../../../shared/playlist-entries';
 import { Artwork, TrackDuration } from '../Shared';
@@ -35,6 +35,8 @@ export type TrackTableProps = {
   add: (songs: Song[]) => void;
   details: (song: Song) => void;
   currentId?: string;
+  requestedPlaying: boolean;
+  togglePlayback: () => void;
   offset?: number;
   editable?: boolean;
   busy?: boolean;
@@ -51,6 +53,8 @@ export function TrackTable({
   add,
   details,
   currentId,
+  requestedPlaying,
+  togglePlayback,
   offset = 0,
   editable,
   busy,
@@ -161,6 +165,15 @@ export function TrackTable({
       anchor.current = row.key;
     }
   }
+  function activate(index: number) {
+    // Browser rows represent songs. The Queue drawer selects exact occurrences.
+    if (rows[index].song.id === currentId) togglePlayback();
+    else
+      play(
+        rows.map((item) => item.song),
+        index,
+      );
+  }
   function rowClick(event: MouseEvent<HTMLTableRowElement>, index: number) {
     if ((event.target as HTMLElement).closest('button,input,summary,[popover]')) return;
     event.currentTarget.focus({ preventScroll: true });
@@ -175,11 +188,7 @@ export function TrackTable({
       select(next);
     } else if (event.key === ' ' || event.key === 'Enter') {
       event.preventDefault();
-      if (event.key === 'Enter')
-        play(
-          rows.map((item) => item.song),
-          index,
-        );
+      if (event.key === 'Enter') activate(index);
       else choose(index, event.shiftKey, event.metaKey || event.ctrlKey);
     } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
       event.preventDefault();
@@ -220,6 +229,8 @@ export function TrackTable({
           <tbody>
             {indices.map((index, windowIndex) => {
               const row = rows[index];
+              const pausing = row.song.id === currentId && requestedPlaying;
+              const ActionIcon = pausing ? Pause : Play;
               return (
                 <Fragment key={row.key}>
                   {spacer(index - (indices[windowIndex - 1] ?? -1) - 1)}
@@ -234,11 +245,7 @@ export function TrackTable({
                     onClick={(event) => rowClick(event, index)}
                     onKeyDown={(event) => rowKey(event, index)}
                     onDoubleClick={(event) => {
-                      if (!(event.target as HTMLElement).closest('button,input,summary,[popover]'))
-                        play(
-                          rows.map((item) => item.song),
-                          index,
-                        );
+                      if (!(event.target as HTMLElement).closest('button,input,summary,[popover]')) activate(index);
                     }}
                   >
                     <td>
@@ -265,17 +272,12 @@ export function TrackTable({
                       <div className="song-title-cell">
                         <button
                           className="artwork-button"
-                          aria-label={`Play ${row.song.name}`}
-                          onClick={() =>
-                            play(
-                              rows.map((item) => item.song),
-                              index,
-                            )
-                          }
+                          aria-label={`${pausing ? 'Pause' : 'Play'} ${row.song.name}`}
+                          onClick={() => activate(index)}
                         >
                           <Artwork url={row.song.imageUrl} name={row.song.name} />
                           <span className="artwork-play">
-                            <Play size={14} fill="currentColor" />
+                            <ActionIcon size={14} fill="currentColor" />
                           </span>
                         </button>
                         <button className="song-name" onClick={() => details(row.song)}>
@@ -290,9 +292,14 @@ export function TrackTable({
                     </td>
                     <td className="row-actions">
                       <TrackMenu name={row.song.name}>
-                        <button onClick={() => play([row.song])}>
-                          <Play size={15} />
-                          Play song
+                        <button
+                          onClick={() => {
+                            if (row.song.id === currentId) togglePlayback();
+                            else play([row.song]);
+                          }}
+                        >
+                          <ActionIcon size={15} />
+                          {pausing ? 'Pause song' : 'Play song'}
                         </button>
                         <button onClick={() => queue([row.song])}>
                           <ListPlus size={15} />

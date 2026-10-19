@@ -1,12 +1,13 @@
 import { useRef, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Copy, Pencil, Plus, Trash2, UserRound } from 'lucide-react';
+import { Copy, Pencil, Plus, Trash2 } from 'lucide-react';
 import type { DJ } from '../../../shared/types';
 import { unwrap } from '../../api';
 import { confirmLocalState } from '../../local-state-cache';
 import { Dialog, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { DJEditor } from './components/DJEditor.component';
 import { DJPreview } from './components/DJPreview.component';
+import { DJAvatar } from '../../components/DJAvatar/DJAvatar.component';
 import { useRetryFocus } from '../../useRetryFocus';
 import './DJs.styles.css';
 const fresh = (): DJ => ({
@@ -19,6 +20,7 @@ const fresh = (): DJ => ({
   language: '',
   personality: '',
   speakingFrequency: 'never',
+  avatar: { kind: 'initials', color: 'neutral' },
 });
 export function DJsPage() {
   const client = useQueryClient();
@@ -91,9 +93,7 @@ export function DJsPage() {
         <div className="dj-list" ref={results}>
           {djs.map((dj) => (
             <article key={dj.id} className="dj-row">
-              <div className="dj-avatar">
-                <UserRound size={24} />
-              </div>
+              <DJAvatar dj={dj} />
               <div className="dj-summary">
                 <h2>{dj.name}</h2>
                 <p>{dj.description || 'Your saved DJ configuration'}</p>

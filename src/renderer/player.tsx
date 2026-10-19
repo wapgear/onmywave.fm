@@ -1,4 +1,14 @@
 import {
+  createShufflePlan,
+  refillShufflePlan,
+  nextShuffle,
+  previousShuffle,
+  selectShuffle,
+  removeShuffle,
+  isShuffleSnapshot,
+  type ShufflePlan,
+} from '../shared/shuffle-queue';
+import {
   createContext,
   useCallback,
   useContext,
@@ -44,7 +54,7 @@ type ScheduledNews = {
   cancelDelivery(): void;
 };
 
-type QueueEntry = { key: string; song: Song };
+type QueueEntry = { key: string; song: Song; historyIndex?: number };
 type LoadSettlement = { key?: string; generation: number; outcome: 'success' | 'failure' | 'superseded' };
 export type PlaybackRetrySettlement = {
   key?: string;
@@ -56,6 +66,9 @@ export type PlaybackRetrySettlement = {
 export type OptionsSaveSettlement = { generation: number; outcome: 'success' | 'failure' | 'superseded' };
 type PlayerState = {
   queue: QueueEntry[];
+  upcomingQueue: QueueEntry[];
+  shuffleHistoryQueue: QueueEntry[];
+  shuffleRemaining: number;
   current?: Song;
   currentKey?: string;
   playing: boolean;
@@ -74,7 +87,7 @@ type PlayerState = {
   retryOptions(): Promise<OptionsSaveSettlement>;
   getOptionsSaveGeneration(): number;
   play(songs: Song[], index?: number): void;
-  playQueueEntry(key: string): void;
+  playQueueEntry(key: string, historyIndex?: number): void;
   enqueue(songs: Song[]): void;
   musicCommandRevision: number;
   getMusicCommandRevision(): number;
@@ -186,11 +199,12 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const target = useRef(0);
   const playIntent = useRef(false);
   const preparing = useRef(false);
-  const shuffleHistory = useRef<{ keys: string[]; cursor: number; visited: Set<string> }>({
-    keys: [],
-    cursor: -1,
-    visited: new Set(),
-  });
+  const [shuffleView, setShuffleView] = useState<ShufflePlan>(() => createShufflePlan([], null));
+  const shufflePlan = useRef<ShufflePlan>(shuffleView);
+  const updateShufflePlan = useCallback((plan: ShufflePlan) => {
+    shufflePlan.current = plan;
+    setShuffleView(plan);
+  }, []);
   const requestPlayback = useCallback((value: boolean) => {
     playIntent.current = value;
     setRequestedPlaying(value);
@@ -373,43 +387,16 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       stopNews(afterNews);
       const state = live.current;
       if (!state.queue.length) return;
-      const history = shuffleHistory.current;
-      const key = state.queue[state.index]?.key;
-      const available = new Set(state.queue.map((item) => item.key));
-      history.visited = new Set([...history.visited].filter((item) => available.has(item)));
       let nextIndex: number | undefined;
       if (state.shuffle) {
-        if (key) {
-          history.visited.add(key);
-          if (history.keys[history.cursor] !== key) {
-            history.keys = [...history.keys.slice(0, history.cursor + 1), key].slice(-state.queue.length);
-            history.cursor = history.keys.length - 1;
-          }
-        }
-        while (history.cursor + 1 < history.keys.length && nextIndex === undefined) {
-          history.cursor += 1;
-          const candidateKey = history.keys[history.cursor];
-          const candidate = state.queue.findIndex((item) => item.key === candidateKey);
-          if (candidate >= 0) nextIndex = candidate;
-        }
-        if (nextIndex === undefined) {
-          let candidates = state.queue
-            .map((item, i) => ({ key: item.key, index: i }))
-            .filter((item) => !history.visited.has(item.key));
-          if (!candidates.length && state.repeat === 'all') {
-            history.visited = new Set(key ? [key] : []);
-            candidates = state.queue.map((item, i) => ({ key: item.key, index: i })).filter((item) => item.key !== key);
-            if (!candidates.length) nextIndex = state.index;
-          }
-          if (candidates.length) {
-            const chosen = candidates[Math.floor(Math.random() * candidates.length)];
-            nextIndex = chosen.index;
-            history.keys.push(chosen.key);
-            if (history.keys.length > state.queue.length) history.keys.shift();
-            history.cursor = history.keys.length - 1;
-            history.visited.add(chosen.key);
-          }
-        }
+        const advanced = nextShuffle(
+          shufflePlan.current,
+          state.queue.map((item) => item.key),
+          state.queue[state.index]?.key ?? null,
+          state.repeat === 'all',
+        );
+        updateShufflePlan(advanced.plan);
+        if (advanced.key) nextIndex = state.queue.findIndex((item) => item.key === advanced.key);
       } else if (state.index + 1 < state.queue.length) nextIndex = state.index + 1;
       else if (state.repeat === 'all') nextIndex = 0;
       if (nextIndex !== undefined) {
@@ -427,7 +414,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         setPlaying(false);
       }
     },
-    [stopNews, requestPlayback, changeTrack],
+    [stopNews, requestPlayback, changeTrack, updateShufflePlan],
   );
 
   const skipNext = useCallback(() => {
@@ -648,6 +635,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       setRestore(saved);
       try {
         const songs: Song[] = [];
+        const originalIndices: number[] = [];
         let restoredIndex = 0;
         for (let n = 0; n < saved.trackIds.length; n += 50) {
           const batch = await Promise.all(
@@ -672,6 +660,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
             if (song) {
               if (n + j < saved.currentIndex) restoredIndex++;
               songs.push(song);
+              originalIndices.push(n + j);
             }
           });
         }
@@ -683,10 +672,33 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         setPosition(target.current);
         ++generation.current;
         preparing.current = true;
-        shuffleHistory.current = { keys: [], cursor: -1, visited: new Set() };
         const restoredQueue = entries(songs);
         const restoredIndexInQueue = Math.min(restoredIndex, songs.length - 1);
         const restoredKey = restoredQueue[restoredIndexInQueue]?.key;
+        let plan: ShufflePlan;
+        if (
+          isShuffleSnapshot(saved.shufflePlan, saved.trackIds.length, saved.currentIndex) &&
+          originalIndices.includes(saved.currentIndex)
+        ) {
+          const snapshot = saved.shufflePlan;
+          const byOriginal = new Map(originalIndices.map((original, index) => [original, restoredQueue[index].key]));
+          const keys = (indices: number[]) =>
+            indices.flatMap((index) => (byOriginal.has(index) ? [byOriginal.get(index)!] : []));
+          plan = refillShufflePlan(
+            {
+              upcoming: keys(snapshot.upcoming),
+              history: keys(snapshot.history),
+              cursor: keys(snapshot.history.slice(0, snapshot.cursor + 1)).length - 1,
+              visited: new Set(keys(snapshot.visited)),
+            },
+            restoredQueue.map((item) => item.key),
+          );
+        } else
+          plan = createShufflePlan(
+            restoredQueue.map((item) => item.key),
+            restoredKey ?? null,
+          );
+        updateShufflePlan(plan);
         setQueue(restoredQueue);
         setIndex(restoredIndexInQueue);
         setRestore(null);
@@ -713,7 +725,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         if (resumeToken === resumeGeneration.current) setBusy(false);
       }
     },
-    [requestPlayback, stopNews],
+    [requestPlayback, stopNews, updateShufflePlan],
   );
 
   useEffect(() => {
@@ -829,6 +841,9 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       const state = live.current;
       const optionsGeneration = optionsSaveGeneration.current;
       const optionsPending = optionsInFlight.current?.generation === optionsGeneration;
+      const byKey = new Map(state.queue.map((item, index) => [item.key, index]));
+      const indices = (keys: Iterable<string>) => [...keys].flatMap((key) => (byKey.has(key) ? [byKey.get(key)!] : []));
+      const plan = shufflePlan.current;
       void window.wave
         .savePlayback({
           connectionId: connection.id,
@@ -838,6 +853,16 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
           volume: state.volume,
           shuffle: state.shuffle,
           repeat: state.repeat,
+          ...(state.shuffle
+            ? {
+                shufflePlan: {
+                  upcoming: indices(plan.upcoming),
+                  history: indices(plan.history),
+                  cursor: plan.cursor,
+                  visited: indices(plan.visited),
+                },
+              }
+            : {}),
         })
         .then(unwrap)
         .then(() => {
@@ -852,7 +877,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       clearInterval(timer);
       window.removeEventListener('beforeunload', save);
     };
-  }, [connection, readyConnection, queue, index, volume, shuffle, repeat, optionsRevision]);
+  }, [connection, readyConnection, queue, index, volume, shuffle, repeat, optionsRevision, shuffleView]);
 
   const seek = useCallback(
     (seconds: number) => {
@@ -1077,23 +1102,20 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       return;
     }
     if (state.shuffle) {
-      const history = shuffleHistory.current;
-      while (history.cursor > 0) {
-        history.cursor -= 1;
-        const previousKey = history.keys[history.cursor];
-        const previousIndex = state.queue.findIndex((item) => item.key === previousKey);
-        if (previousIndex >= 0) {
-          stopNews();
-          changeTrack(previousIndex);
-          return;
-        }
+      const previous = previousShuffle(shufflePlan.current);
+      const previousIndex = state.queue.findIndex((item) => item.key === previous.key);
+      if (previousIndex >= 0) {
+        updateShufflePlan(previous.plan);
+        stopNews();
+        changeTrack(previousIndex);
+        return;
       }
       seek(0);
     } else if (state.index > 0) {
       stopNews();
       changeTrack(state.index - 1);
     } else seek(0);
-  }, [seek, stopNews, changeTrack, musicCommand]);
+  }, [seek, stopNews, changeTrack, musicCommand, updateShufflePlan]);
 
   useEffect(() => {
     const handleKey = (event: KeyboardEvent) => {
@@ -1180,8 +1202,58 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     };
   }, [current, duration, playing, skipNext, previous, seek, toggle, requestPlayback, musicCommand]);
 
-  const play = (songs: Song[], start = 0) => {
+  const playQueueEntry = (key: string, historyIndex?: number) => {
+    const state = live.current;
+    const nextIndex = state.queue.findIndex((item) => item.key === key);
+    if (nextIndex < 0) return;
+    musicCommand();
+    stopNews();
+    requestPlayback(true);
+    if (state.shuffle) {
+      const plan = shufflePlan.current;
+      const selected =
+        historyIndex !== undefined && plan.history[historyIndex] === key
+          ? { ...plan, cursor: historyIndex }
+          : selectShuffle(
+              plan,
+              state.queue.map((item) => item.key),
+              key,
+            );
+      updateShufflePlan(
+        refillShufflePlan(
+          selected,
+          state.queue.map((item) => item.key),
+        ),
+      );
+    }
+    changeTrack(nextIndex);
+  };
+  const play = (songs: Song[], start?: number) => {
     if (!songs.length) return;
+    const selectedIndex = Math.min(Math.max(0, start ?? 0), songs.length - 1);
+    const state = live.current;
+    if (state.shuffle && (start !== undefined || songs.length === 1)) {
+      const selectedId = songs[selectedIndex].id;
+      const plan = shufflePlan.current;
+      const byKey = new Map(state.queue.map((item) => [item.key, item]));
+      const forwardIndex = plan.history.findIndex(
+        (key, index) => index > plan.cursor && byKey.get(key)?.song.id === selectedId,
+      );
+      const selected =
+        state.queue[state.index]?.song.id === selectedId
+          ? state.queue[state.index]
+          : forwardIndex >= 0
+            ? byKey.get(plan.history[forwardIndex])
+            : (plan.upcoming.map((key) => byKey.get(key)).find((item) => item?.song.id === selectedId) ??
+              state.queue.find((item) => item.song.id === selectedId));
+      if (selected) {
+        playQueueEntry(
+          selected.key,
+          forwardIndex >= 0 && plan.history[forwardIndex] === selected.key ? forwardIndex : undefined,
+        );
+        return;
+      }
+    }
     musicCommand();
     stopNews();
     ++resumeGeneration.current;
@@ -1192,9 +1264,16 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     ++generation.current;
     preparing.current = true;
     audio.current?.pause();
-    shuffleHistory.current = { keys: [], cursor: -1, visited: new Set() };
-    setQueue(entries(songs));
-    setIndex(Math.min(Math.max(0, start), songs.length - 1));
+    const nextQueue = entries(songs);
+    const nextIndex = selectedIndex;
+    updateShufflePlan(
+      createShufflePlan(
+        nextQueue.map((item) => item.key),
+        nextQueue[nextIndex]?.key ?? null,
+      ),
+    );
+    setQueue(nextQueue);
+    setIndex(nextIndex);
     setReadyConnection(connection?.id ?? null);
   };
   const scheduleNews = async (news: NewsBreak, duckVolume = 0.05, claimId?: string) => {
@@ -1382,10 +1461,33 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     }
   };
 
+  const byQueueKey = new Map(queue.map((item) => [item.key, item]));
+  const planned = shuffleView;
+  const forward = planned.history.slice(planned.cursor + 1);
+  const forwardKeys = new Set(forward);
+  const plannedKeys = new Set(planned.upcoming);
+  const upcomingKeys = [...forward, ...planned.upcoming.filter((key) => !forwardKeys.has(key))];
+  const upcomingQueue = upcomingKeys
+    .slice(0, 50)
+    .flatMap((key, index) =>
+      byQueueKey.has(key)
+        ? [{ ...byQueueKey.get(key)!, ...(index < forward.length ? { historyIndex: planned.cursor + 1 + index } : {}) }]
+        : [],
+    );
+  const shuffleHistoryQueue = planned.history
+    .slice(0, planned.cursor)
+    .flatMap((key, historyIndex) => (byQueueKey.has(key) ? [{ ...byQueueKey.get(key)!, historyIndex }] : []));
+  const shuffleRemaining =
+    upcomingKeys.length +
+    queue.filter((item) => !planned.visited.has(item.key) && !plannedKeys.has(item.key) && !forwardKeys.has(item.key))
+      .length;
   return (
     <PlayerContext.Provider
       value={{
         queue,
+        upcomingQueue,
+        shuffleHistoryQueue,
+        shuffleRemaining,
         current,
         currentKey,
         playing,
@@ -1423,16 +1525,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
           if (playIntent.current) toggle('preview');
         },
         play,
-        playQueueEntry: (key) => {
-          const state = live.current;
-          const nextIndex = state.queue.findIndex((item) => item.key === key);
-          if (nextIndex < 0) return;
-          musicCommand();
-          stopNews();
-          requestPlayback(true);
-          shuffleHistory.current = { keys: [key], cursor: 0, visited: new Set([key]) };
-          changeTrack(nextIndex);
-        },
+        playQueueEntry,
         enqueue: (songs) => {
           if (!songs.length) return;
           // Queueing replaces an in-flight saved-session restore. Settle its Retry
@@ -1442,7 +1535,18 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
           ++resumeGeneration.current;
           setRestore(null);
           if (!live.current.current) setBusy(false);
-          setQueue((items) => [...items, ...entries(songs)]);
+          const nextQueue = [...live.current.queue, ...entries(songs)];
+          if (live.current.shuffle) {
+            const keys = nextQueue.map((item) => item.key);
+            const currentKey = nextQueue[live.current.index]?.key ?? null;
+            updateShufflePlan(
+              live.current.queue.length
+                ? refillShufflePlan(shufflePlan.current, keys)
+                : createShufflePlan(keys, currentKey),
+            );
+          }
+          live.current = { ...live.current, queue: nextQueue, current: nextQueue[live.current.index]?.song };
+          setQueue(nextQueue);
           setReadyConnection(connection?.id ?? null);
         },
         toggle,
@@ -1455,7 +1559,13 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
           setOptionsRevision((revision) => revision + 1);
           preferenceEdits.current.shuffle = true;
           const key = live.current.queue[live.current.index]?.key;
-          shuffleHistory.current = { keys: key ? [key] : [], cursor: key ? 0 : -1, visited: new Set(key ? [key] : []) };
+          if (!live.current.shuffle)
+            updateShufflePlan(
+              createShufflePlan(
+                live.current.queue.map((item) => item.key),
+                key ?? null,
+              ),
+            );
           setShuffle((value) => !value);
         },
         cycleRepeat: () => {
@@ -1488,14 +1598,38 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
             setPlaying(false);
             setPosition(0);
           }
-          const nextIndex = removed < index ? index - 1 : Math.min(index, Math.max(0, remaining.length - 1));
-          if (key === currentKey && remaining.length) {
-            const history = shuffleHistory.current;
-            const replacement = remaining[nextIndex].key;
-            history.visited.add(replacement);
-            history.keys = [...history.keys.slice(0, history.cursor + 1), replacement].slice(-remaining.length);
-            history.cursor = history.keys.length - 1;
+          let nextIndex = removed < index ? index - 1 : Math.min(index, Math.max(0, remaining.length - 1));
+          let plan = shufflePlan.current;
+          if (key === currentKey && shuffle && remaining.length) {
+            const keys = remaining.map((item) => item.key);
+            const advanced = nextShuffle(removeShuffle(plan, keys, key), keys, null, repeat === 'all');
+            plan = advanced.plan;
+            if (advanced.key && advanced.key !== key)
+              nextIndex = remaining.findIndex((item) => item.key === advanced.key);
+            else {
+              requestPlayback(false);
+              nextIndex = Math.min(nextIndex, remaining.length - 1);
+            }
           }
+          plan = removeShuffle(
+            plan,
+            remaining.map((item) => item.key),
+            key,
+          );
+          if (shuffle && remaining.length) {
+            const replacement = remaining[nextIndex].key;
+            if (plan.history[plan.cursor] !== replacement)
+              plan = selectShuffle(
+                plan,
+                remaining.map((item) => item.key),
+                replacement,
+              );
+            plan = refillShufflePlan(
+              plan,
+              remaining.map((item) => item.key),
+            );
+          }
+          updateShufflePlan(plan);
           live.current = { ...live.current, queue: remaining, index: nextIndex, current: remaining[nextIndex]?.song };
           setQueue(remaining);
           setIndex(nextIndex);

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { useIsMutating, useMutation } from '@tanstack/react-query';
-import { Check, ExternalLink, Headphones, LoaderCircle, Pause, Play, Radio, Square } from 'lucide-react';
+import { useMutation } from '@tanstack/react-query';
+import { ExternalLink, Headphones, LoaderCircle, Pause, Play, Square } from 'lucide-react';
 import type { PreparedNewsLibrary, PreparedNewsTake } from '../../../../shared/types';
 import { unwrap } from '../../../api';
 import { freshAudioUrl } from '../../../audio';
@@ -17,32 +17,18 @@ const savedDate = (value: string) =>
 export function PreparedTakes({
   library,
   refresh,
-  loadDraft,
   active = true,
 }: {
   library: PreparedNewsLibrary;
   refresh: () => Promise<void>;
-  loadDraft: (take: PreparedNewsTake) => void;
   active?: boolean;
 }) {
   const player = usePlayer();
-  const section = useRef<HTMLElement>(null);
-  const selectionInFlight = useRef(false);
-  const schedulingInFlight = useRef(false);
-  const selectionPending = useIsMutating({ mutationKey: ['preparedTakeSelection'] }) > 0;
-  const schedulingPending = useIsMutating({ mutationKey: ['preparedTakeSchedule'] }) > 0;
   const [stopFocusRun, setStopFocusRun] = useState<{
     element: HTMLButtonElement;
     runId?: number;
     stopped?: boolean;
   } | null>(null);
-  const [focusedControl, setFocusedControl] = useState<string | null>(null);
-  const ownsFocus = (key: string) => active && focusedControl === key;
-  const focusProps = (key: string) => ({
-    'data-prepared-action': key,
-    onFocus: () => setFocusedControl(key),
-    onBlur: () => setFocusedControl((current) => (current === key ? null : current)),
-  });
   const breakStatus = {
     idle: '',
     waiting: 'DJ break scheduled for the end of this song.',
@@ -58,7 +44,6 @@ export function PreparedTakes({
   const [audition, setAudition] = useState<Audition | null>(null);
   const [durations, setDurations] = useState<Record<string, number>>({});
   const [audioError, setAudioError] = useState<string | null>(null);
-  const selected = library.takes.find((take) => take.id === library.selectedTakeId);
   const takes = [...library.takes].sort(
     (a, b) => (Date.parse(b.createdAt) || 0) - (Date.parse(a.createdAt) || 0) || b.id.localeCompare(a.id),
   );
@@ -109,77 +94,7 @@ export function PreparedTakes({
       if (token === operation.current) setAudition(null);
     });
   }, [player.currentKey, player.musicCommandRevision, dispose]);
-  const select = useMutation({
-    mutationKey: ['preparedTakeSelection'],
-    onMutate: () => stop(),
-    mutationFn: async (id: string | null) => unwrap(await window.wave.selectNewsTake(id)),
-    onSettled: async () => {
-      try {
-        await refresh();
-      } finally {
-        selectionInFlight.current = false;
-      }
-    },
-  });
   const source = useMutation({ mutationFn: async (url: string) => unwrap(await window.wave.openSource(url)) });
-  const schedule = useMutation({
-    mutationKey: ['preparedTakeSchedule'],
-    mutationFn: async (take: PreparedNewsTake) => {
-      stop();
-      await player.scheduleNews(take, take.renderingDJ.news?.duckVolume ?? 0.05);
-    },
-    onSettled: () => {
-      schedulingInFlight.current = false;
-    },
-  });
-  function chooseTake(id: string | null) {
-    if (
-      selectionInFlight.current ||
-      selectionPending ||
-      schedulingInFlight.current ||
-      schedulingPending ||
-      id === library.selectedTakeId ||
-      (id !== null && !library.takes.some((take) => take.id === id && take.available))
-    )
-      return;
-    selectionInFlight.current = true;
-    select.mutate(id);
-  }
-  function scheduleTake() {
-    if (
-      schedulingInFlight.current ||
-      schedulingPending ||
-      selectionInFlight.current ||
-      selectionPending ||
-      !selected?.available ||
-      !player.current ||
-      (player.activeNewsId === selected.id && player.newsPhase !== 'idle')
-    )
-      return;
-    schedulingInFlight.current = true;
-    schedule.reset();
-    schedule.mutate(selected);
-  }
-  useLayoutEffect(() => {
-    const control = document.activeElement;
-    if (
-      !(control instanceof HTMLElement) ||
-      !section.current?.contains(control) ||
-      !control.checkVisibility() ||
-      document.visibilityState !== 'visible' ||
-      !document.hasFocus()
-    )
-      return;
-    const key = control.dataset.preparedAction;
-    if (
-      (schedule.error && key === 'schedule') ||
-      (select.error && key === (select.variables === null ? 'clear' : `select:${select.variables}`))
-    ) {
-      control
-        .closest('.prepared-take-choice, .prepared-selection-feedback')
-        ?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-    }
-  }, [select.error, select.variables, schedule.error]);
   async function listen(take: PreparedNewsTake) {
     setAudioError(null);
     if (audition?.id === take.id && audio.current) {
@@ -270,83 +185,15 @@ export function PreparedTakes({
   const ownsStopFocus = active && stopFocusRun !== null && document.activeElement === stopFocusRun.element;
   const staleStopFocus = ownsStopFocus && savedBreakActive && stopFocusRun.runId !== player.newsRunId;
   const canStopBreak = savedBreakActive && !staleStopFocus && player.newsRunId !== undefined;
-  const selectedActive = !!selected && player.activeNewsId === selected.id && player.newsPhase !== 'idle';
   return (
-    <section ref={section} className="prepared-takes" aria-labelledby="prepared-takes-title">
+    <section className="prepared-takes" aria-labelledby="prepared-takes-title">
       <header className="prepared-takes-heading">
         <div>
-          <h2 id="prepared-takes-title">Saved audio takes</h2>
-          <p>Listen or choose a take for a DJ break.</p>
+          <h2 id="prepared-takes-title">Saved audio</h2>
+          <p>Listen to saved recordings and review their scripts, settings, and sources.</p>
         </div>
         <button onClick={refresh}>Refresh</button>
       </header>
-      {takes.length > 0 && (
-        <div className="prepared-selection">
-          <div>
-            <span className="prepared-eyebrow">Selected take</span>
-            <strong role="status">
-              {selected
-                ? `${selected.renderingDJ.name} · ${savedDate(selected.createdAt)}`
-                : 'Choose a saved take below'}
-            </strong>
-            {selected && (
-              <p>
-                {provider(selected)} · {selected.voice}
-                {!selected.available ? ' · Audio unavailable' : ''}
-              </p>
-            )}
-          </div>
-          <div className="prepared-selection-feedback">
-            <div className="prepared-selection-actions">
-              <button
-                {...focusProps('schedule')}
-                className="primary"
-                disabled={
-                  (!selected?.available ||
-                    !player.current ||
-                    schedulingPending ||
-                    selectionPending ||
-                    selectedActive) &&
-                  !ownsFocus('schedule')
-                }
-                aria-disabled={
-                  !selected?.available ||
-                  !player.current ||
-                  schedulingPending ||
-                  selectionPending ||
-                  selectedActive ||
-                  undefined
-                }
-                aria-busy={schedulingPending || undefined}
-                onClick={scheduleTake}
-              >
-                <Radio size={15} />
-                {schedulingPending ? 'Scheduling…' : selectedActive ? 'Break active' : 'Schedule DJ break'}
-              </button>
-              <button
-                {...focusProps('clear')}
-                disabled={(!selected || selectionPending || schedulingPending) && !ownsFocus('clear')}
-                aria-disabled={!selected || selectionPending || schedulingPending || undefined}
-                aria-busy={(select.isPending && select.variables === null) || undefined}
-                onClick={() => chooseTake(null)}
-              >
-                {select.isPending && select.variables === null
-                  ? 'Clearing…'
-                  : selected
-                    ? 'Clear selection'
-                    : 'No take selected'}
-              </button>
-            </div>
-            <ErrorNotice error={select.variables === null ? select.error : null} />
-            <ErrorNotice error={schedule.error} />
-          </div>
-        </div>
-      )}
-      {selected && !player.current && (
-        <p className="prepared-help">
-          Start a song before scheduling a break. Preparing and auditioning saved audio do not require a song.
-        </p>
-      )}
       {(savedBreakActive || ownsStopFocus) && (
         <div className="prepared-on-air">
           <span role="status">
@@ -359,15 +206,8 @@ export function PreparedTakes({
                   : 'DJ break ended.'}
           </span>
           <button
-            {...focusProps('stop')}
-            onFocus={(event) => {
-              setFocusedControl('stop');
-              setStopFocusRun({ element: event.currentTarget, runId: player.newsRunId });
-            }}
-            onBlur={() => {
-              setFocusedControl(null);
-              setStopFocusRun(null);
-            }}
+            onFocus={(event) => setStopFocusRun({ element: event.currentTarget, runId: player.newsRunId })}
+            onBlur={() => setStopFocusRun(null)}
             aria-disabled={!canStopBreak || undefined}
             onClick={() => {
               const runId = ownsStopFocus ? stopFocusRun.runId : player.newsRunId;
@@ -387,38 +227,25 @@ export function PreparedTakes({
           </button>
         </div>
       )}
-      {selected && (
-        <p className="prepared-help">
-          The break waits for the end of this song. Choose its placement and timing in Settings → General → DJ
-          transitions. Pause keeps your place. Seeking follows the Keep the DJ setting; changing songs cancels this
-          placement.
-        </p>
-      )}
-      {selectionPending && (
-        <p className="prepared-help" role="status">
-          Updating selected take…
-        </p>
-      )}
       <ErrorNotice error={audioError ? new Error(audioError) : null} />
       {!takes.length && (
         <div className="prepared-empty">
           <Headphones size={28} />
           <h3>No saved audio yet</h3>
-          <p>Prepare a story to save your first recording.</p>
+          <p>Automatically prepared recordings will appear here.</p>
         </div>
       )}
       <ol className="prepared-take-list">
         {takes.map((take) => {
           const current = audition?.id === take.id ? audition : null;
           const measured = durations[take.id];
-          const chosen = selected?.id === take.id;
           return (
             <li
               key={take.id}
               id={`prepared-take-${take.id}`}
               tabIndex={-1}
               aria-label={`Saved take from ${savedDate(take.createdAt)}`}
-              className={`prepared-take ${chosen ? 'is-selected' : ''}`}
+              className="prepared-take"
             >
               <div className="prepared-take-heading">
                 <div>
@@ -427,12 +254,6 @@ export function PreparedTakes({
                     <time dateTime={take.createdAt}>{savedDate(take.createdAt)}</time> · {provider(take)} · {take.voice}
                   </p>
                 </div>
-                {chosen && (
-                  <span className="prepared-selected">
-                    <Check size={13} />
-                    Selected
-                  </span>
-                )}
               </div>
               <div className="prepared-audition">
                 <button
@@ -473,37 +294,16 @@ export function PreparedTakes({
                   {current ? `${duration(current.position)} / ` : ''}
                   {measured ? duration(measured) : 'Duration checked on listen'}
                 </span>
-                <div className="prepared-take-choice">
-                  <button
-                    {...focusProps(`select:${take.id}`)}
-                    className="prepared-use-take"
-                    disabled={
-                      (!take.available || selectionPending || schedulingPending || chosen) &&
-                      !ownsFocus(`select:${take.id}`)
-                    }
-                    aria-disabled={!take.available || selectionPending || schedulingPending || chosen || undefined}
-                    aria-busy={(select.isPending && select.variables === take.id) || undefined}
-                    onClick={() => chooseTake(take.id)}
-                  >
-                    {chosen
-                      ? 'Selected'
-                      : select.isPending && select.variables === take.id
-                        ? 'Selecting…'
-                        : 'Use this take'}
-                  </button>
-                  <ErrorNotice error={select.variables === take.id ? select.error : null} />
-                </div>
               </div>
               {!take.available && (
                 <p className="prepared-missing">
-                  The saved audio file is missing or incomplete. Its script and settings are kept. Load the script to
-                  prepare another take when you choose.
+                  The saved audio file is missing or incomplete. Its script, settings, and source details remain in the
+                  archive.
                 </p>
               )}
               {take.deliveryState?.status === 'started' && player.activeNewsId !== take.id && (
                 <p className="prepared-help">
-                  This recording may already have played. It stays out of automatic breaks. You can still listen or
-                  schedule it yourself.
+                  This recording may already have played and stays out of automatic breaks. You can still listen here.
                 </p>
               )}
               <p className="prepared-script">{take.script}</p>
@@ -584,10 +384,7 @@ export function PreparedTakes({
                   </ul>
                 )}
               </details>
-              <div className="prepared-take-footer">
-                <button onClick={() => loadDraft(take)}>Load script into draft</button>
-                <span>AI-generated voice · Saved locally</span>
-              </div>
+              <p className="prepared-take-footer">Saved locally</p>
             </li>
           );
         })}

@@ -740,6 +740,8 @@ function PlaylistDetail({
               add={add}
               details={details}
               currentId={player.current?.id}
+              requestedPlaying={player.requestedPlaying}
+              togglePlayback={player.toggle}
               editable={data.canEdit !== false}
               busy={editBlocked}
               remove={(entryId, source) => void removeEntry(entryId, source)}

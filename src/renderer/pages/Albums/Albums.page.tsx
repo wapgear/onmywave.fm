@@ -213,6 +213,8 @@ function AlbumDetail({
           add={add}
           details={details}
           currentId={player.current?.id}
+          requestedPlaying={player.requestedPlaying}
+          togglePlayback={player.toggle}
         />
       ) : (
         !tracks.error && <Empty title="No tracks available">This album has no accessible music tracks.</Empty>

@@ -71,5 +71,18 @@
     ".oxlintrc.json": "36a5dc6a8c9a633aec6b7306a4326c3d1860be02e225f7a3f662b7d2ebd44b13",
     ".oxfmtrc.json": "a9da32deb460e522eca1a821c4c19d2b6c38b693f1e7d84fe02c50eb183e0104",
     ".github/workflows/quality.yml": "8f5fac04cef80895cba36d1df50f34f3c9050a33cc6c6e6770fda104f33497aa"
+  },
+  "integrationReview": {
+    "baseRevision": "e641da84223b19f873f03301ab997e14ec2a22ae",
+    "approach": "Restore the merged feature source, reapply the hidden spacer attribute and URL-parameter snapshot lint explanation, then format it. This avoids carrying obsolete manual controls through conflict resolution.",
+    "combinedFeatureRecord": "2026-10-19-merged-feature-review.json",
+    "compiledEquivalence": {
+      "base": "e641da84223b19f873f03301ab997e14ec2a22ae",
+      "checked": 77,
+      "differences": [],
+      "normalization": "Compile JS/TS with stable identifiers, coalesce adjacent string literals in React children arrays, remove comments. Allow only the intentional aria-hidden spacer attribute."
+    },
+    "checks": "Clean CI-style npm ci, format/lint/build including TypeScript, and production audit passed. Initial format of the long voice method chain required a second pass; final format check is clean.",
+    "note": "Original source hashes above describe the initial tooling baseline; integration code comparison and merged-feature record describe the reviewed combined app."
   }
 }

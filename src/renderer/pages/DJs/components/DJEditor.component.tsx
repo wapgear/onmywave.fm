@@ -8,6 +8,8 @@ import { Dialog, ErrorNotice } from '../../../components/Shared';
 import { ConfigurationTabs } from '../../../components/ConfigurationTabs/ConfigurationTabs.component';
 import { djPresets } from './DJEditor.presets';
 import { VoicePreview } from './VoicePreview.component';
+import { DJAvatarPicker } from './DJAvatarPicker.component';
+import { resolveDJAvatar } from '../../../../shared/dj-avatar';
 import './DJEditor.styles.css';
 
 export const defaultNews: NewsSettings = {
@@ -37,6 +39,7 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
   const inFlight = useRef(false);
   const [draft, setDraft] = useState<DJ>({
     ...value,
+    avatar: resolveDJAvatar(value.avatar),
     news: {
       ...defaultNews,
       ...value.news,
@@ -134,6 +137,10 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
   function updateNews(patch: Partial<NewsSettings>) {
     save.reset();
     setDraft((old) => ({ ...old, news: { ...old.news!, ...patch } }));
+  }
+  function updateAvatar(avatar: DJ['avatar']) {
+    save.reset();
+    setDraft((old) => ({ ...old, avatar }));
   }
   const field = (key: TextField, label: string, placeholder = '', multiline = false) => (
     <label>
@@ -357,6 +364,7 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
           )}
 
           {field('name', 'Name', 'Evening companion')}
+          <DJAvatarPicker dj={draft} onChange={updateAvatar} />
           <div
             role="tabpanel"
             id={`${modeId}-panel-advanced`}
@@ -462,9 +470,7 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
           </div>
         </fieldset>
         <ErrorNotice error={save.error} />
-        <p className="dj-profile-save-note">
-          Saving a DJ does not generate audio, start playback, or change a selected take.
-        </p>
+        <p className="dj-profile-save-note">Saving a DJ does not generate audio or start playback.</p>
         <div className="modal-actions">
           <button type="button" aria-disabled={save.isPending || undefined} onClick={closeEditor}>
             Cancel

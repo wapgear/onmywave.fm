@@ -1,18 +1,10 @@
-import { useEffect, useLayoutEffect, useRef, useState, type Dispatch, type SetStateAction } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { useIsMutating, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Headphones, LoaderCircle, Newspaper } from 'lucide-react';
-import type {
-  ApiError,
-  ListeningRoom,
-  NewsProgress,
-  PreparedNewsRequest,
-  PreparedNewsTake,
-} from '../../../shared/types';
-import { WaveError, unwrap } from '../../api';
+import { LoaderCircle } from 'lucide-react';
+import type { ListeningRoom, PreparedNewsRequest } from '../../../shared/types';
+import { unwrap } from '../../api';
 import { confirmLocalState } from '../../local-state-cache';
 import { Dialog, ErrorNotice, PageHeading, errorMessage } from '../../components/Shared';
-import { FilterSelect } from '../../components/FilterSelect/FilterSelect.component';
-import { InfoHelp } from '../../components/InfoHelp/InfoHelp.component';
 import { ConfigurationTabs } from '../../components/ConfigurationTabs/ConfigurationTabs.component';
 import { RoomSetup } from './components/RoomSetup.component';
 import { PreparedTakes } from './components/PreparedTakes.component';
@@ -24,19 +16,8 @@ import type { WorkflowDraft } from '../../../shared/workflow';
 import { NewsRecoveryPanel, useNewsRecovery } from '../../NewsRecovery';
 import './Stations.styles.css';
 
-export type RoomDraft = { scriptId: string; script: string } | null;
-type AudioCompletion = {
-  requestId: string;
-  takeId: string;
-  reused: boolean;
-  profileName?: string;
-  reviewError?: string;
-  reconciled?: boolean;
-};
 export type RoomSetupDraft = {
-  audioCompletion?: AudioCompletion;
-  manualCompletion?: { request: Preparation; profileName?: string };
-  preparationCancellation?: { requestId: string; acknowledged: boolean; beforeDispatch: boolean };
+  preparationCancellation?: { requestId: string; acknowledged: boolean };
   setup: ListeningRoom | null;
   moodDraft: string | null;
   newsInterests?: string;
@@ -45,32 +26,8 @@ export type RoomSetupDraft = {
   stopErrorOrigin?: 'settings' | 'progress';
   operationError?: string;
   operationErrorTarget?: 'setup' | 'resume' | 'availability';
-  manualPreparation?: ManualPreparation;
   preparationCancelError?: string;
   tab?: string;
-};
-type ScriptReplacement = { kind: 'load'; draft: NonNullable<RoomDraft>; reveal: boolean } | { kind: 'prepare' };
-type PreparationInput =
-  | { kind: 'script'; input: { profileId?: string; requestId: string; djId: string; sourceIds: string[] } }
-  | {
-      kind: 'audio';
-      input: {
-        profileId?: string;
-        requestId: string;
-        scriptId: string;
-        script: string;
-        djId: string;
-        newVariation?: boolean;
-      };
-    };
-type Preparation = PreparationInput & { reconcile?: boolean };
-type PreparationOperation = { request: Preparation; control: { controller: AbortController; dispatched: boolean } };
-type ManualPreparation = PreparationOperation & {
-  pending: boolean;
-  progress?: NewsProgress;
-  error?: ApiError;
-  cancelRequested?: boolean;
-  profileName?: string;
 };
 function preparationOrigin(request: PreparedNewsRequest) {
   const origin = request.origin;
@@ -78,18 +35,14 @@ function preparationOrigin(request: PreparedNewsRequest) {
   return `${origin.kind === 'automatic' ? 'Automatic' : 'Manual'} · ${origin.profileName ?? 'Original profile unavailable'} · ${new Date(origin.startedAt).toLocaleString()}`;
 }
 export function StationsPage({
-  draft,
-  setDraft,
   configDraft,
   setConfigDraft,
   configureSources,
   configureDJ,
   configureSettings,
 }: {
-  draft: RoomDraft;
-  setDraft: Dispatch<SetStateAction<RoomDraft>>;
   configDraft: RoomSetupDraft;
-  setConfigDraft: Dispatch<SetStateAction<RoomSetupDraft>>;
+  setConfigDraft: React.Dispatch<React.SetStateAction<RoomSetupDraft>>;
   configureSources: () => void;
   configureDJ: () => void;
   configureSettings: () => void;
@@ -98,19 +51,12 @@ export function StationsPage({
   const newsRecoveryReady = newsRecovery.status.phase === 'ready';
   const client = useQueryClient();
   const configurationPending = useIsMutating({ mutationKey: ['roomConfiguration'] }) > 0;
-  const preparationInFlight = useRef(false);
   const cancelInFlight = useRef(false);
-  const [manualToolsOpen, setManualToolsOpen] = useState(false);
-  const [manualFocus, setManualFocus] = useState<{
-    key: 'text' | 'audio' | 'variation' | 'reconcile';
-    element: HTMLButtonElement;
-  } | null>(null);
   const [cancelFocus, setCancelFocus] = useState<{
     element: HTMLButtonElement;
     requestId: string;
     kind: 'cancel' | 'retry';
   } | null>(null);
-  const preparationPending = useIsMutating({ mutationKey: ['manualPreparation'] }) > 0;
   const saveSubmission = useRef(false);
   const workflowActionInFlight = useRef(false);
   const availabilityInput = useRef<HTMLInputElement>(null);
@@ -149,7 +95,6 @@ export function StationsPage({
   const { setup, moodDraft } = configDraft;
   const setSetup = (setup: ListeningRoom | null) => setConfigDraft((current) => ({ ...current, setup }));
   const setMoodDraft = (moodDraft: string | null) => setConfigDraft((current) => ({ ...current, moodDraft }));
-  const manualTools = useRef<HTMLDetailsElement>(null);
   const requestHistory = useRef<HTMLDetailsElement>(null);
   const tab = ['news', 'host', 'prepare', 'settings'].includes(configDraft.tab ?? '')
     ? 'settings'
@@ -178,17 +123,6 @@ export function StationsPage({
     target: () => document.getElementById('room-panel-saved'),
     canFocusSuccess: () => newsRecoveryReady && tab === 'saved' && library.isSuccess && !library.isFetching,
   });
-  const aiRetryFocus = useRetryFocus({
-    ownerKey: `room:ai-status:${tab}`,
-    target: () => manualTools.current?.querySelector('summary') ?? null,
-    canFocusSuccess: () => newsRecoveryReady && tab === 'settings' && aiStatus.isSuccess && !aiStatus.isFetching,
-  });
-  const elevenRetryFocus = useRetryFocus({
-    ownerKey: `room:voice-status:${tab}`,
-    target: () => manualTools.current?.querySelector('summary') ?? null,
-    canFocusSuccess: () =>
-      newsRecoveryReady && tab === 'settings' && elevenStatus.isSuccess && !elevenStatus.isFetching,
-  });
   const aiStatus = useQuery({
     queryKey: ['aiStatus'],
     meta: { aiOperation: true },
@@ -201,11 +135,6 @@ export function StationsPage({
     queryFn: async () => unwrap(await window.wave.getElevenLabsStatus()),
     enabled: newsRecoveryReady,
   });
-  const manual = configDraft.manualPreparation;
-  const manualPending = manual?.pending === true;
-  const lastRequest = manual?.request;
-  const checkingSavedResult = manualPending && lastRequest?.reconcile === true;
-  const preparationError = manual?.error ? new WaveError(manual.error) : null;
   const preparationStatusUnknown = library.isPending || !!library.error || state.isPending || !!state.error;
   const latestStoredRequest = library.data?.requests.at(-1);
   const preparationHistory = library.data?.requests.filter((value) => value.status !== 'complete') ?? [];
@@ -213,7 +142,6 @@ export function StationsPage({
   const restoredInterruption =
     !preparationStatusUnknown &&
     state.data &&
-    !manual &&
     latestStoredRequest?.status === 'interrupted' &&
     !state.data.roomProfiles.some(
       (profile) => profile.workflowDraft.newsLastRun?.requestId === latestStoredRequest.requestId,
@@ -227,18 +155,6 @@ export function StationsPage({
   const profileSubmission = useRef(false);
   const [switchTarget, setSwitchTarget] = useState<string | null>(null);
   const [profileNotice, setProfileNotice] = useState('');
-  const [scriptReplacement, setScriptReplacement] = useState<ScriptReplacement | null>(null);
-  useEffect(
-    () =>
-      window.wave.onNewsProgress((value) => {
-        setConfigDraft((current) =>
-          current.manualPreparation?.pending && current.manualPreparation.request.input.requestId === value.requestId
-            ? { ...current, manualPreparation: { ...current.manualPreparation, progress: value } }
-            : current,
-        );
-      }),
-    [setConfigDraft],
-  );
   const rawRoom = setup ?? state.data?.listeningRoom ?? { djId: null, sourceIds: [] };
   const room = state.data
     ? {
@@ -287,28 +203,19 @@ export function StationsPage({
       },
     }));
   };
-  const latestScript = library.data?.scripts.at(-1);
-  const editing = draft ?? (latestScript ? { scriptId: latestScript.id, script: latestScript.script } : null);
-  const scriptRecord = library.data?.scripts.find((value) => value.id === editing?.scriptId);
-  const scriptDirty = !!draft && (!scriptRecord || draft.script !== scriptRecord.script);
-  const selectedTake = library.data?.takes.find((value) => value.id === library.data?.selectedTakeId);
-  const finite = dj?.news?.speechEngine === 'elevenlabs-v4';
-  const words = editing?.script.trim().split(/\s+/u).filter(Boolean).length ?? 0;
   const validSources =
     room.sourceIds.length > 0 &&
     room.sourceIds.length <= 20 &&
     room.sourceIds.every((id) => sources.some((source) => source.id === id));
   const ready = !!dj && validSources && !!mood.trim();
-  const audioKeyReady = elevenStatus.data?.configured;
-  const textKeyReady = aiStatus.data?.configured;
   const chosenSources = sources.filter((value) => room.sourceIds.includes(value.id));
   const xKeyRequired = chosenSources.some((value) => value.kind === 'twitter');
   const workflowReady =
     !!activeProfile?.enabled &&
     ready &&
     !!dj?.news &&
-    textKeyReady === true &&
-    audioKeyReady === true &&
+    aiStatus.data?.configured === true &&
+    elevenStatus.data?.configured === true &&
     (!xKeyRequired || xStatus.data?.configured === true);
   const workflowStatusLoading = aiStatus.isPending || elevenStatus.isPending || (xKeyRequired && xStatus.isPending);
   const workflowStatusError = aiStatus.error || elevenStatus.error || (xKeyRequired && xStatus.error);
@@ -519,106 +426,6 @@ export function StationsPage({
     },
   });
   const source = useMutation({ mutationFn: async (url: string) => unwrap(await window.wave.openSource(url)) });
-  const prepare = useMutation({
-    mutationKey: ['manualPreparation'],
-    meta: { aiOperation: true },
-    mutationFn: async ({ request, control }: PreparationOperation) => {
-      if (!newsRecoveryReady) throw new Error('News data is unavailable. Recover it before starting preparation.');
-      const draftAtStart = draft;
-      try {
-        if (request.kind === 'script' && !request.reconcile) await persistSetup();
-        if (control.controller.signal.aborted)
-          throw new Error('Preparation canceled before generation. No provider request was sent.');
-        control.dispatched = true;
-        setConfigDraft((current) =>
-          current.manualPreparation?.control === control
-            ? { ...current, manualPreparation: { ...current.manualPreparation } }
-            : current,
-        );
-        if (request.kind === 'script') {
-          const result = unwrap(
-            await window.wave.prepareNewsScript({ ...request.input, reconcileOnly: request.reconcile === true }),
-          );
-          setDraft((current) => (current === draftAtStart ? { scriptId: result.id, script: result.script } : current));
-        } else {
-          const take = unwrap(
-            await window.wave.renderNewsTake({ ...request.input, reconcileOnly: request.reconcile === true }),
-          );
-          setConfigDraft((current) =>
-            current.manualPreparation?.control === control
-              ? {
-                  ...current,
-                  audioCompletion: {
-                    requestId: request.input.requestId,
-                    takeId: take.id,
-                    reused: take.requestId !== request.input.requestId,
-                    profileName: current.manualPreparation.profileName,
-                    reconciled: request.reconcile === true,
-                  },
-                }
-              : current,
-          );
-        }
-      } finally {
-        await refresh();
-      }
-    },
-    onSuccess: (_result, { request, control }) =>
-      setConfigDraft((current) =>
-        current.manualPreparation?.control === control
-          ? {
-              ...current,
-              manualCompletion: { request, profileName: current.manualPreparation.profileName },
-              manualPreparation: undefined,
-            }
-          : current,
-      ),
-    onError: (error, { control }) =>
-      setConfigDraft((current) =>
-        current.manualPreparation?.control === control
-          ? {
-              ...current,
-              manualPreparation: {
-                ...current.manualPreparation,
-                pending: false,
-                error: { code: error instanceof WaveError ? error.code : 'server', message: errorMessage(error) },
-              },
-            }
-          : current,
-      ),
-    onSettled: () => {
-      preparationInFlight.current = false;
-    },
-  });
-  function startPreparation(request: Preparation) {
-    if (
-      preparationInFlight.current ||
-      preparationPending ||
-      !newsRecoveryReady ||
-      busy ||
-      manualPending ||
-      cancellationPending
-    )
-      return;
-    preparationInFlight.current = true;
-    const capturedRequest = structuredClone(request);
-    if (!request.reconcile) capturedRequest.input.profileId = activeProfile?.id;
-    const operation = { request: capturedRequest, control: { controller: new AbortController(), dispatched: false } };
-    setConfigDraft((current) => ({
-      ...current,
-      audioCompletion: undefined,
-      manualCompletion: undefined,
-      preparationCancellation: undefined,
-      manualPreparation: {
-        ...operation,
-        pending: true,
-        profileName: request.reconcile ? manual?.profileName : activeProfile?.name,
-      },
-      preparationCancelError: undefined,
-    }));
-    prepare.mutate(operation);
-  }
-  const noStory = preparationError?.code === 'no-news' || preparationError?.code === 'partial-coverage';
   const running = library.data?.requests.find((value) => value.status === 'running');
   const cancel = useMutation({
     mutationKey: ['newsCancellation'],
@@ -627,22 +434,10 @@ export function StationsPage({
       setConfigDraft((current) => ({
         ...current,
         preparationCancelError: undefined,
-        preparationCancellation: {
-          requestId: input.requestId,
-          acknowledged: false,
-          beforeDispatch: !!input.control && !input.control.dispatched,
-        },
+        preparationCancellation: { requestId: input.requestId, acknowledged: false },
       })),
-    mutationFn: async (input: { requestId: string; control?: PreparationOperation['control'] }) => {
-      if (input.control) {
-        input.control.controller.abort();
-        setConfigDraft((current) =>
-          current.manualPreparation && current.manualPreparation.control === input.control
-            ? { ...current, manualPreparation: { ...current.manualPreparation, cancelRequested: true } }
-            : current,
-        );
-        if (input.control.dispatched) unwrap(await window.wave.cancelPreparedNews(input.requestId));
-      } else unwrap(await window.wave.cancelPreparedNews(input.requestId));
+    mutationFn: async (input: { requestId: string }) => {
+      unwrap(await window.wave.cancelPreparedNews(input.requestId));
       await refresh();
     },
     onSuccess: (_result, input) =>
@@ -651,25 +446,13 @@ export function StationsPage({
           ? { ...current, preparationCancellation: { ...current.preparationCancellation, acknowledged: true } }
           : current,
       ),
-    onError: (error, input) =>
-      setConfigDraft((current) => ({
-        ...current,
-        preparationCancelError: errorMessage(error),
-        ...(input.control && current.manualPreparation?.control === input.control
-          ? { manualPreparation: { ...current.manualPreparation!, cancelRequested: false } }
-          : {}),
-      })),
+    onError: (error) => setConfigDraft((current) => ({ ...current, preparationCancelError: errorMessage(error) })),
     onSettled: () => {
       cancelInFlight.current = false;
     },
   });
   function cancelPreparation(retry = false, expectedRequestId?: string) {
-    const target =
-      manualPending && manual
-        ? { requestId: manual.request.input.requestId, control: manual.control }
-        : running
-          ? { requestId: running.requestId }
-          : null;
+    const target = running ? { requestId: running.requestId } : null;
     if (
       !target ||
       (expectedRequestId && expectedRequestId !== target.requestId) ||
@@ -683,7 +466,7 @@ export function StationsPage({
     cancelInFlight.current = true;
     cancel.mutate(target);
   }
-  const preparing = manualPending || !!running;
+  const preparing = !!running;
   const runningProfiles = running
     ? (state.data?.roomProfiles.filter(
         (profile) =>
@@ -757,12 +540,10 @@ export function StationsPage({
           setup: null,
           moodDraft: null,
           tab: current.tab,
-          audioCompletion: current.audioCompletion,
-          manualPreparation: current.manualPreparation,
           preparationCancelError: current.preparationCancelError,
         }));
         setSwitchTarget(null);
-        setProfileNotice('Room switched. Your script and selected audio are unchanged.');
+        setProfileNotice('Room switched. Saved news and audio history are unchanged.');
       }
     },
     onSettled: () => {
@@ -786,11 +567,7 @@ export function StationsPage({
     },
   });
   const setupBusy =
-    preparationStatusUnknown ||
-    cancellationPending ||
-    configurationPending ||
-    manualPending ||
-    (!!running && !runningProfile);
+    preparationStatusUnknown || cancellationPending || configurationPending || (!!running && !runningProfile);
   const busy =
     setupBusy ||
     preparing ||
@@ -806,31 +583,17 @@ export function StationsPage({
     tab !== 'settings' &&
     !!activeProfile &&
     ((!!activeProfile.workflowDraft.newsEnabled && runningProfile?.id === activeProfile.id) || ownsProgressStopFocus);
-  const ownsManualFocus = (key: NonNullable<typeof manualFocus>['key']) =>
-    (key === 'reconcile' || (tab === 'settings' && manualToolsOpen)) &&
-    manualFocus?.key === key &&
-    document.activeElement === manualFocus.element;
   const ownsCancelFocus = cancelFocus !== null && document.activeElement === cancelFocus.element;
   const ownsCancelAction = (kind: 'cancel' | 'retry') => ownsCancelFocus && cancelFocus?.kind === kind;
-  const currentCancelId = manualPending ? manual?.request.input.requestId : running?.requestId;
+  const currentCancelId = running?.requestId;
   const oldCancelFocus = ownsCancelFocus && !!currentCancelId && cancelFocus?.requestId !== currentCancelId;
-  const manualRequest = manual?.request ?? configDraft.manualCompletion?.request;
-  const manualAction = manualRequest?.reconcile
-    ? 'reconcile'
-    : manualRequest?.kind === 'script'
-      ? 'text'
-      : manualRequest?.input.newVariation
-        ? 'variation'
-        : 'audio';
-  const ownsManualActionFocus = manualFocus !== null && ownsManualFocus(manualFocus.key);
   const cancellation = configDraft.preparationCancellation;
   const cancellationRecord =
     cancellation && library.data?.requests.find((value) => value.requestId === cancellation.requestId);
   const cancellationWaiting =
     !!cancellation?.acknowledged &&
     cancellation.requestId === currentCancelId &&
-    ((manualPending && manual?.request.input.requestId === cancellation.requestId) ||
-      cancellationRecord?.status === 'running');
+    cancellationRecord?.status === 'running';
   const cancellationFinished =
     cancellationRecord?.status === 'complete' ||
     cancellationRecord?.status === 'skipped' ||
@@ -845,7 +608,7 @@ export function StationsPage({
           : 'Preparation stopped'
         : cancellationWaiting
           ? 'Cancellation requested'
-          : !manualPending && runningProfile
+          : runningProfile
             ? `Cancel this check for ${runningProfile.name}`
             : 'Cancel preparation';
   const localCancelError =
@@ -854,17 +617,6 @@ export function StationsPage({
       ? configDraft.preparationCancelError
       : undefined;
   const cancelUnavailable = oldCancelFocus || cancellationPending || !preparing || cancellationWaiting;
-  const localManualFeedback = tab === 'settings' && manualToolsOpen;
-  const manualErrorMessage = manual?.error?.message;
-  useLayoutEffect(() => {
-    if (!manualErrorMessage || !ownsManualActionFocus || document.visibilityState !== 'visible' || !document.hasFocus())
-      return;
-    const element = manualFocus?.element;
-    if (element?.checkVisibility())
-      element
-        .closest('.room-manual-action, .room-manual-feedback')
-        ?.scrollIntoView({ block: 'center', inline: 'nearest' });
-  }, [manualErrorMessage, ownsManualActionFocus, manualFocus]);
   useLayoutEffect(() => {
     if (
       localCancelError &&
@@ -938,141 +690,6 @@ export function StationsPage({
     if (setupDirty) setSwitchTarget(id);
     else changeProfile({ kind: 'switch', id, saveChanges: false });
   }
-  function prepareText(confirmed = false) {
-    if (!ready || !room.djId || !textKeyReady) return;
-    if (scriptDirty && !confirmed) {
-      setScriptReplacement({ kind: 'prepare' });
-      return;
-    }
-    cancel.reset();
-    startPreparation({
-      kind: 'script',
-      input: { requestId: crypto.randomUUID(), djId: room.djId, sourceIds: [...room.sourceIds] },
-    });
-  }
-  function renderTake(newVariation = false) {
-    if (!editing || !room.djId || !finite || !audioKeyReady || !words || words > 55) return;
-    cancel.reset();
-    startPreparation({
-      kind: 'audio',
-      input: {
-        requestId: crypto.randomUUID(),
-        scriptId: editing.scriptId,
-        script: editing.script.trim(),
-        djId: room.djId,
-        newVariation,
-      },
-    });
-  }
-  const sourceSnapshot = (values: typeof sources) =>
-    JSON.stringify([...values].sort((a, b) => a.id.localeCompare(b.id)));
-  const differs =
-    selectedTake &&
-    (selectedTake.script !== editing?.script ||
-      JSON.stringify(selectedTake.renderingDJ) !== JSON.stringify(dj) ||
-      selectedTake.provenance.mood !== mood ||
-      (selectedTake.provenance.newsInterests ?? selectedTake.provenance.dj.news?.interests ?? '') !== newsInterests ||
-      sourceSnapshot(selectedTake.provenance.sources) !== sourceSnapshot(chosenSources));
-  function revealScriptEditor() {
-    setTab('settings');
-    requestAnimationFrame(() =>
-      requestAnimationFrame(() => {
-        if (manualTools.current) manualTools.current.open = true;
-        manualTools.current?.scrollIntoView({ block: 'start', behavior: 'auto' });
-        manualTools.current?.querySelector<HTMLTextAreaElement>('#news-draft')?.focus({ preventScroll: true });
-      }),
-    );
-  }
-  function applyScript(next: NonNullable<RoomDraft>, reveal: boolean) {
-    setDraft(next);
-    if (reveal) revealScriptEditor();
-  }
-  function requestScript(next: NonNullable<RoomDraft>, reveal = true) {
-    if (scriptDirty && (editing?.scriptId !== next.scriptId || editing.script !== next.script))
-      setScriptReplacement({ kind: 'load', draft: next, reveal });
-    else applyScript(next, reveal);
-  }
-  function loadDraft(take: PreparedNewsTake) {
-    requestScript({ scriptId: take.scriptId, script: take.script });
-  }
-  function loadScriptDraft(script: { id: string; script: string }) {
-    requestScript({ scriptId: script.id, script: script.script });
-  }
-  const audioCompletion = configDraft.audioCompletion;
-  const reviewInFlight = useRef(false);
-  const reviewPending = useIsMutating({ mutationKey: ['savedTakeReview'] }) > 0;
-  const [reviewFocused, setReviewFocused] = useState<HTMLButtonElement | null>(null);
-  const ownsReviewFocus = reviewFocused !== null && document.activeElement === reviewFocused;
-  const [confirmedReview, setConfirmedReview] = useState<{ requestId: string; takeId: string } | null>(null);
-  const { retryRef: reviewRetryRef, retry: retryReviewFocus } = useRetryFocus({
-    ownerKey: `saved-take-review:${audioCompletion?.requestId}:${audioCompletion?.takeId}:${activeProfile?.id}:${newsRecoveryReady}`,
-    target: () => (audioCompletion ? document.getElementById(`prepared-take-${audioCompletion.takeId}`) : null),
-    canFocusSuccess: () =>
-      !!audioCompletion &&
-      tab === 'saved' &&
-      library.isSuccess &&
-      !library.isFetching &&
-      confirmedReview?.requestId === audioCompletion.requestId &&
-      confirmedReview.takeId === audioCompletion.takeId &&
-      library.data.takes.some((take) => take.id === audioCompletion.takeId),
-  });
-  const reviewAudio = useMutation({
-    mutationKey: ['savedTakeReview'],
-    mutationFn: async (completion: AudioCompletion) => {
-      const result = await library.refetch();
-      if (result.error)
-        throw new Error('Your audio result was saved, but saved takes could not be refreshed. Try reviewing it again.');
-      if (!result.data?.takes.some((take) => take.id === completion.takeId))
-        throw new Error('The completed take could not be found in saved audio. Try reviewing it again.');
-    },
-    onMutate: (completion) => {
-      setConfirmedReview(null);
-      setConfigDraft((current) =>
-        current.audioCompletion?.requestId === completion.requestId &&
-        current.audioCompletion.takeId === completion.takeId
-          ? { ...current, audioCompletion: { ...current.audioCompletion, reviewError: undefined } }
-          : current,
-      );
-    },
-    onSuccess: (_result, completion) =>
-      setConfirmedReview({ requestId: completion.requestId, takeId: completion.takeId }),
-    onError: (error, completion) =>
-      setConfigDraft((current) =>
-        current.audioCompletion?.requestId === completion.requestId &&
-        current.audioCompletion.takeId === completion.takeId
-          ? { ...current, audioCompletion: { ...current.audioCompletion, reviewError: errorMessage(error) } }
-          : current,
-      ),
-  });
-  function reviewSavedTake(completion: AudioCompletion) {
-    if (reviewInFlight.current || reviewPending || reviewAudio.isPending) return;
-    reviewInFlight.current = true;
-    void retryReviewFocus(
-      async () => {
-        try {
-          await reviewAudio.mutateAsync(completion);
-          return { isError: false };
-        } catch {
-          return { isError: true };
-        }
-      },
-      undefined,
-      () => {
-        reviewInFlight.current = false;
-      },
-    );
-    setTab('saved');
-  }
-  useLayoutEffect(() => {
-    if (
-      audioCompletion?.reviewError &&
-      ownsReviewFocus &&
-      document.visibilityState === 'visible' &&
-      document.hasFocus() &&
-      reviewFocused?.checkVisibility()
-    )
-      reviewFocused.closest('.room-audio-result')?.scrollIntoView({ block: 'center', inline: 'nearest' });
-  }, [audioCompletion?.reviewError, ownsReviewFocus, reviewFocused]);
   function openPreparation() {
     setTab('settings');
   }
@@ -1094,106 +711,6 @@ export function StationsPage({
       row?.scrollIntoView({ block: 'center' });
     });
   }
-  const audioResult = audioCompletion && !manualPending && (
-    <div className="room-audio-result">
-      <div className="notice">
-        <span role="status">
-          {audioCompletion.reconciled
-            ? 'Saved audio result found'
-            : audioCompletion.reused
-              ? 'Matching saved audio reused'
-              : 'Audio take saved'}{' '}
-          · {audioCompletion.profileName ?? 'Previous setup'}. Review it to listen or choose it for a DJ break.
-        </span>
-        <button
-          ref={reviewRetryRef}
-          className="room-review-take"
-          disabled={reviewPending && !ownsReviewFocus}
-          aria-disabled={reviewPending || undefined}
-          aria-busy={reviewPending || undefined}
-          onFocus={(event) => setReviewFocused(event.currentTarget)}
-          onBlur={() => setReviewFocused(null)}
-          onClick={() => reviewSavedTake(audioCompletion)}
-        >
-          {reviewPending ? 'Opening saved take…' : 'Review saved take'}
-        </button>
-      </div>
-      <ErrorNotice error={audioCompletion.reviewError ? new Error(audioCompletion.reviewError) : null} />
-    </div>
-  );
-  const manualFeedback = manualRequest && (
-    <div className="room-manual-feedback room-background-error">
-      <p className="form-hint">
-        Manual preparation · {manual?.profileName ?? configDraft.manualCompletion?.profileName ?? 'Previous setup'}
-      </p>
-      {manualPending && (
-        <p className="form-hint" role="status">
-          {checkingSavedResult
-            ? `Checking saved ${manualRequest.kind === 'script' ? 'text' : 'audio'}… No new provider request.`
-            : (manual?.progress?.message ??
-              (manual?.control.dispatched
-                ? `Preparing ${manualRequest.kind === 'script' ? 'text' : 'audio'}…`
-                : 'Saving setup before preparation…'))}
-        </p>
-      )}
-      {preparationError &&
-        (noStory || (manual?.cancelRequested && !manual.control.dispatched) ? (
-          <p className="form-hint" role="status">
-            {preparationError.message}
-          </p>
-        ) : (
-          <ErrorNotice error={preparationError} />
-        ))}
-      {configDraft.manualCompletion && (
-        <p className="form-hint" role="status">
-          {manualRequest.reconcile
-            ? `Saved ${manualRequest.kind === 'script' ? 'text' : 'audio'} result found. No new provider request.`
-            : manualRequest.kind === 'script'
-              ? 'News text prepared. Review the script below before generating audio.'
-              : 'Audio preparation finished. Review the saved take below.'}
-        </p>
-      )}
-      <div className="room-actions">
-        {((!noStory && manual?.control.dispatched && (preparationError || checkingSavedResult)) ||
-          ownsManualFocus('reconcile')) && (
-          <button
-            className="room-link"
-            disabled={(busy || !preparationError) && !ownsManualFocus('reconcile')}
-            aria-disabled={busy || !preparationError || undefined}
-            aria-busy={checkingSavedResult || undefined}
-            onFocus={(event) => setManualFocus({ key: 'reconcile', element: event.currentTarget })}
-            onBlur={() => setManualFocus(null)}
-            onClick={() => {
-              if (!busy && preparationError && manual) startPreparation({ ...manual.request, reconcile: true });
-            }}
-          >
-            {checkingSavedResult
-              ? `Checking saved ${manualRequest.kind === 'script' ? 'text' : 'audio'}…`
-              : configDraft.manualCompletion?.request.reconcile
-                ? 'Saved result found'
-                : 'Check saved result for this request'}
-          </button>
-        )}
-        {preparationError && !localManualFeedback && (
-          <button
-            className="room-link"
-            onClick={() => {
-              setTab('settings');
-              requestAnimationFrame(() => {
-                if (manualTools.current) {
-                  manualTools.current.open = true;
-                  manualTools.current.querySelector('summary')?.focus();
-                  manualTools.current.scrollIntoView({ block: 'start' });
-                }
-              });
-            }}
-          >
-            Review preparation
-          </button>
-        )}
-      </div>
-    </div>
-  );
   return (
     <>
       <PageHeading headingRef={heading} title="News bucket" />
@@ -1338,7 +855,8 @@ export function StationsPage({
                         finish.
                       </strong>{' '}
                       {preparationOrigin(restoredInterruption)}. It was not restarted automatically. A provider request
-                      may have been charged. Review its saved status before starting a new attempt.
+                      may have been charged. Review its saved status before resuming automatic preparation in News
+                      settings.
                     </span>
                     <button aria-controls="preparation-history" onClick={reviewPreparationHistory}>
                       Review preparation history
@@ -1375,7 +893,7 @@ export function StationsPage({
                 {library.data && preparationStatusUnknown && (
                   <p className="form-hint" role="status">
                     {library.isPending || library.error
-                      ? 'Saved news and manual preparation activity could not be confirmed. Showing the last loaded recordings, drafts and article history.'
+                      ? 'Saved news and preparation history could not be confirmed. Showing the last loaded recordings, script records, and article history.'
                       : 'Automatic preparation status could not be refreshed. Recordings below are matched against the last saved profile.'}{' '}
                     Retry the failed status check before editing setup.
                   </p>
@@ -1389,7 +907,6 @@ export function StationsPage({
                     savedNewsStale={preparationStatusUnknown}
                     openSource={(url) => source.mutate(url)}
                     openPreparation={openPreparation}
-                    openDraft={loadScriptDraft}
                   />
                 )}
                 <ErrorNotice error={source.error} />
@@ -1403,24 +920,13 @@ export function StationsPage({
                     ? ownsCancelFocus
                       ? cancellationFinished
                         ? 'Preparation finished before cancellation was confirmed.'
-                        : cancellation?.beforeDispatch
-                          ? 'Preparation stopped before generation. No provider request was sent.'
-                          : 'Preparation stopped. A provider request may have been charged.'
+                        : 'Preparation stopped. A provider request may have been charged.'
                       : activeProfile?.workflowDraft.newsEnabled
                         ? 'Automatic preparation remains on.'
                         : 'Automatic preparation turned off.'
-                    : manualPending
-                      ? manual.cancelRequested
-                        ? 'Cancellation requested. Waiting for preparation to stop…'
-                        : checkingSavedResult
-                          ? `Checking saved ${lastRequest?.kind === 'audio' ? 'audio' : 'text'} for ${manual.profileName ?? 'your room'}… No new provider request.`
-                          : (manual.progress?.message ??
-                            (manual.control.dispatched
-                              ? `Preparing ${lastRequest?.kind === 'audio' ? 'audio' : 'text'} for ${manual.profileName ?? 'your room'}…`
-                              : 'Saving setup before preparation…'))
-                      : runningProfile
-                        ? `Preparing news for ${runningProfile.name}…`
-                        : 'Preparing…'}
+                    : runningProfile
+                      ? `Preparing news for ${runningProfile.name}…`
+                      : 'Preparing…'}
                 </span>
                 {(preparing || ownsCancelFocus) && (
                   <div className="room-cancel-action">
@@ -1523,7 +1029,7 @@ export function StationsPage({
                 )}
               </div>
             )}
-            {runningProfile && !preparationStatusUnknown && !manualPending && (
+            {runningProfile && !preparationStatusUnknown && (
               <p className="form-hint">
                 This check keeps its original sources, host, mood and interests. Saved setup changes apply to future
                 checks.
@@ -1535,7 +1041,6 @@ export function StationsPage({
                 <ErrorNotice error={new Error(configDraft.preparationCancelError)} />
               </div>
             )}
-            {!localManualFeedback && manualFeedback}
             <section
               id="room-panel-settings"
               role="tabpanel"
@@ -1623,213 +1128,6 @@ export function StationsPage({
                   Save setup and preparation together to keep these choices in this room profile.
                 </p>
               )}
-              {(!textKeyReady || !audioKeyReady) && (
-                <p className="form-hint">
-                  News preparation needs OpenAI and ElevenLabs keys.{' '}
-                  <button className="room-link" onClick={configureSettings}>
-                    Provider keys
-                  </button>
-                </p>
-              )}
-              <details
-                className="room-script room-testing-tools"
-                ref={manualTools}
-                onToggle={(event) => setManualToolsOpen(event.currentTarget.open)}
-              >
-                <summary>Testing tools · Prepare a story manually</summary>
-                <div className="room-script-content" aria-labelledby="script-title">
-                  <div className="room-section-heading">
-                    <div>
-                      <span className="eyebrow">Manual testing</span>
-                      <h2 id="script-title">Prepare a story</h2>
-                    </div>
-                    <InfoHelp label="About manual preparation">
-                      <p>
-                        Use these tools to test a script or voice. Text and audio requests use your provider accounts
-                        and save completed results locally.
-                      </p>
-                      <p>
-                        DJ playback only picks saved recordings. The news workflow prepares stories on its own schedule.
-                      </p>
-                    </InfoHelp>
-                  </div>
-                  <p>Prepare text, review it, then generate an audio take.</p>
-                  <p className="form-hint">
-                    Manual text preparation uses OpenAI outside automatic preparation limits. It can incur charges even
-                    when no recording is made.
-                  </p>
-                  <div className="room-manual-action">
-                    <button
-                      className="primary"
-                      disabled={(busy || !ready || !textKeyReady) && !ownsManualFocus('text')}
-                      aria-disabled={busy || !ready || !textKeyReady || undefined}
-                      aria-busy={(manualPending && manualAction === 'text') || undefined}
-                      onFocus={(event) => setManualFocus({ key: 'text', element: event.currentTarget })}
-                      onBlur={() => setManualFocus(null)}
-                      onClick={() => {
-                        if (!busy && ready && textKeyReady) prepareText();
-                      }}
-                    >
-                      <Newspaper size={15} />
-                      {manualPending && manualAction === 'text' ? 'Preparing text…' : 'Prepare news text'}
-                    </button>
-                    {localManualFeedback && manualRequest?.kind === 'script' && manualFeedback}
-                  </div>
-                  {!ready && (
-                    <p className="form-hint">Choose sources and a DJ, and describe your station mood first.</p>
-                  )}
-                  {ready && !textKeyReady && (
-                    <p className="notice">
-                      {aiStatus.isPending
-                        ? 'Checking OpenAI key…'
-                        : aiStatus.error
-                          ? 'OpenAI key status unavailable.'
-                          : 'Add an OpenAI key to prepare text.'}{' '}
-                      <button className="room-link" onClick={configureSettings}>
-                        Open Settings
-                      </button>
-                    </p>
-                  )}
-                  <ErrorNotice
-                    error={aiStatus.error}
-                    retryRef={aiRetryFocus.retryRef}
-                    retrying={aiStatus.isFetching}
-                    retry={() => aiRetryFocus.retry(() => aiStatus.refetch())}
-                  />
-                  {dj?.news?.speechEngine === 'elevenlabs-v4' && (
-                    <ErrorNotice
-                      error={elevenStatus.error}
-                      retryRef={elevenRetryFocus.retryRef}
-                      retrying={elevenStatus.isFetching}
-                      retry={() => elevenRetryFocus.retry(() => elevenStatus.refetch())}
-                    />
-                  )}
-
-                  {!!library.data?.scripts.length && (
-                    <div className="room-saved-script">
-                      <FilterSelect
-                        label="Saved draft"
-                        value={editing?.scriptId ?? ''}
-                        choices={library.data.scripts
-                          .map((value) => ({
-                            value: value.id,
-                            label: `${value.provenance.dj.name} · ${new Date(value.createdAt).toLocaleString()}`,
-                          }))
-                          .reverse()}
-                        onChange={(id) => {
-                          const saved = library.data?.scripts.find((value) => value.id === id);
-                          if (saved) requestScript({ scriptId: saved.id, script: saved.script }, false);
-                        }}
-                        disabled={busy}
-                      />
-                    </div>
-                  )}
-                  {editing && (
-                    <div className="room-script-editor">
-                      <label htmlFor="news-draft">Review the script</label>
-                      <textarea
-                        id="news-draft"
-                        rows={5}
-                        maxLength={700}
-                        disabled={busy}
-                        value={editing.script}
-                        onChange={(event) => setDraft({ ...editing, script: event.target.value })}
-                      />
-                      <div className="room-script-meta">
-                        <span className={words > 55 ? 'danger' : ''}>{words} / 55 words</span>
-                        <span>{scriptRecord ? new Date(scriptRecord.createdAt).toLocaleString() : 'Saved draft'}</span>
-                      </div>
-                      {scriptRecord && (
-                        <details>
-                          <summary>Sources and preparation settings</summary>
-                          <p className="form-hint">
-                            Prepared for {scriptRecord.provenance.dj.name} · {scriptRecord.provenance.mood}
-                          </p>
-                          <p className="form-hint">
-                            News interests:{' '}
-                            {(scriptRecord.provenance.newsInterests ?? scriptRecord.provenance.dj.news?.interests) ||
-                              'Any topics from selected sources'}
-                          </p>
-                          {scriptRecord.articles.map((article) => (
-                            <p key={article.id} className="room-article">
-                              <button className="room-link" onClick={() => source.mutate(article.url)}>
-                                {article.title}
-                              </button>
-                              <span>
-                                {article.source}
-                                {Number.isFinite(Date.parse(article.publishedAt ?? ''))
-                                  ? ` · ${new Date(article.publishedAt!).toLocaleDateString()}`
-                                  : ' · Date unavailable'}
-                              </span>
-                            </p>
-                          ))}
-                          {scriptRecord.warnings.map((warning, index) => (
-                            <p className="form-hint" key={index}>
-                              {warning}
-                            </p>
-                          ))}
-                        </details>
-                      )}
-                      <div className="room-section-heading room-render-heading">
-                        <div>
-                          <span className="eyebrow">Manual audio</span>
-                          <h3>Generate a complete take</h3>
-                        </div>
-                        <Headphones size={19} />
-                      </div>
-                      {!finite && (
-                        <p className="notice">
-                          Configure ElevenLabs in this DJ's voice settings.{' '}
-                          <button className="room-link" onClick={configureDJ}>
-                            Manage DJ in Settings
-                          </button>
-                        </p>
-                      )}
-                      {!audioKeyReady && (
-                        <p className="notice">
-                          Add an ElevenLabs key before generating audio.{' '}
-                          <button className="room-link" onClick={configureSettings}>
-                            Open Settings
-                          </button>
-                        </p>
-                      )}
-                      <p className="form-hint">
-                        A new audio take uses ElevenLabs outside automatic preparation limits and can use credits or
-                        incur charges. Reusing or auditioning a saved take makes no provider request.
-                      </p>
-                      <div className="room-manual-action">
-                        <div className="room-actions">
-                          {(['audio', 'variation'] as const).map((key) => {
-                            const unavailable = busy || !finite || !audioKeyReady || !words || words > 55;
-                            return (
-                              <button
-                                key={key}
-                                className={key === 'audio' ? 'primary' : undefined}
-                                disabled={!!unavailable && !ownsManualFocus(key)}
-                                aria-disabled={!!unavailable || undefined}
-                                aria-busy={(manualPending && manualAction === key) || undefined}
-                                onFocus={(event) => setManualFocus({ key, element: event.currentTarget })}
-                                onBlur={() => setManualFocus(null)}
-                                onClick={() => {
-                                  if (!unavailable) renderTake(key === 'variation');
-                                }}
-                              >
-                                {manualPending && manualAction === key
-                                  ? 'Generating audio…'
-                                  : key === 'audio'
-                                    ? 'Generate audio take'
-                                    : 'Generate another take'}
-                              </button>
-                            );
-                          })}
-                        </div>
-                        {localManualFeedback && manualRequest?.kind === 'audio' && manualFeedback}
-                      </div>
-                    </div>
-                  )}
-                  <ErrorNotice error={source.error} />
-                </div>
-              </details>
             </section>
             <section
               id="room-panel-saved"
@@ -1838,11 +1136,6 @@ export function StationsPage({
               hidden={tab !== 'saved'}
               tabIndex={0}
             >
-              {differs && (
-                <p className="notice">
-                  Your draft or setup differs from the selected take. Your saved choice remains unchanged.
-                </p>
-              )}
               <ErrorNotice
                 error={library.error}
                 retryRef={savedRetryFocus.retryRef}
@@ -1854,14 +1147,7 @@ export function StationsPage({
                   Opening saved audio…
                 </p>
               )}
-              {library.data && (
-                <PreparedTakes
-                  active={tab === 'saved'}
-                  library={library.data}
-                  refresh={refresh}
-                  loadDraft={loadDraft}
-                />
-              )}
+              {library.data && <PreparedTakes active={tab === 'saved'} library={library.data} refresh={refresh} />}
               {!!preparationHistory.length && (
                 <details id="preparation-history" className="room-request-history" ref={requestHistory}>
                   <summary>Preparation history</summary>
@@ -1902,38 +1188,7 @@ export function StationsPage({
                 </details>
               )}
             </section>
-            {audioResult}
           </div>
-          {scriptReplacement && (
-            <Dialog title="Replace edited script?" close={() => setScriptReplacement(null)}>
-              <p>
-                {scriptReplacement.kind === 'prepare'
-                  ? 'Preparing new text will replace your edited script if it succeeds. This request uses OpenAI outside automatic preparation limits and may incur charges. If preparation fails, your edited script stays here.'
-                  : 'Loading this saved script will replace your unsaved edits. Your saved scripts and recordings stay unchanged.'}
-              </p>
-              <div className="modal-actions">
-                <button
-                  onClick={() => {
-                    setScriptReplacement(null);
-                    revealScriptEditor();
-                  }}
-                >
-                  Keep editing
-                </button>
-                <button
-                  className="primary"
-                  onClick={() => {
-                    const replacement = scriptReplacement;
-                    setScriptReplacement(null);
-                    if (replacement.kind === 'prepare') prepareText(true);
-                    else applyScript(replacement.draft, replacement.reveal);
-                  }}
-                >
-                  {scriptReplacement.kind === 'prepare' ? 'Prepare new text' : 'Replace draft'}
-                </button>
-              </div>
-            </Dialog>
-          )}
           {newProfileOpen && (
             <Dialog
               title="Save a new listening room"
@@ -1989,7 +1244,7 @@ export function StationsPage({
             <Dialog title="Switch listening rooms?" close={closeProfileDialogs} closeDisabled={profiles.isPending}>
               <p>
                 You have unsaved changes to {activeProfile?.name ?? 'your current room'}. Save them before switching, or
-                discard them. Your script and selected audio stay unchanged.
+                discard them. Saved scripts and recordings stay unchanged.
               </p>
               <ErrorNotice error={profiles.error} />
               <div className="modal-actions">

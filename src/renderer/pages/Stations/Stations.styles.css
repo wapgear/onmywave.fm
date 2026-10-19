@@ -2,7 +2,6 @@
   max-width: 960px;
 }
 .room-setup,
-.room-script,
 .prepared-takes {
   padding: 0 0 28px;
   margin: 0 0 28px;
@@ -35,8 +34,7 @@
 .room-configuration h3 {
   font-size: 13px;
 }
-.room-configuration p,
-.room-script > p {
+.room-configuration p {
   font-size: 12px;
   color: var(--muted);
   margin: 8px 0 14px;
@@ -89,59 +87,10 @@
 .room-mood textarea {
   background: var(--panel);
 }
-.room-provider-keys {
-  margin-bottom: 28px;
-}
-.room-script > .primary {
-  font-size: 12px;
-  border-radius: 8px;
-}
-.room-script-editor {
-  margin-top: 24px;
-}
-.room-script-editor > label {
-  display: block;
-  font-size: 13px;
-  margin-bottom: 10px;
-}
-.room-script-editor > textarea {
-  font-size: 14px;
-  line-height: 1.8;
-  background: var(--panel);
-}
-.room-script-meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  color: var(--muted);
-  font-size: 11px;
-  margin: 9px 0 18px;
-}
-.room-script details summary,
 .room-request-history summary {
   font-size: 12px;
   color: var(--muted);
   cursor: pointer;
-}
-.room-article {
-  font-size: 12px;
-  margin: 12px 0;
-}
-.room-article span {
-  display: block;
-  font-size: 11px;
-  color: var(--muted);
-  margin-top: 4px;
-}
-.room-render-heading {
-  margin-top: 26px;
-  border-top: 1px solid var(--separator);
-  padding-top: 22px;
-}
-.room-render-heading h3 {
-  font-size: 16px;
-  margin-top: 6px;
 }
 .room-actions {
   display: flex;
@@ -153,13 +102,6 @@
 .room-actions button {
   font-size: 12px;
   border-radius: 8px;
-}
-.room-script .news-progress {
-  align-items: center;
-  flex-wrap: wrap;
-}
-.room-script .news-progress > span {
-  flex: 1;
 }
 .room-request-history {
   margin: 28px 0;
@@ -186,18 +128,6 @@
   .room-mood {
     grid-column: auto;
   }
-}
-
-.room-saved-script {
-  margin-top: 20px;
-}
-.room-saved-script .filter-select-trigger {
-  max-width: 100%;
-}
-.room-article .room-link {
-  white-space: normal;
-  text-align: left;
-  justify-content: flex-start;
 }
 
 .workflow-mood {
@@ -275,12 +205,6 @@
 }
 .room-preparation {
   scroll-margin-top: 20px;
-}
-.room-preparation > .room-script > .form-hint {
-  margin: 12px 0;
-}
-.room-script > .room-section-heading {
-  margin-bottom: 12px;
 }
 .room-wizard-fields .workflow-mood {
   margin-top: 22px;
@@ -379,9 +303,6 @@
 .room-setup[role='tabpanel'] {
   border: 0;
 }
-.room-preparation[role='tabpanel'] > .room-script {
-  border: 0;
-}
 
 .room-unsaved {
   display: flex;
@@ -478,23 +399,6 @@
   color: var(--muted);
   margin: 10px 0 16px;
 }
-.room-testing-tools {
-  padding: 0 0 24px;
-}
-.room-testing-tools > summary {
-  font-size: 12px;
-  color: var(--muted);
-  cursor: pointer;
-  padding: 8px 0;
-}
-.room-script-content {
-  padding-top: 20px;
-}
-.room-script-content > p {
-  font-size: 12px;
-  color: var(--muted);
-  margin: 8px 0 14px;
-}
 
 .room-automatic .room-dj-schedule {
   margin-top: 28px;
@@ -567,39 +471,24 @@
   translate: 0 0;
 }
 
-.room-manual-action,
-.room-manual-feedback,
 .room-cancel-action {
   min-width: 0;
   max-width: 100%;
 }
-.room-manual-action button[aria-disabled='true'],
-.room-manual-feedback button[aria-disabled='true'],
 .room-cancel-action button[aria-disabled='true'] {
   color: var(--muted);
   background: var(--surface);
   cursor: default;
 }
-.room-manual-action button[aria-busy='true'],
-.room-manual-feedback button[aria-busy='true'],
 .room-cancel-action button[aria-busy='true'] {
   cursor: progress;
 }
-.room-manual-action button[aria-disabled='true']:active,
-.room-manual-feedback button[aria-disabled='true']:active,
 .room-cancel-action button[aria-disabled='true']:active {
   translate: 0 0;
 }
-
-.room-review-take[aria-disabled='true'],
-.room-review-take[aria-disabled='true']:hover {
-  color: var(--muted);
-  background: var(--surface);
-  cursor: default;
-}
-.room-review-take[aria-busy='true'] {
-  cursor: progress;
-}
-.room-review-take[aria-disabled='true']:active {
-  translate: 0 0;
+.room-host-choice > .room-host-avatar {
+  width: 32px;
+  height: 32px;
+  align-self: center;
+  margin: 0;
 }

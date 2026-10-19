@@ -1,6 +1,7 @@
+import { djPreparationKey } from '../shared/dj-avatar';
 import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { DJ, DJPlaybackSettings, NewsSource, PreparedNewsTake, RoomProfile } from '../shared/types';
+import type { DJPlaybackSettings, PreparedNewsTake, RoomProfile } from '../shared/types';
 import { defaultDJPlaybackSettings } from '../shared/dj-playback';
 import { unwrap } from './api';
 import { confirmLocalState } from './local-state-cache';
@@ -43,7 +44,7 @@ function useDJPlaybackController() {
   const configKey = JSON.stringify([
     { enabled: settings.enabled, roomId: settings.roomId, everySongs: settings.everySongs },
     room ? { id: room.id, room: room.room, mood: room.mood, newsInterests: room.workflowDraft.newsInterests } : null,
-    dj ?? null,
+    djPreparationKey(dj),
     sources,
   ]);
   const live = useRef({ player, queryError: state.error, recoveryReady });
@@ -53,12 +54,7 @@ function useDJPlaybackController() {
   const retry = useRef<() => void>(() => {});
   const [view, setView] = useState<PlaybackView | null>(null);
   useEffect(() => {
-    const [config, profile] = JSON.parse(configKey) as [
-      DJPlaybackSettings,
-      RoomProfile | null,
-      DJ | null,
-      NewsSource[],
-    ];
+    const [config, profile] = JSON.parse(configKey) as [DJPlaybackSettings, RoomProfile | null];
     let cancelled = false;
     let checking = false;
     const excluded = new Set<string>();

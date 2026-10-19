@@ -195,8 +195,7 @@ export function WorkflowPreferences({
             <p className="settings-description">
               Up to {Math.ceil(24 / value.everyHours)} scheduled checks per local day for this profile. Checks can use
               paid text generation even when no story qualifies. Automatic voice generation stops at the recording
-              limit. Manual preparation and voice previews are outside these limits and can use additional provider
-              credits.
+              limit. Host voice previews are outside these limits and can use additional provider credits.
             </p>
             <p className="settings-description">
               Saving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer

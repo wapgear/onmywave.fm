@@ -23,33 +23,38 @@ export function Queue() {
     player.removeQueue(key);
   }
   function rows(items: typeof player.queue) {
+    const occurrences = new Map<string, number>();
     return (
       <ol className="queue-list">
-        {items.map((item) => (
-          <li key={item.key}>
-            <button
-              className="queue-track"
-              onClick={() => player.playQueueEntry(item.key)}
-              aria-label={`Play ${item.song.name}`}
-            >
-              <Artwork url={item.song.imageUrl} name={item.song.name} />
-              <span>
-                <strong>{item.song.name}</strong>
-                <small>{item.song.artists.join(', ') || 'Unknown artist'}</small>
+        {items.map((item) => {
+          const occurrence = occurrences.get(item.key) ?? 0;
+          occurrences.set(item.key, occurrence + 1);
+          return (
+            <li key={`${item.key}:${occurrence}`}>
+              <button
+                className="queue-track"
+                onClick={() => player.playQueueEntry(item.key, item.historyIndex)}
+                aria-label={`Play ${item.song.name}`}
+              >
+                <Artwork url={item.song.imageUrl} name={item.song.name} />
+                <span>
+                  <strong>{item.song.name}</strong>
+                  <small>{item.song.artists.join(', ') || 'Unknown artist'}</small>
+                </span>
+              </button>
+              <span className="queue-time">
+                <TrackDuration seconds={item.song.duration} />
               </span>
-            </button>
-            <span className="queue-time">
-              <TrackDuration seconds={item.song.duration} />
-            </span>
-            <button
-              className="icon-button queue-remove"
-              onClick={(event) => remove(item.key, event.currentTarget)}
-              aria-label={`Remove ${item.song.name} from queue`}
-            >
-              <X size={14} />
-            </button>
-          </li>
-        ))}
+              <button
+                className="icon-button queue-remove"
+                onClick={(event) => remove(item.key, event.currentTarget)}
+                aria-label={`Remove ${item.song.name} from queue`}
+              >
+                <X size={14} />
+              </button>
+            </li>
+          );
+        })}
       </ol>
     );
   }
@@ -81,25 +86,54 @@ export function Queue() {
           )}
           <section>
             <div className="queue-section-title">
-              <h3>{player.shuffle ? 'In your queue' : 'Up Next'}</h3>
-              <span>
-                {remaining} {remaining === 1 ? 'song' : 'songs'}
-              </span>
+              <h3>Up Next</h3>
+              {player.shuffle ? (
+                <span>
+                  {player.upcomingQueue.length} planned · {player.shuffleRemaining} left
+                </span>
+              ) : (
+                <span>
+                  {remaining} {remaining === 1 ? 'song' : 'songs'}
+                </span>
+              )}
             </div>
-            {player.shuffle && <p className="queue-end">Shuffle is on. Songs play in a random order.</p>}
             {player.shuffle ? (
-              rows(player.queue.filter((item) => item.key !== player.currentKey))
+              <>
+                {player.upcomingQueue.length > 0 && (
+                  <p className="queue-end">
+                    Showing the next {player.upcomingQueue.length} of {player.shuffleRemaining} queued songs in shuffle
+                    order.
+                  </p>
+                )}
+                {player.upcomingQueue.length ? (
+                  rows(player.upcomingQueue)
+                ) : (
+                  <p className="queue-end">
+                    {player.repeat === 'all' && player.shuffleRemaining === 0
+                      ? 'The shuffle cycle is complete. Next starts a new cycle.'
+                      : 'You’ve reached the end of the queue.'}
+                  </p>
+                )}
+              </>
             ) : index + 1 < player.queue.length ? (
               rows(player.queue.slice(index + 1))
             ) : (
               <p className="queue-end">You’ve reached the end of the queue.</p>
             )}
           </section>
-          {!player.shuffle && index > 0 && (
+          {player.shuffle && player.shuffleHistoryQueue.length > 0 ? (
             <details className="queue-history">
-              <summary>Earlier in this queue · {index}</summary>
-              {rows(player.queue.slice(0, index))}
+              <summary>Played earlier in this shuffle · {player.shuffleHistoryQueue.length}</summary>
+              {rows(player.shuffleHistoryQueue)}
             </details>
+          ) : (
+            !player.shuffle &&
+            index > 0 && (
+              <details className="queue-history">
+                <summary>Earlier in this queue · {index}</summary>
+                {rows(player.queue.slice(0, index))}
+              </details>
+            )
           )}
         </>
       )}

@@ -3,6 +3,9 @@
   outline-offset: -1px;
   border-radius: 12px;
 }
+.artwork-button:focus-visible .artwork-play {
+  display: flex;
+}
 .track-menu-trigger {
   min-height: 30px;
   width: 28px;

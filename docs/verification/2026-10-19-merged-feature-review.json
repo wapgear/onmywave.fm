@@ -1,0 +1,197 @@
+{
+  "featureRevision": "e641da84223b19f873f03301ab997e14ec2a22ae",
+  "scope": "All four feature PRs merged, before formatting PR148.",
+  "checks": {
+    "build": "passed",
+    "typecheck": "passed as part of build",
+    "lint": "passed",
+    "productionAudit": {
+      "info": 0,
+      "low": 0,
+      "moderate": 0,
+      "high": 0,
+      "critical": 0,
+      "total": 0
+    }
+  },
+  "native": {
+    "dj-avatar": {
+      "results": [
+        {
+          "name": "legacy missing and invalid disk avatars render safe host icon"
+        },
+        {
+          "name": "cancel discards avatar and color"
+        },
+        {
+          "name": "native arrow selection and selected swatch state; Unicode initials update live"
+        },
+        {
+          "name": "avatar save persists, run metadata and DJ settings unchanged"
+        },
+        {
+          "name": "duplicate inherits appearance and edits independently"
+        },
+        {
+          "name": "pending locks picker; failed save retains draft for explicit retry"
+        },
+        {
+          "name": "IPC rejects arbitrary asset paths, unknown IDs, CSS colors, extra keys and null without saving"
+        },
+        {
+          "name": "selected host avatar shared in room setup; ready recording remains eligible after cosmetic edits"
+        },
+        {
+          "name": "fresh Electron process restores choice and color"
+        },
+        {
+          "name": "new DJ uses initials and picker remains available in every creation mode"
+        },
+        {
+          "name": "main-process saved-news claim survives cosmetic edits; editorial edits still invalidate and mark changed"
+        },
+        {
+          "name": "actual missing portrait falls back; switching to available portrait retries image"
+        }
+      ],
+      "rendererErrors": [],
+      "externalAttempts": [],
+      "data": "/tmp/native-dj-avatars-yYq0sy"
+    },
+    "active-song": {
+      "cases": [
+        "Active restored song resumes existing queue without new playback preparation",
+        "Artwork toggles active song to pause without replacing queue or loading media",
+        "Focused active row Enter resumes and pauses",
+        "Active row menu label and icon follow requested playback; both actions retain queue",
+        "Double-click active row toggles existing playback",
+        "Song title keeps opening details without transport changes",
+        "Keyboard focus reveals the artwork transport icon",
+        "Different song follows original queue-start behavior",
+        "Album track table toggles same active song without replacing queue",
+        "Duplicate playlist browser rows represent same active song and toggle without queue replacement",
+        "Queue drawer still selects exact duplicate occurrence and starts it"
+      ],
+      "rendererErrors": [],
+      "externalAttempts": []
+    },
+    "planned-shuffle": {
+      "cases": [
+        "Enable plans50 distinct occurrences once; canonical queue unchanged; queue displays same count",
+        "IPC rejects sparse upcoming/history/visited arrays without modifying saved playback",
+        "Next follows displayed plan without rerandomizing and retains pause intent",
+        "Selecting future entry skips preceding plan without inventing actual history or changing suffix",
+        "Previous walks actual plays; selecting forward history retains planned suffix",
+        "Near-end refill keeps remaining suffix and adds unvisited occurrences to50",
+        "Removing planned occurrence updates persisted indices and retains next Remove focus",
+        "Fresh process restores canonical order, selected occurrence and exact shuffle plan/history paused",
+        "IPC rejects malformed plan indices, duplicates, cursor and unknown fields without mutation",
+        "Disabling shuffle preserves canonical order; reenabling builds a fresh bounded plan",
+        "Enqueue extends candidate pool without reordering visible upcoming plan",
+        "Browser selection of an already queued song jumps within existing plan",
+        "Combined active-song toggle preserves shuffle plan, canonical queue and prepared media",
+        "Browser selection outside current queue starts a new shuffle queue",
+        "Duplicate song IDs remain distinct queue occurrences; repeat off exhausts once",
+        "Repeat all creates new cycle without immediate repeat and persists valid prior-cycle history",
+        "Repeat-cycle forward-history selection targets its exact history slot",
+        "Explicit Next skips repeat-one using planned order",
+        "Actual decoded media ending in repeat-one reloads same occurrence without consuming plan",
+        "Malformed snapshot on disk falls back to a usable fresh plan without losing queue",
+        "Restoration remaps plan indices around unavailable songs while retaining current occurrence",
+        "Prior-cycle history selection, restart and forward replay preserve pending cycle until normal planned advance",
+        "Enqueue into empty shuffled player seeds current history and saves valid plan"
+      ],
+      "rendererErrors": [],
+      "externalAttempts": [],
+      "initialPlan": [
+        105,
+        16,
+        65,
+        32,
+        94,
+        64,
+        19,
+        79,
+        40,
+        86,
+        123,
+        14,
+        83,
+        95,
+        2,
+        26,
+        18,
+        72,
+        61,
+        107,
+        69,
+        111,
+        89,
+        62,
+        78,
+        3,
+        54,
+        99,
+        115,
+        93,
+        127,
+        30,
+        81,
+        84,
+        52,
+        118,
+        67,
+        66,
+        114,
+        53,
+        119,
+        73,
+        58,
+        11,
+        117,
+        51,
+        88,
+        46,
+        98,
+        126
+      ],
+      "data": "/tmp/native-empty-shuffle-iNUgbs"
+    },
+    "automated-news": {
+      "cases": [
+        "Legacy running manual request becomes interrupted without dispatch; manual API methods absent",
+        "Script-only archive exposes historical manual and automatic text across deleted profiles, with origin and references",
+        "Settings keeps setup and automatic workflow without manual authoring/editor controls",
+        "Archive has no selection, scheduling or draft-loading routes; historical selected ID retained",
+        "Saved recording still auditions, pauses/resumes and stops without provider requests",
+        "Historical interruption and preparation history remain reachable without deleting saved audio",
+        "Actual scheduled workflow still prepares script and publishes recording through controlled text/voice responses",
+        "Automatic DJ schedules and invokes generated saved audio; archive Stop controls its active run without generation",
+        "Turn off during held automatic text cancels exact run and prevents later voice dispatch",
+        "Fresh process preserves old/new scripts, recordings and historical selection with no provider retry"
+      ],
+      "rendererErrors": [],
+      "methods": [
+        {
+          "name": "prepareNewsScript",
+          "present": false
+        },
+        {
+          "name": "renderNewsTake",
+          "present": false
+        },
+        {
+          "name": "selectNewsTake",
+          "present": false
+        }
+      ],
+      "data": "/tmp/native-automated-news-L4FMlt"
+    }
+  },
+  "limits": [
+    "Disposable profiles, local synthetic Jellyfin and controlled text/voice providers; muted decoded media, no paid provider calls.",
+    "No live-service, audible listener or VoiceOver acceptance claimed."
+  ],
+  "fixtureCorrection": "Active-song duplicate-row check now awaits the first playlist row before asserting count; initial attempt raced the asynchronous playlist read.",
+  "passed": 56
+}

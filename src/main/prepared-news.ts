@@ -143,7 +143,8 @@ async function load() {
           {
             ...request,
             status: 'interrupted',
-            error: 'The app stopped before this request completed. Start an explicit new attempt.',
+            error:
+              'The app stopped before this request completed. Review News settings before resuming automatic preparation.',
           })
         : request,
     );
@@ -573,10 +574,6 @@ export async function markPreparedNewsPlayed(input: { id: string; claimId: strin
     }),
   }));
 }
-export async function selectNewsTake(id: string | null) {
-  if (id !== null && (!validId(id) || !(await preparedAudio(id)))) invalid('Choose an available saved take.');
-  await change((current) => ({ ...current, selectedTakeId: id }));
-}
 export async function cancelPreparedNews(id: string) {
   if (!validId(id)) invalid();
   if (active?.id === id) active.controller.abort();
@@ -589,13 +586,12 @@ function validateDj(dj: DJ | undefined): DJ {
   validateNewsSettings(dj.news!);
   return structuredClone(dj);
 }
-async function execute<T extends PreparedNewsScript | PreparedNewsTake>(
+async function execute<T extends PreparedNewsTake>(
   requestId: string,
-  kind: PreparedNewsRequest['kind'],
+  kind: 'audio',
   payload: unknown,
   work: (signal: AbortSignal) => Promise<T>,
-  reconcileOnly: boolean,
-  context: Omit<PreparedNewsOrigin, 'startedAt'>,
+  context: Omit<PreparedNewsOrigin, 'startedAt'> & { kind: 'automatic' },
 ): Promise<T> {
   if (!validId(requestId)) invalid();
   const inputHash = hash(payload);
@@ -631,27 +627,14 @@ async function execute<T extends PreparedNewsScript | PreparedNewsTake>(
             old.error || 'No story was selected because source coverage was incomplete.',
           );
         if (old.status === 'complete') {
-          const saved =
-            kind === 'script'
-              ? (await load()).scripts.find((item) => item.id === old.artifactId)
-              : (await load()).takes.find((item) => item.id === old.artifactId);
-          if (saved)
-            return (
-              kind === 'audio'
-                ? { ...structuredClone(saved), available: Boolean(await preparedAudio(saved.id)) }
-                : structuredClone(saved)
-            ) as T;
+          const saved = (await load()).takes.find((item) => item.id === old.artifactId);
+          if (saved) return { ...structuredClone(saved), available: Boolean(await preparedAudio(saved.id)) } as T;
         }
         throw new ServiceError(
           'uncertain-write',
-          old.error || 'This request did not complete. Start an explicit new attempt to try again.',
+          old.error || 'This request did not complete. Review News settings before resuming automatic preparation.',
         );
       }
-      if (reconcileOnly)
-        throw new ServiceError(
-          'uncertain-write',
-          'No completed result is saved for this request. Start a new attempt explicitly if you want to prepare it again.',
-        );
       const profileName =
         context.profileName ??
         (context.profileId
@@ -667,14 +650,7 @@ async function execute<T extends PreparedNewsScript | PreparedNewsTake>(
       // A completed artifact crosses the publication boundary and must survive later cancellation.
       await change((current) => ({
         ...current,
-        scripts:
-          kind === 'script' && !current.scripts.some((script) => script.id === result.id)
-            ? [...current.scripts, result as PreparedNewsScript]
-            : current.scripts,
-        takes:
-          kind === 'audio' && !current.takes.some((take) => take.id === result.id)
-            ? [...current.takes, result as PreparedNewsTake]
-            : current.takes,
+        takes: !current.takes.some((take) => take.id === result.id) ? [...current.takes, result] : current.takes,
         requests: current.requests.map((item) =>
           item.requestId === requestId ? { ...item, status: 'complete', artifactId: result.id } : item,
         ),
@@ -686,7 +662,7 @@ async function execute<T extends PreparedNewsScript | PreparedNewsTake>(
           ? error
           : new ServiceError('server', 'Could not prepare the news break. Check the connection and try again.');
       const message = controller.signal.aborted
-        ? 'Preparation stopped. A provider request may have been charged. Start an explicit new attempt to try again.'
+        ? 'Preparation stopped. A provider request may have been charged. Review News settings before resuming automatic preparation.'
         : failure.message;
       await change((current) => ({
         ...current,
@@ -718,164 +694,6 @@ async function execute<T extends PreparedNewsScript | PreparedNewsTake>(
   })();
   return operation.promise;
 }
-export async function prepareNewsScript(
-  news: NewsService,
-  input: { profileId?: string; requestId: string; djId: string; sourceIds: string[]; reconcileOnly?: boolean },
-) {
-  if (
-    !input ||
-    !validId(input.djId) ||
-    !Array.isArray(input.sourceIds) ||
-    input.sourceIds.length > 20 ||
-    input.sourceIds.some((id) => !validId(id))
-  )
-    invalid();
-  if (input.reconcileOnly !== undefined && typeof input.reconcileOnly !== 'boolean') invalid();
-  if (input.profileId !== undefined && !validId(input.profileId)) invalid();
-  return execute(
-    input.requestId,
-    'script',
-    { djId: input.djId, sourceIds: input.sourceIds },
-    async (signal) => {
-      const state = await getLocalState();
-      const dj = validateDj(state.djs.find((item) => item.id === input.djId));
-      const sources = [...new Set(input.sourceIds)].map(
-        (id) => state.sources.find((source) => source.id === id) || invalid('A selected source no longer exists.'),
-      );
-      if (!sources.length) invalid('Choose at least one news source.');
-      const cancel = () => news.cancel(input.requestId);
-      signal.addEventListener('abort', cancel, { once: true });
-      try {
-        const excluded = await reviewedArticleUrls();
-        signal.throwIfAborted();
-        const result = await news.prepareScript({
-          requestId: input.requestId,
-          dj,
-          sources,
-          settings: {
-            ...dj.news!,
-            interests: state.workflowDraft.newsInterests ?? dj.news!.interests,
-            feedUrls: sources.filter((source) => !source.kind || source.kind === 'rss').map((source) => source.url),
-          },
-          mood: state.vibe,
-          excludeArticleUrls: excluded,
-          onCandidates: (candidates) => submitReviewedCandidates(input.requestId, candidates),
-          onReleaseCandidates: (candidates) => releaseReviewedCandidates(input.requestId, candidates),
-          onReview: (url) => completeReviewedCandidates(input.requestId, url),
-        });
-        return {
-          ...result,
-          id: randomUUID(),
-          createdAt: new Date().toISOString(),
-          provenance: {
-            dj,
-            mood: state.vibe,
-            sources,
-            newsInterests: state.workflowDraft.newsInterests ?? dj.news!.interests,
-          },
-        };
-      } finally {
-        signal.removeEventListener('abort', cancel);
-      }
-    },
-    input.reconcileOnly === true,
-    { kind: 'manual', profileId: input.profileId },
-  );
-}
-export async function renderNewsTake(
-  news: NewsService,
-  input: {
-    profileId?: string;
-    requestId: string;
-    scriptId: string;
-    script: string;
-    djId: string;
-    newVariation?: boolean;
-    reconcileOnly?: boolean;
-  },
-) {
-  if (
-    !input ||
-    !validId(input.scriptId) ||
-    !validId(input.djId) ||
-    typeof input.script !== 'string' ||
-    !input.script.trim() ||
-    input.script.length > 700 ||
-    input.script.trim().split(/\s+/u).length > 55 ||
-    (input.newVariation !== undefined && typeof input.newVariation !== 'boolean')
-  )
-    invalid('Use a reviewed script of at most 55 words.');
-  if (input.reconcileOnly !== undefined && typeof input.reconcileOnly !== 'boolean') invalid();
-  if (input.profileId !== undefined && !validId(input.profileId)) invalid();
-  return execute(
-    input.requestId,
-    'audio',
-    { scriptId: input.scriptId, script: input.script, djId: input.djId, newVariation: input.newVariation === true },
-    async (signal) => {
-      const saved = (await load()).scripts.find((item) => item.id === input.scriptId);
-      if (!saved) invalid('Prepare a script first.');
-      const dj = validateDj((await getLocalState()).djs.find((item) => item.id === input.djId));
-      const settings = dj.news!;
-      const engine = 'elevenlabs-v4' as const;
-      const model = 'eleven_v4';
-      const voice = settings.elevenVoiceId || 'JBFqnCBsd6RMkjVDRZzb';
-      const delivery = settings.elevenTags || '';
-      const signature = hash({
-        scriptId: saved!.id,
-        script: input.script.trim(),
-        engine,
-        model,
-        voice,
-        delivery,
-        language: dj.language,
-        personality: dj.personality,
-        musicPreferences: dj.musicPreferences,
-        mood: saved!.provenance.mood,
-      });
-      if (!input.newVariation) {
-        const matches = (await load()).takes
-          .filter((take) => take.signature === signature && take.provenance.dj.id === saved!.provenance.dj.id)
-          .sort((a, b) => (Date.parse(b.createdAt) || 0) - (Date.parse(a.createdAt) || 0));
-        for (const take of matches) if (await preparedAudio(take.id)) return structuredClone(take);
-      }
-      const result = await news.renderPreparedSpeech(
-        { requestId: input.requestId, dj, settings, mood: saved!.provenance.mood, engine },
-        {
-          requestId: input.requestId,
-          script: input.script.trim(),
-          articles: saved!.articles,
-          warnings: saved!.warnings,
-        },
-        AbortSignal.any([signal, AbortSignal.timeout(120000)]),
-      );
-      signal.throwIfAborted();
-      const id = randomUUID();
-      const take = {
-        id,
-        requestId: input.requestId,
-        scriptId: saved!.id,
-        script: result.script,
-        articles: result.articles,
-        warnings: result.warnings,
-        audioUrl: `wave-media://prepared/${id}`,
-        engine,
-        createdAt: new Date().toISOString(),
-        signature,
-        provenance: saved!.provenance,
-        renderingDJ: dj,
-        available: true,
-        byteLength: result.audio.length,
-        model,
-        voice,
-        delivery,
-      } as PreparedNewsTake;
-      return await publishTake(take, result.audio);
-    },
-    input.reconcileOnly === true,
-    { kind: 'manual', profileId: input.profileId },
-  );
-}
-
 async function publishTake(take: PreparedNewsTake, audio: Buffer) {
   if (active?.id === take.requestId) active.publishing = true;
   try {
@@ -1007,7 +825,6 @@ export async function prepareRoomNews(
         signal.removeEventListener('abort', cancel);
       }
     },
-    false,
     {
       kind: 'automatic',
       profileId: input.roomId,

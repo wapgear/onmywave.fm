@@ -11,6 +11,7 @@ import type { LocalState, LocalStateSnapshot, ListeningRoom, RoomProfile } from 
 import { readSharedProviderKey, writeSharedProviderKey } from './keychain';
 import { normalizePlaybackPreferences } from './playback-preferences';
 import { StorageError } from './storage-error';
+import { resolveDJAvatar } from '../shared/dj-avatar';
 
 export type StoredConnection = {
   id: string;
@@ -298,6 +299,7 @@ export async function getLocalState(): Promise<LocalStateSnapshot> {
         const djs: LocalState['djs'] = Array.isArray(value.djs)
           ? value.djs.map((dj: LocalState['djs'][number]) => ({
               ...dj,
+              ...(dj.avatar === undefined ? {} : { avatar: resolveDJAvatar(dj.avatar) }),
               news: dj.news ? { ...dj.news, speechEngine: 'elevenlabs-v4', textModel: NEWS_TEXT_MODEL } : undefined,
             }))
           : [];
