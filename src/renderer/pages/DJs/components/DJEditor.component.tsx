@@ -122,6 +122,6 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
       </div></section>
       </div>
     </fieldset>
-    <ErrorNotice error={save.error} /><p className="dj-profile-save-note">Saving a DJ does not generate audio, start playback, or change a selected take.</p><div className="modal-actions"><button type="button" aria-disabled={save.isPending || undefined} onClick={closeEditor}>Cancel</button><button ref={saveButton} className="primary" aria-disabled={save.isPending || undefined} aria-busy={save.isPending || undefined} disabled={!draft.name.trim() || !news.elevenVoiceId?.trim()}>{save.isPending ? 'Saving…' : 'Save DJ'}</button></div>
+    <ErrorNotice error={save.error} /><p className="dj-profile-save-note">Saving a DJ does not generate audio or start playback.</p><div className="modal-actions"><button type="button" aria-disabled={save.isPending || undefined} onClick={closeEditor}>Cancel</button><button ref={saveButton} className="primary" aria-disabled={save.isPending || undefined} aria-busy={save.isPending || undefined} disabled={!draft.name.trim() || !news.elevenVoiceId?.trim()}>{save.isPending ? 'Saving…' : 'Save DJ'}</button></div>
   </form></Dialog>;
 }

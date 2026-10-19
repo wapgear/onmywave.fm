@@ -1,4 +1,3 @@
-import { djPreparationKey } from '../../../../shared/dj-avatar';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { ExternalLink, Newspaper, Radio } from 'lucide-react';
 import type { LocalState, NewsArticle, NewsBreak, PreparedNewsLibrary, PreparedNewsTake, PreparedNewsScript, ReviewedNewsArticle } from '../../../../shared/types';
@@ -17,7 +16,7 @@ type Automation = {
   songsUntilBreak: number;
 };
 
-export function NewsBucket({ library, localState, automation, profileStatusUnknown, savedNewsStale, openSource, openPreparation, openDraft }: {
+export function NewsBucket({ library, localState, automation, profileStatusUnknown, savedNewsStale, openSource, openPreparation }: {
   library: PreparedNewsLibrary;
   localState: LocalState;
   automation: Automation;
@@ -25,7 +24,6 @@ export function NewsBucket({ library, localState, automation, profileStatusUnkno
   savedNewsStale: boolean;
   openSource: (url: string) => void;
   openPreparation: () => void;
-  openDraft: (script: PreparedNewsScript) => void;
 }) {
   const player = usePlayer();
   const [historyLimit, setHistoryLimit] = useState(25);
@@ -52,12 +50,8 @@ export function NewsBucket({ library, localState, automation, profileStatusUnkno
   const preparation = pageProfile ? newsPreparationStatus(pageProfile) : null;
   const lastRun = pageProfile?.workflowDraft.newsLastRun;
   const lastLabels = { running: 'Check in progress', prepared: 'Recording saved', 'no-news': 'No qualifying story', 'partial-coverage': 'Incomplete source coverage', failed: 'Check failed', interrupted: 'Check interrupted' };
-  const pageDj = localState.djs.find(dj => dj.id === pageProfile?.room.djId);
-  const pageSources = [...new Set(pageProfile?.room.sourceIds ?? [])].map(id => localState.sources.find(source => source.id === id)).filter((source): source is NonNullable<typeof source> => Boolean(source));
-  const pageInterests = pageProfile?.workflowDraft.newsInterests ?? pageDj?.news?.interests ?? '';
-  const pageDrafts = pageProfile && pageDj ? library.scripts.filter(script => !library.takes.some(take => take.scriptId === script.id)
-    && matchesProfile(script, pageProfile, pageDj, pageInterests, pageSources))
-    .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt)) : [];
+  const scriptOnly = library.scripts.filter(script => !library.takes.some(take => take.scriptId === script.id))
+    .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
   const reviewed = [...(library.reviewedArticles ?? [])].sort((a, b) => Date.parse(b.reviewedAt) - Date.parse(a.reviewedAt));
   const visibleReviewed = reviewed.slice(0, historyLimit);
   const nextHistoryCount = Math.min(25, reviewed.length - visibleReviewed.length);
@@ -96,8 +90,15 @@ export function NewsBucket({ library, localState, automation, profileStatusUnkno
     </>;
   }
 
-  function draft(script: PreparedNewsScript) {
-    return <article className="news-bucket-draft" key={script.id}><p>{script.script}</p><div className="news-bucket-draft-meta"><span>Draft · {script.provenance.dj.name} · {new Date(script.createdAt).toLocaleDateString()} · audio not generated</span><button onClick={() => openDraft(script)}>Review draft</button></div>
+  function savedScript(script: PreparedNewsScript) {
+    const request = library.requests.find(value => value.requestId === script.requestId);
+    const origin = request?.origin?.kind === 'automatic' ? 'Automatic' : request?.origin?.kind === 'manual' ? 'Manual' : 'Origin unavailable';
+    const status = request?.status ?? 'saved script';
+    const profile = request?.origin?.profileName ?? script.provenance.roomName ?? script.provenance.roomId ?? 'Profile unavailable';
+    return <article className="news-bucket-draft" key={script.id}>
+      <p>{script.script}</p>
+      <div className="news-bucket-draft-meta"><span>{origin} · {status} · Saved {new Date(script.createdAt).toLocaleDateString()} · no saved audio</span><span>Host: {script.provenance.dj.name} · Profile: {profile}</span></div>
+      <p className="news-bucket-muted">Saved script only. No recording is saved for this text.</p>
       {script.articles.map(article => <p className="news-bucket-draft-source" key={`${article.id}-${article.url}`}><button onClick={() => openSource(article.url)}>{article.title}<ExternalLink size={13} aria-hidden="true" /></button>{articleSource(article)}</p>)}
       {preparationNotes(script.warnings)}
     </article>;
@@ -153,8 +154,9 @@ export function NewsBucket({ library, localState, automation, profileStatusUnkno
     </section>
 
     <section className="news-bucket-drafts" aria-labelledby="news-bucket-drafts-title">
-      <div className="news-bucket-section-heading"><div><span className="eyebrow">{savedNewsStale ? 'Last loaded drafts' : 'In preparation'}</span><h3 id="news-bucket-drafts-title">Drafts for {pageProfile?.name ?? 'this profile'}</h3></div><span>{pageDrafts.length}{savedNewsStale ? ' last loaded' : ''}</span></div>
-      {!pageDrafts.length ? <div className="news-bucket-draft-empty"><p>{savedNewsStale ? 'No drafts were waiting for audio when last loaded.' : 'No drafts are waiting for audio.'}</p></div> : <div className="news-bucket-draft-list">{pageDrafts.map(draft)}</div>}
+      <div className="news-bucket-section-heading"><div><span className="eyebrow">{savedNewsStale ? 'Last loaded scripts' : 'Saved history'}</span><h3 id="news-bucket-drafts-title">Saved text across all profiles</h3></div><span>{scriptOnly.length}{savedNewsStale ? ' last loaded' : ''}</span></div>
+      <p className="news-bucket-muted">These saved records are read-only. New stories and recordings are prepared automatically from your room settings.</p>
+      {!scriptOnly.length ? <div className="news-bucket-draft-empty"><p>{savedNewsStale ? 'No script-only records were in the last loaded results.' : 'No saved scripts are waiting without audio.'}</p></div> : <div className="news-bucket-draft-list">{scriptOnly.map(savedScript)}</div>}
     </section>
 
     <section className="news-bucket-history" aria-labelledby="news-bucket-history-title">
@@ -168,14 +170,6 @@ export function NewsBucket({ library, localState, automation, profileStatusUnkno
       }}>Show {nextHistoryCount} more reviewed {nextHistoryCount === 1 ? 'story' : 'stories'}</button>}</>}
     </section>
   </section>;
-}
-
-function matchesProfile(script: PreparedNewsScript, profile: LocalState['roomProfiles'][number], dj: LocalState['djs'][number], interests: string, sources: LocalState['sources']): boolean {
-  if (script.provenance.roomId && script.provenance.roomId !== profile.id) return false;
-  if (script.provenance.dj.id !== dj.id || djPreparationKey(script.provenance.dj) !== djPreparationKey(dj) || script.provenance.mood !== profile.mood) return false;
-  if ((script.provenance.newsInterests ?? script.provenance.dj.news?.interests ?? '') !== interests) return false;
-  const identity = (items: LocalState['sources']) => items.map(source => ({ id: source.id, url: source.url })).sort((a, b) => a.id.localeCompare(b.id) || a.url.localeCompare(b.url));
-  return JSON.stringify(identity(script.provenance.sources)) === JSON.stringify(identity(sources));
 }
 
 function ReviewedRow({ article, openSource }: { article: ReviewedNewsArticle; openSource: (url: string) => void }) {
