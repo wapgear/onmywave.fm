@@ -2,6 +2,7 @@ import { useIsMutating, useMutation } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 
 import { unwrap } from '../../api';
+import { UpdateSettings } from '../../components/AppUpdates/AppUpdates.component';
 import { LibraryChooser } from '../../components/LibraryChooser';
 import { ProviderKeys } from '../../components/ProviderKeys/ProviderKeys.component';
 import { Dialog, ErrorNotice, PageHeading } from '../../components/Shared';
@@ -118,10 +119,7 @@ export function SettingsPage({
           </section>
           <DJPlaybackSettings />
           <NewsTransitions />
-          <section>
-            <h2>About</h2>
-            <p className="settings-description">onmywave.fm Light for macOS</p>
-          </section>
+          <UpdateSettings />
         </div>
       )}
       {confirm && (

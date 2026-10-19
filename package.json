@@ -1,10 +1,10 @@
 {
-  "name": "onmywave-desktop-light",
-  "version": "0.1.0",
+  "name": "onmywave-desktop",
+  "version": "0.0.1",
   "private": true,
   "license": "GPL-3.0-only",
   "author": "onmywave.fm contributors",
-  "description": "A light macOS music player for your Jellyfin library",
+  "description": "A macOS music player for your Jellyfin library",
   "main": "out/main/index.js",
   "type": "module",
   "scripts": {
@@ -19,13 +19,15 @@
     "lint:oxlint": "oxlint --max-warnings=0",
     "format": "oxfmt --write . && eslint . --fix --fix-type layout && oxlint --fix --config .oxlint-spacing.json",
     "format:check": "node scripts/check-format.mjs && oxlint --config .oxlint-spacing.json --max-warnings=0",
-    "check": "npm run format:check && npm run lint && npm run build"
+    "check": "npm run format:check && npm run lint && npm run build",
+    "release:mac": "bash scripts/release-mac.sh"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
     "@fontsource/manrope": "^5.2.8",
     "@tanstack/react-query": "5.96.2",
     "@tanstack/react-virtual": "^3.14.19",
+    "electron-updater": "^6.8.9",
     "fast-xml-parser": "^5.11.2",
     "lucide-react": "^0.468.0",
     "react": "19.2.7",
@@ -53,7 +55,7 @@
   },
   "build": {
     "appId": "fm.onmywave.light",
-    "productName": "onmywave.fm Light",
+    "productName": "onmywave.fm",
     "directories": {
       "output": "release"
     },
@@ -61,7 +63,8 @@
       "out/**",
       "package.json",
       "LICENSE",
-      "THIRD_PARTY_NOTICES.md"
+      "THIRD_PARTY_NOTICES.md",
+      "licenses/**"
     ],
     "mac": {
       "category": "public.app-category.music",
@@ -69,6 +72,23 @@
         "dir"
       ],
       "icon": "resources/icon.icns"
+    },
+    "artifactName": "onmywave-${version}-${arch}.${ext}",
+    "publish": {
+      "provider": "github",
+      "owner": "wapgear",
+      "repo": "onmywave-app"
     }
+  },
+  "homepage": "https://github.com/wapgear/onmywave.fm#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wapgear/onmywave.fm.git"
+  },
+  "bugs": {
+    "url": "https://github.com/wapgear/onmywave.fm/issues"
+  },
+  "engines": {
+    "node": ">=24 <25"
   }
 }

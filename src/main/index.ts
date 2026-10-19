@@ -76,9 +76,16 @@ import {
   writeElevenLabsKey,
 } from './storage';
 import { StorageError } from './storage-error';
+import {
+  checkForUpdates as checkForAppUpdates,
+  downloadUpdate as downloadAppUpdate,
+  getUpdateStatus,
+  installUpdate as installAppUpdate,
+  startUpdates,
+} from './updates';
 
 
-app.setName('onmywave.fm Light');
+app.setName('onmywave.fm');
 
 app.setPath('userData', join(app.getPath('appData'), 'onmywave-light'));
 
@@ -107,6 +114,8 @@ let newsRecoveryFailed = false;
 
 let closing = false;
 
+let shutdownStarted = false;
+
 const news = new NewsService({
   canGenerate: () => !closing && newsRecoveryStatus.phase === 'ready' && !signingOut && !!service.connection(),
   getApiKey: readOpenAIKey,
@@ -120,6 +129,16 @@ const news = new NewsService({
 
 function cancelNews() {
   news.cancel();
+}
+
+function beginShutdown() {
+  if (shutdownStarted) return;
+  shutdownStarted = true;
+  closing = true;
+  ++newsRecoveryEpoch;
+  stopNewsWorkflow();
+  cancelNews();
+  revokeMedia();
 }
 
 let playlistSessionEpoch = 0;
@@ -331,6 +350,10 @@ const newsOperations = new Set([
 
 function registerIpc() {
   const operations: Record<string, (input: never) => unknown> = {
+    getUpdateStatus: () => getUpdateStatus(),
+    checkForUpdates: () => checkForAppUpdates(),
+    downloadUpdate: () => downloadAppUpdate(),
+    installUpdate: () => installAppUpdate(),
     getNewsRecoveryStatus: () => ({ ...newsRecoveryStatus }),
     retryNewsRecovery: () => recoverNews(),
     getConnection: () => service.connection(),
@@ -903,6 +926,11 @@ function registerIpc() {
       try {
         if (!window || event.sender !== window.webContents || event.senderFrame !== window.webContents.mainFrame)
           throw new ServiceError('forbidden', 'Request denied.');
+        if (
+          ['getUpdateStatus', 'checkForUpdates', 'downloadUpdate', 'installUpdate'].includes(name) &&
+          input !== undefined
+        )
+          invalid();
         if (input !== undefined && JSON.stringify(input).length > 8_000_000) invalid();
         if (
           input !== undefined &&
@@ -1060,6 +1088,9 @@ app
     );
     registerIpc();
     await createWindow();
+    startUpdates((status) => {
+      if (window && !window.isDestroyed()) window.webContents.send('wave:updateStatus', status);
+    }, beginShutdown);
     void recoverNews();
     app.on('activate', () => {
       if (!window) void createWindow();
@@ -1079,9 +1110,5 @@ app.on('window-all-closed', () => {
 });
 
 app.on('before-quit', () => {
-  closing = true;
-  ++newsRecoveryEpoch;
-  stopNewsWorkflow();
-  cancelNews();
-  revokeMedia();
+  beginShutdown();
 });
