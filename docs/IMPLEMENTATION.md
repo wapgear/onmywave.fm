@@ -2,6 +2,10 @@
 
 The historical sections below preserve earlier work and evidence. The current dated entry links the latest implementation and acceptance findings; earlier sections are not the current feature contract or acceptance status. Use [REQUIREMENTS](../REQUIREMENTS.md), [the radio PRD and STAR stories](RADIO_EXPERIENCE.md), and [the acceptance checklist](ACCEPTANCE_CHECKLIST.md) for the current application. Earlier speech-engine, station-placeholder, packaging and verification descriptions below retain their historical scope. Routine verification now uses development or production-preview Electron and never packages, signs, notarizes or publishes the app.
 
+## Current dated evidence, 19 October 2026
+
+Issue #25 retires manual story editing, text/audio generation, saved-take selection and manual insertion from the renderer and IPC. Automatic preparation, delivery, cancellation, status and recovery remain available. Saved scripts and recordings, including old manual work and deleted-profile history, remain readable and recordings can be auditioned. The [automated-only news record](verification/2026-10-19-automated-only-news.json) covers ten native Electron scenarios, including actual automatic preparation and delivery with controlled providers, cancellation before voice dispatch and restart without retries. Build/TypeScript and full ESLint pass. Earlier manual-control notes retain their historical scope.
+
 ## Current dated evidence, 18 October 2026
 
 The [requirement clause review](verification/2026-10-18-requirement-clause-review.json) introduces an exact-text semantic/proof review queue while retaining all source lines, STAR stories and parent gates. Its fragments are not scored requirements; proof acceptance remains unreviewed. Current summary text now agrees with the table’s 25 open checks and later PRD revisions. App source and acceptance dispositions are unchanged.
