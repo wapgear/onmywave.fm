@@ -480,7 +480,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         const byOriginal = new Map(originalIndices.map((original, index) => [original, restoredQueue[index].key]));
         const keys = (indices: number[]) => indices.flatMap(index => byOriginal.has(index) ? [byOriginal.get(index)!] : []);
         plan = refillShufflePlan({ upcoming: keys(snapshot.upcoming), history: keys(snapshot.history),
-          cursor: keys(snapshot.history.slice(0, snapshot.cursor + 1)).length - 1, visited: new Set(keys(snapshot.visited)) }, restoredQueue.map(item => item.key), restoredKey ?? null);
+          cursor: keys(snapshot.history.slice(0, snapshot.cursor + 1)).length - 1, visited: new Set(keys(snapshot.visited)) }, restoredQueue.map(item => item.key));
       } else plan = createShufflePlan(restoredQueue.map(item => item.key), restoredKey ?? null);
       updateShufflePlan(plan);
       setQueue(restoredQueue);
@@ -799,9 +799,9 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       if (state.shuffle) {
         const plan = shufflePlan.current;
         const selected = historyIndex !== undefined && plan.history[historyIndex] === key
-          ? { ...plan, cursor: historyIndex, visited: new Set([...plan.visited, key]), upcoming: plan.upcoming.filter(item => item !== key) }
+          ? { ...plan, cursor: historyIndex }
           : selectShuffle(plan, state.queue.map(item => item.key), key);
-        updateShufflePlan(refillShufflePlan(selected, state.queue.map(item => item.key), key));
+        updateShufflePlan(refillShufflePlan(selected, state.queue.map(item => item.key)));
       }
       changeTrack(nextIndex);
   };
@@ -975,7 +975,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       if (live.current.shuffle) {
         const keys = nextQueue.map(item => item.key);
         const currentKey = nextQueue[live.current.index]?.key ?? null;
-        updateShufflePlan(live.current.queue.length ? refillShufflePlan(shufflePlan.current, keys, currentKey) : createShufflePlan(keys, currentKey));
+        updateShufflePlan(live.current.queue.length ? refillShufflePlan(shufflePlan.current, keys) : createShufflePlan(keys, currentKey));
       }
       live.current = { ...live.current, queue: nextQueue, current: nextQueue[live.current.index]?.song };
       setQueue(nextQueue);
@@ -1017,7 +1017,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       if (shuffle && remaining.length) {
         const replacement = remaining[nextIndex].key;
         if (plan.history[plan.cursor] !== replacement) plan = selectShuffle(plan, remaining.map(item => item.key), replacement);
-        plan = refillShufflePlan(plan, remaining.map(item => item.key), replacement);
+        plan = refillShufflePlan(plan, remaining.map(item => item.key));
       }
       updateShufflePlan(plan);
       live.current = { ...live.current, queue: remaining, index: nextIndex, current: remaining[nextIndex]?.song };

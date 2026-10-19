@@ -28,7 +28,7 @@ export function isShuffleSnapshot(value: unknown, queueLength: number, currentIn
   if (upcoming.some(index => visitedSet.has(index))) return false;
   const cursor = snapshot.cursor as number;
   if (queueLength === 0) return upcoming.length === 0 && history.length === 0 && visited.length === 0 && cursor === -1;
-  return currentIndex >= 0 && currentIndex < queueLength && visitedSet.has(currentIndex) && history.length > 0 && cursor >= 0 && cursor < history.length && history[cursor] === currentIndex;
+  return currentIndex >= 0 && currentIndex < queueLength && visited.length > 0 && history.length > 0 && cursor >= 0 && cursor < history.length && history[cursor] === currentIndex;
 }
 
 function sample<T>(values: T[], count: number): T[] {
@@ -60,13 +60,12 @@ export function createShufflePlan(keys: string[], currentKey: string | null): Sh
   return { upcoming, history, cursor: history.length - 1, visited };
 }
 
-/** Replenish a short upcoming window without changing its existing suffix. */
-export function refillShufflePlan(plan: ShufflePlan, keys: string[], currentKey: string | null): ShufflePlan {
+/** Replenish the active cycle independently of replay through earlier history. */
+export function refillShufflePlan(plan: ShufflePlan, keys: string[]): ShufflePlan {
   const available = new Set(keys);
   const upcoming = plan.upcoming.filter((key, index, items) => available.has(key) && items.indexOf(key) === index);
   const { history, cursor } = retainedCursor(plan.history, plan.cursor, key => available.has(key));
   const visited = new Set([...plan.visited].filter(key => available.has(key)));
-  if (currentKey && available.has(currentKey)) visited.add(currentKey);
   const normalized: ShufflePlan = { upcoming, history, cursor: Math.max(-1, cursor), visited };
   if (upcoming.length > SHUFFLE_REFILL_THRESHOLD) return normalized;
   const planned = new Set(upcoming);
@@ -77,20 +76,19 @@ export function refillShufflePlan(plan: ShufflePlan, keys: string[], currentKey:
 
 /** Select the next planned occurrence, replay forward history, or start a repeat-all cycle. */
 export function nextShuffle(plan: ShufflePlan, keys: string[], currentKey: string | null, repeatAll: boolean): { plan: ShufflePlan; key: string | null } {
-  plan = refillShufflePlan(plan, keys, currentKey);
+  plan = refillShufflePlan(plan, keys);
   const available = new Set(keys);
   const upcoming = plan.upcoming.filter(key => available.has(key));
   const { history, cursor } = retainedCursor(plan.history, plan.cursor, key => available.has(key));
   const visited = new Set([...plan.visited].filter(key => available.has(key)));
-  if (currentKey && available.has(currentKey)) visited.add(currentKey);
   const normalized: ShufflePlan = { upcoming, history, cursor: Math.max(-1, cursor), visited };
 
   while (normalized.cursor + 1 < normalized.history.length) {
     const nextCursor = normalized.cursor + 1;
     const key = normalized.history[nextCursor];
     if (available.has(key)) {
-      const advanced: ShufflePlan = { ...normalized, cursor: nextCursor, visited: new Set([...visited, key]), upcoming: upcoming.filter(item => item !== key) };
-      return { plan: refillShufflePlan(advanced, keys, key), key };
+      const advanced: ShufflePlan = { ...normalized, cursor: nextCursor };
+      return { plan: refillShufflePlan(advanced, keys), key };
     }
     normalized.history.splice(nextCursor, 1);
   }
@@ -108,7 +106,7 @@ export function nextShuffle(plan: ShufflePlan, keys: string[], currentKey: strin
   if (!nextKey) return { plan: { ...normalized, upcoming: nextUpcoming, visited: nextVisited }, key: null };
 
   const advanced = appendHistory({ ...normalized, upcoming: nextUpcoming, visited: nextVisited }, nextKey, Math.max(1, keys.length));
-  const replenished = refillShufflePlan(advanced, keys, nextKey);
+  const replenished = refillShufflePlan(advanced, keys);
   return { plan: replenished, key: nextKey };
 }
 
@@ -124,7 +122,7 @@ export function selectShuffle(plan: ShufflePlan, keys: string[], key: string): S
   }
 
   const historyIndex = plan.history.lastIndexOf(key);
-  if (historyIndex >= 0) return { ...plan, cursor: historyIndex, visited: new Set([...plan.visited, key]) };
+  if (historyIndex >= 0) return { ...plan, cursor: historyIndex };
 
   const history = [...plan.history.slice(0, plan.cursor + 1), key].slice(-Math.max(1, keys.length));
   return { ...plan, history, cursor: history.length - 1, visited: new Set([...plan.visited, key]) };
