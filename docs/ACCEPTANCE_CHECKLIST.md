@@ -1,5 +1,7 @@
 # Observable acceptance checklist
 
+Scope update, 19 October 2026, issue #25: manual story editing, text/audio generation, take selection and manual scheduling are removed. Earlier rows and evidence specific to those controls are historical and are not current acceptance obligations. Automatic preparation/delivery, read-only archive/audition and uncertain-work recovery remain current; see the dated automated-only verification record.
+
 Opened 16 October 2026 from the current REQUIREMENTS and RADIO_EXPERIENCE contracts. This is the working inventory for requirement-by-requirement review, replacing the seven parent gates as the level at which evidence must be assessed. The parent gates and 27 STAR stories remain mandatory. This checklist does not replace or reduce either source document.
 
 Each row is one observable contract. A row with variants passes only when every named variant is supported. Do not split easy variants to improve a score or treat a sampled page as every page. A candidate evidence record alone is not a current pass. Changes to this inventory must cite a changed or previously omitted source requirement and preserve its history.

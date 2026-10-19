@@ -50,6 +50,7 @@ export type PlaylistEditRecovery = { status: 'pending' | 'review'; markerId: str
 export type PlaylistLibrary = { items: Playlist[]; creationRecovery?: PlaylistEditRecovery };
 export type PlaylistDetail = Playlist & { canEdit: boolean | null; restriction?: string; entries: PlaylistEntry[]; editRecovery?: PlaylistEditRecovery };
 export type DJ = {
+  avatar?: import('./dj-avatar').DJAvatarChoice;
   id: string;
   name: string;
   description: string;
@@ -164,9 +165,6 @@ export interface WaveApi {
   releasePreparedNews(input: PreparedNewsClaim & { neverPlayInvoked?: boolean }): Promise<Result<void>>;
   markPreparedNewsPlayed(input: PreparedNewsClaim): Promise<Result<void>>;
   getPreparedNews(): Promise<Result<PreparedNewsLibrary>>;
-  prepareNewsScript(input: { profileId?: string; reconcileOnly?: boolean; requestId: string; djId: string; sourceIds: string[] }): Promise<Result<PreparedNewsScript>>;
-  renderNewsTake(input: { profileId?: string; reconcileOnly?: boolean; requestId: string; scriptId: string; script: string; djId: string; newVariation?: boolean }): Promise<Result<PreparedNewsTake>>;
-  selectNewsTake(takeId: string | null): Promise<Result<void>>;
   cancelPreparedNews(requestId: string): Promise<Result<void>>;
   getVoicePreview(voiceId: string): Promise<Result<DJVoicePreview>>;
   prepareVoicePreview(input: { voiceId: string; regenerate?: boolean }): Promise<Result<DJVoicePreview>>;

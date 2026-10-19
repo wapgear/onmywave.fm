@@ -1,0 +1,58 @@
+{
+  "date": "2026-10-19",
+  "issue": 25,
+  "scope": "Automatic-only news creation and DJ delivery; preserve read-only historical artifacts and audition.",
+  "validation": {
+    "build": "npm run build passed (includes TypeScript and bundled voice checks)",
+    "lint": "npm run lint passed",
+    "nativeElectron": {
+      "passed": 10,
+      "cases": [
+        "Legacy running manual request becomes interrupted without dispatch; manual API methods absent",
+        "Script-only archive exposes historical manual and automatic text across deleted profiles, with origin and references",
+        "Settings keeps setup and automatic workflow without manual authoring/editor controls",
+        "Archive has no selection, scheduling or draft-loading routes; historical selected ID retained",
+        "Saved recording still auditions, pauses/resumes and stops without provider requests",
+        "Historical interruption and preparation history remain reachable without deleting saved audio",
+        "Actual scheduled workflow still prepares script and publishes recording through controlled text/voice responses",
+        "Automatic DJ schedules and invokes generated saved audio; archive Stop controls its active run without generation",
+        "Turn off during held automatic text cancels exact run and prevents later voice dispatch",
+        "Fresh process preserves old/new scripts, recordings and historical selection with no provider retry"
+      ],
+      "rendererErrors": [],
+      "removedRendererMethods": [
+        {
+          "name": "prepareNewsScript",
+          "present": false
+        },
+        {
+          "name": "renderNewsTake",
+          "present": false
+        },
+        {
+          "name": "selectNewsTake",
+          "present": false
+        }
+      ]
+    },
+    "fixture": "Actual main/preload and production renderer in a disposable local profile; controlled text and voice responses, muted audio, stopped periodic scheduler with explicit ticks; no paid provider requests.",
+    "limits": [
+      "Controlled providers and local server, not a live service or audible-listener acceptance test.",
+      "Historical selectedTakeId and manual-origin metadata retained for compatibility; no history purge."
+    ]
+  },
+  "sourceSha256": {
+    "src/main/index.ts": "e16ff5fd243ecdd5343859d2d5a9cfa7679818246560a680dc39db70d2e0a3a5",
+    "src/main/prepared-news.ts": "40dabc5061324809d2d6353be90ba7e5f201705156411bf458e84a0e9b0255cf",
+    "src/preload/index.ts": "ecb3f0c8b0a42ac9339475ad1d6dfe66246bc4d34c4334af366328612a71df26",
+    "src/renderer/App.tsx": "19df50f7572f113f3ba4b782576a3973d1e19a43de6081230da449becdd3d804",
+    "src/renderer/pages/DJs/components/DJEditor.component.tsx": "0582c96141a6fe450ef696f84c31da9ddc6ad1fa20468afa350bbac0c4214079",
+    "src/renderer/pages/Settings/components/WorkflowPreferences.component.tsx": "bdc31c44eb62fd3e6a9a75743591ea50ff75557d3fdb9223baa2aebd4e16a4a2",
+    "src/renderer/pages/Stations/Stations.page.tsx": "2dc34cf124e9df2d1b66e34bdc39813c590d3472bdd3859655a491bb7a852da8",
+    "src/renderer/pages/Stations/Stations.styles.css": "32286d823921c5a78c0b09d7755760b4221881060c4ec244183b67a017e38d57",
+    "src/renderer/pages/Stations/components/NewsBucket.component.tsx": "dcbc33f741f98c8abe7838b25c9d290b330891123bdb758d5080cbec015ec8fa",
+    "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": "f333c84c9051a737a6da14ab11c9d21b5d2476da4bbd5ed2e58af3a09ce4c799",
+    "src/renderer/pages/Stations/components/PreparedTakes.styles.css": "f95df6dfc2813b55c22c37cb6e0653603cab08695d368415938a6d3ff9f574c8",
+    "src/shared/types.ts": "d75b7c62b520d61831ce42c7c6f95610569188ca5c6de5552a28893db436a6b1"
+  }
+}

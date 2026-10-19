@@ -1,5 +1,7 @@
 # PRD alignment and UX acceptance audit
 
+Scope update, 19 October 2026, issue #25: manual story editing, text/audio generation, take selection and manual scheduling are removed. Earlier rows and evidence specific to those controls are historical and are not current acceptance obligations. Automatic preparation/delivery, read-only archive/audition and uncertain-work recovery remain current; see the dated automated-only verification record.
+
 Audit opened 16 October 2026. The goal remains active. A previous passing build and status fixture did not prove completion of all music and radio flows.
 
 Current 18 October result: the [essential keyboard audit](verification/2026-10-18-q06-keyboard-acceptance.json) moves Q06 to Controlled after current-source and native-evidence reconciliation. The checklist now has 26 open checks, 14 listener and 12 other-proof. Dated sections below preserve their original dispositions; no listener or full VoiceOver acceptance is implied.
