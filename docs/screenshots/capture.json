@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-19",
+  "baseCommit": "cf8823d",
+  "runtime": "Electron 43.7.0 on macOS",
+  "viewport": {
+    "width": 1280,
+    "height": 788,
+    "deviceScaleFactor": 2
+  },
+  "method": "BrowserWindow.webContents.capturePage with built production renderer and existing preload; fixture-only IPC handlers; external HTTP(S) requests blocked",
+  "data": "12 fictional songs/albums, built-in placeholder icons, no music files, no real account or providers",
+  "localChanges": "Existing uncommitted TrackTable source and styles were included in the renderer build. Hashes below identify those inputs.",
+  "sha256": {
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "f745a5100e411f9816f552b726e05f94df122463f555db645a3a561dcd1daefe",
+    "src/renderer/components/TrackTable/TrackTable.styles.css": "c11b4f036715a59fbc3be3e611153aaf942cc2013f6ed1fe208a29f527da9440",
+    "docs/screenshots/albums.png": "fdc72061ba71a37361fd70c2b54d118a346a81610f28e78eb509ec3dd0d09547",
+    "docs/screenshots/library.png": "828a64d5b0b74e1097fba3d938a4e6ae3412a89f07dd3c16673fabe4c2aa947a"
+  }
+}
