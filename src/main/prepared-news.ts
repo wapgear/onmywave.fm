@@ -461,8 +461,7 @@ export async function renderNewsTake(news: NewsService, input: { profileId?: str
     signal.throwIfAborted();
     const id = randomUUID();
     const take = { id, requestId: input.requestId, scriptId: saved!.id, script: result.script, articles: result.articles, warnings: result.warnings, audioUrl: `wave-media://prepared/${id}`, engine, createdAt: new Date().toISOString(), signature, provenance: saved!.provenance, renderingDJ: dj, available: true, byteLength: result.audio.length, model, voice, delivery } as PreparedNewsTake;
-    await publishTake(take, result.audio);
-    return take;
+    return await publishTake(take, result.audio);
   }, input.reconcileOnly === true, { kind: 'manual', profileId: input.profileId });
 }
 
@@ -472,11 +471,13 @@ async function publishTake(take: PreparedNewsTake, audio: Buffer) {
     await mkdir(root(), { recursive: true, mode: 0o700 });
     const temp = `${audioPath(take.id)}.tmp`;
     await writeFile(temp, audio, { mode: 0o600 });
+    const recorded = { ...take, recordedAt: new Date().toISOString() };
     const sidecar = join(root(), `${take.id}.take.json`);
     const request = (await load()).requests.find(item => item.requestId === take.requestId)!;
-    await writeFile(`${sidecar}.tmp`, JSON.stringify({ take, request }), { mode: 0o600 });
+    await writeFile(`${sidecar}.tmp`, JSON.stringify({ take: recorded, request }), { mode: 0o600 });
     await rename(`${sidecar}.tmp`, sidecar);
     await rename(temp, audioPath(take.id));
+    return recorded;
   } catch { throw new StorageError(); }
 }
 
@@ -512,8 +513,7 @@ export async function prepareRoomNews(news: NewsService, input: { requestId: str
       signal.throwIfAborted();
       const id = randomUUID();
       const take: PreparedNewsTake = { requestId: input.requestId, script: result.script, articles: result.articles, warnings: result.warnings, engine: result.engine, id, scriptId: script.id, createdAt: script.createdAt, audioUrl: `wave-media://prepared/${id}`, signature: hash({ requestId: input.requestId, provenance, script: result.script }), provenance, renderingDJ: dj, available: true, byteLength: result.audio.length, model: 'eleven_v4', voice: settings.elevenVoiceId || 'JBFqnCBsd6RMkjVDRZzb', delivery: settings.elevenTags || '', deliveryState: { status: 'ready' } };
-      await publishTake(take, result.audio);
-      return take;
+      return await publishTake(take, result.audio);
     } finally { signal.removeEventListener('abort', cancel); }
   }, false, { kind: 'automatic', profileId: input.roomId, profileName: snapshot?.roomProfiles.find(profile => profile.id === input.roomId)?.name });
 }
