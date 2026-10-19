@@ -22,7 +22,7 @@ export function isShuffleSnapshot(value: unknown, queueLength: number, currentIn
   const visited = snapshot.visited;
   if (upcoming.length > SHUFFLE_WINDOW_SIZE || history.length > Math.max(1, queueLength) || visited.length > queueLength) return false;
   const validIndex = (index: unknown): index is number => Number.isInteger(index) && (index as number) >= 0 && (index as number) < queueLength;
-  if (!upcoming.every(validIndex) || !history.every(validIndex) || !visited.every(validIndex)) return false;
+  if (!Array.from(upcoming).every(validIndex) || !Array.from(history).every(validIndex) || !Array.from(visited).every(validIndex)) return false;
   if (new Set(upcoming).size !== upcoming.length || new Set(visited).size !== visited.length) return false;
   const visitedSet = new Set(visited as number[]);
   if (upcoming.some(index => visitedSet.has(index))) return false;

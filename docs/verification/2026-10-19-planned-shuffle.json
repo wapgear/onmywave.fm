@@ -62,5 +62,33 @@
     "bootstrap.mjs": "e73a4782c10601cf5f41495cff3ee81d96a19ee546e9bba05b1f0ed17f111911",
     "server.mjs": "1aa3efbebb1757a8a57f82886d522703856fc16aea117ced7c8f3daa40a408f1",
     "report.json": "218a14ce8a6e109f82160b2be8af48b6319841a9966a6e66d6b74d02e836ca5f"
+  },
+  "reviewFollowUp": {
+    "date": "2026-10-19",
+    "fix": "Validate every array slot, including sparse holes, at persistence and IPC boundaries.",
+    "validation": "Build/TypeScript, full ESLint and 21 native Electron scenarios passed.",
+    "cases": [
+      "Enable plans50 distinct occurrences once; canonical queue unchanged; queue displays same count",
+      "IPC rejects sparse upcoming/history/visited arrays without modifying saved playback",
+      "Next follows displayed plan without rerandomizing and retains pause intent",
+      "Selecting future entry skips preceding plan without inventing actual history or changing suffix",
+      "Previous walks actual plays; selecting forward history retains planned suffix",
+      "Near-end refill keeps remaining suffix and adds unvisited occurrences to50",
+      "Removing planned occurrence updates persisted indices and retains next Remove focus",
+      "Fresh process restores canonical order, selected occurrence and exact shuffle plan/history paused",
+      "IPC rejects malformed plan indices, duplicates, cursor and unknown fields without mutation",
+      "Disabling shuffle preserves canonical order; reenabling builds a fresh bounded plan",
+      "Enqueue extends candidate pool without reordering visible upcoming plan",
+      "Browser selection of an already queued song jumps within existing plan",
+      "Browser selection outside current queue starts a new shuffle queue",
+      "Duplicate song IDs remain distinct queue occurrences; repeat off exhausts once",
+      "Repeat all creates new cycle without immediate repeat and persists valid prior-cycle history",
+      "Repeat-cycle forward-history selection targets its exact history slot",
+      "Explicit Next skips repeat-one using planned order",
+      "Actual decoded media ending in repeat-one reloads same occurrence without consuming plan",
+      "Malformed snapshot on disk falls back to a usable fresh plan without losing queue",
+      "Restoration remaps plan indices around unavailable songs while retaining current occurrence",
+      "Enqueue into empty shuffled player seeds current history and saves valid plan"
+    ]
   }
 }
