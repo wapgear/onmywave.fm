@@ -13,16 +13,16 @@ Use Node.js 24 and an Apple silicon Mac with the Developer ID certificate config
 Increase the package version before each new release, then run:
 
 ```sh
-npm run release:mac -- --local-only
-npm run release:mac -- path/to/release-notes.md
+pnpm run release:mac --local-only
+pnpm run release:mac path/to/release-notes.md
 ```
 
 Existing installations without the updater need one manual installation of an updater-enabled release. This change does not publish a release.
 
 ## Verification
 
-- `npm run check` passed formatting, lint, TypeScript, and production build.
-- `npm audit --omit=dev` reported no vulnerabilities.
+- `pnpm run check` passed formatting, lint, TypeScript, and production build.
+- `pnpm audit` reported no vulnerabilities.
 - Browser verification exercised the actual components with a simulated bridge: deferral without download, percentage progress, disabled in-flight actions, restart deferral, explicit restart, installation failure, retry, current version, and a new release prompt at 960 and 1280 pixel widths.
 - A native Electron launch with isolated application data verified production imports, the preload bridge, and development-build update gating.
 - Release metadata and artifact SHA-512 validation passed against the existing local release artifacts. Shell syntax validation passed.

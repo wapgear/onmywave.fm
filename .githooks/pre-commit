@@ -9,4 +9,4 @@ fi
 
 node scripts/check-commit-files.mjs
 git diff --cached --check
-npm run check
+pnpm run check

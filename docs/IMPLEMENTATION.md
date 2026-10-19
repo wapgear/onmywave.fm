@@ -58,7 +58,7 @@ The app lives in `desktop-light/` and uses Electron, Vite, React, and TanStack Q
 
 ## Verified
 
-Type checking, ESLint, and production builds pass. The npm production dependency audit reports zero vulnerabilities.
+Type checking, ESLint, and production builds pass. The full pnpm dependency audit reports zero vulnerabilities.
 
 Manual checks against the configured Jellyfin server covered sign-in, library selection, artwork, browsing 475 songs and 424 albums, direct playback, seeking, navigation during playback, and paused restoration after restart. Playlist creation, adding selected songs, renaming while retaining entries, and editable detail views passed in the app. Focused service checks also covered duplicate skipping, entry movement and removal. Temporary verification playlists were cleaned up; the existing music playlist was preserved.
 
@@ -111,7 +111,7 @@ Genre, Tag and Sort share searchable, scrollable native popovers with a common c
 
 Verification in browser fixtures with 5,000 albums and 5,000 songs: album mounting stayed at most 50 tiles while loading over 1,600 records, song mounting stayed about 27 rows while loading over 1,100 records, and physical song rows measured 56px. Song selection and a 30,000px scroll position survived Settings navigation. Album detail/back retained a 20,000px position and focus. Opening/closing the drawer preserved the first visible album during column changes; resizing to 960×640 retained the focused tile fully in view. Arrow traversal kept song rows above the player. Filter lists with 167 options scrolled, supported Home/Escape, applied a genre to the actual query and cleared it. Next-page failures preserved loaded songs/albums and recovered through Retry. Settings fixture saves locked editing, applied selected IDs and stayed on Settings. Drawer content switches start at the top; Escape without an open drawer leaves search focus alone.
 
-Local Electron checks used the real Jellyfin server: subsequent pages loaded for both songs and albums, no pagination remained, and the Playing Next drawer showed 79 upcoming songs beside the library with no modal or second visible scrollbar. Muted playback loaded successfully and was left paused at its prior volume. Build, typecheck and ESLint pass; the production dependency audit reports zero vulnerabilities. No paid generation, packaging, publishing or unit-test framework was introduced. Large multi-library server pagination still uses the existing prefix aggregation strategy; renderer virtualization does not change that server-side cost.
+Local Electron checks used the real Jellyfin server: subsequent pages loaded for both songs and albums, no pagination remained, and the Playing Next drawer showed 79 upcoming songs beside the library with no modal or second visible scrollbar. Muted playback loaded successfully and was left paused at its prior volume. Build, typecheck and ESLint pass; the full dependency audit reports zero vulnerabilities. No paid generation, packaging, publishing or unit-test framework was introduced. Large multi-library server pagination still uses the existing prefix aggregation strategy; renderer virtualization does not change that server-side cost.
 
 
 ## Prepared Listening Room, October 15, 2026

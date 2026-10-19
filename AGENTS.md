@@ -1,10 +1,10 @@
 # desktop-light conventions
 
-Run `npm run format` after editing code, then `npm run check` before handing it over. The Quality workflow runs the same checks. Prefer focused manual or end-to-end verification for behavior changes; do not add unit tests unless requested.
+Run `pnpm run format` after editing code, then `pnpm run check` before handing it over. The Quality workflow runs the same checks. Prefer focused manual or end-to-end verification for behavior changes; do not add unit tests unless requested.
 
 ## Commits and pull requests
 
-Work on a feature branch and submit a PR to `main`. Keep the installed pre-commit hook and server-side required checks enabled; do not bypass them. Run `npm run format`, then `npm run check` before committing. Keep untrusted PR code out of privileged workflows, use SHA-pinned actions and least-privilege tokens, and keep release credentials out of PR jobs. See [contribution guidance](CONTRIBUTING.md) for hook setup and repository protections.
+Work on a feature branch and submit a PR to `main`. Keep the installed pre-commit hook and server-side required checks enabled; do not bypass them. Run `pnpm run format`, then `pnpm run check` before committing. Keep untrusted PR code out of privileged workflows, use SHA-pinned actions and least-privilege tokens, and keep release credentials out of PR jobs. See [contribution guidance](CONTRIBUTING.md) for hook setup and repository protections.
 
 ## Formatting and ordering
 

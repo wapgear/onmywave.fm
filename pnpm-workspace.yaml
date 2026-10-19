@@ -1,0 +1,8 @@
+overrides:
+  '@electron/get@^3.0.0>global-agent': 4.1.3
+
+onlyBuiltDependencies:
+  - esbuild
+
+ignoredBuiltDependencies:
+  - electron-winstaller

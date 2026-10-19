@@ -9,7 +9,7 @@
     "node_modules/**",
     "docs/**",
     "resources/**",
-    "package-lock.json",
+    "pnpm-lock.yaml",
     "*.md",
     "LICENSE",
     "src/renderer/public/**"

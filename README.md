@@ -29,13 +29,13 @@ Screenshots show the actual renderer with a fictional local catalog, placeholder
 
 ## Run from source
 
-Install [Node.js 24](https://nodejs.org/) and npm on macOS, then:
+Install [Node.js 24](https://nodejs.org/) and [pnpm 10.34.7](https://pnpm.io/installation) on macOS, then:
 
 ```sh
 git clone https://github.com/wapgear/onmywave.fm.git
 cd onmywave.fm
-npm ci
-npm run dev
+pnpm install --frozen-lockfile
+pnpm run dev
 ```
 
 In the app:
@@ -68,17 +68,17 @@ News preparation sends source content and your configured editorial preferences 
 ## Development
 
 ```sh
-npm run check       # formatting, lint, TypeScript, production build
-npm run format      # apply source formatting and spacing fixes
-npm audit --omit=dev
+pnpm run check       # formatting, lint, TypeScript, production build
+pnpm run format      # apply source formatting and spacing fixes
+pnpm audit
 ```
 
-The build validates bundled voice samples without making generation requests. `npm run preview` opens the built app. CI runs the same quality checks and production dependency audit.
+The build validates bundled voice samples without making generation requests. `pnpm run preview` opens the built app. CI runs the same quality checks and full dependency audit.
 
 For an unsigned local macOS app directory:
 
 ```sh
-npm run package:mac
+pnpm run package:mac
 ```
 
 Output goes to `release/`. This command does not publish a release.
@@ -86,8 +86,8 @@ Output goes to `release/`. This command does not publish a release.
 For a signed, notarized Apple silicon release, export `APPLE_ID`, `APPLE_APP_SPECIFIC_PASSWORD`, and `APPLE_TEAM_ID`, or put them in ignored `scripts/.env.local`. Install the Developer ID certificate named in `electron-builder.release.mjs` and authenticate `gh` with access to `wapgear/onmywave-app`.
 
 ```sh
-npm run release:mac -- --local-only           # build and verify without publishing
-npm run release:mac -- docs/releases/0.0.1.md # build, verify, and publish
+pnpm run release:mac --local-only           # build and verify without publishing
+pnpm run release:mac docs/releases/0.0.1.md # build, verify, and publish
 ```
 
 The release command runs the quality checks, builds a DMG and ZIP, verifies signing and notarization, and includes corresponding source and SHA-256 checksums. See [automatic updates](docs/AUTO_UPDATES.md) for the update flow and verification limits. It uploads all files, including updater metadata and blockmaps, to a draft before publishing. Each release needs a higher package version than the previous release. Existing 0.0.1 installations without the updater need one manual installation of an updater-enabled release. Keep credentials outside Git. Review [release readiness](docs/OPEN_SOURCE_READINESS.md) for remaining verification limits.
