@@ -30,4 +30,4 @@ jobs:
       - run: npm ci
       - run: node scripts/check-commit-files.mjs --tracked
       - run: npm run check
-      - run: npm audit --omit=dev
+      - run: npm audit

@@ -25,12 +25,12 @@ Reviewed 19 October 2026 for `wapgear/onmywave.fm`, which is now public. This re
 - [ ] Resolve the media checks above and review dependency/runtime license resources in the packaged app. Include corresponding source and the applicable notices with the release. See the [GNU GPL v3 text](../LICENSE) and [GNU guidance](https://www.gnu.org/licenses/gpl-faq.html) for distribution requirements.
 - [x] Configure signed and notarized Apple silicon DMG and ZIP releases. The release script verifies signing, notarization, and installer integrity; `npm run package:mac` remains an unsigned local app-directory build.
 - [ ] Verify a clean install and startup on macOS without developer tooling or local credentials. Run a real Jellyfin playback/playlist smoke test and separately authorize any paid-provider checks.
-- [ ] Review development-tool advisories before using the packaging pipeline for a public release. The full audit currently reports 8 moderate and 1 low finding through build tooling; the production-only audit reports zero. `npm audit fix --force` proposes dependency changes outside this cleanup and was not run.
+- [x] Resolve development-tool advisories. The full audit now reports zero findings after the Vite/esbuild update and a scoped proxy dependency override; CI audits development and production dependencies. The downloader proxy and unsigned macOS package were verified. See [dependency security verification](verification/2026-10-19-dependency-security.md).
 - [ ] Write a release changelog and record supported macOS/CPU targets after testing them. Automatic updates now use the existing releases repository, with metadata and blockmaps published by the release script. An installed, signed version-to-version upgrade still needs verification.
 
 ## Review evidence and limits
 
-`npm run check` passed, covering formatting, lint, TypeScript, and production build. `npm audit --omit=dev` reported zero vulnerabilities. A full `npm audit` reported the development-tool findings above. No dependency versions were changed by this cleanup.
+`npm run check` passed, covering formatting, lint, TypeScript, and production build. `npm audit --omit=dev` reported zero vulnerabilities. The original cleanup recorded development-tool findings; the subsequent dependency-security change resolved them and now runs the full audit in CI.
 
 A targeted text scan of tracked files and 1,648 historical Git blobs reachable from the locally available refs found no matches for common OpenAI/GitHub/AWS token patterns, private-key headers, or HTTP URLs with embedded user/password credentials. Binary files were excluded. This does not detect arbitrary Jellyfin tokens, every provider-key format, credentials absent from local refs, secrets inside images, or personal data.
 
