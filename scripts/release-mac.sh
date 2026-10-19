@@ -4,7 +4,7 @@ cd "$(dirname "$0")/.."
 
 notes=${1:-}
 if [[ $# != 1 || ( "$notes" != --local-only && ! -f "$notes" ) ]]; then
-  echo 'Usage: npm run release:mac -- --local-only | path/to/release-notes.md' >&2
+  echo 'Usage: pnpm run release:mac --local-only | path/to/release-notes.md' >&2
   exit 1
 fi
 if [[ "$(uname -s)" != Darwin || "$(uname -m)" != arm64 ]]; then
@@ -22,8 +22,8 @@ fi
 
 repo=wapgear/onmywave-app
 version=$(node -p 'JSON.parse(require("fs").readFileSync("package.json")).version')
-npm run check
-npx electron-builder --config electron-builder.release.mjs --mac --arm64 --publish never
+pnpm run check
+pnpm exec electron-builder --config electron-builder.release.mjs --mac --arm64 --publish never
 app='release/mac-arm64/onmywave.fm.app'
 codesign --verify --deep --strict "$app"
 xcrun stapler validate "$app"
@@ -50,9 +50,9 @@ JS
 # Include the exact build inputs, without local credentials or historical documentation.
 source="onmywave-${version}-source.tar.gz"
 COPYFILE_DISABLE=1 tar --exclude='.env*' -czf "release/$source" \
-  src resources licenses scripts package.json package-lock.json electron.vite.config.ts \
-  electron-builder.release.mjs tsconfig.json eslint.config.js .oxfmtrc.json \
-  .oxlintrc.json .oxlint-spacing.json .nvmrc AGENTS.md README.md LICENSE THIRD_PARTY_NOTICES.md
+  src resources licenses scripts package.json pnpm-lock.yaml pnpm-workspace.yaml electron.vite.config.ts \
+  electron-builder.release.mjs tsconfig.json .oxlint-format.json .oxfmtrc.json \
+  .oxlintrc.json .nvmrc AGENTS.md README.md LICENSE THIRD_PARTY_NOTICES.md
 (
   cd release
   shasum -a 256 "onmywave-${version}-arm64.dmg" \

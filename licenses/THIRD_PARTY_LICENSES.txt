@@ -1,6 +1,6 @@
 Third party license texts
 
-Snapshot of production dependencies in package-lock.json. Updated 2026-10-19.
+Snapshot of production dependencies in pnpm-lock.yaml. Updated 2026-10-19.
 Full upstream license texts follow.
 
 

@@ -1,14 +1,14 @@
 # desktop-light conventions
 
-Run `npm run format` after editing code, then `npm run check` before handing it over. The Quality workflow runs the same checks. Prefer focused manual or end-to-end verification for behavior changes; do not add unit tests unless requested.
+Run `pnpm run format` after editing code, then `pnpm run check` before handing it over. The Quality workflow runs the same checks. Prefer focused manual or end-to-end verification for behavior changes; do not add unit tests unless requested.
 
 ## Commits and pull requests
 
-Work on a feature branch and submit a PR to `main`. Keep the installed pre-commit hook and server-side required checks enabled; do not bypass them. Run `npm run format`, then `npm run check` before committing. Keep untrusted PR code out of privileged workflows, use SHA-pinned actions and least-privilege tokens, and keep release credentials out of PR jobs. See [contribution guidance](CONTRIBUTING.md) for hook setup and repository protections.
+Work on a feature branch and submit a PR to `main`. Keep the installed pre-commit hook and server-side required checks enabled; do not bypass them. Run `pnpm run format`, then `pnpm run check` before committing. Keep untrusted PR code out of privileged workflows, use SHA-pinned actions and least-privilege tokens, and keep release credentials out of PR jobs. See [contribution guidance](CONTRIBUTING.md) for hook setup and repository protections.
 
 ## Formatting and ordering
 
-Oxfmt owns import sorting and ordinary formatting. ESLint Stylistic owns statement spacing. Oxlint requires exactly two blank lines after the final import, including before comments. Use one blank line:
+Oxfmt owns import sorting and ordinary formatting. Oxlint runs Stylistic for statement spacing. Oxlint requires exactly two blank lines after the final import, including before comments. Use one blank line:
 
 - Between top-level declarations and statements, including types, constants, functions, classes, and exports.
 - Before and after `useMemo`, `useCallback`, and `memo` declarations.
@@ -27,7 +27,7 @@ Keep render pure and props/state immutable. Derive values during render instead 
 
 Use `useMemo` and `useCallback` for measured work or required stable identity. Do not add them to every expression. Define components at module scope, use stable keys, and preserve accessible names, keyboard access, and focus behavior. Render untrusted source text as text; raw HTML is prohibited by lint.
 
-ESLint runs the recommended React Hooks checks plus component/hook factory validation. Oxlint explicitly checks JSX keys, duplicate props, unsafe HTML, children props, state mutation, and external-link protection. These checks supplement behavior review.
+Oxlint runs the recommended React Hooks checks plus component/hook factory validation through its JavaScript plugin host. It also runs type-aware correctness checks, including unhandled and misused promises. Oxlint explicitly checks JSX keys, duplicate props, unsafe HTML, children props, state mutation, and external-link protection. These checks supplement behavior review.
 
 ## Electron
 

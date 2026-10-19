@@ -50,8 +50,8 @@ const node = (value: unknown): XmlNode => (value && typeof value === 'object' ? 
 const array = (value: unknown): unknown[] => (value === undefined ? [] : Array.isArray(value) ? value : [value]);
 
 const plain = (value: unknown, max: number): string => {
-  const text =
-    typeof value === 'string' || typeof value === 'number' ? String(value) : String(node(value)['#text'] || '');
+  const content = typeof value === 'object' ? node(value)['#text'] : value;
+  const text = typeof content === 'string' || typeof content === 'number' ? String(content) : '';
   return text
     .replace(/<[^>]*>/g, ' ')
     .replace(/\s+/g, ' ')

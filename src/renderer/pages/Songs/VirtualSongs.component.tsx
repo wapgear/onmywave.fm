@@ -40,7 +40,7 @@ export function VirtualSongs({
 
   const getScrollElement = useCallback(() => root.current?.closest<HTMLElement>('.main-content') ?? null, []);
 
-  // eslint-disable-next-line react-hooks/incompatible-library
+  // oxlint-disable-next-line hooks/incompatible-library
   const virtualizer = useVirtualizer({
     count: table.rows.length,
     getScrollElement,

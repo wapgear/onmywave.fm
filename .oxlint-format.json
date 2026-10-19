@@ -1,0 +1,95 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["import"],
+  "categories": {
+    "correctness": "off"
+  },
+  "ignorePatterns": ["out/**", "release/**", "node_modules/**", "docs/**"],
+  "rules": {
+    "import/newline-after-import": [
+      "error",
+      {
+        "count": 2,
+        "exactCount": true,
+        "considerComments": true
+      }
+    ],
+    "@stylistic/padding-line-between-statements": [
+      "error",
+      {
+        "blankLine": "always",
+        "prev": "import",
+        "next": "*"
+      },
+      {
+        "blankLine": "any",
+        "prev": "import",
+        "next": "import"
+      },
+      {
+        "blankLine": "always",
+        "prev": {
+          "selector": "Program > :not(ImportDeclaration)"
+        },
+        "next": {
+          "selector": "Program > :not(ImportDeclaration)"
+        }
+      },
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": {
+          "selector": "Program > :matches(FunctionDeclaration, ClassDeclaration, ExportNamedDeclaration[declaration.type=/^(FunctionDeclaration|ClassDeclaration)$/], ExportDefaultDeclaration[declaration.type=/^(FunctionDeclaration|ClassDeclaration)$/], VariableDeclaration[declarations.0.init.type=/^(ArrowFunctionExpression|FunctionExpression)$/], ExportNamedDeclaration[declaration.declarations.0.init.type=/^(ArrowFunctionExpression|FunctionExpression)$/])"
+        }
+      },
+      {
+        "blankLine": "always",
+        "prev": {
+          "selector": "Program > :matches(FunctionDeclaration, ClassDeclaration, ExportNamedDeclaration[declaration.type=/^(FunctionDeclaration|ClassDeclaration)$/], ExportDefaultDeclaration[declaration.type=/^(FunctionDeclaration|ClassDeclaration)$/], VariableDeclaration[declarations.0.init.type=/^(ArrowFunctionExpression|FunctionExpression)$/], ExportNamedDeclaration[declaration.declarations.0.init.type=/^(ArrowFunctionExpression|FunctionExpression)$/])"
+        },
+        "next": "*"
+      },
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": {
+          "selector": "VariableDeclaration[declarations.0.init.callee.name=/^(useMemo|useCallback|memo)$/], VariableDeclaration[declarations.0.init.callee.object.name=\"React\"][declarations.0.init.callee.property.name=/^(useMemo|useCallback|memo)$/]"
+        }
+      },
+      {
+        "blankLine": "always",
+        "prev": {
+          "selector": "VariableDeclaration[declarations.0.init.callee.name=/^(useMemo|useCallback|memo)$/], VariableDeclaration[declarations.0.init.callee.object.name=\"React\"][declarations.0.init.callee.property.name=/^(useMemo|useCallback|memo)$/]"
+        },
+        "next": "*"
+      },
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": {
+          "selector": "ExpressionStatement[expression.callee.name=/^(useEffect|useLayoutEffect|useInsertionEffect)$/], ExpressionStatement[expression.callee.object.name=\"React\"][expression.callee.property.name=/^(useEffect|useLayoutEffect|useInsertionEffect)$/]"
+        }
+      },
+      {
+        "blankLine": "always",
+        "prev": {
+          "selector": "ExpressionStatement[expression.callee.name=/^(useEffect|useLayoutEffect|useInsertionEffect)$/], ExpressionStatement[expression.callee.object.name=\"React\"][expression.callee.property.name=/^(useEffect|useLayoutEffect|useInsertionEffect)$/]"
+        },
+        "next": "*"
+      },
+      {
+        "blankLine": "always",
+        "prev": "*",
+        "next": {
+          "selector": "ReturnStatement[argument.type=/^(JSXElement|JSXFragment)$/]"
+        }
+      }
+    ]
+  },
+  "jsPlugins": [
+    {
+      "name": "@stylistic",
+      "specifier": "@stylistic/eslint-plugin"
+    }
+  ]
+}

@@ -200,7 +200,7 @@ export function PreparedTakes({ library, refresh, active = true }: PreparedTakes
           <h2 id="prepared-takes-title">Saved audio</h2>
           <p>Listen to saved recordings and review their scripts, settings, and sources.</p>
         </div>
-        <button onClick={refresh}>Refresh</button>
+        <button onClick={() => void refresh()}>Refresh</button>
       </header>
       {(savedBreakActive || ownsStopFocus) && (
         <div className="prepared-on-air">

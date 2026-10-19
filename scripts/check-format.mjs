@@ -41,7 +41,7 @@ for (const file of different) {
   }
   const formatted = await format(file, normalized, options);
   if (formatted.errors.length || formatted.code !== normalized) {
-    console.error(`${file}: run npm run format`);
+    console.error(`${file}: run pnpm run format`);
     failures++;
   }
 }
