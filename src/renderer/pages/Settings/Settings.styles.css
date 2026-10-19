@@ -1,22 +1,106 @@
-.settings-preferences { max-width: 660px; }
-.settings-preferences section { padding: 0 0 26px; margin: 0 0 26px; border-color: var(--border, #e4e4e7); }
-.settings-preferences h2 { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
-.settings-account { margin: 0; }
-.settings-account > div { display: grid; grid-template-columns: 116px minmax(0, 1fr); gap: 16px; padding: 8px 0; font-size: 13px; line-height: 1.6; }
-.settings-account dt { color: var(--muted); }
-.settings-account dd { margin: 0; overflow-wrap: anywhere; }
-.settings-preferences .settings-signout { margin-top: 14px; border-radius: 8px; color: var(--accent); background: var(--surface); font-size: 12px; }
-.settings-preferences .settings-description { font-size: 13px; line-height: 1.7; color: var(--muted); }
-.settings-preferences .settings-footnote { font-size: 12px; line-height: 1.7; margin-top: 8px; color: var(--muted); }
-.settings-sections { display:flex; flex-wrap:wrap; gap:6px; margin:0 0 32px; }
-.settings-sections button { font-size:12px; padding:8px 12px; background:transparent; color:var(--muted); border-radius:7px; }
-.settings-sections button[aria-current="page"] { background:var(--surface); color:var(--text); }
-.settings-sections button:hover { color:var(--text); background:var(--surface); }
-.settings-section-title { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
-.settings-section-title h2 { margin:0; }
-.dj-song-interval { display: flex; flex-direction: row; align-items: center; flex-wrap: wrap; gap: 10px; font-size: 12px; }
-.dj-song-interval input { width: 76px; }
-.dj-song-interval span { color: var(--muted); }
-.settings-save[aria-disabled="true"], .settings-save[aria-disabled="true"]:hover { cursor:default; color:var(--muted); background:var(--surface); }
-.settings-save[aria-busy="true"], .settings-save[aria-busy="true"]:hover { cursor:progress; }
-.settings-save[aria-disabled="true"]:active { translate:0 0; }
+.settings-preferences {
+  max-width: 660px;
+}
+.settings-preferences section {
+  padding: 0 0 26px;
+  margin: 0 0 26px;
+  border-color: var(--border, #e4e4e7);
+}
+.settings-preferences h2 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.settings-account {
+  margin: 0;
+}
+.settings-account > div {
+  display: grid;
+  grid-template-columns: 116px minmax(0, 1fr);
+  gap: 16px;
+  padding: 8px 0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+.settings-account dt {
+  color: var(--muted);
+}
+.settings-account dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.settings-preferences .settings-signout {
+  margin-top: 14px;
+  border-radius: 8px;
+  color: var(--accent);
+  background: var(--surface);
+  font-size: 12px;
+}
+.settings-preferences .settings-description {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+.settings-preferences .settings-footnote {
+  font-size: 12px;
+  line-height: 1.7;
+  margin-top: 8px;
+  color: var(--muted);
+}
+.settings-sections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 32px;
+}
+.settings-sections button {
+  font-size: 12px;
+  padding: 8px 12px;
+  background: transparent;
+  color: var(--muted);
+  border-radius: 7px;
+}
+.settings-sections button[aria-current='page'] {
+  background: var(--surface);
+  color: var(--text);
+}
+.settings-sections button:hover {
+  color: var(--text);
+  background: var(--surface);
+}
+.settings-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.settings-section-title h2 {
+  margin: 0;
+}
+.dj-song-interval {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 12px;
+}
+.dj-song-interval input {
+  width: 76px;
+}
+.dj-song-interval span {
+  color: var(--muted);
+}
+.settings-save[aria-disabled='true'],
+.settings-save[aria-disabled='true']:hover {
+  cursor: default;
+  color: var(--muted);
+  background: var(--surface);
+}
+.settings-save[aria-busy='true'],
+.settings-save[aria-busy='true']:hover {
+  cursor: progress;
+}
+.settings-save[aria-disabled='true']:active {
+  translate: 0 0;
+}

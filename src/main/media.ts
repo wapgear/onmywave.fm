@@ -27,7 +27,10 @@ function clipResponse(request: Request, clip: { bytes: Buffer; mime: string }): 
     const match = /^bytes=(\d*)-(\d*)$/.exec(range);
     if (!match || (!match[1] && !match[2])) return new Response(null, { status: 416 });
     if (!match[1]) start = Math.max(0, clip.bytes.length - Number(match[2]));
-    else { start = Number(match[1]); if (match[2]) end = Math.min(end, Number(match[2])); }
+    else {
+      start = Number(match[1]);
+      if (match[2]) end = Math.min(end, Number(match[2]));
+    }
     if (start > end || !Number.isSafeInteger(start) || !Number.isSafeInteger(end)) {
       headers.set('Content-Range', `bytes */${clip.bytes.length}`);
       return new Response(null, { status: 416, headers });
@@ -35,26 +38,49 @@ function clipResponse(request: Request, clip: { bytes: Buffer; mime: string }): 
     headers.set('Content-Range', `bytes ${start}-${end}/${clip.bytes.length}`);
   }
   headers.set('Content-Length', String(end - start + 1));
-  return new Response(request.method === 'HEAD' ? null : new Uint8Array(clip.bytes.subarray(start, end + 1)), { status: range ? 206 : 200, headers });
+  return new Response(request.method === 'HEAD' ? null : new Uint8Array(clip.bytes.subarray(start, end + 1)), {
+    status: range ? 206 : 200,
+    headers,
+  });
 }
 
-export function preparePlayback(session: Session | null, input: { id: string; transcode?: boolean; offsetSeconds?: number }, deviceId: string): PlaybackResource {
+export function preparePlayback(
+  session: Session | null,
+  input: { id: string; transcode?: boolean; offsetSeconds?: number },
+  deviceId: string,
+): PlaybackResource {
   if (!session) throw new ServiceError('unauthorized', 'Sign in to play music.');
-  if (!itemId(input.id) || (input.offsetSeconds !== undefined && (!Number.isFinite(input.offsetSeconds) || input.offsetSeconds < 0))) {
+  if (
+    !itemId(input.id) ||
+    (input.offsetSeconds !== undefined && (!Number.isFinite(input.offsetSeconds) || input.offsetSeconds < 0))
+  ) {
     throw new ServiceError('invalid', 'Invalid playback request.');
   }
   const transcode = input.transcode === true;
-  const offsetSeconds = transcode ? input.offsetSeconds ?? 0 : 0;
+  const offsetSeconds = transcode ? (input.offsetSeconds ?? 0) : 0;
   const handle = randomUUID();
   // Do not advertise a direct-play container: Jellyfin may then serve the source unchanged and ignore startTimeTicks.
-  const query = new URLSearchParams(transcode ? {
-    userId: session.userId, deviceId, audioCodec: 'mp3',
-    transcodingContainer: 'mp3', transcodingProtocol: 'http', maxAudioSampleRate: '48000',
-    startTimeTicks: String(Math.round(offsetSeconds * 10_000_000)), enableRedirection: 'false', playSessionId: handle,
-  } : { static: 'true' });
+  const query = new URLSearchParams(
+    transcode
+      ? {
+          userId: session.userId,
+          deviceId,
+          audioCodec: 'mp3',
+          transcodingContainer: 'mp3',
+          transcodingProtocol: 'http',
+          maxAudioSampleRate: '48000',
+          startTimeTicks: String(Math.round(offsetSeconds * 10_000_000)),
+          enableRedirection: 'false',
+          playSessionId: handle,
+        }
+      : { static: 'true' },
+  );
   // Retain recent resources for Chromium's delayed range requests without growing with the queue.
   if (resources.size >= 32) resources.delete(resources.keys().next().value!);
-  resources.set(handle, { connectionId: session.id, path: `Audio/${input.id}/${transcode ? 'universal' : 'stream'}?${query}` });
+  resources.set(handle, {
+    connectionId: session.id,
+    path: `Audio/${input.id}/${transcode ? 'universal' : 'stream'}?${query}`,
+  });
   return { url: `wave-media://audio/${handle}`, offsetSeconds, transcoded: transcode };
 }
 
@@ -79,7 +105,10 @@ export function registerMedia(getSession: () => Session | null, deviceId: string
         if (!bytes) return new Response(null, { status: 404 });
         return clipResponse(request, { bytes, mime: 'audio/mpeg' });
       } catch (error) {
-        if (error instanceof StorageError) { onStorageFailure?.(); return new Response(null, { status: 503 }); }
+        if (error instanceof StorageError) {
+          onStorageFailure?.();
+          return new Response(null, { status: 503 });
+        }
         throw error;
       }
     }
@@ -102,7 +131,9 @@ export function registerMedia(getSession: () => Session | null, deviceId: string
     request.signal.addEventListener('abort', () => controller.abort(), { once: true });
     const timeout = setTimeout(() => controller.abort(), 20_000);
     let streaming = false;
-    const headers = new Headers({ Authorization: `MediaBrowser Client="onmywave.fm", Device="Mac", DeviceId="${deviceId}", Version="0.1.0", Token="${session.token}"` });
+    const headers = new Headers({
+      Authorization: `MediaBrowser Client="onmywave.fm", Device="Mac", DeviceId="${deviceId}", Version="0.1.0", Token="${session.token}"`,
+    });
     for (const key of ['range', 'if-range']) {
       const value = request.headers.get(key);
       if (value) headers.set(key, value);
@@ -111,13 +142,19 @@ export function registerMedia(getSession: () => Session | null, deviceId: string
       let upstreamUrl = new URL(path, `${session.serverUrl.replace(/\/$/, '')}/`);
       let response: Response | undefined;
       for (let hop = 0; hop < 5; hop++) {
-        response = await fetch(upstreamUrl, { method: request.method, headers, signal: controller.signal, redirect: 'manual' });
+        response = await fetch(upstreamUrl, {
+          method: request.method,
+          headers,
+          signal: controller.signal,
+          redirect: 'manual',
+        });
         if (![301, 302, 303, 307, 308].includes(response.status)) break;
         const location = response.headers.get('location');
         await response.body?.cancel();
         if (!location) return new Response(null, { status: 502 });
         const next = new URL(location, upstreamUrl);
-        if (next.origin !== upstreamUrl.origin || !['http:', 'https:'].includes(next.protocol)) return new Response(null, { status: 502 });
+        if (next.origin !== upstreamUrl.origin || !['http:', 'https:'].includes(next.protocol))
+          return new Response(null, { status: 502 });
         upstreamUrl = next;
         response = undefined;
       }
@@ -138,11 +175,20 @@ export function registerMedia(getSession: () => Session | null, deviceId: string
         async pull(target) {
           try {
             const next = await reader.read();
-            if (next.done) { activeRequests.delete(controller); target.close(); }
-            else target.enqueue(next.value);
-          } catch { activeRequests.delete(controller); target.error(new Error('The media stream was interrupted. Retry playback.')); }
+            if (next.done) {
+              activeRequests.delete(controller);
+              target.close();
+            } else target.enqueue(next.value);
+          } catch {
+            activeRequests.delete(controller);
+            target.error(new Error('The media stream was interrupted. Retry playback.'));
+          }
         },
-        async cancel() { activeRequests.delete(controller); controller.abort(); await reader.cancel().catch(() => {}); },
+        async cancel() {
+          activeRequests.delete(controller);
+          controller.abort();
+          await reader.cancel().catch(() => {});
+        },
       });
       return new Response(body, { status: response.status, headers: outgoing });
     } catch {

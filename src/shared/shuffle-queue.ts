@@ -15,20 +15,45 @@ export function isShuffleSnapshot(value: unknown, queueLength: number, currentIn
   if (!Number.isInteger(queueLength) || queueLength < 0 || !Number.isInteger(currentIndex)) return false;
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
   const snapshot = value as Record<string, unknown>;
-  if (Object.keys(snapshot).some(key => !['upcoming', 'history', 'cursor', 'visited'].includes(key))) return false;
-  if (!Array.isArray(snapshot.upcoming) || !Array.isArray(snapshot.history) || !Array.isArray(snapshot.visited) || !Number.isInteger(snapshot.cursor)) return false;
+  if (Object.keys(snapshot).some((key) => !['upcoming', 'history', 'cursor', 'visited'].includes(key))) return false;
+  if (
+    !Array.isArray(snapshot.upcoming) ||
+    !Array.isArray(snapshot.history) ||
+    !Array.isArray(snapshot.visited) ||
+    !Number.isInteger(snapshot.cursor)
+  )
+    return false;
   const upcoming = snapshot.upcoming;
   const history = snapshot.history;
   const visited = snapshot.visited;
-  if (upcoming.length > SHUFFLE_WINDOW_SIZE || history.length > Math.max(1, queueLength) || visited.length > queueLength) return false;
-  const validIndex = (index: unknown): index is number => Number.isInteger(index) && (index as number) >= 0 && (index as number) < queueLength;
-  if (!Array.from(upcoming).every(validIndex) || !Array.from(history).every(validIndex) || !Array.from(visited).every(validIndex)) return false;
+  if (
+    upcoming.length > SHUFFLE_WINDOW_SIZE ||
+    history.length > Math.max(1, queueLength) ||
+    visited.length > queueLength
+  )
+    return false;
+  const validIndex = (index: unknown): index is number =>
+    Number.isInteger(index) && (index as number) >= 0 && (index as number) < queueLength;
+  if (
+    !Array.from(upcoming).every(validIndex) ||
+    !Array.from(history).every(validIndex) ||
+    !Array.from(visited).every(validIndex)
+  )
+    return false;
   if (new Set(upcoming).size !== upcoming.length || new Set(visited).size !== visited.length) return false;
   const visitedSet = new Set(visited as number[]);
-  if (upcoming.some(index => visitedSet.has(index))) return false;
+  if (upcoming.some((index) => visitedSet.has(index))) return false;
   const cursor = snapshot.cursor as number;
   if (queueLength === 0) return upcoming.length === 0 && history.length === 0 && visited.length === 0 && cursor === -1;
-  return currentIndex >= 0 && currentIndex < queueLength && visited.length > 0 && history.length > 0 && cursor >= 0 && cursor < history.length && history[cursor] === currentIndex;
+  return (
+    currentIndex >= 0 &&
+    currentIndex < queueLength &&
+    visited.length > 0 &&
+    history.length > 0 &&
+    cursor >= 0 &&
+    cursor < history.length &&
+    history[cursor] === currentIndex
+  );
 }
 
 function sample<T>(values: T[], count: number): T[] {
@@ -41,7 +66,11 @@ function sample<T>(values: T[], count: number): T[] {
   return result.slice(0, size);
 }
 
-function retainedCursor(history: string[], cursor: number, keep: (key: string) => boolean): { history: string[]; cursor: number } {
+function retainedCursor(
+  history: string[],
+  cursor: number,
+  keep: (key: string) => boolean,
+): { history: string[]; cursor: number } {
   const retained = history.filter(keep);
   const cursorPosition = history.slice(0, cursor + 1).filter(keep).length - 1;
   return { history: retained, cursor: Math.max(-1, cursorPosition) };
@@ -56,7 +85,10 @@ export function createShufflePlan(keys: string[], currentKey: string | null): Sh
   const currentIsPresent = currentKey !== null && keys.includes(currentKey);
   const history = currentIsPresent ? [currentKey] : [];
   const visited = new Set(history);
-  const upcoming = sample(keys.filter(key => !visited.has(key)), SHUFFLE_WINDOW_SIZE);
+  const upcoming = sample(
+    keys.filter((key) => !visited.has(key)),
+    SHUFFLE_WINDOW_SIZE,
+  );
   return { upcoming, history, cursor: history.length - 1, visited };
 }
 
@@ -64,23 +96,28 @@ export function createShufflePlan(keys: string[], currentKey: string | null): Sh
 export function refillShufflePlan(plan: ShufflePlan, keys: string[]): ShufflePlan {
   const available = new Set(keys);
   const upcoming = plan.upcoming.filter((key, index, items) => available.has(key) && items.indexOf(key) === index);
-  const { history, cursor } = retainedCursor(plan.history, plan.cursor, key => available.has(key));
-  const visited = new Set([...plan.visited].filter(key => available.has(key)));
+  const { history, cursor } = retainedCursor(plan.history, plan.cursor, (key) => available.has(key));
+  const visited = new Set([...plan.visited].filter((key) => available.has(key)));
   const normalized: ShufflePlan = { upcoming, history, cursor: Math.max(-1, cursor), visited };
   if (upcoming.length > SHUFFLE_REFILL_THRESHOLD) return normalized;
   const planned = new Set(upcoming);
   const needed = Math.max(0, SHUFFLE_WINDOW_SIZE - upcoming.length);
-  const candidates = keys.filter(key => !visited.has(key) && !planned.has(key));
+  const candidates = keys.filter((key) => !visited.has(key) && !planned.has(key));
   return { ...normalized, upcoming: [...upcoming, ...sample(candidates, needed)] };
 }
 
 /** Select the next planned occurrence, replay forward history, or start a repeat-all cycle. */
-export function nextShuffle(plan: ShufflePlan, keys: string[], currentKey: string | null, repeatAll: boolean): { plan: ShufflePlan; key: string | null } {
+export function nextShuffle(
+  plan: ShufflePlan,
+  keys: string[],
+  currentKey: string | null,
+  repeatAll: boolean,
+): { plan: ShufflePlan; key: string | null } {
   plan = refillShufflePlan(plan, keys);
   const available = new Set(keys);
-  const upcoming = plan.upcoming.filter(key => available.has(key));
-  const { history, cursor } = retainedCursor(plan.history, plan.cursor, key => available.has(key));
-  const visited = new Set([...plan.visited].filter(key => available.has(key)));
+  const upcoming = plan.upcoming.filter((key) => available.has(key));
+  const { history, cursor } = retainedCursor(plan.history, plan.cursor, (key) => available.has(key));
+  const visited = new Set([...plan.visited].filter((key) => available.has(key)));
   const normalized: ShufflePlan = { upcoming, history, cursor: Math.max(-1, cursor), visited };
 
   while (normalized.cursor + 1 < normalized.history.length) {
@@ -97,7 +134,7 @@ export function nextShuffle(plan: ShufflePlan, keys: string[], currentKey: strin
   let nextUpcoming = upcoming.slice(nextKey ? 1 : 0);
   let nextVisited = visited;
   if (!nextKey && repeatAll && keys.length) {
-    const pool = keys.filter(key => key !== currentKey || keys.length === 1);
+    const pool = keys.filter((key) => key !== currentKey || keys.length === 1);
     const cycle = sample(pool, Math.min(pool.length, SHUFFLE_WINDOW_SIZE + 1));
     nextKey = cycle[0] ?? null;
     nextUpcoming = cycle.slice(1, SHUFFLE_WINDOW_SIZE + 1);
@@ -105,7 +142,11 @@ export function nextShuffle(plan: ShufflePlan, keys: string[], currentKey: strin
   }
   if (!nextKey) return { plan: { ...normalized, upcoming: nextUpcoming, visited: nextVisited }, key: null };
 
-  const advanced = appendHistory({ ...normalized, upcoming: nextUpcoming, visited: nextVisited }, nextKey, Math.max(1, keys.length));
+  const advanced = appendHistory(
+    { ...normalized, upcoming: nextUpcoming, visited: nextVisited },
+    nextKey,
+    Math.max(1, keys.length),
+  );
   const replenished = refillShufflePlan(advanced, keys);
   return { plan: replenished, key: nextKey };
 }
@@ -131,12 +172,12 @@ export function selectShuffle(plan: ShufflePlan, keys: string[], key: string): S
 /** Remove one queue occurrence from every plan structure and repair its history cursor. */
 export function removeShuffle(plan: ShufflePlan, keys: string[], key: string): ShufflePlan {
   const available = new Set(keys);
-  const { history, cursor } = retainedCursor(plan.history, plan.cursor, item => available.has(item) && item !== key);
+  const { history, cursor } = retainedCursor(plan.history, plan.cursor, (item) => available.has(item) && item !== key);
   return {
-    upcoming: plan.upcoming.filter(item => available.has(item) && item !== key),
+    upcoming: plan.upcoming.filter((item) => available.has(item) && item !== key),
     history,
     cursor: Math.max(-1, cursor),
-    visited: new Set([...plan.visited].filter(item => available.has(item) && item !== key)),
+    visited: new Set([...plan.visited].filter((item) => available.has(item) && item !== key)),
   };
 }
 

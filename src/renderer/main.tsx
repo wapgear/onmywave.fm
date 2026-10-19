@@ -10,8 +10,36 @@ import './styles.css';
 function onError(error: unknown) {
   const failure = error as { code?: string; authRevision?: number };
   const connection = queryClient.getQueryData<import('../shared/types').Connection | null>(['connection']);
-  if (failure?.code === 'unauthorized' && connection && failure.authRevision === connection.authRevision) window.dispatchEvent(new CustomEvent('wave:auth-expired', { detail: { authRevision: failure.authRevision } }));
+  if (failure?.code === 'unauthorized' && connection && failure.authRevision === connection.authRevision)
+    window.dispatchEvent(new CustomEvent('wave:auth-expired', { detail: { authRevision: failure.authRevision } }));
 }
-const queryClient = new QueryClient({ queryCache: new QueryCache({ onError: (error, query) => { if (!query.meta?.aiOperation) onError(error); } }), mutationCache: new MutationCache({ onError: (error, _variables, _context, mutation) => { if (!mutation.options.meta?.authAttempt && !mutation.options.meta?.aiOperation) onError(error); } }), defaultOptions: { queries: { staleTime: 30_000, retry: (count, error) => count < 1 && !['unauthorized', 'forbidden', 'invalid', 'not-found'].includes((error as { code?: string }).code ?? ''), refetchOnWindowFocus: false }, mutations: { retry: false } } });
+const queryClient = new QueryClient({
+  queryCache: new QueryCache({
+    onError: (error, query) => {
+      if (!query.meta?.aiOperation) onError(error);
+    },
+  }),
+  mutationCache: new MutationCache({
+    onError: (error, _variables, _context, mutation) => {
+      if (!mutation.options.meta?.authAttempt && !mutation.options.meta?.aiOperation) onError(error);
+    },
+  }),
+  defaultOptions: {
+    queries: {
+      staleTime: 30_000,
+      retry: (count, error) =>
+        count < 1 &&
+        !['unauthorized', 'forbidden', 'invalid', 'not-found'].includes((error as { code?: string }).code ?? ''),
+      refetchOnWindowFocus: false,
+    },
+    mutations: { retry: false },
+  },
+});
 queryClient.setQueryDefaults(['localState'], { structuralSharing: retainNewestLocalState });
-ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><QueryClientProvider client={queryClient}><App /></QueryClientProvider></React.StrictMode>);
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
+  </React.StrictMode>,
+);

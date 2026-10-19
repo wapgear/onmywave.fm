@@ -1,0 +1,47 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["eslint", "typescript", "unicorn", "oxc", "react", "jsx-a11y", "import", "node"],
+  "categories": {
+    "correctness": "error"
+  },
+  "ignorePatterns": ["out/**", "release/**", "node_modules/**", "docs/**"],
+  "rules": {
+    "jsx-a11y/prefer-tag-over-role": "off"
+  },
+  "overrides": [
+    {
+      "files": [
+        "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx",
+        "src/renderer/pages/Connection/Connection.page.tsx",
+        "src/renderer/pages/Sources/Sources.page.tsx",
+        "src/renderer/pages/Playlists/Playlists.page.tsx",
+        "src/renderer/pages/Stations/Stations.page.tsx"
+      ],
+      "rules": {
+        "jsx-a11y/no-autofocus": "off"
+      }
+    },
+    {
+      "files": [
+        "src/renderer/components/FilterSelect/FilterSelect.component.tsx",
+        "src/renderer/components/TrackTable/TrackTable.component.tsx",
+        "src/renderer/components/Shared.tsx"
+      ],
+      "rules": {
+        "jsx-a11y/no-noninteractive-element-interactions": "off"
+      }
+    },
+    {
+      "files": ["src/renderer/components/Shared.tsx"],
+      "rules": {
+        "jsx-a11y/click-events-have-key-events": "off"
+      }
+    },
+    {
+      "files": ["src/renderer/pages/DJs/components/VoicePreview.component.tsx"],
+      "rules": {
+        "jsx-a11y/media-has-caption": "off"
+      }
+    }
+  ]
+}

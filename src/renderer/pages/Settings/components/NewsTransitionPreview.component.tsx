@@ -20,23 +20,36 @@ export function NewsTransitionPreview({ settings }: { settings: NewsTransitionSe
     { id: 'tail', label: overMusic ? 'Quiet music' : 'Silence', time: `${settings.postSpeechSeconds} s` },
     { id: 'next', label: 'Next song fades in', time: `${settings.fadeInSeconds} s` },
   ];
-  const stop = useCallback(() => { dispose.current?.(); setPhase(''); }, []);
+  const stop = useCallback(() => {
+    dispose.current?.();
+    setPhase('');
+  }, []);
   useEffect(() => () => dispose.current?.(), []);
   useEffect(() => {
     if (!player.requestedPlaying || !dispose.current) return;
     dispose.current();
     let active = true;
-    queueMicrotask(() => { if (active) setPhase(''); });
-    return () => { active = false; };
+    queueMicrotask(() => {
+      if (active) setPhase('');
+    });
+    return () => {
+      active = false;
+    };
   }, [player.requestedPlaying]);
   useLayoutEffect(() => {
     if (!dispose.current) return;
     dispose.current();
     let active = true;
-    queueMicrotask(() => { if (active && !dispose.current) setPhase(''); });
-    return () => { active = false; };
+    queueMicrotask(() => {
+      if (active && !dispose.current) setPhase('');
+    });
+    return () => {
+      active = false;
+    };
   }, [player.currentKey, player.musicCommandRevision]);
-  useEffect(() => { if (master.current) master.current.gain.value = player.volume; }, [player.volume]);
+  useEffect(() => {
+    if (master.current) master.current.gain.value = player.volume;
+  }, [player.volume]);
 
   async function start() {
     stop();
@@ -68,7 +81,9 @@ export function NewsTransitionPreview({ settings }: { settings: NewsTransitionSe
         clearTimeout(loadTimeout);
         cancelAnimationFrame(frame);
         voice.oncanplay = voice.onplay = voice.onended = voice.onerror = null;
-        voice.pause(); voice.removeAttribute('src'); voice.load();
+        voice.pause();
+        voice.removeAttribute('src');
+        voice.load();
         for (const oscillator of oscillators) oscillator.stop();
         void context.close();
         master.current = null;
@@ -87,7 +102,8 @@ export function NewsTransitionPreview({ settings }: { settings: NewsTransitionSe
           const note = context.createGain();
           oscillator.frequency.value = frequency;
           note.gain.value = 0;
-          oscillator.connect(note); note.connect(music);
+          oscillator.connect(note);
+          note.connect(music);
           const now = context.currentTime;
           for (let beat = index * 0.125; beat < 60; beat += 0.5) {
             note.gain.setValueAtTime(0, now + beat);
@@ -100,10 +116,17 @@ export function NewsTransitionPreview({ settings }: { settings: NewsTransitionSe
       }
       let stage = 'music';
       let began = 0;
-      function enter(next: string) { stage = next; began = context.currentTime; setPhase(next); }
+      function enter(next: string) {
+        stage = next;
+        began = context.currentTime;
+        setPhase(next);
+      }
       function tick() {
         if (cancelled) return;
-        if (!current()) { stop(); return; }
+        if (!current()) {
+          stop();
+          return;
+        }
         const elapsed = context.currentTime - began;
         if (stage === 'music') {
           music.gain.value = 1;
@@ -122,24 +145,39 @@ export function NewsTransitionPreview({ settings }: { settings: NewsTransitionSe
           enter('next');
         } else if (stage === 'next') {
           music.gain.value = settings.fadeInSeconds === 0 ? 1 : Math.min(1, elapsed / settings.fadeInSeconds);
-          if (elapsed >= settings.fadeInSeconds + 2) { stop(); setPhase('finished'); return; }
+          if (elapsed >= settings.fadeInSeconds + 2) {
+            stop();
+            setPhase('finished');
+            return;
+          }
         }
         frame = requestAnimationFrame(tick);
       }
-      voice.onplay = () => { if (!cancelled && !current()) stop(); };
-      voice.onended = () => { if (!cancelled && current()) enter('tail'); };
+      voice.onplay = () => {
+        if (!cancelled && !current()) stop();
+      };
+      voice.onended = () => {
+        if (!cancelled && current()) enter('tail');
+      };
       voice.onerror = fail;
       loadTimeout = window.setTimeout(fail, 15000);
       voice.oncanplay = () => {
         voice.oncanplay = null;
         clearTimeout(loadTimeout);
         if (cancelled) return;
-        if (!current()) { stop(); return; }
-        makeMusic(); enter('music'); tick();
+        if (!current()) {
+          stop();
+          return;
+        }
+        makeMusic();
+        enter('music');
+        tick();
       };
       await context.resume();
-      if (!cancelled && current()) { voice.preload = 'auto'; voice.load(); }
-      else if (!cancelled) stop();
+      if (!cancelled && current()) {
+        voice.preload = 'auto';
+        voice.load();
+      } else if (!cancelled) stop();
     } catch {
       if (cleanup && dispose.current !== cleanup) return;
       cleanup?.();
@@ -149,11 +187,40 @@ export function NewsTransitionPreview({ settings }: { settings: NewsTransitionSe
   }
 
   const active = phase !== '' && phase !== 'finished';
-  return <div className="transition-preview">
-    <div className="transition-preview-heading"><h3>Hear this transition</h3><button type="button" disabled={!valid} onClick={() => active ? stop() : void start()}>{active ? <Square size={14} /> : <Play size={14} />}{active ? 'Stop preview' : 'Preview transition'}</button></div>
-    <p className="form-hint">Uses the timings above, even before saving. Sample music and a saved AI voice, no generation needed. Your music pauses and stays paused. Changing songs or seeking stops the sample.{player.activeNewsId && ' Your scheduled DJ break stays queued.'}</p>
-    {valid && <ol className="transition-preview-steps" aria-label="Transition stages">{steps.map(step => <li key={step.id} aria-current={phase === step.id ? 'step' : undefined}><span>{step.label}</span><small>{step.time}</small></li>)}</ol>}
-    <p className="form-hint" role="status">{!valid ? 'Enter valid fade times and pauses to preview.' : phase === 'loading' ? 'Loading saved sample…' : phase === 'finished' ? 'Preview finished. Adjust the timings or replay to compare.' : steps.find(step => step.id === phase)?.label ?? 'Ready to preview.'}</p>
-    <ErrorNotice error={error} />
-  </div>;
+  return (
+    <div className="transition-preview">
+      <div className="transition-preview-heading">
+        <h3>Hear this transition</h3>
+        <button type="button" disabled={!valid} onClick={() => (active ? stop() : void start())}>
+          {active ? <Square size={14} /> : <Play size={14} />}
+          {active ? 'Stop preview' : 'Preview transition'}
+        </button>
+      </div>
+      <p className="form-hint">
+        Uses the timings above, even before saving. Sample music and a saved AI voice, no generation needed. Your music
+        pauses and stays paused. Changing songs or seeking stops the sample.
+        {player.activeNewsId && ' Your scheduled DJ break stays queued.'}
+      </p>
+      {valid && (
+        <ol className="transition-preview-steps" aria-label="Transition stages">
+          {steps.map((step) => (
+            <li key={step.id} aria-current={phase === step.id ? 'step' : undefined}>
+              <span>{step.label}</span>
+              <small>{step.time}</small>
+            </li>
+          ))}
+        </ol>
+      )}
+      <p className="form-hint" role="status">
+        {!valid
+          ? 'Enter valid fade times and pauses to preview.'
+          : phase === 'loading'
+            ? 'Loading saved sample…'
+            : phase === 'finished'
+              ? 'Preview finished. Adjust the timings or replay to compare.'
+              : (steps.find((step) => step.id === phase)?.label ?? 'Ready to preview.')}
+      </p>
+      <ErrorNotice error={error} />
+    </div>
+  );
 }
