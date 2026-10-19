@@ -219,6 +219,8 @@ Options-save Retry keeps its focused action and pending feedback until that actu
 
 - Show the current track, artist, artwork, playback position, and duration.
 
+- In Songs, album tracks and playlist tracks, the active song's artwork control shows Pause while playback is requested and Play while paused. Artwork, row Enter/double-click and the row menu toggle that existing playback without rebuilding its queue or restarting its position. Browser rows identify the song, including repeated entries for the same song; the Queue drawer selects exact queued occurrences. Single-click row selection, Space selection, song-title details and explicit collection/selection Play retain their own actions. Keyboard focus reveals the artwork transport icon.
+
 - Provide an expandable queue showing upcoming music.
 
 - Keep playback running while the listener navigates and when the app is in the background.
