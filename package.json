@@ -46,7 +46,7 @@
     "electron": "43.7.0",
     "electron-builder": "^26.15.7",
     "electron-vite": "6.0.0",
-    "eslint": "^9.39.4",
+    "eslint": "^10.13.0",
     "eslint-plugin-react-hooks": "^7.1.1",
     "oxfmt": "0.73.0",
     "oxlint": "1.88.0",
