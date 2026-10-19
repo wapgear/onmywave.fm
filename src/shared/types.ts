@@ -92,6 +92,7 @@ export type NewsRecoveryStatus = { phase: 'recovering' | 'ready' | 'unavailable'
 export type AiStatus = { configured: boolean; sessionOnly: boolean };
 export type NewsProgress = { requestId: string; phase: 'feeds' | 'writing' | 'speech' | 'live-recording'; message: string; transcript?: string };
 export type PlaybackSnapshot = {
+  shufflePlan?: import('./shuffle-queue').ShuffleSnapshot;
   connectionId: string;
   trackIds: string[];
   currentIndex: number;

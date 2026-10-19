@@ -223,6 +223,8 @@ Options-save Retry keeps its focused action and pending feedback until that actu
 
 - Provide an expandable queue showing upcoming music.
 
+- Shuffle plans up to 50 upcoming queued occurrences once, then refills to 50 when ten or fewer remain, preserving the displayed suffix. Draw only from the supplied queue; do not claim automatic discovery of the whole library. Next follows the displayed order, Previous follows actual playback history, and skipped planned items do not become played history. Choosing a future queue item skips to it while retaining its later suffix. A browser Play for a song already queued selects its current, forward-history or next planned occurrence; an absent song starts a new queue, while explicit multi-song collection Play replaces it. Duplicate song IDs remain separate queue occurrences. Enqueue and removal preserve the remaining plan, repeat off stops at exhaustion, repeat all starts a fresh cycle without an immediate repeat when alternatives exist, and repeat one leaves the plan untouched on natural completion while explicit Next advances. Keep the canonical queue order when shuffle is disabled. Persist the plan and bounded actual history as occurrence indices, restore them paused, and remap around unavailable songs; absent or malformed historical plans fall back to a fresh usable plan. Retain the next visible queue-removal focus target.
+
 - Keep playback running while the listener navigates and when the app is in the background.
 
 - Support macOS media controls.

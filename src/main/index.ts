@@ -1,3 +1,4 @@
+import { isShuffleSnapshot } from '../shared/shuffle-queue';
 import { isDJPlaybackSettings, isDJPlaybackSettingsPatch, normalizeDJPlaybackSettings } from '../shared/dj-playback';
 import type { DJPlaybackSettingsPatch } from '../shared/dj-playback';
 import { normalizeNewsSource } from '../shared/sources';
@@ -98,7 +99,8 @@ function validatePlayback(value: unknown): asserts value is PlaybackSnapshot | n
     || typeof value.position !== 'number' || !Number.isFinite(value.position) || value.position < 0
     || typeof value.volume !== 'number' || !Number.isFinite(value.volume) || value.volume < 0 || value.volume > 1
     || typeof value.shuffle !== 'boolean' || typeof value.repeat !== 'string' || !['off', 'all', 'one'].includes(value.repeat)
-    || (value.outputId !== undefined && !text(value.outputId, 512))) invalid();
+    || (value.outputId !== undefined && !text(value.outputId, 512))
+    || (value.shufflePlan !== undefined && !isShuffleSnapshot(value.shufflePlan, (value.trackIds as string[]).length, value.currentIndex as number))) invalid();
 }
 
 

@@ -41,5 +41,6 @@
     "build.mjs": "0cb45c9013d6ed2d8ddec4e83d755c4fb3fcc96c7fa36a833da64c35f8cd393f",
     "bootstrap.mjs": "ed236e98d46ce9edb486b39b403dbfcb1d5e5ba84786fd8413c618e49276ba1a",
     "report.json": "4902669223cac0034e3ec39d5f03abd1b82aa97f201c1f987d587f7a8d2b24c6"
-  }
+  },
+  "integrationWithShuffle": "The different-song queue-start case was verified with shuffle off. Issue #1 changes selection while shuffle is on: an already queued song selects its existing occurrence and retains the plan; an absent song starts a new queue. Explicit collection Play replaces the queue. Current-song browser controls always toggle existing playback."
 }
