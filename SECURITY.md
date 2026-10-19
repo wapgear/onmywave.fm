@@ -4,7 +4,7 @@
 
 Do not post credentials, exploit details, or private app data in a public issue.
 
-Use [GitHub private vulnerability reporting](https://github.com/wapgear/onmywave.fm/security/advisories/new) if the repository has it enabled. If it is unavailable, open a public issue asking for a private contact method without including vulnerability details. A dedicated security email and response SLA are not currently established.
+Use [GitHub private vulnerability reporting](https://github.com/wapgear/onmywave.fm/security/advisories/new), which is enabled for this repository. If the form is temporarily unavailable, open a public issue asking for a private contact method without including vulnerability details. A dedicated security email and response SLA are not currently established.
 
 A private report should include the affected revision, operating system, reproduction steps, likely impact, and a minimal example with synthetic credentials and data.
 
