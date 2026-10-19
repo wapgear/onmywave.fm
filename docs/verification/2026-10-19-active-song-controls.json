@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-19",
+  "issue": 3,
+  "change": "Active-song browser controls toggle existing playback intent rather than constructing a new queue. Songs, album tracks and playlist tracks share the behavior.",
+  "identityDecision": "Browser rows represent song IDs, including duplicate playlist rows; Queue drawer retains distinct occurrence keys. Steve reviewed actual diff, challenged duplicate behavior, then accepted this explicit distinction with reservation to verify both.",
+  "checks": {
+    "build": "npm run build passed, including typecheck and bundled voice checks.",
+    "lint": "Full npm run lint and final focused ESLint passed.",
+    "native": {
+      "cases": [
+        "Active restored song resumes existing queue without new playback preparation",
+        "Artwork toggles active song to pause without replacing queue or loading media",
+        "Focused active row Enter resumes and pauses",
+        "Active row menu label and icon follow requested playback; both actions retain queue",
+        "Double-click active row toggles existing playback",
+        "Song title keeps opening details without transport changes",
+        "Keyboard focus reveals the artwork transport icon",
+        "Different song follows original queue-start behavior",
+        "Album track table toggles same active song without replacing queue",
+        "Duplicate playlist browser rows represent same active song and toggle without queue replacement",
+        "Queue drawer still selects exact duplicate occurrence and starts it"
+      ],
+      "rendererErrors": [],
+      "externalAttempts": []
+    }
+  },
+  "method": "Actual built renderer/preload/main in disposable Electron appData at 1280x720, synthetic localhost Jellyfin and muted media. Counter observes actual preparePlayback IPC calls; toggles do not add preparations. External fetch blocked/count zero. Synthetic playlist has two distinct entries for same song; both browser rows toggle while Queue selection starts exact occurrence.",
+  "limits": [
+    "No live server writes, provider requests, audible playback or VoiceOver acceptance. No unit tests added/run.",
+    "Earlier fixture selectors assumed an exact title-only accessible name and a details dialog; corrected to the actual title button and details drawer. Final eleven cases pass."
+  ],
+  "sourceSha256": {
+    "src/renderer/components/TrackTable/TrackTable.component.tsx": "94f67cf84ffe8c95ac4f977b1c211ff4fef4919ba0d35fc14d30dde6368b8e60",
+    "src/renderer/components/TrackTable/TrackTable.styles.css": "d7c8b6f28ee73afce23bc67598e3759a9a6844bb2939bb3474d70976ad742c48",
+    "src/renderer/pages/Songs/Songs.page.tsx": "673a760c67b483eccff176829a9b3c784a443b6b3f719b26e931f63b8d51ae3a",
+    "src/renderer/pages/Albums/Albums.page.tsx": "9743482e92a171e23383d17ca5fb9c7d6a577b8fcc81825f56d4a9c066e190aa",
+    "src/renderer/pages/Playlists/Playlists.page.tsx": "0bc008397712631500550a491824405cb199adc416690fb84c3ba827d79688a0"
+  },
+  "fixtureSha256": {
+    "native.cjs": "024317a892a0666622b5b6756157a5ae35295838fa94c33553f26d19e6ab80f5",
+    "build.mjs": "0cb45c9013d6ed2d8ddec4e83d755c4fb3fcc96c7fa36a833da64c35f8cd393f",
+    "bootstrap.mjs": "ed236e98d46ce9edb486b39b403dbfcb1d5e5ba84786fd8413c618e49276ba1a",
+    "report.json": "4902669223cac0034e3ec39d5f03abd1b82aa97f201c1f987d587f7a8d2b24c6"
+  }
+}
