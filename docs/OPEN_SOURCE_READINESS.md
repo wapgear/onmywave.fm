@@ -6,7 +6,7 @@ Reviewed 19 October 2026 for `wapgear/onmywave.fm`, which is now public. This re
 
 - A full GPL v3 license is present and the package declares `GPL-3.0-only`. The existing license choice is unchanged.
 - The README covers requirements, setup, features, provider costs, local data, development, and release limitations.
-- Fresh screenshots use the actual renderer, fictional metadata, and built-in placeholders.
+- README screenshots use the actual renderer with the website demo catalog and matching release covers. Capture and artwork sources are recorded in `docs/screenshots/`.
 - Contribution guidance, issue templates, a pull request template, and a security reporting policy are present.
 - Repository metadata and Node.js 24 requirements are recorded in the package and `.nvmrc`.
 - Production dependency license texts, including font notices, are collected in `licenses/` and included by the packaging configuration.
@@ -16,7 +16,7 @@ Reviewed 19 October 2026 for `wapgear/onmywave.fm`, which is now public. This re
 ## Open review items
 
 - [ ] Resolve bundled-media rights listed in [third party notices](../THIRD_PARTY_NOTICES.md). The ElevenLabs generation account/plan and the rights to redistribute those recordings are not recorded here. Review the [applicable ElevenLabs terms](https://elevenlabs.io/terms-of-use) and the terms that applied when the clips were created. Record evidence of permissions or replace the assets. Generated portraits and design-reference images also need an origin and rights record.
-- [ ] Visually review historical screenshots and evidence, including third party album artwork and desktop context. The new README screenshots avoid those inputs, but this cleanup did not approve all historical images for publication.
+- [ ] Visually review historical screenshots and evidence, including third party album artwork and desktop context. Current README screenshots use the website demo assets with recorded cover-art sources. This cleanup did not approve all historical images for publication.
 - [ ] Run a dedicated secret scanner across all Git refs and review personal data in historical docs. The targeted review below is useful but is not an exhaustive scan. If a real credential is found, revoke it first, then plan any necessary history cleanup with collaborators.
 - [x] Enable private vulnerability reporting, secret scanning and push protection, Dependabot security updates, and a main ruleset requiring PRs and CI. Fork workflows require approval for outside collaborators; Actions require pinned commit SHAs. The checked-in ruleset is `.github/main-ruleset.json`. CodeQL produces alerts without being an initial merge gate.
 

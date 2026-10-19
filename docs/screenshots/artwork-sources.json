@@ -1,0 +1,66 @@
+[
+  {
+    "trackName": "Patient Zero",
+    "artistName": "Taylor Swift",
+    "collectionName": "The Life of a Showgirl: The Encore",
+    "trackViewUrl": "https://music.apple.com/us/album/patient-zero/6814997249?i=6814997425&uo=4",
+    "imageUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/a0/dd/fd/a0ddfd72-ee9e-f046-6466-a5dbefc696fa/26UM1IM21436.rgb.jpg/600x600bb.jpg",
+    "trackTimeMillis": 225868
+  },
+  {
+    "trackName": "Choosin' Texas",
+    "artistName": "Ella Langley",
+    "collectionName": "Dandelion",
+    "trackViewUrl": "https://music.apple.com/us/album/choosin-texas/1869436835?i=1869436839&uo=4",
+    "imageUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/a1/ba/64/a1ba6484-f462-1b88-ddff-d4c014d5f265/196874018361.jpg/600x600bb.jpg",
+    "trackTimeMillis": 231747
+  },
+  {
+    "trackName": "Boston",
+    "artistName": "STELLA LEFTY",
+    "collectionName": "Boston - Single",
+    "trackViewUrl": "https://music.apple.com/us/album/boston/1884403092?i=1884403093&uo=4",
+    "imageUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/7c/de/5e/7cde5e7a-612d-9714-d34c-1eb234c85ebb/810129961546.jpg/600x600bb.jpg",
+    "trackTimeMillis": 170859
+  },
+  {
+    "trackName": "Been By Now",
+    "artistName": "Morgan Wallen",
+    "collectionName": "Been By Now - Single",
+    "trackViewUrl": "https://music.apple.com/us/album/been-by-now/6792676858?i=6792676860&uo=4",
+    "imageUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/9f/8d/52/9f8d52a0-b6d9-d038-327b-4fe58bedce67/26UMGIM94572.rgb.jpg/600x600bb.jpg",
+    "trackTimeMillis": 213806
+  },
+  {
+    "trackName": "Solar Eclipse",
+    "artistName": "Drake & Don Toliver",
+    "collectionName": "HABIBTI (FOMO)",
+    "trackViewUrl": "https://music.apple.com/us/album/solar-eclipse/6818059268?i=6818059593&uo=4",
+    "imageUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/62/58/98/62589807-decc-d418-eb07-5060de9a2d3e/26UMGIM63617.rgb.jpg/600x600bb.jpg",
+    "trackTimeMillis": 218389
+  },
+  {
+    "trackName": "Dracula",
+    "artistName": "Tame Impala",
+    "collectionName": "Dracula - Single",
+    "trackViewUrl": "https://music.apple.com/us/album/dracula/1842444456?i=1842444457&uo=4",
+    "imageUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/36/be/b4/36beb41f-c644-55cb-9fbb-bf0622a66653/196873644783.jpg/600x600bb.jpg",
+    "trackTimeMillis": 205309
+  },
+  {
+    "trackName": "hate that i made you love me",
+    "artistName": "Ariana Grande",
+    "collectionName": "petal",
+    "trackViewUrl": "https://music.apple.com/us/album/hate-that-i-made-you-love-me/1895420874?i=6763656725&uo=4",
+    "imageUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/56/f4/96/56f49612-02dd-83f4-44fe-d2118cc70707/26UMGIM51129.rgb.jpg/600x600bb.jpg",
+    "trackTimeMillis": 197950
+  },
+  {
+    "trackName": "stupid song",
+    "artistName": "Olivia Rodrigo",
+    "collectionName": "you seem pretty sad for a girl so in love",
+    "trackViewUrl": "https://music.apple.com/us/album/stupid-song/1889992111?i=1889992115&uo=4",
+    "imageUrl": "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/1d/1b/f9/1d1bf9b1-44c6-9a6c-6ffb-c158488c06ce/26UMGIM39303.rgb.jpg/600x600bb.jpg",
+    "trackTimeMillis": 209680
+  }
+]
