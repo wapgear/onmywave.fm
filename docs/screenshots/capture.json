@@ -1,19 +1,18 @@
 {
   "date": "2026-10-19",
-  "baseCommit": "cf8823d",
-  "runtime": "Electron 43.7.0 on macOS",
+  "method": "Unmodified copies of the screenshots published on https://onmywave.izmailov.dev/",
   "viewport": {
-    "width": 1280,
-    "height": 788,
-    "deviceScaleFactor": 2
+    "width": 1440,
+    "height": 900
   },
-  "method": "BrowserWindow.webContents.capturePage with built production renderer and existing preload; fixture-only IPC handlers; external HTTP(S) requests blocked",
-  "data": "12 fictional songs/albums, built-in placeholder icons, no music files, no real account or providers",
-  "localChanges": "Existing uncommitted TrackTable source and styles were included in the renderer build. Hashes below identify those inputs.",
+  "data": "Actual app renderer with an example catalog of real titles, artists, and matching release covers. No chart recordings or private library tracks included.",
+  "sources": {
+    "docs/screenshots/albums.png": "https://izmailov.dev/assets/onmywave/artwork-albums.png",
+    "docs/screenshots/library.png": "https://izmailov.dev/assets/onmywave/artwork-dj-breaks.png"
+  },
+  "artworkSources": "artwork-sources.json",
   "sha256": {
-    "src/renderer/components/TrackTable/TrackTable.component.tsx": "f745a5100e411f9816f552b726e05f94df122463f555db645a3a561dcd1daefe",
-    "src/renderer/components/TrackTable/TrackTable.styles.css": "c11b4f036715a59fbc3be3e611153aaf942cc2013f6ed1fe208a29f527da9440",
-    "docs/screenshots/albums.png": "fdc72061ba71a37361fd70c2b54d118a346a81610f28e78eb509ec3dd0d09547",
-    "docs/screenshots/library.png": "828a64d5b0b74e1097fba3d938a4e6ae3412a89f07dd3c16673fabe4c2aa947a"
+    "docs/screenshots/albums.png": "d5ac1ef3f7bc37043799cba7600e7f06d0d10a2bab3e6bf84ffa90ff008e9f2c",
+    "docs/screenshots/library.png": "448eb64d59512487b76e22ca9113e15a34efb2e5e031deb6766aa54542e52f5c"
   }
 }

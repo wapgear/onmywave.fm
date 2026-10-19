@@ -30,6 +30,6 @@ Electron and Chromium have their own notices in the Electron distribution, inclu
 | `src/renderer/public/dj-avatars/` | Generated fox and owl portraits, identified as generated in the dated DJ-avatar verification record. | Record the generation source and asset rights. |
 | `docs/design/` | Generated design reference and its prompt. | Record the generation source and asset rights. These images are not screenshots of the app. |
 | `docs/verification/`, `docs/dj-*.png` | Historical app captures and verification material. | Review each image for private information and third party artwork before public release. |
-| `docs/screenshots/` | Actual renderer captures with fictional metadata and the app's built-in placeholder icons. | Capture details are in the adjacent README. No album artwork or music was imported. |
+| `docs/screenshots/` | App screenshots copied from the website demo, with real song metadata and matching release covers. | Capture details and Apple catalog artwork sources are recorded in that directory. Cover rights remain with their respective holders. No song recordings are included. |
 
 No additional media license is asserted by this notice. [Release readiness](docs/OPEN_SOURCE_READINESS.md) tracks the unresolved provenance checks. Confirm permissions or replace unresolved assets before distribution. Provider services and voice models are governed by their own terms, not by the application's code license.
