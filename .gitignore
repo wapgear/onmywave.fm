@@ -4,3 +4,8 @@ release/
 .DS_Store
 *.log
 .env*
+*.pem
+*.key
+*.p12
+*.pfx
+coverage/
