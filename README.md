@@ -29,7 +29,7 @@ For local testing use `npm run dev` or `npm run preview`. Routine verification d
 
 ## Separate release work
 
-`npm run package:mac` is an optional local packaging command for an explicitly requested release task. It creates a macOS application under `release/` and is not part of the checks above. Signing, notarization, distribution and automatic updates require a separate release setup.
+`npm run package:mac` is an optional local packaging command for an explicitly requested release task. It creates a macOS application under `release/` and is not part of the checks above. Signed release builds and automatic updates use the existing GitHub releases repository. See [automatic updates and publishing](docs/AUTO_UPDATES.md) for setup, user behavior, and verification limits.
 
 ## Listening session
 

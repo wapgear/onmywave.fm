@@ -6,6 +6,7 @@ import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
 import '@fontsource/manrope/600.css';
 import App from './App';
+import { AppUpdates } from './components/AppUpdates/AppUpdates.component';
 import { retainNewestLocalState } from './local-state-cache';
 
 import './styles.css';
@@ -47,6 +48,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <App />
+      <AppUpdates />
     </QueryClientProvider>
   </React.StrictMode>,
 );

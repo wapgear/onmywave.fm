@@ -1,4 +1,5 @@
 import type { DJPlaybackSettings, DJPlaybackSettingsPatch } from './dj-playback';
+import type { UpdateStatus } from './update';
 import type { WorkflowDraft } from './workflow';
 
 
@@ -288,6 +289,11 @@ export type LocalStateSnapshot = LocalState & { revision: number };
 export type PlaybackResource = { url: string; offsetSeconds: number; transcoded: boolean };
 
 export interface WaveApi {
+  getUpdateStatus(): Promise<Result<UpdateStatus>>;
+  checkForUpdates(): Promise<Result<UpdateStatus>>;
+  downloadUpdate(): Promise<Result<UpdateStatus>>;
+  installUpdate(): Promise<Result<UpdateStatus>>;
+  onUpdateStatus(callback: (status: UpdateStatus) => void): () => void;
   getNewsRecoveryStatus(): Promise<Result<NewsRecoveryStatus>>;
   retryNewsRecovery(): Promise<Result<NewsRecoveryStatus>>;
   getConnection(): Promise<Result<Connection | null>>;

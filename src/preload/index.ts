@@ -1,9 +1,19 @@
 import { contextBridge, ipcRenderer } from 'electron';
 
 import type { NewsProgress, WaveApi } from '../shared/types';
+import type { UpdateStatus } from '../shared/update';
 
 
 const api: WaveApi = {
+  getUpdateStatus: () => ipcRenderer.invoke('wave:getUpdateStatus'),
+  checkForUpdates: () => ipcRenderer.invoke('wave:checkForUpdates'),
+  downloadUpdate: () => ipcRenderer.invoke('wave:downloadUpdate'),
+  installUpdate: () => ipcRenderer.invoke('wave:installUpdate'),
+  onUpdateStatus: (callback) => {
+    const listener = (_event: Electron.IpcRendererEvent, status: UpdateStatus) => callback(status);
+    ipcRenderer.on('wave:updateStatus', listener);
+    return () => ipcRenderer.removeListener('wave:updateStatus', listener);
+  },
   getNewsRecoveryStatus: () => ipcRenderer.invoke('wave:getNewsRecoveryStatus'),
   retryNewsRecovery: () => ipcRenderer.invoke('wave:retryNewsRecovery'),
   getConnection: () => ipcRenderer.invoke('wave:getConnection'),
