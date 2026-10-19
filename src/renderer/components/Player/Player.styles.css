@@ -123,6 +123,10 @@
     transform 120ms ease,
     background 120ms ease;
 }
+/* The filled triangle needs optical centering within its square SVG box. */
+.player-play > .lucide-play {
+  translate: 1px 0;
+}
 .player-play:hover:not(:disabled) {
   transform: scale(1.04);
   background: #414550;

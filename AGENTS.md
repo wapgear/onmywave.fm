@@ -6,6 +6,10 @@ Run `pnpm run format` after editing code, then `pnpm run check` before handing i
 
 Work on a feature branch and submit a PR to `main`. Keep the installed pre-commit hook and server-side required checks enabled; do not bypass them. Run `pnpm run format`, then `pnpm run check` before committing. Keep untrusted PR code out of privileged workflows, use SHA-pinned actions and least-privilege tokens, and keep release credentials out of PR jobs. See [contribution guidance](CONTRIBUTING.md) for hook setup and repository protections.
 
+## UI verification
+
+For every UI change, capture and visually inspect before and after screenshots of the affected interface. Use the same viewport, state, and content for each pair, include the images in the PR, and report the viewports and behavior verified. Use fixtures or redact private data. Capture the before state before editing the UI.
+
 ## Formatting and ordering
 
 Oxfmt owns import sorting and ordinary formatting. Oxlint runs Stylistic for statement spacing. Oxlint requires exactly two blank lines after the final import, including before comments. Use one blank line:
