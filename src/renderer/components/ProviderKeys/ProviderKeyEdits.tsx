@@ -14,7 +14,8 @@ function useEdit(provider: Provider, sessionId: string | null) {
   const mutationKey = ['providerKey', provider];
   const pending = useIsMutating({ mutationKey, exact: true }) > 0;
   const save = useMutation({
-    mutationKey, meta: { aiOperation: true },
+    mutationKey,
+    meta: { aiOperation: true },
     onMutate: async () => {
       const input = submission.current;
       if (!input) throw new Error('Choose a provider key change before saving.');
@@ -24,15 +25,27 @@ function useEdit(provider: Provider, sessionId: string | null) {
     mutationFn: async () => {
       const input = submission.current;
       if (!input) throw new Error('Choose a provider key change before saving.');
-      return unwrap(await (provider === 'openai' ? window.wave.setOpenAiKey(input.value) : provider === 'elevenlabs' ? window.wave.setElevenLabsKey(input.value) : window.wave.setTwitterKey(input.value)));
+      return unwrap(
+        await (provider === 'openai'
+          ? window.wave.setOpenAiKey(input.value)
+          : provider === 'elevenlabs'
+            ? window.wave.setElevenLabsKey(input.value)
+            : window.wave.setTwitterKey(input.value)),
+      );
     },
     onSuccess: async (value, _variables, context) => {
       await client.cancelQueries({ queryKey, exact: true });
       client.setQueryData(queryKey, value);
       if (context?.revision === revision.current) setDraft('');
     },
-    onError: () => { void client.cancelQueries({ queryKey, exact: true }).then(() => client.invalidateQueries({ queryKey, exact: true })); },
-    onSettled: () => { submission.current = null; },
+    onError: () => {
+      void client
+        .cancelQueries({ queryKey, exact: true })
+        .then(() => client.invalidateQueries({ queryKey, exact: true }));
+    },
+    onSettled: () => {
+      submission.current = null;
+    },
   });
   const { reset } = save;
   useLayoutEffect(() => {
@@ -43,8 +56,15 @@ function useEdit(provider: Provider, sessionId: string | null) {
     reset();
   }, [sessionId, reset]);
   return {
-    draft, pending, error: save.error, queryKey,
-    setDraft(value: string) { if (submission.current || pending) return; save.reset(); setDraft(value); },
+    draft,
+    pending,
+    error: save.error,
+    queryKey,
+    setDraft(value: string) {
+      if (submission.current || pending) return;
+      save.reset();
+      setDraft(value);
+    },
     submit(value: string | null) {
       if (submission.current || pending || (value !== null && !value.trim())) return;
       submission.current = { value, revision: revision.current };

@@ -11,10 +11,24 @@ import './VoicePreview.styles.css';
 
 const validVoiceId = (value: string) => /^[a-zA-Z0-9_-]{1,128}$/.test(value);
 
-type PreviewResource = { kind: 'voice'; voiceId: string } | { kind: 'dj'; djId: string; voiceId: string; delivery: string };
+type PreviewResource =
+  | { kind: 'voice'; voiceId: string }
+  | { kind: 'dj'; djId: string; voiceId: string; delivery: string };
 
-export function VoicePreview({ resource, label, playbackId, activeId, onStart, active = true }: {
-  resource: PreviewResource; label: string; playbackId: string; activeId?: string; onStart?: (id: string) => void; active?: boolean;
+export function VoicePreview({
+  resource,
+  label,
+  playbackId,
+  activeId,
+  onStart,
+  active = true,
+}: {
+  resource: PreviewResource;
+  label: string;
+  playbackId: string;
+  activeId?: string;
+  onStart?: (id: string) => void;
+  active?: boolean;
 }) {
   const { voiceId } = resource;
   const savedDJ = resource.kind === 'dj';
@@ -33,17 +47,40 @@ export function VoicePreview({ resource, label, playbackId, activeId, onStart, a
   const playGeneration = useRef(0);
   const musicGeneration = useRef(0);
   const musicAtRequest = useRef({ generation: 0, command: 0 });
-  const requestIsCurrent = () => musicAtRequest.current.generation === musicGeneration.current && musicAtRequest.current.command === player.getMusicCommandRevision();
+  const requestIsCurrent = () =>
+    musicAtRequest.current.generation === musicGeneration.current &&
+    musicAtRequest.current.command === player.getMusicCommandRevision();
   const [playingVoiceId, setPlayingVoiceId] = useState<string | null>(null);
   const [failedVoiceId, setFailedVoiceId] = useState<string | null>(null);
   const [playError, setPlayError] = useState<Error | null>(null);
   const generationInFlight = useRef(false);
-  const [focusedAction, setFocusedAction] = useState<{ action: 'preview' | 'regenerate'; element: HTMLButtonElement } | null>(null);
-  const ownsFocus = (action: 'preview' | 'regenerate') => active && focusedAction?.action === action && document.activeElement === focusedAction.element;
-  const queryKey = resource.kind === 'dj' ? ['djVoicePreview', resource.djId, voiceId, resource.delivery] : ['voicePreview', voiceId];
+  const [focusedAction, setFocusedAction] = useState<{
+    action: 'preview' | 'regenerate';
+    element: HTMLButtonElement;
+  } | null>(null);
+  const ownsFocus = (action: 'preview' | 'regenerate') =>
+    active && focusedAction?.action === action && document.activeElement === focusedAction.element;
+  const queryKey =
+    resource.kind === 'dj' ? ['djVoicePreview', resource.djId, voiceId, resource.delivery] : ['voicePreview', voiceId];
   const valid = validVoiceId(voiceId);
-  const preview = useQuery({ queryKey, enabled: active && valid && recoveryReady, queryFn: async () => unwrap(await (resource.kind === 'dj' ? window.wave.getDJVoicePreview(resource.djId) : window.wave.getVoicePreview(voiceId))), retry: false, refetchOnWindowFocus: false, refetchOnReconnect: false });
-  const retryFocus = useRetryFocus({ ownerKey: identity, target: () => previewGroup.current, canFocusSuccess: () => active && recoveryReady && preview.isSuccess && !preview.isFetching });
+  const preview = useQuery({
+    queryKey,
+    enabled: active && valid && recoveryReady,
+    queryFn: async () =>
+      unwrap(
+        await (resource.kind === 'dj'
+          ? window.wave.getDJVoicePreview(resource.djId)
+          : window.wave.getVoicePreview(voiceId)),
+      ),
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+  });
+  const retryFocus = useRetryFocus({
+    ownerKey: identity,
+    target: () => previewGroup.current,
+    canFocusSuccess: () => active && recoveryReady && preview.isSuccess && !preview.isFetching,
+  });
   const shared = preview.data;
   const playable = shared?.available && shared.audioUrl ? shared : null;
   const playing = playingVoiceId === voiceId;
@@ -54,7 +91,13 @@ export function VoicePreview({ resource, label, playbackId, activeId, onStart, a
     mounted.current = true;
     const element = audio.current;
     const generation = playGeneration;
-    return () => { mounted.current = false; ++generation.current; element?.pause(); element?.removeAttribute('src'); element?.load(); };
+    return () => {
+      mounted.current = false;
+      ++generation.current;
+      element?.pause();
+      element?.removeAttribute('src');
+      element?.load();
+    };
   }, []);
   useLayoutEffect(() => {
     currentVoiceId.current = voiceId;
@@ -70,9 +113,19 @@ export function VoicePreview({ resource, label, playbackId, activeId, onStart, a
       audio.current?.pause();
     }
   }, [player.requestedPlaying]);
-  useLayoutEffect(() => { ++musicGeneration.current; audio.current?.pause(); }, [player.currentKey, player.musicCommandRevision]);
-  useLayoutEffect(() => { if (audio.current) audio.current.volume = player.volume; }, [player.volume]);
-  useLayoutEffect(() => { if (!active || (activeId && activeId !== playbackId)) { ++playGeneration.current; audio.current?.pause(); } }, [active, activeId, playbackId]);
+  useLayoutEffect(() => {
+    ++musicGeneration.current;
+    audio.current?.pause();
+  }, [player.currentKey, player.musicCommandRevision]);
+  useLayoutEffect(() => {
+    if (audio.current) audio.current.volume = player.volume;
+  }, [player.volume]);
+  useLayoutEffect(() => {
+    if (!active || (activeId && activeId !== playbackId)) {
+      ++playGeneration.current;
+      audio.current?.pause();
+    }
+  }, [active, activeId, playbackId]);
 
   async function play(url: string) {
     const element = audio.current;
@@ -85,10 +138,20 @@ export function VoicePreview({ resource, label, playbackId, activeId, onStart, a
     loadedGeneration.current = generation;
     element.currentTime = 0;
     try {
-      if (!active || currentVoiceId.current !== voiceId || !requestIsCurrent() || generation !== playGeneration.current) return;
+      if (!active || currentVoiceId.current !== voiceId || !requestIsCurrent() || generation !== playGeneration.current)
+        return;
       await element.play();
     } catch {
-      if (mounted.current && generation === playGeneration.current && requestIsCurrent()) { setFailedVoiceId(voiceId); setPlayError(new Error(bundled ? 'The bundled voice sample could not play. Try again.' : 'This voice sample could not play. Regenerate it to replace the saved file.')); }
+      if (mounted.current && generation === playGeneration.current && requestIsCurrent()) {
+        setFailedVoiceId(voiceId);
+        setPlayError(
+          new Error(
+            bundled
+              ? 'The bundled voice sample could not play. Try again.'
+              : 'This voice sample could not play. Regenerate it to replace the saved file.',
+          ),
+        );
+      }
     }
   }
 
@@ -96,12 +159,21 @@ export function VoicePreview({ resource, label, playbackId, activeId, onStart, a
     meta: { aiOperation: true },
     mutationFn: async (regenerate: boolean) => {
       if (!recoveryReady) throw new Error('News data is unavailable. Recover it before generating a voice preview.');
-      return unwrap(await (resource.kind === 'dj' ? window.wave.prepareDJVoicePreview({ djId: resource.djId, regenerate }) : window.wave.prepareVoicePreview({ voiceId, regenerate })));
+      return unwrap(
+        await (resource.kind === 'dj'
+          ? window.wave.prepareDJVoicePreview({ djId: resource.djId, regenerate })
+          : window.wave.prepareVoicePreview({ voiceId, regenerate })),
+      );
     },
-    onSuccess: result => client.setQueryData(queryKey, result),
+    onSuccess: (result) => client.setQueryData(queryKey, result),
     onSettled: async () => {
-      try { await client.invalidateQueries({ queryKey: resource.kind === 'dj' ? ['djVoicePreview', resource.djId] : queryKey }); }
-      finally { generationInFlight.current = false; }
+      try {
+        await client.invalidateQueries({
+          queryKey: resource.kind === 'dj' ? ['djVoicePreview', resource.djId] : queryKey,
+        });
+      } finally {
+        generationInFlight.current = false;
+      }
     },
   });
   const busy = preview.isPending || prepare.isPending;
@@ -110,18 +182,37 @@ export function VoicePreview({ resource, label, playbackId, activeId, onStart, a
 
   function start() {
     if (previewUnavailable || generationInFlight.current) return;
-    if (playing) { ++playGeneration.current; audio.current?.pause(); return; }
+    if (playing) {
+      ++playGeneration.current;
+      audio.current?.pause();
+      return;
+    }
     setPlayError(null);
     onStart?.(playbackId);
-    if (playable?.audioUrl && (!audioFailed || bundled)) { void play(playable.audioUrl); return; }
-    if (!recoveryReady) { setPlayError(new Error('News data is unavailable. Recover it before generating a voice preview.')); return; }
-    if (bundled) { setPlayError(new Error('The bundled preset voice sample is unavailable.')); return; }
-    if (!valid) { setPlayError(new Error('Enter a valid ElevenLabs voice ID first.')); return; }
+    if (playable?.audioUrl && (!audioFailed || bundled)) {
+      void play(playable.audioUrl);
+      return;
+    }
+    if (!recoveryReady) {
+      setPlayError(new Error('News data is unavailable. Recover it before generating a voice preview.'));
+      return;
+    }
+    if (bundled) {
+      setPlayError(new Error('The bundled preset voice sample is unavailable.'));
+      return;
+    }
+    if (!valid) {
+      setPlayError(new Error('Enter a valid ElevenLabs voice ID first.'));
+      return;
+    }
     generate(attempted || audioFailed);
   }
   function generate(regenerate: boolean) {
     if (!active || busy || generationInFlight.current) return;
-    if (!recoveryReady) { setPlayError(new Error('News data is unavailable. Recover it before generating a voice preview.')); return; }
+    if (!recoveryReady) {
+      setPlayError(new Error('News data is unavailable. Recover it before generating a voice preview.'));
+      return;
+    }
     setPlayError(null);
     audio.current?.pause();
     onStart?.(playbackId);
@@ -129,29 +220,162 @@ export function VoicePreview({ resource, label, playbackId, activeId, onStart, a
     musicAtRequest.current = { generation: musicGeneration.current, command: player.getMusicCommandRevision() };
     generationInFlight.current = true;
     prepare.reset();
-    prepare.mutate(regenerate, { onSuccess: result => {
-      if (token !== playGeneration.current || currentVoiceId.current !== voiceId || !requestIsCurrent() || !active) return;
-      if (result.available && result.audioUrl) void play(result.audioUrl);
-    } });
+    prepare.mutate(regenerate, {
+      onSuccess: (result) => {
+        if (token !== playGeneration.current || currentVoiceId.current !== voiceId || !requestIsCurrent() || !active)
+          return;
+        if (result.available && result.audioUrl) void play(result.audioUrl);
+      },
+    });
   }
 
   const pending = busy || prepare.isPending;
-  const previewUnavailable = !active || pending || (!!preview.error && !shared && !playable) || (bundled && !playable && !preview.isPending) || (!recoveryReady && !playable && !bundled);
+  const previewUnavailable =
+    !active ||
+    pending ||
+    (!!preview.error && !shared && !playable) ||
+    (bundled && !playable && !preview.isPending) ||
+    (!recoveryReady && !playable && !bundled);
   const regenerateUnavailable = !recoveryReady || !active || pending || !canPlay;
   const focusProps = (action: 'preview' | 'regenerate') => ({
     onFocus: (event: React.FocusEvent<HTMLButtonElement>) => setFocusedAction({ action, element: event.currentTarget }),
     onBlur: () => setFocusedAction(null),
   });
-  const buttonLabel = playing ? 'Stop preview' : savedDJ ? canPlay && !audioFailed ? 'Preview saved DJ' : attempted || audioFailed ? 'Retry DJ preview' : 'Generate DJ preview' : audioFailed && bundled ? 'Try preview again' : audioFailed ? 'Regenerate preview' : canPlay ? 'Preview voice' : bundled ? 'Preview voice' : attempted ? 'Retry preview' : 'Generate preview';
-  return <div ref={previewGroup} tabIndex={-1} role="group" aria-labelledby={labelId} className="dj-voice-preview">
-    <button type="button"  {...focusProps('preview')} disabled={previewUnavailable && !ownsFocus('preview')} aria-disabled={previewUnavailable || undefined} aria-busy={pending || undefined} onClick={start} aria-label={`${pending ? 'Loading preview' : buttonLabel} for ${label}`}>
-      {pending ? <LoaderCircle size={14} className="spinning" /> : playing ? <Square size={14} /> : <Play size={14} />}{pending ? 'Loading…' : buttonLabel}
-    </button>
-    {savedDJ && (canPlay || ownsFocus('regenerate')) && <button type="button" {...focusProps('regenerate')} disabled={regenerateUnavailable && !ownsFocus('regenerate')} aria-disabled={regenerateUnavailable || undefined} aria-busy={prepare.isPending || undefined} onClick={() => { if (!regenerateUnavailable) generate(true); }} aria-label={`${prepare.isPending ? 'Regenerating DJ preview' : canPlay ? 'Regenerate DJ preview' : 'Preview unavailable'} for ${label}`}>{prepare.isPending ? 'Regenerating…' : canPlay ? 'Regenerate DJ preview' : 'Preview unavailable'}</button>}
-    <span id={labelId} className="dj-voice-preview-label">{label} · {savedDJ ? 'DJ delivery preview' : 'voice sample'}</span>
-    <p className="dj-preview-hint" role="status">{!valid ? 'Enter a valid ElevenLabs voice ID to preview it.' : prepare.isPending ? 'Preparing the voice preview and checking its saved status…' : preview.isPending ? savedDJ ? 'Checking saved DJ delivery preview…' : 'Checking saved voice sample…' : savedDJ ? playable ? shared?.stale ? 'Outdated preview. This recording uses earlier voice or delivery settings. Regenerate makes a new ElevenLabs request.' : 'Saved locally with this DJ’s voice and delivery. Replay needs no provider request; regeneration uses ElevenLabs.' : attempted ? 'No playable DJ preview is saved. Retry makes a new ElevenLabs request.' : 'Generate a fixed sample with this DJ’s saved voice and delivery using ElevenLabs. Saving this DJ does not generate audio.' : playable ? audioFailed ? bundled ? 'The bundled sample could not play; no provider request will be made.' : 'The saved sample failed to play. Regenerate it once to replace it.' : 'Saved locally. Replaying does not make a provider request.' : bundled ? 'The bundled preset sample is unavailable; synthesis is disabled for preset voices.' : attempted ? 'No playable sample is saved. Retry makes a new ElevenLabs request.' : 'Generate once with ElevenLabs; this sample is then shared by voice ID.'}</p>
-    {!bundled && valid && <p className="dj-preview-hint">Generating or regenerating a preview uses ElevenLabs outside automatic news limits and can use credits or incur charges. Replaying saved audio makes no provider request.</p>}
-    <audio ref={audio} preload="none" aria-label={`${label} ${savedDJ ? 'DJ delivery preview' : 'voice sample'}`} onPlay={() => { if (!active || (activeId && activeId !== playbackId) || loadedGeneration.current !== playGeneration.current || loadedVoiceId.current !== currentVoiceId.current || !requestIsCurrent()) { audio.current?.pause(); return; } setFailedVoiceId(null); onStart?.(playbackId); player.pauseForPreview(); setPlayingVoiceId(currentVoiceId.current); }} onPause={() => setPlayingVoiceId(null)} onEnded={() => setPlayingVoiceId(null)} onError={() => { setPlayingVoiceId(null); setFailedVoiceId(currentVoiceId.current); setPlayError(new Error(bundled ? 'The bundled voice sample could not be opened.' : 'The saved voice sample could not be opened. Regenerate it to replace the file.')); }} />
-    <ErrorNotice key={identity} error={preview.error} retryRef={retryFocus.retryRef} retrying={preview.isFetching} retry={() => retryFocus.retry(() => preview.refetch())} /><ErrorNotice error={prepare.error} /><ErrorNotice error={playError} />
-  </div>;
+  const buttonLabel = playing
+    ? 'Stop preview'
+    : savedDJ
+      ? canPlay && !audioFailed
+        ? 'Preview saved DJ'
+        : attempted || audioFailed
+          ? 'Retry DJ preview'
+          : 'Generate DJ preview'
+      : audioFailed && bundled
+        ? 'Try preview again'
+        : audioFailed
+          ? 'Regenerate preview'
+          : canPlay
+            ? 'Preview voice'
+            : bundled
+              ? 'Preview voice'
+              : attempted
+                ? 'Retry preview'
+                : 'Generate preview';
+  return (
+    <div ref={previewGroup} tabIndex={-1} role="group" aria-labelledby={labelId} className="dj-voice-preview">
+      <button
+        type="button"
+        {...focusProps('preview')}
+        disabled={previewUnavailable && !ownsFocus('preview')}
+        aria-disabled={previewUnavailable || undefined}
+        aria-busy={pending || undefined}
+        onClick={start}
+        aria-label={`${pending ? 'Loading preview' : buttonLabel} for ${label}`}
+      >
+        {pending ? (
+          <LoaderCircle size={14} className="spinning" />
+        ) : playing ? (
+          <Square size={14} />
+        ) : (
+          <Play size={14} />
+        )}
+        {pending ? 'Loading…' : buttonLabel}
+      </button>
+      {savedDJ && (canPlay || ownsFocus('regenerate')) && (
+        <button
+          type="button"
+          {...focusProps('regenerate')}
+          disabled={regenerateUnavailable && !ownsFocus('regenerate')}
+          aria-disabled={regenerateUnavailable || undefined}
+          aria-busy={prepare.isPending || undefined}
+          onClick={() => {
+            if (!regenerateUnavailable) generate(true);
+          }}
+          aria-label={`${prepare.isPending ? 'Regenerating DJ preview' : canPlay ? 'Regenerate DJ preview' : 'Preview unavailable'} for ${label}`}
+        >
+          {prepare.isPending ? 'Regenerating…' : canPlay ? 'Regenerate DJ preview' : 'Preview unavailable'}
+        </button>
+      )}
+      <span id={labelId} className="dj-voice-preview-label">
+        {label} · {savedDJ ? 'DJ delivery preview' : 'voice sample'}
+      </span>
+      <p className="dj-preview-hint" role="status">
+        {!valid
+          ? 'Enter a valid ElevenLabs voice ID to preview it.'
+          : prepare.isPending
+            ? 'Preparing the voice preview and checking its saved status…'
+            : preview.isPending
+              ? savedDJ
+                ? 'Checking saved DJ delivery preview…'
+                : 'Checking saved voice sample…'
+              : savedDJ
+                ? playable
+                  ? shared?.stale
+                    ? 'Outdated preview. This recording uses earlier voice or delivery settings. Regenerate makes a new ElevenLabs request.'
+                    : 'Saved locally with this DJ’s voice and delivery. Replay needs no provider request; regeneration uses ElevenLabs.'
+                  : attempted
+                    ? 'No playable DJ preview is saved. Retry makes a new ElevenLabs request.'
+                    : 'Generate a fixed sample with this DJ’s saved voice and delivery using ElevenLabs. Saving this DJ does not generate audio.'
+                : playable
+                  ? audioFailed
+                    ? bundled
+                      ? 'The bundled sample could not play; no provider request will be made.'
+                      : 'The saved sample failed to play. Regenerate it once to replace it.'
+                    : 'Saved locally. Replaying does not make a provider request.'
+                  : bundled
+                    ? 'The bundled preset sample is unavailable; synthesis is disabled for preset voices.'
+                    : attempted
+                      ? 'No playable sample is saved. Retry makes a new ElevenLabs request.'
+                      : 'Generate once with ElevenLabs; this sample is then shared by voice ID.'}
+      </p>
+      {!bundled && valid && (
+        <p className="dj-preview-hint">
+          Generating or regenerating a preview uses ElevenLabs outside automatic news limits and can use credits or
+          incur charges. Replaying saved audio makes no provider request.
+        </p>
+      )}
+      <audio
+        ref={audio}
+        preload="none"
+        aria-label={`${label} ${savedDJ ? 'DJ delivery preview' : 'voice sample'}`}
+        onPlay={() => {
+          if (
+            !active ||
+            (activeId && activeId !== playbackId) ||
+            loadedGeneration.current !== playGeneration.current ||
+            loadedVoiceId.current !== currentVoiceId.current ||
+            !requestIsCurrent()
+          ) {
+            audio.current?.pause();
+            return;
+          }
+          setFailedVoiceId(null);
+          onStart?.(playbackId);
+          player.pauseForPreview();
+          setPlayingVoiceId(currentVoiceId.current);
+        }}
+        onPause={() => setPlayingVoiceId(null)}
+        onEnded={() => setPlayingVoiceId(null)}
+        onError={() => {
+          setPlayingVoiceId(null);
+          setFailedVoiceId(currentVoiceId.current);
+          setPlayError(
+            new Error(
+              bundled
+                ? 'The bundled voice sample could not be opened.'
+                : 'The saved voice sample could not be opened. Regenerate it to replace the file.',
+            ),
+          );
+        }}
+      />
+      <ErrorNotice
+        key={identity}
+        error={preview.error}
+        retryRef={retryFocus.retryRef}
+        retrying={preview.isFetching}
+        retry={() => retryFocus.retry(() => preview.refetch())}
+      />
+      <ErrorNotice error={prepare.error} />
+      <ErrorNotice error={playError} />
+    </div>
+  );
 }

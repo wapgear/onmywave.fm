@@ -1,4 +1,26 @@
-.song-table tr:focus-visible { outline: 1px solid var(--focus); outline-offset: -1px; border-radius: 12px; }
-.track-menu-trigger { min-height: 30px; width: 28px; padding: 0; background: transparent; border-radius: 10px; letter-spacing: 1px; }
-.row-menu.track-popover { position: fixed; inset: auto; margin: 0; width: 205px; max-width: calc(100vw - 16px); max-height: calc(100dvh - 16px); overflow-y: auto; color: var(--text); }
-.row-menu.track-popover:not(:popover-open) { display: none; }
+.song-table tr:focus-visible {
+  outline: 1px solid var(--focus);
+  outline-offset: -1px;
+  border-radius: 12px;
+}
+.track-menu-trigger {
+  min-height: 30px;
+  width: 28px;
+  padding: 0;
+  background: transparent;
+  border-radius: 10px;
+  letter-spacing: 1px;
+}
+.row-menu.track-popover {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  width: 205px;
+  max-width: calc(100vw - 16px);
+  max-height: calc(100dvh - 16px);
+  overflow-y: auto;
+  color: var(--text);
+}
+.row-menu.track-popover:not(:popover-open) {
+  display: none;
+}

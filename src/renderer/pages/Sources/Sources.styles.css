@@ -1,1 +1,45 @@
-.sources-description{max-width:620px;color:var(--muted);font-size:13px;line-height:1.7;margin:0 0 28px}.source-list{max-width:780px}.source-row{display:flex;align-items:center;gap:12px;padding:18px 0;border-bottom:1px solid var(--separator)}.source-row>svg{color:var(--muted);flex-shrink:0}.source-row>div{flex:1;min-width:0}.source-row h2{font-size:14px;letter-spacing:0;overflow-wrap:anywhere}.source-row p{font-size:12px;color:var(--muted);overflow-wrap:anywhere;margin-top:5px}.source-row span{display:block;font-size:11px;color:var(--accent);margin-top:5px}.source-row button{flex-shrink:0}
+.sources-description {
+  max-width: 620px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 0 0 28px;
+}
+.source-list {
+  max-width: 780px;
+}
+.source-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--separator);
+}
+.source-row > svg {
+  color: var(--muted);
+  flex-shrink: 0;
+}
+.source-row > div {
+  flex: 1;
+  min-width: 0;
+}
+.source-row h2 {
+  font-size: 14px;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+.source-row p {
+  font-size: 12px;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+  margin-top: 5px;
+}
+.source-row span {
+  display: block;
+  font-size: 11px;
+  color: var(--accent);
+  margin-top: 5px;
+}
+.source-row button {
+  flex-shrink: 0;
+}

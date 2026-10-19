@@ -1,16 +1,101 @@
-.filter-select-trigger { gap: 7px; height: 34px; min-width: 112px; max-width: 240px; padding: 0 12px; border-radius: 8px; background: var(--surface); font-size: 12px; }
-.filter-select-label { color: var(--muted); }
-.filter-select-value { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.filter-select-trigger > svg { margin-left: auto; flex-shrink: 0; color: var(--muted); }
-.filter-select-popup { -webkit-app-region: no-drag; position: fixed; inset: auto; width: 276px; max-width: calc(100vw - 16px); max-height: min(380px, calc(100dvh - 16px)); margin: 0; padding: 6px; border: 1px solid var(--border, #e4e4e7); border-radius: 12px; background: var(--popover, #fff); color: var(--text); box-shadow: 0 10px 32px #0002; overflow: hidden; }
-.filter-select-popup:popover-open { display: flex; flex-direction: column; }
-.filter-select-popup:not(:popover-open) { display: none; }
-.filter-select-search { display: flex; align-items: center; flex-shrink: 0; gap: 8px; padding: 4px 9px 8px; margin: 0; color: var(--muted); }
-.filter-select-search input { width: 100%; background: transparent; border: 0; border-radius: 4px; padding: 7px 0; font-size: 12px; }
-.filter-select-options { overflow-y: auto; min-height: 0; max-height: 292px; overscroll-behavior: contain; position: relative; }
-.filter-select-options button { display: flex; justify-content: space-between; width: 100%; gap: 12px; text-align: left; border-radius: 6px; background: transparent; padding: 8px 10px; font-size: 12px; }
-.filter-select-options button > span { overflow-wrap: anywhere; white-space: normal; }
-.filter-select-options button > svg { flex-shrink: 0; color: var(--accent); }
-.filter-select-options button:hover, .filter-select-options button:focus-visible { background: var(--surface); }
-.filter-select-options button[aria-selected=true] { color: var(--accent); }
-.filter-select-empty { padding: 12px 10px; color: var(--muted); font-size: 12px; }
+.filter-select-trigger {
+  gap: 7px;
+  height: 34px;
+  min-width: 112px;
+  max-width: 240px;
+  padding: 0 12px;
+  border-radius: 8px;
+  background: var(--surface);
+  font-size: 12px;
+}
+.filter-select-label {
+  color: var(--muted);
+}
+.filter-select-value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.filter-select-trigger > svg {
+  margin-left: auto;
+  flex-shrink: 0;
+  color: var(--muted);
+}
+.filter-select-popup {
+  -webkit-app-region: no-drag;
+  position: fixed;
+  inset: auto;
+  width: 276px;
+  max-width: calc(100vw - 16px);
+  max-height: min(380px, calc(100dvh - 16px));
+  margin: 0;
+  padding: 6px;
+  border: 1px solid var(--border, #e4e4e7);
+  border-radius: 12px;
+  background: var(--popover, #fff);
+  color: var(--text);
+  box-shadow: 0 10px 32px #0002;
+  overflow: hidden;
+}
+.filter-select-popup:popover-open {
+  display: flex;
+  flex-direction: column;
+}
+.filter-select-popup:not(:popover-open) {
+  display: none;
+}
+.filter-select-search {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 8px;
+  padding: 4px 9px 8px;
+  margin: 0;
+  color: var(--muted);
+}
+.filter-select-search input {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
+  padding: 7px 0;
+  font-size: 12px;
+}
+.filter-select-options {
+  overflow-y: auto;
+  min-height: 0;
+  max-height: 292px;
+  overscroll-behavior: contain;
+  position: relative;
+}
+.filter-select-options button {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+  text-align: left;
+  border-radius: 6px;
+  background: transparent;
+  padding: 8px 10px;
+  font-size: 12px;
+}
+.filter-select-options button > span {
+  overflow-wrap: anywhere;
+  white-space: normal;
+}
+.filter-select-options button > svg {
+  flex-shrink: 0;
+  color: var(--accent);
+}
+.filter-select-options button:hover,
+.filter-select-options button:focus-visible {
+  background: var(--surface);
+}
+.filter-select-options button[aria-selected='true'] {
+  color: var(--accent);
+}
+.filter-select-empty {
+  padding: 12px 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
