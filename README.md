@@ -89,7 +89,7 @@ For a signed, notarized Apple silicon release, export `APPLE_ID`, `APPLE_APP_SPE
 
 ```sh
 pnpm run release:mac --local-only           # build and verify without publishing
-pnpm run release:mac docs/releases/0.0.1.md # build, verify, and publish
+pnpm run release:mac docs/releases/0.0.2.md # build, verify, and publish
 ```
 
 The release command runs the quality checks, builds a DMG and ZIP, verifies signing and notarization, and includes corresponding source and SHA-256 checksums. See [automatic updates](docs/AUTO_UPDATES.md) for the update flow and verification limits. It uploads all files, including updater metadata and blockmaps, to a draft before publishing. Each release needs a higher package version than the previous release. Existing 0.0.1 installations without the updater need one manual installation of an updater-enabled release. Keep credentials outside Git. Review [release readiness](docs/OPEN_SOURCE_READINESS.md) for remaining verification limits.
