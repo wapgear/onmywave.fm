@@ -7,8 +7,8 @@ import {
   useLayoutEffect,
   useRef,
   useState,
-  type MouseEvent,
   type KeyboardEvent,
+  type MouseEvent,
   type ReactNode,
 } from 'react';
 
@@ -375,12 +375,60 @@ function TrackMenu({ name, children }: { name: string; children: ReactNode }) {
   const id = useId();
   const trigger = useRef<HTMLButtonElement>(null);
   const menu = useRef<HTMLDivElement>(null);
+  const contextPoint = useRef<{ x: number; y: number } | null>(null);
   const [open, setOpen] = useState(false);
+
+  const position = useCallback(() => {
+    const node = menu.current!;
+    const rect = trigger.current!.getBoundingClientRect();
+    const bounds = node.getBoundingClientRect();
+    node.style.left = `${Math.max(8, Math.min(window.innerWidth - bounds.width - 8, contextPoint.current?.x ?? rect.right - bounds.width))}px`;
+    node.style.top = `${Math.max(8, Math.min(window.innerHeight - bounds.height - 8, contextPoint.current?.y ?? rect.bottom + 4))}px`;
+  }, []);
 
   const close = useCallback(() => {
     menu.current?.hidePopover();
     trigger.current?.focus({ preventScroll: true });
   }, []);
+
+  useEffect(() => {
+    const row = trigger.current?.closest('tr');
+    if (!row) return;
+    let pendingOpen: (() => void) | undefined;
+    const show = (point: { x: number; y: number } | null) => {
+      trigger.current?.focus({ preventScroll: true });
+      contextPoint.current = point;
+      menu.current?.showPopover();
+      position();
+      menu.current?.querySelector<HTMLButtonElement>('button:not(:disabled)')?.focus({ preventScroll: true });
+    };
+    const contextMenu = (event: globalThis.MouseEvent) => {
+      if (menu.current?.contains(event.target as Node)) return;
+      event.preventDefault();
+      const point = event.button === 2 || event.ctrlKey ? { x: event.clientX, y: event.clientY } : null;
+      if (pendingOpen) document.removeEventListener('pointerup', pendingOpen);
+      // macOS sends contextmenu before pointerup, which would light-dismiss a newly opened popover.
+      if (event.buttons) {
+        pendingOpen = () => show(point);
+        document.addEventListener('pointerup', pendingOpen, { once: true });
+      } else show(point);
+    };
+    const keyboardMenu = (event: globalThis.KeyboardEvent) => {
+      if (menu.current?.contains(event.target as Node)) return;
+      if (event.key === 'ContextMenu' || (event.shiftKey && event.key === 'F10')) {
+        event.preventDefault();
+        event.stopPropagation();
+        show(null);
+      }
+    };
+    row.addEventListener('contextmenu', contextMenu);
+    row.addEventListener('keydown', keyboardMenu);
+    return () => {
+      if (pendingOpen) document.removeEventListener('pointerup', pendingOpen);
+      row.removeEventListener('contextmenu', contextMenu);
+      row.removeEventListener('keydown', keyboardMenu);
+    };
+  }, [position]);
 
   useEffect(() => {
     if (!open) return;
@@ -404,11 +452,7 @@ function TrackMenu({ name, children }: { name: string; children: ReactNode }) {
         popoverTarget={id}
         aria-label={`Actions for ${name}`}
         onClick={() => {
-          const rect = trigger.current!.getBoundingClientRect();
-          const node = menu.current!;
-          const height = node.getBoundingClientRect().height || 275;
-          node.style.left = `${Math.max(8, Math.min(window.innerWidth - 218, rect.right - 205))}px`;
-          node.style.top = `${Math.max(8, Math.min(rect.bottom + 4, window.innerHeight - height - 8))}px`;
+          contextPoint.current = null;
         }}
       >
         •••
@@ -427,8 +471,7 @@ function TrackMenu({ name, children }: { name: string; children: ReactNode }) {
           setOpen(event.newState === 'open');
           if (event.newState === 'open') {
             const node = menu.current!;
-            const rect = trigger.current!.getBoundingClientRect();
-            node.style.top = `${Math.max(8, Math.min(rect.bottom + 4, window.innerHeight - node.getBoundingClientRect().height - 8))}px`;
+            position();
             node.querySelector<HTMLButtonElement>('button:not(:disabled)')?.focus({ preventScroll: true });
           } else if (menu.current?.contains(document.activeElement) || document.activeElement === document.body)
             trigger.current?.focus({ preventScroll: true });
