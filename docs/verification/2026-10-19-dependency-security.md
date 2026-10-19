@@ -2,7 +2,7 @@
 
 The two open Dependabot alerts concerned development tooling: `esbuild` before 0.28.1 and `sprintf-js` through Electron Builder's optional proxy support. No runtime dependency was changed.
 
-Vite 7.3.7 accepts esbuild 0.28, allowing its lockfile entry to advance to 0.28.2 while keeping electron-vite 5.0.0 and its unaffected esbuild 0.25.12. A major electron-vite upgrade was unnecessary.
+The merged #154 update uses Vite 7.3.7 and electron-vite 6.0.0 with patched esbuild 0.28.2. This branch incorporates that update before migrating the lockfile to pnpm.
 
 `sprintf-js` has no patched release. The scoped pnpm override replaces only `global-agent` under `@electron/get` 3 with 4.1.3, whose upstream 4.1 release removed the `roarr` logger and its vulnerable formatter. Electron Builder's downloader still uses the same `bootstrap()` export. Remove this override when Electron Builder no longer depends on the old downloader/proxy chain. The unpatched package is absent from the resulting lockfile; no advisory was dismissed or ignored.
 
