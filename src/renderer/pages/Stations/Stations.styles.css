@@ -26,3 +26,4 @@
 .room-availability{min-width:0}.room-availability input[aria-disabled="true"]{cursor:progress}.room-progress-stop{min-width:0;max-width:100%}.room-progress-stop>button[aria-disabled="true"]{color:var(--muted);background:var(--surface);cursor:default}.room-progress-stop>button[aria-busy="true"]{cursor:progress}.room-progress-stop>button[aria-disabled="true"]:active{translate:0 0}
 
 .room-cancel-action{min-width:0;max-width:100%}.room-cancel-action button[aria-disabled="true"]{color:var(--muted);background:var(--surface);cursor:default}.room-cancel-action button[aria-busy="true"]{cursor:progress}.room-cancel-action button[aria-disabled="true"]:active{translate:0 0}
+.room-host-choice>.room-host-avatar{width:32px;height:32px;align-self:center;margin:0}

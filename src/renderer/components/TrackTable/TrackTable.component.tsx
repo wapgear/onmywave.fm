@@ -1,5 +1,5 @@
 import { Fragment, useCallback, useEffect, useId, useLayoutEffect, useRef, useState, type MouseEvent, type KeyboardEvent, type ReactNode } from 'react';
-import { ArrowDown, ArrowUp, Check, Clock3, Info, ListPlus, Play, Plus, Trash2 } from 'lucide-react';
+import { ArrowDown, ArrowUp, Check, Clock3, Info, ListPlus, Pause, Play, Plus, Trash2 } from 'lucide-react';
 import type { PlaylistEntry, Song } from '../../../shared/types';
 import { editablePlaylistEntryIds } from '../../../shared/playlist-entries';
 import { Artwork, TrackDuration } from '../Shared';
@@ -23,6 +23,8 @@ export type TrackTableProps = {
   add: (songs: Song[]) => void;
   details: (song: Song) => void;
   currentId?: string;
+  requestedPlaying: boolean;
+  togglePlayback: () => void;
   offset?: number;
   editable?: boolean;
   busy?: boolean;
@@ -31,7 +33,7 @@ export type TrackTableProps = {
   rowWindow?: { indices: number[]; rowHeight: number; focusRow: (index: number) => void };
 
 };
-export function TrackTable({ rows, selected, select, play, queue, add, details, currentId, offset = 0, editable, busy, remove, move, rowWindow }: TrackTableProps) {
+export function TrackTable({ rows, selected, select, play, queue, add, details, currentId, requestedPlaying, togglePlayback, offset = 0, editable, busy, remove, move, rowWindow }: TrackTableProps) {
   const anchor = useRef<string | null>(null);
   const tableRoot = useRef<HTMLDivElement>(null);
   const toolbar = useRef<HTMLDivElement>(null);
@@ -89,6 +91,11 @@ export function TrackTable({ rows, selected, select, play, queue, add, details, 
       anchor.current = row.key;
     }
   }
+  function activate(index: number) {
+    // Browser rows represent songs. The Queue drawer selects exact occurrences.
+    if (rows[index].song.id === currentId) togglePlayback();
+    else play(rows.map(item => item.song), index);
+  }
   function rowClick(event: MouseEvent<HTMLTableRowElement>, index: number) {
     if ((event.target as HTMLElement).closest('button,input,summary,[popover]')) return;
     event.currentTarget.focus({ preventScroll: true });
@@ -103,7 +110,7 @@ export function TrackTable({ rows, selected, select, play, queue, add, details, 
       select(next);
     } else if (event.key === ' ' || event.key === 'Enter') {
       event.preventDefault();
-      if (event.key === 'Enter') play(rows.map(item => item.song), index);
+      if (event.key === 'Enter') activate(index);
       else choose(index, event.shiftKey, event.metaKey || event.ctrlKey);
     } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
       event.preventDefault();
@@ -116,12 +123,12 @@ export function TrackTable({ rows, selected, select, play, queue, add, details, 
   const indices = rowWindow?.indices ?? rows.map((_, index) => index);
   function spacer(count: number) { return count > 0 && rowWindow ? <tr aria-hidden="true" className="song-spacer"><td colSpan={6} style={{ height: count * rowWindow.rowHeight, padding: 0, border: 0 }} /></tr> : null; }
   return <>
-    <div ref={tableRoot} className="table-scroll"><table className="song-table" aria-rowcount={rows.length + 1}><thead><tr><th className="check-column"><input type="checkbox" aria-label="Select loaded songs" checked={allSelected} onChange={toggleAll} /></th><th className="number-column">#</th><th>Title</th><th className="album-column">Album</th><th className="time-column"><Clock3 size={14} aria-label="Duration" /></th><th className="actions-column"><span className="sr-only">Actions</span></th></tr></thead><tbody>{indices.map((index, windowIndex) => { const row = rows[index]; return <Fragment key={row.key}>{spacer(index - (indices[windowIndex - 1] ?? -1) - 1)}<tr data-track-index={index} data-track-key={row.key} aria-rowindex={index + 2} className={`${selected.has(row.key) ? 'selected' : ''} ${currentId === row.song.id ? 'now-playing' : ''}`} tabIndex={0} aria-label={`${row.song.name || 'Untitled song'}, ${row.song.artists.join(', ') || 'Unknown artist'}`} aria-selected={selected.has(row.key)} onClick={event => rowClick(event, index)} onKeyDown={event => rowKey(event, index)} onDoubleClick={event => { if (!(event.target as HTMLElement).closest('button,input,summary,[popover]')) play(rows.map(item => item.song), index); }}>
+    <div ref={tableRoot} className="table-scroll"><table className="song-table" aria-rowcount={rows.length + 1}><thead><tr><th className="check-column"><input type="checkbox" aria-label="Select loaded songs" checked={allSelected} onChange={toggleAll} /></th><th className="number-column">#</th><th>Title</th><th className="album-column">Album</th><th className="time-column"><Clock3 size={14} aria-label="Duration" /></th><th className="actions-column"><span className="sr-only">Actions</span></th></tr></thead><tbody>{indices.map((index, windowIndex) => { const row = rows[index]; const pausing = row.song.id === currentId && requestedPlaying; const ActionIcon = pausing ? Pause : Play; return <Fragment key={row.key}>{spacer(index - (indices[windowIndex - 1] ?? -1) - 1)}<tr data-track-index={index} data-track-key={row.key} aria-rowindex={index + 2} className={`${selected.has(row.key) ? 'selected' : ''} ${currentId === row.song.id ? 'now-playing' : ''}`} tabIndex={0} aria-label={`${row.song.name || 'Untitled song'}, ${row.song.artists.join(', ') || 'Unknown artist'}`} aria-selected={selected.has(row.key)} onClick={event => rowClick(event, index)} onKeyDown={event => rowKey(event, index)} onDoubleClick={event => { if (!(event.target as HTMLElement).closest('button,input,summary,[popover]')) activate(index); }}>
       <td><input aria-label={`Select ${row.song.name}`} type="checkbox" checked={selected.has(row.key)} onChange={() => { anchor.current = row.key; toggle(row.key, row.song); }} /></td><td className="row-number">{currentId === row.song.id ? <span className="playing-bars" aria-label="Current song">♫</span> : offset + index + 1}</td>
-      <td><div className="song-title-cell"><button className="artwork-button" aria-label={`Play ${row.song.name}`} onClick={() => play(rows.map(item => item.song), index)}><Artwork url={row.song.imageUrl} name={row.song.name} /><span className="artwork-play"><Play size={14} fill="currentColor" /></span></button><button className="song-name" onClick={() => details(row.song)}><span>{row.song.name || 'Untitled song'}</span><small>{row.song.artists.join(', ') || 'Unknown artist'}</small></button></div></td>
+      <td><div className="song-title-cell"><button className="artwork-button" aria-label={`${pausing ? 'Pause' : 'Play'} ${row.song.name}`} onClick={() => activate(index)}><Artwork url={row.song.imageUrl} name={row.song.name} /><span className="artwork-play"><ActionIcon size={14} fill="currentColor" /></span></button><button className="song-name" onClick={() => details(row.song)}><span>{row.song.name || 'Untitled song'}</span><small>{row.song.artists.join(', ') || 'Unknown artist'}</small></button></div></td>
       <td className="album-column muted truncate">{row.song.album || 'Unknown album'}</td><td className="time-column muted"><TrackDuration seconds={row.song.duration} /></td>
       <td className="row-actions"><TrackMenu name={row.song.name}>
-        <button onClick={() => play([row.song])}><Play size={15} />Play song</button><button onClick={() => queue([row.song])}><ListPlus size={15} />Add to queue</button><button onClick={() => add([row.song])}><Plus size={15} />Add to playlist</button><button onClick={() => details(row.song)}><Info size={15} />Song details</button>{editable && <><button disabled={busy || row.editable === false || index === 0} onClick={() => move?.(row.key, index - 1)}><ArrowUp size={15} />Move up</button><button disabled={busy || row.editable === false || index === rows.length - 1} onClick={() => move?.(row.key, index + 1)}><ArrowDown size={15} />Move down</button><button disabled={busy || row.editable === false} className="danger" onClick={() => remove?.(row.key, document.activeElement instanceof HTMLButtonElement && document.activeElement.classList.contains('track-menu-trigger') ? document.activeElement : null)}><Trash2 size={15} />Remove from playlist</button></>}
+        <button onClick={() => { if (row.song.id === currentId) togglePlayback(); else play([row.song]); }}><ActionIcon size={15} />{pausing ? 'Pause song' : 'Play song'}</button><button onClick={() => queue([row.song])}><ListPlus size={15} />Add to queue</button><button onClick={() => add([row.song])}><Plus size={15} />Add to playlist</button><button onClick={() => details(row.song)}><Info size={15} />Song details</button>{editable && <><button disabled={busy || row.editable === false || index === 0} onClick={() => move?.(row.key, index - 1)}><ArrowUp size={15} />Move up</button><button disabled={busy || row.editable === false || index === rows.length - 1} onClick={() => move?.(row.key, index + 1)}><ArrowDown size={15} />Move down</button><button disabled={busy || row.editable === false} className="danger" onClick={() => remove?.(row.key, document.activeElement instanceof HTMLButtonElement && document.activeElement.classList.contains('track-menu-trigger') ? document.activeElement : null)}><Trash2 size={15} />Remove from playlist</button></>}
       </TrackMenu></td>
     </tr></Fragment>; })}{spacer(rows.length - (indices.at(-1) ?? -1) - 1)}</tbody></table></div>
     {selectedSongs.length > 0 && <div ref={toolbar} className="selection-toolbar" aria-label="Selected songs"><span><Check size={15} />{selectedSongs.length} selected</span><button onClick={() => play(selectedSongs)}><Play size={16} />Play</button><button className="icon-button" aria-label="Add selected songs to queue" onClick={() => queue(selectedSongs)}><ListPlus size={19} /></button><button className="primary" onClick={() => add(selectedSongs)}>Add to playlist</button><button onClick={() => select(new Map())}>Clear</button></div>}
