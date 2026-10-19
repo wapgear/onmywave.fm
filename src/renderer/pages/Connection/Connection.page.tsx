@@ -1,25 +1,22 @@
-import { useEffect, useRef, useState } from 'react';
 import { useIsMutating, useMutation } from '@tanstack/react-query';
 import { ArrowRight, Music2 } from 'lucide-react';
-import type { Connection } from '../../../shared/types';
+import { useEffect, useRef, useState } from 'react';
+
 import { unwrap } from '../../api';
-import { ErrorNotice } from '../../components/Shared';
 import { LibraryChooser } from '../../components/LibraryChooser';
-import { useLibrarySelection, type ConnectionTransition } from '../../components/LibrarySelection';
+import { useLibrarySelection } from '../../components/LibrarySelection';
+import { ErrorNotice } from '../../components/Shared';
 import { NewsRecoveryNotice } from '../../NewsRecovery';
+import type { ConnectionPageProps } from './Connection.types';
+
+
 export function ConnectionPage({
   connection,
   expired,
   connected,
   librariesSelected,
   runConnectionTransition,
-}: {
-  connection: Connection | null;
-  expired: boolean;
-  connected: (value: Connection) => void | Promise<void>;
-  librariesSelected: (value: Connection) => void | Promise<void>;
-  runConnectionTransition: ConnectionTransition;
-}) {
+}: ConnectionPageProps) {
   const [serverUrl, setServerUrl] = useState(connection?.serverUrl ?? '');
   const [username, setUsername] = useState(connection?.userName ?? '');
   const [password, setPassword] = useState('');
@@ -33,18 +30,21 @@ export function ConnectionPage({
   const ownsConnectFocus = focusedConnect !== null && document.activeElement === focusedConnect;
   const chooser = useRef<HTMLDivElement>(null);
   const returnToChooser = useRef(false);
+
   useEffect(() => {
     active.current = true;
     return () => {
       active.current = false;
     };
   }, []);
+
   useEffect(() => {
     if (!changingAccount && returnToChooser.current) {
       returnToChooser.current = false;
       chooser.current?.querySelector<HTMLButtonElement>('.library-change-account')?.focus({ preventScroll: true });
     }
   }, [changingAccount]);
+
   const login = useMutation({
     meta: { authAttempt: true },
     mutationFn: async () =>
@@ -66,6 +66,7 @@ export function ConnectionPage({
   const savingLibraries = useIsMutating({ mutationKey: ['selectLibraries', connection?.id] }) > 0;
   const loginBlocked = login.isPending || savingLibraries;
   const canLogin = !loginBlocked && !!serverUrl.trim() && !!username.trim();
+
   useEffect(() => {
     if (
       login.error &&
@@ -76,8 +77,10 @@ export function ConnectionPage({
     )
       focusedConnect.scrollIntoView({ block: 'nearest', inline: 'nearest' });
   }, [login.error, ownsConnectFocus, focusedConnect]);
+
   const hasChooser = connection && !expired;
   const choosing = hasChooser && !changingAccount;
+
   return (
     <main className="connection-page">
       <div className="connection-brand">

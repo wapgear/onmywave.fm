@@ -1,18 +1,25 @@
-import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
-import { fileURLToPath, URL } from 'node:url';
-import process from 'node:process';
-import console from 'node:console';
 import { Buffer } from 'node:buffer';
-const { fetch, AbortSignal } = globalThis;
+import console from 'node:console';
+import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
+import process from 'node:process';
+import { fileURLToPath, URL } from 'node:url';
+
 import { PRESET_VOICE_IDS, VOICE_SAMPLE_TEXT, VOICE_SAMPLE_VERSION } from '../src/shared/voice-previews.ts';
 
+
+const { fetch, AbortSignal } = globalThis;
+
 const folder = new URL('../src/renderer/public/voice-previews/', import.meta.url);
+
 await mkdir(folder, { recursive: true });
+
 const previous = await readFile(new URL('manifest.json', folder), 'utf8').then(JSON.parse, (error) => {
   if (error.code === 'ENOENT') return null;
   throw error;
 });
+
 const clips = previous?.version === VOICE_SAMPLE_VERSION ? previous.clips : {};
+
 for (const voiceId of PRESET_VOICE_IDS) {
   const target = new URL(`${voiceId}.mp3`, folder);
   const saved = await readFile(target).catch((error) => {

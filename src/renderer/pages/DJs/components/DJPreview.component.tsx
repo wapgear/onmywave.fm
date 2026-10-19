@@ -1,23 +1,17 @@
-import type { DJ } from '../../../../shared/types';
+import type { DJPreviewProps } from './DJPreview.types';
 import { VoicePreview } from './VoicePreview.component';
+
 
 const defaultVoiceId = 'JBFqnCBsd6RMkjVDRZzb';
 
-export function DJPreview({
-  dj,
-  activeId,
-  onStart,
-}: {
-  dj: DJ;
-  activeId: string | null;
-  onStart: (id: string) => void;
-}) {
+export function DJPreview({ dj, activeId, onStart }: DJPreviewProps) {
   const resource = {
     kind: 'dj' as const,
     djId: dj.id,
     voiceId: dj.news?.elevenVoiceId || defaultVoiceId,
     delivery: dj.news?.elevenTags || '',
   };
+
   return (
     <div className="dj-preview">
       <VoicePreview

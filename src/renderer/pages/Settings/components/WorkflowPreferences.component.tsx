@@ -1,36 +1,12 @@
-import type { RoomProfile } from '../../../../shared/types';
-import type { WorkflowDraft } from '../../../../shared/workflow';
 import { type FormEvent, useLayoutEffect, useRef, useState } from 'react';
+
+import { newsPreparationStatus } from '../../../../shared/news-preparation-status';
 import { ErrorNotice, errorMessage } from '../../../components/Shared';
 import { useNewsRecovery } from '../../../NewsRecovery';
-import { newsPreparationStatus } from '../../../../shared/news-preparation-status';
+import type { WorkflowPreferencesProps } from './WorkflowPreferences.types';
+
 import './WorkflowPreferences.styles.css';
 
-export type PreparationIssue = { message: string; action?: { label: string; run: () => void } };
-type Props = {
-  active: boolean;
-  resuming: boolean;
-  resumeError: unknown;
-  stopError: unknown;
-  room?: RoomProfile;
-  value: WorkflowDraft;
-  dirty: boolean;
-  disabled: boolean;
-  saving: boolean;
-  saveError: unknown;
-  activationReady: boolean;
-  statusLoading: boolean;
-  statusError: unknown;
-  profileStatusUnknown: boolean;
-  issues: PreparationIssue[];
-  onChange: (patch: Partial<WorkflowDraft>) => void;
-  onSave: () => void;
-  onResume: () => void;
-  onTurnOff: () => void;
-  stopping: boolean;
-  stopDisabled: boolean;
-  onRetryStatus: () => void;
-};
 
 export function WorkflowPreferences({
   active,
@@ -55,7 +31,7 @@ export function WorkflowPreferences({
   stopping,
   stopDisabled,
   onRetryStatus,
-}: Props) {
+}: WorkflowPreferencesProps) {
   const saveButton = useRef<HTMLButtonElement>(null);
   const saveFeedback = useRef<HTMLDivElement>(null);
   const [ownsSaveFocus, setOwnsSaveFocus] = useState(false);
@@ -87,6 +63,7 @@ export function WorkflowPreferences({
   const preparationResumed = !!room?.enabled && !!room.workflowDraft.newsEnabled && !needsResume;
   const stopErrorMessage = stopError ? errorMessage(stopError) : '';
   const resumeErrorMessage = resumeError ? errorMessage(resumeError) : '';
+
   useLayoutEffect(() => {
     const focused = document.activeElement;
     if (
@@ -103,6 +80,7 @@ export function WorkflowPreferences({
       focused.closest('.news-workflow-action')?.scrollIntoView({ block: 'center', inline: 'nearest' });
     }
   }, [stopErrorMessage, resumeErrorMessage]);
+
   const saveErrorMessage = saveError ? errorMessage(saveError) : '';
   const lastSaveErrorMessage = useRef(saveErrorMessage);
 

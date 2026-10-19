@@ -1,5 +1,6 @@
 import type { DJ } from './types';
 
+
 export const djAvatarIcons = [
   { id: 'host', name: 'Host' },
   { id: 'headphones', name: 'Headphones' },
@@ -8,10 +9,12 @@ export const djAvatarIcons = [
   { id: 'music', name: 'Music' },
   { id: 'sparkles', name: 'Sparkles' },
 ] as const;
+
 export const djAvatarPortraits = [
   { id: 'fox', name: 'Fox' },
   { id: 'owl', name: 'Owl' },
 ] as const;
+
 export const djAvatarColors = [
   { id: 'neutral', name: 'Cloud', background: '#efeff3', foreground: '#555963' },
   { id: 'peach', name: 'Peach', background: '#f6e1d3', foreground: '#724331' },
@@ -22,6 +25,7 @@ export const djAvatarColors = [
 ] as const;
 
 type Color = (typeof djAvatarColors)[number]['id'];
+
 export type DJAvatarChoice = (
   | { kind: 'initials' }
   | { kind: 'icon'; id: (typeof djAvatarIcons)[number]['id'] }
@@ -46,6 +50,7 @@ export function resolveDJAvatar(value: unknown): DJAvatarChoice {
 }
 
 const graphemes = new Intl.Segmenter(undefined, { granularity: 'grapheme' });
+
 export function djInitials(name: string): string {
   const words = name.trim().split(/\s+/u).filter(Boolean);
   const first = (word: string) => graphemes.segment(word)[Symbol.iterator]().next().value?.segment ?? '';

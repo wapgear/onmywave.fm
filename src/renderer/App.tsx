@@ -1,42 +1,44 @@
-import {
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-  useSyncExternalStore,
-  type Dispatch,
-  type SetStateAction,
-} from 'react';
 import { useIsMutating, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Disc3, ListMusic, Music2, Radio, Settings } from 'lucide-react';
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
+
 import type { Connection, Song } from '../shared/types';
 import { unwrap } from './api';
-import { useRetryFocus } from './useRetryFocus';
-import { PlayerProvider } from './player';
-import { DJPlaybackProvider } from './dj-playback';
-import { Player } from './components/Player/Player.component';
+import type { ReadyAppProps, SessionContentProps } from './App.types';
 import { AddPlaylist } from './components/AddPlaylist/AddPlaylist.component';
-import { Queue } from './components/Queue/Queue.component';
-import './components/Drawer/Drawer.styles.css';
 import { Inspector } from './components/Inspector/Inspector.component';
-import { LibrarySelectionProvider, type ConnectionTransition } from './components/LibrarySelection';
-import { SettingsEditsProvider } from './pages/Settings/SettingsEdits';
+import { LibrarySelectionProvider } from './components/LibrarySelection';
+import type { ConnectionTransition } from './components/LibrarySelection.types';
+import { Player } from './components/Player/Player.component';
 import { ProviderKeyEditsProvider } from './components/ProviderKeys/ProviderKeyEdits';
+import { Queue } from './components/Queue/Queue.component';
+
+import './components/Drawer/Drawer.styles.css';
 import { ErrorNotice } from './components/Shared';
-import { ConnectionPage } from './pages/Connection/Connection.page';
-import { SongsPage, initialSongsView } from './pages/Songs/Songs.page';
-import { AlbumsPage, initialAlbumsView } from './pages/Albums/Albums.page';
-import { PlaylistsPage, usePlaylistRecovery } from './pages/Playlists/Playlists.page';
-import { StationsPage, type RoomSetupDraft } from './pages/Stations/Stations.page';
-import { SettingsPage, type SettingsSection } from './pages/Settings/Settings.page';
+import { DJPlaybackProvider } from './dj-playback';
 import { NewsRecoveryNotice, NewsRecoveryProvider } from './NewsRecovery';
+import { AlbumsPage, initialAlbumsView } from './pages/Albums/Albums.page';
+import { ConnectionPage } from './pages/Connection/Connection.page';
+import { PlaylistsPage, usePlaylistRecovery } from './pages/Playlists/Playlists.page';
+import { SettingsPage } from './pages/Settings/Settings.page';
+import type { SettingsSection } from './pages/Settings/Settings.types';
+import { SettingsEditsProvider } from './pages/Settings/SettingsEdits';
+import { SongsPage, initialSongsView } from './pages/Songs/Songs.page';
+import { StationsPage } from './pages/Stations/Stations.page';
+import type { RoomSetupDraft } from './pages/Stations/Stations.types';
+import { PlayerProvider } from './player';
+import { useRetryFocus } from './useRetryFocus';
+
+
 type PageName = 'songs' | 'albums' | 'playlists' | 'stations' | 'settings';
+
 const navigation = [
   { id: 'songs', name: 'All songs', icon: Music2 },
   { id: 'albums', name: 'Albums', icon: Disc3 },
   { id: 'playlists', name: 'Playlists', icon: ListMusic },
   { id: 'stations', name: 'News bucket', icon: Radio },
 ] as const;
+
 export default function App() {
   const client = useQueryClient();
   const connectionQuery = useQuery({
@@ -85,6 +87,7 @@ export default function App() {
       () => source,
     );
   };
+
   useEffect(() => {
     const expire = (event: Event) => {
       const revision = (event as CustomEvent<{ authRevision: number }>).detail?.authRevision;
@@ -100,12 +103,14 @@ export default function App() {
     window.addEventListener('wave:auth-expired', expire);
     return () => window.removeEventListener('wave:auth-expired', expire);
   }, [client]);
+
   useEffect(() => {
     if (pendingAuthChanges || deferredExpiry.current === null) return;
     const revision = deferredExpiry.current;
     deferredExpiry.current = null;
     if (client.getQueryData<Connection | null>(['connection'])?.authRevision === revision) setExpired(true);
   }, [pendingAuthChanges, client, connectionQuery.data?.authRevision]);
+
   async function setConnection(connection: Connection | null, clearExpiry = true) {
     const accountData = { predicate: (query: { queryKey: readonly unknown[] }) => query.queryKey[0] !== 'connection' };
     await client.cancelQueries(accountData);
@@ -117,6 +122,7 @@ export default function App() {
     }
   }
   const connection = connectionQuery.data ?? null;
+
   return (
     <>
       <div className="titlebar-drag-region" aria-hidden="true" />
@@ -152,18 +158,8 @@ export default function App() {
     </>
   );
 }
-type RadioDrafts = { roomSetupDraft: RoomSetupDraft; setRoomSetupDraft: Dispatch<SetStateAction<RoomSetupDraft>> };
-function SessionContent({
-  connection,
-  expired,
-  setConnection,
-  runConnectionTransition,
-}: {
-  connection: Connection | null;
-  expired: boolean;
-  setConnection: (connection: Connection | null, clearExpiry?: boolean) => Promise<void>;
-  runConnectionTransition: ConnectionTransition;
-}) {
+
+function SessionContent({ connection, expired, setConnection, runConnectionTransition }: SessionContentProps) {
   const playlistRecovery = usePlaylistRecovery();
   const [roomSetupDraft, setRoomSetupDraft] = useState<RoomSetupDraft>({ setup: null, moodDraft: null });
   const librariesSelected = (value: Connection) => setConnection(value, false);
@@ -192,12 +188,14 @@ function SessionContent({
         </DJPlaybackProvider>
       </PlayerProvider>
     );
+
   return (
     <LibrarySelectionProvider connection={connection} expired={expired}>
       {content}
     </LibrarySelectionProvider>
   );
 }
+
 function ReadyApp({
   connection,
   update,
@@ -205,19 +203,16 @@ function ReadyApp({
   playlistRecovery,
   roomSetupDraft,
   setRoomSetupDraft,
-}: {
-  connection: Connection;
-  update: (connection: Connection) => void;
-  disconnected: () => void | Promise<void>;
-  playlistRecovery: ReturnType<typeof usePlaylistRecovery>;
-} & RadioDrafts) {
+}: ReadyAppProps) {
   const active = useRef(false);
+
   useEffect(() => {
     active.current = true;
     return () => {
       active.current = false;
     };
   }, []);
+
   const [songsView, setSongsView] = useState(initialSongsView);
   const [albumsView, setAlbumsView] = useState(initialAlbumsView);
   const [playlistId, setPlaylistId] = useState<string | null>(null);
@@ -272,12 +267,15 @@ function ReadyApp({
     if (trigger?.isConnected) trigger.focus({ preventScroll: true });
   }
   const closeDrawerRef = useRef(closeDrawer);
+
   useLayoutEffect(() => {
     closeDrawerRef.current = closeDrawer;
   });
+
   useLayoutEffect(() => {
     if (drawer) drawerClose.current?.focus({ preventScroll: true });
   }, [drawer]);
+
   const [adding, setAdding] = useState<Song[] | null>(null);
   function updateLibraries(value: Connection) {
     if (!active.current || value?.id !== connection.id) return;
@@ -310,6 +308,7 @@ function ReadyApp({
           : page === 'settings'
             ? `settings-${settingsSection}`
             : page;
+
   useLayoutEffect(() => {
     const node = main.current;
     if (!node || !content.current) return;
@@ -365,6 +364,7 @@ function ReadyApp({
       node.removeEventListener('keydown', stop);
     };
   }, [location]);
+
   const { retryFrom: enterManagement } = useRetryFocus({
     ownerKey: 'setup-management',
     target: () =>
@@ -382,6 +382,7 @@ function ReadyApp({
     canFocusSuccess: () =>
       page === playerDestination.current && !returnToSetup && (page !== 'settings' || settingsSection === 'general'),
   });
+
   useEffect(() => {
     const shortcut = (event: KeyboardEvent) => {
       if (event.defaultPrevented || document.querySelector('dialog[open]') || document.querySelector(':popover-open'))
@@ -399,6 +400,7 @@ function ReadyApp({
     window.addEventListener('keydown', shortcut);
     return () => window.removeEventListener('keydown', shortcut);
   }, []);
+
   function navigate(next: PageName) {
     setPage(next);
     setDrawer(null);
@@ -441,6 +443,7 @@ function ReadyApp({
       return { isError: false };
     });
   }
+
   useLayoutEffect(() => {
     if (page !== 'stations' || !restoreSetupFocus.current) return;
     restoreSetupFocus.current = false;

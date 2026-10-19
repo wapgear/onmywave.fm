@@ -1,9 +1,13 @@
+import type { DJPlaybackSettings, DJPlaybackSettingsPatch } from './dj-playback';
+import type { WorkflowDraft } from './workflow';
+
+
 export const NEWS_TEXT_MODEL = 'gpt-6-luna';
 
-import type { DJPlaybackSettings, DJPlaybackSettingsPatch } from './dj-playback';
 export type { DJPlaybackSettings, DJPlaybackSettingsPatch } from './dj-playback';
-import type { WorkflowDraft } from './workflow';
+
 export type { WorkflowDraft } from './workflow';
+
 export type ApiError = {
   code:
     | 'offline'
@@ -20,8 +24,11 @@ export type ApiError = {
   message: string;
   authRevision?: number;
 };
+
 export type Result<T> = { ok: true; value: T } | { ok: false; error: ApiError };
+
 export type Page<T> = { items: T[]; total: number; start: number };
+
 export type Connection = {
   id: string;
   authRevision: number;
@@ -31,8 +38,11 @@ export type Connection = {
   selectedLibraryIds: string[];
   sessionOnly: boolean;
 };
+
 export type LibraryFilters = { genres: string[]; tags: string[] };
+
 export type Library = { id: string; name: string };
+
 export type Song = {
   id: string;
   name: string;
@@ -53,7 +63,9 @@ export type Song = {
   sampleRate?: number;
   size?: number;
 };
+
 export type Album = { id: string; name: string; artist: string; year?: number; imageUrl?: string; songCount?: number };
+
 export type CatalogQuery = {
   start?: number;
   limit?: number;
@@ -63,6 +75,7 @@ export type CatalogQuery = {
   sort?: 'name' | 'artist' | 'album' | 'year' | 'dateAdded';
   descending?: boolean;
 };
+
 export type Playlist = {
   id: string;
   name: string;
@@ -70,17 +83,22 @@ export type Playlist = {
   songCount?: number;
   recoveryStatus?: 'pending' | 'review' | 'unavailable';
 };
+
 export type PlaylistEntry = { entryId: string; song: Song };
+
 export type PlaylistEditRecovery =
   | { status: 'pending' | 'review'; markerId: string; receipt?: string }
   | { status: 'unavailable' };
+
 export type PlaylistLibrary = { items: Playlist[]; creationRecovery?: PlaylistEditRecovery };
+
 export type PlaylistDetail = Playlist & {
   canEdit: boolean | null;
   restriction?: string;
   entries: PlaylistEntry[];
   editRecovery?: PlaylistEditRecovery;
 };
+
 export type DJ = {
   avatar?: import('./dj-avatar').DJAvatarChoice;
   id: string;
@@ -94,6 +112,7 @@ export type DJ = {
   speakingFrequency: 'never' | 'occasionally' | 'often';
   news?: NewsSettings;
 };
+
 export type NewsSettings = {
   feedUrls: string[];
   interests: string;
@@ -106,6 +125,7 @@ export type NewsSettings = {
   elevenTags?: string;
   duckVolume: number;
 };
+
 export type NewsTransitionSettings = {
   mode: 'over-music' | 'between-songs';
   fadeOutSeconds: number;
@@ -113,7 +133,9 @@ export type NewsTransitionSettings = {
   postSpeechSeconds: number;
   fadeInSeconds: number;
 };
+
 export type NewsArticle = { id: string; title: string; url: string; source: string; publishedAt?: string };
+
 export type ReviewedNewsArticle = NewsArticle & {
   canonicalUrl: string;
   requestId: string;
@@ -121,13 +143,16 @@ export type ReviewedNewsArticle = NewsArticle & {
   status: 'submitted' | 'reviewed' | 'interrupted';
   outcome?: 'selected' | 'not-selected';
 };
+
 export type NewsScript = { requestId: string; script: string; articles: NewsArticle[]; warnings: string[] };
+
 export type NewsBreak = NewsScript & {
   id: string;
   audioUrl: string;
   engine: NewsSettings['speechEngine'];
   createdAt: string;
 };
+
 export type DJVoicePreview = {
   audioUrl: string | null;
   createdAt: string | null;
@@ -135,16 +160,22 @@ export type DJVoicePreview = {
   stale: boolean;
   attempted: boolean;
 };
+
 export type DJVoice = { id: string; name: string; description: string };
+
 export type DJVoiceSearch = { prompt: string; gender: 'any' | 'male' | 'female' };
+
 export type NewsRecoveryStatus = { phase: 'recovering' | 'ready' | 'unavailable' };
+
 export type AiStatus = { configured: boolean; sessionOnly: boolean };
+
 export type NewsProgress = {
   requestId: string;
   phase: 'feeds' | 'writing' | 'speech' | 'live-recording';
   message: string;
   transcript?: string;
 };
+
 export type PlaybackSnapshot = {
   shufflePlan?: import('./shuffle-queue').ShuffleSnapshot;
   connectionId: string;
@@ -156,7 +187,9 @@ export type PlaybackSnapshot = {
   repeat: 'off' | 'all' | 'one';
   outputId?: string;
 };
+
 export type PlaybackPreferences = Pick<PlaybackSnapshot, 'volume' | 'shuffle' | 'repeat'>;
+
 export type NewsSource = {
   id: string;
   name: string;
@@ -164,7 +197,9 @@ export type NewsSource = {
   kind?: 'rss' | 'twitter' | 'hacker-news';
   query?: string;
 };
+
 export type ListeningRoom = { djId: string | null; sourceIds: string[] };
+
 export type RoomProfile = {
   enabled: boolean;
   id: string;
@@ -173,6 +208,7 @@ export type RoomProfile = {
   mood: string;
   workflowDraft: WorkflowDraft;
 };
+
 export type PreparedNewsProvenance = {
   dj: DJ;
   mood: string;
@@ -181,7 +217,9 @@ export type PreparedNewsProvenance = {
   roomId?: string;
   roomName?: string;
 };
+
 export type PreparedNewsScript = NewsScript & { id: string; createdAt: string; provenance: PreparedNewsProvenance };
+
 export type PreparedNewsTake = NewsBreak & {
   recordedAt?: string;
   signature: string;
@@ -201,12 +239,14 @@ export type PreparedNewsTake = NewsBreak & {
     playedAt?: string;
   };
 };
+
 export type PreparedNewsOrigin = {
   kind: 'manual' | 'automatic';
   startedAt: string;
   profileId?: string;
   profileName?: string;
 };
+
 export type PreparedNewsRequest = {
   origin?: PreparedNewsOrigin;
   requestId: string;
@@ -216,7 +256,9 @@ export type PreparedNewsRequest = {
   artifactId?: string;
   error?: string;
 };
+
 export type PreparedNewsClaim = { id: string; claimId: string };
+
 export type PreparedNewsLibrary = {
   preparationErrorVersion?: 1;
   scripts: PreparedNewsScript[];
@@ -225,6 +267,7 @@ export type PreparedNewsLibrary = {
   requests: PreparedNewsRequest[];
   reviewedArticles: ReviewedNewsArticle[];
 };
+
 export type LocalState = {
   preparationErrorVersion?: 1;
   djPlayback: DJPlaybackSettings;
@@ -239,8 +282,11 @@ export type LocalState = {
   listeningRoom: ListeningRoom;
   workflowDraft: WorkflowDraft;
 };
+
 export type LocalStateSnapshot = LocalState & { revision: number };
+
 export type PlaybackResource = { url: string; offsetSeconds: number; transcoded: boolean };
+
 export interface WaveApi {
   getNewsRecoveryStatus(): Promise<Result<NewsRecoveryStatus>>;
   retryNewsRecovery(): Promise<Result<NewsRecoveryStatus>>;

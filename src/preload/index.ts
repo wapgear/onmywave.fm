@@ -1,5 +1,7 @@
 import { contextBridge, ipcRenderer } from 'electron';
+
 import type { NewsProgress, WaveApi } from '../shared/types';
+
 
 const api: WaveApi = {
   getNewsRecoveryStatus: () => ipcRenderer.invoke('wave:getNewsRecoveryStatus'),
@@ -68,4 +70,5 @@ const api: WaveApi = {
   },
   openSource: (url) => ipcRenderer.invoke('wave:openSource', url),
 };
+
 contextBridge.exposeInMainWorld('wave', api);

@@ -1,30 +1,39 @@
-import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useIsFetching, useIsMutating, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, ListMusic, ListPlus, LockKeyhole, Pencil, Play, Plus } from 'lucide-react';
+import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
+
 import type { PlaylistEditRecovery, PlaylistLibrary, Song } from '../../../shared/types';
 import { unwrap, WaveError } from '../../api';
-import { usePlayer } from '../../player';
-import { Artwork, Dialog, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { CollectionHeading } from '../../components/CollectionHeading/CollectionHeading.component';
+import { Artwork, Dialog, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { playlistRows, TrackTable } from '../../components/TrackTable/TrackTable.component';
+import { usePlayer } from '../../player';
 import { useRetryFocus } from '../../useRetryFocus';
+import type { PlaylistDetailProps, PlaylistNameDialogProps, PlaylistsPageProps } from './Playlists.types';
+
+
 type PlaylistEdit = { pending: boolean; error: unknown; needsReview: boolean; reviewReady: boolean };
+
 const emptyEdit: PlaylistEdit = { pending: false, error: null, needsReview: false, reviewReady: false };
+
 export function usePlaylistRecovery() {
   const active = useRef(true);
   const records = useRef<Record<string, PlaylistEdit>>({});
   const [edits, setEdits] = useState<Record<string, PlaylistEdit>>({});
+
   useLayoutEffect(() => {
     active.current = true;
     return () => {
       active.current = false;
     };
   }, []);
+
   const update = useCallback((id: string, patch: Partial<PlaylistEdit>) => {
     if (!active.current) return;
     records.current = { ...records.current, [id]: { ...emptyEdit, ...records.current[id], ...patch } };
     setEdits(records.current);
   }, []);
+
   return {
     edits,
     update,
@@ -37,7 +46,7 @@ export function usePlaylistRecovery() {
     },
   };
 }
-type PlaylistRecovery = ReturnType<typeof usePlaylistRecovery>;
+
 export function PlaylistsPage({
   add,
   details,
@@ -47,16 +56,7 @@ export function PlaylistsPage({
   onOpenDetail,
   onCreateDetail,
   onReturnFromDetail,
-}: {
-  onReturnFromDetail: (id: string, origin: HTMLButtonElement) => void;
-  onOpenDetail: (id: string, origin: HTMLButtonElement) => void;
-  onCreateDetail: (id: string, origin: HTMLElement | null) => void;
-  recovery: PlaylistRecovery;
-  id: string | null;
-  setId: (id: string | null) => void;
-  add: (songs: Song[]) => void;
-  details: (song: Song) => void;
-}) {
+}: PlaylistsPageProps) {
   const [creating, setCreating] = useState(false);
   const [creationActionPending, setCreationActionPending] = useState<'refresh' | 'ack' | null>(null);
   const creationActionBusy = useRef(false);
@@ -127,6 +127,7 @@ export function PlaylistsPage({
         details={details}
       />
     );
+
   return (
     <>
       <PageHeading title="Playlists" subtitle="Your collections, on every Jellyfin client" headingRef={heading}>
@@ -331,21 +332,8 @@ export function PlaylistsPage({
     </>
   );
 }
-function PlaylistDetail({
-  id,
-  listError,
-  back,
-  add,
-  details,
-  recovery,
-}: {
-  recovery: PlaylistRecovery;
-  id: string;
-  listError: unknown;
-  back: (origin: HTMLButtonElement) => void;
-  add: (songs: Song[]) => void;
-  details: (song: Song) => void;
-}) {
+
+function PlaylistDetail({ id, listError, back, add, details, recovery }: PlaylistDetailProps) {
   const client = useQueryClient();
   const player = usePlayer();
   const accountId = client.getQueryData<{ id: string } | null>(['connection'])?.id ?? 'signed-out';
@@ -363,7 +351,9 @@ function PlaylistDetail({
   const [selected, setSelected] = useState<Map<string, Song>>(new Map());
   const listFetching = useIsFetching({ queryKey: ['playlists'] }) > 0;
   const entries = playlist.data?.entries;
+
   const rows = useMemo(() => playlistRows(entries ?? []), [entries]);
+
   const [selectionEntries, setSelectionEntries] = useState(entries);
   if (selectionEntries !== entries) {
     const stableKeys = new Set(rows.filter((row) => row.editable).map((row) => row.key));
@@ -376,9 +366,11 @@ function PlaylistDetail({
   const [renaming, setRenaming] = useState(false);
   const edit = recovery.edits[id] ?? emptyEdit;
   const editRecoveryRef = useRef(edit);
+
   useLayoutEffect(() => {
     editRecoveryRef.current = edit;
   }, [edit]);
+
   const durable = playlist.data?.editRecovery;
   const detailRetryFocus = useRetryFocus({
     ownerKey: `playlist:${id}:reads`,
@@ -545,6 +537,7 @@ function PlaylistDetail({
   const data = playlist.data;
   const editBlocked =
     edit.pending || !!durable || recoveryAcknowledgePending || playlist.isFetching || !!playlist.error || needsReview;
+
   return (
     <>
       <button
@@ -779,19 +772,8 @@ function PlaylistDetail({
     </>
   );
 }
-function PlaylistNameDialog({
-  title,
-  initial,
-  close,
-  save,
-  created,
-}: {
-  title: string;
-  initial: string;
-  close: () => void;
-  save: (name: string) => Promise<string | void>;
-  created?: (id: string, origin: HTMLElement | null) => void;
-}) {
+
+function PlaylistNameDialog({ title, initial, close, save, created }: PlaylistNameDialogProps) {
   const [name, setName] = useState(initial);
   const client = useQueryClient();
   const mounted = useRef(true);
@@ -799,18 +781,21 @@ function PlaylistNameDialog({
   const restoreFocusRef = useRef(true);
   const inFlight = useRef(false);
   const stopTracking = useRef<(() => void) | null>(null);
+
   useLayoutEffect(() => {
     mounted.current = true;
     return () => {
       mounted.current = false;
     };
   }, []);
+
   useLayoutEffect(
     () => () => {
       stopTracking.current?.();
     },
     [],
   );
+
   const mutation = useMutation({
     mutationFn: () => save(name.trim()),
     onSuccess: (id) => {
@@ -915,6 +900,7 @@ function PlaylistNameDialog({
   const cancel = () => {
     if (!inFlight.current && !mutation.isPending) close();
   };
+
   return (
     <Dialog
       title={title}

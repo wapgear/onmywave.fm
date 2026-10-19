@@ -1,7 +1,10 @@
 import { createHash } from 'node:crypto';
+
 import type { PlaybackPreferences, PlaybackSnapshot } from '../shared/types';
 
+
 export const playbackPreferenceKey = (connectionId: string) => createHash('sha256').update(connectionId).digest('hex');
+
 export const defaultPlaybackPreferences = (): PlaybackPreferences => ({ volume: 0.75, shuffle: false, repeat: 'off' });
 
 function preferences(value: unknown): PlaybackPreferences | null {

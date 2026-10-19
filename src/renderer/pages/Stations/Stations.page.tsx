@@ -1,52 +1,39 @@
-import { useLayoutEffect, useRef, useState } from 'react';
 import { useIsMutating, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { LoaderCircle } from 'lucide-react';
+import { useLayoutEffect, useRef, useState } from 'react';
+
 import type { ListeningRoom, PreparedNewsRequest } from '../../../shared/types';
-import { unwrap } from '../../api';
-import { confirmLocalState } from '../../local-state-cache';
-import { Dialog, ErrorNotice, PageHeading, errorMessage } from '../../components/Shared';
-import { ConfigurationTabs } from '../../components/ConfigurationTabs/ConfigurationTabs.component';
-import { RoomSetup } from './components/RoomSetup.component';
-import { PreparedTakes } from './components/PreparedTakes.component';
-import { useDJPlayback } from '../../dj-playback';
-import { useRetryFocus } from '../../useRetryFocus';
-import { WorkflowPreferences, type PreparationIssue } from '../Settings/components/WorkflowPreferences.component';
-import { NewsBucket } from './components/NewsBucket.component';
 import type { WorkflowDraft } from '../../../shared/workflow';
+import { unwrap } from '../../api';
+import { ConfigurationTabs } from '../../components/ConfigurationTabs/ConfigurationTabs.component';
+import { Dialog, ErrorNotice, PageHeading, errorMessage } from '../../components/Shared';
+import { useDJPlayback } from '../../dj-playback';
+import { confirmLocalState } from '../../local-state-cache';
 import { NewsRecoveryPanel, useNewsRecovery } from '../../NewsRecovery';
+import { useRetryFocus } from '../../useRetryFocus';
+import { WorkflowPreferences } from '../Settings/components/WorkflowPreferences.component';
+import type { PreparationIssue } from '../Settings/components/WorkflowPreferences.types';
+import { NewsBucket } from './components/NewsBucket.component';
+import { PreparedTakes } from './components/PreparedTakes.component';
+import { RoomSetup } from './components/RoomSetup.component';
+import type { RoomSetupDraft, StationsPageProps } from './Stations.types';
+
 import './Stations.styles.css';
 
-export type RoomSetupDraft = {
-  preparationCancellation?: { requestId: string; acknowledged: boolean };
-  setup: ListeningRoom | null;
-  moodDraft: string | null;
-  newsInterests?: string;
-  workflow?: { roomId: string; patch: Partial<WorkflowDraft> };
-  stopError?: string;
-  stopErrorOrigin?: 'settings' | 'progress';
-  operationError?: string;
-  operationErrorTarget?: 'setup' | 'resume' | 'availability';
-  preparationCancelError?: string;
-  tab?: string;
-};
+
 function preparationOrigin(request: PreparedNewsRequest) {
   const origin = request.origin;
   if (!origin) return 'Original profile and time not recorded';
   return `${origin.kind === 'automatic' ? 'Automatic' : 'Manual'} · ${origin.profileName ?? 'Original profile unavailable'} · ${new Date(origin.startedAt).toLocaleString()}`;
 }
+
 export function StationsPage({
   configDraft,
   setConfigDraft,
   configureSources,
   configureDJ,
   configureSettings,
-}: {
-  configDraft: RoomSetupDraft;
-  setConfigDraft: React.Dispatch<React.SetStateAction<RoomSetupDraft>>;
-  configureSources: () => void;
-  configureDJ: () => void;
-  configureSettings: () => void;
-}) {
+}: StationsPageProps) {
   const newsRecovery = useNewsRecovery();
   const newsRecoveryReady = newsRecovery.status.phase === 'ready';
   const client = useQueryClient();
@@ -617,6 +604,7 @@ export function StationsPage({
       ? configDraft.preparationCancelError
       : undefined;
   const cancelUnavailable = oldCancelFocus || cancellationPending || !preparing || cancellationWaiting;
+
   useLayoutEffect(() => {
     if (
       localCancelError &&
@@ -627,6 +615,7 @@ export function StationsPage({
     )
       cancelFocus.element.closest('.room-cancel-action')?.scrollIntoView({ block: 'center', inline: 'nearest' });
   }, [localCancelError, ownsCancelFocus, cancelFocus]);
+
   function turnOffPreparation(origin: 'settings' | 'progress') {
     if (
       workflowActionInFlight.current ||
@@ -648,6 +637,7 @@ export function StationsPage({
     workflowActionInFlight.current = true;
     enableProfile.mutate({ id: activeProfile.id, enabled });
   }
+
   useLayoutEffect(() => {
     const focused = document.activeElement;
     if (
@@ -673,6 +663,7 @@ export function StationsPage({
     configDraft.stopErrorOrigin,
     configDraft.stopError,
   ]);
+
   function changeProfile(action: { kind: 'copy' } | { kind: 'switch'; id: string; saveChanges: boolean }) {
     if (profileSubmission.current || busy || (action.kind === 'copy' && !profileName.trim())) return;
     profileSubmission.current = true;
@@ -711,6 +702,7 @@ export function StationsPage({
       row?.scrollIntoView({ block: 'center' });
     });
   }
+
   return (
     <>
       <PageHeading headingRef={heading} title="News bucket" />

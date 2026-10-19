@@ -1,20 +1,8 @@
-import type { DJ, ListeningRoom, NewsSource } from '../../../../shared/types';
-import { FilterSelect } from '../../../components/FilterSelect/FilterSelect.component';
 import { DJAvatar } from '../../../components/DJAvatar/DJAvatar.component';
+import { FilterSelect } from '../../../components/FilterSelect/FilterSelect.component';
+import type { RoomSetupProps } from './RoomSetup.types';
 
-type Props = {
-  sources: NewsSource[];
-  djs: DJ[];
-  room: ListeningRoom;
-  mood: string;
-  newsInterests: string;
-  busy: boolean;
-  setSetup: (room: ListeningRoom) => void;
-  setMoodDraft: (mood: string) => void;
-  setNewsInterests: (interests: string) => void;
-  configureSources: () => void;
-  configureDJ: () => void;
-};
+
 export function RoomSetup({
   sources,
   djs,
@@ -27,8 +15,9 @@ export function RoomSetup({
   setNewsInterests,
   configureSources,
   configureDJ,
-}: Props) {
+}: RoomSetupProps) {
   const selectedDJ = djs.find((dj) => dj.id === room.djId);
+
   return (
     <section className="room-setup" aria-labelledby="news-setup-title">
       <div className="room-section-heading">

@@ -44,9 +44,12 @@ export function defaultWorkflowDraft(): WorkflowDraft {
     },
   };
 }
+
 const record = (value: unknown): value is Record<string, unknown> =>
   Boolean(value) && typeof value === 'object' && !Array.isArray(value);
+
 const validCity = (value: unknown): value is string => typeof value === 'string' && value.length <= 256;
+
 function validTimeZone(value: unknown): value is string {
   if (typeof value !== 'string' || !value || value.length > 128) return false;
   try {
@@ -56,6 +59,7 @@ function validTimeZone(value: unknown): value is string {
     return false;
   }
 }
+
 export function isWorkflowDraft(value: unknown): value is WorkflowDraft {
   if (
     !record(value) ||
@@ -116,6 +120,7 @@ export function isWorkflowDraft(value: unknown): value is WorkflowDraft {
     ['celsius', 'fahrenheit'].includes(String(morning.units))
   );
 }
+
 export function normalizeWorkflowDraft(value: unknown): WorkflowDraft {
   if (!isWorkflowDraft(value)) return defaultWorkflowDraft();
   return {

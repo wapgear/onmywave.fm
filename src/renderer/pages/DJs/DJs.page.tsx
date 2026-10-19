@@ -1,15 +1,19 @@
-import { useRef, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Copy, Pencil, Plus, Trash2 } from 'lucide-react';
+import { useRef, useState } from 'react';
+
 import type { DJ } from '../../../shared/types';
 import { unwrap } from '../../api';
-import { confirmLocalState } from '../../local-state-cache';
+import { DJAvatar } from '../../components/DJAvatar/DJAvatar.component';
 import { Dialog, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
+import { confirmLocalState } from '../../local-state-cache';
+import { useRetryFocus } from '../../useRetryFocus';
 import { DJEditor } from './components/DJEditor.component';
 import { DJPreview } from './components/DJPreview.component';
-import { DJAvatar } from '../../components/DJAvatar/DJAvatar.component';
-import { useRetryFocus } from '../../useRetryFocus';
+
 import './DJs.styles.css';
+
+
 const fresh = (): DJ => ({
   id: crypto.randomUUID(),
   name: '',
@@ -22,6 +26,7 @@ const fresh = (): DJ => ({
   speakingFrequency: 'never',
   avatar: { kind: 'initials', color: 'neutral' },
 });
+
 export function DJsPage() {
   const client = useQueryClient();
   const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()) });
@@ -71,6 +76,7 @@ export function DJsPage() {
     save.reset();
     setEditing(dj);
   }
+
   return (
     <>
       <PageHeading title="DJs" subtitle="Hosts and voices for your prepared audio takes" headingRef={heading}>

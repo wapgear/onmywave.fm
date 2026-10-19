@@ -1,16 +1,20 @@
-import { NEWS_TEXT_MODEL } from '../../../../shared/types';
-import { useId, useLayoutEffect, useRef, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { DJ, DJVoice, DJVoiceSearch, NewsSettings } from '../../../../shared/types';
-import { unwrap } from '../../../api';
-import { confirmLocalState } from '../../../local-state-cache';
-import { Dialog, ErrorNotice } from '../../../components/Shared';
-import { ConfigurationTabs } from '../../../components/ConfigurationTabs/ConfigurationTabs.component';
-import { djPresets } from './DJEditor.presets';
-import { VoicePreview } from './VoicePreview.component';
-import { DJAvatarPicker } from './DJAvatarPicker.component';
+import { useId, useLayoutEffect, useRef, useState } from 'react';
+
 import { resolveDJAvatar } from '../../../../shared/dj-avatar';
+import type { DJ, DJVoice, DJVoiceSearch, NewsSettings } from '../../../../shared/types';
+import { NEWS_TEXT_MODEL } from '../../../../shared/types';
+import { unwrap } from '../../../api';
+import { ConfigurationTabs } from '../../../components/ConfigurationTabs/ConfigurationTabs.component';
+import { Dialog, ErrorNotice } from '../../../components/Shared';
+import { confirmLocalState } from '../../../local-state-cache';
+import { DJAvatarPicker } from './DJAvatarPicker.component';
+import { djPresets } from './DJEditor.presets';
+import type { TextField } from './DJEditor.types';
+import { VoicePreview } from './VoicePreview.component';
+
 import './DJEditor.styles.css';
+
 
 export const defaultNews: NewsSettings = {
   feedUrls: [],
@@ -24,14 +28,7 @@ export const defaultNews: NewsSettings = {
   elevenVoiceId: 'JBFqnCBsd6RMkjVDRZzb',
   elevenTags: '',
 };
-type TextField =
-  | 'name'
-  | 'description'
-  | 'instructions'
-  | 'musicPreferences'
-  | 'exclusions'
-  | 'personality'
-  | 'language';
+
 export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
   const client = useQueryClient();
   const form = useRef<HTMLFormElement>(null);
@@ -118,6 +115,7 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
       inFlight.current = false;
     },
   });
+
   useLayoutEffect(() => {
     const active = document.activeElement;
     if (
@@ -131,6 +129,7 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
       return;
     active.scrollIntoView({ block: 'center', inline: 'nearest' });
   }, [save.error]);
+
   function closeEditor() {
     if (!inFlight.current && !save.isPending) close();
   }
@@ -170,6 +169,7 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
       )}
     </label>
   );
+
   return (
     <Dialog title={value.name ? 'Edit DJ' : 'Create a DJ'} close={closeEditor} closeDisabled={save.isPending} wide>
       <form

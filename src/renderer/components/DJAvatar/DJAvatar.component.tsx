@@ -1,8 +1,11 @@
-import { useState } from 'react';
 import { Headphones, Mic2, Music2, Radio, Sparkles, UserRound } from 'lucide-react';
+import { useState } from 'react';
+
 import { djAvatarColors, djInitials, resolveDJAvatar } from '../../../shared/dj-avatar';
 import type { DJ } from '../../../shared/types';
+
 import './DJAvatar.styles.css';
+
 
 const icons = {
   host: UserRound,

@@ -1,28 +1,15 @@
-import { useLayoutEffect, useRef, useState } from 'react';
 import { ExternalLink, Newspaper, Radio } from 'lucide-react';
-import type {
-  LocalState,
-  NewsArticle,
-  NewsBreak,
-  PreparedNewsLibrary,
-  PreparedNewsTake,
-  PreparedNewsScript,
-  ReviewedNewsArticle,
-} from '../../../../shared/types';
+import { useLayoutEffect, useRef, useState } from 'react';
+
 import { eligibleNewsTakes } from '../../../../shared/news-pool';
 import { newsPreparationStatus } from '../../../../shared/news-preparation-status';
-import { usePlayer } from '../../../player';
+import type { NewsArticle, NewsBreak, PreparedNewsScript, ReviewedNewsArticle } from '../../../../shared/types';
 import { ErrorNotice } from '../../../components/Shared';
+import { usePlayer } from '../../../player';
+import type { NewsBucketProps } from './NewsBucket.types';
+
 import './NewsBucket.styles.css';
 
-type Automation = {
-  settings: LocalState['djPlayback'];
-  room?: LocalState['roomProfiles'][number];
-  preparing: boolean;
-  pending: PreparedNewsTake | null;
-  error: string | null;
-  songsUntilBreak: number;
-};
 
 export function NewsBucket({
   library,
@@ -32,19 +19,12 @@ export function NewsBucket({
   savedNewsStale,
   openSource,
   openPreparation,
-}: {
-  library: PreparedNewsLibrary;
-  localState: LocalState;
-  automation: Automation;
-  profileStatusUnknown: boolean;
-  savedNewsStale: boolean;
-  openSource: (url: string) => void;
-  openPreparation: () => void;
-}) {
+}: NewsBucketProps) {
   const player = usePlayer();
   const [historyLimit, setHistoryLimit] = useState(25);
   const historyList = useRef<HTMLUListElement>(null);
   const revealHistory = useRef<{ button: HTMLButtonElement; key: string } | null>(null);
+
   useLayoutEffect(() => {
     const pending = revealHistory.current;
     revealHistory.current = null;
@@ -63,6 +43,7 @@ export function NewsBucket({
     target?.focus({ preventScroll: true });
     target?.scrollIntoView({ block: 'nearest' });
   }, [historyLimit]);
+
   const pageProfile = localState.roomProfiles.find((room) => room.id === localState.activeRoomProfileId);
   const eligible = pageProfile ? eligibleNewsTakes(library.takes, localState, pageProfile.id) : [];
   const active = player.activeNews;
@@ -127,6 +108,7 @@ export function NewsBucket({
     } catch {
       /* Some saved references may have an invalid URL. */
     }
+
     return (
       <span>
         {article.source}
@@ -183,6 +165,7 @@ export function NewsBucket({
     const status = request?.status ?? 'saved script';
     const profile =
       request?.origin?.profileName ?? script.provenance.roomName ?? script.provenance.roomId ?? 'Profile unavailable';
+
     return (
       <article className="news-bucket-draft" key={script.id}>
         <p>{script.script}</p>
@@ -494,6 +477,7 @@ function ReviewedRow({ article, openSource }: { article: ReviewedNewsArticle; op
   } catch {
     /* Preserve saved source rows even when a reference is malformed. */
   }
+
   return (
     <li className="news-bucket-reviewed-row">
       <div>

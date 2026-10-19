@@ -1,22 +1,32 @@
-import { app } from 'electron';
 import { createHash, randomUUID } from 'node:crypto';
 import { mkdir, readFile, rename, stat, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+
+import { app } from 'electron';
+
 import { NEWS_TEXT_MODEL } from '../shared/types';
-import { PRESET_VOICE_IDS, VOICE_SAMPLE_TEXT, VOICE_SAMPLE_VERSION } from '../shared/voice-previews';
 import type { DJ, DJVoicePreview, NewsSettings } from '../shared/types';
+import { PRESET_VOICE_IDS, VOICE_SAMPLE_TEXT, VOICE_SAMPLE_VERSION } from '../shared/voice-previews';
 import { ServiceError } from './jellyfin';
 import { NewsService, validateNewsSettings } from './news';
 import { getLocalState, readElevenLabsKey } from './storage';
 
+
 type Clip = { id: string; signature: string; createdAt: string; byteLength: number };
+
 type Manifest = { version: 1; attempted: true; clip: Clip | null };
+
 const sample = VOICE_SAMPLE_TEXT;
+
 const hash = (text: string) => createHash('sha256').update(text).digest('hex');
+
 const validKey = (value: string) => /^[a-f0-9]{64}$/.test(value);
+
 const validClip = (value: unknown): value is string =>
   typeof value === 'string' && /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/.test(value);
+
 const directory = (key: string) => join(app.getPath('userData'), 'dj-voice-previews', key);
+
 const inFlight = new Map<string, Promise<DJVoicePreview>>();
 
 function cacheKey(djId: string) {
@@ -24,11 +34,13 @@ function cacheKey(djId: string) {
     throw new ServiceError('invalid', 'Choose a saved DJ to preview.');
   return hash(djId);
 }
+
 async function savedDJ(djId: string): Promise<DJ> {
   const dj = (await getLocalState()).djs.find((item) => item.id === djId);
   if (!dj) throw new ServiceError('invalid', 'This DJ no longer exists.');
   return dj;
 }
+
 function speechSettings(dj: Pick<DJ, 'news'>): NewsSettings {
   return {
     feedUrls: [],
@@ -43,6 +55,7 @@ function speechSettings(dj: Pick<DJ, 'news'>): NewsSettings {
     elevenTags: dj.news?.elevenTags,
   };
 }
+
 function signature(dj: DJ) {
   const settings = speechSettings(dj);
   return hash(
@@ -56,6 +69,7 @@ function signature(dj: DJ) {
     }),
   );
 }
+
 async function readManifest(key: string, replaceCorrupt = false): Promise<Manifest | null> {
   let content: string;
   try {
@@ -88,12 +102,14 @@ async function readManifest(key: string, replaceCorrupt = false): Promise<Manife
     throw new ServiceError('server', 'The saved voice preview could not be read. Existing files were preserved.');
   }
 }
+
 async function writeManifest(key: string, manifest: Manifest) {
   await mkdir(directory(key), { recursive: true, mode: 0o700 });
   const temp = join(directory(key), `index.${randomUUID()}.tmp`);
   await writeFile(temp, JSON.stringify(manifest), { mode: 0o600 });
   await rename(temp, join(directory(key), 'index.json'));
 }
+
 async function snapshot(key: string, dj: DJ, manifest: Manifest | null): Promise<DJVoicePreview> {
   const clip = manifest?.clip;
   const available = clip
@@ -113,11 +129,13 @@ async function snapshot(key: string, dj: DJ, manifest: Manifest | null): Promise
     attempted: manifest?.attempted ?? false,
   };
 }
+
 function voiceKey(voiceId: string) {
   if (typeof voiceId !== 'string' || !/^[a-zA-Z0-9_-]{1,128}$/.test(voiceId))
     throw new ServiceError('invalid', 'Enter a valid ElevenLabs voice ID.');
   return hash(JSON.stringify({ voiceId, sampleVersion: VOICE_SAMPLE_VERSION }));
 }
+
 function voiceDJ(voiceId: string): DJ {
   return {
     id: voiceId,
@@ -132,6 +150,7 @@ function voiceDJ(voiceId: string): DJ {
     news: { ...speechSettings({}), elevenVoiceId: voiceId, elevenTags: '' },
   };
 }
+
 export async function bundledVoiceAudio(voiceId: string): Promise<Buffer | null> {
   if (!PRESET_VOICE_IDS.includes(voiceId)) return null;
   for (const folder of ['src/renderer/public', 'out/renderer']) {
@@ -145,6 +164,7 @@ export async function bundledVoiceAudio(voiceId: string): Promise<Buffer | null>
   }
   throw new ServiceError('server', 'This bundled voice sample is missing. Rebuild or reinstall the app to restore it.');
 }
+
 export async function getVoicePreview(voiceId: string): Promise<DJVoicePreview> {
   const key = voiceKey(voiceId);
   const saved = await snapshot(key, voiceDJ(voiceId), await readManifest(key));
@@ -159,11 +179,13 @@ export async function getVoicePreview(voiceId: string): Promise<DJVoicePreview> 
     };
   return saved;
 }
+
 export async function getDJVoicePreview(djId: string): Promise<DJVoicePreview> {
   const key = cacheKey(djId);
   const dj = await savedDJ(djId);
   return snapshot(key, dj, await readManifest(key));
 }
+
 export async function prepareDJVoicePreview(
   news: NewsService,
   input: { djId: string; regenerate?: boolean },
@@ -191,6 +213,7 @@ export async function prepareDJVoicePreview(
   inFlight.set(flightKey, task);
   return task;
 }
+
 export async function prepareVoicePreview(
   news: NewsService,
   input: { voiceId: string; regenerate?: boolean },
@@ -218,6 +241,7 @@ export async function prepareVoicePreview(
   inFlight.set(flightKey, task);
   return task;
 }
+
 async function generatePreview(
   news: NewsService,
   key: string,
@@ -251,6 +275,7 @@ async function generatePreview(
   await writeManifest(key, manifest);
   return snapshot(key, dj, manifest);
 }
+
 export async function djPreviewAudio(key: string, clipId: string): Promise<Buffer | null> {
   if (typeof key !== 'string' || !validKey(key) || !validClip(clipId)) return null;
   try {

@@ -1,13 +1,16 @@
-import { useRef, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import type { NewsTransitionSettings } from '../../../../shared/types';
+import { useRef, useState } from 'react';
+
 import { defaultNewsTransitionSettings } from '../../../../shared/news-transitions';
+import type { NewsTransitionSettings } from '../../../../shared/types';
 import { unwrap } from '../../../api';
 import { ErrorNotice } from '../../../components/Shared';
+import { useRetryFocus } from '../../../useRetryFocus';
 import { useGeneralSettingsEdits } from '../SettingsEdits';
 import { NewsTransitionPreview } from './NewsTransitionPreview.component';
-import { useRetryFocus } from '../../../useRetryFocus';
+
 import './NewsTransitions.styles.css';
+
 
 const presets: { id: string; name: string; settings: NewsTransitionSettings }[] = [
   { id: 'natural', name: 'Natural', settings: defaultNewsTransitionSettings() },
@@ -24,6 +27,7 @@ const presets: { id: string; name: string; settings: NewsTransitionSettings }[] 
   },
   { id: 'bulletin', name: 'News bulletin', settings: { ...defaultNewsTransitionSettings(), mode: 'between-songs' } },
 ];
+
 const fields = [
   { key: 'fadeOutSeconds', label: 'Lower music over', max: 5, hint: 'Fade down before the DJ starts.' },
   {
@@ -59,6 +63,7 @@ export function NewsTransitions() {
   function change(patch: Partial<NewsTransitionSettings>) {
     edit.change({ ...settings, ...patch });
   }
+
   return (
     <section className="news-transition-settings" aria-labelledby="news-transitions-title">
       <h2 ref={heading} tabIndex={-1} id="news-transitions-title">

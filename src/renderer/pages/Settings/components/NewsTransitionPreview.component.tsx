@@ -1,8 +1,10 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Play, Square } from 'lucide-react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+
 import { isNewsTransitionSettings, type NewsTransitionSettings } from '../../../../shared/news-transitions';
-import { usePlayer } from '../../../player';
 import { ErrorNotice } from '../../../components/Shared';
+import { usePlayer } from '../../../player';
+
 
 export function NewsTransitionPreview({ settings }: { settings: NewsTransitionSettings }) {
   const player = usePlayer();
@@ -20,11 +22,14 @@ export function NewsTransitionPreview({ settings }: { settings: NewsTransitionSe
     { id: 'tail', label: overMusic ? 'Quiet music' : 'Silence', time: `${settings.postSpeechSeconds} s` },
     { id: 'next', label: 'Next song fades in', time: `${settings.fadeInSeconds} s` },
   ];
+
   const stop = useCallback(() => {
     dispose.current?.();
     setPhase('');
   }, []);
+
   useEffect(() => () => dispose.current?.(), []);
+
   useEffect(() => {
     if (!player.requestedPlaying || !dispose.current) return;
     dispose.current();
@@ -36,6 +41,7 @@ export function NewsTransitionPreview({ settings }: { settings: NewsTransitionSe
       active = false;
     };
   }, [player.requestedPlaying]);
+
   useLayoutEffect(() => {
     if (!dispose.current) return;
     dispose.current();
@@ -47,6 +53,7 @@ export function NewsTransitionPreview({ settings }: { settings: NewsTransitionSe
       active = false;
     };
   }, [player.currentKey, player.musicCommandRevision]);
+
   useEffect(() => {
     if (master.current) master.current.gain.value = player.volume;
   }, [player.volume]);
@@ -187,6 +194,7 @@ export function NewsTransitionPreview({ settings }: { settings: NewsTransitionSe
   }
 
   const active = phase !== '' && phase !== 'finished';
+
   return (
     <div className="transition-preview">
       <div className="transition-preview-heading">

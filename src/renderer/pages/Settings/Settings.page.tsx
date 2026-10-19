@@ -1,22 +1,26 @@
-import { useRef, useState } from 'react';
 import { useIsMutating, useMutation } from '@tanstack/react-query';
-import type { Connection } from '../../../shared/types';
+import { useRef, useState } from 'react';
+
 import { unwrap } from '../../api';
-import { Dialog, ErrorNotice, PageHeading } from '../../components/Shared';
 import { LibraryChooser } from '../../components/LibraryChooser';
 import { ProviderKeys } from '../../components/ProviderKeys/ProviderKeys.component';
-import { SourcesPage } from '../Sources/Sources.page';
+import { Dialog, ErrorNotice, PageHeading } from '../../components/Shared';
 import { DJsPage } from '../DJs/DJs.page';
+import { SourcesPage } from '../Sources/Sources.page';
 import { DJPlaybackSettings } from './components/DJPlaybackSettings.component';
 import { NewsTransitions } from './components/NewsTransitions.component';
+import type { SettingsPageProps, SettingsSection } from './Settings.types';
+
 import './Settings.styles.css';
-export type SettingsSection = 'general' | 'keys' | 'sources' | 'djs';
+
+
 const sections: { id: SettingsSection; label: string }[] = [
   { id: 'general', label: 'General' },
   { id: 'keys', label: 'Provider keys' },
   { id: 'sources', label: 'Sources' },
   { id: 'djs', label: 'DJs' },
 ];
+
 export function SettingsPage({
   connection,
   update,
@@ -24,14 +28,7 @@ export function SettingsPage({
   section,
   onSectionChange,
   returnToSetup,
-}: {
-  connection: Connection;
-  update: (value: Connection) => void;
-  disconnected: () => void | Promise<void>;
-  section?: SettingsSection;
-  onSectionChange?: (value: SettingsSection) => void;
-  returnToSetup?: () => void;
-}) {
+}: SettingsPageProps) {
   const [confirm, setConfirm] = useState(false);
   const [localSection, setLocalSection] = useState<SettingsSection>('general');
   const activeSection = section ?? localSection;
@@ -54,6 +51,7 @@ export function SettingsPage({
     disconnectInFlight.current = true;
     disconnect.mutate();
   }
+
   return (
     <>
       <PageHeading title="Settings">

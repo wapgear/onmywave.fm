@@ -1,35 +1,21 @@
-import { useId, useLayoutEffect, useRef, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { LoaderCircle, Play, Square } from 'lucide-react';
+import { useId, useLayoutEffect, useRef, useState } from 'react';
+
 import { PRESET_VOICE_IDS } from '../../../../shared/voice-previews';
 import { unwrap } from '../../../api';
 import { ErrorNotice } from '../../../components/Shared';
+import { useNewsRecovery } from '../../../NewsRecovery';
 import { usePlayer } from '../../../player';
 import { useRetryFocus } from '../../../useRetryFocus';
-import { useNewsRecovery } from '../../../NewsRecovery';
+import type { VoicePreviewProps } from './VoicePreview.types';
+
 import './VoicePreview.styles.css';
+
 
 const validVoiceId = (value: string) => /^[a-zA-Z0-9_-]{1,128}$/.test(value);
 
-type PreviewResource =
-  | { kind: 'voice'; voiceId: string }
-  | { kind: 'dj'; djId: string; voiceId: string; delivery: string };
-
-export function VoicePreview({
-  resource,
-  label,
-  playbackId,
-  activeId,
-  onStart,
-  active = true,
-}: {
-  resource: PreviewResource;
-  label: string;
-  playbackId: string;
-  activeId?: string;
-  onStart?: (id: string) => void;
-  active?: boolean;
-}) {
+export function VoicePreview({ resource, label, playbackId, activeId, onStart, active = true }: VoicePreviewProps) {
   const { voiceId } = resource;
   const savedDJ = resource.kind === 'dj';
   const identity = JSON.stringify(resource);
@@ -99,6 +85,7 @@ export function VoicePreview({
       element?.load();
     };
   }, []);
+
   useLayoutEffect(() => {
     currentVoiceId.current = voiceId;
     loadedVoiceId.current = '';
@@ -107,19 +94,23 @@ export function VoicePreview({
     audio.current?.removeAttribute('src');
     audio.current?.load();
   }, [voiceId, identity]);
+
   useLayoutEffect(() => {
     if (player.requestedPlaying) {
       ++musicGeneration.current;
       audio.current?.pause();
     }
   }, [player.requestedPlaying]);
+
   useLayoutEffect(() => {
     ++musicGeneration.current;
     audio.current?.pause();
   }, [player.currentKey, player.musicCommandRevision]);
+
   useLayoutEffect(() => {
     if (audio.current) audio.current.volume = player.volume;
   }, [player.volume]);
+
   useLayoutEffect(() => {
     if (!active || (activeId && activeId !== playbackId)) {
       ++playGeneration.current;
@@ -260,6 +251,7 @@ export function VoicePreview({
               : attempted
                 ? 'Retry preview'
                 : 'Generate preview';
+
   return (
     <div ref={previewGroup} tabIndex={-1} role="group" aria-labelledby={labelId} className="dj-voice-preview">
       <button

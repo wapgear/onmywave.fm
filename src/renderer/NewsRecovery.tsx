@@ -1,20 +1,15 @@
-import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { LoaderCircle, Radio, RotateCw } from 'lucide-react';
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
+
 import type { NewsRecoveryStatus } from '../shared/types';
 import { unwrap } from './api';
+import type { NewsRecoveryNoticeProps, RecoveryContextValue } from './NewsRecovery.types';
 import { useRetryFocus } from './useRetryFocus';
+
 import './NewsRecovery.styles.css';
 
-type RecoveryContextValue = {
-  status: NewsRecoveryStatus;
-  retrying: boolean;
-  retryError: boolean;
-  recovered: boolean;
-  dismissed: boolean;
-  retry(): void;
-  dismiss(): void;
-};
+
 const RecoveryContext = createContext<RecoveryContextValue | null>(null);
 
 export function NewsRecoveryProvider({ children }: { children: ReactNode }) {
@@ -86,6 +81,7 @@ export function NewsRecoveryProvider({ children }: { children: ReactNode }) {
   }, [applyStatus, retrying, status.phase]);
 
   const value = { status, retrying, retryError, recovered, dismissed, retry, dismiss: () => setDismissed(true) };
+
   return <RecoveryContext.Provider value={value}>{children}</RecoveryContext.Provider>;
 }
 
@@ -95,15 +91,7 @@ export function useNewsRecovery() {
   return value;
 }
 
-export function NewsRecoveryNotice({
-  onOpenSettings,
-  focusTarget,
-  settingsTarget,
-}: {
-  onOpenSettings?: () => void;
-  focusTarget: () => HTMLElement | null;
-  settingsTarget?: () => HTMLElement | null;
-}) {
+export function NewsRecoveryNotice({ onOpenSettings, focusTarget, settingsTarget }: NewsRecoveryNoticeProps) {
   const recovery = useNewsRecovery();
   const { retryRef, retry: focusAfterAction } = useRetryFocus({
     ownerKey: 'news-recovery-notice',
@@ -129,6 +117,7 @@ export function NewsRecoveryNotice({
         ? 'Retrying…'
         : 'Recovering…'
       : 'Retry news recovery';
+
   return (
     <aside className="news-recovery-notice" aria-label="News and DJ availability">
       <Radio size={17} aria-hidden="true" />
@@ -166,6 +155,7 @@ export function NewsRecoveryNotice({
 
 export function NewsRecoveryPanel() {
   const { status } = useNewsRecovery();
+
   return (
     <section className="news-recovery-panel" aria-labelledby="news-recovery-heading">
       <Radio size={22} aria-hidden="true" />

@@ -1,29 +1,31 @@
-import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { useIsMutating, useMutation } from '@tanstack/react-query';
+import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState } from 'react';
+
 import type { Connection } from '../../shared/types';
 import { unwrap } from '../api';
+import type { LibrarySelectionDone, LibrarySelectionProviderProps } from './LibrarySelection.types';
 
-export type ConnectionTransition = (
-  source: HTMLButtonElement | null,
-  operation: () => Promise<Connection | undefined>,
-) => Promise<void>;
-export type LibrarySelectionDone = (connection: Connection) => void | false | Promise<void | false>;
+
 type Submission = { ids: string[]; accountId: string; revision: number; done: LibrarySelectionDone };
+
 function useSelection(connection: Connection | null, expired: boolean) {
   const [selected, setSelected] = useState(connection?.selectedLibraryIds ?? []);
   const active = useRef(false);
   const revision = useRef(0);
   const submitting = useRef(false);
   const current = useRef({ accountId: connection?.id, expired });
+
   useLayoutEffect(() => {
     current.current = { accountId: connection?.id, expired };
   });
+
   useEffect(() => {
     active.current = true;
     return () => {
       active.current = false;
     };
   }, []);
+
   const pending = useIsMutating({ mutationKey: ['selectLibraries', connection?.id] }) > 0;
   const save = useMutation({
     mutationKey: ['selectLibraries', connection?.id],
@@ -81,19 +83,15 @@ function useSelection(connection: Connection | null, expired: boolean) {
     },
   };
 }
+
 const LibrarySelection = createContext<ReturnType<typeof useSelection> | null>(null);
-export function LibrarySelectionProvider({
-  connection,
-  expired,
-  children,
-}: {
-  connection: Connection | null;
-  expired: boolean;
-  children: ReactNode;
-}) {
+
+export function LibrarySelectionProvider({ connection, expired, children }: LibrarySelectionProviderProps) {
   const selection = useSelection(connection, expired);
+
   return <LibrarySelection.Provider value={selection}>{children}</LibrarySelection.Provider>;
 }
+
 export function useLibrarySelection() {
   const selection = useContext(LibrarySelection);
   if (!selection) throw new Error('Library selection requires an account session.');

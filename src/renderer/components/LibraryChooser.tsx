@@ -1,24 +1,22 @@
-import { useRef, useState } from 'react';
-import { useRetryFocus } from '../useRetryFocus';
 import { useQuery } from '@tanstack/react-query';
-import type { Connection } from '../../shared/types';
+import { useRef, useState } from 'react';
+
 import { unwrap } from '../api';
+import { useRetryFocus } from '../useRetryFocus';
+import type { LibraryChooserProps } from './LibraryChooser.types';
+import { useLibrarySelection } from './LibrarySelection';
 import { Empty, ErrorNotice } from './Shared';
-import { useLibrarySelection, type ConnectionTransition, type LibrarySelectionDone } from './LibrarySelection';
+
 import './LibraryChooser.styles.css';
+
+
 export function LibraryChooser({
   connection,
   done,
   onChangeAccount,
   disabled = false,
   runConnectionTransition,
-}: {
-  connection: Connection;
-  done: LibrarySelectionDone;
-  onChangeAccount?: () => void;
-  disabled?: boolean;
-  runConnectionTransition?: ConnectionTransition;
-}) {
+}: LibraryChooserProps) {
   const libraries = useQuery({
     queryKey: ['libraries', connection.id],
     queryFn: async () => unwrap(await window.wave.libraries()),
@@ -52,6 +50,7 @@ export function LibraryChooser({
     connection.selectedLibraryIds.some((id) => !selectedIds.includes(id));
   const canSave =
     !disabled && dirty && !selection.pending && selectedIds.length > 0 && !libraries.isFetching && !libraries.error;
+
   return (
     <form
       ref={form}

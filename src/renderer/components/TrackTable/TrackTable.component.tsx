@@ -1,3 +1,4 @@
+import { ArrowDown, ArrowUp, Check, Clock3, Info, ListPlus, Pause, Play, Plus, Trash2 } from 'lucide-react';
 import {
   Fragment,
   useCallback,
@@ -10,14 +11,17 @@ import {
   type KeyboardEvent,
   type ReactNode,
 } from 'react';
-import { ArrowDown, ArrowUp, Check, Clock3, Info, ListPlus, Pause, Play, Plus, Trash2 } from 'lucide-react';
-import type { PlaylistEntry, Song } from '../../../shared/types';
+
 import { editablePlaylistEntryIds } from '../../../shared/playlist-entries';
+import type { PlaylistEntry, Song } from '../../../shared/types';
 import { Artwork, TrackDuration } from '../Shared';
+import type { TrackRow, TrackTableProps } from './TrackTable.types';
+
 import './TrackTable.styles.css';
 
-export type TrackRow = { key: string; song: Song; editable?: boolean };
+
 export const songRows = (songs: Song[]): TrackRow[] => songs.map((song) => ({ key: song.id, song }));
+
 export const playlistRows = (entries: PlaylistEntry[]): TrackRow[] => {
   const editable = editablePlaylistEntryIds(entries);
   return entries.map((entry, index) => ({
@@ -26,24 +30,7 @@ export const playlistRows = (entries: PlaylistEntry[]): TrackRow[] => {
     editable: editable.has(entry.entryId),
   }));
 };
-export type TrackTableProps = {
-  rows: TrackRow[];
-  selected: Map<string, Song>;
-  select: (next: Map<string, Song>) => void;
-  play: (songs: Song[], index?: number) => void;
-  queue: (songs: Song[]) => void;
-  add: (songs: Song[]) => void;
-  details: (song: Song) => void;
-  currentId?: string;
-  requestedPlaying: boolean;
-  togglePlayback: () => void;
-  offset?: number;
-  editable?: boolean;
-  busy?: boolean;
-  remove?: (key: string, source: HTMLButtonElement | null) => void;
-  move?: (key: string, index: number) => void;
-  rowWindow?: { indices: number[]; rowHeight: number; focusRow: (index: number) => void };
-};
+
 export function TrackTable({
   rows,
   selected,
@@ -65,6 +52,7 @@ export function TrackTable({
   const anchor = useRef<string | null>(null);
   const tableRoot = useRef<HTMLDivElement>(null);
   const toolbar = useRef<HTMLDivElement>(null);
+
   useLayoutEffect(() => {
     const table = tableRoot.current;
     const scroll = table?.closest<HTMLElement>('.main-content');
@@ -136,6 +124,7 @@ export function TrackTable({
   useEffect(() => {
     if (!rows.some((row) => row.key === anchor.current)) anchor.current = null;
   }, [rows]);
+
   const selectedSongs = rows.filter((row) => selected.has(row.key)).map((row) => row.song);
   const allSelected = rows.length > 0 && rows.every((row) => selected.has(row.key));
   function toggle(key: string, song: Song) {
@@ -206,6 +195,7 @@ export function TrackTable({
       </tr>
     ) : null;
   }
+
   return (
     <>
       <div ref={tableRoot} className="table-scroll">
@@ -231,6 +221,7 @@ export function TrackTable({
               const row = rows[index];
               const pausing = row.song.id === currentId && requestedPlaying;
               const ActionIcon = pausing ? Pause : Play;
+
               return (
                 <Fragment key={row.key}>
                   {spacer(index - (indices[windowIndex - 1] ?? -1) - 1)}
@@ -385,10 +376,12 @@ function TrackMenu({ name, children }: { name: string; children: ReactNode }) {
   const trigger = useRef<HTMLButtonElement>(null);
   const menu = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
+
   const close = useCallback(() => {
     menu.current?.hidePopover();
     trigger.current?.focus({ preventScroll: true });
   }, []);
+
   useEffect(() => {
     if (!open) return;
     const dismiss = (event: Event) => {
@@ -402,6 +395,7 @@ function TrackMenu({ name, children }: { name: string; children: ReactNode }) {
       window.removeEventListener('resize', close);
     };
   }, [open, close]);
+
   return (
     <>
       <button

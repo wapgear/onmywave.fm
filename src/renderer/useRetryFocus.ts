@@ -1,19 +1,11 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
+import type { RetryFocusOptions, PassiveFocus } from './useRetryFocus.types';
+
+
 type RetryResult = { isError: boolean };
-type RetryFocusOptions = {
-  ownerKey: string;
-  target: () => HTMLElement | null;
-  canFocusSuccess: () => boolean;
-};
+
 type Attempt = { ownerKey: string; button: HTMLButtonElement; cancelled: boolean };
-type PassiveFocus = {
-  ownerKey: string;
-  button: HTMLButtonElement;
-  scope: HTMLElement | null;
-  scopes: HTMLElement[];
-  cancelled: boolean;
-};
 
 const focusScopeSelector = 'dialog[open], [popover]:popover-open, [role="dialog"][aria-modal="true"]';
 
@@ -327,5 +319,6 @@ export function useRetryFocus(options: RetryFocusOptions) {
       retryFrom(retryRef.current, operation, target, onComplete),
     [retryFrom],
   );
+
   return { retryRef, retry, retryFrom };
 }

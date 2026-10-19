@@ -1,28 +1,26 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { ExternalLink, Headphones, LoaderCircle, Pause, Play, Square } from 'lucide-react';
-import type { PreparedNewsLibrary, PreparedNewsTake } from '../../../../shared/types';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+
+import type { PreparedNewsTake } from '../../../../shared/types';
 import { unwrap } from '../../../api';
 import { freshAudioUrl } from '../../../audio';
-import { usePlayer } from '../../../player';
 import { ErrorNotice, duration } from '../../../components/Shared';
+import { usePlayer } from '../../../player';
+import type { PreparedTakesProps } from './PreparedTakes.types';
+
 import './PreparedTakes.styles.css';
 
+
 type Audition = { id: string; phase: 'loading' | 'playing' | 'paused'; position: number };
+
 const provider = (take: PreparedNewsTake) =>
   take.engine === 'elevenlabs-v4' ? 'ElevenLabs' : take.engine === 'openai-tts' ? 'OpenAI' : 'Saved recording';
+
 const savedDate = (value: string) =>
   Number.isFinite(Date.parse(value)) ? new Date(value).toLocaleString() : 'Saved take';
 
-export function PreparedTakes({
-  library,
-  refresh,
-  active = true,
-}: {
-  library: PreparedNewsLibrary;
-  refresh: () => Promise<void>;
-  active?: boolean;
-}) {
+export function PreparedTakes({ library, refresh, active = true }: PreparedTakesProps) {
   const player = usePlayer();
   const [stopFocusRun, setStopFocusRun] = useState<{
     element: HTMLButtonElement;
@@ -47,6 +45,7 @@ export function PreparedTakes({
   const takes = [...library.takes].sort(
     (a, b) => (Date.parse(b.createdAt) || 0) - (Date.parse(a.createdAt) || 0) || b.id.localeCompare(a.id),
   );
+
   const dispose = useCallback(() => {
     ++operation.current;
     ++playGeneration.current;
@@ -65,11 +64,14 @@ export function PreparedTakes({
       audio.current = null;
     }
   }, []);
+
   const stop = useCallback(() => {
     dispose();
     setAudition(null);
   }, [dispose]);
+
   useEffect(() => () => dispose(), [dispose]);
+
   useEffect(() => {
     if (active || !audio.current) return;
     dispose();
@@ -78,6 +80,7 @@ export function PreparedTakes({
       if (token === operation.current) setAudition(null);
     });
   }, [active, dispose]);
+
   useEffect(() => {
     if (!player.requestedPlaying || !audio.current) return;
     dispose();
@@ -86,6 +89,7 @@ export function PreparedTakes({
       if (token === operation.current) setAudition(null);
     });
   }, [player.requestedPlaying, dispose]);
+
   useLayoutEffect(() => {
     if (!audio.current) return;
     dispose();
@@ -94,6 +98,7 @@ export function PreparedTakes({
       if (token === operation.current) setAudition(null);
     });
   }, [player.currentKey, player.musicCommandRevision, dispose]);
+
   const source = useMutation({ mutationFn: async (url: string) => unwrap(await window.wave.openSource(url)) });
   async function listen(take: PreparedNewsTake) {
     setAudioError(null);
@@ -177,14 +182,17 @@ export function PreparedTakes({
       }
     }
   }
+
   useEffect(() => {
     if (audio.current) audio.current.volume = player.volume;
   }, [player.volume]);
+
   const activeTake = library.takes.find((take) => take.id === player.activeNewsId);
   const savedBreakActive = !!activeTake && player.newsPhase !== 'idle';
   const ownsStopFocus = active && stopFocusRun !== null && document.activeElement === stopFocusRun.element;
   const staleStopFocus = ownsStopFocus && savedBreakActive && stopFocusRun.runId !== player.newsRunId;
   const canStopBreak = savedBreakActive && !staleStopFocus && player.newsRunId !== undefined;
+
   return (
     <section className="prepared-takes" aria-labelledby="prepared-takes-title">
       <header className="prepared-takes-heading">
@@ -239,6 +247,7 @@ export function PreparedTakes({
         {takes.map((take) => {
           const current = audition?.id === take.id ? audition : null;
           const measured = durations[take.id];
+
           return (
             <li
               key={take.id}

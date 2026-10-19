@@ -1,7 +1,10 @@
-import { useRef, useState, type ReactNode } from 'react';
 import { Info } from 'lucide-react';
+import { useRef, useState, type ReactNode } from 'react';
+
 import { Dialog } from '../Shared';
+
 import './InfoHelp.styles.css';
+
 
 export function InfoHelp({ label, children }: { label: string; children: ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -10,6 +13,7 @@ export function InfoHelp({ label, children }: { label: string; children: ReactNo
     setOpen(false);
     requestAnimationFrame(() => trigger.current?.focus({ preventScroll: true }));
   }
+
   return (
     <>
       <button

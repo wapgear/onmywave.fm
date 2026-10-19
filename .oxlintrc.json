@@ -4,9 +4,16 @@
   "categories": {
     "correctness": "error"
   },
-  "ignorePatterns": ["out/**", "release/**", "node_modules/**", "docs/**"],
   "rules": {
-    "jsx-a11y/prefer-tag-over-role": "off"
+    "jsx-a11y/prefer-tag-over-role": "off",
+    "import/first": "error",
+    "import/no-duplicates": "error",
+    "react/jsx-key": "error",
+    "react/jsx-no-duplicate-props": "error",
+    "react/jsx-no-target-blank": "error",
+    "react/no-danger": "error",
+    "react/no-children-prop": "error",
+    "react/no-direct-mutation-state": "error"
   },
   "overrides": [
     {
@@ -43,5 +50,6 @@
         "jsx-a11y/media-has-caption": "off"
       }
     }
-  ]
+  ],
+  "extends": ["./.oxlint-spacing.json"]
 }

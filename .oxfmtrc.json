@@ -13,5 +13,10 @@
     "*.md",
     "LICENSE",
     "src/renderer/public/**"
-  ]
+  ],
+  "sortImports": {
+    "groups": ["builtin", "external", ["internal", "subpath"], ["parent", "sibling", "index"], "style", "unknown"],
+    "newlinesBetween": true,
+    "sortSideEffects": false
+  }
 }

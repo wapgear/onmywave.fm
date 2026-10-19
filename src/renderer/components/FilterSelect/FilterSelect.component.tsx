@@ -1,8 +1,11 @@
-import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
 import { Check, ChevronDown, Search } from 'lucide-react';
+import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
+
+import type { FilterSelectProps } from './FilterSelect.types';
+
 import './FilterSelect.styles.css';
 
-type Choice = { value: string; label: string };
+
 export function FilterSelect({
   label,
   value,
@@ -13,17 +16,7 @@ export function FilterSelect({
   allowCustom = false,
   disabled = false,
   loading = false,
-}: {
-  label: string;
-  value: string;
-  choices: Choice[];
-  onChange: (value: string) => void;
-  emptyLabel?: string;
-  searchable?: boolean;
-  allowCustom?: boolean;
-  disabled?: boolean;
-  loading?: boolean;
-}) {
+}: FilterSelectProps) {
   const id = useId();
   const trigger = useRef<HTMLButtonElement>(null);
   const popup = useRef<HTMLDivElement>(null);
@@ -39,14 +32,17 @@ export function FilterSelect({
     allowCustom &&
     search.trim() &&
     !choices.some((choice) => choice.value.toLocaleLowerCase() === search.trim().toLocaleLowerCase());
+
   const close = useCallback(() => {
     popup.current?.hidePopover();
     trigger.current?.focus({ preventScroll: true });
   }, []);
+
   const choose = (next: string) => {
     close();
     onChange(next);
   };
+
   useEffect(() => {
     if (!open) return;
     const onScroll = (event: Event) => {
@@ -60,6 +56,7 @@ export function FilterSelect({
       window.removeEventListener('resize', close);
     };
   }, [open, close]);
+
   function position() {
     const node = popup.current!;
     const rect = trigger.current!.getBoundingClientRect();
@@ -103,6 +100,7 @@ export function FilterSelect({
         list.current.scrollTop = top + button.offsetHeight - list.current.clientHeight;
     }
   }
+
   return (
     <>
       <button

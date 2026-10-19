@@ -1,23 +1,21 @@
-import { useEffect, useId, useRef, useState } from 'react';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { ExternalLink, Radio, Settings, X } from 'lucide-react';
-import type { DJPlaybackSettings, NewsBreak } from '../../../shared/types';
+import { useEffect, useId, useRef, useState } from 'react';
+
 import { newsPreparationStatus } from '../../../shared/news-preparation-status';
+import type { DJPlaybackSettings, NewsBreak } from '../../../shared/types';
 import { unwrap } from '../../api';
-import { usePlayer } from '../../player';
 import { useDJPlayback } from '../../dj-playback';
 import { useNewsRecovery } from '../../NewsRecovery';
+import { usePlayer } from '../../player';
 import { useRetryFocus } from '../../useRetryFocus';
 import { ErrorNotice } from '../Shared';
+import type { DJPopoverProps } from './DJPopover.types';
+
 import './DJPopover.styles.css';
 
-export function DJPopover({
-  openRoom,
-  openSettings,
-}: {
-  openRoom: (source: HTMLButtonElement | null) => void;
-  openSettings: (source: HTMLButtonElement | null) => void;
-}) {
+
+export function DJPopover({ openRoom, openSettings }: DJPopoverProps) {
   const player = usePlayer();
   const automation = useDJPlayback();
   const recovery = useNewsRecovery();
@@ -123,11 +121,13 @@ export function DJPopover({
     popup.current.style.bottom = `${window.innerHeight - rect.top + 12}px`;
     popup.current.style.maxHeight = `${Math.max(120, rect.top - 24)}px`;
   }
+
   useEffect(() => {
     if (!open) return;
     window.addEventListener('resize', position);
     return () => window.removeEventListener('resize', position);
   }, [open]);
+
   function navigate(action: (source: HTMLButtonElement | null) => void) {
     suppressReturnFocus.current = true;
     popup.current?.hidePopover();
@@ -214,6 +214,7 @@ export function DJPopover({
       </div>
     );
   }
+
   return (
     <>
       <button

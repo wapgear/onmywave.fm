@@ -1,19 +1,10 @@
-import { useLayoutEffect, useRef, useState, type ReactNode } from 'react';
-import { Artwork } from '../Shared';
+import { useLayoutEffect, useRef, useState } from 'react';
 
-export function CollectionHeading({
-  artwork,
-  eyebrow,
-  title,
-  subtitle,
-  children,
-}: {
-  artwork?: string;
-  eyebrow: string;
-  title: string;
-  subtitle?: ReactNode;
-  children: ReactNode;
-}) {
+import { Artwork } from '../Shared';
+import type { CollectionHeadingProps } from './CollectionHeading.types';
+
+
+export function CollectionHeading({ artwork, eyebrow, title, subtitle, children }: CollectionHeadingProps) {
   const heading = useRef<HTMLHeadingElement>(null);
   const [clipped, setClipped] = useState(false);
 

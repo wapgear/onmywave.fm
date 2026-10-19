@@ -1,31 +1,26 @@
-import { useLayoutEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { Song } from '../../../shared/types';
+import { useLayoutEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from 'react';
+
 import { unwrap, WaveError } from '../../api';
-import { Dialog, ErrorNotice } from '../Shared';
 import { useRetryFocus } from '../../useRetryFocus';
-export function AddPlaylist({
-  connectionId,
-  songs,
-  close,
-  checkPlaylists,
-}: {
-  connectionId: string;
-  songs: Song[];
-  close: () => void;
-  checkPlaylists: () => void;
-}) {
+import { Dialog, ErrorNotice } from '../Shared';
+import type { AddPlaylistProps } from './AddPlaylist.types';
+
+
+export function AddPlaylist({ connectionId, songs, close, checkPlaylists }: AddPlaylistProps) {
   const client = useQueryClient();
   const mounted = useRef(true);
   const nameInput = useRef<HTMLInputElement>(null);
   const inFlight = useRef(false);
   const destinationInput = useRef<HTMLSelectElement>(null);
+
   useLayoutEffect(() => {
     mounted.current = true;
     return () => {
       mounted.current = false;
     };
   }, []);
+
   const playlists = useQuery({ queryKey: ['playlists'], queryFn: async () => unwrap(await window.wave.playlists()) });
   const retryFocus = useRetryFocus({
     ownerKey: 'add-playlist:destinations',
@@ -93,6 +88,7 @@ export function AddPlaylist({
   const blockKey = (event: KeyboardEvent) => {
     if (locked() && event.key !== 'Tab' && event.key !== 'Escape') event.preventDefault();
   };
+
   return (
     <Dialog
       title={`Add ${songs.length === 1 ? 'song' : `${songs.length} songs`} to playlist`}
