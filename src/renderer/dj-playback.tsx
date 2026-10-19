@@ -1,6 +1,7 @@
+import { djPreparationKey } from '../shared/dj-avatar';
 import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { DJ, DJPlaybackSettings, NewsSource, PreparedNewsTake, RoomProfile } from '../shared/types';
+import type { DJPlaybackSettings, PreparedNewsTake, RoomProfile } from '../shared/types';
 import { defaultDJPlaybackSettings } from '../shared/dj-playback';
 import { unwrap } from './api';
 import { confirmLocalState } from './local-state-cache';
@@ -26,13 +27,13 @@ function useDJPlaybackController() {
   const room = rooms.find(room => room.id === settings.roomId);
   const dj = state.data?.djs.find(dj => dj.id === room?.room.djId);
   const sources = state.data?.sources.filter(source => room?.room.sourceIds.includes(source.id)) ?? [];
-  const configKey = JSON.stringify([{ enabled: settings.enabled, roomId: settings.roomId, everySongs: settings.everySongs }, room ? { id: room.id, room: room.room, mood: room.mood, newsInterests: room.workflowDraft.newsInterests } : null, dj ?? null, sources]);
+  const configKey = JSON.stringify([{ enabled: settings.enabled, roomId: settings.roomId, everySongs: settings.everySongs }, room ? { id: room.id, room: room.room, mood: room.mood, newsInterests: room.workflowDraft.newsInterests } : null, djPreparationKey(dj), sources]);
   const live = useRef({ player, queryError: state.error, recoveryReady });
   useLayoutEffect(() => { live.current = { player, queryError: state.error, recoveryReady }; });
   const retry = useRef<() => void>(() => {});
   const [view, setView] = useState<PlaybackView | null>(null);
   useEffect(() => {
-    const [config, profile] = JSON.parse(configKey) as [DJPlaybackSettings, RoomProfile | null, DJ | null, NewsSource[]];
+    const [config, profile] = JSON.parse(configKey) as [DJPlaybackSettings, RoomProfile | null];
     let cancelled = false;
     let checking = false;
     const excluded = new Set<string>();

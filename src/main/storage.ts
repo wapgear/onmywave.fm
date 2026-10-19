@@ -11,6 +11,7 @@ import type { LocalState, LocalStateSnapshot, ListeningRoom, RoomProfile } from 
 import { readSharedProviderKey, writeSharedProviderKey } from './keychain';
 import { normalizePlaybackPreferences } from './playback-preferences';
 import { StorageError } from './storage-error';
+import { resolveDJAvatar } from '../shared/dj-avatar';
 
 export type StoredConnection = {
   id: string; serverUrl: string; userId: string; userName: string; token: string;
@@ -184,7 +185,7 @@ export async function getLocalState(): Promise<LocalStateSnapshot> {
         }
         return result;
       };
-      const djs: LocalState['djs'] = Array.isArray(value.djs) ? value.djs.map((dj: LocalState['djs'][number]) => ({ ...dj, news: dj.news ? { ...dj.news, speechEngine: 'elevenlabs-v4', textModel: NEWS_TEXT_MODEL } : undefined })) : [];
+      const djs: LocalState['djs'] = Array.isArray(value.djs) ? value.djs.map((dj: LocalState['djs'][number]) => ({ ...dj, ...(dj.avatar === undefined ? {} : { avatar: resolveDJAvatar(dj.avatar) }), news: dj.news ? { ...dj.news, speechEngine: 'elevenlabs-v4', textModel: NEWS_TEXT_MODEL } : undefined })) : [];
       const migrated = [...new Set<string>(djs.flatMap((dj: LocalState['djs'][number]) => dj.news?.feedUrls || []))].map((url, index) => ({ id: `legacy-source-${index + 1}`, name: url, url }));
       const sources = Array.isArray(value.sources) ? value.sources : migrated;
       const onlyDj = djs.length === 1 ? djs[0] : null;

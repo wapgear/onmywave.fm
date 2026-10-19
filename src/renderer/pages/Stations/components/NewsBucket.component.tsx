@@ -1,3 +1,4 @@
+import { djPreparationKey } from '../../../../shared/dj-avatar';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { ExternalLink, Newspaper, Radio } from 'lucide-react';
 import type { LocalState, NewsArticle, NewsBreak, PreparedNewsLibrary, PreparedNewsTake, PreparedNewsScript, ReviewedNewsArticle } from '../../../../shared/types';
@@ -171,7 +172,7 @@ export function NewsBucket({ library, localState, automation, profileStatusUnkno
 
 function matchesProfile(script: PreparedNewsScript, profile: LocalState['roomProfiles'][number], dj: LocalState['djs'][number], interests: string, sources: LocalState['sources']): boolean {
   if (script.provenance.roomId && script.provenance.roomId !== profile.id) return false;
-  if (script.provenance.dj.id !== dj.id || JSON.stringify(script.provenance.dj) !== JSON.stringify(dj) || script.provenance.mood !== profile.mood) return false;
+  if (script.provenance.dj.id !== dj.id || djPreparationKey(script.provenance.dj) !== djPreparationKey(dj) || script.provenance.mood !== profile.mood) return false;
   if ((script.provenance.newsInterests ?? script.provenance.dj.news?.interests ?? '') !== interests) return false;
   const identity = (items: LocalState['sources']) => items.map(source => ({ id: source.id, url: source.url })).sort((a, b) => a.id.localeCompare(b.id) || a.url.localeCompare(b.url));
   return JSON.stringify(identity(script.provenance.sources)) === JSON.stringify(identity(sources));

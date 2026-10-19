@@ -21,6 +21,7 @@ import type { WorkflowDraft } from '../shared/workflow';
 import type { ApiError, DJ, PlaybackSnapshot, PlaybackPreferences, NewsSource, ListeningRoom, LocalState } from '../shared/types';
 import { defaultPlaybackPreferences, playbackPreferenceKey } from './playback-preferences';
 import { StorageError } from './storage-error';
+import { djPreparationKey, isDJAvatar } from '../shared/dj-avatar';
 import type { NewsRecoveryStatus } from '../shared/types';
 
 app.setName('onmywave.fm Light');
@@ -60,6 +61,7 @@ function validateDjs(value: unknown): asserts value is DJ[] {
       if (!text((dj as Record<string, unknown>)[field], 20_000)) invalid();
     }
     if (!['never', 'occasionally', 'often'].includes(String((dj as Record<string, unknown>).speakingFrequency))) invalid();
+    if ((dj as DJ).avatar !== undefined && !isDJAvatar((dj as DJ).avatar)) invalid();
     const settings = (dj as DJ).news;
     if (settings !== undefined) {
       (dj as DJ).news = validateNewsSettings(settings);
@@ -252,8 +254,8 @@ function registerIpc() {
       validateDjs(input);
       const djs = input as DJ[];
       return updateLocalStateAndGet(state => {
-        const before = new Map(state.djs.map(dj => [dj.id, JSON.stringify(dj)]));
-        const after = new Map(djs.map(dj => [dj.id, JSON.stringify(dj)]));
+        const before = new Map(state.djs.map(dj => [dj.id, djPreparationKey(dj)]));
+        const after = new Map(djs.map(dj => [dj.id, djPreparationKey(dj)]));
         const changed = new Set([...before.keys(), ...after.keys()].filter(id => before.get(id) !== after.get(id)));
         return { djs, ...markChangedProfileRuns(state, profile => Boolean(profile.room.djId && changed.has(profile.room.djId))) };
       });
@@ -336,7 +338,7 @@ function registerIpc() {
           if (signingOut || epoch !== preparationEpoch) throw new ServiceError('invalid', 'Sign-out interrupted this save. Sign in and review the saved news settings.');
           if (state.activeRoomProfileId !== activeProfileId) throw new ServiceError('invalid', 'The profile changed while saving. Review its settings and save again.');
           validateRoomReferences(input.room, state);
-          if (input.workflowDraft.newsEnabled && (JSON.stringify(selectedDj) !== JSON.stringify(state.djs.find(dj => dj.id === input.room.djId))
+          if (input.workflowDraft.newsEnabled && (djPreparationKey(selectedDj) !== djPreparationKey(state.djs.find(dj => dj.id === input.room.djId))
             || JSON.stringify(selectedSources) !== JSON.stringify(state.sources.filter(source => input.room.sourceIds.includes(source.id)))
             || !state.roomProfiles.find(profile => profile.id === activeProfileId)?.enabled)) throw new ServiceError('invalid', 'The selected host or sources changed while saving. Review them and save again.');
           const profile = state.roomProfiles.find(value => value.id === activeProfileId);

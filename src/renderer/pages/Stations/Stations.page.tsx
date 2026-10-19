@@ -1,3 +1,4 @@
+import { djPreparationKey } from '../../../shared/dj-avatar';
 import { useEffect, useLayoutEffect, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import { useIsMutating, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Headphones, LoaderCircle, Newspaper } from 'lucide-react';
@@ -387,7 +388,7 @@ export function StationsPage({ draft, setDraft, configDraft, setConfigDraft, con
     startPreparation({ kind: 'audio', input: { requestId: crypto.randomUUID(), scriptId: editing.scriptId, script: editing.script.trim(), djId: room.djId, newVariation } });
   }
   const sourceSnapshot = (values: typeof sources) => JSON.stringify([...values].sort((a, b) => a.id.localeCompare(b.id)));
-  const differs = selectedTake && (selectedTake.script !== editing?.script || JSON.stringify(selectedTake.renderingDJ) !== JSON.stringify(dj) || selectedTake.provenance.mood !== mood || (selectedTake.provenance.newsInterests ?? selectedTake.provenance.dj.news?.interests ?? '') !== newsInterests || sourceSnapshot(selectedTake.provenance.sources) !== sourceSnapshot(chosenSources));
+  const differs = selectedTake && (selectedTake.script !== editing?.script || djPreparationKey(selectedTake.renderingDJ) !== djPreparationKey(dj) || selectedTake.provenance.mood !== mood || (selectedTake.provenance.newsInterests ?? selectedTake.provenance.dj.news?.interests ?? '') !== newsInterests || sourceSnapshot(selectedTake.provenance.sources) !== sourceSnapshot(chosenSources));
   function revealScriptEditor() {
     setTab('settings');
     requestAnimationFrame(() => requestAnimationFrame(() => {
