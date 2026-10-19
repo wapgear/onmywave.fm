@@ -1,20 +1,30 @@
-import { StorageError } from './storage-error';
 import { randomUUID } from 'node:crypto';
+
 import type { LocalState, PreparedNewsTake, RoomProfile, WorkflowDraft } from '../shared/types';
-import { getLocalState, updateLocalState } from './storage';
-import { cancelPreparedNews, getPreparedNews, prepareRoomNews } from './prepared-news';
-import type { NewsService } from './news';
 import { ServiceError } from './jellyfin';
+import type { NewsService } from './news';
+import { cancelPreparedNews, getPreparedNews, prepareRoomNews } from './prepared-news';
+import { getLocalState, updateLocalState } from './storage';
+import { StorageError } from './storage-error';
+
 
 const TICK_MS = 60_000;
+
 const dayKey = (date = new Date()) =>
   `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+
 let timer: NodeJS.Timeout | undefined;
+
 let busy = false;
+
 let activeRequest: string | null = null;
+
 let activeRoomId: string | null = null;
+
 let canRun = () => true;
+
 let generation = 0;
+
 export function invalidateNewsWorkflow() {
   ++generation;
 }

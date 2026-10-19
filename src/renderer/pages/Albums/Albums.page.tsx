@@ -1,38 +1,31 @@
-import { useEffect, useRef, useState } from 'react';
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
 import { ArrowLeft, ListPlus, Play, Plus, Search } from 'lucide-react';
-import type { Album, Song } from '../../../shared/types';
+import { useEffect, useRef, useState } from 'react';
+
 import { unwrap } from '../../api';
-import { usePlayer } from '../../player';
-import { Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { CollectionHeading } from '../../components/CollectionHeading/CollectionHeading.component';
+import { Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { songRows, TrackTable } from '../../components/TrackTable/TrackTable.component';
-import { VirtualAlbums } from './VirtualAlbums.component';
+import { usePlayer } from '../../player';
 import { useRetryFocus } from '../../useRetryFocus';
-export type AlbumsView = { album: Album | null; draft: string; selected: Map<string, Song> };
+import type { AlbumDetailProps, AlbumsPageProps, AlbumsView } from './Albums.types';
+import { VirtualAlbums } from './VirtualAlbums.component';
+
+
 export const initialAlbumsView = (): AlbumsView => ({ album: null, draft: '', selected: new Map() });
-export function AlbumsPage({
-  add,
-  details,
-  view,
-  setView,
-  onOpenDetail,
-}: {
-  onOpenDetail: (id: string, origin: HTMLButtonElement) => void;
-  view: AlbumsView;
-  setView: React.Dispatch<React.SetStateAction<AlbumsView>>;
-  add: (songs: Song[]) => void;
-  details: (song: Song) => void;
-}) {
+
+export function AlbumsPage({ add, details, view, setView, onOpenDetail }: AlbumsPageProps) {
   const { album, draft, selected } = view;
   const [returnFocus, setReturnFocus] = useState<string | null>(null);
   const [search, setSearch] = useState(draft.trim());
   const headingRef = useRef<HTMLHeadingElement>(null);
   const resultsRef = useRef<HTMLElement>(null);
+
   useEffect(() => {
     const timer = setTimeout(() => setSearch(draft.trim()), 300);
     return () => clearTimeout(timer);
   }, [draft]);
+
   const albums = useInfiniteQuery({
     queryKey: ['albums', 'infinite', search],
     queryFn: async ({ pageParam }) => unwrap(await window.wave.albums({ search, start: pageParam, limit: 48 })),
@@ -64,6 +57,7 @@ export function AlbumsPage({
         details={details}
       />
     );
+
   return (
     <>
       <PageHeading headingRef={headingRef} title="Albums" subtitle="A closer listen">
@@ -121,21 +115,8 @@ export function AlbumsPage({
     </>
   );
 }
-function AlbumDetail({
-  album,
-  selected,
-  select,
-  back,
-  add,
-  details,
-}: {
-  album: Album;
-  selected: Map<string, Song>;
-  select: (selected: Map<string, Song>) => void;
-  back: () => void;
-  add: (songs: Song[]) => void;
-  details: (song: Song) => void;
-}) {
+
+function AlbumDetail({ album, selected, select, back, add, details }: AlbumDetailProps) {
   const backRef = useRef<HTMLButtonElement>(null);
   const detail = useQuery({
     queryKey: ['album', album.id],
@@ -157,6 +138,7 @@ function AlbumDetail({
     canFocusSuccess: () => tracks.isSuccess && !tracks.isFetching,
   });
   const player = usePlayer();
+
   return (
     <>
       <button ref={backRef} aria-label="Back to albums" className="back-button" onClick={back}>

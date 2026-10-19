@@ -1,18 +1,23 @@
+import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { MutationCache, QueryCache, QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
 import '@fontsource/inter/400.css';
 import '@fontsource/inter/500.css';
 import '@fontsource/manrope/600.css';
 import App from './App';
 import { retainNewestLocalState } from './local-state-cache';
+
 import './styles.css';
+
+
 function onError(error: unknown) {
   const failure = error as { code?: string; authRevision?: number };
   const connection = queryClient.getQueryData<import('../shared/types').Connection | null>(['connection']);
   if (failure?.code === 'unauthorized' && connection && failure.authRevision === connection.authRevision)
     window.dispatchEvent(new CustomEvent('wave:auth-expired', { detail: { authRevision: failure.authRevision } }));
 }
+
 const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: (error, query) => {
@@ -35,7 +40,9 @@ const queryClient = new QueryClient({
     mutations: { retry: false },
   },
 });
+
 queryClient.setQueryDefaults(['localState'], { structuralSharing: retainNewestLocalState });
+
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>

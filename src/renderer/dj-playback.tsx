@@ -1,24 +1,16 @@
-import { djPreparationKey } from '../shared/dj-avatar';
-import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import type { DJPlaybackSettings, PreparedNewsTake, RoomProfile } from '../shared/types';
-import { defaultDJPlaybackSettings } from '../shared/dj-playback';
-import { unwrap } from './api';
-import { confirmLocalState } from './local-state-cache';
-import { usePlayer } from './player';
-import { useNewsRecovery } from './NewsRecovery';
+import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 
-type PlaybackView = {
-  configKey: string;
-  pending: PreparedNewsTake | null;
-  preparing: boolean;
-  placing: boolean;
-  waiting: boolean;
-  failure: string | null;
-  baseline: number;
-  retryPhase: 'queued' | 'checking' | 'ready' | 'empty' | null;
-  retryMessage: string | null;
-};
+import { djPreparationKey } from '../shared/dj-avatar';
+import { defaultDJPlaybackSettings } from '../shared/dj-playback';
+import type { DJPlaybackSettings, PreparedNewsTake, RoomProfile } from '../shared/types';
+import { unwrap } from './api';
+import type { PlaybackView } from './dj-playback.types';
+import { confirmLocalState } from './local-state-cache';
+import { useNewsRecovery } from './NewsRecovery';
+import { usePlayer } from './player';
+
+
 function useDJPlaybackController() {
   const player = usePlayer();
   const recovery = useNewsRecovery();
@@ -48,11 +40,14 @@ function useDJPlaybackController() {
     sources,
   ]);
   const live = useRef({ player, queryError: state.error, recoveryReady });
+
   useLayoutEffect(() => {
     live.current = { player, queryError: state.error, recoveryReady };
   });
+
   const retry = useRef<() => void>(() => {});
   const [view, setView] = useState<PlaybackView | null>(null);
+
   useEffect(() => {
     const [config, profile] = JSON.parse(configKey) as [DJPlaybackSettings, RoomProfile | null];
     let cancelled = false;
@@ -221,6 +216,7 @@ function useDJPlaybackController() {
       if (ownedNews && live.current.player.activeNews?.id === ownedNews) live.current.player.stopNews();
     };
   }, [configKey]);
+
   const current = view?.configKey === configKey ? view : null;
   const completed = Math.max(0, player.completedSongs - (current?.baseline ?? player.completedSongs));
   const savePlaybackSettings = async (patch: Partial<DJPlaybackSettings>) => {
@@ -292,11 +288,15 @@ function useDJPlaybackController() {
     recoveryStatus: recovery.status.phase,
   };
 }
+
 const DJPlaybackContext = createContext<ReturnType<typeof useDJPlaybackController> | null>(null);
+
 export function DJPlaybackProvider({ children }: { children: ReactNode }) {
   const controller = useDJPlaybackController();
+
   return <DJPlaybackContext.Provider value={controller}>{children}</DJPlaybackContext.Provider>;
 }
+
 export function useDJPlayback() {
   const controller = useContext(DJPlaybackContext);
   if (!controller) throw new Error('DJ controls require DJPlaybackProvider');

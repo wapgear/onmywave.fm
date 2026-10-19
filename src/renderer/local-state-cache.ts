@@ -1,5 +1,7 @@
 import { replaceEqualDeep, type QueryClient } from '@tanstack/react-query';
+
 import type { LocalStateSnapshot } from '../shared/types';
+
 
 export function retainNewestLocalState(previous: unknown, incoming: unknown) {
   const current = previous as LocalStateSnapshot | undefined;

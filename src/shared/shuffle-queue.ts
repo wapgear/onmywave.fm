@@ -1,4 +1,5 @@
 export const SHUFFLE_WINDOW_SIZE = 50;
+
 export const SHUFFLE_REFILL_THRESHOLD = 10;
 
 export type ShufflePlan = {

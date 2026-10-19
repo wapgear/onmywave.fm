@@ -1,45 +1,40 @@
-import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import {
   ListMusic,
+  LoaderCircle,
   Pause,
   Play,
   Repeat,
   Repeat1,
+  RotateCw,
   Shuffle,
   SkipBack,
   SkipForward,
   Volume1,
   Volume2,
   VolumeX,
-  RotateCw,
-  LoaderCircle,
 } from 'lucide-react';
-import { usePlayer } from '../../player';
-import type { OptionsSaveSettlement, PlaybackRetrySettlement } from '../../player';
-import { useRetryFocus } from '../../useRetryFocus';
+import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+
 import { useNewsRecovery } from '../../NewsRecovery';
+import { usePlayer } from '../../player';
+import type { OptionsSaveSettlement, PlaybackRetrySettlement } from '../../player.types';
+import { useRetryFocus } from '../../useRetryFocus';
 import { Artwork } from '../Shared';
 import { DJPopover } from './DJPopover.component';
+import type { PlayerProps } from './Player.types';
+
 import './Player.styles.css';
+
 
 export const formatTime = (seconds: number) => {
   const safe = Math.max(0, Math.floor(Number.isFinite(seconds) ? seconds : 0));
   return `${Math.floor(safe / 60)}:${String(safe % 60).padStart(2, '0')}`;
 };
+
 const fill = (percent: number): CSSProperties =>
   ({ '--range-fill': `${Math.max(0, Math.min(100, percent))}%` }) as CSSProperties;
 
-export function Player({
-  queueOpen,
-  toggleQueue,
-  openRoom,
-  openSettings,
-}: {
-  queueOpen: boolean;
-  toggleQueue: () => void;
-  openRoom: (source: HTMLButtonElement | null) => void;
-  openSettings: (source: HTMLButtonElement | null) => void;
-}) {
+export function Player({ queueOpen, toggleQueue, openRoom, openSettings }: PlayerProps) {
   const player = usePlayer();
   const recovery = useNewsRecovery();
   const knownSpeech =
@@ -71,6 +66,7 @@ export function Player({
     ...(activeRun !== undefined ? [activeRun] : []),
   ];
   const notices = useRef<HTMLDivElement>(null);
+
   useLayoutEffect(() => {
     const node = notices.current;
     const shell = node?.closest<HTMLElement>('.app-shell');
@@ -84,6 +80,7 @@ export function Player({
       shell.style.removeProperty('--player-notice-height');
     };
   }, []);
+
   const [seekDraft, setSeekDraft] = useState<{ key?: string; value: number } | null>(null);
   const [mutedVolume, setMutedVolume] = useState(0.75);
   const playControl = useRef<HTMLButtonElement>(null);
@@ -181,6 +178,7 @@ export function Player({
       },
     );
   }
+
   return (
     <>
       <div ref={notices} className="player-notices">
@@ -195,6 +193,7 @@ export function Player({
                   ? 'DJ break stopped.'
                   : 'DJ break ended.';
           const actions: ('toggle' | 'stop')[] = current ? ['toggle', 'stop'] : breakFocus ? [breakFocus.action] : [];
+
           return (
             <div key={runId} className="radio-speaking">
               <span role="status">{current ? breakStatus : terminal}</span>

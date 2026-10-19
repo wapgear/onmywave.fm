@@ -1,15 +1,22 @@
+import { randomUUID } from 'node:crypto';
+
+import { XMLParser, XMLValidator } from 'fast-xml-parser';
+
+import { canonicalArticleUrl } from '../shared/news-pool';
 import { normalizeNewsSource } from '../shared/sources';
 import { NEWS_TEXT_MODEL } from '../shared/types';
-import { canonicalArticleUrl } from '../shared/news-pool';
-import { randomUUID } from 'node:crypto';
-import { XMLParser, XMLValidator } from 'fast-xml-parser';
 import type { DJ, NewsSettings, NewsArticle, NewsScript, NewsProgress, NewsSource, Song } from '../shared/types';
 import { ServiceError } from './jellyfin';
 
+
 export type { NewsArticle, NewsScript } from '../shared/types';
+
 export type GeneratedNews = NewsScript & { audio: Buffer; mimeType: 'audio/mpeg'; engine: 'elevenlabs-v4' };
+
 type Candidate = NewsArticle & { summary: string };
+
 type SourceBatch = { articles: Candidate[]; coverageWarnings: string[] };
+
 type Input = {
   sources?: NewsSource[];
   mood?: string;
@@ -24,7 +31,9 @@ type Input = {
   onReleaseCandidates?: (articles: NewsArticle[]) => Promise<void>;
   onReview?: (selectedUrl?: string) => Promise<void>;
 };
+
 class DefinitiveProviderRejection extends ServiceError {}
+
 const musicContext = (input: Input, listenerPreferences: string) => ({
   title: input.music?.name.slice(0, 256),
   artists: input.music?.artists.slice(0, 8).map((value) => value.slice(0, 128)),
@@ -33,9 +42,13 @@ const musicContext = (input: Input, listenerPreferences: string) => ({
   tags: input.music?.tags.slice(0, 12).map((value) => value.slice(0, 128)),
   listenerPreferences,
 });
+
 type XmlNode = Record<string, unknown>;
+
 const node = (value: unknown): XmlNode => (value && typeof value === 'object' ? (value as XmlNode) : {});
+
 const array = (value: unknown): unknown[] => (value === undefined ? [] : Array.isArray(value) ? value : [value]);
+
 const plain = (value: unknown, max: number): string => {
   const text =
     typeof value === 'string' || typeof value === 'number' ? String(value) : String(node(value)['#text'] || '');
@@ -45,6 +58,7 @@ const plain = (value: unknown, max: number): string => {
     .trim()
     .slice(0, max);
 };
+
 function httpUrl(value: string, base?: string): URL {
   try {
     const url = new URL(value, base);
@@ -56,6 +70,7 @@ function httpUrl(value: string, base?: string): URL {
     throw new ServiceError('invalid', 'Use an HTTP or HTTPS news feed URL without a username or password.');
   }
 }
+
 export function validateNewsSettings(value: NewsSettings): NewsSettings {
   if (
     !value ||
@@ -110,6 +125,7 @@ export function validateNewsSettings(value: NewsSettings): NewsSettings {
     feedUrls: [...new Set(value.feedUrls.map((value) => httpUrl(value).href))],
   };
 }
+
 async function boundedBytes(response: Response, limit: number, signal: AbortSignal): Promise<Buffer> {
   if (Number(response.headers.get('content-length')) > limit) {
     await response.body?.cancel();
@@ -136,6 +152,7 @@ async function boundedBytes(response: Response, limit: number, signal: AbortSign
   }
   return Buffer.concat(chunks, length);
 }
+
 export class NewsService {
   private active: { id: string; controller: AbortController } | null = null;
   private generation = new AbortController();

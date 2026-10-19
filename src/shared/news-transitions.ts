@@ -1,4 +1,6 @@
 import type { NewsTransitionSettings } from './types';
+
+
 export type { NewsTransitionSettings } from './types';
 
 export const defaultNewsTransitionSettings = (): NewsTransitionSettings => ({
@@ -8,6 +10,7 @@ export const defaultNewsTransitionSettings = (): NewsTransitionSettings => ({
   postSpeechSeconds: 0.5,
   fadeInSeconds: 1.5,
 });
+
 const limits = { fadeOutSeconds: 5, leadInSeconds: 3, postSpeechSeconds: 3, fadeInSeconds: 5 } as const;
 
 export function isNewsTransitionSettings(value: unknown): value is NewsTransitionSettings {

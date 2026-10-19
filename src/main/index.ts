@@ -1,14 +1,40 @@
-import { isShuffleSnapshot } from '../shared/shuffle-queue';
-import { isDJPlaybackSettings, isDJPlaybackSettingsPatch, normalizeDJPlaybackSettings } from '../shared/dj-playback';
-import type { DJPlaybackSettingsPatch } from '../shared/dj-playback';
-import { normalizeNewsSource } from '../shared/sources';
-import { readTwitterKey, twitterKeyStatus, writeTwitterKey } from './storage';
-import { getDJVoicePreview, prepareDJVoicePreview, getVoicePreview, prepareVoicePreview } from './dj-previews';
-import { searchDJVoices } from './dj-voices';
-import { app, BrowserWindow, ipcMain, net, protocol, session, shell } from 'electron';
 import { randomUUID } from 'node:crypto';
 import { dirname, extname, join, relative, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+
+import { app, BrowserWindow, ipcMain, net, protocol, session, shell } from 'electron';
+
+import { djPreparationKey, isDJAvatar } from '../shared/dj-avatar';
+import { isDJPlaybackSettings, isDJPlaybackSettingsPatch, normalizeDJPlaybackSettings } from '../shared/dj-playback';
+import type { DJPlaybackSettingsPatch } from '../shared/dj-playback';
+import { isNewsTransitionSettings, normalizeNewsTransitionSettings } from '../shared/news-transitions';
+import { isShuffleSnapshot } from '../shared/shuffle-queue';
+import { normalizeNewsSource } from '../shared/sources';
+import type {
+  NewsRecoveryStatus,
+  ApiError,
+  DJ,
+  PlaybackSnapshot,
+  PlaybackPreferences,
+  NewsSource,
+  ListeningRoom,
+  LocalState,
+} from '../shared/types';
+import { isWorkflowDraft, normalizeWorkflowDraft } from '../shared/workflow';
+import type { WorkflowDraft } from '../shared/workflow';
+import { getDJVoicePreview, prepareDJVoicePreview, getVoicePreview, prepareVoicePreview } from './dj-previews';
+import { searchDJVoices } from './dj-voices';
+import { JellyfinService, ServiceError, PLAYLIST_CREATION } from './jellyfin';
+import { preparePlayback, registerMedia, revokeMedia } from './media';
+import { NewsService, validateNewsSettings } from './news';
+import {
+  pauseNewsWorkflow,
+  startNewsWorkflow,
+  stopNewsWorkflow,
+  invalidateNewsWorkflow,
+  checkNewsWorkflow,
+} from './news-workflow';
+import { defaultPlaybackPreferences, playbackPreferenceKey } from './playback-preferences';
 import {
   acknowledgePlaylistRecovery,
   beginPlaylistRead,
@@ -19,8 +45,22 @@ import {
   playlistRecoveryStatuses,
   withPlaylistRecovery,
 } from './playlist-recovery';
-import { JellyfinService, ServiceError, PLAYLIST_CREATION } from './jellyfin';
 import {
+  getPreparedNews,
+  cancelPreparedNews,
+  cancelActivePreparedNews,
+  isPreparedNewsActive,
+  nextRoomNews,
+  claimPreparedNews,
+  startPreparedNews,
+  releasePreparedNews,
+  markPreparedNewsPlayed,
+  reconcilePreparedNews,
+} from './prepared-news';
+import {
+  readTwitterKey,
+  twitterKeyStatus,
+  writeTwitterKey,
   getLocalState,
   openAIKeyStatus,
   readDeviceIdentity,
@@ -35,60 +75,38 @@ import {
   elevenLabsKeyStatus,
   writeElevenLabsKey,
 } from './storage';
-import { preparePlayback, registerMedia, revokeMedia } from './media';
-import { NewsService, validateNewsSettings } from './news';
-import {
-  getPreparedNews,
-  cancelPreparedNews,
-  cancelActivePreparedNews,
-  isPreparedNewsActive,
-  nextRoomNews,
-  claimPreparedNews,
-  startPreparedNews,
-  releasePreparedNews,
-  markPreparedNewsPlayed,
-  reconcilePreparedNews,
-} from './prepared-news';
-import {
-  pauseNewsWorkflow,
-  startNewsWorkflow,
-  stopNewsWorkflow,
-  invalidateNewsWorkflow,
-  checkNewsWorkflow,
-} from './news-workflow';
-import { isNewsTransitionSettings, normalizeNewsTransitionSettings } from '../shared/news-transitions';
-import { isWorkflowDraft, normalizeWorkflowDraft } from '../shared/workflow';
-import type { WorkflowDraft } from '../shared/workflow';
-import type {
-  ApiError,
-  DJ,
-  PlaybackSnapshot,
-  PlaybackPreferences,
-  NewsSource,
-  ListeningRoom,
-  LocalState,
-} from '../shared/types';
-import { defaultPlaybackPreferences, playbackPreferenceKey } from './playback-preferences';
 import { StorageError } from './storage-error';
-import { djPreparationKey, isDJAvatar } from '../shared/dj-avatar';
-import type { NewsRecoveryStatus } from '../shared/types';
+
 
 app.setName('onmywave.fm Light');
+
 app.setPath('userData', join(app.getPath('appData'), 'onmywave-light'));
+
 protocol.registerSchemesAsPrivileged([
   { scheme: 'wave-app', privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true } },
   { scheme: 'wave-media', privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true } },
 ]);
+
 const directory = dirname(fileURLToPath(import.meta.url));
+
 let window: BrowserWindow | null = null;
+
 let signingOut = false;
+
 let preparationEpoch = 0;
+
 let newsRecoveryStatus: NewsRecoveryStatus = { phase: 'recovering' };
+
 let newsRecoveryAttempt: Promise<NewsRecoveryStatus> | null = null;
+
 let newsRecoveryAttemptEpoch = 0;
+
 let newsRecoveryEpoch = 0;
+
 let newsRecoveryFailed = false;
+
 let closing = false;
+
 const news = new NewsService({
   canGenerate: () => !closing && newsRecoveryStatus.phase === 'ready' && !signingOut && !!service.connection(),
   getApiKey: readOpenAIKey,
@@ -99,19 +117,28 @@ const news = new NewsService({
       window.webContents.send('wave:newsProgress', value);
   },
 });
+
 function cancelNews() {
   news.cancel();
 }
+
 let playlistSessionEpoch = 0;
+
 let service: JellyfinService;
+
 let deviceId: string;
+
 let persistentDeviceIdentity = false;
+
 const invalid = () => {
   throw new ServiceError('invalid', 'Invalid request.');
 };
+
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   !!value && typeof value === 'object' && !Array.isArray(value);
+
 const text = (value: unknown, max: number): value is string => typeof value === 'string' && value.length <= max;
+
 const strings = (value: unknown, max: number): value is string[] =>
   Array.isArray(value) && value.length <= max && value.every((item) => text(item, 128));
 
@@ -140,6 +167,7 @@ function validateDjs(value: unknown): asserts value is DJ[] {
     }
   }
 }
+
 function validateRoomConfiguration(
   value: unknown,
 ): asserts value is { room: ListeningRoom; mood: string; workflowDraft: WorkflowDraft } {
@@ -154,6 +182,7 @@ function validateRoomConfiguration(
   )
     invalid();
 }
+
 function validateRoomReferences(room: ListeningRoom, state: LocalState) {
   if (
     (room.djId !== null && !state.djs.some((dj) => dj.id === room.djId)) ||
@@ -161,6 +190,7 @@ function validateRoomReferences(room: ListeningRoom, state: LocalState) {
   )
     throw new ServiceError('invalid', 'A selected DJ or source no longer exists.');
 }
+
 function markChangedProfileRuns(
   state: LocalState,
   affected: (profile: LocalState['roomProfiles'][number]) => boolean,
@@ -183,11 +213,13 @@ function markChangedProfileRuns(
       : {}),
   };
 }
+
 function profileName(value: unknown): string {
   if (!text(value, 80) || !value.trim())
     throw new ServiceError('invalid', 'Give this configuration a name of up to 80 characters.');
   return value.trim();
 }
+
 function profileId(value: unknown): asserts value is string {
   if (!text(value, 128) || !/^[a-zA-Z0-9-]+$/.test(value)) invalid();
 }
@@ -229,6 +261,7 @@ function newsUnavailable() {
   cancelActivePreparedNews();
   news.cancelGeneration();
 }
+
 function requireNewsReady() {
   if (newsRecoveryStatus.phase !== 'ready')
     throw new ServiceError(
@@ -236,6 +269,7 @@ function requireNewsReady() {
       'News data is unavailable. Retry news recovery before using news or DJ features.',
     );
 }
+
 function recoverNews(): Promise<NewsRecoveryStatus> {
   if (newsRecoveryAttempt)
     return newsRecoveryAttemptEpoch === newsRecoveryEpoch
@@ -284,6 +318,7 @@ function recoverNews(): Promise<NewsRecoveryStatus> {
   });
   return newsRecoveryAttempt;
 }
+
 const newsOperations = new Set([
   'getPreparedNews',
   'nextRoomNews',
@@ -1038,9 +1073,11 @@ app
   .catch(() => {
     app.quit();
   });
+
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
+
 app.on('before-quit', () => {
   closing = true;
   ++newsRecoveryEpoch;

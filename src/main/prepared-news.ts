@@ -1,7 +1,10 @@
-import { app } from 'electron';
+import { createHash, randomUUID } from 'node:crypto';
 import { mkdir, readFile, writeFile, rename, stat, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
-import { createHash, randomUUID } from 'node:crypto';
+
+import { app } from 'electron';
+
+import { canonicalArticleUrl, eligibleNewsTakes, matchesNewsRoom } from '../shared/news-pool';
 import type {
   DJ,
   LocalState,
@@ -12,17 +15,20 @@ import type {
   PreparedNewsScript,
   PreparedNewsTake,
 } from '../shared/types';
-import { canonicalArticleUrl, eligibleNewsTakes, matchesNewsRoom } from '../shared/news-pool';
-import { getLocalState, readOpenAIKey, readElevenLabsKey, readTwitterKey } from './storage';
-import { NewsService, validateNewsSettings } from './news';
 import { ServiceError } from './jellyfin';
+import { NewsService, validateNewsSettings } from './news';
+import { getLocalState, readOpenAIKey, readElevenLabsKey, readTwitterKey } from './storage';
 import { StorageError } from './storage-error';
 
+
 const hash = (value: unknown) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
+
 const validId = (value: unknown): value is string => typeof value === 'string' && /^[a-zA-Z0-9-]{1,128}$/.test(value);
+
 const invalid = (message = 'Invalid prepared news request.'): never => {
   throw new ServiceError('invalid', message);
 };
+
 function validOrigin(value: unknown): value is PreparedNewsOrigin {
   if (!value || typeof value !== 'object') return false;
   const origin = value as PreparedNewsOrigin;
@@ -37,11 +43,17 @@ function validOrigin(value: unknown): value is PreparedNewsOrigin {
       (typeof origin.profileName === 'string' && !!origin.profileName.trim() && origin.profileName.length <= 80))
   );
 }
+
 const root = () => join(app.getPath('userData'), 'prepared-news');
+
 const audioPath = (id: string) => join(root(), `${id}.mp3`);
+
 let library: PreparedNewsLibrary | undefined;
+
 let initialization: Promise<PreparedNewsLibrary> | undefined;
+
 let writes = Promise.resolve();
+
 let active: {
   id: string;
   controller: AbortController;
@@ -181,6 +193,7 @@ export async function submitReviewedCandidates(requestId: string, candidates: Ne
     return { ...current, reviewedArticles };
   });
 }
+
 export async function completeReviewedCandidates(requestId: string, selectedUrl?: string) {
   const selected = selectedUrl ? canonicalArticleUrl(selectedUrl) : null;
   const at = new Date().toISOString();
@@ -198,6 +211,7 @@ export async function completeReviewedCandidates(requestId: string, selectedUrl?
     ),
   }));
 }
+
 export async function interruptReviewedCandidates(requestId: string) {
   await change((current) => ({
     ...current,
@@ -208,6 +222,7 @@ export async function interruptReviewedCandidates(requestId: string) {
     ),
   }));
 }
+
 export async function releaseReviewedCandidates(requestId: string, candidates: NewsArticle[]) {
   const urls = new Set(
     candidates.map((article) => canonicalArticleUrl(article.url)).filter((url): url is string => Boolean(url)),
@@ -219,9 +234,11 @@ export async function releaseReviewedCandidates(requestId: string, candidates: N
     ),
   }));
 }
+
 export async function reviewedArticleUrls() {
   return (await load()).reviewedArticles.map((article) => article.canonicalUrl);
 }
+
 async function change(update: (current: PreparedNewsLibrary) => PreparedNewsLibrary) {
   const task = writes.then(async () => {
     const next = update(structuredClone(await load()));
@@ -238,6 +255,7 @@ async function change(update: (current: PreparedNewsLibrary) => PreparedNewsLibr
   writes = task.catch(() => {});
   return task;
 }
+
 async function recoverCompletedAudio() {
   const current = await load();
   const files = await readdir(root()).catch((error: NodeJS.ErrnoException) => {
@@ -291,9 +309,11 @@ async function recoverCompletedAudio() {
     return state;
   });
 }
+
 export function isPreparedNewsActive(requestId: string) {
   return active?.id === requestId;
 }
+
 export async function preparedAudio(id: string): Promise<Buffer | null> {
   if (!validId(id)) return null;
   const take = (await load()).takes.find((value) => value.id === id);
@@ -306,6 +326,7 @@ export async function preparedAudio(id: string): Promise<Buffer | null> {
     throw new StorageError();
   }
 }
+
 export async function getPreparedNews(): Promise<PreparedNewsLibrary> {
   await writes;
   await recoverCompletedAudio();
@@ -328,6 +349,7 @@ export async function getPreparedNews(): Promise<PreparedNewsLibrary> {
   );
   return snapshot;
 }
+
 export async function reconcilePreparedNews() {
   await writes;
   await recoverCompletedAudio();
@@ -574,18 +596,22 @@ export async function markPreparedNewsPlayed(input: { id: string; claimId: strin
     }),
   }));
 }
+
 export async function cancelPreparedNews(id: string) {
   if (!validId(id)) invalid();
   if (active?.id === id) active.controller.abort();
 }
+
 export function cancelActivePreparedNews() {
   active?.controller.abort();
 }
+
 function validateDj(dj: DJ | undefined): DJ {
   if (!dj?.news) return invalid('Choose a saved DJ with news settings.');
   validateNewsSettings(dj.news!);
   return structuredClone(dj);
 }
+
 async function execute<T extends PreparedNewsTake>(
   requestId: string,
   kind: 'audio',
@@ -694,6 +720,7 @@ async function execute<T extends PreparedNewsTake>(
   })();
   return operation.promise;
 }
+
 async function publishTake(take: PreparedNewsTake, audio: Buffer) {
   if (active?.id === take.requestId) active.publishing = true;
   try {

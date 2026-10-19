@@ -1,19 +1,13 @@
-import { useId, useLayoutEffect, useRef, useState, type ReactNode, type RefObject } from 'react';
 import { AlertCircle, Music2, X } from 'lucide-react';
+import { useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+
+import type { DialogProps, ErrorNoticeProps, PageHeadingProps } from './Shared.types';
+
 
 export const errorMessage = (error: unknown) =>
   error instanceof Error ? error.message : 'Something went wrong. Please try again.';
-export function ErrorNotice({
-  error,
-  retry,
-  retryRef,
-  retrying = false,
-}: {
-  error: unknown;
-  retry?: () => void | Promise<unknown>;
-  retryRef?: RefObject<HTMLButtonElement | null>;
-  retrying?: boolean;
-}) {
+
+export function ErrorNotice({ error, retry, retryRef, retrying = false }: ErrorNoticeProps) {
   const inFlight = useRef(false);
   const [ownsRetryFocus, setOwnsRetryFocus] = useState(false);
   const [attemptPending, setAttemptPending] = useState(false);
@@ -41,6 +35,7 @@ export function ErrorNotice({
   }
   const busy = retrying || attemptPending;
   const busyLabel = attemptPending ? 'Retrying…' : 'Checking…';
+
   return (
     <div className="notice error">
       <AlertCircle size={18} aria-hidden="true" />
@@ -69,6 +64,7 @@ export function ErrorNotice({
     </div>
   );
 }
+
 export function Empty({ title, children }: { title: string; children?: ReactNode }) {
   return (
     <div className="empty">
@@ -78,9 +74,11 @@ export function Empty({ title, children }: { title: string; children?: ReactNode
     </div>
   );
 }
+
 export function Artwork(props: { url?: string; name: string; className?: string }) {
   return <ArtworkImage key={props.url ?? ''} {...props} />;
 }
+
 function ArtworkImage({ url, name, className = '' }: { url?: string; name: string; className?: string }) {
   const [failed, setFailed] = useState(false);
   return url && !failed ? (
@@ -91,7 +89,9 @@ function ArtworkImage({ url, name, className = '' }: { url?: string; name: strin
     </div>
   );
 }
+
 const shouldRestoreFocus = (restoreFocusRef?: { readonly current: boolean }) => restoreFocusRef?.current !== false;
+
 export function Dialog({
   title,
   children,
@@ -100,20 +100,13 @@ export function Dialog({
   initialFocusRef,
   restoreFocusRef,
   closeDisabled = false,
-}: {
-  title: string;
-  children: ReactNode;
-  close: () => void;
-  wide?: boolean;
-  initialFocusRef?: { readonly current: HTMLElement | null };
-  restoreFocusRef?: { readonly current: boolean };
-  closeDisabled?: boolean;
-}) {
+}: DialogProps) {
   const ref = useRef<HTMLDialogElement>(null);
   const titleId = useId();
   const opener = useRef<HTMLElement | null>(null);
   if (opener.current === null)
     opener.current = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
   useLayoutEffect(() => {
     const node = ref.current;
     if (!node) return;
@@ -134,6 +127,7 @@ export function Dialog({
       });
     };
   }, [initialFocusRef, restoreFocusRef]);
+
   return (
     <dialog
       ref={ref}
@@ -172,17 +166,8 @@ export function Dialog({
     </dialog>
   );
 }
-export function PageHeading({
-  title,
-  subtitle,
-  children,
-  headingRef,
-}: {
-  title: string;
-  subtitle?: string;
-  children?: ReactNode;
-  headingRef?: RefObject<HTMLHeadingElement | null>;
-}) {
+
+export function PageHeading({ title, subtitle, children, headingRef }: PageHeadingProps) {
   return (
     <header className="page-heading">
       <div>
@@ -195,10 +180,12 @@ export function PageHeading({
     </header>
   );
 }
+
 export function duration(seconds: number) {
   const safe = Number.isFinite(seconds) ? Math.max(0, seconds) : 0;
   return `${Math.floor(safe / 60)}:${String(Math.floor(safe % 60)).padStart(2, '0')}`;
 }
+
 export function TrackDuration({ seconds }: { seconds: number }) {
   return Number.isFinite(seconds) && seconds > 0 ? (
     duration(seconds)

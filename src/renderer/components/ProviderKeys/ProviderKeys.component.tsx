@@ -1,12 +1,15 @@
-import { useId, useRef, useState } from 'react';
-import { useRetryFocus } from '../../useRetryFocus';
 import { useQuery } from '@tanstack/react-query';
+import { useId, useRef, useState } from 'react';
+
 import { unwrap } from '../../api';
-import { ErrorNotice } from '../Shared';
+import { useRetryFocus } from '../../useRetryFocus';
 import { InfoHelp } from '../InfoHelp/InfoHelp.component';
-import { TwitterSetupHelp } from './TwitterSetupHelp.component';
+import { ErrorNotice } from '../Shared';
 import { useProviderKeyEdit } from './ProviderKeyEdits';
+import { TwitterSetupHelp } from './TwitterSetupHelp.component';
+
 import './ProviderKeys.styles.css';
+
 
 export function ProviderKeys({ disabled = false }: { disabled?: boolean }) {
   return (
@@ -39,6 +42,7 @@ export function ProviderKeys({ disabled = false }: { disabled?: boolean }) {
     </div>
   );
 }
+
 function ProviderKey({ provider, disabled }: { provider: 'openai' | 'elevenlabs' | 'twitter'; disabled: boolean }) {
   const edit = useProviderKeyEdit(provider);
   const { draft: key, queryKey } = edit;
@@ -79,6 +83,7 @@ function ProviderKey({ provider, disabled }: { provider: 'openai' | 'elevenlabs'
     target: () => statusHeading.current,
     canFocusSuccess: () => !busy && status.isSuccess && !status.isFetching,
   });
+
   return (
     <section className="provider-key">
       <div className="provider-key-status">

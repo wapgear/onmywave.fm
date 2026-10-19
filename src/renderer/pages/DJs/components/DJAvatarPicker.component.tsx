@@ -1,5 +1,6 @@
-import { useId } from 'react';
 import { Headphones, Mic2, Music2, Radio, Sparkles, UserRound } from 'lucide-react';
+import { useId } from 'react';
+
 import {
   djAvatarColors,
   djAvatarIcons,
@@ -8,9 +9,11 @@ import {
   resolveDJAvatar,
 } from '../../../../shared/dj-avatar';
 import type { DJAvatarChoice } from '../../../../shared/dj-avatar';
-import { DJAvatar } from '../../../components/DJAvatar/DJAvatar.component';
 import type { DJ } from '../../../../shared/types';
+import { DJAvatar } from '../../../components/DJAvatar/DJAvatar.component';
+
 import './DJAvatarPicker.styles.css';
+
 
 const icons = {
   host: UserRound,
@@ -20,6 +23,7 @@ const icons = {
   music: Music2,
   sparkles: Sparkles,
 } as const;
+
 type Props = { dj: DJ; onChange: (avatar: DJAvatarChoice) => void };
 
 export function DJAvatarPicker({ dj, onChange }: Props) {
@@ -52,6 +56,7 @@ export function DJAvatarPicker({ dj, onChange }: Props) {
           : { kind: 'portrait' as const, id: key as (typeof djAvatarPortraits)[number]['id'], color: avatar.color };
     onChange(next);
   }
+
   return (
     <div className="dj-avatar-picker">
       <div className="dj-avatar-picker-preview">

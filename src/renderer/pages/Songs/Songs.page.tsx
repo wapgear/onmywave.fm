@@ -1,32 +1,27 @@
-import { useEffect, useRef, useState } from 'react';
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 import { RefreshCw, Search } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+
 import type { CatalogQuery, Song } from '../../../shared/types';
 import { unwrap } from '../../api';
-import { usePlayer } from '../../player';
-import { Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { FilterSelect } from '../../components/FilterSelect/FilterSelect.component';
+import { Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { songRows } from '../../components/TrackTable/TrackTable.component';
-import { VirtualSongs } from './VirtualSongs.component';
+import { usePlayer } from '../../player';
 import { useRetryFocus } from '../../useRetryFocus';
+import type { SongsPageProps, SongsView } from './Songs.types';
+import { VirtualSongs } from './VirtualSongs.component';
+
+
 const PAGE_SIZE = 80;
-export type SongsView = { search: string; query: CatalogQuery; selected: Map<string, Song> };
+
 export const initialSongsView = (): SongsView => ({
   search: '',
   query: { start: 0, limit: PAGE_SIZE, sort: 'dateAdded', descending: true, search: '' },
   selected: new Map(),
 });
-export function SongsPage({
-  add,
-  details,
-  view,
-  setView,
-}: {
-  view: SongsView;
-  setView: React.Dispatch<React.SetStateAction<SongsView>>;
-  add: (songs: Song[]) => void;
-  details: (song: Song) => void;
-}) {
+
+export function SongsPage({ add, details, view, setView }: SongsPageProps) {
   const player = usePlayer();
   const client = useQueryClient();
   const { search, query, selected } = view;
@@ -36,6 +31,7 @@ export function SongsPage({
   const setSelected = (selected: Map<string, Song>) => setView((old) => ({ ...old, selected }));
   const headingRef = useRef<HTMLHeadingElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const timer = setTimeout(
       () =>
@@ -48,6 +44,7 @@ export function SongsPage({
     );
     return () => clearTimeout(timer);
   }, [search, setView]);
+
   function change(next: Partial<CatalogQuery>) {
     setQuery((old) => ({ ...old, ...next, start: 0 }));
     setSelected(new Map());
@@ -106,6 +103,7 @@ export function SongsPage({
     }
   }
   const items = [...new Map(songs.data?.pages.flatMap((page) => page.items).map((song) => [song.id, song])).values()];
+
   return (
     <>
       <PageHeading headingRef={headingRef} title="All songs" subtitle="Your Jellyfin library">

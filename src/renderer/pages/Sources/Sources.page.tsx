@@ -1,14 +1,17 @@
-import { useRef, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Pencil, Plus, Rss, Trash2 } from 'lucide-react';
+import { useRef, useState } from 'react';
+
 import { normalizeNewsSource } from '../../../shared/sources';
 import type { NewsSource } from '../../../shared/types';
 import { unwrap } from '../../api';
-import { confirmLocalState } from '../../local-state-cache';
-import { Dialog, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { TwitterSetupHelp } from '../../components/ProviderKeys/TwitterSetupHelp.component';
+import { Dialog, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
+import { confirmLocalState } from '../../local-state-cache';
 import { useRetryFocus } from '../../useRetryFocus';
+
 import './Sources.styles.css';
+
 
 export function SourcesPage() {
   const client = useQueryClient();
@@ -79,6 +82,7 @@ export function SourcesPage() {
           profile.id === state.data?.djPlayback.roomId && profile.room.sourceIds.every((id) => id === deleting?.id),
       )
     : undefined;
+
   return (
     <>
       <PageHeading title="Sources" subtitle="News for your prepared stories" headingRef={heading}>

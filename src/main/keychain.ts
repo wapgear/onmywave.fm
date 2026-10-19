@@ -1,7 +1,11 @@
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
+
+
 const run = promisify(execFile);
+
 type Provider = 'openai' | 'elevenlabs';
+
 const service = (provider: Provider) => `fm.onmywave.providers.${provider}`;
 
 export async function readSharedProviderKey(provider: Provider): Promise<string | null> {

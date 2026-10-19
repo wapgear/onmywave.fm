@@ -1,17 +1,20 @@
+import { randomUUID } from 'node:crypto';
+import { renameSync, unlinkSync } from 'node:fs';
+import { link, mkdir, readFile, rename, writeFile, unlink } from 'node:fs/promises';
+import { join } from 'node:path';
+
+import { app, safeStorage } from 'electron';
+
+import { resolveDJAvatar } from '../shared/dj-avatar';
 import { defaultDJPlaybackSettings, normalizeDJPlaybackSettings } from '../shared/dj-playback';
 import { defaultNewsTransitionSettings, normalizeNewsTransitionSettings } from '../shared/news-transitions';
 import { NEWS_TEXT_MODEL } from '../shared/types';
-import { app, safeStorage } from 'electron';
-import { link, mkdir, readFile, rename, writeFile, unlink } from 'node:fs/promises';
-import { renameSync, unlinkSync } from 'node:fs';
-import { join } from 'node:path';
-import { randomUUID } from 'node:crypto';
-import { defaultWorkflowDraft, isWorkflowDraft, normalizeWorkflowDraft } from '../shared/workflow';
 import type { LocalState, LocalStateSnapshot, ListeningRoom, RoomProfile } from '../shared/types';
+import { defaultWorkflowDraft, isWorkflowDraft, normalizeWorkflowDraft } from '../shared/workflow';
 import { readSharedProviderKey, writeSharedProviderKey } from './keychain';
 import { normalizePlaybackPreferences } from './playback-preferences';
 import { StorageError } from './storage-error';
-import { resolveDJAvatar } from '../shared/dj-avatar';
+
 
 export type StoredConnection = {
   id: string;
@@ -22,6 +25,7 @@ export type StoredConnection = {
   serverVersion: string;
   selectedLibraryIds: string[];
 };
+
 const emptyState = (): LocalState => ({
   preparationErrorVersion: 1,
   djPlayback: defaultDJPlaybackSettings(),
@@ -45,14 +49,23 @@ const emptyState = (): LocalState => ({
   listeningRoom: { djId: null, sourceIds: [] },
   workflowDraft: defaultWorkflowDraft(),
 });
+
 let localState: LocalState | undefined;
+
 let localStateRevision = 0;
+
 let localStateLoading: Promise<void> | undefined;
+
 let localStateMigrationPending = false;
+
 let localStateMigration: Promise<void> | undefined;
+
 let writes = Promise.resolve();
+
 const location = (name: string) => join(app.getPath('userData'), name);
+
 let deviceIdentity: Promise<{ id: string; persistent: boolean }> | undefined;
+
 export function readDeviceIdentity() {
   return (deviceIdentity ??= (async () => {
     const fallback = { id: randomUUID(), persistent: false };
@@ -86,11 +99,17 @@ export function readDeviceIdentity() {
     }
   })());
 }
+
 type KeyProvider = 'openai' | 'elevenlabs' | 'twitter';
+
 const providerKeys = new Map<KeyProvider, string | null>();
+
 const providerKeyRevisions = new Map<KeyProvider, number>();
+
 const sessionOnlyKeys = new Set<KeyProvider>();
+
 let keyWrites = Promise.resolve();
+
 export function withProviderKeys<T>(operation: () => Promise<T>): Promise<T> {
   const next = keyWrites.then(operation);
   keyWrites = next.then(
@@ -99,6 +118,7 @@ export function withProviderKeys<T>(operation: () => Promise<T>): Promise<T> {
   );
   return next;
 }
+
 async function readProviderKey(provider: KeyProvider): Promise<string | null> {
   const revision = providerKeyRevisions.get(provider);
   const shared = provider === 'twitter' ? null : await readSharedProviderKey(provider);
@@ -120,9 +140,11 @@ async function readProviderKey(provider: KeyProvider): Promise<string | null> {
   providerKeys.set(provider, key);
   return key;
 }
+
 async function providerKeyStatus(provider: KeyProvider) {
   return { configured: Boolean(await readProviderKey(provider)), sessionOnly: sessionOnlyKeys.has(provider) };
 }
+
 function writeProviderKey(provider: KeyProvider, key: string | null) {
   return withProviderKeys(async () => {
     if (provider !== 'twitter') await writeSharedProviderKey(provider, key);
@@ -145,15 +167,23 @@ function writeProviderKey(provider: KeyProvider, key: string | null) {
     return providerKeyStatus(provider);
   });
 }
+
 export const readOpenAIKey = () => readProviderKey('openai');
+
 export const openAIKeyStatus = () => providerKeyStatus('openai');
+
 export const writeOpenAIKey = (key: string | null) => writeProviderKey('openai', key);
+
 export const readElevenLabsKey = () => readProviderKey('elevenlabs');
+
 export const elevenLabsKeyStatus = () => providerKeyStatus('elevenlabs');
+
 export const writeElevenLabsKey = (key: string | null) => writeProviderKey('elevenlabs', key);
 
 export const readTwitterKey = () => readProviderKey('twitter');
+
 export const twitterKeyStatus = () => providerKeyStatus('twitter');
+
 export const writeTwitterKey = (key: string | null) => writeProviderKey('twitter', key);
 
 export async function atomicWrite(name: string, content: string) {

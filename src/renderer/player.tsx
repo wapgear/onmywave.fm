@@ -1,13 +1,4 @@
-import {
-  createShufflePlan,
-  refillShufflePlan,
-  nextShuffle,
-  previousShuffle,
-  selectShuffle,
-  removeShuffle,
-  isShuffleSnapshot,
-  type ShufflePlan,
-} from '../shared/shuffle-queue';
+import { useQuery } from '@tanstack/react-query';
 import {
   createContext,
   useCallback,
@@ -18,109 +9,53 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { useQuery } from '@tanstack/react-query';
+
 import { normalizeDJPlaybackSettings } from '../shared/dj-playback';
 import { defaultNewsTransitionSettings, normalizeNewsTransitionSettings } from '../shared/news-transitions';
-import type { NewsTransitionSettings } from '../shared/news-transitions';
+import {
+  createShufflePlan,
+  isShuffleSnapshot,
+  nextShuffle,
+  previousShuffle,
+  refillShufflePlan,
+  removeShuffle,
+  selectShuffle,
+  type ShufflePlan,
+} from '../shared/shuffle-queue';
 import type {
   Connection,
   NewsBreak,
-  PreparedNewsClaim,
-  PlaybackSnapshot,
   PlaybackPreferences,
+  PlaybackSnapshot,
+  PreparedNewsClaim,
   Song,
 } from '../shared/types';
 import { unwrap, WaveError } from './api';
 import { freshAudioUrl } from './audio';
 import { useNewsRecovery } from './NewsRecovery';
+import type {
+  HeardNews,
+  NewsPhase,
+  QueueEntry,
+  OptionsSaveSettlement,
+  PlaybackRetrySettlement,
+  PlayerState,
+  ScheduledNews,
+} from './player.types';
 
-type HeardNews = { news: NewsBreak; startedAt: string; status: 'playing' | 'completed' | 'interrupted' };
-type NewsPhase = 'waiting' | 'fading' | 'lead-in' | 'speaking' | 'tail';
-type ScheduledNews = {
-  token: number;
-  key: string;
-  duration: number;
-  bed: number;
-  phase: NewsPhase;
-  trackEnded: boolean;
-  settings: NewsTransitionSettings;
-  elapsed: number;
-  lastTick: number;
-  startLevel: number;
-  speechAttempt: number;
-  starting: boolean;
-  prepareSpeech(): Promise<void>;
-  playSpeech(): Promise<void>;
-  cancelDelivery(): void;
-};
 
-type QueueEntry = { key: string; song: Song; historyIndex?: number };
 type LoadSettlement = { key?: string; generation: number; outcome: 'success' | 'failure' | 'superseded' };
-export type PlaybackRetrySettlement = {
-  key?: string;
-  generation: number;
-  commandRevision: number;
-  kind: 'track' | 'restore';
-  outcome: 'success' | 'failure' | 'superseded';
-};
-export type OptionsSaveSettlement = { generation: number; outcome: 'success' | 'failure' | 'superseded' };
-type PlayerState = {
-  queue: QueueEntry[];
-  upcomingQueue: QueueEntry[];
-  shuffleHistoryQueue: QueueEntry[];
-  shuffleRemaining: number;
-  current?: Song;
-  currentKey?: string;
-  playing: boolean;
-  requestedPlaying: boolean;
-  busy: boolean;
-  position: number;
-  duration: number;
-  error: string | null;
-  volume: number;
-  shuffle: boolean;
-  repeat: PlaybackSnapshot['repeat'];
-  canRetry: boolean;
-  completedSongs: number;
-  optionsError: string | null;
-  optionsRevision: number;
-  retryOptions(): Promise<OptionsSaveSettlement>;
-  getOptionsSaveGeneration(): number;
-  play(songs: Song[], index?: number): void;
-  playQueueEntry(key: string, historyIndex?: number): void;
-  enqueue(songs: Song[]): void;
-  musicCommandRevision: number;
-  getMusicCommandRevision(): number;
-  pauseForPreview(): void;
-  toggle(): void;
-  next(): void;
-  previous(): void;
-  seek(seconds: number): void;
-  setVolume(value: number): void;
-  toggleShuffle(): void;
-  cycleRepeat(): void;
-  removeQueue(key: string): void;
-  retry(): Promise<PlaybackRetrySettlement>;
-  getPlaybackGeneration(): number;
-  getResumeGeneration(): number;
-  newsPhase: 'idle' | NewsPhase | 'paused';
-  activeNewsId?: string;
-  newsRunId?: number;
-  newsNotice: string | null;
-  newsLoading: boolean;
-  activeNews?: NewsBreak;
-  lastNews: HeardNews | null;
-  scheduleNews(news: NewsBreak, duckVolume: number, claimId?: string): Promise<void>;
-  stopNews(): void;
-  controlNews(runId: number, action: 'toggle' | 'stop'): boolean;
-};
+
 const PlayerContext = createContext<PlayerState | null>(null);
+
 const trackLoadError = 'This track could not be played. Check your connection, then retry or skip.';
+
 export function usePlayer() {
   const value = useContext(PlayerContext);
   if (!value) throw new Error('Player requires PlayerProvider');
   return value;
 }
+
 const entries = (songs: Song[]): QueueEntry[] => songs.map((song) => ({ key: crypto.randomUUID(), song }));
 
 export function PlayerProvider({ connection, children }: { connection: Connection | null; children: ReactNode }) {
@@ -162,6 +97,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const commandRevision = useRef(0);
   const [musicCommandRevision, setMusicCommandRevision] = useState(0);
   const cancelRestoreRetry = useRef<(() => void) | null>(null);
+
   const musicCommand = useCallback(() => {
     ++newsNoticeRevision.current;
     setNewsNotice(null);
@@ -169,7 +105,9 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     cancelRestoreRetry.current?.();
     cancelRestoreRetry.current = null;
   }, []);
+
   const getMusicCommandRevision = useCallback(() => commandRevision.current, []);
+
   const countedSongGeneration = useRef(-1);
   const audio = useRef<HTMLAudioElement | null>(null);
   const speech = useRef<HTMLAudioElement | null>(null);
@@ -201,21 +139,26 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const preparing = useRef(false);
   const [shuffleView, setShuffleView] = useState<ShufflePlan>(() => createShufflePlan([], null));
   const shufflePlan = useRef<ShufflePlan>(shuffleView);
+
   const updateShufflePlan = useCallback((plan: ShufflePlan) => {
     shufflePlan.current = plan;
     setShuffleView(plan);
   }, []);
+
   const requestPlayback = useCallback((value: boolean) => {
     playIntent.current = value;
     setRequestedPlaying(value);
   }, []);
+
   const current = queue[index]?.song;
   const currentKey = queue[index]?.key;
   const duration = current && Number.isFinite(current.duration) && current.duration > 0 ? current.duration : 0;
   const live = useRef({ queue, index, current, repeat, shuffle, position, volume, recoveryReady });
+
   useLayoutEffect(() => {
     live.current = { queue, index, current, repeat, shuffle, position, volume, recoveryReady };
   }, [queue, index, current, repeat, shuffle, position, volume, recoveryReady]);
+
   const changeVolume = useCallback((value: number) => {
     const next = Math.max(0, Math.min(1, value));
     if (next === live.current.volume) return;
@@ -810,12 +753,14 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     optionsInFlight.current = { generation, promise };
     return promise;
   }, [connection]);
+
   useEffect(
     () => () => {
       ++optionsSaveGeneration.current;
     },
     [connection?.id],
   );
+
   useEffect(() => {
     if (connection && readyConnection !== connection.id) void saveOptions();
   }, [connection, readyConnection, volume, shuffle, repeat, optionsRevision, saveOptions]);
@@ -932,6 +877,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     },
     [load, stopNews, continueAfterSong, checkScheduledNews, djSettings.keepOnSeek, musicCommand, fadeMusic],
   );
+
   const retry = useCallback((): Promise<PlaybackRetrySettlement> => {
     if (retryInFlight.current && (retryInFlight.current.kind === 'restore' || retryInFlight.current.key === currentKey))
       return retryInFlight.current.promise;
@@ -1002,6 +948,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     });
     return pending;
   }, [current, currentKey, load, musicCommand, position, requestPlayback, restore, restoreSession, stopNews]);
+
   const toggle = useCallback(
     (origin?: 'preview') => {
       if (origin !== 'preview') musicCommand();
@@ -1086,6 +1033,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     },
     [stopNews, requestPlayback, load, continueAfterSong, musicCommand],
   );
+
   const controlNews = (runId: number, action: 'toggle' | 'stop') => {
     const planned = newsSchedule.current;
     if (!planned || planned.token !== runId || planned.token !== newsGeneration.current) return false;
@@ -1094,6 +1042,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     else stopNews();
     return true;
   };
+
   const previous = useCallback(() => {
     musicCommand();
     const state = live.current;
@@ -1481,6 +1430,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     upcomingKeys.length +
     queue.filter((item) => !planned.visited.has(item.key) && !plannedKeys.has(item.key) && !forwardKeys.has(item.key))
       .length;
+
   return (
     <PlayerContext.Provider
       value={{

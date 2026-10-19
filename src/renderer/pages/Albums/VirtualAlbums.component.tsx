@@ -1,11 +1,15 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { defaultRangeExtractor, observeElementOffset, useVirtualizer } from '@tanstack/react-virtual';
-import type { Album } from '../../../shared/types';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react';
+
 import { Artwork, ErrorNotice } from '../../components/Shared';
 import { useRetryFocus } from '../../useRetryFocus';
+import type { VirtualAlbumsProps } from './VirtualAlbums.types';
+
 import './Albums.styles.css';
 
+
 const GAP = 22;
+
 export function VirtualAlbums({
   albums,
   total,
@@ -17,18 +21,7 @@ export function VirtualAlbums({
   returnFocus,
   focused,
   onResultsElement,
-}: {
-  albums: Album[];
-  total: number;
-  hasNext: boolean;
-  fetching: boolean;
-  nextError: unknown;
-  loadNext: () => Promise<{ isError: boolean }>;
-  open: (album: Album, origin: HTMLButtonElement) => void;
-  returnFocus: string | null;
-  focused: () => void;
-  onResultsElement?: (node: HTMLElement | null) => void;
-}) {
+}: VirtualAlbumsProps) {
   const grid = useRef<HTMLDivElement>(null);
   const status = useRef<HTMLSpanElement>(null);
   const retryFocus = useRetryFocus({
@@ -51,7 +44,9 @@ export function VirtualAlbums({
   const [focusedId, setFocusedId] = useState<string | null>(returnFocus);
   const focusedIndex = albums.findIndex((album) => album.id === focusedId);
   const focusedRow = focusedIndex < 0 ? -1 : Math.floor(focusedIndex / layout.columns);
+
   const getScrollElement = useCallback(() => grid.current?.closest<HTMLElement>('.main-content') ?? null, []);
+
   // TanStack Virtual mutates its instance; keep this component outside compiler memoization.
   // eslint-disable-next-line react-hooks/incompatible-library
   const virtualizer = useVirtualizer({
@@ -76,6 +71,7 @@ export function VirtualAlbums({
       return [...new Set(indexes)].sort((a, b) => a - b);
     },
   });
+
   useLayoutEffect(() => {
     const node = grid.current;
     const scroll = getScrollElement();
@@ -120,6 +116,7 @@ export function VirtualAlbums({
     measure();
     return () => observer.disconnect();
   }, [getScrollElement, albums]);
+
   useLayoutEffect(() => {
     virtualizer.measure();
     const pending = pendingLayout.current;
@@ -154,6 +151,7 @@ export function VirtualAlbums({
     }
     pendingLayout.current = null;
   }, [layout, virtualizer, getScrollElement, albums]);
+
   const visible = virtualizer.getVirtualItems();
   const lastVisible =
     visible
@@ -163,10 +161,12 @@ export function VirtualAlbums({
           row.start <= (virtualizer.scrollOffset ?? 0) + (virtualizer.scrollRect?.height ?? 0),
       )
       .at(-1)?.index ?? -1;
+
   useEffect(() => {
     if (hasNext && !fetching && !nextError && lastVisible >= Math.ceil(albums.length / layout.columns) - 4)
       void loadNext();
   }, [lastVisible, hasNext, fetching, nextError, albums.length, layout.columns, loadNext]);
+
   useEffect(() => {
     if (!returnFocus || restoredFocus.current === returnFocus) return;
     const frame = requestAnimationFrame(() => {
@@ -181,6 +181,7 @@ export function VirtualAlbums({
     });
     return () => cancelAnimationFrame(frame);
   }, [returnFocus, focused, visible]);
+
   function keyboard(event: KeyboardEvent<HTMLButtonElement>, index: number) {
     let next: number;
     if (event.key === 'ArrowRight') next = index + 1;
@@ -246,6 +247,7 @@ export function VirtualAlbums({
       },
     );
   }
+
   return (
     <section ref={onResultsElement} aria-label="Album collection" className="virtual-albums">
       <div

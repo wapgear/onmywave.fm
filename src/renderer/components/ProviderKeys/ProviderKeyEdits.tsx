@@ -1,9 +1,13 @@
-import { createContext, useContext, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { useIsMutating, useMutation, useQueryClient } from '@tanstack/react-query';
+import { createContext, useContext, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+
 import { unwrap } from '../../api';
 
+
 type Provider = 'openai' | 'elevenlabs' | 'twitter';
+
 const statusKeys = { openai: 'aiStatus', elevenlabs: 'elevenLabsStatus', twitter: 'twitterStatus' } as const;
+
 function useEdit(provider: Provider, sessionId: string | null) {
   const client = useQueryClient();
   const [draft, setDraft] = useState('');
@@ -48,6 +52,7 @@ function useEdit(provider: Provider, sessionId: string | null) {
     },
   });
   const { reset } = save;
+
   useLayoutEffect(() => {
     if (session.current === sessionId) return;
     session.current = sessionId;
@@ -55,6 +60,7 @@ function useEdit(provider: Provider, sessionId: string | null) {
     setDraft('');
     reset();
   }, [sessionId, reset]);
+
   return {
     draft,
     pending,
@@ -72,13 +78,17 @@ function useEdit(provider: Provider, sessionId: string | null) {
     },
   };
 }
+
 const ProviderKeyEdits = createContext<Record<Provider, ReturnType<typeof useEdit>> | null>(null);
+
 export function ProviderKeyEditsProvider({ sessionId, children }: { sessionId: string | null; children: ReactNode }) {
   const openai = useEdit('openai', sessionId);
   const elevenlabs = useEdit('elevenlabs', sessionId);
   const twitter = useEdit('twitter', sessionId);
+
   return <ProviderKeyEdits.Provider value={{ openai, elevenlabs, twitter }}>{children}</ProviderKeyEdits.Provider>;
 }
+
 export function useProviderKeyEdit(provider: Provider) {
   const edits = useContext(ProviderKeyEdits);
   if (!edits) throw new Error('Provider key editing requires its app owner.');

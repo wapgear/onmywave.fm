@@ -1,6 +1,9 @@
 import { useRef, useState } from 'react';
+
 import { unwrap } from '../../api';
+
 import './TwitterSetupHelp.styles.css';
+
 
 const links = {
   console: 'https://developer.x.com/',
@@ -26,6 +29,7 @@ export function TwitterSetupHelp() {
         Could not open this page. Try again.
       </span>
     ) : null;
+
   return (
     <details className="twitter-setup-help">
       <summary>How do I get a Twitter / X token?</summary>

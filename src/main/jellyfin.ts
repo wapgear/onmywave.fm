@@ -1,3 +1,4 @@
+import { editablePlaylistEntryIds, playlistEntryIdentity } from '../shared/playlist-entries';
 import type {
   Album,
   ApiError,
@@ -11,7 +12,7 @@ import type {
   PlaylistEntry,
   Song,
 } from '../shared/types';
-import { editablePlaylistEntryIds, playlistEntryIdentity } from '../shared/playlist-entries';
+
 
 export class ServiceError extends Error {
   constructor(
@@ -21,6 +22,7 @@ export class ServiceError extends Error {
     super(message);
   }
 }
+
 export type Session = {
   serverUrl: string;
   token: string;
@@ -30,7 +32,9 @@ export type Session = {
   selectedLibraryIds: string[];
   sessionOnly: boolean;
 };
+
 type AudioStream = { Type?: string; Index?: number; Codec?: string; BitRate?: number; SampleRate?: number };
+
 type Item = {
   Id: string;
   Name?: string;
@@ -69,7 +73,9 @@ type Item = {
   User?: { Id: string; Name?: string };
   Version?: string;
 };
+
 export const PLAYLIST_CREATION = 'playlist-creation';
+
 type Deps = {
   deviceId: string;
   imageUrl: (id: string, tag?: string) => string;
@@ -83,27 +89,34 @@ type Deps = {
     canStart: () => boolean,
   ) => Promise<void>;
 };
+
 const fields = 'Genres,Tags,MediaSources,MediaStreams,DateCreated,Overview,SortName,ParentId';
+
 const itemIdentity = (id: string) => id.replaceAll('-', '').toLowerCase();
+
 const validId = (value: unknown): string => {
   if (typeof value !== 'string' || !/^(?:[a-f\d]{32}|[a-f\d]{8}(?:-[a-f\d]{4}){3}-[a-f\d]{12})$/i.test(value))
     throw new ServiceError('invalid', 'Invalid library item.');
   return value;
 };
+
 const ids = (values: unknown): string[] => {
   if (!Array.isArray(values) || values.length > 100000) throw new ServiceError('invalid', 'Invalid item selection.');
   return values.map(validId);
 };
+
 const playlistEntryId = (value: unknown): string => {
   if (typeof value !== 'string' || playlistEntryIdentity(value) === null)
     throw new ServiceError('invalid', 'Invalid playlist entry.');
   return value;
 };
+
 const name = (value: unknown): string => {
   if (typeof value !== 'string' || !value.trim() || value.length > 256)
     throw new ServiceError('invalid', 'Enter a name of up to 256 characters.');
   return value.trim();
 };
+
 const serverAddress = (value: string): string => {
   try {
     const url = new URL(value);
@@ -114,6 +127,7 @@ const serverAddress = (value: string): string => {
     throw new ServiceError('invalid', 'Enter an HTTP or HTTPS Jellyfin server address.');
   }
 };
+
 const stringArray = (value: unknown): string[] =>
   Array.isArray(value) ? value.filter((v): v is string => typeof v === 'string') : [];
 

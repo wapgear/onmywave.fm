@@ -1,15 +1,22 @@
-import { djPreviewAudio, bundledVoiceAudio } from './dj-previews';
-import { protocol } from 'electron';
-import { ServiceError } from './jellyfin';
-import { StorageError } from './storage-error';
-import { preparedAudio } from './prepared-news';
 import { randomUUID } from 'node:crypto';
+
+import { protocol } from 'electron';
+
 import type { PlaybackResource } from '../shared/types';
+import { djPreviewAudio, bundledVoiceAudio } from './dj-previews';
+import { ServiceError } from './jellyfin';
+import { preparedAudio } from './prepared-news';
+import { StorageError } from './storage-error';
+
 
 type Session = { id: string; serverUrl: string; userId: string; token: string };
+
 type Resource = { connectionId: string; path: string };
+
 const resources = new Map<string, Resource>();
+
 const activeRequests = new Set<AbortController>();
+
 const itemId = (id: string) => /^[a-zA-Z0-9_-]{1,128}$/.test(id);
 
 export function revokeMedia() {

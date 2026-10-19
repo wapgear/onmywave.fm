@@ -1,11 +1,16 @@
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { defaultRangeExtractor, observeElementOffset, useVirtualizer } from '@tanstack/react-virtual';
-import { TrackTable, type TrackTableProps } from '../../components/TrackTable/TrackTable.component';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+
 import { ErrorNotice } from '../../components/Shared';
+import { TrackTable } from '../../components/TrackTable/TrackTable.component';
 import { useRetryFocus } from '../../useRetryFocus';
+import type { VirtualSongsProps } from './VirtualSongs.types';
+
 import './VirtualSongs.styles.css';
 
+
 const ROW_HEIGHT = 56;
+
 export function VirtualSongs({
   total,
   hasNext,
@@ -14,14 +19,7 @@ export function VirtualSongs({
   loadNext,
   onResultsElement,
   ...table
-}: TrackTableProps & {
-  total: number;
-  hasNext: boolean;
-  fetching: boolean;
-  nextError: unknown;
-  loadNext: () => Promise<{ isError: boolean }>;
-  onResultsElement?: (node: HTMLDivElement | null) => void;
-}) {
+}: VirtualSongsProps) {
   const root = useRef<HTMLDivElement>(null);
   const status = useRef<HTMLSpanElement>(null);
   const retryFocus = useRetryFocus({
@@ -35,9 +33,13 @@ export function VirtualSongs({
   const [recoveryIndex, setRecoveryIndex] = useState<number | null>(null);
   const recoveryToken = useRef(0);
   const focusFrame = useRef(0);
+
   useEffect(() => () => cancelAnimationFrame(focusFrame.current), []);
+
   const focusedIndex = table.rows.findIndex((row) => row.key === focusedKey);
+
   const getScrollElement = useCallback(() => root.current?.closest<HTMLElement>('.main-content') ?? null, []);
+
   // eslint-disable-next-line react-hooks/incompatible-library
   const virtualizer = useVirtualizer({
     count: table.rows.length,
@@ -60,6 +62,7 @@ export function VirtualSongs({
       return [...new Set(indices)].sort((a, b) => a - b);
     },
   });
+
   useLayoutEffect(() => {
     const node = root.current;
     const scroll = getScrollElement();
@@ -76,6 +79,7 @@ export function VirtualSongs({
     measure();
     return () => observer.disconnect();
   }, [getScrollElement]);
+
   const visible = virtualizer.getVirtualItems();
   const lastVisible =
     visible
@@ -85,9 +89,11 @@ export function VirtualSongs({
           row.start <= (virtualizer.scrollOffset ?? 0) + (virtualizer.scrollRect?.height ?? 0),
       )
       .at(-1)?.index ?? -1;
+
   useEffect(() => {
     if (hasNext && !fetching && !nextError && lastVisible >= table.rows.length - 12) void loadNext();
   }, [hasNext, fetching, nextError, lastVisible, table.rows.length, loadNext]);
+
   function focusRow(index: number) {
     cancelAnimationFrame(focusFrame.current);
     const key = table.rows[index]?.key;
@@ -143,6 +149,7 @@ export function VirtualSongs({
       },
     );
   }
+
   return (
     <div
       ref={(node) => {

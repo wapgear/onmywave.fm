@@ -1,7 +1,9 @@
-import { useRef } from 'react';
 import { ListMusic, X } from 'lucide-react';
+import { useRef } from 'react';
+
 import { usePlayer } from '../../player';
 import { Artwork, TrackDuration } from '../Shared';
+
 
 export function Queue() {
   const player = usePlayer();
@@ -24,11 +26,13 @@ export function Queue() {
   }
   function rows(items: typeof player.queue) {
     const occurrences = new Map<string, number>();
+
     return (
       <ol className="queue-list">
         {items.map((item) => {
           const occurrence = occurrences.get(item.key) ?? 0;
           occurrences.set(item.key, occurrence + 1);
+
           return (
             <li key={`${item.key}:${occurrence}`}>
               <button
@@ -58,6 +62,7 @@ export function Queue() {
       </ol>
     );
   }
+
   return (
     <div ref={root} className="queue-content">
       {!player.queue.length ? (

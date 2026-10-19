@@ -8,6 +8,7 @@ const voices = {
   eric: { id: 'cjVigY5qzO86Huf0OWal', name: 'Eric' },
   daniel: { id: 'onwK4e9ZLuTAKqWW03F9', name: 'Daniel' },
 };
+
 export const djPresets = [
   {
     id: 'enthusiastic',

@@ -1,8 +1,11 @@
-import type { LocalState, PreparedNewsTake } from './types';
 import { djPreparationKey } from './dj-avatar';
+import type { LocalState, PreparedNewsTake } from './types';
+
 
 const stable = (value: unknown) => JSON.stringify(value);
+
 const trackingParams = /^(utm_.+|fbclid|gclid|mc_cid|mc_eid|igshid)$/i;
+
 export function canonicalArticleUrl(value: string): string | null {
   try {
     const url = new URL(value);
@@ -22,6 +25,7 @@ export function canonicalArticleUrl(value: string): string | null {
     return null;
   }
 }
+
 const sourceIdentity = (sources: LocalState['sources']) =>
   sources
     .map((source) => ({ id: source.id, url: source.url }))

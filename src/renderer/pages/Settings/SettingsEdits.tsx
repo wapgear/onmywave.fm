@@ -1,12 +1,15 @@
-import { createContext, useContext, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import type { DJPlaybackSettings, LocalStateSnapshot, NewsTransitionSettings } from '../../../shared/types';
+import { createContext, useContext, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
+
 import { isNewsTransitionSettings } from '../../../shared/news-transitions';
+import type { DJPlaybackSettings, LocalStateSnapshot, NewsTransitionSettings } from '../../../shared/types';
 import { unwrap } from '../../api';
 import { confirmLocalState } from '../../local-state-cache';
 import { useNewsRecovery } from '../../NewsRecovery';
 
+
 type PlaybackPreferences = Pick<DJPlaybackSettings, 'everySongs' | 'keepOnSeek' | 'voiceVolume'>;
+
 function useEdit<T>(write: (value: T) => Promise<LocalStateSnapshot>) {
   const client = useQueryClient();
   const [draft, setDraft] = useState<T | null>(null);
@@ -38,12 +41,15 @@ function useEdit<T>(write: (value: T) => Promise<LocalStateSnapshot>) {
     },
   };
 }
+
 function useSettingsEdits() {
   const recovery = useNewsRecovery();
   const currentRecovery = useRef(recovery.status.phase);
+
   useLayoutEffect(() => {
     currentRecovery.current = recovery.status.phase;
   }, [recovery.status.phase]);
+
   const playback = useEdit<PlaybackPreferences>(async (value) => {
     if (currentRecovery.current !== 'ready')
       throw new Error('News data is unavailable. Recover it before changing DJ playback.');
@@ -58,11 +64,15 @@ function useSettingsEdits() {
   });
   return { playback, transitions };
 }
+
 const SettingsEdits = createContext<ReturnType<typeof useSettingsEdits> | null>(null);
+
 export function SettingsEditsProvider({ children }: { children: ReactNode }) {
   const edits = useSettingsEdits();
+
   return <SettingsEdits.Provider value={edits}>{children}</SettingsEdits.Provider>;
 }
+
 export function useGeneralSettingsEdits() {
   const edits = useContext(SettingsEdits);
   if (!edits) throw new Error('General settings require their app owner.');

@@ -5,7 +5,9 @@ export type DJPlaybackSettings = {
   keepOnSeek: boolean;
   voiceVolume: number;
 };
+
 export type DJPlaybackSettingsPatch = Partial<DJPlaybackSettings>;
+
 export const defaultDJPlaybackSettings = (): DJPlaybackSettings => ({
   enabled: false,
   roomId: null,
@@ -13,6 +15,7 @@ export const defaultDJPlaybackSettings = (): DJPlaybackSettings => ({
   keepOnSeek: true,
   voiceVolume: 0.7,
 });
+
 export function isDJPlaybackSettings(value: unknown): value is DJPlaybackSettings {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
   const settings = value as DJPlaybackSettings;
@@ -31,6 +34,7 @@ export function isDJPlaybackSettings(value: unknown): value is DJPlaybackSetting
         settings.voiceVolume <= 1))
   );
 }
+
 export function isDJPlaybackSettingsPatch(value: unknown): value is DJPlaybackSettingsPatch {
   if (
     !value ||
@@ -53,6 +57,7 @@ export function isDJPlaybackSettingsPatch(value: unknown): value is DJPlaybackSe
   if (keys.some((key) => patch[key as string] === undefined)) return false;
   return isDJPlaybackSettings({ ...defaultDJPlaybackSettings(), ...patch });
 }
+
 export function normalizeDJPlaybackSettings(value: unknown): DJPlaybackSettings {
   return isDJPlaybackSettings(value)
     ? {

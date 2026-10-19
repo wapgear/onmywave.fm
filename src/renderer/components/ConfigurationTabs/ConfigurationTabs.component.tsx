@@ -1,14 +1,14 @@
 import './ConfigurationTabs.styles.css';
+import type { ConfigurationTabsProps } from './ConfigurationTabs.types';
 
-type Props = {
-  id: string;
-  label?: string;
-  tabs: { id: string; label: string }[];
-  value: string;
-  onChange: (value: string) => void;
-};
 
-export function ConfigurationTabs({ id, label = 'Configuration sections', tabs, value, onChange }: Props) {
+export function ConfigurationTabs({
+  id,
+  label = 'Configuration sections',
+  tabs,
+  value,
+  onChange,
+}: ConfigurationTabsProps) {
   return (
     <div className="configuration-tabs" role="tablist" aria-label={label}>
       {tabs.map((tab, index) => (

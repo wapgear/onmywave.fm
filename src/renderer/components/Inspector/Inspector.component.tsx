@@ -1,17 +1,22 @@
-import { useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { useRetryFocus } from '../../useRetryFocus';
-import { unwrap } from '../../api';
+import { useRef } from 'react';
+
 import type { Song } from '../../../shared/types';
+import { unwrap } from '../../api';
+import { useRetryFocus } from '../../useRetryFocus';
 import { Artwork, duration, ErrorNotice } from '../Shared';
+
+
 const positive = (value: number | undefined): value is number =>
   typeof value === 'number' && Number.isFinite(value) && value > 0;
+
 function fileSize(bytes: number | undefined) {
   if (!positive(bytes)) return 'Unavailable';
   const units = ['B', 'kB', 'MB', 'GB', 'TB'];
   const index = Math.min(units.length - 1, Math.floor(Math.log(bytes) / Math.log(1000)));
   return `${(bytes / 1000 ** index).toLocaleString(undefined, { maximumFractionDigits: index ? 1 : 0 })} ${units[index]}`;
 }
+
 export function Inspector({ song: selected }: { song: Song }) {
   const heading = useRef<HTMLHeadingElement>(null);
   const detail = useQuery({
@@ -25,6 +30,7 @@ export function Inspector({ song: selected }: { song: Song }) {
   });
   const song = detail.data ?? selected;
   const unavailable = detail.isPending ? 'Loading…' : 'Unavailable';
+
   return (
     <section className="song-inspector">
       <Artwork url={song.imageUrl} name={song.name} className="inspector-art" />

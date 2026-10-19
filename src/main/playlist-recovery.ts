@@ -1,22 +1,32 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+
 import { app } from 'electron';
-import { atomicWrite } from './storage';
-import { ServiceError } from './jellyfin';
+
 import type { Playlist, PlaylistEditRecovery } from '../shared/types';
+import { ServiceError } from './jellyfin';
+import { atomicWrite } from './storage';
+
 
 type Marker = { key: string; markerId: string };
+
 let markers: Marker[] | undefined;
+
 let updates = Promise.resolve();
+
 let epoch = 0;
+
 const active = new Set<string>();
+
 const receipts = new Map<string, { markerId: string; receipt: string }>();
+
 const unavailable = () =>
   new ServiceError(
     'server',
     'Playlist editing recovery could not be saved or read. Your music remains available. Refresh the playlist before editing again.',
   );
+
 export const playlistRecoveryKey = (serverUrl: string, userId: string, playlistId: string) =>
   createHash('sha256')
     .update(
@@ -28,14 +38,17 @@ export const playlistRecoveryKey = (serverUrl: string, userId: string, playlistI
       ]),
     )
     .digest('hex');
+
 export const playlistCreationRecoveryKey = (serverUrl: string, userId: string) =>
   createHash('sha256')
     .update(JSON.stringify(['playlist-create-recovery-v1', serverUrl, userId.toLowerCase().replaceAll('-', '')]))
     .digest('hex');
+
 export function invalidatePlaylistReceipts() {
   ++epoch;
   receipts.clear();
 }
+
 function serialized<T>(work: () => Promise<T>): Promise<T> {
   const result = updates.then(work);
   updates = result.then(
@@ -44,6 +57,7 @@ function serialized<T>(work: () => Promise<T>): Promise<T> {
   );
   return result;
 }
+
 async function readMarkers() {
   if (markers) return markers;
   try {
@@ -73,6 +87,7 @@ async function readMarkers() {
     throw unavailable();
   }
 }
+
 async function saveMarkers(value: Marker[]) {
   try {
     await atomicWrite('playlist-recovery.json', JSON.stringify(value));
@@ -81,6 +96,7 @@ async function saveMarkers(value: Marker[]) {
     throw unavailable();
   }
 }
+
 export async function withPlaylistRecovery(
   key: string,
   reserve: boolean,
@@ -141,6 +157,7 @@ export async function withPlaylistRecovery(
     if (markerId) active.delete(key);
   }
 }
+
 function clearMarker(key: string, markerId: string) {
   return serialized(async () => {
     const current = await readMarkers();
@@ -150,6 +167,7 @@ function clearMarker(key: string, markerId: string) {
     receipts.delete(key);
   });
 }
+
 export function beginPlaylistRead(key: string) {
   return serialized(async () => {
     receipts.delete(key);
@@ -160,6 +178,7 @@ export function beginPlaylistRead(key: string) {
     };
   });
 }
+
 export function finishPlaylistRead(
   key: string,
   before: { markerId?: string; epoch: number; pending: boolean },
@@ -175,6 +194,7 @@ export function finishPlaylistRead(
     return { status: 'review', markerId: marker.markerId, receipt };
   });
 }
+
 export function acknowledgePlaylistRecovery(key: string, markerId: string, receipt: string, isCurrent: () => boolean) {
   return serialized(async () => {
     const current = await readMarkers(),
