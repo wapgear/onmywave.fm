@@ -1,4 +1,5 @@
 import type { LocalState, PreparedNewsTake } from './types';
+import { djPreparationKey } from './dj-avatar';
 
 const stable = (value: unknown) => JSON.stringify(value);
 const trackingParams = /^(utm_.+|fbclid|gclid|mc_cid|mc_eid|igshid)$/i;
@@ -24,7 +25,7 @@ export function matchesNewsRoom(take: PreparedNewsTake, state: LocalState, roomI
   const profile = state.roomProfiles.find(value => value.id === roomId);
   if (!profile) return false;
   const dj = state.djs.find(value => value.id === profile.room.djId);
-  if (!dj?.news || take.provenance.dj.id !== dj.id || stable(take.provenance.dj) !== stable(dj)) return false;
+  if (!dj?.news || take.provenance.dj.id !== dj.id || djPreparationKey(take.provenance.dj) !== djPreparationKey(dj)) return false;
   if (take.provenance.mood !== profile.mood) return false;
   const interests = profile.workflowDraft.newsInterests ?? dj.news.interests;
   if ((take.provenance.newsInterests ?? take.provenance.dj.news?.interests ?? '') !== interests) return false;

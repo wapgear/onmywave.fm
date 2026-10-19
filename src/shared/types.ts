@@ -50,6 +50,7 @@ export type PlaylistEditRecovery = { status: 'pending' | 'review'; markerId: str
 export type PlaylistLibrary = { items: Playlist[]; creationRecovery?: PlaylistEditRecovery };
 export type PlaylistDetail = Playlist & { canEdit: boolean | null; restriction?: string; entries: PlaylistEntry[]; editRecovery?: PlaylistEditRecovery };
 export type DJ = {
+  avatar?: import('./dj-avatar').DJAvatarChoice;
   id: string;
   name: string;
   description: string;

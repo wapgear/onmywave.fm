@@ -1,0 +1,85 @@
+{
+  "date": "2026-10-19",
+  "issue": 62,
+  "scope": "Saved local DJ appearance, editor draft lifecycle and cosmetic/preparation identity boundaries.",
+  "decision": {
+    "Steve": "Supports independent appearance/background catalogs, native radios, legacy generic fallback. Implemented frontend.",
+    "Elena": "Independent proposal and challenge supports design. Actual diff source review found no new actionable defect; native checks run by root.",
+    "Morgan": "Optional allowlisted choice, no network/upload/generation flow. Root owns persistence, validation, preparation comparisons and integration."
+  },
+  "checks": {
+    "build": "npm run build passed, includes TypeScript and bundled voice checks.",
+    "lint": "Full npm run lint passed; final type-only import/cast edit checked with focused ESLint.",
+    "native": [
+      {
+        "name": "legacy missing and invalid disk avatars render safe host icon"
+      },
+      {
+        "name": "cancel discards avatar and color"
+      },
+      {
+        "name": "native arrow selection and selected swatch state; Unicode initials update live"
+      },
+      {
+        "name": "avatar save persists, run metadata and DJ settings unchanged"
+      },
+      {
+        "name": "duplicate inherits appearance and edits independently"
+      },
+      {
+        "name": "pending locks picker; failed save retains draft for explicit retry"
+      },
+      {
+        "name": "IPC rejects arbitrary asset paths, unknown IDs, CSS colors, extra keys and null without saving"
+      },
+      {
+        "name": "selected host avatar shared in room setup; ready recording remains eligible after cosmetic edits"
+      },
+      {
+        "name": "fresh Electron process restores choice and color"
+      },
+      {
+        "name": "new DJ uses initials and picker remains available in every creation mode"
+      },
+      {
+        "name": "main-process saved-news claim survives cosmetic edits; editorial edits still invalidate and mark changed"
+      },
+      {
+        "name": "actual missing portrait falls back; switching to available portrait retries image"
+      }
+    ],
+    "rendererErrors": [],
+    "externalAttempts": []
+  },
+  "method": {
+    "runtime": "Actual Electron main, preload and built renderer at 1280x720 and 100% zoom. Disposable appData and synthetic localhost Jellyfin; no user account/data mutation.",
+    "adapters": "Shared key reader returns null; fixture seed creates local DJs, profiles and one bundled MP3 take; save hold/failure injected immediately before actual IPC operation. Missing-portrait case returns 404 from actual wave-app handler. External fetches blocked and counted.",
+    "storage": "Actual encrypted connection and filesystem local-state/prepared-news paths, reopened in fresh Electron processes.",
+    "intermediate": "Earlier run used a renderer built before the swatch fix; another fixture wait inspected input.disabled instead of inherited :disabled. Final 12-case run uses corrected renderer and selector."
+  },
+  "limits": [
+    "No new unit tests or framework. No live provider calls, audible quality, VoiceOver or deferred smaller-window/zoom acceptance claimed.",
+    "Actual pending automatic provider run and in-flight room-save race were source-reviewed, not reproduced in this fixture.",
+    "Generated portraits are bundled PNGs; no user uploads or live avatar generation."
+  ],
+  "sourceSha256": {
+    "src/shared/dj-avatar.ts": "62285082741fa51232e1256b80fe8ebd562297d44c74574d6cea64d551e9219e",
+    "src/shared/types.ts": "154368c3fe911119bb9360942cc83eb10e7f93c73001995f6574f0c455805eb8",
+    "src/shared/news-pool.ts": "8775b5ace60eeaa56ba8cf8fbdc4f2e3bd9a9ead31d8f6c6ef6a6a9ea0c909d8",
+    "src/main/index.ts": "9902ce136475e0343e6f4414e8218aca956636020a1b14ff6a9f0eb3a7164f76",
+    "src/main/storage.ts": "ef174f6bf603b32ec1b47dc4c0a8bd1588e8de327c0a64e75acc4011c51bddad",
+    "src/renderer/dj-playback.tsx": "9c3437b7c2578e3f06608ef060ef3614bd5dc3443c17447542dab35bfe7eef7b",
+    "src/renderer/pages/Stations/Stations.page.tsx": "57b7e4f6004c06b73cfa746c14046ca310ea15cce2062692b204d6da72bdedc7",
+    "src/renderer/pages/Stations/components/NewsBucket.component.tsx": "8f847e3200d14d143d46e343ae96217941fcb7d66a82bc4bb031ab141732ccbd",
+    "src/renderer/components/DJAvatar/DJAvatar.component.tsx": "2f79488b1716c07f3c19f62cd4e318617f67265042087753e904bf868cd70e03",
+    "src/renderer/pages/DJs/components/DJAvatarPicker.component.tsx": "b5ee7031e3680f6003f6eb8f96cabaf798c0547ab100d457df6355e41cf030ac",
+    "src/renderer/public/dj-avatars/fox.png": "3bfd82c30fd8c1b19ac5291e621dbb22d6f10497c93333e124e756118121a668",
+    "src/renderer/public/dj-avatars/owl.png": "653dd6676e180d7b83f4de9dc32ed87542782f80d4ddd8b5b7dcce6aa4b11928"
+  },
+  "fixtureSha256": {
+    "build.mjs": "3d8f256255f632b1dd1068f894db5d182c0d94d6230b7ef7ce486ce9b8fe1f34",
+    "bootstrap.mjs": "6e76c14525a42602b2049864d9b925c0a312636e1295a4e90eba8744f94e0792",
+    "native.cjs": "2fc10263d0bdb64baed50b34fef7fa77ce07bc727e1f98fe9f05fa90a41b9d28",
+    "report.json": "6ee8b8607ff156ec4071aaee4c288e88546c2f57f8382015d69b16c1bbc11f36"
+  }
+}

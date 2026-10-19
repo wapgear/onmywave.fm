@@ -8,6 +8,8 @@ import { Dialog, ErrorNotice } from '../../../components/Shared';
 import { ConfigurationTabs } from '../../../components/ConfigurationTabs/ConfigurationTabs.component';
 import { djPresets } from './DJEditor.presets';
 import { VoicePreview } from './VoicePreview.component';
+import { DJAvatarPicker } from './DJAvatarPicker.component';
+import { resolveDJAvatar } from '../../../../shared/dj-avatar';
 import './DJEditor.styles.css';
 
 export const defaultNews: NewsSettings = {
@@ -21,7 +23,7 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
   const form = useRef<HTMLFormElement>(null);
   const saveButton = useRef<HTMLButtonElement>(null);
   const inFlight = useRef(false);
-  const [draft, setDraft] = useState<DJ>({ ...value, news: { ...defaultNews, ...value.news, elevenVoiceId: value.name ? value.news?.elevenVoiceId ?? defaultNews.elevenVoiceId : '', speechEngine: 'elevenlabs-v4', textModel: NEWS_TEXT_MODEL } });
+  const [draft, setDraft] = useState<DJ>({ ...value, avatar: resolveDJAvatar(value.avatar), news: { ...defaultNews, ...value.news, elevenVoiceId: value.name ? value.news?.elevenVoiceId ?? defaultNews.elevenVoiceId : '', speechEngine: 'elevenlabs-v4', textModel: NEWS_TEXT_MODEL } });
   const [mode, setMode] = useState(value.name ? 'advanced' : 'predefined');
   const modeId = useId();
   const [presetId, setPresetId] = useState('warm');
@@ -73,6 +75,7 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
   }, [save.error]);
   function closeEditor() { if (!inFlight.current && !save.isPending) close(); }
   function updateNews(patch: Partial<NewsSettings>) { save.reset(); setDraft(old => ({ ...old, news: { ...old.news!, ...patch } })); }
+  function updateAvatar(avatar: DJ['avatar']) { save.reset(); setDraft(old => ({ ...old, avatar })); }
   const field = (key: TextField, label: string, placeholder = '', multiline = false) => <label>{label}{multiline
     ? <textarea value={draft[key]} maxLength={20_000} placeholder={placeholder} rows={3} onChange={event => { save.reset(); setDraft(old => ({ ...old, [key]: event.target.value })); }} />
     : <input value={draft[key]} placeholder={placeholder} required={key === 'name'} maxLength={key === 'name' ? 160 : 20_000} onChange={event => { save.reset(); setDraft(old => ({ ...old, [key]: event.target.value })); }} />}</label>;
@@ -96,6 +99,7 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
       {news.elevenVoiceId && mode !== 'advanced' && <p className="dj-selected-voice" role="status">{selectedVoice?.id === news.elevenVoiceId ? `Selected voice: ${selectedVoice.name}` : 'Your current voice is kept.'} You can tweak this DJ in Advanced.</p>}
 
       {field('name', 'Name', 'Evening companion')}
+      <DJAvatarPicker dj={draft} onChange={updateAvatar} />
       <div role="tabpanel" id={`${modeId}-panel-advanced`} aria-labelledby={`${modeId}-tab-advanced`} hidden={mode !== 'advanced'}>
       {field('personality', 'Personality', 'Warm, curious, concise. Let the music breathe.', true)}
       {field('language', 'Language', 'English')}
