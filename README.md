@@ -2,7 +2,7 @@
 
 A macOS music player for your Jellyfin library, with optional spoken news between songs. Built with Electron, React, and TypeScript.
 
-![The song library in onmywave.fm](docs/screenshots/library.png)
+![The song library and DJ breaks panel in onmywave.fm](docs/screenshots/library.png)
 
 Browse songs and albums, build playlists, and keep a listening queue that returns when you reopen the app. Add a DJ when you want news from your chosen sources mixed into your listening session.
 
@@ -23,9 +23,9 @@ You need your own Jellyfin server, an account with access to at least one music 
 
 AI playlist generation, weather, calendar, and reminder workflows are planned. See the [app guide](docs/APP_GUIDE.md) for detailed behavior and the [acceptance checklist](docs/ACCEPTANCE_CHECKLIST.md) for verification limits.
 
-![The album browser with sample metadata](docs/screenshots/albums.png)
+![The album library with release cover artwork](docs/screenshots/albums.png)
 
-Screenshots show the actual renderer with a fictional local catalog, placeholder artwork, and no provider calls. See [capture details](docs/screenshots/README.md).
+Screenshots come from the [website demo](https://onmywave.izmailov.dev/) and show the actual renderer with real song titles and matching release covers in an example catalog. See [capture details](docs/screenshots/README.md).
 
 ## Run from source
 

@@ -1,12 +1,10 @@
 # README screenshots
 
-Captured on 19 October 2026 using the production renderer in Electron 43.7.0 on macOS, with a 1280 × 788 content viewport at 2× resolution.
+Copied without edits from [onmywave.izmailov.dev](https://onmywave.izmailov.dev/) on 19 October 2026. Both images are 1440 × 900 screenshots of the actual app renderer with a disposable example catalog.
 
-- `library.png` shows All songs.
-- `albums.png` shows Albums.
+- `albums.png`: the album library with matching release covers, from [artwork-albums.png](https://izmailov.dev/assets/onmywave/artwork-albums.png).
+- `library.png`: the song library and DJ breaks panel, from [artwork-dj-breaks.png](https://izmailov.dev/assets/onmywave/artwork-dj-breaks.png).
 
-A temporary Electron capture harness loaded the built renderer and existing preload, returned a fictional catalog through IPC, blocked external HTTP(S) requests, and used disposable local storage. The captures include the app's own placeholder icons. No album art, real account data, music files, or live provider calls were used. Existing TrackTable edits in the working tree were included. [Capture metadata](capture.json) records input and image hashes.
+The titles and artists are real catalog metadata. The example does not include the songs' recordings or a private music library. It does not establish live-server or playback behavior.
 
-These are screenshots of the rendered app, not generated concept art. They document browsing appearance and do not establish live server or playback behavior.
-
-To replace them, build the current app, open the same views with a disposable catalog, and capture the content area. Keep the viewport consistent, use content with known redistribution rights, hide private information, visually inspect both captures, and update the metadata and README captions together.
+Album titles, artist names, lengths, and covers were matched against Apple's iTunes catalog for the website demo. [Artwork sources](artwork-sources.json) records the release pages and original image URLs. Artwork rights remain with the respective rights holders; the application license does not relicense the covers.
