@@ -430,7 +430,6 @@ export function Player({ queueOpen, lyricsOpen, toggleQueue, toggleLyrics, openR
             disabled={!player.current}
           >
             <MicVocal size={18} aria-hidden="true" />
-            <span>Lyrics</span>
           </button>
           <button
             className={`player-icon ${queueOpen ? 'is-active' : ''}`}
