@@ -27,6 +27,7 @@ const api: WaveApi = {
   album: (id) => ipcRenderer.invoke('wave:album', id),
   albumTracks: (id) => ipcRenderer.invoke('wave:albumTracks', id),
   song: (id) => ipcRenderer.invoke('wave:song', id),
+  lyrics: (id) => ipcRenderer.invoke('wave:lyrics', id),
   playlists: () => ipcRenderer.invoke('wave:playlists'),
   playlistPermission: (id) => ipcRenderer.invoke('wave:playlistPermission', id),
   playlist: (id) => ipcRenderer.invoke('wave:playlist', id),

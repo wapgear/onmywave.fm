@@ -6,6 +6,18 @@ Development notes and detailed behavior for onmywave.fm. Start with the [README]
 
 Reopening automatically restores the previous queue, song, playback position, volume, shuffle, and repeat. The player is paused and ready to play, with no resume confirmation. Removed songs are skipped during restoration; temporary connection failures preserve the saved session and offer Retry.
 
+## Song lyrics
+
+Select a song, then use the Lyrics button beside Queue in the player. Lyrics and Queue share the same drawer. Closing Lyrics returns focus to its player button. The panel follows song changes and closes when there is no selected song or the account changes.
+
+Timed lyrics highlight against the music position, including while seeking or repeating a song. Lines with the same timestamp highlight together. Scrolling manually pauses automatic following; **Follow current line** resumes it. Plain lyrics retain their line breaks and do not scroll automatically. Lyrics never start, pause, or seek playback and do not follow DJ speech.
+
+Lyrics come from the connected Jellyfin server, version 10.9 or later. To fill missing lyrics, install a compatible [Jellyfin LRCLIB plugin](https://github.com/jellyfin/jellyfin-plugin-lrclib) and download lyrics on the server. Jellyfin also supports [matching local lyric files](https://jellyfin.org/docs/general/server/media/music/#lyrics). The app reads the server's saved lyrics by song ID; it does not search external providers or download lyric files itself.
+
+Missing lyrics, unsupported servers, access restrictions, and loading failures have separate states. Recoverable failures offer **Try again**. Closing the drawer discards its inactive lyric query. Lyrics are not saved to disk or included in the listening queue. Invalid or unordered timing falls back to plain text. The first release uses the server's line start times and has no manual timing adjustment or word-level highlighting.
+
+See the [lyrics verification record](verification/lyrics/README.md) for native fixture checks and live-server verification limits.
+
 ## Scope
 
 See [the radio experience and STAR scenarios](RADIO_EXPERIENCE.md), [the requirements](../REQUIREMENTS.md) and [current implemented desktop capture](verification/2026-10-17-implemented-desktop.jpg). The [approved generated visual target](design/macos-production-concept-v4.png) remains a design reference. The implemented capture uses a disposable local catalog; its [verification record](verification/2026-10-17-implemented-desktop.json) identifies the actual desktop framing and remaining Dock/chrome limits. Browse your Jellyfin library, manage playlists, and configure prepared news in News bucket. Uncertain playlist creations, additions, reorders and removals retain recovery across navigation, same-account sign-in and app restarts. Review needed marks affected playlists; open one, refresh and check its contents before acknowledging. An uncertain creation asks you to refresh and check the playlist list before creating another; other playlists remain usable. Startup never repeats these writes. Refresh library updates songs and filter choices, and refreshes cached album, song-detail and playlist data when used. It keeps the current listening queue, search and selection. AI playlist generation remains future work. The player DJ plays saved news on a song interval; a separate workflow prepares it.

@@ -414,6 +414,7 @@ function registerIpc() {
     album: (input) => service.album(input),
     albumTracks: (input) => service.albumTracks(input),
     song: (input) => service.song(input),
+    lyrics: (input) => service.lyrics(input),
     playlists: async () => {
       const current = service.exportSession(),
         epoch = playlistSessionEpoch;

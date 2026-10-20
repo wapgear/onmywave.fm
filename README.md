@@ -17,6 +17,7 @@ You need your own Jellyfin server, an account with access to at least one music 
 - Browse and search songs and albums, with genre/tag filters and sorting for songs.
 - Create and edit Jellyfin playlists when your account has permission.
 - Manage the queue, shuffle, repeat, volume, and playback position. Relaunch restores the session paused.
+- Read Jellyfin lyrics in the player, with timed line highlighting when available and plain-text fallback.
 - Configure named news rooms with RSS/Atom, Hacker News, or X sources and a saved DJ.
 - Prepare spoken news separately from music playback, then play saved recordings at a chosen song interval.
 - Audition bundled voices and try DJ transition timings without API keys.
