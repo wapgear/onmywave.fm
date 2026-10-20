@@ -8,7 +8,7 @@ Reopening automatically restores the previous queue, song, playback position, vo
 
 ## Song lyrics
 
-Select a song, then use the Lyrics button beside Queue in the player. Lyrics and Queue share the same drawer. Closing Lyrics returns focus to its player button. The panel follows song changes and closes when there is no selected song or the account changes.
+Select a song, then use the microphone icon labeled Lyrics beside Queue in the player. Lyrics opens an overlay across the full song-list area with larger text. Navigation and playback controls stay available. Close or Escape restores the same list position and returns focus to the Lyrics button. Opening Queue closes Lyrics, and opening Lyrics closes Queue. The overlay follows song changes and closes when there is no selected song or the account changes.
 
 Timed lyrics highlight against the music position, including while seeking or repeating a song. Lines with the same timestamp highlight together. Scrolling manually pauses automatic following; **Follow current line** resumes it. Plain lyrics retain their line breaks and do not scroll automatically. Lyrics never start, pause, or seek playback and do not follow DJ speech.
 

@@ -457,7 +457,7 @@ function ReadyApp({
   }, [page]);
 
   return (
-    <div className={`app-shell ${visibleDrawer ? 'has-drawer' : ''}`}>
+    <div className={`app-shell ${visibleDrawer && visibleDrawer !== 'lyrics' ? 'has-drawer' : ''}`}>
       <aside className="sidebar">
         <div className="traffic-light-space" />
         <div className="wordmark">onmywave.fm</div>
@@ -489,7 +489,13 @@ function ReadyApp({
           </p>
         </div>
       </aside>
-      <main ref={main} className="main-content" id="main-content">
+      <main
+        ref={main}
+        className="main-content"
+        id="main-content"
+        inert={visibleDrawer === 'lyrics'}
+        aria-hidden={visibleDrawer === 'lyrics' || undefined}
+      >
         <div ref={content} className="page-content">
           <NewsRecoveryNotice
             onOpenSettings={openNewsSettings}
@@ -555,6 +561,7 @@ function ReadyApp({
         <aside
           id="listening-drawer"
           className={`side-drawer ${visibleDrawer === 'lyrics' ? 'lyrics-drawer' : ''}`}
+          role={visibleDrawer === 'lyrics' ? 'dialog' : undefined}
           aria-labelledby="drawer-title"
         >
           <header className="drawer-heading">

@@ -1,5 +1,23 @@
+.side-drawer.lyrics-drawer {
+  position: absolute;
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  inset: 0 0 0 var(--sidebar);
+  z-index: 30;
+  width: auto;
+  border-left: 0;
+}
+.lyrics-drawer .drawer-heading {
+  padding-inline: 30px;
+}
+.lyrics-drawer .drawer-body {
+  padding-inline: clamp(24px, 5vw, 80px);
+  padding-bottom: 24px;
+  margin-bottom: var(--player-clearance);
+  scroll-padding-bottom: 24px;
+}
 .lyrics-content {
-  max-width: 560px;
+  max-width: 760px;
   margin: 0 auto;
 }
 .lyrics-heading {
@@ -25,14 +43,14 @@
 }
 .lyrics-heading h3 {
   margin-top: 7px;
-  font-size: 19px;
+  font-size: 26px;
   line-height: 1.35;
   overflow-wrap: anywhere;
 }
 .lyrics-heading p {
   margin-top: 4px;
   color: var(--muted);
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.5;
   overflow-wrap: anywhere;
 }
@@ -64,7 +82,7 @@
 .lyrics-lines p {
   margin: 0;
   color: var(--muted);
-  font-size: 15px;
+  font-size: clamp(22px, 2.3vw, 32px);
   line-height: 1.8;
   overflow-wrap: anywhere;
   white-space: pre-wrap;

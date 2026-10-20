@@ -1,6 +1,6 @@
 # Song lyrics verification
 
-Checked on 21 October 2026 for [issue 168](https://github.com/wapgear/onmywave.fm/issues/168). The feature reads saved Jellyfin lyrics and displays them in the player drawer. Live library coverage remains unverified.
+Checked on 21 October 2026 for [issue 168](https://github.com/wapgear/onmywave.fm/issues/168). The feature reads saved Jellyfin lyrics and displays them in the player drawer. Live library coverage remains unverified. The initial drawer layout recorded here is superseded by the [full-width overlay update](../lyrics-overlay/README.md); the service checks still apply.
 
 ## Implementation and review
 

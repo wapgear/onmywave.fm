@@ -1,7 +1,7 @@
 import {
-  Captions,
   ListMusic,
   LoaderCircle,
+  MicVocal,
   Pause,
   Play,
   Repeat,
@@ -421,7 +421,7 @@ export function Player({ queueOpen, lyricsOpen, toggleQueue, toggleLyrics, openR
             aria-valuetext={`${Math.round(player.volume * 100)} percent`}
           />
           <button
-            className={`player-icon ${lyricsOpen ? 'is-active' : ''}`}
+            className={`player-icon player-lyrics ${lyricsOpen ? 'is-active' : ''}`}
             onClick={(event) => toggleLyrics(event.currentTarget)}
             title="Lyrics"
             aria-label={lyricsOpen ? 'Hide lyrics' : 'Show lyrics'}
@@ -429,7 +429,8 @@ export function Player({ queueOpen, lyricsOpen, toggleQueue, toggleLyrics, openR
             aria-expanded={lyricsOpen}
             disabled={!player.current}
           >
-            <Captions size={20} />
+            <MicVocal size={18} aria-hidden="true" />
+            <span>Lyrics</span>
           </button>
           <button
             className={`player-icon ${queueOpen ? 'is-active' : ''}`}
