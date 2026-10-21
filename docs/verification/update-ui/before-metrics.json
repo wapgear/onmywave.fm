@@ -1,0 +1,512 @@
+[
+  {
+    "width": 1280,
+    "height": 800,
+    "phase": "available",
+    "rect": {
+      "x": 896,
+      "y": 457.5,
+      "width": 360,
+      "height": 210.5,
+      "top": 457.5,
+      "right": 1256,
+      "bottom": 668,
+      "left": 896
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Update now",
+        "disabled": false,
+        "rect": {
+          "x": 914,
+          "y": 532,
+          "width": 107.84375,
+          "height": 34,
+          "top": 532,
+          "right": 1021.84375,
+          "bottom": 566,
+          "left": 914
+        }
+      },
+      {
+        "text": "Later",
+        "disabled": false,
+        "rect": {
+          "x": 914,
+          "y": 616,
+          "width": 61.65625,
+          "height": 34,
+          "top": 616,
+          "right": 975.65625,
+          "bottom": 650,
+          "left": 914
+        }
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "height": 800,
+    "phase": "downloading",
+    "rect": {
+      "x": 896,
+      "y": 509.5,
+      "width": 360,
+      "height": 158.5,
+      "top": 509.5,
+      "right": 1256,
+      "bottom": 668,
+      "left": 896
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Please wait…",
+        "disabled": true,
+        "rect": {
+          "x": 914,
+          "y": 616,
+          "width": 115.375,
+          "height": 34,
+          "top": 616,
+          "right": 1029.375,
+          "bottom": 650,
+          "left": 914
+        }
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "height": 800,
+    "phase": "downloaded",
+    "rect": {
+      "x": 896,
+      "y": 499.5,
+      "width": 360,
+      "height": 168.5,
+      "top": 499.5,
+      "right": 1256,
+      "bottom": 668,
+      "left": 896
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Restart now",
+        "disabled": false,
+        "rect": {
+          "x": 914,
+          "y": 616,
+          "width": 106.75,
+          "height": 34,
+          "top": 616,
+          "right": 1020.75,
+          "bottom": 650,
+          "left": 914
+        }
+      },
+      {
+        "text": "Restart later",
+        "disabled": false,
+        "rect": {
+          "x": 1020.75,
+          "y": 616,
+          "width": 108.0078125,
+          "height": 34,
+          "top": 616,
+          "right": 1128.7578125,
+          "bottom": 650,
+          "left": 1020.75
+        }
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "height": 800,
+    "phase": "error",
+    "rect": {
+      "x": 896,
+      "y": 520.5,
+      "width": 360,
+      "height": 147.5,
+      "top": 520.5,
+      "right": 1256,
+      "bottom": 668,
+      "left": 896
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Try again",
+        "disabled": false,
+        "rect": {
+          "x": 914,
+          "y": 616,
+          "width": 89.515625,
+          "height": 34,
+          "top": 616,
+          "right": 1003.515625,
+          "bottom": 650,
+          "left": 914
+        }
+      },
+      {
+        "text": "Later",
+        "disabled": false,
+        "rect": {
+          "x": 1003.515625,
+          "y": 616,
+          "width": 61.65625,
+          "height": 34,
+          "top": 616,
+          "right": 1065.171875,
+          "bottom": 650,
+          "left": 1003.515625
+        }
+      }
+    ]
+  },
+  {
+    "width": 960,
+    "height": 640,
+    "phase": "available",
+    "rect": {
+      "x": 576,
+      "y": 297.5,
+      "width": 360,
+      "height": 210.5,
+      "top": 297.5,
+      "right": 936,
+      "bottom": 508,
+      "left": 576
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Update now",
+        "disabled": false,
+        "rect": {
+          "x": 594,
+          "y": 372,
+          "width": 107.84375,
+          "height": 34,
+          "top": 372,
+          "right": 701.84375,
+          "bottom": 406,
+          "left": 594
+        }
+      },
+      {
+        "text": "Later",
+        "disabled": false,
+        "rect": {
+          "x": 594,
+          "y": 456,
+          "width": 61.65625,
+          "height": 34,
+          "top": 456,
+          "right": 655.65625,
+          "bottom": 490,
+          "left": 594
+        }
+      }
+    ]
+  },
+  {
+    "width": 960,
+    "height": 640,
+    "phase": "downloading",
+    "rect": {
+      "x": 576,
+      "y": 349.5,
+      "width": 360,
+      "height": 158.5,
+      "top": 349.5,
+      "right": 936,
+      "bottom": 508,
+      "left": 576
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Please wait…",
+        "disabled": true,
+        "rect": {
+          "x": 594,
+          "y": 456,
+          "width": 115.375,
+          "height": 34,
+          "top": 456,
+          "right": 709.375,
+          "bottom": 490,
+          "left": 594
+        }
+      }
+    ]
+  },
+  {
+    "width": 960,
+    "height": 640,
+    "phase": "downloaded",
+    "rect": {
+      "x": 576,
+      "y": 339.5,
+      "width": 360,
+      "height": 168.5,
+      "top": 339.5,
+      "right": 936,
+      "bottom": 508,
+      "left": 576
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Restart now",
+        "disabled": false,
+        "rect": {
+          "x": 594,
+          "y": 456,
+          "width": 106.75,
+          "height": 34,
+          "top": 456,
+          "right": 700.75,
+          "bottom": 490,
+          "left": 594
+        }
+      },
+      {
+        "text": "Restart later",
+        "disabled": false,
+        "rect": {
+          "x": 700.75,
+          "y": 456,
+          "width": 108.0078125,
+          "height": 34,
+          "top": 456,
+          "right": 808.7578125,
+          "bottom": 490,
+          "left": 700.75
+        }
+      }
+    ]
+  },
+  {
+    "width": 960,
+    "height": 640,
+    "phase": "error",
+    "rect": {
+      "x": 576,
+      "y": 360.5,
+      "width": 360,
+      "height": 147.5,
+      "top": 360.5,
+      "right": 936,
+      "bottom": 508,
+      "left": 576
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Try again",
+        "disabled": false,
+        "rect": {
+          "x": 594,
+          "y": 456,
+          "width": 89.515625,
+          "height": 34,
+          "top": 456,
+          "right": 683.515625,
+          "bottom": 490,
+          "left": 594
+        }
+      },
+      {
+        "text": "Later",
+        "disabled": false,
+        "rect": {
+          "x": 683.515625,
+          "y": 456,
+          "width": 61.65625,
+          "height": 34,
+          "top": 456,
+          "right": 745.171875,
+          "bottom": 490,
+          "left": 683.515625
+        }
+      }
+    ]
+  },
+  {
+    "width": 1600,
+    "height": 1000,
+    "phase": "available",
+    "rect": {
+      "x": 1216,
+      "y": 657.5,
+      "width": 360,
+      "height": 210.5,
+      "top": 657.5,
+      "right": 1576,
+      "bottom": 868,
+      "left": 1216
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Update now",
+        "disabled": false,
+        "rect": {
+          "x": 1234,
+          "y": 732,
+          "width": 107.84375,
+          "height": 34,
+          "top": 732,
+          "right": 1341.84375,
+          "bottom": 766,
+          "left": 1234
+        }
+      },
+      {
+        "text": "Later",
+        "disabled": false,
+        "rect": {
+          "x": 1234,
+          "y": 816,
+          "width": 61.65625,
+          "height": 34,
+          "top": 816,
+          "right": 1295.65625,
+          "bottom": 850,
+          "left": 1234
+        }
+      }
+    ]
+  },
+  {
+    "width": 1600,
+    "height": 1000,
+    "phase": "downloading",
+    "rect": {
+      "x": 1216,
+      "y": 709.5,
+      "width": 360,
+      "height": 158.5,
+      "top": 709.5,
+      "right": 1576,
+      "bottom": 868,
+      "left": 1216
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Please wait…",
+        "disabled": true,
+        "rect": {
+          "x": 1234,
+          "y": 816,
+          "width": 115.375,
+          "height": 34,
+          "top": 816,
+          "right": 1349.375,
+          "bottom": 850,
+          "left": 1234
+        }
+      }
+    ]
+  },
+  {
+    "width": 1600,
+    "height": 1000,
+    "phase": "downloaded",
+    "rect": {
+      "x": 1216,
+      "y": 699.5,
+      "width": 360,
+      "height": 168.5,
+      "top": 699.5,
+      "right": 1576,
+      "bottom": 868,
+      "left": 1216
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Restart now",
+        "disabled": false,
+        "rect": {
+          "x": 1234,
+          "y": 816,
+          "width": 106.75,
+          "height": 34,
+          "top": 816,
+          "right": 1340.75,
+          "bottom": 850,
+          "left": 1234
+        }
+      },
+      {
+        "text": "Restart later",
+        "disabled": false,
+        "rect": {
+          "x": 1340.75,
+          "y": 816,
+          "width": 108.0078125,
+          "height": 34,
+          "top": 816,
+          "right": 1448.7578125,
+          "bottom": 850,
+          "left": 1340.75
+        }
+      }
+    ]
+  },
+  {
+    "width": 1600,
+    "height": 1000,
+    "phase": "error",
+    "rect": {
+      "x": 1216,
+      "y": 720.5,
+      "width": 360,
+      "height": 147.5,
+      "top": 720.5,
+      "right": 1576,
+      "bottom": 868,
+      "left": 1216
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Try again",
+        "disabled": false,
+        "rect": {
+          "x": 1234,
+          "y": 816,
+          "width": 89.515625,
+          "height": 34,
+          "top": 816,
+          "right": 1323.515625,
+          "bottom": 850,
+          "left": 1234
+        }
+      },
+      {
+        "text": "Later",
+        "disabled": false,
+        "rect": {
+          "x": 1323.515625,
+          "y": 816,
+          "width": 61.65625,
+          "height": 34,
+          "top": 816,
+          "right": 1385.171875,
+          "bottom": 850,
+          "left": 1323.515625
+        }
+      }
+    ]
+  }
+]

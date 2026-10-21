@@ -1,30 +1,156 @@
 .app-update-notice {
   position: fixed;
   right: 24px;
-  bottom: calc(var(--player-clearance) + 16px);
+  bottom: calc(var(--player-clearance) + var(--player-notice-height, 0px) + 20px);
   z-index: 30;
-  width: min(360px, calc(100vw - 48px));
-  padding: 18px;
-  border-radius: 18px;
+  width: min(384px, calc(100vw - 48px));
+  max-height: calc(100dvh - var(--player-clearance) - var(--player-notice-height, 0px) - 88px);
+  overflow: auto;
+  border-radius: 20px;
   background: var(--popover);
-  box-shadow: 0 8px 36px #0002;
+  box-shadow:
+    0 12px 40px #00000014,
+    0 0 0 1px #00000008;
+  animation: app-update-enter 220ms ease-out both;
 }
-.app-update-notice h2 {
-  margin: 0 0 8px;
+.app-update-card {
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+  animation: app-update-content 180ms ease-out both;
+}
+.app-update-heading {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.app-update-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 36px;
+  height: 36px;
+  border-radius: 12px;
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+.app-update-heading h2 {
+  margin: 0;
   font-size: 16px;
+  line-height: 1.4;
 }
-.app-update-notice p,
-.app-update-settings p {
-  line-height: 1.5;
+.app-update-controls,
+.app-update-status {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
 }
-.app-update-notice > button {
-  margin-top: 8px;
+.app-update-status {
+  animation: app-update-content 180ms ease-out both;
 }
-.app-update-notice progress,
-.app-update-settings progress {
+.app-update-controls p {
+  margin: 0;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.app-update-controls .app-update-hint {
+  color: var(--muted);
+  font-size: 13px;
+}
+.app-update-controls > .notice {
+  margin: 0;
+}
+.app-update-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding-top: 4px;
+}
+.app-update-notice .app-update-actions button {
+  min-height: 36px;
+}
+.app-update-download {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.app-update-progress {
+  flex: 1;
+  height: 6px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: var(--surface);
+}
+.app-update-progress > span {
   display: block;
-  width: 100%;
-  height: 8px;
-  margin: 12px 0;
-  accent-color: var(--accent);
+  height: 100%;
+  border-radius: inherit;
+  background: var(--accent);
+  transition: width 240ms ease-out;
+}
+.app-update-percent {
+  min-width: 4ch;
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+.app-update-notice-collapsed {
+  width: fit-content;
+  overflow: visible;
+  background: transparent;
+  box-shadow: none;
+}
+.app-update-reopen {
+  min-height: 40px;
+  padding: 10px 16px;
+  background: var(--popover);
+  box-shadow:
+    0 4px 20px #00000014,
+    0 0 0 1px #00000008;
+  animation: app-update-content 180ms ease-out both;
+}
+.app-update-settings {
+  display: grid;
+  gap: 12px;
+}
+.app-update-settings > h2,
+.app-update-settings > p {
+  margin: 0;
+}
+@keyframes app-update-enter {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes app-update-content {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (max-height: 700px) {
+  .app-update-card {
+    padding: 20px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-update-notice,
+  .app-update-card,
+  .app-update-status,
+  .app-update-reopen {
+    animation: none;
+  }
+  .app-update-notice button,
+  .app-update-settings button,
+  .app-update-progress > span {
+    transition: none;
+  }
 }
