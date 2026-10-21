@@ -1,0 +1,38 @@
+{
+  "verification": "Actual renderer and audio handlers with fixture IPC/media; no live services or audible output",
+  "results": [
+    "timeline input and keyboard commit seek to 45",
+    "paused seek updates position without starting playback",
+    "next while paused resets position and preserves pause",
+    {
+      "queueOpenTickRenders": {
+        "PlayerTimeline": 20
+      }
+    },
+    {
+      "lyricsTickRenders": {
+        "Lyrics": 2,
+        "PlayerTimeline": 2
+      },
+      "activeLine": "The third line"
+    },
+    {
+      "fallbackOffset": 37,
+      "retryOffset": 37,
+      "retryOutcome": "success",
+      "periodicPosition": 37,
+      "unloadPosition": 44
+    },
+    {
+      "news": "scheduled, started, paused, resumed, completed",
+      "nextTrack": "Evening track 002",
+      "position": 0
+    },
+    {
+      "restoreTrack": "Evening track 002",
+      "restorePosition": 44,
+      "requestedPlaying": false,
+      "emptyQueuePosition": 0
+    }
+  ]
+}
