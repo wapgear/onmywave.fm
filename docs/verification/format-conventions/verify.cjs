@@ -20,11 +20,12 @@ function rejects(file, source, diagnostic) {
   results.push(`Rejected ${diagnostic.source}`);
 }
 try {
-  fs.writeFileSync(renderer, 'export type FixtureProps={label:string};export function Fixture({label}:FixtureProps){return <span>{label}</span>}');
+  fs.writeFileSync(renderer, 'export type FixtureProps={label:string;description?:{introduction:string;explanation:string;conclusion:string}};export function Fixture({label}:FixtureProps){return <span>{label}</span>}');
   assert.notEqual(run(['oxfmt', '--check', renderer]).status, 0);
   assert.equal(run(['oxfmt', '--write', renderer]).status, 0);
   assert.equal(run(['oxlint', '--fix', '--config', '.oxlint-format.json', renderer]).status, 0);
   assert.equal(run(['oxfmt', '--check', renderer]).status, 0);
+  assert.match(fs.readFileSync(renderer, 'utf8'), /export type FixtureProps = \{\n/);
   const positive = run(['oxlint', '--type-aware', '--max-warnings=0', renderer]);
   assert.equal(positive.status, 0, positive.output);
   results.push('Real formatting error rejected; formatted local multiline exported props accepted');
