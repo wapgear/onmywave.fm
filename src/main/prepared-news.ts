@@ -53,6 +53,10 @@ let initialization: Promise<PreparedNewsLibrary> | undefined;
 
 let writes = Promise.resolve();
 
+let recoveryDirty = true;
+
+let recoveryPromise: Promise<void> | undefined;
+
 let active: {
   id: string;
   controller: AbortController;
@@ -309,6 +313,24 @@ async function recoverCompletedAudio() {
   });
 }
 
+async function recoverIfDirty() {
+  while ((recoveryDirty || recoveryPromise) && !active?.publishing) {
+    if (!recoveryPromise && recoveryDirty) {
+      recoveryDirty = false;
+      const scan = recoverCompletedAudio().catch((error) => {
+        recoveryDirty = true;
+        throw error;
+      });
+      const tracked: Promise<void> = scan.finally(() => {
+        if (recoveryPromise === tracked) recoveryPromise = undefined;
+      });
+      recoveryPromise = tracked;
+    }
+    const current = recoveryPromise;
+    if (current) await current;
+  }
+}
+
 export function isPreparedNewsActive(requestId: string) {
   return active?.id === requestId;
 }
@@ -328,7 +350,7 @@ export async function preparedAudio(id: string): Promise<Buffer | null> {
 
 export async function getPreparedNews(): Promise<PreparedNewsLibrary> {
   await writes;
-  await recoverCompletedAudio();
+  await recoverIfDirty();
   const snapshot = structuredClone(await load());
   snapshot.takes = await Promise.all(
     snapshot.takes.map(async (take) => ({
@@ -351,7 +373,7 @@ export async function getPreparedNews(): Promise<PreparedNewsLibrary> {
 
 export async function reconcilePreparedNews() {
   await writes;
-  await recoverCompletedAudio();
+  await recoverIfDirty();
   await change((current) => ({
     ...current,
     takes: current.takes.map((take) => {
@@ -424,8 +446,6 @@ export async function nextRoomNews(
     input.excludedIds.some((id) => !validId(id))
   )
     invalid();
-  await writes;
-  await recoverCompletedAudio();
   const state = await getLocalState();
   const profile = state.roomProfiles.find((value) => value.id === input.roomId);
   if (!profile?.enabled) return null;
@@ -492,8 +512,6 @@ export async function nextRoomNews(
 
 export async function claimPreparedNews(input: { id: string; claimId?: string }): Promise<PreparedNewsTake> {
   if (!input || !validId(input.id) || (input.claimId !== undefined && !validId(input.claimId))) invalid();
-  await writes;
-  await recoverCompletedAudio();
   const readable = await getPreparedNews();
   const available = readable.takes.some((take) => take.id === input.id && take.available);
   if (!available) invalid('Choose an available saved take.');
@@ -639,7 +657,7 @@ async function execute<T extends PreparedNewsTake>(
   const startedAt = new Date().toISOString();
   operation.promise = (async () => {
     try {
-      await recoverCompletedAudio();
+      await recoverIfDirty();
       const old = (await load()).requests.find((item) => item.requestId === requestId);
       if (old) {
         if (old.kind !== kind || old.inputHash !== inputHash)
@@ -714,15 +732,23 @@ async function execute<T extends PreparedNewsTake>(
       if (controller.signal.aborted) throw new ServiceError('uncertain-write', message);
       throw failure;
     } finally {
-      if (active === operation) active = null;
+      if (active === operation) {
+        if (operation.publishing) recoveryDirty = true;
+        active = null;
+      }
     }
   })();
   return operation.promise;
 }
 
 async function publishTake(take: PreparedNewsTake, audio: Buffer) {
-  if (active?.id === take.requestId) active.publishing = true;
+  const operation = active?.id === take.requestId ? active : null;
+  if (operation) {
+    operation.publishing = true;
+    recoveryDirty = true;
+  }
   try {
+    if (recoveryPromise) await recoveryPromise;
     await mkdir(root(), { recursive: true, mode: 0o700 });
     const temp = `${audioPath(take.id)}.tmp`;
     await writeFile(temp, audio, { mode: 0o600 });

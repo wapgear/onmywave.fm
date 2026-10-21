@@ -1,0 +1,7 @@
+const fs=require('node:fs'),fsp=require('node:fs/promises'),path=require('node:path'),os=require('node:os'),Module=require('node:module');
+const ts=require(path.join(process.cwd(),'node_modules/typescript'));
+require.extensions['.ts']=(m,f)=>m._compile(ts.transpileModule(fs.readFileSync(f,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,f);
+const dir=fs.mkdtempSync(path.join(os.tmpdir(),'wave-recovery-baseline-'));fs.mkdirSync(path.join(dir,'prepared-news'));fs.writeFileSync(path.join(dir,'prepared-news/index.json'),JSON.stringify({preparationErrorVersion:1,scripts:[],takes:[],requests:[],reviewedArticles:[],selectedTakeId:null}));
+const original=Module._load;Module._load=function(id,...args){if(id==='electron')return{app:{getPath:()=>dir},safeStorage:{}};return original.call(this,id,...args)};
+const readdir=fsp.readdir;let scans=0;fsp.readdir=async(...args)=>{scans++;return readdir(...args)};
+(async()=>{const prepared=require(path.join(process.cwd(),'src/main/prepared-news.ts'));await Promise.all([prepared.getPreparedNews(),prepared.getPreparedNews(),prepared.getPreparedNews()]);const concurrent=scans;for(let i=0;i<3;i++)await prepared.getPreparedNews();console.log(JSON.stringify({concurrentListings:3,concurrentRecoveryScans:concurrent,subsequentUnchangedListings:3,additionalScans:scans-concurrent},null,2));})().finally(()=>{fsp.readdir=readdir;fs.rmSync(dir,{recursive:true,force:true})});

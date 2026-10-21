@@ -1,0 +1,41 @@
+{
+  "verification": "Actual prepared-news module with temporary files, fake Electron userData/storage keys and fake provider methods; no live providers",
+  "results": [
+    {
+      "scenario": "concurrent readers coalesce recovery and unchanged listings do not rescan",
+      "result": "passed"
+    },
+    {
+      "scenario": "audio availability is checked freshly without another recovery scan",
+      "result": "passed"
+    },
+    {
+      "scenario": "scan errors are retryable and do not poison later reads",
+      "result": "passed"
+    },
+    {
+      "scenario": "preparation waits for an active recovery scan before touching files",
+      "result": "passed"
+    },
+    {
+      "scenario": "same-session recovery restores a durable sidecar after audio and final index failures",
+      "result": "passed"
+    },
+    {
+      "scenario": "completed audio is recovered when the final index commit fails",
+      "result": "passed"
+    },
+    {
+      "scenario": "active partial publication is not promoted by concurrent readers",
+      "result": "passed"
+    },
+    {
+      "scenario": "active publication is not recovered after audio rename until final index commit settles",
+      "result": "passed"
+    },
+    {
+      "scenario": "request idempotency and claim history remain intact after cached recovery",
+      "result": "passed"
+    }
+  ]
+}
