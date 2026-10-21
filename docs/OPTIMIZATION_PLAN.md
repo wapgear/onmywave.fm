@@ -6,8 +6,8 @@ The October 21, 2026 review identified eight changes. Each linked issue records 
 | --- | --- | --- |
 | 1 | [reuse Jellyfin search results across pages](https://github.com/wapgear/onmywave.fm/issues/172) | Merged in [#180](https://github.com/wapgear/onmywave.fm/pull/180); issue closed |
 | 2 | [isolate playback progress from library and queue renders](https://github.com/wapgear/onmywave.fm/issues/173) | Merged in [#182](https://github.com/wapgear/onmywave.fm/pull/182); issue closed |
-| 3 | [run DJ scheduling clocks only when needed](https://github.com/wapgear/onmywave.fm/issues/174) | Implemented; idle, timing, delivery and lifecycle fixtures passed; awaiting PR checks |
-| 4 | [coalesce playback checkpoints and skip unchanged saves](https://github.com/wapgear/onmywave.fm/issues/175) | Planned |
+| 3 | [run DJ scheduling clocks only when needed](https://github.com/wapgear/onmywave.fm/issues/174) | Merged in [#183](https://github.com/wapgear/onmywave.fm/pull/183); issue closed |
+| 4 | [coalesce playback checkpoints and skip unchanged saves](https://github.com/wapgear/onmywave.fm/issues/175) | Implemented; coalescing, retries, rollback, unload and lifecycle fixtures passed; awaiting PR checks |
 | 5 | [remove unused weather fields from news workflows](https://github.com/wapgear/onmywave.fm/issues/176) | Planned |
 | 6 | [make room profiles the source of active configuration](https://github.com/wapgear/onmywave.fm/issues/177) | Planned |
 | 7 | [simplify formatting and component type conventions](https://github.com/wapgear/onmywave.fm/issues/178) | Planned |
