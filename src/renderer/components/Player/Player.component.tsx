@@ -79,15 +79,15 @@ export function Player({
 
   useLayoutEffect(() => {
     const node = notices.current;
-    const shell = node?.closest<HTMLElement>('.app-shell');
-    if (!node || !shell) return;
-    const measure = () => shell.style.setProperty('--player-notice-height', `${node.getBoundingClientRect().height}px`);
+    const root = document.documentElement;
+    if (!node) return;
+    const measure = () => root.style.setProperty('--player-notice-height', `${node.getBoundingClientRect().height}px`);
     const observer = new ResizeObserver(measure);
     observer.observe(node);
     measure();
     return () => {
       observer.disconnect();
-      shell.style.removeProperty('--player-notice-height');
+      root.style.removeProperty('--player-notice-height');
     };
   }, []);
 

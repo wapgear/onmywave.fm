@@ -1,0 +1,557 @@
+[
+  {
+    "width": 1280,
+    "height": 800,
+    "phase": "available",
+    "rect": {
+      "x": 872,
+      "y": 438.0078125,
+      "width": 384,
+      "height": 225.9921875,
+      "top": 438.0078125,
+      "right": 1256,
+      "bottom": 664,
+      "left": 872
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Update now",
+        "disabled": false,
+        "rect": {
+          "x": 896,
+          "y": 604,
+          "width": 107.84375,
+          "height": 36,
+          "top": 604,
+          "right": 1003.84375,
+          "bottom": 640,
+          "left": 896
+        }
+      },
+      {
+        "text": "Later",
+        "disabled": false,
+        "rect": {
+          "x": 1011.84375,
+          "y": 604,
+          "width": 61.65625,
+          "height": 36,
+          "top": 604,
+          "right": 1073.5,
+          "bottom": 640,
+          "left": 1011.84375
+        }
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "height": 800,
+    "phase": "downloading",
+    "rect": {
+      "x": 872,
+      "y": 463.8046875,
+      "width": 384,
+      "height": 200.1953125,
+      "top": 463.8046875,
+      "right": 1256,
+      "bottom": 664,
+      "left": 872
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Please wait…",
+        "disabled": true,
+        "rect": {
+          "x": 896,
+          "y": 604,
+          "width": 115.375,
+          "height": 36,
+          "top": 604,
+          "right": 1011.375,
+          "bottom": 640,
+          "left": 896
+        }
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "height": 800,
+    "phase": "downloaded",
+    "rect": {
+      "x": 872,
+      "y": 438.0078125,
+      "width": 384,
+      "height": 225.9921875,
+      "top": 438.0078125,
+      "right": 1256,
+      "bottom": 664,
+      "left": 872
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Restart now",
+        "disabled": false,
+        "rect": {
+          "x": 896,
+          "y": 604,
+          "width": 106.75,
+          "height": 36,
+          "top": 604,
+          "right": 1002.75,
+          "bottom": 640,
+          "left": 896
+        }
+      },
+      {
+        "text": "Restart later",
+        "disabled": false,
+        "rect": {
+          "x": 1010.75,
+          "y": 604,
+          "width": 108.0078125,
+          "height": 36,
+          "top": 604,
+          "right": 1118.7578125,
+          "bottom": 640,
+          "left": 1010.75
+        }
+      }
+    ]
+  },
+  {
+    "width": 1280,
+    "height": 800,
+    "phase": "error",
+    "rect": {
+      "x": 872,
+      "y": 468.609375,
+      "width": 384,
+      "height": 195.390625,
+      "top": 468.609375,
+      "right": 1256,
+      "bottom": 664,
+      "left": 872
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Try again",
+        "disabled": false,
+        "rect": {
+          "x": 896,
+          "y": 604,
+          "width": 89.515625,
+          "height": 36,
+          "top": 604,
+          "right": 985.515625,
+          "bottom": 640,
+          "left": 896
+        }
+      },
+      {
+        "text": "Later",
+        "disabled": false,
+        "rect": {
+          "x": 993.515625,
+          "y": 604,
+          "width": 61.65625,
+          "height": 36,
+          "top": 604,
+          "right": 1055.171875,
+          "bottom": 640,
+          "left": 993.515625
+        }
+      }
+    ]
+  },
+  {
+    "width": 960,
+    "height": 640,
+    "phase": "available",
+    "rect": {
+      "x": 552,
+      "y": 286.0078125,
+      "width": 384,
+      "height": 217.9921875,
+      "top": 286.0078125,
+      "right": 936,
+      "bottom": 504,
+      "left": 552
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Update now",
+        "disabled": false,
+        "rect": {
+          "x": 572,
+          "y": 448,
+          "width": 107.84375,
+          "height": 36,
+          "top": 448,
+          "right": 679.84375,
+          "bottom": 484,
+          "left": 572
+        }
+      },
+      {
+        "text": "Later",
+        "disabled": false,
+        "rect": {
+          "x": 687.84375,
+          "y": 448,
+          "width": 61.65625,
+          "height": 36,
+          "top": 448,
+          "right": 749.5,
+          "bottom": 484,
+          "left": 687.84375
+        }
+      }
+    ]
+  },
+  {
+    "width": 960,
+    "height": 640,
+    "phase": "downloading",
+    "rect": {
+      "x": 552,
+      "y": 311.8046875,
+      "width": 384,
+      "height": 192.1953125,
+      "top": 311.8046875,
+      "right": 936,
+      "bottom": 504,
+      "left": 552
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Please wait…",
+        "disabled": true,
+        "rect": {
+          "x": 572,
+          "y": 448,
+          "width": 115.375,
+          "height": 36,
+          "top": 448,
+          "right": 687.375,
+          "bottom": 484,
+          "left": 572
+        }
+      }
+    ]
+  },
+  {
+    "width": 960,
+    "height": 640,
+    "phase": "downloaded",
+    "rect": {
+      "x": 552,
+      "y": 286.0078125,
+      "width": 384,
+      "height": 217.9921875,
+      "top": 286.0078125,
+      "right": 936,
+      "bottom": 504,
+      "left": 552
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Restart now",
+        "disabled": false,
+        "rect": {
+          "x": 572,
+          "y": 448,
+          "width": 106.75,
+          "height": 36,
+          "top": 448,
+          "right": 678.75,
+          "bottom": 484,
+          "left": 572
+        }
+      },
+      {
+        "text": "Restart later",
+        "disabled": false,
+        "rect": {
+          "x": 686.75,
+          "y": 448,
+          "width": 108.0078125,
+          "height": 36,
+          "top": 448,
+          "right": 794.7578125,
+          "bottom": 484,
+          "left": 686.75
+        }
+      }
+    ]
+  },
+  {
+    "width": 960,
+    "height": 640,
+    "phase": "error",
+    "rect": {
+      "x": 552,
+      "y": 316.609375,
+      "width": 384,
+      "height": 187.390625,
+      "top": 316.609375,
+      "right": 936,
+      "bottom": 504,
+      "left": 552
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Try again",
+        "disabled": false,
+        "rect": {
+          "x": 572,
+          "y": 448,
+          "width": 89.515625,
+          "height": 36,
+          "top": 448,
+          "right": 661.515625,
+          "bottom": 484,
+          "left": 572
+        }
+      },
+      {
+        "text": "Later",
+        "disabled": false,
+        "rect": {
+          "x": 669.515625,
+          "y": 448,
+          "width": 61.65625,
+          "height": 36,
+          "top": 448,
+          "right": 731.171875,
+          "bottom": 484,
+          "left": 669.515625
+        }
+      }
+    ]
+  },
+  {
+    "width": 1600,
+    "height": 1000,
+    "phase": "available",
+    "rect": {
+      "x": 1192,
+      "y": 638.0078125,
+      "width": 384,
+      "height": 225.9921875,
+      "top": 638.0078125,
+      "right": 1576,
+      "bottom": 864,
+      "left": 1192
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Update now",
+        "disabled": false,
+        "rect": {
+          "x": 1216,
+          "y": 804,
+          "width": 107.84375,
+          "height": 36,
+          "top": 804,
+          "right": 1323.84375,
+          "bottom": 840,
+          "left": 1216
+        }
+      },
+      {
+        "text": "Later",
+        "disabled": false,
+        "rect": {
+          "x": 1331.84375,
+          "y": 804,
+          "width": 61.65625,
+          "height": 36,
+          "top": 804,
+          "right": 1393.5,
+          "bottom": 840,
+          "left": 1331.84375
+        }
+      }
+    ]
+  },
+  {
+    "width": 1600,
+    "height": 1000,
+    "phase": "downloading",
+    "rect": {
+      "x": 1192,
+      "y": 663.8046875,
+      "width": 384,
+      "height": 200.1953125,
+      "top": 663.8046875,
+      "right": 1576,
+      "bottom": 864,
+      "left": 1192
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Please wait…",
+        "disabled": true,
+        "rect": {
+          "x": 1216,
+          "y": 804,
+          "width": 115.375,
+          "height": 36,
+          "top": 804,
+          "right": 1331.375,
+          "bottom": 840,
+          "left": 1216
+        }
+      }
+    ]
+  },
+  {
+    "width": 1600,
+    "height": 1000,
+    "phase": "downloaded",
+    "rect": {
+      "x": 1192,
+      "y": 638.0078125,
+      "width": 384,
+      "height": 225.9921875,
+      "top": 638.0078125,
+      "right": 1576,
+      "bottom": 864,
+      "left": 1192
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Restart now",
+        "disabled": false,
+        "rect": {
+          "x": 1216,
+          "y": 804,
+          "width": 106.75,
+          "height": 36,
+          "top": 804,
+          "right": 1322.75,
+          "bottom": 840,
+          "left": 1216
+        }
+      },
+      {
+        "text": "Restart later",
+        "disabled": false,
+        "rect": {
+          "x": 1330.75,
+          "y": 804,
+          "width": 108.0078125,
+          "height": 36,
+          "top": 804,
+          "right": 1438.7578125,
+          "bottom": 840,
+          "left": 1330.75
+        }
+      }
+    ]
+  },
+  {
+    "width": 1600,
+    "height": 1000,
+    "phase": "error",
+    "rect": {
+      "x": 1192,
+      "y": 668.609375,
+      "width": 384,
+      "height": 195.390625,
+      "top": 668.609375,
+      "right": 1576,
+      "bottom": 864,
+      "left": 1192
+    },
+    "overflow": false,
+    "buttons": [
+      {
+        "text": "Try again",
+        "disabled": false,
+        "rect": {
+          "x": 1216,
+          "y": 804,
+          "width": 89.515625,
+          "height": 36,
+          "top": 804,
+          "right": 1305.515625,
+          "bottom": 840,
+          "left": 1216
+        }
+      },
+      {
+        "text": "Later",
+        "disabled": false,
+        "rect": {
+          "x": 1313.515625,
+          "y": 804,
+          "width": 61.65625,
+          "height": 36,
+          "top": 804,
+          "right": 1375.171875,
+          "bottom": 840,
+          "left": 1313.515625
+        }
+      }
+    ]
+  },
+  {
+    "phase": "idle",
+    "notice": false,
+    "settings": "About and updatesonmywave.fm for macOS · 0.1.0Updates are checked automatically while the app is open.Check for updates"
+  },
+  {
+    "phase": "unsupported",
+    "notice": false,
+    "settings": "About and updatesonmywave.fm for macOS · 0.1.0Automatic updates are available in the installed Apple silicon macOS app."
+  },
+  {
+    "phase": "checking",
+    "notice": false,
+    "settings": "About and updatesonmywave.fm for macOS · 0.1.0Checking for updates…Please wait…"
+  },
+  {
+    "phase": "current",
+    "notice": false,
+    "settings": "About and updatesonmywave.fm for macOS · 0.1.0You have the latest version.Check for updates"
+  },
+  {
+    "phase": "installing",
+    "notice": true,
+    "settings": "About and updatesonmywave.fm for macOS · 0.1.0Restarting to install the update…Please wait…"
+  },
+  {
+    "playerNoticeHeight": 72,
+    "bottomGap": 208,
+    "top": 366.0078125
+  },
+  {
+    "longMessage": true,
+    "scrolls": true,
+    "horizontalOverflow": false,
+    "top": 68
+  },
+  {
+    "smoothProgress": true,
+    "value": 90,
+    "visualFraction": 0.5393392914139802
+  },
+  {
+    "reducedMotion": true,
+    "animations": 0
+  }
+]
