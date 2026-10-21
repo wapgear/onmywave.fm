@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { Song, SongLyrics } from '../../../shared/types';
 import { unwrap, WaveError } from '../../api';
+import { usePlayer } from '../../player';
 import { useRetryFocus } from '../../useRetryFocus';
 import { ErrorNotice } from '../Shared';
 
@@ -11,6 +12,7 @@ import './Lyrics.styles.css';
 
 
 export function Lyrics({ connectionId, song, position }: { connectionId: string; song: Song; position: number }) {
+  const player = usePlayer();
   const root = useRef<HTMLDivElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
   const expectedScrollTop = useRef<number | null>(null);
@@ -143,7 +145,21 @@ export function Lyrics({ connectionId, song, position }: { connectionId: string;
               className={synced && line.start === activeStart ? 'is-active' : undefined}
               aria-current={index === scrollIndex ? 'true' : undefined}
             >
-              {line.text || <span aria-hidden="true">&nbsp;</span>}
+              {synced && line.text.trim() ? (
+                <button
+                  type="button"
+                  className="lyrics-line-seek"
+                  title="Jump to this line"
+                  onClick={() => {
+                    player.seek(line.start!);
+                    setFollowing(true);
+                  }}
+                >
+                  {line.text}
+                </button>
+              ) : (
+                line.text || <span aria-hidden="true">&nbsp;</span>
+              )}
             </p>
           ))}
         </div>

@@ -92,6 +92,25 @@
   color: var(--text);
   font-weight: 600;
 }
+.lyrics-line-seek {
+  display: block;
+  width: 100%;
+  min-height: 0;
+  border-radius: 4px;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  white-space: inherit;
+  overflow-wrap: inherit;
+  transition: color 140ms ease;
+}
+.lyrics-line-seek:hover:where(:not(:disabled)),
+.lyrics-line-seek:active:where(:not(:disabled)) {
+  background: transparent;
+  color: var(--text);
+  translate: none;
+}
 .lyrics-message {
   color: var(--muted);
   font-size: 13px;
@@ -114,7 +133,8 @@
   line-height: 1.55;
 }
 @media (prefers-reduced-motion: reduce) {
-  .lyrics-lines p {
+  .lyrics-lines p,
+  .lyrics-line-seek {
     transition: none;
   }
 }
