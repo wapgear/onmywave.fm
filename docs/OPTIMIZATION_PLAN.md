@@ -10,8 +10,8 @@ The October 21, 2026 review identified eight changes. Each linked issue records 
 | 4 | [coalesce playback checkpoints and skip unchanged saves](https://github.com/wapgear/onmywave.fm/issues/175) | Merged in [#184](https://github.com/wapgear/onmywave.fm/pull/184); issue closed |
 | 5 | [remove unused weather fields from news workflows](https://github.com/wapgear/onmywave.fm/issues/176) | Merged in [#185](https://github.com/wapgear/onmywave.fm/pull/185); issue closed |
 | 6 | [make room profiles the source of active configuration](https://github.com/wapgear/onmywave.fm/issues/177) | Merged in [#186](https://github.com/wapgear/onmywave.fm/pull/186); issue closed |
-| 7 | [simplify formatting and component type conventions](https://github.com/wapgear/onmywave.fm/issues/178) | Implemented; verifying formatter and retained lint rules |
-| 8 | [reconcile prepared news only after publication changes](https://github.com/wapgear/onmywave.fm/issues/179) | Planned |
+| 7 | [simplify formatting and component type conventions](https://github.com/wapgear/onmywave.fm/issues/178) | Merged in [#187](https://github.com/wapgear/onmywave.fm/pull/187); issue closed |
+| 8 | [reconcile prepared news only after publication changes](https://github.com/wapgear/onmywave.fm/issues/179) | Implementation and verification complete; issue tracks PR merge and closure |
 
 ## Delivery rules
 
