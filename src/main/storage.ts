@@ -391,7 +391,10 @@ export async function getLocalState(): Promise<LocalStateSnapshot> {
           vibe: active.mood,
           workflowDraft: active.workflowDraft,
         });
-        localStateMigrationPending = value.preparationErrorVersion !== 1;
+        localStateMigrationPending =
+          value.preparationErrorVersion !== 1 ||
+          Object.hasOwn(value.workflowDraft ?? {}, 'morning') ||
+          value.roomProfiles?.some((profile: RoomProfile) => Object.hasOwn(profile.workflowDraft, 'morning'));
       } catch {
         throw new StorageError('Local settings could not be opened. Your existing settings were preserved.');
       }
