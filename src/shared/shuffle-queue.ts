@@ -135,11 +135,16 @@ export function nextShuffle(
   let nextUpcoming = upcoming.slice(nextKey ? 1 : 0);
   let nextVisited = visited;
   if (!nextKey && repeatAll && keys.length) {
-    const pool = keys.filter((key) => key !== currentKey || keys.length === 1);
-    const cycle = sample(pool, Math.min(pool.length, SHUFFLE_WINDOW_SIZE + 1));
-    nextKey = cycle[0] ?? null;
-    nextUpcoming = cycle.slice(1, SHUFFLE_WINDOW_SIZE + 1);
-    nextVisited = new Set(currentKey && available.has(currentKey) ? [currentKey] : []);
+    const first = sample(
+      keys.filter((key) => key !== currentKey || keys.length === 1),
+      1,
+    )[0];
+    nextKey = first ?? null;
+    nextUpcoming = sample(
+      keys.filter((key) => key !== first),
+      SHUFFLE_WINDOW_SIZE,
+    );
+    nextVisited = new Set();
   }
   if (!nextKey) return { plan: { ...normalized, upcoming: nextUpcoming, visited: nextVisited }, key: null };
 
