@@ -46,6 +46,9 @@ export type PlayerState = {
   repeat: PlaybackSnapshot['repeat'];
   canRetry: boolean;
   completedSongs: number;
+  libraryError: string | null;
+  libraryLoading: boolean;
+  retryLibrary(this: void): Promise<boolean>;
   optionsError: string | null;
   optionsRevision: number;
   retryOptions(this: void): Promise<OptionsSaveSettlement>;
@@ -62,7 +65,7 @@ export type PlayerState = {
   seek(this: void, seconds: number): void;
   setVolume(this: void, value: number): void;
   toggleShuffle(this: void): void;
-  cycleRepeat(this: void): void;
+  setRepeat(this: void, value: PlaybackSnapshot['repeat']): void;
   removeQueue(this: void, key: string): void;
   retry(this: void): Promise<PlaybackRetrySettlement>;
   getPlaybackGeneration(this: void): number;
