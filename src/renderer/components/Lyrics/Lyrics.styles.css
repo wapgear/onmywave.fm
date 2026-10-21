@@ -1,0 +1,158 @@
+.side-drawer.lyrics-drawer {
+  position: absolute;
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  inset: 0 0 0 var(--sidebar);
+  z-index: 30;
+  width: auto;
+  border-left: 0;
+}
+.lyrics-drawer .drawer-heading {
+  padding-inline: 30px;
+}
+.lyrics-drawer .drawer-body {
+  padding-inline: clamp(24px, 5vw, 80px);
+  padding-top: 32px;
+  padding-bottom: 48px;
+  margin-bottom: var(--player-clearance);
+  scroll-padding-block: 48px;
+  mask-image: linear-gradient(to bottom, transparent, #000 32px, #000 calc(100% - 48px), transparent);
+}
+.lyrics-content {
+  max-width: 760px;
+  margin: 0 auto;
+}
+.lyrics-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin: -12px 0 16px;
+  padding: 16px 0 12px;
+  background: var(--panel);
+}
+.lyrics-heading > div {
+  flex: 1 1 140px;
+  min-width: 0;
+}
+.lyrics-source {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.lyrics-heading h3 {
+  margin-top: 7px;
+  font-size: 26px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.lyrics-heading p {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.lyrics-follow {
+  flex: 0 0 auto;
+  max-width: 100%;
+  min-height: 30px;
+  border: 1px solid var(--separator);
+  border-radius: 7px;
+  padding: 0 9px;
+  color: var(--text);
+  background: var(--panel);
+  font-size: 11px;
+  white-space: normal;
+}
+.lyrics-follow-bar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  padding: 32px 0 8px;
+  background: var(--panel);
+}
+.lyrics-follow:hover {
+  background: var(--hover);
+}
+.lyrics-lines {
+  padding: 2px 0 18px;
+}
+.lyrics-lines p {
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(22px, 2.3vw, 32px);
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  transition:
+    color 260ms ease,
+    transform 300ms ease;
+}
+.lyrics-lines.is-synced p.is-active {
+  color: var(--text);
+  font-weight: 600;
+  transform: translateX(4px);
+}
+.lyrics-line-seek {
+  display: block;
+  width: 100%;
+  min-height: 0;
+  border-radius: 4px;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  white-space: inherit;
+  overflow-wrap: inherit;
+  transition: color 140ms ease;
+}
+.lyrics-line-seek:hover:where(:not(:disabled)),
+.lyrics-line-seek:active:where(:not(:disabled)) {
+  background: transparent;
+  color: var(--text);
+  translate: none;
+}
+.lyrics-message {
+  color: var(--muted);
+  font-size: 13px;
+}
+.lyrics-empty {
+  display: grid;
+  justify-items: center;
+  gap: 9px;
+  padding: 38px 12px;
+  color: var(--muted);
+  text-align: center;
+}
+.lyrics-empty p {
+  color: var(--text);
+  font-size: 13px;
+}
+.lyrics-empty small {
+  max-width: 270px;
+  font-size: 11px;
+  line-height: 1.55;
+}
+@media (prefers-reduced-motion: reduce) {
+  .lyrics-lines p,
+  .lyrics-line-seek {
+    transition: none;
+  }
+  .lyrics-lines.is-synced p.is-active {
+    transform: none;
+  }
+}
+@media (max-height: 540px) {
+  .lyrics-drawer .drawer-heading {
+    height: 48px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+  .lyrics-follow-bar {
+    padding-bottom: 4px;
+  }
+}

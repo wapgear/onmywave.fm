@@ -11,6 +11,7 @@ import type {
   PlaylistDetail,
   PlaylistEntry,
   Song,
+  SongLyrics,
 } from '../shared/types';
 
 
@@ -140,6 +141,7 @@ export class JellyfinService {
   private writes = new Map<string, Promise<unknown>>();
   private catalogSnapshots = new Map<string, { session: Session; items: Item[] }>();
   private catalogLoads = new Map<string, { session: Session; promise: Promise<Page<Item>> }>();
+  private lyricsRequest: AbortController | null = null;
   constructor(private deps: Deps) {}
   connection(): Connection | null {
     const s = this.session;
@@ -171,6 +173,7 @@ export class JellyfinService {
         }
       : null;
     ++this.connectionIntent;
+    this.lyricsRequest?.abort();
     this.session = restored;
     ++this.authRevision;
     this.catalogSnapshots.clear();
@@ -191,6 +194,7 @@ export class JellyfinService {
       const commit = (publish: () => boolean) => {
         if (!current()) throw superseded();
         const saved = publish();
+        this.lyricsRequest?.abort();
         this.session = snapshot ? { ...snapshot, sessionOnly: !saved } : null;
         this.catalogSnapshots.clear();
         this.catalogLoads.clear();
@@ -729,6 +733,82 @@ export class JellyfinService {
       const item = await this.json(`/Users/${s.userId}/Items/${id}`);
       if (item.Type !== 'Audio') throw new ServiceError('invalid', 'This item is not a song.');
       return this.songItem(item);
+    });
+  }
+  async lyrics(value: string): Promise<SongLyrics> {
+    return this.readCurrentSession(async () => {
+      const id = validId(value);
+      const session = this.requireSession();
+      const version = /^(\d+)\.(\d+)/.exec(session.serverVersion);
+      if (version && (Number(version[1]) < 10 || (Number(version[1]) === 10 && Number(version[2]) < 9)))
+        throw new ServiceError('unsupported', 'Lyrics require Jellyfin 10.9 or later.');
+      this.lyricsRequest?.abort();
+      const controller = new AbortController();
+      this.lyricsRequest = controller;
+      try {
+        return await this.request(
+          session.serverUrl,
+          `/Audio/${id}/Lyrics`,
+          { signal: controller.signal },
+          session.token,
+          async (response) => {
+            // Bound the streamed response, including servers that omit Content-Length.
+            const reader = response.body?.getReader();
+            if (!reader) throw new ServiceError('server', 'Jellyfin returned an unreadable lyrics response.');
+            const chunks: Uint8Array[] = [];
+            let size = 0;
+            try {
+              while (true) {
+                const next = await reader.read();
+                if (next.done) break;
+                size += next.value.byteLength;
+                if (size > 1_000_000) throw new ServiceError('server', 'The lyrics response is too large to display.');
+                chunks.push(next.value);
+              }
+            } finally {
+              await reader.cancel().catch(() => {});
+              reader.releaseLock();
+            }
+            const data: unknown = JSON.parse(Buffer.concat(chunks, size).toString('utf8'));
+            if (!data || typeof data !== 'object' || !('Lyrics' in data) || !Array.isArray(data.Lyrics))
+              throw new ServiceError('server', 'Jellyfin returned an unreadable lyrics response.');
+            if (data.Lyrics.length > 10_000)
+              throw new ServiceError('server', 'The lyrics response has too many lines to display.');
+            const lines = data.Lyrics.map((line: unknown) => {
+              if (!line || typeof line !== 'object' || !('Text' in line) || typeof line.Text !== 'string')
+                throw new ServiceError('server', 'Jellyfin returned an unreadable lyric line.');
+              const ticks = 'Start' in line ? line.Start : undefined;
+              return {
+                text: line.Text,
+                start:
+                  typeof ticks === 'number' && Number.isSafeInteger(ticks) && ticks >= 0
+                    ? ticks / 10_000_000
+                    : undefined,
+              };
+            });
+            const metadata = 'Metadata' in data ? data.Metadata : undefined;
+            const explicitlyPlain =
+              metadata && typeof metadata === 'object' && 'IsSynced' in metadata && metadata.IsSynced === false;
+            const synced =
+              !explicitlyPlain &&
+              lines.length > 0 &&
+              lines.every(
+                (line, index) =>
+                  line.start !== undefined && (index === 0 || line.start >= (lines[index - 1].start ?? Infinity)),
+              );
+            if (!lines.some((line) => line.text.trim())) return { lines: [], synced: false };
+            return { lines: synced ? lines : lines.map(({ text }) => ({ text })), synced: !!synced };
+          },
+        );
+      } catch (error) {
+        if (error instanceof ServiceError && error.code === 'not-found') {
+          if (!version) throw new ServiceError('unsupported', 'Lyrics are unavailable on this Jellyfin server.');
+          return { lines: [], synced: false };
+        }
+        throw error;
+      } finally {
+        if (this.lyricsRequest === controller) this.lyricsRequest = null;
+      }
     });
   }
   private playlistItem(item: Item): Playlist {

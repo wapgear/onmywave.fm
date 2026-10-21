@@ -17,6 +17,7 @@ You need your own Jellyfin server, an account with access to at least one music 
 - Browse and search songs and albums, with genre/tag filters and sorting for songs.
 - Create and edit Jellyfin playlists when your account has permission.
 - Manage the queue, shuffle, repeat, volume, and playback position. Relaunch restores the session paused.
+- Read Jellyfin lyrics in the player, with timed line highlighting when available and plain-text fallback.
 - Configure named news rooms with RSS/Atom, Hacker News, or X sources and a saved DJ.
 - Prepare spoken news separately from music playback, then play saved recordings at a chosen song interval.
 - Audition bundled voices and try DJ transition timings without API keys.
@@ -89,7 +90,7 @@ For a signed, notarized Apple silicon release, export `APPLE_ID`, `APPLE_APP_SPE
 
 ```sh
 pnpm run release:mac --local-only           # build and verify without publishing
-pnpm run release:mac docs/releases/0.0.2.md # build, verify, and publish
+pnpm run release:mac docs/releases/0.1.0.md # build, verify, and publish
 ```
 
 The release command runs the quality checks, builds a DMG and ZIP, verifies signing and notarization, and includes corresponding source and SHA-256 checksums. See [automatic updates](docs/AUTO_UPDATES.md) for the update flow and verification limits. It uploads all files, including updater metadata and blockmaps, to a draft before publishing. Each release needs a higher package version than the previous release. Existing 0.0.1 installations without the updater need one manual installation of an updater-enabled release. Keep credentials outside Git. Review [release readiness](docs/OPEN_SOURCE_READINESS.md) for remaining verification limits.

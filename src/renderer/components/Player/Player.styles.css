@@ -273,7 +273,7 @@
     gap: 6px;
   }
   .player-volume {
-    width: 64px;
+    width: 48px;
   }
 }
 @media (max-width: 820px) {

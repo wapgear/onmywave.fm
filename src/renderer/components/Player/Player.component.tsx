@@ -1,6 +1,7 @@
 import {
   ListMusic,
   LoaderCircle,
+  MicVocal,
   Pause,
   Play,
   Repeat,
@@ -34,7 +35,7 @@ export const formatTime = (seconds: number) => {
 const fill = (percent: number): CSSProperties =>
   ({ '--range-fill': `${Math.max(0, Math.min(100, percent))}%` }) as CSSProperties;
 
-export function Player({ queueOpen, toggleQueue, openRoom, openSettings }: PlayerProps) {
+export function Player({ queueOpen, lyricsOpen, toggleQueue, toggleLyrics, openRoom, openSettings }: PlayerProps) {
   const player = usePlayer();
   const recovery = useNewsRecovery();
   const knownSpeech =
@@ -420,8 +421,19 @@ export function Player({ queueOpen, toggleQueue, openRoom, openSettings }: Playe
             aria-valuetext={`${Math.round(player.volume * 100)} percent`}
           />
           <button
+            className={`player-icon player-lyrics ${lyricsOpen ? 'is-active' : ''}`}
+            onClick={(event) => toggleLyrics(event.currentTarget)}
+            title="Lyrics"
+            aria-label={lyricsOpen ? 'Hide lyrics' : 'Show lyrics'}
+            aria-controls="listening-drawer"
+            aria-expanded={lyricsOpen}
+            disabled={!player.current}
+          >
+            <MicVocal size={18} aria-hidden="true" />
+          </button>
+          <button
             className={`player-icon ${queueOpen ? 'is-active' : ''}`}
-            onClick={toggleQueue}
+            onClick={(event) => toggleQueue(event.currentTarget)}
             title="Playing Next"
             aria-label={`${queueOpen ? 'Hide' : 'Show'} queue, ${player.queue.length} ${player.queue.length === 1 ? 'track' : 'tracks'}`}
             aria-controls="listening-drawer"

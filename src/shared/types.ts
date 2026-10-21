@@ -65,6 +65,9 @@ export type Song = {
   size?: number;
 };
 
+// Synced lines have monotonic start times in seconds on the song's playback clock.
+export type SongLyrics = { lines: { text: string; start?: number }[]; synced: boolean };
+
 export type Album = { id: string; name: string; artist: string; year?: number; imageUrl?: string; songCount?: number };
 
 export type CatalogQuery = {
@@ -307,6 +310,7 @@ export interface WaveApi {
   album(id: string): Promise<Result<Album>>;
   albumTracks(id: string): Promise<Result<Song[]>>;
   song(id: string): Promise<Result<Song>>;
+  lyrics(id: string): Promise<Result<SongLyrics>>;
   playlists(): Promise<Result<PlaylistLibrary>>;
   playlistPermission(id: string): Promise<Result<boolean | null>>;
   playlist(id: string): Promise<Result<PlaylistDetail>>;

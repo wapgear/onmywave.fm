@@ -9,6 +9,7 @@ import { AddPlaylist } from './components/AddPlaylist/AddPlaylist.component';
 import { Inspector } from './components/Inspector/Inspector.component';
 import { LibrarySelectionProvider } from './components/LibrarySelection';
 import type { ConnectionTransition } from './components/LibrarySelection.types';
+import { Lyrics } from './components/Lyrics/Lyrics.component';
 import { Player } from './components/Player/Player.component';
 import { ProviderKeyEditsProvider } from './components/ProviderKeys/ProviderKeyEdits';
 import { Queue } from './components/Queue/Queue.component';
@@ -26,7 +27,7 @@ import { SettingsEditsProvider } from './pages/Settings/SettingsEdits';
 import { SongsPage, initialSongsView } from './pages/Songs/Songs.page';
 import { StationsPage } from './pages/Stations/Stations.page';
 import type { RoomSetupDraft } from './pages/Stations/Stations.types';
-import { PlayerProvider } from './player';
+import { PlayerProvider, usePlayer } from './player';
 import { useRetryFocus } from './useRetryFocus';
 
 
@@ -247,16 +248,14 @@ function ReadyApp({
   const playerDestination = useRef<'stations' | 'settings' | null>(null);
   const setupReturnTarget = useRef('');
   const restoreSetupFocus = useRef(false);
-  const [drawer, setDrawer] = useState<Song | 'queue' | null>(null);
+  const player = usePlayer();
+  const [drawer, setDrawer] = useState<Song | 'queue' | 'lyrics' | null>(null);
   const drawerTrigger = useRef<HTMLElement | null>(null);
   const drawerClose = useRef<HTMLButtonElement>(null);
-  function openDrawer(value: Song | 'queue') {
-    drawerTrigger.current =
-      value === 'queue'
-        ? document.querySelector<HTMLElement>('[aria-controls="listening-drawer"]')
-        : document.activeElement instanceof HTMLElement
-          ? document.activeElement
-          : null;
+  if (drawer === 'lyrics' && !player.current) setDrawer(null);
+  const visibleDrawer = drawer === 'lyrics' && !player.current ? null : drawer;
+  function openDrawer(value: Song | 'queue' | 'lyrics', source?: HTMLElement | null) {
+    drawerTrigger.current = source ?? (document.activeElement instanceof HTMLElement ? document.activeElement : null);
     setDrawer(value);
   }
   function closeDrawer() {
@@ -273,8 +272,8 @@ function ReadyApp({
   });
 
   useLayoutEffect(() => {
-    if (drawer) drawerClose.current?.focus({ preventScroll: true });
-  }, [drawer]);
+    if (visibleDrawer) drawerClose.current?.focus({ preventScroll: true });
+  }, [visibleDrawer]);
 
   const [adding, setAdding] = useState<Song[] | null>(null);
   function updateLibraries(value: Connection) {
@@ -458,7 +457,7 @@ function ReadyApp({
   }, [page]);
 
   return (
-    <div className={`app-shell ${drawer ? 'has-drawer' : ''}`}>
+    <div className={`app-shell ${visibleDrawer && visibleDrawer !== 'lyrics' ? 'has-drawer' : ''}`}>
       <aside className="sidebar">
         <div className="traffic-light-space" />
         <div className="wordmark">onmywave.fm</div>
@@ -490,7 +489,13 @@ function ReadyApp({
           </p>
         </div>
       </aside>
-      <main ref={main} className="main-content" id="main-content">
+      <main
+        ref={main}
+        className="main-content"
+        id="main-content"
+        inert={visibleDrawer === 'lyrics'}
+        aria-hidden={visibleDrawer === 'lyrics' || undefined}
+      >
         <div ref={content} className="page-content">
           <NewsRecoveryNotice
             onOpenSettings={openNewsSettings}
@@ -552,29 +557,61 @@ function ReadyApp({
           )}
         </div>
       </main>
-      {drawer && (
-        <aside id="listening-drawer" className="side-drawer" aria-labelledby="drawer-title">
+      {visibleDrawer && (
+        <aside
+          id="listening-drawer"
+          className={`side-drawer ${visibleDrawer === 'lyrics' ? 'lyrics-drawer' : ''}`}
+          role={visibleDrawer === 'lyrics' ? 'dialog' : undefined}
+          aria-labelledby="drawer-title"
+        >
           <header className="drawer-heading">
-            <h2 id="drawer-title">{drawer === 'queue' ? 'Playing Next' : 'Song details'}</h2>
+            <h2 id="drawer-title">
+              {visibleDrawer === 'queue' ? 'Playing Next' : visibleDrawer === 'lyrics' ? 'Lyrics' : 'Song details'}
+            </h2>
             <button
               ref={drawerClose}
               className="icon-button"
               onClick={closeDrawer}
-              aria-label={drawer === 'queue' ? 'Close queue' : 'Close song details'}
+              aria-label={
+                visibleDrawer === 'queue'
+                  ? 'Close queue'
+                  : visibleDrawer === 'lyrics'
+                    ? 'Close lyrics'
+                    : 'Close song details'
+              }
             >
               <span aria-hidden="true">×</span>
             </button>
           </header>
-          <div key={drawer === 'queue' ? 'queue' : drawer.id} className="drawer-body">
-            {drawer === 'queue' ? <Queue /> : <Inspector key={drawer.id} song={drawer} />}
+          <div
+            key={visibleDrawer === 'queue' || visibleDrawer === 'lyrics' ? visibleDrawer : visibleDrawer.id}
+            className="drawer-body"
+            role={visibleDrawer === 'lyrics' ? 'region' : undefined}
+            tabIndex={visibleDrawer === 'lyrics' ? 0 : undefined}
+            aria-label={visibleDrawer === 'lyrics' ? 'Song lyrics' : undefined}
+          >
+            {visibleDrawer === 'queue' ? (
+              <Queue />
+            ) : visibleDrawer === 'lyrics' ? (
+              <Lyrics
+                key={player.currentKey}
+                connectionId={connection.id}
+                song={player.current!}
+                position={player.position}
+              />
+            ) : (
+              <Inspector key={visibleDrawer.id} song={visibleDrawer} />
+            )}
           </div>
         </aside>
       )}
       <Player
         openRoom={(source) => openPlayerDestination('stations', source)}
         openSettings={(source) => openPlayerDestination('settings', source)}
-        queueOpen={drawer === 'queue'}
-        toggleQueue={() => (drawer === 'queue' ? closeDrawer() : openDrawer('queue'))}
+        queueOpen={visibleDrawer === 'queue'}
+        lyricsOpen={visibleDrawer === 'lyrics'}
+        toggleQueue={(source) => (visibleDrawer === 'queue' ? closeDrawer() : openDrawer('queue', source))}
+        toggleLyrics={(source) => (visibleDrawer === 'lyrics' ? closeDrawer() : openDrawer('lyrics', source))}
       />
       {adding && (
         <AddPlaylist
