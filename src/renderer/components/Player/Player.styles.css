@@ -108,61 +108,6 @@
   outline: 1px solid var(--focus);
   outline-offset: 2px;
 }
-.repeat-popover {
-  position: fixed;
-  inset: auto;
-  margin: 0;
-  width: 196px;
-  padding: 5px;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: var(--popover, #fff);
-  color: var(--text);
-  box-shadow: 0 10px 32px #262d4026;
-  -webkit-app-region: no-drag;
-}
-.repeat-popover:not(:popover-open) {
-  display: none;
-}
-.repeat-popover [role='radiogroup'] {
-  display: grid;
-  gap: 2px;
-}
-.repeat-popover button {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  width: 100%;
-  min-height: 34px;
-  padding: 0 9px;
-  border: 0;
-  border-radius: 8px;
-  background: transparent;
-  color: var(--text);
-  text-align: left;
-  font: inherit;
-  font-size: 12px;
-  cursor: pointer;
-}
-.repeat-popover button:hover,
-.repeat-popover button[aria-checked='true'] {
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-.repeat-popover button:focus-visible {
-  outline: 1px solid var(--focus);
-  outline-offset: -1px;
-}
-.repeat-popover button > span:first-of-type {
-  flex: 1;
-}
-.repeat-current {
-  color: var(--muted);
-  font-size: 10px;
-}
-.repeat-popover button[aria-checked='true'] .repeat-current {
-  color: var(--accent);
-}
 .player-play {
   width: 36px;
   height: 36px;

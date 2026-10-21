@@ -14,15 +14,7 @@ import {
   Volume2,
   VolumeX,
 } from 'lucide-react';
-import {
-  useEffect,
-  useId,
-  useLayoutEffect,
-  useRef,
-  useState,
-  type CSSProperties,
-  type KeyboardEvent as ReactKeyboardEvent,
-} from 'react';
+import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 
 import { useNewsRecovery } from '../../NewsRecovery';
 import { usePlayer } from '../../player';
@@ -37,12 +29,6 @@ import './Player.styles.css';
 
 const fill = (percent: number): CSSProperties =>
   ({ '--range-fill': `${Math.max(0, Math.min(100, percent))}%` }) as CSSProperties;
-
-const repeatModes = [
-  { value: 'off', label: 'Off' },
-  { value: 'one', label: 'One song' },
-  { value: 'all', label: 'Whole library' },
-] as const;
 
 export function Player({
   queueOpen,
@@ -84,53 +70,12 @@ export function Player({
     ...(activeRun !== undefined ? [activeRun] : []),
   ];
   const notices = useRef<HTMLDivElement>(null);
-  const repeatId = useId();
   const repeatTrigger = useRef<HTMLButtonElement>(null);
-  const repeatPopup = useRef<HTMLDivElement>(null);
-  const repeatChoices = useRef<Array<HTMLButtonElement | null>>([]);
-  const [repeatOpen, setRepeatOpen] = useState(false);
   const { retryRef: libraryRetryRef, retry: retryLibraryWithFocus } = useRetryFocus({
     ownerKey: `player:library:${player.repeat}`,
     target: () => repeatTrigger.current,
     canFocusSuccess: () => !player.libraryError && !player.libraryLoading,
   });
-
-  function positionRepeatPopup() {
-    const trigger = repeatTrigger.current;
-    const popup = repeatPopup.current;
-    if (!trigger || !popup) return;
-    const rect = trigger.getBoundingClientRect();
-    popup.style.left = `${Math.max(12, Math.min(rect.left + rect.width / 2 - popup.offsetWidth / 2, window.innerWidth - popup.offsetWidth - 12))}px`;
-    popup.style.bottom = `${window.innerHeight - rect.top + 10}px`;
-  }
-
-  useEffect(() => {
-    if (!repeatOpen) return;
-    positionRepeatPopup();
-    window.addEventListener('resize', positionRepeatPopup);
-    return () => window.removeEventListener('resize', positionRepeatPopup);
-  }, [repeatOpen]);
-
-  function setRepeatMode(value: (typeof repeatModes)[number]['value']) {
-    player.setRepeat(value);
-    repeatPopup.current?.hidePopover();
-  }
-
-  function moveRepeatChoice(event: ReactKeyboardEvent<HTMLButtonElement>, index: number) {
-    if (!['ArrowDown', 'ArrowRight', 'ArrowUp', 'ArrowLeft', 'Home', 'End'].includes(event.key)) return;
-    event.preventDefault();
-    const next =
-      event.key === 'Home'
-        ? 0
-        : event.key === 'End'
-          ? repeatModes.length - 1
-          : (index + (event.key === 'ArrowDown' || event.key === 'ArrowRight' ? 1 : -1) + repeatModes.length) %
-            repeatModes.length;
-    const option = repeatModes[next];
-    if (!option) return;
-    player.setRepeat(option.value);
-    repeatChoices.current[next]?.focus({ preventScroll: true });
-  }
 
   useLayoutEffect(() => {
     const node = notices.current;
@@ -427,64 +372,19 @@ export function Player({
             <button
               ref={repeatTrigger}
               className={`player-icon secondary-transport ${player.repeat !== 'off' ? 'is-active' : ''}`}
-              popoverTarget={repeatId}
-              aria-haspopup="dialog"
-              aria-expanded={repeatOpen}
-              aria-controls={repeatId}
-              onClick={positionRepeatPopup}
-              title={`Repeat: ${repeatModes.find((mode) => mode.value === player.repeat)?.label ?? 'Off'}`}
-              aria-label={`Repeat: ${repeatModes.find((mode) => mode.value === player.repeat)?.label ?? 'Off'}. Choose repeat mode`}
+              onClick={() =>
+                player.setRepeat(player.repeat === 'off' ? 'all' : player.repeat === 'all' ? 'one' : 'off')
+              }
+              title={`Repeat: ${player.repeat}`}
+              aria-label={`Repeat: ${player.repeat}`}
+              aria-pressed={player.repeat !== 'off'}
             >
-              {player.repeat === 'one' ? <Repeat1 size={16} /> : <Repeat size={16} />}
+              {player.repeat === 'one' ? (
+                <Repeat1 size={16} aria-hidden="true" />
+              ) : (
+                <Repeat size={16} aria-hidden="true" />
+              )}
             </button>
-            <div
-              id={repeatId}
-              ref={repeatPopup}
-              className="repeat-popover"
-              popover="auto"
-              role="dialog"
-              aria-label="Repeat mode"
-              onToggle={(event) => {
-                if (event.target !== event.currentTarget) return;
-                const opening = event.newState === 'open';
-                setRepeatOpen(opening);
-                if (opening) {
-                  positionRepeatPopup();
-                  const selected = repeatModes.findIndex((mode) => mode.value === player.repeat);
-                  repeatChoices.current[selected]?.focus({ preventScroll: true });
-                } else if (
-                  repeatPopup.current?.contains(document.activeElement) ||
-                  document.activeElement === document.body
-                ) {
-                  repeatTrigger.current?.focus({ preventScroll: true });
-                }
-              }}
-            >
-              <div role="radiogroup" aria-label="Repeat mode">
-                {repeatModes.map((mode, index) => (
-                  <button
-                    key={mode.value}
-                    ref={(node) => {
-                      repeatChoices.current[index] = node;
-                    }}
-                    type="button"
-                    role="radio"
-                    aria-checked={player.repeat === mode.value}
-                    tabIndex={player.repeat === mode.value ? 0 : -1}
-                    onClick={() => setRepeatMode(mode.value)}
-                    onKeyDown={(event) => moveRepeatChoice(event, index)}
-                  >
-                    {mode.value === 'one' ? (
-                      <Repeat1 size={15} aria-hidden="true" />
-                    ) : (
-                      <Repeat size={15} aria-hidden="true" />
-                    )}
-                    <span>{mode.label}</span>
-                    {player.repeat === mode.value && <span className="repeat-current">Current</span>}
-                  </button>
-                ))}
-              </div>
-            </div>
           </div>
           <PlayerTimeline />
         </div>

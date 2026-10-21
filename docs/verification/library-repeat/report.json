@@ -22,13 +22,13 @@
     "Same-account library scope change cancels prior paging",
     "Account switch rejects delayed catalog results",
     "Oversized catalog produces a recoverable notice without discarding the playing queue",
-    "Repeat menu choices, keyboard navigation, selection and focus return",
     "Changing selected libraries during a waiting natural boundary resumes with the new scope",
     "Changing repeat off then on cancels a waiting natural boundary without phantom playback",
     "Empty catalog preserves a playable explicit queue",
     "Library retry returns keyboard focus to repeat control on success",
-    "Native Escape and light dismissal return focus without altering selected repeat mode",
-    "Repeat popover remains inside the viewport at 200 percent zoom"
+    "Repeat icon cycles off to all to one to off without opening a menu",
+    "Enter and Space cycle the repeat icon and retain button focus",
+    "Icon and focus ring fit at both window sizes at 200 percent zoom"
   ],
   "rendererErrors": [],
   "quality": [
@@ -52,5 +52,6 @@
     "Scoped selector to the repeat popover instead of the first dialog in the page.",
     "Native keyboard activation requires Enter character event as well as key down/up.",
     "Baseline images were initially captured before UI edits; final baseline pair recaptured from unchanged base source with identical fixture state."
-  ]
+  ],
+  "uiRevision": "Per user request, removed the labelled menu. Repeat icon cycles off, all, one, off; all is accent-colored and one uses Repeat1. Tooltips, aria-label and aria-pressed remain. Focused native click, keyboard and zoom checks passed; playback source is unchanged."
 }
