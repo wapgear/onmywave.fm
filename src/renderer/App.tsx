@@ -606,6 +606,9 @@ function ReadyApp({
         </aside>
       )}
       <Player
+        openDetails={(source) => {
+          if (player.current) openDrawer(player.current, source);
+        }}
         openRoom={(source) => openPlayerDestination('stations', source)}
         openSettings={(source) => openPlayerDestination('settings', source)}
         queueOpen={visibleDrawer === 'queue'}
