@@ -11,7 +11,6 @@ import { NewsTransitionPreview } from './NewsTransitionPreview.component';
 
 import './NewsTransitions.styles.css';
 
-
 const presets: { id: string; name: string; settings: NewsTransitionSettings }[] = [
   { id: 'natural', name: 'Natural', settings: defaultNewsTransitionSettings() },
   {

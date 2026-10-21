@@ -8,7 +8,6 @@ import { NEWS_TEXT_MODEL } from '../shared/types';
 import type { DJ, NewsSettings, NewsArticle, NewsScript, NewsProgress, NewsSource, Song } from '../shared/types';
 import { ServiceError } from './jellyfin';
 
-
 export type { NewsArticle, NewsScript } from '../shared/types';
 
 export type GeneratedNews = NewsScript & { audio: Buffer; mimeType: 'audio/mpeg'; engine: 'elevenlabs-v4' };

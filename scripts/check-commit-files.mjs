@@ -2,7 +2,6 @@ import { execFileSync } from 'node:child_process';
 import console from 'node:console';
 import process from 'node:process';
 
-
 const args = process.argv.slice(2);
 
 if (args.length > 1 || (args.length === 1 && args[0] !== '--tracked')) {

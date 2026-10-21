@@ -84,7 +84,6 @@ import {
   startUpdates,
 } from './updates';
 
-
 app.setName('onmywave.fm');
 
 app.setPath('userData', join(app.getPath('appData'), 'onmywave-light'));

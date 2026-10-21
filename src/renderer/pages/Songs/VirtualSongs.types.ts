@@ -1,6 +1,5 @@
 import type { TrackTableProps } from '../../components/TrackTable/TrackTable.types';
 
-
 export type VirtualSongsProps = TrackTableProps & {
   total: number;
   hasNext: boolean;

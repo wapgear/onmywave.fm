@@ -2,7 +2,6 @@ import { useState, type CSSProperties } from 'react';
 
 import { usePlayer, usePlayerPosition } from '../../player';
 
-
 const formatTime = (seconds: number) => {
   const safe = Math.max(0, Math.floor(Number.isFinite(seconds) ? seconds : 0));
   return `${Math.floor(safe / 60)}:${String(safe % 60).padStart(2, '0')}`;

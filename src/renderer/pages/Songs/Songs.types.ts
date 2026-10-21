@@ -1,6 +1,5 @@
 import type { CatalogQuery, Song } from '../../../shared/types';
 
-
 export type SongsView = { search: string; query: CatalogQuery; selected: Map<string, Song> };
 
 export type SongsPageProps = {

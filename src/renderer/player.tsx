@@ -45,7 +45,6 @@ import type {
   ScheduledNews,
 } from './player.types';
 
-
 type LoadSettlement = { key?: string; generation: number; outcome: 'success' | 'failure' | 'superseded' };
 
 const PlayerContext = createContext<PlayerState | null>(null);

@@ -1,19 +1,10 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["import"],
   "categories": {
     "correctness": "off"
   },
   "ignorePatterns": ["out/**", "release/**", "node_modules/**", "docs/**"],
   "rules": {
-    "import/newline-after-import": [
-      "error",
-      {
-        "count": 2,
-        "exactCount": true,
-        "considerComments": true
-      }
-    ],
     "@stylistic/padding-line-between-statements": [
       "error",
       {

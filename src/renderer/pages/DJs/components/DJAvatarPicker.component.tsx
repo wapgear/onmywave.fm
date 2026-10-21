@@ -14,7 +14,6 @@ import { DJAvatar } from '../../../components/DJAvatar/DJAvatar.component';
 
 import './DJAvatarPicker.styles.css';
 
-
 const icons = {
   host: UserRound,
   headphones: Headphones,

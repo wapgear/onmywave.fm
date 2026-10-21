@@ -1,6 +1,5 @@
 import type { ReactNode, RefObject } from 'react';
 
-
 export type ErrorNoticeProps = {
   error: unknown;
   retry?: () => void | Promise<unknown>;

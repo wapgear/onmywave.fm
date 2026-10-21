@@ -12,7 +12,6 @@ import { useRetryFocus } from '../../useRetryFocus';
 import type { SongsPageProps, SongsView } from './Songs.types';
 import { VirtualSongs } from './VirtualSongs.component';
 
-
 const PAGE_SIZE = 80;
 
 export const initialSongsView = (): SongsView => ({

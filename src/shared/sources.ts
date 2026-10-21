@@ -1,6 +1,5 @@
 import type { NewsSource } from './types';
 
-
 export function normalizeNewsSource(source: NewsSource): NewsSource {
   if (
     !source ||

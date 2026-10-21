@@ -1,7 +1,6 @@
 import type { ListeningRoom } from '../../../shared/types';
 import type { WorkflowDraft } from '../../../shared/workflow';
 
-
 export type RoomSetupDraft = {
   preparationCancellation?: { requestId: string; acknowledged: boolean };
   setup: ListeningRoom | null;

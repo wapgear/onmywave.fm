@@ -5,7 +5,6 @@ import type { FilterSelectProps } from './FilterSelect.types';
 
 import './FilterSelect.styles.css';
 
-
 export function FilterSelect({
   label,
   value,

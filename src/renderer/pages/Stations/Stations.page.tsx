@@ -20,7 +20,6 @@ import type { RoomSetupDraft, StationsPageProps } from './Stations.types';
 
 import './Stations.styles.css';
 
-
 function preparationOrigin(request: PreparedNewsRequest) {
   const origin = request.origin;
   if (!origin) return 'Original profile and time not recorded';

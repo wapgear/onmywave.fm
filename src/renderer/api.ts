@@ -1,6 +1,5 @@
 import type { ApiError, Result } from '../shared/types';
 
-
 export class WaveError extends Error {
   readonly code: ApiError['code'];
   readonly authRevision?: number;

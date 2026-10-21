@@ -9,7 +9,6 @@ import { Empty, ErrorNotice } from './Shared';
 
 import './LibraryChooser.styles.css';
 
-
 export function LibraryChooser({
   connection,
   done,

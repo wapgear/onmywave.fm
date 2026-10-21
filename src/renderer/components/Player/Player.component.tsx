@@ -27,7 +27,6 @@ import { PlayerTimeline } from './PlayerTimeline.component';
 
 import './Player.styles.css';
 
-
 const fill = (percent: number): CSSProperties =>
   ({ '--range-fill': `${Math.max(0, Math.min(100, percent))}%` }) as CSSProperties;
 

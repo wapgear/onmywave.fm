@@ -1,7 +1,6 @@
 import type { Song } from '../../../shared/types';
 import type { usePlaylistRecovery } from './Playlists.page';
 
-
 export type PlaylistsPageProps = {
   onReturnFromDetail: (id: string, origin: HTMLButtonElement) => void;
   onOpenDetail: (id: string, origin: HTMLButtonElement) => void;

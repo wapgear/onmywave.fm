@@ -3,7 +3,6 @@ import { createContext, useContext, useLayoutEffect, useRef, useState, type Reac
 
 import { unwrap } from '../../api';
 
-
 type Provider = 'openai' | 'elevenlabs' | 'twitter';
 
 const statusKeys = { openai: 'aiStatus', elevenlabs: 'elevenLabsStatus', twitter: 'twitterStatus' } as const;

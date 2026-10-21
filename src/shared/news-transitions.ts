@@ -1,6 +1,5 @@
 import type { NewsTransitionSettings } from './types';
 
-
 export type { NewsTransitionSettings } from './types';
 
 export const defaultNewsTransitionSettings = (): NewsTransitionSettings => ({

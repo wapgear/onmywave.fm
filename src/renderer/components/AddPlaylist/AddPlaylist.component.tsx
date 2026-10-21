@@ -6,7 +6,6 @@ import { useRetryFocus } from '../../useRetryFocus';
 import { Dialog, ErrorNotice } from '../Shared';
 import type { AddPlaylistProps } from './AddPlaylist.types';
 
-
 export function AddPlaylist({ connectionId, songs, close, checkPlaylists }: AddPlaylistProps) {
   const client = useQueryClient();
   const mounted = useRef(true);

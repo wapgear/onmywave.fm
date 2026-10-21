@@ -15,7 +15,6 @@ import { readSharedProviderKey, writeSharedProviderKey } from './keychain';
 import { normalizePlaybackPreferences } from './playback-preferences';
 import { StorageError } from './storage-error';
 
-
 export type StoredConnection = {
   id: string;
   serverUrl: string;

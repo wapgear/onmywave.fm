@@ -10,7 +10,6 @@ import { ErrorNotice } from '../Shared';
 
 import './Lyrics.styles.css';
 
-
 export function Lyrics({ connectionId, song }: { connectionId: string; song: Song }) {
   const player = usePlayer();
   const position = usePlayerPosition();

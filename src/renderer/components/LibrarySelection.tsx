@@ -5,7 +5,6 @@ import type { Connection } from '../../shared/types';
 import { unwrap } from '../api';
 import type { LibrarySelectionDone, LibrarySelectionProviderProps } from './LibrarySelection.types';
 
-
 type Submission = { ids: string[]; accountId: string; revision: number; done: LibrarySelectionDone };
 
 function useSelection(connection: Connection | null, expired: boolean) {

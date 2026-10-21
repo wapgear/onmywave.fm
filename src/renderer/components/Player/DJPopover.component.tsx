@@ -14,7 +14,6 @@ import type { DJPopoverProps } from './DJPopover.types';
 
 import './DJPopover.styles.css';
 
-
 export function DJPopover({ openRoom, openSettings }: DJPopoverProps) {
   const player = usePlayer();
   const automation = useDJPlayback();

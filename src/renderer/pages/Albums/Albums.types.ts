@@ -1,6 +1,5 @@
 import type { Album, Song } from '../../../shared/types';
 
-
 export type AlbumsView = { album: Album | null; draft: string; selected: Map<string, Song> };
 
 export type AlbumsPageProps = {
