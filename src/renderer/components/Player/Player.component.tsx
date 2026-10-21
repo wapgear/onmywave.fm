@@ -70,6 +70,12 @@ export function Player({
     ...(activeRun !== undefined ? [activeRun] : []),
   ];
   const notices = useRef<HTMLDivElement>(null);
+  const repeatTrigger = useRef<HTMLButtonElement>(null);
+  const { retryRef: libraryRetryRef, retry: retryLibraryWithFocus } = useRetryFocus({
+    ownerKey: `player:library:${player.repeat}`,
+    target: () => repeatTrigger.current,
+    canFocusSuccess: () => !player.libraryError && !player.libraryLoading,
+  });
 
   useLayoutEffect(() => {
     const node = notices.current;
@@ -278,6 +284,27 @@ export function Player({
             </button>
           </div>
         )}
+        {(player.libraryLoading || player.libraryError) && (
+          <div className="playback-error player-library-notice">
+            <span role={player.libraryLoading ? 'status' : 'alert'}>
+              {player.libraryLoading ? 'Loading whole library…' : player.libraryError}
+            </span>
+            {player.libraryError && (
+              <button
+                ref={libraryRetryRef}
+                aria-disabled={player.libraryLoading || undefined}
+                aria-busy={player.libraryLoading || undefined}
+                onClick={() => {
+                  if (player.libraryLoading) return;
+                  void retryLibraryWithFocus(async () => ({ isError: !(await player.retryLibrary()) }));
+                }}
+              >
+                {player.libraryLoading ? <LoaderCircle size={14} className="player-spin" /> : <RotateCw size={14} />}
+                {player.libraryLoading ? 'Loading library…' : 'Retry library'}
+              </button>
+            )}
+          </div>
+        )}
       </div>
       <footer className="player-bar" aria-label="Music player">
         <div className="player-song">
@@ -343,13 +370,20 @@ export function Player({
               <SkipForward size={19} fill="currentColor" />
             </button>
             <button
+              ref={repeatTrigger}
               className={`player-icon secondary-transport ${player.repeat !== 'off' ? 'is-active' : ''}`}
-              onClick={player.cycleRepeat}
-              title={`Repeat ${player.repeat}`}
+              onClick={() =>
+                player.setRepeat(player.repeat === 'off' ? 'all' : player.repeat === 'all' ? 'one' : 'off')
+              }
+              title={`Repeat: ${player.repeat}`}
               aria-label={`Repeat: ${player.repeat}`}
               aria-pressed={player.repeat !== 'off'}
             >
-              {player.repeat === 'one' ? <Repeat1 size={16} /> : <Repeat size={16} />}
+              {player.repeat === 'one' ? (
+                <Repeat1 size={16} aria-hidden="true" />
+              ) : (
+                <Repeat size={16} aria-hidden="true" />
+              )}
             </button>
           </div>
           <PlayerTimeline />

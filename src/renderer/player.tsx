@@ -33,6 +33,7 @@ import type {
 } from '../shared/types';
 import { unwrap, WaveError } from './api';
 import { freshAudioUrl } from './audio';
+import { useLibraryRepeat } from './hooks/useLibraryRepeat';
 import { useNewsRecovery } from './NewsRecovery';
 import type {
   HeardNews,
@@ -104,6 +105,23 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const [volume, setVolume] = useState(0.75);
   const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState<PlaybackSnapshot['repeat']>('off');
+  const libraryScope = connection
+    ? JSON.stringify([connection.id, connection.authRevision, connection.selectedLibraryIds])
+    : null;
+  const libraryScopeRef = useRef(libraryScope);
+  const { load: loadLibrary } = useLibraryRepeat(libraryScope, repeat === 'all');
+  const [libraryError, setLibraryError] = useState<string | null>(null);
+  const [libraryLoading, setLibraryLoading] = useState(false);
+  const [queueSession, setQueueSession] = useState(0);
+  const queueRevision = useRef(0);
+  const repeatRevision = useRef(0);
+  const excludedLibrarySongs = useRef(new Set<string>());
+  const pendingLibraryNext = useRef<{
+    command: number;
+    generation: number;
+    afterNews: boolean;
+    scope: string | null;
+  } | null>(null);
   const [restore, setRestore] = useState<PlaybackSnapshot | null>(null);
   const [restoreAttempt, setRestoreAttempt] = useState(0);
   const [readyConnection, setReadyConnection] = useState<string | null>(null);
@@ -223,6 +241,10 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     volume,
     recoveryReady,
   });
+
+  useLayoutEffect(() => {
+    libraryScopeRef.current = libraryScope;
+  }, [libraryScope]);
 
   useLayoutEffect(() => {
     const nextConnectionId = connection?.id ?? null;
@@ -414,11 +436,81 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     [publishPosition],
   );
 
-  const next = useCallback(
-    (afterNews = false) => {
-      stopNews(afterNews);
+  const extendLibraryQueue = useCallback(async () => {
+    const revision = queueRevision.current;
+    const modeRevision = repeatRevision.current;
+    const connectionId = currentConnectionId.current;
+    const scope = libraryScopeRef.current;
+    const isCurrent = () =>
+      mounted.current &&
+      queueRevision.current === revision &&
+      repeatRevision.current === modeRevision &&
+      currentConnectionId.current === connectionId &&
+      libraryScopeRef.current === scope &&
+      live.current.repeat === 'all';
+    if (!live.current.queue.length || !connectionId || live.current.repeat !== 'all') return false;
+    setLibraryLoading(true);
+    try {
+      const songs = await loadLibrary();
+      if (!isCurrent()) return false;
       const state = live.current;
+      const known = new Set(state.queue.map((item) => item.song.id));
+      const added = entries(songs.filter((song) => !known.has(song.id) && !excludedLibrarySongs.current.has(song.id)));
+      if (state.queue.length + added.length > 100_000)
+        throw new Error('This queue is too large to repeat with the whole library.');
+      if (added.length) {
+        const nextQueue = [...state.queue, ...added];
+        live.current = { ...state, queue: nextQueue };
+        setQueue(nextQueue);
+        if (state.shuffle)
+          updateShufflePlan(
+            refillShufflePlan(
+              shufflePlan.current,
+              nextQueue.map((item) => item.key),
+            ),
+          );
+      }
+      setLibraryError(null);
+      return true;
+    } catch (cause) {
+      if (isCurrent() && !(cause instanceof DOMException && cause.name === 'AbortError'))
+        setLibraryError(
+          `The library could not be added to the queue. ${cause instanceof Error ? cause.message : 'Check your connection and retry.'}`,
+        );
+      return false;
+    } finally {
+      if (isCurrent()) setLibraryLoading(false);
+    }
+  }, [loadLibrary, updateShufflePlan]);
+
+  const next = useCallback(
+    async (afterNews = false) => {
+      stopNews(afterNews);
+      let state = live.current;
       if (!state.queue.length) return;
+      const plan = shufflePlan.current;
+      const atBoundary = state.shuffle
+        ? plan.cursor + 1 >= plan.history.length && plan.upcoming.length === 0
+        : state.index + 1 >= state.queue.length;
+      if (state.repeat === 'all' && atBoundary) {
+        const command = commandRevision.current;
+        const token = generation.current;
+        const modeRevision = repeatRevision.current;
+        const scope = libraryScopeRef.current;
+        pendingLibraryNext.current = { command, generation: token, afterNews, scope };
+        const ready = await extendLibraryQueue();
+        if (
+          command !== commandRevision.current ||
+          token !== generation.current ||
+          modeRevision !== repeatRevision.current ||
+          scope !== libraryScopeRef.current ||
+          live.current.repeat !== 'all'
+        )
+          return;
+        if (!ready) return;
+        pendingLibraryNext.current = null;
+        state = live.current;
+      }
       let nextIndex: number | undefined;
       if (state.shuffle) {
         const advanced = nextShuffle(
@@ -446,12 +538,27 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         setPlaying(false);
       }
     },
-    [stopNews, requestPlayback, changeTrack, updateShufflePlan],
+    [stopNews, requestPlayback, changeTrack, updateShufflePlan, extendLibraryQueue],
   );
+
+  useEffect(() => {
+    if (repeat !== 'all' || !connection || readyConnection !== connection.id || !live.current.queue.length) return;
+    void extendLibraryQueue().then((ready) => {
+      const pending = pendingLibraryNext.current;
+      if (
+        ready &&
+        pending &&
+        pending.scope !== libraryScopeRef.current &&
+        pending.command === commandRevision.current &&
+        pending.generation === generation.current
+      )
+        void next(pending.afterNews);
+    });
+  }, [connection, readyConnection, repeat, queueSession, extendLibraryQueue, next]);
 
   const skipNext = useCallback(() => {
     musicCommand();
-    next();
+    void next();
   }, [musicCommand, next]);
 
   const continueAfterSong = useCallback(
@@ -460,7 +567,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       if (state.repeat === 'one' && state.current) {
         stopNews(afterNews);
         void load(state.current, converted.current, 0);
-      } else next(afterNews);
+      } else void next(afterNews);
     },
     [load, next, stopNews],
   );
@@ -752,6 +859,8 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
             restoredKey ?? null,
           );
         updateShufflePlan(plan);
+        queueRevision.current += 1;
+        setQueueSession(queueRevision.current);
         setQueue(restoredQueue);
         setIndex(restoredIndexInQueue);
         setRestore(null);
@@ -1446,6 +1555,10 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         nextQueue[nextIndex]?.key ?? null,
       ),
     );
+    excludedLibrarySongs.current.clear();
+    queueRevision.current += 1;
+    setQueueSession(queueRevision.current);
+    live.current = { ...live.current, queue: nextQueue, index: nextIndex, current: nextQueue[nextIndex]?.song };
     setQueue(nextQueue);
     setIndex(nextIndex);
     setReadyConnection(connection?.id ?? null);
@@ -1676,6 +1789,20 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
           shuffle,
           repeat,
           completedSongs,
+          libraryError: repeat === 'all' ? libraryError : null,
+          libraryLoading: repeat === 'all' && libraryLoading,
+          retryLibrary: async () => {
+            const pending = pendingLibraryNext.current;
+            const ready = await extendLibraryQueue();
+            if (
+              ready &&
+              pending &&
+              pending.command === commandRevision.current &&
+              pending.generation === generation.current
+            )
+              await next(pending.afterNews);
+            return ready;
+          },
           optionsError,
           optionsRevision,
           retryOptions: saveOptions,
@@ -1711,6 +1838,11 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
             ++resumeGeneration.current;
             setRestore(null);
             if (!live.current.current) setBusy(false);
+            if (!live.current.queue.length) {
+              excludedLibrarySongs.current.clear();
+              queueRevision.current += 1;
+              setQueueSession(queueRevision.current);
+            }
             const nextQueue = [...live.current.queue, ...entries(songs)];
             if (live.current.shuffle) {
               const keys = nextQueue.map((item) => item.key);
@@ -1744,15 +1876,26 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
               );
             setShuffle((value) => !value);
           },
-          cycleRepeat: () => {
+          setRepeat: (value) => {
+            if (live.current.repeat === value) return;
+            ++repeatRevision.current;
+            pendingLibraryNext.current = null;
+            if (audio.current?.ended) {
+              requestPlayback(false);
+              setPlaying(false);
+            }
             ++optionsSaveGeneration.current;
             setOptionsRevision((revision) => revision + 1);
             preferenceEdits.current.repeat = true;
-            setRepeat((value) => (value === 'off' ? 'all' : value === 'all' ? 'one' : 'off'));
+            live.current.repeat = value;
+            setLibraryError(null);
+            setLibraryLoading(false);
+            setRepeat(value);
           },
           removeQueue: (key) => {
             const removed = queue.findIndex((item) => item.key === key);
             if (removed < 0) return;
+            excludedLibrarySongs.current.add(queue[removed].song.id);
             if (key === currentKey) {
               musicCommand();
               stopNews();
