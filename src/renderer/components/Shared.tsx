@@ -1,6 +1,7 @@
 import { AlertCircle, Music2, X } from 'lucide-react';
 import { useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 
+import { IconButton } from './IconButton/IconButton.component';
 import type { DialogProps, ErrorNoticeProps, PageHeadingProps } from './Shared.types';
 
 export const errorMessage = (error: unknown) =>
@@ -114,7 +115,7 @@ export function Dialog({
     if (initialFocus && node.contains(initialFocus) && !initialFocus.matches(':disabled'))
       initialFocus.focus({ preventScroll: true });
     return () => {
-      node?.close();
+      node.close();
       if (!shouldRestoreFocus(restoreFocusRef)) return;
       requestAnimationFrame(() => {
         if (document.querySelector('dialog[open]')) return;
@@ -150,20 +151,24 @@ export function Dialog({
     >
       <div className="modal-heading">
         <h2 id={titleId}>{title}</h2>
-        <button
-          className="icon-button"
+        <IconButton
+          className="modal-close"
           aria-disabled={closeDisabled || undefined}
           onClick={() => {
             if (!closeDisabled) close();
           }}
-          aria-label="Close dialog"
+          label="Close dialog"
         >
-          <X size={20} />
-        </button>
+          <X size={20} aria-hidden="true" />
+        </IconButton>
       </div>
-      {children}
+      <div className="modal-content">{children}</div>
     </dialog>
   );
+}
+
+export function DialogActions({ children }: { children: ReactNode }) {
+  return <div className="modal-actions">{children}</div>;
 }
 
 export function PageHeading({ title, subtitle, children, headingRef }: PageHeadingProps) {

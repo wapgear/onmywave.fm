@@ -15,6 +15,23 @@
   --border: #e2e2e7;
   --separator: #e6e6ea;
   --focus: #c92843;
+  --control-size: 34px;
+  --control-size-compact: 32px;
+  --control-size-play: 36px;
+  --control-focus-width: 2px;
+  --control-gap: 8px;
+  --control-radius: 8px;
+  --field-height: 38px;
+  --field-radius: 10px;
+  --field-background: #f3f3f5;
+  --field-border: #e2e2e8;
+  --danger: #ad3434;
+  --popover-radius: 12px;
+  --popover-shadow: 0 10px 32px #17203926;
+  --dialog-padding: 20px;
+  --dialog-radius: 22px;
+  --dialog-background: #fdfdfe;
+  --dialog-shadow: 0 24px 90px #181b3a38;
   --muted: #626674;
   --surface: #f0f0f2;
   --text: #202024;
@@ -42,13 +59,13 @@ button {
   border-radius: 18px;
   background: #efeff1;
   color: inherit;
-  min-height: 34px;
+  min-height: var(--control-size);
   padding: 7px 14px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: var(--control-gap);
   white-space: nowrap;
   transition: background 0.15s;
 }
@@ -73,7 +90,7 @@ select:focus-visible,
 textarea:focus-visible,
 summary:focus-visible,
 [tabindex]:focus-visible {
-  outline: 1px solid var(--focus);
+  outline: var(--control-focus-width) solid var(--focus);
   outline-offset: 2px;
 }
 button.primary {
@@ -82,6 +99,12 @@ button.primary {
 }
 button.primary:hover:where(:not(:disabled)) {
   background: var(--accent-hover);
+}
+button.ghost {
+  background: transparent;
+}
+button.ghost:hover:where(:not(:disabled)) {
+  background: var(--hover);
 }
 button.destructive {
   background: #b63131;
@@ -136,12 +159,20 @@ p {
   line-height: 1.65;
 }
 .icon-button {
-  width: 34px;
-  height: 34px;
-  min-width: 34px;
-  padding: 6px;
+  width: var(--icon-button-size, var(--control-size));
+  height: var(--icon-button-size, var(--control-size));
+  min-width: var(--icon-button-size, var(--control-size));
+  min-height: var(--icon-button-size, var(--control-size));
+  flex: 0 0 auto;
+  padding: 0;
   background: transparent;
   border-radius: 50%;
+}
+.icon-button-compact {
+  --icon-button-size: var(--control-size-compact);
+}
+button > svg {
+  flex-shrink: 0;
 }
 .icon-button:hover:where(:not(:disabled)) {
   background: #e9e9ec;
@@ -269,6 +300,8 @@ p {
   border: 0;
   border-radius: 0;
   outline-offset: 5px;
+  height: 100%;
+  min-height: 0;
   font-size: 12px;
 }
 .filter-bar {
@@ -501,17 +534,26 @@ p {
 .row-actions summary:hover {
   background: #e3e3e8;
 }
+:where(.popover-surface) {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  max-width: calc(100vw - 16px);
+  max-height: calc(100dvh - 16px);
+  border: 1px solid var(--border);
+  border-radius: var(--popover-radius);
+  background: var(--popover);
+  color: var(--text);
+  box-shadow: var(--popover-shadow);
+  -webkit-app-region: no-drag;
+}
+.popover-surface:not(:popover-open) {
+  display: none;
+}
 .row-menu {
-  position: absolute;
   z-index: 20;
-  right: 0;
-  top: 30px;
   display: flex;
   flex-direction: column;
-  background: #fff;
-  box-shadow: 0 6px 25px #17203926;
-  border: 1px solid #e9e9ed;
-  border-radius: 12px;
   padding: 6px;
   min-width: 195px;
 }
@@ -958,12 +1000,17 @@ p {
   width: 440px;
   max-width: calc(100vw - 48px);
   max-height: calc(100dvh - 80px);
-  border: 1px solid #ececf0;
-  border-radius: 22px;
-  padding: 26px;
-  box-shadow: 0 24px 90px #181b3a38;
+  border: 1px solid var(--border);
+  border-radius: var(--dialog-radius);
+  padding: 0;
+  box-shadow: var(--dialog-shadow);
   color: var(--text);
-  background: #fdfdfe;
+  background: var(--dialog-background);
+  overflow: hidden;
+}
+.modal[open] {
+  display: flex;
+  flex-direction: column;
 }
 .modal-wide {
   width: 660px;
@@ -973,24 +1020,42 @@ p {
   backdrop-filter: blur(5px);
 }
 .modal-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-  margin-bottom: 24px;
+  position: relative;
+  flex: 0 0 auto;
+  padding: var(--dialog-padding) 56px 16px var(--dialog-padding);
 }
 .modal-heading h2 {
-  font-size: 20px;
+  font-size: 18px;
+  line-height: 1.35;
   min-width: 0;
   overflow-wrap: anywhere;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
 }
-.modal-heading .icon-button {
-  margin: -5px -5px -5px 0;
-  flex: 0 0 auto;
+.modal-heading .modal-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+.modal-content {
+  min-height: 0;
+  margin: 0 8px 8px;
+  padding: 0 12px 12px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: #b8bac3 transparent;
+  scroll-padding-block: 8px;
+}
+.modal-content::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.modal-content::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: #b8bac3;
+}
+.modal-content::-webkit-scrollbar-track {
+  background: transparent;
 }
 .modal p {
   font-size: 13px;
@@ -999,11 +1064,17 @@ p {
 }
 .modal-actions {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: flex-end;
-  gap: 8px;
+  gap: var(--control-gap);
   margin-top: 24px;
 }
 .modal-actions button {
+  max-width: 100%;
+  min-width: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
   font-size: 12px;
 }
 form label {
@@ -1014,13 +1085,13 @@ form label {
   font-weight: 500;
   margin: 0 0 18px;
 }
-input,
+input:where(:not([type='checkbox'], [type='radio'], [type='range'])),
 select,
 textarea {
   color: var(--text);
-  background: #f3f3f5;
-  border: 1px solid #e2e2e8;
-  border-radius: 10px;
+  background: var(--field-background);
+  border: 1px solid var(--field-border);
+  border-radius: var(--field-radius);
   padding: 10px 12px;
   min-width: 0;
   width: 100%;
@@ -1034,12 +1105,28 @@ textarea {
   resize: vertical;
   line-height: 1.65;
 }
-input {
-  min-height: 38px;
-}
+input:where(:not([type='checkbox'], [type='radio'], [type='range'])),
 select {
-  min-height: 38px;
+  min-height: var(--field-height);
 }
+:where(input[type='checkbox'], input[type='radio']) {
+  width: 16px;
+  height: 16px;
+  min-height: 16px;
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
+  accent-color: var(--accent);
+}
+:where(input, select, textarea):disabled {
+  color: var(--muted);
+  cursor: default;
+  opacity: 0.65;
+}
+:where(input, select, textarea)[aria-invalid='true'] {
+  border-color: var(--danger);
+}
+
 .checkbox-label {
   flex-direction: row;
   align-items: center;
@@ -1060,7 +1147,7 @@ select {
 }
 .form-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
 }
 fieldset {
@@ -1180,7 +1267,7 @@ legend {
   .selection-toolbar {
     gap: 2px;
   }
-  .selection-toolbar button {
+  .selection-toolbar button:not(.icon-button) {
     padding-left: 10px;
     padding-right: 10px;
   }
@@ -1573,18 +1660,6 @@ legend {
 .selection-toolbar {
   flex-wrap: wrap;
 }
-.modal {
-  overscroll-behavior: contain;
-  scrollbar-gutter: auto;
-}
-.modal-heading {
-  position: sticky;
-  top: -26px;
-  z-index: 2;
-  padding: 18px 0;
-  background: #fdfdfef5;
-  backdrop-filter: blur(16px);
-}
 
 .sidebar {
   grid-column: 1;
@@ -1598,9 +1673,6 @@ legend {
 .main-content {
   scroll-padding-top: 72px;
   scroll-padding-bottom: calc(var(--player-clearance) + var(--player-notice-height, 0px) + 24px);
-}
-.modal {
-  scroll-padding-top: 84px;
 }
 
 .app-shell.has-drawer {
@@ -1811,7 +1883,7 @@ input[type='checkbox'] {
 .collection-heading h1:focus-visible,
 .song-load-status > span:focus-visible,
 .album-load-status > span:focus-visible {
-  outline: 1px solid var(--focus);
+  outline: var(--control-focus-width) solid var(--focus);
   outline-offset: 2px;
   border-radius: 4px;
 }

@@ -5,8 +5,9 @@ import { useLayoutEffect, useRef, useState } from 'react';
 import type { ListeningRoom, PreparedNewsRequest } from '../../../shared/types';
 import type { WorkflowDraft } from '../../../shared/workflow';
 import { unwrap } from '../../api';
+import { Button } from '../../components/Button/Button.component';
 import { ConfigurationTabs } from '../../components/ConfigurationTabs/ConfigurationTabs.component';
-import { Dialog, ErrorNotice, PageHeading, errorMessage } from '../../components/Shared';
+import { Dialog, DialogActions, ErrorNotice, PageHeading, errorMessage } from '../../components/Shared';
 import { useDJPlayback } from '../../dj-playback';
 import { confirmLocalState } from '../../local-state-cache';
 import { NewsRecoveryPanel, useNewsRecovery } from '../../NewsRecovery';
@@ -1220,19 +1221,20 @@ export function StationsPage({
                   Advanced room options before enabling preparation or DJ breaks. You can finish incomplete setup later.
                 </p>
                 <ErrorNotice error={profiles.error} />
-                <div className="modal-actions">
-                  <button type="button" aria-disabled={profiles.isPending || undefined} onClick={closeProfileDialogs}>
+                <DialogActions>
+                  <Button type="button" aria-disabled={profiles.isPending || undefined} onClick={closeProfileDialogs}>
                     Cancel
-                  </button>
-                  <button
-                    className="primary"
+                  </Button>
+                  <Button
+                    type="submit"
+                    variant="primary"
                     disabled={!profileName.trim()}
                     aria-disabled={busy || undefined}
                     aria-busy={profiles.isPending || undefined}
                   >
                     {profiles.isPending ? 'Saving…' : 'Save room'}
-                  </button>
-                </div>
+                  </Button>
+                </DialogActions>
               </form>
             </Dialog>
           )}
@@ -1243,25 +1245,25 @@ export function StationsPage({
                 discard them. Saved scripts and recordings stay unchanged.
               </p>
               <ErrorNotice error={profiles.error} />
-              <div className="modal-actions">
-                <button aria-disabled={profiles.isPending || undefined} onClick={closeProfileDialogs}>
+              <DialogActions>
+                <Button aria-disabled={profiles.isPending || undefined} onClick={closeProfileDialogs}>
                   Cancel
-                </button>
-                <button
+                </Button>
+                <Button
                   aria-disabled={busy || undefined}
                   onClick={() => changeProfile({ kind: 'switch', id: switchTarget, saveChanges: false })}
                 >
                   Discard and switch
-                </button>
-                <button
-                  className="primary"
+                </Button>
+                <Button
+                  variant="primary"
                   aria-disabled={busy || undefined}
                   aria-busy={profiles.isPending || undefined}
                   onClick={() => changeProfile({ kind: 'switch', id: switchTarget, saveChanges: true })}
                 >
                   {profiles.isPending ? 'Switching…' : 'Save and switch'}
-                </button>
-              </div>
+                </Button>
+              </DialogActions>
             </Dialog>
           )}
         </>

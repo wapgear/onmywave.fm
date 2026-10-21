@@ -22,22 +22,10 @@
   font-size: 10px;
 }
 .dj-popover {
-  position: fixed;
-  inset: auto;
-  margin: 0;
   width: 320px;
   max-width: calc(100vw - 24px);
   padding: 14px;
   overflow: auto;
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  background: var(--popover, #fff);
-  color: var(--text);
-  box-shadow: 0 12px 48px #262d4026;
-  -webkit-app-region: no-drag;
-}
-.dj-popover:not(:popover-open) {
-  display: none;
 }
 .dj-popover header,
 .dj-control,

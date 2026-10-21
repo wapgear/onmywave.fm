@@ -21,8 +21,6 @@
   letter-spacing: -0.2px;
 }
 .drawer-heading button {
-  font-size: 27px;
-  font-weight: 400;
   color: var(--muted);
 }
 .drawer-body {
@@ -156,10 +154,6 @@
   font-size: 11px;
 }
 .queue-remove {
-  width: 24px;
-  min-width: 24px;
-  height: 28px;
-  min-height: 28px;
   opacity: 0;
 }
 .queue-list li:hover .queue-remove,

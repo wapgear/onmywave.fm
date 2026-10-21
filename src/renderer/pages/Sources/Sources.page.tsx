@@ -5,8 +5,10 @@ import { useRef, useState } from 'react';
 import { normalizeNewsSource } from '../../../shared/sources';
 import type { NewsSource } from '../../../shared/types';
 import { unwrap } from '../../api';
+import { Button } from '../../components/Button/Button.component';
+import { IconButton } from '../../components/IconButton/IconButton.component';
 import { TwitterSetupHelp } from '../../components/ProviderKeys/TwitterSetupHelp.component';
-import { Dialog, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
+import { Dialog, DialogActions, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { confirmLocalState } from '../../local-state-cache';
 import { useRetryFocus } from '../../useRetryFocus';
 
@@ -127,25 +129,20 @@ export function SourcesPage() {
                   .find((profile) => profile.id === state.data?.activeRoomProfileId)
                   ?.room.sourceIds.includes(source.id) && <span>Selected in News bucket</span>}
               </div>
-              <button
-                className="icon-button"
+              <IconButton disabled={mutation.isPending} label={`Edit ${source.name}`} onClick={() => edit(source)}>
+                <Pencil size={16} aria-hidden="true" />
+              </IconButton>
+              <IconButton
+                className="danger"
                 disabled={mutation.isPending}
-                aria-label={`Edit ${source.name}`}
-                onClick={() => edit(source)}
-              >
-                <Pencil size={16} />
-              </button>
-              <button
-                className="icon-button danger"
-                disabled={mutation.isPending}
-                aria-label={`Delete ${source.name}`}
+                label={`Delete ${source.name}`}
                 onClick={() => {
                   mutation.reset();
                   setDeleting(source);
                 }}
               >
-                <Trash2 size={16} />
-              </button>
+                <Trash2 size={16} aria-hidden="true" />
+              </IconButton>
             </article>
           ))}
         </div>
@@ -272,13 +269,14 @@ export function SourcesPage() {
               )}
             </fieldset>
             <ErrorNotice error={mutation.error} />
-            <div className="modal-actions">
-              <button type="button" aria-disabled={mutation.isPending || undefined} onClick={closeDialogs}>
+            <DialogActions>
+              <Button type="button" aria-disabled={mutation.isPending || undefined} onClick={closeDialogs}>
                 Cancel
-              </button>
-              <button
+              </Button>
+              <Button
+                type="submit"
                 ref={saveButton}
-                className="primary"
+                variant="primary"
                 aria-disabled={mutation.isPending || undefined}
                 aria-busy={mutation.isPending || undefined}
                 disabled={
@@ -286,8 +284,8 @@ export function SourcesPage() {
                 }
               >
                 {mutation.isPending ? 'Saving…' : 'Save source'}
-              </button>
-            </div>
+              </Button>
+            </DialogActions>
           </form>
         </Dialog>
       )}
@@ -307,19 +305,19 @@ export function SourcesPage() {
             </p>
           )}
           <ErrorNotice error={mutation.error} />
-          <div className="modal-actions">
-            <button aria-disabled={mutation.isPending || undefined} onClick={closeDialogs}>
+          <DialogActions>
+            <Button aria-disabled={mutation.isPending || undefined} onClick={closeDialogs}>
               Cancel
-            </button>
-            <button
-              className="destructive"
+            </Button>
+            <Button
+              variant="destructive"
               aria-disabled={mutation.isPending || undefined}
               aria-busy={mutation.isPending || undefined}
               onClick={() => changeSource({ remove: deleting.id })}
             >
               {mutation.isPending ? 'Deleting…' : 'Delete source'}
-            </button>
-          </div>
+            </Button>
+          </DialogActions>
         </Dialog>
       )}
     </>

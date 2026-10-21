@@ -9,6 +9,7 @@ import { useDJPlayback } from '../../dj-playback';
 import { useNewsRecovery } from '../../NewsRecovery';
 import { usePlayer } from '../../player';
 import { useRetryFocus } from '../../useRetryFocus';
+import { IconButton } from '../IconButton/IconButton.component';
 import { InfoHelp } from '../InfoHelp/InfoHelp.component';
 import { ErrorNotice } from '../Shared';
 import type { DJPopoverProps } from './DJPopover.types';
@@ -235,7 +236,7 @@ export function DJPopover({ openRoom, openSettings }: DJPopoverProps) {
       <div
         id={id}
         ref={popup}
-        className="dj-popover"
+        className="popover-surface dj-popover"
         popover="auto"
         role="dialog"
         aria-label="DJ controls"
@@ -333,14 +334,9 @@ export function DJPopover({ openRoom, openSettings }: DJPopoverProps) {
                 )}
               </section>
             </InfoHelp>
-            <button
-              className="icon-button"
-              popoverTarget={id}
-              popoverTargetAction="hide"
-              aria-label="Close DJ controls"
-            >
-              <X size={18} />
-            </button>
+            <IconButton popoverTarget={id} popoverTargetAction="hide" label="Close DJ controls">
+              <X size={18} aria-hidden="true" />
+            </IconButton>
           </div>
         </header>
         {!recoveryReady && !knownSpeech && (

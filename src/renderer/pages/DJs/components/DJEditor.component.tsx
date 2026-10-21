@@ -5,8 +5,9 @@ import { resolveDJAvatar } from '../../../../shared/dj-avatar';
 import type { DJ, DJVoice, DJVoiceSearch, NewsSettings } from '../../../../shared/types';
 import { NEWS_TEXT_MODEL } from '../../../../shared/types';
 import { unwrap } from '../../../api';
+import { Button } from '../../../components/Button/Button.component';
 import { ConfigurationTabs } from '../../../components/ConfigurationTabs/ConfigurationTabs.component';
-import { Dialog, ErrorNotice } from '../../../components/Shared';
+import { Dialog, DialogActions, ErrorNotice } from '../../../components/Shared';
 import { confirmLocalState } from '../../../local-state-cache';
 import { DJAvatarPicker } from './DJAvatarPicker.component';
 import { djPresets } from './DJEditor.presets';
@@ -470,20 +471,21 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
         </fieldset>
         <ErrorNotice error={save.error} />
         <p className="dj-profile-save-note">Saving a DJ does not generate audio or start playback.</p>
-        <div className="modal-actions">
-          <button type="button" aria-disabled={save.isPending || undefined} onClick={closeEditor}>
+        <DialogActions>
+          <Button type="button" aria-disabled={save.isPending || undefined} onClick={closeEditor}>
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
+            type="submit"
             ref={saveButton}
-            className="primary"
+            variant="primary"
             aria-disabled={save.isPending || undefined}
             aria-busy={save.isPending || undefined}
             disabled={!draft.name.trim() || !news.elevenVoiceId?.trim()}
           >
             {save.isPending ? 'Saving…' : 'Save DJ'}
-          </button>
-        </div>
+          </Button>
+        </DialogActions>
       </form>
     </Dialog>
   );

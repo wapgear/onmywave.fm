@@ -3,7 +3,8 @@ import { useLayoutEffect, useRef, useState, type KeyboardEvent, type PointerEven
 
 import { unwrap, WaveError } from '../../api';
 import { useRetryFocus } from '../../useRetryFocus';
-import { Dialog, ErrorNotice } from '../Shared';
+import { Button } from '../Button/Button.component';
+import { Dialog, DialogActions, ErrorNotice } from '../Shared';
 import type { AddPlaylistProps } from './AddPlaylist.types';
 
 export function AddPlaylist({ connectionId, songs, close, checkPlaylists }: AddPlaylistProps) {
@@ -228,12 +229,13 @@ export function AddPlaylist({ connectionId, songs, close, checkPlaylists }: AddP
             The change may already be saved. Check the refreshed playlists and their songs before trying again.
           </p>
         )}
-        <div className="modal-actions">
-          <button type="button" aria-disabled={save.isPending || undefined} onClick={uncertain ? review : cancel}>
+        <DialogActions>
+          <Button type="button" aria-disabled={save.isPending || undefined} onClick={uncertain ? review : cancel}>
             {uncertain ? 'Close and check playlists' : 'Cancel'}
-          </button>
-          <button
-            className="primary"
+          </Button>
+          <Button
+            type="submit"
+            variant="primary"
             disabled={
               !save.isPending &&
               !uncertain &&
@@ -243,8 +245,8 @@ export function AddPlaylist({ connectionId, songs, close, checkPlaylists }: AddP
             aria-busy={save.isPending || undefined}
           >
             {save.isPending ? 'Saving…' : destination === 'new' ? 'Create playlist' : 'Add songs'}
-          </button>
-        </div>
+          </Button>
+        </DialogActions>
       </form>
     </Dialog>
   );

@@ -4,8 +4,10 @@ import { useRef, useState } from 'react';
 
 import type { DJ } from '../../../shared/types';
 import { unwrap } from '../../api';
+import { Button } from '../../components/Button/Button.component';
 import { DJAvatar } from '../../components/DJAvatar/DJAvatar.component';
-import { Dialog, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
+import { IconButton } from '../../components/IconButton/IconButton.component';
+import { Dialog, DialogActions, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { confirmLocalState } from '../../local-state-cache';
 import { useRetryFocus } from '../../useRetryFocus';
 import { DJEditor } from './components/DJEditor.component';
@@ -104,26 +106,25 @@ export function DJsPage() {
                 <p>{dj.description || 'Your saved DJ configuration'}</p>
                 <DJPreview dj={dj} activeId={previewing} onStart={setPreviewing} />
               </div>
-              <button className="icon-button" aria-label={`Edit ${dj.name}`} onClick={() => edit({ ...dj })}>
-                <Pencil size={17} />
-              </button>
-              <button
-                className="icon-button"
-                aria-label={`Duplicate ${dj.name}`}
+              <IconButton label={`Edit ${dj.name}`} onClick={() => edit({ ...dj })}>
+                <Pencil size={17} aria-hidden="true" />
+              </IconButton>
+              <IconButton
+                label={`Duplicate ${dj.name}`}
                 onClick={() => edit({ ...dj, id: crypto.randomUUID(), name: `${dj.name} copy` })}
               >
-                <Copy size={17} />
-              </button>
-              <button
-                className="icon-button danger"
-                aria-label={`Delete ${dj.name}`}
+                <Copy size={17} aria-hidden="true" />
+              </IconButton>
+              <IconButton
+                className="danger"
+                label={`Delete ${dj.name}`}
                 onClick={() => {
                   save.reset();
                   setDeleting(dj);
                 }}
               >
-                <Trash2 size={17} />
-              </button>
+                <Trash2 size={17} aria-hidden="true" />
+              </IconButton>
             </article>
           ))}
         </div>
@@ -159,19 +160,19 @@ export function DJsPage() {
             </p>
           )}
           <ErrorNotice error={save.error} />
-          <div className="modal-actions">
-            <button aria-disabled={save.isPending || undefined} onClick={closeDeletion}>
+          <DialogActions>
+            <Button aria-disabled={save.isPending || undefined} onClick={closeDeletion}>
               Cancel
-            </button>
-            <button
-              className="destructive"
+            </Button>
+            <Button
+              variant="destructive"
               aria-disabled={save.isPending || undefined}
               aria-busy={save.isPending || undefined}
               onClick={() => deleteDJ(deleting.id)}
             >
               {save.isPending ? 'Deleting…' : 'Delete DJ'}
-            </button>
-          </div>
+            </Button>
+          </DialogActions>
         </Dialog>
       )}
     </>
