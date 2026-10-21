@@ -35,7 +35,15 @@ export const formatTime = (seconds: number) => {
 const fill = (percent: number): CSSProperties =>
   ({ '--range-fill': `${Math.max(0, Math.min(100, percent))}%` }) as CSSProperties;
 
-export function Player({ queueOpen, lyricsOpen, toggleQueue, toggleLyrics, openRoom, openSettings }: PlayerProps) {
+export function Player({
+  queueOpen,
+  lyricsOpen,
+  toggleQueue,
+  toggleLyrics,
+  openDetails,
+  openRoom,
+  openSettings,
+}: PlayerProps) {
   const player = usePlayer();
   const recovery = useNewsRecovery();
   const knownSpeech =
@@ -286,9 +294,16 @@ export function Player({ queueOpen, lyricsOpen, toggleQueue, toggleLyrics, openR
       </div>
       <footer className="player-bar" aria-label="Music player">
         <div className="player-song">
-          <div className="player-artwork">
+          <button
+            className="player-artwork"
+            onClick={(event) => openDetails(event.currentTarget)}
+            disabled={!player.current}
+            aria-label="Show song details"
+            title="Show song details"
+            aria-controls="listening-drawer"
+          >
             <Artwork url={player.current?.imageUrl} name={player.current?.name ?? 'No song selected'} />
-          </div>
+          </button>
           <div>
             <strong title={player.current?.name}>{player.current?.name ?? 'Your music, ready when you are'}</strong>
             <span title={player.current?.artists.join(', ')}>
