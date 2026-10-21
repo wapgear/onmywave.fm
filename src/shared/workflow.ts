@@ -20,13 +20,6 @@ export type WorkflowDraft = {
   everyHours: 1 | 3 | 6;
   importance: 'major' | 'relevant';
   maxNewsClipsPerDay: number;
-  morning: {
-    includeWeather: boolean;
-    city: string;
-    localTime: string;
-    timeZone: string;
-    units: 'celsius' | 'fahrenheit';
-  };
 };
 
 export function defaultWorkflowDraft(): WorkflowDraft {
@@ -35,30 +28,11 @@ export function defaultWorkflowDraft(): WorkflowDraft {
     everyHours: 3,
     importance: 'major',
     maxNewsClipsPerDay: 3,
-    morning: {
-      includeWeather: false,
-      city: '',
-      localTime: '08:00',
-      timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
-      units: 'celsius',
-    },
   };
 }
 
 const record = (value: unknown): value is Record<string, unknown> =>
   Boolean(value) && typeof value === 'object' && !Array.isArray(value);
-
-const validCity = (value: unknown): value is string => typeof value === 'string' && value.length <= 256;
-
-function validTimeZone(value: unknown): value is string {
-  if (typeof value !== 'string' || !value || value.length > 128) return false;
-  try {
-    new Intl.DateTimeFormat('en', { timeZone: value });
-    return true;
-  } catch {
-    return false;
-  }
-}
 
 export function isWorkflowDraft(value: unknown): value is WorkflowDraft {
   if (
@@ -105,20 +79,10 @@ export function isWorkflowDraft(value: unknown): value is WorkflowDraft {
     !['major', 'relevant'].includes(String(value.importance)) ||
     !Number.isInteger(value.maxNewsClipsPerDay) ||
     (value.maxNewsClipsPerDay as number) < 1 ||
-    (value.maxNewsClipsPerDay as number) > 10 ||
-    !record(value.morning)
+    (value.maxNewsClipsPerDay as number) > 10
   )
     return false;
-  const morning = value.morning;
-  return (
-    typeof morning.includeWeather === 'boolean' &&
-    validCity(morning.city) &&
-    (!morning.includeWeather || Boolean(morning.city.trim())) &&
-    typeof morning.localTime === 'string' &&
-    /^([01]\d|2[0-3]):[0-5]\d$/.test(morning.localTime) &&
-    validTimeZone(morning.timeZone) &&
-    ['celsius', 'fahrenheit'].includes(String(morning.units))
-  );
+  return true;
 }
 
 export function normalizeWorkflowDraft(value: unknown): WorkflowDraft {
@@ -139,12 +103,5 @@ export function normalizeWorkflowDraft(value: unknown): WorkflowDraft {
     everyHours: value.everyHours,
     importance: value.importance,
     maxNewsClipsPerDay: value.maxNewsClipsPerDay,
-    morning: {
-      includeWeather: value.morning.includeWeather,
-      city: value.morning.city.trim(),
-      localTime: value.morning.localTime,
-      timeZone: value.morning.timeZone,
-      units: value.morning.units,
-    },
   };
 }
