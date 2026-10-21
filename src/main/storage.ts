@@ -42,12 +42,9 @@ const emptyState = (): LocalState => ({
   activeRoomProfileId: 'default-room',
   newsTransitions: defaultNewsTransitionSettings(),
   djs: [],
-  vibe: '',
   playback: null,
   playbackPreferences: {},
   sources: [],
-  listeningRoom: { djId: null, sourceIds: [] },
-  workflowDraft: defaultWorkflowDraft(),
 });
 
 let localState: LocalState | undefined;
@@ -264,17 +261,12 @@ function validStoredProfile(value: unknown): value is RoomProfile {
   );
 }
 
-function synchronizeRoomProfiles(state: LocalState): LocalState {
+function normalizeLocalState(state: LocalState): LocalState {
   const cleanRoom = (room: ListeningRoom): ListeningRoom => ({
     djId: state.djs.some((dj) => dj.id === room.djId) ? room.djId : null,
     sourceIds: [...new Set(room.sourceIds)].filter((id) => state.sources.some((source) => source.id === id)),
   });
-  const listeningRoom = cleanRoom(state.listeningRoom);
-  const roomProfiles = state.roomProfiles.map((profile) =>
-    profile.id === state.activeRoomProfileId
-      ? { ...profile, room: listeningRoom, mood: state.vibe, workflowDraft: state.workflowDraft }
-      : { ...profile, room: cleanRoom(profile.room) },
-  );
+  const roomProfiles = state.roomProfiles.map((profile) => ({ ...profile, room: cleanRoom(profile.room) }));
   const selected = roomProfiles.find((room) => room.id === state.djPlayback.roomId);
   const valid =
     selected?.enabled &&
@@ -284,7 +276,6 @@ function synchronizeRoomProfiles(state: LocalState): LocalState {
     selected.mood.trim();
   return {
     ...state,
-    listeningRoom,
     roomProfiles,
     djPlayback: valid ? state.djPlayback : { ...state.djPlayback, enabled: false, roomId: selected?.id ?? null },
   };
@@ -338,14 +329,16 @@ export async function getLocalState(): Promise<LocalStateSnapshot> {
         ].map((url, index) => ({ id: `legacy-source-${index + 1}`, name: url, url }));
         const sources = Array.isArray(value.sources) ? value.sources : migrated;
         const onlyDj = djs.length === 1 ? djs[0] : null;
-        const base: Omit<LocalState, 'roomProfiles' | 'activeRoomProfileId' | 'djPlayback'> = {
-          preparationErrorVersion: 1,
+        const base = {
+          preparationErrorVersion: 1 as const,
           newsTransitions: normalizeNewsTransitionSettings(value.newsTransitions),
           djs,
-          vibe: typeof value.vibe === 'string' ? value.vibe : '',
           playback: value.playback ?? null,
           playbackPreferences: normalizePlaybackPreferences(value.playbackPreferences, value.playback ?? null),
           sources,
+        };
+        const legacy = {
+          vibe: typeof value.vibe === 'string' ? value.vibe : '',
           workflowDraft: workflow(value.workflowDraft),
           listeningRoom:
             value.listeningRoom && Array.isArray(value.listeningRoom.sourceIds)
@@ -376,23 +369,23 @@ export async function getLocalState(): Promise<LocalStateSnapshot> {
             enabled: true,
             id: 'default-room',
             name: 'My room',
-            room: base.listeningRoom,
-            mood: base.vibe,
-            workflowDraft: base.workflowDraft,
+            room: legacy.listeningRoom,
+            mood: legacy.vibe,
+            workflowDraft: legacy.workflowDraft,
           });
         const active = uniqueProfiles.find((profile) => profile.id === value.activeRoomProfileId) ?? uniqueProfiles[0];
         const djPlayback = normalizeDJPlaybackSettings(value.djPlayback);
-        localState = synchronizeRoomProfiles({
+        localState = normalizeLocalState({
           ...base,
           djPlayback,
           roomProfiles: uniqueProfiles,
           activeRoomProfileId: active.id,
-          listeningRoom: active.room,
-          vibe: active.mood,
-          workflowDraft: active.workflowDraft,
         });
         localStateMigrationPending =
           value.preparationErrorVersion !== 1 ||
+          Object.hasOwn(value, 'listeningRoom') ||
+          Object.hasOwn(value, 'vibe') ||
+          Object.hasOwn(value, 'workflowDraft') ||
           Object.hasOwn(value.workflowDraft ?? {}, 'morning') ||
           value.roomProfiles?.some((profile: RoomProfile) => Object.hasOwn(profile.workflowDraft, 'morning'));
       } catch {
@@ -431,7 +424,7 @@ export function updateLocalStateAndGet(
   const next = writes.then(async () => {
     await getLocalState();
     const current = structuredClone(localState!);
-    const state = synchronizeRoomProfiles({ ...current, ...(typeof patch === 'function' ? patch(current) : patch) });
+    const state = normalizeLocalState({ ...current, ...(typeof patch === 'function' ? patch(current) : patch) });
     try {
       await atomicWrite('local-state.json', JSON.stringify(state));
     } catch {

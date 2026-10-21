@@ -4,16 +4,16 @@ import { defaultWorkflowDraft } from '/@fs/__FIXTURE_ROOT__/src/shared/workflow.
 const ok=value=>Promise.resolve({ok:true,value});
 const songs=Array.from({length:120},(_,i)=>({id:String(i+1).padStart(32,'0'),name:`Evening track ${String(i+1).padStart(3,'0')}`,artists:['Fixture artist'],album:'Listening session',duration:180,genres:['Electronic'],tags:[]}));
 const connection={id:'fixture-session',authRevision:1,serverUrl:'https://fixture.invalid',serverVersion:'fixture',userName:'Fixture listener',selectedLibraryIds:['fixture-library'],sessionOnly:true};
-const state={preparationErrorVersion:1,revision:1,djPlayback:defaultDJPlaybackSettings(),newsTransitions:defaultNewsTransitionSettings(),roomProfiles:[{id:'default-room',name:'My room',enabled:true,room:{djId:null,sourceIds:[]},mood:'',workflowDraft:defaultWorkflowDraft()}],activeRoomProfileId:'default-room',djs:[],sources:[],listeningRoom:{djId:null,sourceIds:[]},vibe:'',workflowDraft:defaultWorkflowDraft(),playback:null,playbackPreferences:{}};
+const state={preparationErrorVersion:1,revision:1,djPlayback:defaultDJPlaybackSettings(),newsTransitions:defaultNewsTransitionSettings(),roomProfiles:[{id:'default-room',name:'My room',enabled:true,room:{djId:null,sourceIds:[]},mood:'',workflowDraft:defaultWorkflowDraft()}],activeRoomProfileId:'default-room',djs:[],sources:[],playback:null,playbackPreferences:{}};
 if(window.__fixtureSeed?.playback)state.playback=window.__fixtureSeed.playback;
 if(window.__fixtureSeed?.dj){
  const dj={id:'fixture-dj',name:'Fixture DJ',description:'Fixture host',instructions:'Read the news',musicPreferences:'',exclusions:'',language:'English',personality:'Warm',speakingFrequency:'often',news:{feedUrls:[],interests:'',minStories:1,maxStories:1,voice:'fixture',textModel:'fixture',speechEngine:'elevenlabs-v4',duckVolume:.05}};
  state.djs=[dj];state.sources=[{id:'fixture-source',name:'Fixture feed',url:'https://fixture.invalid/feed',kind:'rss'}];
  state.roomProfiles[0].room={djId:dj.id,sourceIds:['fixture-source']};state.roomProfiles[0].mood='Warm';
- state.listeningRoom=state.roomProfiles[0].room;state.vibe='Warm';
  state.djPlayback={...state.djPlayback,enabled:true,roomId:'default-room',everySongs:window.__fixtureSeed.everySongs??1};
  Object.assign(state.newsTransitions,{mode:'between-songs',fadeOutSeconds:0,leadInSeconds:0,postSpeechSeconds:0,fadeInSeconds:0});
 }
+if(window.__fixtureSeed?.state)Object.assign(state,window.__fixtureSeed.state);
 window.__renders={};
 window.__fixture={songs,state,connection,audios:[],calls:[],checkpoints:[],intervals:[],tick(position){const audio=this.audios.find(a=>a.src.startsWith('/fixture-audio'));if(!audio)throw Error('No audio loaded');audio.currentTime=position;audio.emit('timeupdate');},counts(){return {...window.__renders};}};
 const nativeInterval=window.setInterval.bind(window), nativeClearInterval=window.clearInterval.bind(window);
@@ -32,6 +32,7 @@ window.Audio=FixtureAudio;
 const takes=Array.from({length:window.__fixtureSeed?.availableTakes??0},(_,i)=>({id:'fixture-take-'+i,requestId:'fixture-request-'+i,audioUrl:location.origin+'/fixture-speech-'+i,engine:'elevenlabs-v4',createdAt:'2026-10-21T15:00:00.000Z',script:'Fixture news '+i,articles:[],warnings:[],signature:'fixture-'+i,provenance:{dj:state.djs[0],mood:'Warm',sources:state.sources},renderingDJ:state.djs[0],available:true,byteLength:100,model:'fixture',voice:'fixture',delivery:'Fixture',scriptId:'script-'+i,deliveryState:{status:'claimed',claimId:'claim-'+i}}));
 window.__fixture.takes=takes;
 const bridge={
+ libraries:()=>ok([{id:'fixture-library',name:'Fixture library'}]),getAiStatus:()=>ok({configured:false}),getElevenLabsStatus:()=>ok({configured:false}),
  getConnection:()=>ok(connection),getLocalState:()=>ok(structuredClone(state)),getPlaybackPreferences:()=>ok({volume:.75,shuffle:false,repeat:'off'}),getNewsRecoveryStatus:()=>ok({phase:window.__fixture.recoveryPhase??'ready'}),getUpdateStatus:()=>ok({phase:'unsupported',currentVersion:'fixture'}),
  songs:q=>ok({items:songs.slice(q.start,q.start+q.limit),total:songs.length,start:q.start}),libraryFilters:()=>ok({genres:['Electronic'],tags:[]}),song:id=>ok(songs.find(s=>s.id===id)),
  albums:q=>ok({items:[],total:0,start:q.start}),playlists:()=>ok({items:[],recovery:[]}),getPreparedNews:()=>ok({scripts:[],takes:[],requests:[],reviewedArticles:[]}),

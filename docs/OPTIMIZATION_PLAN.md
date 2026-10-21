@@ -8,8 +8,8 @@ The October 21, 2026 review identified eight changes. Each linked issue records 
 | 2 | [isolate playback progress from library and queue renders](https://github.com/wapgear/onmywave.fm/issues/173) | Merged in [#182](https://github.com/wapgear/onmywave.fm/pull/182); issue closed |
 | 3 | [run DJ scheduling clocks only when needed](https://github.com/wapgear/onmywave.fm/issues/174) | Merged in [#183](https://github.com/wapgear/onmywave.fm/pull/183); issue closed |
 | 4 | [coalesce playback checkpoints and skip unchanged saves](https://github.com/wapgear/onmywave.fm/issues/175) | Merged in [#184](https://github.com/wapgear/onmywave.fm/pull/184); issue closed |
-| 5 | [remove unused weather fields from news workflows](https://github.com/wapgear/onmywave.fm/issues/176) | Implemented; legacy migration and failure/retry verification passed |
-| 6 | [make room profiles the source of active configuration](https://github.com/wapgear/onmywave.fm/issues/177) | Planned |
+| 5 | [remove unused weather fields from news workflows](https://github.com/wapgear/onmywave.fm/issues/176) | Merged in [#185](https://github.com/wapgear/onmywave.fm/pull/185); issue closed |
+| 6 | [make room profiles the source of active configuration](https://github.com/wapgear/onmywave.fm/issues/177) | Implemented; migration, scheduler and editor fixtures passed; awaiting PR checks |
 | 7 | [simplify formatting and component type conventions](https://github.com/wapgear/onmywave.fm/issues/178) | Planned |
 | 8 | [reconcile prepared news only after publication changes](https://github.com/wapgear/onmywave.fm/issues/179) | Planned |
 

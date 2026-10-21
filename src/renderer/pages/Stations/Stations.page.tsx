@@ -142,14 +142,15 @@ export function StationsPage({
   const profileSubmission = useRef(false);
   const [switchTarget, setSwitchTarget] = useState<string | null>(null);
   const [profileNotice, setProfileNotice] = useState('');
-  const rawRoom = setup ?? state.data?.listeningRoom ?? { djId: null, sourceIds: [] };
+  const activeProfile = state.data?.roomProfiles.find((value) => value.id === state.data.activeRoomProfileId);
+  const rawRoom = setup ?? activeProfile?.room ?? { djId: null, sourceIds: [] };
   const room = state.data
     ? {
         djId: state.data.djs.some((dj) => dj.id === rawRoom.djId) ? rawRoom.djId : null,
         sourceIds: rawRoom.sourceIds.filter((id) => state.data!.sources.some((source) => source.id === id)),
       }
     : rawRoom;
-  const mood = moodDraft ?? state.data?.vibe ?? '';
+  const mood = moodDraft ?? activeProfile?.mood ?? '';
   const sources = state.data?.sources ?? [];
   const xStatus = useQuery({
     queryKey: ['twitterStatus'],
@@ -158,20 +159,20 @@ export function StationsPage({
   });
   const dj = state.data?.djs.find((value) => value.id === room.djId);
   const newsInterests =
-    configDraft.newsInterests ?? state.data?.workflowDraft.newsInterests ?? dj?.news?.interests ?? '';
+    configDraft.newsInterests ?? activeProfile?.workflowDraft.newsInterests ?? dj?.news?.interests ?? '';
   const setNewsInterests = (newsInterests: string) => setConfigDraft((current) => ({ ...current, newsInterests }));
   const sameSources = (left: string[], right: string[]) =>
     JSON.stringify([...left].sort()) === JSON.stringify([...right].sort());
   const unsavedSetup =
     !!state.data &&
-    (room.djId !== state.data.listeningRoom.djId ||
-      !sameSources(room.sourceIds, state.data.listeningRoom.sourceIds) ||
-      mood !== state.data.vibe ||
+    !!activeProfile &&
+    (room.djId !== activeProfile.room.djId ||
+      !sameSources(room.sourceIds, activeProfile.room.sourceIds) ||
+      mood !== activeProfile.mood ||
       newsInterests !==
-        (state.data.workflowDraft.newsInterests ??
-          state.data.djs.find((value) => value.id === state.data.listeningRoom.djId)?.news?.interests ??
+        (activeProfile.workflowDraft.newsInterests ??
+          state.data.djs.find((value) => value.id === activeProfile.room.djId)?.news?.interests ??
           ''));
-  const activeProfile = state.data?.roomProfiles.find((value) => value.id === state.data.activeRoomProfileId);
   const workflowPatch =
     configDraft.workflow?.roomId === activeProfile?.id ? (configDraft.workflow?.patch ?? null) : null;
   const workflowDraft = { ...activeProfile?.workflowDraft, ...workflowPatch };
@@ -301,7 +302,8 @@ export function StationsPage({
     mutationFn: async (includeWorkflow: boolean) => {
       const submittedDraft = configDraft;
       const latest = unwrap(await window.wave.getLocalState());
-      if (latest.activeRoomProfileId !== activeProfile?.id)
+      const latestProfile = latest.roomProfiles.find((value) => value.id === latest.activeRoomProfileId);
+      if (!latestProfile || latest.activeRoomProfileId !== activeProfile?.id)
         throw new Error('The active room changed before these settings were saved. Review the room and try again.');
       const workflow =
         includeWorkflow && configDraft.workflow?.roomId === latest.activeRoomProfileId
@@ -312,7 +314,7 @@ export function StationsPage({
         unwrap(
           await window.wave.saveWorkflowDraft({
             expectedProfileId: latest.activeRoomProfileId,
-            workflowDraft: { ...latest.workflowDraft, ...workflow, newsInterests },
+            workflowDraft: { ...latestProfile.workflowDraft, ...workflow, newsInterests },
             room,
             mood: mood.trim(),
           }),
@@ -499,6 +501,9 @@ export function StationsPage({
     mutationFn: async (action: { kind: 'copy' } | { kind: 'switch'; id: string; saveChanges: boolean }) => {
       if (action.kind === 'copy') {
         const latest = unwrap(await window.wave.getLocalState());
+        const latestProfile = latest.roomProfiles.find((value) => value.id === latest.activeRoomProfileId);
+        if (!latestProfile || latest.activeRoomProfileId !== activeProfile?.id)
+          throw new Error('The active room changed. Review its settings before saving a copy.');
         const workflow = configDraft.workflow?.roomId === latest.activeRoomProfileId ? configDraft.workflow.patch : {};
         await confirmLocalState(
           client,
@@ -507,7 +512,7 @@ export function StationsPage({
               name: profileName.trim(),
               room,
               mood: mood.trim(),
-              workflowDraft: { ...latest.workflowDraft, ...workflow, newsInterests },
+              workflowDraft: { ...latestProfile.workflowDraft, ...workflow, newsInterests },
             }),
           ),
         );
