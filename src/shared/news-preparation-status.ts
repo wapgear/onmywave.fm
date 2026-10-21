@@ -1,6 +1,5 @@
 import type { RoomProfile } from './types';
 
-
 /** Counts are scheduled attempts, not provider invoices or successful assessments. */
 export function newsPreparationStatus(profile: RoomProfile, now = new Date()) {
   const workflow = profile.workflowDraft;

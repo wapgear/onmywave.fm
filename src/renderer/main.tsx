@@ -11,7 +11,6 @@ import { retainNewestLocalState } from './local-state-cache';
 
 import './styles.css';
 
-
 function onError(error: unknown) {
   const failure = error as { code?: string; authRevision?: number };
   const connection = queryClient.getQueryData<import('../shared/types').Connection | null>(['connection']);

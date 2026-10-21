@@ -6,7 +6,6 @@ import { unwrap } from '../../api';
 import { useRetryFocus } from '../../useRetryFocus';
 import { Artwork, duration, ErrorNotice } from '../Shared';
 
-
 const positive = (value: number | undefined): value is number =>
   typeof value === 'number' && Number.isFinite(value) && value > 0;
 

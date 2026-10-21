@@ -11,7 +11,6 @@ import { ServiceError } from './jellyfin';
 import { NewsService, validateNewsSettings } from './news';
 import { getLocalState, readElevenLabsKey } from './storage';
 
-
 type Clip = { id: string; signature: string; createdAt: string; byteLength: number };
 
 type Manifest = { version: 1; attempted: true; clip: Clip | null };

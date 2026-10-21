@@ -14,7 +14,6 @@ import type {
   SongLyrics,
 } from '../shared/types';
 
-
 export class ServiceError extends Error {
   constructor(
     public code: ApiError['code'],

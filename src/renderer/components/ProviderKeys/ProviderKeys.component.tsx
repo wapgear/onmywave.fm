@@ -10,7 +10,6 @@ import { TwitterSetupHelp } from './TwitterSetupHelp.component';
 
 import './ProviderKeys.styles.css';
 
-
 export function ProviderKeys({ disabled = false }: { disabled?: boolean }) {
   return (
     <div className="provider-keys">

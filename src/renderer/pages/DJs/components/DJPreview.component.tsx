@@ -1,7 +1,6 @@
 import type { DJPreviewProps } from './DJPreview.types';
 import { VoicePreview } from './VoicePreview.component';
 
-
 const defaultVoiceId = 'JBFqnCBsd6RMkjVDRZzb';
 
 export function DJPreview({ dj, activeId, onStart }: DJPreviewProps) {

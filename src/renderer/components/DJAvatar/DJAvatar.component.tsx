@@ -6,7 +6,6 @@ import type { DJ } from '../../../shared/types';
 
 import './DJAvatar.styles.css';
 
-
 const icons = {
   host: UserRound,
   headphones: Headphones,

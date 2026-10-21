@@ -8,7 +8,6 @@ import type { VirtualSongsProps } from './VirtualSongs.types';
 
 import './VirtualSongs.styles.css';
 
-
 const ROW_HEIGHT = 56;
 
 export function VirtualSongs({

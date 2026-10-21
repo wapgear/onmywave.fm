@@ -30,7 +30,6 @@ import type { RoomSetupDraft } from './pages/Stations/Stations.types';
 import { PlayerProvider, usePlayer } from './player';
 import { useRetryFocus } from './useRetryFocus';
 
-
 type PageName = 'songs' | 'albums' | 'playlists' | 'stations' | 'settings';
 
 const navigation = [

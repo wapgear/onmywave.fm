@@ -19,7 +19,7 @@ The hook rejects commits on `main`, obvious credential/private-key filenames, ge
 1. Fork the repository and create a branch for one focused change.
 2. Read [AGENTS.md](AGENTS.md) for the source conventions.
 3. Make the change and manually exercise the affected flow. Use a disposable library for playlist writes and local sample data for screenshots.
-4. Run `pnpm run format`, `pnpm run check`, and `pnpm audit`.
+4. Run `pnpm run format`, `pnpm run check`, and `pnpm audit`. Oxfmt owns formatting and import spacing; Oxlint checks statement spacing, correctness, React Hooks, and Electron boundaries. Component types may stay local or use a companion file when useful.
 5. Describe the problem, the resulting behavior, what you verified, and any checks you could not run. Include before/after screenshots for visible changes.
 
 Prefer focused manual or end-to-end verification. New unit tests and test frameworks are not required by default. Do not bypass the local hook or required CI checks. Provider-backed checks are optional and may cost money; state whether you used fixtures or live services.

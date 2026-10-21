@@ -11,7 +11,6 @@ import type { PreparedTakesProps } from './PreparedTakes.types';
 
 import './PreparedTakes.styles.css';
 
-
 type Audition = { id: string; phase: 'loading' | 'playing' | 'paused'; position: number };
 
 const provider = (take: PreparedNewsTake) =>

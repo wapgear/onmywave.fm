@@ -2,7 +2,6 @@ import type { DJVoice, DJVoiceSearch } from '../shared/types';
 import { ServiceError } from './jellyfin';
 import { readElevenLabsKey } from './storage';
 
-
 export async function searchDJVoices(input: DJVoiceSearch): Promise<DJVoice[]> {
   if (
     !input ||

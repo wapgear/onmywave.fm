@@ -12,7 +12,6 @@ import type { VoicePreviewProps } from './VoicePreview.types';
 
 import './VoicePreview.styles.css';
 
-
 const validVoiceId = (value: string) => /^[a-zA-Z0-9_-]{1,128}$/.test(value);
 
 export function VoicePreview({ resource, label, playbackId, activeId, onStart, active = true }: VoicePreviewProps) {

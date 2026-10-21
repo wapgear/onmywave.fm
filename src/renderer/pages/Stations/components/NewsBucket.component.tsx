@@ -10,7 +10,6 @@ import type { NewsBucketProps } from './NewsBucket.types';
 
 import './NewsBucket.styles.css';
 
-
 export function NewsBucket({
   library,
   localState,

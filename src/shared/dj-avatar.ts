@@ -1,6 +1,5 @@
 import type { DJ } from './types';
 
-
 export const djAvatarIcons = [
   { id: 'host', name: 'Host' },
   { id: 'headphones', name: 'Headphones' },

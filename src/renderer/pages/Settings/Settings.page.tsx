@@ -14,7 +14,6 @@ import type { SettingsPageProps, SettingsSection } from './Settings.types';
 
 import './Settings.styles.css';
 
-
 const sections: { id: SettingsSection; label: string }[] = [
   { id: 'general', label: 'General' },
   { id: 'keys', label: 'Provider keys' },

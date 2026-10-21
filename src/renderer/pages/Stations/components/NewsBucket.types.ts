@@ -1,6 +1,5 @@
 import type { LocalState, PreparedNewsLibrary, PreparedNewsTake } from '../../../../shared/types';
 
-
 export type Automation = {
   settings: LocalState['djPlayback'];
   room?: LocalState['roomProfiles'][number];

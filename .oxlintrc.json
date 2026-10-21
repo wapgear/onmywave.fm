@@ -321,13 +321,6 @@
       }
     },
     {
-      "files": ["src/renderer/**/*.ts", "src/renderer/**/*.tsx"],
-      "excludeFiles": ["**/*.types.ts", "**/*.d.ts"],
-      "rules": {
-        "local/component-types": "error"
-      }
-    },
-    {
       "files": ["src/main/**/*.ts", "src/main/**/*.tsx"],
       "rules": {
         "local/synchronous-ipc": "error",

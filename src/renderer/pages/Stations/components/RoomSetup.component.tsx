@@ -2,7 +2,6 @@ import { DJAvatar } from '../../../components/DJAvatar/DJAvatar.component';
 import { FilterSelect } from '../../../components/FilterSelect/FilterSelect.component';
 import type { RoomSetupProps } from './RoomSetup.types';
 
-
 export function RoomSetup({
   sources,
   djs,

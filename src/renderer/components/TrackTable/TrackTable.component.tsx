@@ -19,7 +19,6 @@ import type { TrackRow, TrackTableProps } from './TrackTable.types';
 
 import './TrackTable.styles.css';
 
-
 export const songRows = (songs: Song[]): TrackRow[] => songs.map((song) => ({ key: song.id, song }));
 
 export const playlistRows = (entries: PlaylistEntry[]): TrackRow[] => {

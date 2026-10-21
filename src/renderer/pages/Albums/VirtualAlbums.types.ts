@@ -1,6 +1,5 @@
 import type { Album } from '../../../shared/types';
 
-
 export type VirtualAlbumsProps = {
   albums: Album[];
   total: number;

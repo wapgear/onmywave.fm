@@ -2,7 +2,6 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react
 
 import type { RetryFocusOptions, PassiveFocus } from './useRetryFocus.types';
 
-
 type RetryResult = { isError: boolean };
 
 type Attempt = { ownerKey: string; button: HTMLButtonElement; cancelled: boolean };

@@ -9,7 +9,6 @@ import { useRetryFocus } from './useRetryFocus';
 
 import './NewsRecovery.styles.css';
 
-
 const RecoveryContext = createContext<RecoveryContextValue | null>(null);
 
 export function NewsRecoveryProvider({ children }: { children: ReactNode }) {

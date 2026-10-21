@@ -4,7 +4,6 @@ import { resolve } from 'node:path';
 import process from 'node:process';
 import { fileURLToPath, URL } from 'node:url';
 
-
 const root = fileURLToPath(new URL('..', import.meta.url));
 
 const gitRoot = spawnSync('git', ['rev-parse', '--show-toplevel'], { cwd: root, encoding: 'utf8' });

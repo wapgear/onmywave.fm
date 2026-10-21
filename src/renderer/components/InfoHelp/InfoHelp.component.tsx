@@ -5,7 +5,6 @@ import { Dialog } from '../Shared';
 
 import './InfoHelp.styles.css';
 
-
 export function InfoHelp({ label, children }: { label: string; children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const trigger = useRef<HTMLButtonElement>(null);

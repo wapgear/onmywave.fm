@@ -1,6 +1,5 @@
 import type { DJ, ListeningRoom, NewsSource } from '../../../../shared/types';
 
-
 export type RoomSetupProps = {
   sources: NewsSource[];
   djs: DJ[];

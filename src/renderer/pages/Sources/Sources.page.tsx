@@ -12,7 +12,6 @@ import { useRetryFocus } from '../../useRetryFocus';
 
 import './Sources.styles.css';
 
-
 export function SourcesPage() {
   const client = useQueryClient();
   const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()) });

@@ -4,7 +4,6 @@ import { useRef } from 'react';
 import { usePlayer } from '../../player';
 import { Artwork, TrackDuration } from '../Shared';
 
-
 export function Queue() {
   const player = usePlayer();
   const root = useRef<HTMLDivElement>(null);

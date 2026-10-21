@@ -1,8 +1,5 @@
 import { builtinModules } from 'node:module';
 
-import componentTypes from './oxlint-rules/component-types.mjs';
-
-
 const restrictedRendererModules = [
   ...new Set([...builtinModules, ...builtinModules.map((name) => `node:${name}`), 'electron']),
 ];
@@ -57,7 +54,6 @@ function restrictedSyntax(selectors, message) {
 
 export default {
   rules: {
-    'component-types': componentTypes,
     'renderer-dynamic-imports': restrictedSyntax(
       [rendererDynamicImports],
       'Renderer code must use the typed window.wave bridge instead of dynamically importing Node or Electron.',

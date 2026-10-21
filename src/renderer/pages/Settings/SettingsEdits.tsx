@@ -7,7 +7,6 @@ import { unwrap } from '../../api';
 import { confirmLocalState } from '../../local-state-cache';
 import { useNewsRecovery } from '../../NewsRecovery';
 
-
 type PlaybackPreferences = Pick<DJPlaybackSettings, 'everySongs' | 'keepOnSeek' | 'voiceVolume'>;
 
 function useEdit<T>(write: (value: T) => Promise<LocalStateSnapshot>) {

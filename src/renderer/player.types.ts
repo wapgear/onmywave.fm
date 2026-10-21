@@ -1,7 +1,6 @@
 import type { NewsTransitionSettings } from '../shared/news-transitions';
 import type { NewsBreak, PlaybackSnapshot, Song } from '../shared/types';
 
-
 export type ScheduledNews = {
   token: number;
   key: string;

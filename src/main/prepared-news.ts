@@ -20,7 +20,6 @@ import { NewsService, validateNewsSettings } from './news';
 import { getLocalState, readOpenAIKey, readElevenLabsKey, readTwitterKey } from './storage';
 import { StorageError } from './storage-error';
 
-
 const hash = (value: unknown) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 
 const validId = (value: unknown): value is string => typeof value === 'string' && /^[a-zA-Z0-9-]{1,128}$/.test(value);

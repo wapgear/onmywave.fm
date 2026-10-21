@@ -3,7 +3,6 @@ import { useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 
 import type { DialogProps, ErrorNoticeProps, PageHeadingProps } from './Shared.types';
 
-
 export const errorMessage = (error: unknown) =>
   error instanceof Error ? error.message : 'Something went wrong. Please try again.';
 

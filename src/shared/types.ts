@@ -2,7 +2,6 @@ import type { DJPlaybackSettings, DJPlaybackSettingsPatch } from './dj-playback'
 import type { UpdateStatus } from './update';
 import type { WorkflowDraft } from './workflow';
 
-
 export const NEWS_TEXT_MODEL = 'gpt-6-luna';
 
 export type { DJPlaybackSettings, DJPlaybackSettingsPatch } from './dj-playback';

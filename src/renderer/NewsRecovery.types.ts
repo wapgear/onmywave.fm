@@ -1,6 +1,5 @@
 import type { NewsRecoveryStatus } from '../shared/types';
 
-
 export type RecoveryContextValue = {
   status: NewsRecoveryStatus;
   retrying: boolean;

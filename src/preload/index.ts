@@ -3,7 +3,6 @@ import { contextBridge, ipcRenderer } from 'electron';
 import type { NewsProgress, WaveApi } from '../shared/types';
 import type { UpdateStatus } from '../shared/update';
 
-
 const api: WaveApi = {
   getUpdateStatus: () => ipcRenderer.invoke('wave:getUpdateStatus'),
   checkForUpdates: () => ipcRenderer.invoke('wave:checkForUpdates'),

@@ -7,7 +7,6 @@ import { cancelPreparedNews, getPreparedNews, prepareRoomNews } from './prepared
 import { getLocalState, updateLocalState } from './storage';
 import { StorageError } from './storage-error';
 
-
 const TICK_MS = 60_000;
 
 const dayKey = (date = new Date()) =>
