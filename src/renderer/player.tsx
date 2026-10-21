@@ -113,6 +113,23 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const [optionsRevision, setOptionsRevision] = useState(0);
   const optionsSaveGeneration = useRef(0);
   const optionsInFlight = useRef<{ generation: number; promise: Promise<OptionsSaveSettlement> } | null>(null);
+  const playbackCheckpoint = useRef({
+    inFlight: null as null | { fingerprint: string },
+    pending: null as null | {
+      fingerprint: string;
+      snapshot: PlaybackSnapshot;
+      optionsGeneration: number;
+      optionsPending: boolean;
+      lifecycleGeneration: number;
+      connectionGeneration: number;
+    },
+    lastSavedFingerprint: null as string | null,
+    skipDrain: false,
+  });
+  const currentConnectionId = useRef(connection?.id ?? null);
+  const checkpointConnectionGeneration = useRef(0);
+  const mounted = useRef(false);
+  const checkpointLifecycle = useRef(0);
   const [attempt, setAttempt] = useState(0);
   const [newsPhase, setNewsPhase] = useState<PlayerState['newsPhase']>('idle');
   const [activeNewsId, setActiveNewsId] = useState<string>();
@@ -126,6 +143,14 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const commandRevision = useRef(0);
   const [musicCommandRevision, setMusicCommandRevision] = useState(0);
   const cancelRestoreRetry = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    ++checkpointLifecycle.current;
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
 
   const musicCommand = useCallback(() => {
     ++newsNoticeRevision.current;
@@ -199,6 +224,14 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     volume,
     recoveryReady,
   });
+
+  useLayoutEffect(() => {
+    const nextConnectionId = connection?.id ?? null;
+    if (currentConnectionId.current === nextConnectionId) return;
+    currentConnectionId.current = nextConnectionId;
+    ++checkpointConnectionGeneration.current;
+    playbackCheckpoint.current.pending = null;
+  }, [connection?.id]);
 
   const publishPosition = useCallback(
     (value: number) => {
@@ -862,45 +895,149 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
 
   useEffect(() => {
     if (!connection || readyConnection !== connection.id) return;
+    const checkpoint = playbackCheckpoint.current;
+    const dispatch = (item: NonNullable<typeof checkpoint.pending>) => {
+      checkpoint.inFlight = { fingerprint: item.fingerprint };
+      void window.wave
+        .savePlayback(item.snapshot)
+        .then(unwrap)
+        .then(() => {
+          if (checkpointConnectionGeneration.current === item.connectionGeneration)
+            checkpoint.lastSavedFingerprint = item.fingerprint;
+          if (
+            !mounted.current ||
+            checkpointLifecycle.current !== item.lifecycleGeneration ||
+            checkpointConnectionGeneration.current !== item.connectionGeneration ||
+            currentConnectionId.current !== item.snapshot.connectionId
+          )
+            return;
+          if (!item.optionsPending && item.optionsGeneration === optionsSaveGeneration.current) setOptionsError(null);
+          setError((current) =>
+            current === 'Playback continues, but the session could not be saved.' ? null : current,
+          );
+        })
+        .catch(() => {
+          if (
+            mounted.current &&
+            checkpointLifecycle.current === item.lifecycleGeneration &&
+            checkpointConnectionGeneration.current === item.connectionGeneration &&
+            currentConnectionId.current === item.snapshot.connectionId
+          )
+            setError('Playback continues, but the session could not be saved.');
+        })
+        .finally(() => {
+          if (checkpoint.inFlight?.fingerprint !== item.fingerprint) return;
+          checkpoint.inFlight = null;
+          if (checkpoint.skipDrain) return;
+          const pending = checkpoint.pending;
+          checkpoint.pending = null;
+          if (!pending) return;
+          if (pending.fingerprint === checkpoint.lastSavedFingerprint) {
+            if (
+              mounted.current &&
+              checkpointLifecycle.current === pending.lifecycleGeneration &&
+              checkpointConnectionGeneration.current === pending.connectionGeneration &&
+              currentConnectionId.current === pending.snapshot.connectionId
+            )
+              setError((current) =>
+                current === 'Playback continues, but the session could not be saved.' ? null : current,
+              );
+            return;
+          }
+          if (pending.fingerprint === item.fingerprint && checkpoint.lastSavedFingerprint !== item.fingerprint) return;
+          dispatch(pending);
+        });
+    };
     const save = () => {
+      if (!mounted.current || currentConnectionId.current !== connection.id) return;
       const state = live.current;
       const optionsGeneration = optionsSaveGeneration.current;
       const optionsPending = optionsInFlight.current?.generation === optionsGeneration;
       const byKey = new Map(state.queue.map((item, index) => [item.key, index]));
       const indices = (keys: Iterable<string>) => [...keys].flatMap((key) => (byKey.has(key) ? [byKey.get(key)!] : []));
       const plan = shufflePlan.current;
+      const snapshot: PlaybackSnapshot = {
+        connectionId: connection.id,
+        trackIds: state.queue.map((item) => item.song.id),
+        currentIndex: state.queue.length ? state.index : 0,
+        position: state.queue.length ? live.current.position : 0,
+        volume: state.volume,
+        shuffle: state.shuffle,
+        repeat: state.repeat,
+        ...(state.shuffle
+          ? {
+              shufflePlan: {
+                upcoming: indices(plan.upcoming),
+                history: indices(plan.history),
+                cursor: plan.cursor,
+                visited: indices(plan.visited),
+              },
+            }
+          : {}),
+      };
+      const item = {
+        fingerprint: JSON.stringify(snapshot),
+        snapshot,
+        optionsGeneration,
+        optionsPending,
+        lifecycleGeneration: checkpointLifecycle.current,
+        connectionGeneration: checkpointConnectionGeneration.current,
+      };
+      checkpoint.skipDrain = false;
+      if (checkpoint.inFlight) {
+        checkpoint.pending = checkpoint.inFlight.fingerprint === item.fingerprint ? null : item;
+        return;
+      }
+      if (item.fingerprint === checkpoint.lastSavedFingerprint) {
+        if (
+          mounted.current &&
+          checkpointLifecycle.current === item.lifecycleGeneration &&
+          checkpointConnectionGeneration.current === item.connectionGeneration
+        )
+          setError((current) =>
+            current === 'Playback continues, but the session could not be saved.' ? null : current,
+          );
+        return;
+      }
+      dispatch(item);
+    };
+    const saveOnUnload = () => {
+      const state = live.current;
+      const byKey = new Map(state.queue.map((item, index) => [item.key, index]));
+      const indices = (keys: Iterable<string>) => [...keys].flatMap((key) => (byKey.has(key) ? [byKey.get(key)!] : []));
+      const plan = shufflePlan.current;
+      const snapshot: PlaybackSnapshot = {
+        connectionId: connection.id,
+        trackIds: state.queue.map((item) => item.song.id),
+        currentIndex: state.queue.length ? state.index : 0,
+        position: state.queue.length ? state.position : 0,
+        volume: state.volume,
+        shuffle: state.shuffle,
+        repeat: state.repeat,
+        ...(state.shuffle
+          ? {
+              shufflePlan: {
+                upcoming: indices(plan.upcoming),
+                history: indices(plan.history),
+                cursor: plan.cursor,
+                visited: indices(plan.visited),
+              },
+            }
+          : {}),
+      };
+      checkpoint.pending = null;
+      checkpoint.skipDrain = true;
       void window.wave
-        .savePlayback({
-          connectionId: connection.id,
-          trackIds: state.queue.map((item) => item.song.id),
-          currentIndex: state.queue.length ? state.index : 0,
-          position: state.queue.length ? live.current.position : 0,
-          volume: state.volume,
-          shuffle: state.shuffle,
-          repeat: state.repeat,
-          ...(state.shuffle
-            ? {
-                shufflePlan: {
-                  upcoming: indices(plan.upcoming),
-                  history: indices(plan.history),
-                  cursor: plan.cursor,
-                  visited: indices(plan.visited),
-                },
-              }
-            : {}),
-        })
+        .savePlayback(snapshot)
         .then(unwrap)
-        .then(() => {
-          if (!optionsPending && optionsGeneration === optionsSaveGeneration.current) setOptionsError(null);
-        })
-        .catch(() => setError('Playback continues, but the session could not be saved.'));
+        .catch(() => {});
     };
     save();
     const timer = window.setInterval(save, 5000);
-    window.addEventListener('beforeunload', save);
+    window.addEventListener('beforeunload', saveOnUnload);
     return () => {
       clearInterval(timer);
-      window.removeEventListener('beforeunload', save);
+      window.removeEventListener('beforeunload', saveOnUnload);
     };
   }, [connection, readyConnection, queue, index, volume, shuffle, repeat, optionsRevision, shuffleView]);
 
