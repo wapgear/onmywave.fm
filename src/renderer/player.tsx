@@ -143,6 +143,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const newsActive = useRef(false);
   const newsGeneration = useRef(0);
   const newsSchedule = useRef<ScheduledNews | null>(null);
+  const newsClock = useRef<number | null>(null);
   const cancelPreload = useRef<(() => void) | null>(null);
   const finishFade = useRef<((completed: boolean) => void) | null>(null);
   const consumedEnd = useRef<number | null>(null);
@@ -168,6 +169,12 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const preparing = useRef(false);
   const [shuffleView, setShuffleView] = useState<ShufflePlan>(() => createShufflePlan([], null));
   const shufflePlan = useRef<ShufflePlan>(shuffleView);
+
+  const clearNewsClock = useCallback(() => {
+    if (newsClock.current === null) return;
+    window.clearInterval(newsClock.current);
+    newsClock.current = null;
+  }, []);
 
   const updateShufflePlan = useCallback((plan: ShufflePlan) => {
     shufflePlan.current = plan;
@@ -247,6 +254,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     (preserveBed = false) => {
       ++newsGeneration.current;
       newsActive.current = false;
+      clearNewsClock();
       newsSchedule.current?.cancelDelivery();
       newsSchedule.current = null;
       setNewsRunId(undefined);
@@ -273,7 +281,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       setLastNews((value) => (value?.status === 'playing' ? { ...value, status: 'interrupted' } : value));
       setActiveNewsId(undefined);
     },
-    [fadeMusic],
+    [clearNewsClock, fadeMusic],
   );
 
   useEffect(() => {
@@ -516,6 +524,17 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     }
   }, [continueAfterSong, stopNews]);
 
+  const startNewsClock = useCallback(() => {
+    if (newsClock.current !== null || !newsSchedule.current) return;
+    newsClock.current = window.setInterval(() => {
+      if (!newsSchedule.current) {
+        clearNewsClock();
+        return;
+      }
+      checkScheduledNews();
+    }, 25);
+  }, [checkScheduledNews, clearNewsClock]);
+
   useEffect(() => {
     const lifecycle = generation;
     const speechLifecycle = newsGeneration;
@@ -557,7 +576,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       if (!newsSchedule.current?.trackEnded) publishPosition(offset.current + element.currentTime);
       checkScheduledNews();
     };
-    const newsClock = window.setInterval(() => checkScheduledNews(), 25);
+    if (newsSchedule.current) startNewsClock();
     element.onended = () => {
       // A queue change can precede replacement of the outgoing audio source.
       if (preparing.current || !element.ended || consumedEnd.current === generation.current) return;
@@ -588,7 +607,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     return () => {
       ++lifecycle.current;
       ++speechLifecycle.current;
-      clearInterval(newsClock);
+      clearNewsClock();
       scheduled.current?.cancelDelivery();
       scheduled.current = null;
       deferredFade.current = null;
@@ -617,7 +636,17 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       element.load();
       audio.current = null;
     };
-  }, [load, continueAfterSong, checkScheduledNews, stopNews, fadeMusic, publishPosition, requestPlayback]);
+  }, [
+    load,
+    continueAfterSong,
+    checkScheduledNews,
+    clearNewsClock,
+    startNewsClock,
+    stopNews,
+    fadeMusic,
+    publishPosition,
+    requestPlayback,
+  ]);
 
   const restoreSession = useCallback(
     async (saved: PlaybackSnapshot, retryCommandRevision?: number): Promise<PlaybackRetrySettlement> => {
@@ -1421,6 +1450,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         cancelDelivery,
       };
       newsSchedule.current = planned;
+      startNewsClock();
       setNewsRunId(token);
       setActiveNewsId(news.id);
       setNewsLoading(false);

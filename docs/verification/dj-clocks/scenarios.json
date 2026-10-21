@@ -1,0 +1,50 @@
+{
+  "verification": "Actual renderer with fixture IPC/audio, real browser timers; no paid providers or audible output",
+  "results": [
+    {
+      "scenario": "everySongs=1 consecutive saved takes, pause/resume, completion",
+      "phases": [
+        {
+          "take": 0,
+          "phase": "speaking"
+        },
+        {
+          "take": 1,
+          "phase": "speaking"
+        }
+      ],
+      "starts": 2,
+      "played": 2,
+      "poolQueries": 3,
+      "nextTrack": "Evening track 003",
+      "activeDJClocks": 0
+    },
+    {
+      "scenario": "pool failure retry and recovery loss while waiting",
+      "poolQueries": 2,
+      "phase": "idle",
+      "claimReleased": true,
+      "starts": 0,
+      "activeDJClocks": 0
+    },
+    {
+      "scenario": "due state changes during unchanged settings save",
+      "completedSongs": 1,
+      "poolQueriesBeforeSaveCompletion": 0,
+      "poolQueriesAfterSaveCompletion": 1
+    },
+    {
+      "scenario": "nonzero fade, pause/resume, lead-in and tail with stalled timeupdate",
+      "fadeOutSeconds": 0.12,
+      "leadInSeconds": 0.12,
+      "postSpeechSeconds": 0.12,
+      "pausePreservedVolume": true,
+      "nextTrack": "Evening track 002",
+      "activeDJClocks": 0
+    },
+    {
+      "scenario": "provider unmount cancels active scheduled clock",
+      "activeDJClocks": 0
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "state": "no song playing; DJ disabled; no news scheduled",
+  "observationMilliseconds": 1100,
+  "transitionCallbacks": 0,
+  "controllerCallbacks": 0,
+  "activeIntervalDelays": [
+    30000,
+    1000,
+    5000
+  ]
+}
