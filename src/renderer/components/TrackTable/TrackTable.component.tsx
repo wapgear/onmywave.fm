@@ -463,7 +463,7 @@ function TrackMenu({ name, children }: { name: string; children: ReactNode }) {
         ref={menu}
         popover="auto"
         role="group"
-        className="row-menu track-popover"
+        className="popover-surface row-menu track-popover"
         aria-label={`Actions for ${name}`}
         onBlurCapture={(event) => {
           if (!event.currentTarget.contains(event.relatedTarget)) menu.current?.hidePopover();

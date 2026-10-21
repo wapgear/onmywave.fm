@@ -4,9 +4,10 @@ import { useRef, useState } from 'react';
 
 import type { DJ } from '../../../shared/types';
 import { unwrap } from '../../api';
+import { Button } from '../../components/Button/Button.component';
 import { DJAvatar } from '../../components/DJAvatar/DJAvatar.component';
 import { IconButton } from '../../components/IconButton/IconButton.component';
-import { Dialog, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
+import { Dialog, DialogActions, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { confirmLocalState } from '../../local-state-cache';
 import { useRetryFocus } from '../../useRetryFocus';
 import { DJEditor } from './components/DJEditor.component';
@@ -159,19 +160,19 @@ export function DJsPage() {
             </p>
           )}
           <ErrorNotice error={save.error} />
-          <div className="modal-actions">
-            <button aria-disabled={save.isPending || undefined} onClick={closeDeletion}>
+          <DialogActions>
+            <Button aria-disabled={save.isPending || undefined} onClick={closeDeletion}>
               Cancel
-            </button>
-            <button
-              className="destructive"
+            </Button>
+            <Button
+              variant="destructive"
               aria-disabled={save.isPending || undefined}
               aria-busy={save.isPending || undefined}
               onClick={() => deleteDJ(deleting.id)}
             >
               {save.isPending ? 'Deleting…' : 'Delete DJ'}
-            </button>
-          </div>
+            </Button>
+          </DialogActions>
         </Dialog>
       )}
     </>

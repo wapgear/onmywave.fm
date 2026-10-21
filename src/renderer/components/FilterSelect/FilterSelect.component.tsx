@@ -122,7 +122,7 @@ export function FilterSelect({
       <div
         id={id}
         ref={popup}
-        className="filter-select-popup"
+        className="popover-surface filter-select-popup"
         popover="auto"
         role="dialog"
         aria-label={`Choose ${label.toLowerCase()}`}

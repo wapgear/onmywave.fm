@@ -111,11 +111,19 @@ export function Dialog({
     const node = ref.current;
     if (!node) return;
     node.showModal();
+    const heading = node.querySelector<HTMLElement>('.modal-heading');
+    const measureHeading = () => {
+      if (heading) node.style.setProperty('--dialog-heading-height', `${heading.getBoundingClientRect().height}px`);
+    };
+    const observer = new ResizeObserver(measureHeading);
+    if (heading) observer.observe(heading);
+    measureHeading();
     const initialFocus = initialFocusRef?.current;
     if (initialFocus && node.contains(initialFocus) && !initialFocus.matches(':disabled'))
       initialFocus.focus({ preventScroll: true });
     return () => {
-      node?.close();
+      observer.disconnect();
+      node.close();
       if (!shouldRestoreFocus(restoreFocusRef)) return;
       requestAnimationFrame(() => {
         if (document.querySelector('dialog[open]')) return;
@@ -164,6 +172,10 @@ export function Dialog({
       {children}
     </dialog>
   );
+}
+
+export function DialogActions({ children }: { children: ReactNode }) {
+  return <div className="modal-actions">{children}</div>;
 }
 
 export function PageHeading({ title, subtitle, children, headingRef }: PageHeadingProps) {

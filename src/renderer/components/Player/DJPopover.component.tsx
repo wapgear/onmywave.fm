@@ -236,7 +236,7 @@ export function DJPopover({ openRoom, openSettings }: DJPopoverProps) {
       <div
         id={id}
         ref={popup}
-        className="dj-popover"
+        className="popover-surface dj-popover"
         popover="auto"
         role="dialog"
         aria-label="DJ controls"

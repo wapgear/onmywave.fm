@@ -1,6 +1,6 @@
 .configuration-tabs {
   display: flex;
-  gap: 6px;
+  gap: var(--control-gap);
   overflow-x: auto;
   max-width: 100%;
   padding: 4px 2px 12px;
@@ -9,7 +9,7 @@
 }
 .configuration-tabs > [role='tab'] {
   flex-shrink: 0;
-  border-radius: 8px;
+  border-radius: var(--control-radius);
   font-size: 13px;
   background: transparent;
   color: var(--muted);

@@ -27,15 +27,6 @@
   border-radius: 10px;
 }
 .row-menu.track-popover {
-  position: fixed;
-  inset: auto;
-  margin: 0;
   width: 205px;
-  max-width: calc(100vw - 16px);
-  max-height: calc(100dvh - 16px);
   overflow-y: auto;
-  color: var(--text);
-}
-.row-menu.track-popover:not(:popover-open) {
-  display: none;
 }
