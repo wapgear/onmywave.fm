@@ -46,6 +46,7 @@ function useDJPlaybackController() {
   });
 
   const retry = useRef<() => void>(() => {});
+  const wakeTick = useRef<() => void>(() => {});
   const [view, setView] = useState<PlaybackView | null>(null);
 
   useEffect(() => {
@@ -88,6 +89,7 @@ function useDJPlaybackController() {
       cycle.retryPhase = 'queued';
       attempted.clear();
       publish();
+      wakeTick.current();
     };
     const tick = () => {
       if (!published) {
@@ -131,6 +133,7 @@ function useDJPlaybackController() {
         cycle.pending = null;
         cycle.baseline = p.completedSongs;
         publish();
+        wakeTick.current();
         return;
       }
       if (!p.currentKey || !p.requestedPlaying || p.busy || p.activeNews) return;
@@ -158,6 +161,7 @@ function useDJPlaybackController() {
           .finally(() => {
             cycle.placing = false;
             publish();
+            wakeTick.current();
           });
         return;
       }
@@ -206,16 +210,35 @@ function useDJPlaybackController() {
           checking = false;
           cycle.preparing = false;
           publish();
+          wakeTick.current();
         });
     };
-    const timer = window.setInterval(tick, 100);
+    const wake = () => tick();
+    wakeTick.current = wake;
+    tick();
     return () => {
       cancelled = true;
-      window.clearInterval(timer);
+      if (wakeTick.current === wake) wakeTick.current = () => {};
       if (ownedNews && cycle.pending) release(cycle.pending);
       if (ownedNews && live.current.player.activeNews?.id === ownedNews) live.current.player.stopNews();
     };
   }, [configKey]);
+
+  useEffect(() => {
+    wakeTick.current();
+  }, [
+    configKey,
+    recoveryReady,
+    state.error,
+    player.currentKey,
+    player.requestedPlaying,
+    player.busy,
+    player.activeNews?.id,
+    player.newsPhase,
+    player.lastNews?.news.id,
+    player.lastNews?.status,
+    player.completedSongs,
+  ]);
 
   const current = view?.configKey === configKey ? view : null;
   const completed = Math.max(0, player.completedSongs - (current?.baseline ?? player.completedSongs));
@@ -250,6 +273,7 @@ function useDJPlaybackController() {
     } finally {
       if (saved && patch.enabled === false) live.current.player.stopNews();
       writeInFlight.current = false;
+      wakeTick.current();
     }
   };
   const update = useMutation({ mutationFn: savePlaybackSettings });
