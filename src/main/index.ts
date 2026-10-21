@@ -706,7 +706,6 @@ function registerIpc() {
         const workflowDraft = { ...profile.workflowDraft, newsEnabled: false, nextNewsCheckAt: undefined };
         return {
           roomProfiles: state.roomProfiles.map((value) => (value.id === input ? { ...value, workflowDraft } : value)),
-          ...(state.activeRoomProfileId === input ? { workflowDraft } : {}),
         };
       });
       pauseNewsWorkflow(input);

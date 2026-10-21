@@ -71,6 +71,19 @@ const twoProfiles = (overrides = {}) => ({
   activeRoomProfileId: 'room-b',
   ...overrides,
 });
+const mainSource = fs.readFileSync(path.join(process.cwd(), 'src/main/index.ts'), 'utf8');
+const mainFile = ts.createSourceFile('index.ts', mainSource, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+const disableNewsPreparationNode = (() => {
+  let found;
+  const visit = (node) => {
+    if (ts.isPropertyAssignment(node) && node.name.getText(mainFile) === 'disableNewsPreparation') found = node.initializer;
+    if (!found) ts.forEachChild(node, visit);
+  };
+  visit(mainFile);
+  assert.ok(found, 'disableNewsPreparation handler exists');
+  return found;
+})();
+const sourceDisableNewsPreparation = disableNewsPreparationNode.getText(mainFile);
 const check = async (name, run) => {
   await run();
   results.push({ scenario: name, result: 'passed' });
@@ -206,6 +219,54 @@ const check = async (name, run) => {
     assert.equal(unrelated.workflowDraft.newsLastRun, undefined);
     assert.equal(unrelated.workflowDraft.newsClipsToday, undefined);
     for (const key of ['vibe', 'listeningRoom', 'workflowDraft']) assert.equal(Object.hasOwn(state, key), false);
+  });
+
+  await check('actual disable handler changes only its target profile and persists no aliases', async () => {
+    const initial = twoProfiles({
+      djs: [{ id: 'dj-a' }],
+      sources: [{ id: 'source-a' }],
+      roomProfiles: [
+        profile('room-a', {
+          room: { djId: 'dj-a', sourceIds: ['source-a'] },
+          workflowDraft: { ...profile('room-a').workflowDraft, newsEnabled: true, nextNewsCheckAt: '2026-10-22T10:00:00.000Z' },
+        }),
+        profile('room-b', { workflowDraft: { ...profile('room-b').workflowDraft, newsEnabled: true, nextNewsCheckAt: '2026-10-23T10:00:00.000Z' } }),
+      ],
+      activeRoomProfileId: 'room-b',
+      djPlayback: { enabled: true, roomId: 'room-a', everySongs: 3, keepOnSeek: true, voiceVolume: 0.7 },
+    });
+    const { file, storage } = fresh('disable-handler', initial);
+    const transpiled = ts.transpileModule(`(${sourceDisableNewsPreparation})`, {
+      compilerOptions: { module: ts.ModuleKind.None, target: ts.ScriptTarget.ES2022 },
+    }).outputText;
+    let paused;
+    const handler = new Function(
+      'profileId',
+      'updateLocalStateAndGet',
+      'ServiceError',
+      'pauseNewsWorkflow',
+      `return ${transpiled};`,
+    )(
+      (id) => assert.match(id, /^[a-zA-Z0-9-]{1,128}$/),
+      storage.updateLocalStateAndGet,
+      class ServiceError extends Error {},
+      (id) => { paused = id; },
+    );
+    await handler('room-b');
+    const state = await storage.getLocalState();
+    const target = state.roomProfiles.find((value) => value.id === 'room-b');
+    const unrelated = state.roomProfiles.find((value) => value.id === 'room-a');
+    assert.equal(target.workflowDraft.newsEnabled, false);
+    assert.equal(target.workflowDraft.nextNewsCheckAt, undefined);
+    assert.equal(unrelated.workflowDraft.newsEnabled, true);
+    assert.equal(unrelated.workflowDraft.nextNewsCheckAt, '2026-10-22T10:00:00.000Z');
+    assert.equal(paused, 'room-b');
+    assert.equal(state.activeRoomProfileId, 'room-b');
+    assert.deepEqual(state.djPlayback, initial.djPlayback);
+    const disk = JSON.parse(fs.readFileSync(file, 'utf8'));
+    for (const key of ['vibe', 'listeningRoom', 'workflowDraft']) assert.equal(Object.hasOwn(disk, key), false);
+    assert.equal(disk.roomProfiles.find((value) => value.id === 'room-a').workflowDraft.newsEnabled, true);
+    assert.equal(disk.roomProfiles.find((value) => value.id === 'room-b').workflowDraft.newsEnabled, false);
   });
 
   console.log(
