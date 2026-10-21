@@ -40,7 +40,6 @@ export type PlayerState = {
   playing: boolean;
   requestedPlaying: boolean;
   busy: boolean;
-  position: number;
   duration: number;
   error: string | null;
   volume: number;
@@ -79,6 +78,12 @@ export type PlayerState = {
   scheduleNews(this: void, news: NewsBreak, duckVolume: number, claimId?: string): Promise<void>;
   stopNews(this: void): void;
   controlNews(this: void, runId: number, action: 'toggle' | 'stop'): boolean;
+};
+
+export type PositionStore = {
+  getSnapshot: () => number;
+  publish: (position: number) => void;
+  subscribe: (listener: () => void) => () => void;
 };
 
 export type HeardNews = { news: NewsBreak; startedAt: string; status: 'playing' | 'completed' | 'interrupted' };

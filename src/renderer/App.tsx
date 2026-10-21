@@ -593,12 +593,7 @@ function ReadyApp({
             {visibleDrawer === 'queue' ? (
               <Queue />
             ) : visibleDrawer === 'lyrics' ? (
-              <Lyrics
-                key={player.currentKey}
-                connectionId={connection.id}
-                song={player.current!}
-                position={player.position}
-              />
+              <Lyrics key={player.currentKey} connectionId={connection.id} song={player.current!} />
             ) : (
               <Inspector key={visibleDrawer.id} song={visibleDrawer} />
             )}

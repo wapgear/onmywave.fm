@@ -4,8 +4,8 @@ The October 21, 2026 review identified eight changes. Each linked issue records 
 
 | Order | Issue | Status |
 | --- | --- | --- |
-| 1 | [reuse Jellyfin search results across pages](https://github.com/wapgear/onmywave.fm/issues/172) | Implemented; fixture verification passed; awaiting PR checks |
-| 2 | [isolate playback progress from library and queue renders](https://github.com/wapgear/onmywave.fm/issues/173) | Planned |
+| 1 | [reuse Jellyfin search results across pages](https://github.com/wapgear/onmywave.fm/issues/172) | Merged in [#180](https://github.com/wapgear/onmywave.fm/pull/180); issue closed |
+| 2 | [isolate playback progress from library and queue renders](https://github.com/wapgear/onmywave.fm/issues/173) | Implemented; render counts and playback fixtures passed; awaiting PR checks |
 | 3 | [run DJ scheduling clocks only when needed](https://github.com/wapgear/onmywave.fm/issues/174) | Planned |
 | 4 | [coalesce playback checkpoints and skip unchanged saves](https://github.com/wapgear/onmywave.fm/issues/175) | Planned |
 | 5 | [remove unused weather fields from news workflows](https://github.com/wapgear/onmywave.fm/issues/176) | Planned |

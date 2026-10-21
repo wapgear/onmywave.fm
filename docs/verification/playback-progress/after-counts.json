@@ -1,0 +1,12 @@
+{
+  "events": 10,
+  "strictMode": true,
+  "viewport": [
+    1280,
+    800
+  ],
+  "renders": {
+    "PlayerTimeline": 20
+  },
+  "position": 10
+}

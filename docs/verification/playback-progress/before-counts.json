@@ -1,0 +1,15 @@
+{
+  "events": 10,
+  "strictMode": true,
+  "viewport": [
+    1280,
+    800
+  ],
+  "renders": {
+    "PlayerProvider": 20,
+    "ReadyApp": 20,
+    "SongsPage": 20,
+    "Player": 20,
+    "DJPopover": 20
+  }
+}
