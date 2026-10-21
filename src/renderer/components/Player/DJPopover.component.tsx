@@ -9,6 +9,7 @@ import { useDJPlayback } from '../../dj-playback';
 import { useNewsRecovery } from '../../NewsRecovery';
 import { usePlayer } from '../../player';
 import { useRetryFocus } from '../../useRetryFocus';
+import { InfoHelp } from '../InfoHelp/InfoHelp.component';
 import { ErrorNotice } from '../Shared';
 import type { DJPopoverProps } from './DJPopover.types';
 
@@ -25,6 +26,7 @@ export function DJPopover({ openRoom, openSettings }: DJPopoverProps) {
   const suppressReturnFocus = useRef(false);
   const [open, setOpen] = useState(false);
   const profileInput = useRef<HTMLSelectElement>(null);
+  const profileSummary = useRef<HTMLElement>(null);
   const [scheduleFocus, setScheduleFocus] = useState<HTMLButtonElement | null>(null);
   const [profileFocus, setProfileFocus] = useState<HTMLSelectElement | null>(null);
   const [poolRetryFocus, setPoolRetryFocus] = useState<HTMLButtonElement | null>(null);
@@ -33,7 +35,7 @@ export function DJPopover({ openRoom, openSettings }: DJPopoverProps) {
   const ownsPoolRetryFocus = open && poolRetryFocus !== null && document.activeElement === poolRetryFocus;
   const retryFocus = useRetryFocus({
     ownerKey: `dj-controls:${open}:${recoveryReady}`,
-    target: () => profileInput.current,
+    target: () => (profileInput.current?.checkVisibility() ? profileInput.current : profileSummary.current),
     canFocusSuccess: () => open && recoveryReady && automation.state.isSuccess && !automation.state.isFetching,
   });
   const preparationState = useQuery({
@@ -80,7 +82,7 @@ export function DJPopover({ openRoom, openSettings }: DJPopoverProps) {
           : automation.error
             ? 'Needs attention'
             : automation.waitingForPreparation
-              ? 'Waiting'
+              ? 'No saved news ready'
               : automation.preparing
                 ? 'Checking pool'
                 : automation.pending
@@ -116,7 +118,7 @@ export function DJPopover({ openRoom, openSettings }: DJPopoverProps) {
   function position() {
     if (!trigger.current || !popup.current) return;
     const rect = trigger.current.getBoundingClientRect();
-    popup.current.style.right = `${Math.max(12, Math.min(window.innerWidth - rect.right, window.innerWidth - 372))}px`;
+    popup.current.style.right = `${Math.max(12, Math.min(window.innerWidth - rect.right, window.innerWidth - popup.current.offsetWidth - 12))}px`;
     popup.current.style.bottom = `${window.innerHeight - rect.top + 12}px`;
     popup.current.style.maxHeight = `${Math.max(120, rect.top - 24)}px`;
   }
@@ -238,6 +240,7 @@ export function DJPopover({ openRoom, openSettings }: DJPopoverProps) {
         role="dialog"
         aria-label="DJ controls"
         onToggle={(event) => {
+          if (event.target !== event.currentTarget) return;
           const opening = event.newState === 'open';
           setOpen(opening);
           if (opening) {
@@ -269,9 +272,76 @@ export function DJPopover({ openRoom, openSettings }: DJPopoverProps) {
                   : status}
             </span>
           </div>
-          <button className="icon-button" popoverTarget={id} popoverTargetAction="hide" aria-label="Close DJ controls">
-            <X size={18} />
-          </button>
+          <div className="dj-header-actions">
+            <InfoHelp label="About DJ breaks">
+              <p>
+                The DJ checks for matching saved news every {automation.settings.everySongs}{' '}
+                {automation.settings.everySongs === 1 ? 'song' : 'songs'}. Skips do not count. Music continues when
+                nothing qualifies or the song ending is unsuitable.
+              </p>
+              <p>
+                Saved recordings play without provider keys. Preparing new news in News bucket → Settings uses provider
+                credits.
+              </p>
+              <section aria-labelledby={`${id}-preparation-title`} className="dj-preparation-status">
+                <h3 id={`${id}-preparation-title`}>
+                  Automatic news preparation{preparationRoom ? ` · ${preparationRoom.name}` : ''}
+                </h3>
+                {!recoveryReady && (
+                  <p className="dj-hint">Preparation status is unavailable until news data is recovered.</p>
+                )}
+                {recoveryReady && preparationState.isPending && (
+                  <p className="dj-hint" role="status">
+                    Checking preparation status…
+                  </p>
+                )}
+                {recoveryReady && preparationState.error && !preparationState.data && (
+                  <p className="dj-hint" role="alert">
+                    Preparation status could not be loaded. Open News bucket to check it.
+                  </p>
+                )}
+                {recoveryReady && preparationState.isRefetchError && preparationState.data && (
+                  <p className="dj-hint" role="status">
+                    Could not refresh; showing the last saved status.
+                  </p>
+                )}
+                {recoveryReady &&
+                  preparationState.data &&
+                  !automation.settings.roomId &&
+                  automation.rooms.length > 0 && (
+                    <p className="dj-hint">Choose a news profile under Current DJ to see its preparation status.</p>
+                  )}
+                {recoveryReady && preparationState.data && automation.settings.roomId && !preparationRoom && (
+                  <p className="dj-hint">The selected news profile is unavailable. Choose another under Current DJ.</p>
+                )}
+                {recoveryReady && preparation && (
+                  <p className="dj-hint">
+                    {preparationState.error ? (
+                      <>Last saved automatic setting: {preparationRoom?.workflowDraft.newsEnabled ? 'on' : 'off'}.</>
+                    ) : (
+                      <>
+                        <strong>{preparation.label}.</strong> {preparation.detail}
+                      </>
+                    )}
+                  </p>
+                )}
+                {preparationRoom && editingRoom && preparationRoom.id !== editingRoom.id && (
+                  <p className="dj-hint">
+                    News bucket currently shows {editingRoom.name}. Choose {preparationRoom.name} in its Setup profile
+                    menu to edit the preparation shown here.
+                  </p>
+                )}
+              </section>
+            </InfoHelp>
+            <button
+              className="icon-button"
+              popoverTarget={id}
+              popoverTargetAction="hide"
+              aria-label="Close DJ controls"
+            >
+              <X size={18} />
+            </button>
+          </div>
         </header>
         {!recoveryReady && !knownSpeech && (
           <p className="dj-hint">DJ status and schedule controls are unavailable until news data is recovered.</p>
@@ -280,9 +350,7 @@ export function DJPopover({ openRoom, openSettings }: DJPopoverProps) {
           <div>
             <strong>DJ schedule</strong>
             <p className="dj-hint">
-              Check for a news break every {automation.settings.everySongs}{' '}
-              {automation.settings.everySongs === 1 ? 'song' : 'songs'} while enabled. Music continues when nothing
-              qualifies.
+              Every {automation.settings.everySongs} {automation.settings.everySongs === 1 ? 'song' : 'songs'}
             </p>
           </div>
           <button
@@ -337,8 +405,7 @@ export function DJPopover({ openRoom, openSettings }: DJPopoverProps) {
         )}
         {automation.settings.enabled && !automation.preparing && !upcoming && !automation.error && (
           <p className="dj-automation-note">
-            Next break in {automation.songsUntilBreak} {automation.songsUntilBreak === 1 ? 'song' : 'songs'}. Skips do
-            not count.
+            Next check in {automation.songsUntilBreak} {automation.songsUntilBreak === 1 ? 'song' : 'songs'}.
           </p>
         )}
         {showPoolRetry && (
@@ -376,88 +443,62 @@ export function DJPopover({ openRoom, openSettings }: DJPopoverProps) {
           </div>
         )}
         <ErrorNotice error={player.error ? new Error(player.error) : null} />
-        <section aria-labelledby={`${id}-preparation-title`} className="dj-preparation-status">
-          <h3 id={`${id}-preparation-title`}>
-            Automatic news preparation{preparationRoom ? ` · ${preparationRoom.name}` : ''}
-          </h3>
-          {!recoveryReady && <p className="dj-hint">Preparation status is unavailable until news data is recovered.</p>}
-          {recoveryReady && preparationState.isPending && (
-            <p className="dj-hint" role="status">
-              Checking preparation status…
-            </p>
-          )}
-          {recoveryReady && preparationState.error && !preparationState.data && (
-            <p className="dj-hint" role="alert">
-              Preparation status could not be loaded. Open News bucket to check it.
-            </p>
-          )}
-          {recoveryReady && preparationState.isRefetchError && preparationState.data && (
-            <p className="dj-hint" role="status">
-              Could not refresh; showing the last saved status.
-            </p>
-          )}
-          {recoveryReady && preparationState.data && !automation.settings.roomId && automation.rooms.length > 0 && (
-            <p className="dj-hint">Choose a news profile below to see its preparation status.</p>
-          )}
-          {recoveryReady && preparationState.data && automation.settings.roomId && !preparationRoom && (
-            <p className="dj-hint">The selected news profile is unavailable. Choose another profile below.</p>
-          )}
-          {recoveryReady && preparation && (
-            <p className="dj-hint">
-              {preparationState.error ? (
-                <>Last saved automatic setting: {preparationRoom?.workflowDraft.newsEnabled ? 'on' : 'off'}.</>
-              ) : (
-                <>
-                  <strong>{preparation.label}.</strong> {preparation.detail}
-                </>
-              )}
-            </p>
-          )}
-          {preparationRoom && editingRoom && preparationRoom.id !== editingRoom.id && (
-            <p className="dj-hint">
-              News bucket currently shows {editingRoom.name}. Choose {preparationRoom.name} in its Setup profile menu to
-              edit the preparation shown here.
-            </p>
-          )}
-          <button className="dj-preparation-link" onClick={() => navigate(openRoom)}>
-            Open News bucket
-          </button>
-        </section>
         <section>
-          <h3>Quick configuration</h3>
-          <label className="dj-take-label" htmlFor={`${id}-room`}>
-            News profile
-          </label>
-          <select
-            ref={profileInput}
-            id={`${id}-room`}
-            value={automation.room?.id ?? ''}
-            disabled={profileUnavailable && !ownsProfileFocus}
-            aria-disabled={profileUnavailable || undefined}
-            aria-busy={updatingProfile || undefined}
-            onFocus={(event) => setProfileFocus(event.currentTarget)}
-            onBlur={() => setProfileFocus(null)}
-            onPointerDown={(event) => {
-              if (profileUnavailable) event.preventDefault();
-            }}
-            onKeyDown={(event) => {
-              if (
-                profileUnavailable &&
-                [' ', 'Enter', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown'].includes(event.key)
+          <details className="dj-profile-details">
+            <summary ref={profileSummary}>
+              Current DJ ·{' '}
+              {automation.state.data?.djs.find((dj) => dj.id === automation.room?.room.djId)?.name ?? 'Not selected'}
+            </summary>
+            <label className="dj-take-label" htmlFor={`${id}-room`}>
+              News profile
+            </label>
+            <select
+              ref={profileInput}
+              id={`${id}-room`}
+              value={automation.room?.id ?? ''}
+              disabled={profileUnavailable && !ownsProfileFocus}
+              aria-disabled={profileUnavailable || undefined}
+              aria-busy={updatingProfile || undefined}
+              onFocus={(event) => setProfileFocus(event.currentTarget)}
+              onBlur={() => setProfileFocus(null)}
+              onPointerDown={(event) => {
+                if (profileUnavailable) event.preventDefault();
+              }}
+              onKeyDown={(event) => {
+                if (
+                  profileUnavailable &&
+                  [' ', 'Enter', 'ArrowUp', 'ArrowDown', 'Home', 'End', 'PageUp', 'PageDown'].includes(event.key)
+                )
+                  event.preventDefault();
+              }}
+              onChange={(event) => {
+                if (!profileUnavailable) changePlayback({ roomId: event.target.value || null });
+              }}
+            >
+              <option value="">Choose a news profile</option>
+              {automation.rooms.map((room) => (
+                <option key={room.id} value={room.id}>
+                  {room.name}
+                </option>
+              ))}
+            </select>
+            {recoveryReady && automation.room ? (
+              <p className="dj-hint">
+                {automation.state.data?.djs.find((dj) => dj.id === automation.room?.room.djId)?.name ??
+                  'Choose a host in the News bucket'}{' '}
+                · {automation.sources.map((value) => value.name).join(', ') || 'No sources selected'}
+              </p>
+            ) : (
+              recoveryReady &&
+              automation.state.data && (
+                <p className="dj-hint">
+                  {automation.rooms.length
+                    ? 'Choose a news profile above for DJ breaks.'
+                    : 'No news profiles are available. Make a profile available in News bucket → Advanced room options.'}
+                </p>
               )
-                event.preventDefault();
-            }}
-            onChange={(event) => {
-              if (!profileUnavailable) changePlayback({ roomId: event.target.value || null });
-            }}
-          >
-            <option value="">Choose a news profile</option>
-            {automation.rooms.map((room) => (
-              <option key={room.id} value={room.id}>
-                {room.name}
-              </option>
-            ))}
-          </select>
+            )}
+          </details>
           {updatingProfile && (
             <p className="dj-hint dj-action-status" role="status">
               Requested profile: {automation.rooms.find((room) => room.id === updateVariables?.roomId)?.name ?? 'none'}.
@@ -495,63 +536,22 @@ export function DJPopover({ openRoom, openSettings }: DJPopoverProps) {
               retry={() => retryFocus.retry(() => automation.refreshPlaybackStatus())}
             />
           )}
-          {recoveryReady && automation.room ? (
-            <p className="dj-hint">
-              {automation.state.data?.djs.find((dj) => dj.id === automation.room?.room.djId)?.name ??
-                'Choose a host in the News bucket'}{' '}
-              · {automation.sources.map((value) => value.name).join(', ') || 'No sources selected'}
-            </p>
-          ) : (
-            recoveryReady &&
-            automation.state.data && (
-              <p className="dj-hint">
-                {automation.rooms.length
-                  ? 'Choose a news profile above for DJ breaks.'
-                  : 'No news profiles are available. Make a profile available in News bucket → Advanced room options.'}
-              </p>
-            )
-          )}
-          <p className="dj-hint">
-            DJ breaks play matching saved recordings without provider keys. Preparing new news is separate in News
-            bucket → Settings and uses provider credits.
-          </p>
         </section>
-        <section>
-          <h3>{player.newsPhase !== 'idle' && player.newsPhase !== 'waiting' ? 'Current news' : 'Upcoming news'}</h3>
-          {upcoming ? (
-            story(upcoming)
-          ) : (
-            <p className="dj-hint">
-              {!recoveryReady
-                ? 'News status is unavailable during recovery.'
-                : automation.waitingForPreparation
-                  ? 'Waiting for the current preparation to finish…'
-                  : automation.preparing
-                    ? 'Checking saved news…'
-                    : automation.settings.enabled
-                      ? 'The DJ checks saved news when a break is due. An empty pool is skipped.'
-                      : 'Enable DJ to start your schedule.'}
-            </p>
-          )}
-          {recoveryReady && automation.pending && !player.activeNews && (
-            <p className="dj-hint">
-              Ready for the next suitable song ending. Music continues if this ending is unsuitable.
-            </p>
-          )}
-        </section>
-        <section>
-          <h3>Last heard this session</h3>
-          {player.lastNews ? (
-            <>
-              <p className="dj-hint">
-                {new Date(player.lastNews.startedAt).toLocaleTimeString()} · {heardStatus}
-              </p>
-              {story(player.lastNews.news)}
-            </>
-          ) : (
-            <p className="dj-hint">No news has played in this session.</p>
-          )}
-        </section>
+        {upcoming && (
+          <details className="dj-news-details">
+            <summary>
+              {player.newsPhase !== 'idle' && player.newsPhase !== 'waiting' ? 'Current news' : 'Upcoming news'}
+            </summary>
+            {story(upcoming)}
+          </details>
+        )}
+        {player.lastNews && (
+          <details className="dj-news-details">
+            <summary>Last heard · {heardStatus}</summary>
+            <p className="dj-hint">{new Date(player.lastNews.startedAt).toLocaleTimeString()}</p>
+            {story(player.lastNews.news)}
+          </details>
+        )}
         <ErrorNotice error={source.error} />
         <footer>
           <button onClick={() => navigate(openRoom)}>
