@@ -74,16 +74,20 @@ export function Lyrics({ connectionId, song, position }: { connectionId: string;
     const stopOnKey = (event: KeyboardEvent) => {
       if (['ArrowDown', 'ArrowUp', 'End', 'Home', 'PageDown', 'PageUp', ' '].includes(event.key)) stopFollowing();
     };
+    const stopOnPointer = (event: PointerEvent) => {
+      if (event.target instanceof Element && event.target.closest('.lyrics-line-seek, .lyrics-follow')) return;
+      stopFollowing();
+    };
     body.addEventListener('wheel', stopFollowing, { passive: true });
     body.addEventListener('touchstart', stopFollowing, { passive: true });
-    body.addEventListener('pointerdown', stopFollowing, true);
+    body.addEventListener('pointerdown', stopOnPointer, true);
     body.addEventListener('keydown', stopOnKey, true);
     body.addEventListener('scroll', stopOnScroll, { passive: true });
     body.addEventListener('scrollend', finishScroll);
     return () => {
       body.removeEventListener('wheel', stopFollowing);
       body.removeEventListener('touchstart', stopFollowing);
-      body.removeEventListener('pointerdown', stopFollowing, true);
+      body.removeEventListener('pointerdown', stopOnPointer, true);
       body.removeEventListener('keydown', stopOnKey, true);
       body.removeEventListener('scroll', stopOnScroll);
       body.removeEventListener('scrollend', finishScroll);
@@ -150,6 +154,11 @@ export function Lyrics({ connectionId, song, position }: { connectionId: string;
           <p>No lyrics are available for this song.</p>
           <small>Enable Jellyfin’s LRCLIB plugin on your server to provide lyrics.</small>
         </div>
+      )}
+      {lyrics.isSuccess && lines.length > 0 && !synced && (
+        <p className="lyrics-message" role="status">
+          These lyrics aren’t time-synced. Jumping to a line is unavailable.
+        </p>
       )}
       {lyrics.isSuccess && lines.length > 0 && (
         <div className={`lyrics-lines ${synced ? 'is-synced' : ''}`}>
