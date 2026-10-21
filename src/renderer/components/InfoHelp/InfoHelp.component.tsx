@@ -1,6 +1,7 @@
 import { Info } from 'lucide-react';
 import { useRef, useState, type ReactNode } from 'react';
 
+import { IconButton } from '../IconButton/IconButton.component';
 import { Dialog } from '../Shared';
 
 import './InfoHelp.styles.css';
@@ -15,16 +16,15 @@ export function InfoHelp({ label, children }: { label: string; children: ReactNo
 
   return (
     <>
-      <button
+      <IconButton
         ref={trigger}
-        type="button"
-        className="icon-button info-help"
-        aria-label={label}
+        label={label}
+        className="info-help"
         aria-haspopup="dialog"
         onClick={() => setOpen(true)}
       >
         <Info size={17} aria-hidden="true" />
-      </button>
+      </IconButton>
       {open && (
         <Dialog title={label} close={close}>
           <div className="info-help-content">{children}</div>

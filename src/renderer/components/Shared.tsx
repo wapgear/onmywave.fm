@@ -1,6 +1,7 @@
 import { AlertCircle, Music2, X } from 'lucide-react';
 import { useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 
+import { IconButton } from './IconButton/IconButton.component';
 import type { DialogProps, ErrorNoticeProps, PageHeadingProps } from './Shared.types';
 
 export const errorMessage = (error: unknown) =>
@@ -150,16 +151,15 @@ export function Dialog({
     >
       <div className="modal-heading">
         <h2 id={titleId}>{title}</h2>
-        <button
-          className="icon-button"
+        <IconButton
           aria-disabled={closeDisabled || undefined}
           onClick={() => {
             if (!closeDisabled) close();
           }}
-          aria-label="Close dialog"
+          label="Close dialog"
         >
-          <X size={20} />
-        </button>
+          <X size={20} aria-hidden="true" />
+        </IconButton>
       </div>
       {children}
     </dialog>

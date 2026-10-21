@@ -20,6 +20,7 @@ import { useNewsRecovery } from '../../NewsRecovery';
 import { usePlayer } from '../../player';
 import type { OptionsSaveSettlement, PlaybackRetrySettlement } from '../../player.types';
 import { useRetryFocus } from '../../useRetryFocus';
+import { IconButton } from '../IconButton/IconButton.component';
 import { Artwork } from '../Shared';
 import { DJPopover } from './DJPopover.component';
 import type { PlayerProps } from './Player.types';
@@ -327,56 +328,58 @@ export function Player({
         </div>
         <div className="player-center">
           <div className="player-transport">
-            <button
-              className={`player-icon secondary-transport ${player.shuffle ? 'is-active' : ''}`}
+            <IconButton
+              variant="player"
+              className={`secondary-transport ${player.shuffle ? 'is-active' : ''}`}
               onClick={player.toggleShuffle}
               title={`Shuffle ${player.shuffle ? 'on' : 'off'}`}
-              aria-label="Shuffle"
+              label="Shuffle"
               aria-pressed={player.shuffle}
             >
-              <Shuffle size={16} />
-            </button>
-            <button
-              className="player-icon"
+              <Shuffle size={16} aria-hidden="true" />
+            </IconButton>
+            <IconButton
+              variant="player"
               onClick={player.previous}
               disabled={!player.current}
               title="Previous track (⌘←)"
-              aria-label="Previous track"
+              label="Previous track"
             >
-              <SkipBack size={19} fill="currentColor" />
-            </button>
-            <button
+              <SkipBack size={19} fill="currentColor" aria-hidden="true" />
+            </IconButton>
+            <IconButton
               ref={playControl}
-              className="player-play"
+              variant="play"
               onClick={player.toggle}
               disabled={!player.current}
               title={`${player.requestedPlaying ? 'Pause' : 'Play'} (Space)`}
-              aria-label={player.requestedPlaying ? 'Pause' : 'Play'}
+              label={player.requestedPlaying ? 'Pause' : 'Play'}
             >
               {player.requestedPlaying ? (
-                <Pause size={21} fill="currentColor" />
+                <Pause size={21} fill="currentColor" aria-hidden="true" />
               ) : (
-                <Play size={21} fill="currentColor" />
+                <Play size={21} fill="currentColor" aria-hidden="true" />
               )}
-            </button>
-            <button
+            </IconButton>
+            <IconButton
               ref={nextControl}
-              className="player-icon"
+              variant="player"
               onClick={player.next}
               disabled={!player.current}
               title="Next track (⌘→)"
-              aria-label="Next track"
+              label="Next track"
             >
-              <SkipForward size={19} fill="currentColor" />
-            </button>
-            <button
+              <SkipForward size={19} fill="currentColor" aria-hidden="true" />
+            </IconButton>
+            <IconButton
               ref={repeatTrigger}
-              className={`player-icon secondary-transport ${player.repeat !== 'off' ? 'is-active' : ''}`}
+              variant="player"
+              className={`secondary-transport ${player.repeat !== 'off' ? 'is-active' : ''}`}
               onClick={() =>
                 player.setRepeat(player.repeat === 'off' ? 'all' : player.repeat === 'all' ? 'one' : 'off')
               }
               title={`Repeat: ${player.repeat}`}
-              aria-label={`Repeat: ${player.repeat}`}
+              label={`Repeat: ${player.repeat}`}
               aria-pressed={player.repeat !== 'off'}
             >
               {player.repeat === 'one' ? (
@@ -384,7 +387,7 @@ export function Player({
               ) : (
                 <Repeat size={16} aria-hidden="true" />
               )}
-            </button>
+            </IconButton>
           </div>
           <PlayerTimeline />
         </div>
@@ -398,10 +401,10 @@ export function Player({
               <LoaderCircle size={15} className="player-spin" aria-hidden="true" />
             </>
           )}
-          <button
-            className="player-icon"
+          <IconButton
+            variant="player"
             title={player.volume ? 'Mute' : 'Unmute'}
-            aria-label={player.volume ? 'Mute' : 'Unmute'}
+            label={player.volume ? 'Mute' : 'Unmute'}
             onClick={() => {
               if (player.volume) {
                 setMutedVolume(player.volume);
@@ -409,8 +412,8 @@ export function Player({
               } else player.setVolume(mutedVolume);
             }}
           >
-            <Volume size={18} />
-          </button>
+            <Volume size={18} aria-hidden="true" />
+          </IconButton>
           <input
             ref={volumeControl}
             className="player-volume"
@@ -424,27 +427,29 @@ export function Player({
             aria-label="Volume"
             aria-valuetext={`${Math.round(player.volume * 100)} percent`}
           />
-          <button
-            className={`player-icon player-lyrics ${lyricsOpen ? 'is-active' : ''}`}
+          <IconButton
+            variant="player"
+            className={`player-lyrics ${lyricsOpen ? 'is-active' : ''}`}
             onClick={(event) => toggleLyrics(event.currentTarget)}
             title="Lyrics"
-            aria-label={lyricsOpen ? 'Hide lyrics' : 'Show lyrics'}
+            label={lyricsOpen ? 'Hide lyrics' : 'Show lyrics'}
             aria-controls="listening-drawer"
             aria-expanded={lyricsOpen}
             disabled={!player.current}
           >
             <MicVocal size={18} aria-hidden="true" />
-          </button>
-          <button
-            className={`player-icon ${queueOpen ? 'is-active' : ''}`}
+          </IconButton>
+          <IconButton
+            variant="player"
+            className={`${queueOpen ? 'is-active' : ''}`}
             onClick={(event) => toggleQueue(event.currentTarget)}
             title="Playing Next"
-            aria-label={`${queueOpen ? 'Hide' : 'Show'} queue, ${player.queue.length} ${player.queue.length === 1 ? 'track' : 'tracks'}`}
+            label={`${queueOpen ? 'Hide' : 'Show'} queue, ${player.queue.length} ${player.queue.length === 1 ? 'track' : 'tracks'}`}
             aria-controls="listening-drawer"
             aria-expanded={queueOpen}
           >
-            <ListMusic size={21} />
-          </button>
+            <ListMusic size={21} aria-hidden="true" />
+          </IconButton>
         </div>
       </footer>
     </>

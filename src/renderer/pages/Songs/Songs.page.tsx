@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { CatalogQuery, Song } from '../../../shared/types';
 import { unwrap } from '../../api';
 import { FilterSelect } from '../../components/FilterSelect/FilterSelect.component';
+import { IconButton } from '../../components/IconButton/IconButton.component';
 import { Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { songRows } from '../../components/TrackTable/TrackTable.component';
 import { usePlayer } from '../../player';
@@ -160,17 +161,16 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
               ? 'Z–A'
               : 'A–Z'}
         </button>
-        <button
-          type="button"
-          className="icon-button refresh-button"
-          aria-label="Refresh library"
+        <IconButton
+          className="refresh-button"
+          label="Refresh library"
           aria-disabled={refreshing || undefined}
           aria-busy={refreshing}
           title="Refresh songs, filters, albums and playlists"
           onClick={() => void refreshLibrary()}
         >
-          <RefreshCw size={17} className={refreshing ? 'spinning' : ''} />
-        </button>
+          <RefreshCw size={17} className={refreshing ? 'spinning' : ''} aria-hidden="true" />
+        </IconButton>
       </div>
       <ErrorNotice
         error={filters.error}

@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUp, Check, Clock3, Info, ListPlus, Pause, Play, Plus, Trash2 } from 'lucide-react';
+import { ArrowDown, ArrowUp, Check, Clock3, Ellipsis, Info, ListPlus, Pause, Play, Plus, Trash2 } from 'lucide-react';
 import {
   Fragment,
   useCallback,
@@ -14,6 +14,7 @@ import {
 
 import { editablePlaylistEntryIds } from '../../../shared/playlist-entries';
 import type { PlaylistEntry, Song } from '../../../shared/types';
+import { IconButton } from '../IconButton/IconButton.component';
 import { Artwork, TrackDuration } from '../Shared';
 import type { TrackRow, TrackTableProps } from './TrackTable.types';
 
@@ -357,9 +358,9 @@ export function TrackTable({
             <Play size={16} />
             Play
           </button>
-          <button className="icon-button" aria-label="Add selected songs to queue" onClick={() => queue(selectedSongs)}>
-            <ListPlus size={19} />
-          </button>
+          <IconButton variant="compact" label="Add selected songs to queue" onClick={() => queue(selectedSongs)}>
+            <ListPlus size={19} aria-hidden="true" />
+          </IconButton>
           <button className="primary" onClick={() => add(selectedSongs)}>
             Add to playlist
           </button>
@@ -445,17 +446,18 @@ function TrackMenu({ name, children }: { name: string; children: ReactNode }) {
 
   return (
     <>
-      <button
+      <IconButton
         ref={trigger}
+        variant="compact"
         className="track-menu-trigger"
         popoverTarget={id}
-        aria-label={`Actions for ${name}`}
+        label={`Actions for ${name}`}
         onClick={() => {
           contextPoint.current = null;
         }}
       >
-        •••
-      </button>
+        <Ellipsis size={18} aria-hidden="true" />
+      </IconButton>
       <div
         id={id}
         ref={menu}
