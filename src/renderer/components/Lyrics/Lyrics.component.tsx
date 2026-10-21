@@ -55,12 +55,21 @@ export function Lyrics({ connectionId, song, position }: { connectionId: string;
   useEffect(() => {
     const body = root.current?.closest<HTMLElement>('.drawer-body');
     if (!body) return;
-    const stopFollowing = () => setFollowing(false);
-    const stopOnScroll = () => {
-      const expected = expectedScrollTop.current;
+    body.scrollTo({ top: 0, behavior: 'instant' });
+    let lastScrollTop = body.scrollTop;
+    const stopFollowing = () => {
       expectedScrollTop.current = null;
-      if (expected !== null && Math.abs(body.scrollTop - expected) < 2) return;
+      body.scrollTo({ top: body.scrollTop, behavior: 'instant' });
       setFollowing(false);
+    };
+    const stopOnScroll = () => {
+      const moved = Math.abs(body.scrollTop - lastScrollTop) >= 2;
+      lastScrollTop = body.scrollTop;
+      if (!moved || expectedScrollTop.current !== null) return;
+      setFollowing(false);
+    };
+    const finishScroll = () => {
+      expectedScrollTop.current = null;
     };
     const stopOnKey = (event: KeyboardEvent) => {
       if (['ArrowDown', 'ArrowUp', 'End', 'Home', 'PageDown', 'PageUp', ' '].includes(event.key)) stopFollowing();
@@ -70,13 +79,16 @@ export function Lyrics({ connectionId, song, position }: { connectionId: string;
     body.addEventListener('pointerdown', stopFollowing, true);
     body.addEventListener('keydown', stopOnKey, true);
     body.addEventListener('scroll', stopOnScroll, { passive: true });
+    body.addEventListener('scrollend', finishScroll);
     return () => {
       body.removeEventListener('wheel', stopFollowing);
       body.removeEventListener('touchstart', stopFollowing);
       body.removeEventListener('pointerdown', stopFollowing, true);
       body.removeEventListener('keydown', stopOnKey, true);
       body.removeEventListener('scroll', stopOnScroll);
+      body.removeEventListener('scrollend', finishScroll);
       expectedScrollTop.current = null;
+      body.scrollTo({ top: body.scrollTop, behavior: 'instant' });
     };
   }, []);
 
@@ -96,7 +108,10 @@ export function Lyrics({ connectionId, song, position }: { connectionId: string;
     );
     if (Math.abs(body.scrollTop - target) < 2) return;
     expectedScrollTop.current = target;
-    body.scrollTop = target;
+    body.scrollTo({
+      top: target,
+      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+    });
   }, [following, scrollIndex, synced]);
 
   return (

@@ -12,9 +12,11 @@
 }
 .lyrics-drawer .drawer-body {
   padding-inline: clamp(24px, 5vw, 80px);
-  padding-bottom: 24px;
+  padding-top: 32px;
+  padding-bottom: 48px;
   margin-bottom: var(--player-clearance);
-  scroll-padding-bottom: 24px;
+  scroll-padding-block: 48px;
+  mask-image: linear-gradient(to bottom, transparent, #000 32px, #000 calc(100% - 48px), transparent);
 }
 .lyrics-content {
   max-width: 760px;
@@ -68,9 +70,9 @@
 }
 .lyrics-follow-bar {
   position: sticky;
-  top: -12px;
+  top: 0;
   z-index: 1;
-  padding: 8px 0;
+  padding: 32px 0 8px;
   background: var(--panel);
 }
 .lyrics-follow:hover {
@@ -86,11 +88,14 @@
   line-height: 1.8;
   overflow-wrap: anywhere;
   white-space: pre-wrap;
-  transition: color 140ms ease;
+  transition:
+    color 260ms ease,
+    transform 300ms ease;
 }
 .lyrics-lines.is-synced p.is-active {
   color: var(--text);
   font-weight: 600;
+  transform: translateX(4px);
 }
 .lyrics-line-seek {
   display: block;
@@ -137,6 +142,9 @@
   .lyrics-line-seek {
     transition: none;
   }
+  .lyrics-lines.is-synced p.is-active {
+    transform: none;
+  }
 }
 @media (max-height: 540px) {
   .lyrics-drawer .drawer-heading {
@@ -145,6 +153,6 @@
     padding-bottom: 8px;
   }
   .lyrics-follow-bar {
-    padding: 4px 0;
+    padding-bottom: 4px;
   }
 }
