@@ -75,7 +75,6 @@ async function deferWorkflow(profile: RoomProfile, reason: 'limit' | 'busy'): Pr
     applied = true;
     return {
       roomProfiles: state.roomProfiles.map((value) => (value.id === profile.id ? { ...value, workflowDraft } : value)),
-      ...(state.activeRoomProfileId === profile.id ? { workflowDraft } : {}),
     };
   });
   return applied;
@@ -114,7 +113,6 @@ async function finishRun(
     };
     return {
       roomProfiles: state.roomProfiles.map((value) => (value.id === profileId ? { ...value, workflowDraft } : value)),
-      ...(state.activeRoomProfileId === profileId ? { workflowDraft } : {}),
     };
   });
 }
@@ -188,7 +186,6 @@ async function processProfile(news: NewsService, profile: RoomProfile) {
       roomProfiles: state.roomProfiles.map((value) =>
         value.id === latest.id ? { ...value, workflowDraft: started } : value,
       ),
-      ...(state.activeRoomProfileId === latest.id ? { workflowDraft: started } : {}),
     };
   });
   if (!snapshot) return;
@@ -257,7 +254,6 @@ async function processProfile(news: NewsService, profile: RoomProfile) {
           roomProfiles: state.roomProfiles.map((value) =>
             value.id === current.id ? { ...value, workflowDraft } : value,
           ),
-          ...(state.activeRoomProfileId === current.id ? { workflowDraft } : {}),
         };
       });
       return;
@@ -338,9 +334,6 @@ export async function startNewsWorkflow(
     });
     return {
       roomProfiles: changed,
-      ...(state.activeRoomProfileId
-        ? { workflowDraft: changed.find((profile) => profile.id === state.activeRoomProfileId)?.workflowDraft }
-        : {}),
     };
   });
   if (options.canStart?.() === false) return;

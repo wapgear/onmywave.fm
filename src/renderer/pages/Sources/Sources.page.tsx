@@ -124,7 +124,9 @@ export function SourcesPage() {
                       ? 'Hacker News'
                       : 'RSS / Atom'}
                 </p>
-                {state.data?.listeningRoom.sourceIds.includes(source.id) && <span>Selected in News bucket</span>}
+                {state.data?.roomProfiles
+                  .find((profile) => profile.id === state.data?.activeRoomProfileId)
+                  ?.room.sourceIds.includes(source.id) && <span>Selected in News bucket</span>}
               </div>
               <button
                 className="icon-button"

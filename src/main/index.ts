@@ -227,9 +227,6 @@ function markChangedProfileRuns(
   );
   return {
     roomProfiles,
-    ...(state.activeRoomProfileId
-      ? { workflowDraft: roomProfiles.find((profile) => profile.id === state.activeRoomProfileId)?.workflowDraft }
-      : {}),
   };
 }
 
@@ -314,7 +311,6 @@ function recoverNews(): Promise<NewsRecoveryStatus> {
           );
           return {
             roomProfiles,
-            workflowDraft: roomProfiles.find((profile) => profile.id === state.activeRoomProfileId)!.workflowDraft,
           };
         });
       }
@@ -386,7 +382,6 @@ function registerIpc() {
             );
             return {
               roomProfiles,
-              workflowDraft: roomProfiles.find((profile) => profile.id === state.activeRoomProfileId)!.workflowDraft,
             };
           });
         } catch (error) {
@@ -525,10 +520,6 @@ function registerIpc() {
       });
     },
     searchDJVoices,
-    saveVibe: async (input) => {
-      if (!text(input, 20_000)) invalid();
-      await updateLocalState({ vibe: input });
-    },
     saveNewsTransitions: async (input) => {
       if (!isNewsTransitionSettings(input)) invalid();
       const settings = normalizeNewsTransitionSettings(input);
@@ -696,7 +687,11 @@ function registerIpc() {
                   ? new Date(Date.parse(anchoredRun.startedAt) + requested.everyHours * 60 * 60 * 1000).toISOString()
                   : undefined,
           };
-          return { workflowDraft, listeningRoom: room, vibe: input.mood.trim() };
+          return {
+            roomProfiles: state.roomProfiles.map((value) =>
+              value.id === activeProfileId ? { ...value, room, mood: input.mood.trim(), workflowDraft } : value,
+            ),
+          };
         });
       };
       const saved = input.workflowDraft.newsEnabled ? await withProviderKeys(save) : await save();
@@ -765,9 +760,6 @@ function registerIpc() {
         if (!profile) throw new ServiceError('not-found', 'This configuration no longer exists.');
         return {
           activeRoomProfileId: profile.id,
-          listeningRoom: profile.room,
-          vibe: profile.mood,
-          workflowDraft: profile.workflowDraft,
         };
       });
     },
@@ -824,24 +816,8 @@ function registerIpc() {
         const changed = new Set([...before.keys(), ...after.keys()].filter((id) => before.get(id) !== after.get(id)));
         return {
           sources,
-          listeningRoom: {
-            ...state.listeningRoom,
-            sourceIds: state.listeningRoom.sourceIds.filter((id) => sources.some((source) => source.id === id)),
-          },
           ...markChangedProfileRuns(state, (profile) => profile.room.sourceIds.some((id) => changed.has(id))),
         };
-      });
-    },
-    saveListeningRoom: async (input: ListeningRoom) => {
-      if (!isRecord(input) || (input.djId !== null && !text(input.djId, 128)) || !strings(input.sourceIds, 20))
-        invalid();
-      await updateLocalState((state) => {
-        if (
-          (input.djId !== null && !state.djs.some((dj) => dj.id === input.djId)) ||
-          input.sourceIds.some((id) => !state.sources.some((source) => source.id === id))
-        )
-          invalid();
-        return { listeningRoom: { djId: input.djId, sourceIds: [...new Set(input.sourceIds)] } };
       });
     },
     setRoomProfileEnabled: async (input: { id: string; enabled: boolean }) => {
