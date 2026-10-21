@@ -1,5 +1,7 @@
 # Dialogs and native controls
 
+The subsequent [modal layout correction](../modal-layout/README.md) replaces the sticky-header arrangement shown in these historical captures.
+
 Extended the shared control review on 21 October 2026. See [the renderer design system](../../design-system.md) for reuse contracts and Apple references.
 
 ## Changes and evidence

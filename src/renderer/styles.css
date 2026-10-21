@@ -28,7 +28,7 @@
   --danger: #ad3434;
   --popover-radius: 12px;
   --popover-shadow: 0 10px 32px #17203926;
-  --dialog-padding: 26px;
+  --dialog-padding: 20px;
   --dialog-radius: 22px;
   --dialog-background: #fdfdfe;
   --dialog-shadow: 0 24px 90px #181b3a38;
@@ -1002,14 +1002,15 @@ button > svg {
   max-height: calc(100dvh - 80px);
   border: 1px solid var(--border);
   border-radius: var(--dialog-radius);
-  padding: var(--dialog-padding);
+  padding: 0;
   box-shadow: var(--dialog-shadow);
   color: var(--text);
   background: var(--dialog-background);
-  overflow: auto;
-  overscroll-behavior: contain;
-  scrollbar-gutter: auto;
-  scroll-padding-top: calc(var(--dialog-heading-height, 84px) + 8px);
+  overflow: hidden;
+}
+.modal[open] {
+  display: flex;
+  flex-direction: column;
 }
 .modal-wide {
   width: 660px;
@@ -1019,24 +1020,42 @@ button > svg {
   backdrop-filter: blur(5px);
 }
 .modal-heading {
-  position: sticky;
-  top: calc(-1 * var(--dialog-padding));
-  z-index: 2;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 24px;
-  padding: 18px 0;
-  background: var(--dialog-background);
+  position: relative;
+  flex: 0 0 auto;
+  padding: var(--dialog-padding) 56px 16px var(--dialog-padding);
 }
 .modal-heading h2 {
-  font-size: 20px;
+  font-size: 18px;
+  line-height: 1.35;
   min-width: 0;
   overflow-wrap: anywhere;
 }
-.modal-heading .icon-button {
-  flex: 0 0 auto;
+.modal-heading .modal-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+.modal-content {
+  min-height: 0;
+  margin: 0 8px 8px;
+  padding: 0 12px 12px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: #b8bac3 transparent;
+  scroll-padding-block: 8px;
+}
+.modal-content::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.modal-content::-webkit-scrollbar-thumb {
+  border-radius: 3px;
+  background: #b8bac3;
+}
+.modal-content::-webkit-scrollbar-track {
+  background: transparent;
 }
 .modal p {
   font-size: 13px;

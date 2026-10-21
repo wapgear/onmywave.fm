@@ -111,18 +111,10 @@ export function Dialog({
     const node = ref.current;
     if (!node) return;
     node.showModal();
-    const heading = node.querySelector<HTMLElement>('.modal-heading');
-    const measureHeading = () => {
-      if (heading) node.style.setProperty('--dialog-heading-height', `${heading.getBoundingClientRect().height}px`);
-    };
-    const observer = new ResizeObserver(measureHeading);
-    if (heading) observer.observe(heading);
-    measureHeading();
     const initialFocus = initialFocusRef?.current;
     if (initialFocus && node.contains(initialFocus) && !initialFocus.matches(':disabled'))
       initialFocus.focus({ preventScroll: true });
     return () => {
-      observer.disconnect();
       node.close();
       if (!shouldRestoreFocus(restoreFocusRef)) return;
       requestAnimationFrame(() => {
@@ -160,6 +152,7 @@ export function Dialog({
       <div className="modal-heading">
         <h2 id={titleId}>{title}</h2>
         <IconButton
+          className="modal-close"
           aria-disabled={closeDisabled || undefined}
           onClick={() => {
             if (!closeDisabled) close();
@@ -169,7 +162,7 @@ export function Dialog({
           <X size={20} aria-hidden="true" />
         </IconButton>
       </div>
-      {children}
+      <div className="modal-content">{children}</div>
     </dialog>
   );
 }
