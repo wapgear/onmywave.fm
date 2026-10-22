@@ -1,0 +1,20 @@
+{
+  "rows": 9999,
+  "scrollTop": 2400,
+  "status": {
+    "callCounts": {
+      "preparePlayback": 1
+    },
+    "completedSongs": 0,
+    "currentId": "00000000000000000000000000000001",
+    "newsPhase": "idle",
+    "opens": [
+      1851.4000000059605,
+      1819.20000000298
+    ],
+    "playing": false,
+    "position": 30,
+    "queueLength": 10000,
+    "requestedPlaying": false
+  }
+}

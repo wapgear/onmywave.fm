@@ -103,12 +103,20 @@
   padding: 0;
   margin: 0;
 }
+.queue-virtual-list {
+  position: relative;
+  overflow-anchor: none;
+}
 .queue-list li {
   display: flex;
   align-items: center;
   gap: 4px;
   border-radius: 7px;
   padding: 5px 0;
+}
+.queue-virtual-list li {
+  box-sizing: border-box;
+  margin: 0;
 }
 .queue-list li:hover {
   background: var(--hover);

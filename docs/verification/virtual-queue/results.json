@@ -1,0 +1,201 @@
+{
+  "verification": "Manual browser interaction with real renderer and fixture IPC/audio; no native media or live server",
+  "viewports": [
+    [
+      1280,
+      800
+    ],
+    [
+      960,
+      700
+    ]
+  ],
+  "baseline": {
+    "rows": 9999,
+    "scrollTop": 2400,
+    "status": {
+      "callCounts": {
+        "preparePlayback": 1
+      },
+      "completedSongs": 0,
+      "currentId": "00000000000000000000000000000001",
+      "newsPhase": "idle",
+      "opens": [
+        1851.4000000059605,
+        1819.20000000298
+      ],
+      "playing": false,
+      "position": 30,
+      "queueLength": 10000,
+      "requestedPlaying": false
+    }
+  },
+  "after": {
+    "height": 800,
+    "rows": 17,
+    "status": {
+      "callCounts": {
+        "preparePlayback": 1
+      },
+      "completedSongs": 0,
+      "currentId": "00000000000000000000000000000001",
+      "newsPhase": "idle",
+      "opens": [
+        44.900000005960464,
+        58.19999998807907,
+        17
+      ],
+      "playing": false,
+      "position": 30,
+      "queueLength": 10000,
+      "requestedPlaying": false
+    },
+    "width": 1280
+  },
+  "historyEnd": {
+    "index": "8999",
+    "pos": "9000",
+    "rect": {
+      "bottom": 655,
+      "height": 44,
+      "left": 997,
+      "right": 1187.640625,
+      "top": 611,
+      "width": 190.640625,
+      "x": 997,
+      "y": 611
+    },
+    "rows": 24,
+    "size": "9000",
+    "status": {
+      "callCounts": {
+        "preparePlayback": 1
+      },
+      "completedSongs": 0,
+      "currentId": "00000000000000000000000000000001",
+      "newsPhase": "idle",
+      "opens": [
+        46.70000000298023
+      ],
+      "playing": false,
+      "position": 30,
+      "queueLength": 10000,
+      "requestedPlaying": false
+    }
+  },
+  "historyAfterUpcomingRemoval": {
+    "index": "8999",
+    "rect": {
+      "bottom": 655,
+      "height": 44,
+      "left": 997,
+      "right": 1187.640625,
+      "top": 611,
+      "width": 190.640625,
+      "x": 997,
+      "y": 611
+    },
+    "rows": 24,
+    "status": {
+      "callCounts": {
+        "preparePlayback": 1
+      },
+      "completedSongs": 0,
+      "currentId": "00000000000000000000000000000001",
+      "newsPhase": "idle",
+      "opens": [
+        46.70000000298023
+      ],
+      "playing": false,
+      "position": 30,
+      "queueLength": 9999,
+      "requestedPlaying": false
+    }
+  },
+  "djBeforeQueue": {
+    "opens": [],
+    "queueLength": 10000,
+    "currentId": "00000000000000000000000000000001",
+    "playing": true,
+    "requestedPlaying": true,
+    "completedSongs": 1,
+    "newsPhase": "speaking",
+    "position": 180,
+    "callCounts": {
+      "preparePlayback": 1,
+      "nextRoomNews": 1,
+      "startPreparedNews": 1,
+      "markPreparedNewsPlayed": 1
+    }
+  },
+  "djAfterQueue": {
+    "opens": [
+      58.1000000089407
+    ],
+    "queueLength": 10000,
+    "currentId": "00000000000000000000000000000001",
+    "playing": true,
+    "requestedPlaying": true,
+    "completedSongs": 1,
+    "newsPhase": "speaking",
+    "position": 180,
+    "callCounts": {
+      "preparePlayback": 1,
+      "nextRoomNews": 1,
+      "startPreparedNews": 1,
+      "markPreparedNewsPlayed": 1
+    }
+  },
+  "djAfterSpeech": {
+    "opens": [
+      58.1000000089407
+    ],
+    "queueLength": 10000,
+    "currentId": "00000000000000000000000000000002",
+    "playing": true,
+    "requestedPlaying": true,
+    "completedSongs": 1,
+    "newsPhase": "waiting",
+    "position": 0,
+    "callCounts": {
+      "preparePlayback": 2,
+      "nextRoomNews": 2,
+      "startPreparedNews": 1,
+      "markPreparedNewsPlayed": 1
+    }
+  },
+  "observations": [
+    {
+      "name": "End keeps focus on index 9998 and Home returns to index 0",
+      "result": "passed"
+    },
+    {
+      "name": "Last row removal focuses previous remove control; first row removal focuses successor",
+      "result": "passed"
+    },
+    {
+      "name": "Selecting last occurrence focuses Now Playing; selected fixture song 040",
+      "result": "passed"
+    },
+    {
+      "name": "Scrolling while first remove control focused retains it; 28 total mounted rows",
+      "result": "passed"
+    },
+    {
+      "name": "Closed history mounts zero rows; expanded 9000-entry history End focuses index 8999 with aria-posinset 9000 and aria-setsize 9000",
+      "result": "passed"
+    },
+    {
+      "name": "Shuffle preserves 50 planned preview and total remaining count",
+      "result": "passed"
+    },
+    {
+      "name": "Opening/scrolling during active DJ speech preserves playback and delivery counters; speech completion advances once",
+      "result": "passed"
+    }
+  ],
+  "sourceSha256": {
+    "src/renderer/components/Queue/Queue.component.tsx": "22d99a1b4c715a1f23646bc173f22c90474a285f4af314fe54c8259f57a98d9c",
+    "src/renderer/components/Drawer/Drawer.styles.css": "ed654cd785c47a8c370527ae7afe173ed30d5d34db27e9fe48cf03f09b69eb54"
+  }
+}
