@@ -8,7 +8,6 @@ import type { Playlist, PlaylistEditRecovery } from '../shared/types';
 import { ServiceError } from './jellyfin';
 import { atomicWrite } from './storage';
 
-
 type Marker = { key: string; markerId: string };
 
 let markers: Marker[] | undefined;

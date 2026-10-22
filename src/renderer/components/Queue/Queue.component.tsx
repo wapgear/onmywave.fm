@@ -5,7 +5,6 @@ import { usePlayer } from '../../player';
 import { IconButton } from '../IconButton/IconButton.component';
 import { Artwork, TrackDuration } from '../Shared';
 
-
 export function Queue() {
   const player = usePlayer();
   const root = useRef<HTMLDivElement>(null);

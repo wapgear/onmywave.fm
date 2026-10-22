@@ -3,7 +3,6 @@ import { FilterSelect } from '../../../components/FilterSelect/FilterSelect.comp
 import { InfoHelp } from '../../../components/InfoHelp/InfoHelp.component';
 import type { RoomSetupProps } from './RoomSetup.types';
 
-
 export function RoomSetup({
   sources,
   djs,

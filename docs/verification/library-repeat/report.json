@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-21",
+  "issue": 190,
+  "base": "add11a9",
+  "scope": "desktop player",
+  "method": "Actual React renderer hosted by Vite in isolated Electron with synthetic bridge, catalog, audio events and disposable userData. No live Jellyfin or provider writes.",
+  "checks": [
+    "Off exhausts a finite queue without library discovery",
+    "Library discovery pages 620 songs, preserves queued prefix and planned shuffle suffix",
+    "Three shuffled 120-song cycles visit every song exactly once, with no immediate boundary repeats",
+    "Repeat one restarts natural completion while explicit Next advances",
+    "Slow library discovery joins at queue boundary instead of looping a one-song selection",
+    "Library failure leaves current audio alone and retry resumes a waiting boundary",
+    "Switching repeat off rejects delayed catalog results",
+    "Replacing the queue during discovery keeps the replacement prefix and current track",
+    "Single-song library repeats without exhaustion",
+    "Session restore retains repeat mode, canonical queue and planned suffix",
+    "Near-tail shuffle refill preserves its remaining suffix",
+    "Off shuffle exhausts all 120 songs exactly once",
+    "Sequential library mode plays the queue then library additions in order and wraps",
+    "Removed library song stays removed at the next boundary",
+    "Same-account library scope change cancels prior paging",
+    "Account switch rejects delayed catalog results",
+    "Oversized catalog produces a recoverable notice without discarding the playing queue",
+    "Changing selected libraries during a waiting natural boundary resumes with the new scope",
+    "Changing repeat off then on cancels a waiting natural boundary without phantom playback",
+    "Empty catalog preserves a playable explicit queue",
+    "Library retry returns keyboard focus to repeat control on success",
+    "Repeat icon cycles off to all to one to off without opening a menu",
+    "Enter and Space cycle the repeat icon and retain button focus",
+    "Icon and focus ring fit at both window sizes at 200 percent zoom"
+  ],
+  "rendererErrors": [],
+  "quality": [
+    "pnpm run format",
+    "pnpm run check: format, type-aware lint, TypeScript, voice asset validation, production build",
+    "pnpm audit: no known vulnerabilities",
+    "git diff --check"
+  ],
+  "limitations": [
+    "Catalog is loaded once per repeat-mode/library-scope session, capped at the existing 100000-track persistence limit. No large-library performance benchmark.",
+    "Mocked media events and bridge responses exercise renderer behavior; real Jellyfin pagination, actual decoded audio completion, native encrypted persistence and audible DJ transitions were not exercised in this change.",
+    "Explicit duplicate queue occurrences are preserved. Catalog additions are deduplicated by song ID."
+  ],
+  "review": {
+    "Steve": "Accepted after repeat-mode and same-account library-scope boundary races were fixed and reproduced in native renderer checks.",
+    "Elena": "Implemented and reviewed selector accessibility and retry focus; focused lint/type checks passed.",
+    "Morgan": "Reuse all as whole-library mode to match the three requested choices; preserve finite Off and natural-completion One behavior, queue prefix and 50/10 planner. Full catalog fetch is bounded by existing queue limit."
+  },
+  "fixtureCorrections": [
+    "Targeted the active audio element instead of StrictMode-disposed Audio instance.",
+    "Scoped selector to the repeat popover instead of the first dialog in the page.",
+    "Native keyboard activation requires Enter character event as well as key down/up.",
+    "Baseline images were initially captured before UI edits; final baseline pair recaptured from unchanged base source with identical fixture state."
+  ],
+  "uiRevision": "Per user request, removed the labelled menu. Repeat icon cycles off, all, one, off; all is accent-colored and one uses Repeat1. Tooltips, aria-label and aria-pressed remain. Focused native click, keyboard and zoom checks passed; playback source is unchanged."
+}

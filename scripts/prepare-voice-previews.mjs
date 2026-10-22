@@ -6,7 +6,6 @@ import { fileURLToPath, URL } from 'node:url';
 
 import { PRESET_VOICE_IDS, VOICE_SAMPLE_TEXT, VOICE_SAMPLE_VERSION } from '../src/shared/voice-previews.ts';
 
-
 const { fetch, AbortSignal } = globalThis;
 
 const folder = new URL('../src/renderer/public/voice-previews/', import.meta.url);

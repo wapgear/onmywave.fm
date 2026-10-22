@@ -2,7 +2,6 @@ import type { ReactNode } from 'react';
 
 import type { Connection } from '../../shared/types';
 
-
 export type ConnectionTransition = (
   source: HTMLButtonElement | null,
   operation: () => Promise<Connection | undefined>,

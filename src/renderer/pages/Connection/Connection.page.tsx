@@ -10,7 +10,6 @@ import { ErrorNotice } from '../../components/Shared';
 import { NewsRecoveryNotice } from '../../NewsRecovery';
 import type { ConnectionPageProps } from './Connection.types';
 
-
 export function ConnectionPage({
   connection,
   expired,

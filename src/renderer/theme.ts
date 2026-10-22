@@ -1,6 +1,5 @@
 import type { Theme } from './theme.types';
 
-
 const storageKey = 'wave:theme';
 
 export const themes = [

@@ -1,0 +1,45 @@
+{
+  "verification": "actual JellyfinService with fixture fetch transport; no live server or provider calls",
+  "results": [
+    {
+      "requestCounts": [
+        3,
+        0,
+        0
+      ],
+      "baselineRequestCounts": [
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "name": "three pages share one exhaustive result",
+      "result": "passed"
+    },
+    {
+      "name": "trimmed search shares snapshot, first page refresh observes changes",
+      "result": "passed"
+    },
+    {
+      "name": "in-flight pages share one discovery",
+      "result": "passed"
+    },
+    {
+      "name": "failed refresh invalidates old snapshot and permits retry",
+      "result": "passed"
+    },
+    {
+      "name": "session change rejects in-flight read and clears cache",
+      "result": "passed"
+    },
+    {
+      "name": "keys isolate type, filters, search, sort, direction and retain two views",
+      "result": "passed"
+    },
+    {
+      "name": "single-library nonsearch remains paginated",
+      "result": "passed"
+    }
+  ]
+}

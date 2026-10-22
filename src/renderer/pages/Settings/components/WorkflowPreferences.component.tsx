@@ -7,7 +7,6 @@ import type { WorkflowPreferencesProps } from './WorkflowPreferences.types';
 
 import './WorkflowPreferences.styles.css';
 
-
 export function WorkflowPreferences({
   active,
   resuming,

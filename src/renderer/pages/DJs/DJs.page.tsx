@@ -15,7 +15,6 @@ import { DJPreview } from './components/DJPreview.component';
 
 import './DJs.styles.css';
 
-
 const fresh = (): DJ => ({
   id: crypto.randomUUID(),
   name: '',

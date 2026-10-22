@@ -1,6 +1,5 @@
 import type { Song } from '../../../shared/types';
 
-
 export type TrackRow = { key: string; song: Song; editable?: boolean };
 
 export type TrackTableProps = {

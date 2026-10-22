@@ -5,7 +5,6 @@ import { isNewsTransitionSettings, type NewsTransitionSettings } from '../../../
 import { ErrorNotice } from '../../../components/Shared';
 import { usePlayer } from '../../../player';
 
-
 export function NewsTransitionPreview({ settings }: { settings: NewsTransitionSettings }) {
   const player = usePlayer();
   const dispose = useRef<(() => void) | null>(null);

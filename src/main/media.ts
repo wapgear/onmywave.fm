@@ -8,7 +8,6 @@ import { ServiceError } from './jellyfin';
 import { preparedAudio } from './prepared-news';
 import { StorageError } from './storage-error';
 
-
 type Session = { id: string; serverUrl: string; userId: string; token: string };
 
 type Resource = { connectionId: string; path: string };

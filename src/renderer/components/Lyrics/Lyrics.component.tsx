@@ -4,15 +4,15 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { Song, SongLyrics } from '../../../shared/types';
 import { unwrap, WaveError } from '../../api';
-import { usePlayer } from '../../player';
+import { usePlayer, usePlayerPosition } from '../../player';
 import { useRetryFocus } from '../../useRetryFocus';
 import { ErrorNotice } from '../Shared';
 
 import './Lyrics.styles.css';
 
-
-export function Lyrics({ connectionId, song, position }: { connectionId: string; song: Song; position: number }) {
+export function Lyrics({ connectionId, song }: { connectionId: string; song: Song }) {
   const player = usePlayer();
+  const position = usePlayerPosition();
   const root = useRef<HTMLDivElement>(null);
   const heading = useRef<HTMLHeadingElement>(null);
   const expectedScrollTop = useRef<number | null>(null);

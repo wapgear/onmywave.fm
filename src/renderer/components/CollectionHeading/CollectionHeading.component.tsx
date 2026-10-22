@@ -3,7 +3,6 @@ import { useLayoutEffect, useRef, useState } from 'react';
 import { Artwork } from '../Shared';
 import type { CollectionHeadingProps } from './CollectionHeading.types';
 
-
 export function CollectionHeading({ artwork, eyebrow, title, subtitle, children }: CollectionHeadingProps) {
   const heading = useRef<HTMLHeadingElement>(null);
   const [clipped, setClipped] = useState(false);

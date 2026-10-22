@@ -1,6 +1,5 @@
 import type { PlaylistEntry } from './types';
 
-
 export function playlistEntryIdentity(value: unknown): string | null {
   if (typeof value !== 'string' || !/^[a-zA-Z0-9_-]{1,128}$/.test(value)) return null;
   return /^(?:[a-f\d]{32}|[a-f\d]{8}(?:-[a-f\d]{4}){3}-[a-f\d]{12})$/i.test(value)

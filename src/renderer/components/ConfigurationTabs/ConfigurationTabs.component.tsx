@@ -1,7 +1,6 @@
 import './ConfigurationTabs.styles.css';
 import type { ConfigurationTabsProps } from './ConfigurationTabs.types';
 
-
 export function ConfigurationTabs({
   id,
   label = 'Configuration sections',

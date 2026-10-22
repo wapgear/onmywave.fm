@@ -8,7 +8,6 @@ import { ErrorNotice } from '../Shared';
 
 import './AppUpdates.styles.css';
 
-
 const queryKey = ['appUpdates'];
 
 function useUpdates() {

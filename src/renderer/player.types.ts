@@ -1,7 +1,6 @@
 import type { NewsTransitionSettings } from '../shared/news-transitions';
 import type { NewsBreak, PlaybackSnapshot, Song } from '../shared/types';
 
-
 export type ScheduledNews = {
   token: number;
   key: string;
@@ -40,7 +39,6 @@ export type PlayerState = {
   playing: boolean;
   requestedPlaying: boolean;
   busy: boolean;
-  position: number;
   duration: number;
   error: string | null;
   volume: number;
@@ -48,6 +46,9 @@ export type PlayerState = {
   repeat: PlaybackSnapshot['repeat'];
   canRetry: boolean;
   completedSongs: number;
+  libraryError: string | null;
+  libraryLoading: boolean;
+  retryLibrary(this: void): Promise<boolean>;
   optionsError: string | null;
   optionsRevision: number;
   retryOptions(this: void): Promise<OptionsSaveSettlement>;
@@ -64,7 +65,7 @@ export type PlayerState = {
   seek(this: void, seconds: number): void;
   setVolume(this: void, value: number): void;
   toggleShuffle(this: void): void;
-  cycleRepeat(this: void): void;
+  setRepeat(this: void, value: PlaybackSnapshot['repeat']): void;
   removeQueue(this: void, key: string): void;
   retry(this: void): Promise<PlaybackRetrySettlement>;
   getPlaybackGeneration(this: void): number;
@@ -79,6 +80,12 @@ export type PlayerState = {
   scheduleNews(this: void, news: NewsBreak, duckVolume: number, claimId?: string): Promise<void>;
   stopNews(this: void): void;
   controlNews(this: void, runId: number, action: 'toggle' | 'stop'): boolean;
+};
+
+export type PositionStore = {
+  getSnapshot: () => number;
+  publish: (position: number) => void;
+  subscribe: (listener: () => void) => () => void;
 };
 
 export type HeardNews = { news: NewsBreak; startedAt: string; status: 'playing' | 'completed' | 'interrupted' };

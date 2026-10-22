@@ -2,7 +2,6 @@ import type { DJPlaybackSettings, DJPlaybackSettingsPatch } from './dj-playback'
 import type { UpdateStatus } from './update';
 import type { WorkflowDraft } from './workflow';
 
-
 export const NEWS_TEXT_MODEL = 'gpt-6-luna';
 
 export type { DJPlaybackSettings, DJPlaybackSettingsPatch } from './dj-playback';
@@ -279,12 +278,9 @@ export type LocalState = {
   activeRoomProfileId: string;
   newsTransitions: NewsTransitionSettings;
   djs: DJ[];
-  vibe: string;
   playback: PlaybackSnapshot | null;
   playbackPreferences: Record<string, PlaybackPreferences>;
   sources: NewsSource[];
-  listeningRoom: ListeningRoom;
-  workflowDraft: WorkflowDraft;
 };
 
 export type LocalStateSnapshot = LocalState & { revision: number };
@@ -329,7 +325,6 @@ export interface WaveApi {
   getLocalState(): Promise<Result<LocalStateSnapshot>>;
   saveDjs(djs: DJ[]): Promise<Result<LocalStateSnapshot>>;
   searchDJVoices(input: DJVoiceSearch): Promise<Result<DJVoice[]>>;
-  saveVibe(vibe: string): Promise<Result<void>>;
   saveNewsTransitions(settings: NewsTransitionSettings): Promise<Result<LocalStateSnapshot>>;
   savePlayback(snapshot: PlaybackSnapshot | null): Promise<Result<void>>;
   getPlaybackPreferences(connectionId: string): Promise<Result<PlaybackPreferences | null>>;
@@ -355,7 +350,6 @@ export interface WaveApi {
   renameRoomProfile(input: { id: string; name: string }): Promise<Result<void>>;
   deleteRoomProfile(id: string): Promise<Result<void>>;
   saveNewsSources(sources: NewsSource[]): Promise<Result<LocalStateSnapshot>>;
-  saveListeningRoom(room: ListeningRoom): Promise<Result<void>>;
   setRoomProfileEnabled(input: { id: string; enabled: boolean }): Promise<Result<LocalStateSnapshot>>;
   saveDJPlayback(settings: DJPlaybackSettingsPatch): Promise<Result<LocalStateSnapshot>>;
   nextRoomNews(input: { roomId: string; excludedIds: string[] }): Promise<Result<PreparedNewsTake | null>>;

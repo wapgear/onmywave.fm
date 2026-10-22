@@ -1,0 +1,48 @@
+{
+  "verification": "Actual renderer with controlled asynchronous fixture savePlayback IPC",
+  "results": [
+    {
+      "scenario": "three changes during slow storage coalesce",
+      "sent": 2,
+      "maxActive": 1
+    },
+    {
+      "scenario": "saved A, active B, latest A, B succeeds",
+      "writes": 2,
+      "finalVolume": 0.4
+    },
+    {
+      "scenario": "saved A, active B, latest A, B fails",
+      "writes": 1,
+      "finalVolume": 0.4
+    },
+    {
+      "scenario": "failed checkpoint retries on periodic trigger",
+      "writes": 2,
+      "errorCleared": true
+    },
+    {
+      "scenario": "latest equals failed active snapshot",
+      "noImmediateRetry": true,
+      "newerStateSaved": true
+    },
+    {
+      "scenario": "playing position checkpoints, paused duplicates skip",
+      "position": 90,
+      "pausedWrites": 0
+    },
+    {
+      "scenario": "unload force dispatches newest and drops older pending",
+      "finalPosition": 95,
+      "finalVolume": 0.84,
+      "maxNormalActive": 1,
+      "shutdownActive": 2
+    },
+    {
+      "scenario": "late failed write after unmount and same-id reconnect",
+      "restoredSong": "Evening track 003",
+      "position": 25,
+      "error": null
+    }
+  ]
+}

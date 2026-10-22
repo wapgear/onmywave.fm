@@ -4,7 +4,6 @@ import { unwrap } from '../../api';
 
 import './TwitterSetupHelp.styles.css';
 
-
 const links = {
   console: 'https://developer.x.com/',
   token: 'https://docs.x.com/fundamentals/authentication/oauth-2-0/bearer-tokens',

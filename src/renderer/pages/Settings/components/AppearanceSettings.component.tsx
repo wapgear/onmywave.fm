@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { InfoHelp } from '../../../components/InfoHelp/InfoHelp.component';
 import { applyTheme, currentTheme, themes } from '../../../theme';
 
-
 export function AppearanceSettings() {
   const [theme, setTheme] = useState(currentTheme);
   const [saved, setSaved] = useState(true);

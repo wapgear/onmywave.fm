@@ -12,7 +12,6 @@ import { usePlayer } from '../../player';
 import { useRetryFocus } from '../../useRetryFocus';
 import type { PlaylistDetailProps, PlaylistNameDialogProps, PlaylistsPageProps } from './Playlists.types';
 
-
 type PlaylistEdit = { pending: boolean; error: unknown; needsReview: boolean; reviewReady: boolean };
 
 const emptyEdit: PlaylistEdit = { pending: false, error: null, needsReview: false, reviewReady: false };

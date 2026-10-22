@@ -1,6 +1,5 @@
 import type { IconButtonProps } from './IconButton.types';
 
-
 const variants = {
   standard: 'icon-button',
   compact: 'icon-button icon-button-compact',

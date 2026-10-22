@@ -17,7 +17,6 @@ import { VoicePreview } from './VoicePreview.component';
 
 import './DJEditor.styles.css';
 
-
 export const defaultNews: NewsSettings = {
   feedUrls: [],
   interests: '',

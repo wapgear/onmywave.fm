@@ -13,7 +13,6 @@ import { restoreTheme } from './theme';
 import './styles.css';
 import './themes.css';
 
-
 restoreTheme();
 
 function onError(error: unknown) {

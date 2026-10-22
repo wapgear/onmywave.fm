@@ -16,7 +16,6 @@ import type { DJPopoverProps } from './DJPopover.types';
 
 import './DJPopover.styles.css';
 
-
 export function DJPopover({ openRoom, openSettings }: DJPopoverProps) {
   const player = usePlayer();
   const automation = useDJPlayback();
@@ -311,10 +310,10 @@ export function DJPopover({ openRoom, openSettings }: DJPopoverProps) {
                   preparationState.data &&
                   !automation.settings.roomId &&
                   automation.rooms.length > 0 && (
-                    <p className="dj-hint">Choose a news profile below to see its preparation status.</p>
+                    <p className="dj-hint">Choose a news profile under Current DJ to see its preparation status.</p>
                   )}
                 {recoveryReady && preparationState.data && automation.settings.roomId && !preparationRoom && (
-                  <p className="dj-hint">The selected news profile is unavailable. Choose another profile below.</p>
+                  <p className="dj-hint">The selected news profile is unavailable. Choose another under Current DJ.</p>
                 )}
                 {recoveryReady && preparation && (
                   <p className="dj-hint">

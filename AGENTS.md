@@ -6,22 +6,24 @@ Run `pnpm run format` after editing code, then `pnpm run check` before handing i
 
 Work on a feature branch and submit a PR to `main`. Keep the installed pre-commit hook and server-side required checks enabled; do not bypass them. Run `pnpm run format`, then `pnpm run check` before committing. Keep untrusted PR code out of privileged workflows, use SHA-pinned actions and least-privilege tokens, and keep release credentials out of PR jobs. See [contribution guidance](CONTRIBUTING.md) for hook setup and repository protections.
 
+After merging a PR, confirm that GitHub reports it merged and that its merge commit is on `main`, then delete its remote feature branch. Remove the local feature branch after moving any attached worktree off it and confirming that no unmerged work would be lost. Preserve `main`, unrelated branches, and unrelated working-tree changes.
+
 ## UI verification
 
 For every UI change, capture and visually inspect before and after screenshots of the affected interface. Use the same viewport, state, and content for each pair, include the images in the PR, and report the viewports and behavior verified. Use fixtures or redact private data. Capture the before state before editing the UI.
 
 ## Formatting and ordering
 
-Oxfmt owns import sorting and ordinary formatting. Oxlint runs Stylistic for statement spacing. Oxlint requires exactly two blank lines after the final import, including before comments. Use one blank line:
+Oxfmt owns import sorting and ordinary formatting. Oxlint runs Stylistic for statement spacing. Oxfmt owns blank lines after imports; do not override its spacing. Use one blank line:
 
 - Between top-level declarations and statements, including types, constants, functions, classes, and exports.
 - Before and after `useMemo`, `useCallback`, and `memo` declarations.
 - Before and after effect statements.
 - Before a JSX return. Compact guard clauses and callback returns may stay compact.
 
-Import groups are Node builtins, external packages, internal modules, relative modules, and styles. Keep imports before executable code and merge duplicate imports from the same module. Side-effect imports keep their execution order, especially fonts, CSS, and initialization modules. Do not add a competing import sorter. Oxfmt collapses the two-line import gap; the format command restores it with Oxlint, and the format check normalizes only that gap before comparing Oxfmt output.
+Import groups are Node builtins, external packages, internal modules, relative modules, and styles. Keep imports before executable code and merge duplicate imports from the same module. Side-effect imports keep their execution order, especially fonts, CSS, and initialization modules. Do not add a competing import sorter. The format check runs Oxfmt directly, then checks statement spacing with Oxlint.
 
-Put exported or multiline component types and multiline props in colocated `ComponentName.types.ts` files, using `import type` in components and consumers. For pages, use the page stem, such as `Settings.types.ts`. Keep single-line, non-exported aliases and single-line inline props in their current module. If another extracted type needs a local alias, move that alias into the type file too, since it is now shared. The `local/component-types` lint rule rejects exported aliases/interfaces, multiline aliases/interfaces, and multiline component props in renderer source files. It also catches local declarations exported through an export list. Type-only imports and re-exports from companion files remain allowed.
+Keep component-owned types beside their component when that is clearest. Use a colocated `ComponentName.types.ts` file for types shared by several consumers or when extraction improves readability. Local multiline types and props are allowed. Keep existing companion files unless the current change benefits from moving them; do not mechanically split or merge types. Use `import type` for type-only imports.
 
 For new components, prefer imports, any retained local types, module constants/helpers, then components. Inside a component, prefer context/state/refs and data hooks, derived values and memos, callbacks/handlers, effects, then guards and JSX. Dependencies take priority over this reading order. All Hooks must run unconditionally before early returns. Never mechanically sort Hooks, dependency arrays, or executable declarations.
 

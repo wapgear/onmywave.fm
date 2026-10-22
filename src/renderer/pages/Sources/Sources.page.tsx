@@ -14,7 +14,6 @@ import { useRetryFocus } from '../../useRetryFocus';
 
 import './Sources.styles.css';
 
-
 export function SourcesPage() {
   const client = useQueryClient();
   const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()) });
@@ -124,7 +123,9 @@ export function SourcesPage() {
                       ? 'Hacker News'
                       : 'RSS / Atom'}
                 </p>
-                {state.data?.listeningRoom.sourceIds.includes(source.id) && <span>Selected in News bucket</span>}
+                {state.data?.roomProfiles
+                  .find((profile) => profile.id === state.data?.activeRoomProfileId)
+                  ?.room.sourceIds.includes(source.id) && <span>Selected in News bucket</span>}
               </div>
               <IconButton disabled={mutation.isPending} label={`Edit ${source.name}`} onClick={() => edit(source)}>
                 <Pencil size={16} aria-hidden="true" />

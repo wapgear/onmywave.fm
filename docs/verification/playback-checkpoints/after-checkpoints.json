@@ -1,0 +1,9 @@
+{
+  "state": "restored three-song queue paused at 44 seconds",
+  "observationMilliseconds": 5400,
+  "checkpointCount": 1,
+  "uniqueSnapshots": 1,
+  "positions": [
+    44
+  ]
+}

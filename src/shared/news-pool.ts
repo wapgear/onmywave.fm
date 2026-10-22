@@ -1,7 +1,6 @@
 import { djPreparationKey } from './dj-avatar';
 import type { LocalState, PreparedNewsTake } from './types';
 
-
 const stable = (value: unknown) => JSON.stringify(value);
 
 const trackingParams = /^(utm_.+|fbclid|gclid|mc_cid|mc_eid|igshid)$/i;

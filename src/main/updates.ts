@@ -3,7 +3,6 @@ import updater from 'electron-updater';
 
 import type { UpdateStatus } from '../shared/update';
 
-
 const CHECK_INTERVAL = 6 * 60 * 60 * 1000;
 
 const { autoUpdater } = updater;

@@ -607,6 +607,22 @@ button > svg {
 .popover-surface:not(:popover-open) {
   display: none;
 }
+:where(.popover-surface) {
+  position: fixed;
+  inset: auto;
+  margin: 0;
+  max-width: calc(100vw - 16px);
+  max-height: calc(100dvh - 16px);
+  border: 1px solid var(--border);
+  border-radius: var(--popover-radius);
+  background: var(--popover);
+  color: var(--text);
+  box-shadow: var(--popover-shadow);
+  -webkit-app-region: no-drag;
+}
+.popover-surface:not(:popover-open) {
+  display: none;
+}
 .row-menu {
   z-index: 20;
   display: flex;

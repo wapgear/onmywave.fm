@@ -7,7 +7,6 @@ import type { VirtualAlbumsProps } from './VirtualAlbums.types';
 
 import './Albums.styles.css';
 
-
 const GAP = 22;
 
 export function VirtualAlbums({

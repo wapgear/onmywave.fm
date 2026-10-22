@@ -31,7 +31,6 @@ import type { RoomSetupDraft } from './pages/Stations/Stations.types';
 import { PlayerProvider, usePlayer } from './player';
 import { useRetryFocus } from './useRetryFocus';
 
-
 type PageName = 'songs' | 'albums' | 'playlists' | 'stations' | 'settings';
 
 const navigation = [
@@ -593,12 +592,7 @@ function ReadyApp({
             {visibleDrawer === 'queue' ? (
               <Queue />
             ) : visibleDrawer === 'lyrics' ? (
-              <Lyrics
-                key={player.currentKey}
-                connectionId={connection.id}
-                song={player.current!}
-                position={player.position}
-              />
+              <Lyrics key={player.currentKey} connectionId={connection.id} song={player.current!} />
             ) : (
               <Inspector key={visibleDrawer.id} song={visibleDrawer} />
             )}
@@ -606,7 +600,9 @@ function ReadyApp({
         </aside>
       )}
       <Player
-        details={(song, source) => openDrawer(song, source)}
+        openDetails={(source) => {
+          if (player.current) openDrawer(player.current, source);
+        }}
         openRoom={(source) => openPlayerDestination('stations', source)}
         openSettings={(source) => openPlayerDestination('settings', source)}
         queueOpen={visibleDrawer === 'queue'}

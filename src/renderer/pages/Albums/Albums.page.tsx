@@ -11,7 +11,6 @@ import { useRetryFocus } from '../../useRetryFocus';
 import type { AlbumDetailProps, AlbumsPageProps, AlbumsView } from './Albums.types';
 import { VirtualAlbums } from './VirtualAlbums.component';
 
-
 export const initialAlbumsView = (): AlbumsView => ({ album: null, draft: '', selected: new Map() });
 
 export function AlbumsPage({ add, details, view, setView, onOpenDetail }: AlbumsPageProps) {

@@ -1,0 +1,6 @@
+{
+  "concurrentListings": 3,
+  "concurrentRecoveryScans": 1,
+  "subsequentUnchangedListings": 3,
+  "additionalScans": 0
+}

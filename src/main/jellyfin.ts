@@ -14,7 +14,6 @@ import type {
   SongLyrics,
 } from '../shared/types';
 
-
 export class ServiceError extends Error {
   constructor(
     public code: ApiError['code'],
@@ -574,6 +573,54 @@ export class JellyfinService {
   ): Promise<Page<Item>> {
     const session = this.requireSession();
     const term = query.search!;
+    const snapshotKey = JSON.stringify([
+      'search',
+      type,
+      term,
+      query.genre || '',
+      query.tag || '',
+      query.sort || 'name',
+      !!query.descending,
+    ]);
+    const loading = this.catalogLoads.get(snapshotKey);
+    if (loading?.session === session) {
+      const page = await loading.promise;
+      if (this.session !== session) throw new ServiceError('unauthorized', 'The connection changed. Search again.');
+      return { ...page, items: page.items.slice(start, start + limit), start };
+    }
+    const previous = this.catalogSnapshots.get(snapshotKey);
+    if (start > 0 && previous?.session === session) {
+      this.catalogSnapshots.delete(snapshotKey);
+      this.catalogSnapshots.set(snapshotKey, previous);
+      return { items: previous.items.slice(start, start + limit), total: previous.items.length, start };
+    }
+    if (start === 0) this.catalogSnapshots.delete(snapshotKey);
+    const load = {
+      session,
+      promise: this.readSearchCatalog(type, query, sort),
+    };
+    this.catalogLoads.set(snapshotKey, load);
+    try {
+      const page = await load.promise;
+      if (this.session !== session) throw new ServiceError('unauthorized', 'The connection changed. Search again.');
+      if (this.catalogLoads.get(snapshotKey) === load) {
+        this.catalogSnapshots.delete(snapshotKey);
+        this.catalogSnapshots.set(snapshotKey, { session, items: page.items });
+        if (this.catalogSnapshots.size > 2) this.catalogSnapshots.delete(this.catalogSnapshots.keys().next().value!);
+      }
+      return { ...page, items: page.items.slice(start, start + limit), start };
+    } finally {
+      if (this.catalogLoads.get(snapshotKey) === load) this.catalogLoads.delete(snapshotKey);
+    }
+  }
+
+  private async readSearchCatalog(
+    type: 'Audio' | 'MusicAlbum',
+    query: CatalogQuery,
+    sort: string,
+  ): Promise<Page<Item>> {
+    const session = this.requireSession();
+    const term = query.search!;
     const maximum = 10000;
     const matches = new Map<string, Item>();
     const bounded = async (path: string, parameters: Record<string, string>): Promise<Item[]> => {
@@ -670,7 +717,7 @@ export class JellyfinService {
       return query.descending ? -value : value;
     });
     if (this.session !== session) throw new ServiceError('unauthorized', 'The connection changed. Search again.');
-    return { items: items.slice(start, start + limit), total: items.length, start };
+    return { items, total: items.length, start: 0 };
   }
   async songs(query: CatalogQuery): Promise<Page<Song>> {
     return this.readCurrentSession(async () => {

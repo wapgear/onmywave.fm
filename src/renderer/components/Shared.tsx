@@ -4,7 +4,6 @@ import { useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react'
 import { IconButton } from './IconButton/IconButton.component';
 import type { DialogProps, ErrorNoticeProps, PageHeadingProps } from './Shared.types';
 
-
 export const errorMessage = (error: unknown) =>
   error instanceof Error ? error.message : 'Something went wrong. Please try again.';
 

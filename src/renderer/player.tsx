@@ -7,6 +7,7 @@ import {
   useLayoutEffect,
   useRef,
   useState,
+  useSyncExternalStore,
   type ReactNode,
 } from 'react';
 
@@ -32,6 +33,7 @@ import type {
 } from '../shared/types';
 import { unwrap, WaveError } from './api';
 import { freshAudioUrl } from './audio';
+import { useLibraryRepeat } from './hooks/useLibraryRepeat';
 import { useNewsRecovery } from './NewsRecovery';
 import type {
   HeardNews,
@@ -39,14 +41,35 @@ import type {
   QueueEntry,
   OptionsSaveSettlement,
   PlaybackRetrySettlement,
+  PositionStore,
   PlayerState,
   ScheduledNews,
 } from './player.types';
 
-
 type LoadSettlement = { key?: string; generation: number; outcome: 'success' | 'failure' | 'superseded' };
 
 const PlayerContext = createContext<PlayerState | null>(null);
+
+const PositionContext = createContext<PositionStore | null>(null);
+
+function createPositionStore(): PositionStore {
+  let position = 0;
+  const listeners = new Set<() => void>();
+  return {
+    getSnapshot: () => position,
+    publish: (value) => {
+      if (position === value) return;
+      position = value;
+      listeners.forEach((listener) => listener());
+    },
+    subscribe: (listener) => {
+      listeners.add(listener);
+      return () => {
+        listeners.delete(listener);
+      };
+    },
+  };
+}
 
 const trackLoadError = 'This track could not be played. Check your connection, then retry or skip.';
 
@@ -56,9 +79,16 @@ export function usePlayer() {
   return value;
 }
 
+export function usePlayerPosition() {
+  const store = useContext(PositionContext);
+  if (!store) throw new Error('Player position requires PlayerProvider');
+  return useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
+}
+
 const entries = (songs: Song[]): QueueEntry[] => songs.map((song) => ({ key: crypto.randomUUID(), song }));
 
 export function PlayerProvider({ connection, children }: { connection: Connection | null; children: ReactNode }) {
+  const [positionStore] = useState(createPositionStore);
   const recovery = useNewsRecovery();
   const recoveryReady = recovery.status.phase === 'ready';
   const preferences = useQuery({
@@ -71,11 +101,27 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const [playing, setPlaying] = useState(false);
   const [requestedPlaying, setRequestedPlaying] = useState(false);
   const [busy, setBusy] = useState(false);
-  const [position, setPosition] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [volume, setVolume] = useState(0.75);
   const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState<PlaybackSnapshot['repeat']>('off');
+  const libraryScope = connection
+    ? JSON.stringify([connection.id, connection.authRevision, connection.selectedLibraryIds])
+    : null;
+  const libraryScopeRef = useRef(libraryScope);
+  const { load: loadLibrary } = useLibraryRepeat(libraryScope, repeat === 'all');
+  const [libraryError, setLibraryError] = useState<string | null>(null);
+  const [libraryLoading, setLibraryLoading] = useState(false);
+  const [queueSession, setQueueSession] = useState(0);
+  const queueRevision = useRef(0);
+  const repeatRevision = useRef(0);
+  const excludedLibrarySongs = useRef(new Set<string>());
+  const pendingLibraryNext = useRef<{
+    command: number;
+    generation: number;
+    afterNews: boolean;
+    scope: string | null;
+  } | null>(null);
   const [restore, setRestore] = useState<PlaybackSnapshot | null>(null);
   const [restoreAttempt, setRestoreAttempt] = useState(0);
   const [readyConnection, setReadyConnection] = useState<string | null>(null);
@@ -84,6 +130,23 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const [optionsRevision, setOptionsRevision] = useState(0);
   const optionsSaveGeneration = useRef(0);
   const optionsInFlight = useRef<{ generation: number; promise: Promise<OptionsSaveSettlement> } | null>(null);
+  const playbackCheckpoint = useRef({
+    inFlight: null as null | { fingerprint: string },
+    pending: null as null | {
+      fingerprint: string;
+      snapshot: PlaybackSnapshot;
+      optionsGeneration: number;
+      optionsPending: boolean;
+      lifecycleGeneration: number;
+      connectionGeneration: number;
+    },
+    lastSavedFingerprint: null as string | null,
+    skipDrain: false,
+  });
+  const currentConnectionId = useRef(connection?.id ?? null);
+  const checkpointConnectionGeneration = useRef(0);
+  const mounted = useRef(false);
+  const checkpointLifecycle = useRef(0);
   const [attempt, setAttempt] = useState(0);
   const [newsPhase, setNewsPhase] = useState<PlayerState['newsPhase']>('idle');
   const [activeNewsId, setActiveNewsId] = useState<string>();
@@ -97,6 +160,14 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const commandRevision = useRef(0);
   const [musicCommandRevision, setMusicCommandRevision] = useState(0);
   const cancelRestoreRetry = useRef<(() => void) | null>(null);
+
+  useEffect(() => {
+    ++checkpointLifecycle.current;
+    mounted.current = true;
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
 
   const musicCommand = useCallback(() => {
     ++newsNoticeRevision.current;
@@ -114,6 +185,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const newsActive = useRef(false);
   const newsGeneration = useRef(0);
   const newsSchedule = useRef<ScheduledNews | null>(null);
+  const newsClock = useRef<number | null>(null);
   const cancelPreload = useRef<(() => void) | null>(null);
   const finishFade = useRef<((completed: boolean) => void) | null>(null);
   const consumedEnd = useRef<number | null>(null);
@@ -140,6 +212,12 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const [shuffleView, setShuffleView] = useState<ShufflePlan>(() => createShufflePlan([], null));
   const shufflePlan = useRef<ShufflePlan>(shuffleView);
 
+  const clearNewsClock = useCallback(() => {
+    if (newsClock.current === null) return;
+    window.clearInterval(newsClock.current);
+    newsClock.current = null;
+  }, []);
+
   const updateShufflePlan = useCallback((plan: ShufflePlan) => {
     shufflePlan.current = plan;
     setShuffleView(plan);
@@ -153,11 +231,40 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const current = queue[index]?.song;
   const currentKey = queue[index]?.key;
   const duration = current && Number.isFinite(current.duration) && current.duration > 0 ? current.duration : 0;
-  const live = useRef({ queue, index, current, repeat, shuffle, position, volume, recoveryReady });
+  const live = useRef({
+    queue,
+    index,
+    current,
+    repeat,
+    shuffle,
+    position: 0,
+    volume,
+    recoveryReady,
+  });
 
   useLayoutEffect(() => {
-    live.current = { queue, index, current, repeat, shuffle, position, volume, recoveryReady };
-  }, [queue, index, current, repeat, shuffle, position, volume, recoveryReady]);
+    libraryScopeRef.current = libraryScope;
+  }, [libraryScope]);
+
+  useLayoutEffect(() => {
+    const nextConnectionId = connection?.id ?? null;
+    if (currentConnectionId.current === nextConnectionId) return;
+    currentConnectionId.current = nextConnectionId;
+    ++checkpointConnectionGeneration.current;
+    playbackCheckpoint.current.pending = null;
+  }, [connection?.id]);
+
+  const publishPosition = useCallback(
+    (value: number) => {
+      live.current.position = value;
+      positionStore.publish(value);
+    },
+    [positionStore],
+  );
+
+  useLayoutEffect(() => {
+    live.current = { ...live.current, queue, index, current, repeat, shuffle, volume, recoveryReady };
+  }, [queue, index, current, repeat, shuffle, volume, recoveryReady]);
 
   const changeVolume = useCallback((value: number) => {
     const next = Math.max(0, Math.min(1, value));
@@ -201,6 +308,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     (preserveBed = false) => {
       ++newsGeneration.current;
       newsActive.current = false;
+      clearNewsClock();
       newsSchedule.current?.cancelDelivery();
       newsSchedule.current = null;
       setNewsRunId(undefined);
@@ -227,7 +335,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       setLastNews((value) => (value?.status === 'playing' ? { ...value, status: 'interrupted' } : value));
       setActiveNewsId(undefined);
     },
-    [fadeMusic],
+    [clearNewsClock, fadeMusic],
   );
 
   useEffect(() => {
@@ -262,7 +370,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         offset.current = resource.offsetSeconds;
         converted.current = resource.transcoded;
         target.current = resource.transcoded ? 0 : start;
-        setPosition(start);
+        publishPosition(start);
         if (!Number.isFinite(song.duration) || song.duration <= 0) {
           element.ondurationchange = () => {
             const measured = resource.offsetSeconds + element.duration;
@@ -310,26 +418,99 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         return settlement('failure');
       }
     },
-    [requestPlayback],
+    [publishPosition, requestPlayback],
   );
 
-  const changeTrack = useCallback((nextIndex: number) => {
-    ++generation.current;
-    preparing.current = true;
-    setBusy(true);
-    audio.current?.pause();
-    const state = live.current;
-    live.current = { ...state, index: nextIndex, current: state.queue[nextIndex]?.song, position: 0 };
-    setPosition(0);
-    setIndex(nextIndex);
-    setAttempt((value) => value + 1);
-  }, []);
+  const changeTrack = useCallback(
+    (nextIndex: number) => {
+      ++generation.current;
+      preparing.current = true;
+      setBusy(true);
+      audio.current?.pause();
+      const state = live.current;
+      live.current = { ...state, index: nextIndex, current: state.queue[nextIndex]?.song, position: 0 };
+      publishPosition(0);
+      setIndex(nextIndex);
+      setAttempt((value) => value + 1);
+    },
+    [publishPosition],
+  );
+
+  const extendLibraryQueue = useCallback(async () => {
+    const revision = queueRevision.current;
+    const modeRevision = repeatRevision.current;
+    const connectionId = currentConnectionId.current;
+    const scope = libraryScopeRef.current;
+    const isCurrent = () =>
+      mounted.current &&
+      queueRevision.current === revision &&
+      repeatRevision.current === modeRevision &&
+      currentConnectionId.current === connectionId &&
+      libraryScopeRef.current === scope &&
+      live.current.repeat === 'all';
+    if (!live.current.queue.length || !connectionId || live.current.repeat !== 'all') return false;
+    setLibraryLoading(true);
+    try {
+      const songs = await loadLibrary();
+      if (!isCurrent()) return false;
+      const state = live.current;
+      const known = new Set(state.queue.map((item) => item.song.id));
+      const added = entries(songs.filter((song) => !known.has(song.id) && !excludedLibrarySongs.current.has(song.id)));
+      if (state.queue.length + added.length > 100_000)
+        throw new Error('This queue is too large to repeat with the whole library.');
+      if (added.length) {
+        const nextQueue = [...state.queue, ...added];
+        live.current = { ...state, queue: nextQueue };
+        setQueue(nextQueue);
+        if (state.shuffle)
+          updateShufflePlan(
+            refillShufflePlan(
+              shufflePlan.current,
+              nextQueue.map((item) => item.key),
+            ),
+          );
+      }
+      setLibraryError(null);
+      return true;
+    } catch (cause) {
+      if (isCurrent() && !(cause instanceof DOMException && cause.name === 'AbortError'))
+        setLibraryError(
+          `The library could not be added to the queue. ${cause instanceof Error ? cause.message : 'Check your connection and retry.'}`,
+        );
+      return false;
+    } finally {
+      if (isCurrent()) setLibraryLoading(false);
+    }
+  }, [loadLibrary, updateShufflePlan]);
 
   const next = useCallback(
-    (afterNews = false) => {
+    async (afterNews = false) => {
       stopNews(afterNews);
-      const state = live.current;
+      let state = live.current;
       if (!state.queue.length) return;
+      const plan = shufflePlan.current;
+      const atBoundary = state.shuffle
+        ? plan.cursor + 1 >= plan.history.length && plan.upcoming.length === 0
+        : state.index + 1 >= state.queue.length;
+      if (state.repeat === 'all' && atBoundary) {
+        const command = commandRevision.current;
+        const token = generation.current;
+        const modeRevision = repeatRevision.current;
+        const scope = libraryScopeRef.current;
+        pendingLibraryNext.current = { command, generation: token, afterNews, scope };
+        const ready = await extendLibraryQueue();
+        if (
+          command !== commandRevision.current ||
+          token !== generation.current ||
+          modeRevision !== repeatRevision.current ||
+          scope !== libraryScopeRef.current ||
+          live.current.repeat !== 'all'
+        )
+          return;
+        if (!ready) return;
+        pendingLibraryNext.current = null;
+        state = live.current;
+      }
       let nextIndex: number | undefined;
       if (state.shuffle) {
         const advanced = nextShuffle(
@@ -358,12 +539,27 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         setError(null);
       }
     },
-    [stopNews, requestPlayback, changeTrack, updateShufflePlan],
+    [stopNews, requestPlayback, changeTrack, updateShufflePlan, extendLibraryQueue],
   );
+
+  useEffect(() => {
+    if (repeat !== 'all' || !connection || readyConnection !== connection.id || !live.current.queue.length) return;
+    void extendLibraryQueue().then((ready) => {
+      const pending = pendingLibraryNext.current;
+      if (
+        ready &&
+        pending &&
+        pending.scope !== libraryScopeRef.current &&
+        pending.command === commandRevision.current &&
+        pending.generation === generation.current
+      )
+        void next(pending.afterNews);
+    });
+  }, [connection, readyConnection, repeat, queueSession, extendLibraryQueue, next]);
 
   const skipNext = useCallback(() => {
     musicCommand();
-    next();
+    void next();
   }, [musicCommand, next]);
 
   const continueAfterSong = useCallback(
@@ -372,7 +568,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       if (state.repeat === 'one' && state.current) {
         stopNews(afterNews);
         void load(state.current, converted.current, 0);
-      } else next(afterNews);
+      } else void next(afterNews);
     },
     [load, next, stopNews],
   );
@@ -468,6 +664,17 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     }
   }, [continueAfterSong, stopNews]);
 
+  const startNewsClock = useCallback(() => {
+    if (newsClock.current !== null || !newsSchedule.current) return;
+    newsClock.current = window.setInterval(() => {
+      if (!newsSchedule.current) {
+        clearNewsClock();
+        return;
+      }
+      checkScheduledNews();
+    }, 25);
+  }, [checkScheduledNews, clearNewsClock]);
+
   useEffect(() => {
     const lifecycle = generation;
     const speechLifecycle = newsGeneration;
@@ -506,10 +713,10 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       setBusy(false);
     };
     element.ontimeupdate = () => {
-      if (!newsSchedule.current?.trackEnded) setPosition(offset.current + element.currentTime);
+      if (!newsSchedule.current?.trackEnded) publishPosition(offset.current + element.currentTime);
       checkScheduledNews();
     };
-    const newsClock = window.setInterval(() => checkScheduledNews(), 25);
+    if (newsSchedule.current) startNewsClock();
     element.onended = () => {
       // A queue change can precede replacement of the outgoing audio source.
       if (preparing.current || !element.ended || consumedEnd.current === generation.current) return;
@@ -540,7 +747,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     return () => {
       ++lifecycle.current;
       ++speechLifecycle.current;
-      clearInterval(newsClock);
+      clearNewsClock();
       scheduled.current?.cancelDelivery();
       scheduled.current = null;
       deferredFade.current = null;
@@ -569,7 +776,17 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       element.load();
       audio.current = null;
     };
-  }, [load, continueAfterSong, checkScheduledNews, stopNews, fadeMusic, requestPlayback]);
+  }, [
+    load,
+    continueAfterSong,
+    checkScheduledNews,
+    clearNewsClock,
+    startNewsClock,
+    stopNews,
+    fadeMusic,
+    publishPosition,
+    requestPlayback,
+  ]);
 
   const restoreSession = useCallback(
     async (saved: PlaybackSnapshot, retryCommandRevision?: number): Promise<PlaybackRetrySettlement> => {
@@ -613,7 +830,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         target.current = songs[restoredIndex]?.id === saved.trackIds[saved.currentIndex] ? saved.position : 0;
         requestPlayback(false);
         setPlaying(false);
-        setPosition(target.current);
+        publishPosition(target.current);
         ++generation.current;
         preparing.current = true;
         const restoredQueue = entries(songs);
@@ -643,6 +860,8 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
             restoredKey ?? null,
           );
         updateShufflePlan(plan);
+        queueRevision.current += 1;
+        setQueueSession(queueRevision.current);
         setQueue(restoredQueue);
         setIndex(restoredIndexInQueue);
         setRestore(null);
@@ -669,7 +888,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         if (resumeToken === resumeGeneration.current) setBusy(false);
       }
     },
-    [requestPlayback, stopNews, updateShufflePlan],
+    [publishPosition, requestPlayback, stopNews, updateShufflePlan],
   );
 
   useEffect(() => {
@@ -785,45 +1004,149 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
 
   useEffect(() => {
     if (!connection || readyConnection !== connection.id) return;
+    const checkpoint = playbackCheckpoint.current;
+    const dispatch = (item: NonNullable<typeof checkpoint.pending>) => {
+      checkpoint.inFlight = { fingerprint: item.fingerprint };
+      void window.wave
+        .savePlayback(item.snapshot)
+        .then(unwrap)
+        .then(() => {
+          if (checkpointConnectionGeneration.current === item.connectionGeneration)
+            checkpoint.lastSavedFingerprint = item.fingerprint;
+          if (
+            !mounted.current ||
+            checkpointLifecycle.current !== item.lifecycleGeneration ||
+            checkpointConnectionGeneration.current !== item.connectionGeneration ||
+            currentConnectionId.current !== item.snapshot.connectionId
+          )
+            return;
+          if (!item.optionsPending && item.optionsGeneration === optionsSaveGeneration.current) setOptionsError(null);
+          setError((current) =>
+            current === 'Playback continues, but the session could not be saved.' ? null : current,
+          );
+        })
+        .catch(() => {
+          if (
+            mounted.current &&
+            checkpointLifecycle.current === item.lifecycleGeneration &&
+            checkpointConnectionGeneration.current === item.connectionGeneration &&
+            currentConnectionId.current === item.snapshot.connectionId
+          )
+            setError('Playback continues, but the session could not be saved.');
+        })
+        .finally(() => {
+          if (checkpoint.inFlight?.fingerprint !== item.fingerprint) return;
+          checkpoint.inFlight = null;
+          if (checkpoint.skipDrain) return;
+          const pending = checkpoint.pending;
+          checkpoint.pending = null;
+          if (!pending) return;
+          if (pending.fingerprint === checkpoint.lastSavedFingerprint) {
+            if (
+              mounted.current &&
+              checkpointLifecycle.current === pending.lifecycleGeneration &&
+              checkpointConnectionGeneration.current === pending.connectionGeneration &&
+              currentConnectionId.current === pending.snapshot.connectionId
+            )
+              setError((current) =>
+                current === 'Playback continues, but the session could not be saved.' ? null : current,
+              );
+            return;
+          }
+          if (pending.fingerprint === item.fingerprint && checkpoint.lastSavedFingerprint !== item.fingerprint) return;
+          dispatch(pending);
+        });
+    };
     const save = () => {
+      if (!mounted.current || currentConnectionId.current !== connection.id) return;
       const state = live.current;
       const optionsGeneration = optionsSaveGeneration.current;
       const optionsPending = optionsInFlight.current?.generation === optionsGeneration;
       const byKey = new Map(state.queue.map((item, index) => [item.key, index]));
       const indices = (keys: Iterable<string>) => [...keys].flatMap((key) => (byKey.has(key) ? [byKey.get(key)!] : []));
       const plan = shufflePlan.current;
+      const snapshot: PlaybackSnapshot = {
+        connectionId: connection.id,
+        trackIds: state.queue.map((item) => item.song.id),
+        currentIndex: state.queue.length ? state.index : 0,
+        position: state.queue.length ? live.current.position : 0,
+        volume: state.volume,
+        shuffle: state.shuffle,
+        repeat: state.repeat,
+        ...(state.shuffle
+          ? {
+              shufflePlan: {
+                upcoming: indices(plan.upcoming),
+                history: indices(plan.history),
+                cursor: plan.cursor,
+                visited: indices(plan.visited),
+              },
+            }
+          : {}),
+      };
+      const item = {
+        fingerprint: JSON.stringify(snapshot),
+        snapshot,
+        optionsGeneration,
+        optionsPending,
+        lifecycleGeneration: checkpointLifecycle.current,
+        connectionGeneration: checkpointConnectionGeneration.current,
+      };
+      checkpoint.skipDrain = false;
+      if (checkpoint.inFlight) {
+        checkpoint.pending = checkpoint.inFlight.fingerprint === item.fingerprint ? null : item;
+        return;
+      }
+      if (item.fingerprint === checkpoint.lastSavedFingerprint) {
+        if (
+          mounted.current &&
+          checkpointLifecycle.current === item.lifecycleGeneration &&
+          checkpointConnectionGeneration.current === item.connectionGeneration
+        )
+          setError((current) =>
+            current === 'Playback continues, but the session could not be saved.' ? null : current,
+          );
+        return;
+      }
+      dispatch(item);
+    };
+    const saveOnUnload = () => {
+      const state = live.current;
+      const byKey = new Map(state.queue.map((item, index) => [item.key, index]));
+      const indices = (keys: Iterable<string>) => [...keys].flatMap((key) => (byKey.has(key) ? [byKey.get(key)!] : []));
+      const plan = shufflePlan.current;
+      const snapshot: PlaybackSnapshot = {
+        connectionId: connection.id,
+        trackIds: state.queue.map((item) => item.song.id),
+        currentIndex: state.queue.length ? state.index : 0,
+        position: state.queue.length ? state.position : 0,
+        volume: state.volume,
+        shuffle: state.shuffle,
+        repeat: state.repeat,
+        ...(state.shuffle
+          ? {
+              shufflePlan: {
+                upcoming: indices(plan.upcoming),
+                history: indices(plan.history),
+                cursor: plan.cursor,
+                visited: indices(plan.visited),
+              },
+            }
+          : {}),
+      };
+      checkpoint.pending = null;
+      checkpoint.skipDrain = true;
       void window.wave
-        .savePlayback({
-          connectionId: connection.id,
-          trackIds: state.queue.map((item) => item.song.id),
-          currentIndex: state.queue.length ? state.index : 0,
-          position: state.queue.length ? state.position : 0,
-          volume: state.volume,
-          shuffle: state.shuffle,
-          repeat: state.repeat,
-          ...(state.shuffle
-            ? {
-                shufflePlan: {
-                  upcoming: indices(plan.upcoming),
-                  history: indices(plan.history),
-                  cursor: plan.cursor,
-                  visited: indices(plan.visited),
-                },
-              }
-            : {}),
-        })
+        .savePlayback(snapshot)
         .then(unwrap)
-        .then(() => {
-          if (!optionsPending && optionsGeneration === optionsSaveGeneration.current) setOptionsError(null);
-        })
-        .catch(() => setError('Playback continues, but the session could not be saved.'));
+        .catch(() => {});
     };
     save();
     const timer = window.setInterval(save, 5000);
-    window.addEventListener('beforeunload', save);
+    window.addEventListener('beforeunload', saveOnUnload);
     return () => {
       clearInterval(timer);
-      window.removeEventListener('beforeunload', save);
+      window.removeEventListener('beforeunload', saveOnUnload);
     };
   }, [connection, readyConnection, queue, index, volume, shuffle, repeat, optionsRevision, shuffleView]);
 
@@ -859,7 +1182,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         audio.current.removeAttribute('src');
         audio.current.load();
         setBusy(false);
-        setPosition(value);
+        publishPosition(value);
         if (newsSchedule.current) {
           newsSchedule.current.trackEnded = true;
           setPlaying(playIntent.current);
@@ -872,13 +1195,22 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       else {
         try {
           audio.current.currentTime = value;
-          setPosition(value);
+          publishPosition(value);
         } catch {
           setError('Seeking is not available yet. Wait for playback and try again.');
         }
       }
     },
-    [load, stopNews, continueAfterSong, checkScheduledNews, djSettings.keepOnSeek, musicCommand, fadeMusic],
+    [
+      load,
+      stopNews,
+      continueAfterSong,
+      checkScheduledNews,
+      djSettings.keepOnSeek,
+      musicCommand,
+      fadeMusic,
+      publishPosition,
+    ],
   );
 
   const retry = useCallback((): Promise<PlaybackRetrySettlement> => {
@@ -891,7 +1223,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     if (current && currentKey) {
       const key = currentKey;
       requestPlayback(true);
-      pending = load(current, converted.current, position).then((result) => ({
+      pending = load(current, converted.current, live.current.position).then((result) => ({
         key: result.key,
         generation: result.generation,
         commandRevision: retryCommandRevision,
@@ -950,7 +1282,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       if (retryInFlight.current === currentAttempt) retryInFlight.current = null;
     });
     return pending;
-  }, [current, currentKey, load, musicCommand, position, requestPlayback, restore, restoreSession, stopNews]);
+  }, [current, currentKey, load, musicCommand, requestPlayback, restore, restoreSession, stopNews]);
 
   const toggle = useCallback(
     (origin?: 'preview') => {
@@ -1224,6 +1556,10 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         nextQueue[nextIndex]?.key ?? null,
       ),
     );
+    excludedLibrarySongs.current.clear();
+    queueRevision.current += 1;
+    setQueueSession(queueRevision.current);
+    live.current = { ...live.current, queue: nextQueue, index: nextIndex, current: nextQueue[nextIndex]?.song };
     setQueue(nextQueue);
     setIndex(nextIndex);
     setReadyConnection(connection?.id ?? null);
@@ -1364,6 +1700,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         cancelDelivery,
       };
       newsSchedule.current = planned;
+      startNewsClock();
       setNewsRunId(token);
       setActiveNewsId(news.id);
       setNewsLoading(false);
@@ -1435,164 +1772,195 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       .length;
 
   return (
-    <PlayerContext.Provider
-      value={{
-        queue,
-        upcomingQueue,
-        shuffleHistoryQueue,
-        shuffleRemaining,
-        current,
-        currentKey,
-        playing,
-        requestedPlaying,
-        busy,
-        position,
-        duration,
-        error,
-        volume,
-        shuffle,
-        repeat,
-        completedSongs,
-        optionsError,
-        optionsRevision,
-        retryOptions: saveOptions,
-        getOptionsSaveGeneration: () => optionsSaveGeneration.current,
-        newsPhase,
-        activeNewsId,
-        newsRunId,
-        newsLoading,
-        newsNotice,
-        activeNews,
-        lastNews,
-        scheduleNews,
-        stopNews: () => {
-          const ended = newsSchedule.current?.trackEnded;
-          if (ended) continueAfterSong();
-          else stopNews();
-        },
-        controlNews,
-        canRetry: !!current || !!restore || !!error,
-        musicCommandRevision,
-        getMusicCommandRevision,
-        pauseForPreview: () => {
-          if (playIntent.current) toggle('preview');
-        },
-        play,
-        playQueueEntry,
-        enqueue: (songs) => {
-          if (!songs.length) return;
-          // Queueing replaces an in-flight saved-session restore. Settle its Retry
-          // attempt so it cannot keep masking errors for the newly queued track.
-          cancelRestoreRetry.current?.();
-          cancelRestoreRetry.current = null;
-          ++resumeGeneration.current;
-          setRestore(null);
-          if (!live.current.current) setBusy(false);
-          const nextQueue = [...live.current.queue, ...entries(songs)];
-          if (live.current.shuffle) {
-            const keys = nextQueue.map((item) => item.key);
-            const currentKey = nextQueue[live.current.index]?.key ?? null;
-            updateShufflePlan(
-              live.current.queue.length
-                ? refillShufflePlan(shufflePlan.current, keys)
-                : createShufflePlan(keys, currentKey),
-            );
-          }
-          live.current = { ...live.current, queue: nextQueue, current: nextQueue[live.current.index]?.song };
-          setQueue(nextQueue);
-          setReadyConnection(connection?.id ?? null);
-        },
-        toggle,
-        next: skipNext,
-        previous,
-        seek,
-        setVolume: changeVolume,
-        toggleShuffle: () => {
-          ++optionsSaveGeneration.current;
-          setOptionsRevision((revision) => revision + 1);
-          preferenceEdits.current.shuffle = true;
-          const key = live.current.queue[live.current.index]?.key;
-          if (!live.current.shuffle)
-            updateShufflePlan(
-              createShufflePlan(
-                live.current.queue.map((item) => item.key),
-                key ?? null,
-              ),
-            );
-          setShuffle((value) => !value);
-        },
-        cycleRepeat: () => {
-          ++optionsSaveGeneration.current;
-          setOptionsRevision((revision) => revision + 1);
-          preferenceEdits.current.repeat = true;
-          setRepeat((value) => (value === 'off' ? 'all' : value === 'all' ? 'one' : 'off'));
-        },
-        removeQueue: (key) => {
-          const removed = queue.findIndex((item) => item.key === key);
-          if (removed < 0) return;
-          if (key === currentKey) {
-            musicCommand();
-            stopNews();
-            ++generation.current;
-            preparing.current = true;
-            audio.current?.pause();
-            setError(null);
-          }
-          const remaining = queue.filter((item) => item.key !== key);
-          if (!remaining.length) {
-            requestPlayback(false);
-            preparing.current = false;
-            audio.current?.pause();
-            audio.current?.removeAttribute('src');
-            audio.current?.load();
-            ++generation.current;
+    <PositionContext.Provider value={positionStore}>
+      <PlayerContext.Provider
+        value={{
+          queue,
+          upcomingQueue,
+          shuffleHistoryQueue,
+          shuffleRemaining,
+          current,
+          currentKey,
+          playing,
+          requestedPlaying,
+          busy,
+          duration,
+          error,
+          volume,
+          shuffle,
+          repeat,
+          completedSongs,
+          libraryError: repeat === 'all' ? libraryError : null,
+          libraryLoading: repeat === 'all' && libraryLoading,
+          retryLibrary: async () => {
+            const pending = pendingLibraryNext.current;
+            const ready = await extendLibraryQueue();
+            if (
+              ready &&
+              pending &&
+              pending.command === commandRevision.current &&
+              pending.generation === generation.current
+            )
+              await next(pending.afterNews);
+            return ready;
+          },
+          optionsError,
+          optionsRevision,
+          retryOptions: saveOptions,
+          getOptionsSaveGeneration: () => optionsSaveGeneration.current,
+          newsPhase,
+          activeNewsId,
+          newsRunId,
+          newsLoading,
+          newsNotice,
+          activeNews,
+          lastNews,
+          scheduleNews,
+          stopNews: () => {
+            const ended = newsSchedule.current?.trackEnded;
+            if (ended) continueAfterSong();
+            else stopNews();
+          },
+          controlNews,
+          canRetry: !!current || !!restore || !!error,
+          musicCommandRevision,
+          getMusicCommandRevision,
+          pauseForPreview: () => {
+            if (playIntent.current) toggle('preview');
+          },
+          play,
+          playQueueEntry,
+          enqueue: (songs) => {
+            if (!songs.length) return;
+            // Queueing replaces an in-flight saved-session restore. Settle its Retry
+            // attempt so it cannot keep masking errors for the newly queued track.
+            cancelRestoreRetry.current?.();
+            cancelRestoreRetry.current = null;
             ++resumeGeneration.current;
-            setBusy(false);
-            setPlaying(false);
-            setPosition(0);
-          }
-          let nextIndex = removed < index ? index - 1 : Math.min(index, Math.max(0, remaining.length - 1));
-          let plan = shufflePlan.current;
-          if (key === currentKey && shuffle && remaining.length) {
-            const keys = remaining.map((item) => item.key);
-            const advanced = nextShuffle(removeShuffle(plan, keys, key), keys, null, repeat === 'all');
-            plan = advanced.plan;
-            if (advanced.key && advanced.key !== key)
-              nextIndex = remaining.findIndex((item) => item.key === advanced.key);
-            else {
-              requestPlayback(false);
-              nextIndex = Math.min(nextIndex, remaining.length - 1);
+            setRestore(null);
+            if (!live.current.current) setBusy(false);
+            if (!live.current.queue.length) {
+              excludedLibrarySongs.current.clear();
+              queueRevision.current += 1;
+              setQueueSession(queueRevision.current);
             }
-          }
-          plan = removeShuffle(
-            plan,
-            remaining.map((item) => item.key),
-            key,
-          );
-          if (shuffle && remaining.length) {
-            const replacement = remaining[nextIndex].key;
-            if (plan.history[plan.cursor] !== replacement)
-              plan = selectShuffle(
-                plan,
-                remaining.map((item) => item.key),
-                replacement,
+            const nextQueue = [...live.current.queue, ...entries(songs)];
+            if (live.current.shuffle) {
+              const keys = nextQueue.map((item) => item.key);
+              const currentKey = nextQueue[live.current.index]?.key ?? null;
+              updateShufflePlan(
+                live.current.queue.length
+                  ? refillShufflePlan(shufflePlan.current, keys)
+                  : createShufflePlan(keys, currentKey),
               );
-            plan = refillShufflePlan(
+            }
+            live.current = { ...live.current, queue: nextQueue, current: nextQueue[live.current.index]?.song };
+            setQueue(nextQueue);
+            setReadyConnection(connection?.id ?? null);
+          },
+          toggle,
+          next: skipNext,
+          previous,
+          seek,
+          setVolume: changeVolume,
+          toggleShuffle: () => {
+            ++optionsSaveGeneration.current;
+            setOptionsRevision((revision) => revision + 1);
+            preferenceEdits.current.shuffle = true;
+            const key = live.current.queue[live.current.index]?.key;
+            if (!live.current.shuffle)
+              updateShufflePlan(
+                createShufflePlan(
+                  live.current.queue.map((item) => item.key),
+                  key ?? null,
+                ),
+              );
+            setShuffle((value) => !value);
+          },
+          setRepeat: (value) => {
+            if (live.current.repeat === value) return;
+            ++repeatRevision.current;
+            pendingLibraryNext.current = null;
+            if (audio.current?.ended) {
+              requestPlayback(false);
+              setPlaying(false);
+            }
+            ++optionsSaveGeneration.current;
+            setOptionsRevision((revision) => revision + 1);
+            preferenceEdits.current.repeat = true;
+            live.current.repeat = value;
+            setLibraryError(null);
+            setLibraryLoading(false);
+            setRepeat(value);
+          },
+          removeQueue: (key) => {
+            const removed = queue.findIndex((item) => item.key === key);
+            if (removed < 0) return;
+            excludedLibrarySongs.current.add(queue[removed].song.id);
+            if (key === currentKey) {
+              musicCommand();
+              stopNews();
+              ++generation.current;
+              preparing.current = true;
+              audio.current?.pause();
+              setError(null);
+            }
+            const remaining = queue.filter((item) => item.key !== key);
+            if (!remaining.length) {
+              requestPlayback(false);
+              preparing.current = false;
+              audio.current?.pause();
+              audio.current?.removeAttribute('src');
+              audio.current?.load();
+              ++generation.current;
+              ++resumeGeneration.current;
+              setBusy(false);
+              setPlaying(false);
+              publishPosition(0);
+            }
+            let nextIndex = removed < index ? index - 1 : Math.min(index, Math.max(0, remaining.length - 1));
+            let plan = shufflePlan.current;
+            if (key === currentKey && shuffle && remaining.length) {
+              const keys = remaining.map((item) => item.key);
+              const advanced = nextShuffle(removeShuffle(plan, keys, key), keys, null, repeat === 'all');
+              plan = advanced.plan;
+              if (advanced.key && advanced.key !== key)
+                nextIndex = remaining.findIndex((item) => item.key === advanced.key);
+              else {
+                requestPlayback(false);
+                nextIndex = Math.min(nextIndex, remaining.length - 1);
+              }
+            }
+            plan = removeShuffle(
               plan,
               remaining.map((item) => item.key),
+              key,
             );
-          }
-          updateShufflePlan(plan);
-          live.current = { ...live.current, queue: remaining, index: nextIndex, current: remaining[nextIndex]?.song };
-          setQueue(remaining);
-          setIndex(nextIndex);
-        },
-        retry,
-        getPlaybackGeneration: () => generation.current,
-        getResumeGeneration: () => resumeGeneration.current,
-      }}
-    >
-      {children}
-    </PlayerContext.Provider>
+            if (shuffle && remaining.length) {
+              const replacement = remaining[nextIndex].key;
+              if (plan.history[plan.cursor] !== replacement)
+                plan = selectShuffle(
+                  plan,
+                  remaining.map((item) => item.key),
+                  replacement,
+                );
+              plan = refillShufflePlan(
+                plan,
+                remaining.map((item) => item.key),
+              );
+            }
+            updateShufflePlan(plan);
+            live.current = { ...live.current, queue: remaining, index: nextIndex, current: remaining[nextIndex]?.song };
+            setQueue(remaining);
+            setIndex(nextIndex);
+          },
+          retry,
+          getPlaybackGeneration: () => generation.current,
+          getResumeGeneration: () => resumeGeneration.current,
+        }}
+      >
+        {children}
+      </PlayerContext.Provider>
+    </PositionContext.Provider>
   );
 }
