@@ -21,4 +21,5 @@ export type StationsPageProps = {
   configureSources: () => void;
   configureDJ: () => void;
   configureSettings: () => void;
+  openDJControls: () => void;
 };

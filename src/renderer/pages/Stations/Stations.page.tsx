@@ -2,6 +2,8 @@ import { useIsMutating, useMutation, useQuery, useQueryClient } from '@tanstack/
 import { LoaderCircle } from 'lucide-react';
 import { useLayoutEffect, useRef, useState } from 'react';
 
+import { eligibleNewsTakes } from '../../../shared/news-pool';
+import { newsPreparationStatus } from '../../../shared/news-preparation-status';
 import type { ListeningRoom, PreparedNewsRequest } from '../../../shared/types';
 import type { WorkflowDraft } from '../../../shared/workflow';
 import { unwrap } from '../../api';
@@ -14,6 +16,7 @@ import { NewsRecoveryPanel, useNewsRecovery } from '../../NewsRecovery';
 import { useRetryFocus } from '../../useRetryFocus';
 import { WorkflowPreferences } from '../Settings/components/WorkflowPreferences.component';
 import type { PreparationIssue } from '../Settings/components/WorkflowPreferences.types';
+import { DJReadiness } from './components/DJReadiness.component';
 import { NewsBucket } from './components/NewsBucket.component';
 import { PreparedTakes } from './components/PreparedTakes.component';
 import { RoomSetup } from './components/RoomSetup.component';
@@ -33,6 +36,7 @@ export function StationsPage({
   configureSources,
   configureDJ,
   configureSettings,
+  openDJControls,
 }: StationsPageProps) {
   const newsRecovery = useNewsRecovery();
   const newsRecoveryReady = newsRecovery.status.phase === 'ready';
@@ -50,6 +54,7 @@ export function StationsPage({
   const progressStopButton = useRef<HTMLButtonElement>(null);
   const [availabilityFocused, setAvailabilityFocused] = useState<HTMLInputElement | null>(null);
   const [progressStopFocused, setProgressStopFocused] = useState<HTMLButtonElement | null>(null);
+  const [pendingSetupFocus, setPendingSetupFocus] = useState<string | null>(null);
   const configurationMutation = {
     mutationKey: ['roomConfiguration'],
     onMutate: () =>
@@ -100,6 +105,19 @@ export function StationsPage({
     target: () => document.getElementById('room-panel-bucket'),
     canFocusSuccess: () => newsRecoveryReady && tab === 'bucket' && library.isSuccess && !library.isFetching,
   });
+
+  useLayoutEffect(() => {
+    const selector = pendingSetupFocus;
+    if (tab !== 'settings' || !selector) return;
+    const frame = requestAnimationFrame(() => {
+      const target = document.querySelector<HTMLElement>(selector);
+      target?.scrollIntoView({ block: 'center' });
+      target?.focus({ preventScroll: true });
+      setPendingSetupFocus(null);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [tab, pendingSetupFocus]);
+
   const settingsRetryFocus = useRetryFocus({
     ownerKey: `room:settings-news:${tab}`,
     target: () => document.getElementById('room-panel-settings'),
@@ -209,6 +227,11 @@ export function StationsPage({
   const workflowStatusError = aiStatus.error || elevenStatus.error || (xKeyRequired && xStatus.error);
   const setupDirty = unsavedSetup || workflowDirty;
   function focusSetup(selector: string) {
+    if (tab !== 'settings') {
+      setPendingSetupFocus(selector);
+      setTab('settings');
+      return;
+    }
     const target = document.querySelector<HTMLElement>(selector);
     target?.scrollIntoView({ block: 'center' });
     target?.focus({ preventScroll: true });
@@ -293,6 +316,142 @@ export function StationsPage({
         ]
       : []),
   ];
+  const eligibleSavedAudio =
+    state.data && library.data && activeProfile
+      ? eligibleNewsTakes(library.data.takes, state.data, activeProfile.id)
+      : null;
+  const profileStatusUnconfirmed = state.isPending || !!state.error;
+  const savedAudioUnconfirmed = profileStatusUnconfirmed || library.isPending || !!library.error;
+  const preparationStatus = activeProfile ? newsPreparationStatus(activeProfile) : null;
+  const preparationStatusLabel = activeProfile
+    ? `${profileStatusUnconfirmed ? 'Last confirmed: ' : ''}${preparationStatus!.label}${workflowStatusLoading ? ' · checking provider keys' : workflowStatusError ? ' · provider key status unavailable' : ''}`
+    : state.isPending
+      ? 'Checking selected profile…'
+      : state.error
+        ? 'Profile status unavailable'
+        : 'No active setup profile';
+  const savedAudioStatus =
+    eligibleSavedAudio === null
+      ? state.isPending || library.isPending
+        ? 'Checking saved recordings…'
+        : 'Saved recordings unavailable'
+      : `${savedAudioUnconfirmed ? 'Last loaded: ' : ''}${eligibleSavedAudio.length} eligible${savedAudioUnconfirmed ? ' · status unconfirmed' : ''}`;
+  const playbackProfileName =
+    automation.room?.name ?? (automation.settings.roomId ? 'Profile unavailable' : 'Not selected');
+  const lastConfirmedPlayback = `${automation.settings.enabled ? 'On' : 'Off'} · ${playbackProfileName} · every ${automation.settings.everySongs} songs`;
+  const playbackStatus = !automation.state.data
+    ? automation.state.isPending
+      ? 'Checking playback schedule…'
+      : 'Playback schedule unavailable'
+    : automation.unconfirmedUpdate
+      ? `Change not confirmed · last saved ${lastConfirmedPlayback}`
+      : automation.update.isPending
+        ? `Saving · last confirmed ${lastConfirmedPlayback}`
+        : automation.update.error
+          ? `Save failed · last confirmed ${lastConfirmedPlayback}`
+          : automation.state.error
+            ? `Last confirmed: ${lastConfirmedPlayback}`
+            : lastConfirmedPlayback;
+  const runtimeDJ = state.data?.djs.find((value) => value.id === automation.room?.room.djId);
+  const runtimeSourcesValid =
+    !!automation.room?.room.sourceIds.length &&
+    automation.room.room.sourceIds.every((id) => automation.sources.some((source) => source.id === id));
+  const runtimeSetupIncomplete =
+    !automation.room?.enabled || !runtimeDJ?.news || !runtimeSourcesValid || !automation.room.mood.trim();
+  const profileMismatch = !!activeProfile && !!automation.room && activeProfile.id !== automation.room.id;
+  async function refreshReadiness() {
+    await Promise.all([
+      library.refetch(),
+      aiStatus.refetch(),
+      elevenStatus.refetch(),
+      ...(xKeyRequired ? [xStatus.refetch()] : []),
+      automation.refreshPlaybackStatus(),
+    ]);
+  }
+  const nextStep: { message: string; action?: { label: string; run: () => void; kind?: 'playback' } } = (() => {
+    if (setupDirty)
+      return {
+        message: 'Review and save the unsaved setup changes.',
+        action: { label: 'Review setup', run: () => focusSetup('#room-panel-settings') },
+      };
+    if (automation.unconfirmedUpdate)
+      return {
+        message: 'The playback change needs confirmation.',
+        action: { label: 'Check playback status', run: openDJControls, kind: 'playback' },
+      };
+    if (automation.update.error)
+      return {
+        message: 'Playback setting could not be saved.',
+        action: { label: 'Review DJ controls', run: openDJControls, kind: 'playback' },
+      };
+    if (state.isPending || library.isPending) return { message: 'Checking setup and saved audio status…' };
+    if (state.error || library.error)
+      return {
+        message: 'Some readiness status could not be confirmed.',
+        action: { label: 'Refresh status', run: () => void refreshReadiness() },
+      };
+    if (!activeProfile)
+      return {
+        message: 'Choose a setup profile to see preparation readiness.',
+        action: { label: 'Choose profile', run: () => focusSetup('#room-profile') },
+      };
+    if (automation.state.isPending || automation.update.isPending) return { message: 'Checking playback schedule…' };
+    if (automation.state.error)
+      return {
+        message: 'Playback schedule status could not be confirmed.',
+        action: { label: 'Check playback status', run: openDJControls, kind: 'playback' },
+      };
+    if (!automation.state.data) return { message: 'Playback schedule is not available yet.' };
+
+    if (eligibleSavedAudio && eligibleSavedAudio.length > 0) {
+      if (profileMismatch)
+        return {
+          message: 'Saved audio is matched to this setup profile; review the separate playback profile.',
+          action: { label: 'Review playback profile', run: openDJControls, kind: 'playback' },
+        };
+      if (!automation.settings.enabled || !automation.room || runtimeSetupIncomplete)
+        return {
+          message: 'Saved audio is available, but playback needs setup.',
+          action: { label: 'Open DJ controls', run: openDJControls, kind: 'playback' },
+        };
+      return { message: 'Saved audio playback is ready. Automatic preparation is optional.' };
+    }
+
+    if (workflowStatusLoading) return { message: 'Checking preparation provider status for new recordings…' };
+    if (workflowStatusError)
+      return {
+        message: 'Preparation provider status could not be confirmed for new recordings.',
+        action: { label: 'Refresh status', run: () => void refreshReadiness() },
+      };
+
+    if (preparationIssues.length > 0 && preparationIssues[0].action)
+      return {
+        message: `For new recordings: ${preparationIssues[0].message}`,
+        action: preparationIssues[0].action,
+      };
+    if (
+      !activeProfile.workflowDraft.newsEnabled ||
+      activeProfile.workflowDraft.newsWorkflowPaused ||
+      activeProfile.workflowDraft.newsWorkflowError
+    )
+      return {
+        message: 'Automatic preparation for new recordings needs review.',
+        action: { label: 'Review preparation', run: () => focusSetup('.news-workflow-toggle input') },
+      };
+    if (!automation.settings.enabled || !automation.room || runtimeSetupIncomplete)
+      return {
+        message: automation.settings.enabled
+          ? 'Review the playback profile and its setup.'
+          : 'Review the playback schedule; preparation remains independent.',
+        action: { label: 'Open DJ controls', run: openDJControls, kind: 'playback' },
+      };
+    if (eligibleSavedAudio?.length === 0)
+      return {
+        message: 'No saved recording is currently eligible for this setup profile.',
+        action: { label: 'Review saved audio', run: () => setTab('saved') },
+      };
+    return { message: 'No setup action is currently required.' };
+  })();
   async function refresh() {
     await client.invalidateQueries({ queryKey: ['preparedNews'] });
   }
@@ -727,6 +886,24 @@ export function StationsPage({
               retrying={state.isFetching}
               retry={() => stateRetryFocus.retry(() => state.refetch())}
             />
+            <DJReadiness
+              preparationProfile={activeProfile?.name ?? (state.isPending ? 'Checking profile' : 'Unavailable')}
+              preparationStatus={preparationStatusLabel}
+              savedAudioLabel={`Saved audio · ${activeProfile?.name ?? 'setup profile'}`}
+              savedAudioStatus={savedAudioStatus}
+              playbackStatus={playbackStatus}
+              openDJControls={openDJControls}
+              nextStep={nextStep}
+            >
+              {profileMismatch && (
+                <p className="dj-readiness-note">
+                  Playback uses {automation.room?.name}; saved audio above is matched to {activeProfile?.name}.
+                </p>
+              )}
+              <p className="dj-readiness-note">
+                Preparing news may use paid text generation. Saved recordings can play without provider keys.
+              </p>
+            </DJReadiness>
             {state.data && (
               <>
                 <div className="room-profile-bar">
