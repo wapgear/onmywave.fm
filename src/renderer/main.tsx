@@ -7,6 +7,7 @@ import '@fontsource/inter/500.css';
 import '@fontsource/manrope/600.css';
 import App from './App';
 import { AppUpdates } from './components/AppUpdates/AppUpdates.component';
+import { RenderErrorBoundary } from './components/RenderErrorBoundary/RenderErrorBoundary.component';
 import { retainNewestLocalState } from './local-state-cache';
 import { restoreTheme } from './theme';
 
@@ -47,11 +48,17 @@ const queryClient = new QueryClient({
 
 queryClient.setQueryDefaults(['localState'], { structuralSharing: retainNewestLocalState });
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById('root')!, {
+  onCaughtError: () => console.error('[render-error] caught'),
+  onUncaughtError: () => console.error('[render-error] uncaught'),
+  onRecoverableError: () => console.error('[render-error] recoverable'),
+}).render(
   <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <App />
-      <AppUpdates />
-    </QueryClientProvider>
+    <RenderErrorBoundary scope="root">
+      <QueryClientProvider client={queryClient}>
+        <App />
+        <AppUpdates />
+      </QueryClientProvider>
+    </RenderErrorBoundary>
   </React.StrictMode>,
 );
