@@ -19,6 +19,8 @@ import type {
   NewsSource,
   ListeningRoom,
   LocalState,
+  CatalogRequest,
+  Page,
 } from '../shared/types';
 import { isWorkflowDraft, normalizeWorkflowDraft } from '../shared/workflow';
 import type { WorkflowDraft } from '../shared/workflow';
@@ -137,12 +139,22 @@ function beginShutdown() {
   ++newsRecoveryEpoch;
   stopNewsWorkflow();
   cancelNews();
+  cancelCatalogRequests();
   revokeMedia();
 }
 
 let playlistSessionEpoch = 0;
 
 let service: JellyfinService;
+
+// Only the current window's main frame can invoke these operations.
+const catalogRequests = new Map<string, AbortController>();
+
+function cancelCatalogRequests() {
+  for (const controller of catalogRequests.values()) controller.abort();
+  catalogRequests.clear();
+  service?.cancelCatalogLoads();
+}
 
 let deviceId: string;
 
@@ -151,6 +163,28 @@ let persistentDeviceIdentity = false;
 const invalid = () => {
   throw new ServiceError('invalid', 'Invalid request.');
 };
+
+function catalogRequestId(value: unknown): string {
+  if (typeof value !== 'string' || !/^[a-f\d]{8}(?:-[a-f\d]{4}){3}-[a-f\d]{12}$/i.test(value)) return invalid();
+  return value;
+}
+
+async function readCatalog<T>(
+  input: CatalogRequest,
+  read: (query: CatalogRequest, signal?: AbortSignal) => Promise<Page<T>>,
+): Promise<Page<T>> {
+  if (input.requestId === undefined) return read(input);
+  const requestId = catalogRequestId(input.requestId);
+  if (catalogRequests.has(requestId) || catalogRequests.size >= 64)
+    throw new ServiceError('invalid', 'Too many pending catalog requests. Try again.');
+  const controller = new AbortController();
+  catalogRequests.set(requestId, controller);
+  try {
+    return await read(input, controller.signal);
+  } finally {
+    if (catalogRequests.get(requestId) === controller) catalogRequests.delete(requestId);
+  }
+}
 
 const isRecord = (value: unknown): value is Record<string, unknown> =>
   !!value && typeof value === 'object' && !Array.isArray(value);
@@ -403,8 +437,11 @@ function registerIpc() {
     libraries: () => service.libraries(),
     libraryFilters: () => service.libraryFilters(),
     selectLibraries: (input) => service.selectLibraries(input),
-    songs: (input) => service.songs(input),
-    albums: (input) => service.albums(input),
+    songs: (input: CatalogRequest) => readCatalog(input, (query, signal) => service.songs(query, signal)),
+    albums: (input: CatalogRequest) => readCatalog(input, (query, signal) => service.albums(query, signal)),
+    cancelCatalog: (input: string) => {
+      catalogRequests.get(catalogRequestId(input))?.abort();
+    },
     album: (input) => service.album(input),
     albumTracks: (input) => service.albumTracks(input),
     song: (input) => service.song(input),
@@ -971,6 +1008,11 @@ async function createWindow() {
   window.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
   window.webContents.on('will-navigate', (event) => event.preventDefault());
   window.webContents.on('will-attach-webview', (event) => event.preventDefault());
+  window.webContents.on('did-start-navigation', (_event, _url, _isInPlace, isMainFrame) => {
+    if (isMainFrame) cancelCatalogRequests();
+  });
+  window.webContents.on('render-process-gone', cancelCatalogRequests);
+  window.webContents.on('destroyed', cancelCatalogRequests);
   window.once('ready-to-show', () => window?.show());
   window.on('close', (event) => {
     if (process.platform === 'darwin' && !closing) {
@@ -979,6 +1021,7 @@ async function createWindow() {
     }
   });
   window.on('closed', () => {
+    cancelCatalogRequests();
     cancelNews();
     window = null;
   });

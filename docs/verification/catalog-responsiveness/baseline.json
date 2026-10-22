@@ -1,0 +1,203 @@
+{
+  "verification": "JellyfinService integration with deterministic fixture fetch; no live server/provider requests",
+  "generatedAt": "2026-10-22T15:43:32.195Z",
+  "repositoryHead": "5a47954c8f40d8aa3af6a6c4e02c72a4197a0be2",
+  "serviceRef": "5a47954c8f40d8aa3af6a6c4e02c72a4197a0be2",
+  "jellyfinSourceSha256": "91709b13bd0ee6d2c194f1775f949ef8e91ed463c53e1ef3468fe9eae589573f",
+  "fixtureSha256": "42563ce9e610ea581a9855984bb78a2e6af6956ff330fb4d3d84d9b57283b3d8",
+  "delayMs": 8,
+  "iterations": 5,
+  "scenarios": [
+    {
+      "libraries": 1,
+      "kind": "browse",
+      "iterations": 5,
+      "fixtureSongs": 12000,
+      "firstPageLatency": {
+        "medianMs": 9.91,
+        "minMs": 9.88,
+        "maxMs": 35.02,
+        "samplesMs": [
+          35.02,
+          9.88,
+          9.91,
+          9.91,
+          9.98
+        ]
+      },
+      "upstreamRequests": {
+        "median": 1,
+        "samples": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ]
+      },
+      "peakConcurrentRequests": 1,
+      "resultCounts": [
+        12000,
+        12000,
+        12000,
+        12000,
+        12000
+      ],
+      "heapGrowthBytes": {
+        "samples": [
+          3138032,
+          304384,
+          309720,
+          299016,
+          346704
+        ],
+        "baselineHeapBytes": 43821304
+      },
+      "controlledDelayPerRequestMs": 8
+    },
+    {
+      "libraries": 1,
+      "kind": "search",
+      "iterations": 5,
+      "fixtureSongs": 12000,
+      "expectedSearchMatches": 9000,
+      "firstPageLatency": {
+        "medianMs": 296.92,
+        "minMs": 290.94,
+        "maxMs": 307.71,
+        "samplesMs": [
+          307.71,
+          297.99,
+          293.02,
+          290.94,
+          296.92
+        ]
+      },
+      "upstreamRequests": {
+        "median": 21,
+        "samples": [
+          21,
+          21,
+          21,
+          21,
+          21
+        ]
+      },
+      "peakConcurrentRequests": 1,
+      "resultCounts": [
+        9000,
+        9000,
+        9000,
+        9000,
+        9000
+      ],
+      "heapGrowthBytes": {
+        "samples": [
+          29980928,
+          27652440,
+          14324048,
+          27822984,
+          27641504
+        ],
+        "baselineHeapBytes": 54545872
+      },
+      "controlledDelayPerRequestMs": 8
+    },
+    {
+      "libraries": 3,
+      "kind": "browse",
+      "iterations": 5,
+      "fixtureSongs": 12600,
+      "firstPageLatency": {
+        "medianMs": 261.63,
+        "minMs": 257.14,
+        "maxMs": 311.59,
+        "samplesMs": [
+          311.59,
+          268.71,
+          261.63,
+          260.93,
+          257.14
+        ]
+      },
+      "upstreamRequests": {
+        "median": 27,
+        "samples": [
+          27,
+          27,
+          27,
+          27,
+          27
+        ]
+      },
+      "peakConcurrentRequests": 3,
+      "resultCounts": [
+        12599,
+        12599,
+        12599,
+        12599,
+        12599
+      ],
+      "heapGrowthBytes": {
+        "samples": [
+          33073344,
+          41224136,
+          30305096,
+          40968952,
+          40951976
+        ],
+        "baselineHeapBytes": 85631936
+      },
+      "controlledDelayPerRequestMs": 8
+    },
+    {
+      "libraries": 3,
+      "kind": "search",
+      "iterations": 5,
+      "fixtureSongs": 12600,
+      "expectedSearchMatches": 9449,
+      "firstPageLatency": {
+        "medianMs": 401.83,
+        "minMs": 399.03,
+        "maxMs": 415.77,
+        "samplesMs": [
+          415.77,
+          407.35,
+          399.03,
+          399.15,
+          401.83
+        ]
+      },
+      "upstreamRequests": {
+        "median": 31,
+        "samples": [
+          31,
+          31,
+          31,
+          31,
+          31
+        ]
+      },
+      "peakConcurrentRequests": 1,
+      "resultCounts": [
+        9449,
+        9449,
+        9449,
+        9449,
+        9449
+      ],
+      "heapGrowthBytes": {
+        "samples": [
+          27093536,
+          25440328,
+          25470224,
+          13381512,
+          25471736
+        ],
+        "baselineHeapBytes": 100749576
+      },
+      "controlledDelayPerRequestMs": 8
+    }
+  ],
+  "serviceContracts": []
+}

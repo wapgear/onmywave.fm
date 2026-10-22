@@ -1,0 +1,235 @@
+{
+  "fixture": "Actual renderer and player hooks, synthetic bridge/audio, CUA UI interactions; no live Jellyfin",
+  "sequential": {
+    "selectedSourceOrder": [
+      2,
+      4
+    ],
+    "albumSourceOrder": [
+      6,
+      3,
+      6
+    ],
+    "playlistSourceOrder": [
+      4,
+      2,
+      4
+    ],
+    "finalCanonicalOrder": [
+      1,
+      4,
+      2,
+      4,
+      6,
+      3,
+      6,
+      2,
+      4,
+      3,
+      2,
+      1,
+      3,
+      4,
+      2,
+      5,
+      6,
+      7,
+      2,
+      4,
+      6,
+      3,
+      6,
+      4,
+      2,
+      4
+    ],
+    "sameCurrentKey": true,
+    "position": 30,
+    "playing": false,
+    "completedSongs": 0,
+    "calls": {
+      "preparePlayback": 1
+    },
+    "afterSingleAndSelectedPlayNext": [
+      1,
+      2,
+      4,
+      3,
+      2,
+      1,
+      3,
+      4,
+      2,
+      5,
+      6,
+      7
+    ]
+  },
+  "empty": {
+    "next": {
+      "currentId": 3,
+      "length": 1,
+      "playing": false
+    },
+    "end": {
+      "currentId": 5,
+      "length": 1,
+      "playing": false
+    }
+  },
+  "reorder": {
+    "buttonOrder": [
+      1,
+      2,
+      1,
+      4,
+      3,
+      2,
+      5,
+      6
+    ],
+    "keyboardOrder": [
+      1,
+      2,
+      2,
+      1,
+      4,
+      3,
+      5,
+      6
+    ],
+    "exactDuplicateMoved": true,
+    "otherDuplicateRetained": true,
+    "currentUnchanged": true,
+    "position": 40,
+    "playing": true,
+    "completed": 0,
+    "restoreSameOrder": true,
+    "restorePosition": 40,
+    "restorePaused": true
+  },
+  "shuffle": {
+    "firstMoveSwapsExactRows": true,
+    "insertedFuture": [
+      2,
+      4,
+      5,
+      3,
+      2,
+      6,
+      2,
+      1,
+      4,
+      8
+    ],
+    "restoredFuture": [
+      2,
+      4,
+      5,
+      3,
+      2,
+      6,
+      2,
+      1,
+      4,
+      8
+    ],
+    "restoredPaused": true,
+    "restoredPosition": 30,
+    "repeatOffStopped": true,
+    "completed": 11,
+    "remaining": 0,
+    "naturalFutureIds": [
+      2,
+      4,
+      5,
+      3,
+      2,
+      6,
+      2,
+      1,
+      4,
+      8
+    ],
+    "stoppedOnLastSong": true
+  },
+  "large": {
+    "queueLength": 10001,
+    "futureCount": 10000,
+    "appendedLast": 8,
+    "moveEndFocus": "Reorder Evening track 015",
+    "moveEndIndex": "9999",
+    "renderedRowsAfterMove": 16,
+    "sameCurrent": true,
+    "position": 30
+  },
+  "repeatAll": {
+    "initialQueue": 123,
+    "explicitAppendReachedLast": true,
+    "completedAtTail": 122,
+    "remainingAtTail": 0,
+    "restartPlaying": true,
+    "restartRemaining": 50
+  },
+  "repeatOne": {
+    "sameCurrent": true,
+    "sameFuture": true,
+    "playing": true
+  },
+  "repeatedVisits": {
+    "sameCanonicalVisitMovedIndependently": true,
+    "selectedSecondVisitRemaining": 6,
+    "expectedRemaining": 6,
+    "futureCounts": [
+      8,
+      7,
+      6
+    ],
+    "currentPreservedOnRemove": true,
+    "playing": true,
+    "position": 30,
+    "completed": 0,
+    "calls": {
+      "preparePlayback": 1
+    }
+  },
+  "dj": {
+    "phaseWhileEditing": "speaking",
+    "sameCurrent": true,
+    "unchangedCalls": true,
+    "completedBefore": 1,
+    "completedAfterEdits": 1,
+    "phaseAfterSpeech": "idle",
+    "currentAfterSpeech": 2,
+    "callsAfterSpeech": {
+      "markPreparedNewsPlayed": 1,
+      "preparePlayback": 2,
+      "startPreparedNews": 1
+    }
+  },
+  "pointer": {
+    "before": [
+      2,
+      1,
+      3,
+      4,
+      2,
+      5,
+      6
+    ],
+    "after": [
+      1,
+      3,
+      2,
+      4,
+      2,
+      5,
+      6
+    ],
+    "input": "Native CUA tab.drag from first grip to after third row"
+  },
+  "regression": {
+    "criticalPlaybackScenariosPassed": 7,
+    "targetedMutationsDetected": 6
+  }
+}

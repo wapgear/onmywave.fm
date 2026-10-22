@@ -44,6 +44,7 @@ export type PlayerState = {
   volume: number;
   shuffle: boolean;
   repeat: PlaybackSnapshot['repeat'];
+  queueSession: number;
   canRetry: boolean;
   completedSongs: number;
   libraryError: string | null;
@@ -54,7 +55,9 @@ export type PlayerState = {
   retryOptions(this: void): Promise<OptionsSaveSettlement>;
   getOptionsSaveGeneration(this: void): number;
   play(this: void, songs: Song[], index?: number): void;
-  playQueueEntry(this: void, key: string, historyIndex?: number): void;
+  playQueueEntry(this: void, key: string, historyIndex?: number, upcomingId?: string): void;
+  playNext(this: void, songs: Song[]): void;
+  moveUpcoming(this: void, fromId: string, beforeId: string | null): void;
   enqueue(this: void, songs: Song[]): void;
   musicCommandRevision: number;
   getMusicCommandRevision(this: void): number;
@@ -66,7 +69,7 @@ export type PlayerState = {
   setVolume(this: void, value: number): void;
   toggleShuffle(this: void): void;
   setRepeat(this: void, value: PlaybackSnapshot['repeat']): void;
-  removeQueue(this: void, key: string): void;
+  removeQueue(this: void, key: string, upcomingId?: string): void;
   retry(this: void): Promise<PlaybackRetrySettlement>;
   getPlaybackGeneration(this: void): number;
   getResumeGeneration(this: void): number;
@@ -92,4 +95,4 @@ export type HeardNews = { news: NewsBreak; startedAt: string; status: 'playing' 
 
 export type NewsPhase = 'waiting' | 'fading' | 'lead-in' | 'speaking' | 'tail';
 
-export type QueueEntry = { key: string; song: Song; historyIndex?: number };
+export type QueueEntry = { key: string; song: Song; historyIndex?: number; upcomingId?: string };

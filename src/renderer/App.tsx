@@ -14,6 +14,7 @@ import { Lyrics } from './components/Lyrics/Lyrics.component';
 import { Player } from './components/Player/Player.component';
 import { ProviderKeyEditsProvider } from './components/ProviderKeys/ProviderKeyEdits';
 import { Queue } from './components/Queue/Queue.component';
+import { RenderErrorBoundary } from './components/RenderErrorBoundary/RenderErrorBoundary.component';
 
 import './components/Drawer/Drawer.styles.css';
 import { ErrorNotice } from './components/Shared';
@@ -420,6 +421,15 @@ function ReadyApp({
     setDrawer(null);
     setReturnToSetup(false);
   }
+  function openDJControls() {
+    const trigger = document.getElementById('player-dj-controls');
+    if (!(trigger instanceof HTMLButtonElement)) return;
+    const targetId = trigger.getAttribute('popovertarget');
+    const popover = targetId ? document.getElementById(targetId) : null;
+    if (popover?.matches(':popover-open')) return;
+    trigger.focus({ preventScroll: true });
+    trigger.click();
+  }
   function configureRoom(section: SettingsSection) {
     const focused = document.activeElement;
     const source =
@@ -502,59 +512,62 @@ function ReadyApp({
             focusTarget={() => content.current?.querySelector<HTMLElement>('.page-heading h1') ?? null}
             settingsTarget={() => content.current?.querySelector<HTMLElement>('#room-panel-settings') ?? null}
           />
-          {page === 'songs' && (
-            <SongsPage view={songsView} setView={setSongsView} add={setAdding} details={openDrawer} />
-          )}
-          {page === 'albums' && (
-            <AlbumsPage
-              onOpenDetail={(id, origin) => requestCollectionFocus(`albums-${id}`, origin)}
-              view={albumsView}
-              setView={setAlbumsView}
-              add={setAdding}
-              details={openDrawer}
-            />
-          )}
-          {page === 'playlists' && (
-            <PlaylistsPage
-              onCreateDetail={requestCreatedPlaylistFocus}
-              onReturnFromDetail={(id, origin) => requestCollectionFocus('playlists-list', origin, id)}
-              onOpenDetail={(id, origin) => requestCollectionFocus(`playlists-${id}`, origin)}
-              recovery={playlistRecovery}
-              id={playlistId}
-              setId={setPlaylistId}
-              add={setAdding}
-              details={openDrawer}
-            />
-          )}
-          {page === 'stations' && (
-            <StationsPage
-              configDraft={roomSetupDraft}
-              setConfigDraft={setRoomSetupDraft}
-              configureSources={() => configureRoom('sources')}
-              configureDJ={() => configureRoom('djs')}
-              configureSettings={() => configureRoom('keys')}
-            />
-          )}
-          {page === 'settings' && (
-            <SettingsPage
-              section={settingsSection}
-              onSectionChange={setSettingsSection}
-              returnToSetup={
-                returnToSetup
-                  ? () => {
-                      restoreSetupFocus.current = true;
-                      scrollPositions.current.delete('stations');
-                      setRoomSetupDraft((current) => ({ ...current, tab: 'settings' }));
-                      setPage('stations');
-                      setReturnToSetup(false);
-                    }
-                  : undefined
-              }
-              connection={connection}
-              update={updateLibraries}
-              disconnected={() => (active.current ? disconnected() : undefined)}
-            />
-          )}
+          <RenderErrorBoundary scope="page" resetKey={location}>
+            {page === 'songs' && (
+              <SongsPage view={songsView} setView={setSongsView} add={setAdding} details={openDrawer} />
+            )}
+            {page === 'albums' && (
+              <AlbumsPage
+                onOpenDetail={(id, origin) => requestCollectionFocus(`albums-${id}`, origin)}
+                view={albumsView}
+                setView={setAlbumsView}
+                add={setAdding}
+                details={openDrawer}
+              />
+            )}
+            {page === 'playlists' && (
+              <PlaylistsPage
+                onCreateDetail={requestCreatedPlaylistFocus}
+                onReturnFromDetail={(id, origin) => requestCollectionFocus('playlists-list', origin, id)}
+                onOpenDetail={(id, origin) => requestCollectionFocus(`playlists-${id}`, origin)}
+                recovery={playlistRecovery}
+                id={playlistId}
+                setId={setPlaylistId}
+                add={setAdding}
+                details={openDrawer}
+              />
+            )}
+            {page === 'stations' && (
+              <StationsPage
+                configDraft={roomSetupDraft}
+                setConfigDraft={setRoomSetupDraft}
+                configureSources={() => configureRoom('sources')}
+                configureDJ={() => configureRoom('djs')}
+                configureSettings={() => configureRoom('keys')}
+                openDJControls={openDJControls}
+              />
+            )}
+            {page === 'settings' && (
+              <SettingsPage
+                section={settingsSection}
+                onSectionChange={setSettingsSection}
+                returnToSetup={
+                  returnToSetup
+                    ? () => {
+                        restoreSetupFocus.current = true;
+                        scrollPositions.current.delete('stations');
+                        setRoomSetupDraft((current) => ({ ...current, tab: 'settings' }));
+                        setPage('stations');
+                        setReturnToSetup(false);
+                      }
+                    : undefined
+                }
+                connection={connection}
+                update={updateLibraries}
+                disconnected={() => (active.current ? disconnected() : undefined)}
+              />
+            )}
+          </RenderErrorBoundary>
         </div>
       </main>
       {visibleDrawer && (

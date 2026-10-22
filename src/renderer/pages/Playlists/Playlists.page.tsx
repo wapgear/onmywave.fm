@@ -566,10 +566,17 @@ function PlaylistDetail({ id, listError, back, add, details, recovery }: Playlis
             </button>
             <button
               disabled={!data.entries.length}
+              onClick={() => player.playNext(data.entries.map((entry) => entry.song))}
+            >
+              <Play size={16} />
+              Play next
+            </button>
+            <button
+              disabled={!data.entries.length}
               onClick={() => player.enqueue(data.entries.map((entry) => entry.song))}
             >
               <ListPlus size={17} />
-              Queue
+              Add to end
             </button>
             <button disabled={data.canEdit === false || editBlocked} onClick={() => setRenaming(true)}>
               <Pencil size={15} />
@@ -729,7 +736,8 @@ function PlaylistDetail({ id, listError, back, add, details, recovery }: Playlis
               selected={selected}
               select={setSelected}
               play={player.play}
-              queue={player.enqueue}
+              playNext={player.playNext}
+              enqueue={player.enqueue}
               add={add}
               details={details}
               currentId={player.current?.id}

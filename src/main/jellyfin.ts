@@ -131,6 +131,65 @@ const serverAddress = (value: string): string => {
 const stringArray = (value: unknown): string[] =>
   Array.isArray(value) ? value.filter((v): v is string => typeof v === 'string') : [];
 
+class CatalogLimiter {
+  private active = 0;
+  private waiting: Array<{ ready: () => void; signal: AbortSignal }> = [];
+  async run<T>(signal: AbortSignal, work: () => Promise<T>): Promise<T> {
+    if (signal.aborted) throw new DOMException('Catalog request cancelled.', 'AbortError');
+    let acquired = false;
+    if (this.active >= 4) {
+      await new Promise<void>((resolve, reject) => {
+        const ready = () => {
+          signal.removeEventListener('abort', aborted);
+          this.active++;
+          acquired = true;
+          resolve();
+        };
+        const aborted = () => {
+          this.waiting = this.waiting.filter((item) => item.ready !== ready);
+          reject(new DOMException('Catalog request cancelled.', 'AbortError'));
+        };
+        this.waiting.push({ ready, signal });
+        signal.addEventListener('abort', aborted, { once: true });
+      });
+    } else {
+      this.active++;
+      acquired = true;
+    }
+    if (signal.aborted) {
+      if (acquired) this.release();
+      throw new DOMException('Catalog request cancelled.', 'AbortError');
+    }
+    try {
+      return await work();
+    } finally {
+      this.release();
+    }
+  }
+  private release(): void {
+    this.active--;
+    while (this.waiting.length) {
+      const next = this.waiting.shift()!;
+      if (!next.signal.aborted) {
+        next.ready();
+        break;
+      }
+    }
+  }
+}
+
+const catalogLimiter = new CatalogLimiter();
+
+const catalogCollator = new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' });
+
+type CatalogLoad = {
+  session: Session;
+  controller: AbortController;
+  promise: Promise<Page<Item>>;
+  subscribers: number;
+  settled: boolean;
+};
+
 export class JellyfinService {
   private session: Session | null = null;
   private authRevision = 0;
@@ -139,9 +198,69 @@ export class JellyfinService {
   private connectionWrites = Promise.resolve();
   private writes = new Map<string, Promise<unknown>>();
   private catalogSnapshots = new Map<string, { session: Session; items: Item[] }>();
-  private catalogLoads = new Map<string, { session: Session; promise: Promise<Page<Item>> }>();
+  private catalogLoads = new Map<string, CatalogLoad>();
   private lyricsRequest: AbortController | null = null;
+  private catalogControllers = new Set<AbortController>();
   constructor(private deps: Deps) {}
+  cancelCatalogLoads(): void {
+    for (const load of this.catalogLoads.values()) load.controller.abort();
+    for (const controller of this.catalogControllers) controller.abort();
+    this.catalogLoads.clear();
+  }
+  private async waitForCatalogLoad(key: string, load: CatalogLoad, signal: AbortSignal): Promise<Page<Item>> {
+    if (signal.aborted) throw new DOMException('Catalog request cancelled.', 'AbortError');
+    load.subscribers++;
+    let onAbort: (() => void) | undefined;
+    let released = false;
+    const release = () => {
+      if (released) return;
+      released = true;
+      load.subscribers--;
+      if (!load.subscribers && !load.settled && this.catalogLoads.get(key) === load) {
+        this.catalogLoads.delete(key);
+        load.controller.abort();
+      }
+    };
+    const aborted = () => {
+      release();
+      rejectAbort();
+    };
+    let rejectAbort = () => {};
+    try {
+      return await Promise.race([
+        load.promise,
+        new Promise<never>((_, reject) => {
+          rejectAbort = () => reject(new DOMException('Catalog request cancelled.', 'AbortError'));
+          onAbort = aborted;
+          signal.addEventListener('abort', onAbort, { once: true });
+        }),
+      ]);
+    } finally {
+      if (onAbort) signal.removeEventListener('abort', onAbort);
+      release();
+    }
+  }
+  private trackCatalogLoad(key: string, load: CatalogLoad): void {
+    this.catalogLoads.set(key, load);
+    void load.promise
+      .then(
+        (page) => {
+          load.settled = true;
+          if (this.catalogLoads.get(key) === load && this.session === load.session) {
+            this.catalogSnapshots.delete(key);
+            this.catalogSnapshots.set(key, { session: load.session, items: page.items });
+            if (this.catalogSnapshots.size > 2)
+              this.catalogSnapshots.delete(this.catalogSnapshots.keys().next().value!);
+          }
+        },
+        () => {
+          load.settled = true;
+        },
+      )
+      .finally(() => {
+        if (this.catalogLoads.get(key) === load) this.catalogLoads.delete(key);
+      });
+  }
   connection(): Connection | null {
     const s = this.session;
     return s
@@ -173,10 +292,10 @@ export class JellyfinService {
       : null;
     ++this.connectionIntent;
     this.lyricsRequest?.abort();
+    this.cancelCatalogLoads();
     this.session = restored;
     ++this.authRevision;
     this.catalogSnapshots.clear();
-    this.catalogLoads.clear();
     ++this.sessionRevision;
     this.deps.onConnectionChanged?.();
   }
@@ -194,9 +313,9 @@ export class JellyfinService {
         if (!current()) throw superseded();
         const saved = publish();
         this.lyricsRequest?.abort();
+        this.cancelCatalogLoads();
         this.session = snapshot ? { ...snapshot, sessionOnly: !saved } : null;
         this.catalogSnapshots.clear();
-        this.catalogLoads.clear();
         committed = true;
         if (notify) {
           ++this.authRevision;
@@ -274,6 +393,7 @@ export class JellyfinService {
       return await consume(response);
     } catch (error) {
       if (error instanceof ServiceError) throw error;
+      if (!write && init.signal?.aborted) throw new DOMException('Request canceled.', 'AbortError');
       if (error instanceof SyntaxError && !controller.signal.aborted && !init.signal?.aborted) {
         throw new ServiceError(
           write ? 'uncertain-write' : 'server',
@@ -442,7 +562,7 @@ export class JellyfinService {
       imageUrl: item.ImageTags?.Primary ? this.deps.imageUrl(item.Id, item.ImageTags.Primary) : undefined,
     };
   }
-  private async catalog(type: 'Audio' | 'MusicAlbum', query: CatalogQuery): Promise<Page<Item>> {
+  private async catalog(type: 'Audio' | 'MusicAlbum', query: CatalogQuery, signal: AbortSignal): Promise<Page<Item>> {
     const s = this.requireSession();
     const start = query.start ?? 0,
       limit = query.limit ?? 100;
@@ -468,7 +588,7 @@ export class JellyfinService {
         throw new ServiceError('invalid', 'Invalid catalog filter.');
     if (!s.selectedLibraryIds.length) return { items: [], total: 0, start };
     if (query.search?.trim())
-      return this.searchCatalog(type, { ...query, search: query.search.trim() }, sort, start, limit);
+      return this.searchCatalog(type, { ...query, search: query.search.trim() }, sort, start, limit, signal);
     const multiple = s.selectedLibraryIds.length > 1;
     const snapshotKey = JSON.stringify([
       type,
@@ -479,7 +599,7 @@ export class JellyfinService {
     ]);
     const loading = this.catalogLoads.get(snapshotKey);
     if (multiple && loading?.session === s) {
-      const page = await loading.promise;
+      const page = await this.waitForCatalogLoad(snapshotKey, loading, signal);
       if (this.session !== s) throw new ServiceError('invalid', 'The library changed. Refresh your collection.');
       return { items: page.items.slice(start, start + limit), total: page.total, start };
     }
@@ -489,38 +609,47 @@ export class JellyfinService {
       this.catalogSnapshots.set(snapshotKey, previous);
       return { items: previous.items.slice(start, start + limit), total: previous.items.length, start };
     }
-    const read = async () => {
-      const pages = await Promise.all(
-        s.selectedLibraryIds.map(async (parent) => {
-          const params = new URLSearchParams({
-            ParentId: parent,
-            Recursive: 'true',
-            IncludeItemTypes: type,
-            Fields: fields,
-            StartIndex: String(start),
-            Limit: String(limit),
-            SortBy: sort,
-            SortOrder: query.descending ? 'Descending' : 'Ascending',
-            EnableTotalRecordCount: 'true',
-          });
-          if (query.search) params.set('SearchTerm', query.search);
-          if (query.genre) params.set('Genres', query.genre);
-          if (query.tag) params.set('Tags', query.tag);
-          // Complete each root before merging: provider and app sort comparators can differ.
-          if (multiple) {
-            const items = await this.allItems(`/Users/${s.userId}/Items`, Object.fromEntries(params));
-            return { Items: items, TotalRecordCount: items.length };
-          }
-          return this.json(`/Users/${s.userId}/Items?${params}`);
-        }),
-      );
+    const controller = multiple ? new AbortController() : undefined;
+    const read = async (requestSignal: AbortSignal) => {
+      const pageReads = s.selectedLibraryIds.map(async (parent) => {
+        const params = new URLSearchParams({
+          ParentId: parent,
+          Recursive: 'true',
+          IncludeItemTypes: type,
+          Fields: fields,
+          StartIndex: String(start),
+          Limit: String(limit),
+          SortBy: sort,
+          SortOrder: query.descending ? 'Descending' : 'Ascending',
+          EnableTotalRecordCount: 'true',
+        });
+        if (query.search) params.set('SearchTerm', query.search);
+        if (query.genre) params.set('Genres', query.genre);
+        if (query.tag) params.set('Tags', query.tag);
+        // Complete each root before merging: provider and app sort comparators can differ.
+        if (multiple) {
+          const items = await this.allItems(`/Users/${s.userId}/Items`, Object.fromEntries(params), requestSignal);
+          return { Items: items, TotalRecordCount: items.length };
+        }
+        return catalogLimiter.run(requestSignal, () =>
+          this.json(`/Users/${s.userId}/Items?${params}`, { signal: requestSignal }),
+        );
+      });
+      let pages;
+      try {
+        pages = await Promise.all(pageReads);
+      } catch (error) {
+        controller?.abort();
+        await Promise.allSettled(pageReads);
+        throw error;
+      }
       let items: Item[] = pages.flatMap((page) => page.Items || []);
       if (multiple) {
         if (this.session !== s) throw new ServiceError('invalid', 'The library changed. Refresh your collection.');
         items = [...new Map(items.map((item) => [itemIdentity(item.Id), item])).values()];
         const total = items.length;
         const compareText = (a: string | undefined, b: string | undefined) =>
-          String(a || '').localeCompare(String(b || ''), undefined, { numeric: true, sensitivity: 'base' });
+          catalogCollator.compare(String(a || ''), String(b || ''));
         items.sort((a, b) => {
           let value = 0;
           if (query.sort === 'dateAdded')
@@ -547,22 +676,18 @@ export class JellyfinService {
       }
       return { items, total: pages.reduce((sum, page) => sum + (page.TotalRecordCount || 0), 0), start };
     };
-    if (!multiple) return read();
-    const load = { session: s, promise: read() };
-    this.catalogLoads.set(snapshotKey, load);
-    try {
-      const page = await load.promise;
-      if (this.session !== s) throw new ServiceError('invalid', 'The library changed. Refresh your collection.');
-      if (this.catalogLoads.get(snapshotKey) === load) {
-        this.catalogSnapshots.delete(snapshotKey);
-        this.catalogSnapshots.set(snapshotKey, { session: s, items: page.items });
-        // ponytail: retain two completed views; an evicted view is rebuilt on its next page.
-        if (this.catalogSnapshots.size > 2) this.catalogSnapshots.delete(this.catalogSnapshots.keys().next().value!);
-      }
-      return { items: page.items.slice(start, start + limit), total: page.total, start };
-    } finally {
-      if (this.catalogLoads.get(snapshotKey) === load) this.catalogLoads.delete(snapshotKey);
-    }
+    if (!multiple) return read(signal);
+    const load = {
+      session: s,
+      controller: controller!,
+      promise: read(controller!.signal),
+      subscribers: 0,
+      settled: false,
+    };
+    this.trackCatalogLoad(snapshotKey, load);
+    const page = await this.waitForCatalogLoad(snapshotKey, load, signal);
+    if (this.session !== s) throw new ServiceError('invalid', 'The library changed. Refresh your collection.');
+    return { items: page.items.slice(start, start + limit), total: page.total, start };
   }
   private async searchCatalog(
     type: 'Audio' | 'MusicAlbum',
@@ -570,6 +695,7 @@ export class JellyfinService {
     sort: string,
     start: number,
     limit: number,
+    signal: AbortSignal,
   ): Promise<Page<Item>> {
     const session = this.requireSession();
     const term = query.search!;
@@ -584,7 +710,7 @@ export class JellyfinService {
     ]);
     const loading = this.catalogLoads.get(snapshotKey);
     if (loading?.session === session) {
-      const page = await loading.promise;
+      const page = await this.waitForCatalogLoad(snapshotKey, loading, signal);
       if (this.session !== session) throw new ServiceError('unauthorized', 'The connection changed. Search again.');
       return { ...page, items: page.items.slice(start, start + limit), start };
     }
@@ -595,35 +721,35 @@ export class JellyfinService {
       return { items: previous.items.slice(start, start + limit), total: previous.items.length, start };
     }
     if (start === 0) this.catalogSnapshots.delete(snapshotKey);
-    const load = {
+    const controller = new AbortController();
+    const load: CatalogLoad = {
       session,
-      promise: this.readSearchCatalog(type, query, sort),
+      controller,
+      promise: this.readSearchCatalog(type, query, sort, controller.signal),
+      subscribers: 0,
+      settled: false,
     };
-    this.catalogLoads.set(snapshotKey, load);
-    try {
-      const page = await load.promise;
-      if (this.session !== session) throw new ServiceError('unauthorized', 'The connection changed. Search again.');
-      if (this.catalogLoads.get(snapshotKey) === load) {
-        this.catalogSnapshots.delete(snapshotKey);
-        this.catalogSnapshots.set(snapshotKey, { session, items: page.items });
-        if (this.catalogSnapshots.size > 2) this.catalogSnapshots.delete(this.catalogSnapshots.keys().next().value!);
-      }
-      return { ...page, items: page.items.slice(start, start + limit), start };
-    } finally {
-      if (this.catalogLoads.get(snapshotKey) === load) this.catalogLoads.delete(snapshotKey);
-    }
+    this.trackCatalogLoad(snapshotKey, load);
+    const page = await this.waitForCatalogLoad(snapshotKey, load, signal);
+    if (this.session !== session) throw new ServiceError('unauthorized', 'The connection changed. Search again.');
+    return { ...page, items: page.items.slice(start, start + limit), start };
   }
 
   private async readSearchCatalog(
     type: 'Audio' | 'MusicAlbum',
     query: CatalogQuery,
     sort: string,
+    signal: AbortSignal,
   ): Promise<Page<Item>> {
     const session = this.requireSession();
     const term = query.search!;
     const maximum = 10000;
     const matches = new Map<string, Item>();
-    const bounded = async (path: string, parameters: Record<string, string>): Promise<Item[]> => {
+    const bounded = async (
+      path: string,
+      parameters: Record<string, string>,
+      requestSignal = signal,
+    ): Promise<Item[]> => {
       const result: Item[] = [];
       while (true) {
         if (this.session !== session) throw new ServiceError('unauthorized', 'The connection changed. Search again.');
@@ -634,7 +760,9 @@ export class JellyfinService {
           StartIndex: String(result.length),
           Limit: '500',
         });
-        const page = await this.json(`${path}?${params}`);
+        const page = await catalogLimiter.run(requestSignal, () =>
+          this.json(`${path}?${params}`, { signal: requestSignal }),
+        );
         if (this.session !== session) throw new ServiceError('unauthorized', 'The connection changed. Search again.');
         const batch = page.Items || [];
         result.push(...batch);
@@ -654,12 +782,16 @@ export class JellyfinService {
           'This search matches too much music. Enter a more specific title, artist, or album.',
         );
     };
-    const artists = await bounded(type === 'Audio' ? '/Artists' : '/Artists/AlbumArtists', {
-      UserId: session.userId,
-      SearchTerm: term,
-    });
-    const artistIds = artists.map((item) => validId(item.Id));
-    for (const library of session.selectedLibraryIds) {
+    const branchController = new AbortController();
+    const abortBranches = () => branchController.abort();
+    signal.addEventListener('abort', abortBranches, { once: true });
+    const branchSignal = branchController.signal;
+    const artistsPromise = bounded(
+      type === 'Audio' ? '/Artists' : '/Artists/AlbumArtists',
+      { UserId: session.userId, SearchTerm: term },
+      branchSignal,
+    );
+    const branches = session.selectedLibraryIds.map(async (library) => {
       const base: Record<string, string> = {
         ParentId: library,
         Recursive: 'true',
@@ -669,32 +801,75 @@ export class JellyfinService {
       };
       if (query.genre) base.Genres = query.genre;
       if (query.tag) base.Tags = query.tag;
-      add(await bounded(`/Users/${session.userId}/Items`, { ...base, SearchTerm: term }));
-      for (let index = 0; index < artistIds.length; index += 100) {
-        add(
-          await bounded(`/Users/${session.userId}/Items`, {
-            ...base,
-            [type === 'Audio' ? 'ArtistIds' : 'AlbumArtistIds']: artistIds.slice(index, index + 100).join(','),
-          }),
+      const titleMatches = bounded(`/Users/${session.userId}/Items`, { ...base, SearchTerm: term }, branchSignal);
+      const work: Promise<Item[]>[] = [titleMatches];
+      const artistMatches = artistsPromise.then(async (artists) => {
+        const ids = artists.map((item) => validId(item.Id));
+        return Promise.all(
+          Array.from({ length: Math.ceil(ids.length / 100) }, (_, batch) =>
+            bounded(
+              `/Users/${session.userId}/Items`,
+              {
+                ...base,
+                [type === 'Audio' ? 'ArtistIds' : 'AlbumArtistIds']: ids
+                  .slice(batch * 100, batch * 100 + 100)
+                  .join(','),
+              },
+              branchSignal,
+            ),
+          ),
+        ).then((batches) => batches.flat());
+      });
+      work.push(artistMatches);
+      if (type === 'Audio') {
+        work.push(
+          (async () => {
+            const albums = await bounded(
+              `/Users/${session.userId}/Items`,
+              {
+                ParentId: library,
+                Recursive: 'true',
+                IncludeItemTypes: 'MusicAlbum',
+                SearchTerm: term,
+              },
+              branchSignal,
+            );
+            const batches = await Promise.all(
+              Array.from({ length: Math.ceil(albums.length / 100) }, (_, batch) => {
+                const albumIds = albums.slice(batch * 100, batch * 100 + 100).map((item) => validId(item.Id));
+                const wanted = new Set(albumIds.map(itemIdentity));
+                return bounded(
+                  `/Users/${session.userId}/Items`,
+                  { ...base, AlbumIds: albumIds.join(',') },
+                  branchSignal,
+                ).then((songs) => songs.filter((item) => item.AlbumId && wanted.has(itemIdentity(item.AlbumId))));
+              }),
+            );
+            return batches.flat();
+          })(),
         );
       }
-      if (type !== 'Audio') continue;
-      const albums = await bounded(`/Users/${session.userId}/Items`, {
-        ParentId: library,
-        Recursive: 'true',
-        IncludeItemTypes: 'MusicAlbum',
-        SearchTerm: term,
-      });
-      for (let index = 0; index < albums.length; index += 100) {
-        const albumIds = albums.slice(index, index + 100).map((item) => validId(item.Id));
-        const wanted = new Set(albumIds.map(itemIdentity));
-        // Jellyfin can also match other albums with the same title when AlbumIds is set.
-        const songs = await bounded(`/Users/${session.userId}/Items`, { ...base, AlbumIds: albumIds.join(',') });
-        add(songs.filter((item) => item.AlbumId && wanted.has(itemIdentity(item.AlbumId))));
+      try {
+        return (await Promise.all(work)).flat();
+      } catch (error) {
+        branchController.abort();
+        await Promise.allSettled(work);
+        throw error;
       }
+    });
+    let results: Item[][];
+    try {
+      results = await Promise.all(branches);
+    } catch (error) {
+      branchController.abort();
+      await Promise.allSettled(branches);
+      throw error;
+    } finally {
+      signal.removeEventListener('abort', abortBranches);
     }
+    for (const items of results) add(items);
     const compareText = (a: string | undefined, b: string | undefined) =>
-      String(a || '').localeCompare(String(b || ''), undefined, { numeric: true, sensitivity: 'base' });
+      catalogCollator.compare(String(a || ''), String(b || ''));
     const items = [...matches.values()].sort((a, b) => {
       let value = 0;
       if (query.sort === 'dateAdded')
@@ -719,19 +894,36 @@ export class JellyfinService {
     if (this.session !== session) throw new ServiceError('unauthorized', 'The connection changed. Search again.');
     return { items, total: items.length, start: 0 };
   }
-  async songs(query: CatalogQuery): Promise<Page<Song>> {
-    return this.readCurrentSession(async () => {
-      const page = await this.catalog('Audio', query);
-      return { ...page, items: page.items.map((item) => this.songItem(item)) };
-    });
+  async songs(query: CatalogQuery, signal = new AbortController().signal): Promise<Page<Song>> {
+    return this.catalogOperation(signal, async (requestSignal) =>
+      this.readCurrentSession(async () => {
+        const page = await this.catalog('Audio', query, requestSignal);
+        return { ...page, items: page.items.map((item) => this.songItem(item)) };
+      }),
+    );
   }
-  async albums(query: CatalogQuery): Promise<Page<Album>> {
-    return this.readCurrentSession(async () => {
-      const page = await this.catalog('MusicAlbum', query);
-      return { ...page, items: page.items.map((item) => this.albumItem(item)) };
-    });
+  async albums(query: CatalogQuery, signal = new AbortController().signal): Promise<Page<Album>> {
+    return this.catalogOperation(signal, async (requestSignal) =>
+      this.readCurrentSession(async () => {
+        const page = await this.catalog('MusicAlbum', query, requestSignal);
+        return { ...page, items: page.items.map((item) => this.albumItem(item)) };
+      }),
+    );
   }
-  private async allItems(path: string, parameters: Record<string, string> = {}): Promise<Item[]> {
+  private async catalogOperation<T>(signal: AbortSignal, operation: (signal: AbortSignal) => Promise<T>): Promise<T> {
+    signal.throwIfAborted();
+    const controller = new AbortController();
+    this.catalogControllers.add(controller);
+    const abort = () => controller.abort();
+    signal.addEventListener('abort', abort, { once: true });
+    try {
+      return await operation(controller.signal);
+    } finally {
+      signal.removeEventListener('abort', abort);
+      this.catalogControllers.delete(controller);
+    }
+  }
+  private async allItems(path: string, parameters: Record<string, string> = {}, signal?: AbortSignal): Promise<Item[]> {
     const session = this.requireSession();
     const items: Item[] = [];
     while (true) {
@@ -742,7 +934,9 @@ export class JellyfinService {
         Limit: '500',
         Fields: fields,
       });
-      const page = await this.json(`${path}?${params}`);
+      const page = signal
+        ? await catalogLimiter.run(signal, () => this.json(`${path}?${params}`, { signal }))
+        : await this.json(`${path}?${params}`);
       if (this.session !== session) throw new ServiceError('invalid', 'The connection changed. Refresh your library.');
       const batch = page.Items || [];
       items.push(...batch);

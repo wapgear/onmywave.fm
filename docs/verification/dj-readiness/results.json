@@ -1,0 +1,386 @@
+{
+  "providerPending": {
+    "fixture": {
+      "calls": [
+        "preparePlayback",
+        "saveDJPlayback"
+      ],
+      "checkpoints": 1,
+      "state": {
+        "activeRoomProfileId": "default-room",
+        "djPlayback": {
+          "enabled": true,
+          "everySongs": 3,
+          "keepOnSeek": true,
+          "roomId": "default-room",
+          "voiceVolume": 0.7
+        },
+        "djs": [
+          {
+            "description": "Fixture host",
+            "exclusions": "",
+            "id": "fixture-dj",
+            "instructions": "Read the news",
+            "language": "English",
+            "musicPreferences": "",
+            "name": "Fixture DJ",
+            "news": {
+              "duckVolume": 0.05,
+              "feedUrls": [],
+              "interests": "",
+              "maxStories": 1,
+              "minStories": 1,
+              "speechEngine": "elevenlabs-v4",
+              "textModel": "fixture",
+              "voice": "fixture"
+            },
+            "personality": "Warm",
+            "speakingFrequency": "often"
+          }
+        ],
+        "newsTransitions": {
+          "fadeInSeconds": 0,
+          "fadeOutSeconds": 0,
+          "leadInSeconds": 0,
+          "mode": "between-songs",
+          "postSpeechSeconds": 0
+        },
+        "playback": {
+          "connectionId": "fixture-session",
+          "currentIndex": 0,
+          "position": 30,
+          "repeat": "off",
+          "shuffle": false,
+          "trackIds": [
+            "00000000000000000000000000000001",
+            "00000000000000000000000000000002"
+          ],
+          "volume": 0.75
+        },
+        "playbackPreferences": {},
+        "preparationErrorVersion": 1,
+        "revision": 2,
+        "roomProfiles": [
+          {
+            "enabled": true,
+            "id": "default-room",
+            "mood": "Warm",
+            "name": "My room",
+            "room": {
+              "djId": "fixture-dj",
+              "sourceIds": [
+                "fixture-source"
+              ]
+            },
+            "workflowDraft": {
+              "everyHours": 3,
+              "importance": "major",
+              "maxNewsClipsPerDay": 3,
+              "newsEnabled": false
+            }
+          }
+        ],
+        "sources": [
+          {
+            "id": "fixture-source",
+            "kind": "rss",
+            "name": "Fixture feed",
+            "url": "https://fixture.invalid/feed"
+          }
+        ]
+      }
+    },
+    "focus": "player-dj-controls",
+    "summary": "DJ setup\nPreparation · My room\nPreparation off · checking provider keys\nSaved audio · My room\n3 eligible\nPlayback\nOn · My room · every 3 songs\nDJ controls\n\nPreparing news may use paid text generation. Saved recordings can play without provider keys.\n\nNext step: Saved audio playback is ready. Automatic preparation is optional."
+  },
+  "providerError": {
+    "fixture": {
+      "calls": [
+        "preparePlayback",
+        "saveDJPlayback"
+      ],
+      "checkpoints": 1,
+      "state": {
+        "activeRoomProfileId": "default-room",
+        "djPlayback": {
+          "enabled": true,
+          "everySongs": 3,
+          "keepOnSeek": true,
+          "roomId": "default-room",
+          "voiceVolume": 0.7
+        },
+        "djs": [
+          {
+            "description": "Fixture host",
+            "exclusions": "",
+            "id": "fixture-dj",
+            "instructions": "Read the news",
+            "language": "English",
+            "musicPreferences": "",
+            "name": "Fixture DJ",
+            "news": {
+              "duckVolume": 0.05,
+              "feedUrls": [],
+              "interests": "",
+              "maxStories": 1,
+              "minStories": 1,
+              "speechEngine": "elevenlabs-v4",
+              "textModel": "fixture",
+              "voice": "fixture"
+            },
+            "personality": "Warm",
+            "speakingFrequency": "often"
+          }
+        ],
+        "newsTransitions": {
+          "fadeInSeconds": 0,
+          "fadeOutSeconds": 0,
+          "leadInSeconds": 0,
+          "mode": "between-songs",
+          "postSpeechSeconds": 0
+        },
+        "playback": {
+          "connectionId": "fixture-session",
+          "currentIndex": 0,
+          "position": 30,
+          "repeat": "off",
+          "shuffle": false,
+          "trackIds": [
+            "00000000000000000000000000000001",
+            "00000000000000000000000000000002"
+          ],
+          "volume": 0.75
+        },
+        "playbackPreferences": {},
+        "preparationErrorVersion": 1,
+        "revision": 2,
+        "roomProfiles": [
+          {
+            "enabled": true,
+            "id": "default-room",
+            "mood": "Warm",
+            "name": "My room",
+            "room": {
+              "djId": "fixture-dj",
+              "sourceIds": [
+                "fixture-source"
+              ]
+            },
+            "workflowDraft": {
+              "everyHours": 3,
+              "importance": "major",
+              "maxNewsClipsPerDay": 3,
+              "newsEnabled": false
+            }
+          }
+        ],
+        "sources": [
+          {
+            "id": "fixture-source",
+            "kind": "rss",
+            "name": "Fixture feed",
+            "url": "https://fixture.invalid/feed"
+          }
+        ]
+      }
+    },
+    "summary": "DJ setup\nPreparation · My room\nPreparation off · provider key status unavailable\nSaved audio · My room\n3 eligible\nPlayback\nOn · My room · every 3 songs\nDJ controls\n\nPreparing news may use paid text generation. Saved recordings can play without provider keys.\n\nNext step: Saved audio playback is ready. Automatic preparation is optional."
+  },
+  "saveError": {
+    "fixture": {
+      "calls": [
+        "preparePlayback"
+      ],
+      "checkpoints": 1,
+      "state": {
+        "activeRoomProfileId": "default-room",
+        "djPlayback": {
+          "enabled": false,
+          "everySongs": 3,
+          "keepOnSeek": true,
+          "roomId": "default-room",
+          "voiceVolume": 0.7
+        },
+        "djs": [
+          {
+            "description": "Fixture host",
+            "exclusions": "",
+            "id": "fixture-dj",
+            "instructions": "Read the news",
+            "language": "English",
+            "musicPreferences": "",
+            "name": "Fixture DJ",
+            "news": {
+              "duckVolume": 0.05,
+              "feedUrls": [],
+              "interests": "",
+              "maxStories": 1,
+              "minStories": 1,
+              "speechEngine": "elevenlabs-v4",
+              "textModel": "fixture",
+              "voice": "fixture"
+            },
+            "personality": "Warm",
+            "speakingFrequency": "often"
+          }
+        ],
+        "newsTransitions": {
+          "fadeInSeconds": 0,
+          "fadeOutSeconds": 0,
+          "leadInSeconds": 0,
+          "mode": "between-songs",
+          "postSpeechSeconds": 0
+        },
+        "playback": {
+          "connectionId": "fixture-session",
+          "currentIndex": 0,
+          "position": 30,
+          "repeat": "off",
+          "shuffle": false,
+          "trackIds": [
+            "00000000000000000000000000000001",
+            "00000000000000000000000000000002"
+          ],
+          "volume": 0.75
+        },
+        "playbackPreferences": {},
+        "preparationErrorVersion": 1,
+        "revision": 1,
+        "roomProfiles": [
+          {
+            "enabled": true,
+            "id": "default-room",
+            "mood": "Warm",
+            "name": "My room",
+            "room": {
+              "djId": "fixture-dj",
+              "sourceIds": [
+                "fixture-source"
+              ]
+            },
+            "workflowDraft": {
+              "everyHours": 3,
+              "importance": "major",
+              "maxNewsClipsPerDay": 3,
+              "newsEnabled": false
+            }
+          }
+        ],
+        "sources": [
+          {
+            "id": "fixture-source",
+            "kind": "rss",
+            "name": "Fixture feed",
+            "url": "https://fixture.invalid/feed"
+          }
+        ]
+      }
+    },
+    "focus": "player-dj-controls",
+    "summary": "DJ setup\nPreparation · My room\nPreparation off\nSaved audio · My room\n3 eligible\nPlayback\nSave failed · last confirmed Off · My room · every 3 songs\n\nPreparing news may use paid text generation. Saved recordings can play without provider keys.\n\nNext step: Playback setting could not be saved.\nReview DJ controls"
+  },
+  "profileMismatch": "DJ setup\nPreparation · My room\nPreparation off\nSaved audio · My room\n3 eligible\nPlayback\nOn · Other room · every 3 songs\n\nPlayback uses Other room; saved audio above is matched to My room.\n\nPreparing news may use paid text generation. Saved recordings can play without provider keys.\n\nNext step: Saved audio is matched to this setup profile; review the separate playback profile.\nReview playback profile",
+  "unconfirmed": "DJ setup\nPreparation · My room\nPreparation off\nSaved audio · My room\n3 eligible\nPlayback\nChange not confirmed · last saved On · My room · every 3 songs\n\nPreparing news may use paid text generation. Saved recordings can play without provider keys.\n\nNext step: The playback change needs confirmation.\nCheck playback status",
+  "dirty": {
+    "fixture": {
+      "calls": [
+        "preparePlayback"
+      ],
+      "checkpoints": 1,
+      "state": {
+        "activeRoomProfileId": "default-room",
+        "djPlayback": {
+          "enabled": false,
+          "everySongs": 3,
+          "keepOnSeek": true,
+          "roomId": "default-room",
+          "voiceVolume": 0.7
+        },
+        "djs": [
+          {
+            "description": "Fixture host",
+            "exclusions": "",
+            "id": "fixture-dj",
+            "instructions": "Read the news",
+            "language": "English",
+            "musicPreferences": "",
+            "name": "Fixture DJ",
+            "news": {
+              "duckVolume": 0.05,
+              "feedUrls": [],
+              "interests": "",
+              "maxStories": 1,
+              "minStories": 1,
+              "speechEngine": "elevenlabs-v4",
+              "textModel": "fixture",
+              "voice": "fixture"
+            },
+            "personality": "Warm",
+            "speakingFrequency": "often"
+          }
+        ],
+        "newsTransitions": {
+          "fadeInSeconds": 0,
+          "fadeOutSeconds": 0,
+          "leadInSeconds": 0,
+          "mode": "between-songs",
+          "postSpeechSeconds": 0
+        },
+        "playback": {
+          "connectionId": "fixture-session",
+          "currentIndex": 0,
+          "position": 30,
+          "repeat": "off",
+          "shuffle": false,
+          "trackIds": [
+            "00000000000000000000000000000001",
+            "00000000000000000000000000000002"
+          ],
+          "volume": 0.75
+        },
+        "playbackPreferences": {},
+        "preparationErrorVersion": 1,
+        "revision": 1,
+        "roomProfiles": [
+          {
+            "enabled": true,
+            "id": "default-room",
+            "mood": "Warm",
+            "name": "My room",
+            "room": {
+              "djId": "fixture-dj",
+              "sourceIds": [
+                "fixture-source"
+              ]
+            },
+            "workflowDraft": {
+              "everyHours": 3,
+              "importance": "major",
+              "maxNewsClipsPerDay": 3,
+              "newsEnabled": false
+            }
+          }
+        ],
+        "sources": [
+          {
+            "id": "fixture-source",
+            "kind": "rss",
+            "name": "Fixture feed",
+            "url": "https://fixture.invalid/feed"
+          }
+        ]
+      }
+    },
+    "focused": "room-panel-settings",
+    "selectedTab": "Settings",
+    "summary": "DJ setupPreparation · My roomPreparation offSaved audio · My room3 eligiblePlaybackOff · My room · every 3 songsDJ controlsPreparing news may use paid text generation. Saved recordings can play without provider keys.Next step: Review and save the unsaved setup changes.Review setup"
+  },
+  "providerReturn": {
+    "focused": "room-tab-settings",
+    "label": null,
+    "selectedTab": "Settings",
+    "tag": "BUTTON"
+  },
+  "pending": "DJ setup\nPreparation · My room\nPreparation off\nSaved audio · My room\nChecking saved recordings…\nPlayback\nOff · Not selected · every 3 songs\nDJ controls\n\nPreparing news may use paid text generation. Saved recordings can play without provider keys.\n\nNext step: Checking setup and saved audio status…",
+  "unknown": "DJ setup\nPreparation · My room\nPreparation off\nSaved audio · My room\nSaved recordings unavailable\nPlayback\nOff · Not selected · every 3 songs\nDJ controls\n\nPreparing news may use paid text generation. Saved recordings can play without provider keys.\n\nNext step: Some readiness status could not be confirmed.\nRefresh status"
+}

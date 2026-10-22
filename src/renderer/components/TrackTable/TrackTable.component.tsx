@@ -36,7 +36,8 @@ export function TrackTable({
   selected,
   select,
   play,
-  queue,
+  playNext,
+  enqueue,
   add,
   details,
   currentId,
@@ -293,9 +294,13 @@ export function TrackTable({
                           <ActionIcon size={15} />
                           {pausing ? 'Pause song' : 'Play song'}
                         </button>
-                        <button onClick={() => queue([row.song])}>
+                        <button onClick={() => playNext([row.song])}>
+                          <Play size={15} />
+                          Play next
+                        </button>
+                        <button onClick={() => enqueue([row.song])}>
                           <ListPlus size={15} />
-                          Add to queue
+                          Add to end
                         </button>
                         <button onClick={() => add([row.song])}>
                           <Plus size={15} />
@@ -359,9 +364,14 @@ export function TrackTable({
             <Play size={16} />
             Play
           </button>
-          <IconButton variant="compact" label="Add selected songs to queue" onClick={() => queue(selectedSongs)}>
+          <button onClick={() => playNext(selectedSongs)}>
+            <Play size={16} />
+            Play next
+          </button>
+          <button onClick={() => enqueue(selectedSongs)}>
             <ListPlus size={19} aria-hidden="true" />
-          </IconButton>
+            Add to end
+          </button>
           <button className="primary" onClick={() => add(selectedSongs)}>
             Add to playlist
           </button>

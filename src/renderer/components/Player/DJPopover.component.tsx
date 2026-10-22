@@ -221,6 +221,7 @@ export function DJPopover({ openRoom, openSettings }: DJPopoverProps) {
     <>
       <button
         ref={trigger}
+        id="player-dj-controls"
         className={`player-dj ${active ? 'is-active' : ''}`}
         popoverTarget={id}
         aria-haspopup="dialog"
