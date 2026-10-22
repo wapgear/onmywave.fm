@@ -41,6 +41,12 @@ const api: WaveApi = {
   preparePlayback: (input) => ipcRenderer.invoke('wave:preparePlayback', input),
   getLocalState: () => ipcRenderer.invoke('wave:getLocalState'),
   saveDjs: (djs) => ipcRenderer.invoke('wave:saveDjs', djs),
+  onPlaybackCheckpointRequest: (callback) => {
+    const listener = (_event: Electron.IpcRendererEvent, requestId: string) => callback(requestId);
+    ipcRenderer.on('wave:playbackCheckpointRequest', listener);
+    return () => ipcRenderer.removeListener('wave:playbackCheckpointRequest', listener);
+  },
+  flushPlaybackCheckpoint: (input) => ipcRenderer.invoke('wave:flushPlaybackCheckpoint', input),
   searchDJVoices: (input) => ipcRenderer.invoke('wave:searchDJVoices', input),
   saveNewsTransitions: (settings) => ipcRenderer.invoke('wave:saveNewsTransitions', settings),
   savePlayback: (snapshot) => ipcRenderer.invoke('wave:savePlayback', snapshot),

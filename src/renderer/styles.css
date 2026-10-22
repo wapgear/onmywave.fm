@@ -458,9 +458,6 @@ button > svg {
 .song-table td:last-child {
   border-radius: 0;
 }
-.song-table .check-column {
-  width: 30px;
-}
 .song-table .number-column {
   width: 28px;
 }
@@ -474,15 +471,6 @@ button > svg {
 }
 .song-table .actions-column {
   width: 36px;
-}
-.song-table input[type='checkbox'] {
-  accent-color: var(--accent);
-  width: 15px;
-  height: 15px;
-  min-height: 15px;
-  cursor: pointer;
-  margin: 0;
-  vertical-align: middle;
 }
 .song-title-cell {
   display: flex;
@@ -517,7 +505,7 @@ button > svg {
   width: 36px;
   height: 36px;
 }
-.artwork-details {
+.artwork-play {
   display: none;
   position: absolute;
   inset: 0;
@@ -526,7 +514,7 @@ button > svg {
   background: #0006;
   color: white;
 }
-.artwork-button:hover .artwork-details {
+.artwork-button:hover .artwork-play {
   display: flex;
 }
 .song-name {
@@ -1724,7 +1712,7 @@ legend {
   border-bottom: 1px solid var(--separator);
   height: 34px;
 }
-.artwork-button:focus-visible .artwork-details {
+.artwork-button:focus-visible .artwork-play {
   display: flex;
 }
 .song-table .now-playing .song-name > span {

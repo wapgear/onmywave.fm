@@ -23,6 +23,8 @@ Player checks load the actual React app and player through Vite with the existin
 
 The player scenarios verify paused restoration at 44 seconds, checkpoint-file readback into a new window, natural song completion, selection of a repeated song's exact queue occurrence, repeat-off exhaustion, repeat-one, a complete shuffle cycle containing 120 distinct occurrences of the same song, and repeat-all cycle reset. The cancellation scenario covers a claim that settles after a music command cancels scheduling. Targeted renderer mutants must reach readiness and fail their matching behavior assertion; failure to load the renderer does not count.
 
+The player command also builds the app and runs the [native quit/relaunch check](../playback-relaunch/README.md). That check uses production main IPC, preload, and storage with an isolated data directory and synthetic Jellyfin metadata/audio. It verifies that the final checkpoint reaches disk before a normal quit and that a fresh process restores it paused.
+
 Native macOS verification remains necessary for audio output and decoding, system media controls, VoiceOver, packaged application permissions, and real Jellyfin transport. Static format, type, lint, build, and audit checks remain enabled in the existing Quality job.
 
 Mutation checks transform source only inside disposable verification loads. They do not edit checked-out production files. A missing mutation anchor, startup failure, or process timeout must fail verification rather than count as a detected regression. After renderer readiness, a bounded wait for an expected transition can fail its named behavior assertion.

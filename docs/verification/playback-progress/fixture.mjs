@@ -45,6 +45,6 @@ const bridge={
  markPreparedNewsPlayed:input=>{window.__fixture.calls.push({method:'markPreparedNewsPlayed',input});return ok();},
  releasePreparedNews:input=>{window.__fixture.calls.push({method:'releasePreparedNews',input});return ok();},
  saveDJPlayback:async patch=>{window.__fixture.calls.push({method:'saveDJPlayback',patch});if(window.__fixture.saveDJGate)await window.__fixture.saveDJGate;state.djPlayback={...state.djPlayback,...patch};state.revision++;return ok(structuredClone(state));},
- onNewsProgress:()=>()=>{},onUpdateStatus:()=>()=>{},
+ onNewsProgress:()=>()=>{},onUpdateStatus:()=>()=>{},onPlaybackCheckpointRequest:()=>()=>{},flushPlaybackCheckpoint:()=>ok(),
 };
 window.wave=new Proxy(bridge,{get(target,name){if(name in target)return target[name];return (...args)=>{window.__fixture.calls.push({method:name,args});return ok(null);};}});

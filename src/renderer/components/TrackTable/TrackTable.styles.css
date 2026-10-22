@@ -3,7 +3,7 @@
   outline-offset: -2px;
   border-radius: 12px;
 }
-.artwork-button:focus-visible .artwork-details {
+.artwork-button:focus-visible .artwork-play {
   display: flex;
 }
 .song-table tbody tr:not(.song-spacer) > td:first-child {
@@ -13,10 +13,6 @@
 .song-table tbody tr:not(.song-spacer) > td:last-child {
   border-radius: 0 10px 10px 0;
   padding-right: 12px;
-}
-.song-table thead .check-column {
-  width: 38px;
-  padding-left: 12px;
 }
 .song-table thead .actions-column {
   width: 52px;

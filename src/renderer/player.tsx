@@ -50,6 +50,44 @@ import type {
 
 type LoadSettlement = { key?: string; generation: number; outcome: 'success' | 'failure' | 'superseded' };
 
+function playbackSnapshot(
+  connectionId: string,
+  state: {
+    queue: QueueEntry[];
+    index: number;
+    position: number;
+    volume: number;
+    shuffle: boolean;
+    repeat: PlaybackSnapshot['repeat'];
+  },
+  plan: ShufflePlan,
+): PlaybackSnapshot {
+  const byKey = new Map(state.queue.map((item, index) => [item.key, index]));
+  const indices = (keys: Iterable<string>) => [...keys].flatMap((key) => (byKey.has(key) ? [byKey.get(key)!] : []));
+  return {
+    connectionId,
+    trackIds: state.queue.map((item) => item.song.id),
+    currentIndex: state.queue.length ? state.index : 0,
+    position: state.queue.length ? state.position : 0,
+    volume: state.volume,
+    shuffle: state.shuffle,
+    repeat: state.repeat,
+    ...(state.shuffle
+      ? {
+          shufflePlan: {
+            upcoming: indices(plan.upcoming),
+            ...(plan.manualUpcoming.length
+              ? { manualUpcoming: indices(plan.manualUpcoming.map((item) => item.key)) }
+              : {}),
+            history: indices(plan.history),
+            cursor: plan.cursor,
+            visited: indices(plan.visited),
+          },
+        }
+      : {}),
+  };
+}
+
 const PlayerContext = createContext<PlayerState | null>(null);
 
 const PositionContext = createContext<PositionStore | null>(null);
@@ -144,8 +182,10 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     },
     lastSavedFingerprint: null as string | null,
     skipDrain: false,
+    finalizing: false,
   });
   const currentConnectionId = useRef(connection?.id ?? null);
+  const checkpointCanSave = useRef(false);
   const checkpointConnectionGeneration = useRef(0);
   const mounted = useRef(false);
   const checkpointLifecycle = useRef(0);
@@ -250,11 +290,12 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
 
   useLayoutEffect(() => {
     const nextConnectionId = connection?.id ?? null;
+    checkpointCanSave.current = Boolean(nextConnectionId && readyConnection === nextConnectionId && !restore);
     if (currentConnectionId.current === nextConnectionId) return;
     currentConnectionId.current = nextConnectionId;
     ++checkpointConnectionGeneration.current;
     playbackCheckpoint.current.pending = null;
-  }, [connection?.id]);
+  }, [connection?.id, readyConnection, restore]);
 
   const publishPosition = useCallback(
     (value: number) => {
@@ -1077,35 +1118,11 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         });
     };
     const save = () => {
-      if (!mounted.current || currentConnectionId.current !== connection.id) return;
+      if (!mounted.current || checkpoint.finalizing || currentConnectionId.current !== connection.id) return;
       const state = live.current;
       const optionsGeneration = optionsSaveGeneration.current;
       const optionsPending = optionsInFlight.current?.generation === optionsGeneration;
-      const byKey = new Map(state.queue.map((item, index) => [item.key, index]));
-      const indices = (keys: Iterable<string>) => [...keys].flatMap((key) => (byKey.has(key) ? [byKey.get(key)!] : []));
-      const plan = shufflePlan.current;
-      const snapshot: PlaybackSnapshot = {
-        connectionId: connection.id,
-        trackIds: state.queue.map((item) => item.song.id),
-        currentIndex: state.queue.length ? state.index : 0,
-        position: state.queue.length ? live.current.position : 0,
-        volume: state.volume,
-        shuffle: state.shuffle,
-        repeat: state.repeat,
-        ...(state.shuffle
-          ? {
-              shufflePlan: {
-                upcoming: indices(plan.upcoming),
-                ...(plan.manualUpcoming.length
-                  ? { manualUpcoming: indices(plan.manualUpcoming.map((item) => item.key)) }
-                  : {}),
-                history: indices(plan.history),
-                cursor: plan.cursor,
-                visited: indices(plan.visited),
-              },
-            }
-          : {}),
-      };
+      const snapshot = playbackSnapshot(connection.id, state, shufflePlan.current);
       const item = {
         fingerprint: JSON.stringify(snapshot),
         snapshot,
@@ -1133,32 +1150,9 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       dispatch(item);
     };
     const saveOnUnload = () => {
+      if (checkpoint.finalizing) return;
       const state = live.current;
-      const byKey = new Map(state.queue.map((item, index) => [item.key, index]));
-      const indices = (keys: Iterable<string>) => [...keys].flatMap((key) => (byKey.has(key) ? [byKey.get(key)!] : []));
-      const plan = shufflePlan.current;
-      const snapshot: PlaybackSnapshot = {
-        connectionId: connection.id,
-        trackIds: state.queue.map((item) => item.song.id),
-        currentIndex: state.queue.length ? state.index : 0,
-        position: state.queue.length ? state.position : 0,
-        volume: state.volume,
-        shuffle: state.shuffle,
-        repeat: state.repeat,
-        ...(state.shuffle
-          ? {
-              shufflePlan: {
-                upcoming: indices(plan.upcoming),
-                ...(plan.manualUpcoming.length
-                  ? { manualUpcoming: indices(plan.manualUpcoming.map((item) => item.key)) }
-                  : {}),
-                history: indices(plan.history),
-                cursor: plan.cursor,
-                visited: indices(plan.visited),
-              },
-            }
-          : {}),
-      };
+      const snapshot = playbackSnapshot(connection.id, state, shufflePlan.current);
       checkpoint.pending = null;
       checkpoint.skipDrain = true;
       void window.wave
@@ -1174,6 +1168,34 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       window.removeEventListener('beforeunload', saveOnUnload);
     };
   }, [connection, readyConnection, queue, index, volume, shuffle, repeat, optionsRevision, shuffleView]);
+
+  useEffect(
+    () =>
+      window.wave.onPlaybackCheckpointRequest((requestId) => {
+        const checkpoint = playbackCheckpoint.current;
+        checkpoint.finalizing = true;
+        checkpoint.pending = null;
+        checkpoint.skipDrain = true;
+        const connectionId = currentConnectionId.current;
+        let snapshot: PlaybackSnapshot | null = null;
+        if (connectionId && checkpointCanSave.current) {
+          requestPlayback(false);
+          setPlaying(false);
+          audio.current?.pause();
+          speech.current?.pause();
+          snapshot = playbackSnapshot(connectionId, live.current, shufflePlan.current);
+        }
+        void window.wave
+          .flushPlaybackCheckpoint({ requestId, snapshot })
+          .then(unwrap)
+          .catch(() => false)
+          .finally(() => {
+            checkpoint.finalizing = false;
+            checkpoint.skipDrain = false;
+          });
+      }),
+    [requestPlayback],
+  );
 
   const seek = useCallback(
     (seconds: number) => {

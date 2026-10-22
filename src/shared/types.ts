@@ -327,6 +327,8 @@ export interface WaveApi {
   }): Promise<Result<PlaybackResource>>;
   getLocalState(): Promise<Result<LocalStateSnapshot>>;
   saveDjs(djs: DJ[]): Promise<Result<LocalStateSnapshot>>;
+  onPlaybackCheckpointRequest(callback: (requestId: string) => void): () => void;
+  flushPlaybackCheckpoint(input: { requestId: string; snapshot: PlaybackSnapshot | null }): Promise<Result<boolean>>;
   searchDJVoices(input: DJVoiceSearch): Promise<Result<DJVoice[]>>;
   saveNewsTransitions(settings: NewsTransitionSettings): Promise<Result<LocalStateSnapshot>>;
   savePlayback(snapshot: PlaybackSnapshot | null): Promise<Result<void>>;
