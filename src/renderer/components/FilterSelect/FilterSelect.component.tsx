@@ -123,7 +123,7 @@ export function FilterSelect({
       <div
         id={id}
         ref={popup}
-        className="filter-select-popup"
+        className="popover-surface filter-select-popup"
         popover="auto"
         role="dialog"
         aria-label={`Choose ${label.toLowerCase()}`}
@@ -146,8 +146,8 @@ export function FilterSelect({
         }}
       >
         {searchable && (
-          <label className="filter-select-search">
-            <Search size={15} aria-hidden="true" />
+          <label className="search-field filter-select-search">
+            <Search size={17} aria-hidden="true" />
             <input
               ref={searchInput}
               aria-label={`Search ${label.toLowerCase()}`}

@@ -5,8 +5,10 @@ import { resolveDJAvatar } from '../../../../shared/dj-avatar';
 import type { DJ, DJVoice, DJVoiceSearch, NewsSettings } from '../../../../shared/types';
 import { NEWS_TEXT_MODEL } from '../../../../shared/types';
 import { unwrap } from '../../../api';
+import { Button } from '../../../components/Button/Button.component';
 import { ConfigurationTabs } from '../../../components/ConfigurationTabs/ConfigurationTabs.component';
-import { Dialog, ErrorNotice } from '../../../components/Shared';
+import { InfoHelp } from '../../../components/InfoHelp/InfoHelp.component';
+import { Dialog, DialogActions, ErrorNotice } from '../../../components/Shared';
 import { confirmLocalState } from '../../../local-state-cache';
 import { DJAvatarPicker } from './DJAvatarPicker.component';
 import { djPresets } from './DJEditor.presets';
@@ -191,27 +193,32 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
         }}
       >
         <fieldset disabled={save.isPending}>
-          <ConfigurationTabs
-            id={modeId}
-            label="DJ creation mode"
-            tabs={[
-              { id: 'predefined', label: 'Predefined' },
-              { id: 'simple', label: 'Simple' },
-              { id: 'advanced', label: 'Advanced' },
-            ]}
-            value={mode}
-            onChange={(value) => {
-              setMode(value);
-              setPreviewingVoice('');
-            }}
-          />
-          <p className="dj-profile-intro">
-            {mode === 'predefined'
-              ? 'Start with a ready-made personality and voice.'
-              : mode === 'simple'
-                ? 'Describe your host and find a voice in ElevenLabs.'
-                : 'Fine-tune your host, voice and delivery yourself.'}
-          </p>
+          <div className="dj-profile-mode-heading">
+            <ConfigurationTabs
+              id={modeId}
+              label="DJ creation mode"
+              tabs={[
+                { id: 'predefined', label: 'Predefined' },
+                { id: 'simple', label: 'Simple' },
+                { id: 'advanced', label: 'Advanced' },
+              ]}
+              value={mode}
+              onChange={(value) => {
+                setMode(value);
+                setPreviewingVoice('');
+              }}
+            />
+            <InfoHelp label="About DJ creation modes">
+              <p>
+                Predefined applies a ready-made personality, description and voice. Voice access depends on your
+                ElevenLabs account; you can listen after saving.
+              </p>
+              <p>
+                Simple searches ElevenLabs voices from a short description. Advanced lets you edit the host, voice and
+                delivery yourself.
+              </p>
+            </InfoHelp>
+          </div>
           <div
             role="tabpanel"
             id={`${modeId}-panel-predefined`}
@@ -258,10 +265,6 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
               onStart={setPreviewingVoice}
               active={mode === 'predefined'}
             />
-            <p className="form-hint">
-              Applies the personality, description, voice and delivery. Voice access depends on your ElevenLabs account.
-              You can listen after saving.
-            </p>
           </div>
           <div
             role="tabpanel"
@@ -269,9 +272,18 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
             aria-labelledby={`${modeId}-tab-simple`}
             hidden={mode !== 'simple'}
           >
-            <label>
-              Describe your DJ
+            <div className="dj-simple-prompt">
+              <div className="dj-simple-prompt-heading">
+                <label htmlFor={`${modeId}-voice-search`}>Describe your DJ</label>
+                <InfoHelp label="About voice search">
+                  <p>
+                    Use short descriptive keywords. Search covers voice names, descriptions and labels available to your
+                    ElevenLabs account.
+                  </p>
+                </InfoHelp>
+              </div>
               <textarea
+                id={`${modeId}-voice-search`}
                 rows={3}
                 maxLength={500}
                 value={prompt}
@@ -289,11 +301,7 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
                   }
                 }}
               />
-              <span className="form-hint">
-                Use short descriptive keywords. Searches the names, descriptions and labels of voices available to your
-                ElevenLabs account.
-              </span>
-            </label>
+            </div>
             <div className="dj-search-controls">
               <label>
                 Voice preference
@@ -374,8 +382,15 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
             {field('personality', 'Personality', 'Warm, curious, concise. Let the music breathe.', true)}
             {field('language', 'Language', 'English')}
             <section className="dj-profile-voice">
-              <h3>Voice</h3>
-              <p className="form-hint">ElevenLabs · prepared speech</p>
+              <div className="dj-profile-section-heading">
+                <h3>Voice</h3>
+                <InfoHelp label="About voice IDs and delivery">
+                  <p>
+                    Find a voice ID in your ElevenLabs voice library. Your existing voice stays selected while editing.
+                  </p>
+                  <p>Delivery tags are optional bracketed cues supported by the voice provider.</p>
+                </InfoHelp>
+              </div>
               <label>
                 ElevenLabs voice ID
                 <input
@@ -386,9 +401,6 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
                   placeholder="Voice ID from your ElevenLabs library"
                   onChange={(event) => updateNews({ elevenVoiceId: event.target.value })}
                 />
-                <span className="form-hint">
-                  Find this ID in your ElevenLabs voice library. Your existing voice is kept when you edit this DJ.
-                </span>
               </label>
               {!!news.elevenVoiceId && (
                 <VoicePreview
@@ -403,12 +415,18 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
               )}
             </section>
             <section className="dj-profile-advanced">
-              <h3>Host preferences</h3>
+              <div className="dj-profile-section-heading">
+                <h3>Host preferences</h3>
+                <InfoHelp label="About host preferences">
+                  <p>OpenAI prepares stories from your selected sources; ElevenLabs generates the voice.</p>
+                  <p>Set how often you hear news in Settings → General → DJ playback.</p>
+                </InfoHelp>
+              </div>
               <div>
                 <p className="form-hint">
-                  Your full host instructions, music preferences and exclusions are sent to OpenAI for news preparation,
-                  up to 20,000 characters per field. Longer text can increase usage and cost. Music preferences guide
-                  the host’s style; you choose the music queue.
+                  OpenAI receives your host instructions, music preferences and exclusions for news preparation (up to
+                  20,000 characters per field). Longer text can increase usage and cost. Preferences guide the writing;
+                  your queue controls playback.
                 </p>
                 {field('description', 'Short description', 'Optional description')}
                 {field('instructions', 'Host instructions', 'How should this host introduce a story?', true)}
@@ -424,9 +442,6 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
                     onChange={(event) => updateNews({ interests: event.target.value })}
                   />
                 </label>
-                <p className="form-hint">
-                  OpenAI · {NEWS_TEXT_MODEL} prepares stories from your sources. ElevenLabs generates the voice.
-                </p>
                 {news.speechEngine === 'elevenlabs-v4' && (
                   <label>
                     Delivery tags
@@ -436,7 +451,6 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
                       placeholder="[excited]"
                       onChange={(event) => updateNews({ elevenTags: event.target.value })}
                     />
-                    <span className="form-hint">Optional bracketed tags supported by your voice provider.</span>
                   </label>
                 )}
                 <label>
@@ -458,7 +472,6 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
                       ' Your saved level is retained; the current player limits the music bed to 8%.'}
                   </span>
                 </label>
-                <p className="form-hint">Set how often you hear news in Settings → General → DJ playback.</p>
                 {!!news.feedUrls.length && (
                   <p className="form-hint">
                     Your {news.feedUrls.length} legacy {news.feedUrls.length === 1 ? 'feed URL is' : 'feed URLs are'}{' '}
@@ -471,20 +484,21 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
         </fieldset>
         <ErrorNotice error={save.error} />
         <p className="dj-profile-save-note">Saving a DJ does not generate audio or start playback.</p>
-        <div className="modal-actions">
-          <button type="button" aria-disabled={save.isPending || undefined} onClick={closeEditor}>
+        <DialogActions>
+          <Button type="button" aria-disabled={save.isPending || undefined} onClick={closeEditor}>
             Cancel
-          </button>
-          <button
+          </Button>
+          <Button
+            type="submit"
             ref={saveButton}
-            className="primary"
+            variant="primary"
             aria-disabled={save.isPending || undefined}
             aria-busy={save.isPending || undefined}
             disabled={!draft.name.trim() || !news.elevenVoiceId?.trim()}
           >
             {save.isPending ? 'Saving…' : 'Save DJ'}
-          </button>
-        </div>
+          </Button>
+        </DialogActions>
       </form>
     </Dialog>
   );

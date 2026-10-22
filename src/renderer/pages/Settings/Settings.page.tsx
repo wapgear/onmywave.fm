@@ -3,11 +3,13 @@ import { useRef, useState } from 'react';
 
 import { unwrap } from '../../api';
 import { UpdateSettings } from '../../components/AppUpdates/AppUpdates.component';
+import { Button } from '../../components/Button/Button.component';
 import { LibraryChooser } from '../../components/LibraryChooser';
 import { ProviderKeys } from '../../components/ProviderKeys/ProviderKeys.component';
-import { Dialog, ErrorNotice, PageHeading } from '../../components/Shared';
+import { Dialog, DialogActions, ErrorNotice, PageHeading } from '../../components/Shared';
 import { DJsPage } from '../DJs/DJs.page';
 import { SourcesPage } from '../Sources/Sources.page';
+import { AppearanceSettings } from './components/AppearanceSettings.component';
 import { DJPlaybackSettings } from './components/DJPlaybackSettings.component';
 import { NewsTransitions } from './components/NewsTransitions.component';
 import type { SettingsPageProps, SettingsSection } from './Settings.types';
@@ -81,6 +83,7 @@ export function SettingsPage({
       {activeSection === 'djs' && <DJsPage />}
       {activeSection === 'general' && (
         <div className="settings-content settings-preferences">
+          <AppearanceSettings />
           <section>
             <h2>Account</h2>
             <dl className="settings-account">
@@ -137,20 +140,20 @@ export function SettingsPage({
             bucket → Settings.
           </p>
           <ErrorNotice error={disconnect.error} />
-          <div className="modal-actions">
-            <button aria-disabled={disconnect.isPending || undefined} onClick={closeConfirmation}>
+          <DialogActions>
+            <Button aria-disabled={disconnect.isPending || undefined} onClick={closeConfirmation}>
               Cancel
-            </button>
-            <button
-              className="primary"
+            </Button>
+            <Button
+              variant="primary"
               disabled={savingLibraries}
               aria-disabled={disconnect.isPending || undefined}
               aria-busy={disconnect.isPending || undefined}
               onClick={confirmDisconnect}
             >
               {disconnect.isPending ? 'Signing out…' : 'Sign out'}
-            </button>
-          </div>
+            </Button>
+          </DialogActions>
         </Dialog>
       )}
     </>

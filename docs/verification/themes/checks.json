@@ -1,0 +1,17 @@
+[
+  "Default is Light",
+  "1280 light applies immediately",
+  "1280 coffee applies immediately",
+  "1280 dark applies immediately",
+  "960 light applies immediately",
+  "960 coffee applies immediately",
+  "960 dark applies immediately",
+  "1600 light applies immediately",
+  "1600 coffee applies immediately",
+  "1600 dark applies immediately",
+  "Native arrow keys select theme and preserve focus",
+  "Dark restored on reload",
+  "New renderer restores saved theme",
+  "Invalid stored preference falls back to Light",
+  "Storage failure still applies theme and explains retry"
+]

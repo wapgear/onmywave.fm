@@ -55,7 +55,7 @@
   flex-wrap: wrap;
 }
 .twitter-help-error {
-  color: #ad3434;
+  color: var(--danger);
   font-size: 11px;
   line-height: 1.5;
 }

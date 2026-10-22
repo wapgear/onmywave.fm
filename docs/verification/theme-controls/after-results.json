@@ -1,0 +1,190 @@
+[
+  "Reproduced failed playback",
+  {
+    "theme": "light",
+    "width": 1280,
+    "wrapper": {
+      "x": 970,
+      "y": 48,
+      "width": 280,
+      "height": 34,
+      "top": 48,
+      "right": 1250,
+      "bottom": 82,
+      "left": 970
+    },
+    "input": {
+      "x": 1010,
+      "y": 48,
+      "width": 227,
+      "height": 34,
+      "top": 48,
+      "right": 1237,
+      "bottom": 82,
+      "left": 1010
+    },
+    "wrapperOutline": "2px",
+    "wrapperOffset": "-2px",
+    "inputOutlineStyle": "none"
+  },
+  "light filter input has no overflowing inner outline",
+  "light search field heights match",
+  {
+    "theme": "coffee",
+    "width": 1280,
+    "wrapper": {
+      "x": 970,
+      "y": 48,
+      "width": 280,
+      "height": 34,
+      "top": 48,
+      "right": 1250,
+      "bottom": 82,
+      "left": 970
+    },
+    "input": {
+      "x": 1010,
+      "y": 48,
+      "width": 227,
+      "height": 34,
+      "top": 48,
+      "right": 1237,
+      "bottom": 82,
+      "left": 1010
+    },
+    "wrapperOutline": "2px",
+    "wrapperOffset": "-2px",
+    "inputOutlineStyle": "none"
+  },
+  "coffee filter input has no overflowing inner outline",
+  "coffee search field heights match",
+  {
+    "theme": "dark",
+    "width": 1280,
+    "wrapper": {
+      "x": 970,
+      "y": 48,
+      "width": 280,
+      "height": 34,
+      "top": 48,
+      "right": 1250,
+      "bottom": 82,
+      "left": 970
+    },
+    "input": {
+      "x": 1010,
+      "y": 48,
+      "width": 227,
+      "height": 34,
+      "top": 48,
+      "right": 1237,
+      "bottom": 82,
+      "left": 1010
+    },
+    "wrapperOutline": "2px",
+    "wrapperOffset": "-2px",
+    "inputOutlineStyle": "none"
+  },
+  "dark filter input has no overflowing inner outline",
+  "dark search field heights match",
+  {
+    "theme": "light",
+    "width": 960,
+    "wrapper": {
+      "x": 656,
+      "y": 32,
+      "width": 280,
+      "height": 34,
+      "top": 32,
+      "right": 936,
+      "bottom": 66,
+      "left": 656
+    },
+    "input": {
+      "x": 696,
+      "y": 32,
+      "width": 227,
+      "height": 34,
+      "top": 32,
+      "right": 923,
+      "bottom": 66,
+      "left": 696
+    },
+    "wrapperOutline": "2px",
+    "wrapperOffset": "-2px",
+    "inputOutlineStyle": "none"
+  },
+  "light filter input has no overflowing inner outline",
+  "light search field heights match",
+  {
+    "theme": "coffee",
+    "width": 960,
+    "wrapper": {
+      "x": 656,
+      "y": 32,
+      "width": 280,
+      "height": 34,
+      "top": 32,
+      "right": 936,
+      "bottom": 66,
+      "left": 656
+    },
+    "input": {
+      "x": 696,
+      "y": 32,
+      "width": 227,
+      "height": 34,
+      "top": 32,
+      "right": 923,
+      "bottom": 66,
+      "left": 696
+    },
+    "wrapperOutline": "2px",
+    "wrapperOffset": "-2px",
+    "inputOutlineStyle": "none"
+  },
+  "coffee filter input has no overflowing inner outline",
+  "coffee search field heights match",
+  {
+    "theme": "dark",
+    "width": 960,
+    "wrapper": {
+      "x": 656,
+      "y": 32,
+      "width": 280,
+      "height": 34,
+      "top": 32,
+      "right": 936,
+      "bottom": 66,
+      "left": 656
+    },
+    "input": {
+      "x": 696,
+      "y": 32,
+      "width": 227,
+      "height": 34,
+      "top": 32,
+      "right": 923,
+      "bottom": 66,
+      "left": 696
+    },
+    "wrapperOutline": "2px",
+    "wrapperOffset": "-2px",
+    "inputOutlineStyle": "none"
+  },
+  "dark filter input has no overflowing inner outline",
+  "dark search field heights match",
+  "Keyboard search focus ring stays inside rounded container",
+  "Skip advances to next occurrence after failure",
+  {
+    "lastTrackError": null
+  },
+  "Skip last failed track clears stale error",
+  "Last-track skip leaves player stopped",
+  "Volume responds to keyboard",
+  "Volume responds to pointer at visible thumb track",
+  "Filter search narrows choices",
+  "Filter Enter selects matching choice and restores trigger focus",
+  "Reproduced restore failure with no current track",
+  "No unusable skip action for restore failure"
+]

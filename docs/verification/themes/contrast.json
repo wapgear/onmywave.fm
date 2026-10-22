@@ -1,0 +1,275 @@
+[
+  {
+    "theme": "light",
+    "foreground": "--text",
+    "background": "--canvas",
+    "ratio": 15.7,
+    "passes_4_5": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--muted",
+    "background": "--canvas",
+    "ratio": 5.53,
+    "passes_4_5": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--muted",
+    "background": "--surface",
+    "ratio": 5.02,
+    "passes_4_5": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--muted",
+    "background": "--selection",
+    "ratio": 4.9,
+    "passes_4_5": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--text",
+    "background": "--field-background",
+    "ratio": 14.65,
+    "passes_4_5": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--on-accent",
+    "background": "--accent",
+    "ratio": 5.43,
+    "passes_4_5": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--on-accent",
+    "background": "--accent-hover",
+    "ratio": 6.45,
+    "passes_4_5": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--accent",
+    "background": "--accent-soft",
+    "ratio": 4.74,
+    "passes_4_5": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--notice-error-text",
+    "background": "--notice-error-background",
+    "ratio": 5.35,
+    "passes_4_5": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--warning-text",
+    "background": "--warning-background",
+    "ratio": 5.98,
+    "passes_4_5": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--player-control-text",
+    "background": "--player-control",
+    "ratio": 13.11,
+    "passes_4_5": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--player-pill-text",
+    "background": "--player-pill-background",
+    "ratio": 7.03,
+    "passes_4_5": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--danger",
+    "background": "--surface",
+    "ratio": 5.56,
+    "passes_4_5": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--text",
+    "background": "--canvas",
+    "ratio": 11.94,
+    "passes_4_5": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--muted",
+    "background": "--canvas",
+    "ratio": 5.54,
+    "passes_4_5": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--muted",
+    "background": "--surface",
+    "ratio": 4.82,
+    "passes_4_5": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--muted",
+    "background": "--selection",
+    "ratio": 4.71,
+    "passes_4_5": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--text",
+    "background": "--field-background",
+    "ratio": 10.56,
+    "passes_4_5": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--on-accent",
+    "background": "--accent",
+    "ratio": 6.17,
+    "passes_4_5": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--on-accent",
+    "background": "--accent-hover",
+    "ratio": 6.72,
+    "passes_4_5": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--accent",
+    "background": "--accent-soft",
+    "ratio": 4.98,
+    "passes_4_5": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--notice-error-text",
+    "background": "--notice-error-background",
+    "ratio": 5.84,
+    "passes_4_5": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--warning-text",
+    "background": "--warning-background",
+    "ratio": 5.98,
+    "passes_4_5": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--player-control-text",
+    "background": "--player-control",
+    "ratio": 12.19,
+    "passes_4_5": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--player-pill-text",
+    "background": "--player-pill-background",
+    "ratio": 6.87,
+    "passes_4_5": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--danger",
+    "background": "--surface",
+    "ratio": 5.01,
+    "passes_4_5": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--text",
+    "background": "--canvas",
+    "ratio": 14.1,
+    "passes_4_5": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--muted",
+    "background": "--canvas",
+    "ratio": 7.31,
+    "passes_4_5": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--muted",
+    "background": "--surface",
+    "ratio": 5.68,
+    "passes_4_5": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--muted",
+    "background": "--selection",
+    "ratio": 4.97,
+    "passes_4_5": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--text",
+    "background": "--field-background",
+    "ratio": 11.27,
+    "passes_4_5": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--on-accent",
+    "background": "--accent",
+    "ratio": 5.79,
+    "passes_4_5": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--on-accent",
+    "background": "--accent-hover",
+    "ratio": 7.1,
+    "passes_4_5": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--accent",
+    "background": "--accent-soft",
+    "ratio": 4.71,
+    "passes_4_5": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--notice-error-text",
+    "background": "--notice-error-background",
+    "ratio": 7.47,
+    "passes_4_5": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--warning-text",
+    "background": "--warning-background",
+    "ratio": 7.52,
+    "passes_4_5": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--player-control-text",
+    "background": "--player-control",
+    "ratio": 14.75,
+    "passes_4_5": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--player-pill-text",
+    "background": "--player-pill-background",
+    "ratio": 7.05,
+    "passes_4_5": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--danger",
+    "background": "--surface",
+    "ratio": 5.64,
+    "passes_4_5": true
+  }
+]

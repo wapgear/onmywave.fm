@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 
 import { defaultDJPlaybackSettings, type DJPlaybackSettings as Settings } from '../../../../shared/dj-playback';
 import { unwrap } from '../../../api';
+import { InfoHelp } from '../../../components/InfoHelp/InfoHelp.component';
 import { ErrorNotice } from '../../../components/Shared';
 import { useNewsRecovery } from '../../../NewsRecovery';
 import { useRetryFocus } from '../../../useRetryFocus';
@@ -41,10 +42,19 @@ export function DJPlaybackSettings() {
 
   return (
     <section className="room-dj-schedule" aria-labelledby="dj-playback-title">
-      <h2 ref={heading} tabIndex={-1} id="dj-playback-title">
-        DJ playback
-      </h2>
-      <p className="settings-description">Choose how often the DJ checks saved news and how its voice plays.</p>
+      <div className="settings-section-title">
+        <h2 ref={heading} tabIndex={-1} id="dj-playback-title">
+          DJ playback
+        </h2>
+        <InfoHelp label="DJ playback details">
+          <p>
+            Only finished songs count toward the news check interval. Empty news pools are skipped without generating
+            anything.
+          </p>
+          <p>When you keep the DJ while seeking, speech waits for a suitable ending and resumes where it paused.</p>
+          <p>DJ voice volume is relative to the player volume.</p>
+        </InfoHelp>
+      </div>
       {!recoveryReady && (
         <p className="notice">
           DJ playback settings are unavailable until news data recovery completes. Existing music playback remains
@@ -87,14 +97,10 @@ export function DJPlaybackSettings() {
               step={1}
               required
               value={Number.isNaN(settings.everySongs) ? '' : settings.everySongs}
-              aria-describedby="dj-interval-help"
               onChange={(event) => change({ everySongs: event.target.value === '' ? NaN : Number(event.target.value) })}
             />
-            <span>{settings.everySongs === 1 ? 'song' : 'songs'}</span>
+            <span>{settings.everySongs === 1 ? 'finished song' : 'finished songs'}</span>
           </label>
-          <p id="dj-interval-help" className="settings-footnote">
-            Only finished songs count. Choose 1 for testing. Empty news pools are skipped without generating anything.
-          </p>
           <label className="dj-song-interval">
             <input
               type="checkbox"
@@ -103,11 +109,8 @@ export function DJPlaybackSettings() {
             />
             Keep the DJ when seeking or rewinding
           </label>
-          <p className="settings-footnote">
-            Keeps the break when you seek. Speech waits for the next suitable ending and resumes where it paused.
-          </p>
           <label className="dj-song-interval">
-            DJ voice volume
+            Voice volume
             <input
               type="range"
               min={0}
@@ -119,7 +122,6 @@ export function DJPlaybackSettings() {
             />
             <span>{Math.round(settings.voiceVolume * 100)}%</span>
           </label>
-          <p className="settings-footnote">Relative to player volume. The default is 70%.</p>
         </fieldset>
         <button
           ref={saveButton}

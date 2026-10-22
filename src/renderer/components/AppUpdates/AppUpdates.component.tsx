@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Download } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { Check, Download } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 import type { UpdateStatus } from '../../../shared/update';
 import { unwrap } from '../../api';
@@ -26,9 +26,9 @@ function statusText(status: UpdateStatus) {
     case 'available':
       return `Version ${status.version} is available.`;
     case 'downloading':
-      return `Downloading version ${status.version}… ${Math.floor(status.percent ?? 0)}%`;
+      return `Downloading version ${status.version}…`;
     case 'downloaded':
-      return `Version ${status.version} is ready. Restarting stops playback. Restart now to apply it, or keep listening and restart later.`;
+      return `Version ${status.version} is ready to install.`;
     case 'installing':
       return 'Restarting to install the update…';
     case 'error':
@@ -38,7 +38,7 @@ function statusText(status: UpdateStatus) {
   }
 }
 
-function UpdateControls({ status }: { status: UpdateStatus }) {
+function UpdateControls({ status, onDefer }: { status: UpdateStatus; onDefer?: () => void }) {
   const action = useMutation({
     mutationFn: async (command: 'check' | 'download' | 'install') =>
       unwrap(
@@ -50,41 +50,67 @@ function UpdateControls({ status }: { status: UpdateStatus }) {
       ),
   });
   const busy = action.isPending || ['checking', 'downloading', 'installing'].includes(status.phase);
+  const percent = Math.floor(Math.max(0, Math.min(100, status.percent ?? 0)));
 
   return (
-    <>
-      <p role="status">{statusText(status)}</p>
-      {status.phase === 'downloading' && (
-        <progress aria-label="Update download" max={100} value={status.percent ?? 0} />
-      )}
+    <div className="app-update-controls">
+      <div className="app-update-status" key={status.phase}>
+        <p role="status">{statusText(status)}</p>
+        {status.phase === 'downloading' && (
+          <div className="app-update-download">
+            <div
+              className="app-update-progress"
+              role="progressbar"
+              aria-label="Update download"
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={percent}
+            >
+              <span style={{ width: `${percent}%` }} />
+            </div>
+            <span className="app-update-percent" aria-hidden="true">
+              {percent}%
+            </span>
+          </div>
+        )}
+        {['available', 'downloaded'].includes(status.phase) && (
+          <p className="app-update-hint">
+            {status.phase === 'available'
+              ? 'Download now, then restart when you are ready. Restarting stops playback.'
+              : 'Restarting stops playback. You can keep listening and restart later.'}
+          </p>
+        )}
+      </div>
       <ErrorNotice
         error={action.error ?? (status.phase === 'downloaded' && status.message ? new Error(status.message) : null)}
       />
       {status.phase !== 'unsupported' && (
-        <button
-          className={['available', 'downloaded'].includes(status.phase) ? 'primary' : undefined}
-          disabled={busy}
-          onClick={() =>
-            action.mutate(
-              status.phase === 'downloaded' ? 'install' : status.phase === 'available' ? 'download' : 'check',
-            )
-          }
-        >
-          {status.phase === 'downloaded'
-            ? 'Restart now'
-            : status.phase === 'available'
-              ? 'Update now'
-              : busy
-                ? 'Please wait…'
-                : status.phase === 'error'
-                  ? 'Try again'
-                  : 'Check for updates'}
-        </button>
+        <div className="app-update-actions">
+          <button
+            className={['available', 'downloaded'].includes(status.phase) ? 'primary' : undefined}
+            disabled={busy}
+            onClick={() =>
+              action.mutate(
+                status.phase === 'downloaded' ? 'install' : status.phase === 'available' ? 'download' : 'check',
+              )
+            }
+          >
+            {status.phase === 'downloaded'
+              ? 'Restart now'
+              : status.phase === 'available'
+                ? 'Update now'
+                : busy
+                  ? 'Please wait…'
+                  : status.phase === 'error'
+                    ? 'Try again'
+                    : 'Check for updates'}
+          </button>
+          {onDefer && !['downloading', 'installing'].includes(status.phase) && (
+            <button onClick={onDefer}>{status.phase === 'downloaded' ? 'Restart later' : 'Later'}</button>
+          )}
+        </div>
       )}
-      {status.phase === 'available' && (
-        <p className="muted">Download the update, then restart when you are ready. Restarting stops playback.</p>
-      )}
-    </>
+    </div>
   );
 }
 
@@ -105,8 +131,22 @@ export function AppUpdates() {
   const client = useQueryClient();
   const query = useUpdates();
   const [dismissed, setDismissed] = useState('');
+  const noticeRef = useRef<HTMLElement>(null);
+  const restoreFocus = useRef(false);
   const status = query.data;
   const promptKey = `${status?.version ?? ''}:${status?.phase}`;
+  const collapsed = dismissed === promptKey;
+
+  function toggleNotice() {
+    restoreFocus.current = true;
+    setDismissed(collapsed ? '' : promptKey);
+  }
+
+  useEffect(() => {
+    if (!restoreFocus.current) return;
+    noticeRef.current?.querySelector('button')?.focus();
+    restoreFocus.current = false;
+  }, [dismissed]);
 
   useEffect(() => {
     // Subscribe before reading again so events during startup cannot be lost.
@@ -127,28 +167,36 @@ export function AppUpdates() {
   if (!status || !['available', 'downloading', 'downloaded', 'installing', 'error'].includes(status.phase)) return null;
 
   return (
-    <aside className="app-update-notice" aria-label="App update">
-      {dismissed === promptKey ? (
-        <button onClick={() => setDismissed('')}>
-          <Download size={16} />
+    <aside
+      ref={noticeRef}
+      className={`app-update-notice${collapsed ? ' app-update-notice-collapsed' : ''}`}
+      aria-label="App update"
+    >
+      {collapsed ? (
+        <button className="app-update-reopen" onClick={toggleNotice} aria-expanded={false}>
+          <Download size={16} aria-hidden="true" />
           {status.phase === 'downloaded' ? 'Update ready' : 'App update'}
         </button>
       ) : (
-        <>
-          <h2>
-            {status.phase === 'downloaded'
-              ? 'Ready to restart'
-              : status.phase === 'error'
-                ? 'Update needs attention'
-                : 'App update'}
-          </h2>
-          <UpdateControls status={status} />
-          {!['downloading', 'installing'].includes(status.phase) && (
-            <button onClick={() => setDismissed(promptKey)}>
-              {status.phase === 'downloaded' ? 'Restart later' : 'Later'}
-            </button>
-          )}
-        </>
+        <div className="app-update-card">
+          <div className="app-update-heading">
+            <span className="app-update-icon" aria-hidden="true">
+              {status.phase === 'downloaded' ? <Check size={20} /> : <Download size={20} />}
+            </span>
+            <h2>
+              {status.phase === 'downloaded'
+                ? 'Ready to restart'
+                : status.phase === 'error'
+                  ? 'Update needs attention'
+                  : status.phase === 'downloading'
+                    ? 'Downloading update'
+                    : status.phase === 'installing'
+                      ? 'Restarting app'
+                      : 'App update'}
+            </h2>
+          </div>
+          <UpdateControls status={status} onDefer={toggleNotice} />
+        </div>
       )}
     </aside>
   );

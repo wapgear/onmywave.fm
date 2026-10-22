@@ -2,6 +2,7 @@ import { ListMusic, X } from 'lucide-react';
 import { useRef } from 'react';
 
 import { usePlayer } from '../../player';
+import { IconButton } from '../IconButton/IconButton.component';
 import { Artwork, TrackDuration } from '../Shared';
 
 
@@ -49,13 +50,14 @@ export function Queue() {
               <span className="queue-time">
                 <TrackDuration seconds={item.song.duration} />
               </span>
-              <button
-                className="icon-button queue-remove"
+              <IconButton
+                className="queue-remove"
+                variant="compact"
+                label={`Remove ${item.song.name} from queue`}
                 onClick={(event) => remove(item.key, event.currentTarget)}
-                aria-label={`Remove ${item.song.name} from queue`}
               >
-                <X size={14} />
-              </button>
+                <X size={14} aria-hidden="true" />
+              </IconButton>
             </li>
           );
         })}

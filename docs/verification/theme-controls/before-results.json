@@ -1,0 +1,170 @@
+[
+  "Reproduced failed playback",
+  {
+    "theme": "light",
+    "width": 1280,
+    "wrapper": {
+      "x": 970,
+      "y": 48,
+      "width": 280,
+      "height": 34,
+      "top": 48,
+      "right": 1250,
+      "bottom": 82,
+      "left": 970
+    },
+    "input": {
+      "x": 1008.3046875,
+      "y": 48,
+      "width": 228.6953125,
+      "height": 34,
+      "top": 48,
+      "right": 1237,
+      "bottom": 82,
+      "left": 1008.3046875
+    },
+    "wrapperOutline": "3px",
+    "wrapperOffset": "0px",
+    "inputOutline": "2px"
+  },
+  {
+    "theme": "coffee",
+    "width": 1280,
+    "wrapper": {
+      "x": 970,
+      "y": 48,
+      "width": 280,
+      "height": 34,
+      "top": 48,
+      "right": 1250,
+      "bottom": 82,
+      "left": 970
+    },
+    "input": {
+      "x": 1008.3046875,
+      "y": 48,
+      "width": 228.6953125,
+      "height": 34,
+      "top": 48,
+      "right": 1237,
+      "bottom": 82,
+      "left": 1008.3046875
+    },
+    "wrapperOutline": "3px",
+    "wrapperOffset": "0px",
+    "inputOutline": "2px"
+  },
+  {
+    "theme": "dark",
+    "width": 1280,
+    "wrapper": {
+      "x": 970,
+      "y": 48,
+      "width": 280,
+      "height": 34,
+      "top": 48,
+      "right": 1250,
+      "bottom": 82,
+      "left": 970
+    },
+    "input": {
+      "x": 1008.3046875,
+      "y": 48,
+      "width": 228.6953125,
+      "height": 34,
+      "top": 48,
+      "right": 1237,
+      "bottom": 82,
+      "left": 1008.3046875
+    },
+    "wrapperOutline": "3px",
+    "wrapperOffset": "0px",
+    "inputOutline": "2px"
+  },
+  {
+    "theme": "light",
+    "width": 960,
+    "wrapper": {
+      "x": 656,
+      "y": 32,
+      "width": 280,
+      "height": 34,
+      "top": 32,
+      "right": 936,
+      "bottom": 66,
+      "left": 656
+    },
+    "input": {
+      "x": 694.3046875,
+      "y": 32,
+      "width": 228.6953125,
+      "height": 34,
+      "top": 32,
+      "right": 923,
+      "bottom": 66,
+      "left": 694.3046875
+    },
+    "wrapperOutline": "3px",
+    "wrapperOffset": "0px",
+    "inputOutline": "2px"
+  },
+  {
+    "theme": "coffee",
+    "width": 960,
+    "wrapper": {
+      "x": 656,
+      "y": 32,
+      "width": 280,
+      "height": 34,
+      "top": 32,
+      "right": 936,
+      "bottom": 66,
+      "left": 656
+    },
+    "input": {
+      "x": 694.3046875,
+      "y": 32,
+      "width": 228.6953125,
+      "height": 34,
+      "top": 32,
+      "right": 923,
+      "bottom": 66,
+      "left": 694.3046875
+    },
+    "wrapperOutline": "3px",
+    "wrapperOffset": "0px",
+    "inputOutline": "2px"
+  },
+  {
+    "theme": "dark",
+    "width": 960,
+    "wrapper": {
+      "x": 656,
+      "y": 32,
+      "width": 280,
+      "height": 34,
+      "top": 32,
+      "right": 936,
+      "bottom": 66,
+      "left": 656
+    },
+    "input": {
+      "x": 694.3046875,
+      "y": 32,
+      "width": 228.6953125,
+      "height": 34,
+      "top": 32,
+      "right": 923,
+      "bottom": 66,
+      "left": 694.3046875
+    },
+    "wrapperOutline": "3px",
+    "wrapperOffset": "0px",
+    "inputOutline": "2px"
+  },
+  "Skip advances to next occurrence after failure",
+  {
+    "lastTrackError": "Cannot play Last light. Retry or skip this track."
+  },
+  "Reproduced restore failure with no current track"
+]

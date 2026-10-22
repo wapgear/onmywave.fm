@@ -8,7 +8,7 @@
   border: 0;
   border-radius: 8px;
   background: transparent;
-  color: #4f505a;
+  color: var(--player-pill-text);
   font-size: 11px;
 }
 .player-dj.is-active {
@@ -22,22 +22,10 @@
   font-size: 10px;
 }
 .dj-popover {
-  position: fixed;
-  inset: auto;
-  margin: 0;
-  width: 360px;
+  width: 320px;
   max-width: calc(100vw - 24px);
-  padding: 20px;
+  padding: 14px;
   overflow: auto;
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  background: var(--popover, #fff);
-  color: var(--text);
-  box-shadow: 0 12px 48px #262d4026;
-  -webkit-app-region: no-drag;
-}
-.dj-popover:not(:popover-open) {
-  display: none;
 }
 .dj-popover header,
 .dj-control,
@@ -52,8 +40,8 @@
   min-width: 0;
 }
 .dj-popover h2 {
-  margin: 0 0 6px;
-  font-size: 18px;
+  margin: 0 0 3px;
+  font-size: 16px;
 }
 .dj-popover h3 {
   margin: 0 0 10px;
@@ -62,17 +50,17 @@
   overflow-wrap: anywhere;
 }
 .dj-popover section {
-  margin-top: 20px;
+  margin-top: 12px;
 }
 .dj-popover .dj-control {
-  align-items: flex-start;
+  align-items: center;
 }
 .dj-control strong {
   font-size: 12px;
 }
 .dj-popover p {
   font-size: 12px;
-  line-height: 1.6;
+  line-height: 1.5;
   margin: 6px 0;
   overflow-wrap: anywhere;
 }
@@ -106,15 +94,6 @@
 }
 .dj-popover .dj-preparation-status h3 {
   margin-bottom: 6px;
-}
-.dj-popover .dj-preparation-link {
-  padding: 3px 0;
-  color: var(--accent);
-  background: transparent;
-}
-.dj-popover .dj-preparation-link:hover {
-  background: transparent;
-  text-decoration: underline;
 }
 .dj-popover button {
   font-size: 11px;
@@ -203,8 +182,8 @@
   display: block;
 }
 .dj-popover footer {
-  margin-top: 20px;
-  padding-top: 14px;
+  margin-top: 12px;
+  padding-top: 10px;
   border-top: 1px solid var(--border);
 }
 .dj-popover footer button {
@@ -234,6 +213,34 @@
 .dj-story .dj-preparation-notes {
   padding-left: 16px;
   list-style: disc;
-  line-height: 1.6;
+  line-height: 1.5;
   overflow-wrap: anywhere;
+}
+
+.dj-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.dj-news-details,
+.dj-profile-details {
+  margin-top: 12px;
+  font-size: 12px;
+}
+.dj-news-details > summary,
+.dj-profile-details > summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.dj-news-details > summary:focus-visible,
+.dj-profile-details > summary:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.dj-profile-details > summary {
+  overflow-wrap: anywhere;
+}
+.dj-profile-details[open] > summary {
+  margin-bottom: 10px;
 }

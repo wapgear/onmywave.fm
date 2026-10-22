@@ -11,10 +11,8 @@
   padding: 12px 18px;
   height: 88px;
   border-radius: 22px;
-  background: rgb(255 255 255 / 94%);
-  box-shadow:
-    0 8px 28px rgb(35 36 40 / 8%),
-    0 0 0 1px rgb(255 255 255 / 95%);
+  background: var(--player-background);
+  box-shadow: var(--player-shadow);
   backdrop-filter: blur(24px);
   -webkit-app-region: no-drag;
 }
@@ -25,6 +23,8 @@
   min-width: 0;
 }
 .player-artwork {
+  padding: 0;
+  background: transparent;
   width: 48px;
   height: 48px;
   flex: 0 0 48px;
@@ -48,7 +48,7 @@
   text-overflow: ellipsis;
 }
 .player-song span {
-  color: #656873;
+  color: var(--player-subtle);
   font-size: 11px;
   white-space: nowrap;
   overflow: hidden;
@@ -76,20 +76,20 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  min-height: 32px;
+  width: var(--control-size-compact);
+  height: var(--control-size-compact);
+  min-height: var(--control-size-compact);
   flex-shrink: 0;
   padding: 0;
   border: 0;
   border-radius: 8px;
-  color: #3e414a;
+  color: var(--player-icon);
   background: transparent;
   cursor: pointer;
   transition: background 120ms ease;
 }
 .player-icon:hover:not(:disabled) {
-  background: rgb(0 0 0 / 6%);
+  background: var(--control-hover);
 }
 .player-icon.is-active {
   background: var(--accent-soft);
@@ -104,20 +104,20 @@
 }
 .player-icon:focus-visible,
 .player-play:focus-visible {
-  outline: 1px solid var(--focus);
+  outline: var(--control-focus-width) solid var(--focus);
   outline-offset: 2px;
 }
 .player-play {
-  width: 36px;
-  height: 36px;
-  min-height: 36px;
+  width: var(--control-size-play);
+  height: var(--control-size-play);
+  min-height: var(--control-size-play);
   display: grid;
   place-items: center;
   padding: 0;
   border: none;
   border-radius: 50%;
-  color: #fff;
-  background: #303036;
+  color: var(--player-control-text);
+  background: var(--player-control);
   cursor: pointer;
   transition:
     transform 120ms ease,
@@ -129,7 +129,7 @@
 }
 .player-play:hover:not(:disabled) {
   transform: scale(1.04);
-  background: #414550;
+  background: var(--player-control-hover);
 }
 .player-progress {
   display: flex;
@@ -138,14 +138,14 @@
   min-width: 0;
 }
 .player-progress span {
-  color: #656873;
+  color: var(--player-subtle);
   font-size: 10px;
   font-variant-numeric: tabular-nums;
   min-width: 30px;
 }
 .player-progress span:last-child {
   text-align: right;
-  min-width: 36px;
+  min-width: var(--control-size-play);
 }
 .player-progress input {
   width: 100%;
@@ -166,16 +166,20 @@
 .player-bar input[type='range']::-webkit-slider-runnable-track {
   height: 4px;
   border-radius: 4px;
-  background: linear-gradient(to right, #86878c var(--range-fill), #dedee2 var(--range-fill));
+  background: linear-gradient(
+    to right,
+    var(--range-fill-color) var(--range-fill),
+    var(--range-track) var(--range-fill)
+  );
 }
 .player-bar input[type='range']::-webkit-slider-thumb {
   appearance: none;
   -webkit-appearance: none;
-  width: 10px;
-  height: 10px;
-  margin-top: -3px;
+  width: 12px;
+  height: 12px;
+  margin-top: -4px;
   border-radius: 50%;
-  background: #fff;
+  background: var(--player-control);
   box-shadow:
     0 0 0 1px #0002,
     0 1px 3px #0003;
@@ -188,7 +192,7 @@
   visibility: hidden;
 }
 .player-bar input[type='range']:focus-visible {
-  outline: 1px solid var(--focus);
+  outline: var(--control-focus-width) solid var(--focus);
   outline-offset: 1px;
   border-radius: 5px;
 }
@@ -219,8 +223,8 @@
   padding: 10px 14px;
   border-radius: 12px;
   font-size: 12px;
-  background: #f0f0f3;
-  color: #4f505a;
+  background: var(--player-pill-background);
+  color: var(--player-pill-text);
   box-shadow: 0 4px 20px #262d4014;
 }
 .player-notices > div > span {
@@ -228,8 +232,8 @@
   min-width: 180px;
 }
 .playback-error {
-  background: #fff0ed;
-  color: #893b30;
+  background: var(--player-alert-background);
+  color: var(--player-alert-text);
 }
 .radio-speaking {
   background: var(--accent-soft);
@@ -242,12 +246,23 @@
   border: 0;
   min-height: 28px;
   padding: 2px 4px;
+  border-radius: 4px;
   font: inherit;
   font-weight: 500;
   text-decoration: underline;
   cursor: pointer;
   color: inherit;
   white-space: nowrap;
+}
+.player-notices button:hover:where(:not(:disabled)) {
+  background: transparent;
+  text-decoration-thickness: 2px;
+}
+.player-notices button:disabled {
+  background: transparent;
+  color: var(--muted);
+  cursor: default;
+  text-decoration: none;
 }
 .playback-error button[aria-disabled='true'] {
   color: var(--muted);
@@ -256,7 +271,7 @@
 .player-spin {
   animation: player-spin 1s linear infinite;
   flex-shrink: 0;
-  color: #656873;
+  color: var(--player-subtle);
 }
 @keyframes player-spin {
   to {
@@ -290,8 +305,8 @@
     gap: 8px;
   }
   .player-artwork {
-    width: 36px;
-    height: 36px;
+    width: var(--control-size-play);
+    height: var(--control-size-play);
     flex-basis: 36px;
   }
   .player-tools {

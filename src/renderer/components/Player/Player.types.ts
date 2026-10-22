@@ -1,4 +1,8 @@
+import type { Song } from '../../../shared/types';
+
+
 export type PlayerProps = {
+  details: (song: Song, source: HTMLButtonElement) => void;
   queueOpen: boolean;
   lyricsOpen: boolean;
   toggleQueue: (source: HTMLButtonElement) => void;

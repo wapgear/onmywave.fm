@@ -1,0 +1,9 @@
+[
+  "light Space opens nested help",
+  "light Escape closes only help and restores focus",
+  "coffee Space opens nested help",
+  "coffee Escape closes only help and restores focus",
+  "dark Space opens nested help",
+  "dark Escape closes only help and restores focus",
+  "Avatar native arrow navigation selects visible control"
+]

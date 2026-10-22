@@ -20,6 +20,7 @@ import { useNewsRecovery } from '../../NewsRecovery';
 import { usePlayer } from '../../player';
 import type { OptionsSaveSettlement, PlaybackRetrySettlement } from '../../player.types';
 import { useRetryFocus } from '../../useRetryFocus';
+import { IconButton } from '../IconButton/IconButton.component';
 import { Artwork } from '../Shared';
 import { DJPopover } from './DJPopover.component';
 import type { PlayerProps } from './Player.types';
@@ -35,7 +36,15 @@ export const formatTime = (seconds: number) => {
 const fill = (percent: number): CSSProperties =>
   ({ '--range-fill': `${Math.max(0, Math.min(100, percent))}%` }) as CSSProperties;
 
-export function Player({ queueOpen, lyricsOpen, toggleQueue, toggleLyrics, openRoom, openSettings }: PlayerProps) {
+export function Player({
+  details,
+  queueOpen,
+  lyricsOpen,
+  toggleQueue,
+  toggleLyrics,
+  openRoom,
+  openSettings,
+}: PlayerProps) {
   const player = usePlayer();
   const recovery = useNewsRecovery();
   const knownSpeech =
@@ -70,15 +79,15 @@ export function Player({ queueOpen, lyricsOpen, toggleQueue, toggleLyrics, openR
 
   useLayoutEffect(() => {
     const node = notices.current;
-    const shell = node?.closest<HTMLElement>('.app-shell');
-    if (!node || !shell) return;
-    const measure = () => shell.style.setProperty('--player-notice-height', `${node.getBoundingClientRect().height}px`);
+    const root = document.documentElement;
+    if (!node) return;
+    const measure = () => root.style.setProperty('--player-notice-height', `${node.getBoundingClientRect().height}px`);
     const observer = new ResizeObserver(measure);
     observer.observe(node);
     measure();
     return () => {
       observer.disconnect();
-      shell.style.removeProperty('--player-notice-height');
+      root.style.removeProperty('--player-notice-height');
     };
   }, []);
 
@@ -256,15 +265,17 @@ export function Player({ queueOpen, lyricsOpen, toggleQueue, toggleLyrics, openR
               {showRetrying ? <LoaderCircle size={14} className="player-spin" /> : <RotateCw size={14} />}
               {showRetrying ? 'Retrying…' : 'Retry'}
             </button>
-            <button
-              onClick={(event) => {
-                if (document.activeElement === event.currentTarget) nextControl.current?.focus({ preventScroll: true });
-                player.next();
-              }}
-              disabled={!player.current}
-            >
-              Skip track
-            </button>
+            {player.current && (
+              <button
+                onClick={(event) => {
+                  if (document.activeElement === event.currentTarget)
+                    nextControl.current?.focus({ preventScroll: true });
+                  player.next();
+                }}
+              >
+                Skip track
+              </button>
+            )}
           </div>
         )}
         {(player.optionsError || retryingOptions) && (
@@ -286,9 +297,18 @@ export function Player({ queueOpen, lyricsOpen, toggleQueue, toggleLyrics, openR
       </div>
       <footer className="player-bar" aria-label="Music player">
         <div className="player-song">
-          <div className="player-artwork">
+          <button
+            type="button"
+            className="player-artwork"
+            aria-label={player.current ? `Song details for ${player.current.name || 'Untitled song'}` : 'Song details'}
+            title="Song details"
+            disabled={!player.current}
+            onClick={(event) => {
+              if (player.current) details(player.current, event.currentTarget);
+            }}
+          >
             <Artwork url={player.current?.imageUrl} name={player.current?.name ?? 'No song selected'} />
-          </div>
+          </button>
           <div>
             <strong title={player.current?.name}>{player.current?.name ?? 'Your music, ready when you are'}</strong>
             <span title={player.current?.artists.join(', ')}>
@@ -298,57 +318,63 @@ export function Player({ queueOpen, lyricsOpen, toggleQueue, toggleLyrics, openR
         </div>
         <div className="player-center">
           <div className="player-transport">
-            <button
-              className={`player-icon secondary-transport ${player.shuffle ? 'is-active' : ''}`}
+            <IconButton
+              variant="player"
+              className={`secondary-transport ${player.shuffle ? 'is-active' : ''}`}
               onClick={player.toggleShuffle}
               title={`Shuffle ${player.shuffle ? 'on' : 'off'}`}
-              aria-label="Shuffle"
+              label="Shuffle"
               aria-pressed={player.shuffle}
             >
-              <Shuffle size={16} />
-            </button>
-            <button
-              className="player-icon"
+              <Shuffle size={16} aria-hidden="true" />
+            </IconButton>
+            <IconButton
+              variant="player"
               onClick={player.previous}
               disabled={!player.current}
               title="Previous track (⌘←)"
-              aria-label="Previous track"
+              label="Previous track"
             >
-              <SkipBack size={19} fill="currentColor" />
-            </button>
-            <button
+              <SkipBack size={19} fill="currentColor" aria-hidden="true" />
+            </IconButton>
+            <IconButton
               ref={playControl}
-              className="player-play"
+              variant="play"
               onClick={player.toggle}
               disabled={!player.current}
               title={`${player.requestedPlaying ? 'Pause' : 'Play'} (Space)`}
-              aria-label={player.requestedPlaying ? 'Pause' : 'Play'}
+              label={player.requestedPlaying ? 'Pause' : 'Play'}
             >
               {player.requestedPlaying ? (
-                <Pause size={21} fill="currentColor" />
+                <Pause size={21} fill="currentColor" aria-hidden="true" />
               ) : (
-                <Play size={21} fill="currentColor" />
+                <Play size={21} fill="currentColor" aria-hidden="true" />
               )}
-            </button>
-            <button
+            </IconButton>
+            <IconButton
               ref={nextControl}
-              className="player-icon"
+              variant="player"
               onClick={player.next}
               disabled={!player.current}
               title="Next track (⌘→)"
-              aria-label="Next track"
+              label="Next track"
             >
-              <SkipForward size={19} fill="currentColor" />
-            </button>
-            <button
-              className={`player-icon secondary-transport ${player.repeat !== 'off' ? 'is-active' : ''}`}
+              <SkipForward size={19} fill="currentColor" aria-hidden="true" />
+            </IconButton>
+            <IconButton
+              variant="player"
+              className={`secondary-transport ${player.repeat !== 'off' ? 'is-active' : ''}`}
               onClick={player.cycleRepeat}
               title={`Repeat ${player.repeat}`}
-              aria-label={`Repeat: ${player.repeat}`}
+              label={`Repeat: ${player.repeat}`}
               aria-pressed={player.repeat !== 'off'}
             >
-              {player.repeat === 'one' ? <Repeat1 size={16} /> : <Repeat size={16} />}
-            </button>
+              {player.repeat === 'one' ? (
+                <Repeat1 size={16} aria-hidden="true" />
+              ) : (
+                <Repeat size={16} aria-hidden="true" />
+              )}
+            </IconButton>
           </div>
           <div className="player-progress">
             <span>{formatTime(position)}</span>
@@ -394,10 +420,10 @@ export function Player({ queueOpen, lyricsOpen, toggleQueue, toggleLyrics, openR
               <LoaderCircle size={15} className="player-spin" aria-hidden="true" />
             </>
           )}
-          <button
-            className="player-icon"
+          <IconButton
+            variant="player"
             title={player.volume ? 'Mute' : 'Unmute'}
-            aria-label={player.volume ? 'Mute' : 'Unmute'}
+            label={player.volume ? 'Mute' : 'Unmute'}
             onClick={() => {
               if (player.volume) {
                 setMutedVolume(player.volume);
@@ -405,8 +431,8 @@ export function Player({ queueOpen, lyricsOpen, toggleQueue, toggleLyrics, openR
               } else player.setVolume(mutedVolume);
             }}
           >
-            <Volume size={18} />
-          </button>
+            <Volume size={18} aria-hidden="true" />
+          </IconButton>
           <input
             ref={volumeControl}
             className="player-volume"
@@ -420,27 +446,29 @@ export function Player({ queueOpen, lyricsOpen, toggleQueue, toggleLyrics, openR
             aria-label="Volume"
             aria-valuetext={`${Math.round(player.volume * 100)} percent`}
           />
-          <button
-            className={`player-icon player-lyrics ${lyricsOpen ? 'is-active' : ''}`}
+          <IconButton
+            variant="player"
+            className={`player-lyrics ${lyricsOpen ? 'is-active' : ''}`}
             onClick={(event) => toggleLyrics(event.currentTarget)}
             title="Lyrics"
-            aria-label={lyricsOpen ? 'Hide lyrics' : 'Show lyrics'}
+            label={lyricsOpen ? 'Hide lyrics' : 'Show lyrics'}
             aria-controls="listening-drawer"
             aria-expanded={lyricsOpen}
             disabled={!player.current}
           >
             <MicVocal size={18} aria-hidden="true" />
-          </button>
-          <button
-            className={`player-icon ${queueOpen ? 'is-active' : ''}`}
+          </IconButton>
+          <IconButton
+            variant="player"
+            className={`${queueOpen ? 'is-active' : ''}`}
             onClick={(event) => toggleQueue(event.currentTarget)}
             title="Playing Next"
-            aria-label={`${queueOpen ? 'Hide' : 'Show'} queue, ${player.queue.length} ${player.queue.length === 1 ? 'track' : 'tracks'}`}
+            label={`${queueOpen ? 'Hide' : 'Show'} queue, ${player.queue.length} ${player.queue.length === 1 ? 'track' : 'tracks'}`}
             aria-controls="listening-drawer"
             aria-expanded={queueOpen}
           >
-            <ListMusic size={21} />
-          </button>
+            <ListMusic size={21} aria-hidden="true" />
+          </IconButton>
         </div>
       </footer>
     </>

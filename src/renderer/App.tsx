@@ -1,11 +1,12 @@
 import { useIsMutating, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Disc3, ListMusic, Music2, Radio, Settings } from 'lucide-react';
+import { Disc3, ListMusic, Music2, Radio, Settings, X } from 'lucide-react';
 import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
 
 import type { Connection, Song } from '../shared/types';
 import { unwrap } from './api';
 import type { ReadyAppProps, SessionContentProps } from './App.types';
 import { AddPlaylist } from './components/AddPlaylist/AddPlaylist.component';
+import { IconButton } from './components/IconButton/IconButton.component';
 import { Inspector } from './components/Inspector/Inspector.component';
 import { LibrarySelectionProvider } from './components/LibrarySelection';
 import type { ConnectionTransition } from './components/LibrarySelection.types';
@@ -568,11 +569,10 @@ function ReadyApp({
             <h2 id="drawer-title">
               {visibleDrawer === 'queue' ? 'Playing Next' : visibleDrawer === 'lyrics' ? 'Lyrics' : 'Song details'}
             </h2>
-            <button
+            <IconButton
               ref={drawerClose}
-              className="icon-button"
               onClick={closeDrawer}
-              aria-label={
+              label={
                 visibleDrawer === 'queue'
                   ? 'Close queue'
                   : visibleDrawer === 'lyrics'
@@ -580,8 +580,8 @@ function ReadyApp({
                     : 'Close song details'
               }
             >
-              <span aria-hidden="true">×</span>
-            </button>
+              <X size={20} aria-hidden="true" />
+            </IconButton>
           </header>
           <div
             key={visibleDrawer === 'queue' || visibleDrawer === 'lyrics' ? visibleDrawer : visibleDrawer.id}
@@ -606,6 +606,7 @@ function ReadyApp({
         </aside>
       )}
       <Player
+        details={(song, source) => openDrawer(song, source)}
         openRoom={(source) => openPlayerDestination('stations', source)}
         openSettings={(source) => openPlayerDestination('settings', source)}
         queueOpen={visibleDrawer === 'queue'}

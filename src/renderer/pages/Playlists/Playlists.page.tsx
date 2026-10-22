@@ -4,8 +4,9 @@ import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import type { PlaylistEditRecovery, PlaylistLibrary, Song } from '../../../shared/types';
 import { unwrap, WaveError } from '../../api';
+import { Button } from '../../components/Button/Button.component';
 import { CollectionHeading } from '../../components/CollectionHeading/CollectionHeading.component';
-import { Artwork, Dialog, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
+import { Artwork, Dialog, DialogActions, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { playlistRows, TrackTable } from '../../components/TrackTable/TrackTable.component';
 import { usePlayer } from '../../player';
 import { useRetryFocus } from '../../useRetryFocus';
@@ -937,19 +938,20 @@ function PlaylistNameDialog({ title, initial, close, save, created }: PlaylistNa
             again.
           </p>
         )}
-        <div className="modal-actions">
-          <button type="button" aria-disabled={mutation.isPending || undefined} onClick={cancel}>
+        <DialogActions>
+          <Button type="button" aria-disabled={mutation.isPending || undefined} onClick={cancel}>
             {uncertain ? 'Close and check playlists' : 'Cancel'}
-          </button>
-          <button
-            className="primary"
+          </Button>
+          <Button
+            type="submit"
+            variant="primary"
             disabled={!name.trim()}
             aria-disabled={mutation.isPending || uncertain || undefined}
             aria-busy={mutation.isPending || undefined}
           >
             {mutation.isPending ? 'Saving…' : 'Save playlist'}
-          </button>
-        </div>
+          </Button>
+        </DialogActions>
       </form>
     </Dialog>
   );

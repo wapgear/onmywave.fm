@@ -3,6 +3,7 @@ import { ArrowRight, Music2 } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 import { unwrap } from '../../api';
+import { InfoHelp } from '../../components/InfoHelp/InfoHelp.component';
 import { LibraryChooser } from '../../components/LibraryChooser';
 import { useLibrarySelection } from '../../components/LibrarySelection';
 import { ErrorNotice } from '../../components/Shared';
@@ -86,6 +87,10 @@ export function ConnectionPage({
       <div className="connection-brand">
         <Music2 size={25} />
         <span>onmywave.fm</span>
+        <InfoHelp label="About connecting to Jellyfin">
+          <p>Your library stays on your Jellyfin server.</p>
+          <p>Your connection uses macOS secure storage when available.</p>
+        </InfoHelp>
       </div>
       <NewsRecoveryNotice focusTarget={() => document.querySelector<HTMLElement>('.connection-card h1')} />
       <section className="connection-card">
@@ -205,11 +210,9 @@ export function ConnectionPage({
                 Back to library selection
               </button>
             )}
-            <p className="form-hint">Your connection is protected using macOS secure storage when available.</p>
           </form>
         )}
       </section>
-      <p className="connection-footer">Your library stays on your Jellyfin server.</p>
     </main>
   );
 }

@@ -1,8 +1,36 @@
-.dj-profile-intro {
-  font-size: 13px;
-  color: var(--muted);
-  line-height: 1.7;
-  margin-bottom: 24px;
+.dj-profile-mode-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--control-gap);
+  margin: 12px 0 24px;
+}
+.dj-profile-mode-heading > .configuration-tabs {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+.dj-profile-mode-heading > .info-help {
+  margin-top: 4px;
+}
+.dj-profile-section-heading,
+.dj-simple-prompt-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.dj-profile-section-heading {
+  margin-bottom: 18px;
+}
+.dj-profile-section-heading h3 {
+  margin: 0;
+}
+.dj-simple-prompt-heading {
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.dj-simple-prompt-heading label {
+  display: block;
+  margin: 0;
 }
 .dj-profile-form > fieldset {
   margin: 0;
@@ -21,7 +49,6 @@
 }
 .dj-profile-voice h3 {
   font-size: 14px;
-  margin-bottom: 18px;
 }
 .dj-profile-advanced {
   margin-top: 22px;
@@ -33,7 +60,10 @@
   color: var(--muted);
   cursor: pointer;
 }
-.dj-profile-advanced > div {
+.dj-profile-advanced > .dj-profile-section-heading {
+  margin-bottom: 0;
+}
+.dj-profile-advanced > div:not(.dj-profile-section-heading) {
   padding-top: 22px;
 }
 .dj-profile-duck {
@@ -156,7 +186,7 @@
   font-size: 14px;
 }
 .dj-profile-form button:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: var(--control-focus-width) solid var(--focus);
   outline-offset: 3px;
 }
 @media (max-width: 540px) {

@@ -186,6 +186,6 @@
 }
 
 .prepared-take:focus-visible {
-  outline: 2px solid var(--accent);
+  outline: var(--control-focus-width) solid var(--focus);
   outline-offset: 4px;
 }

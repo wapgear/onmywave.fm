@@ -60,7 +60,7 @@ export function AlbumsPage({ add, details, view, setView, onOpenDetail }: Albums
 
   return (
     <>
-      <PageHeading headingRef={headingRef} title="Albums" subtitle="A closer listen">
+      <PageHeading headingRef={headingRef} title="Albums">
         <div className="search-field">
           <Search size={17} />
           <input
