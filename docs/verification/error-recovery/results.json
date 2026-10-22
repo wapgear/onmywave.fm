@@ -1,0 +1,62 @@
+{
+  "baseline": {
+    "pageExceptionRemovedNavigation": true,
+    "pageExceptionRemovedPlayer": true
+  },
+  "pageFailure": {
+    "hasNavigation": true,
+    "hasPlayer": true,
+    "sameQueue": true,
+    "sameCurrent": true,
+    "audioInstancesBefore": 2,
+    "audioInstancesAfter": 2,
+    "playing": true,
+    "progressAfterFailure": 50,
+    "diagnostics": [
+      "[render-error] caught"
+    ],
+    "secretVisible": false
+  },
+  "keyboard": {
+    "initialFailureFocus": {
+      "id": "page-render-error-title",
+      "tag": "H1",
+      "text": "This page couldn't be displayed."
+    },
+    "retryRecoveryFocus": {
+      "tabIndex": -1,
+      "tag": "H1",
+      "text": "All songs"
+    },
+    "navigationFromFailure": {
+      "focus": "Albums",
+      "heading": "Albums"
+    }
+  },
+  "dj": {
+    "sameQueueThroughFailure": true,
+    "sameOccurrenceThroughFailure": true,
+    "sameAudioCountThroughFailure": true,
+    "activeNewsBefore": "fixture-take-0",
+    "activeNewsAfterFailure": "fixture-take-0",
+    "newsStarts": 1,
+    "heardWrites": 1,
+    "totalAudioInstances": 3,
+    "completedSongs": 1,
+    "secondOccurrenceSelected": true,
+    "activeNewsAfterEnd": null
+  },
+  "broad": {
+    "fallback": "onmywave.fm couldn't open this view.\n\nReloading tries to restore your saved queue with playback paused. Music may have stopped.\n\nReload app",
+    "lastSavedIndex": 1,
+    "lastSavedPosition": 10,
+    "reloadedSong": "Evening track 002",
+    "reloadedPosition": 10,
+    "reloadedPaused": true,
+    "focus": "root-render-error-title",
+    "allFixtureAudioPaused": true,
+    "diagnostics": [
+      "[render-error] caught"
+    ]
+  }
+}

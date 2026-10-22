@@ -1,0 +1,39 @@
+.render-boundary-content {
+  display: contents;
+}
+.render-error {
+  max-width: 640px;
+  padding: 22px 24px;
+  border: 1px solid var(--separator);
+  border-radius: 12px;
+  background: var(--panel);
+}
+.render-error h1 {
+  margin: 0;
+  font-size: 18px;
+}
+.render-error h1:focus {
+  outline: none;
+}
+.render-error p {
+  margin: 10px 0 16px;
+  color: var(--muted);
+  line-height: 1.55;
+}
+.render-error button {
+  font-size: 12px;
+}
+.page-render-error {
+  margin: 42px auto;
+}
+.root-render-error {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 32px;
+  border: 0;
+  background: transparent;
+}
