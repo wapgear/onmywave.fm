@@ -8,7 +8,7 @@
   border: 0;
   border-radius: 8px;
   background: transparent;
-  color: #4f505a;
+  color: var(--player-pill-text);
   font-size: 11px;
 }
 .player-dj.is-active {

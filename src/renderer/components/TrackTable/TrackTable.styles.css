@@ -1,9 +1,9 @@
 .song-table tr:focus-visible {
-  outline: 1px solid var(--focus);
-  outline-offset: -1px;
+  outline: var(--control-focus-width) solid var(--focus);
+  outline-offset: -2px;
   border-radius: 12px;
 }
-.artwork-button:focus-visible .artwork-play {
+.artwork-button:focus-visible .artwork-details {
   display: flex;
 }
 .song-table tbody tr:not(.song-spacer) > td:first-child {

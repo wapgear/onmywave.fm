@@ -145,8 +145,8 @@ export function FilterSelect({
         }}
       >
         {searchable && (
-          <label className="filter-select-search">
-            <Search size={15} aria-hidden="true" />
+          <label className="search-field filter-select-search">
+            <Search size={17} aria-hidden="true" />
             <input
               ref={searchInput}
               aria-label={`Search ${label.toLowerCase()}`}

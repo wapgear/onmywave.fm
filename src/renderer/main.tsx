@@ -8,8 +8,12 @@ import '@fontsource/manrope/600.css';
 import App from './App';
 import { AppUpdates } from './components/AppUpdates/AppUpdates.component';
 import { retainNewestLocalState } from './local-state-cache';
+import { restoreTheme } from './theme';
 
 import './styles.css';
+import './themes.css';
+
+restoreTheme();
 
 function onError(error: unknown) {
   const failure = error as { code?: string; authRevision?: number };

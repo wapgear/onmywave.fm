@@ -807,10 +807,7 @@ export function StationsPage({
                     Updating room settings… You can keep browsing and listening.
                   </p>
                 )}
-                <p className="form-hint">
-                  Choose a profile to edit its sources, host, and preparation settings. Playback can use a different
-                  profile.
-                </p>
+
                 <ErrorNotice
                   error={
                     configDraft.stopError &&

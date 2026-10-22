@@ -31,22 +31,11 @@
   display: flex;
   flex-direction: column;
 }
-.filter-select-search {
-  display: flex;
-  align-items: center;
+.search-field.filter-select-search {
   flex-shrink: 0;
-  gap: 8px;
-  padding: 4px 9px 8px;
-  margin: 0;
-  color: var(--muted);
-}
-.filter-select-search input {
   width: 100%;
-  background: transparent;
-  border: 0;
-  border-radius: 4px;
-  padding: 7px 0;
-  font-size: 12px;
+  margin: 0 0 6px;
+  font-weight: 400;
 }
 .filter-select-options {
   overflow-y: auto;

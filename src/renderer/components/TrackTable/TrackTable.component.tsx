@@ -263,12 +263,13 @@ export function TrackTable({
                       <div className="song-title-cell">
                         <button
                           className="artwork-button"
-                          aria-label={`${pausing ? 'Pause' : 'Play'} ${row.song.name}`}
-                          onClick={() => activate(index)}
+                          aria-label={`Song details for ${row.song.name || 'Untitled song'}`}
+                          title="Song details"
+                          onClick={() => details(row.song)}
                         >
                           <Artwork url={row.song.imageUrl} name={row.song.name} />
-                          <span className="artwork-play">
-                            <ActionIcon size={14} fill="currentColor" />
+                          <span className="artwork-details" aria-hidden="true">
+                            <Info size={14} />
                           </span>
                         </button>
                         <button className="song-name" onClick={() => details(row.song)}>

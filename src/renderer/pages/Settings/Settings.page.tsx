@@ -9,6 +9,7 @@ import { ProviderKeys } from '../../components/ProviderKeys/ProviderKeys.compone
 import { Dialog, DialogActions, ErrorNotice, PageHeading } from '../../components/Shared';
 import { DJsPage } from '../DJs/DJs.page';
 import { SourcesPage } from '../Sources/Sources.page';
+import { AppearanceSettings } from './components/AppearanceSettings.component';
 import { DJPlaybackSettings } from './components/DJPlaybackSettings.component';
 import { NewsTransitions } from './components/NewsTransitions.component';
 import type { SettingsPageProps, SettingsSection } from './Settings.types';
@@ -81,6 +82,7 @@ export function SettingsPage({
       {activeSection === 'djs' && <DJsPage />}
       {activeSection === 'general' && (
         <div className="settings-content settings-preferences">
+          <AppearanceSettings />
           <section>
             <h2>Account</h2>
             <dl className="settings-account">

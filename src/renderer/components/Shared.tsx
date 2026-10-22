@@ -135,6 +135,7 @@ export function Dialog({
       className={wide ? 'modal modal-wide' : 'modal'}
       onCancel={(event) => {
         event.preventDefault();
+        event.stopPropagation();
         if (!closeDisabled) close();
       }}
       onClick={(event) => {

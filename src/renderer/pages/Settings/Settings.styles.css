@@ -85,8 +85,16 @@
   gap: 10px;
   font-size: 12px;
 }
-.dj-song-interval input {
+.dj-song-interval input[type='number'] {
   width: 76px;
+}
+.dj-song-interval input[type='range'] {
+  width: 140px;
+}
+.dj-song-interval input[type='checkbox'] {
+  width: 16px;
+  min-height: 16px;
+  flex: 0 0 16px;
 }
 .dj-song-interval span {
   color: var(--muted);
@@ -103,4 +111,78 @@
 }
 .settings-save[aria-disabled='true']:active {
   translate: 0 0;
+}
+
+.theme-picker {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+}
+.theme-choice {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  cursor: pointer;
+}
+.theme-choice:has(:checked) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+.theme-choice:has(:focus-visible) {
+  outline: var(--control-focus-width) solid var(--focus);
+  outline-offset: 3px;
+}
+.theme-preview {
+  --preview-background: #fbfbfc;
+  --preview-sidebar: #f0f0f3;
+  --preview-line: #626674;
+  position: relative;
+  display: grid;
+  gap: 5px;
+  padding: 12px 12px 12px 36%;
+  background: linear-gradient(to right, var(--preview-sidebar) 25%, var(--preview-background) 25%);
+  border: 1px solid var(--preview-sidebar);
+  border-radius: 6px;
+}
+[data-preview='coffee'] .theme-preview {
+  --preview-background: #f6f0e7;
+  --preview-sidebar: #e8ddce;
+  --preview-line: #706052;
+}
+[data-preview='dark'] .theme-preview {
+  --preview-background: #1b1c20;
+  --preview-sidebar: #24252a;
+  --preview-line: #b1b2bd;
+}
+.theme-preview > span {
+  height: 3px;
+  border-radius: 2px;
+  background: var(--preview-line);
+}
+.theme-preview > span:last-child {
+  width: 60%;
+}
+.theme-choice-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.theme-choice-description {
+  font-size: 11px;
+  color: var(--muted);
+}
+@media (max-width: 600px) {
+  .theme-picker {
+    grid-template-columns: 1fr;
+  }
+  .theme-preview {
+    display: none;
+  }
 }

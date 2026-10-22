@@ -258,15 +258,17 @@ export function Player({
               {showRetrying ? <LoaderCircle size={14} className="player-spin" /> : <RotateCw size={14} />}
               {showRetrying ? 'Retrying…' : 'Retry'}
             </button>
-            <button
-              onClick={(event) => {
-                if (document.activeElement === event.currentTarget) nextControl.current?.focus({ preventScroll: true });
-                player.next();
-              }}
-              disabled={!player.current}
-            >
-              Skip track
-            </button>
+            {player.current && (
+              <button
+                onClick={(event) => {
+                  if (document.activeElement === event.currentTarget)
+                    nextControl.current?.focus({ preventScroll: true });
+                  player.next();
+                }}
+              >
+                Skip track
+              </button>
+            )}
           </div>
         )}
         {(player.optionsError || retryingOptions) && (
@@ -313,7 +315,7 @@ export function Player({
             className="player-artwork"
             onClick={(event) => openDetails(event.currentTarget)}
             disabled={!player.current}
-            aria-label="Show song details"
+            aria-label={player.current ? `Song details for ${player.current.name || 'Untitled song'}` : 'Song details'}
             title="Show song details"
             aria-controls="listening-drawer"
           >

@@ -131,6 +131,10 @@
   line-height: 1.7;
   margin: 0;
 }
+.news-workflow-disclosures {
+  display: grid;
+  gap: 8px;
+}
 .news-workflow-fields input[type='number'] {
   max-width: 100px;
 }

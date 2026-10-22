@@ -86,7 +86,7 @@ export function SourcesPage() {
 
   return (
     <>
-      <PageHeading title="Sources" subtitle="News for your prepared stories" headingRef={heading}>
+      <PageHeading title="Sources" headingRef={heading}>
         <button
           ref={addSource}
           className="primary"
@@ -97,9 +97,7 @@ export function SourcesPage() {
           Add source
         </button>
       </PageHeading>
-      <p className="sources-description">
-        Choose RSS feeds, Twitter / X searches, or Hacker News for your news workflow.
-      </p>
+
       <ErrorNotice
         error={state.error}
         retryRef={retryFocus.retryRef}

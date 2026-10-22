@@ -4,6 +4,7 @@ import { useRef, useState } from 'react';
 import { defaultNewsTransitionSettings } from '../../../../shared/news-transitions';
 import type { NewsTransitionSettings } from '../../../../shared/types';
 import { unwrap } from '../../../api';
+import { InfoHelp } from '../../../components/InfoHelp/InfoHelp.component';
 import { ErrorNotice } from '../../../components/Shared';
 import { useRetryFocus } from '../../../useRetryFocus';
 import { useGeneralSettingsEdits } from '../SettingsEdits';
@@ -28,15 +29,14 @@ const presets: { id: string; name: string; settings: NewsTransitionSettings }[] 
 ];
 
 const fields = [
-  { key: 'fadeOutSeconds', label: 'Lower music over', max: 5, hint: 'Fade down before the DJ starts.' },
+  { key: 'fadeOutSeconds', label: 'Lower music over', max: 5 },
   {
     key: 'leadInSeconds',
     label: 'Breathing room before speech',
     max: 3,
-    hint: 'Wait after the music fades or finishes.',
   },
-  { key: 'postSpeechSeconds', label: 'Pause after speech', max: 3, hint: 'Leave a moment before music resumes.' },
-  { key: 'fadeInSeconds', label: 'Bring music back over', max: 5, hint: 'Fade music up to your listening volume.' },
+  { key: 'postSpeechSeconds', label: 'Pause after speech', max: 3 },
+  { key: 'fadeInSeconds', label: 'Bring music back over', max: 5 },
 ] as const;
 
 export function NewsTransitions() {
@@ -65,12 +65,15 @@ export function NewsTransitions() {
 
   return (
     <section className="news-transition-settings" aria-labelledby="news-transitions-title">
-      <h2 ref={heading} tabIndex={-1} id="news-transitions-title">
-        DJ transitions
-      </h2>
-      <p className="settings-description">
-        Give news breaks room to breathe. Saved changes apply to the next break you schedule.
-      </p>
+      <div className="settings-section-title">
+        <h2 ref={heading} tabIndex={-1} id="news-transitions-title">
+          DJ transitions
+        </h2>
+        <InfoHelp label="DJ transition timing">
+          <p>The preview illustrates the order and duration of these steps for the selected play mode.</p>
+        </InfoHelp>
+      </div>
+      <p className="settings-description">Saved changes apply to the next break you schedule.</p>
       <ErrorNotice
         error={state.error}
         retryRef={retryFocus.retryRef}
@@ -119,7 +122,6 @@ export function NewsTransitions() {
                   </option>
                 ))}
               </select>
-              <span className="form-hint">Start with a style, then adjust the timing below.</span>
             </label>
             <label>
               Play the DJ
@@ -153,11 +155,6 @@ export function NewsTransitions() {
                   />
                   <span>seconds</span>
                 </div>
-                <span className="form-hint">
-                  {field.key === 'fadeOutSeconds' && settings.mode === 'between-songs'
-                    ? 'Fade the song ending before the bulletin.'
-                    : field.hint}
-                </span>
               </label>
             ))}
           </div>

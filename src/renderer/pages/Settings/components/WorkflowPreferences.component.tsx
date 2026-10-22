@@ -122,8 +122,8 @@ export function WorkflowPreferences({
     <div className="settings-workflow">
       <h2>Automatic news preparation</h2>
       <p className="settings-description">
-        Prepare stories automatically while the app is running and your Mac is awake. Quitting stops checks; closing the
-        window can leave the app running.
+        Runs while the app is running and your Mac is awake. Quitting stops checks; closing the window may leave the app
+        running.
       </p>
       {room && (
         <form key={room.id} onSubmit={submit}>
@@ -169,15 +169,17 @@ export function WorkflowPreferences({
                 onChange={(event) => onChange({ maxNewsClipsPerDay: Number(event.target.value) })}
               />
             </label>
-            <p className="settings-description">
-              Up to {Math.ceil(24 / value.everyHours)} scheduled checks per local day for this profile. Checks can use
-              paid text generation even when no story qualifies. Automatic voice generation stops at the recording
-              limit. Host voice previews are outside these limits and can use additional provider credits.
-            </p>
-            <p className="settings-description">
-              Saving an enabled workflow authorizes OpenAI and ElevenLabs requests. X sources also require an X bearer
-              token. Music keeps playing while news is prepared.
-            </p>
+            <div className="news-workflow-disclosures">
+              <p className="settings-description">
+                Up to {Math.ceil(24 / value.everyHours)} checks per local day for this profile. Checks may incur paid
+                text-generation charges even when no story qualifies. Automatic voice generation stops at the daily
+                recording limit; host voice previews are outside the limit and may use extra provider credits.
+              </p>
+              <p className="settings-description">
+                Saving while enabled authorizes OpenAI and ElevenLabs requests. X sources require an X bearer token.
+                Music keeps playing during preparation.
+              </p>
+            </div>
             {dirty && (
               <p className="notice" role="status">
                 Unsaved profile changes.{' '}

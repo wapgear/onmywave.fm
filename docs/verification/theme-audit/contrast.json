@@ -1,0 +1,677 @@
+[
+  {
+    "theme": "light",
+    "foreground": "--text",
+    "background": "--canvas",
+    "ratio": 15.7,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--text",
+    "background": "--surface",
+    "ratio": 14.26,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--text",
+    "background": "--panel",
+    "ratio": 15.17,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--text",
+    "background": "--selection",
+    "ratio": 13.9,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--text",
+    "background": "--popover",
+    "ratio": 16.24,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--text",
+    "background": "--field-background",
+    "ratio": 14.65,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--muted",
+    "background": "--canvas",
+    "ratio": 5.53,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--muted",
+    "background": "--surface",
+    "ratio": 5.02,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--muted",
+    "background": "--panel",
+    "ratio": 5.34,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--muted",
+    "background": "--selection",
+    "ratio": 4.9,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--muted",
+    "background": "--popover",
+    "ratio": 5.72,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--muted",
+    "background": "--field-background",
+    "ratio": 5.16,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--accent",
+    "background": "--canvas",
+    "ratio": 5.25,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--accent",
+    "background": "--surface",
+    "ratio": 4.77,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--accent",
+    "background": "--accent-soft",
+    "ratio": 4.74,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--accent",
+    "background": "--selection",
+    "ratio": 4.65,
+    "minimum": 3,
+    "pass": true,
+    "role": "Current-song playing-bars icon on selected row"
+  },
+  {
+    "theme": "light",
+    "foreground": "--focus",
+    "background": "--canvas",
+    "ratio": 5.25,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--focus",
+    "background": "--surface",
+    "ratio": 4.77,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--focus",
+    "background": "--popover",
+    "ratio": 5.43,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--focus",
+    "background": "--field-background",
+    "ratio": 4.9,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--focus",
+    "background": "--selection",
+    "ratio": 4.65,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--on-accent",
+    "background": "--accent",
+    "ratio": 5.43,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--on-accent",
+    "background": "--accent-hover",
+    "ratio": 6.45,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--danger",
+    "background": "--surface",
+    "ratio": 5.56,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--notice-error-text",
+    "background": "--notice-error-background",
+    "ratio": 5.35,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--warning-text",
+    "background": "--warning-background",
+    "ratio": 5.98,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--success-ink",
+    "background": "--success-soft",
+    "ratio": 4.67,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "light",
+    "foreground": "--player-control",
+    "background": "--range-track",
+    "ratio": 9.77,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--text",
+    "background": "--canvas",
+    "ratio": 11.94,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--text",
+    "background": "--surface",
+    "ratio": 10.37,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--text",
+    "background": "--panel",
+    "ratio": 10.96,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--text",
+    "background": "--selection",
+    "ratio": 10.14,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--text",
+    "background": "--popover",
+    "ratio": 12.57,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--text",
+    "background": "--field-background",
+    "ratio": 10.56,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--muted",
+    "background": "--canvas",
+    "ratio": 5.54,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--muted",
+    "background": "--surface",
+    "ratio": 4.82,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--muted",
+    "background": "--panel",
+    "ratio": 5.09,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--muted",
+    "background": "--selection",
+    "ratio": 4.71,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--muted",
+    "background": "--popover",
+    "ratio": 5.84,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--muted",
+    "background": "--field-background",
+    "ratio": 4.9,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--accent",
+    "background": "--canvas",
+    "ratio": 5.44,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--accent",
+    "background": "--surface",
+    "ratio": 4.73,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--accent",
+    "background": "--accent-soft",
+    "ratio": 4.98,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--accent",
+    "background": "--selection",
+    "ratio": 4.62,
+    "minimum": 3,
+    "pass": true,
+    "role": "Current-song playing-bars icon on selected row"
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--focus",
+    "background": "--canvas",
+    "ratio": 5.23,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--focus",
+    "background": "--surface",
+    "ratio": 4.55,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--focus",
+    "background": "--popover",
+    "ratio": 5.51,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--focus",
+    "background": "--field-background",
+    "ratio": 4.62,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--focus",
+    "background": "--selection",
+    "ratio": 4.44,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--on-accent",
+    "background": "--accent",
+    "ratio": 6.17,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--on-accent",
+    "background": "--accent-hover",
+    "ratio": 6.72,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--danger",
+    "background": "--surface",
+    "ratio": 5.01,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--notice-error-text",
+    "background": "--notice-error-background",
+    "ratio": 5.84,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--warning-text",
+    "background": "--warning-background",
+    "ratio": 5.98,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--success-ink",
+    "background": "--success-soft",
+    "ratio": 5.06,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "coffee",
+    "foreground": "--player-control",
+    "background": "--range-track",
+    "ratio": 7.85,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--text",
+    "background": "--canvas",
+    "ratio": 14.1,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--text",
+    "background": "--surface",
+    "ratio": 10.95,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--text",
+    "background": "--panel",
+    "ratio": 12.53,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--text",
+    "background": "--selection",
+    "ratio": 9.59,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--text",
+    "background": "--popover",
+    "ratio": 11.92,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--text",
+    "background": "--field-background",
+    "ratio": 11.27,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--muted",
+    "background": "--canvas",
+    "ratio": 7.31,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--muted",
+    "background": "--surface",
+    "ratio": 5.68,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--muted",
+    "background": "--panel",
+    "ratio": 6.5,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--muted",
+    "background": "--selection",
+    "ratio": 4.97,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--muted",
+    "background": "--popover",
+    "ratio": 6.18,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--muted",
+    "background": "--field-background",
+    "ratio": 5.84,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--accent",
+    "background": "--canvas",
+    "ratio": 5.93,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--accent",
+    "background": "--surface",
+    "ratio": 4.6,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--accent",
+    "background": "--accent-soft",
+    "ratio": 4.71,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--accent",
+    "background": "--selection",
+    "ratio": 4.03,
+    "minimum": 3,
+    "pass": true,
+    "role": "Current-song playing-bars icon on selected row"
+  },
+  {
+    "theme": "dark",
+    "foreground": "--focus",
+    "background": "--canvas",
+    "ratio": 7.26,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--focus",
+    "background": "--surface",
+    "ratio": 5.64,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--focus",
+    "background": "--popover",
+    "ratio": 6.14,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--focus",
+    "background": "--field-background",
+    "ratio": 5.8,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--focus",
+    "background": "--selection",
+    "ratio": 4.94,
+    "minimum": 3,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--on-accent",
+    "background": "--accent",
+    "ratio": 5.79,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--on-accent",
+    "background": "--accent-hover",
+    "ratio": 7.1,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--danger",
+    "background": "--surface",
+    "ratio": 5.64,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--notice-error-text",
+    "background": "--notice-error-background",
+    "ratio": 7.47,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--warning-text",
+    "background": "--warning-background",
+    "ratio": 7.52,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--success-ink",
+    "background": "--success-soft",
+    "ratio": 7.13,
+    "minimum": 4.5,
+    "pass": true
+  },
+  {
+    "theme": "dark",
+    "foreground": "--player-control",
+    "background": "--range-track",
+    "ratio": 7.61,
+    "minimum": 3,
+    "pass": true
+  }
+]

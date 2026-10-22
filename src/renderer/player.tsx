@@ -536,6 +536,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         audio.current?.load();
         setBusy(false);
         setPlaying(false);
+        setError(null);
       }
     },
     [stopNews, requestPlayback, changeTrack, updateShufflePlan, extendLibraryQueue],

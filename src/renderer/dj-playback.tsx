@@ -113,6 +113,7 @@ function useDJPlaybackController() {
         ownedNews = null;
         cycle.preparing = false;
         cycle.placing = false;
+        cycle.waiting = false;
         recoveryBlocked = true;
         publish();
         return;
@@ -186,6 +187,7 @@ function useDJPlaybackController() {
             return;
           }
           cycle.pending = take;
+          cycle.waiting = !take;
           ownedNews = take?.id ?? null;
           if (!take) {
             cycle.baseline = live.current.player.completedSongs;

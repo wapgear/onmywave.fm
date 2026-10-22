@@ -1,0 +1,16 @@
+{
+  "libraryOpened": true,
+  "playerButton": true,
+  "checks": [
+    "Library cover opens song details",
+    "Library cover does not change queue or start playback",
+    "Closing library details restores cover focus",
+    "Keyboard Enter on cover opens details",
+    "Album track cover opens details",
+    "Playlist track cover opens details",
+    "Player cover opens current song details",
+    "Player cover preserves queue",
+    "Closing player details restores cover focus",
+    "Keyboard Space on player cover opens details"
+  ]
+}

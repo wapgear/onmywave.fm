@@ -1,5 +1,6 @@
 import { DJAvatar } from '../../../components/DJAvatar/DJAvatar.component';
 import { FilterSelect } from '../../../components/FilterSelect/FilterSelect.component';
+import { InfoHelp } from '../../../components/InfoHelp/InfoHelp.component';
 import type { RoomSetupProps } from './RoomSetup.types';
 
 export function RoomSetup({
@@ -21,6 +22,10 @@ export function RoomSetup({
     <section className="room-setup" aria-labelledby="news-setup-title">
       <div className="room-section-heading">
         <h2 id="news-setup-title">News sources and host</h2>
+        <InfoHelp label="About news sources and host">
+          <p>Choose sources, a DJ, and a mood for this profile. Save them with the preparation settings below.</p>
+          <p>Automatic preparation stays off until you enable and save it.</p>
+        </InfoHelp>
       </div>
       <fieldset className="room-wizard-fields" disabled={busy}>
         <div className="room-field-heading">
@@ -85,10 +90,6 @@ export function RoomSetup({
             placeholder="Relaxed, curious, and low-key."
           />
         </label>
-        <p className="form-hint">
-          Save these choices with the preparation settings below. Automatic preparation stays off until you explicitly
-          enable and save it.
-        </p>
       </fieldset>
     </section>
   );

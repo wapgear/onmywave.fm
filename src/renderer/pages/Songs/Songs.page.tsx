@@ -106,7 +106,7 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
 
   return (
     <>
-      <PageHeading headingRef={headingRef} title="All songs" subtitle="Your Jellyfin library">
+      <PageHeading headingRef={headingRef} title="All songs">
         <div className="search-field">
           <Search size={17} />
           <input

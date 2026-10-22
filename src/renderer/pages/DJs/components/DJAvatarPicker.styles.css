@@ -68,7 +68,7 @@
 }
 .dj-avatar-choice input:focus-visible + .dj-avatar-choice-mark,
 .dj-avatar-color input:focus-visible + span {
-  outline: 2px solid var(--accent);
+  outline: var(--control-focus-width) solid var(--focus);
   outline-offset: 3px;
 }
 .dj-avatar-choice-mark img {

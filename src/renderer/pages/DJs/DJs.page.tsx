@@ -80,7 +80,7 @@ export function DJsPage() {
 
   return (
     <>
-      <PageHeading title="DJs" subtitle="Hosts and voices for your prepared audio takes" headingRef={heading}>
+      <PageHeading title="DJs" headingRef={heading}>
         <button ref={newDJ} className="primary" disabled={!state.data} onClick={() => edit(fresh())}>
           <Plus size={17} />
           New DJ
