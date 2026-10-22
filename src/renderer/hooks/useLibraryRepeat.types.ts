@@ -6,4 +6,5 @@ export type LibraryRepeatState = {
   generation: number;
   cache: Song[] | null;
   flight: Promise<Song[]> | null;
+  controller: AbortController | null;
 };

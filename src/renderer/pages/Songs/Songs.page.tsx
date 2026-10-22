@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { CatalogQuery, Song } from '../../../shared/types';
 import { unwrap } from '../../api';
+import { readCatalog } from '../../catalog';
 import { FilterSelect } from '../../components/FilterSelect/FilterSelect.component';
 import { IconButton } from '../../components/IconButton/IconButton.component';
 import { Empty, ErrorNotice, PageHeading } from '../../components/Shared';
@@ -58,8 +59,8 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
   };
   const songs = useInfiniteQuery({
     queryKey: ['songs', 'infinite', catalog],
-    queryFn: async ({ pageParam }) =>
-      unwrap(await window.wave.songs({ ...catalog, start: pageParam, limit: PAGE_SIZE })),
+    queryFn: ({ pageParam, signal }) =>
+      readCatalog(window.wave.songs, { ...catalog, start: pageParam, limit: PAGE_SIZE }, signal),
     initialPageParam: 0,
     getNextPageParam: (last) =>
       last.items.length && last.start + last.items.length < last.total ? last.start + last.items.length : undefined,

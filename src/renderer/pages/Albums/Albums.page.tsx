@@ -1,8 +1,9 @@
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, ListPlus, Play, Plus, Search } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 import { unwrap } from '../../api';
+import { readCatalog } from '../../catalog';
 import { CollectionHeading } from '../../components/CollectionHeading/CollectionHeading.component';
 import { Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { songRows, TrackTable } from '../../components/TrackTable/TrackTable.component';
@@ -15,6 +16,7 @@ export const initialAlbumsView = (): AlbumsView => ({ album: null, draft: '', se
 
 export function AlbumsPage({ add, details, view, setView, onOpenDetail }: AlbumsPageProps) {
   const { album, draft, selected } = view;
+  const client = useQueryClient();
   const [returnFocus, setReturnFocus] = useState<string | null>(null);
   const [search, setSearch] = useState(draft.trim());
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -27,7 +29,8 @@ export function AlbumsPage({ add, details, view, setView, onOpenDetail }: Albums
 
   const albums = useInfiniteQuery({
     queryKey: ['albums', 'infinite', search],
-    queryFn: async ({ pageParam }) => unwrap(await window.wave.albums({ search, start: pageParam, limit: 48 })),
+    queryFn: ({ pageParam, signal }) =>
+      readCatalog(window.wave.albums, { search, start: pageParam, limit: 48 }, signal),
     initialPageParam: 0,
     getNextPageParam: (last) =>
       last.items.length && last.start + last.items.length < last.total ? last.start + last.items.length : undefined,
@@ -35,6 +38,11 @@ export function AlbumsPage({ add, details, view, setView, onOpenDetail }: Albums
     staleTime: 60_000,
     gcTime: 10 * 60_000,
   });
+
+  useEffect(() => {
+    if (album) void client.cancelQueries({ queryKey: ['albums', 'infinite', search], exact: true });
+  }, [album, search, client]);
+
   const retryFocus = useRetryFocus({
     ownerKey: `albums:${album?.id ?? 'browse'}:${search}`,
     target: () => resultsRef.current?.querySelector<HTMLElement>('[data-album-id]') ?? headingRef.current,
