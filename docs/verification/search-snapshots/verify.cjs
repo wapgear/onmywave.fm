@@ -25,7 +25,7 @@ async function scenario(name, operation) { await operation(); results.push({name
  await scenario('three pages share one exhaustive result',async()=>{
   reset(); const ids=[]; const counts=[];
   for (const start of [0,80,160]) {const before=requests.length; const page=await service.songs({...base,start}); ids.push(...page.items.map(s=>s.id)); counts.push(requests.length-before); assert.equal(page.total,240);}
-  assert.equal(new Set(ids).size,240); assert.deepEqual(ids,catalog.map(s=>s.Id)); assert.deepEqual(counts,[3,0,0]); results.push({requestCounts:counts,baselineRequestCounts:[3,3,3]});
+  assert.equal(new Set(ids).size,240); assert.deepEqual(ids,catalog.map(s=>s.Id)); assert.deepEqual(counts,[3,0,0], 'SEARCH_SNAPSHOT_REQUEST_COUNTS'); results.push({requestCounts:counts,baselineRequestCounts:[3,3,3]});
  });
  await scenario('trimmed search shares snapshot, first page refresh observes changes',async()=>{
   const before=requests.length; await service.songs({...base,search:' Match ',start:80}); assert.equal(requests.length,before);
