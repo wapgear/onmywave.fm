@@ -159,9 +159,13 @@ function AlbumDetail({ album, selected, select, back, add, details }: AlbumDetai
           <Play size={16} fill="currentColor" />
           Play album
         </button>
+        <button disabled={!tracks.data?.length} onClick={() => player.playNext(tracks.data!)}>
+          <Play size={16} />
+          Play next
+        </button>
         <button disabled={!tracks.data?.length} onClick={() => player.enqueue(tracks.data!)}>
           <ListPlus size={17} />
-          Queue
+          Add to end
         </button>
         <button disabled={!tracks.data?.length} onClick={() => add(tracks.data!)}>
           <Plus size={17} />
@@ -190,7 +194,8 @@ function AlbumDetail({ album, selected, select, back, add, details }: AlbumDetai
           selected={selected}
           select={select}
           play={player.play}
-          queue={player.enqueue}
+          playNext={player.playNext}
+          enqueue={player.enqueue}
           add={add}
           details={details}
           currentId={player.current?.id}

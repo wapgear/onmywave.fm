@@ -7,7 +7,8 @@ export type TrackTableProps = {
   selected: Map<string, Song>;
   select: (next: Map<string, Song>) => void;
   play: (songs: Song[], index?: number) => void;
-  queue: (songs: Song[]) => void;
+  playNext: (songs: Song[]) => void;
+  enqueue: (songs: Song[]) => void;
   add: (songs: Song[]) => void;
   details: (song: Song) => void;
   currentId?: string;

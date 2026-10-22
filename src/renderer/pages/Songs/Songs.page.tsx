@@ -206,7 +206,8 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
           selected={selected}
           select={setSelected}
           play={player.play}
-          queue={player.enqueue}
+          playNext={player.playNext}
+          enqueue={player.enqueue}
           add={add}
           details={details}
           currentId={player.current?.id}
