@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUp, Check, Clock3, Ellipsis, Info, ListPlus, Pause, Play, Plus, Trash2 } from 'lucide-react';
+import { ArrowDown, ArrowUp, Clock3, Ellipsis, Info, ListPlus, Pause, Play, Plus, Trash2 } from 'lucide-react';
 import {
   Fragment,
   useCallback,
@@ -127,35 +127,21 @@ export function TrackTable({
   }, [rows]);
 
   const selectedSongs = rows.filter((row) => selected.has(row.key)).map((row) => row.song);
-  const allSelected = rows.length > 0 && rows.every((row) => selected.has(row.key));
-  function toggle(key: string, song: Song) {
-    const next = new Map(selected);
-    if (next.has(key)) next.delete(key);
-    else next.set(key, song);
-    select(next);
-  }
-  function toggleAll() {
-    const next = new Map(selected);
-    for (const row of rows) {
-      if (allSelected) next.delete(row.key);
-      else next.set(row.key, row.song);
-    }
-    select(next);
-  }
-  function choose(index: number, shift: boolean, additive: boolean) {
+  function choose(index: number, shift: boolean) {
     const row = rows[index];
     const from = rows.findIndex((item) => item.key === anchor.current);
+    const next = new Map(selected);
     if (shift && from >= 0) {
-      const next = additive ? new Map(selected) : new Map<string, Song>();
       for (const item of rows.slice(Math.min(from, index), Math.max(from, index) + 1)) next.set(item.key, item.song);
-      select(next);
     } else {
-      if (additive) toggle(row.key, row.song);
-      else select(new Map([[row.key, row.song]]));
+      if (next.has(row.key)) next.delete(row.key);
+      else next.set(row.key, row.song);
       anchor.current = row.key;
     }
+    select(next);
   }
   function activate(index: number) {
+    if (selected.size) select(new Map());
     // Browser rows represent songs. The Queue drawer selects exact occurrences.
     if (rows[index].song.id === currentId) togglePlayback();
     else
@@ -165,34 +151,43 @@ export function TrackTable({
       );
   }
   function rowClick(event: MouseEvent<HTMLTableRowElement>, index: number) {
-    if ((event.target as HTMLElement).closest('button,input,summary,[popover]')) return;
-    event.currentTarget.focus({ preventScroll: true });
-    choose(index, event.shiftKey, event.metaKey || event.ctrlKey);
+    const target = event.target as HTMLElement;
+    const playbackControl = target.closest('.artwork-button,.song-name');
+    if (target.closest('button,input,summary,[popover]') && !playbackControl) return;
+    if (event.ctrlKey || event.button !== 0 || (!event.metaKey && event.detail > 1)) return;
+    if (!playbackControl || event.metaKey) event.currentTarget.focus({ preventScroll: true });
+    if (event.metaKey) {
+      event.preventDefault();
+      choose(index, event.shiftKey);
+    } else activate(index);
   }
   function rowKey(event: KeyboardEvent<HTMLTableRowElement>, index: number) {
     if (event.target !== event.currentTarget) return;
-    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'a') {
+    if (event.metaKey && event.key.toLowerCase() === 'a') {
       event.preventDefault();
       const next = new Map(selected);
       for (const row of rows) next.set(row.key, row.song);
       select(next);
     } else if (event.key === ' ' || event.key === 'Enter') {
       event.preventDefault();
-      if (event.key === 'Enter') activate(index);
-      else choose(index, event.shiftKey, event.metaKey || event.ctrlKey);
+      if (event.metaKey) choose(index, event.shiftKey);
+      else activate(index);
     } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
       event.preventDefault();
       const next = Math.max(0, Math.min(rows.length - 1, index + (event.key === 'ArrowUp' ? -1 : 1)));
       if (rowWindow) rowWindow.focusRow(next);
       else event.currentTarget.parentElement?.querySelector<HTMLElement>(`[data-track-index="${next}"]`)?.focus();
-      choose(next, event.shiftKey, event.metaKey || event.ctrlKey);
+      if (event.metaKey) choose(next, event.shiftKey);
+    } else if (event.key === 'Escape' && selected.size) {
+      event.preventDefault();
+      select(new Map());
     }
   }
   const indices = rowWindow?.indices ?? rows.map((_, index) => index);
   function spacer(count: number) {
     return count > 0 && rowWindow ? (
       <tr aria-hidden="true" className="song-spacer">
-        <td aria-hidden="true" colSpan={6} style={{ height: count * rowWindow.rowHeight, padding: 0, border: 0 }} />
+        <td aria-hidden="true" colSpan={5} style={{ height: count * rowWindow.rowHeight, padding: 0, border: 0 }} />
       </tr>
     ) : null;
   }
@@ -200,12 +195,13 @@ export function TrackTable({
   return (
     <>
       <div ref={tableRoot} className="table-scroll">
-        <table className="song-table" aria-rowcount={rows.length + 1}>
+        <table
+          className="song-table"
+          aria-label="Songs. Command-click to select songs."
+          aria-rowcount={rows.length + 1}
+        >
           <thead>
             <tr>
-              <th className="check-column">
-                <input type="checkbox" aria-label="Select loaded songs" checked={allSelected} onChange={toggleAll} />
-              </th>
               <th className="number-column">#</th>
               <th>Title</th>
               <th className="album-column">Album</th>
@@ -236,21 +232,7 @@ export function TrackTable({
                     aria-selected={selected.has(row.key)}
                     onClick={(event) => rowClick(event, index)}
                     onKeyDown={(event) => rowKey(event, index)}
-                    onDoubleClick={(event) => {
-                      if (!(event.target as HTMLElement).closest('button,input,summary,[popover]')) activate(index);
-                    }}
                   >
-                    <td>
-                      <input
-                        aria-label={`Select ${row.song.name}`}
-                        type="checkbox"
-                        checked={selected.has(row.key)}
-                        onChange={() => {
-                          anchor.current = row.key;
-                          toggle(row.key, row.song);
-                        }}
-                      />
-                    </td>
                     <td className="row-number">
                       {currentId === row.song.id ? (
                         <span className="playing-bars" aria-label="Current song">
@@ -264,16 +246,15 @@ export function TrackTable({
                       <div className="song-title-cell">
                         <button
                           className="artwork-button"
-                          aria-label={`Song details for ${row.song.name || 'Untitled song'}`}
-                          title="Song details"
-                          onClick={() => details(row.song)}
+                          aria-label={`${pausing ? 'Pause' : 'Play'} ${row.song.name || 'Untitled song'}`}
+                          title={pausing ? 'Pause song' : 'Play song'}
                         >
                           <Artwork url={row.song.imageUrl} name={row.song.name} />
-                          <span className="artwork-details" aria-hidden="true">
-                            <Info size={14} />
+                          <span className="artwork-play" aria-hidden="true">
+                            <ActionIcon size={14} />
                           </span>
                         </button>
-                        <button className="song-name" onClick={() => details(row.song)}>
+                        <button className="song-name">
                           <span>{row.song.name || 'Untitled song'}</span>
                           <small>{row.song.artists.join(', ') || 'Unknown artist'}</small>
                         </button>
@@ -356,10 +337,7 @@ export function TrackTable({
       </div>
       {selectedSongs.length > 0 && (
         <div ref={toolbar} className="selection-toolbar" aria-label="Selected songs">
-          <span>
-            <Check size={15} />
-            {selectedSongs.length} selected
-          </span>
+          <span>{selectedSongs.length} selected</span>
           <button onClick={() => play(selectedSongs)}>
             <Play size={16} />
             Play
