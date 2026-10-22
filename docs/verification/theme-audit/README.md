@@ -51,3 +51,7 @@ Nested help: [Light](after-dj-mode-help-light-1280.png), [Coffee](after-dj-mode-
 ## Limits
 
 These checks cover synthetic normal, empty, editing and selected/focused states. Live Jellyfin streaming, provider-generated news/voice, all recovery/error permutations, populated saved-news history, OS-native chrome and screen-reader speech were not exercised. Existing uncommitted interface work was preserved.
+
+## Release integration check
+
+On 22 October 2026, after merging main through `c0d82be`, rebuilt the fixture and repeated the 144 theme/viewport captures. No renderer errors, sampled-text contrast failures or control/text overflow were reported. Repeated library, album, playlist and player cover checks, including native Enter/Space and focus restoration; all passed. The retained after captures and route measurements reflect this integrated build. `pnpm run check` and `pnpm audit` passed.
