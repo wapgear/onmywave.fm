@@ -420,6 +420,15 @@ function ReadyApp({
     setDrawer(null);
     setReturnToSetup(false);
   }
+  function openDJControls() {
+    const trigger = document.getElementById('player-dj-controls');
+    if (!(trigger instanceof HTMLButtonElement)) return;
+    const targetId = trigger.getAttribute('popovertarget');
+    const popover = targetId ? document.getElementById(targetId) : null;
+    if (popover?.matches(':popover-open')) return;
+    trigger.focus({ preventScroll: true });
+    trigger.click();
+  }
   function configureRoom(section: SettingsSection) {
     const focused = document.activeElement;
     const source =
@@ -533,6 +542,7 @@ function ReadyApp({
               configureSources={() => configureRoom('sources')}
               configureDJ={() => configureRoom('djs')}
               configureSettings={() => configureRoom('keys')}
+              openDJControls={openDJControls}
             />
           )}
           {page === 'settings' && (
