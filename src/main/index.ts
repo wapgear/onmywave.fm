@@ -117,6 +117,15 @@ let closing = false;
 
 let shutdownStarted = false;
 
+let quitCheckpointInFlight = false;
+
+let quitCheckpointed = false;
+
+const playbackCheckpointWaiters = new Map<
+  string,
+  { sender: BrowserWindow['webContents']; resolve: (saved: boolean) => void; timer: ReturnType<typeof setTimeout> }
+>();
+
 const news = new NewsService({
   canGenerate: () => !closing && newsRecoveryStatus.phase === 'ready' && !signingOut && !!service.connection(),
   getApiKey: readOpenAIKey,
@@ -141,6 +150,34 @@ function beginShutdown() {
   cancelNews();
   cancelCatalogRequests();
   revokeMedia();
+}
+
+function resolvePlaybackCheckpoint(requestId: string, saved: boolean) {
+  const waiter = playbackCheckpointWaiters.get(requestId);
+  if (!waiter) return;
+  playbackCheckpointWaiters.delete(requestId);
+  clearTimeout(waiter.timer);
+  waiter.resolve(saved);
+}
+
+function finishPlaybackCheckpointsFor(sender: BrowserWindow['webContents']) {
+  for (const [requestId, waiter] of playbackCheckpointWaiters)
+    if (waiter.sender === sender) resolvePlaybackCheckpoint(requestId, false);
+}
+
+function requestPlaybackCheckpoint(): Promise<boolean> {
+  const target = window;
+  if (!target || target.isDestroyed() || target.webContents.isDestroyed()) return Promise.resolve(false);
+  const requestId = randomUUID();
+  return new Promise((resolve) => {
+    const timer = setTimeout(() => resolvePlaybackCheckpoint(requestId, false), 1500);
+    playbackCheckpointWaiters.set(requestId, { sender: target.webContents, resolve, timer });
+    try {
+      target.webContents.send('wave:playbackCheckpointRequest', requestId);
+    } catch {
+      resolvePlaybackCheckpoint(requestId, false);
+    }
+  });
 }
 
 let playlistSessionEpoch = 0;
@@ -299,6 +336,34 @@ function validatePlayback(value: unknown): asserts value is PlaybackSnapshot | n
     invalid();
 }
 
+async function savePlaybackSnapshot(input: PlaybackSnapshot | null): Promise<boolean> {
+  validatePlayback(input);
+  let saved = false;
+  await updateLocalState((state) => {
+    const connectionId = service.connection()?.id;
+    if (signingOut || !connectionId) return {};
+    if (!input) {
+      if (state.playback?.connectionId !== connectionId) return {};
+      saved = true;
+      return { playback: null };
+    }
+    if (input.connectionId !== connectionId) return {};
+    const { volume, shuffle, repeat } = input;
+    saved = true;
+    return {
+      playback:
+        state.playback && state.playback.connectionId !== connectionId && !input.trackIds.length
+          ? state.playback
+          : input,
+      playbackPreferences: {
+        ...state.playbackPreferences,
+        [playbackPreferenceKey(connectionId)]: { volume, shuffle, repeat },
+      },
+    };
+  });
+  return saved;
+}
+
 function newsUnavailable() {
   if (closing) return;
   ++newsRecoveryEpoch;
@@ -382,7 +447,11 @@ function registerIpc() {
     getUpdateStatus: () => getUpdateStatus(),
     checkForUpdates: () => checkForAppUpdates(),
     downloadUpdate: () => downloadAppUpdate(),
-    installUpdate: () => installAppUpdate(),
+    installUpdate: async () => {
+      if (getUpdateStatus().phase !== 'downloaded') return installAppUpdate();
+      await requestPlaybackCheckpoint();
+      return installAppUpdate();
+    },
     getNewsRecoveryStatus: () => ({ ...newsRecoveryStatus }),
     retryNewsRecovery: () => recoverNews(),
     getConnection: () => service.connection(),
@@ -562,24 +631,20 @@ function registerIpc() {
       return updateLocalStateAndGet({ newsTransitions: settings });
     },
     savePlayback: async (input: PlaybackSnapshot | null) => {
-      validatePlayback(input);
-      await updateLocalState((state) => {
-        const connectionId = service.connection()?.id;
-        if (signingOut || !connectionId) return {};
-        if (!input) return state.playback?.connectionId === connectionId ? { playback: null } : {};
-        if (input.connectionId !== connectionId) return {};
-        const { volume, shuffle, repeat } = input;
-        return {
-          playback:
-            state.playback && state.playback.connectionId !== connectionId && !input.trackIds.length
-              ? state.playback
-              : input,
-          playbackPreferences: {
-            ...state.playbackPreferences,
-            [playbackPreferenceKey(connectionId)]: { volume, shuffle, repeat },
-          },
-        };
-      });
+      await savePlaybackSnapshot(input);
+    },
+    flushPlaybackCheckpoint: async (input: { requestId: string; snapshot: PlaybackSnapshot | null }) => {
+      if (!isRecord(input) || !text(input.requestId, 36) || !Object.hasOwn(input, 'snapshot')) invalid();
+      const waiter = playbackCheckpointWaiters.get(input.requestId);
+      if (!waiter || waiter.sender !== window?.webContents) invalid();
+      try {
+        const saved = input.snapshot === null ? false : await savePlaybackSnapshot(input.snapshot);
+        resolvePlaybackCheckpoint(input.requestId, saved);
+        return saved;
+      } catch (error) {
+        resolvePlaybackCheckpoint(input.requestId, false);
+        throw error;
+      }
     },
     getPlaybackPreferences: async (connectionId: string) => {
       if (!text(connectionId, 4096) || !connectionId) invalid();
@@ -987,7 +1052,7 @@ function registerIpc() {
 }
 
 async function createWindow() {
-  window = new BrowserWindow({
+  const createdWindow = new BrowserWindow({
     width: 1280,
     height: 800,
     minWidth: 960,
@@ -1005,14 +1070,25 @@ async function createWindow() {
       backgroundThrottling: false,
     },
   });
+  window = createdWindow;
+  const contents = createdWindow.webContents;
   window.webContents.setWindowOpenHandler(() => ({ action: 'deny' }));
   window.webContents.on('will-navigate', (event) => event.preventDefault());
   window.webContents.on('will-attach-webview', (event) => event.preventDefault());
   window.webContents.on('did-start-navigation', (_event, _url, _isInPlace, isMainFrame) => {
-    if (isMainFrame) cancelCatalogRequests();
+    if (isMainFrame) {
+      cancelCatalogRequests();
+      finishPlaybackCheckpointsFor(contents);
+    }
   });
-  window.webContents.on('render-process-gone', cancelCatalogRequests);
-  window.webContents.on('destroyed', cancelCatalogRequests);
+  window.webContents.on('render-process-gone', () => {
+    cancelCatalogRequests();
+    finishPlaybackCheckpointsFor(contents);
+  });
+  window.webContents.on('destroyed', () => {
+    cancelCatalogRequests();
+    finishPlaybackCheckpointsFor(contents);
+  });
   window.once('ready-to-show', () => window?.show());
   window.on('close', (event) => {
     if (process.platform === 'darwin' && !closing) {
@@ -1020,10 +1096,11 @@ async function createWindow() {
       window?.hide();
     }
   });
-  window.on('closed', () => {
+  createdWindow.on('closed', () => {
     cancelCatalogRequests();
     cancelNews();
-    window = null;
+    finishPlaybackCheckpointsFor(contents);
+    if (window === createdWindow) window = null;
   });
   const devUrl = process.env.ELECTRON_RENDERER_URL;
   if (devUrl) await window.loadURL(devUrl);
@@ -1127,6 +1204,19 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') app.quit();
 });
 
-app.on('before-quit', () => {
-  beginShutdown();
+app.on('before-quit', (event) => {
+  if (quitCheckpointed) {
+    quitCheckpointed = false;
+    beginShutdown();
+    return;
+  }
+  event.preventDefault();
+  if (quitCheckpointInFlight) return;
+  quitCheckpointInFlight = true;
+  void requestPlaybackCheckpoint().finally(() => {
+    quitCheckpointInFlight = false;
+    quitCheckpointed = true;
+    beginShutdown();
+    app.quit();
+  });
 });

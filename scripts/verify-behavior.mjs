@@ -78,6 +78,8 @@ try {
     await run('playback-storage', process.execPath, ['docs/verification/critical-playback/verify-storage.cjs']);
   } else {
     await run('player', process.execPath, ['docs/verification/critical-playback/verify.cjs']);
+    await run('player-build', 'pnpm', ['run', 'build']);
+    await run('player-relaunch', process.execPath, ['docs/verification/playback-relaunch/verify.mjs']);
   }
 } catch (error) {
   console.error(error instanceof Error ? error.message : error);

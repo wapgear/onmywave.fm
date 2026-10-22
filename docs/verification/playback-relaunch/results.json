@@ -1,0 +1,33 @@
+{
+  "command": "node docs/verification/playback-relaunch/verify.mjs",
+  "platform": "darwin",
+  "mainSourceSha256": "8fd6e5d95f4889b0932df2e80c44f1c3ad148d6d29112bd151ceeac5a720c928",
+  "builtMainSha256": "b63811ae81f0c09e3fd74497bae1aca063267231ac132f965d9ff719356b38d9",
+  "verifierSha256": "d3eda254dafe800370d7dc3e8e4e7ebef2e2caa29014616a5049729c7e7e2e7b",
+  "results": [
+    {
+      "scenario": "quit checkpoint persists the latest playing position and edited duplicate shuffle before the periodic checkpoint; relaunch is paused",
+      "exitMs": 845,
+      "diskPositionImmediatelyBeforeQuit": 44,
+      "positionAfterQuit": 73,
+      "currentQueueOccurrenceIndex": 2,
+      "manualUpcomingQueueIndices": [3, 0]
+    },
+    {
+      "scenario": "fresh Electron process restores the exact paused occurrence and shuffle future",
+      "position": 73,
+      "upcomingSongIds": ["3", "1"]
+    },
+    {
+      "scenario": "removing the before-quit checkpoint barrier is detected",
+      "diskPosition": 44,
+      "attemptedPosition": 111,
+      "detected": true
+    }
+  ],
+  "limitations": [
+    "Synthetic session, local fake Jellyfin metadata, and fake Audio; no real account, keychain, provider, remote service, or audio decoding.",
+    "Normal quit and relaunch are exercised; updater installation ordering is not exercised.",
+    "The generated test-only main bundle is instrumented from the production build; this is not a packaged-app test."
+  ]
+}
