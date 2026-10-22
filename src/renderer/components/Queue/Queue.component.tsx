@@ -364,7 +364,7 @@ function QueueRows({
               }}
             >
               {reorderable && item.upcomingId && (
-                <span className="queue-row-actions">
+                <>
                   <button
                     type="button"
                     className="queue-drag-handle"
@@ -376,25 +376,27 @@ function QueueRows({
                   >
                     <GripVertical size={14} aria-hidden="true" />
                   </button>
-                  <IconButton
-                    className="queue-move queue-move-up"
-                    variant="compact"
-                    label={`Move ${item.song.name} up`}
-                    disabled={virtualRow.index === 0}
-                    onClick={() => moveToIndex(virtualRow.index, virtualRow.index - 1)}
-                  >
-                    <ArrowUp size={14} aria-hidden="true" />
-                  </IconButton>
-                  <IconButton
-                    className="queue-move queue-move-down"
-                    variant="compact"
-                    label={`Move ${item.song.name} down`}
-                    disabled={virtualRow.index === items.length - 1}
-                    onClick={() => moveToIndex(virtualRow.index, virtualRow.index + 1)}
-                  >
-                    <ArrowDown size={14} aria-hidden="true" />
-                  </IconButton>
-                </span>
+                  <span className="queue-row-actions">
+                    <IconButton
+                      className="queue-move queue-move-up"
+                      variant="compact"
+                      label={`Move ${item.song.name} up`}
+                      disabled={virtualRow.index === 0}
+                      onClick={() => moveToIndex(virtualRow.index, virtualRow.index - 1)}
+                    >
+                      <ArrowUp size={14} aria-hidden="true" />
+                    </IconButton>
+                    <IconButton
+                      className="queue-move queue-move-down"
+                      variant="compact"
+                      label={`Move ${item.song.name} down`}
+                      disabled={virtualRow.index === items.length - 1}
+                      onClick={() => moveToIndex(virtualRow.index, virtualRow.index + 1)}
+                    >
+                      <ArrowDown size={14} aria-hidden="true" />
+                    </IconButton>
+                  </span>
+                </>
               )}
               <button
                 className="queue-track queue-play"

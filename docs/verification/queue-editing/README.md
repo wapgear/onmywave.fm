@@ -44,3 +44,14 @@ Matching queue views use the same eight songs, current entry, paused 30-second p
 | Song menu, 960×700 | ![Before song menu](menu-before-960.png) | ![After song menu](menu-after-960.png) |
 
 This branch builds on PR #202's queue virtualization. Merge #202 first; the #200 PR targets `main` according to repository convention.
+
+## Visible drag handle follow-up
+
+The six-dot grip now stays visible before the artwork for every upcoming row. Move arrows remain available on hover and keyboard focus. The current song and played history have no drag handle. Matching paused 30-second views were captured and inspected before and after at 1280×800 and 960×700.
+
+Native pointer dragging of the first upcoming occurrence after the third changed `[2,1,3,4,2,5,6]` to `[1,3,2,4,2,5,6]`. The current occurrence, 30-second position, and paused intent remained unchanged. Home on the moved grip returned that exact occurrence to the front and retained keyboard focus.
+
+| View | Before | After |
+| --- | --- | --- |
+| 1280×800 | ![Hidden grip](grip-before-1280.png) | ![Visible grip](grip-after-1280.png) |
+| 960×700 | ![Hidden narrow grip](grip-before-960.png) | ![Visible narrow grip](grip-after-960.png) |

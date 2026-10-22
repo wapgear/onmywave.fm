@@ -191,26 +191,29 @@
   background: var(--panel);
   opacity: 0;
 }
-.queue-row-actions button {
+.queue-row-actions button,
+.queue-drag-handle {
   --icon-button-size: 22px;
   width: 22px;
   min-width: 22px;
+  flex-shrink: 0;
   min-height: 22px;
   padding: 0;
   border-radius: 5px;
   color: var(--muted);
 }
-.queue-row-actions button:hover:where(:not(:disabled)) {
+.queue-row-actions button:hover:where(:not(:disabled)),
+.queue-drag-handle:hover {
   color: var(--text);
 }
-.queue-row-actions .queue-drag-handle {
+.queue-drag-handle {
   cursor: grab;
   touch-action: none;
 }
-.queue-row-actions .queue-drag-handle:active {
+.queue-drag-handle:active {
   cursor: grabbing;
 }
-.queue-row-actions .queue-drag-handle:focus-visible,
+.queue-drag-handle:focus-visible,
 .queue-row-actions .queue-move:focus-visible {
   outline-offset: 0;
 }
