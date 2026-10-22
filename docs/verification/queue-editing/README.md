@@ -55,3 +55,5 @@ Native pointer dragging of the first upcoming occurrence after the third changed
 | --- | --- | --- |
 | 1280×800 | ![Hidden grip](grip-before-1280.png) | ![Visible grip](grip-after-1280.png) |
 | 960×700 | ![Hidden narrow grip](grip-before-960.png) | ![Visible narrow grip](grip-after-960.png) |
+
+The merge-time CI audit identified newly published Electron advisories in 43.7.0. The dependency and lockfile now pin 43.7.6, the patched version for [GHSA-x562-297c-g43g](https://github.com/advisories/GHSA-x562-297c-g43g). The full dependency audit passes with the patch; no audit exclusions were added.
