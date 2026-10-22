@@ -79,6 +79,8 @@ export type CatalogQuery = {
   descending?: boolean;
 };
 
+export type CatalogRequest = CatalogQuery & { requestId?: string };
+
 export type Playlist = {
   id: string;
   name: string;
@@ -301,8 +303,9 @@ export interface WaveApi {
   libraries(): Promise<Result<Library[]>>;
   libraryFilters(): Promise<Result<LibraryFilters>>;
   selectLibraries(ids: string[]): Promise<Result<Connection>>;
-  songs(query: CatalogQuery): Promise<Result<Page<Song>>>;
-  albums(query: CatalogQuery): Promise<Result<Page<Album>>>;
+  songs(this: void, query: CatalogRequest): Promise<Result<Page<Song>>>;
+  albums(this: void, query: CatalogRequest): Promise<Result<Page<Album>>>;
+  cancelCatalog(requestId: string): Promise<Result<void>>;
   album(id: string): Promise<Result<Album>>;
   albumTracks(id: string): Promise<Result<Song[]>>;
   song(id: string): Promise<Result<Song>>;

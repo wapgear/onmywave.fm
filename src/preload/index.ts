@@ -23,6 +23,7 @@ const api: WaveApi = {
   selectLibraries: (ids) => ipcRenderer.invoke('wave:selectLibraries', ids),
   songs: (query) => ipcRenderer.invoke('wave:songs', query),
   albums: (query) => ipcRenderer.invoke('wave:albums', query),
+  cancelCatalog: (requestId) => ipcRenderer.invoke('wave:cancelCatalog', requestId),
   album: (id) => ipcRenderer.invoke('wave:album', id),
   albumTracks: (id) => ipcRenderer.invoke('wave:albumTracks', id),
   song: (id) => ipcRenderer.invoke('wave:song', id),

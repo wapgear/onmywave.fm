@@ -1,7 +1,7 @@
 import { useCallback, useLayoutEffect, useRef } from 'react';
 
 import type { Song } from '../../shared/types';
-import { unwrap } from '../api';
+import { readCatalog } from '../catalog';
 import type { LibraryRepeatState } from './useLibraryRepeat.types';
 
 const PAGE_SIZE = 500;
@@ -21,11 +21,14 @@ export function useLibraryRepeat(connectionId: string | null, enabled: boolean) 
     generation: 0,
     cache: null,
     flight: null,
+    controller: null,
   });
 
   useLayoutEffect(() => {
     const current = state.current;
     if (current.connectionId !== connectionId || current.enabled !== enabled) {
+      current.controller?.abort();
+      current.controller = null;
       current.connectionId = connectionId;
       current.enabled = enabled;
       current.generation += 1;
@@ -35,6 +38,8 @@ export function useLibraryRepeat(connectionId: string | null, enabled: boolean) 
     const generation = current.generation;
     return () => {
       if (current.generation === generation) {
+        current.controller?.abort();
+        current.controller = null;
         current.generation += 1;
         current.cache = null;
         current.flight = null;
@@ -49,6 +54,8 @@ export function useLibraryRepeat(connectionId: string | null, enabled: boolean) 
     if (current.flight) return current.flight;
 
     const generation = current.generation;
+    const controller = new AbortController();
+    current.controller = controller;
     const activeConnectionId = current.connectionId;
     const isCurrent = () =>
       state.current.generation === generation &&
@@ -61,7 +68,11 @@ export function useLibraryRepeat(connectionId: string | null, enabled: boolean) 
 
       while (total === null || start < total) {
         if (!isCurrent()) throw abortError();
-        const page = unwrap(await window.wave.songs({ start, limit: PAGE_SIZE, sort: 'name', descending: false }));
+        const page = await readCatalog(
+          window.wave.songs,
+          { start, limit: PAGE_SIZE, sort: 'name', descending: false },
+          controller.signal,
+        );
         if (!isCurrent()) throw abortError();
         if (
           page.start !== start ||
@@ -85,9 +96,17 @@ export function useLibraryRepeat(connectionId: string | null, enabled: boolean) 
       return result;
     })();
     current.flight = flight;
-    void flight.catch(() => {
-      if (state.current.generation === generation) state.current.flight = null;
-    });
+    void flight.then(
+      () => {
+        if (state.current.generation === generation) state.current.controller = null;
+      },
+      () => {
+        if (state.current.generation === generation) {
+          state.current.flight = null;
+          state.current.controller = null;
+        }
+      },
+    );
     return flight;
   }, []);
 
