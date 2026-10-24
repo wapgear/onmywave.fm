@@ -1,6 +1,6 @@
 {
   "name": "onmywave-desktop",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "private": true,
   "license": "GPL-3.0-only",
   "author": "onmywave.fm contributors",
@@ -40,7 +40,7 @@
     "@types/react-dom": "^19.2.3",
     "@types/ws": "^8.18.2",
     "@vitejs/plugin-react": "^5.2.0",
-    "electron": "43.7.6",
+    "electron": "43.8.1",
     "electron-builder": "^26.15.7",
     "electron-vite": "6.0.0",
     "eslint-plugin-react-hooks": "^7.1.1",
