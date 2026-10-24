@@ -44,4 +44,17 @@
   background: var(--player-background);
   box-shadow: 0 4px 16px rgb(20 25 35 / 6%);
   backdrop-filter: blur(16px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+}
+
+.song-load-count.is-scrolling,
+.song-load-count:focus {
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .song-load-count {
+    transition: none;
+  }
 }

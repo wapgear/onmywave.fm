@@ -52,6 +52,7 @@ export function VirtualSongs({
     scrollMargin: offset,
     scrollPaddingStart: 48,
     overscan: 6,
+    isScrollingResetDelay: 800,
     rangeExtractor: (range) => {
       const indices = defaultRangeExtractor(range);
       if (focusedIndex >= 0)
@@ -171,7 +172,7 @@ export function VirtualSongs({
       <div className="song-load-status">
         <span
           ref={status}
-          className="song-load-count"
+          className={`song-load-count ${virtualizer.isScrolling ? 'is-scrolling' : ''}`}
           tabIndex={-1}
           role="group"
           aria-label={`${table.rows.length.toLocaleString()} of ${total.toLocaleString()} songs loaded`}
