@@ -1,0 +1,80 @@
+[
+  {
+    "variant": "applied",
+    "scene": "on-air",
+    "baseline": {
+      "x": 208,
+      "y": 28,
+      "width": 1216,
+      "height": 756
+    },
+    "layout": {
+      "x": 208,
+      "y": 28,
+      "width": 1216,
+      "height": 756
+    },
+    "notices": {
+      "x": 880,
+      "y": 712.71875,
+      "width": 548,
+      "height": 75.28125
+    },
+    "stable": true,
+    "errors": []
+  },
+  {
+    "scene": "dj-actions",
+    "pausedAndResumedControl": true,
+    "focusRetained": true
+  },
+  {
+    "variant": "applied",
+    "scene": "playback-error",
+    "baseline": {
+      "x": 208,
+      "y": 28,
+      "width": 1216,
+      "height": 756
+    },
+    "layout": {
+      "x": 208,
+      "y": 28,
+      "width": 1216,
+      "height": 756
+    },
+    "notices": {
+      "x": 880,
+      "y": 712.71875,
+      "width": 548,
+      "height": 75.28125
+    },
+    "stable": true,
+    "errors": []
+  },
+  {
+    "variant": "applied",
+    "scene": "narrow-dark-drawer",
+    "controls": [
+      {
+        "text": "Retry",
+        "x": 297,
+        "y": 483,
+        "width": 71.484375,
+        "height": 44,
+        "focused": true,
+        "outline": "solid"
+      },
+      {
+        "text": "Skip track",
+        "x": 697.765625,
+        "y": 483,
+        "width": 69.234375,
+        "height": 44,
+        "focused": false,
+        "outline": "none"
+      }
+    ],
+    "overflow": false
+  }
+]
