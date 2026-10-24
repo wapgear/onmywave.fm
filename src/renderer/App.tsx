@@ -1,6 +1,7 @@
 import { useIsMutating, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Disc3, ListMusic, Maximize2, Minimize2, Music2, Radio, Settings, X } from 'lucide-react';
 import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { flushSync } from 'react-dom';
 
 import type { Connection, Song } from '../shared/types';
 import { unwrap } from './api';
@@ -258,32 +259,69 @@ function ReadyApp({
   const drawerClose = useRef<HTMLButtonElement>(null);
   const drawerElement = useRef<HTMLElement>(null);
   const drawerExit = useRef<Animation | null>(null);
+  const drawerEnter = useRef<Animation | null>(null);
+  const drawerTransition = useRef<ViewTransition | null>(null);
   if (drawer === 'lyrics' && !player.current) setDrawer(null);
   const visibleDrawer = drawer === 'lyrics' && !player.current ? null : drawer;
   const expandedLyrics = visibleDrawer === 'lyrics' && lyricsExpanded;
   const listeningSidebar = typeof visibleDrawer === 'string' && !expandedLyrics;
+  function cancelDrawerTransition() {
+    drawerTransition.current?.skipTransition();
+    drawerTransition.current = null;
+    document.documentElement.classList.remove('is-switching-sidebar');
+  }
   function openDrawer(value: Song | 'queue' | 'lyrics' | 'dj', source?: HTMLElement | null) {
+    cancelDrawerTransition();
     drawerExit.current?.cancel();
     drawerExit.current = null;
+    drawerEnter.current?.finish();
     if (drawerElement.current) drawerElement.current.inert = false;
     drawerTrigger.current = source ?? (document.activeElement instanceof HTMLElement ? document.activeElement : null);
-    setLyricsExpanded(false);
-    setDrawer(value);
+    const updateDrawer = () => {
+      setLyricsExpanded(false);
+      setDrawer(value);
+    };
+    if (
+      typeof visibleDrawer === 'string' &&
+      typeof value === 'string' &&
+      visibleDrawer !== value &&
+      document.startViewTransition &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      document.documentElement.classList.add('is-switching-sidebar');
+      const transition = document.startViewTransition(() => {
+        if (drawerTransition.current !== transition) return;
+        flushSync(updateDrawer);
+      });
+      drawerTransition.current = transition;
+      void transition.ready.catch(() => {});
+      void transition.finished.then(
+        () => {
+          if (drawerTransition.current === transition) cancelDrawerTransition();
+        },
+        () => {
+          if (drawerTransition.current === transition) cancelDrawerTransition();
+        },
+      );
+      return;
+    }
+    updateDrawer();
   }
   function closeDrawer() {
+    cancelDrawerTransition();
     if (!drawer || drawerExit.current) return;
     const trigger = drawerTrigger.current;
     if (trigger?.isConnected) trigger.focus({ preventScroll: true });
     const node = drawerElement.current;
-    if (drawer === 'dj' && node && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (typeof drawer === 'string' && node && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       const style = getComputedStyle(node);
-      const animation = node.animate(
-        [
-          { transform: style.transform, opacity: style.opacity },
-          { transform: 'translateX(calc(100% + 16px))', opacity: 0 },
-        ],
-        { duration: 180, easing: 'cubic-bezier(0.4, 0, 1, 1)', fill: 'forwards' },
-      );
+      const from = { transform: style.transform, opacity: style.opacity };
+      drawerEnter.current?.cancel();
+      const animation = node.animate([from, { transform: 'translateX(calc(100% + 16px))', opacity: 0 }], {
+        duration: 180,
+        easing: 'cubic-bezier(0.4, 0, 1, 1)',
+        fill: 'forwards',
+      });
       node.inert = true;
       drawerExit.current = animation;
       void animation.finished.then(
@@ -308,11 +346,41 @@ function ReadyApp({
 
   useLayoutEffect(() => {
     if (visibleDrawer) drawerClose.current?.focus({ preventScroll: true });
+    else {
+      drawerTransition.current?.skipTransition();
+      drawerTransition.current = null;
+      document.documentElement.classList.remove('is-switching-sidebar');
+    }
+    if (
+      typeof visibleDrawer === 'string' &&
+      drawerElement.current &&
+      !drawerTransition.current &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      drawerEnter.current = drawerElement.current.animate(
+        [
+          { transform: 'translateX(calc(100% + 16px))', opacity: 0 },
+          { transform: 'translateX(0)', opacity: 1 },
+        ],
+        { duration: 220, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)' },
+      );
+    }
     return () => {
+      drawerEnter.current?.cancel();
+      drawerEnter.current = null;
       drawerExit.current?.cancel();
       drawerExit.current = null;
     };
   }, [visibleDrawer]);
+
+  useLayoutEffect(
+    () => () => {
+      drawerTransition.current?.skipTransition();
+      drawerTransition.current = null;
+      document.documentElement.classList.remove('is-switching-sidebar');
+    },
+    [],
+  );
 
   const [adding, setAdding] = useState<Song[] | null>(null);
   function updateLibraries(value: Connection) {
@@ -625,7 +693,10 @@ function ReadyApp({
             <div className="drawer-heading-actions">
               {visibleDrawer === 'lyrics' && (
                 <IconButton
-                  onClick={() => setLyricsExpanded((expanded) => !expanded)}
+                  onClick={() => {
+                    cancelDrawerTransition();
+                    setLyricsExpanded((expanded) => !expanded);
+                  }}
                   label={expandedLyrics ? 'Return lyrics to sidebar' : 'Expand lyrics'}
                   aria-expanded={expandedLyrics}
                 >

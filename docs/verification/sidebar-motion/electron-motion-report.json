@@ -1,0 +1,161 @@
+{
+  "native": true,
+  "version": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.7871.250 Electron/43.8.1 Safari/537.36",
+  "checks": [
+    {
+      "initialAndExit": "Show DJ sidebar",
+      "duration": 220
+    },
+    {
+      "initialAndExit": "Show queue, 5 tracks",
+      "duration": 220
+    },
+    {
+      "initialAndExit": "Show lyrics",
+      "duration": 220
+    },
+    {
+      "switchTo": "queue",
+      "animations": [
+        {
+          "name": "sidebar-replace-in",
+          "frames": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "transform": "translateX(100%)",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "transform": "none",
+              "computedOffset": 1
+            }
+          ],
+          "duration": 220
+        },
+        {
+          "name": "sidebar-replace-out",
+          "frames": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "transform": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "transform": "translateX(-100%)",
+              "computedOffset": 1
+            }
+          ],
+          "duration": 220
+        }
+      ]
+    },
+    {
+      "switchTo": "lyrics",
+      "animations": [
+        {
+          "name": "sidebar-replace-in",
+          "frames": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "transform": "translateX(100%)",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "transform": "none",
+              "computedOffset": 1
+            }
+          ],
+          "duration": 220
+        },
+        {
+          "name": "sidebar-replace-out",
+          "frames": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "transform": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "transform": "translateX(-100%)",
+              "computedOffset": 1
+            }
+          ],
+          "duration": 220
+        }
+      ]
+    },
+    {
+      "switchTo": "dj",
+      "animations": [
+        {
+          "name": "sidebar-replace-in",
+          "frames": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "transform": "translateX(100%)",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "transform": "none",
+              "computedOffset": 1
+            }
+          ],
+          "duration": 220
+        },
+        {
+          "name": "sidebar-replace-out",
+          "frames": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "transform": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "transform": "translateX(-100%)",
+              "computedOffset": 1
+            }
+          ],
+          "duration": 220
+        }
+      ]
+    },
+    {
+      "rapidLatestWins": true,
+      "closeCancelsPendingSwitch": true
+    },
+    {
+      "reducedMotion": true
+    }
+  ],
+  "pageErrors": []
+}
