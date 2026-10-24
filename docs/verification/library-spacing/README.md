@@ -1,5 +1,7 @@
 # Library spacing and keyboard focus
 
+The [follow-up corrections](../library-spacing-followup/README.md) fix sidebar clipping, symmetric row spacing, and the header background beneath a permanently reserved scrollbar gutter. The captures below show the first implementation.
+
 The main content now sits in an inset, theme-aware frame inspired by the supplied Yandex Music reference. Song rows have square edges, an 8px gap below the table header, and 4px of transparent spacing between row backgrounds. Their total height remains 56px so virtual scrolling retains its existing density. The scrollbar itself and its track have transparent backgrounds; a short table fills the frame through its right edge without reserving a scrollbar gutter.
 
 The library search has a labeled Clear search button that clears both the input and applied query, clears selection, and restores input focus. Typing retains the existing 300ms debounce. Empty searches apply without that delay, and clearing cancels a pending search. Filter options and drawer buttons draw their focus rings inside their bounds, including at scroll-container edges.

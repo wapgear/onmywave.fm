@@ -1,7 +1,22 @@
 .song-table tr:focus-visible {
-  outline: var(--control-focus-width) solid var(--focus);
-  outline-offset: -2px;
-  border-radius: 0;
+  outline: none;
+}
+.song-table tr:focus-visible > td {
+  box-shadow:
+    inset 0 var(--control-focus-width) var(--focus),
+    inset 0 calc(-1 * var(--control-focus-width)) var(--focus);
+}
+.song-table tr:focus-visible > td:first-child {
+  box-shadow:
+    inset var(--control-focus-width) 0 var(--focus),
+    inset 0 var(--control-focus-width) var(--focus),
+    inset 0 calc(-1 * var(--control-focus-width)) var(--focus);
+}
+.song-table tr:focus-visible > td:last-child {
+  box-shadow:
+    inset calc(-1 * var(--control-focus-width)) 0 var(--focus),
+    inset 0 var(--control-focus-width) var(--focus),
+    inset 0 calc(-1 * var(--control-focus-width)) var(--focus);
 }
 .artwork-button:focus-visible .artwork-play {
   display: flex;
