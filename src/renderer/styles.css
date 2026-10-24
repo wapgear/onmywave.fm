@@ -317,7 +317,7 @@ button > svg {
 .main-content {
   overflow-x: hidden;
   overflow-y: scroll;
-  margin: 28px 12px 12px 0;
+  margin: 28px 16px calc(var(--player-clearance) + var(--player-notice-height, 0px)) 0;
   border-radius: 16px;
   background: linear-gradient(
     to bottom,
@@ -656,7 +656,7 @@ button > svg {
 }
 .selection-toolbar {
   position: sticky;
-  bottom: calc(var(--player-clearance) + var(--player-notice-height, 0px) + 12px);
+  bottom: 12px;
   z-index: 12;
   display: flex;
   align-items: center;
@@ -1728,7 +1728,7 @@ legend {
 }
 .page-content {
   min-width: 0;
-  padding: 18px 30px calc(var(--player-clearance) + var(--player-notice-height, 0px) + 32px);
+  padding: 18px 30px 32px;
 }
 .song-table thead th {
   position: sticky;
@@ -1760,7 +1760,7 @@ legend {
 
 .main-content {
   scroll-padding-top: 72px;
-  scroll-padding-bottom: calc(var(--player-clearance) + var(--player-notice-height, 0px) + 24px);
+  scroll-padding-bottom: 24px;
 }
 
 .app-shell.has-drawer {
