@@ -4,6 +4,7 @@ import {
   MicVocal,
   Pause,
   Radio,
+  RadioTower,
   Play,
   Repeat,
   Repeat1,
@@ -44,6 +45,8 @@ export function Player({
 }: PlayerProps) {
   const player = usePlayer();
   const automation = useDJPlayback();
+  const djActive = automation.settings.enabled || player.newsPhase !== 'idle';
+  const DJStatusIcon = djActive ? RadioTower : Radio;
   const notices = useRef<HTMLDivElement>(null);
   const repeatTrigger = useRef<HTMLButtonElement>(null);
   const { retryRef: libraryRetryRef, retry: retryLibraryWithFocus } = useRetryFocus({
@@ -374,14 +377,15 @@ export function Player({
           <IconButton
             id="player-dj-controls"
             variant="player"
-            className={`player-dj ${djOpen || automation.settings.enabled || player.newsPhase !== 'idle' ? 'is-active' : ''}`}
+            className={`player-dj ${djOpen ? 'is-active' : ''}`}
             onClick={(event) => toggleDJ(event.currentTarget)}
-            title="Your DJ"
+            title={`Your DJ · ${djActive ? 'Active' : 'Inactive'}`}
+            aria-description={djActive ? 'DJ active' : 'DJ inactive'}
             label={djOpen ? 'Hide DJ sidebar' : 'Show DJ sidebar'}
             aria-controls="listening-drawer"
             aria-expanded={djOpen}
           >
-            <Radio size={19} aria-hidden="true" />
+            <DJStatusIcon size={19} aria-hidden="true" />
           </IconButton>
         </div>
       </footer>
