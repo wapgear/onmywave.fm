@@ -1841,6 +1841,10 @@ input[type='range'] {
   }
 }
 
+.app-shell.has-dj-drawer {
+  grid-template-columns: var(--sidebar) minmax(0, 1fr) 336px;
+}
+
 :root {
   --content-inset: 30px;
 }
