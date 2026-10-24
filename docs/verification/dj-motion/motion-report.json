@@ -1,0 +1,56 @@
+{
+  "checks": [
+    "9 of 9 floats 12px inside library bottom right",
+    "opening uses slide animation",
+    "floating count follows narrowed library",
+    "close slides out, disables exiting controls and restores focus",
+    "count follows library after sidebar closes",
+    "count remains in bottom corner with one search result",
+    "switching drawer cancels stale exit",
+    "reduced motion skips entrance and exit",
+    "1280 dark count placement",
+    "800 dark count placement and viewport fit",
+    "count stays fixed when long library scrolls"
+  ],
+  "errors": [],
+  "motion": [
+    {
+      "opening": [
+        {
+          "name": "dj-sidebar-enter",
+          "state": "running",
+          "duration": 220
+        }
+      ]
+    },
+    {
+      "closing": {
+        "inert": true,
+        "focused": "player-dj-controls",
+        "animations": [
+          {
+            "duration": 180,
+            "frames": [
+              {
+                "offset": null,
+                "easing": "linear",
+                "composite": "auto",
+                "transform": "none",
+                "opacity": "1",
+                "computedOffset": 0
+              },
+              {
+                "offset": null,
+                "easing": "linear",
+                "composite": "auto",
+                "transform": "translateX(calc(100% + 16px))",
+                "opacity": "0",
+                "computedOffset": 1
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,341 @@
+{
+  "checks": [
+    "count hidden on initial idle view",
+    "scroll reveals count with fade transition",
+    "count stays visible while scrolling continues",
+    "idle fades out after scroll, with intermediate opacity both ways",
+    "retry focus target remains visible when focused",
+    "reduced motion shows and hides without fading"
+  ],
+  "errors": [],
+  "frames": [
+    {
+      "opacity": 0.0831504,
+      "scrolling": true
+    },
+    {
+      "opacity": 0.261174,
+      "scrolling": true
+    },
+    {
+      "opacity": 0.637451,
+      "scrolling": true
+    },
+    {
+      "opacity": 0.762727,
+      "scrolling": true
+    },
+    {
+      "opacity": 0.914997,
+      "scrolling": true
+    },
+    {
+      "opacity": 0.957297,
+      "scrolling": true
+    },
+    {
+      "opacity": 0.996948,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": true
+    },
+    {
+      "opacity": 1,
+      "scrolling": false
+    },
+    {
+      "opacity": 0.91598,
+      "scrolling": false
+    },
+    {
+      "opacity": 0.531719,
+      "scrolling": false
+    },
+    {
+      "opacity": 0.361601,
+      "scrolling": false
+    },
+    {
+      "opacity": 0.147699,
+      "scrolling": false
+    },
+    {
+      "opacity": 0.0852877,
+      "scrolling": false
+    },
+    {
+      "opacity": 0.0165212,
+      "scrolling": false
+    },
+    {
+      "opacity": 0.00309547,
+      "scrolling": false
+    }
+  ]
+}

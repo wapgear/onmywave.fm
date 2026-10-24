@@ -315,9 +315,10 @@ button > svg {
   -webkit-app-region: drag;
 }
 .main-content {
+  anchor-name: --library-panel;
   overflow-x: hidden;
   overflow-y: scroll;
-  margin: 28px 16px calc(var(--player-clearance) + var(--player-notice-height, 0px)) 0;
+  margin: 28px 16px var(--player-clearance) 0;
   border-radius: 16px;
   background: linear-gradient(
     to bottom,
@@ -1772,10 +1773,6 @@ legend {
 .has-drawer .main-content::-webkit-scrollbar {
   display: none;
 }
-.has-drawer .player-notices {
-  right: 328px;
-  left: calc(var(--sidebar) + 24px);
-}
 * {
   scrollbar-width: auto;
   scrollbar-color: auto;
@@ -1843,9 +1840,10 @@ input[type='range'] {
   .app-shell.has-drawer {
     grid-template-columns: var(--sidebar) minmax(0, 1fr) 320px;
   }
-  .has-drawer .player-notices {
-    right: 344px;
-  }
+}
+
+.app-shell.has-dj-drawer {
+  grid-template-columns: var(--sidebar) minmax(0, 1fr) 336px;
 }
 
 :root {
@@ -1915,8 +1913,7 @@ input[type='range'] {
     padding-bottom: 24px;
     scroll-padding-bottom: 24px;
   }
-  .has-drawer .main-content,
-  .has-drawer .player-notices {
+  .has-drawer .main-content {
     visibility: hidden;
   }
 }

@@ -4,6 +4,7 @@ export type PlayerProps = {
   toggleQueue: (source: HTMLButtonElement) => void;
   toggleLyrics: (source: HTMLButtonElement) => void;
   openDetails: (source: HTMLButtonElement) => void;
-  openRoom: (source: HTMLButtonElement | null) => void;
-  openSettings: (source: HTMLButtonElement | null) => void;
+  djOpen: boolean;
+  toggleDJ: (source: HTMLButtonElement) => void;
+  djControlsTarget: HTMLDivElement | null;
 };

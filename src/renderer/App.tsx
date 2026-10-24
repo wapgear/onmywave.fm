@@ -6,6 +6,7 @@ import type { Connection, Song } from '../shared/types';
 import { unwrap } from './api';
 import type { ReadyAppProps, SessionContentProps } from './App.types';
 import { AddPlaylist } from './components/AddPlaylist/AddPlaylist.component';
+import { DJSidebar } from './components/DJSidebar/DJSidebar.component';
 import { IconButton } from './components/IconButton/IconButton.component';
 import { Inspector } from './components/Inspector/Inspector.component';
 import { LibrarySelectionProvider } from './components/LibrarySelection';
@@ -250,21 +251,50 @@ function ReadyApp({
   const setupReturnTarget = useRef('');
   const restoreSetupFocus = useRef(false);
   const player = usePlayer();
-  const [drawer, setDrawer] = useState<Song | 'queue' | 'lyrics' | null>(null);
+  const [drawer, setDrawer] = useState<Song | 'queue' | 'lyrics' | 'dj' | null>(null);
+  const [djControlsTarget, setDJControlsTarget] = useState<HTMLDivElement | null>(null);
   const drawerTrigger = useRef<HTMLElement | null>(null);
   const drawerClose = useRef<HTMLButtonElement>(null);
+  const drawerElement = useRef<HTMLElement>(null);
+  const drawerExit = useRef<Animation | null>(null);
   if (drawer === 'lyrics' && !player.current) setDrawer(null);
   const visibleDrawer = drawer === 'lyrics' && !player.current ? null : drawer;
-  function openDrawer(value: Song | 'queue' | 'lyrics', source?: HTMLElement | null) {
+  function openDrawer(value: Song | 'queue' | 'lyrics' | 'dj', source?: HTMLElement | null) {
+    drawerExit.current?.cancel();
+    drawerExit.current = null;
+    if (drawerElement.current) drawerElement.current.inert = false;
     drawerTrigger.current = source ?? (document.activeElement instanceof HTMLElement ? document.activeElement : null);
     setDrawer(value);
   }
   function closeDrawer() {
-    if (!drawer) return;
-    setDrawer(null);
+    if (!drawer || drawerExit.current) return;
     const trigger = drawerTrigger.current;
-    drawerTrigger.current = null;
     if (trigger?.isConnected) trigger.focus({ preventScroll: true });
+    const node = drawerElement.current;
+    if (drawer === 'dj' && node && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const style = getComputedStyle(node);
+      const animation = node.animate(
+        [
+          { transform: style.transform, opacity: style.opacity },
+          { transform: 'translateX(calc(100% + 16px))', opacity: 0 },
+        ],
+        { duration: 180, easing: 'cubic-bezier(0.4, 0, 1, 1)', fill: 'forwards' },
+      );
+      node.inert = true;
+      drawerExit.current = animation;
+      void animation.finished.then(
+        () => {
+          if (drawerExit.current !== animation) return;
+          drawerExit.current = null;
+          drawerTrigger.current = null;
+          setDrawer(null);
+        },
+        () => {},
+      );
+      return;
+    }
+    drawerTrigger.current = null;
+    setDrawer(null);
   }
   const closeDrawerRef = useRef(closeDrawer);
 
@@ -274,6 +304,10 @@ function ReadyApp({
 
   useLayoutEffect(() => {
     if (visibleDrawer) drawerClose.current?.focus({ preventScroll: true });
+    return () => {
+      drawerExit.current?.cancel();
+      drawerExit.current = null;
+    };
   }, [visibleDrawer]);
 
   const [adding, setAdding] = useState<Song[] | null>(null);
@@ -422,13 +456,7 @@ function ReadyApp({
     setReturnToSetup(false);
   }
   function openDJControls() {
-    const trigger = document.getElementById('player-dj-controls');
-    if (!(trigger instanceof HTMLButtonElement)) return;
-    const targetId = trigger.getAttribute('popovertarget');
-    const popover = targetId ? document.getElementById(targetId) : null;
-    if (popover?.matches(':popover-open')) return;
-    trigger.focus({ preventScroll: true });
-    trigger.click();
+    openDrawer('dj', document.getElementById('player-dj-controls'));
   }
   function configureRoom(section: SettingsSection) {
     const focused = document.activeElement;
@@ -467,7 +495,9 @@ function ReadyApp({
   }, [page]);
 
   return (
-    <div className={`app-shell ${visibleDrawer && visibleDrawer !== 'lyrics' ? 'has-drawer' : ''}`}>
+    <div
+      className={`app-shell ${visibleDrawer && visibleDrawer !== 'lyrics' ? 'has-drawer' : ''} ${visibleDrawer === 'dj' ? 'has-dj-drawer' : ''}`}
+    >
       <aside className="sidebar">
         <div className="traffic-light-space" />
         <div className="wordmark">onmywave.fm</div>
@@ -572,14 +602,21 @@ function ReadyApp({
       </main>
       {visibleDrawer && (
         <aside
+          ref={drawerElement}
           id="listening-drawer"
-          className={`side-drawer ${visibleDrawer === 'lyrics' ? 'lyrics-drawer' : ''}`}
+          className={`side-drawer ${visibleDrawer === 'lyrics' ? 'lyrics-drawer' : visibleDrawer === 'dj' ? 'dj-drawer' : ''}`}
           role={visibleDrawer === 'lyrics' ? 'dialog' : undefined}
           aria-labelledby="drawer-title"
         >
           <header className="drawer-heading">
             <h2 id="drawer-title">
-              {visibleDrawer === 'queue' ? 'Playing Next' : visibleDrawer === 'lyrics' ? 'Lyrics' : 'Song details'}
+              {visibleDrawer === 'queue'
+                ? 'Playing Next'
+                : visibleDrawer === 'lyrics'
+                  ? 'Lyrics'
+                  : visibleDrawer === 'dj'
+                    ? 'Your DJ'
+                    : 'Song details'}
             </h2>
             <IconButton
               ref={drawerClose}
@@ -589,20 +626,38 @@ function ReadyApp({
                   ? 'Close queue'
                   : visibleDrawer === 'lyrics'
                     ? 'Close lyrics'
-                    : 'Close song details'
+                    : visibleDrawer === 'dj'
+                      ? 'Close DJ sidebar'
+                      : 'Close song details'
               }
             >
               <X size={20} aria-hidden="true" />
             </IconButton>
           </header>
           <div
-            key={visibleDrawer === 'queue' || visibleDrawer === 'lyrics' ? visibleDrawer : visibleDrawer.id}
+            key={typeof visibleDrawer === 'string' ? visibleDrawer : visibleDrawer.id}
             className="drawer-body"
             role={visibleDrawer === 'lyrics' ? 'region' : undefined}
             tabIndex={visibleDrawer === 'lyrics' ? 0 : undefined}
             aria-label={visibleDrawer === 'lyrics' ? 'Song lyrics' : undefined}
           >
-            {visibleDrawer === 'queue' ? (
+            {visibleDrawer === 'dj' ? (
+              <DJSidebar
+                controlsRef={setDJControlsTarget}
+                openRoom={() =>
+                  openPlayerDestination(
+                    'stations',
+                    drawerTrigger.current instanceof HTMLButtonElement ? drawerTrigger.current : null,
+                  )
+                }
+                openSettings={() =>
+                  openPlayerDestination(
+                    'settings',
+                    drawerTrigger.current instanceof HTMLButtonElement ? drawerTrigger.current : null,
+                  )
+                }
+              />
+            ) : visibleDrawer === 'queue' ? (
               <Queue />
             ) : visibleDrawer === 'lyrics' ? (
               <Lyrics key={player.currentKey} connectionId={connection.id} song={player.current!} />
@@ -616,8 +671,9 @@ function ReadyApp({
         openDetails={(source) => {
           if (player.current) openDrawer(player.current, source);
         }}
-        openRoom={(source) => openPlayerDestination('stations', source)}
-        openSettings={(source) => openPlayerDestination('settings', source)}
+        djOpen={visibleDrawer === 'dj'}
+        djControlsTarget={djControlsTarget}
+        toggleDJ={(source) => (visibleDrawer === 'dj' ? closeDrawer() : openDrawer('dj', source))}
         queueOpen={visibleDrawer === 'queue'}
         lyricsOpen={visibleDrawer === 'lyrics'}
         toggleQueue={(source) => (visibleDrawer === 'queue' ? closeDrawer() : openDrawer('queue', source))}

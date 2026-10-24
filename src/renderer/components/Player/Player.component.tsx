@@ -3,6 +3,7 @@ import {
   LoaderCircle,
   MicVocal,
   Pause,
+  Radio,
   Play,
   Repeat,
   Repeat1,
@@ -16,13 +17,13 @@ import {
 } from 'lucide-react';
 import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 
-import { useNewsRecovery } from '../../NewsRecovery';
+import { useDJPlayback } from '../../dj-playback';
 import { usePlayer } from '../../player';
 import type { OptionsSaveSettlement, PlaybackRetrySettlement } from '../../player.types';
 import { useRetryFocus } from '../../useRetryFocus';
 import { IconButton } from '../IconButton/IconButton.component';
 import { Artwork } from '../Shared';
-import { DJPopover } from './DJPopover.component';
+import { DJBreakNotice } from './DJBreakNotice.component';
 import type { PlayerProps } from './Player.types';
 import { PlayerTimeline } from './PlayerTimeline.component';
 
@@ -37,39 +38,12 @@ export function Player({
   toggleQueue,
   toggleLyrics,
   openDetails,
-  openRoom,
-  openSettings,
+  djOpen,
+  toggleDJ,
+  djControlsTarget,
 }: PlayerProps) {
   const player = usePlayer();
-  const recovery = useNewsRecovery();
-  const knownSpeech =
-    !!player.activeNews &&
-    player.lastNews?.news.id === player.activeNews.id &&
-    (player.newsPhase === 'speaking' ||
-      player.newsPhase === 'paused' ||
-      (player.newsPhase === 'tail' && player.lastNews.status === 'completed'));
-  const showNewsControls = recovery.status.phase === 'ready' || knownSpeech;
-  const breakStatus = {
-    idle: '',
-    waiting: 'DJ break scheduled for the end of this song.',
-    fading: 'Lowering the music for your DJ.',
-    'lead-in': 'Your DJ starts shortly.',
-    speaking: 'Your DJ is on air.',
-    tail: 'Your DJ has finished.',
-    paused: 'DJ break paused. Use the player to resume.',
-  }[player.newsPhase];
-  const [breakFocus, setBreakFocus] = useState<{
-    element: HTMLButtonElement;
-    runId: number;
-    action: 'toggle' | 'stop';
-    ended?: 'cancelled' | 'stopped';
-  } | null>(null);
-  const ownsBreakFocus = breakFocus !== null && document.activeElement === breakFocus.element;
-  const activeRun = showNewsControls && player.newsPhase !== 'idle' ? player.newsRunId : undefined;
-  const visibleRuns = [
-    ...(ownsBreakFocus && breakFocus.runId !== activeRun ? [breakFocus.runId] : []),
-    ...(activeRun !== undefined ? [activeRun] : []),
-  ];
+  const automation = useDJPlayback();
   const notices = useRef<HTMLDivElement>(null);
   const repeatTrigger = useRef<HTMLButtonElement>(null);
   const { retryRef: libraryRetryRef, retry: retryLibraryWithFocus } = useRetryFocus({
@@ -185,61 +159,7 @@ export function Player({
   return (
     <>
       <div ref={notices} className="player-notices">
-        {visibleRuns.map((runId) => {
-          const current = runId === activeRun;
-          const terminal =
-            activeRun !== undefined
-              ? 'Previous DJ break ended.'
-              : breakFocus?.ended === 'cancelled'
-                ? 'Scheduled DJ break cancelled.'
-                : breakFocus?.ended === 'stopped'
-                  ? 'DJ break stopped.'
-                  : 'DJ break ended.';
-          const actions: ('toggle' | 'stop')[] = current ? ['toggle', 'stop'] : breakFocus ? [breakFocus.action] : [];
-
-          return (
-            <div key={runId} className="radio-speaking">
-              <span role="status">{current ? breakStatus : terminal}</span>
-              {actions.map((action) => (
-                <button
-                  key={action}
-                  aria-disabled={!current || undefined}
-                  onFocus={(event) => setBreakFocus({ element: event.currentTarget, runId, action })}
-                  onBlur={(event) => {
-                    const element = event.currentTarget;
-                    setBreakFocus((value) => (value?.element === element ? null : value));
-                  }}
-                  onClick={() => {
-                    if (!current) return;
-                    const handled = player.controlNews(runId, action);
-                    if (handled && action === 'stop')
-                      setBreakFocus((value) =>
-                        value?.runId === runId
-                          ? { ...value, ended: player.newsPhase === 'waiting' ? 'cancelled' : 'stopped' }
-                          : value,
-                      );
-                  }}
-                >
-                  {!current
-                    ? activeRun !== undefined
-                      ? 'Previous break ended'
-                      : breakFocus?.ended === 'cancelled'
-                        ? 'Break cancelled'
-                        : breakFocus?.ended === 'stopped'
-                          ? 'Break stopped'
-                          : 'Break ended'
-                    : action === 'stop'
-                      ? player.newsPhase === 'waiting'
-                        ? 'Cancel break'
-                        : 'Stop DJ'
-                      : player.newsPhase === 'paused' || (player.newsPhase === 'waiting' && !player.requestedPlaying)
-                        ? 'Resume'
-                        : 'Pause'}
-                </button>
-              ))}
-            </div>
-          );
-        })}
+        <DJBreakNotice target={djControlsTarget} />
         {player.newsNotice && (
           <div className="playback-error">
             <span role="status">{player.newsNotice}</span>
@@ -394,7 +314,6 @@ export function Player({
           <PlayerTimeline />
         </div>
         <div className="player-tools">
-          <DJPopover openRoom={openRoom} openSettings={openSettings} />
           {player.busy && (
             <>
               <span className="sr-only" role="status">
@@ -451,6 +370,18 @@ export function Player({
             aria-expanded={queueOpen}
           >
             <ListMusic size={21} aria-hidden="true" />
+          </IconButton>
+          <IconButton
+            id="player-dj-controls"
+            variant="player"
+            className={`player-dj ${djOpen || automation.settings.enabled || player.newsPhase !== 'idle' ? 'is-active' : ''}`}
+            onClick={(event) => toggleDJ(event.currentTarget)}
+            title="Your DJ"
+            label={djOpen ? 'Hide DJ sidebar' : 'Show DJ sidebar'}
+            aria-controls="listening-drawer"
+            aria-expanded={djOpen}
+          >
+            <Radio size={19} aria-hidden="true" />
           </IconButton>
         </div>
       </footer>
