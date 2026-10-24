@@ -59,6 +59,9 @@
   overflow-wrap: anywhere;
   white-space: normal;
 }
+.filter-select-options button:focus-visible {
+  outline-offset: -2px;
+}
 .filter-select-options button > svg {
   flex-shrink: 0;
   color: var(--accent);

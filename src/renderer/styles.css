@@ -232,7 +232,7 @@ button > svg {
   grid-template-columns: var(--sidebar) minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr) auto;
   position: relative;
-  background: var(--canvas);
+  background: var(--sidebar-background);
 }
 .sidebar {
   background: var(--sidebar-background);
@@ -277,6 +277,9 @@ button > svg {
 .sidebar button.active > svg {
   color: var(--accent);
 }
+.sidebar button:focus-visible {
+  outline-offset: -2px;
+}
 .sidebar-bottom {
   margin-top: auto;
   display: flex;
@@ -312,7 +315,19 @@ button > svg {
   -webkit-app-region: drag;
 }
 .main-content {
-  overflow: auto;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  margin: 28px 16px calc(var(--player-clearance) + var(--player-notice-height, 0px)) 0;
+  border-radius: 16px;
+  background: linear-gradient(
+    to bottom,
+    var(--canvas) var(--table-header-top, 0px),
+    var(--table-header) var(--table-header-top, 0px),
+    var(--table-header) calc(var(--table-header-bottom, 0px) - 1px),
+    var(--separator) calc(var(--table-header-bottom, 0px) - 1px),
+    var(--separator) var(--table-header-bottom, 0px),
+    var(--canvas) var(--table-header-bottom, 0px)
+  );
   padding: 0;
   min-width: 0;
   scrollbar-gutter: auto;
@@ -360,6 +375,17 @@ button > svg {
 }
 .search-field > svg {
   flex-shrink: 0;
+}
+.search-field .search-clear {
+  --icon-button-size: 26px;
+  min-height: 26px;
+  width: 26px;
+  flex-shrink: 0;
+  padding: 0;
+  background: transparent;
+}
+.search-field .search-clear:focus-visible {
+  outline-offset: -2px;
 }
 .filter-bar {
   display: flex;
@@ -439,18 +465,19 @@ button > svg {
 }
 .song-table td {
   height: 56px;
-  border-bottom: 1px solid var(--row-border);
+  border-block: 2px solid transparent;
+  background-clip: padding-box;
   padding: 6px 8px;
   vertical-align: middle;
 }
 .song-table tbody tr {
-  border-radius: 12px;
+  border-radius: 0;
 }
 .song-table tbody tr:hover td {
-  background: var(--table-hover);
+  background-color: var(--table-hover);
 }
 .song-table tbody tr.selected td {
-  background: var(--selection);
+  background-color: var(--selection);
 }
 .song-table td:first-child {
   border-radius: 0;
@@ -629,7 +656,7 @@ button > svg {
 }
 .selection-toolbar {
   position: sticky;
-  bottom: calc(var(--player-clearance) + var(--player-notice-height, 0px) + 12px);
+  bottom: 12px;
   z-index: 12;
   display: flex;
   align-items: center;
@@ -1701,7 +1728,7 @@ legend {
 }
 .page-content {
   min-width: 0;
-  padding: 46px 30px calc(var(--player-clearance) + var(--player-notice-height, 0px) + 32px);
+  padding: 18px 30px 32px;
 }
 .song-table thead th {
   position: sticky;
@@ -1733,7 +1760,7 @@ legend {
 
 .main-content {
   scroll-padding-top: 72px;
-  scroll-padding-bottom: calc(var(--player-clearance) + var(--player-notice-height, 0px) + 24px);
+  scroll-padding-bottom: 24px;
 }
 
 .app-shell.has-drawer {
@@ -1756,6 +1783,7 @@ legend {
 *::-webkit-scrollbar {
   width: 8px;
   height: 8px;
+  background: transparent;
 }
 *::-webkit-scrollbar-track {
   background: transparent;

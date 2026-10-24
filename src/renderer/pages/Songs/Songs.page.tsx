@@ -1,5 +1,5 @@
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
-import { RefreshCw, Search } from 'lucide-react';
+import { RefreshCw, Search, X } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 import type { CatalogQuery, Song } from '../../../shared/types';
@@ -31,6 +31,7 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
     setView((old) => ({ ...old, query: update(old.query) }));
   const setSelected = (selected: Map<string, Song>) => setView((old) => ({ ...old, selected }));
   const headingRef = useRef<HTMLHeadingElement>(null);
+  const searchRef = useRef<HTMLInputElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -41,7 +42,7 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
             ? old
             : { ...old, query: { ...old.query, start: 0, search: search.trim() }, selected: new Map() },
         ),
-      300,
+      search.trim() ? 300 : 0,
     );
     return () => clearTimeout(timer);
   }, [search, setView]);
@@ -111,11 +112,30 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
         <div className="search-field">
           <Search size={17} />
           <input
+            ref={searchRef}
             aria-label="Search songs, artists and albums"
             placeholder="Search your library"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
           />
+          {search && (
+            <IconButton
+              className="search-clear"
+              variant="compact"
+              label="Clear search"
+              onClick={() => {
+                setView((old) => ({
+                  ...old,
+                  search: '',
+                  query: { ...old.query, start: 0, search: '' },
+                  selected: new Map(),
+                }));
+                searchRef.current?.focus();
+              }}
+            >
+              <X size={15} aria-hidden="true" />
+            </IconButton>
+          )}
         </div>
       </PageHeading>
       <div className="filter-bar">

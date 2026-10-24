@@ -69,7 +69,7 @@ export function VirtualSongs({
     const measure = () => {
       setPaddingEnd(Number.parseFloat(getComputedStyle(scroll).scrollPaddingBottom) || 140);
       const body = node.querySelector('tbody');
-      if (body) setOffset(body.getBoundingClientRect().top - scroll.getBoundingClientRect().top + scroll.scrollTop);
+      if (body) setOffset(body.getBoundingClientRect().top + 8 - scroll.getBoundingClientRect().top + scroll.scrollTop);
     };
     const observer = new ResizeObserver(measure);
     observer.observe(node);

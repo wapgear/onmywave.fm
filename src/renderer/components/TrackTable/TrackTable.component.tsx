@@ -57,6 +57,37 @@ export function TrackTable({
   useLayoutEffect(() => {
     const table = tableRoot.current;
     const scroll = table?.closest<HTMLElement>('.main-content');
+    if (!table || !scroll) return;
+    let frame = 0;
+    const updateHeader = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const header = table.querySelector('th')?.getBoundingClientRect();
+        if (!header) return;
+        const top = scroll.getBoundingClientRect().top;
+        scroll.style.setProperty('--table-header-top', `${Math.max(0, header.top - top)}px`);
+        scroll.style.setProperty('--table-header-bottom', `${Math.max(0, header.bottom - top)}px`);
+      });
+    };
+    const observer = new ResizeObserver(updateHeader);
+    observer.observe(scroll);
+    observer.observe(table);
+    const content = table.closest('.page-content');
+    if (content) observer.observe(content);
+    scroll.addEventListener('scroll', updateHeader, { passive: true });
+    updateHeader();
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      scroll.removeEventListener('scroll', updateHeader);
+      scroll.style.removeProperty('--table-header-top');
+      scroll.style.removeProperty('--table-header-bottom');
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    const table = tableRoot.current;
+    const scroll = table?.closest<HTMLElement>('.main-content');
     const shell = scroll?.closest('.app-shell');
     if (!table || !scroll || !shell) return;
     let frame = 0;
@@ -214,6 +245,9 @@ export function TrackTable({
             </tr>
           </thead>
           <tbody>
+            <tr aria-hidden="true" className="song-spacer">
+              <td aria-hidden="true" colSpan={5} style={{ height: 8, padding: 0, border: 0 }} />
+            </tr>
             {indices.map((index, windowIndex) => {
               const row = rows[index];
               const pausing = row.song.id === currentId && requestedPlaying;
