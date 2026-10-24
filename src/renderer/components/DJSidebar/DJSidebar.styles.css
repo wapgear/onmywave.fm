@@ -1,12 +1,5 @@
 .side-drawer.dj-drawer {
-  margin: 28px 16px var(--player-clearance) 0;
-  overflow: hidden;
-  border: 0;
-  border-radius: 16px;
   animation: dj-sidebar-enter 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.dj-drawer .drawer-body {
-  padding: 20px;
 }
 .dj-sidebar-content {
   min-width: 0;
@@ -234,16 +227,6 @@
 .dj-profile-details[open] > summary {
   margin-bottom: 10px;
 }
-@media (max-width: 820px) {
-  .side-drawer.dj-drawer {
-    top: 28px;
-    right: 16px;
-    bottom: var(--player-clearance);
-    width: min(320px, calc(100% - var(--sidebar) - 16px));
-    margin: 0;
-  }
-}
-
 @keyframes dj-sidebar-enter {
   from {
     transform: translateX(calc(100% + 16px));

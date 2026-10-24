@@ -275,3 +275,28 @@
 .drawer-empty p {
   font-size: 12px;
 }
+
+.side-drawer.listening-drawer {
+  margin: 28px 16px var(--player-clearance) 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 16px;
+}
+.listening-drawer .drawer-body {
+  padding: 20px;
+  scroll-padding-block: 20px;
+}
+.drawer-heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+@media (max-width: 820px) {
+  .side-drawer.listening-drawer {
+    top: 28px;
+    right: 16px;
+    bottom: var(--player-clearance);
+    width: min(var(--listening-sidebar-width), calc(100% - var(--sidebar) - 16px));
+    margin: 0;
+  }
+}

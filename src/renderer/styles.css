@@ -1842,8 +1842,9 @@ input[type='range'] {
   }
 }
 
-.app-shell.has-dj-drawer {
-  grid-template-columns: var(--sidebar) minmax(0, 1fr) 336px;
+.app-shell.has-listening-drawer {
+  --listening-sidebar-width: 320px;
+  grid-template-columns: var(--sidebar) minmax(0, 1fr) calc(var(--listening-sidebar-width) + 16px);
 }
 
 :root {

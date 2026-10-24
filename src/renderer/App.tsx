@@ -1,5 +1,5 @@
 import { useIsMutating, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Disc3, ListMusic, Music2, Radio, Settings, X } from 'lucide-react';
+import { Disc3, ListMusic, Maximize2, Minimize2, Music2, Radio, Settings, X } from 'lucide-react';
 import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
 
 import type { Connection, Song } from '../shared/types';
@@ -252,6 +252,7 @@ function ReadyApp({
   const restoreSetupFocus = useRef(false);
   const player = usePlayer();
   const [drawer, setDrawer] = useState<Song | 'queue' | 'lyrics' | 'dj' | null>(null);
+  const [lyricsExpanded, setLyricsExpanded] = useState(false);
   const [djControlsTarget, setDJControlsTarget] = useState<HTMLDivElement | null>(null);
   const drawerTrigger = useRef<HTMLElement | null>(null);
   const drawerClose = useRef<HTMLButtonElement>(null);
@@ -259,11 +260,14 @@ function ReadyApp({
   const drawerExit = useRef<Animation | null>(null);
   if (drawer === 'lyrics' && !player.current) setDrawer(null);
   const visibleDrawer = drawer === 'lyrics' && !player.current ? null : drawer;
+  const expandedLyrics = visibleDrawer === 'lyrics' && lyricsExpanded;
+  const listeningSidebar = typeof visibleDrawer === 'string' && !expandedLyrics;
   function openDrawer(value: Song | 'queue' | 'lyrics' | 'dj', source?: HTMLElement | null) {
     drawerExit.current?.cancel();
     drawerExit.current = null;
     if (drawerElement.current) drawerElement.current.inert = false;
     drawerTrigger.current = source ?? (document.activeElement instanceof HTMLElement ? document.activeElement : null);
+    setLyricsExpanded(false);
     setDrawer(value);
   }
   function closeDrawer() {
@@ -496,7 +500,7 @@ function ReadyApp({
 
   return (
     <div
-      className={`app-shell ${visibleDrawer && visibleDrawer !== 'lyrics' ? 'has-drawer' : ''} ${visibleDrawer === 'dj' ? 'has-dj-drawer' : ''}`}
+      className={`app-shell ${visibleDrawer && !expandedLyrics ? 'has-drawer' : ''} ${listeningSidebar ? 'has-listening-drawer' : ''}`}
     >
       <aside className="sidebar">
         <div className="traffic-light-space" />
@@ -533,8 +537,8 @@ function ReadyApp({
         ref={main}
         className="main-content"
         id="main-content"
-        inert={visibleDrawer === 'lyrics'}
-        aria-hidden={visibleDrawer === 'lyrics' || undefined}
+        inert={expandedLyrics}
+        aria-hidden={expandedLyrics || undefined}
       >
         <div ref={content} className="page-content">
           <NewsRecoveryNotice
@@ -604,8 +608,8 @@ function ReadyApp({
         <aside
           ref={drawerElement}
           id="listening-drawer"
-          className={`side-drawer ${visibleDrawer === 'lyrics' ? 'lyrics-drawer' : visibleDrawer === 'dj' ? 'dj-drawer' : ''}`}
-          role={visibleDrawer === 'lyrics' ? 'dialog' : undefined}
+          className={`side-drawer ${listeningSidebar ? 'listening-drawer' : ''} ${visibleDrawer === 'lyrics' ? `lyrics-drawer ${expandedLyrics ? 'is-expanded' : ''}` : visibleDrawer === 'dj' ? 'dj-drawer' : ''}`}
+          role={expandedLyrics ? 'dialog' : undefined}
           aria-labelledby="drawer-title"
         >
           <header className="drawer-heading">
@@ -618,21 +622,36 @@ function ReadyApp({
                     ? 'Your DJ'
                     : 'Song details'}
             </h2>
-            <IconButton
-              ref={drawerClose}
-              onClick={closeDrawer}
-              label={
-                visibleDrawer === 'queue'
-                  ? 'Close queue'
-                  : visibleDrawer === 'lyrics'
-                    ? 'Close lyrics'
-                    : visibleDrawer === 'dj'
-                      ? 'Close DJ sidebar'
-                      : 'Close song details'
-              }
-            >
-              <X size={20} aria-hidden="true" />
-            </IconButton>
+            <div className="drawer-heading-actions">
+              {visibleDrawer === 'lyrics' && (
+                <IconButton
+                  onClick={() => setLyricsExpanded((expanded) => !expanded)}
+                  label={expandedLyrics ? 'Return lyrics to sidebar' : 'Expand lyrics'}
+                  aria-expanded={expandedLyrics}
+                >
+                  {expandedLyrics ? (
+                    <Minimize2 size={18} aria-hidden="true" />
+                  ) : (
+                    <Maximize2 size={18} aria-hidden="true" />
+                  )}
+                </IconButton>
+              )}
+              <IconButton
+                ref={drawerClose}
+                onClick={closeDrawer}
+                label={
+                  visibleDrawer === 'queue'
+                    ? 'Close queue'
+                    : visibleDrawer === 'lyrics'
+                      ? 'Close lyrics'
+                      : visibleDrawer === 'dj'
+                        ? 'Close DJ sidebar'
+                        : 'Close song details'
+                }
+              >
+                <X size={20} aria-hidden="true" />
+              </IconButton>
+            </div>
           </header>
           <div
             key={typeof visibleDrawer === 'string' ? visibleDrawer : visibleDrawer.id}
@@ -660,7 +679,12 @@ function ReadyApp({
             ) : visibleDrawer === 'queue' ? (
               <Queue />
             ) : visibleDrawer === 'lyrics' ? (
-              <Lyrics key={player.currentKey} connectionId={connection.id} song={player.current!} />
+              <Lyrics
+                key={player.currentKey}
+                connectionId={connection.id}
+                song={player.current!}
+                expanded={expandedLyrics}
+              />
             ) : (
               <Inspector key={visibleDrawer.id} song={visibleDrawer} />
             )}

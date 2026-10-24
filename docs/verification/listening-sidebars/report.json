@@ -1,0 +1,81 @@
+{
+  "results": [
+    {
+      "viewport": [
+        1440,
+        900
+      ],
+      "equalPanelGeometry": {
+        "x": 1104,
+        "y": 28,
+        "width": 320,
+        "height": 756
+      },
+      "expandCollapseAndFocus": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "viewport": [
+        1600,
+        1000
+      ],
+      "equalPanelGeometry": {
+        "x": 1264,
+        "y": 28,
+        "width": 320,
+        "height": 856
+      },
+      "expandCollapseAndFocus": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "viewport": [
+        960,
+        700
+      ],
+      "equalPanelGeometry": {
+        "x": 624,
+        "y": 28,
+        "width": 320,
+        "height": 556
+      },
+      "expandCollapseAndFocus": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "viewport": [
+        800,
+        700
+      ],
+      "equalPanelGeometry": {
+        "x": 464,
+        "y": 28,
+        "width": 320,
+        "height": 512
+      },
+      "expandCollapseAndFocus": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "viewport": [
+        640,
+        480
+      ],
+      "equalPanelGeometry": {
+        "x": 304,
+        "y": 28,
+        "width": 320,
+        "height": 292
+      },
+      "expandCollapseAndFocus": true,
+      "noHorizontalOverflow": true
+    },
+    {
+      "syncedLineVisibleThroughResize": true,
+      "seekAndResumeFollowing": true,
+      "mutuallyExclusivePanels": true,
+      "reopensInSidebar": true
+    }
+  ],
+  "pageErrors": []
+}
