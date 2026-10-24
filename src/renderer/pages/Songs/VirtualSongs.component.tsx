@@ -171,6 +171,7 @@ export function VirtualSongs({
       <div className="song-load-status">
         <span
           ref={status}
+          className="song-load-count"
           tabIndex={-1}
           role="group"
           aria-label={`${table.rows.length.toLocaleString()} of ${total.toLocaleString()} songs loaded`}

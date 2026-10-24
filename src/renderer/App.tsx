@@ -255,18 +255,46 @@ function ReadyApp({
   const [djControlsTarget, setDJControlsTarget] = useState<HTMLDivElement | null>(null);
   const drawerTrigger = useRef<HTMLElement | null>(null);
   const drawerClose = useRef<HTMLButtonElement>(null);
+  const drawerElement = useRef<HTMLElement>(null);
+  const drawerExit = useRef<Animation | null>(null);
   if (drawer === 'lyrics' && !player.current) setDrawer(null);
   const visibleDrawer = drawer === 'lyrics' && !player.current ? null : drawer;
   function openDrawer(value: Song | 'queue' | 'lyrics' | 'dj', source?: HTMLElement | null) {
+    drawerExit.current?.cancel();
+    drawerExit.current = null;
+    if (drawerElement.current) drawerElement.current.inert = false;
     drawerTrigger.current = source ?? (document.activeElement instanceof HTMLElement ? document.activeElement : null);
     setDrawer(value);
   }
   function closeDrawer() {
-    if (!drawer) return;
-    setDrawer(null);
+    if (!drawer || drawerExit.current) return;
     const trigger = drawerTrigger.current;
-    drawerTrigger.current = null;
     if (trigger?.isConnected) trigger.focus({ preventScroll: true });
+    const node = drawerElement.current;
+    if (drawer === 'dj' && node && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      const style = getComputedStyle(node);
+      const animation = node.animate(
+        [
+          { transform: style.transform, opacity: style.opacity },
+          { transform: 'translateX(calc(100% + 16px))', opacity: 0 },
+        ],
+        { duration: 180, easing: 'cubic-bezier(0.4, 0, 1, 1)', fill: 'forwards' },
+      );
+      node.inert = true;
+      drawerExit.current = animation;
+      void animation.finished.then(
+        () => {
+          if (drawerExit.current !== animation) return;
+          drawerExit.current = null;
+          drawerTrigger.current = null;
+          setDrawer(null);
+        },
+        () => {},
+      );
+      return;
+    }
+    drawerTrigger.current = null;
+    setDrawer(null);
   }
   const closeDrawerRef = useRef(closeDrawer);
 
@@ -276,6 +304,10 @@ function ReadyApp({
 
   useLayoutEffect(() => {
     if (visibleDrawer) drawerClose.current?.focus({ preventScroll: true });
+    return () => {
+      drawerExit.current?.cancel();
+      drawerExit.current = null;
+    };
   }, [visibleDrawer]);
 
   const [adding, setAdding] = useState<Song[] | null>(null);
@@ -570,6 +602,7 @@ function ReadyApp({
       </main>
       {visibleDrawer && (
         <aside
+          ref={drawerElement}
           id="listening-drawer"
           className={`side-drawer ${visibleDrawer === 'lyrics' ? 'lyrics-drawer' : visibleDrawer === 'dj' ? 'dj-drawer' : ''}`}
           role={visibleDrawer === 'lyrics' ? 'dialog' : undefined}

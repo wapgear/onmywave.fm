@@ -30,3 +30,18 @@
 .song-load-status > button {
   font-size: 12px;
 }
+
+.song-load-count {
+  position: fixed;
+  position-anchor: --library-panel;
+  right: calc(anchor(right, 16px) + 12px);
+  bottom: calc(anchor(bottom, var(--player-clearance)) + 12px);
+  z-index: 5;
+  max-width: calc(100vw - 48px);
+  padding: 7px 11px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--player-background);
+  box-shadow: 0 4px 16px rgb(20 25 35 / 6%);
+  backdrop-filter: blur(16px);
+}

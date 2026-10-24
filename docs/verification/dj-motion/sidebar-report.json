@@ -1,0 +1,25 @@
+{
+  "checks": [
+    "one DJ controller, moved into app sidebar",
+    "close receives focus and player geometry is unchanged",
+    "panel matches library top and bottom, 16px gutter/inset",
+    "pause retains focus on Resume",
+    "Escape restores DJ icon focus and floating controls",
+    "DJ replaces queue instead of stacking panels",
+    "DJ replaces lyrics and restores nonmodal panel",
+    "narrow panel and controls fit above music player",
+    "stop keeps focused terminal action",
+    "section click after Stop is stable",
+    "profile summary keyboard activation works after Stop",
+    "failed schedule update retains focused action and shows error",
+    "schedule can recover after a failed save",
+    "ended feedback does not return after reopening sidebar",
+    "News bucket navigation dismisses DJ sidebar"
+  ],
+  "errors": [],
+  "viewports": [
+    "1440x900 light",
+    "1280x800 dark",
+    "800x700 dark"
+  ]
+}

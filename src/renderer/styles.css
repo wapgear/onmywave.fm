@@ -315,6 +315,7 @@ button > svg {
   -webkit-app-region: drag;
 }
 .main-content {
+  anchor-name: --library-panel;
   overflow-x: hidden;
   overflow-y: scroll;
   margin: 28px 16px var(--player-clearance) 0;
