@@ -1,0 +1,85 @@
+{
+  "before": true,
+  "native": false,
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "version": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+  "routes": [
+    {
+      "from": "lyrics",
+      "to": "queue",
+      "outgoingX": -302.745,
+      "incomingX": 17.2546,
+      "clipPath": "none",
+      "groupOverflow": "clip",
+      "panelX": 1104,
+      "panelWidth": 320,
+      "oneLiveDrawer": true,
+      "types": []
+    },
+    {
+      "from": "lyrics",
+      "to": "dj",
+      "outgoingX": -302.745,
+      "incomingX": 17.2546,
+      "clipPath": "none",
+      "groupOverflow": "clip",
+      "panelX": 1104,
+      "panelWidth": 320,
+      "oneLiveDrawer": true,
+      "types": []
+    },
+    {
+      "from": "queue",
+      "to": "lyrics",
+      "outgoingX": -302.745,
+      "incomingX": 17.2546,
+      "clipPath": "none",
+      "groupOverflow": "clip",
+      "panelX": 1104,
+      "panelWidth": 320,
+      "oneLiveDrawer": true,
+      "types": []
+    },
+    {
+      "from": "queue",
+      "to": "dj",
+      "outgoingX": -302.745,
+      "incomingX": 17.2546,
+      "clipPath": "none",
+      "groupOverflow": "clip",
+      "panelX": 1104,
+      "panelWidth": 320,
+      "oneLiveDrawer": true,
+      "types": []
+    },
+    {
+      "from": "dj",
+      "to": "lyrics",
+      "outgoingX": -302.745,
+      "incomingX": 17.2546,
+      "clipPath": "none",
+      "groupOverflow": "clip",
+      "panelX": 1104,
+      "panelWidth": 320,
+      "oneLiveDrawer": true,
+      "types": []
+    },
+    {
+      "from": "dj",
+      "to": "queue",
+      "outgoingX": -302.745,
+      "incomingX": 17.2546,
+      "clipPath": "none",
+      "groupOverflow": "clip",
+      "panelX": 1104,
+      "panelWidth": 320,
+      "oneLiveDrawer": true,
+      "types": []
+    }
+  ],
+  "rapidReversalAndReducedMotion": false,
+  "pageErrors": []
+}

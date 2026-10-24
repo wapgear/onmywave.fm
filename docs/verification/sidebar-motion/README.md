@@ -1,5 +1,7 @@
 # Shared sidebar motion
 
+The final order-aware direction and main-content occlusion are documented in [Ordered sidebar switching](../ordered-sidebar-motion/README.md). The captures below preserve the preceding shared-motion verification.
+
 DJ, queue, and lyrics now use the previous DJ entrance and exit motion: 220 ms from the right with a gentle fade, and 180 ms back to the right on close. A panel switch moves the outgoing snapshot left while the next panel slides in from the right over 220 ms with the same entrance easing. The handoff clips to the panel's rounded bounds and keeps one live drawer mounted.
 
 The native View Transition API captures only the named drawer. WAAPI handles first entry and close, so the incoming snapshot cannot inherit an offscreen entrance animation. Pending transitions are skipped and guarded against stale updates on rapid switches, close, navigation, or unmount. Reduced motion switches immediately. Environments without the snapshot API use the shared entrance instead.

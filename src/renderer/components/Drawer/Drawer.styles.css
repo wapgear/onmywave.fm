@@ -303,6 +303,15 @@
 
 :root.is-switching-sidebar {
   view-transition-name: none;
+  --sidebar-switch-out: calc(-100% - 16px);
+  --sidebar-switch-in: calc(100% + 16px);
+}
+:root:active-view-transition-type(sidebar-backward) {
+  --sidebar-switch-out: calc(100% + 16px);
+  --sidebar-switch-in: calc(-100% - 16px);
+}
+:root.is-switching-sidebar::view-transition {
+  clip-path: inset(0 0 0 var(--sidebar-switch-left));
 }
 .is-switching-sidebar .side-drawer {
   view-transition-name: listening-sidebar;
@@ -311,14 +320,15 @@
   pointer-events: none;
 }
 ::view-transition-group(listening-sidebar) {
-  overflow: clip;
-  border-radius: 16px;
+  overflow: visible;
   animation-duration: 220ms;
   animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 ::view-transition-old(listening-sidebar),
 ::view-transition-new(listening-sidebar) {
   mix-blend-mode: normal;
+  border-radius: 16px;
+  overflow: clip;
   height: 100%;
   animation: 220ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
@@ -330,12 +340,12 @@
 }
 @keyframes sidebar-replace-out {
   to {
-    transform: translateX(-100%);
+    transform: translateX(var(--sidebar-switch-out));
   }
 }
 @keyframes sidebar-replace-in {
   from {
-    transform: translateX(100%);
+    transform: translateX(var(--sidebar-switch-in));
   }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -36,6 +36,8 @@ import { useRetryFocus } from './useRetryFocus';
 
 type PageName = 'songs' | 'albums' | 'playlists' | 'stations' | 'settings';
 
+const listeningDrawerOrder = ['lyrics', 'queue', 'dj'] as const;
+
 const navigation = [
   { id: 'songs', name: 'All songs', icon: Music2 },
   { id: 'albums', name: 'Albums', icon: Disc3 },
@@ -269,6 +271,7 @@ function ReadyApp({
     drawerTransition.current?.skipTransition();
     drawerTransition.current = null;
     document.documentElement.classList.remove('is-switching-sidebar');
+    document.documentElement.style.removeProperty('--sidebar-switch-left');
   }
   function openDrawer(value: Song | 'queue' | 'lyrics' | 'dj', source?: HTMLElement | null) {
     cancelDrawerTransition();
@@ -289,9 +292,18 @@ function ReadyApp({
       !window.matchMedia('(prefers-reduced-motion: reduce)').matches
     ) {
       document.documentElement.classList.add('is-switching-sidebar');
-      const transition = document.startViewTransition(() => {
-        if (drawerTransition.current !== transition) return;
-        flushSync(updateDrawer);
+      const panelLeft = drawerElement.current?.getBoundingClientRect().left ?? 0;
+      document.documentElement.style.setProperty('--sidebar-switch-left', `${Math.max(0, panelLeft - 16)}px`);
+      const direction =
+        listeningDrawerOrder.indexOf(value) > listeningDrawerOrder.indexOf(visibleDrawer)
+          ? 'sidebar-forward'
+          : 'sidebar-backward';
+      const transition = document.startViewTransition({
+        update: () => {
+          if (drawerTransition.current !== transition) return;
+          flushSync(updateDrawer);
+        },
+        types: [direction],
       });
       drawerTransition.current = transition;
       void transition.ready.catch(() => {});
@@ -350,6 +362,7 @@ function ReadyApp({
       drawerTransition.current?.skipTransition();
       drawerTransition.current = null;
       document.documentElement.classList.remove('is-switching-sidebar');
+      document.documentElement.style.removeProperty('--sidebar-switch-left');
     }
     if (
       typeof visibleDrawer === 'string' &&
@@ -378,6 +391,7 @@ function ReadyApp({
       drawerTransition.current?.skipTransition();
       drawerTransition.current = null;
       document.documentElement.classList.remove('is-switching-sidebar');
+      document.documentElement.style.removeProperty('--sidebar-switch-left');
     },
     [],
   );
