@@ -1,17 +1,15 @@
 .song-table tr:focus-visible {
   outline: var(--control-focus-width) solid var(--focus);
   outline-offset: -2px;
-  border-radius: 12px;
+  border-radius: 0;
 }
 .artwork-button:focus-visible .artwork-play {
   display: flex;
 }
 .song-table tbody tr:not(.song-spacer) > td:first-child {
-  border-radius: 10px 0 0 10px;
   padding-left: 12px;
 }
 .song-table tbody tr:not(.song-spacer) > td:last-child {
-  border-radius: 0 10px 10px 0;
   padding-right: 12px;
 }
 .song-table thead .actions-column {

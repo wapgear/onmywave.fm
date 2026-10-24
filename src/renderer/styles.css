@@ -232,7 +232,7 @@ button > svg {
   grid-template-columns: var(--sidebar) minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr) auto;
   position: relative;
-  background: var(--canvas);
+  background: var(--sidebar-background);
 }
 .sidebar {
   background: var(--sidebar-background);
@@ -313,6 +313,9 @@ button > svg {
 }
 .main-content {
   overflow: auto;
+  margin: 28px 12px 12px 0;
+  border-radius: 16px;
+  background: var(--canvas);
   padding: 0;
   min-width: 0;
   scrollbar-gutter: auto;
@@ -360,6 +363,17 @@ button > svg {
 }
 .search-field > svg {
   flex-shrink: 0;
+}
+.search-field .search-clear {
+  --icon-button-size: 26px;
+  min-height: 26px;
+  width: 26px;
+  flex-shrink: 0;
+  padding: 0;
+  background: transparent;
+}
+.search-field .search-clear:focus-visible {
+  outline-offset: -2px;
 }
 .filter-bar {
   display: flex;
@@ -439,12 +453,13 @@ button > svg {
 }
 .song-table td {
   height: 56px;
-  border-bottom: 1px solid var(--row-border);
+  border-bottom: 4px solid transparent;
+  background-clip: padding-box;
   padding: 6px 8px;
   vertical-align: middle;
 }
 .song-table tbody tr {
-  border-radius: 12px;
+  border-radius: 0;
 }
 .song-table tbody tr:hover td {
   background: var(--table-hover);
@@ -1701,7 +1716,7 @@ legend {
 }
 .page-content {
   min-width: 0;
-  padding: 46px 30px calc(var(--player-clearance) + var(--player-notice-height, 0px) + 32px);
+  padding: 18px 30px calc(var(--player-clearance) + var(--player-notice-height, 0px) + 32px);
 }
 .song-table thead th {
   position: sticky;
@@ -1756,6 +1771,7 @@ legend {
 *::-webkit-scrollbar {
   width: 8px;
   height: 8px;
+  background: transparent;
 }
 *::-webkit-scrollbar-track {
   background: transparent;

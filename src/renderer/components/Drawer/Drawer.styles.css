@@ -31,6 +31,9 @@
   padding: 12px 20px calc(var(--player-clearance) + 24px);
   scroll-padding-block: 16px calc(var(--player-clearance) + 24px);
 }
+.drawer-body button:focus-visible {
+  outline-offset: -2px;
+}
 .song-inspector .inspector-art {
   width: 100%;
   border-radius: 10px;

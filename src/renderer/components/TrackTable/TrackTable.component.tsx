@@ -214,6 +214,9 @@ export function TrackTable({
             </tr>
           </thead>
           <tbody>
+            <tr aria-hidden="true" className="song-spacer">
+              <td aria-hidden="true" colSpan={5} style={{ height: 8, padding: 0, border: 0 }} />
+            </tr>
             {indices.map((index, windowIndex) => {
               const row = rows[index];
               const pausing = row.song.id === currentId && requestedPlaying;
