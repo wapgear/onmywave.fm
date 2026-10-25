@@ -4,6 +4,10 @@ Installed Apple silicon macOS builds check `wapgear/onmywave-app` at startup and
 
 The app offers Update now or Later when a release is available. Update now downloads it with percentage progress. Restart now installs the downloaded update and stops playback; Restart later keeps the app running. Settings → General → About and updates shows the current version and provides a manual check. Check, download, and installation failures offer retry actions.
 
+## Windows preview
+
+The unsigned Windows preview uses manual updates. Its About section directs users to install a newer Windows release; it does not check, download, or install through electron-updater. Install over the current per-user installation to preserve data. Add Windows automatic updates only after signing/publisher validation and a two-version installed upgrade have been verified. macOS update behavior and signing remain unchanged.
+
 ## Publishing
 
 The existing GitHub release repository hosts the signed DMG, ZIP, updater metadata, blockmaps, source archive, and checksums. No additional update server or client token is required. The release script validates the generated metadata against the artifact version, size, and SHA-512 hashes, uploads all assets to a draft, then publishes it.

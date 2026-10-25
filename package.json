@@ -1,10 +1,10 @@
 {
   "name": "onmywave-desktop",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "private": true,
   "license": "GPL-3.0-only",
   "author": "onmywave.fm contributors",
-  "description": "A macOS music player for your Jellyfin library",
+  "description": "A desktop music player for your Jellyfin library",
   "main": "out/main/index.js",
   "type": "module",
   "scripts": {
@@ -15,10 +15,12 @@
     "typecheck": "tsc --noEmit",
     "lint": "oxlint --type-aware --max-warnings=0",
     "package:mac": "pnpm run build && electron-builder --mac --dir --publish never",
+    "package:windows": "pnpm run build && electron-builder --config electron-builder.windows.mjs --win nsis --x64 --publish never",
     "format": "oxfmt --write . && oxlint --fix --config .oxlint-format.json",
     "format:check": "oxfmt --check . && oxlint --config .oxlint-format.json --max-warnings=0",
     "check": "pnpm run format:check && pnpm run lint && pnpm run build",
     "release:mac": "bash scripts/release-mac.sh",
+    "release:windows": "node scripts/release-windows.mjs",
     "hooks:install": "node scripts/install-git-hooks.mjs"
   },
   "dependencies": {

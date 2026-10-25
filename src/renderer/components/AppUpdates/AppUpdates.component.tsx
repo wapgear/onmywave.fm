@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { UpdateStatus } from '../../../shared/update';
 import { unwrap } from '../../api';
+import { isMac } from '../../platform';
 import { ErrorNotice } from '../Shared';
 
 import './AppUpdates.styles.css';
@@ -17,7 +18,9 @@ function useUpdates() {
 function statusText(status: UpdateStatus) {
   switch (status.phase) {
     case 'unsupported':
-      return 'Automatic updates are available in the installed Apple silicon macOS app.';
+      return window.wave.platform === 'win32'
+        ? 'This unsigned Windows preview uses manual updates. Install a newer Windows release to update.'
+        : 'Automatic updates are available in the installed Apple silicon macOS app.';
     case 'checking':
       return 'Checking for updates…';
     case 'current':
@@ -119,7 +122,10 @@ export function UpdateSettings() {
   return (
     <section className="app-update-settings">
       <h2>About and updates</h2>
-      <p className="settings-description">onmywave.fm for macOS{query.data ? ` · ${query.data.currentVersion}` : ''}</p>
+      <p className="settings-description">
+        onmywave.fm for {isMac ? 'macOS' : window.wave.platform === 'win32' ? 'Windows' : 'desktop'}
+        {query.data ? ` · ${query.data.currentVersion}` : ''}
+      </p>
       <ErrorNotice error={query.error} retry={() => query.refetch()} retrying={query.isFetching} />
       {query.data && <UpdateControls status={query.data} />}
     </section>

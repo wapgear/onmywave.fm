@@ -2,6 +2,7 @@ import { defaultRangeExtractor, observeElementOffset, useVirtualizer } from '@ta
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react';
 
 import { Artwork, ErrorNotice } from '../../components/Shared';
+import { primaryModifier } from '../../platform';
 import { useRetryFocus } from '../../useRetryFocus';
 import type { VirtualAlbumsProps } from './VirtualAlbums.types';
 
@@ -194,7 +195,7 @@ export function VirtualAlbums({
           ? albums.length - 1
           : Math.min(albums.length - 1, index - (index % layout.columns) + layout.columns - 1);
     else return;
-    if (event.metaKey && event.key.startsWith('Arrow')) return;
+    if (primaryModifier(event) && event.key.startsWith('Arrow')) return;
     event.preventDefault();
     next = Math.min(albums.length - 1, Math.max(0, next));
     const id = albums[next].id;

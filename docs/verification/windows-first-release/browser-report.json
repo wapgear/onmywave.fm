@@ -1,0 +1,184 @@
+{
+  "provenance": "Chrome on macOS, actual renderer with explicit platform fixture and simulated audio/bridge. Windows Ctrl-click uses DOM-dispatched click events because macOS converts physical Ctrl-click to contextmenu. Other keys use Playwright keyboard events. Does not prove native Windows controls, DPAPI, installer, DPI or Snap.",
+  "reports": [
+    {
+      "width": 1280,
+      "height": 800,
+      "theme": "light",
+      "platform": "win32",
+      "metrics": {
+        "mainTop": 40,
+        "dragTop": 0,
+        "dragHeight": 40,
+        "wordmarkTop": 16,
+        "platform": "win32",
+        "theme": "light",
+        "titleBarTheme": "light",
+        "overflow": false
+      },
+      "drawerTops": [
+        {
+          "label": "Show queue, 5 tracks",
+          "top": 40
+        },
+        {
+          "label": "Show lyrics",
+          "top": 40
+        },
+        {
+          "label": "Show DJ sidebar",
+          "top": 40
+        }
+      ],
+      "selection": true,
+      "selectAll": true,
+      "find": true,
+      "nextTrack": true,
+      "manualUpdateCopy": true,
+      "pageErrors": []
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "theme": "dark",
+      "platform": "win32",
+      "metrics": {
+        "mainTop": 40,
+        "dragTop": 0,
+        "dragHeight": 40,
+        "wordmarkTop": 16,
+        "platform": "win32",
+        "theme": "dark",
+        "titleBarTheme": "dark",
+        "overflow": false
+      },
+      "drawerTops": [
+        {
+          "label": "Show queue, 5 tracks",
+          "top": 40
+        },
+        {
+          "label": "Show lyrics",
+          "top": 40
+        },
+        {
+          "label": "Show DJ sidebar",
+          "top": 40
+        }
+      ],
+      "selection": true,
+      "selectAll": true,
+      "find": true,
+      "nextTrack": true,
+      "manualUpdateCopy": true,
+      "pageErrors": []
+    },
+    {
+      "width": 960,
+      "height": 640,
+      "theme": "coffee",
+      "platform": "win32",
+      "metrics": {
+        "mainTop": 40,
+        "dragTop": 0,
+        "dragHeight": 40,
+        "wordmarkTop": 16,
+        "platform": "win32",
+        "theme": "coffee",
+        "titleBarTheme": "coffee",
+        "overflow": false
+      },
+      "drawerTops": [
+        {
+          "label": "Show queue, 5 tracks",
+          "top": 40
+        },
+        {
+          "label": "Show lyrics",
+          "top": 40
+        },
+        {
+          "label": "Show DJ sidebar",
+          "top": 40
+        }
+      ],
+      "selection": true,
+      "selectAll": true,
+      "find": true,
+      "nextTrack": true,
+      "manualUpdateCopy": true,
+      "pageErrors": []
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "theme": "light",
+      "platform": "win32",
+      "metrics": {
+        "mainTop": 40,
+        "dragTop": 0,
+        "dragHeight": 40,
+        "wordmarkTop": 16,
+        "platform": "win32",
+        "theme": "light",
+        "titleBarTheme": "light",
+        "overflow": false
+      },
+      "drawerTops": [
+        {
+          "label": "Show queue, 5 tracks",
+          "top": 40
+        },
+        {
+          "label": "Show lyrics",
+          "top": 40
+        },
+        {
+          "label": "Show DJ sidebar",
+          "top": 40
+        }
+      ],
+      "selection": true,
+      "selectAll": true,
+      "find": true,
+      "nextTrack": true,
+      "manualUpdateCopy": true,
+      "pageErrors": []
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "theme": "light",
+      "platform": "darwin",
+      "metrics": {
+        "mainTop": 28,
+        "dragTop": 0,
+        "dragHeight": 24,
+        "wordmarkTop": 52,
+        "platform": "darwin",
+        "theme": "light",
+        "overflow": false
+      },
+      "drawerTops": [
+        {
+          "label": "Show queue, 5 tracks",
+          "top": 28
+        },
+        {
+          "label": "Show lyrics",
+          "top": 28
+        },
+        {
+          "label": "Show DJ sidebar",
+          "top": 28
+        }
+      ],
+      "selection": true,
+      "selectAll": true,
+      "find": true,
+      "nextTrack": true,
+      "manualUpdateCopy": false,
+      "pageErrors": []
+    }
+  ]
+}

@@ -37,6 +37,7 @@ import { unwrap, WaveError } from './api';
 import { freshAudioUrl } from './audio';
 import { useLibraryRepeat } from './hooks/useLibraryRepeat';
 import { useNewsRecovery } from './NewsRecovery';
+import { isMac, primaryModifier } from './platform';
 import type {
   HeardNews,
   NewsPhase,
@@ -1455,7 +1456,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         event.defaultPrevented ||
         event.repeat ||
         event.altKey ||
-        event.ctrlKey ||
+        (isMac ? event.ctrlKey : event.metaKey) ||
         event.shiftKey ||
         document.querySelector('dialog[open], :popover-open') ||
         (target instanceof Element &&
@@ -1466,10 +1467,10 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         return;
       const interactive =
         target instanceof Element && target.closest('button, a, summary, [role="button"], [role="tab"]');
-      if (event.code === 'Space' && !event.metaKey && !interactive && live.current.current) {
+      if (event.code === 'Space' && !event.metaKey && !event.ctrlKey && !interactive && live.current.current) {
         event.preventDefault();
         toggle();
-      } else if (event.metaKey) {
+      } else if (primaryModifier(event)) {
         if (event.key === 'ArrowLeft' && live.current.current) {
           event.preventDefault();
           previous();

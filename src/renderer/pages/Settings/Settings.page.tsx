@@ -128,7 +128,7 @@ export function SettingsPage({
         <Dialog title="Sign out of Jellyfin?" close={closeConfirmation} closeDisabled={disconnect.isPending}>
           <p>
             Playback will stop and unsaved news setup and script edits will be discarded. Your saved profiles, DJs,
-            provider keys and recordings stay on this Mac.
+            provider keys and recordings stay on this device.
           </p>
           {savingProviderKey && (
             <p>A provider key change is still saving. That change can finish after you sign out.</p>

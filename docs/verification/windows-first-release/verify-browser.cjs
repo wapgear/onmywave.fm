@@ -1,0 +1,24 @@
+const {chromium}=require(process.env.WAVE_PLAYWRIGHT_MODULE || 'playwright');
+const assert=require('node:assert/strict');const fs=require('node:fs/promises');
+const dir=__dirname;
+(async()=>{const browser=await chromium.launch({channel:'chrome',headless:true});const reports=[];
+for(const [width,height,theme,platform] of [[1280,800,'light','win32'],[1280,800,'dark','win32'],[960,640,'coffee','win32'],[1920,1080,'light','win32'],[1280,800,'light','darwin']]){
+ const page=await browser.newPage({viewport:{width,height},reducedMotion:'reduce'});const errors=[];page.on('pageerror',e=>errors.push(e.message));await page.addInitScript(({theme,platform})=>{localStorage.setItem('wave:theme',theme);window.__fixtureSeed={platform}}, {theme,platform});
+ await page.goto('http://127.0.0.1:5199');await page.waitForSelector('.song-table tbody tr[data-track-index]');
+ const metrics=await page.evaluate(()=>{const main=document.querySelector('.main-content').getBoundingClientRect(),drag=document.querySelector('.titlebar-drag-region').getBoundingClientRect(),wordmark=document.querySelector('.sidebar .wordmark').getBoundingClientRect();return{mainTop:main.top,dragTop:drag.top,dragHeight:drag.height,wordmarkTop:wordmark.top,platform:document.documentElement.dataset.platform,theme:document.documentElement.dataset.theme,titleBarTheme:window.__fixture.titleBarTheme,overflow:document.documentElement.scrollWidth>innerWidth};});
+ assert.equal(metrics.platform,platform);assert.equal(metrics.mainTop,platform==='win32'?40:28);assert.equal(metrics.dragHeight,platform==='win32'?40:24);assert.equal(metrics.overflow,false);if(platform==='win32')assert.equal(metrics.titleBarTheme,theme);
+ await page.screenshot({path:`${dir}/after-library-${width}-${theme}-${platform}.png`});
+ const modifier=platform==='win32'?'Control':'Meta';const rows=page.locator('tr[data-track-index]');
+ await rows.nth(0).focus();if(platform==='win32')await rows.nth(0).dispatchEvent('click',{button:0,ctrlKey:true});else await rows.nth(0).locator('td').nth(2).click({modifiers:[modifier]});assert.equal(await page.locator('tr[aria-selected="true"]').count(),1);
+ await rows.nth(1).focus();if(platform==='win32')await rows.nth(1).dispatchEvent('click',{button:0,ctrlKey:true});else await rows.nth(1).locator('td').nth(2).click({modifiers:[modifier]});assert.equal(await page.locator('tr[aria-selected="true"]').count(),2);
+ await page.keyboard.press(`${modifier}+a`);assert.ok(await page.locator('tr[aria-selected="true"]').count()>2);await page.keyboard.press('Escape');
+ await page.keyboard.press(`${modifier}+f`);assert.equal(await page.locator('.search-field input').first().evaluate(el=>el===document.activeElement),true);await page.keyboard.press('Tab');
+ await page.evaluate(()=>window.__fixture.player.play(window.__fixture.songs.slice(0,5),0));await page.waitForTimeout(100);
+ await page.locator('.main-content').click({position:{x:100,y:100}});await page.keyboard.press(`${modifier}+ArrowRight`);await page.waitForTimeout(100);assert.equal(await page.evaluate(()=>window.__fixture.player.current.id),await page.evaluate(()=>window.__fixture.songs[1].id));
+ const drawerTops=[];
+ for(const label of ['Show queue, 5 tracks','Show lyrics','Show DJ sidebar']){await page.getByRole('button',{name:label,exact:true}).click();const top=await page.locator('.side-drawer').evaluate(el=>el.getBoundingClientRect().top);if(platform==='win32')assert.equal(top,40,`${label} top ${top}`);drawerTops.push({label,top});if(label==='Show lyrics'&&platform==='win32'&&width===1280&&theme==='light')await page.screenshot({path:`${dir}/after-lyrics-1280-light-win32.png`});if(label==='Show lyrics'){const expand=page.getByRole('button',{name:'Expand lyrics',exact:true});if(await expand.count()){await expand.click();assert.ok(await page.locator('.side-drawer').evaluate(el=>el.getBoundingClientRect().top)>= (platform==='win32'?40:28));}}await page.keyboard.press('Escape');}
+ await page.getByRole('button',{name:'Settings',exact:true}).click();await page.getByRole('button',{name:'General',exact:true}).click();
+ if(platform==='win32'){assert.ok(await page.getByText('This unsigned Windows preview uses manual updates.',{exact:false}).count()>0);assert.ok(await page.getByText('onmywave.fm for Windows',{exact:false}).count()>0);}
+ assert.deepEqual(errors,[]);reports.push({width,height,theme,platform,metrics,drawerTops,selection:true,selectAll:true,find:true,nextTrack:true,manualUpdateCopy:platform==='win32',pageErrors:errors});await page.close();
+}
+await fs.writeFile(`${dir}/browser-report.json`,JSON.stringify({provenance:'Chrome on macOS, actual renderer with explicit platform fixture and simulated audio/bridge. Does not prove native Windows controls, DPAPI, installer, DPI or Snap.',reports},null,2)+'\n');console.log(JSON.stringify(reports,null,2));await browser.close();})().catch(e=>{console.error(e);process.exit(1)});

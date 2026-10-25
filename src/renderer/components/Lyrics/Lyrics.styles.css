@@ -11,6 +11,10 @@
   overflow: hidden;
   transition: width 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+html[data-platform='win32'] .app-shell .side-drawer.lyrics-drawer {
+  inset-block-start: var(--window-titlebar-height, 40px);
+  margin-block-start: 0;
+}
 .app-shell .side-drawer.lyrics-drawer.is-expanded {
   width: calc(100% - var(--sidebar) - 16px);
 }

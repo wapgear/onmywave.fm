@@ -122,8 +122,8 @@ export function WorkflowPreferences({
     <div className="settings-workflow">
       <h2>Automatic news preparation</h2>
       <p className="settings-description">
-        Runs while the app is running and your Mac is awake. Quitting stops checks; closing the window may leave the app
-        running.
+        Runs while the app is running and your device is awake. Quitting stops checks. On Windows, closing the window
+        quits the app. On macOS, the app can keep running with its window closed.
       </p>
       {room && (
         <form key={room.id} onSubmit={submit}>

@@ -376,3 +376,14 @@
     animation: none;
   }
 }
+html[data-platform='win32'] .side-drawer.listening-drawer {
+  margin-block-start: var(--window-titlebar-height, 40px);
+}
+@media (max-width: 820px) {
+  html[data-platform='win32'] .side-drawer {
+    top: var(--window-titlebar-height, 40px);
+  }
+  html[data-platform='win32'] .side-drawer.listening-drawer {
+    margin-block-start: 0;
+  }
+}

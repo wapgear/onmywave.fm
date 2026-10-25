@@ -16,6 +16,8 @@ import './themes.css';
 
 restoreTheme();
 
+if (window.wave?.platform) document.documentElement.dataset.platform = window.wave.platform;
+
 function onError(error: unknown) {
   const failure = error as { code?: string; authRevision?: number };
   const connection = queryClient.getQueryData<import('../shared/types').Connection | null>(['connection']);

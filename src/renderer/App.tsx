@@ -31,6 +31,7 @@ import { SettingsEditsProvider } from './pages/Settings/SettingsEdits';
 import { SongsPage, initialSongsView } from './pages/Songs/Songs.page';
 import { StationsPage } from './pages/Stations/Stations.page';
 import type { RoomSetupDraft } from './pages/Stations/Stations.types';
+import { primaryModifier } from './platform';
 import { PlayerProvider, usePlayer } from './player';
 import { useRetryFocus } from './useRetryFocus';
 
@@ -507,7 +508,7 @@ function ReadyApp({
     const shortcut = (event: KeyboardEvent) => {
       if (event.defaultPrevented || document.querySelector('dialog[open]') || document.querySelector(':popover-open'))
         return;
-      if (event.metaKey && !event.ctrlKey && !event.altKey && !event.shiftKey && event.key.toLowerCase() === 'f') {
+      if (primaryModifier(event) && !event.altKey && !event.shiftKey && event.key.toLowerCase() === 'f') {
         const input = main.current?.querySelector<HTMLInputElement>('.search-field input');
         if (input) {
           event.preventDefault();

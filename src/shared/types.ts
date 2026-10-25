@@ -289,7 +289,11 @@ export type LocalStateSnapshot = LocalState & { revision: number };
 
 export type PlaybackResource = { url: string; offsetSeconds: number; transcoded: boolean };
 
+export type WindowTheme = 'light' | 'coffee' | 'dark';
+
 export interface WaveApi {
+  readonly platform: NodeJS.Platform;
+  setTitleBarTheme(theme: WindowTheme): Promise<Result<void>>;
   getUpdateStatus(): Promise<Result<UpdateStatus>>;
   checkForUpdates(): Promise<Result<UpdateStatus>>;
   downloadUpdate(): Promise<Result<UpdateStatus>>;

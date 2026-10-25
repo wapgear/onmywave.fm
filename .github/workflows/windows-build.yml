@@ -1,0 +1,97 @@
+name: Windows package
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/windows-build.yml'
+      - '.gitattributes'
+      - '.ox*'
+      - 'electron-builder.windows.mjs'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'resources/**'
+      - 'scripts/**'
+      - 'src/**'
+      - 'electron.vite.config.ts'
+      - 'tsconfig.json'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: windows-package-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  package:
+    runs-on: windows-2022
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '24'
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run check
+      - run: pnpm audit
+      - run: pnpm run release:windows -- --skip-check
+      - name: Verify Windows files are unsigned
+        shell: pwsh
+        run: |
+          $installer = @(Get-ChildItem release/windows -File -Filter 'onmywave-*-windows-x64.exe')
+          $appPath = 'release/windows/win-unpacked/onmywave.fm.exe'
+          $uninstallers = @(Get-ChildItem release/windows -File -Filter 'onmywave-*-windows-x64.__uninstaller.exe' -Recurse)
+          if ($installer.Count -ne 1) { throw "Expected one x64 installer; found $($installer.Count)." }
+          if (-not (Test-Path $appPath -PathType Leaf)) { throw "Missing packaged app: $appPath" }
+
+          function Assert-PeFile($path, $expectedMachine) {
+            $stream = [System.IO.File]::OpenRead($path)
+            try {
+              $dosHeader = New-Object byte[] 64
+              if ($stream.Read($dosHeader, 0, 64) -ne 64 -or $dosHeader[0] -ne 0x4d -or $dosHeader[1] -ne 0x5a) {
+                throw "$path is not a PE executable."
+              }
+              $peOffset = [BitConverter]::ToInt32($dosHeader, 0x3c)
+              if ($peOffset -lt 64 -or $peOffset -gt $stream.Length - 6) { throw "$path has an invalid PE header offset." }
+              $stream.Seek($peOffset, [System.IO.SeekOrigin]::Begin) | Out-Null
+              $peHeader = New-Object byte[] 6
+              if ($stream.Read($peHeader, 0, 6) -ne 6 -or $peHeader[0] -ne 0x50 -or $peHeader[1] -ne 0x45 -or $peHeader[2] -ne 0 -or $peHeader[3] -ne 0) {
+                throw "$path is not a PE executable."
+              }
+              $machine = [BitConverter]::ToUInt16($peHeader, 4)
+              if ($machine -ne $expectedMachine) { throw "$path has unexpected PE machine type 0x$($machine.ToString('x4'))." }
+            } finally {
+              $stream.Dispose()
+            }
+          }
+
+          $targets = @(
+            @{ Path = $installer[0].FullName; Machine = 0x014c },
+            @{ Path = $appPath; Machine = 0x8664 }
+          )
+          foreach ($uninstaller in $uninstallers) {
+            $targets += @{ Path = $uninstaller.FullName; Machine = 0x014c }
+          }
+          if ($targets.Count -lt 2) { throw 'Expected the x64 installer and app executable.' }
+
+          foreach ($target in $targets) {
+            Assert-PeFile $target.Path $target.Machine
+            $signature = Get-AuthenticodeSignature $target.Path
+            if ($signature.Status -ne 'NotSigned') {
+              throw "$($target.Path) should be unsigned, got $($signature.Status)."
+            }
+          }
+      - uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        with:
+          name: onmywave-windows-${{ github.sha }}
+          path: |
+            release/windows/onmywave-*
+            release/windows/SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 14

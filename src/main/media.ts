@@ -138,7 +138,7 @@ export function registerMedia(getSession: () => Session | null, deviceId: string
     const timeout = setTimeout(() => controller.abort(), 20_000);
     let streaming = false;
     const headers = new Headers({
-      Authorization: `MediaBrowser Client="onmywave.fm", Device="Mac", DeviceId="${deviceId}", Version="0.1.0", Token="${session.token}"`,
+      Authorization: `MediaBrowser Client="onmywave.fm", Device="${process.platform === 'win32' ? 'Windows' : process.platform === 'darwin' ? 'Mac' : 'Desktop'}", DeviceId="${deviceId}", Version="0.1.0", Token="${session.token}"`,
     });
     for (const key of ['range', 'if-range']) {
       const value = request.headers.get(key);

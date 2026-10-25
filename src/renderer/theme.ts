@@ -17,6 +17,12 @@ export function currentTheme(): Theme {
   return isTheme(value) ? value : 'light';
 }
 
+function syncTitleBarTheme(theme: Theme) {
+  const api = window.wave;
+  if (api?.platform === 'win32' && typeof api.setTitleBarTheme === 'function')
+    void api.setTitleBarTheme(theme).catch(() => {});
+}
+
 export function restoreTheme() {
   let theme: Theme = 'light';
   try {
@@ -26,10 +32,12 @@ export function restoreTheme() {
     // Appearance remains available when browser storage is unavailable.
   }
   document.documentElement.dataset.theme = theme;
+  syncTitleBarTheme(theme);
 }
 
 export function applyTheme(theme: Theme): boolean {
   document.documentElement.dataset.theme = theme;
+  syncTitleBarTheme(theme);
   try {
     localStorage.setItem(storageKey, theme);
     return true;

@@ -25,8 +25,8 @@ export function ProviderKeys({ disabled = false }: { disabled?: boolean }) {
             recordings play without keys.
           </p>
           <p>
-            Provider keys apply to this app on this Mac when you switch music accounts. Signing out clears entered key
-            text. A key change already saving can still finish.
+            Provider keys apply to this app on this device when you switch music accounts. Signing out clears entered
+            key text. A key change already saving can still finish.
           </p>
           <p>
             Preparing text sends selected source content, news interests, DJ preferences, and mood to OpenAI. Generating

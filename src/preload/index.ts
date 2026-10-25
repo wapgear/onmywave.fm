@@ -1,9 +1,11 @@
 import { contextBridge, ipcRenderer } from 'electron';
 
-import type { NewsProgress, WaveApi } from '../shared/types';
+import type { NewsProgress, WaveApi, WindowTheme } from '../shared/types';
 import type { UpdateStatus } from '../shared/update';
 
 const api: WaveApi = {
+  platform: process.platform,
+  setTitleBarTheme: (theme: WindowTheme) => ipcRenderer.invoke('wave:setTitleBarTheme', theme),
   getUpdateStatus: () => ipcRenderer.invoke('wave:getUpdateStatus'),
   checkForUpdates: () => ipcRenderer.invoke('wave:checkForUpdates'),
   downloadUpdate: () => ipcRenderer.invoke('wave:downloadUpdate'),
