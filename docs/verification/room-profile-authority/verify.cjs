@@ -23,6 +23,7 @@ Module._load = function (id, ...args) {
     return {
       cancelPreparedNews: async () => {},
       getPreparedNews: async () => ({ requests: [], takes: [] }),
+      resumableRoomNewsRequest: async () => null,
       prepareRoomNews: async (_news, input, snapshot) => {
         preparedNewsCalls.push({ input, snapshot: structuredClone(snapshot) });
         return { id: 'fixture-take', recordedAt: new Date().toISOString() };

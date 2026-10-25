@@ -4,7 +4,7 @@ The News bucket now has Simple and Advanced views. Simple shows compact source/w
 
 The inspector follows the existing playback sidebar's visual language, closes by button or Escape, and returns focus to its story row. Closing it gives its column back to the list. Narrow layouts follow DOM reading order, and selecting a story brings the inspector into view. The app's playback sidebar and modal controls take priority over the inspector's Escape handler.
 
-Room settings links retain the existing draft/save workflow. There are no new persisted writing preferences, provider operations or backend state transitions. Reviewed articles retain the current global exclusion policy and are distinct from heard recordings. Heard and incomplete-playback records use their saved room identity, so editing a room's host or mood does not erase that room's playback history. Older recordings without a saved room identity remain available in Saved audio.
+Room settings links retain the existing draft/save workflow. The UI redesign adds no persisted writing preferences. Reviewed articles are distinct from heard recordings; the subsequent [editorial pipeline update](../news-editorial-pipeline/README.md) limits unselected exclusions to their editorial setup and records selection reasons. Heard and incomplete-playback records use their saved room identity, so editing a room's host or mood does not erase that room's playback history. Older recordings without a saved room identity remain available in Saved audio.
 
 ## Design decision and review
 

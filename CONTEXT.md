@@ -20,6 +20,18 @@ The listener's chosen sources, DJ and station mood.
 **News draft**:
 A short editable script prepared from chosen news sources, with its source references and the setup used to prepare it.
 
+**Editorial selection**:
+One story chosen from collected articles for a room's interests and importance setting, with a recorded reason. Selection does not mean the story has been written, recorded, or heard.
+
+**Preparation checkpoint**:
+A saved collection, editorial selection, or script that an explicitly resumed preparation can continue from. It belongs to the editorial setup and source material used for that preparation.
+
+**Host preferences**:
+The listener's directions for language, tone, personality and delivery. They shape news writing within the station's factual, source and length rules.
+
+**Article review**:
+An editorial assessment under a particular room setup. A review that does not select an article is separate from playback history and does not exclude the article from other setups.
+
 **Audio take**:
 A complete saved recording of a reviewed news script, with the voice and setup used when it was prepared.
 _Avoid_: Live news stream

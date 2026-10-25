@@ -27,7 +27,7 @@ export function canonicalArticleUrl(value: string): string | null {
 
 const sourceIdentity = (sources: LocalState['sources']) =>
   sources
-    .map((source) => ({ id: source.id, url: source.url }))
+    .map((source) => ({ id: source.id, url: source.url, kind: source.kind ?? 'rss', query: source.query ?? '' }))
     .sort((a, b) => a.id.localeCompare(b.id) || a.url.localeCompare(b.url));
 
 /** True when a saved take was prepared for this room's current editorial setup. */
@@ -38,6 +38,8 @@ export function matchesNewsRoom(take: PreparedNewsTake, state: LocalState, roomI
   if (!dj?.news || take.provenance.dj.id !== dj.id || djPreparationKey(take.provenance.dj) !== djPreparationKey(dj))
     return false;
   if (take.provenance.mood !== profile.mood) return false;
+  if (take.provenance.importance !== undefined && take.provenance.importance !== profile.workflowDraft.importance)
+    return false;
   const interests = profile.workflowDraft.newsInterests ?? dj.news.interests;
   if ((take.provenance.newsInterests ?? take.provenance.dj.news?.interests ?? '') !== interests) return false;
   const sources = [...new Set(profile.room.sourceIds)]

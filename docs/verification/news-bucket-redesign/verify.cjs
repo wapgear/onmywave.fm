@@ -54,7 +54,7 @@ async function main() {
       assert.equal(await inspector.getByRole('button', { name: /Listen|audition/ }).count(), 0);
       await list.getByRole('button', { name: /Reviewed/ }).click();
       assert.equal(await bucket.locator('.news-bucket-reviewed-row').count(), 3);
-      assert.match(await bucket.innerText(), /excluded from future news selection across profiles/);
+      assert.match(await bucket.innerText(), /Review history is separate from playback/);
       await list.getByRole('button', { name: /Ready/ }).click();
       await rows.first().click();
       await page.screenshot({ path: `${__dirname}/after-advanced-${width}-${theme}.png` });

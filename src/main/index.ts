@@ -90,6 +90,9 @@ app.setName('onmywave.fm');
 
 app.setPath('userData', join(app.getPath('appData'), 'onmywave-light'));
 
+// The local preparation index has one writer and one provider runner per app data directory.
+if (!app.requestSingleInstanceLock()) app.exit(0);
+
 protocol.registerSchemesAsPrivileged([
   { scheme: 'wave-app', privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true } },
   { scheme: 'wave-media', privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true } },
@@ -98,6 +101,16 @@ protocol.registerSchemesAsPrivileged([
 const directory = dirname(fileURLToPath(import.meta.url));
 
 let window: BrowserWindow | null = null;
+
+app.on('second-instance', () => {
+  if (!window || window.isDestroyed()) {
+    if (service && !closing) void createWindow();
+    return;
+  }
+  if (window.isMinimized()) window.restore();
+  window.show();
+  window.focus();
+});
 
 let signingOut = false;
 

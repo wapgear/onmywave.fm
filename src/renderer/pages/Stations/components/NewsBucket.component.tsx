@@ -296,7 +296,7 @@ export function NewsBucket({
         </details>
         <details className="news-bucket-detail-disclosure">
           <summary>Why this story</summary>
-          <p className="news-bucket-muted">Selection reason was not recorded.</p>
+          <p className="news-bucket-muted">{take.selection?.reason ?? 'Selection reason was not recorded.'}</p>
         </details>
       </>
     );
@@ -354,7 +354,11 @@ export function NewsBucket({
           <summary>{article.status === 'reviewed' ? `Review outcome · ${outcome}` : outcome}</summary>
           {renderArticles([article])}
         </details>
-        <p className="news-bucket-muted">Reviewed stories are excluded from future news selection across profiles.</p>
+        {article.reason && <p className="news-bucket-muted">{article.reason}</p>}
+        <p className="news-bucket-muted">
+          Unselected reviews only skip an article for the same editorial setup, for up to 24 hours. Review history is
+          separate from playback.
+        </p>
       </>
     );
   }
@@ -731,7 +735,8 @@ export function NewsBucket({
           {listSection === 'reviewed' && view === 'advanced' && (
             <section className="news-bucket-list-section" aria-label="Reviewed stories">
               <p className="news-bucket-muted">
-                Reviewed stories are excluded from future news selection across profiles.
+                Unselected reviews only skip an article for the same editorial setup, for up to 24 hours. Review history
+                is separate from playback.
               </p>
               {reviewed.length ? (
                 <>
