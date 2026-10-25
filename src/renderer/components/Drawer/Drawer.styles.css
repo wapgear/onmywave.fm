@@ -282,6 +282,18 @@
   border: 0;
   border-radius: 16px;
 }
+.listening-drawer .drawer-heading {
+  height: var(--section-header-height);
+  padding: 0 18px 0 20px;
+  background: var(--table-header);
+  border-bottom: 1px solid var(--separator);
+}
+.listening-drawer .drawer-heading h2 {
+  color: var(--muted);
+  font-size: var(--section-header-font-size);
+  font-weight: 400;
+  letter-spacing: normal;
+}
 .listening-drawer .drawer-body {
   padding: 20px;
   scroll-padding-block: 20px;
@@ -312,6 +324,13 @@
 }
 :root.is-switching-sidebar::view-transition {
   clip-path: inset(0 0 0 var(--sidebar-switch-left));
+  mask-image: linear-gradient(
+    to right,
+    transparent var(--sidebar-switch-left),
+    #000 calc(var(--sidebar-switch-left) + 16px),
+    #000 calc(100% - 16px),
+    transparent
+  );
 }
 .is-switching-sidebar .side-drawer {
   view-transition-name: listening-sidebar;
