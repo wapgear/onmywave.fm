@@ -39,6 +39,8 @@ The first run exposed a hang from synchronous `app.quit()` inside the cancelled 
 
 The Windows release script cross-builds the app and a per-user NSIS x64 installer using electron-builder v26 and Wine on macOS. Local PE inspection distinguishes the x86 NSIS setup executable from its x64 application payload; the application's architecture is x64. Installer and application certificate tables are empty, consistent with an unsigned build. This inspection is separate from Windows Authenticode verification. The source archive and SHA-256 checksums are generated alongside the installer under ignored `release/windows/`.
 
+The initial Windows CI run exposed CRLF checkout causing the LF formatter to reject text files. A repository `.gitattributes` rule now keeps text checkouts LF across platforms; the quality gate remains unchanged.
+
 The Windows workflow runs quality checks, a dependency audit, packaging, PE architecture checks, and native `Get-AuthenticodeSignature` checks for the installer and app. It deliberately leaves bundled vendor helpers out of the unsigned-app assertion. Workflow execution does not establish interactive install or window behavior.
 
 ## Remaining Windows evidence

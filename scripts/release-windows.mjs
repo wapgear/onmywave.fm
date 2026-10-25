@@ -88,6 +88,7 @@ run('tar', [
   '.oxfmtrc.json',
   '.oxlintrc.json',
   '.nvmrc',
+  '.gitattributes',
   'AGENTS.md',
   'README.md',
   'CONTRIBUTING.md',
