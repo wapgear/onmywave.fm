@@ -59,6 +59,8 @@
     },
     "files": [
       "out/**",
+      "resources/icon.png",
+      "resources/trayTemplate*.png",
       "package.json",
       "LICENSE",
       "THIRD_PARTY_NOTICES.md",
