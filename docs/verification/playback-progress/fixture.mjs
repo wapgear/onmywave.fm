@@ -32,6 +32,7 @@ window.Audio=FixtureAudio;
 const takes=Array.from({length:window.__fixtureSeed?.availableTakes??0},(_,i)=>({id:'fixture-take-'+i,requestId:'fixture-request-'+i,audioUrl:location.origin+'/fixture-speech-'+i,engine:'elevenlabs-v4',createdAt:'2026-10-21T15:00:00.000Z',script:'Fixture news '+i,articles:[],warnings:[],signature:'fixture-'+i,provenance:{dj:state.djs[0],mood:'Warm',sources:state.sources},renderingDJ:state.djs[0],available:true,byteLength:100,model:'fixture',voice:'fixture',delivery:'Fixture',scriptId:'script-'+i,deliveryState:{status:'claimed',claimId:'claim-'+i}}));
 window.__fixture.takes=takes;
 const bridge={
+ platform:window.__fixtureSeed?.platform??'darwin',setTitleBarTheme:theme=>{window.__fixture.titleBarTheme=theme;return ok();},
  libraries:()=>ok([{id:'fixture-library',name:'Fixture library'}]),getAiStatus:()=>ok({configured:false}),getElevenLabsStatus:()=>ok({configured:false}),
  getConnection:()=>ok(connection),getLocalState:()=>ok(structuredClone(state)),getPlaybackPreferences:()=>ok({volume:.75,shuffle:false,repeat:'off'}),getNewsRecoveryStatus:()=>ok({phase:window.__fixture.recoveryPhase??'ready'}),getUpdateStatus:()=>ok({phase:'unsupported',currentVersion:'fixture'}),
  songs:q=>ok({items:songs.slice(q.start,q.start+q.limit),total:songs.length,start:q.start}),libraryFilters:()=>ok({genres:['Electronic'],tags:[]}),song:id=>ok(songs.find(s=>s.id===id)),

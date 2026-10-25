@@ -1,0 +1,39 @@
+{
+  "verification": "Production Electron main bundle + production preload + actual renderer PlayerProvider + local-state storage, with synthetic Jellyfin metadata/audio; isolated appData, no account/keychain/provider use",
+  "results": [
+    {
+      "scenario": "real quit flush writes latest playing position and edited duplicate shuffle before five-second timer; relaunch policy restores paused",
+      "exitMs": 955,
+      "preQuitDiskPosition": 44,
+      "position": 73,
+      "currentIndex": 2,
+      "manualUpcoming": [
+        3,
+        0
+      ]
+    },
+    {
+      "scenario": "fresh Electron process restores durable paused state and exact shuffle future",
+      "position": 73,
+      "upcoming": [
+        "3",
+        "1"
+      ]
+    },
+    {
+      "scenario": "omitted-before-quit-barrier mutant is detected by durable readback",
+      "expectedPosition": 44,
+      "attemptedPosition": 111,
+      "detected": true
+    }
+  ],
+  "executionHost": "macOS arm64, Electron 43.8.1",
+  "adaptations": [
+    "Copied current out/src/package and the existing playback-relaunch verifier into a disposable directory with shared dependency symlink.",
+    "Only the close-event platform guards were overridden in the isolated compiled bundle to select the Windows close handler on macOS. BrowserWindow platform configuration remained macOS.",
+    "The existing verifier SIGUSR2 trigger called window.close() instead of app.quit(). Existing synthetic Jellyfin, audio, isolated appData and provider-key bypasses were retained.",
+    "Vite allow-list included the real shared dependency directory. No production source or real application data was modified."
+  ],
+  "mainBundleSha256": "dab17e5282bc10533a037495ec426e749077922c44b53da3d6072ee01c588636",
+  "limitations": "Native Electron close/checkpoint behavior on macOS with Windows close branch selected; does not establish Windows OS close events, DPAPI, installer or Snap."
+}

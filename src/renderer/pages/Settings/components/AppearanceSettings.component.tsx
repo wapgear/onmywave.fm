@@ -12,7 +12,7 @@ export function AppearanceSettings() {
       <div className="settings-section-title">
         <h2 id="appearance-title">Appearance</h2>
         <InfoHelp label="About appearance">
-          <p>Theme changes apply throughout the app and are saved on this Mac.</p>
+          <p>Theme changes apply throughout the app and are saved on this device.</p>
         </InfoHelp>
       </div>
       <fieldset className="theme-picker">
@@ -43,7 +43,7 @@ export function AppearanceSettings() {
       </fieldset>
       {!saved && (
         <p className="settings-footnote" role="status">
-          Theme applied for now. It could not be saved on this Mac. Choose another theme to retry.
+          Theme applied for now. It could not be saved on this device. Choose another theme to retry.
         </p>
       )}
     </section>

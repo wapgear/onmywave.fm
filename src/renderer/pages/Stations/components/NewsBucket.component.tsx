@@ -263,8 +263,8 @@ export function NewsBucket({
                 </div>
               </dl>
               <p className="news-bucket-muted">
-                Only scheduled preparation is counted for this profile in your Mac's local day. Checks can use paid text
-                generation even when no recording is made.
+                Only scheduled preparation is counted for this profile in your device's local day. Checks can use paid
+                text generation even when no recording is made.
               </p>
               {lastRun ? (
                 <div className="news-bucket-last-run">

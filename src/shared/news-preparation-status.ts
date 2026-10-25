@@ -35,7 +35,7 @@ export function newsPreparationStatus(profile: RoomProfile, now = new Date()) {
     detail = `Checks can resume after local midnight while the app runs.${next && next.getTime() > now.getTime() ? ` Next check: ${next.toLocaleString()}.` : ''}`;
   } else {
     label = 'Preparation on';
-    detail = `${workflow.newsLastRun?.outcome === 'partial-coverage' ? 'The last check had incomplete source coverage. ' : ''}${nextLabel} The app must be running and your Mac awake.`;
+    detail = `${workflow.newsLastRun?.outcome === 'partial-coverage' ? 'The last check had incomplete source coverage. ' : ''}${nextLabel} The app must be running and your device awake.`;
   }
   return { label, detail, checks, checkLimit, recordings, recordingLimit: workflow.maxNewsClipsPerDay, atLimit };
 }

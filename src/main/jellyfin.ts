@@ -367,7 +367,7 @@ export class JellyfinService {
     const headers = new Headers(init.headers);
     headers.set(
       'Authorization',
-      `MediaBrowser Client="onmywave.fm", Device="Mac", DeviceId="${this.deps.deviceId.replace(/[^a-zA-Z0-9-]/g, '')}", Version="0.1.0"${token ? `, Token="${token}"` : ''}`,
+      `MediaBrowser Client="onmywave.fm", Device="${process.platform === 'win32' ? 'Windows' : process.platform === 'darwin' ? 'Mac' : 'Desktop'}", DeviceId="${this.deps.deviceId.replace(/[^a-zA-Z0-9-]/g, '')}", Version="0.1.0"${token ? `, Token="${token}"` : ''}`,
     );
     if (init.body) headers.set('Content-Type', 'application/json');
     const write =

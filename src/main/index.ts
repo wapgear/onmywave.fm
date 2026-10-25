@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { dirname, extname, join, relative, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-import { app, BrowserWindow, ipcMain, net, protocol, session, shell } from 'electron';
+import { app, BrowserWindow, ipcMain, nativeTheme, net, protocol, session, shell, systemPreferences } from 'electron';
 
 import { djPreparationKey, isDJAvatar } from '../shared/dj-avatar';
 import { isDJPlaybackSettings, isDJPlaybackSettingsPatch, normalizeDJPlaybackSettings } from '../shared/dj-playback';
@@ -21,6 +21,7 @@ import type {
   LocalState,
   CatalogRequest,
   Page,
+  WindowTheme,
 } from '../shared/types';
 import { isWorkflowDraft, normalizeWorkflowDraft } from '../shared/workflow';
 import type { WorkflowDraft } from '../shared/workflow';
@@ -98,6 +99,32 @@ protocol.registerSchemesAsPrivileged([
 const directory = dirname(fileURLToPath(import.meta.url));
 
 let window: BrowserWindow | null = null;
+
+const titleBarThemes = {
+  light: { color: '#f0f0f3', symbolColor: '#202024' },
+  coffee: { color: '#ece4d9', symbolColor: '#342d27' },
+  dark: { color: '#20242a', symbolColor: '#ece9e3' },
+} satisfies Record<WindowTheme, { color: string; symbolColor: string }>;
+
+let windowTheme: WindowTheme = 'light';
+
+function titleBarOverlayOptions(theme: WindowTheme) {
+  return {
+    ...(nativeTheme.shouldUseHighContrastColors
+      ? { color: systemPreferences.getColor('3d-face'), symbolColor: systemPreferences.getColor('button-text') }
+      : titleBarThemes[theme]),
+    height: 40,
+  };
+}
+
+function syncTitleBarOverlay() {
+  if (process.platform !== 'win32' || !window || window.isDestroyed()) return;
+  window.setTitleBarOverlay(titleBarOverlayOptions(windowTheme));
+}
+
+nativeTheme.on('updated', syncTitleBarOverlay);
+
+systemPreferences.on('color-changed', syncTitleBarOverlay);
 
 let signingOut = false;
 
@@ -444,6 +471,11 @@ const newsOperations = new Set([
 
 function registerIpc() {
   const operations: Record<string, (input: never) => unknown> = {
+    setTitleBarTheme: (input: WindowTheme) => {
+      if (!['light', 'coffee', 'dark'].includes(input)) invalid();
+      windowTheme = input;
+      syncTitleBarOverlay();
+    },
     getUpdateStatus: () => getUpdateStatus(),
     checkForUpdates: () => checkForAppUpdates(),
     downloadUpdate: () => downloadAppUpdate(),
@@ -1058,8 +1090,15 @@ async function createWindow() {
     minWidth: 960,
     minHeight: 640,
     title: 'onmywave.fm',
-    titleBarStyle: 'hiddenInset',
-    trafficLightPosition: { x: 20, y: 22 },
+    ...(process.platform === 'darwin'
+      ? { titleBarStyle: 'hiddenInset' as const, trafficLightPosition: { x: 20, y: 22 } }
+      : process.platform === 'win32'
+        ? {
+            titleBarStyle: 'hidden' as const,
+            titleBarOverlay: titleBarOverlayOptions(windowTheme),
+            autoHideMenuBar: true,
+          }
+        : {}),
     backgroundColor: '#faf9f6',
     show: false,
     webPreferences: {
@@ -1094,6 +1133,9 @@ async function createWindow() {
     if (process.platform === 'darwin' && !closing) {
       event.preventDefault();
       window?.hide();
+    } else if (process.platform === 'win32' && !closing) {
+      event.preventDefault();
+      setImmediate(() => app.quit());
     }
   });
   createdWindow.on('closed', () => {

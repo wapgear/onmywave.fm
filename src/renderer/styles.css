@@ -1804,6 +1804,21 @@ input[type='range'] {
   z-index: 3;
   height: 24px;
 }
+html[data-platform='win32'] {
+  --window-titlebar-height: env(titlebar-area-height, 40px);
+}
+html[data-platform='win32'] .traffic-light-space {
+  height: 16px;
+}
+html[data-platform='win32'] .main-content {
+  margin-top: var(--window-titlebar-height);
+}
+html[data-platform='win32'] .titlebar-drag-region {
+  left: env(titlebar-area-x, 0px);
+  right: auto;
+  width: env(titlebar-area-width, 100%);
+  height: var(--window-titlebar-height);
+}
 .search-field {
   background: var(--field-muted);
 }

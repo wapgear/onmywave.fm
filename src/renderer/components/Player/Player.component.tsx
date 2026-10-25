@@ -19,6 +19,7 @@ import {
 import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 
 import { useDJPlayback } from '../../dj-playback';
+import { isMac } from '../../platform';
 import { usePlayer } from '../../player';
 import type { OptionsSaveSettlement, PlaybackRetrySettlement } from '../../player.types';
 import { useRetryFocus } from '../../useRetryFocus';
@@ -267,7 +268,7 @@ export function Player({
               variant="player"
               onClick={player.previous}
               disabled={!player.current}
-              title="Previous track (⌘←)"
+              title={`Previous track (${isMac ? '⌘' : 'Ctrl+'}←)`}
               label="Previous track"
             >
               <SkipBack size={19} fill="currentColor" aria-hidden="true" />
@@ -291,7 +292,7 @@ export function Player({
               variant="player"
               onClick={player.next}
               disabled={!player.current}
-              title="Next track (⌘→)"
+              title={`Next track (${isMac ? '⌘' : 'Ctrl+'}→)`}
               label="Next track"
             >
               <SkipForward size={19} fill="currentColor" aria-hidden="true" />

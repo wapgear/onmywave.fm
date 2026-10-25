@@ -88,7 +88,7 @@ export function ConnectionPage({
         <span>onmywave.fm</span>
         <InfoHelp label="About connecting to Jellyfin">
           <p>Your library stays on your Jellyfin server.</p>
-          <p>Your connection uses macOS secure storage when available.</p>
+          <p>Your connection uses system-protected storage when available.</p>
         </InfoHelp>
       </div>
       <NewsRecoveryNotice focusTarget={() => document.querySelector<HTMLElement>('.connection-card h1')} />
