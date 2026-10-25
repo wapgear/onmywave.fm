@@ -50,7 +50,6 @@ app.whenReady().then(async () => {
     await contents.executeJavaScript(\`
       window.trayCheckAudio = new Audio('wave-app://bundle/demo/news-break.mp3');
       window.trayCheckAudio.loop = true;
-      window.trayCheckAudio.muted = true;
       window.trayCheckMarker = 'same-renderer';
       window.trayCheckAudio.play().catch(error => { throw new Error(error.name + ': ' + error.message); });
     \`, true);
@@ -61,8 +60,13 @@ app.whenReady().then(async () => {
     verify.ok(!target.isDestroyed() && !target.isVisible(), 'Close hides the same window');
     verify.ok(!closing && !shutdownStarted, 'Close does not start shutdown');
     verify.equal(checkpointRequests, 0, 'Close does not checkpoint or quit');
-    const audio = await contents.executeJavaScript('({ time: window.trayCheckAudio.currentTime, paused: window.trayCheckAudio.paused })');
-    verify.ok(!audio.paused && audio.time > before + 0.5, 'Audio advances while hidden');
+    let audio;
+    for (let attempt = 0; attempt < 40; attempt++) {
+      audio = await contents.executeJavaScript('({ time: window.trayCheckAudio.currentTime, paused: window.trayCheckAudio.paused, readyState: window.trayCheckAudio.readyState })');
+      if (!audio.paused && audio.time > before + 0.5) break;
+      await wait(100);
+    }
+    verify.ok(!audio.paused && audio.time > before + 0.5, 'Audio advances while hidden: ' + JSON.stringify({ before, audio }));
     verificationMenu.items[0].click();
     verify.ok(target.isVisible() && window === target, 'Show restores the same window');
     verify.equal(await contents.executeJavaScript('window.trayCheckMarker'), 'same-renderer');
@@ -94,10 +98,9 @@ app.whenReady().then(async () => {
 });
 `;
 
-
 try {
   await writeFile(entry, source);
-  const child = spawn(require('electron'), [entry], {
+  const child = spawn(require('electron'), ['--disable-audio-output', entry], {
     cwd: root,
     env: {
       ...process.env,
