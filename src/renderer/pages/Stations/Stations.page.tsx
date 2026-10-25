@@ -1,5 +1,5 @@
 import { useIsMutating, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { LoaderCircle } from 'lucide-react';
+import { ChevronRight, LoaderCircle } from 'lucide-react';
 import { useLayoutEffect, useRef, useState } from 'react';
 
 import { eligibleNewsTakes } from '../../../shared/news-pool';
@@ -867,6 +867,27 @@ export function StationsPage({
     });
   }
 
+  const readiness = (
+    <DJReadiness
+      preparationProfile={activeProfile?.name ?? (state.isPending ? 'Checking profile' : 'Unavailable')}
+      preparationStatus={preparationStatusLabel}
+      savedAudioLabel={`Saved audio · ${activeProfile?.name ?? 'setup profile'}`}
+      savedAudioStatus={savedAudioStatus}
+      playbackStatus={playbackStatus}
+      openDJControls={openDJControls}
+      nextStep={nextStep}
+    >
+      {profileMismatch && (
+        <p className="dj-readiness-note">
+          Playback uses {automation.room?.name}; saved audio above is matched to {activeProfile?.name}.
+        </p>
+      )}
+      <p className="dj-readiness-note">
+        Preparing news may use paid text generation. Saved recordings can play without provider keys.
+      </p>
+    </DJReadiness>
+  );
+
   return (
     <>
       <PageHeading headingRef={heading} title="News bucket" />
@@ -874,7 +895,7 @@ export function StationsPage({
         <NewsRecoveryPanel />
       ) : (
         <>
-          <div className="listening-room">
+          <div className={`listening-room ${tab === 'bucket' ? 'is-news-bucket' : ''}`}>
             {state.isPending && (
               <p className="loading" role="status">
                 Opening your room…
@@ -886,99 +907,102 @@ export function StationsPage({
               retrying={state.isFetching}
               retry={() => stateRetryFocus.retry(() => state.refetch())}
             />
-            <DJReadiness
-              preparationProfile={activeProfile?.name ?? (state.isPending ? 'Checking profile' : 'Unavailable')}
-              preparationStatus={preparationStatusLabel}
-              savedAudioLabel={`Saved audio · ${activeProfile?.name ?? 'setup profile'}`}
-              savedAudioStatus={savedAudioStatus}
-              playbackStatus={playbackStatus}
-              openDJControls={openDJControls}
-              nextStep={nextStep}
-            >
-              {profileMismatch && (
-                <p className="dj-readiness-note">
-                  Playback uses {automation.room?.name}; saved audio above is matched to {activeProfile?.name}.
-                </p>
-              )}
-              <p className="dj-readiness-note">
-                Preparing news may use paid text generation. Saved recordings can play without provider keys.
-              </p>
-            </DJReadiness>
+            {tab === 'bucket' ? (
+              <div className="room-bucket-readiness-row">
+                <details className="room-readiness-details">
+                  <summary>
+                    <ChevronRight className="room-readiness-chevron" size={13} aria-hidden="true" />
+                    <strong>DJ setup</strong>
+                    <span>{preparationStatusLabel}</span>
+                    <span>Saved audio · {savedAudioStatus}</span>
+                  </summary>
+                  {readiness}
+                </details>
+                <div className="room-bucket-next-step">
+                  <span>Next · {nextStep.message}</span>
+                  {nextStep.action && <button onClick={nextStep.action.run}>{nextStep.action.label}</button>}
+                </div>
+              </div>
+            ) : (
+              readiness
+            )}
             {state.data && (
               <>
-                <div className="room-profile-bar">
-                  <label htmlFor="room-profile">
-                    Setup profile
-                    <select
-                      id="room-profile"
-                      value={state.data.activeRoomProfileId}
+                <div className="room-profile-controls">
+                  <div className="room-profile-bar">
+                    <label htmlFor="room-profile">
+                      {tab === 'bucket' ? 'Room' : 'Setup profile'}
+                      <select
+                        id="room-profile"
+                        value={state.data.activeRoomProfileId}
+                        disabled={busy}
+                        onChange={(event) => chooseProfile(event.target.value)}
+                      >
+                        {state.data.roomProfiles.map((value) => (
+                          <option key={value.id} value={value.id}>
+                            {value.name}
+                            {value.id === state.data?.activeRoomProfileId ? ' · Active' : ''}
+                          </option>
+                        ))}
+                      </select>
+                    </label>
+                    <button
                       disabled={busy}
-                      onChange={(event) => chooseProfile(event.target.value)}
+                      onClick={() => {
+                        profiles.reset();
+                        setProfileName('');
+                        setNewProfileOpen(true);
+                      }}
                     >
-                      {state.data.roomProfiles.map((value) => (
-                        <option key={value.id} value={value.id}>
-                          {value.name}
-                          {value.id === state.data?.activeRoomProfileId ? ' · Active' : ''}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                  <button
-                    disabled={busy}
-                    onClick={() => {
-                      profiles.reset();
-                      setProfileName('');
-                      setNewProfileOpen(true);
-                    }}
-                  >
-                    Save as new
-                  </button>
-                </div>
-                {activeProfile && (
-                  <div className="room-availability">
-                    <details className="room-advanced">
-                      <summary>Advanced room options</summary>
-                      <label className="room-dj-enabled">
-                        <input
-                          key={activeProfile.id}
-                          ref={availabilityInput}
-                          type="checkbox"
-                          checked={activeProfile.enabled}
-                          disabled={busy && !ownsAvailabilityFocus}
-                          aria-disabled={busy || undefined}
-                          aria-busy={enableProfile.isPending || undefined}
-                          onFocus={(event) => setAvailabilityFocused(event.currentTarget)}
-                          onBlur={() => setAvailabilityFocused(null)}
-                          onClick={(event) => {
-                            if (workflowActionInFlight.current || busy) event.preventDefault();
-                          }}
-                          onKeyDown={(event) => {
-                            if (
-                              (workflowActionInFlight.current || busy) &&
-                              (event.key === ' ' || event.key === 'Enter')
-                            )
-                              event.preventDefault();
-                          }}
-                          onChange={(event) => setProfileAvailability(event.target.checked)}
-                        />
-                        Make this profile available for DJ playback and preparation
-                      </label>
-                      {enableProfile.isPending && enableProfile.variables.id === activeProfile.id && (
-                        <p className="form-hint" role="status">
-                          Making this profile {enableProfile.variables.enabled ? 'available' : 'unavailable'}… Its saved
-                          setting stays shown until confirmed.
-                        </p>
-                      )}
-                    </details>
-                    <ErrorNotice
-                      error={
-                        configDraft.operationErrorTarget === 'availability' && configDraft.operationError
-                          ? new Error(configDraft.operationError)
-                          : null
-                      }
-                    />
+                      Save as new
+                    </button>
                   </div>
-                )}
+                  {activeProfile && (
+                    <div className="room-availability">
+                      <details className="room-advanced">
+                        <summary>Advanced room options</summary>
+                        <label className="room-dj-enabled">
+                          <input
+                            key={activeProfile.id}
+                            ref={availabilityInput}
+                            type="checkbox"
+                            checked={activeProfile.enabled}
+                            disabled={busy && !ownsAvailabilityFocus}
+                            aria-disabled={busy || undefined}
+                            aria-busy={enableProfile.isPending || undefined}
+                            onFocus={(event) => setAvailabilityFocused(event.currentTarget)}
+                            onBlur={() => setAvailabilityFocused(null)}
+                            onClick={(event) => {
+                              if (workflowActionInFlight.current || busy) event.preventDefault();
+                            }}
+                            onKeyDown={(event) => {
+                              if (
+                                (workflowActionInFlight.current || busy) &&
+                                (event.key === ' ' || event.key === 'Enter')
+                              )
+                                event.preventDefault();
+                            }}
+                            onChange={(event) => setProfileAvailability(event.target.checked)}
+                          />
+                          Make this profile available for DJ playback and preparation
+                        </label>
+                        {enableProfile.isPending && enableProfile.variables.id === activeProfile.id && (
+                          <p className="form-hint" role="status">
+                            Making this profile {enableProfile.variables.enabled ? 'available' : 'unavailable'}… Its
+                            saved setting stays shown until confirmed.
+                          </p>
+                        )}
+                      </details>
+                      <ErrorNotice
+                        error={
+                          configDraft.operationErrorTarget === 'availability' && configDraft.operationError
+                            ? new Error(configDraft.operationError)
+                            : null
+                        }
+                      />
+                    </div>
+                  )}
+                </div>
                 {configurationPending && (
                   <p className="form-hint" role="status">
                     Updating room settings… You can keep browsing and listening.
@@ -1071,13 +1095,18 @@ export function StationsPage({
                 )}
                 {library.data && (
                   <NewsBucket
+                    key={activeProfile?.id ?? 'no-profile'}
                     library={library.data}
                     localState={state.data}
                     automation={automation}
+                    active={tab === 'bucket'}
                     profileStatusUnknown={state.isPending || !!state.error}
                     savedNewsStale={preparationStatusUnknown}
                     openSource={(url) => source.mutate(url)}
                     openPreparation={openPreparation}
+                    openSetup={focusSetup}
+                    configureDJ={configureDJ}
+                    openSavedAudio={() => setTab('saved')}
                   />
                 )}
                 <ErrorNotice error={source.error} />

@@ -1,0 +1,126 @@
+{
+  "provenance": "Real renderer served by the existing fixture server; disposable state and simulated audio; no real accounts or provider calls.",
+  "reports": [
+    {
+      "width": 1440,
+      "height": 900,
+      "theme": "dark",
+      "simpleAndAdvanced": true,
+      "readyAndHeardCounts": true,
+      "inspectorCloseAndFocus": true,
+      "previewPauseResumeStop": true,
+      "previewStopsOnTabChange": true,
+      "scriptsHaveNoAudio": true,
+      "reviewedHistory": true,
+      "draftRetained": true,
+      "overflow": [
+        {
+          "className": "main-content",
+          "overflow": false
+        },
+        {
+          "className": "news-bucket is-advanced",
+          "overflow": false
+        },
+        {
+          "className": "news-bucket-layout",
+          "overflow": false
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "theme": "dark",
+      "simpleAndAdvanced": true,
+      "readyAndHeardCounts": true,
+      "inspectorCloseAndFocus": true,
+      "previewPauseResumeStop": true,
+      "previewStopsOnTabChange": true,
+      "scriptsHaveNoAudio": true,
+      "reviewedHistory": true,
+      "draftRetained": true,
+      "overflow": [
+        {
+          "className": "main-content",
+          "overflow": false
+        },
+        {
+          "className": "news-bucket is-advanced",
+          "overflow": false
+        },
+        {
+          "className": "news-bucket-layout",
+          "overflow": false
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "width": 800,
+      "height": 700,
+      "theme": "dark",
+      "simpleAndAdvanced": true,
+      "readyAndHeardCounts": true,
+      "inspectorCloseAndFocus": true,
+      "previewPauseResumeStop": true,
+      "previewStopsOnTabChange": true,
+      "scriptsHaveNoAudio": true,
+      "reviewedHistory": true,
+      "draftRetained": true,
+      "overflow": [
+        {
+          "className": "main-content",
+          "overflow": false
+        },
+        {
+          "className": "news-bucket is-advanced",
+          "overflow": false
+        },
+        {
+          "className": "news-bucket-layout",
+          "overflow": false
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "theme": "light",
+      "simpleAndAdvanced": true,
+      "readyAndHeardCounts": true,
+      "inspectorCloseAndFocus": true,
+      "previewPauseResumeStop": true,
+      "previewStopsOnTabChange": true,
+      "scriptsHaveNoAudio": true,
+      "reviewedHistory": true,
+      "draftRetained": true,
+      "overflow": [
+        {
+          "className": "main-content",
+          "overflow": false
+        },
+        {
+          "className": "news-bucket is-advanced",
+          "overflow": false
+        },
+        {
+          "className": "news-bucket-layout",
+          "overflow": false
+        }
+      ],
+      "pageErrors": []
+    }
+  ],
+  "additional": {
+    "appDrawerEscapePriority": true,
+    "previewErrorAndRetry": true,
+    "previewStopsForMusic": true,
+    "heardScopedToRoom": true,
+    "startedNotCountedAsHeard": true,
+    "cachedHistoryOnFailure": true,
+    "profileSwitchStopsPreviewAndClearsInspector": true
+  }
+}

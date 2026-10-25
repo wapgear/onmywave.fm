@@ -1,6 +1,79 @@
 .listening-room {
   max-width: 960px;
 }
+.listening-room.is-news-bucket {
+  width: 100%;
+  max-width: none;
+}
+.room-bucket-readiness-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+  margin: 4px 0 8px;
+  border-bottom: 1px solid var(--separator);
+}
+.room-readiness-details {
+  flex: 1 1 280px;
+  min-width: 0;
+}
+.room-readiness-details > summary {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 3px 14px;
+  min-height: 34px;
+  padding: 6px 0;
+  color: var(--muted);
+  font-size: 11px;
+  cursor: pointer;
+  list-style-position: inside;
+}
+.room-readiness-details > summary strong {
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 500;
+}
+.room-readiness-chevron {
+  flex-shrink: 0;
+  align-self: center;
+}
+.room-readiness-details[open] .room-readiness-chevron {
+  rotate: 90deg;
+}
+.room-readiness-details > .dj-readiness {
+  margin: 0;
+  padding: 10px 0 12px;
+  border-top: 1px solid var(--separator);
+  border-bottom: 0;
+}
+.room-readiness-details .dj-readiness-next {
+  display: none;
+}
+.room-bucket-next-step {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+  flex: 1 1 360px;
+  gap: 8px;
+  padding: 3px 0 6px;
+  color: var(--muted);
+  font-size: 11px;
+}
+.room-bucket-next-step > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.room-bucket-next-step > button {
+  flex-shrink: 0;
+  min-height: 26px;
+  padding: 4px 9px;
+  font-size: 11px;
+}
+.listening-room.is-news-bucket > .configuration-tabs {
+  margin: 6px 0 10px;
+  padding: 2px 2px 8px;
+}
 .dj-readiness {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -432,6 +505,40 @@
 .room-profile-bar > button {
   font-size: 12px;
 }
+.is-news-bucket .room-profile-bar > label {
+  flex: 0 1 auto;
+  align-items: center;
+  flex-direction: row;
+  gap: 8px;
+  min-width: 0;
+  max-width: none;
+}
+.is-news-bucket .room-profile-bar {
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+.is-news-bucket .room-profile-bar > label select {
+  width: auto;
+  min-width: 180px;
+  max-width: 300px;
+  min-height: 32px;
+}
+.is-news-bucket .room-profile-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin-bottom: 8px;
+}
+.is-news-bucket .room-availability .room-advanced {
+  margin: 0;
+}
+.is-news-bucket .room-availability .room-advanced > summary {
+  color: var(--muted);
+  font-size: 11px;
+  cursor: pointer;
+}
 .room-profile-notice {
   font-size: 12px;
   color: var(--muted);
@@ -442,6 +549,13 @@
   .room-profile-bar > label {
     flex-basis: 100%;
     min-width: 0;
+  }
+  .room-bucket-next-step {
+    justify-content: flex-start;
+    flex-basis: 100%;
+  }
+  .is-news-bucket .room-profile-bar > label select {
+    min-width: min(180px, 48vw);
   }
 }
 

@@ -17,4 +17,8 @@ export type NewsBucketProps = {
   savedNewsStale: boolean;
   openSource: (url: string) => void;
   openPreparation: () => void;
+  active?: boolean;
+  openSetup?: (selector: string) => void;
+  configureDJ?: () => void;
+  openSavedAudio?: () => void;
 };
