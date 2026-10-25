@@ -282,13 +282,15 @@
   border: 0;
   border-radius: 16px;
 }
-.listening-drawer .drawer-heading {
+.listening-drawer .drawer-heading,
+.lyrics-drawer .drawer-heading {
   height: var(--section-header-height);
   padding: 0 18px 0 20px;
   background: var(--table-header);
   border-bottom: 1px solid var(--separator);
 }
-.listening-drawer .drawer-heading h2 {
+.listening-drawer .drawer-heading h2,
+.lyrics-drawer .drawer-heading h2 {
   color: var(--muted);
   font-size: var(--section-header-font-size);
   font-weight: 400;

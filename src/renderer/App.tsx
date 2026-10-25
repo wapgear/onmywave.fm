@@ -582,7 +582,7 @@ function ReadyApp({
 
   return (
     <div
-      className={`app-shell ${visibleDrawer && !expandedLyrics ? 'has-drawer' : ''} ${listeningSidebar ? 'has-listening-drawer' : ''}`}
+      className={`app-shell ${visibleDrawer ? 'has-drawer' : ''} ${typeof visibleDrawer === 'string' ? 'has-listening-drawer' : ''}`}
     >
       <aside className="sidebar">
         <div className="traffic-light-space" />
@@ -709,6 +709,7 @@ function ReadyApp({
                 <IconButton
                   onClick={() => {
                     cancelDrawerTransition();
+                    drawerEnter.current?.finish();
                     setLyricsExpanded((expanded) => !expanded);
                   }}
                   label={expandedLyrics ? 'Return lyrics to sidebar' : 'Expand lyrics'}

@@ -69,7 +69,10 @@ export function Lyrics({ connectionId, song, expanded }: { connectionId: string;
       setFollowing(false);
     };
     const finishScroll = () => {
+      const target = expectedScrollTop.current;
+      if (target === null || Math.abs(body.scrollTop - target) >= 2) return;
       expectedScrollTop.current = null;
+      lastScrollTop = body.scrollTop;
     };
     const stopOnKey = (event: KeyboardEvent) => {
       if (['ArrowDown', 'ArrowUp', 'End', 'Home', 'PageDown', 'PageUp', ' '].includes(event.key)) stopFollowing();
@@ -98,24 +101,43 @@ export function Lyrics({ connectionId, song, expanded }: { connectionId: string;
 
   useEffect(() => {
     if (!following || !synced || scrollIndex < 0) return;
-    const body = root.current?.closest<HTMLElement>('.drawer-body');
-    const line = root.current?.querySelector<HTMLElement>(`[data-lyrics-index="${scrollIndex}"]`);
-    if (!body || !line) return;
-    const lineRect = line.getBoundingClientRect();
-    const bodyRect = body.getBoundingClientRect();
-    const target = Math.max(
-      0,
-      Math.min(
-        body.scrollHeight - body.clientHeight,
-        body.scrollTop + lineRect.top - bodyRect.top - body.clientHeight / 2 + lineRect.height / 2,
-      ),
-    );
-    if (Math.abs(body.scrollTop - target) < 2) return;
-    expectedScrollTop.current = target;
-    body.scrollTo({
-      top: target,
-      behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+    const content = root.current;
+    const body = content?.closest<HTMLElement>('.drawer-body');
+    const line = content?.querySelector<HTMLElement>(`[data-lyrics-index="${scrollIndex}"]`);
+    if (!content || !body || !line) return;
+    const centerLine = (behavior: ScrollBehavior) => {
+      const lineRect = line.getBoundingClientRect();
+      const bodyRect = body.getBoundingClientRect();
+      const target = Math.max(
+        0,
+        Math.min(
+          body.scrollHeight - body.clientHeight,
+          body.scrollTop + lineRect.top - bodyRect.top - body.clientHeight / 2 + lineRect.height / 2,
+        ),
+      );
+      if (Math.abs(body.scrollTop - target) < 2) return;
+      expectedScrollTop.current = target;
+      body.scrollTo({ top: target, behavior });
+    };
+    centerLine(window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth');
+    let bodyWidth = body.clientWidth;
+    let contentWidth = content.clientWidth;
+    let contentHeight = content.clientHeight;
+    const resize = new ResizeObserver(() => {
+      if (
+        body.clientWidth === bodyWidth &&
+        content.clientWidth === contentWidth &&
+        content.clientHeight === contentHeight
+      )
+        return;
+      bodyWidth = body.clientWidth;
+      contentWidth = content.clientWidth;
+      contentHeight = content.clientHeight;
+      centerLine('instant');
     });
+    resize.observe(body);
+    resize.observe(content);
+    return () => resize.disconnect();
   }, [expanded, following, scrollIndex, synced]);
 
   return (
