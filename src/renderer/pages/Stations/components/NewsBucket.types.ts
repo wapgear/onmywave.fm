@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import type { LocalState, PreparedNewsLibrary, PreparedNewsTake } from '../../../../shared/types';
 
 export type Automation = {
@@ -17,8 +19,6 @@ export type NewsBucketProps = {
   savedNewsStale: boolean;
   openSource: (url: string) => void;
   openPreparation: () => void;
+  roomSettings?: ReactNode;
   active?: boolean;
-  openSetup?: (selector: string) => void;
-  configureDJ?: () => void;
-  openSavedAudio?: () => void;
 };

@@ -10,8 +10,7 @@ const { openFixture } = require('../news-bucket-redesign/capture.cjs');
       window.__fixture.library.takes[0].selection = { candidateId: 'article-0', reasonCode: 'selected', reason: 'A concrete release announcement matches the music interest.', decidedAt: new Date().toISOString() };
       window.__fixture.client.setQueryData(['preparedNews'], structuredClone(window.__fixture.library));
     });
-    await page.getByRole('button', { name: 'Advanced', exact: true }).click();
-    await page.locator('.news-bucket-list-tabs').getByRole('button', { name: /Reviewed/ }).click();
+    await page.getByRole('combobox', { name: 'Story history', exact: true }).selectOption('reviewed');
     await page.locator('#news-story-inspector summary').filter({ hasText: 'Why this story' }).click();
     const mode = process.argv[2] || 'after';
     if (mode === 'after') {

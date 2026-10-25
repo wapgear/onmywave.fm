@@ -55,7 +55,7 @@ async function openFixture(browser, width = 1440, height = 900, theme = 'dark') 
 }
 
 async function main() {
-  const browser = await chromium.connectOverCDP('http://127.0.0.1:9335');
+  const browser = await chromium.connectOverCDP(process.env.WAVE_DEBUG_URL || 'http://127.0.0.1:9335');
   const { page, errors } = await openFixture(browser);
   const mode = process.argv[2] || 'before';
   await page.screenshot({ path: `${__dirname}/${mode}-1440-dark.png` });

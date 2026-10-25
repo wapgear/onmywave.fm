@@ -1,0 +1,255 @@
+{
+  "provenance": "Real renderer, isolated fixture bridge and simulated audio; no provider calls.",
+  "reports": [
+    {
+      "width": 1536,
+      "height": 1024,
+      "theme": "dark",
+      "layout": {
+        "rail": {
+          "x": 245,
+          "y": 123,
+          "width": 362.9375,
+          "height": 752,
+          "fontSize": "14px"
+        },
+        "list": {
+          "x": 607.9375,
+          "y": 123,
+          "width": 443.609375,
+          "height": 752,
+          "fontSize": "14px"
+        },
+        "inspector": {
+          "x": 1051.546875,
+          "y": 123,
+          "width": 423.4375,
+          "height": 752,
+          "fontSize": "14px"
+        },
+        "row": {
+          "x": 692.9375,
+          "y": 252.25,
+          "width": 319.609375,
+          "height": 21,
+          "fontSize": "15px"
+        }
+      },
+      "advancedOnly": true,
+      "readyAndHeard": true,
+      "inspectorFocus": true,
+      "previewPauseResumeStop": true,
+      "previewStopsOnViewChange": true,
+      "invalidHiddenFieldRevealed": true,
+      "sharedDraft": true,
+      "saveFailureRetainsDraft": true,
+      "saveUsesExistingBridge": true,
+      "overflow": [
+        {
+          "className": "main-content",
+          "overflow": false
+        },
+        {
+          "className": "news-bucket",
+          "overflow": false
+        },
+        {
+          "className": "news-bucket-layout",
+          "overflow": false
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "theme": "dark",
+      "layout": {
+        "rail": {
+          "x": 239,
+          "y": 139,
+          "width": 260,
+          "height": 528,
+          "fontSize": "14px"
+        },
+        "list": {
+          "x": 499,
+          "y": 139,
+          "width": 416,
+          "height": 528,
+          "fontSize": "14px"
+        },
+        "inspector": {
+          "x": 915,
+          "y": 139,
+          "width": 310,
+          "height": 528,
+          "fontSize": "14px"
+        },
+        "row": {
+          "x": 580,
+          "y": 268.25,
+          "width": 300,
+          "height": 21,
+          "fontSize": "15px"
+        }
+      },
+      "advancedOnly": true,
+      "readyAndHeard": true,
+      "inspectorFocus": true,
+      "previewPauseResumeStop": true,
+      "previewStopsOnViewChange": true,
+      "invalidHiddenFieldRevealed": true,
+      "sharedDraft": true,
+      "saveFailureRetainsDraft": true,
+      "saveUsesExistingBridge": true,
+      "overflow": [
+        {
+          "className": "main-content",
+          "overflow": false
+        },
+        {
+          "className": "news-bucket",
+          "overflow": false
+        },
+        {
+          "className": "news-bucket-layout",
+          "overflow": false
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "width": 800,
+      "height": 700,
+      "theme": "dark",
+      "layout": {
+        "rail": {
+          "x": 201,
+          "y": 240.890625,
+          "width": 554,
+          "height": 53,
+          "fontSize": "14px"
+        },
+        "list": {
+          "x": 201,
+          "y": 293.890625,
+          "width": 554,
+          "height": 360,
+          "fontSize": "14px"
+        },
+        "inspector": null,
+        "row": {
+          "x": 281,
+          "y": 466.140625,
+          "width": 440,
+          "height": 21,
+          "fontSize": "15px"
+        }
+      },
+      "advancedOnly": true,
+      "readyAndHeard": true,
+      "inspectorFocus": true,
+      "previewPauseResumeStop": true,
+      "previewStopsOnViewChange": true,
+      "invalidHiddenFieldRevealed": true,
+      "sharedDraft": true,
+      "saveFailureRetainsDraft": true,
+      "saveUsesExistingBridge": true,
+      "overflow": [
+        {
+          "className": "main-content",
+          "overflow": false
+        },
+        {
+          "className": "news-bucket",
+          "overflow": false
+        },
+        {
+          "className": "news-bucket-layout",
+          "overflow": false
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "width": 1280,
+      "height": 800,
+      "theme": "light",
+      "layout": {
+        "rail": {
+          "x": 239,
+          "y": 139,
+          "width": 260,
+          "height": 528,
+          "fontSize": "14px"
+        },
+        "list": {
+          "x": 499,
+          "y": 139,
+          "width": 416,
+          "height": 528,
+          "fontSize": "14px"
+        },
+        "inspector": {
+          "x": 915,
+          "y": 139,
+          "width": 310,
+          "height": 528,
+          "fontSize": "14px"
+        },
+        "row": {
+          "x": 580,
+          "y": 268.25,
+          "width": 300,
+          "height": 21,
+          "fontSize": "15px"
+        }
+      },
+      "advancedOnly": true,
+      "readyAndHeard": true,
+      "inspectorFocus": true,
+      "previewPauseResumeStop": true,
+      "previewStopsOnViewChange": true,
+      "invalidHiddenFieldRevealed": true,
+      "sharedDraft": true,
+      "saveFailureRetainsDraft": true,
+      "saveUsesExistingBridge": true,
+      "overflow": [
+        {
+          "className": "main-content",
+          "overflow": false
+        },
+        {
+          "className": "news-bucket",
+          "overflow": false
+        },
+        {
+          "className": "news-bucket-layout",
+          "overflow": false
+        }
+      ],
+      "pageErrors": []
+    },
+    {
+      "historyScriptsAndReviewed": true,
+      "scriptsHaveNoAudio": true,
+      "globalDrawerEscapePriority": true,
+      "previewErrorAndRetry": true,
+      "previewStopsForMusic": true,
+      "heardScopedToRoom": true,
+      "startedNotHeard": true,
+      "cachedHistoryOnFailure": true,
+      "roomChangeStopsPreview": true,
+      "pageErrors": []
+    },
+    {
+      "checkpointCollectedActualCount": true,
+      "checkpointSelectedOne": true,
+      "checkpointRoomScope": true,
+      "candidateHasNoListen": true,
+      "storedSelectionReason": true,
+      "pageErrors": []
+    }
+  ]
+}

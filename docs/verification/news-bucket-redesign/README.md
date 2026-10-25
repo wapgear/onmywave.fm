@@ -1,4 +1,6 @@
-# News bucket redesign
+# Original news bucket redesign
+
+This record describes the first implementation, retained for its historical screenshots. The current Advanced-only redesign, element calibration and verification are in [news-bucket-calibration](../news-bucket-calibration/README.md). Simple mode was removed after the user reviewed this implementation.
 
 The News bucket now has Simple and Advanced views. Simple shows compact source/writing summaries, ready recordings and confirmed playback for the selected room. Advanced adds collapsible room settings summaries, saved scripts and reviewed article history. Selecting a story opens a local inspector with spoken text, saved-audio audition, sources, warnings and the recorded selection outcome where available.
 
