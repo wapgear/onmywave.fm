@@ -1,0 +1,97 @@
+{
+  "before": false,
+  "native": true,
+  "viewport": {
+    "width": 1440,
+    "height": 868
+  },
+  "version": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.7871.250 Electron/43.8.1 Safari/537.36",
+  "routes": [
+    {
+      "from": "lyrics",
+      "to": "queue",
+      "outgoingX": -317.883,
+      "incomingX": 18.1173,
+      "clipPath": "inset(0px 0px 0px 1088px)",
+      "groupOverflow": "visible",
+      "panelX": 1104,
+      "panelWidth": 320,
+      "oneLiveDrawer": true,
+      "types": [
+        "sidebar-forward"
+      ]
+    },
+    {
+      "from": "lyrics",
+      "to": "dj",
+      "outgoingX": -317.883,
+      "incomingX": 18.1173,
+      "clipPath": "inset(0px 0px 0px 1088px)",
+      "groupOverflow": "visible",
+      "panelX": 1104,
+      "panelWidth": 320,
+      "oneLiveDrawer": true,
+      "types": [
+        "sidebar-forward"
+      ]
+    },
+    {
+      "from": "queue",
+      "to": "lyrics",
+      "outgoingX": 317.883,
+      "incomingX": -18.1173,
+      "clipPath": "inset(0px 0px 0px 1088px)",
+      "groupOverflow": "visible",
+      "panelX": 1104,
+      "panelWidth": 320,
+      "oneLiveDrawer": true,
+      "types": [
+        "sidebar-backward"
+      ]
+    },
+    {
+      "from": "queue",
+      "to": "dj",
+      "outgoingX": -317.883,
+      "incomingX": 18.1173,
+      "clipPath": "inset(0px 0px 0px 1088px)",
+      "groupOverflow": "visible",
+      "panelX": 1104,
+      "panelWidth": 320,
+      "oneLiveDrawer": true,
+      "types": [
+        "sidebar-forward"
+      ]
+    },
+    {
+      "from": "dj",
+      "to": "lyrics",
+      "outgoingX": 317.883,
+      "incomingX": -18.1173,
+      "clipPath": "inset(0px 0px 0px 1088px)",
+      "groupOverflow": "visible",
+      "panelX": 1104,
+      "panelWidth": 320,
+      "oneLiveDrawer": true,
+      "types": [
+        "sidebar-backward"
+      ]
+    },
+    {
+      "from": "dj",
+      "to": "queue",
+      "outgoingX": 317.883,
+      "incomingX": -18.1173,
+      "clipPath": "inset(0px 0px 0px 1088px)",
+      "groupOverflow": "visible",
+      "panelX": 1104,
+      "panelWidth": 320,
+      "oneLiveDrawer": true,
+      "types": [
+        "sidebar-backward"
+      ]
+    }
+  ],
+  "rapidReversalAndReducedMotion": true,
+  "pageErrors": []
+}

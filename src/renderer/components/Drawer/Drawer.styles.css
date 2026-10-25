@@ -275,3 +275,102 @@
 .drawer-empty p {
   font-size: 12px;
 }
+
+.side-drawer.listening-drawer {
+  margin: 28px 16px var(--player-clearance) 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 16px;
+}
+.listening-drawer .drawer-heading {
+  height: var(--section-header-height);
+  padding: 0 18px 0 20px;
+  background: var(--table-header);
+  border-bottom: 1px solid var(--separator);
+}
+.listening-drawer .drawer-heading h2 {
+  color: var(--muted);
+  font-size: var(--section-header-font-size);
+  font-weight: 400;
+  letter-spacing: normal;
+}
+.listening-drawer .drawer-body {
+  padding: 20px;
+  scroll-padding-block: 20px;
+}
+.drawer-heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+@media (max-width: 820px) {
+  .side-drawer.listening-drawer {
+    top: 28px;
+    right: 16px;
+    bottom: var(--player-clearance);
+    width: min(var(--listening-sidebar-width), calc(100% - var(--sidebar) - 16px));
+    margin: 0;
+  }
+}
+
+:root.is-switching-sidebar {
+  view-transition-name: none;
+  --sidebar-switch-out: calc(-100% - 16px);
+  --sidebar-switch-in: calc(100% + 16px);
+}
+:root:active-view-transition-type(sidebar-backward) {
+  --sidebar-switch-out: calc(100% + 16px);
+  --sidebar-switch-in: calc(-100% - 16px);
+}
+:root.is-switching-sidebar::view-transition {
+  clip-path: inset(0 0 0 var(--sidebar-switch-left));
+  mask-image: linear-gradient(
+    to right,
+    transparent var(--sidebar-switch-left),
+    #000 calc(var(--sidebar-switch-left) + 16px),
+    #000 calc(100% - 16px),
+    transparent
+  );
+}
+.is-switching-sidebar .side-drawer {
+  view-transition-name: listening-sidebar;
+}
+::view-transition {
+  pointer-events: none;
+}
+::view-transition-group(listening-sidebar) {
+  overflow: visible;
+  animation-duration: 220ms;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+::view-transition-old(listening-sidebar),
+::view-transition-new(listening-sidebar) {
+  mix-blend-mode: normal;
+  border-radius: 16px;
+  overflow: clip;
+  height: 100%;
+  animation: 220ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+::view-transition-old(listening-sidebar) {
+  animation-name: sidebar-replace-out;
+}
+::view-transition-new(listening-sidebar) {
+  animation-name: sidebar-replace-in;
+}
+@keyframes sidebar-replace-out {
+  to {
+    transform: translateX(var(--sidebar-switch-out));
+  }
+}
+@keyframes sidebar-replace-in {
+  from {
+    transform: translateX(var(--sidebar-switch-in));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(listening-sidebar),
+  ::view-transition-old(listening-sidebar),
+  ::view-transition-new(listening-sidebar) {
+    animation: none;
+  }
+}

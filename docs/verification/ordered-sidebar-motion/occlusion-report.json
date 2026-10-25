@@ -1,0 +1,41 @@
+{
+  "protectedMainContentRegion": [
+    208,
+    28,
+    1088,
+    784
+  ],
+  "tolerancePerChannel": 1,
+  "comparisons": {
+    "after-dj-to-lyrics-1440.png": {
+      "maxChannelDifference": 0,
+      "changedPixels": 0,
+      "passed": true
+    },
+    "after-dj-to-queue-1440.png": {
+      "maxChannelDifference": 0,
+      "changedPixels": 0,
+      "passed": true
+    },
+    "after-lyrics-to-dj-1440.png": {
+      "maxChannelDifference": 0,
+      "changedPixels": 0,
+      "passed": true
+    },
+    "after-lyrics-to-queue-1440.png": {
+      "maxChannelDifference": 0,
+      "changedPixels": 0,
+      "passed": true
+    },
+    "after-queue-to-dj-1440.png": {
+      "maxChannelDifference": 1,
+      "changedPixels": 1,
+      "passed": true
+    },
+    "after-queue-to-lyrics-1440.png": {
+      "maxChannelDifference": 0,
+      "changedPixels": 0,
+      "passed": true
+    }
+  }
+}

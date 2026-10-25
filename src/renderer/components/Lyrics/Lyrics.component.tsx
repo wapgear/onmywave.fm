@@ -10,7 +10,7 @@ import { ErrorNotice } from '../Shared';
 
 import './Lyrics.styles.css';
 
-export function Lyrics({ connectionId, song }: { connectionId: string; song: Song }) {
+export function Lyrics({ connectionId, song, expanded }: { connectionId: string; song: Song; expanded: boolean }) {
   const player = usePlayer();
   const position = usePlayerPosition();
   const root = useRef<HTMLDivElement>(null);
@@ -116,7 +116,7 @@ export function Lyrics({ connectionId, song }: { connectionId: string; song: Son
       top: target,
       behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
     });
-  }, [following, scrollIndex, synced]);
+  }, [expanded, following, scrollIndex, synced]);
 
   return (
     <div ref={root} className="lyrics-content">

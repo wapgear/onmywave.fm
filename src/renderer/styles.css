@@ -84,6 +84,8 @@
   --text: #202024;
   --sidebar: 208px;
   --player-clearance: 116px;
+  --section-header-height: 48px;
+  --section-header-font-size: 11px;
   color-scheme: light;
   font-synthesis: none;
 }
@@ -456,7 +458,7 @@ button > svg {
 }
 .song-table thead {
   color: var(--muted);
-  font-size: 11px;
+  font-size: var(--section-header-font-size);
   font-weight: 400;
 }
 .song-table th {
@@ -1842,8 +1844,9 @@ input[type='range'] {
   }
 }
 
-.app-shell.has-dj-drawer {
-  grid-template-columns: var(--sidebar) minmax(0, 1fr) 336px;
+.app-shell.has-listening-drawer {
+  --listening-sidebar-width: 320px;
+  grid-template-columns: var(--sidebar) minmax(0, 1fr) calc(var(--listening-sidebar-width) + 16px);
 }
 
 :root {
@@ -1853,7 +1856,7 @@ input[type='range'] {
   padding-inline: var(--content-inset);
 }
 .song-table thead th {
-  height: 48px;
+  height: var(--section-header-height);
   padding: 14px 8px;
 }
 .song-table th:first-child,

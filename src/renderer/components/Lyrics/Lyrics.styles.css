@@ -1,4 +1,4 @@
-.side-drawer.lyrics-drawer {
+.side-drawer.lyrics-drawer.is-expanded {
   position: absolute;
   grid-column: 1 / -1;
   grid-row: 1 / -1;
@@ -7,10 +7,10 @@
   width: auto;
   border-left: 0;
 }
-.lyrics-drawer .drawer-heading {
+.lyrics-drawer.is-expanded .drawer-heading {
   padding-inline: 30px;
 }
-.lyrics-drawer .drawer-body {
+.lyrics-drawer.is-expanded .drawer-body {
   padding-inline: clamp(24px, 5vw, 80px);
   padding-top: 32px;
   padding-bottom: 48px;
@@ -155,4 +155,14 @@
   .lyrics-follow-bar {
     padding-bottom: 4px;
   }
+}
+
+.listening-drawer .lyrics-heading h3 {
+  font-size: 20px;
+}
+.listening-drawer .lyrics-lines p {
+  font-size: 18px;
+}
+.listening-drawer .lyrics-follow-bar {
+  padding-top: 0;
 }

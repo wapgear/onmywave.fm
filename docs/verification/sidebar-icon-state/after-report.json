@@ -1,0 +1,282 @@
+[
+  {
+    "enabled": false,
+    "states": [
+      {
+        "panel": "none",
+        "highlighted": [],
+        "djIcon": "lucide lucide-radio",
+        "djHighlighted": false,
+        "tools": [
+          {
+            "label": "Song details for Evening track 001",
+            "active": false,
+            "color": "rgb(32, 32, 36)",
+            "expanded": null
+          },
+          {
+            "label": "Show lyrics",
+            "active": false,
+            "color": "rgb(62, 65, 74)",
+            "expanded": "false"
+          },
+          {
+            "label": "Show queue, 5 tracks",
+            "active": false,
+            "color": "rgb(62, 65, 74)",
+            "expanded": "false"
+          },
+          {
+            "label": "Show DJ sidebar",
+            "active": false,
+            "color": "rgb(62, 65, 74)",
+            "expanded": "false"
+          }
+        ]
+      },
+      {
+        "panel": "lyrics",
+        "highlighted": [
+          "Hide lyrics"
+        ],
+        "djIcon": "lucide lucide-radio",
+        "djHighlighted": false,
+        "tools": [
+          {
+            "label": "Song details for Evening track 001",
+            "active": false,
+            "color": "rgb(32, 32, 36)",
+            "expanded": null
+          },
+          {
+            "label": "Hide lyrics",
+            "active": true,
+            "color": "rgb(201, 40, 67)",
+            "expanded": "true"
+          },
+          {
+            "label": "Show queue, 5 tracks",
+            "active": false,
+            "color": "rgb(62, 65, 74)",
+            "expanded": "false"
+          },
+          {
+            "label": "Show DJ sidebar",
+            "active": false,
+            "color": "rgb(62, 65, 74)",
+            "expanded": "false"
+          }
+        ]
+      },
+      {
+        "panel": "queue",
+        "highlighted": [
+          "Hide queue, 5 tracks"
+        ],
+        "djIcon": "lucide lucide-radio",
+        "djHighlighted": false,
+        "tools": [
+          {
+            "label": "Song details for Evening track 001",
+            "active": false,
+            "color": "rgb(32, 32, 36)",
+            "expanded": null
+          },
+          {
+            "label": "Show lyrics",
+            "active": false,
+            "color": "rgb(62, 65, 74)",
+            "expanded": "false"
+          },
+          {
+            "label": "Hide queue, 5 tracks",
+            "active": true,
+            "color": "rgb(201, 40, 67)",
+            "expanded": "true"
+          },
+          {
+            "label": "Show DJ sidebar",
+            "active": false,
+            "color": "rgb(62, 65, 74)",
+            "expanded": "false"
+          }
+        ]
+      },
+      {
+        "panel": "dj",
+        "highlighted": [
+          "Hide DJ sidebar"
+        ],
+        "djIcon": "lucide lucide-radio",
+        "djHighlighted": true,
+        "tools": [
+          {
+            "label": "Song details for Evening track 001",
+            "active": false,
+            "color": "rgb(32, 32, 36)",
+            "expanded": null
+          },
+          {
+            "label": "Show lyrics",
+            "active": false,
+            "color": "rgb(62, 65, 74)",
+            "expanded": "false"
+          },
+          {
+            "label": "Show queue, 5 tracks",
+            "active": false,
+            "color": "rgb(62, 65, 74)",
+            "expanded": "false"
+          },
+          {
+            "label": "Hide DJ sidebar",
+            "active": true,
+            "color": "rgb(201, 40, 67)",
+            "expanded": "true"
+          }
+        ]
+      }
+    ],
+    "errors": []
+  },
+  {
+    "enabled": true,
+    "states": [
+      {
+        "panel": "none",
+        "highlighted": [],
+        "djIcon": "lucide lucide-radio-tower",
+        "djHighlighted": false,
+        "tools": [
+          {
+            "label": "Song details for Evening track 001",
+            "active": false,
+            "color": "rgb(32, 32, 36)",
+            "expanded": null
+          },
+          {
+            "label": "Show lyrics",
+            "active": false,
+            "color": "rgb(62, 65, 74)",
+            "expanded": "false"
+          },
+          {
+            "label": "Show queue, 5 tracks",
+            "active": false,
+            "color": "rgb(62, 65, 74)",
+            "expanded": "false"
+          },
+          {
+            "label": "Show DJ sidebar",
+            "active": false,
+            "color": "rgb(62, 65, 74)",
+            "expanded": "false"
+          }
+        ]
+      },
+      {
+        "panel": "lyrics",
+        "highlighted": [
+          "Hide lyrics"
+        ],
+        "djIcon": "lucide lucide-radio-tower",
+        "djHighlighted": false,
+        "tools": [
+          {
+            "label": "Song details for Evening track 001",
+            "active": false,
+            "color": "rgb(32, 32, 36)",
+            "expanded": null
+          },
+          {
+            "label": "Hide lyrics",
+            "active": true,
+            "color": "rgb(201, 40, 67)",
+            "expanded": "true"
+          },
+          {
+            "label": "Show queue, 5 tracks",
+            "active": false,
+            "color": "rgb(62, 65, 74)",
+            "expanded": "false"
+          },
+          {
+            "label": "Show DJ sidebar",
+            "active": false,
+            "color": "rgb(62, 65, 74)",
+            "expanded": "false"
+          }
+        ]
+      },
+      {
+        "panel": "queue",
+        "highlighted": [
+          "Hide queue, 5 tracks"
+        ],
+        "djIcon": "lucide lucide-radio-tower",
+        "djHighlighted": false,
+        "tools": [
+          {
+            "label": "Song details for Evening track 001",
+            "active": false,
+            "color": "rgb(32, 32, 36)",
+            "expanded": null
+          },
+          {
+            "label": "Show lyrics",
+            "active": false,
+            "color": "rgb(62, 65, 74)",
+            "expanded": "false"
+          },
+          {
+            "label": "Hide queue, 5 tracks",
+            "active": true,
+            "color": "rgb(201, 40, 67)",
+            "expanded": "true"
+          },
+          {
+            "label": "Show DJ sidebar",
+            "active": false,
+            "color": "rgb(62, 65, 74)",
+            "expanded": "false"
+          }
+        ]
+      },
+      {
+        "panel": "dj",
+        "highlighted": [
+          "Hide DJ sidebar"
+        ],
+        "djIcon": "lucide lucide-radio-tower",
+        "djHighlighted": true,
+        "tools": [
+          {
+            "label": "Song details for Evening track 001",
+            "active": false,
+            "color": "rgb(32, 32, 36)",
+            "expanded": null
+          },
+          {
+            "label": "Show lyrics",
+            "active": false,
+            "color": "rgb(62, 65, 74)",
+            "expanded": "false"
+          },
+          {
+            "label": "Show queue, 5 tracks",
+            "active": false,
+            "color": "rgb(62, 65, 74)",
+            "expanded": "false"
+          },
+          {
+            "label": "Hide DJ sidebar",
+            "active": true,
+            "color": "rgb(201, 40, 67)",
+            "expanded": "true"
+          }
+        ]
+      }
+    ],
+    "errors": []
+  }
+]
