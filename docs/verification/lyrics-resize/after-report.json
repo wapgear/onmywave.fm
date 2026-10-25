@@ -1,0 +1,826 @@
+[
+  {
+    "width": 1440,
+    "height": 900,
+    "compact": {
+      "panel": {
+        "x": 1104,
+        "y": 28,
+        "width": 320,
+        "height": 756
+      },
+      "close": {
+        "x": 1372,
+        "y": 34.5,
+        "width": 34,
+        "height": 34
+      },
+      "size": {
+        "x": 1336,
+        "y": 34.5,
+        "width": 34,
+        "height": 34
+      },
+      "main": {
+        "x": 208,
+        "y": 28,
+        "width": 880,
+        "height": 756
+      },
+      "player": {
+        "x": 16,
+        "y": 796,
+        "width": 1408,
+        "height": 88
+      }
+    },
+    "expanded": {
+      "panel": {
+        "x": 208,
+        "y": 28,
+        "width": 1216,
+        "height": 756
+      },
+      "close": {
+        "x": 1372,
+        "y": 34.5,
+        "width": 34,
+        "height": 34
+      },
+      "size": {
+        "x": 1336,
+        "y": 34.5,
+        "width": 34,
+        "height": 34
+      },
+      "main": {
+        "x": 208,
+        "y": 28,
+        "width": 880,
+        "height": 756
+      },
+      "player": {
+        "x": 16,
+        "y": 796,
+        "width": 1408,
+        "height": 88
+      }
+    },
+    "frames": [
+      {
+        "t": 0.09999996423721313,
+        "width": 824.359375,
+        "closeX": 1372,
+        "closeY": 34.5,
+        "fontSize": 25.8807
+      },
+      {
+        "t": 15.300000011920929,
+        "width": 976.015625,
+        "closeX": 1372,
+        "closeY": 34.5,
+        "fontSize": 28.2503
+      },
+      {
+        "t": 31.30000001192093,
+        "width": 1064.015625,
+        "closeX": 1372,
+        "closeY": 34.5,
+        "fontSize": 29.6253
+      },
+      {
+        "t": 48.09999996423721,
+        "width": 1118.109375,
+        "closeX": 1372,
+        "closeY": 34.5,
+        "fontSize": 30.4705
+      },
+      {
+        "t": 64.69999998807907,
+        "width": 1152.640625,
+        "closeX": 1372,
+        "closeY": 34.5,
+        "fontSize": 31.0101
+      },
+      {
+        "t": 81.89999997615814,
+        "width": 1175.71875,
+        "closeX": 1372,
+        "closeY": 34.5,
+        "fontSize": 31.3708
+      },
+      {
+        "t": 98.09999996423721,
+        "width": 1191.265625,
+        "closeX": 1372,
+        "closeY": 34.5,
+        "fontSize": 31.6138
+      },
+      {
+        "t": 115.19999998807907,
+        "width": 1201.671875,
+        "closeX": 1372,
+        "closeY": 34.5,
+        "fontSize": 31.7763
+      },
+      {
+        "t": 131.30000001192093,
+        "width": 1208.5625,
+        "closeX": 1372,
+        "closeY": 34.5,
+        "fontSize": 31.8838
+      },
+      {
+        "t": 148.30000001192093,
+        "width": 1212.796875,
+        "closeX": 1372,
+        "closeY": 34.5,
+        "fontSize": 31.9502
+      },
+      {
+        "t": 164.5999999642372,
+        "width": 1215.125,
+        "closeX": 1372,
+        "closeY": 34.5,
+        "fontSize": 31.9865
+      },
+      {
+        "t": 181.80000001192093,
+        "width": 1215.96875,
+        "closeX": 1372,
+        "closeY": 34.5,
+        "fontSize": 31.9996
+      },
+      {
+        "t": 197.80000001192093,
+        "width": 1216,
+        "closeX": 1372,
+        "closeY": 34.5,
+        "fontSize": 32
+      },
+      {
+        "t": 213.69999998807907,
+        "width": 1216,
+        "closeX": 1372,
+        "closeY": 34.5,
+        "fontSize": 32
+      },
+      {
+        "t": 229.69999998807907,
+        "width": 1216,
+        "closeX": 1372,
+        "closeY": 34.5,
+        "fontSize": 32
+      },
+      {
+        "t": 246.39999997615814,
+        "width": 1216,
+        "closeX": 1372,
+        "closeY": 34.5,
+        "fontSize": 32
+      },
+      {
+        "t": 263,
+        "width": 1216,
+        "closeX": 1372,
+        "closeY": 34.5,
+        "fontSize": 32
+      },
+      {
+        "t": 280.19999998807907,
+        "width": 1216,
+        "closeX": 1372,
+        "closeY": 34.5,
+        "fontSize": 32
+      },
+      {
+        "t": 296.39999997615814,
+        "width": 1216,
+        "closeX": 1372,
+        "closeY": 34.5,
+        "fontSize": 32
+      }
+    ],
+    "rapidReversal": true,
+    "followingVisible": true,
+    "sameMountedLyrics": true
+  },
+  {
+    "width": 960,
+    "height": 700,
+    "compact": {
+      "panel": {
+        "x": 624,
+        "y": 28,
+        "width": 320,
+        "height": 556
+      },
+      "close": {
+        "x": 892,
+        "y": 34.5,
+        "width": 34,
+        "height": 34
+      },
+      "size": {
+        "x": 856,
+        "y": 34.5,
+        "width": 34,
+        "height": 34
+      },
+      "main": {
+        "x": 208,
+        "y": 28,
+        "width": 400,
+        "height": 556
+      },
+      "player": {
+        "x": 16,
+        "y": 596,
+        "width": 928,
+        "height": 88
+      }
+    },
+    "expanded": {
+      "panel": {
+        "x": 208,
+        "y": 28,
+        "width": 736,
+        "height": 556
+      },
+      "close": {
+        "x": 892,
+        "y": 34.5,
+        "width": 34,
+        "height": 34
+      },
+      "size": {
+        "x": 856,
+        "y": 34.5,
+        "width": 34,
+        "height": 34
+      },
+      "main": {
+        "x": 208,
+        "y": 28,
+        "width": 400,
+        "height": 556
+      },
+      "player": {
+        "x": 16,
+        "y": 596,
+        "width": 928,
+        "height": 88
+      }
+    },
+    "frames": [
+      {
+        "t": 0,
+        "width": 320,
+        "closeX": 892,
+        "closeY": 34.5,
+        "fontSize": 18
+      },
+      {
+        "t": 5.800000011920929,
+        "width": 320,
+        "closeX": 892,
+        "closeY": 34.5,
+        "fontSize": 18
+      },
+      {
+        "t": 23.100000023841858,
+        "width": 447.046875,
+        "closeX": 892,
+        "closeY": 34.5,
+        "fontSize": 19.2462
+      },
+      {
+        "t": 38.200000047683716,
+        "width": 555.234375,
+        "closeX": 892,
+        "closeY": 34.5,
+        "fontSize": 20.3072
+      },
+      {
+        "t": 55.80000001192093,
+        "width": 624.578125,
+        "closeX": 892,
+        "closeY": 34.5,
+        "fontSize": 20.9872
+      },
+      {
+        "t": 73.70000004768372,
+        "width": 665.625,
+        "closeX": 892,
+        "closeY": 34.5,
+        "fontSize": 21.3898
+      },
+      {
+        "t": 89.90000003576279,
+        "width": 690.546875,
+        "closeX": 892,
+        "closeY": 34.5,
+        "fontSize": 21.6343
+      },
+      {
+        "t": 106.40000003576279,
+        "width": 706.578125,
+        "closeX": 892,
+        "closeY": 34.5,
+        "fontSize": 21.7915
+      },
+      {
+        "t": 122.70000004768372,
+        "width": 717.34375,
+        "closeX": 892,
+        "closeY": 34.5,
+        "fontSize": 21.8971
+      },
+      {
+        "t": 138.9000000357628,
+        "width": 724.515625,
+        "closeX": 892,
+        "closeY": 34.5,
+        "fontSize": 21.9674
+      },
+      {
+        "t": 156.5,
+        "width": 729.375,
+        "closeX": 892,
+        "closeY": 34.5,
+        "fontSize": 22.015
+      },
+      {
+        "t": 173.10000002384186,
+        "width": 732.5625,
+        "closeX": 892,
+        "closeY": 34.5,
+        "fontSize": 22.0463
+      },
+      {
+        "t": 189.30000001192093,
+        "width": 734.515625,
+        "closeX": 892,
+        "closeY": 34.5,
+        "fontSize": 22.0656
+      },
+      {
+        "t": 206.5,
+        "width": 735.59375,
+        "closeX": 892,
+        "closeY": 34.5,
+        "fontSize": 22.0761
+      },
+      {
+        "t": 222.5,
+        "width": 735.984375,
+        "closeX": 892,
+        "closeY": 34.5,
+        "fontSize": 22.0799
+      },
+      {
+        "t": 239.70000004768372,
+        "width": 736,
+        "closeX": 892,
+        "closeY": 34.5,
+        "fontSize": 22.08
+      },
+      {
+        "t": 254.60000002384186,
+        "width": 736,
+        "closeX": 892,
+        "closeY": 34.5,
+        "fontSize": 22.08
+      },
+      {
+        "t": 271.2000000476837,
+        "width": 736,
+        "closeX": 892,
+        "closeY": 34.5,
+        "fontSize": 22.08
+      },
+      {
+        "t": 288.4000000357628,
+        "width": 736,
+        "closeX": 892,
+        "closeY": 34.5,
+        "fontSize": 22.08
+      }
+    ],
+    "rapidReversal": true,
+    "followingVisible": true,
+    "sameMountedLyrics": true
+  },
+  {
+    "width": 800,
+    "height": 700,
+    "compact": {
+      "panel": {
+        "x": 464,
+        "y": 28,
+        "width": 320,
+        "height": 512
+      },
+      "close": {
+        "x": 732,
+        "y": 34.5,
+        "width": 34,
+        "height": 34
+      },
+      "size": {
+        "x": 696,
+        "y": 34.5,
+        "width": 34,
+        "height": 34
+      },
+      "main": {
+        "x": 180,
+        "y": 28,
+        "width": 604,
+        "height": 512
+      },
+      "player": {
+        "x": 16,
+        "y": 552,
+        "width": 768,
+        "height": 132
+      }
+    },
+    "expanded": {
+      "panel": {
+        "x": 180,
+        "y": 28,
+        "width": 604,
+        "height": 512
+      },
+      "close": {
+        "x": 732,
+        "y": 34.5,
+        "width": 34,
+        "height": 34
+      },
+      "size": {
+        "x": 696,
+        "y": 34.5,
+        "width": 34,
+        "height": 34
+      },
+      "main": {
+        "x": 180,
+        "y": 28,
+        "width": 604,
+        "height": 512
+      },
+      "player": {
+        "x": 16,
+        "y": 552,
+        "width": 768,
+        "height": 132
+      }
+    },
+    "frames": [
+      {
+        "t": 0,
+        "width": 320,
+        "closeX": 732,
+        "closeY": 34.5,
+        "fontSize": 18
+      },
+      {
+        "t": 5.300000011920929,
+        "width": 320,
+        "closeX": 732,
+        "closeY": 34.5,
+        "fontSize": 18
+      },
+      {
+        "t": 22.80000001192093,
+        "width": 406.234375,
+        "closeX": 732,
+        "closeY": 34.5,
+        "fontSize": 19.2146
+      },
+      {
+        "t": 39.80000001192093,
+        "width": 480.21875,
+        "closeX": 732,
+        "closeY": 34.5,
+        "fontSize": 20.2568
+      },
+      {
+        "t": 56.200000047683716,
+        "width": 527.921875,
+        "closeX": 732,
+        "closeY": 34.5,
+        "fontSize": 20.9287
+      },
+      {
+        "t": 72.80000001192093,
+        "width": 555.8125,
+        "closeX": 732,
+        "closeY": 34.5,
+        "fontSize": 21.3215
+      },
+      {
+        "t": 89.5,
+        "width": 572.96875,
+        "closeX": 732,
+        "closeY": 34.5,
+        "fontSize": 21.563
+      },
+      {
+        "t": 106.10000002384186,
+        "width": 583.96875,
+        "closeX": 732,
+        "closeY": 34.5,
+        "fontSize": 21.7179
+      },
+      {
+        "t": 122.90000003576279,
+        "width": 591.234375,
+        "closeX": 732,
+        "closeY": 34.5,
+        "fontSize": 21.8202
+      },
+      {
+        "t": 139.4000000357628,
+        "width": 596.15625,
+        "closeX": 732,
+        "closeY": 34.5,
+        "fontSize": 21.8896
+      },
+      {
+        "t": 156.20000004768372,
+        "width": 599.46875,
+        "closeX": 732,
+        "closeY": 34.5,
+        "fontSize": 21.9363
+      },
+      {
+        "t": 173,
+        "width": 601.640625,
+        "closeX": 732,
+        "closeY": 34.5,
+        "fontSize": 21.967
+      },
+      {
+        "t": 189.5,
+        "width": 602.984375,
+        "closeX": 732,
+        "closeY": 34.5,
+        "fontSize": 21.9858
+      },
+      {
+        "t": 206.10000002384186,
+        "width": 603.71875,
+        "closeX": 732,
+        "closeY": 34.5,
+        "fontSize": 21.9962
+      },
+      {
+        "t": 222.5,
+        "width": 603.984375,
+        "closeX": 732,
+        "closeY": 34.5,
+        "fontSize": 21.9999
+      },
+      {
+        "t": 239.30000001192093,
+        "width": 604,
+        "closeX": 732,
+        "closeY": 34.5,
+        "fontSize": 22
+      },
+      {
+        "t": 254.70000004768372,
+        "width": 604,
+        "closeX": 732,
+        "closeY": 34.5,
+        "fontSize": 22
+      },
+      {
+        "t": 271.2000000476837,
+        "width": 604,
+        "closeX": 732,
+        "closeY": 34.5,
+        "fontSize": 22
+      },
+      {
+        "t": 288,
+        "width": 604,
+        "closeX": 732,
+        "closeY": 34.5,
+        "fontSize": 22
+      }
+    ],
+    "rapidReversal": true,
+    "followingVisible": true,
+    "sameMountedLyrics": true
+  },
+  {
+    "width": 480,
+    "height": 640,
+    "compact": {
+      "panel": {
+        "x": 180,
+        "y": 28,
+        "width": 284,
+        "height": 452
+      },
+      "close": {
+        "x": 412,
+        "y": 34.5,
+        "width": 34,
+        "height": 34
+      },
+      "size": {
+        "x": 376,
+        "y": 34.5,
+        "width": 34,
+        "height": 34
+      },
+      "main": {
+        "x": 180,
+        "y": 28,
+        "width": 284,
+        "height": 452
+      },
+      "player": {
+        "x": 16,
+        "y": 492,
+        "width": 448,
+        "height": 132
+      }
+    },
+    "expanded": {
+      "panel": {
+        "x": 180,
+        "y": 28,
+        "width": 284,
+        "height": 452
+      },
+      "close": {
+        "x": 412,
+        "y": 34.5,
+        "width": 34,
+        "height": 34
+      },
+      "size": {
+        "x": 376,
+        "y": 34.5,
+        "width": 34,
+        "height": 34
+      },
+      "main": {
+        "x": 180,
+        "y": 28,
+        "width": 284,
+        "height": 452
+      },
+      "player": {
+        "x": 16,
+        "y": 492,
+        "width": 448,
+        "height": 132
+      }
+    },
+    "frames": [
+      {
+        "t": 0.10000002384185791,
+        "width": 284,
+        "closeX": 412,
+        "closeY": 34.5,
+        "fontSize": 18
+      },
+      {
+        "t": 6.600000023841858,
+        "width": 284,
+        "closeX": 412,
+        "closeY": 34.5,
+        "fontSize": 18
+      },
+      {
+        "t": 24.100000023841858,
+        "width": 284,
+        "closeX": 412,
+        "closeY": 34.5,
+        "fontSize": 19.2146
+      },
+      {
+        "t": 40.40000003576279,
+        "width": 284,
+        "closeX": 412,
+        "closeY": 34.5,
+        "fontSize": 20.2568
+      },
+      {
+        "t": 57.10000002384186,
+        "width": 284,
+        "closeX": 412,
+        "closeY": 34.5,
+        "fontSize": 20.9287
+      },
+      {
+        "t": 72,
+        "width": 284,
+        "closeX": 412,
+        "closeY": 34.5,
+        "fontSize": 21.3215
+      },
+      {
+        "t": 90.60000002384186,
+        "width": 284,
+        "closeX": 412,
+        "closeY": 34.5,
+        "fontSize": 21.563
+      },
+      {
+        "t": 107.30000001192093,
+        "width": 284,
+        "closeX": 412,
+        "closeY": 34.5,
+        "fontSize": 21.7179
+      },
+      {
+        "t": 124,
+        "width": 284,
+        "closeX": 412,
+        "closeY": 34.5,
+        "fontSize": 21.8202
+      },
+      {
+        "t": 140.69999998807907,
+        "width": 284,
+        "closeX": 412,
+        "closeY": 34.5,
+        "fontSize": 21.8896
+      },
+      {
+        "t": 157.69999998807907,
+        "width": 284,
+        "closeX": 412,
+        "closeY": 34.5,
+        "fontSize": 21.9363
+      },
+      {
+        "t": 172.19999998807907,
+        "width": 284,
+        "closeX": 412,
+        "closeY": 34.5,
+        "fontSize": 21.9668
+      },
+      {
+        "t": 189.69999998807907,
+        "width": 284,
+        "closeX": 412,
+        "closeY": 34.5,
+        "fontSize": 21.9858
+      },
+      {
+        "t": 207.69999998807907,
+        "width": 284,
+        "closeX": 412,
+        "closeY": 34.5,
+        "fontSize": 21.9962
+      },
+      {
+        "t": 224,
+        "width": 284,
+        "closeX": 412,
+        "closeY": 34.5,
+        "fontSize": 21.9999
+      },
+      {
+        "t": 240.60000002384186,
+        "width": 284,
+        "closeX": 412,
+        "closeY": 34.5,
+        "fontSize": 22
+      },
+      {
+        "t": 256,
+        "width": 284,
+        "closeX": 412,
+        "closeY": 34.5,
+        "fontSize": 22
+      },
+      {
+        "t": 272.60000002384186,
+        "width": 284,
+        "closeX": 412,
+        "closeY": 34.5,
+        "fontSize": 22
+      },
+      {
+        "t": 289.19999998807907,
+        "width": 284,
+        "closeX": 412,
+        "closeY": 34.5,
+        "fontSize": 22
+      }
+    ],
+    "rapidReversal": true,
+    "followingVisible": true,
+    "sameMountedLyrics": true
+  }
+]

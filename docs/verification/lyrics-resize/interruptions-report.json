@@ -1,0 +1,7 @@
+{
+  "manualScrollingStaysPausedDuringResize": true,
+  "followResumes": true,
+  "switchDuringCollapse": true,
+  "closeDuringExpansion": true,
+  "focusRestored": true
+}
