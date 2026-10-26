@@ -323,7 +323,7 @@ async function main() {
       state.roomProfiles[0].workflowDraft.newsLastRun = { requestId: 'request-malformed', outcome: 'interrupted', startedAt: new Date().toISOString() };
       reload();
       const blocked = await prepared.reviewedArticleUrls();
-      if (mutation === 'future') assert.ok(!blocked.includes('https://story.fixture.invalid/album'));
+      if (mutation === 'future') assert.ok(!blocked.some((url) => url === 'https://story.fixture.invalid/album'));
       assert.equal(await prepared.resumableRoomNewsRequest(snapshot(), 'room-a'), null);
       await assert.rejects(prepare('request-malformed', true));
       assert.equal(calls.speech, 1);
