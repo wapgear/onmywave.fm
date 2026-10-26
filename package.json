@@ -1,6 +1,6 @@
 {
   "name": "onmywave-desktop",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "private": true,
   "license": "GPL-3.0-only",
   "author": "onmywave.fm contributors",
@@ -59,6 +59,8 @@
     },
     "files": [
       "out/**",
+      "resources/icon.png",
+      "resources/trayTemplate*.png",
       "package.json",
       "LICENSE",
       "THIRD_PARTY_NOTICES.md",

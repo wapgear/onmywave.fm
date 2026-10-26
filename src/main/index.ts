@@ -2,7 +2,7 @@ import { randomUUID } from 'node:crypto';
 import { dirname, extname, join, relative, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-import { app, BrowserWindow, ipcMain, net, protocol, session, shell } from 'electron';
+import { app, BrowserWindow, ipcMain, Menu, nativeImage, net, protocol, session, shell, Tray } from 'electron';
 
 import { djPreparationKey, isDJAvatar } from '../shared/dj-avatar';
 import { isDJPlaybackSettings, isDJPlaybackSettingsPatch, normalizeDJPlaybackSettings } from '../shared/dj-playback';
@@ -102,15 +102,20 @@ const directory = dirname(fileURLToPath(import.meta.url));
 
 let window: BrowserWindow | null = null;
 
-app.on('second-instance', () => {
+let tray: Tray | null = null;
+
+function showWindow() {
+  if (closing) return;
   if (!window || window.isDestroyed()) {
-    if (service && !closing) void createWindow();
+    if (service) void createWindow();
     return;
   }
   if (window.isMinimized()) window.restore();
   window.show();
   window.focus();
-});
+}
+
+app.on('second-instance', showWindow);
 
 let signingOut = false;
 
@@ -1104,9 +1109,9 @@ async function createWindow() {
   });
   window.once('ready-to-show', () => window?.show());
   window.on('close', (event) => {
-    if (process.platform === 'darwin' && !closing) {
+    if (!closing && (tray || process.platform === 'darwin')) {
       event.preventDefault();
-      window?.hide();
+      createdWindow.hide();
     }
   });
   createdWindow.on('closed', () => {
@@ -1195,19 +1200,29 @@ app
       newsUnavailable,
     );
     registerIpc();
+    if (process.platform === 'darwin' || process.platform === 'win32') {
+      const image = nativeImage.createFromPath(
+        join(directory, '../../resources', process.platform === 'darwin' ? 'trayTemplate.png' : 'icon.png'),
+      );
+      if (image.isEmpty()) throw new Error('The tray icon could not be loaded.');
+      if (process.platform === 'darwin') image.setTemplateImage(true);
+      tray = new Tray(image);
+      tray.setToolTip('onmywave.fm');
+      tray.setContextMenu(
+        Menu.buildFromTemplate([
+          { label: 'Show onmywave.fm', click: showWindow },
+          { type: 'separator' },
+          { label: 'Quit onmywave.fm', click: () => app.quit() },
+        ]),
+      );
+      if (process.platform === 'win32') tray.on('click', showWindow);
+    }
     await createWindow();
     startUpdates((status) => {
       if (window && !window.isDestroyed()) window.webContents.send('wave:updateStatus', status);
     }, beginShutdown);
     void recoverNews();
-    app.on('activate', () => {
-      if (!window) void createWindow();
-      else {
-        if (window.isMinimized()) window.restore();
-        window.show();
-        window.focus();
-      }
-    });
+    app.on('activate', showWindow);
   })
   .catch(() => {
     app.quit();
