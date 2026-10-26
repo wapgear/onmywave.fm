@@ -1,4 +1,5 @@
 import type { NewsTransitionSettings } from '../shared/news-transitions';
+import type { ShufflePlan } from '../shared/shuffle-queue';
 import type { NewsBreak, PlaybackSnapshot, Song } from '../shared/types';
 
 export type ScheduledNews = {
@@ -14,6 +15,8 @@ export type ScheduledNews = {
   startLevel: number;
   speechAttempt: number;
   starting: boolean;
+  nextSong: { key: string; shufflePlan?: ShufflePlan } | null;
+  isNextCurrent(): boolean;
   prepareSpeech(): Promise<void>;
   playSpeech(): Promise<void>;
   cancelDelivery(): void;

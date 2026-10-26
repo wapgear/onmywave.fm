@@ -215,6 +215,8 @@ export type DJVoicePreview = {
   attempted: boolean;
 };
 
+export type SongHandoff = { script: string; audioUrl: string };
+
 export type DJVoice = { id: string; name: string; description: string };
 
 export type DJVoiceSearch = { prompt: string; gender: 'any' | 'male' | 'female' };
@@ -424,6 +426,8 @@ export interface WaveApi {
   setRoomProfileEnabled(input: { id: string; enabled: boolean }): Promise<Result<LocalStateSnapshot>>;
   saveDJPlayback(settings: DJPlaybackSettingsPatch): Promise<Result<LocalStateSnapshot>>;
   nextRoomNews(input: { roomId: string; excludedIds: string[] }): Promise<Result<PreparedNewsTake | null>>;
+  prepareSongHandoff(input: { requestId: string; takeId: string; songId: string }): Promise<Result<SongHandoff | null>>;
+  cancelSongHandoff(requestId: string): Promise<Result<void>>;
   claimPreparedNews(input: { id: string; claimId?: string }): Promise<Result<PreparedNewsTake>>;
   startPreparedNews(input: PreparedNewsClaim): Promise<Result<void>>;
   releasePreparedNews(input: PreparedNewsClaim & { neverPlayInvoked?: boolean }): Promise<Result<void>>;

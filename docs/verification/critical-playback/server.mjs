@@ -144,7 +144,9 @@ async function main() {
     if (mutation && (!mutationSpec || mutationSpec.assertion !== expectedMutation))
       throw new Error('Invalid mutation configuration');
     const fixtureModule = path.join(root, 'docs/verification/playback-progress/fixture.mjs');
-    const scenarioModule = path.join(root, 'docs/verification/critical-playback/scenarios.mjs');
+    const scenarioModule = path.join(root, scenario === 'song-handoff'
+      ? 'docs/verification/song-handoff/scenarios.mjs'
+      : 'docs/verification/critical-playback/scenarios.mjs');
     server = await createServer({
       root: path.join(root, 'src/renderer'),
       configFile: false,
@@ -263,6 +265,23 @@ async function main() {
       } catch (error) {
         if (!String(error).includes(`ASSERTION:${expectedMutation}:`)) throw error;
         emit({ mutation, detected: true, evidence: String(error).split('\n')[0] });
+      }
+    } else if (scenario === 'song-handoff') {
+      for (const handoffCase of ['normal', 'shuffle', 'shuffle-cycle', 'repeat-one', 'repeat-all', 'end', 'queue-edit', 'intro-edit', 'pause', 'budget', 'too-long', 'failure', 'cancel-pending']) {
+        await open({
+          handoffCase,
+          dj: true,
+          availableTakes: 1,
+          playback: handoffCase === 'shuffle-cycle' ? shuffledAll() : snapshot(['1', '2', '3'], ['end', 'repeat-all'].includes(handoffCase) ? 2 : 0, 0),
+          preferences: { volume: 0.75, shuffle: handoffCase === 'shuffle-cycle', repeat: handoffCase === 'repeat-one' ? 'one' : ['shuffle-cycle', 'repeat-all'].includes(handoffCase) ? 'all' : 'off' },
+          state: {
+            djPlayback: { enabled: false, roomId: 'default-room', everySongs: 1, keepOnSeek: true, voiceVolume: 0.7 },
+            newsTransitions: { mode: ['budget', 'too-long'].includes(handoffCase) ? 'over-music' : 'between-songs', fadeOutSeconds: 0, leadInSeconds: 0, postSpeechSeconds: 0, fadeInSeconds: 0 },
+          },
+        });
+        await run('verify');
+        emit({ scenario: handoffCase, passed: true });
+        await closeWindow();
       }
     } else if (scenario === 'baseline') {
       await open({ playback: snapshot(), preferences: { volume: 0.75, shuffle: false, repeat: 'off' } });
