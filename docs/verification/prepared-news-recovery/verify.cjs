@@ -38,8 +38,6 @@ Module._load = function (id, ...args) {
       readTwitterKey: async () => 'fixture-twitter-key',
     };
   }
-  if (id === './news' && args[0]?.filename?.endsWith(`${path.sep}prepared-news.ts`))
-    return { validateNewsSettings: () => {} };
   return originalLoad.call(this, id, ...args);
 };
 
@@ -48,7 +46,14 @@ const makeState = () => ({
     {
       id: 'fixture-dj',
       name: 'Fixture DJ',
-      news: { interests: 'ambient', feedUrls: ['https://fixture.invalid/feed.xml'], elevenVoiceId: 'voice-fixture' },
+      description: 'Fixture host',
+      instructions: 'Keep it brief',
+      musicPreferences: '',
+      exclusions: '',
+      language: 'English',
+      personality: 'Calm',
+      speakingFrequency: 'often',
+      news: { interests: 'ambient', feedUrls: ['https://fixture.invalid/feed.xml'], elevenVoiceId: 'voice-fixture', minStories: 1, maxStories: 1, voice: 'alloy', textModel: 'gpt-6-luna', speechEngine: 'elevenlabs-v4', duckVolume: 0.05 },
     },
   ],
   sources: [{ id: 'fixture-source', name: 'Fixture source', url: 'https://fixture.invalid/feed.xml' }],
@@ -101,11 +106,23 @@ const harness = (name, initialIndex) => {
     cancel: () => {},
     prepareScript: async (input) => {
       providerCalls.script++;
-      await input.onCandidates?.([]);
-      return { script: 'Fixture script', articles: [], warnings: [] };
+      const candidate = { id: 'story-1', title: 'Fixture story', url: 'https://fixture.invalid/story', source: 'Fixture source', publishedAt: new Date().toISOString(), summary: 'Fixture story', sourceIds: ['fixture-source'] };
+      const selection = { candidateId: candidate.id, reasonCode: 'selected', reason: 'Fixture decision', decidedAt: new Date().toISOString() };
+      await input.onPhase?.('collecting');
+      await input.onCollection?.({ candidates: [candidate], sourceResults: [{ sourceId: 'fixture-source', status: 'complete', articleCount: 1, warnings: [] }], warnings: [], incomplete: false, collectedAt: new Date().toISOString() });
+      await input.onPhase?.('selecting');
+      await input.onProviderAttempt?.('selecting', 'pending');
+      await input.onSelection?.(selection);
+      await input.onPhase?.('writing');
+      await input.onProviderAttempt?.('writing', 'pending');
+      const result = { requestId: input.requestId, script: 'Fixture script', articles: [candidate], warnings: [], selection };
+      await input.onScript?.(result);
+      return result;
     },
-    renderPreparedSpeech: async (_input, result) => {
+    renderPreparedSpeech: async (input, result) => {
       providerCalls.render++;
+      await input.onPhase?.('speech');
+      await input.onProviderAttempt?.('speech', 'pending');
       return { ...result, audio: Buffer.from('fixture audio'), engine: 'elevenlabs-v4' };
     },
   };
@@ -265,7 +282,7 @@ const pause = () => new Promise((resolve) => setImmediate(resolve));
       }
       return originalRename(from, to);
     };
-    await assert.rejects(prepare(prepared, news, 'final-index-request'));
+    await prepare(prepared, news, 'final-index-request');
     assert.equal(failedIndexCommit, true);
     assert.equal(
       fs.readdirSync(directory).some((name) => name.endsWith('.mp3') && !name.endsWith('.tmp')),

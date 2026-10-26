@@ -3,7 +3,7 @@ import { randomUUID } from 'node:crypto';
 import type { LocalState, PreparedNewsTake, RoomProfile, WorkflowDraft } from '../shared/types';
 import { ServiceError } from './jellyfin';
 import type { NewsService } from './news';
-import { cancelPreparedNews, getPreparedNews, prepareRoomNews } from './prepared-news';
+import { cancelPreparedNews, getPreparedNews, prepareRoomNews, resumableRoomNewsRequest } from './prepared-news';
 import { getLocalState, updateLocalState } from './storage';
 import { StorageError } from './storage-error';
 
@@ -144,7 +144,8 @@ async function processProfile(news: NewsService, profile: RoomProfile) {
     return;
   }
 
-  const requestId = randomUUID();
+  const retryRequestId = await resumableRoomNewsRequest(state, current.id);
+  const requestId = retryRequestId ?? randomUUID();
   let snapshot: Pick<LocalState, 'roomProfiles' | 'djs' | 'sources'> | undefined;
   let reservation: { before: WorkflowDraft; started: WorkflowDraft } | undefined;
   await updateLocalState((state) => {
@@ -195,10 +196,17 @@ async function processProfile(news: NewsService, profile: RoomProfile) {
   activeRequest = requestId;
   activeRoomId = current.id;
   try {
-    const take = await prepareRoomNews(news, { requestId, roomId: current.id }, snapshot);
+    const take = await prepareRoomNews(
+      news,
+      { requestId, roomId: current.id, retry: Boolean(retryRequestId) },
+      snapshot,
+    );
     await finishRun(current.id, requestId, 'prepared', undefined, recordingTime(take, new Date().toISOString()));
   } catch (error) {
-    if (error instanceof StorageError) throw error;
+    if (error instanceof StorageError) {
+      await finishRun(current.id, requestId, 'interrupted', error.message);
+      throw error;
+    }
     const message =
       error instanceof ServiceError
         ? error.message
@@ -302,10 +310,14 @@ export async function startNewsWorkflow(
   await updateLocalState((state) => {
     const changed = state.roomProfiles.map((profile) => {
       const run = profile.workflowDraft.newsLastRun;
-      if (run?.outcome !== 'running') return profile;
+      if (!run) return profile;
       const request = requests.get(run.requestId);
+      const take =
+        request?.status === 'complete' ? prepared.takes.find((value) => value.id === request.artifactId) : undefined;
+      const recoveredPublication = Boolean(take) && (run.outcome === 'failed' || run.outcome === 'interrupted');
+      if (run.outcome !== 'running' && !recoveredPublication) return profile;
       const outcome: NonNullable<WorkflowDraft['newsLastRun']>['outcome'] =
-        request?.status === 'complete'
+        request?.status === 'complete' && take
           ? 'prepared'
           : request?.status === 'skipped'
             ? 'no-news'
@@ -316,8 +328,6 @@ export async function startNewsWorkflow(
         outcome === 'interrupted'
           ? request?.error || 'The app stopped before this preparation completed.'
           : request?.error;
-      const take =
-        request?.status === 'complete' ? prepared.takes.find((value) => value.id === request.artifactId) : undefined;
       const finishedAt = outcome === 'prepared' ? recordingTime(take, run.startedAt) : new Date().toISOString();
       const date = dayKey(new Date(finishedAt));
       const count = profile.workflowDraft.newsClipDate === date ? (profile.workflowDraft.newsClipsToday ?? 0) : 0;
@@ -326,6 +336,7 @@ export async function startNewsWorkflow(
         workflowDraft: {
           ...profile.workflowDraft,
           newsWorkflowPaused: profile.workflowDraft.newsWorkflowPaused || outcome === 'interrupted',
+          ...(outcome === 'prepared' ? { newsWorkflowError: undefined } : {}),
           ...(outcome === 'prepared' ? { newsClipDate: date, newsClipsToday: count + 1 } : {}),
           newsLastRun: { ...run, outcome, finishedAt, ...(message ? { message: message.slice(0, 2000) } : {}) },
         },

@@ -1,0 +1,5 @@
+{
+  "verification": "Two native Electron processes, isolated temporary userData, actual production singleton guard extracted from main entry; no window, credentials or providers.",
+  "primaryAcquired": true,
+  "secondaryRejectedAndExited": true
+}

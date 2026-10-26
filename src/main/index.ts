@@ -90,6 +90,7 @@ app.setName('onmywave.fm');
 
 app.setPath('userData', join(app.getPath('appData'), 'onmywave-light'));
 
+// The local preparation index has one writer and one provider runner per app data directory.
 if (!app.requestSingleInstanceLock()) app.exit(0);
 
 protocol.registerSchemesAsPrivileged([
