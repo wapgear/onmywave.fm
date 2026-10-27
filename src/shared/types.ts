@@ -141,15 +141,66 @@ export type NewsTransitionSettings = {
 
 export type NewsArticle = { id: string; title: string; url: string; source: string; publishedAt?: string };
 
+export type FavoritedNewsArticle = NewsArticle & { canonicalUrl: string; favoritedAt: string };
+
+export type NewsCandidate = NewsArticle & { summary: string; sourceIds: string[] };
+
+export type NewsSourceResult = {
+  sourceId: string;
+  status: 'complete' | 'partial' | 'failed';
+  articleCount: number;
+  warnings: string[];
+};
+
+export type NewsCollection = {
+  candidates: NewsCandidate[];
+  sourceResults: NewsSourceResult[];
+  warnings: string[];
+  collectedAt: string;
+  incomplete: boolean;
+};
+
+export type NewsEditorialSelection = {
+  candidateId: string | null;
+  reasonCode: 'selected' | 'no-match' | 'excluded' | 'insufficient-evidence' | 'not-major';
+  reason: string;
+  decidedAt: string;
+};
+
+export type NewsPreparationPhase =
+  | 'collecting'
+  | 'selecting'
+  | 'selected'
+  | 'writing'
+  | 'script-ready'
+  | 'speech'
+  | 'publishing'
+  | 'complete';
+
+export type NewsProviderAttempt = {
+  phase: 'selecting' | 'writing' | 'speech';
+  dispatchedAt: string;
+  outcome: 'pending' | 'rejected' | 'received' | 'uncertain';
+};
+
 export type ReviewedNewsArticle = NewsArticle & {
   canonicalUrl: string;
   requestId: string;
   reviewedAt: string;
   status: 'submitted' | 'reviewed' | 'interrupted';
   outcome?: 'selected' | 'not-selected';
+  configHash?: string;
+  reasonCode?: NewsEditorialSelection['reasonCode'];
+  reason?: string;
 };
 
-export type NewsScript = { requestId: string; script: string; articles: NewsArticle[]; warnings: string[] };
+export type NewsScript = {
+  requestId: string;
+  script: string;
+  articles: NewsArticle[];
+  warnings: string[];
+  selection?: NewsEditorialSelection;
+};
 
 export type NewsBreak = NewsScript & {
   id: string;
@@ -221,6 +272,19 @@ export type PreparedNewsProvenance = {
   newsInterests?: string;
   roomId?: string;
   roomName?: string;
+  importance?: 'major' | 'relevant';
+};
+
+export type NewsPreparationCheckpoint = {
+  version: 1;
+  configHash: string;
+  createdAt: string;
+  provenance: PreparedNewsProvenance;
+  settings: NewsSettings;
+  importance: 'major' | 'relevant';
+  collection?: NewsCollection;
+  selection?: NewsEditorialSelection;
+  scriptId?: string;
 };
 
 export type PreparedNewsScript = NewsScript & { id: string; createdAt: string; provenance: PreparedNewsProvenance };
@@ -260,6 +324,10 @@ export type PreparedNewsRequest = {
   status: 'running' | 'complete' | 'failed' | 'interrupted' | 'skipped' | 'partial-coverage';
   artifactId?: string;
   error?: string;
+  phase?: NewsPreparationPhase;
+  checkpoint?: NewsPreparationCheckpoint;
+  providerAttempt?: NewsProviderAttempt;
+  attempts?: number;
 };
 
 export type PreparedNewsClaim = { id: string; claimId: string };
@@ -271,6 +339,7 @@ export type PreparedNewsLibrary = {
   selectedTakeId: string | null;
   requests: PreparedNewsRequest[];
   reviewedArticles: ReviewedNewsArticle[];
+  favorites?: FavoritedNewsArticle[];
 };
 
 export type LocalState = {
@@ -363,6 +432,7 @@ export interface WaveApi {
   releasePreparedNews(input: PreparedNewsClaim & { neverPlayInvoked?: boolean }): Promise<Result<void>>;
   markPreparedNewsPlayed(input: PreparedNewsClaim): Promise<Result<void>>;
   getPreparedNews(): Promise<Result<PreparedNewsLibrary>>;
+  setNewsFavorite(input: { article: NewsArticle; favorite: boolean }): Promise<Result<PreparedNewsLibrary>>;
   cancelPreparedNews(requestId: string): Promise<Result<void>>;
   getVoicePreview(voiceId: string): Promise<Result<DJVoicePreview>>;
   prepareVoicePreview(input: { voiceId: string; regenerate?: boolean }): Promise<Result<DJVoicePreview>>;

@@ -1,5 +1,6 @@
 import type { ListeningRoom } from '../../../shared/types';
 import type { WorkflowDraft } from '../../../shared/workflow';
+import type { NewsBucketDestination } from './components/NewsBucket.types';
 
 export type RoomSetupDraft = {
   preparationCancellation?: { requestId: string; acknowledged: boolean };
@@ -7,6 +8,7 @@ export type RoomSetupDraft = {
   moodDraft: string | null;
   newsInterests?: string;
   workflow?: { roomId: string; patch: Partial<WorkflowDraft> };
+  bucketDestination?: NewsBucketDestination;
   stopError?: string;
   stopErrorOrigin?: 'settings' | 'progress';
   operationError?: string;

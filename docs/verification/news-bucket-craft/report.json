@@ -1,0 +1,164 @@
+[
+  {
+    "width": 1440,
+    "height": 900,
+    "theme": "dark",
+    "passed": true,
+    "pageErrors": [],
+    "additionalChecks": [
+      "legacy/deleted-room recordings remain reachable without changing heard count",
+      "late favorite result preserves current focus",
+      "resume failure/retry and keyboard focus",
+      "immediate stop failure/retry and keyboard focus",
+      "room availability and keyboard focus",
+      "legacy management return",
+      "unique IDs"
+    ],
+    "checks": [
+      "flush app-surface layout without nested frame",
+      "shared pane header bands and aligned list/sidebar/favorite controls",
+      "one-time desktop reader",
+      "real publication dates and excerpts",
+      "compact reader/back/keyboard focus",
+      "category navigation remains visible",
+      "audition pause/resume/cleanup",
+      "favorites and source links",
+      "history semantics",
+      "latest source check/partial coverage",
+      "inline automatic preparation/readiness/consent",
+      "source and provider round trips retain draft/destination",
+      "validation/save error/success",
+      "no horizontal overflow"
+    ]
+  },
+  {
+    "width": 1280,
+    "height": 800,
+    "theme": "light",
+    "passed": true,
+    "pageErrors": [],
+    "additionalChecks": [
+      "unique IDs"
+    ],
+    "checks": [
+      "flush app-surface layout without nested frame",
+      "shared pane header bands and aligned list/sidebar/favorite controls",
+      "one-time desktop reader",
+      "real publication dates and excerpts",
+      "compact reader/back/keyboard focus",
+      "category navigation remains visible",
+      "audition pause/resume/cleanup",
+      "favorites and source links",
+      "history semantics",
+      "latest source check/partial coverage",
+      "inline automatic preparation/readiness/consent",
+      "source and provider round trips retain draft/destination",
+      "validation/save error/success",
+      "no horizontal overflow"
+    ]
+  },
+  {
+    "width": 1280,
+    "height": 800,
+    "theme": "coffee",
+    "passed": true,
+    "pageErrors": [],
+    "additionalChecks": [
+      "unique IDs"
+    ],
+    "checks": [
+      "flush app-surface layout without nested frame",
+      "shared pane header bands and aligned list/sidebar/favorite controls",
+      "one-time desktop reader",
+      "real publication dates and excerpts",
+      "compact reader/back/keyboard focus",
+      "category navigation remains visible",
+      "audition pause/resume/cleanup",
+      "favorites and source links",
+      "history semantics",
+      "latest source check/partial coverage",
+      "inline automatic preparation/readiness/consent",
+      "source and provider round trips retain draft/destination",
+      "validation/save error/success",
+      "no horizontal overflow"
+    ]
+  },
+  {
+    "width": 1024,
+    "height": 768,
+    "theme": "dark",
+    "passed": true,
+    "pageErrors": [],
+    "additionalChecks": [
+      "unique IDs"
+    ],
+    "checks": [
+      "flush app-surface layout without nested frame",
+      "shared pane header bands and aligned list/sidebar/favorite controls",
+      "one-time desktop reader",
+      "real publication dates and excerpts",
+      "compact reader/back/keyboard focus",
+      "category navigation remains visible",
+      "audition pause/resume/cleanup",
+      "favorites and source links",
+      "history semantics",
+      "latest source check/partial coverage",
+      "inline automatic preparation/readiness/consent",
+      "source and provider round trips retain draft/destination",
+      "validation/save error/success",
+      "no horizontal overflow"
+    ]
+  },
+  {
+    "width": 800,
+    "height": 700,
+    "theme": "dark",
+    "passed": true,
+    "pageErrors": [],
+    "additionalChecks": [
+      "unique IDs"
+    ],
+    "checks": [
+      "flush app-surface layout without nested frame",
+      "shared pane header bands and aligned list/sidebar/favorite controls",
+      "one-time desktop reader",
+      "real publication dates and excerpts",
+      "compact reader/back/keyboard focus",
+      "category navigation remains visible",
+      "audition pause/resume/cleanup",
+      "favorites and source links",
+      "history semantics",
+      "latest source check/partial coverage",
+      "inline automatic preparation/readiness/consent",
+      "source and provider round trips retain draft/destination",
+      "validation/save error/success",
+      "no horizontal overflow"
+    ]
+  },
+  {
+    "width": 720,
+    "height": 450,
+    "theme": "light",
+    "passed": true,
+    "pageErrors": [],
+    "additionalChecks": [
+      "unique IDs"
+    ],
+    "checks": [
+      "flush app-surface layout without nested frame",
+      "shared pane header bands and aligned list/sidebar/favorite controls",
+      "one-time desktop reader",
+      "real publication dates and excerpts",
+      "compact reader/back/keyboard focus",
+      "category navigation remains visible",
+      "audition pause/resume/cleanup",
+      "favorites and source links",
+      "history semantics",
+      "latest source check/partial coverage",
+      "inline automatic preparation/readiness/consent",
+      "source and provider round trips retain draft/destination",
+      "validation/save error/success",
+      "no horizontal overflow"
+    ]
+  }
+]

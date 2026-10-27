@@ -1,0 +1,390 @@
+.news-room-settings {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  max-width: 760px;
+  padding: 0;
+  background: transparent;
+  color: var(--text);
+}
+.news-room-settings-heading {
+  display: none;
+}
+.news-room-settings-heading h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.news-room-settings-empty {
+  max-width: 300px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+.news-room-automation {
+  display: grid;
+  gap: 10px;
+  padding: 2px 0 18px;
+  border-bottom: 1px solid var(--separator);
+  margin-bottom: 4px;
+}
+.news-room-automation-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+.news-room-automation-heading h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+}
+.news-room-automation-heading p,
+.news-room-automation-detail,
+.news-room-paid-consent,
+.news-room-automation-actions > span,
+.news-room-automation-usage {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.news-room-automation-state {
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: var(--panel);
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.3;
+}
+.news-room-automation-state.is-enabled {
+  color: var(--accent);
+}
+.news-room-automation-toggle {
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+  gap: 9px;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 550;
+}
+.news-room-automation-toggle input {
+  width: 17px;
+  height: 17px;
+  margin: 0;
+  accent-color: var(--accent);
+}
+.news-room-automation-readiness {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--panel);
+  color: var(--text);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.news-room-automation-readiness ul {
+  display: grid;
+  gap: 8px;
+  padding-left: 18px;
+  margin: 8px 0 0;
+  color: var(--muted);
+}
+.news-room-automation-readiness li > .news-room-link {
+  display: block;
+  margin-top: 2px;
+}
+.news-room-paid-consent {
+  padding: 9px 10px;
+  margin: 0;
+  border-left: 2px solid var(--accent);
+  background: var(--panel);
+}
+.news-room-paid-consent-disclosure {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.news-room-paid-consent-disclosure > summary {
+  width: fit-content;
+  min-height: 28px;
+  padding: 3px 0;
+  cursor: pointer;
+  color: var(--accent);
+}
+.news-room-paid-consent-disclosure[open] > summary {
+  margin-bottom: 5px;
+}
+.news-room-paid-consent-disclosure .news-room-paid-consent {
+  max-width: 620px;
+}
+.news-room-automation-actions {
+  display: grid;
+  justify-items: start;
+  gap: 5px;
+}
+.news-room-automation-actions > button:not(.news-room-link) {
+  min-height: 34px;
+  padding: 6px 12px;
+  border: 1px solid var(--separator);
+  border-radius: 7px;
+  background: var(--panel);
+  color: var(--text);
+  font: inherit;
+  font-size: 12px;
+}
+.news-room-automation-actions > button:disabled,
+.news-room-automation-actions > button[aria-disabled='true'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.news-room-automation-usage {
+  margin-top: 0;
+  font-variant-numeric: tabular-nums;
+}
+.news-room-settings-group {
+  margin: 0;
+  border: 0;
+  border-bottom: 1px solid var(--separator);
+  border-radius: 0;
+  background: transparent;
+}
+.news-room-settings-group > summary {
+  display: flex;
+  min-height: 58px;
+  align-items: center;
+  gap: 11px;
+  padding: 9px 0;
+  cursor: pointer;
+  list-style: none;
+}
+.news-room-settings-group > summary::-webkit-details-marker {
+  display: none;
+}
+.news-room-settings-group-copy {
+  display: grid;
+  min-width: 0;
+  flex: 1;
+  gap: 4px;
+}
+.news-room-settings-group-copy > strong {
+  color: var(--text);
+  font-size: 15px;
+  font-weight: 600;
+}
+.news-room-settings-group-copy > small {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.news-room-settings-chevron {
+  flex: 0 0 auto;
+  color: var(--muted);
+  transition: rotate 120ms ease;
+}
+.news-room-settings-group[open] .news-room-settings-chevron {
+  rotate: 180deg;
+}
+.news-room-settings-fields {
+  display: grid;
+  gap: 12px;
+  padding: 8px 0 20px;
+}
+.news-room-sources-fields {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 16px;
+}
+.news-room-sources-fields > fieldset {
+  grid-column: 1 / -1;
+}
+.news-room-settings-fields > label,
+.news-room-settings-fields fieldset {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+.news-room-settings-fields fieldset {
+  padding: 0;
+  border: 0;
+}
+.news-room-settings-fields legend {
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 13px;
+}
+.news-room-settings-fields select,
+.news-room-settings-fields input[type='number'],
+.news-room-settings-fields textarea {
+  width: 100%;
+  min-width: 0;
+  min-height: 36px;
+  padding: 7px 9px;
+  border: 1px solid var(--separator);
+  border-radius: 7px;
+  background: var(--canvas);
+  color: var(--text);
+  font: inherit;
+  font-size: 14px;
+}
+.news-room-settings-fields textarea {
+  min-height: 76px;
+  resize: vertical;
+  line-height: 1.5;
+}
+.news-room-source-list {
+  display: grid;
+  max-height: 180px;
+  gap: 5px;
+  overflow: auto;
+  padding: 1px 5px 1px 0;
+}
+.news-room-source-list label {
+  display: flex;
+  min-height: 28px;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+.news-room-source-name {
+  min-width: 0;
+  flex: 1;
+}
+.news-room-source-kind {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: 11px;
+}
+.news-room-source-list input {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+  margin: 0;
+  accent-color: var(--accent);
+}
+.news-room-settings-hint,
+.news-room-preparation-status,
+.news-room-host-summary,
+.news-room-writing-policy p,
+.news-room-memory > p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.news-room-preparation-status {
+  display: grid;
+  gap: 4px;
+  padding: 9px 10px;
+  border-radius: 7px;
+  background: var(--panel);
+}
+.news-room-preparation-status strong {
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 550;
+}
+.news-room-preparation-status small {
+  color: var(--muted);
+  font-size: 10px;
+}
+.news-room-link {
+  justify-self: start;
+  min-height: 28px;
+  padding: 4px 1px;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+  font-size: 12px;
+  text-align: left;
+}
+.news-room-link:disabled,
+.news-room-link[aria-disabled='true'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.news-room-host-summary {
+  padding-top: 1px;
+}
+.news-room-host-summary p + p {
+  margin-top: 7px;
+}
+.news-room-writing-policy {
+  padding-top: 9px;
+  border-top: 1px solid var(--separator);
+}
+.news-room-writing-policy summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 12px;
+}
+.news-room-writing-policy p {
+  margin-top: 7px;
+}
+.news-room-memory {
+  padding-bottom: 10px;
+}
+.news-room-memory > p {
+  padding: 0 0 14px;
+  margin: 0;
+}
+.news-room-settings-save {
+  display: grid;
+  gap: 6px;
+  padding: 14px 0;
+  background: var(--canvas);
+  z-index: 1;
+}
+.news-room-settings:has(.news-room-settings-save > button) .news-room-settings-save {
+  position: sticky;
+  bottom: 0;
+}
+.news-room-settings-save > button {
+  width: auto;
+  min-width: 140px;
+  justify-self: start;
+  min-height: 36px;
+}
+.news-room-settings-saved {
+  color: var(--muted);
+  font-size: 12px;
+}
+.news-room-settings-save > p {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.4;
+}
+@media (max-height: 600px) {
+  .news-room-settings:has(.news-room-settings-save > button) .news-room-settings-save {
+    position: static;
+  }
+}
+.news-room-settings button:focus-visible,
+.news-room-settings select:focus-visible,
+.news-room-settings input:focus-visible,
+.news-room-settings textarea:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.news-room-automation button:focus-visible,
+.news-room-automation-toggle input:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+@container (max-width: 550px) {
+  .news-room-sources-fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

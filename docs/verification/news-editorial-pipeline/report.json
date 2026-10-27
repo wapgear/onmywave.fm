@@ -1,0 +1,57 @@
+{
+  "provenance": "Actual NewsService, prepared-news and scheduler with real temporary index/audio files. HTTP, credentials and room-state storage boundary are fixtures. No live provider calls or real credentials.",
+  "reports": [
+    {
+      "scenario": "durable boundaries, separate policies, source merging and idempotent completion",
+      "result": "passed"
+    },
+    {
+      "scenario": "empty and partial source outcomes do not generate filler",
+      "result": "passed"
+    },
+    {
+      "scenario": "unselected candidates are scoped to editorial configuration",
+      "result": "passed"
+    },
+    {
+      "scenario": "cancelled writing pauses and explicit Resume reuses the selected story",
+      "result": "passed"
+    },
+    {
+      "scenario": "restart after speech failure resumes saved text without reselecting or rewriting",
+      "result": "passed"
+    },
+    {
+      "scenario": "server output constraints override conflicting user preferences",
+      "result": "passed"
+    },
+    {
+      "scenario": "failed selection persistence blocks all downstream provider calls",
+      "result": "passed"
+    },
+    {
+      "scenario": "publication receipt wins over a failed final index commit",
+      "result": "passed"
+    },
+    {
+      "scenario": "changed configuration and expired checkpoints cannot silently resume",
+      "result": "passed"
+    },
+    {
+      "scenario": "a selected story consumed elsewhere cannot trigger another paid retry",
+      "result": "passed"
+    },
+    {
+      "scenario": "malformed sources, duplicate candidates and contradictory phases fail closed",
+      "result": "passed"
+    },
+    {
+      "scenario": "definitive provider rejection pauses scheduled work without automatic paid retries",
+      "result": "passed"
+    },
+    {
+      "scenario": "startup reconciles a completed recording after the room status write fails, once",
+      "result": "passed"
+    }
+  ]
+}

@@ -49,6 +49,7 @@ import {
 } from './playlist-recovery';
 import {
   getPreparedNews,
+  setNewsFavorite,
   cancelPreparedNews,
   cancelActivePreparedNews,
   isPreparedNewsActive,
@@ -90,6 +91,7 @@ app.setName('onmywave.fm');
 
 app.setPath('userData', join(app.getPath('appData'), 'onmywave-light'));
 
+// The local preparation index has one writer and one provider runner per app data directory.
 if (!app.requestSingleInstanceLock()) app.exit(0);
 
 protocol.registerSchemesAsPrivileged([
@@ -451,6 +453,7 @@ function recoverNews(): Promise<NewsRecoveryStatus> {
 
 const newsOperations = new Set([
   'getPreparedNews',
+  'setNewsFavorite',
   'nextRoomNews',
   'claimPreparedNews',
   'startPreparedNews',
@@ -978,6 +981,7 @@ function registerIpc() {
     releasePreparedNews: (input) => releasePreparedNews(input),
     markPreparedNewsPlayed: (input) => markPreparedNewsPlayed(input),
     getPreparedNews: () => getPreparedNews(),
+    setNewsFavorite: (input) => setNewsFavorite(input),
     cancelPreparedNews: (input) => cancelPreparedNews(input),
     getVoicePreview: (input) => getVoicePreview(input),
     prepareVoicePreview: (input) => prepareVoicePreview(news, input),
