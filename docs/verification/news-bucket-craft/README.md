@@ -2,7 +2,7 @@
 
 News Bucket now behaves like a focused reading and listening workspace. The sidebar retains Upcoming, Check news, Past news, Favorites, and Settings. A roomy desktop opens the first eligible story once, while compact windows show a focused reader with Back to stories. Real publication dates and short saved-script excerpts make the list useful before opening each item.
 
-The visual direction is a calm editorial reader within the existing app: one accent, stronger title/script hierarchy, a quieter selected row, thin pane separators, and readable metadata. The reader uses real saved content; no article artwork, durations, provider activity, or unsupported actions are invented. Subtle selection/favorite transitions and the reader entrance respond to user actions and respect reduced motion.
+The workspace meets the app surface edges, without an inset rounded frame or an extra surrounding gutter. The visual direction is a calm editorial reader within the existing app: one accent, stronger title/script hierarchy, a quieter selected row, thin pane separators, and readable metadata. The reader uses real saved content; no article artwork, durations, provider activity, or unsupported actions are invented. Subtle selection/favorite transitions and the reader entrance respond to user actions and respect reduced motion.
 
 Settings now includes automatic preparation, provider readiness, source selection, schedule, writing, pause/resume, immediate turn-off, and room availability. It uses the existing parent-owned drafts and mutations. Credential entry remains in the existing protected Provider keys screen, and managing sources, DJs, or providers returns to the same News Bucket Settings destination with drafts and meaningful focus retained. Unique control IDs keep legacy setup navigation working too. The cost notice is fully visible before an enabled save; saved settings retain it in a compact disclosure.
 
@@ -59,3 +59,5 @@ These pairs use the same 1440 × 900 Dark viewport and synthetic room/library in
 ![Compact reader with Back and Listen](after-reader-800-dark.png)
 
 [Light](after-upcoming-1280-light.png) · [Coffee](after-upcoming-1280-coffee.png) · [200%-equivalent layout](after-200-percent-equivalent.png) · [ImageGen concept](concept.png)
+
+The follow-up frame removal uses the same fixture state and viewport: [before the frame removal](before-frame-1440-dark.png) and [the current flush workspace](after-upcoming-1440-dark.png).

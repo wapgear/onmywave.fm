@@ -76,6 +76,9 @@ async function main() {
         assert.match(await rows.first().innerText(),/Published just now/);
         assert.match(await rows.first().innerText(),/A new album is coming Friday/);
         assert.equal(await noOverflow(page),true);
+        const mainBox=await page.locator('.main-content').boundingBox(),workspaceBox=await bucket.locator('.news-bucket-layout').boundingBox();
+        assert.ok(Math.abs(mainBox.x-workspaceBox.x)<1&&Math.abs(mainBox.x+mainBox.width-workspaceBox.x-workspaceBox.width)<1&&Math.abs(mainBox.y+mainBox.height-workspaceBox.y-workspaceBox.height)<1,'Workspace meets the app surface edges');
+        assert.equal(await bucket.locator('.news-bucket-layout').evaluate(e=>getComputedStyle(e).borderRadius),'0px');
         await screenshot(page,`after-upcoming-${width}-${theme}`);
         if (await inspector.count()) {
           await inspector.getByRole('button',{name:'Close story details',exact:true}).click();
@@ -92,7 +95,8 @@ async function main() {
           assert.equal(await inspector.getByRole('button',{name:'Back to stories',exact:true}).isVisible(),true);
           assert.equal(await rows.first().isVisible(),false,'Compact reading does not stack an unseen list above the story');
           const rect = await nav.boundingBox();
-          assert.ok(rect && rect.y >= 20 && rect.y + rect.height <= height-120,JSON.stringify(rect));
+          const mainBox=await page.locator('.main-content').boundingBox();
+          assert.ok(rect&&mainBox&&rect.y>=mainBox.y-1&&rect.y+rect.height<=mainBox.y+mainBox.height+1,JSON.stringify({rect,mainBox}));
           assert.equal(await page.locator('.main-content').evaluate(e => e.scrollTop),scrollBefore,'Opening a compact reader does not jump past category navigation');
         }
         await screenshot(page,`after-reader-${width}-${theme}`);
@@ -266,7 +270,7 @@ async function main() {
         assert.equal(await noOverflow(page),true);
         assert.deepEqual(await page.evaluate(()=>{const ids=[...document.querySelectorAll('[id]')].map(e=>e.id);return ids.filter((id,i)=>ids.indexOf(id)!==i)}),[],'No duplicate control IDs');
         assert.deepEqual(errors,[]);
-        reports.push({width,height,theme,passed:true,pageErrors:errors,additionalChecks:width===1440?['legacy/deleted-room recordings remain reachable without changing heard count','late favorite result preserves current focus','resume failure/retry and keyboard focus','immediate stop failure/retry and keyboard focus','room availability and keyboard focus','legacy management return','unique IDs']:['unique IDs'],checks:['one-time desktop reader','real publication dates and excerpts','compact reader/back/keyboard focus','category navigation remains visible','audition pause/resume/cleanup','favorites and source links','history semantics','latest source check/partial coverage','inline automatic preparation/readiness/consent','source and provider round trips retain draft/destination','validation/save error/success','no horizontal overflow']});
+        reports.push({width,height,theme,passed:true,pageErrors:errors,additionalChecks:width===1440?['legacy/deleted-room recordings remain reachable without changing heard count','late favorite result preserves current focus','resume failure/retry and keyboard focus','immediate stop failure/retry and keyboard focus','room availability and keyboard focus','legacy management return','unique IDs']:['unique IDs'],checks:['flush app-surface layout without nested frame','one-time desktop reader','real publication dates and excerpts','compact reader/back/keyboard focus','category navigation remains visible','audition pause/resume/cleanup','favorites and source links','history semantics','latest source check/partial coverage','inline automatic preparation/readiness/consent','source and provider round trips retain draft/destination','validation/save error/success','no horizontal overflow']});
       } finally { await page.close(); }
     }
     await fs.writeFile(`${__dirname}/report.json`,JSON.stringify(reports,null,2));

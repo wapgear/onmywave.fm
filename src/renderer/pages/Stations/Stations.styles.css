@@ -5,6 +5,9 @@
   width: 100%;
   max-width: none;
 }
+.page-content:has(.is-news-bucket-page) {
+  padding-bottom: 0;
+}
 .stations-page.is-news-bucket-page .page-heading {
   align-items: center;
   gap: 12px 20px;

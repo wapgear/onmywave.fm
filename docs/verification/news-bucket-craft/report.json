@@ -15,6 +15,7 @@
       "unique IDs"
     ],
     "checks": [
+      "flush app-surface layout without nested frame",
       "one-time desktop reader",
       "real publication dates and excerpts",
       "compact reader/back/keyboard focus",
@@ -39,6 +40,7 @@
       "unique IDs"
     ],
     "checks": [
+      "flush app-surface layout without nested frame",
       "one-time desktop reader",
       "real publication dates and excerpts",
       "compact reader/back/keyboard focus",
@@ -63,6 +65,7 @@
       "unique IDs"
     ],
     "checks": [
+      "flush app-surface layout without nested frame",
       "one-time desktop reader",
       "real publication dates and excerpts",
       "compact reader/back/keyboard focus",
@@ -87,6 +90,7 @@
       "unique IDs"
     ],
     "checks": [
+      "flush app-surface layout without nested frame",
       "one-time desktop reader",
       "real publication dates and excerpts",
       "compact reader/back/keyboard focus",
@@ -111,6 +115,7 @@
       "unique IDs"
     ],
     "checks": [
+      "flush app-surface layout without nested frame",
       "one-time desktop reader",
       "real publication dates and excerpts",
       "compact reader/back/keyboard focus",
@@ -135,6 +140,7 @@
       "unique IDs"
     ],
     "checks": [
+      "flush app-surface layout without nested frame",
       "one-time desktop reader",
       "real publication dates and excerpts",
       "compact reader/back/keyboard focus",
