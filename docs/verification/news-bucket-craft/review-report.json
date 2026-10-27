@@ -1,0 +1,229 @@
+[
+  {
+    "theme": "dark",
+    "contrast": [
+      {
+        "selector": ".news-bucket-navigation [aria-current]",
+        "ratio": 11.204736404574069,
+        "fontSize": "13px"
+      },
+      {
+        "selector": ".news-bucket-content-heading p",
+        "ratio": 7.310452484875088,
+        "fontSize": "13px"
+      },
+      {
+        "selector": ".news-bucket-item-main strong",
+        "ratio": 12.319320567007807,
+        "fontSize": "17px"
+      },
+      {
+        "selector": ".news-bucket-item-main strong",
+        "ratio": 14.097435795506387,
+        "fontSize": "17px"
+      },
+      {
+        "selector": ".news-bucket-item-byline",
+        "ratio": 6.388382182223658,
+        "fontSize": "12px"
+      },
+      {
+        "selector": ".news-bucket-item-byline",
+        "ratio": 7.310452484875088,
+        "fontSize": "12px"
+      },
+      {
+        "selector": ".news-bucket-item-excerpt",
+        "ratio": 6.388382182223658,
+        "fontSize": "13px"
+      },
+      {
+        "selector": ".news-bucket-item-excerpt",
+        "ratio": 7.310452484875088,
+        "fontSize": "13px"
+      },
+      {
+        "selector": ".news-bucket-reader-eyebrow",
+        "ratio": 8.288270245271121,
+        "fontSize": "11px"
+      },
+      {
+        "selector": ".news-bucket-inspector-script",
+        "ratio": 13.779244484008824,
+        "fontSize": "17px"
+      },
+      {
+        "selector": ".news-bucket-audition-play",
+        "ratio": 5.791475759841507,
+        "fontSize": "14px"
+      }
+    ],
+    "checks": [
+      "minimum 4.5:1 text contrast",
+      "reduced motion",
+      "resize retains user intent",
+      "compact Listen visible",
+      "long source/headline and missing date",
+      "audio failure/retry/cleanup",
+      "empty states",
+      "no unsupported check action"
+    ],
+    "pageErrors": []
+  },
+  {
+    "theme": "light",
+    "contrast": [
+      {
+        "selector": ".news-bucket-navigation [aria-current]",
+        "ratio": 14.183608595149495,
+        "fontSize": "13px"
+      },
+      {
+        "selector": ".news-bucket-content-heading p",
+        "ratio": 5.5299474992332165,
+        "fontSize": "13px"
+      },
+      {
+        "selector": ".news-bucket-item-main strong",
+        "ratio": 14.681383575792982,
+        "fontSize": "17px"
+      },
+      {
+        "selector": ".news-bucket-item-main strong",
+        "ratio": 15.698842201639899,
+        "fontSize": "17px"
+      },
+      {
+        "selector": ".news-bucket-item-byline",
+        "ratio": 5.171545732318986,
+        "fontSize": "12px"
+      },
+      {
+        "selector": ".news-bucket-item-byline",
+        "ratio": 5.5299474992332165,
+        "fontSize": "12px"
+      },
+      {
+        "selector": ".news-bucket-item-excerpt",
+        "ratio": 5.171545732318986,
+        "fontSize": "13px"
+      },
+      {
+        "selector": ".news-bucket-item-excerpt",
+        "ratio": 5.5299474992332165,
+        "fontSize": "13px"
+      },
+      {
+        "selector": ".news-bucket-reader-eyebrow",
+        "ratio": 6.856343087013456,
+        "fontSize": "11px"
+      },
+      {
+        "selector": ".news-bucket-inspector-script",
+        "ratio": 15.564072034030447,
+        "fontSize": "17px"
+      },
+      {
+        "selector": ".news-bucket-audition-play",
+        "ratio": 5.429067339411902,
+        "fontSize": "14px"
+      }
+    ],
+    "checks": [
+      "minimum 4.5:1 text contrast",
+      "reduced motion",
+      "resize retains user intent",
+      "compact Listen visible",
+      "long source/headline and missing date",
+      "audio failure/retry/cleanup",
+      "empty states",
+      "no unsupported check action"
+    ],
+    "pageErrors": []
+  },
+  {
+    "theme": "coffee",
+    "contrast": [
+      {
+        "selector": ".news-bucket-navigation [aria-current]",
+        "ratio": 10.925487350740358,
+        "fontSize": "13px"
+      },
+      {
+        "selector": ".news-bucket-content-heading p",
+        "ratio": 5.544400909120065,
+        "fontSize": "13px"
+      },
+      {
+        "selector": ".news-bucket-item-main strong",
+        "ratio": 11.263322224005892,
+        "fontSize": "17px"
+      },
+      {
+        "selector": ".news-bucket-item-main strong",
+        "ratio": 11.937963362996976,
+        "fontSize": "17px"
+      },
+      {
+        "selector": ".news-bucket-item-byline",
+        "ratio": 5.231074353273363,
+        "fontSize": "12px"
+      },
+      {
+        "selector": ".news-bucket-item-byline",
+        "ratio": 5.544400909120065,
+        "fontSize": "12px"
+      },
+      {
+        "selector": ".news-bucket-item-excerpt",
+        "ratio": 5.231074353273363,
+        "fontSize": "13px"
+      },
+      {
+        "selector": ".news-bucket-item-excerpt",
+        "ratio": 5.544400909120065,
+        "fontSize": "13px"
+      },
+      {
+        "selector": ".news-bucket-reader-eyebrow",
+        "ratio": 6.9544622342259474,
+        "fontSize": "11px"
+      },
+      {
+        "selector": ".news-bucket-inspector-script",
+        "ratio": 11.718967064358798,
+        "fontSize": "17px"
+      },
+      {
+        "selector": ".news-bucket-audition-play",
+        "ratio": 6.168273730908121,
+        "fontSize": "14px"
+      }
+    ],
+    "checks": [
+      "minimum 4.5:1 text contrast",
+      "reduced motion",
+      "resize retains user intent",
+      "compact Listen visible",
+      "long source/headline and missing date",
+      "audio failure/retry/cleanup",
+      "empty states",
+      "no unsupported check action"
+    ],
+    "pageErrors": []
+  },
+  {
+    "viewport": {
+      "width": 720,
+      "height": 450,
+      "deviceScaleFactor": 2
+    },
+    "provenance": "200%-equivalent CSS viewport at 1440×900 physical pixels; not OS display or native VoiceOver verification",
+    "checks": [
+      "category selector",
+      "reader/back",
+      "Settings reachable"
+    ],
+    "pageErrors": []
+  }
+]

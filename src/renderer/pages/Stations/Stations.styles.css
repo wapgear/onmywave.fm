@@ -637,3 +637,21 @@
 .room-setup > .room-section-heading h2 {
   margin-top: 0;
 }
+
+.stations-page.is-news-bucket-page .stations-news-header-actions {
+  flex-basis: 220px;
+}
+
+@media (max-width: 1050px) {
+  .stations-page.is-news-bucket-page .page-heading {
+    flex-direction: row;
+    align-items: center;
+  }
+  .stations-page.is-news-bucket-page .page-heading p {
+    display: none;
+  }
+  .stations-page.is-news-bucket-page .stations-news-header-actions {
+    width: auto;
+    justify-content: flex-end;
+  }
+}

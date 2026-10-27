@@ -1,5 +1,7 @@
 # News Bucket simplification
 
+This is the first mail-style implementation, retained with its original screenshots. The current reading and Settings refinement is documented in [news-bucket-craft](../news-bucket-craft/README.md).
+
 The News Bucket uses a mail-style category sidebar: Upcoming, Check news, Past news, Favorites, and Settings. The reading view starts with a full-width story list; selecting a story opens its reader. Source selection, schedule, and writing controls live in the Settings destination, using the existing parent-owned draft/save workflow. Settings disclosures and unsaved values remain intact when switching categories. Advanced preparation and provider configuration remain available through an explicit link.
 
 Upcoming uses the existing room eligibility contract. Check news shows the latest source check for that room, including selected candidates and incomplete coverage; it does not start a provider request. Past news defaults to completed playback and separates saved scripts, editorial reviews, and other recordings with explicit labels. Reviews and incomplete playback are never counted as heard. Scripts and reviews retain their existing cross-room scope; that scope is stated in the UI. Older recordings without room identity remain accessible under Other recordings or the existing Saved audio view.
