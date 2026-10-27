@@ -1,4 +1,4 @@
-import { AudioLines, ChevronDown, ListFilter, RadioTower, SlidersHorizontal } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import { useLayoutEffect, useRef } from 'react';
 
 import { FilterSelect } from '../../../components/FilterSelect/FilterSelect.component';
@@ -394,9 +394,6 @@ export function NewsRoomSettings({
 
           <details className="news-room-settings-group">
             <summary>
-              <span className="news-room-settings-group-icon">
-                <RadioTower size={17} aria-hidden="true" />
-              </span>
               <span className="news-room-settings-group-copy">
                 <strong>Sources &amp; schedule</strong>
                 <small>
@@ -405,7 +402,7 @@ export function NewsRoomSettings({
               </span>
               <ChevronDown className="news-room-settings-chevron" size={17} aria-hidden="true" />
             </summary>
-            <div className="news-room-settings-fields">
+            <div className="news-room-settings-fields news-room-sources-fields">
               <fieldset disabled={disabled}>
                 <legend>News sources</legend>
                 {sources.length ? (
@@ -473,9 +470,6 @@ export function NewsRoomSettings({
 
           <details className="news-room-settings-group">
             <summary>
-              <span className="news-room-settings-group-icon">
-                <ListFilter size={17} aria-hidden="true" />
-              </span>
               <span className="news-room-settings-group-copy">
                 <strong>Selection</strong>
                 <small>{workflow.importance === 'major' ? 'Major developments' : 'Relevant stories'}</small>
@@ -512,9 +506,6 @@ export function NewsRoomSettings({
 
           <details className="news-room-settings-group" open>
             <summary>
-              <span className="news-room-settings-group-icon">
-                <AudioLines size={17} aria-hidden="true" />
-              </span>
               <span className="news-room-settings-group-copy">
                 <strong>Writing</strong>
                 <small>
@@ -579,9 +570,6 @@ export function NewsRoomSettings({
 
           <details className="news-room-settings-group news-room-memory">
             <summary>
-              <span className="news-room-settings-group-icon">
-                <SlidersHorizontal size={17} aria-hidden="true" />
-              </span>
               <span className="news-room-settings-group-copy">
                 <strong>Playback memory</strong>
                 <small>Started and played stories are held out</small>

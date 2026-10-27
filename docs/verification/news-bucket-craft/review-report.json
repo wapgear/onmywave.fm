@@ -44,8 +44,8 @@
       },
       {
         "selector": ".news-bucket-reader-eyebrow",
-        "ratio": 8.288270245271121,
-        "fontSize": "11px"
+        "ratio": 7.145449253255869,
+        "fontSize": "12px"
       },
       {
         "selector": ".news-bucket-inspector-script",
@@ -115,8 +115,8 @@
       },
       {
         "selector": ".news-bucket-reader-eyebrow",
-        "ratio": 6.856343087013456,
-        "fontSize": "11px"
+        "ratio": 5.482474447286412,
+        "fontSize": "12px"
       },
       {
         "selector": ".news-bucket-inspector-script",
@@ -186,8 +186,8 @@
       },
       {
         "selector": ".news-bucket-reader-eyebrow",
-        "ratio": 6.9544622342259474,
-        "fontSize": "11px"
+        "ratio": 5.4426914935067625,
+        "fontSize": "12px"
       },
       {
         "selector": ".news-bucket-inspector-script",

@@ -61,3 +61,7 @@ These pairs use the same 1440 × 900 Dark viewport and synthetic room/library in
 [Light](after-upcoming-1280-light.png) · [Coffee](after-upcoming-1280-coffee.png) · [200%-equivalent layout](after-200-percent-equivalent.png) · [ImageGen concept](concept.png)
 
 The follow-up frame removal uses the same fixture state and viewport: [before the frame removal](before-frame-1440-dark.png) and [the current flush workspace](after-upcoming-1440-dark.png).
+
+The alignment refinement keeps the flush workspace and gives the sidebar label, collection heading, and reader toolbar a shared header band. Every sidebar icon now aligns, including Check news and Settings without count badges. Collection headings, metadata, and story titles share a left edge; favorite controls align with source metadata. Reader typography, action padding, and disclosure spacing use a quieter, consistent rhythm. Settings headings and fields share one left edge, with source schedule controls paired on wider panes and stacked on narrow ones. The focused verifier asserts these alignment relationships in addition to the existing flows.
+
+The same-state 1440 × 900 Dark comparisons for this refinement are [before reading](before-alignment-1440-dark.png) / [after reading](after-upcoming-1440-dark.png) and [before Settings](before-alignment-settings-1440-dark.png) / [after Settings](after-settings-missing-1440-dark.png).

@@ -79,6 +79,25 @@ async function main() {
         const mainBox=await page.locator('.main-content').boundingBox(),workspaceBox=await bucket.locator('.news-bucket-layout').boundingBox();
         assert.ok(Math.abs(mainBox.x-workspaceBox.x)<1&&Math.abs(mainBox.x+mainBox.width-workspaceBox.x-workspaceBox.width)<1&&Math.abs(mainBox.y+mainBox.height-workspaceBox.y-workspaceBox.height)<1,'Workspace meets the app surface edges');
         assert.equal(await bucket.locator('.news-bucket-layout').evaluate(e=>getComputedStyle(e).borderRadius),'0px');
+        const alignment=await bucket.evaluate(root=>{
+          const rect=selector=>root.querySelector(selector).getBoundingClientRect();
+          const heading=rect('.news-bucket-list-column .news-bucket-content-heading h2');
+          const title=rect('.news-bucket-item strong');
+          const byline=rect('.news-bucket-item-byline');
+          const star=rect('.news-bucket-story-row > .news-bucket-star');
+          const navigation=rect('.news-bucket-navigation');
+          const icons=[...root.querySelectorAll('.news-bucket-navigation > button > svg')].map(e=>e.getBoundingClientRect().x);
+          const label=rect('.news-bucket-nav-label');
+          const toolbar=root.querySelector('.news-bucket-reader-toolbar')?.getBoundingClientRect();
+          return {headingX:heading.x,titleX:title.x,bylineCenter:byline.y+byline.height/2,starCenter:star.y+star.height/2,verticalNavigation:navigation.width<200,icons,labelCenter:label.y+label.height/2,headingCenter:heading.y+heading.height/2,toolbarCenter:toolbar?toolbar.y+toolbar.height/2:null};
+        });
+        assert.ok(Math.abs(alignment.headingX-alignment.titleX)<1,'List heading and story text share a left edge');
+        assert.ok(Math.abs(alignment.bylineCenter-alignment.starCenter)<1,'Favorite controls align with source metadata');
+        if(alignment.verticalNavigation){
+          assert.ok(alignment.icons.every(x=>Math.abs(x-alignment.icons[0])<1),'Every sidebar icon shares a left edge, including entries without counts');
+          assert.ok(Math.abs(alignment.labelCenter-alignment.headingCenter)<1,'Sidebar label and collection heading share a header band');
+          if(alignment.toolbarCenter!==null)assert.ok(Math.abs(alignment.labelCenter-alignment.toolbarCenter)<1,'Reader toolbar shares the header band');
+        }
         await screenshot(page,`after-upcoming-${width}-${theme}`);
         if (await inspector.count()) {
           await inspector.getByRole('button',{name:'Close story details',exact:true}).click();
@@ -270,7 +289,7 @@ async function main() {
         assert.equal(await noOverflow(page),true);
         assert.deepEqual(await page.evaluate(()=>{const ids=[...document.querySelectorAll('[id]')].map(e=>e.id);return ids.filter((id,i)=>ids.indexOf(id)!==i)}),[],'No duplicate control IDs');
         assert.deepEqual(errors,[]);
-        reports.push({width,height,theme,passed:true,pageErrors:errors,additionalChecks:width===1440?['legacy/deleted-room recordings remain reachable without changing heard count','late favorite result preserves current focus','resume failure/retry and keyboard focus','immediate stop failure/retry and keyboard focus','room availability and keyboard focus','legacy management return','unique IDs']:['unique IDs'],checks:['flush app-surface layout without nested frame','one-time desktop reader','real publication dates and excerpts','compact reader/back/keyboard focus','category navigation remains visible','audition pause/resume/cleanup','favorites and source links','history semantics','latest source check/partial coverage','inline automatic preparation/readiness/consent','source and provider round trips retain draft/destination','validation/save error/success','no horizontal overflow']});
+        reports.push({width,height,theme,passed:true,pageErrors:errors,additionalChecks:width===1440?['legacy/deleted-room recordings remain reachable without changing heard count','late favorite result preserves current focus','resume failure/retry and keyboard focus','immediate stop failure/retry and keyboard focus','room availability and keyboard focus','legacy management return','unique IDs']:['unique IDs'],checks:['flush app-surface layout without nested frame','shared pane header bands and aligned list/sidebar/favorite controls','one-time desktop reader','real publication dates and excerpts','compact reader/back/keyboard focus','category navigation remains visible','audition pause/resume/cleanup','favorites and source links','history semantics','latest source check/partial coverage','inline automatic preparation/readiness/consent','source and provider round trips retain draft/destination','validation/save error/success','no horizontal overflow']});
       } finally { await page.close(); }
     }
     await fs.writeFile(`${__dirname}/report.json`,JSON.stringify(reports,null,2));

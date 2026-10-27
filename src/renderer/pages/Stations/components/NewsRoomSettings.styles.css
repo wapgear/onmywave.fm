@@ -165,16 +165,6 @@
 .news-room-settings-group > summary::-webkit-details-marker {
   display: none;
 }
-.news-room-settings-group-icon {
-  display: grid;
-  width: 26px;
-  height: 26px;
-  flex: 0 0 26px;
-  place-items: center;
-  border-radius: 0;
-  background: transparent;
-  color: var(--muted);
-}
 .news-room-settings-group-copy {
   display: grid;
   min-width: 0;
@@ -203,7 +193,14 @@
 .news-room-settings-fields {
   display: grid;
   gap: 12px;
-  padding: 8px 0 18px 37px;
+  padding: 8px 0 20px;
+}
+.news-room-sources-fields {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 16px;
+}
+.news-room-sources-fields > fieldset {
+  grid-column: 1 / -1;
 }
 .news-room-settings-fields > label,
 .news-room-settings-fields fieldset {
@@ -251,6 +248,7 @@
 }
 .news-room-source-list label {
   display: flex;
+  min-height: 28px;
   min-width: 0;
   align-items: center;
   gap: 8px;
@@ -338,7 +336,7 @@
   padding-bottom: 10px;
 }
 .news-room-memory > p {
-  padding: 0 14px 14px;
+  padding: 0 0 14px;
   margin: 0;
 }
 .news-room-settings-save {
@@ -383,4 +381,10 @@
 .news-room-automation-toggle input:focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
+}
+
+@container (max-width: 550px) {
+  .news-room-sources-fields {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

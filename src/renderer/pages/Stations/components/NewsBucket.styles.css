@@ -18,15 +18,17 @@
 
 .news-bucket-navigation {
   min-height: 0;
-  padding: 22px 10px;
+  padding: 20px 10px;
   overflow: auto;
   border-right: 1px solid var(--separator);
   background: var(--sidebar-background);
 }
 
 .news-bucket-nav-label {
-  display: block;
-  margin: 0 11px 14px;
+  display: flex;
+  min-height: 34px;
+  align-items: center;
+  margin: 0 10px 12px;
   color: var(--muted);
   font-size: 12px;
   font-weight: 550;
@@ -41,6 +43,7 @@
   width: 100%;
   min-height: 40px;
   align-items: center;
+  justify-content: flex-start;
   gap: 9px;
   padding: 8px 10px;
   margin: 0 0 5px;
@@ -65,6 +68,7 @@
 .news-bucket-navigation button[aria-current='page'] {
   background: var(--accent-soft);
   color: var(--text);
+  font-weight: 600;
 }
 
 .news-bucket-navigation button[aria-current='page'] > svg {
@@ -76,14 +80,16 @@
 }
 
 .news-bucket-count {
+  min-width: 20px;
   margin-left: auto;
   color: var(--muted);
   font-size: 12px;
   font-variant-numeric: tabular-nums;
+  text-align: right;
 }
 
 .news-bucket-navigation .news-bucket-nav-settings {
-  margin-top: 22px;
+  margin-top: 16px;
 }
 
 .news-bucket-content {
@@ -94,10 +100,13 @@
 }
 
 .news-bucket-content-heading {
-  padding: 24px 8px 16px;
+  padding: 20px 12px 16px;
 }
 
 .news-bucket-content-heading h2 {
+  display: flex;
+  min-height: 34px;
+  align-items: center;
   margin: 0;
   color: var(--text);
   font-size: 23px;
@@ -127,7 +136,7 @@
 .news-bucket-list-column {
   min-width: 0;
   min-height: 0;
-  padding: 0 14px 22px;
+  padding: 0 12px 24px;
   overflow: auto;
   scrollbar-gutter: stable;
 }
@@ -138,7 +147,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 0 8px 16px;
+  padding: 0 12px 16px;
   color: var(--muted);
   font-size: 12px;
   line-height: 1.55;
@@ -161,7 +170,7 @@
 
 .news-bucket-item-list {
   display: grid;
-  gap: 5px;
+  gap: 4px;
 }
 
 .news-bucket-story-row {
@@ -200,7 +209,7 @@
 .news-bucket-item-main {
   display: grid;
   min-width: 0;
-  gap: 7px;
+  gap: 6px;
 }
 
 .news-bucket-item-main strong {
@@ -209,7 +218,7 @@
   color: var(--text);
   font-size: 17px;
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 24px;
   letter-spacing: -0.01em;
   overflow-wrap: anywhere;
   -webkit-box-orient: vertical;
@@ -221,7 +230,7 @@
   overflow: hidden;
   color: var(--muted);
   font-size: 12px;
-  line-height: 1.6;
+  line-height: 18px;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -243,7 +252,7 @@
   overflow: hidden;
   color: var(--muted);
   font-size: 13px;
-  line-height: 1.65;
+  line-height: 20px;
   overflow-wrap: anywhere;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -252,7 +261,7 @@
 .news-bucket-item-status {
   color: var(--muted);
   font-size: 12px;
-  line-height: 1.5;
+  line-height: 18px;
   overflow-wrap: anywhere;
 }
 
@@ -263,7 +272,7 @@
   flex: 0 0 auto;
   place-items: center;
   padding: 0;
-  margin: 12px 6px 0 0;
+  margin: 8px 6px 0 0;
   border: 0;
   border-radius: 6px;
   background: transparent;
@@ -301,7 +310,7 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 8px;
-  margin: 0 8px 16px;
+  margin: 0 12px 16px;
   color: var(--muted);
   font-size: 13px;
 }
@@ -338,6 +347,12 @@
   overflow-wrap: anywhere;
 }
 
+.news-bucket-list-column > .news-bucket-muted,
+.news-bucket-list-section > .news-bucket-section-note,
+.news-bucket-list-section > .news-bucket-muted {
+  margin-inline: 12px;
+}
+
 .news-bucket-empty {
   display: grid;
   min-height: 250px;
@@ -371,7 +386,7 @@
 }
 
 .news-bucket-live-story {
-  padding: 8px;
+  padding: 8px 12px;
   margin-bottom: 12px;
   border-bottom: 1px solid var(--separator);
   color: var(--muted);
@@ -425,7 +440,7 @@
 .news-bucket-inspector {
   min-width: 0;
   min-height: 0;
-  padding: 24px 30px 28px;
+  padding: 20px 24px 28px;
   overflow: auto;
   border-left: 1px solid var(--separator);
   background: color-mix(in srgb, var(--panel) 22%, var(--canvas));
@@ -441,17 +456,15 @@
   min-height: 34px;
   align-items: center;
   gap: 12px;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
   background: inherit;
 }
 
 .news-bucket-reader-eyebrow {
-  color: var(--accent-strong);
-  font-size: 11px;
+  color: var(--muted);
+  font-size: 12px;
   font-weight: 550;
-  letter-spacing: 0.08em;
   line-height: 1.5;
-  text-transform: uppercase;
 }
 
 .news-bucket-reader-actions {
@@ -473,7 +486,7 @@
 .news-bucket-inspector > header h2 {
   margin: 0;
   color: var(--text);
-  font-size: clamp(24px, 2.2vw, 30px);
+  font-size: 26px;
   font-weight: 600;
   letter-spacing: -0.035em;
   line-height: 1.25;
@@ -495,7 +508,7 @@
   flex-shrink: 0;
   place-items: center;
   padding: 0;
-  border: 1px solid var(--separator);
+  border: 0;
   border-radius: 6px;
   background: transparent;
   color: var(--muted);
@@ -508,7 +521,7 @@
 }
 
 .news-bucket-preview-label {
-  margin: 26px 0 0;
+  margin: 24px 0 0;
   color: var(--muted);
   font-size: 12px;
   font-weight: 500;
@@ -517,10 +530,10 @@
 
 .news-bucket-inspector-script {
   max-width: 48ch;
-  margin: 9px 0 0;
+  margin: 8px 0 0;
   color: var(--text);
   font-size: 17px;
-  line-height: 1.8;
+  line-height: 28px;
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
@@ -543,7 +556,7 @@
   align-items: center;
   flex-wrap: wrap;
   gap: 12px;
-  margin: 24px 0 28px;
+  margin: 24px 0 0;
   color: var(--muted);
   font-size: 12px;
 }
@@ -555,11 +568,11 @@
 
 .news-bucket-audition-play {
   display: inline-flex;
-  min-height: 42px;
+  min-height: 40px;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 6px 18px 6px 8px;
+  padding: 8px 16px;
   border: 0;
   border-radius: 999px;
   background: var(--accent);
@@ -577,16 +590,20 @@
 
 .news-bucket-audition-disc {
   display: grid;
-  width: 28px;
-  height: 28px;
+  width: 16px;
+  height: 16px;
   flex-shrink: 0;
   place-items: center;
 }
 
 .news-bucket-detail-disclosure {
-  padding-top: 14px;
-  margin-top: 14px;
+  padding-top: 12px;
+  margin-top: 12px;
   border-top: 1px solid var(--separator);
+}
+
+.news-bucket-spoken-story + .news-bucket-detail-disclosure {
+  margin-top: 24px;
 }
 
 .news-bucket-detail-disclosure summary {
@@ -688,7 +705,7 @@
   }
   .news-bucket-inspector {
     border-left: 0;
-    padding: 22px 26px;
+    padding: 20px 24px;
   }
   .news-bucket-reader-back {
     display: inline-flex;
