@@ -971,12 +971,6 @@ export function StationsPage({
                   ))}
                 </select>
               </label>
-              <span className="stations-news-preparation-status" role="status">
-                <span>Automatic preparation</span>
-                <strong>{preparationStatusLabel}</strong>
-              </span>
-              <button onClick={() => setTab('settings')}>News settings</button>
-              <button onClick={() => setTab('saved')}>Saved audio</button>
             </>
           ) : (
             <>

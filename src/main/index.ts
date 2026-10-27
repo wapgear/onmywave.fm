@@ -49,6 +49,7 @@ import {
 } from './playlist-recovery';
 import {
   getPreparedNews,
+  setNewsFavorite,
   cancelPreparedNews,
   cancelActivePreparedNews,
   isPreparedNewsActive,
@@ -452,6 +453,7 @@ function recoverNews(): Promise<NewsRecoveryStatus> {
 
 const newsOperations = new Set([
   'getPreparedNews',
+  'setNewsFavorite',
   'nextRoomNews',
   'claimPreparedNews',
   'startPreparedNews',
@@ -979,6 +981,7 @@ function registerIpc() {
     releasePreparedNews: (input) => releasePreparedNews(input),
     markPreparedNewsPlayed: (input) => markPreparedNewsPlayed(input),
     getPreparedNews: () => getPreparedNews(),
+    setNewsFavorite: (input) => setNewsFavorite(input),
     cancelPreparedNews: (input) => cancelPreparedNews(input),
     getVoicePreview: (input) => getVoicePreview(input),
     prepareVoicePreview: (input) => prepareVoicePreview(news, input),

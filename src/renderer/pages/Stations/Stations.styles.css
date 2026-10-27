@@ -41,21 +41,6 @@
   min-height: 34px;
   padding-inline: 10px;
 }
-.stations-news-preparation-status {
-  display: grid;
-  max-width: 230px;
-  gap: 2px;
-  padding-inline: 8px;
-  color: var(--muted);
-  font-size: 11px;
-  line-height: 1.35;
-}
-.stations-news-preparation-status strong {
-  color: var(--text);
-  font-size: 12px;
-  font-weight: 500;
-  overflow-wrap: anywhere;
-}
 .dj-readiness {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;

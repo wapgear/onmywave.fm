@@ -1,0 +1,74 @@
+[
+  {
+    "width": 1440,
+    "height": 900,
+    "theme": "dark",
+    "passed": true,
+    "checks": [
+      "category mapping",
+      "reading and Escape focus return",
+      "audition pause/resume/cleanup",
+      "favorite add/remove/error",
+      "source link",
+      "history distinctions",
+      "latest check candidates",
+      "settings draft retention/save/validation",
+      "no horizontal overflow"
+    ],
+    "pageErrors": []
+  },
+  {
+    "width": 1280,
+    "height": 800,
+    "theme": "light",
+    "passed": true,
+    "checks": [
+      "category mapping",
+      "reading and Escape focus return",
+      "audition pause/resume/cleanup",
+      "favorite add/remove/error",
+      "source link",
+      "history distinctions",
+      "latest check candidates",
+      "settings draft retention/save/validation",
+      "no horizontal overflow"
+    ],
+    "pageErrors": []
+  },
+  {
+    "width": 1024,
+    "height": 768,
+    "theme": "dark",
+    "passed": true,
+    "checks": [
+      "category mapping",
+      "reading and Escape focus return",
+      "audition pause/resume/cleanup",
+      "favorite add/remove/error",
+      "source link",
+      "history distinctions",
+      "latest check candidates",
+      "settings draft retention/save/validation",
+      "no horizontal overflow"
+    ],
+    "pageErrors": []
+  },
+  {
+    "width": 800,
+    "height": 700,
+    "theme": "dark",
+    "passed": true,
+    "checks": [
+      "category mapping",
+      "reading and Escape focus return",
+      "audition pause/resume/cleanup",
+      "favorite add/remove/error",
+      "source link",
+      "history distinctions",
+      "latest check candidates",
+      "settings draft retention/save/validation",
+      "no horizontal overflow"
+    ],
+    "pageErrors": []
+  }
+]
