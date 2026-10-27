@@ -1,5 +1,6 @@
 import type { DJ, ListeningRoom, NewsSource, RoomProfile } from '../../../../shared/types';
 import type { WorkflowDraft } from '../../../../shared/workflow';
+import type { PreparationIssue } from '../../Settings/components/WorkflowPreferences.types';
 
 export type NewsRoomSettingsProps = {
   profile: RoomProfile | null;
@@ -13,6 +14,21 @@ export type NewsRoomSettingsProps = {
   preparationDetail: string;
   profileStatusUnknown: boolean;
   preparation: { checks: number; checkLimit: number; recordings: number; recordingLimit: number } | null;
+  workflowReady: boolean;
+  workflowStatusLoading: boolean;
+  workflowStatusError: unknown;
+  workflowIssues: PreparationIssue[];
+  resumePending: boolean;
+  resumeError: unknown;
+  stopping: boolean;
+  stopError: unknown;
+  enablingRoomProfile: boolean;
+  enableRoomError: unknown;
+  resumeDisabled: boolean;
+  stopDisabled: boolean;
+  retryWorkflowStatus: () => void;
+  resumeWorkflow: () => void;
+  turnOffWorkflow: () => void;
   busy: boolean;
   saving: boolean;
   dirty: boolean;
@@ -24,5 +40,7 @@ export type NewsRoomSettingsProps = {
   updateWorkflow: (patch: Partial<WorkflowDraft>) => void;
   configureSources: () => void;
   configureDJ: () => void;
+  configureProviders: () => void;
+  enableRoomProfile: () => void;
   save: () => void;
 };

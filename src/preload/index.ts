@@ -67,6 +67,7 @@ const api: WaveApi = {
   releasePreparedNews: (input) => ipcRenderer.invoke('wave:releasePreparedNews', input),
   markPreparedNewsPlayed: (input) => ipcRenderer.invoke('wave:markPreparedNewsPlayed', input),
   getPreparedNews: () => ipcRenderer.invoke('wave:getPreparedNews'),
+  setNewsFavorite: (input) => ipcRenderer.invoke('wave:setNewsFavorite', input),
   cancelPreparedNews: (id) => ipcRenderer.invoke('wave:cancelPreparedNews', id),
   getVoicePreview: (voiceId) => ipcRenderer.invoke('wave:getVoicePreview', voiceId),
   prepareVoicePreview: (input) => ipcRenderer.invoke('wave:prepareVoicePreview', input),

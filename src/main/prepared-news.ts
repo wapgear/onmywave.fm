@@ -7,7 +7,9 @@ import { app } from 'electron';
 import { canonicalArticleUrl, eligibleNewsTakes, matchesNewsRoom } from '../shared/news-pool';
 import type {
   DJ,
+  FavoritedNewsArticle,
   LocalState,
+  NewsArticle,
   NewsCollection,
   NewsEditorialSelection,
   NewsPreparationCheckpoint,
@@ -48,6 +50,59 @@ function validOrigin(value: unknown): value is PreparedNewsOrigin {
 }
 
 const checkpointLifetimeMs = 24 * 60 * 60 * 1000;
+
+function favoriteArticle(value: unknown): NewsArticle {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return invalid();
+  const article = value as Record<string, unknown>;
+  if (
+    typeof article.id !== 'string' ||
+    article.id.length < 1 ||
+    article.id.length > 128 ||
+    typeof article.title !== 'string' ||
+    !article.title.trim() ||
+    article.title.length > 240 ||
+    typeof article.source !== 'string' ||
+    !article.source.trim() ||
+    article.source.length > 160 ||
+    typeof article.url !== 'string' ||
+    article.url.length > 2048 ||
+    !canonicalArticleUrl(article.url) ||
+    (article.publishedAt !== undefined &&
+      (typeof article.publishedAt !== 'string' ||
+        article.publishedAt.length > 64 ||
+        !Number.isFinite(Date.parse(article.publishedAt))))
+  )
+    return invalid('This story cannot be saved as a favorite.');
+  return {
+    id: article.id,
+    title: article.title,
+    url: article.url,
+    source: article.source,
+    ...(typeof article.publishedAt === 'string' ? { publishedAt: article.publishedAt } : {}),
+  };
+}
+
+function validFavorite(value: unknown): value is FavoritedNewsArticle {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
+  const favorite = value as FavoritedNewsArticle;
+  return (
+    !!favoriteArticleForStorage(favorite) &&
+    typeof favorite.canonicalUrl === 'string' &&
+    canonicalArticleUrl(favorite.url) === favorite.canonicalUrl &&
+    typeof favorite.favoritedAt === 'string' &&
+    Number.isFinite(Date.parse(favorite.favoritedAt)) &&
+    new Date(favorite.favoritedAt).toISOString() === favorite.favoritedAt
+  );
+}
+
+function favoriteArticleForStorage(value: FavoritedNewsArticle): boolean {
+  try {
+    favoriteArticle(value);
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 function validCollection(value: unknown): value is NewsCollection {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
@@ -248,8 +303,16 @@ async function load() {
         ...value,
         preparationErrorVersion: 1,
         reviewedArticles: Array.isArray(value.reviewedArticles) ? value.reviewedArticles : [],
+        favorites: value.favorites === undefined ? [] : value.favorites,
       };
-      let shouldPersist = !Array.isArray(value.reviewedArticles) || value.preparationErrorVersion !== 1;
+      if (
+        !Array.isArray(migrated.favorites) ||
+        !migrated.favorites.every(validFavorite) ||
+        new Set(migrated.favorites.map((favorite) => favorite.canonicalUrl)).size !== migrated.favorites.length
+      )
+        throw new Error('Invalid news favorites');
+      let shouldPersist =
+        !Array.isArray(value.reviewedArticles) || value.favorites === undefined || value.preparationErrorVersion !== 1;
       for (const request of migrated.requests) {
         if (
           value.preparationErrorVersion !== 1 &&
@@ -324,6 +387,7 @@ async function load() {
         requests: [],
         selectedTakeId: null,
         reviewedArticles: [],
+        favorites: [],
       };
     }
     let interrupted = false;
@@ -880,6 +944,37 @@ export async function getPreparedNews(): Promise<PreparedNewsLibrary> {
     })),
   );
   return snapshot;
+}
+
+export async function setNewsFavorite(input: unknown): Promise<PreparedNewsLibrary> {
+  if (!input || typeof input !== 'object' || Array.isArray(input)) return invalid();
+  const request = input as Record<string, unknown>;
+  if (typeof request.favorite !== 'boolean') return invalid();
+  const article = favoriteArticle(request.article);
+  const canonicalUrl = canonicalArticleUrl(article.url);
+  if (!canonicalUrl) return invalid('This story has an invalid source link.');
+
+  await change((current) => {
+    const favorites = current.favorites ?? [];
+    const existing = favorites.find((favorite) => favorite.canonicalUrl === canonicalUrl);
+    const isKnownArticle = [
+      ...current.takes.flatMap((take) => take.articles),
+      ...current.scripts.flatMap((script) => script.articles),
+      ...current.reviewedArticles,
+      ...current.requests.flatMap((savedRequest) => savedRequest.checkpoint?.collection?.candidates ?? []),
+    ].some((savedArticle) => canonicalArticleUrl(savedArticle.url) === canonicalUrl);
+    if (request.favorite && !existing && !isKnownArticle)
+      invalid('This story is no longer available to save as a favorite.');
+    return {
+      ...current,
+      favorites: request.favorite
+        ? existing
+          ? favorites
+          : [...favorites, { ...article, canonicalUrl, favoritedAt: new Date().toISOString() }]
+        : favorites.filter((favorite) => favorite.canonicalUrl !== canonicalUrl),
+    };
+  });
+  return getPreparedNews();
 }
 
 export async function reconcilePreparedNews() {

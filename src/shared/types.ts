@@ -141,6 +141,8 @@ export type NewsTransitionSettings = {
 
 export type NewsArticle = { id: string; title: string; url: string; source: string; publishedAt?: string };
 
+export type FavoritedNewsArticle = NewsArticle & { canonicalUrl: string; favoritedAt: string };
+
 export type NewsCandidate = NewsArticle & { summary: string; sourceIds: string[] };
 
 export type NewsSourceResult = {
@@ -337,6 +339,7 @@ export type PreparedNewsLibrary = {
   selectedTakeId: string | null;
   requests: PreparedNewsRequest[];
   reviewedArticles: ReviewedNewsArticle[];
+  favorites?: FavoritedNewsArticle[];
 };
 
 export type LocalState = {
@@ -429,6 +432,7 @@ export interface WaveApi {
   releasePreparedNews(input: PreparedNewsClaim & { neverPlayInvoked?: boolean }): Promise<Result<void>>;
   markPreparedNewsPlayed(input: PreparedNewsClaim): Promise<Result<void>>;
   getPreparedNews(): Promise<Result<PreparedNewsLibrary>>;
+  setNewsFavorite(input: { article: NewsArticle; favorite: boolean }): Promise<Result<PreparedNewsLibrary>>;
   cancelPreparedNews(requestId: string): Promise<Result<void>>;
   getVoicePreview(voiceId: string): Promise<Result<DJVoicePreview>>;
   prepareVoicePreview(input: { voiceId: string; regenerate?: boolean }): Promise<Result<DJVoicePreview>>;

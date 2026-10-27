@@ -1,12 +1,29 @@
-import { AtSign, ChevronDown, ExternalLink, Globe, Newspaper, Pause, Play, Radio, Rss, X } from 'lucide-react';
-import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import {
+  ArrowLeft,
+  AtSign,
+  Clock,
+  ExternalLink,
+  Globe,
+  Inbox,
+  Newspaper,
+  Pause,
+  Play,
+  Radio,
+  Rss,
+  Search,
+  Settings,
+  Star,
+  X,
+} from 'lucide-react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { eligibleNewsTakes } from '../../../../shared/news-pool';
+import { canonicalArticleUrl, eligibleNewsTakes } from '../../../../shared/news-pool';
 import type { NewsArticle, PreparedNewsScript, PreparedNewsTake, ReviewedNewsArticle } from '../../../../shared/types';
 import { ErrorNotice, duration } from '../../../components/Shared';
 import { usePlayer } from '../../../player';
+import { useNewsFavorites } from './hooks/useNewsFavorites';
 import { useSavedNewsAudition } from './hooks/useSavedNewsAudition';
-import type { NewsBucketProps } from './NewsBucket.types';
+import type { NewsBucketDestination, NewsBucketProps } from './NewsBucket.types';
 
 import './NewsBucket.styles.css';
 
@@ -14,7 +31,10 @@ type StorySelection =
   | { kind: 'candidate'; id: string; requestId: string }
   | { kind: 'take'; id: string }
   | { kind: 'script'; id: string }
-  | { kind: 'reviewed'; id: string };
+  | { kind: 'reviewed'; id: string }
+  | { kind: 'favorite'; id: string };
+
+type Destination = NewsBucketDestination;
 
 const selectionKey = (selection: StorySelection) =>
   selection.kind === 'candidate'
@@ -49,18 +69,16 @@ export function NewsBucket({
   openPreparation,
   roomSettings,
   active = true,
+  destination,
+  onDestinationChange,
 }: NewsBucketProps) {
   const player = usePlayer();
-  const [listSection, setListSection] = useState<'ready' | 'heard' | 'collected' | 'selected' | 'scripts' | 'reviewed'>(
-    'ready',
-  );
+  const [pastFilter, setPastFilter] = useState('heard');
   const [historyLimit, setHistoryLimit] = useState(25);
-  const [settingsExpanded, setSettingsExpanded] = useState(false);
+  const favorites = useNewsFavorites(library);
   const invokingRow = useRef<HTMLButtonElement | null>(null);
-  const invokingSection = useRef<typeof listSection | null>(null);
-  const closeButton = useRef<HTMLButtonElement>(null);
-  const historyList = useRef<HTMLUListElement>(null);
-  const revealHistory = useRef<{ button: HTMLButtonElement; key: string } | null>(null);
+  const invokingSection = useRef<Destination | null>(null);
+  const readerHeading = useRef<HTMLHeadingElement>(null);
   const pageProfile = localState.roomProfiles.find((room) => room.id === localState.activeRoomProfileId);
   const eligible = pageProfile ? eligibleNewsTakes(library.takes, localState, pageProfile.id) : [];
   const latestRoomRequest = pageProfile
@@ -80,11 +98,8 @@ export function NewsBucket({
   const checkpoint = latestRoomRequest?.checkpoint;
   const collectedCandidates = checkpoint?.collection?.candidates ?? [];
   const checkpointSelection = checkpoint?.selection;
-  const selectedCandidate = checkpointSelection?.candidateId
-    ? collectedCandidates.find((candidate) => candidate.id === checkpointSelection.candidateId)
-    : undefined;
   const [selection, setSelection] = useState<StorySelection | null>(() =>
-    typeof window !== 'undefined' && window.matchMedia('(min-width: 1120px)').matches && eligible[0]
+    destination === 'upcoming' && window.matchMedia('(min-width: 1280px)').matches && eligible[0]
       ? { kind: 'take', id: eligible[0].id }
       : null,
   );
@@ -97,39 +112,38 @@ export function NewsBucket({
   const audition = useSavedNewsAudition({ active: auditionActive });
   const stopAudition = audition.stop;
 
-  const closeInspector = useCallback(() => {
-    stopAudition();
-    setSelection(null);
-    if (invokingRow.current && !invokingRow.current.isConnected && invokingSection.current)
-      setListSection(invokingSection.current);
-    requestAnimationFrame(() => {
-      const selectedKey = selection ? selectionKey(selection) : '';
-      const row = [...document.querySelectorAll<HTMLButtonElement>('[data-story-key]')].find(
-        (button) => button.dataset.storyKey === selectedKey,
-      );
-      const target = invokingRow.current?.isConnected ? invokingRow.current : row;
-      target?.focus({ preventScroll: true });
-    });
-  }, [selection, stopAudition]);
-
-  useLayoutEffect(() => {
-    const pending = revealHistory.current;
-    revealHistory.current = null;
-    if (!pending) return;
-    const activeElement = document.activeElement;
-    if (
-      (activeElement !== pending.button && !(activeElement === document.body && !pending.button.isConnected)) ||
-      document.visibilityState !== 'visible' ||
-      !document.hasFocus() ||
-      document.querySelector('dialog[open], :popover-open')
-    )
-      return;
-    const target = [...(historyList.current?.querySelectorAll<HTMLButtonElement>('[data-reviewed-key]') ?? [])].find(
-      (button) => button.dataset.reviewedKey === pending.key,
-    );
-    target?.focus({ preventScroll: true });
-    target?.scrollIntoView({ block: 'nearest' });
-  }, [historyLimit]);
+  const closeInspector = useCallback(
+    (restoreTo?: 'navigation') => {
+      const focusedElement = document.activeElement;
+      stopAudition();
+      setSelection(null);
+      if (invokingRow.current && !invokingRow.current.isConnected && invokingSection.current)
+        onDestinationChange(invokingSection.current);
+      requestAnimationFrame(() => {
+        if (document.activeElement !== focusedElement && document.activeElement !== document.body) return;
+        const selectedKey = selection ? selectionKey(selection) : '';
+        const row = [...document.querySelectorAll<HTMLButtonElement>('[data-story-key]')].find(
+          (button) => button.dataset.storyKey === selectedKey,
+        );
+        const currentCategory = document.querySelector<HTMLButtonElement>(
+          '.news-bucket-navigation [aria-current="page"]',
+        );
+        const navigation = currentCategory?.checkVisibility()
+          ? currentCategory
+          : document.querySelector<HTMLSelectElement>('.news-bucket-navigation-select select');
+        const target =
+          restoreTo === 'navigation'
+            ? navigation
+            : invokingRow.current?.isConnected && invokingRow.current.checkVisibility()
+              ? invokingRow.current
+              : row?.checkVisibility()
+                ? row
+                : navigation;
+        target?.focus({ preventScroll: true });
+      });
+    },
+    [onDestinationChange, selection, stopAudition],
+  );
 
   useEffect(() => {
     if (!selection || !active) return;
@@ -168,7 +182,8 @@ export function NewsBucket({
   const nextHistoryCount = Math.min(25, reviewed.length - visibleReviewed.length);
   const runtimeDJ = localState.djs.find((dj) => dj.id === automation.room?.room.djId);
   function sourceIcon(sourceName: string) {
-    const kind = localState.sources.find((source) => source.name === sourceName)?.kind;
+    const source = localState.sources.find((value) => value.name === sourceName);
+    const kind = source ? (source.kind ?? 'rss') : undefined;
     const Icon = kind === 'rss' ? Rss : kind === 'twitter' ? AtSign : kind === 'hacker-news' ? Newspaper : Globe;
 
     return <Icon size={22} strokeWidth={1.7} aria-hidden="true" />;
@@ -194,11 +209,11 @@ export function NewsBucket({
                   : automation.error
                     ? 'Needs attention'
                     : automation.settings.enabled && automation.preparing
-                      ? 'Checking the ready pool'
+                      ? 'Finding a ready story'
                       : runtimePending
                         ? 'Ready for the next suitable song'
                         : automation.settings.enabled
-                          ? 'Waiting for the next check'
+                          ? 'Waiting for a ready story'
                           : 'DJ playback is off';
 
   function articleSource(article: NewsArticle) {
@@ -221,33 +236,85 @@ export function NewsBucket({
     }
     stopAudition();
     invokingRow.current = button;
-    invokingSection.current = listSection;
+    invokingSection.current = destination;
     setSelection(next);
     requestAnimationFrame(() => {
-      closeButton.current?.focus({ preventScroll: true });
-      closeButton.current?.closest('aside')?.scrollIntoView({ block: 'nearest' });
+      readerHeading.current?.focus({ preventScroll: true });
     });
   }
 
-  function storyButton(selectionValue: StorySelection, title: string, meta: string, sourceName?: string) {
-    const isSelected = selection !== null && selectionKey(selection) === selectionKey(selectionValue);
+  function favoriteButton(article: NewsArticle) {
+    const saved = favorites.isFavorite(article);
 
     return (
       <button
-        className={`news-bucket-item ${isSelected ? 'is-selected' : ''}`}
-        key={selectionKey(selectionValue)}
-        data-story-key={selectionKey(selectionValue)}
-        aria-pressed={isSelected}
-        aria-controls={selection ? 'news-story-inspector' : undefined}
-        onClick={(event) => selectStory(selectionValue, event.currentTarget)}
+        className="news-bucket-star"
+        aria-label={`${saved ? 'Remove from' : 'Add to'} favorites: ${article.title}`}
+        aria-pressed={saved}
+        disabled={favorites.pending}
+        onClick={() =>
+          favorites.toggle(article, () => {
+            if (saved && selection?.kind === 'favorite' && selection.id === canonicalArticleUrl(article.url)) {
+              const reader = document.getElementById('news-story-inspector');
+              if (reader?.checkVisibility() && reader.dataset.readerKey === selectionKey(selection))
+                closeInspector('navigation');
+            }
+          })
+        }
       >
-        <span className="news-bucket-item-icon">{sourceIcon(sourceName ?? '')}</span>
-        <span className="news-bucket-item-main">
-          <strong>{title}</strong>
-          <span>{meta}</span>
-        </span>
+        <Star size={17} fill={saved ? 'currentColor' : 'none'} aria-hidden="true" />
       </button>
     );
+  }
+
+  function publicationTime(article: NewsArticle) {
+    return article.publishedAt && Number.isFinite(Date.parse(article.publishedAt))
+      ? `Published ${relativeTime(article.publishedAt).toLocaleLowerCase()}`
+      : 'Published date unavailable';
+  }
+
+  function storyButton(
+    selectionValue: StorySelection,
+    title: string,
+    meta: string,
+    article?: NewsArticle,
+    excerpt?: string,
+  ) {
+    const isSelected = selection !== null && selectionKey(selection) === selectionKey(selectionValue);
+    const recordStatus =
+      article && meta.startsWith(`${article.source} · `) ? meta.slice(article.source.length + 3) : meta;
+
+    return (
+      <div className={`news-bucket-story-row ${isSelected ? 'is-selected' : ''}`} key={selectionKey(selectionValue)}>
+        <button
+          className="news-bucket-item"
+          data-story-key={selectionKey(selectionValue)}
+          aria-pressed={isSelected}
+          aria-controls={selection ? 'news-story-inspector' : undefined}
+          onClick={(event) => selectStory(selectionValue, event.currentTarget)}
+        >
+          <span className="news-bucket-item-main">
+            {article && (
+              <span className="news-bucket-item-byline">
+                <span aria-hidden="true">{sourceIcon(article.source)}</span>
+                {article.source} · {publicationTime(article)}
+              </span>
+            )}
+            <strong>{title}</strong>
+            {excerpt && <span className="news-bucket-item-excerpt">{excerpt}</span>}
+            <span className="news-bucket-item-status">{recordStatus}</span>
+          </span>
+        </button>
+        {article && favoriteButton(article)}
+      </div>
+    );
+  }
+
+  function navigate(next: Destination) {
+    stopAudition();
+    setSelection(null);
+    onDestinationChange(next);
+    setHistoryLimit(25);
   }
 
   function renderArticles(articles: NewsArticle[]) {
@@ -312,56 +379,61 @@ export function NewsBucket({
 
     return (
       <>
-        <h3 className="news-bucket-preview-label">Spoken preview</h3>
-        <p className="news-bucket-inspector-script">{take.script}</p>
-        {take.available ? (
-          <div className="news-bucket-audition">
-            <button
-              className="news-bucket-audition-play"
-              onClick={() => void audition.listen(take)}
-              aria-label={
-                current?.phase === 'loading'
-                  ? 'Cancel loading audition'
-                  : current?.phase === 'playing'
-                    ? 'Pause audition'
-                    : current?.phase === 'paused'
-                      ? 'Resume audition'
-                      : `Listen to ${take.renderingDJ.name}'s saved story`
-              }
-            >
-              {current?.phase === 'loading' ? (
-                'Loading…'
-              ) : current?.phase === 'playing' ? (
-                <>
-                  <span className="news-bucket-audition-disc">
-                    <Pause size={14} aria-hidden="true" />
-                  </span>{' '}
-                  Pause
-                </>
-              ) : (
-                <>
-                  <span className="news-bucket-audition-disc">
-                    <Play size={14} aria-hidden="true" />
-                  </span>{' '}
-                  {current?.phase === 'paused' ? 'Resume' : 'Listen'}
-                </>
-              )}
-            </button>
-            {current && (
-              <button className="room-link" onClick={stopAudition}>
-                Stop
+        <div className="news-bucket-spoken-story">
+          <h3 className="news-bucket-preview-label">Spoken story</h3>
+          <p className="news-bucket-inspector-script">{take.script}</p>
+          {take.available ? (
+            <div className="news-bucket-audition">
+              <button
+                className="news-bucket-audition-play"
+                onClick={() => void audition.listen(take)}
+                aria-label={
+                  current?.phase === 'loading'
+                    ? 'Cancel loading audition'
+                    : current?.phase === 'playing'
+                      ? 'Pause audition'
+                      : current?.phase === 'paused'
+                        ? 'Resume audition'
+                        : `Listen to ${take.renderingDJ.name}'s saved story`
+                }
+              >
+                {current?.phase === 'loading' ? (
+                  'Loading…'
+                ) : current?.phase === 'playing' ? (
+                  <>
+                    <span className="news-bucket-audition-disc">
+                      <Pause size={14} aria-hidden="true" />
+                    </span>{' '}
+                    Pause
+                  </>
+                ) : (
+                  <>
+                    <span className="news-bucket-audition-disc">
+                      <Play size={14} aria-hidden="true" />
+                    </span>{' '}
+                    {current?.phase === 'paused' ? 'Resume' : 'Listen'}
+                  </>
+                )}
               </button>
-            )}
-            {current && current.phase !== 'loading' && (
-              <span>
-                {duration(current.position)}
-                {audition.durations[take.id] ? ` / ${duration(audition.durations[take.id])}` : ''}
-              </span>
-            )}
-          </div>
-        ) : (
-          <p className="news-bucket-muted">The saved audio file is unavailable. The script and sources remain saved.</p>
-        )}
+              <span className="news-bucket-audition-host">{take.renderingDJ.name}</span>
+              {current && (
+                <button className="room-link" onClick={stopAudition}>
+                  Stop
+                </button>
+              )}
+              {current && current.phase !== 'loading' && (
+                <span>
+                  {duration(current.position)}
+                  {audition.durations[take.id] ? ` / ${duration(audition.durations[take.id])}` : ''}
+                </span>
+              )}
+            </div>
+          ) : (
+            <p className="news-bucket-muted">
+              The saved audio file is unavailable. The script and sources remain saved.
+            </p>
+          )}
+        </div>
         <details className="news-bucket-detail-disclosure">
           <summary>Why this story</summary>
           <p className="news-bucket-muted">{take.selection?.reason ?? 'Selection reason was not recorded.'}</p>
@@ -374,7 +446,10 @@ export function NewsBucket({
               : ''}
           </summary>
           <p className="news-bucket-inspector-meta">
-            Host: {take.renderingDJ.name} · Saved {new Date(take.createdAt).toLocaleString()}
+            {take.provenance.roomName ??
+              localState.roomProfiles.find((profile) => profile.id === take.provenance.roomId)?.name ??
+              'Original room unavailable'}{' '}
+            · Host: {take.renderingDJ.name} · Saved {new Date(take.createdAt).toLocaleString()}
             {take.deliveryState?.status === 'played'
               ? ` · Played ${take.deliveryState.playedAt ? new Date(take.deliveryState.playedAt).toLocaleString() : 'time unavailable'}`
               : take.deliveryState?.status === 'started'
@@ -474,24 +549,6 @@ export function NewsBucket({
   const inProgressTakes = library.takes
     .filter((take) => take.provenance.roomId === pageProfile?.id && take.deliveryState?.status === 'started')
     .sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
-  const listTabs: { id: 'ready' | 'heard' | 'collected' | 'selected'; label: string; count: number }[] = [
-    { id: 'ready', label: 'Ready', count: eligible.length },
-    { id: 'heard', label: 'Heard', count: heardTakes.length },
-    ...(checkpoint?.collection
-      ? [{ id: 'collected' as const, label: 'Collected', count: collectedCandidates.length }]
-      : []),
-    ...(checkpoint?.selection
-      ? [{ id: 'selected' as const, label: 'Selected', count: selectedCandidate ? 1 : 0 }]
-      : []),
-  ];
-  const currentListSection =
-    listSection === 'collected' && !checkpoint?.collection
-      ? 'ready'
-      : listSection === 'selected' && !checkpoint?.selection
-        ? 'ready'
-        : listSection;
-  const historySection =
-    currentListSection === 'scripts' || currentListSection === 'reviewed' ? currentListSection : '';
   const lastRun = pageProfile?.workflowDraft.newsLastRun;
   const lastRunTime = lastRun?.finishedAt ?? lastRun?.startedAt;
   const candidateStory = inspectorCandidate;
@@ -516,7 +573,9 @@ export function NewsBucket({
         ? `Started · completion not recorded · Saved ${relativeTime(selectedTake.createdAt)}`
         : selectedTake.deliveryState?.status === 'claimed'
           ? `Reserved for playback · Saved ${relativeTime(selectedTake.createdAt)}`
-          : `Ready · Not yet heard · Saved ${relativeTime(selectedTake.createdAt)}`
+          : eligible.some((take) => take.id === selectedTake.id)
+            ? `Ready · Not yet heard · Saved ${relativeTime(selectedTake.createdAt)}`
+            : `Saved recording · ${selectedTake.available ? 'Not upcoming' : 'Audio unavailable'} · ${relativeTime(selectedTake.createdAt)}`
     : selectedScript
       ? `Saved script · ${relativeTime(selectedScript.createdAt)}`
       : selectedReviewed
@@ -525,407 +584,448 @@ export function NewsBucket({
           ? `${selectedCandidateIsInspector ? 'Selected' : 'Collected'} · ${relativeTime(selectedCandidateIsInspector ? (checkpointSelection?.decidedAt ?? '') : (checkpoint?.collection?.collectedAt ?? ''))}`
           : 'Details unavailable';
 
+  const selectedFavorite =
+    selection?.kind === 'favorite'
+      ? favorites.favorites.find((article) => article.canonicalUrl === selection.id)
+      : undefined;
+  const favoriteArticles = [...favorites.favorites].sort(
+    (a, b) => Date.parse(b.favoritedAt) - Date.parse(a.favoritedAt),
+  );
+  const allTakes = [...library.takes].sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
+  const destinations = [
+    { id: 'upcoming' as const, label: 'Upcoming', icon: Inbox, count: eligible.length },
+    { id: 'check' as const, label: 'Check news', icon: Search },
+    { id: 'past' as const, label: 'Past news', icon: Clock, count: heardTakes.length },
+    { id: 'favorites' as const, label: 'Favorites', icon: Star, count: favoriteArticles.length },
+    { id: 'settings' as const, label: 'Settings', icon: Settings },
+  ];
+  const descriptions = {
+    upcoming: `${eligible.length} ${eligible.length === 1 ? 'story' : 'stories'} ready for your next DJ break.`,
+    check: 'Stories found in the latest source check for this room.',
+    past: 'Your listening history and saved news records.',
+    favorites: 'Articles you have starred, from all rooms.',
+    settings: 'Sources, schedule, and writing for this room.',
+  };
+  const currentDestination = destinations.find((item) => item.id === destination)!;
+  const inspectedArticle =
+    selectedTake?.articles[0] ?? selectedScript?.articles[0] ?? selectedReviewed ?? candidateStory ?? selectedFavorite;
+
+  function takeRow(take: PreparedNewsTake, status: string) {
+    return storyButton(
+      { kind: 'take', id: take.id },
+      take.articles[0]?.title ?? 'Saved story',
+      `${take.articles[0]?.source ?? 'Source unavailable'} · ${status}`,
+      take.articles[0],
+      take.script,
+    );
+  }
+
   return (
     <section className="news-bucket" aria-label="News bucket">
       <div className="news-bucket-layout">
-        <div className="news-bucket-room-sidebar">
-          <button
-            className="news-bucket-settings-toggle"
-            aria-expanded={settingsExpanded}
-            aria-controls="news-room-settings-content"
-            onClick={() => setSettingsExpanded((value) => !value)}
-          >
-            <span>Room settings</span>
-            <ChevronDown size={18} aria-hidden="true" />
-          </button>
-          <div
-            id="news-room-settings-content"
-            className={`news-bucket-room-content ${settingsExpanded ? 'is-expanded' : ''}`}
-          >
-            {roomSettings ?? (
-              <button className="news-bucket-settings-fallback" onClick={openPreparation}>
-                News settings
-              </button>
-            )}
-          </div>
-        </div>
-
-        <div className="news-bucket-list-column">
-          <div className="news-bucket-check-row" role="status">
-            <span className="news-bucket-check-label">Last check</span>
-            {lastRun ? (
-              <span>
-                <strong>{lastRunLabels[lastRun.outcome]}</strong>
-                {lastRunTime && <time dateTime={lastRunTime}> · {relativeTime(lastRunTime)}</time>}
-                {lastRun.message && <span className="news-bucket-check-message"> · {lastRun.message}</span>}
-                {lastRun.setupChanged && <span> · Used earlier settings</span>}
-              </span>
-            ) : (
-              <span>No check recorded for this room.</span>
-            )}
-          </div>
-
-          {automation.settings.enabled && automation.room && (
-            <div className="news-bucket-runtime" role="status">
-              <Radio size={16} aria-hidden="true" />
-              <span>
-                {automation.room.id === pageProfile?.id ? 'Playback' : `Playback uses ${automation.room.name}`} ·{' '}
-                {runtimeDJ?.name ?? 'DJ not configured'} · {phaseLabel}
-                {automation.room.id === pageProfile?.id && !runtimePending && !onAir && !scheduled
-                  ? ` · Next check in ${automation.songsUntilBreak} ${automation.songsUntilBreak === 1 ? 'song' : 'songs'}`
-                  : ''}
-              </span>
-            </div>
-          )}
-          {runtimeDiffersFromPage && automation.settings.enabled && automation.room && (
-            <p className="news-bucket-inline-notice">
-              Playback is set to <strong>{automation.room.name}</strong>; this list belongs to{' '}
-              <strong>{pageProfile?.name ?? 'the selected room'}</strong>.
-            </p>
-          )}
-          <ErrorNotice error={automation.error ? new Error(automation.error) : null} />
-          {profileStatusUnknown && (
-            <p className="news-bucket-inline-notice" role="status">
-              Preparation status is unconfirmed. Showing the last loaded information.
-            </p>
-          )}
-          {savedNewsStale && (
-            <p className="news-bucket-inline-notice" role="status">
-              Saved news may be out of date; availability reflects the last loaded results.
-            </p>
-          )}
-          {currentBreak && (
-            <details className="news-bucket-live-story">
-              <summary>
-                <span>{onAir ? 'On air' : scheduled ? 'Scheduled' : 'Playback'}</span>
-                <strong>{currentBreak.articles[0]?.title ?? 'DJ story'}</strong>
-              </summary>
-              <p>{currentBreak.script}</p>
-              <details className="news-bucket-detail-disclosure">
-                <summary>
-                  Source details{currentBreak.warnings.length ? ` · ${currentBreak.warnings.length} notes` : ''}
-                </summary>
-                {renderArticles(currentBreak.articles)}
-                {renderNotes(currentBreak.warnings)}
-              </details>
-            </details>
-          )}
-          {!!inProgressTakes.length && (
-            <div className="news-bucket-in-progress" role="status">
-              <span>Playback started · completion unconfirmed</span>
-              {inProgressTakes.map((take) => (
-                <button
-                  key={take.id}
-                  className="room-link"
-                  onClick={(event) => selectStory({ kind: 'take', id: take.id }, event.currentTarget)}
-                >
-                  {take.articles[0]?.title ?? 'Saved story'}
-                </button>
+        <nav className="news-bucket-navigation" aria-label="News categories">
+          <span className="news-bucket-nav-label">News</span>
+          <label className="news-bucket-navigation-select">
+            <span className="sr-only">News category</span>
+            <select
+              aria-label="News category"
+              value={destination}
+              onChange={(event) => navigate(event.target.value as Destination)}
+            >
+              {destinations.map(({ id, label, count }) => (
+                <option key={id} value={id}>
+                  {label}
+                  {count !== undefined ? ` · ${count}` : ''}
+                </option>
               ))}
-            </div>
-          )}
-
-          <div className="news-bucket-list-toolbar">
-            <div className="news-bucket-list-tabs" role="group" aria-label="Story list">
-              {listTabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  type="button"
-                  aria-pressed={currentListSection === tab.id}
-                  onClick={() => setListSection(tab.id)}
-                >
-                  <span>{tab.label}</span>
-                  <span>{tab.count}</span>
-                </button>
-              ))}
-            </div>
-            <label className="news-bucket-history-select">
-              <span className="sr-only">Story history</span>
-              <select
-                aria-label="Story history"
-                value={historySection}
-                onChange={(event) =>
-                  setListSection(
-                    event.target.value === 'scripts' || event.target.value === 'reviewed'
-                      ? event.target.value
-                      : 'ready',
-                  )
-                }
-              >
-                <option value="">More history</option>
-                <option value="scripts">Saved scripts</option>
-                <option value="reviewed">Reviewed stories</option>
-              </select>
-            </label>
-          </div>
-
-          {currentListSection === 'ready' && (
-            <section className="news-bucket-list-section" aria-label="Ready stories">
-              {!eligible.length ? (
-                <div className="news-bucket-empty">
-                  <Newspaper size={26} strokeWidth={1.5} aria-hidden="true" />
-                  <h2>
-                    {savedNewsStale ? 'No ready stories in the last loaded results' : 'No fresh recordings ready'}
-                  </h2>
-                  <p>
-                    {savedNewsStale
-                      ? 'Refresh status to confirm what is ready now.'
-                      : 'Stories appear here after they are prepared for this setup.'}
-                  </p>
-                  <button className="room-link" onClick={openPreparation}>
-                    News settings
-                  </button>
-                </div>
-              ) : (
-                <div className="news-bucket-item-list">
-                  {eligible.map((take) => {
-                    const article = take.articles[0];
-                    return storyButton(
-                      { kind: 'take', id: take.id },
-                      article?.title ?? 'Saved story',
-                      `${article?.source ?? 'Source unavailable'} · Saved ${relativeTime(take.createdAt)}`,
-                      article?.source,
-                    );
-                  })}
-                </div>
-              )}
-            </section>
-          )}
-          {currentListSection === 'heard' && (
-            <section className="news-bucket-list-section" aria-label="Heard stories">
-              {heardTakes.length ? (
-                <div className="news-bucket-item-list">
-                  {heardTakes.map((take) => {
-                    const article = take.articles[0];
-                    return storyButton(
-                      { kind: 'take', id: take.id },
-                      article?.title ?? 'Saved story',
-                      `${article?.source ?? 'Source unavailable'} · ${take.deliveryState?.playedAt ? `Heard ${relativeTime(take.deliveryState.playedAt)}` : 'Heard time unavailable'}`,
-                      article?.source,
-                    );
-                  })}
-                </div>
-              ) : (
-                <p className="news-bucket-muted">No recordings with confirmed playback yet.</p>
-              )}
-            </section>
-          )}
-          {currentListSection === 'collected' && checkpoint?.collection && (
-            <section className="news-bucket-list-section" aria-label="Collected stories">
-              <p className="news-bucket-section-note">
-                Collected for {relativeTime(checkpoint.collection.collectedAt)} ·{' '}
-                {checkpoint.collection.candidates.length} candidates
-              </p>
-              {checkpoint.collection.incomplete && (
-                <p className="news-bucket-inline-notice">Source coverage was incomplete.</p>
-              )}
-              {checkpoint.collection.candidates.length ? (
-                <div className="news-bucket-item-list">
-                  {checkpoint.collection.candidates.map((candidate) =>
-                    storyButton(
-                      { kind: 'candidate', id: candidate.id, requestId: latestRoomRequest!.requestId },
-                      candidate.title,
-                      `${candidate.source} · ${candidate.publishedAt ? relativeTime(candidate.publishedAt) : 'Date unavailable'}`,
-                      candidate.source,
-                    ),
-                  )}
-                </div>
-              ) : (
-                <p className="news-bucket-muted">No candidates were collected in this check.</p>
-              )}
-              {renderCollectionStatus()}
-            </section>
-          )}
-          {currentListSection === 'selected' && checkpointSelection && (
-            <section className="news-bucket-list-section" aria-label="Editorial selection">
-              {selectedCandidate ? (
-                <div className="news-bucket-item-list">
-                  {storyButton(
-                    { kind: 'candidate', id: selectedCandidate.id, requestId: latestRoomRequest!.requestId },
-                    selectedCandidate.title,
-                    `${selectedCandidate.source} · Selected ${relativeTime(checkpointSelection.decidedAt)}`,
-                    selectedCandidate.source,
-                  )}
-                </div>
-              ) : (
-                <div className="news-bucket-empty">
-                  <h2>No story selected</h2>
-                  <p>{checkpointSelection.reason}</p>
-                </div>
-              )}
-            </section>
-          )}
-          {currentListSection === 'scripts' && (
-            <section className="news-bucket-list-section" aria-label="Saved scripts">
-              <p className="news-bucket-section-note">Saved scripts without audio across all rooms.</p>
-              {scriptOnly.length ? (
-                <div className="news-bucket-item-list">
-                  {scriptOnly.map((script) => {
-                    const article = script.articles[0];
-                    return storyButton(
-                      { kind: 'script', id: script.id },
-                      article?.title ?? 'Saved script',
-                      `${article?.source ?? script.provenance.dj.name} · Saved ${relativeTime(script.createdAt)}`,
-                      article?.source,
-                    );
-                  })}
-                </div>
-              ) : (
-                <p className="news-bucket-muted">No saved scripts without audio.</p>
-              )}
-            </section>
-          )}
-          {currentListSection === 'reviewed' && (
-            <section className="news-bucket-list-section" aria-label="Reviewed stories">
-              <p className="news-bucket-section-note">
-                Review history is separate from playback. Unselected reviews skip an article for the same editorial
-                setup for up to 24 hours.
-              </p>
-              {reviewed.length ? (
-                <>
-                  <ul ref={historyList} className="news-bucket-reviewed">
-                    {visibleReviewed.map((article) => (
-                      <ReviewedRow
-                        key={`${article.canonicalUrl}-${article.requestId}`}
-                        article={article}
-                        openSource={openSource}
-                        select={(button) =>
-                          selectStory({ kind: 'reviewed', id: `${article.canonicalUrl}:${article.requestId}` }, button)
-                        }
-                        selected={
-                          selection?.kind === 'reviewed' &&
-                          selection.id === `${article.canonicalUrl}:${article.requestId}`
-                        }
-                      />
-                    ))}
-                  </ul>
-                  {nextHistoryCount > 0 && (
-                    <button
-                      className="news-bucket-show-more"
-                      onClick={(event) => {
-                        const first = reviewed[visibleReviewed.length];
-                        revealHistory.current =
-                          first &&
-                          document.activeElement === event.currentTarget &&
-                          event.currentTarget.matches(':focus-visible')
-                            ? {
-                                button: event.currentTarget,
-                                key: JSON.stringify([first.canonicalUrl, first.requestId]),
-                              }
-                            : null;
-                        setHistoryLimit((limit) => limit + 25);
-                      }}
-                    >
-                      Show {nextHistoryCount} more reviewed {nextHistoryCount === 1 ? 'story' : 'stories'}
-                    </button>
-                  )}
-                </>
-              ) : (
-                <p className="news-bucket-muted">No stories have been reviewed yet.</p>
-              )}
-            </section>
-          )}
-        </div>
-
-        {selection && (
-          <aside id="news-story-inspector" className="news-bucket-inspector" aria-label="Story inspector">
-            <header>
-              <div>
-                <h2 className="news-bucket-inspector-heading">Story</h2>
-                <h3 className="news-bucket-inspector-title">{selectedTitle}</h3>
-                <p>
-                  {selectedSource ?? 'Source unavailable'} · {selectedStatus}
-                </p>
-              </div>
-              <button
-                ref={closeButton}
-                className="news-bucket-inspector-close"
-                aria-label="Close story details"
-                onClick={closeInspector}
-              >
-                <X size={18} aria-hidden="true" />
-              </button>
+            </select>
+          </label>
+          {destinations.map(({ id, label, icon: Icon, count }) => (
+            <button
+              key={id}
+              className={id === 'settings' ? 'news-bucket-nav-settings' : ''}
+              aria-current={destination === id ? 'page' : undefined}
+              onClick={() => navigate(id)}
+            >
+              <Icon size={18} aria-hidden="true" />
+              <span>{label}</span>
+              {count !== undefined && <span className="news-bucket-count">{count}</span>}
+            </button>
+          ))}
+        </nav>
+        <div className="news-bucket-content">
+          <ErrorNotice error={favorites.error} />
+          <div className="news-bucket-settings-page" hidden={destination !== 'settings'}>
+            <header className="news-bucket-content-heading">
+              <h2>News settings</h2>
+              <p>{descriptions.settings}</p>
             </header>
-            {selectedTake ? (
-              renderedTake(selectedTake)
-            ) : selectedScript ? (
-              renderScript(selectedScript)
-            ) : selectedReviewed ? (
-              renderReviewed(selectedReviewed)
-            ) : candidateStory ? (
-              <>
-                <h3 className="news-bucket-preview-label">Collected story</h3>
-                <p className="news-bucket-inspector-script">{candidateStory.summary || 'No summary was saved.'}</p>
-                <details className="news-bucket-detail-disclosure">
-                  <summary>Why this story</summary>
-                  <p className="news-bucket-muted">
-                    {selectedCandidateIsInspector && requestWhy
-                      ? requestWhy
-                      : 'This candidate was collected but not selected. No candidate-specific reason was saved.'}
-                  </p>
-                </details>
-                <details className="news-bucket-detail-disclosure">
-                  <summary>Source details</summary>
-                  {renderArticles([candidateStory])}
-                  {renderCollectionStatus()}
-                </details>
-              </>
-            ) : (
-              <p className="news-bucket-muted">This story is no longer available.</p>
+            {roomSettings ?? (
+              <button className="room-link" onClick={openPreparation}>
+                Open news settings
+              </button>
             )}
-            <ErrorNotice error={audition.audioError ? new Error(audition.audioError) : null} />
-          </aside>
-        )}
+          </div>
+          {destination !== 'settings' && (
+            <div className="news-bucket-reading-layout" key={destination}>
+              <div className="news-bucket-list-column">
+                <header className="news-bucket-content-heading">
+                  <h2>{currentDestination.label}</h2>
+                  <p>{descriptions[destination]}</p>
+                </header>
+                {(destination === 'upcoming' || destination === 'check') && (
+                  <div className="news-bucket-check-row" role="status">
+                    <span>
+                      Last source check · {lastRun ? lastRunLabels[lastRun.outcome] : 'No check recorded'}
+                      {lastRunTime && <time dateTime={lastRunTime}> · {relativeTime(lastRunTime)}</time>}
+                      {lastRun?.setupChanged && ' · Used earlier settings'}
+                    </span>
+                  </div>
+                )}
+                {destination === 'check' && lastRun?.message && <p className="news-bucket-muted">{lastRun.message}</p>}
+                {automation.settings.enabled && automation.room && destination === 'upcoming' && (
+                  <div className="news-bucket-runtime" role="status">
+                    <Radio size={16} aria-hidden="true" />
+                    <span>
+                      {runtimeDJ?.name ?? 'DJ'} · {phaseLabel}
+                      {!runtimePending && !onAir && !scheduled
+                        ? ` · Playback checks again in ${automation.songsUntilBreak} ${automation.songsUntilBreak === 1 ? 'song' : 'songs'}`
+                        : ''}
+                    </span>
+                  </div>
+                )}
+                {runtimeDiffersFromPage && automation.settings.enabled && automation.room && (
+                  <p className="news-bucket-inline-notice">
+                    Playback uses <strong>{automation.room.name}</strong>; this list belongs to{' '}
+                    <strong>{pageProfile?.name ?? 'the selected room'}</strong>.
+                  </p>
+                )}
+                <ErrorNotice error={automation.error ? new Error(automation.error) : null} />
+                {profileStatusUnknown && (
+                  <p className="news-bucket-inline-notice" role="status">
+                    Preparation status is unconfirmed. Showing the last loaded information.
+                  </p>
+                )}
+                {savedNewsStale && (
+                  <p className="news-bucket-inline-notice" role="status">
+                    Saved news may be out of date. Refresh status to confirm availability.
+                  </p>
+                )}
+                {destination === 'upcoming' && currentBreak && (
+                  <details className="news-bucket-live-story">
+                    <summary>
+                      <span>{onAir ? 'On air' : scheduled ? 'Scheduled' : 'Playback'}</span>
+                      <strong>{currentBreak.articles[0]?.title ?? 'DJ story'}</strong>
+                    </summary>
+                    <p>{currentBreak.script}</p>
+                    {renderArticles(currentBreak.articles)}
+                    {renderNotes(currentBreak.warnings)}
+                  </details>
+                )}
+                {destination === 'upcoming' && inProgressTakes.length > 0 && (
+                  <details className="news-bucket-detail-disclosure">
+                    <summary>Playback completion unconfirmed · {inProgressTakes.length}</summary>
+                    {inProgressTakes.map((take) => takeRow(take, 'Started · completion not recorded'))}
+                  </details>
+                )}
+                {destination === 'upcoming' && (
+                  <section className="news-bucket-list-section" aria-label="Upcoming stories">
+                    {eligible.length ? (
+                      <div className="news-bucket-item-list">
+                        {eligible.map((take) => takeRow(take, `Saved ${relativeTime(take.createdAt)}`))}
+                      </div>
+                    ) : (
+                      <div className="news-bucket-empty">
+                        <Inbox size={28} aria-hidden="true" />
+                        <h2>{pageProfile?.workflowDraft.newsEnabled ? 'No stories ready yet' : 'Set up your news'}</h2>
+                        <p>
+                          {savedNewsStale
+                            ? 'Refresh status to confirm what is ready.'
+                            : pageProfile?.workflowDraft.newsEnabled
+                              ? 'Your DJ is watching your sources. Fresh recordings appear here when a story qualifies.'
+                              : 'Choose your sources and host, then turn on automatic news in Settings.'}
+                        </p>
+                        <button className="room-link" onClick={() => navigate('settings')}>
+                          Review news settings
+                        </button>
+                      </div>
+                    )}
+                  </section>
+                )}
+                {destination === 'check' && (
+                  <section className="news-bucket-list-section" aria-label="Latest source check">
+                    {checkpoint?.collection ? (
+                      <>
+                        <p className="news-bucket-section-note">
+                          {collectedCandidates.length} stories found · {relativeTime(checkpoint.collection.collectedAt)}
+                          {checkpoint.collection.incomplete && ' · Source coverage incomplete'}
+                        </p>
+                        <div className="news-bucket-item-list">
+                          {collectedCandidates.map((article) =>
+                            storyButton(
+                              { kind: 'candidate', id: article.id, requestId: latestRoomRequest!.requestId },
+                              article.title,
+                              `${article.source} · ${article.id === checkpointSelection?.candidateId ? 'Selected for a briefing' : 'Found in latest check'}`,
+                              article,
+                              article.summary,
+                            ),
+                          )}
+                        </div>
+                        <details className="news-bucket-detail-disclosure">
+                          <summary>Check details</summary>
+                          {checkpointSelection && <p className="news-bucket-muted">{checkpointSelection.reason}</p>}
+                          {renderCollectionStatus()}
+                        </details>
+                      </>
+                    ) : (
+                      <div className="news-bucket-empty">
+                        <Search size={28} aria-hidden="true" />
+                        <h2>{lastRun ? 'No story list saved for this check' : 'No source check yet'}</h2>
+                        <p>
+                          {lastRun
+                            ? 'The saved result is shown above. Stories from future checks will appear here.'
+                            : 'Automatic checks find stories from your selected sources. Turn them on in News settings.'}
+                        </p>
+                        <button className="room-link" onClick={() => navigate('settings')}>
+                          Review news settings
+                        </button>
+                      </div>
+                    )}
+                  </section>
+                )}
+                {destination === 'past' && (
+                  <>
+                    <label className="news-bucket-history-select">
+                      Show
+                      <select
+                        aria-label="Story history"
+                        value={pastFilter}
+                        onChange={(event) => {
+                          setPastFilter(event.target.value);
+                          stopAudition();
+                          setSelection(null);
+                          setHistoryLimit(25);
+                        }}
+                      >
+                        <option value="heard">Heard recordings · {heardTakes.length}</option>
+                        <option value="scripts">Saved scripts · {scriptOnly.length}</option>
+                        <option value="reviewed">Reviewed stories · {reviewed.length}</option>
+                        <option value="all">All saved recordings · {allTakes.length}</option>
+                      </select>
+                    </label>
+                    {pastFilter === 'heard' && (
+                      <section aria-label="Heard recordings">
+                        {heardTakes.length ? (
+                          heardTakes.map((take) =>
+                            takeRow(
+                              take,
+                              take.deliveryState?.playedAt
+                                ? `Heard ${relativeTime(take.deliveryState.playedAt)}`
+                                : 'Heard · time unavailable',
+                            ),
+                          )
+                        ) : (
+                          <p className="news-bucket-muted">No completed news playback for this room yet.</p>
+                        )}
+                      </section>
+                    )}
+                    {pastFilter === 'all' && (
+                      <section aria-label="All saved recordings">
+                        <p className="news-bucket-section-note">
+                          Saved recordings from all rooms and older setups. A recording is marked heard only after
+                          completed playback.
+                        </p>
+                        {allTakes.length ? (
+                          allTakes.map((take) =>
+                            takeRow(
+                              take,
+                              take.deliveryState?.status === 'played'
+                                ? `Heard${take.deliveryState.playedAt ? ` ${relativeTime(take.deliveryState.playedAt)}` : ' · time unavailable'}`
+                                : take.deliveryState?.status === 'started'
+                                  ? 'Completion unconfirmed'
+                                  : take.deliveryState?.status === 'claimed'
+                                    ? 'Reserved for playback'
+                                    : !take.available
+                                      ? 'Audio unavailable'
+                                      : eligible.some((ready) => ready.id === take.id)
+                                        ? 'Ready to listen'
+                                        : 'Saved recording',
+                            ),
+                          )
+                        ) : (
+                          <p className="news-bucket-muted">No saved recordings yet.</p>
+                        )}
+                      </section>
+                    )}
+                    {pastFilter === 'scripts' && (
+                      <section aria-label="Saved scripts">
+                        <p className="news-bucket-section-note">Scripts without audio, across all rooms.</p>
+                        {scriptOnly.length ? (
+                          scriptOnly.map((script) =>
+                            storyButton(
+                              { kind: 'script', id: script.id },
+                              script.articles[0]?.title ?? 'Saved script',
+                              `${script.articles[0]?.source ?? 'Source unavailable'} · Script only · ${relativeTime(script.createdAt)}`,
+                              script.articles[0],
+                              script.script,
+                            ),
+                          )
+                        ) : (
+                          <p className="news-bucket-muted">No saved scripts without audio.</p>
+                        )}
+                      </section>
+                    )}
+                    {pastFilter === 'reviewed' && (
+                      <section aria-label="Reviewed stories">
+                        <p className="news-bucket-section-note">
+                          Editorial reviews across all rooms. A review does not mean a story was heard.
+                        </p>
+                        {visibleReviewed.map((article) =>
+                          storyButton(
+                            { kind: 'reviewed', id: `${article.canonicalUrl}:${article.requestId}` },
+                            article.title,
+                            `${article.source} · ${article.status === 'interrupted' ? 'Review interrupted' : article.status === 'submitted' ? 'Review pending' : article.outcome === 'selected' ? 'Selected for a briefing' : 'Not selected'} · ${relativeTime(article.reviewedAt)}`,
+                            article,
+                          ),
+                        )}
+                        {!reviewed.length && <p className="news-bucket-muted">No reviewed stories yet.</p>}
+                        {nextHistoryCount > 0 && (
+                          <button
+                            className="news-bucket-show-more"
+                            onClick={(event) => {
+                              const button = event.currentTarget;
+                              const first = reviewed[historyLimit];
+                              const restoreFocus = button.matches(':focus-visible');
+                              setHistoryLimit((limit) => limit + 25);
+                              if (!first || !restoreFocus) return;
+                              requestAnimationFrame(() => {
+                                if (
+                                  !document.hasFocus() ||
+                                  document.querySelector('dialog[open], :popover-open') ||
+                                  (document.activeElement !== button && document.activeElement !== document.body)
+                                )
+                                  return;
+                                const row = [...document.querySelectorAll<HTMLButtonElement>('[data-story-key]')].find(
+                                  (item) =>
+                                    item.dataset.storyKey === `reviewed:${first.canonicalUrl}:${first.requestId}`,
+                                );
+                                row?.focus({ preventScroll: true });
+                                row?.scrollIntoView({ block: 'nearest' });
+                              });
+                            }}
+                          >
+                            Show {nextHistoryCount} more stories
+                          </button>
+                        )}
+                      </section>
+                    )}
+                  </>
+                )}
+                {destination === 'favorites' && (
+                  <section aria-label="Favorite articles">
+                    {favoriteArticles.length ? (
+                      favoriteArticles.map((article) =>
+                        storyButton(
+                          { kind: 'favorite', id: article.canonicalUrl },
+                          article.title,
+                          `${article.source} · Favorited ${relativeTime(article.favoritedAt)}`,
+                          article,
+                        ),
+                      )
+                    ) : (
+                      <div className="news-bucket-empty">
+                        <Star size={28} aria-hidden="true" />
+                        <h2>Keep the stories you like</h2>
+                        <p>Star any article to find it here, even after its recording is gone.</p>
+                      </div>
+                    )}
+                  </section>
+                )}
+              </div>
+              {selection && (
+                <aside
+                  id="news-story-inspector"
+                  className="news-bucket-inspector"
+                  aria-label="Story inspector"
+                  data-reader-key={selectionKey(selection)}
+                >
+                  <div className="news-bucket-reader-toolbar">
+                    <button className="news-bucket-reader-back" onClick={() => closeInspector()}>
+                      <ArrowLeft size={16} aria-hidden="true" />
+                      Back to stories
+                    </button>
+                    <span className="news-bucket-reader-eyebrow">
+                      {selectedTake
+                        ? eligible.some((take) => take.id === selectedTake.id)
+                          ? 'Ready to listen'
+                          : selectedTake.deliveryState?.status === 'played'
+                            ? 'From your history'
+                            : 'Saved recording'
+                        : selectedScript
+                          ? 'Script only'
+                          : selectedFavorite
+                            ? 'Favorite article'
+                            : candidateStory
+                              ? 'Source check'
+                              : 'Editorial review'}
+                    </span>
+                    <div className="news-bucket-reader-actions">
+                      {inspectedArticle && favoriteButton(inspectedArticle)}
+                      <button
+                        className="news-bucket-inspector-close"
+                        aria-label="Close story details"
+                        onClick={() => closeInspector()}
+                      >
+                        <X size={18} aria-hidden="true" />
+                      </button>
+                    </div>
+                  </div>
+                  <header>
+                    <h2 ref={readerHeading} tabIndex={-1}>
+                      {selectedFavorite?.title ?? selectedTitle}
+                    </h2>
+                    <p>
+                      {inspectedArticle
+                        ? `${inspectedArticle.source} · ${publicationTime(inspectedArticle)}`
+                        : (selectedSource ?? 'Source unavailable')}
+                    </p>
+                  </header>
+                  {selectedTake ? (
+                    renderedTake(selectedTake)
+                  ) : selectedScript ? (
+                    renderScript(selectedScript)
+                  ) : selectedReviewed ? (
+                    renderReviewed(selectedReviewed)
+                  ) : candidateStory ? (
+                    <>
+                      <h3 className="news-bucket-preview-label">Story summary</h3>
+                      <p className="news-bucket-inspector-script">
+                        {candidateStory.summary || 'No summary was saved.'}
+                      </p>
+                      {selectedCandidateIsInspector && requestWhy && (
+                        <details className="news-bucket-detail-disclosure">
+                          <summary>Why this story</summary>
+                          <p className="news-bucket-muted">{requestWhy}</p>
+                        </details>
+                      )}
+                      {renderArticles([candidateStory])}
+                    </>
+                  ) : selectedFavorite ? (
+                    <>
+                      <p className="news-bucket-muted">Saved to Favorites. Open the source to read the article.</p>
+                      {renderArticles([selectedFavorite])}
+                    </>
+                  ) : (
+                    <p className="news-bucket-muted">This story is no longer available.</p>
+                  )}
+                  {selectedTake && <p className="news-bucket-inspector-meta">{selectedStatus}</p>}
+                  <ErrorNotice error={audition.audioError ? new Error(audition.audioError) : null} />
+                </aside>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </section>
-  );
-}
-
-function ReviewedRow({
-  article,
-  openSource,
-  select,
-  selected,
-}: {
-  article: ReviewedNewsArticle;
-  openSource: (url: string) => void;
-  select: (button: HTMLButtonElement) => void;
-  selected: boolean;
-}) {
-  const outcome =
-    article.status === 'interrupted'
-      ? 'Review interrupted'
-      : article.status === 'submitted'
-        ? 'Submitted for review'
-        : article.outcome === 'selected'
-          ? 'Selected for a briefing'
-          : 'Reviewed · not selected';
-
-  return (
-    <li className={`news-bucket-reviewed-row ${selected ? 'is-selected' : ''}`}>
-      <div>
-        <button
-          className="news-bucket-article-link"
-          data-story-key={`reviewed:${article.canonicalUrl}:${article.requestId}`}
-          data-reviewed-key={JSON.stringify([article.canonicalUrl, article.requestId])}
-          onClick={(event) => select(event.currentTarget)}
-        >
-          {article.title}
-        </button>
-        <span>
-          {article.source} ·{' '}
-          {Number.isFinite(Date.parse(article.publishedAt ?? ''))
-            ? new Date(article.publishedAt!).toLocaleDateString()
-            : 'Date unavailable'}
-        </span>
-        <button className="room-link" onClick={() => openSource(article.url)}>
-          <ExternalLink size={12} aria-hidden="true" /> Open source
-        </button>
-      </div>
-      <div className="news-bucket-reviewed-meta">
-        <span>{outcome}</span>
-        <time dateTime={article.reviewedAt}>{new Date(article.reviewedAt).toLocaleDateString()}</time>
-      </div>
-    </li>
   );
 }
