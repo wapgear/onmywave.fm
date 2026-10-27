@@ -38,7 +38,7 @@ jobs:
           WAVE_VERIFICATION_OUTPUT: ${{ runner.temp }}/wave-behavior
       - name: Upload sanitized behavior evidence
         if: failure()
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: service-behavior-failure
           path: ${{ runner.temp }}/wave-behavior
@@ -64,7 +64,7 @@ jobs:
           WAVE_VERIFICATION_OUTPUT: ${{ runner.temp }}/wave-behavior
       - name: Upload sanitized behavior evidence
         if: failure()
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: playback-behavior-failure
           path: ${{ runner.temp }}/wave-behavior
@@ -95,7 +95,7 @@ jobs:
           WAVE_VERIFICATION_OUTPUT: ${{ runner.temp }}/wave-tray
       - name: Upload sanitized tray evidence
         if: always()
-        uses: actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f # v7.0.0
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: close-to-tray-${{ matrix.os }}
           path: ${{ runner.temp }}/wave-tray
