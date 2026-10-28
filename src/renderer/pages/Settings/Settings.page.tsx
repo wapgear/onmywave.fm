@@ -82,6 +82,7 @@ export function SettingsPage({
       {activeSection === 'djs' && <DJsPage />}
       {activeSection === 'general' && (
         <div className="settings-content settings-preferences">
+          <DJPlaybackSettings />
           <AppearanceSettings />
           <section>
             <h2>Account</h2>
@@ -119,7 +120,6 @@ export function SettingsPage({
             </p>
             <LibraryChooser key={connection.id} connection={connection} done={update} disabled={disconnect.isPending} />
           </section>
-          <DJPlaybackSettings />
           <NewsTransitions />
           <UpdateSettings />
         </div>

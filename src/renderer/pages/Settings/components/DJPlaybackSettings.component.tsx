@@ -45,7 +45,7 @@ export function DJPlaybackSettings() {
     <section className="room-dj-schedule" aria-labelledby="dj-playback-title">
       <div className="settings-section-title">
         <h2 ref={heading} tabIndex={-1} id="dj-playback-title">
-          DJ playback
+          News & song announcements
         </h2>
         <InfoHelp label="DJ playback details">
           <p>
@@ -89,7 +89,7 @@ export function DJPlaybackSettings() {
       >
         <fieldset disabled={!recoveryReady || !state.data || save.isPending}>
           <label className="dj-song-interval">
-            Check news every
+            Play news every
             <input
               ref={intervalInput}
               type="number"
@@ -102,6 +102,11 @@ export function DJPlaybackSettings() {
             />
             <span>{settings.everySongs === 1 ? 'finished song' : 'finished songs'}</span>
           </label>
+          <p className="form-hint">
+            {state.data?.djPlayback.enabled
+              ? 'Reads eligible saved news at this interval. Music continues when no news is ready.'
+              : "News playback is off. Enable news and choose a profile in the player's DJ sidebar."}
+          </p>
           <label className="dj-song-interval">
             <input
               type="checkbox"
@@ -162,12 +167,12 @@ export function DJPlaybackSettings() {
           onFocus={() => setSaveFocused(true)}
           onBlur={() => setSaveFocused(false)}
         >
-          {save.isPending ? 'Saving…' : 'Save DJ playback'}
+          {save.isPending ? 'Saving…' : 'Save announcement settings'}
         </button>
         <ErrorNotice error={save.error} />
         {save.isSuccess && draft === null && (
           <p className="form-hint" role="status">
-            DJ playback saved.
+            Announcement settings saved.
           </p>
         )}
       </form>

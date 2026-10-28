@@ -292,8 +292,13 @@ async function main() {
           let tries = 0;
           const timer = setInterval(() => {
             const section = document.querySelector('.room-dj-schedule');
-            if (section) { clearInterval(timer); section.scrollIntoView({ block: 'start' }); setTimeout(() => {
-              if (section.getBoundingClientRect().top > 200) reject(new Error('DJ settings were not scrolled into the capture'));
+            if (section) { clearInterval(timer);
+              if (${JSON.stringify(stage)}.includes('discovery')) {
+                window.scrollTo(0, 0);
+                document.querySelector('.main-content').scrollTop = 0;
+              } else section.scrollIntoView({ block: 'start' });
+              setTimeout(() => {
+              if (!${JSON.stringify(stage)}.startsWith('before-discovery') && section.getBoundingClientRect().top > (${JSON.stringify(stage)}.includes('discovery') ? 400 : 200)) reject(new Error('DJ settings were not scrolled into the capture'));
               else resolve();
             }, 150); }
             else if (++tries > 100) { clearInterval(timer); reject(new Error('DJ playback settings did not open')); }
@@ -302,6 +307,8 @@ async function main() {
         await writeFile(path.join(root, `docs/verification/song-handoff/${stage}-settings-${width}.png`), (await window.webContents.capturePage()).toPNG());
       }
       if (stage.startsWith('after')) {
+        const firstSection = await window.webContents.executeJavaScript(`document.querySelector('.settings-preferences')?.firstElementChild?.classList.contains('room-dj-schedule')`);
+        if (stage.includes('discovery') && !firstSection) throw new Error('Announcement settings must be the first General section');
         const defaultInterval = await window.webContents.executeJavaScript(`(() => {
           const input = [...document.querySelectorAll('.room-dj-schedule input[type="number"]')].find((input) => input.labels[0]?.textContent.includes('Announce after'));
           return { value: input?.value, disabled: input?.disabled };
@@ -319,14 +326,17 @@ async function main() {
               const input = [...document.querySelectorAll('.room-dj-schedule input[type="number"]')].find((input) => input.labels[0]?.textContent.includes('Announce after'));
               Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, '8');
               input.dispatchEvent(new Event('input', { bubbles: true }));
+              const news = [...document.querySelectorAll('.room-dj-schedule input[type="number"]')].find((input) => input.labels[0]?.textContent.includes('Play news every'));
+              Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(news, '4');
+              news.dispatchEvent(new Event('input', { bubbles: true }));
             })()`);
             await window.webContents.executeJavaScript(`new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))`);
           }
-          await window.webContents.executeJavaScript(`[...document.querySelectorAll('.room-dj-schedule button')].find((button) => button.textContent.trim() === 'Save DJ playback').click()`);
+          await window.webContents.executeJavaScript(`[...document.querySelectorAll('.room-dj-schedule button')].find((button) => button.textContent.trim() === 'Save announcement settings').click()`);
           await window.webContents.executeJavaScript(`new Promise((resolve, reject) => {
             let tries = 0;
             const timer = setInterval(() => {
-              if (window.__fixture.state.djPlayback.announceTracks === ${enabled} && window.__fixture.state.djPlayback.announceEverySongs === 8 && document.querySelector('.room-dj-schedule [role="status"]')?.textContent.includes('saved')) { clearInterval(timer); resolve(); }
+              if (window.__fixture.state.djPlayback.announceTracks === ${enabled} && window.__fixture.state.djPlayback.announceEverySongs === 8 && window.__fixture.state.djPlayback.everySongs === 4 && document.querySelector('.room-dj-schedule [role="status"]')?.textContent.includes('saved')) { clearInterval(timer); resolve(); }
               else if (++tries > 100) { clearInterval(timer); reject(new Error('Announcement setting did not save and confirm')); }
             }, 20);
           })`);
