@@ -23,6 +23,7 @@ import type {
 import { ServiceError } from './jellyfin';
 import { NewsService, validateNewsSettings } from './news';
 import { isSpokenNewsText, NEWS_PROMPT_POLICY_VERSION } from './news-prompts';
+import { validSourceContext, withSourceContext, MAX_CONTEXT_REQUESTS } from './news-source';
 import { getLocalState, readOpenAIKey, readElevenLabsKey, readTwitterKey } from './storage';
 import { StorageError } from './storage-error';
 
@@ -110,6 +111,8 @@ function validCollection(value: unknown): value is NewsCollection {
   return (
     Array.isArray(collection.candidates) &&
     collection.candidates.length <= 200 &&
+    collection.candidates.filter((candidate) => candidate?.sourceContext).length <= MAX_CONTEXT_REQUESTS &&
+    collection.candidates.filter((candidate) => candidate?.sourceContext?.status === 'pending').length <= 1 &&
     new Set(collection.candidates.map((candidate) => candidate?.id)).size === collection.candidates.length &&
     new Set(collection.candidates.map((candidate) => canonicalArticleUrl(candidate?.url))).size ===
       collection.candidates.length &&
@@ -122,6 +125,7 @@ function validCollection(value: unknown): value is NewsCollection {
         candidate.title.length <= 240 &&
         typeof candidate.summary === 'string' &&
         candidate.summary.length <= 1500 &&
+        (candidate.sourceContext === undefined || validSourceContext(candidate.sourceContext)) &&
         typeof candidate.url === 'string' &&
         canonicalArticleUrl(candidate.url) !== null &&
         typeof candidate.source === 'string' &&
@@ -158,7 +162,14 @@ function validSelection(value: unknown, collection?: NewsCollection): value is N
   return (
     (selection.candidateId === null ||
       (typeof selection.candidateId === 'string' &&
-        Boolean(collection?.candidates.some((candidate) => candidate.id === selection.candidateId)))) &&
+        Boolean(
+          collection?.candidates.some(
+            (candidate) =>
+              candidate.id === selection.candidateId &&
+              (!candidate.sourceContext || candidate.sourceContext.status === 'available'),
+          ),
+        ))) &&
+    !collection?.candidates.some((candidate) => candidate.sourceContext?.status === 'pending') &&
     ['selected', 'no-match', 'excluded', 'insufficient-evidence', 'not-major'].includes(selection.reasonCode) &&
     (selected ? selection.reasonCode === 'selected' : selection.reasonCode !== 'selected') &&
     typeof selection.reason === 'string' &&
@@ -669,9 +680,37 @@ async function persistCollection(requestId: string, collection: NewsCollection) 
       collection.candidates.some((candidate) => candidate.sourceIds.some((id) => !sourceIds.has(id)))
     )
       invalid('Collected stories do not match the configured sources.');
-    if (checkpoint.collection && hash(checkpoint.collection) !== hash(collection))
-      invalid('The collected news changed while this preparation was running.');
-    return { ...request, phase: 'selecting', checkpoint: { ...checkpoint, collection } };
+    let contextRequested = false;
+    if (checkpoint.collection && hash(checkpoint.collection) !== hash(collection)) {
+      const previous = checkpoint.collection;
+      const changed = collection.candidates.filter(
+        (candidate) =>
+          hash(candidate.sourceContext ?? null) !==
+          hash(previous.candidates.find((item) => item.id === candidate.id)?.sourceContext ?? null),
+      );
+      const candidate = changed.length === 1 ? changed[0] : undefined;
+      const before = previous.candidates.find((item) => item.id === candidate?.id);
+      if (
+        !candidate?.sourceContext ||
+        !before ||
+        (before.sourceContext
+          ? before.sourceContext.status !== 'pending' || candidate.sourceContext.status === 'pending'
+          : candidate.sourceContext.status !== 'pending') ||
+        hash(withSourceContext(previous, candidate.id, candidate.sourceContext)) !== hash(collection)
+      )
+        invalid('Only requested source evidence can enrich a collected story.');
+      contextRequested = candidate?.sourceContext?.status === 'pending';
+    }
+    return {
+      ...request,
+      phase: 'selecting',
+      checkpoint: { ...checkpoint, collection },
+      ...(contextRequested &&
+      request.providerAttempt?.phase === 'selecting' &&
+      request.providerAttempt.outcome === 'pending'
+        ? { providerAttempt: { ...request.providerAttempt, outcome: 'received' as const } }
+        : {}),
+    };
   });
 }
 
@@ -696,6 +735,7 @@ async function persistSelection(requestId: string, selection: NewsEditorialSelec
     const selected = collection.candidates.find((candidate) => candidate.id === selection.candidateId);
     const reviewedArticles = [...(current.reviewedArticles ?? [])];
     for (const candidate of collection.candidates) {
+      if (candidate.sourceContext?.status === 'unavailable') continue;
       const canonicalUrl = canonicalArticleUrl(candidate.url);
       if (!canonicalUrl) continue;
       const outcome = candidate.id === selected?.id ? 'selected' : 'not-selected';

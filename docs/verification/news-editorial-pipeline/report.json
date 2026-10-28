@@ -38,6 +38,10 @@
       "result": "passed"
     },
     {
+      "scenario": "older prompt policies cannot resume speech under the story-only ending contract",
+      "result": "passed"
+    },
+    {
       "scenario": "a selected story consumed elsewhere cannot trigger another paid retry",
       "result": "passed"
     },
@@ -51,6 +55,38 @@
     },
     {
       "scenario": "startup reconciles a completed recording after the room status write fails, once",
+      "result": "passed"
+    },
+    {
+      "scenario": "incomplete structured output cannot dispatch writing or repeat the model request",
+      "result": "passed"
+    },
+    {
+      "scenario": "thin Hacker News title triggers source extraction, reassessment and grounded writing",
+      "result": "passed"
+    },
+    {
+      "scenario": "RSS context uses the same classifier path and public redirects retain article identity",
+      "result": "passed"
+    },
+    {
+      "scenario": "unavailable, private, oversized and unsupported sources cannot generate filler or poison rejection history",
+      "result": "passed"
+    },
+    {
+      "scenario": "a readable but insufficient source is rejected before writing",
+      "result": "passed"
+    },
+    {
+      "scenario": "context requests are bounded and the same candidate cannot be fetched twice",
+      "result": "passed"
+    },
+    {
+      "scenario": "cancellation during source reading resumes the saved request without repeating the classifier",
+      "result": "passed"
+    },
+    {
+      "scenario": "restart after writing interruption reuses saved source text and selection",
       "result": "passed"
     }
   ]

@@ -160,7 +160,7 @@ const check = async (name, run) => {
         profile('room-a', { room: { djId: 'dj-a', sourceIds: ['source-a'] }, mood: 'A' }),
         profile('room-b', { room: { djId: 'dj-b', sourceIds: ['source-b'] }, mood: 'B' }),
       ],
-      djPlayback: { enabled: true, roomId: 'room-a', everySongs: 3, keepOnSeek: true, voiceVolume: 0.7 },
+      djPlayback: { enabled: true, roomId: 'room-a', everySongs: 3, keepOnSeek: true, voiceVolume: 0.7, announceTracks: true, announceEverySongs: 8 },
     });
     const { file, storage } = fresh('independent-playback-room', initial);
     await storage.updateLocalState((state) => ({
@@ -174,6 +174,8 @@ const check = async (name, run) => {
     assert.equal(state.roomProfiles.find((value) => value.id === 'room-b').mood, 'Edited B');
     assert.equal(state.djPlayback.roomId, 'room-a');
     assert.equal(state.djPlayback.enabled, true);
+    assert.equal(state.djPlayback.announceTracks, true);
+    assert.equal(state.djPlayback.announceEverySongs, 8);
     const disk = JSON.parse(fs.readFileSync(file, 'utf8'));
     for (const key of ['vibe', 'listeningRoom', 'workflowDraft']) assert.equal(Object.hasOwn(disk, key), false);
   });
@@ -234,7 +236,7 @@ const check = async (name, run) => {
         profile('room-b', { workflowDraft: { ...profile('room-b').workflowDraft, newsEnabled: true, nextNewsCheckAt: '2026-10-23T10:00:00.000Z' } }),
       ],
       activeRoomProfileId: 'room-b',
-      djPlayback: { enabled: true, roomId: 'room-a', everySongs: 3, keepOnSeek: true, voiceVolume: 0.7 },
+      djPlayback: { enabled: true, roomId: 'room-a', everySongs: 3, keepOnSeek: true, voiceVolume: 0.7, announceTracks: true, announceEverySongs: 8 },
     });
     const { file, storage } = fresh('disable-handler', initial);
     const transpiled = ts.transpileModule(`(${sourceDisableNewsPreparation})`, {
