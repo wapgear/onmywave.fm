@@ -182,9 +182,9 @@ export function DJSidebar({ openRoom, openSettings, controlsRef }: DJSidebarProp
               </li>
             ))}
           </ul>
-        ) : (
+        ) : news.kind !== 'track-announcement' ? (
           <p className="dj-hint">No source references saved for this recording.</p>
-        )}
+        ) : null}
         {!!news.warnings.length && (
           <ul className="dj-hint dj-preparation-notes" aria-label="Preparation notes">
             {news.warnings.map((warning, index) => (
@@ -204,7 +204,9 @@ export function DJSidebar({ openRoom, openSettings, controlsRef }: DJSidebarProp
             {status === 'Scheduled'
               ? 'Scheduled near track end'
               : status === 'Loading'
-                ? 'Loading news audio…'
+                ? player.activeNews?.kind === 'track-announcement'
+                  ? 'Preparing track introduction…'
+                  : 'Loading news audio…'
                 : status}
           </span>
         </div>
@@ -466,7 +468,11 @@ export function DJSidebar({ openRoom, openSettings, controlsRef }: DJSidebarProp
       {upcoming && (
         <details key={upcoming.id} className="dj-news-details" open>
           <summary>
-            {player.newsPhase !== 'idle' && player.newsPhase !== 'waiting' ? 'Current news' : 'Upcoming news'}
+            {upcoming.kind === 'track-announcement'
+              ? 'Track introduction'
+              : player.newsPhase !== 'idle' && player.newsPhase !== 'waiting'
+                ? 'Current news'
+                : 'Upcoming news'}
           </summary>
           {story(upcoming)}
         </details>

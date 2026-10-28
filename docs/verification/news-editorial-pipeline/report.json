@@ -38,6 +38,10 @@
       "result": "passed"
     },
     {
+      "scenario": "older prompt policies cannot resume speech under the story-only ending contract",
+      "result": "passed"
+    },
+    {
       "scenario": "a selected story consumed elsewhere cannot trigger another paid retry",
       "result": "passed"
     },

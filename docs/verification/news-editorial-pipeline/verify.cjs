@@ -230,6 +230,7 @@ async function main() {
   await run('durable boundaries, separate policies, source merging and idempotent completion', async () => {
     fresh('happy');
     const take = await prepare('request-happy');
+    assert.equal(take.ending, 'story-only');
     assert.deepEqual(calls, { feeds: 2, selecting: 1, writing: 1, speech: 1 });
     assert.equal(take.selection.reasonCode, 'selected');
     const request = index().requests[0];
@@ -237,6 +238,9 @@ async function main() {
     assert.equal(request.phase, 'complete');
     assert.deepEqual(request.checkpoint.collection.candidates[0].sourceIds, ['source-a', 'source-b']);
     assert.equal(index().scripts.length, 1);
+    assert.equal(index().scripts[0].ending, 'story-only');
+    assert.match(requests.find((request) => request.phase === 'writing').instructions, /playback owns the only transition back to music/);
+    assert.match(requests.find((request) => request.phase === 'writing').instructions, /even if host preferences request one/);
     assert.equal((await prepare('request-happy')).id, take.id);
     assert.equal(calls.speech, 1);
     state.djs[0].instructions = 'Different style';
@@ -376,6 +380,26 @@ async function main() {
     } finally { Date.now = clock; }
   });
 
+  await run('older prompt policies cannot resume speech under the story-only ending contract', async () => {
+    const currentPolicy = policy.NEWS_PROMPT_POLICY_VERSION;
+    assert.equal(currentPolicy, 4);
+    try {
+      for (const previousPolicy of [2, 3]) {
+        policy.NEWS_PROMPT_POLICY_VERSION = previousPolicy;
+        fresh('old-policy-' + previousPolicy, { speechFailure: true });
+        const id = 'request-old-policy-' + previousPolicy;
+        await assert.rejects(prepare(id));
+        state.roomProfiles[0].workflowDraft.newsLastRun = { requestId: id, outcome: 'interrupted', startedAt: new Date().toISOString() };
+        assert.equal(await prepared.resumableRoomNewsRequest(snapshot(), 'room-a'), id);
+        policy.NEWS_PROMPT_POLICY_VERSION = currentPolicy;
+        assert.equal(await prepared.resumableRoomNewsRequest(snapshot(), 'room-a'), null);
+        await assert.rejects(prepare(id, true));
+        assert.equal(calls.speech, 1, 'An incompatible checkpoint must not dispatch speech');
+        assert.equal(index().scripts.length, 1, 'Existing saved scripts must remain intact');
+      }
+    } finally { policy.NEWS_PROMPT_POLICY_VERSION = currentPolicy; }
+  });
+
   await run('a selected story consumed elsewhere cannot trigger another paid retry', async () => {
     fresh('consumed-during-pause', { speechFailure: true });
     await assert.rejects(prepare('request-consumed'));
@@ -452,6 +476,13 @@ async function main() {
   await run('thin Hacker News title triggers source extraction, reassessment and grounded writing', async () => {
     fresh('hn-context', { context: true, hackerNews: true });
     const take = await prepare('request-hn-context');
+    assert.equal(take.ending, 'story-only');
+    assert.equal(index().scripts[0].ending, 'story-only');
+    const writing = requests.find((request) => request.phase === 'writing');
+    assert.match(writing.instructions, /available sourceContext.text/);
+    assert.match(writing.instructions, /Always end on the final useful fact/);
+    assert.match(writing.instructions, /even if host preferences request one/);
+    assert.doesNotMatch(writing.instructions, /By default, finish/);
     assert.equal(take.selection.reasonCode, 'selected');
     assert.equal(calls.selecting, 2);
     assert.equal(articleRequests.length, 1);
@@ -534,7 +565,8 @@ async function main() {
     await prepared.cancelPreparedNews('request-context-restart');
     await assert.rejects(pending);
     reload(); scenario.gate = null;
-    await prepare('request-context-restart', true);
+    const take = await prepare('request-context-restart', true);
+    assert.equal(take.ending, 'story-only');
     assert.equal(articleRequests.length, 1);
     assert.equal(calls.selecting, 2);
     assert.equal(calls.writing, 2);

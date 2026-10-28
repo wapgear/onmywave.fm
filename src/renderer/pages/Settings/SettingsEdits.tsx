@@ -7,7 +7,10 @@ import { unwrap } from '../../api';
 import { confirmLocalState } from '../../local-state-cache';
 import { useNewsRecovery } from '../../NewsRecovery';
 
-type PlaybackPreferences = Pick<DJPlaybackSettings, 'everySongs' | 'keepOnSeek' | 'voiceVolume'>;
+type PlaybackPreferences = Pick<
+  DJPlaybackSettings,
+  'everySongs' | 'keepOnSeek' | 'voiceVolume' | 'announceTracks' | 'announceEverySongs'
+>;
 
 function useEdit<T>(write: (value: T) => Promise<LocalStateSnapshot>) {
   const client = useQueryClient();
@@ -54,6 +57,8 @@ function useSettingsEdits() {
       throw new Error('News data is unavailable. Recover it before changing DJ playback.');
     if (!Number.isInteger(value.everySongs) || value.everySongs < 1 || value.everySongs > 100)
       throw new Error('Choose a whole number from 1 to 100 songs.');
+    if (!Number.isInteger(value.announceEverySongs) || value.announceEverySongs < 1 || value.announceEverySongs > 100)
+      throw new Error('Choose an announcement interval from 1 to 100 completed songs.');
     return unwrap(await window.wave.saveDJPlayback(value));
   });
   const transitions = useEdit<NewsTransitionSettings>(async (value) => {

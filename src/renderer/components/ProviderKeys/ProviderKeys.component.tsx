@@ -3,7 +3,7 @@ import { useId, useRef, useState } from 'react';
 
 import { unwrap } from '../../api';
 import { useRetryFocus } from '../../useRetryFocus';
-import { InfoHelp } from '../InfoHelp/InfoHelp.component';
+import { SectionHeading } from '../SectionHeading/SectionHeading.component';
 import { ErrorNotice } from '../Shared';
 import { useProviderKeyEdit } from './ProviderKeyEdits';
 import { TwitterSetupHelp } from './TwitterSetupHelp.component';
@@ -13,28 +13,25 @@ import './ProviderKeys.styles.css';
 export function ProviderKeys({ disabled = false }: { disabled?: boolean }) {
   return (
     <div className="provider-keys">
-      <div className="provider-keys-heading">
-        <h2>Provider keys</h2>
-        <InfoHelp label="About provider keys">
-          <p>
-            Twitter / X uses your bearer token to search recent posts. OpenAI prepares news text. ElevenLabs generates
-            all new voice audio.
-          </p>
-          <p>
-            Keys use protected storage when available. Session-only keys must be entered again after quitting. Saved
-            recordings play without keys.
-          </p>
-          <p>
-            Provider keys apply to this app on this Mac when you switch music accounts. Signing out clears entered key
-            text. A key change already saving can still finish.
-          </p>
-          <p>
-            Preparing text sends selected source content, news interests, DJ preferences, and mood to OpenAI. Generating
-            audio sends the reviewed script and voice preferences to your chosen provider and uses that provider's
-            account.
-          </p>
-        </InfoHelp>
-      </div>
+      <SectionHeading title="Provider keys" helpLabel="About provider keys">
+        <p>
+          Twitter / X uses your bearer token to search recent posts. OpenAI prepares news text. ElevenLabs generates all
+          new voice audio.
+        </p>
+        <p>
+          Keys use protected storage when available. Session-only keys must be entered again after quitting. Saved
+          recordings play without keys.
+        </p>
+        <p>
+          Provider keys apply to this app on this Mac when you switch music accounts. Signing out clears entered key
+          text. A key change already saving can still finish.
+        </p>
+        <p>
+          Preparing text sends selected source content, news interests, DJ preferences, and mood to OpenAI. Generating
+          audio sends the reviewed script and voice preferences to your chosen provider and uses that provider's
+          account.
+        </p>
+      </SectionHeading>
       <ProviderKey provider="openai" disabled={disabled} />
       <ProviderKey provider="elevenlabs" disabled={disabled} />
       <ProviderKey provider="twitter" disabled={disabled} />
@@ -45,12 +42,8 @@ export function ProviderKeys({ disabled = false }: { disabled?: boolean }) {
 function ProviderKey({ provider, disabled }: { provider: 'openai' | 'elevenlabs' | 'twitter'; disabled: boolean }) {
   const edit = useProviderKeyEdit(provider);
   const { draft: key, queryKey } = edit;
-  const name =
-    provider === 'openai'
-      ? 'OpenAI · information and preparation'
-      : provider === 'elevenlabs'
-        ? 'ElevenLabs · voice'
-        : 'Twitter / X · recent search';
+  const name = provider === 'openai' ? 'OpenAI' : provider === 'elevenlabs' ? 'ElevenLabs' : 'Twitter / X';
+  const keyLabel = provider === 'twitter' ? 'Bearer token' : 'API key';
   const status = useQuery({
     queryKey,
     meta: { aiOperation: true },
@@ -102,8 +95,9 @@ function ProviderKey({ provider, disabled }: { provider: 'openai' | 'elevenlabs'
         </span>
       </div>
       <label>
-        {name} {provider === 'twitter' ? 'bearer token' : 'API key'}
+        {keyLabel}
         <input
+          aria-label={`${name} ${keyLabel}`}
           type="password"
           autoComplete="off"
           spellCheck={false}

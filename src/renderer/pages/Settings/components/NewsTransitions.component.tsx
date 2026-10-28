@@ -4,7 +4,7 @@ import { useRef, useState } from 'react';
 import { defaultNewsTransitionSettings } from '../../../../shared/news-transitions';
 import type { NewsTransitionSettings } from '../../../../shared/types';
 import { unwrap } from '../../../api';
-import { InfoHelp } from '../../../components/InfoHelp/InfoHelp.component';
+import { SectionHeading } from '../../../components/SectionHeading/SectionHeading.component';
 import { ErrorNotice } from '../../../components/Shared';
 import { useRetryFocus } from '../../../useRetryFocus';
 import { useGeneralSettingsEdits } from '../SettingsEdits';
@@ -65,15 +65,23 @@ export function NewsTransitions() {
 
   return (
     <section className="news-transition-settings" aria-labelledby="news-transitions-title">
-      <div className="settings-section-title">
-        <h2 ref={heading} tabIndex={-1} id="news-transitions-title">
-          DJ transitions
-        </h2>
-        <InfoHelp label="DJ transition timing">
-          <p>The preview illustrates the order and duration of these steps for the selected play mode.</p>
-        </InfoHelp>
-      </div>
-      <p className="settings-description">Saved changes apply to the next break you schedule.</p>
+      <SectionHeading
+        title="DJ transitions"
+        helpLabel="DJ transition timing"
+        ref={heading}
+        tabIndex={-1}
+        id="news-transitions-title"
+      >
+        <p>Saved timings apply to the next scheduled break.</p>
+        <p>
+          Over music keeps a quiet music bed beneath the DJ; between songs lets the song finish before speech starts.
+          Standalone song introductions always play between songs.
+        </p>
+        <p>
+          Preview uses your current timings without saving, with sample music and a saved voice. It makes no generation
+          requests. Your music stays paused afterward; changing songs or seeking stops the sample.
+        </p>
+      </SectionHeading>
       <ErrorNotice
         error={state.error}
         retryRef={retryFocus.retryRef}
@@ -82,6 +90,7 @@ export function NewsTransitions() {
       />
       {state.isPending && <p role="status">Loading transition settings…</p>}
       <form
+        className="preference-form"
         onSubmit={(event) => {
           event.preventDefault();
           if (save.isPending || !draft || !state.data) return;
@@ -101,7 +110,7 @@ export function NewsTransitions() {
           edit.submit();
         }}
       >
-        <fieldset disabled={!state.data || save.isPending}>
+        <fieldset className="preference-fields" disabled={!state.data || save.isPending}>
           <div className="news-transition-grid">
             <label>
               Transition style
@@ -132,11 +141,6 @@ export function NewsTransitions() {
                 <option value="over-music">Over the end of a song</option>
                 <option value="between-songs">Between songs</option>
               </select>
-              <span className="form-hint">
-                {settings.mode === 'over-music'
-                  ? 'The DJ speaks over a quiet music bed. The outgoing song finishes before the next starts.'
-                  : 'The song finishes, then the DJ speaks without music.'}
-              </span>
             </label>
             {fields.map((field) => (
               <label key={field.key}>

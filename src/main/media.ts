@@ -6,6 +6,7 @@ import type { PlaybackResource } from '../shared/types';
 import { djPreviewAudio, bundledVoiceAudio } from './dj-previews';
 import { ServiceError } from './jellyfin';
 import { preparedAudio } from './prepared-news';
+import { songHandoffAudio, revokeSongHandoffs } from './song-handoffs';
 import { StorageError } from './storage-error';
 
 type Session = { id: string; serverUrl: string; userId: string; token: string };
@@ -19,6 +20,7 @@ const activeRequests = new Set<AbortController>();
 const itemId = (id: string) => /^[a-zA-Z0-9_-]{1,128}$/.test(id);
 
 export function revokeMedia() {
+  revokeSongHandoffs();
   resources.clear();
   for (const controller of activeRequests) controller.abort();
   activeRequests.clear();
@@ -95,6 +97,10 @@ export function registerMedia(getSession: () => Session | null, deviceId: string
     if (request.method !== 'GET' && request.method !== 'HEAD') return new Response(null, { status: 405 });
     const url = new URL(request.url);
     const id = url.pathname.slice(1);
+    if (url.hostname === 'song-handoff') {
+      const bytes = songHandoffAudio(id);
+      return bytes ? clipResponse(request, { bytes, mime: 'audio/mpeg' }) : new Response(null, { status: 404 });
+    }
     if (url.hostname === 'voice-preview') {
       const bytes = await bundledVoiceAudio(id);
       return bytes ? clipResponse(request, { bytes, mime: 'audio/mpeg' }) : new Response(null, { status: 404 });

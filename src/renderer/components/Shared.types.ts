@@ -18,6 +18,7 @@ export type DialogProps = {
 };
 
 export type PageHeadingProps = {
+  as?: 'h1' | 'h2';
   title: string;
   subtitle?: string;
   children?: ReactNode;

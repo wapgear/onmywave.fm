@@ -60,6 +60,7 @@ import {
   markPreparedNewsPlayed,
   reconcilePreparedNews,
 } from './prepared-news';
+import { prepareSongHandoff, cancelSongHandoff } from './song-handoffs';
 import {
   readTwitterKey,
   twitterKeyStatus,
@@ -457,6 +458,7 @@ const newsOperations = new Set([
   'nextRoomNews',
   'claimPreparedNews',
   'startPreparedNews',
+  'prepareSongHandoff',
   'prepareDJVoicePreview',
   'prepareVoicePreview',
   'searchDJVoices',
@@ -977,6 +979,8 @@ function registerIpc() {
       return nextRoomNews(input, () => !closing && newsRecoveryStatus.phase === 'ready' && epoch === newsRecoveryEpoch);
     },
     claimPreparedNews: (input) => claimPreparedNews(input),
+    prepareSongHandoff: (input) => prepareSongHandoff(news, (id) => service.song(id), input),
+    cancelSongHandoff: (input) => cancelSongHandoff(input),
     startPreparedNews: (input) => startPreparedNews(input),
     releasePreparedNews: (input) => releasePreparedNews(input),
     markPreparedNewsPlayed: (input) => markPreparedNewsPlayed(input),

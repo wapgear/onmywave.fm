@@ -144,7 +144,9 @@ async function main() {
     if (mutation && (!mutationSpec || mutationSpec.assertion !== expectedMutation))
       throw new Error('Invalid mutation configuration');
     const fixtureModule = path.join(root, 'docs/verification/playback-progress/fixture.mjs');
-    const scenarioModule = path.join(root, 'docs/verification/critical-playback/scenarios.mjs');
+    const scenarioModule = path.join(root, scenario === 'song-handoff'
+      ? 'docs/verification/song-handoff/scenarios.mjs'
+      : 'docs/verification/critical-playback/scenarios.mjs');
     server = await createServer({
       root: path.join(root, 'src/renderer'),
       configFile: false,
@@ -162,7 +164,22 @@ async function main() {
                 'fixture preferences',
               );
             }
-            if (!id.startsWith(path.join(root, 'src/renderer')) || !id.endsWith('/player.tsx')) return;
+            if (!id.startsWith(path.join(root, 'src/renderer'))) return;
+            if (id.endsWith('/App.tsx')) {
+              const parsed = ts.createSourceFile(id, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+              let position;
+              const visit = (node) => {
+                if (ts.isFunctionDeclaration(node) && node.name?.text === 'App' && node.body) {
+                  const statement = node.body.statements.find(ts.isReturnStatement);
+                  if (statement) position = statement.getStart(parsed);
+                }
+                ts.forEachChild(node, visit);
+              };
+              visit(parsed);
+              if (position === undefined) throw new Error('App fixture instrumentation target is missing');
+              return `${source.slice(0, position)}window.__fixture.client=client;\n${source.slice(position)}`;
+            }
+            if (!id.endsWith('/player.tsx')) return;
             if (mutationSpec) source = exact(source, mutationSpec.anchor, mutationSpec.replacement, mutation);
             const parsed = ts.createSourceFile(id, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
             const target = [];
@@ -263,6 +280,105 @@ async function main() {
       } catch (error) {
         if (!String(error).includes(`ASSERTION:${expectedMutation}:`)) throw error;
         emit({ mutation, detected: true, evidence: String(error).split('\n')[0] });
+      }
+    } else if (scenario === 'preferences-design') {
+      const { verifyPreferences } = await import('../preferences-design/verify.mjs');
+      await open({ playback: snapshot(), dj: true, state: { djPlayback: { enabled: false, roomId: 'default-room', everySongs: 3, keepOnSeek: true, voiceVolume: 0.7 } } });
+      emit(await verifyPreferences(window, root));
+    } else if (scenario === 'song-handoff-settings') {
+      await open({ playback: snapshot(), dj: true, state: { djPlayback: { enabled: false, roomId: 'default-room', everySongs: 3, keepOnSeek: true, voiceVolume: 0.7 } } });
+      await window.webContents.executeJavaScript(`document.querySelector('button.settings-nav')?.click()`);
+      const stage = process.env.WAVE_CAPTURE_STAGE ?? 'after';
+      for (const [width, height] of [[1440, 1000], [960, 800]]) {
+        window.setContentSize(width, height);
+        await window.webContents.executeJavaScript(`document.fonts.ready.then(() => new Promise((resolve) => setTimeout(resolve, 300)))`);
+        await window.webContents.executeJavaScript(`new Promise((resolve, reject) => {
+          let tries = 0;
+          const timer = setInterval(() => {
+            const section = document.querySelector('.room-dj-schedule');
+            if (section) { clearInterval(timer);
+              if (${JSON.stringify(stage)}.includes('discovery')) {
+                window.scrollTo(0, 0);
+                document.querySelector('.main-content').scrollTop = 0;
+              } else section.scrollIntoView({ block: 'start' });
+              setTimeout(() => {
+              if (!${JSON.stringify(stage)}.startsWith('before-discovery') && section.getBoundingClientRect().top > (${JSON.stringify(stage)}.includes('discovery') ? 400 : 200)) reject(new Error('DJ settings were not scrolled into the capture'));
+              else resolve();
+            }, 150); }
+            else if (++tries > 100) { clearInterval(timer); reject(new Error('DJ playback settings did not open')); }
+          }, 20);
+        })`);
+        await writeFile(path.join(root, `docs/verification/song-handoff/${stage}-settings-${width}.png`), (await window.webContents.capturePage()).toPNG());
+      }
+      if (stage.startsWith('after')) {
+        const firstSection = await window.webContents.executeJavaScript(`document.querySelector('.settings-preferences')?.firstElementChild?.classList.contains('room-dj-schedule')`);
+        if (stage.includes('discovery') && !firstSection) throw new Error('Announcement settings must be the first General section');
+        const defaultInterval = await window.webContents.executeJavaScript(`(() => {
+          const input = [...document.querySelectorAll('.room-dj-schedule input[type="number"]')].find((input) => input.labels[0]?.textContent.includes('Announce after'));
+          return { value: input?.value, disabled: input?.disabled };
+        })()`);
+        if (defaultInterval.value !== '6' || !defaultInterval.disabled) throw new Error('Announcement interval must default to six and be disabled while announcements are off');
+        for (const enabled of [true, false]) {
+          await window.webContents.executeJavaScript(`(() => {
+            const checkbox = document.querySelector('#announce-tracks');
+            if (!checkbox || checkbox.checked === ${enabled}) throw new Error('Announcement switch has an unexpected saved value');
+            checkbox.focus(); checkbox.click();
+          })()`);
+          await window.webContents.executeJavaScript(`new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))`);
+          if (enabled) {
+            await window.webContents.executeJavaScript(`(() => {
+              const input = [...document.querySelectorAll('.room-dj-schedule input[type="number"]')].find((input) => input.labels[0]?.textContent.includes('Announce after'));
+              Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, '8');
+              input.dispatchEvent(new Event('input', { bubbles: true }));
+              const news = [...document.querySelectorAll('.room-dj-schedule input[type="number"]')].find((input) => input.labels[0]?.textContent.includes('Play news every'));
+              Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(news, '4');
+              news.dispatchEvent(new Event('input', { bubbles: true }));
+            })()`);
+            await window.webContents.executeJavaScript(`new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))`);
+          }
+          await window.webContents.executeJavaScript(`[...document.querySelectorAll('.room-dj-schedule button')].find((button) => button.textContent.trim() === 'Save announcement settings').click()`);
+          await window.webContents.executeJavaScript(`new Promise((resolve, reject) => {
+            let tries = 0;
+            const timer = setInterval(() => {
+              if (window.__fixture.state.djPlayback.announceTracks === ${enabled} && window.__fixture.state.djPlayback.announceEverySongs === 8 && window.__fixture.state.djPlayback.everySongs === 4 && document.querySelector('.room-dj-schedule [role="status"]')?.textContent.includes('saved')) { clearInterval(timer); resolve(); }
+              else if (++tries > 100) { clearInterval(timer); reject(new Error('Announcement setting did not save and confirm')); }
+            }, 20);
+          })`);
+        }
+      }
+      emit({ scenario: 'DJ playback settings screenshots', stage, passed: true });
+    } else if (scenario === 'song-handoff') {
+      const cases = process.env.WAVE_HANDOFF_CASES?.split(',') ?? ['normal', 'automatic', 'disabled', 'legacy-ending', 'news-override', 'interval-default', 'interval-configured', 'interval-with-news', 'interval-empty-news', 'interval-disabled', 'interval-seek-end', 'interval-disable-generating', 'interval-disable-speaking', 'skip-count', 'disable-generating', 'disable-pending', 'disable-speaking', 'shuffle', 'shuffle-cycle', 'repeat-one', 'repeat-all', 'end', 'queue-edit', 'intro-edit', 'pause', 'seek-intro', 'budget', 'too-long', 'too-late', 'news-unavailable', 'failure', 'cancel-pending'];
+      for (const handoffCase of cases) {
+        await open({
+          handoffCase,
+          captureAnnouncement: process.env.WAVE_CAPTURE_ANNOUNCEMENT === '1',
+          dj: true,
+          availableTakes: 1,
+          playback: handoffCase === 'shuffle-cycle' ? shuffledAll() : snapshot(handoffCase === 'skip-count' ? Array.from({ length: 12 }, (_, index) => String(index + 1)) : ['1', '2', '3'], ['end', 'repeat-all'].includes(handoffCase) ? 2 : 0, 0),
+          preferences: { volume: 0.75, shuffle: handoffCase === 'shuffle-cycle', repeat: handoffCase === 'repeat-one' ? 'one' : ['shuffle-cycle', 'repeat-all'].includes(handoffCase) ? 'all' : 'off' },
+          state: {
+            djPlayback: { enabled: handoffCase === 'automatic', roomId: 'default-room', everySongs: 1, keepOnSeek: true, voiceVolume: 0.7, announceTracks: handoffCase !== 'disabled' },
+            newsTransitions: { mode: ['budget', 'too-long', 'too-late', 'seek-intro'].includes(handoffCase) ? 'over-music' : 'between-songs', fadeOutSeconds: 0, leadInSeconds: 0, postSpeechSeconds: 0, fadeInSeconds: 0 },
+          },
+        });
+        const verification = run('verify');
+        if (process.env.WAVE_CAPTURE_ANNOUNCEMENT === '1') {
+          await window.webContents.executeJavaScript(`new Promise((resolve, reject) => {
+            let tries = 0;
+            const timer = setInterval(() => {
+              if (window.__captureAnnouncementReady) { clearInterval(timer); resolve(); }
+              else if (++tries > 300) { clearInterval(timer); reject(new Error('Announcement capture was not reached')); }
+            }, 20);
+          })`);
+          window.setContentSize(1440, 1000);
+          await new Promise((resolve) => setTimeout(resolve, 300));
+          await writeFile(path.join(root, `docs/verification/song-handoff/${process.env.WAVE_CAPTURE_STAGE ?? 'after-rule'}-announcement.png`), (await window.webContents.capturePage()).toPNG());
+          await window.webContents.executeJavaScript(`window.__captureAnnouncementContinue()`);
+        }
+        await verification;
+        emit({ scenario: handoffCase, passed: true });
+        await closeWindow();
       }
     } else if (scenario === 'baseline') {
       await open({ playback: snapshot(), preferences: { volume: 0.75, shuffle: false, repeat: 'off' } });

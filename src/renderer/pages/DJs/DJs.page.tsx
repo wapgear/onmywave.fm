@@ -80,7 +80,7 @@ export function DJsPage() {
 
   return (
     <>
-      <PageHeading title="DJs" headingRef={heading}>
+      <PageHeading as="h2" title="DJs" headingRef={heading}>
         <button ref={newDJ} className="primary" disabled={!state.data} onClick={() => edit(fresh())}>
           <Plus size={17} />
           New DJ

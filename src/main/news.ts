@@ -768,6 +768,7 @@ export class NewsService {
     const result: NewsScript = {
       requestId: input.requestId,
       script,
+      ending: 'story-only',
       articles: [article],
       warnings: collection.warnings,
       selection,

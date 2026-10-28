@@ -7,13 +7,13 @@
 .news-transition-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px 24px;
-  margin: 20px 0;
+  gap: var(--space-4) var(--space-6);
+  margin: 0;
 }
 .news-transition-grid label {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-2);
   font-size: 13px;
   min-width: 0;
   margin: 0;
@@ -24,7 +24,7 @@
 .news-transition-time {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-2);
 }
 .news-transition-time input {
   width: 88px;
@@ -34,43 +34,44 @@
   color: var(--muted);
   font-size: 12px;
 }
-.news-transition-grid .form-hint {
-  margin: 0;
-}
 .transition-preview {
-  margin: 0 0 20px;
-  padding: 16px;
-  border-radius: 12px;
-  background: var(--surface);
+  margin: 0;
+  font-size: 12px;
+}
+.transition-preview > summary {
+  width: fit-content;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: var(--space-2) 0;
+}
+.transition-preview > summary:focus-visible {
+  outline: var(--control-focus-width) solid var(--focus);
+  outline-offset: var(--space-1);
+  border-radius: var(--control-radius);
 }
 .transition-preview-heading {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-.transition-preview-heading h3 {
-  font-size: 13px;
-  font-weight: 600;
+  gap: var(--space-3);
+  margin: var(--space-3) 0;
 }
 .transition-preview-heading button {
   font-size: 12px;
 }
 .transition-preview .form-hint {
-  margin: 8px 0 0;
+  margin: var(--space-2) 0 0;
 }
 .transition-preview-steps {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 6px;
+  gap: var(--space-2);
   list-style: none;
   padding: 0;
-  margin: 14px 0;
+  margin: var(--space-4) 0;
 }
 .transition-preview-steps li {
-  padding: 9px;
+  padding: var(--space-2);
   border-radius: 6px;
   font-size: 11px;
   line-height: 1.5;

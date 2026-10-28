@@ -66,6 +66,12 @@
   --control-size-play: 36px;
   --control-focus-width: 2px;
   --control-gap: 8px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
   --control-radius: 8px;
   --field-height: 38px;
   --field-radius: 10px;
@@ -342,6 +348,15 @@ button > svg {
   gap: 20px;
   margin-bottom: 26px;
   min-height: 66px;
+}
+.page-heading-section {
+  min-height: var(--control-size);
+  gap: var(--space-4);
+  margin-bottom: var(--space-4);
+}
+.page-heading-section h2 {
+  font-size: 14px;
+  letter-spacing: 0;
 }
 .page-heading p {
   color: var(--muted);
@@ -1001,19 +1016,19 @@ button > svg {
 .settings-content {
   max-width: 720px;
 }
-.settings-content section {
+:where(.settings-content) > section {
   padding: 6px 0 30px;
   margin-bottom: 20px;
   border-bottom: 1px solid var(--separator);
 }
-.settings-content section:last-child {
+:where(.settings-content) > section:last-child {
   border-bottom: 0;
 }
-.settings-content h2 {
+:where(.settings-content) h2 {
   font-size: 16px;
   margin-bottom: 14px;
 }
-.settings-content section > p {
+:where(.settings-content) > section > p {
   font-size: 13px;
 }
 .server-summary {
@@ -1171,10 +1186,38 @@ button > svg {
 form label {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-2);
   font-size: 12px;
   font-weight: 500;
-  margin: 0 0 18px;
+  margin: 0 0 var(--space-4);
+}
+.preference-form,
+.preference-fields {
+  display: grid;
+  gap: var(--space-4);
+  min-width: 0;
+}
+.preference-fields {
+  margin: 0;
+}
+.preference-form label {
+  margin: 0;
+}
+.preference-form .preference-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: var(--field-height);
+}
+.preference-form > button {
+  justify-self: start;
+}
+.preference-note {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 400;
 }
 input:where(:not([type='checkbox'], [type='radio'], [type='range'])),
 select,

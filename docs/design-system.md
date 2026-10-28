@@ -20,3 +20,26 @@ Common tokens live in `styles.css`: control sizes/gap/radius/focus width, field 
 Apple references: [Buttons](https://developer.apple.com/design/human-interface-guidelines/buttons), [Layout](https://developer.apple.com/design/human-interface-guidelines/layout), [Sheets](https://developer.apple.com/design/human-interface-guidelines/sheets), [Offering help](https://developer.apple.com/design/human-interface-guidelines/offering-help), and [Accessibility](https://developer.apple.com/design/human-interface-guidelines/accessibility).
 
 Supplementary explanations belong in a named `InfoHelp` beside the relevant heading. Prefer short labels to repeated subtitles and field hints. Keep live state, validation, setup blockers, paid-request authorization, limits and action consequences visible at the point of use. Composite search fields draw one inset focus ring on the container; hidden inputs and custom pickers must retain a visible shared `--focus` ring on their visible control.
+
+## Content and spacing
+
+Give each settings group one heading. Use `SectionHeading` when it needs an explanation, with a short, descriptive help label. Place scheduling rules, defaults, examples, configuration instructions and preview details inside its `InfoHelp`; do not repeat them as a subtitle or paragraph under the fields. Keep related groups together, such as announcement frequency followed by transition timing.
+
+Each page has one primary `h1`. Content embedded below Settings navigation uses `PageHeading as="h2"` for its subsection title and actions, retaining focus refs without repeating a full-size page header.
+
+Keep current state and required actions visible: errors, unsaved/saved feedback, setup blockers, and brief consequences such as “Uses ElevenLabs credits” or “Pauses your music.” The associated help can explain the details. An `aria-describedby` target must exist while the field is rendered; do not point it at content mounted only when help opens. Contextual help opens with Enter, closes with Escape and restores focus to its info button.
+
+Use the shared spacing scale from `styles.css` rather than one-off gaps:
+
+| Token | Size | Use |
+| --- | --- | --- |
+| `--space-1` | 4px | Small offsets |
+| `--space-2` | 8px | Label/control and icon/text spacing |
+| `--space-3` | 12px | Help paragraphs and compact groups |
+| `--space-4` | 16px | Form rows and heading-to-content spacing |
+| `--space-6` | 24px | Form column spacing |
+| `--space-8` | 32px | Settings groups and navigation-to-content spacing |
+
+`preference-form` and `preference-fields` own the 16px form gap. Labels inside them have no extra bottom margin; `preference-row` aligns inline controls and wraps when needed. Keep section margins and fieldset margins at zero inside these layouts so spacing is applied once. General settings uses a 32px group gap, without additional section padding or separator borders. Global settings defaults use low specificity and apply section spacing only to direct children, leaving nested provider forms and dialogs to their own layout.
+
+Optional previews use a closed native disclosure instead of a second always-visible instructional section. Expanding it reveals the controls and live feedback; collapsing an active preview stops its audio. Preserve playback and save behavior when simplifying presentation.
