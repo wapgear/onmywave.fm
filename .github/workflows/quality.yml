@@ -62,6 +62,10 @@ jobs:
         run: node scripts/verify-behavior.mjs player
         env:
           WAVE_VERIFICATION_OUTPUT: ${{ runner.temp }}/wave-behavior
+      - name: Verify packaged updater configuration
+        run: pnpm run package:mac
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
       - name: Upload sanitized behavior evidence
         if: failure()
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2

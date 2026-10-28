@@ -25,6 +25,7 @@ version=$(node -p 'JSON.parse(require("fs").readFileSync("package.json")).versio
 pnpm run check
 pnpm exec electron-builder --config electron-builder.release.mjs --mac --arm64 --publish never
 app='release/mac-arm64/onmywave.fm.app'
+node scripts/verify-packaged-updates.mjs "$app"
 codesign --verify --deep --strict "$app"
 xcrun stapler validate "$app"
 spctl --assess --type execute --verbose "$app"
