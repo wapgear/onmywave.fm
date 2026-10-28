@@ -1,6 +1,6 @@
 # onmywave.fm
 
-A macOS music player for your Jellyfin library, with optional spoken news between songs. Built with Electron, React, and TypeScript.
+A macOS music player for your Jellyfin library, with optional spoken news and song introductions. Built with Electron, React, and TypeScript.
 
 ![The song library and DJ breaks panel in onmywave.fm](docs/screenshots/library.png)
 
@@ -8,7 +8,7 @@ Browse songs and albums, build playlists, and keep a listening queue that return
 
 ## Project status
 
-Early development. macOS is the supported desktop target. Linux CI checks the source and build, but Linux and Windows desktop behavior are not supported yet. Signed and notarized Apple silicon downloads are available from the [releases repository](https://github.com/wapgear/onmywave-app/releases/latest). Installed builds check the releases repository for updates at startup and every six hours. An in-app prompt lets you update now or later, shows download progress, and offers a restart when ready. Settings → General → About and updates also provides a manual check. Playback continues until you choose Restart now to install the downloaded update.
+Early development. The desktop app requires an Apple silicon Mac running macOS 13 or later. Linux CI checks the source and build, but Linux and Windows desktop behavior are not supported yet. Signed and notarized Apple silicon downloads are available from the [releases repository](https://github.com/wapgear/onmywave-app/releases/latest). Installed builds check the releases repository for updates at startup and every six hours. An in-app prompt lets you update now or later, shows download progress, and offers a restart when ready. Settings → General → About and updates also provides a manual check. Playback continues until you choose Restart now to install the downloaded update.
 
 You need your own Jellyfin server, an account with access to at least one music library, and music that your server can stream. This repository includes no music library or Jellyfin server. Navidrome and Subsonic are not supported.
 
@@ -21,6 +21,7 @@ You need your own Jellyfin server, an account with access to at least one music 
 - Read Jellyfin lyrics in the player, with timed line highlighting when available and plain-text fallback.
 - Configure named news rooms with RSS/Atom, Hacker News, or X sources and a saved DJ.
 - Prepare spoken news separately from music playback, then play saved recordings at a chosen song interval.
+- Enable song introductions after a configurable number of completed songs (default six), or after fact-only news. Both timing controls are in Settings → General.
 - Audition bundled voices and try DJ transition timings without API keys.
 
 AI playlist generation, weather, calendar, and reminder workflows are planned. See the [app guide](docs/APP_GUIDE.md) for detailed behavior and the [acceptance checklist](docs/ACCEPTANCE_CHECKLIST.md) for verification limits.
