@@ -267,7 +267,8 @@ async function main() {
         emit({ mutation, detected: true, evidence: String(error).split('\n')[0] });
       }
     } else if (scenario === 'song-handoff') {
-      for (const handoffCase of ['normal', 'shuffle', 'shuffle-cycle', 'repeat-one', 'repeat-all', 'end', 'queue-edit', 'intro-edit', 'pause', 'budget', 'too-long', 'failure', 'cancel-pending']) {
+      const cases = process.env.WAVE_HANDOFF_CASES?.split(',') ?? ['normal', 'automatic', 'shuffle', 'shuffle-cycle', 'repeat-one', 'repeat-all', 'end', 'queue-edit', 'intro-edit', 'pause', 'seek-intro', 'budget', 'too-long', 'too-late', 'news-unavailable', 'failure', 'cancel-pending'];
+      for (const handoffCase of cases) {
         await open({
           handoffCase,
           dj: true,
@@ -275,8 +276,8 @@ async function main() {
           playback: handoffCase === 'shuffle-cycle' ? shuffledAll() : snapshot(['1', '2', '3'], ['end', 'repeat-all'].includes(handoffCase) ? 2 : 0, 0),
           preferences: { volume: 0.75, shuffle: handoffCase === 'shuffle-cycle', repeat: handoffCase === 'repeat-one' ? 'one' : ['shuffle-cycle', 'repeat-all'].includes(handoffCase) ? 'all' : 'off' },
           state: {
-            djPlayback: { enabled: false, roomId: 'default-room', everySongs: 1, keepOnSeek: true, voiceVolume: 0.7 },
-            newsTransitions: { mode: ['budget', 'too-long'].includes(handoffCase) ? 'over-music' : 'between-songs', fadeOutSeconds: 0, leadInSeconds: 0, postSpeechSeconds: 0, fadeInSeconds: 0 },
+            djPlayback: { enabled: handoffCase === 'automatic', roomId: 'default-room', everySongs: 1, keepOnSeek: true, voiceVolume: 0.7 },
+            newsTransitions: { mode: ['budget', 'too-long', 'too-late', 'seek-intro'].includes(handoffCase) ? 'over-music' : 'between-songs', fadeOutSeconds: 0, leadInSeconds: 0, postSpeechSeconds: 0, fadeInSeconds: 0 },
           },
         });
         await run('verify');

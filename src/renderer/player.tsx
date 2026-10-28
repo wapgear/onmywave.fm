@@ -1679,54 +1679,29 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         throw new Error('The scheduled news break was cancelled because news data is unavailable.');
       const settings = normalizeNewsTransitionSettings(saved.newsTransitions);
       transitionSettings.current = settings;
-      const boundaryState = live.current;
-      const plan = shufflePlan.current;
-      const atBoundary = boundaryState.shuffle
-        ? !plan.manualUpcoming.length && plan.cursor + 1 >= plan.history.length && !plan.upcoming.length
-        : boundaryState.index + 1 >= boundaryState.queue.length;
-      if (boundaryState.repeat === 'all' && atBoundary && !(await extendLibraryQueue()))
-        throw new Error('The next song could not be resolved. Your music continues.');
-      if (token !== newsGeneration.current || live.current.queue[live.current.index]?.key !== key)
-        throw new Error('The scheduled news break was cancelled.');
-      const nextState = live.current;
-      const nextPlan = shufflePlan.current;
-      const { queue: scheduledQueue, repeat: scheduledRepeat, shuffle: scheduledShuffle } = nextState;
-      const advanced =
-        nextState.shuffle && nextState.repeat !== 'one'
-          ? nextShuffle(
-              nextPlan,
-              nextState.queue.map((item) => item.key),
-              key,
-              nextState.repeat === 'all',
-            )
-          : null;
-      const nextKey =
-        nextState.repeat === 'one'
-          ? key
-          : advanced
-            ? advanced.key
-            : (nextState.queue[nextState.index + 1]?.key ??
-              (nextState.repeat === 'all' ? nextState.queue[0]?.key : null));
-      const nextEntry = nextState.queue.find((item) => item.key === nextKey);
-      const nextSong = nextEntry ? { key: nextEntry.key, shufflePlan: advanced?.plan } : null;
-      const isNextCurrent = () =>
-        live.current.queue === scheduledQueue &&
-        live.current.repeat === scheduledRepeat &&
-        live.current.shuffle === scheduledShuffle &&
-        (!scheduledShuffle || shufflePlan.current === nextPlan);
-      if (nextEntry && 'signature' in news) {
-        const link = unwrap(
-          await window.wave.prepareSongHandoff({ requestId, takeId: news.id, songId: nextEntry.song.id }),
-        );
-        if (token !== newsGeneration.current || !isNextCurrent())
-          throw new Error('The song changed before its introduction was ready.');
-        if (link) {
-          handoff = new Audio();
-          handoff.preload = 'auto';
-          handoff.volume = live.current.volume * djSettings.voiceVolume;
-          handoff.src = freshAudioUrl(link.audioUrl);
-        }
-      }
+      const validateTiming = (duration: number) => {
+        if (
+          token !== newsGeneration.current ||
+          !live.current.recoveryReady ||
+          live.current.queue[live.current.index]?.key !== key ||
+          !audio.current?.src
+        )
+          throw new Error('The song changed or news data became unavailable before the break was ready.');
+        const songDuration = live.current.current!.duration;
+        const budget = settings.fadeOutSeconds + settings.leadInSeconds + duration + settings.postSpeechSeconds + 0.3;
+        const scheduledAt = songDuration - budget;
+        if (settings.mode === 'over-music' && scheduledAt < songDuration / 2)
+          throw new Error(
+            'This break is too long for the song ending. Choose News bulletin in Settings > General > DJ transitions to play it between songs.',
+          );
+        if (
+          audio.current.ended ||
+          (settings.mode === 'over-music' && offset.current + audio.current.currentTime > scheduledAt)
+        )
+          throw new Error(
+            'It is too late for this transition. Choose News bulletin in Settings > General > DJ transitions, or try the next song.',
+          );
+      };
       const loadClip = (clip: HTMLAudioElement) =>
         new Promise<void>((resolve, reject) => {
           const cleanup = () => {
@@ -1763,7 +1738,58 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         });
       element.src = freshAudioUrl(news.audioUrl);
       await loadClip(element);
+      validateTiming(element.duration);
+      const boundaryState = live.current;
+      const plan = shufflePlan.current;
+      const atBoundary = boundaryState.shuffle
+        ? !plan.manualUpcoming.length && plan.cursor + 1 >= plan.history.length && !plan.upcoming.length
+        : boundaryState.index + 1 >= boundaryState.queue.length;
+      if (boundaryState.repeat === 'all' && atBoundary && !(await extendLibraryQueue()))
+        throw new Error('The next song could not be resolved. Your music continues.');
+      if (token !== newsGeneration.current || live.current.queue[live.current.index]?.key !== key)
+        throw new Error('The scheduled news break was cancelled.');
+      const nextState = live.current;
+      const nextPlan = shufflePlan.current;
+      const { queue: scheduledQueue, repeat: scheduledRepeat, shuffle: scheduledShuffle } = nextState;
+      const advanced =
+        nextState.shuffle && nextState.repeat !== 'one'
+          ? nextShuffle(
+              nextPlan,
+              nextState.queue.map((item) => item.key),
+              key,
+              nextState.repeat === 'all',
+            )
+          : null;
+      const nextKey =
+        nextState.repeat === 'one'
+          ? key
+          : advanced
+            ? advanced.key
+            : (nextState.queue[nextState.index + 1]?.key ??
+              (nextState.repeat === 'all' ? nextState.queue[0]?.key : null));
+      const nextEntry = nextState.queue.find((item) => item.key === nextKey);
+      const nextSong = nextEntry ? { key: nextEntry.key, shufflePlan: advanced?.plan } : null;
+      const isNextCurrent = () =>
+        live.current.queue === scheduledQueue &&
+        live.current.repeat === scheduledRepeat &&
+        live.current.shuffle === scheduledShuffle &&
+        (!scheduledShuffle || shufflePlan.current === nextPlan);
+      cancelPreload.current = cancelDelivery;
+      if (nextEntry && 'signature' in news) {
+        const link = unwrap(
+          await window.wave.prepareSongHandoff({ requestId, takeId: news.id, songId: nextEntry.song.id }),
+        );
+        if (token !== newsGeneration.current || !isNextCurrent())
+          throw new Error('The song changed before its introduction was ready.');
+        if (link) {
+          handoff = new Audio();
+          handoff.preload = 'auto';
+          handoff.volume = live.current.volume * djSettings.voiceVolume;
+          handoff.src = freshAudioUrl(link.audioUrl);
+        }
+      }
       if (handoff) await loadClip(handoff);
+      if (cancelPreload.current === cancelDelivery) cancelPreload.current = null;
       if (
         token !== newsGeneration.current ||
         !live.current.recoveryReady ||
@@ -1771,21 +1797,8 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         !isNextCurrent()
       )
         throw new Error('The song changed or news data became unavailable before the break was ready.');
-      const songDuration = live.current.current!.duration;
       const duration = element.duration + (handoff?.duration ?? 0);
-      const budget = settings.fadeOutSeconds + settings.leadInSeconds + duration + settings.postSpeechSeconds + 0.3;
-      const scheduledAt = songDuration - budget;
-      if (settings.mode === 'over-music' && scheduledAt < songDuration / 2)
-        throw new Error(
-          'This break is too long for the song ending. Choose News bulletin in Settings > General > DJ transitions to play it between songs.',
-        );
-      if (
-        audio.current!.ended ||
-        (settings.mode === 'over-music' && offset.current + audio.current!.currentTime > scheduledAt)
-      )
-        throw new Error(
-          'It is too late for this transition. Choose News bulletin in Settings > General > DJ transitions, or try the next song.',
-        );
+      validateTiming(duration);
       if ('signature' in news) {
         const reserved = unwrap(await window.wave.claimPreparedNews({ id: news.id, claimId }));
         if (reserved.deliveryState?.status === 'claimed' && reserved.deliveryState.claimId)
@@ -1797,13 +1810,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
           !isNextCurrent()
         )
           throw new Error('The scheduled news break was cancelled.');
-        if (
-          audio.current!.ended ||
-          (settings.mode === 'over-music' && offset.current + audio.current!.currentTime > scheduledAt)
-        )
-          throw new Error(
-            'It is too late for this transition. Choose News bulletin in Settings > General > DJ transitions, or try the next song.',
-          );
+        validateTiming(duration);
       }
       const planned: ScheduledNews = {
         token,
@@ -1860,6 +1867,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         if (token !== newsGeneration.current || newsSchedule.current !== planned) return;
         if (handoff && speech.current === element && isNextCurrent()) {
           speech.current = handoff;
+          planned.duration = handoff.duration;
           handoff.volume = live.current.volume * djSettings.voiceVolume;
           if (playIntent.current) void handoff.play().catch(() => element.onerror?.(new Event('error')));
           return;

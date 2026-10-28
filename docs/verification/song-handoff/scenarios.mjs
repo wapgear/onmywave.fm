@@ -36,6 +36,11 @@ window.__criticalPlayback = {
       constructor() { super(); this.duration = 10; }
       play() { events.push({ method: 'play', src: this.src }); return super.play(); }
       load() {
+        if (mode === 'news-unavailable' && this.src.includes('fixture-speech')) {
+          this.readyState = 0;
+          queueMicrotask(() => this.emit('error'));
+          return;
+        }
         if (this.src.includes('fixture-handoff')) this.duration = mode === 'too-long' ? 12 : 4;
         else if (this.src.includes('fixture-speech')) this.duration = mode === 'too-long' ? 80 : 10;
         super.load();
@@ -51,8 +56,11 @@ window.__criticalPlayback = {
     const expected = mode === 'end' ? null : mode === 'repeat-one' ? before : player().shuffle
       ? player().upcomingQueue[0]?.key : player().queue[player().queue.findIndex((entry) => entry.key === before) + 1]?.key;
     const music = fixture.audios.find((clip) => clip.src.startsWith('/fixture-audio/'));
+    if (mode === 'too-late') music.currentTime = 179;
     const take = fixture.takes[0];
-    const scheduling = player().scheduleNews(take).then(() => null, (error) => error);
+    const scheduling = mode === 'automatic'
+      ? waitFor(() => player().newsPhase === 'waiting', 'Automatic DJ did not schedule the bulletin').then(() => null)
+      : player().scheduleNews(take).then(() => null, (error) => error);
     if (mode === 'cancel-pending') {
       await waitFor(() => resolveLink, 'Introduction request did not start');
       player().next();
@@ -63,10 +71,12 @@ window.__criticalPlayback = {
       return;
     }
     const failure = await scheduling;
-    if (mode === 'failure' || mode === 'too-long') {
+    if (['failure', 'too-long', 'too-late', 'news-unavailable'].includes(mode)) {
       assert(failure instanceof Error, 'Provider failure did not reject scheduling');
       assert(!fixture.calls.some((call) => call.method === 'startPreparedNews'), 'Failed preparation consumed news');
       assert(player().currentKey === before && !music.paused, 'Provider failure interrupted music');
+      if (mode === 'too-late' || mode === 'news-unavailable')
+        assert(!events.some((event) => event.method === 'prepare'), 'An unusable bulletin triggered paid introduction generation');
       return;
     }
     assert(!failure, `Scheduling failed: ${failure?.message}`);
@@ -78,7 +88,7 @@ window.__criticalPlayback = {
       const chosen = events.find((event) => event.method === 'prepare').input.songId;
       if (expected) assert(player().queue.find((entry) => entry.key === expected).song.id === chosen, `Announced song differs from planned occurrence: ${JSON.stringify({mode, chosen, expectedId:player().queue.find((entry) => entry.key === expected).song.id, current:player().current.id, repeat:player().repeat, shuffle:player().shuffle})}`);
     }
-    if (mode === 'budget') {
+    if (mode === 'budget' || mode === 'seek-intro') {
       music.currentTime = 167;
       music.emit('timeupdate');
     } else {
@@ -112,9 +122,23 @@ window.__criticalPlayback = {
         await waitFor(() => !intro.paused, 'Introduction did not resume');
         assert(fixture.calls.filter((call) => call.method === 'startPreparedNews').length === 1, 'Resume consumed news twice');
       }
+      if (mode === 'seek-intro') {
+        intro.currentTime = 1;
+        const newsPlays = events.filter((event) => event.method === 'play' && event.src.includes('fixture-speech')).length;
+        player().seek(169);
+        await waitFor(() => player().newsPhase === 'waiting', 'Seek did not retain the remaining introduction');
+        music.currentTime = 170;
+        music.emit('timeupdate');
+        await new Promise((resolve) => setTimeout(resolve, 100));
+        assert(intro.paused, 'Seek counted the already-finished bulletin in the remaining speech budget');
+        music.currentTime = 177;
+        music.emit('timeupdate');
+        await waitFor(() => !intro.paused, 'Retained introduction did not resume at the correct ending');
+        assert(events.filter((event) => event.method === 'play' && event.src.includes('fixture-speech')).length === newsPlays, 'Seek replayed the completed bulletin');
+      }
       intro.emit('ended');
     }
-    if (mode === 'budget') { music.ended = true; music.emit('ended'); }
+    if (mode === 'budget' || mode === 'seek-intro') { music.ended = true; music.emit('ended'); }
     if (mode === 'end') await waitFor(() => !player().requestedPlaying, 'Final queue did not stop');
     else if (mode === 'repeat-one') await waitFor(() => player().newsPhase === 'idle', 'Repeat-one break did not complete');
     else await waitFor(() => player().currentKey !== before, 'Music did not follow introduction');
