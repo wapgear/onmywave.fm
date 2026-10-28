@@ -17,6 +17,7 @@ import { WorkflowPreferences } from '../Settings/components/WorkflowPreferences.
 import type { PreparationIssue } from '../Settings/components/WorkflowPreferences.types';
 import { DJReadiness } from './components/DJReadiness.component';
 import { NewsBucket } from './components/NewsBucket.component';
+import type { NewsBucketDestination } from './components/NewsBucket.types';
 import { NewsRoomSettings } from './components/NewsRoomSettings.component';
 import { PreparedTakes } from './components/PreparedTakes.component';
 import { RoomSetup } from './components/RoomSetup.component';
@@ -94,6 +95,9 @@ export function StationsPage({
       ? 'saved'
       : 'bucket';
   const setTab = (tab: string) => setConfigDraft((current) => ({ ...current, tab }));
+  const bucketDestination = configDraft.bucketDestination ?? 'upcoming';
+  const setBucketDestination = (destination: NewsBucketDestination) =>
+    setConfigDraft((current) => ({ ...current, tab: 'bucket', bucketDestination: destination }));
   const heading = useRef<HTMLHeadingElement>(null);
   const stateRetryFocus = useRetryFocus({
     ownerKey: 'room:localState',
@@ -749,6 +753,35 @@ export function StationsPage({
           : (preparationStatus?.detail ?? 'Preparation status unavailable.')
       }
       profileStatusUnknown={preparationStatusUnknown}
+      workflowReady={workflowReady}
+      workflowStatusLoading={workflowStatusLoading}
+      workflowStatusError={workflowStatusError}
+      workflowIssues={preparationIssues}
+      resumePending={resume.isPending}
+      resumeError={
+        configDraft.operationErrorTarget === 'resume' && configDraft.operationError
+          ? new Error(configDraft.operationError)
+          : null
+      }
+      stopping={turnOff.isPending && turnOff.variables?.origin === 'settings'}
+      stopError={
+        configDraft.stopErrorOrigin === 'settings' && configDraft.stopError ? new Error(configDraft.stopError) : null
+      }
+      enablingRoomProfile={enableProfile.isPending && enableProfile.variables?.id === activeProfile?.id}
+      enableRoomError={
+        configDraft.operationErrorTarget === 'availability' && configDraft.operationError
+          ? new Error(configDraft.operationError)
+          : null
+      }
+      resumeDisabled={setupBusy || configurationPending || resume.isPending || turnOff.isPending || !newsRecoveryReady}
+      stopDisabled={configurationPending || turnOff.isPending || !newsRecoveryReady}
+      retryWorkflowStatus={() => {
+        void aiStatus.refetch();
+        void elevenStatus.refetch();
+        if (xKeyRequired) void xStatus.refetch();
+      }}
+      resumeWorkflow={resumePreparation}
+      turnOffWorkflow={() => turnOffPreparation('settings')}
       preparation={
         preparationStatus
           ? {
@@ -774,6 +807,8 @@ export function StationsPage({
       updateWorkflow={updateWorkflow}
       configureSources={configureSources}
       configureDJ={configureDJ}
+      configureProviders={configureSettings}
+      enableRoomProfile={() => setProfileAvailability(true)}
       save={submitSetup}
     />
   );
@@ -971,12 +1006,6 @@ export function StationsPage({
                   ))}
                 </select>
               </label>
-              <span className="stations-news-preparation-status" role="status">
-                <span>Automatic preparation</span>
-                <strong>{preparationStatusLabel}</strong>
-              </span>
-              <button onClick={() => setTab('settings')}>News settings</button>
-              <button onClick={() => setTab('saved')}>Saved audio</button>
             </>
           ) : (
             <>
@@ -1172,6 +1201,8 @@ export function StationsPage({
                     openSource={(url) => source.mutate(url)}
                     openPreparation={openPreparation}
                     roomSettings={roomSettings}
+                    destination={bucketDestination}
+                    onDestinationChange={setBucketDestination}
                   />
                 )}
                 <ErrorNotice error={source.error} />

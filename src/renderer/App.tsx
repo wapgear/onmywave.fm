@@ -29,6 +29,7 @@ import { SettingsPage } from './pages/Settings/Settings.page';
 import type { SettingsSection } from './pages/Settings/Settings.types';
 import { SettingsEditsProvider } from './pages/Settings/SettingsEdits';
 import { SongsPage, initialSongsView } from './pages/Songs/Songs.page';
+import type { NewsBucketDestination } from './pages/Stations/components/NewsBucket.types';
 import { StationsPage } from './pages/Stations/Stations.page';
 import type { RoomSetupDraft } from './pages/Stations/Stations.types';
 import { PlayerProvider, usePlayer } from './player';
@@ -252,6 +253,11 @@ function ReadyApp({
   const managementSection = useRef<SettingsSection | null>(null);
   const playerDestination = useRef<'stations' | 'settings' | null>(null);
   const setupReturnTarget = useRef('');
+  const setupReturnContext = useRef<{
+    tab: string | undefined;
+    bucketDestination: NewsBucketDestination | undefined;
+    internalBucketSettings: boolean;
+  } | null>(null);
   const restoreSetupFocus = useRef(false);
   const player = usePlayer();
   const [drawer, setDrawer] = useState<Song | 'queue' | 'lyrics' | 'dj' | null>(null);
@@ -546,6 +552,18 @@ function ReadyApp({
   }
   function configureRoom(section: SettingsSection) {
     const focused = document.activeElement;
+    const internalBucketSettings =
+      page === 'stations' &&
+      (roomSetupDraft.tab === undefined || roomSetupDraft.tab === 'bucket') &&
+      roomSetupDraft.bucketDestination === 'settings';
+    setupReturnContext.current =
+      page === 'stations'
+        ? {
+            tab: roomSetupDraft.tab,
+            bucketDestination: roomSetupDraft.bucketDestination,
+            internalBucketSettings,
+          }
+        : null;
     const source =
       page === 'stations' && focused instanceof HTMLButtonElement && content.current?.contains(focused)
         ? focused
@@ -555,10 +573,16 @@ function ReadyApp({
       if (source) scrollPositions.current.delete(`settings-${section}`);
       setupReturnTarget.current =
         section === 'sources'
-          ? '#manage-room-sources'
+          ? internalBucketSettings
+            ? '#bucket-manage-sources'
+            : '#manage-room-sources'
           : section === 'djs'
-            ? '#manage-room-djs'
-            : '.news-workflow-toggle input';
+            ? internalBucketSettings
+              ? '#bucket-manage-djs'
+              : '#manage-room-djs'
+            : internalBucketSettings
+              ? '.news-room-automation'
+              : '.news-workflow-toggle input';
       setSettingsSection(section);
       setReturnToSetup(true);
       setPage('settings');
@@ -572,6 +596,13 @@ function ReadyApp({
     restoreSetupFocus.current = false;
     const frame = requestAnimationFrame(() => {
       const preferred = main.current?.querySelector<HTMLElement>(setupReturnTarget.current);
+      if (preferred && !preferred.matches(':disabled')) {
+        let disclosure = preferred.closest('details');
+        while (disclosure) {
+          disclosure.open = true;
+          disclosure = disclosure.parentElement?.closest('details') ?? null;
+        }
+      }
       const target =
         preferred && !preferred.matches(':disabled') ? preferred : document.getElementById('room-tab-settings');
       target?.focus({ preventScroll: true });
@@ -672,7 +703,13 @@ function ReadyApp({
                     ? () => {
                         restoreSetupFocus.current = true;
                         scrollPositions.current.delete('stations');
-                        setRoomSetupDraft((current) => ({ ...current, tab: 'settings' }));
+                        const origin = setupReturnContext.current;
+                        setRoomSetupDraft((current) => ({
+                          ...current,
+                          tab: origin?.internalBucketSettings ? 'bucket' : (origin?.tab ?? 'settings'),
+                          bucketDestination: origin?.bucketDestination ?? current.bucketDestination,
+                        }));
+                        setupReturnContext.current = null;
                         setPage('stations');
                         setReturnToSetup(false);
                       }
