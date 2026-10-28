@@ -14,7 +14,7 @@
     "preview": "electron-vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "oxlint --type-aware --max-warnings=0",
-    "package:mac": "pnpm run build && electron-builder --mac --dir --publish never",
+    "package:mac": "pnpm run build && electron-builder --mac --arm64 --publish never && node scripts/verify-packaged-updates.mjs release/mac-arm64/onmywave.fm.app",
     "format": "oxfmt --write . && oxlint --fix --config .oxlint-format.json",
     "format:check": "oxfmt --check . && oxlint --config .oxlint-format.json --max-warnings=0",
     "check": "pnpm run format:check && pnpm run lint && pnpm run build",
@@ -74,7 +74,7 @@
     "mac": {
       "category": "public.app-category.music",
       "target": [
-        "dir"
+        "zip"
       ],
       "icon": "resources/icon.icns"
     },

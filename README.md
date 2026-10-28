@@ -80,13 +80,13 @@ Oxlint is the single lint runner, with type-aware TypeScript analysis and the ex
 
 The build validates bundled voice samples without making generation requests. `pnpm run preview` opens the built app. CI runs the same quality checks and full dependency audit.
 
-For an unsigned local macOS app directory:
+For a local Apple silicon macOS app and ZIP:
 
 ```sh
 pnpm run package:mac
 ```
 
-Output goes to `release/`. This command does not publish a release.
+Output goes to `release/`. The ZIP target ensures Electron Builder includes the updater configuration in the app, and packaging fails if that configuration is missing or points at the wrong release repository. Do not use `electron-builder --dir` for an installed app: it omits updater configuration on macOS. This command does not publish a release. Use the signed release command below for a distributable app.
 
 For a signed, notarized Apple silicon release, export `APPLE_ID`, `APPLE_APP_SPECIFIC_PASSWORD`, and `APPLE_TEAM_ID`, or put them in ignored `scripts/.env.local`. Install the Developer ID certificate named in `electron-builder.release.mjs` and authenticate `gh` with access to `wapgear/onmywave-app`.
 
