@@ -31,12 +31,18 @@ spctl --assess --type execute --verbose "$app"
 hdiutil verify "release/onmywave-${version}-arm64.dmg"
 # Never publish a release that installed apps cannot discover or download.
 node --input-type=module - "$version" <<'JS'
-import { readFileSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
-import { load } from 'js-yaml';
+import { execFileSync } from 'node:child_process';
+import { load, dump } from 'js-yaml';
+import config, { minimumDarwinVersion } from './electron-builder.release.mjs';
 const version = process.argv[2];
 const metadata = load(readFileSync('release/latest-mac.yml', 'utf8'));
 if (metadata.version !== version) throw new Error('Stale updater metadata');
+const minimumMacOSVersion = execFileSync('/usr/libexec/PlistBuddy', ['-c', 'Print :LSMinimumSystemVersion', 'release/mac-arm64/onmywave.fm.app/Contents/Info.plist'], { encoding: 'utf8' }).trim();
+if (minimumMacOSVersion !== config.mac.minimumSystemVersion) throw new Error('Unexpected minimum macOS version');
+if (metadata.minimumSystemVersion && metadata.minimumSystemVersion !== minimumDarwinVersion)
+  throw new Error('Unexpected updater minimum kernel version');
 const zip = `onmywave-${version}-arm64.zip`;
 if (!metadata.files?.some((file) => file.url === zip)) throw new Error('Missing updater ZIP');
 for (const file of metadata.files) {
@@ -45,6 +51,9 @@ for (const file of metadata.files) {
   if (data.length !== file.size || createHash('sha512').update(data).digest('base64') !== file.sha512)
     throw new Error(`Updater artifact does not match metadata: ${file.url}`);
 }
+// This Electron Builder version does not emit the updater's kernel-version floor.
+metadata.minimumSystemVersion = minimumDarwinVersion;
+writeFileSync('release/latest-mac.yml', dump(metadata));
 JS
 
 # Include the exact build inputs, without local credentials or historical documentation.
