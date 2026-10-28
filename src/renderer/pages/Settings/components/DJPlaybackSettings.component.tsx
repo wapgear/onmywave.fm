@@ -1,11 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 
-import {
-  normalizeDJPlaybackSettings,
-  TRACK_ANNOUNCEMENT_SONG_INTERVAL,
-  type DJPlaybackSettings as Settings,
-} from '../../../../shared/dj-playback';
+import { normalizeDJPlaybackSettings, type DJPlaybackSettings as Settings } from '../../../../shared/dj-playback';
 import { unwrap } from '../../../api';
 import { InfoHelp } from '../../../components/InfoHelp/InfoHelp.component';
 import { ErrorNotice } from '../../../components/Shared';
@@ -40,6 +36,7 @@ export function DJPlaybackSettings() {
       keepOnSeek: settings.keepOnSeek,
       voiceVolume: settings.voiceVolume,
       announceTracks: settings.announceTracks,
+      announceEverySongs: settings.announceEverySongs,
       ...patch,
     });
   }
@@ -52,8 +49,8 @@ export function DJPlaybackSettings() {
         </h2>
         <InfoHelp label="DJ playback details">
           <p>
-            Only finished songs count toward the news check interval. Empty news pools are skipped without generating
-            anything.
+            Only finished songs count toward the news check interval. Empty pools do not trigger news generation. Track
+            introductions follow their separate announcement setting.
           </p>
           <p>When you keep the DJ while seeking, speech waits for a suitable ending and resumes where it paused.</p>
           <p>DJ voice volume is relative to the player volume.</p>
@@ -112,11 +109,27 @@ export function DJPlaybackSettings() {
               aria-describedby="track-announcement-hint"
               onChange={(event) => change({ announceTracks: event.target.checked })}
             />
-            Occasionally announce the next song
+            Announce the next song
+          </label>
+          <label className="dj-song-interval">
+            Announce after
+            <input
+              type="number"
+              min={1}
+              max={100}
+              step={1}
+              required
+              disabled={!settings.announceTracks}
+              value={Number.isNaN(settings.announceEverySongs) ? '' : settings.announceEverySongs}
+              onChange={(event) =>
+                change({ announceEverySongs: event.target.value === '' ? NaN : Number(event.target.value) })
+              }
+            />
+            completed songs
           </label>
           <p className="form-hint" id="track-announcement-hint">
-            Only at a news break, with at least {TRACK_ANNOUNCEMENT_SONG_INTERVAL} finished songs between announcements.
-            The introduction replaces the closing line. Enabling this allows speech generation for these introductions.
+            Announce when this interval is reached, or always after fact-only news. Each announcement resets the count.
+            The introduction is the only closing line. Enabling this allows speech generation for introductions.
           </p>
           <label className="dj-song-interval">
             <input

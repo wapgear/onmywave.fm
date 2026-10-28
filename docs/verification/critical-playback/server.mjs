@@ -301,19 +301,32 @@ async function main() {
         })`);
         await writeFile(path.join(root, `docs/verification/song-handoff/${stage}-settings-${width}.png`), (await window.webContents.capturePage()).toPNG());
       }
-      if (stage === 'after') {
+      if (stage.startsWith('after')) {
+        const defaultInterval = await window.webContents.executeJavaScript(`(() => {
+          const input = [...document.querySelectorAll('.room-dj-schedule input[type="number"]')].find((input) => input.labels[0]?.textContent.includes('Announce after'));
+          return { value: input?.value, disabled: input?.disabled };
+        })()`);
+        if (defaultInterval.value !== '6' || !defaultInterval.disabled) throw new Error('Announcement interval must default to six and be disabled while announcements are off');
         for (const enabled of [true, false]) {
           await window.webContents.executeJavaScript(`(() => {
-            const checkbox = [...document.querySelectorAll('.room-dj-schedule input[type="checkbox"]')].find((input) => input.labels[0]?.textContent.includes('Occasionally announce'));
+            const checkbox = [...document.querySelectorAll('.room-dj-schedule input[type="checkbox"]')].find((input) => input.getAttribute('aria-describedby') === 'track-announcement-hint');
             if (!checkbox || checkbox.checked === ${enabled}) throw new Error('Announcement switch has an unexpected saved value');
             checkbox.focus(); checkbox.click();
           })()`);
           await window.webContents.executeJavaScript(`new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))`);
+          if (enabled) {
+            await window.webContents.executeJavaScript(`(() => {
+              const input = [...document.querySelectorAll('.room-dj-schedule input[type="number"]')].find((input) => input.labels[0]?.textContent.includes('Announce after'));
+              Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value').set.call(input, '8');
+              input.dispatchEvent(new Event('input', { bubbles: true }));
+            })()`);
+            await window.webContents.executeJavaScript(`new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))`);
+          }
           await window.webContents.executeJavaScript(`[...document.querySelectorAll('.room-dj-schedule button')].find((button) => button.textContent.trim() === 'Save DJ playback').click()`);
           await window.webContents.executeJavaScript(`new Promise((resolve, reject) => {
             let tries = 0;
             const timer = setInterval(() => {
-              if (window.__fixture.state.djPlayback.announceTracks === ${enabled} && document.querySelector('.room-dj-schedule [role="status"]')?.textContent.includes('saved')) { clearInterval(timer); resolve(); }
+              if (window.__fixture.state.djPlayback.announceTracks === ${enabled} && window.__fixture.state.djPlayback.announceEverySongs === 8 && document.querySelector('.room-dj-schedule [role="status"]')?.textContent.includes('saved')) { clearInterval(timer); resolve(); }
               else if (++tries > 100) { clearInterval(timer); reject(new Error('Announcement setting did not save and confirm')); }
             }, 20);
           })`);
@@ -321,20 +334,35 @@ async function main() {
       }
       emit({ scenario: 'DJ playback settings screenshots', stage, passed: true });
     } else if (scenario === 'song-handoff') {
-      const cases = process.env.WAVE_HANDOFF_CASES?.split(',') ?? ['normal', 'automatic', 'disabled', 'legacy-ending', 'cadence', 'disable-generating', 'disable-pending', 'disable-speaking', 'shuffle', 'shuffle-cycle', 'repeat-one', 'repeat-all', 'end', 'queue-edit', 'intro-edit', 'pause', 'seek-intro', 'budget', 'too-long', 'too-late', 'news-unavailable', 'failure', 'cancel-pending'];
+      const cases = process.env.WAVE_HANDOFF_CASES?.split(',') ?? ['normal', 'automatic', 'disabled', 'legacy-ending', 'news-override', 'interval-default', 'interval-configured', 'interval-with-news', 'interval-empty-news', 'interval-disabled', 'interval-seek-end', 'interval-disable-generating', 'interval-disable-speaking', 'skip-count', 'disable-generating', 'disable-pending', 'disable-speaking', 'shuffle', 'shuffle-cycle', 'repeat-one', 'repeat-all', 'end', 'queue-edit', 'intro-edit', 'pause', 'seek-intro', 'budget', 'too-long', 'too-late', 'news-unavailable', 'failure', 'cancel-pending'];
       for (const handoffCase of cases) {
         await open({
           handoffCase,
+          captureAnnouncement: process.env.WAVE_CAPTURE_ANNOUNCEMENT === '1',
           dj: true,
           availableTakes: 1,
-          playback: handoffCase === 'shuffle-cycle' ? shuffledAll() : snapshot(['1', '2', '3'], ['end', 'repeat-all'].includes(handoffCase) ? 2 : 0, 0),
+          playback: handoffCase === 'shuffle-cycle' ? shuffledAll() : snapshot(handoffCase === 'skip-count' ? Array.from({ length: 12 }, (_, index) => String(index + 1)) : ['1', '2', '3'], ['end', 'repeat-all'].includes(handoffCase) ? 2 : 0, 0),
           preferences: { volume: 0.75, shuffle: handoffCase === 'shuffle-cycle', repeat: handoffCase === 'repeat-one' ? 'one' : ['shuffle-cycle', 'repeat-all'].includes(handoffCase) ? 'all' : 'off' },
           state: {
             djPlayback: { enabled: handoffCase === 'automatic', roomId: 'default-room', everySongs: 1, keepOnSeek: true, voiceVolume: 0.7, announceTracks: handoffCase !== 'disabled' },
             newsTransitions: { mode: ['budget', 'too-long', 'too-late', 'seek-intro'].includes(handoffCase) ? 'over-music' : 'between-songs', fadeOutSeconds: 0, leadInSeconds: 0, postSpeechSeconds: 0, fadeInSeconds: 0 },
           },
         });
-        await run('verify');
+        const verification = run('verify');
+        if (process.env.WAVE_CAPTURE_ANNOUNCEMENT === '1') {
+          await window.webContents.executeJavaScript(`new Promise((resolve, reject) => {
+            let tries = 0;
+            const timer = setInterval(() => {
+              if (window.__captureAnnouncementReady) { clearInterval(timer); resolve(); }
+              else if (++tries > 300) { clearInterval(timer); reject(new Error('Announcement capture was not reached')); }
+            }, 20);
+          })`);
+          window.setContentSize(1440, 1000);
+          await new Promise((resolve) => setTimeout(resolve, 300));
+          await writeFile(path.join(root, `docs/verification/song-handoff/${process.env.WAVE_CAPTURE_STAGE ?? 'after-rule'}-announcement.png`), (await window.webContents.capturePage()).toPNG());
+          await window.webContents.executeJavaScript(`window.__captureAnnouncementContinue()`);
+        }
+        await verification;
         emit({ scenario: handoffCase, passed: true });
         await closeWindow();
       }

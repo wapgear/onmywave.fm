@@ -41,9 +41,14 @@ export function revokeSongHandoffs() {
 export async function prepareSongHandoff(
   news: NewsService,
   resolveSong: (id: string) => Promise<Song>,
-  input: { requestId: string; takeId: string; songId: string },
+  input: { requestId: string; takeId?: string; songId: string },
 ): Promise<SongHandoff | null> {
-  if (!input || !validId(input.requestId) || !validId(input.takeId) || !validId(input.songId))
+  if (
+    !input ||
+    !validId(input.requestId) ||
+    (input.takeId !== undefined && !validId(input.takeId)) ||
+    !validId(input.songId)
+  )
     throw new ServiceError('invalid', 'Invalid song introduction request.');
   if ([...active.values()].some((controller) => !controller.signal.aborted))
     throw new ServiceError('invalid', 'Another song introduction is being prepared.');
@@ -51,17 +56,27 @@ export async function prepareSongHandoff(
   active.set(input.requestId, controller);
   try {
     const signal = AbortSignal.any([controller.signal, news.generationSignal(), AbortSignal.timeout(120000)]);
-    if (!normalizeDJPlaybackSettings((await getLocalState()).djPlayback).announceTracks) return null;
-    const take = (await getPreparedNews()).takes.find((value) => value.id === input.takeId && value.available);
-    if (!take) throw new ServiceError('not-found', 'The saved DJ recording is unavailable.');
-    if (take.ending !== 'story-only') return null;
+    const state = await getLocalState();
+    const settings = normalizeDJPlaybackSettings(state.djPlayback);
+    if (!settings.announceTracks) return null;
+    const take = input.takeId
+      ? (await getPreparedNews()).takes.find((value) => value.id === input.takeId && value.available)
+      : null;
+    if (input.takeId && !take) throw new ServiceError('not-found', 'The saved DJ recording is unavailable.');
+    if (take && take.ending !== 'story-only') return null;
+    const room = state.roomProfiles.find((value) => value.id === (settings.roomId ?? state.activeRoomProfileId));
+    const dj = take?.renderingDJ ?? state.djs.find((value) => value.id === room?.room.djId);
+    if (!dj)
+      throw new ServiceError('invalid', 'Choose a DJ in your listening room before enabling track announcements.');
+    const voice = take?.voice ?? dj.news?.elevenVoiceId ?? 'JBFqnCBsd6RMkjVDRZzb';
+    const delivery = take?.delivery ?? dj.news?.elevenTags ?? '';
     const song = await resolveSong(input.songId);
     signal.throwIfAborted();
     const title = spoken(song.name);
     const artists = song.artists.map(spoken).filter(Boolean).join(', ');
     if (!title || title === 'Untitled song' || title.length > 160 || artists.length > 160) return null;
     const script = `And now, enjoy ${title}${artists ? ` by ${artists}` : ''}.`;
-    const signature = JSON.stringify([take.voice, take.delivery, script]);
+    const signature = JSON.stringify([voice, delivery, script]);
     let attempt = attempts.get(signature);
     if (!attempt) {
       // Retain recent uncertain attempts so a scheduling tick cannot silently repeat a paid request.
@@ -78,7 +93,7 @@ export async function prepareSongHandoff(
           const result = await news.renderPreparedSpeech(
             {
               requestId: input.requestId,
-              dj: take.renderingDJ,
+              dj,
               settings: {
                 feedUrls: [],
                 interests: '',
@@ -88,8 +103,8 @@ export async function prepareSongHandoff(
                 textModel: NEWS_TEXT_MODEL,
                 speechEngine: 'elevenlabs-v4',
                 duckVolume: 0.05,
-                elevenVoiceId: take.voice,
-                elevenTags: take.delivery,
+                elevenVoiceId: voice,
+                elevenTags: delivery,
               },
               engine: 'elevenlabs-v4',
             },

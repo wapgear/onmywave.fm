@@ -204,6 +204,7 @@ export type NewsScript = {
 };
 
 export type NewsBreak = NewsScript & {
+  kind?: 'track-announcement';
   id: string;
   audioUrl: string;
   engine: NewsSettings['speechEngine'];
@@ -430,7 +431,11 @@ export interface WaveApi {
   setRoomProfileEnabled(input: { id: string; enabled: boolean }): Promise<Result<LocalStateSnapshot>>;
   saveDJPlayback(settings: DJPlaybackSettingsPatch): Promise<Result<LocalStateSnapshot>>;
   nextRoomNews(input: { roomId: string; excludedIds: string[] }): Promise<Result<PreparedNewsTake | null>>;
-  prepareSongHandoff(input: { requestId: string; takeId: string; songId: string }): Promise<Result<SongHandoff | null>>;
+  prepareSongHandoff(input: {
+    requestId: string;
+    takeId?: string;
+    songId: string;
+  }): Promise<Result<SongHandoff | null>>;
   cancelSongHandoff(requestId: string): Promise<Result<void>>;
   claimPreparedNews(input: { id: string; claimId?: string }): Promise<Result<PreparedNewsTake>>;
   startPreparedNews(input: PreparedNewsClaim): Promise<Result<void>>;

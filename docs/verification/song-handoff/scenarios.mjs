@@ -32,14 +32,14 @@ window.__criticalPlayback = {
     let resolveLink;
     window.wave.prepareSongHandoff = async (input) => {
       events.push({ method: 'prepare', input });
-      if (mode === 'cancel-pending' || mode === 'disable-generating') await new Promise((resolve) => { resolveLink = resolve; });
-      if (mode === 'disable-generating') return { ok: false, error: { code: 'server', message: 'Fixture introduction cancelled' } };
+      if (mode === 'cancel-pending' || mode.endsWith('disable-generating')) await new Promise((resolve) => { resolveLink = resolve; });
+      if (mode.endsWith('disable-generating')) return { ok: false, error: { code: 'server', message: 'Fixture introduction cancelled' } };
       if (mode === 'failure') return { ok: false, error: { code: 'server', message: 'Fixture speech unavailable' } };
       return { ok: true, value: { script: 'And now, enjoy the next song.', audioUrl: `${location.origin}/fixture-handoff` } };
     };
     window.wave.cancelSongHandoff = async (id) => {
       events.push({ method: 'cancel', id });
-      if (mode === 'disable-generating') resolveLink?.();
+      if (mode.endsWith('disable-generating')) resolveLink?.();
       return { ok: true };
     };
     const BaseAudio = window.Audio;
@@ -89,15 +89,84 @@ window.__criticalPlayback = {
       await waitFor(() => player().newsPhase === 'idle' && !player().busy, 'Cadence break did not finish');
       return !!intro;
     };
-    if (mode === 'cadence') {
-      assert(!(await playBreak()), 'The first news break announced a track before the rare cadence');
-      await finishSongs(11);
-      assert(await playBreak(), 'An eligible rare announcement was omitted');
-      assert(!(await playBreak()), 'Consecutive news breaks repeated the song introduction');
-      assert(events.filter((event) => event.method === 'prepare').length === 1, 'News-only breaks dispatched speech generation');
+    if (mode === 'news-override') {
+      assert(await playBreak(), 'Fact-only news must announce before the interval is reached');
+      assert(!player().isTrackAnnouncementDue(), 'Post-news announcement did not reset the shared interval');
+      assert(await playBreak(), 'Consecutive fact-only news must each have one introduction');
+      assert(events.filter((event) => event.method === 'prepare').length === 2, 'A fact-only news break had duplicate or missing introductions');
       return;
     }
-    await finishSongs(12);
+    if (mode.startsWith('interval-') || mode === 'skip-count') {
+      const interval = mode === 'interval-configured' ? 3 : 6;
+      if (mode === 'interval-configured') await updateSettings({ announceEverySongs: interval });
+      if (mode === 'interval-disabled') await updateSettings({ announceTracks: false });
+      if (mode === 'interval-empty-news') fixture.takes.length = 0;
+      if (mode === 'interval-with-news' || mode === 'interval-empty-news') await updateSettings({ enabled: true, everySongs: interval });
+      if (mode === 'skip-count') {
+        for (let index = 0; index < 7; index++) {
+          const key = player().currentKey;
+          player().next();
+          await waitFor(() => player().currentKey !== key && !player().busy, 'Skip did not advance');
+        }
+        assert(player().completedSongs === 0 && events.filter((event) => event.method === 'prepare').length === 0, 'Skipped songs advanced announcement cadence');
+        return;
+      }
+      player().setRepeat('one');
+      await waitFor(() => player().repeat === 'one', 'Cadence repeat setup failed');
+      if (mode === 'interval-disabled') {
+        await finishSongs(7);
+        assert(!events.some((event) => event.method === 'prepare'), 'Disabled announcements generated standalone speech');
+        return;
+      }
+      await finishSongs(interval - 1);
+      if (mode === 'interval-disable-generating') {
+        await waitFor(() => resolveLink, 'Standalone generation did not start');
+        await updateSettings({ announceTracks: false });
+        await waitFor(() => player().newsPhase === 'idle' && !player().newsLoading, 'Standalone generation did not cancel');
+        assert(!music.paused && player().newsNotice === null, 'Disabling a pending standalone introduction interrupted music or reported a failure');
+        return;
+      }
+      await waitFor(() => player().newsPhase === 'waiting', 'The interval introduction was not prepared for the next natural ending');
+      if (mode === 'interval-seek-end') {
+        player().seek(player().current.duration);
+        await waitFor(() => player().newsPhase === 'idle' && !player().busy && !music.ended, 'Endpoint seek stranded the standalone introduction');
+        assert(player().completedSongs === interval - 1, 'Endpoint seek counted as a completed song');
+        assert(!events.some((event) => event.method === 'play' && event.src.includes('fixture-handoff')), 'Endpoint seek bypassed the completed-song rule');
+        return;
+      }
+      assert(events.filter((event) => event.method === 'play' && event.src.includes('fixture-handoff')).length === 0, 'Announcement played before N songs completed');
+      const request = events.find((event) => event.method === 'prepare');
+      assert((!!request.input.takeId) === (mode === 'interval-with-news'), 'News and standalone triggers were not coordinated');
+      if (mode !== 'interval-with-news') assert(!fixture.calls.some((call) => call.method === 'startPreparedNews'), 'Standalone speech consumed a news claim');
+      music.ended = true;
+      music.emit('ended');
+      if (mode === 'interval-with-news') {
+        const body = fixture.audios.find((clip) => clip.src.includes('fixture-speech-'));
+        await waitFor(() => !body.paused, 'News did not take priority over the interval announcement');
+        body.emit('ended');
+      }
+      const intro = fixture.audios.find((clip) => clip.src.includes('fixture-handoff'));
+      await waitFor(() => intro && !intro.paused, 'The N-song announcement did not play');
+      assert(player().completedSongs === interval, 'Standalone announcement did not wait for N completed songs');
+      assert(events.filter((event) => event.method === 'prepare').length === 1, 'Coinciding triggers generated duplicate introductions');
+      if (mode === 'interval-disable-speaking') {
+        await updateSettings({ announceTracks: false });
+        await waitFor(() => player().newsPhase === 'idle' && !player().busy && !music.ended, 'Disabling standalone speech stranded playback');
+        assert(intro.paused && !intro.src, 'Standalone speech continued after disabling');
+        return;
+      }
+      if (window.__fixtureSeed.captureAnnouncement) {
+        document.querySelector('button[aria-label="Show DJ sidebar"]')?.click();
+        await new Promise((resolve) => setTimeout(resolve, 200));
+        window.__captureAnnouncementReady = true;
+        await new Promise((resolve) => { window.__captureAnnouncementContinue = resolve; });
+      }
+      intro.emit('ended');
+      await waitFor(() => player().newsPhase === 'idle' && !music.ended && !player().busy, 'Announcement did not return to music');
+      await finishSongs(1);
+      assert(player().newsPhase === 'idle' && events.filter((event) => event.method === 'prepare').length === 1, 'Announcement did not reset the interval');
+      return;
+    }
     if (mode === 'automatic') await updateSettings({ enabled: true });
     const before = player().currentKey;
     const expected = mode === 'end' ? null : mode === 'repeat-one' ? before : player().shuffle

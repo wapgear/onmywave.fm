@@ -5,9 +5,8 @@ export type DJPlaybackSettings = {
   keepOnSeek: boolean;
   voiceVolume: number;
   announceTracks: boolean;
+  announceEverySongs: number;
 };
-
-export const TRACK_ANNOUNCEMENT_SONG_INTERVAL = 12;
 
 export type DJPlaybackSettingsPatch = Partial<DJPlaybackSettings>;
 
@@ -18,6 +17,7 @@ export const defaultDJPlaybackSettings = (): DJPlaybackSettings => ({
   keepOnSeek: true,
   voiceVolume: 0.7,
   announceTracks: false,
+  announceEverySongs: 6,
 });
 
 export function isDJPlaybackSettings(value: unknown): value is DJPlaybackSettings {
@@ -31,6 +31,10 @@ export function isDJPlaybackSettings(value: unknown): value is DJPlaybackSetting
     settings.everySongs >= 1 &&
     settings.everySongs <= 100 &&
     (settings.announceTracks === undefined || typeof settings.announceTracks === 'boolean') &&
+    (settings.announceEverySongs === undefined ||
+      (Number.isInteger(settings.announceEverySongs) &&
+        settings.announceEverySongs >= 1 &&
+        settings.announceEverySongs <= 100)) &&
     (settings.keepOnSeek === undefined || typeof settings.keepOnSeek === 'boolean') &&
     (settings.voiceVolume === undefined ||
       (typeof settings.voiceVolume === 'number' &&
@@ -54,7 +58,15 @@ export function isDJPlaybackSettingsPatch(value: unknown): value is DJPlaybackSe
     keys.some(
       (key) =>
         typeof key !== 'string' ||
-        !['enabled', 'roomId', 'everySongs', 'keepOnSeek', 'voiceVolume', 'announceTracks'].includes(key),
+        ![
+          'enabled',
+          'roomId',
+          'everySongs',
+          'keepOnSeek',
+          'voiceVolume',
+          'announceTracks',
+          'announceEverySongs',
+        ].includes(key),
     ) ||
     Object.keys(value).length !== keys.length
   )
@@ -73,6 +85,7 @@ export function normalizeDJPlaybackSettings(value: unknown): DJPlaybackSettings 
         keepOnSeek: value.keepOnSeek ?? true,
         voiceVolume: value.voiceVolume ?? 0.7,
         announceTracks: value.announceTracks ?? false,
+        announceEverySongs: value.announceEverySongs ?? 6,
       }
     : defaultDJPlaybackSettings();
 }

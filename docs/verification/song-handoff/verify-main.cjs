@@ -28,7 +28,7 @@ require.extensions['.ts'] = (mod, file) => mod._compile(ts.transpileModule(fs.re
 }).outputText, file);
 Module._load = function (id, parent, ...rest) {
   if (id === './storage' && parent?.filename.endsWith('/song-handoffs.ts'))
-    return { getLocalState: async () => ({ djPlayback: playback }) };
+    return { getLocalState: async () => ({ djPlayback: playback, activeRoomProfileId: 'fixture-room', roomProfiles: [{ id: 'fixture-room', room: { djId: 'fixture-dj' } }], djs: [{ ...take.renderingDJ, news: { elevenVoiceId: 'fixture-voice', elevenTags: '[warm]' } }] }) };
   if (id === './prepared-news' && parent?.filename.endsWith('/song-handoffs.ts'))
     return { getPreparedNews: async () => ({ takes: [take] }) };
   if (id === './jellyfin' && parent?.filename.startsWith(path.join(root, 'src/main')))
@@ -69,6 +69,8 @@ global.fetch = async (url, options) => {
     assert.equal(take.script, 'The reusable bulletin.');
     assert.deepEqual(await prepare('request-two'), link);
     assert.equal(calls.length, 1, 'Reused introduction triggered another paid request');
+    assert.deepEqual(await prepareSongHandoff(news, async () => song, { requestId: 'standalone-request', songId: song.id }), link, 'Standalone introductions must use the saved room DJ and shared voice cache');
+    assert.equal(calls.length, 1);
 
     song = { ...song, name: 'Instrumental', artists: [] };
     assert.equal((await prepare('missing-artist')).script, 'And now, enjoy Instrumental.');

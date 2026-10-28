@@ -59,6 +59,30 @@ function useDJPlaybackController() {
     let published = false;
     const attempted = new Set<string>();
     let recoveryBlocked = false;
+    let announcing = false;
+    const announcementAttempts = new Set<string>();
+    const announceTrack = () => {
+      const p = live.current.player;
+      const occurrence = `${p.currentKey}:${p.completedSongs}`;
+      if (
+        !p.isTrackAnnouncementDue() ||
+        announcing ||
+        !p.currentKey ||
+        !p.requestedPlaying ||
+        p.busy ||
+        p.activeNews ||
+        announcementAttempts.has(occurrence)
+      )
+        return;
+      announcementAttempts.add(occurrence);
+      announcing = true;
+      void p
+        .scheduleTrackAnnouncement()
+        .catch(() => {})
+        .finally(() => {
+          announcing = false;
+        });
+    };
     const release = (take: PreparedNewsTake) => {
       const claimId = take.deliveryState?.claimId;
       if (claimId)
@@ -120,7 +144,10 @@ function useDJPlaybackController() {
       }
       recoveryBlocked = false;
       if (writeInFlight.current) return;
-      if (!config.enabled || !profile || live.current.queryError || cycle.failure) return;
+      if (!config.enabled || !profile || live.current.queryError || cycle.failure) {
+        announceTrack();
+        return;
+      }
       if (!heard && cycle.pending && p.lastNews?.news.id === cycle.pending.id) {
         heard = true;
         excluded.add(cycle.pending.id);
@@ -165,7 +192,11 @@ function useDJPlaybackController() {
           });
         return;
       }
-      if (checking || p.completedSongs - cycle.baseline < config.everySongs - (skipped ? 0 : 1)) return;
+      if (checking) return;
+      if (p.completedSongs - cycle.baseline < config.everySongs - (skipped ? 0 : 1)) {
+        announceTrack();
+        return;
+      }
       checking = true;
       const retrying = cycle.retryPhase === 'queued';
       if (retrying) {
@@ -239,6 +270,8 @@ function useDJPlaybackController() {
     player.lastNews?.news.id,
     player.lastNews?.status,
     player.completedSongs,
+    settings.announceTracks,
+    settings.announceEverySongs,
   ]);
 
   const current = view?.configKey === configKey ? view : null;

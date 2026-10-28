@@ -3,6 +3,7 @@ import type { ShufflePlan } from '../shared/shuffle-queue';
 import type { NewsBreak, PlaybackSnapshot, Song } from '../shared/types';
 
 export type ScheduledNews = {
+  kind: 'news' | 'track-announcement';
   token: number;
   key: string;
   duration: number;
@@ -51,6 +52,8 @@ export type PlayerState = {
   queueSession: number;
   canRetry: boolean;
   completedSongs: number;
+  isTrackAnnouncementDue(this: void): boolean;
+  scheduleTrackAnnouncement(this: void): Promise<void>;
   libraryError: string | null;
   libraryLoading: boolean;
   retryLibrary(this: void): Promise<boolean>;
