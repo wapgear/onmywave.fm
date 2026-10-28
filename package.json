@@ -24,14 +24,19 @@
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
     "@fontsource/manrope": "^5.2.8",
+    "@mozilla/readability": "^0.6.0",
+    "@tanstack/ai": "1.0.0",
+    "@tanstack/ai-openai": "^1.0.0",
     "@tanstack/react-query": "5.104.5",
     "@tanstack/react-virtual": "^3.14.22",
     "electron-updater": "^6.8.11",
     "fast-xml-parser": "^5.11.2",
+    "linkedom": "^0.18.14",
     "lucide-react": "^0.468.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",
-    "ws": "^8.22.0"
+    "ws": "^8.22.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@stylistic/eslint-plugin": "5.10.0",

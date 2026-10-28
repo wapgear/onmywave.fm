@@ -143,7 +143,16 @@ export type NewsArticle = { id: string; title: string; url: string; source: stri
 
 export type FavoritedNewsArticle = NewsArticle & { canonicalUrl: string; favoritedAt: string };
 
-export type NewsCandidate = NewsArticle & { summary: string; sourceIds: string[] };
+export type NewsSourceContext =
+  | { status: 'pending'; reason: string }
+  | { status: 'unavailable'; reason: string }
+  | { status: 'available'; url: string; text: string; fetchedAt: string };
+
+export type NewsCandidate = NewsArticle & {
+  summary: string;
+  sourceIds: string[];
+  sourceContext?: NewsSourceContext;
+};
 
 export type NewsSourceResult = {
   sourceId: string;
