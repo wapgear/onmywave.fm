@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { InfoHelp } from '../../../components/InfoHelp/InfoHelp.component';
+import { SectionHeading } from '../../../components/SectionHeading/SectionHeading.component';
 import { applyTheme, currentTheme, themes } from '../../../theme';
 
 export function AppearanceSettings() {
@@ -9,12 +9,9 @@ export function AppearanceSettings() {
 
   return (
     <section aria-labelledby="appearance-title">
-      <div className="settings-section-title">
-        <h2 id="appearance-title">Appearance</h2>
-        <InfoHelp label="About appearance">
-          <p>Theme changes apply throughout the app and are saved on this Mac.</p>
-        </InfoHelp>
-      </div>
+      <SectionHeading title="Appearance" helpLabel="About appearance" id="appearance-title">
+        <p>Theme changes apply throughout the app and are saved on this Mac.</p>
+      </SectionHeading>
       <fieldset className="theme-picker">
         <legend className="sr-only">Color theme</legend>
         {themes.map((option) => (

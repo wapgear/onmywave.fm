@@ -172,13 +172,13 @@ export function DialogActions({ children }: { children: ReactNode }) {
   return <div className="modal-actions">{children}</div>;
 }
 
-export function PageHeading({ title, subtitle, children, headingRef }: PageHeadingProps) {
+export function PageHeading({ as: Heading = 'h1', title, subtitle, children, headingRef }: PageHeadingProps) {
   return (
-    <header className="page-heading">
+    <header className={Heading === 'h1' ? 'page-heading' : 'page-heading page-heading-section'}>
       <div>
-        <h1 ref={headingRef} tabIndex={-1}>
+        <Heading ref={headingRef} tabIndex={-1}>
           {title}
-        </h1>
+        </Heading>
         {subtitle && <p>{subtitle}</p>}
       </div>
       {children}

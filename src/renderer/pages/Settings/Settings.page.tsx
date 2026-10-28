@@ -6,6 +6,7 @@ import { UpdateSettings } from '../../components/AppUpdates/AppUpdates.component
 import { Button } from '../../components/Button/Button.component';
 import { LibraryChooser } from '../../components/LibraryChooser';
 import { ProviderKeys } from '../../components/ProviderKeys/ProviderKeys.component';
+import { SectionHeading } from '../../components/SectionHeading/SectionHeading.component';
 import { Dialog, DialogActions, ErrorNotice, PageHeading } from '../../components/Shared';
 import { DJsPage } from '../DJs/DJs.page';
 import { SourcesPage } from '../Sources/Sources.page';
@@ -83,6 +84,7 @@ export function SettingsPage({
       {activeSection === 'general' && (
         <div className="settings-content settings-preferences">
           <DJPlaybackSettings />
+          <NewsTransitions />
           <AppearanceSettings />
           <section>
             <h2>Account</h2>
@@ -114,13 +116,14 @@ export function SettingsPage({
             )}
           </section>
           <section>
-            <h2>Music libraries</h2>
-            <p className="settings-description">
-              Choose the libraries shown in your collection. Your listening queue stays available.
-            </p>
+            <SectionHeading title="Music libraries" helpLabel="About music libraries">
+              <p>
+                Choose which Jellyfin libraries appear in your collection. Changing libraries keeps your listening queue
+                available.
+              </p>
+            </SectionHeading>
             <LibraryChooser key={connection.id} connection={connection} done={update} disabled={disconnect.isPending} />
           </section>
-          <NewsTransitions />
           <UpdateSettings />
         </div>
       )}

@@ -1,15 +1,17 @@
 .settings-preferences {
   max-width: 660px;
+  display: grid;
+  gap: var(--space-8);
 }
-.settings-preferences section {
-  padding: 0 0 26px;
-  margin: 0 0 26px;
-  border-color: var(--border, #e4e4e7);
+.settings-preferences > section {
+  padding: 0;
+  margin: 0;
+  border: 0;
 }
 .settings-preferences h2 {
   font-size: 14px;
   font-weight: 600;
-  margin-bottom: 12px;
+  margin-bottom: var(--space-4);
 }
 .settings-account {
   margin: 0;
@@ -51,7 +53,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin: 0 0 32px;
+  margin: 0 0 var(--space-8);
 }
 .settings-sections button {
   font-size: 12px;
@@ -68,21 +70,7 @@
   color: var(--text);
   background: var(--surface);
 }
-.settings-section-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
-}
-.settings-section-title h2 {
-  margin: 0;
-}
 .dj-song-interval {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
   font-size: 12px;
 }
 .dj-song-interval input[type='number'] {

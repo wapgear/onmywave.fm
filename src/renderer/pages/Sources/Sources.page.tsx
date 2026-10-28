@@ -86,7 +86,7 @@ export function SourcesPage() {
 
   return (
     <>
-      <PageHeading title="Sources" headingRef={heading}>
+      <PageHeading as="h2" title="Sources" headingRef={heading}>
         <button
           ref={addSource}
           className="primary"

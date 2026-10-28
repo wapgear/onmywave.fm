@@ -195,19 +195,21 @@ export function NewsTransitionPreview({ settings }: { settings: NewsTransitionSe
   const active = phase !== '' && phase !== 'finished';
 
   return (
-    <div className="transition-preview">
+    <details
+      className="transition-preview"
+      onToggle={(event) => {
+        if (!event.currentTarget.open && dispose.current) stop();
+      }}
+    >
+      <summary>Preview transition</summary>
       <div className="transition-preview-heading">
-        <h3>Hear this transition</h3>
         <button type="button" disabled={!valid} onClick={() => (active ? stop() : void start())}>
           {active ? <Square size={14} /> : <Play size={14} />}
-          {active ? 'Stop preview' : 'Preview transition'}
+          {active ? 'Stop sample' : 'Play sample'}
         </button>
+        <span className="preference-note">Pauses your music</span>
       </div>
-      <p className="form-hint">
-        Uses the timings above, even before saving. Sample music and a saved AI voice, no generation needed. Your music
-        pauses and stays paused. Changing songs or seeking stops the sample.
-        {player.activeNewsId && ' Your scheduled DJ break stays queued.'}
-      </p>
+      {player.activeNewsId && <p className="form-hint">Your scheduled DJ break stays queued.</p>}
       {valid && (
         <ol className="transition-preview-steps" aria-label="Transition stages">
           {steps.map((step) => (
@@ -228,6 +230,6 @@ export function NewsTransitionPreview({ settings }: { settings: NewsTransitionSe
               : (steps.find((step) => step.id === phase)?.label ?? 'Ready to preview.')}
       </p>
       <ErrorNotice error={error} />
-    </div>
+    </details>
   );
 }

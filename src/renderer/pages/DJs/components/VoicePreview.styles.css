@@ -1,12 +1,12 @@
 .dj-voice-preview {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-2);
   flex-wrap: wrap;
-  margin-top: 10px;
+  margin-top: var(--space-2);
   max-width: 560px;
 }
-.dj-voice-preview > button {
+.dj-voice-preview > button:not(.info-help) {
   display: inline-flex;
   align-items: center;
   gap: 6px;

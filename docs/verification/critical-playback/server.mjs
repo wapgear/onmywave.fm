@@ -281,6 +281,10 @@ async function main() {
         if (!String(error).includes(`ASSERTION:${expectedMutation}:`)) throw error;
         emit({ mutation, detected: true, evidence: String(error).split('\n')[0] });
       }
+    } else if (scenario === 'preferences-design') {
+      const { verifyPreferences } = await import('../preferences-design/verify.mjs');
+      await open({ playback: snapshot(), dj: true, state: { djPlayback: { enabled: false, roomId: 'default-room', everySongs: 3, keepOnSeek: true, voiceVolume: 0.7 } } });
+      emit(await verifyPreferences(window, root));
     } else if (scenario === 'song-handoff-settings') {
       await open({ playback: snapshot(), dj: true, state: { djPlayback: { enabled: false, roomId: 'default-room', everySongs: 3, keepOnSeek: true, voiceVolume: 0.7 } } });
       await window.webContents.executeJavaScript(`document.querySelector('button.settings-nav')?.click()`);
@@ -316,7 +320,7 @@ async function main() {
         if (defaultInterval.value !== '6' || !defaultInterval.disabled) throw new Error('Announcement interval must default to six and be disabled while announcements are off');
         for (const enabled of [true, false]) {
           await window.webContents.executeJavaScript(`(() => {
-            const checkbox = [...document.querySelectorAll('.room-dj-schedule input[type="checkbox"]')].find((input) => input.getAttribute('aria-describedby') === 'track-announcement-hint');
+            const checkbox = document.querySelector('#announce-tracks');
             if (!checkbox || checkbox.checked === ${enabled}) throw new Error('Announcement switch has an unexpected saved value');
             checkbox.focus(); checkbox.click();
           })()`);

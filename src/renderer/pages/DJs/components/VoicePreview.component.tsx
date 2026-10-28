@@ -4,6 +4,7 @@ import { useId, useLayoutEffect, useRef, useState } from 'react';
 
 import { PRESET_VOICE_IDS } from '../../../../shared/voice-previews';
 import { unwrap } from '../../../api';
+import { InfoHelp } from '../../../components/InfoHelp/InfoHelp.component';
 import { ErrorNotice } from '../../../components/Shared';
 import { useNewsRecovery } from '../../../NewsRecovery';
 import { usePlayer } from '../../../player';
@@ -289,6 +290,16 @@ export function VoicePreview({ resource, label, playbackId, activeId, onStart, a
       <span id={labelId} className="dj-voice-preview-label">
         {label} · {savedDJ ? 'DJ delivery preview' : 'voice sample'}
       </span>
+      <InfoHelp label={`${label} preview details`}>
+        <p>
+          A DJ preview uses the saved voice and delivery settings. Saving a DJ does not generate audio. Voice samples
+          are shared by voice ID; bundled preset samples do not generate speech.
+        </p>
+        <p>
+          Generating, retrying or regenerating a preview uses ElevenLabs credits outside automatic news limits.
+          Replaying saved audio makes no provider request. Playing a preview pauses your music.
+        </p>
+      </InfoHelp>
       <p className="dj-preview-hint" role="status">
         {!valid
           ? 'Enter a valid ElevenLabs voice ID to preview it.'
@@ -301,28 +312,25 @@ export function VoicePreview({ resource, label, playbackId, activeId, onStart, a
               : savedDJ
                 ? playable
                   ? shared?.stale
-                    ? 'Outdated preview. This recording uses earlier voice or delivery settings. Regenerate makes a new ElevenLabs request.'
-                    : 'Saved locally with this DJ’s voice and delivery. Replay needs no provider request; regeneration uses ElevenLabs.'
+                    ? 'Outdated preview. Regenerate to use the current voice and delivery.'
+                    : 'Saved DJ preview.'
                   : attempted
-                    ? 'No playable DJ preview is saved. Retry makes a new ElevenLabs request.'
-                    : 'Generate a fixed sample with this DJ’s saved voice and delivery using ElevenLabs. Saving this DJ does not generate audio.'
+                    ? 'No playable DJ preview saved. Retry uses ElevenLabs credits.'
+                    : 'No DJ preview saved.'
                 : playable
                   ? audioFailed
                     ? bundled
                       ? 'The bundled sample could not play; no provider request will be made.'
                       : 'The saved sample failed to play. Regenerate it once to replace it.'
-                    : 'Saved locally. Replaying does not make a provider request.'
+                    : 'Saved voice sample.'
                   : bundled
                     ? 'The bundled preset sample is unavailable; synthesis is disabled for preset voices.'
                     : attempted
-                      ? 'No playable sample is saved. Retry makes a new ElevenLabs request.'
-                      : 'Generate once with ElevenLabs; this sample is then shared by voice ID.'}
+                      ? 'No playable sample saved. Retry uses ElevenLabs credits.'
+                      : 'No voice sample saved.'}
       </p>
       {!bundled && valid && (
-        <p className="dj-preview-hint">
-          Generating or regenerating a preview uses ElevenLabs outside automatic news limits and can use credits or
-          incur charges. Replaying saved audio makes no provider request.
-        </p>
+        <span className="preference-note">Generation uses ElevenLabs credits · Playback pauses music</span>
       )}
       <audio
         ref={audio}
