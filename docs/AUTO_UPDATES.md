@@ -8,6 +8,8 @@ The app offers Update now or Later when a release is available. Update now downl
 
 The existing GitHub release repository hosts the signed DMG, ZIP, updater metadata, blockmaps, source archive, and checksums. No additional update server or client token is required. The release script validates the generated metadata against the artifact version, size, and SHA-512 hashes, uploads all assets to a draft, then publishes it.
 
+Release 0.6.0 requires macOS 13 or later. The release configuration sets the app's minimum macOS version to 13.0, and the release script verifies it in the signed app. Updater metadata declares `minimumSystemVersion: 22.0.0`: electron-updater compares the Darwin kernel version returned by `os.release()`, rather than the macOS product version. This keeps older Macs from being offered an unsupported release. The metadata is included in the final checksum manifest.
+
 Use Node.js 24 and an Apple silicon Mac with the Developer ID certificate configured in `electron-builder.release.mjs`. Set `APPLE_ID`, `APPLE_APP_SPECIFIC_PASSWORD`, and `APPLE_TEAM_ID` in the environment or ignored `scripts/.env.local`, and authenticate `gh` with access to `wapgear/onmywave-app`.
 
 Increase the package version before each new release, then run:
