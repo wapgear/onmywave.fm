@@ -1,6 +1,9 @@
 import { randomUUID } from 'node:crypto';
 
+import { chat, generateSpeech, maxIterations } from '@tanstack/ai';
+import { createOpenaiChat } from '@tanstack/ai-openai';
 import { XMLParser, XMLValidator } from 'fast-xml-parser';
+import { z } from 'zod';
 
 import { canonicalArticleUrl } from '../shared/news-pool';
 import { normalizeNewsSource } from '../shared/sources';
@@ -21,6 +24,8 @@ import type {
 } from '../shared/types';
 import { ServiceError } from './jellyfin';
 import { isSpokenNewsText, NEWS_SELECTION_INSTRUCTIONS, NEWS_WRITING_INSTRUCTIONS } from './news-prompts';
+import { readNewsSource, withSourceContext, MAX_CONTEXT_REQUESTS } from './news-source';
+import { NewsSpeechAdapter } from './news-speech';
 
 export type { NewsArticle, NewsScript } from '../shared/types';
 
@@ -584,43 +589,67 @@ export class NewsService {
     };
   }
 
-  private async responseJson(result: Response, signal: AbortSignal): Promise<XmlNode> {
-    const payload: unknown = JSON.parse((await boundedBytes(result, 256 * 1024, signal)).toString('utf8'));
-    if (node(payload).status !== 'completed')
-      throw new ServiceError('server', 'OpenAI did not complete the news request.');
-    const content = array(node(payload).output)
-      .flatMap((output) => array(node(output).content))
-      .find((value) => node(value).type === 'output_text');
-    if (!content || typeof node(content).text !== 'string')
-      throw new ServiceError('server', 'OpenAI did not return a complete news response.');
-    try {
-      return node(JSON.parse(node(content).text as string));
-    } catch {
-      throw new ServiceError('server', 'OpenAI did not return valid structured news output.');
-    }
-  }
-
-  private async providerResponse(
+  private async providerResponse<T extends z.ZodType>(
     input: Input,
     phase: 'selecting' | 'writing',
     key: string,
-    body: unknown,
+    instructions: string,
+    context: unknown,
+    schema: T,
     signal: AbortSignal,
-  ): Promise<XmlNode> {
+  ): Promise<z.infer<T>> {
     await input.onProviderAttempt?.(phase, 'pending');
     let dispatched = false;
+    let transportError: unknown;
+    const controller = new AbortController();
+    const abort = () => controller.abort();
+    signal.throwIfAborted();
+    signal.addEventListener('abort', abort, { once: true });
     try {
-      const response = await this.openai(key, 'responses', body, signal, () => {
-        dispatched = true;
+      const adapter = createOpenaiChat(NEWS_TEXT_MODEL, key, {
+        baseURL: 'https://api.openai.com/v1',
+        maxRetries: 0,
+        timeout: 120000,
+        fetch: async (url, init) => {
+          try {
+            const address = typeof url === 'string' ? url : url instanceof URL ? url.href : url.url;
+            if (address !== 'https://api.openai.com/v1/responses' || typeof init?.body !== 'string')
+              throw new ServiceError('invalid', 'Unexpected AI news endpoint.');
+            const response = await this.openai(key, 'responses', JSON.parse(init.body), signal, () => {
+              dispatched = true;
+            });
+            const bytes = await boundedBytes(response, 256 * 1024, signal);
+            return new Response(new Uint8Array(bytes), { status: response.status, headers: response.headers });
+          } catch (error) {
+            transportError = error;
+            throw error;
+          }
+        },
       });
-      const payload = await this.responseJson(response, signal);
-      return payload;
+      const result = await chat({
+        adapter,
+        threadId: input.requestId,
+        systemPrompts: [instructions],
+        messages: [{ role: 'user', content: JSON.stringify(context) }],
+        outputSchema: schema,
+        stream: false,
+        abortController: controller,
+        retry: { maxRetries: 0 },
+        agentLoopStrategy: maxIterations(1),
+        reasoning: 'off',
+        modelOptions: { max_output_tokens: 300, store: false },
+        debug: false,
+      });
+      return schema.parse(result);
     } catch (error) {
+      const failure = transportError ?? error;
       await input.onProviderAttempt?.(
         phase,
-        error instanceof DefinitiveProviderRejection || !dispatched ? 'rejected' : 'uncertain',
+        failure instanceof DefinitiveProviderRejection || !dispatched ? 'rejected' : 'uncertain',
       );
-      throw error;
+      throw failure;
+    } finally {
+      signal.removeEventListener('abort', abort);
     }
   }
 
@@ -631,7 +660,7 @@ export class NewsService {
     collection: NewsCollection,
     key: string,
     signal: AbortSignal,
-  ): Promise<NewsEditorialSelection> {
+  ): Promise<NewsEditorialSelection | { candidateId: string; reasonCode: 'needs-context'; reason: string }> {
     await input.onPhase?.('selecting');
     this.deps.onProgress?.({
       requestId: input.requestId,
@@ -643,40 +672,19 @@ export class NewsService {
       input,
       'selecting',
       key,
+      NEWS_SELECTION_INSTRUCTIONS,
       {
-        model: NEWS_TEXT_MODEL,
-        reasoning: { effort: 'none' },
-        max_output_tokens: 300,
-        instructions: NEWS_SELECTION_INSTRUCTIONS,
-        input: JSON.stringify({
-          importance: input.importance ?? 'relevant',
-          interests: settings.interests,
-          exclusions: editorial.exclusions,
-          candidates,
-        }),
-        text: {
-          format: {
-            type: 'json_schema',
-            name: 'news_selection',
-            strict: true,
-            schema: {
-              type: 'object',
-              additionalProperties: false,
-              required: ['candidateId', 'reasonCode', 'reason'],
-              properties: {
-                candidateId: {
-                  anyOf: [{ type: 'string', enum: candidates.map((candidate) => candidate.id) }, { type: 'null' }],
-                },
-                reasonCode: {
-                  type: 'string',
-                  enum: ['selected', 'no-match', 'excluded', 'insufficient-evidence', 'not-major'],
-                },
-                reason: { type: 'string' },
-              },
-            },
-          },
-        },
+        importance: input.importance ?? 'relevant',
+        interests: settings.interests,
+        exclusions: editorial.exclusions,
+        contextRequestsRemaining: MAX_CONTEXT_REQUESTS - candidates.filter((item) => item.sourceContext).length,
+        candidates,
       },
+      z.object({
+        candidateId: z.enum(candidates.map((candidate) => candidate.id)).nullable(),
+        reasonCode: z.enum(['selected', 'needs-context', 'no-match', 'excluded', 'insufficient-evidence', 'not-major']),
+        reason: z.string(),
+      }),
       signal,
     );
     const candidateId = payload.candidateId;
@@ -684,9 +692,19 @@ export class NewsService {
     const reason = typeof payload.reason === 'string' ? payload.reason.trim().slice(0, 240) : '';
     const hasSelection =
       typeof candidateId === 'string' && candidates.some((candidate) => candidate.id === candidateId);
+    const candidate = candidates.find((item) => item.id === candidateId);
+    if (
+      reasonCode === 'needs-context' &&
+      candidate &&
+      !candidate.sourceContext &&
+      reason &&
+      candidates.filter((item) => item.sourceContext).length < MAX_CONTEXT_REQUESTS
+    ) {
+      return { candidateId: candidate.id, reasonCode, reason };
+    }
     const noSelection = candidateId === null;
     const validReason = hasSelection
-      ? reasonCode === 'selected'
+      ? reasonCode === 'selected' && (!candidate?.sourceContext || candidate.sourceContext.status === 'available')
       : noSelection && ['no-match', 'excluded', 'insufficient-evidence', 'not-major'].includes(String(reasonCode));
     if ((!hasSelection && !noSelection) || !validReason || !reason) {
       await input.onProviderAttempt?.('selecting', 'uncertain');
@@ -718,38 +736,21 @@ export class NewsService {
       input,
       'writing',
       key,
+      NEWS_WRITING_INSTRUCTIONS,
       {
-        model: NEWS_TEXT_MODEL,
-        reasoning: { effort: 'none' },
-        max_output_tokens: 300,
-        instructions: NEWS_WRITING_INSTRUCTIONS,
-        input: JSON.stringify({
-          candidate,
-          interests: settings.interests,
-          exclusions: editorial.exclusions,
-          userStyle: {
-            name: input.dj.name,
-            language: input.dj.language,
-            personality: input.dj.personality,
-            instructions: editorial.instructions,
-            mood: input.mood?.slice(0, 4000),
-            music: musicContext(input, editorial.musicPreferences),
-          },
-        }),
-        text: {
-          format: {
-            type: 'json_schema',
-            name: 'spoken_news_story',
-            strict: true,
-            schema: {
-              type: 'object',
-              additionalProperties: false,
-              required: ['script'],
-              properties: { script: { type: 'string' } },
-            },
-          },
+        candidate,
+        interests: settings.interests,
+        exclusions: editorial.exclusions,
+        userStyle: {
+          name: input.dj.name,
+          language: input.dj.language,
+          personality: input.dj.personality,
+          instructions: editorial.instructions,
+          mood: input.mood?.slice(0, 4000),
+          music: musicContext(input, editorial.musicPreferences),
         },
       },
+      z.object({ script: z.string() }),
       signal,
     );
     const script = typeof payload.script === 'string' ? payload.script.trim() : '';
@@ -794,9 +795,33 @@ export class NewsService {
       throw new ServiceError('no-news', `No recent news. Music continues. ${collection.warnings.join(' ')}`.trim());
     }
     let selection = input.checkpoint?.selection;
-    if (!selection) {
-      selection = await this.select(input, settings, editorial, collection, key, signal);
-      await input.onSelection?.(selection);
+    while (!selection) {
+      const pending: NewsCandidate | undefined = collection.candidates.find(
+        (candidate) => candidate.sourceContext?.status === 'pending',
+      );
+      if (pending) {
+        this.deps.onProgress?.({
+          requestId: input.requestId,
+          phase: 'writing',
+          message: 'Reading the linked news article…',
+        });
+        const sourceContext = await readNewsSource(pending.url, signal);
+        signal.throwIfAborted();
+        collection = withSourceContext(collection, pending.id, sourceContext);
+        await input.onCollection?.(collection);
+        continue;
+      }
+      const decision = await this.select(input, settings, editorial, collection, key, signal);
+      if (decision.reasonCode === 'needs-context') {
+        collection = withSourceContext(collection, decision.candidateId, {
+          status: 'pending',
+          reason: decision.reason,
+        });
+        await input.onCollection?.(collection);
+      } else {
+        selection = decision;
+        await input.onSelection?.(selection);
+      }
     }
     if (!selection.candidateId) {
       if (collection.incomplete)
@@ -831,65 +856,77 @@ export class NewsService {
     await input.onPhase?.('speech');
     await input.onProviderAttempt?.('speech', 'pending');
     const voiceId = settings.elevenVoiceId || 'JBFqnCBsd6RMkjVDRZzb';
-    let response: Response;
-    try {
-      response = await fetch(
-        `https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent(voiceId)}?output_format=mp3_44100_128`,
-        {
-          method: 'POST',
-          redirect: 'error',
-          signal: AbortSignal.any([signal, AbortSignal.timeout(120000)]),
-          headers: { 'xi-api-key': elevenKey, 'Content-Type': 'application/json', Accept: 'audio/mpeg' },
-          body: JSON.stringify({
-            model_id: 'eleven_v4',
-            text: `${settings.elevenTags || ''} ${script.script}`.trim(),
-            voice_settings: { stability: 0.5, similarity_boost: 0.75 },
-          }),
-        },
-      );
-    } catch (error) {
-      await input.onProviderAttempt?.('speech', 'uncertain');
-      throw error;
-    }
-    if (response.status === 401) {
-      await input.onProviderAttempt?.('speech', 'rejected');
-      throw new ServiceError(
-        'invalid',
-        'ElevenLabs did not accept the API key. Update it in Settings → Provider keys.',
-      );
-    }
-    if ([403, 404, 422].includes(response.status)) {
-      await input.onProviderAttempt?.('speech', 'rejected');
-      throw new ServiceError(
-        'unsupported',
-        'Eleven v4 or this voice is unavailable for your key. Check model access, voice ID, and text-to-speech permission.',
-      );
-    }
-    if (response.status === 429) {
-      await input.onProviderAttempt?.('speech', 'rejected');
-      throw new ServiceError('server', 'ElevenLabs rate or credit limits prevented this DJ clip.');
-    }
-    if (!response.ok) {
-      await input.onProviderAttempt?.('speech', 'uncertain');
-      throw new ServiceError('server', `ElevenLabs could not render the clip (${response.status}).`);
-    }
-    const contentType = response.headers.get('content-type')?.split(';')[0].trim().toLowerCase();
-    if (contentType && !contentType.startsWith('audio/') && contentType !== 'application/octet-stream') {
-      await input.onProviderAttempt?.('speech', 'uncertain');
-      throw new ServiceError('server', 'ElevenLabs did not return audio. Check the provider status and try again.');
-    }
-    let audio: Buffer;
-    try {
-      audio = await boundedBytes(response, 24 * 1024 * 1024, signal);
-    } catch (error) {
-      await input.onProviderAttempt?.('speech', 'uncertain');
-      throw error;
-    }
-    if (audio.length < 100) {
-      await input.onProviderAttempt?.('speech', 'uncertain');
-      throw new ServiceError('server', 'ElevenLabs returned an empty speech clip.');
-    }
-    signal.throwIfAborted();
+    const result = await generateSpeech({
+      adapter: new NewsSpeechAdapter(async () => {
+        let response: Response;
+        try {
+          response = await fetch(
+            `https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent(voiceId)}?output_format=mp3_44100_128`,
+            {
+              method: 'POST',
+              redirect: 'error',
+              signal: AbortSignal.any([signal, AbortSignal.timeout(120000)]),
+              headers: { 'xi-api-key': elevenKey, 'Content-Type': 'application/json', Accept: 'audio/mpeg' },
+              body: JSON.stringify({
+                model_id: 'eleven_v4',
+                text: `${settings.elevenTags || ''} ${script.script}`.trim(),
+                voice_settings: { stability: 0.5, similarity_boost: 0.75 },
+              }),
+            },
+          );
+        } catch (error) {
+          await input.onProviderAttempt?.('speech', 'uncertain');
+          throw error;
+        }
+        if (response.status === 401) {
+          await input.onProviderAttempt?.('speech', 'rejected');
+          throw new ServiceError(
+            'invalid',
+            'ElevenLabs did not accept the API key. Update it in Settings → Provider keys.',
+          );
+        }
+        if ([403, 404, 422].includes(response.status)) {
+          await input.onProviderAttempt?.('speech', 'rejected');
+          throw new ServiceError(
+            'unsupported',
+            'Eleven v4 or this voice is unavailable for your key. Check model access, voice ID, and text-to-speech permission.',
+          );
+        }
+        if (response.status === 429) {
+          await input.onProviderAttempt?.('speech', 'rejected');
+          throw new ServiceError('server', 'ElevenLabs rate or credit limits prevented this DJ clip.');
+        }
+        if (!response.ok) {
+          await input.onProviderAttempt?.('speech', 'uncertain');
+          throw new ServiceError('server', `ElevenLabs could not render the clip (${response.status}).`);
+        }
+        const contentType = response.headers.get('content-type')?.split(';')[0].trim().toLowerCase();
+        if (contentType && !contentType.startsWith('audio/') && contentType !== 'application/octet-stream') {
+          await input.onProviderAttempt?.('speech', 'uncertain');
+          throw new ServiceError('server', 'ElevenLabs did not return audio. Check the provider status and try again.');
+        }
+        let audio: Buffer;
+        try {
+          audio = await boundedBytes(response, 24 * 1024 * 1024, signal);
+        } catch (error) {
+          await input.onProviderAttempt?.('speech', 'uncertain');
+          throw error;
+        }
+        if (audio.length < 100) {
+          await input.onProviderAttempt?.('speech', 'uncertain');
+          throw new ServiceError('server', 'ElevenLabs returned an empty speech clip.');
+        }
+        signal.throwIfAborted();
+        return audio;
+      }),
+      threadId: input.requestId,
+      text: script.script,
+      voice: voiceId,
+      format: 'mp3',
+      abortSignal: signal,
+      debug: false,
+    });
+    const audio = Buffer.from(result.audio, 'base64');
     return { ...script, audio, mimeType: 'audio/mpeg', engine: 'elevenlabs-v4' };
   }
 }
