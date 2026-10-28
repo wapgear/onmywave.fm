@@ -32,10 +32,11 @@ function check(value, marker, message) {
 }
 
 function exact(source, anchor, replacement, marker) {
-  const first = source.indexOf(anchor);
-  if (first < 0 || source.indexOf(anchor, first + anchor.length) >= 0)
-    throw new Error(`Expected one source anchor for ${marker}`);
-  return source.slice(0, first) + replacement + source.slice(first + anchor.length);
+  const pattern = anchor instanceof RegExp ? anchor : new RegExp(anchor.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const matches = [...source.matchAll(new RegExp(pattern.source, 'g'))];
+  if (matches.length !== 1) throw new Error(`Expected one source anchor for ${marker}`);
+  const [match] = matches;
+  return source.slice(0, match.index) + replacement + source.slice(match.index + match[0].length);
 }
 
 async function makeMain(mutant = false) {
@@ -48,7 +49,7 @@ async function makeMain(mutant = false) {
   );
   source = exact(
     source,
-    'const stored = await readConnection();\n  if (stored) service.restore({ ...stored, sessionOnly: !persistentDeviceIdentity });',
+    /const stored = await readConnection\(\);\s*if \(stored\) service\.restore\(\{\s*\.\.\.stored,\s*sessionOnly: !persistentDeviceIdentity\s*\}\);/,
     'const stored = null;\n  service.restore({ id: process.env.WAVE_FIXTURE_JELLYFIN + "|" + process.env.WAVE_FIXTURE_USER_ID, serverUrl: process.env.WAVE_FIXTURE_JELLYFIN, userId: process.env.WAVE_FIXTURE_USER_ID, userName: "Fixture listener", token: "synthetic-token", serverVersion: "10.9.0", selectedLibraryIds: [process.env.WAVE_FIXTURE_LIBRARY_ID], sessionOnly: true });',
     'synthetic provider session',
   );
@@ -71,26 +72,26 @@ async function makeMain(mutant = false) {
   );
   source = exact(
     source,
-    'async function savePlaybackSnapshot(input) {\n  validatePlayback(input);',
+    /async function savePlaybackSnapshot\(input\) \{\s*validatePlayback\(input\);/,
     'async function savePlaybackSnapshot(input) {\n  if (process.env.WAVE_DELAY_FLUSH === "1") await new Promise((resolve) => setTimeout(resolve, 650));\n  validatePlayback(input);',
     'controlled checkpoint write delay',
   );
   source = exact(
     source,
-    'savePlayback: async (input) => {\n      await savePlaybackSnapshot(input);\n    },',
+    /savePlayback: async \(input\) => \{\s*await savePlaybackSnapshot\(input\);\s*\},/,
     'savePlayback: async (input) => {\n      if (process.env.WAVE_DELAY_LEGACY_SAVE === "1") await new Promise((resolve) => setTimeout(resolve, 2000));\n      await savePlaybackSnapshot(input);\n    },',
     'controlled legacy unload-save delay',
   );
   source = exact(
     source,
-    '}).catch(() => {\n  app.quit();\n});',
+    /\}\)\.catch\(\(\) => \{\s*app\.quit\(\);\s*\}\);/,
     '}).catch((error) => {\n  console.error("RELAUNCH_MAIN_STARTUP_FAILURE", error);\n  app.quit();\n});',
     'startup diagnostics',
   );
   if (mutant) {
     source = exact(
       source,
-      'app.on("before-quit", (event) => {\n  if (quitCheckpointed) {\n    quitCheckpointed = false;\n    beginShutdown();\n    return;\n  }\n  event.preventDefault();\n  if (quitCheckpointInFlight) return;\n  quitCheckpointInFlight = true;\n  void requestPlaybackCheckpoint().finally(() => {\n    quitCheckpointInFlight = false;\n    quitCheckpointed = true;\n    beginShutdown();\n    app.quit();\n  });\n});',
+      /app\.on\("before-quit", \(event\) => \{\s*if \(quitCheckpointed\) \{\s*quitCheckpointed = false;\s*beginShutdown\(\);\s*return;\s*\}\s*event\.preventDefault\(\);\s*if \(quitCheckpointInFlight\) return;\s*quitCheckpointInFlight = true;\s*(?:void )?requestPlaybackCheckpoint\(\)\.finally\(\(\) => \{\s*quitCheckpointInFlight = false;\s*quitCheckpointed = true;\s*beginShutdown\(\);\s*app\.quit\(\);\s*\}\);\s*\}\);/,
       'app.on("before-quit", () => { beginShutdown(); });',
       'missing quit barrier mutant',
     );

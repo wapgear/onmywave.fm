@@ -49,7 +49,7 @@
     "oxlint": "1.89.0",
     "oxlint-tsgolint": "7.0.2005",
     "typescript": "^5.9.3",
-    "vite": "7.3.7"
+    "vite": "8.3.5"
   },
   "build": {
     "appId": "fm.onmywave.light",
