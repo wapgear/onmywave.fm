@@ -1,6 +1,6 @@
 Third party license texts
 
-Snapshot of production dependencies in pnpm-lock.yaml. Updated 2026-10-19.
+Snapshot of production dependencies in pnpm-lock.yaml. Updated 2026-10-28.
 Full upstream license texts follow.
 
 
@@ -230,7 +230,7 @@ SOFTWARE.
 
 
 ========================================================================
-@tanstack/query-core 5.96.2 (MIT)
+@tanstack/query-core 5.104.5 (MIT)
 Source: node_modules/@tanstack/query-core/LICENSE
 
 MIT License
@@ -257,7 +257,7 @@ SOFTWARE.
 
 
 ========================================================================
-@tanstack/react-query 5.96.2 (MIT)
+@tanstack/react-query 5.104.5 (MIT)
 Source: node_modules/@tanstack/react-query/LICENSE
 
 MIT License
@@ -284,7 +284,7 @@ SOFTWARE.
 
 
 ========================================================================
-@tanstack/react-virtual 3.14.19 (MIT)
+@tanstack/react-virtual 3.14.22 (MIT)
 Source: node_modules/@tanstack/react-virtual/LICENSE
 
 MIT License
@@ -311,7 +311,7 @@ SOFTWARE.
 
 
 ========================================================================
-@tanstack/virtual-core 3.19.4 (MIT)
+@tanstack/virtual-core 3.19.7 (MIT)
 Source: node_modules/@tanstack/virtual-core/LICENSE
 
 MIT License
@@ -494,7 +494,7 @@ SOFTWARE.
 
 
 ========================================================================
-react 19.2.7 (MIT)
+react 19.3.1 (MIT)
 Source: node_modules/react/LICENSE
 
 MIT License
@@ -521,7 +521,7 @@ SOFTWARE.
 
 
 ========================================================================
-react-dom 19.2.7 (MIT)
+react-dom 19.3.1 (MIT)
 Source: node_modules/react-dom/LICENSE
 
 MIT License
@@ -548,7 +548,7 @@ SOFTWARE.
 
 
 ========================================================================
-scheduler 0.27.0 (MIT)
+scheduler 0.28.0 (MIT)
 Source: node_modules/scheduler/LICENSE
 
 MIT License
@@ -655,7 +655,7 @@ SOFTWARE.
 
 
 ========================================================================
-electron-updater 6.8.9 (MIT)
+electron-updater 6.8.11 (MIT)
 Source: node_modules/electron-updater/LICENSE
 
 The MIT License (MIT)

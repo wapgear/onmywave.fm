@@ -24,13 +24,13 @@
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
     "@fontsource/manrope": "^5.2.8",
-    "@tanstack/react-query": "5.96.2",
-    "@tanstack/react-virtual": "^3.14.19",
-    "electron-updater": "^6.8.9",
+    "@tanstack/react-query": "5.104.5",
+    "@tanstack/react-virtual": "^3.14.22",
+    "electron-updater": "^6.8.11",
     "fast-xml-parser": "^5.11.2",
     "lucide-react": "^0.468.0",
-    "react": "19.2.7",
-    "react-dom": "19.2.7",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
     "ws": "^8.22.0"
   },
   "devDependencies": {
@@ -40,7 +40,7 @@
     "@types/react-dom": "^19.2.3",
     "@types/ws": "^8.18.2",
     "@vitejs/plugin-react": "^5.2.0",
-    "electron": "43.8.1",
+    "electron": "45.0.0",
     "electron-builder": "^26.18.0",
     "electron-vite": "6.0.0",
     "eslint-plugin-react-hooks": "^7.1.1",

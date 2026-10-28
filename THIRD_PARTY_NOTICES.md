@@ -10,7 +10,7 @@ The existing desktop application was an integration reference. This application 
 
 ## Runtime dependencies and fonts
 
-[Bundled third party license texts](licenses/THIRD_PARTY_LICENSES.txt) contain the available license texts and declarations for all 36 production packages in the current lockfile, including React, TanStack Query/Virtual, Lucide, ws, electron-updater, and the XML parser dependencies. Keep this snapshot synchronized with dependency changes. It is included by the macOS packaging configuration because bundled JavaScript and fonts may no longer sit beside their original package license files.
+[Bundled third party license texts](licenses/THIRD_PARTY_LICENSES.txt) contain the available license texts and declarations for all 36 production packages in the current lockfile (refreshed 2026-10-28), including React, TanStack Query/Virtual, Lucide, ws, electron-updater, and the XML parser dependencies. Keep this snapshot synchronized with dependency changes. It is included by the macOS packaging configuration because bundled JavaScript and fonts may no longer sit beside their original package license files.
 
 - Inter: Copyright 2016 The Inter Project Authors, SIL Open Font License 1.1.
 - Manrope: Copyright 2019 The Manrope Project Authors, SIL Open Font License 1.1.
