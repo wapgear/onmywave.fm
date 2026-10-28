@@ -40,6 +40,12 @@ async function roundtrip(name, mutation) {
   delete require.cache[require.resolve(servicePath)];
   const reader = require(servicePath);
   assert.deepEqual((await reader.getLocalState()).playback, snapshot, 'Durable playback snapshot must survive a fresh storage module');
+  assert.equal((await reader.getLocalState()).djPlayback.announceTracks, false, 'Announcements must start disabled');
+  for (const announceTracks of [true, false]) {
+    await reader.updateLocalState({ djPlayback: { ...(await reader.getLocalState()).djPlayback, announceTracks } });
+    delete require.cache[require.resolve(servicePath)];
+    assert.equal((await require(servicePath).getLocalState()).djPlayback.announceTracks, announceTracks, 'Announcement preference did not survive reload');
+  }
 }
 (async () => {
   await roundtrip('baseline', false);

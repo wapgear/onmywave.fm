@@ -1603,6 +1603,7 @@ export async function prepareRoomNews(
         const take: PreparedNewsTake = {
           requestId: input.requestId,
           script: result.script,
+          ending: readyScript.ending,
           articles: result.articles,
           warnings: result.warnings,
           engine: result.engine,

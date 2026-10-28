@@ -4,6 +4,8 @@ News preparation runs in Electron main, the trusted application boundary. There 
 
 The two model operations use separate fixed instructions and structured context. The selector receives candidates, interests, exclusions and importance. The writer receives one already selected candidate and the user's delivery preferences. The system prompt cannot be replaced by a user field. This follows the [Responses instruction hierarchy](https://developers.openai.com/api/docs/guides/prompt-engineering#message-roles-and-instruction-following). Output validators enforce structure, identity and size; they do not prove factual entailment or that a script sounds natural.
 
+News ending policy version 2 makes every new bulletin story-only: it ends on the final useful fact and leaves signoffs and music handoffs to playback, even when host preferences request a closing line. Scripts and published takes retain a `story-only` marker. This lets the occasional song introduction be the only closing transition, while legacy recordings without that contract remain news-only. Changed policy versions invalidate older resumable configuration hashes without deleting saved audio.
+
 ## Durable transitions
 
 ```mermaid

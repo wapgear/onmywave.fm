@@ -12,12 +12,14 @@ const audio = fs.readFileSync(path.join(root, 'src/renderer/public/demo/news-bre
 const calls = [];
 const take = {
   id: 'fixture-take', available: true, voice: 'fixture-voice', delivery: '[warm]',
+  ending: 'story-only',
   renderingDJ: { id: 'fixture-dj', language: 'English' }, script: 'The reusable bulletin.',
 };
 let song = { id: 'fixture-song', name: 'Where Are You My Love', artists: ['Avalance'] };
 let behavior = 'success';
 let dispatch;
 let allowed = true;
+const playback = { enabled: false, roomId: null, everySongs: 3, announceTracks: true };
 
 class ServiceError extends Error { constructor(code, message) { super(message); this.code = code; } }
 
@@ -25,6 +27,8 @@ require.extensions['.ts'] = (mod, file) => mod._compile(ts.transpileModule(fs.re
   compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
 }).outputText, file);
 Module._load = function (id, parent, ...rest) {
+  if (id === './storage' && parent?.filename.endsWith('/song-handoffs.ts'))
+    return { getLocalState: async () => ({ djPlayback: playback }) };
   if (id === './prepared-news' && parent?.filename.endsWith('/song-handoffs.ts'))
     return { getPreparedNews: async () => ({ takes: [take] }) };
   if (id === './jellyfin' && parent?.filename.startsWith(path.join(root, 'src/main')))
@@ -48,6 +52,15 @@ global.fetch = async (url, options) => {
     const { prepareSongHandoff, cancelSongHandoff, songHandoffAudio, revokeSongHandoffs } = require(path.join(root, 'src/main/song-handoffs.ts'));
     const news = new NewsService({ getApiKey: async () => null, getElevenApiKey: async () => 'fixture-key', canGenerate: () => allowed });
     const prepare = (requestId) => prepareSongHandoff(news, async (id) => { assert.equal(id, song.id); return song; }, { requestId, takeId: take.id, songId: song.id });
+    delete playback.announceTracks;
+    assert.equal(await prepare('legacy-settings'), null);
+    playback.announceTracks = false;
+    assert.equal(await prepare('disabled-settings'), null);
+    playback.announceTracks = true;
+    delete take.ending;
+    assert.equal(await prepare('legacy-ending'), null);
+    take.ending = 'story-only';
+    assert.equal(calls.length, 0, 'Disabled settings or legacy endings dispatched paid speech');
     const link = await prepare('request-one');
     assert.equal(link.script, 'And now, enjoy Where Are You My Love by Avalance.');
     assert.equal(calls[0].text, '[warm] And now, enjoy Where Are You My Love by Avalance.');

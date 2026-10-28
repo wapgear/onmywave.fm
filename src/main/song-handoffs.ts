@@ -1,10 +1,12 @@
 import { randomUUID } from 'node:crypto';
 
+import { normalizeDJPlaybackSettings } from '../shared/dj-playback';
 import type { Song, SongHandoff } from '../shared/types';
 import { NEWS_TEXT_MODEL } from '../shared/types';
 import { ServiceError } from './jellyfin';
 import type { NewsService } from './news';
 import { getPreparedNews } from './prepared-news';
+import { getLocalState } from './storage';
 
 const clips = new Map<string, Buffer>();
 
@@ -49,8 +51,10 @@ export async function prepareSongHandoff(
   active.set(input.requestId, controller);
   try {
     const signal = AbortSignal.any([controller.signal, news.generationSignal(), AbortSignal.timeout(120000)]);
+    if (!normalizeDJPlaybackSettings((await getLocalState()).djPlayback).announceTracks) return null;
     const take = (await getPreparedNews()).takes.find((value) => value.id === input.takeId && value.available);
     if (!take) throw new ServiceError('not-found', 'The saved DJ recording is unavailable.');
+    if (take.ending !== 'story-only') return null;
     const song = await resolveSong(input.songId);
     signal.throwIfAborted();
     const title = spoken(song.name);

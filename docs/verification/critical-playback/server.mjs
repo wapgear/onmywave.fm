@@ -164,7 +164,22 @@ async function main() {
                 'fixture preferences',
               );
             }
-            if (!id.startsWith(path.join(root, 'src/renderer')) || !id.endsWith('/player.tsx')) return;
+            if (!id.startsWith(path.join(root, 'src/renderer'))) return;
+            if (id.endsWith('/App.tsx')) {
+              const parsed = ts.createSourceFile(id, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+              let position;
+              const visit = (node) => {
+                if (ts.isFunctionDeclaration(node) && node.name?.text === 'App' && node.body) {
+                  const statement = node.body.statements.find(ts.isReturnStatement);
+                  if (statement) position = statement.getStart(parsed);
+                }
+                ts.forEachChild(node, visit);
+              };
+              visit(parsed);
+              if (position === undefined) throw new Error('App fixture instrumentation target is missing');
+              return `${source.slice(0, position)}window.__fixture.client=client;\n${source.slice(position)}`;
+            }
+            if (!id.endsWith('/player.tsx')) return;
             if (mutationSpec) source = exact(source, mutationSpec.anchor, mutationSpec.replacement, mutation);
             const parsed = ts.createSourceFile(id, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
             const target = [];
@@ -266,8 +281,47 @@ async function main() {
         if (!String(error).includes(`ASSERTION:${expectedMutation}:`)) throw error;
         emit({ mutation, detected: true, evidence: String(error).split('\n')[0] });
       }
+    } else if (scenario === 'song-handoff-settings') {
+      await open({ playback: snapshot(), dj: true, state: { djPlayback: { enabled: false, roomId: 'default-room', everySongs: 3, keepOnSeek: true, voiceVolume: 0.7 } } });
+      await window.webContents.executeJavaScript(`document.querySelector('button.settings-nav')?.click()`);
+      const stage = process.env.WAVE_CAPTURE_STAGE ?? 'after';
+      for (const [width, height] of [[1440, 1000], [960, 800]]) {
+        window.setContentSize(width, height);
+        await window.webContents.executeJavaScript(`document.fonts.ready.then(() => new Promise((resolve) => setTimeout(resolve, 300)))`);
+        await window.webContents.executeJavaScript(`new Promise((resolve, reject) => {
+          let tries = 0;
+          const timer = setInterval(() => {
+            const section = document.querySelector('.room-dj-schedule');
+            if (section) { clearInterval(timer); section.scrollIntoView({ block: 'start' }); setTimeout(() => {
+              if (section.getBoundingClientRect().top > 200) reject(new Error('DJ settings were not scrolled into the capture'));
+              else resolve();
+            }, 150); }
+            else if (++tries > 100) { clearInterval(timer); reject(new Error('DJ playback settings did not open')); }
+          }, 20);
+        })`);
+        await writeFile(path.join(root, `docs/verification/song-handoff/${stage}-settings-${width}.png`), (await window.webContents.capturePage()).toPNG());
+      }
+      if (stage === 'after') {
+        for (const enabled of [true, false]) {
+          await window.webContents.executeJavaScript(`(() => {
+            const checkbox = [...document.querySelectorAll('.room-dj-schedule input[type="checkbox"]')].find((input) => input.labels[0]?.textContent.includes('Occasionally announce'));
+            if (!checkbox || checkbox.checked === ${enabled}) throw new Error('Announcement switch has an unexpected saved value');
+            checkbox.focus(); checkbox.click();
+          })()`);
+          await window.webContents.executeJavaScript(`new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)))`);
+          await window.webContents.executeJavaScript(`[...document.querySelectorAll('.room-dj-schedule button')].find((button) => button.textContent.trim() === 'Save DJ playback').click()`);
+          await window.webContents.executeJavaScript(`new Promise((resolve, reject) => {
+            let tries = 0;
+            const timer = setInterval(() => {
+              if (window.__fixture.state.djPlayback.announceTracks === ${enabled} && document.querySelector('.room-dj-schedule [role="status"]')?.textContent.includes('saved')) { clearInterval(timer); resolve(); }
+              else if (++tries > 100) { clearInterval(timer); reject(new Error('Announcement setting did not save and confirm')); }
+            }, 20);
+          })`);
+        }
+      }
+      emit({ scenario: 'DJ playback settings screenshots', stage, passed: true });
     } else if (scenario === 'song-handoff') {
-      const cases = process.env.WAVE_HANDOFF_CASES?.split(',') ?? ['normal', 'automatic', 'shuffle', 'shuffle-cycle', 'repeat-one', 'repeat-all', 'end', 'queue-edit', 'intro-edit', 'pause', 'seek-intro', 'budget', 'too-long', 'too-late', 'news-unavailable', 'failure', 'cancel-pending'];
+      const cases = process.env.WAVE_HANDOFF_CASES?.split(',') ?? ['normal', 'automatic', 'disabled', 'legacy-ending', 'cadence', 'disable-generating', 'disable-pending', 'disable-speaking', 'shuffle', 'shuffle-cycle', 'repeat-one', 'repeat-all', 'end', 'queue-edit', 'intro-edit', 'pause', 'seek-intro', 'budget', 'too-long', 'too-late', 'news-unavailable', 'failure', 'cancel-pending'];
       for (const handoffCase of cases) {
         await open({
           handoffCase,
@@ -276,7 +330,7 @@ async function main() {
           playback: handoffCase === 'shuffle-cycle' ? shuffledAll() : snapshot(['1', '2', '3'], ['end', 'repeat-all'].includes(handoffCase) ? 2 : 0, 0),
           preferences: { volume: 0.75, shuffle: handoffCase === 'shuffle-cycle', repeat: handoffCase === 'repeat-one' ? 'one' : ['shuffle-cycle', 'repeat-all'].includes(handoffCase) ? 'all' : 'off' },
           state: {
-            djPlayback: { enabled: handoffCase === 'automatic', roomId: 'default-room', everySongs: 1, keepOnSeek: true, voiceVolume: 0.7 },
+            djPlayback: { enabled: handoffCase === 'automatic', roomId: 'default-room', everySongs: 1, keepOnSeek: true, voiceVolume: 0.7, announceTracks: handoffCase !== 'disabled' },
             newsTransitions: { mode: ['budget', 'too-long', 'too-late', 'seek-intro'].includes(handoffCase) ? 'over-music' : 'between-songs', fadeOutSeconds: 0, leadInSeconds: 0, postSpeechSeconds: 0, fadeInSeconds: 0 },
           },
         });

@@ -17,6 +17,7 @@ export type ScheduledNews = {
   starting: boolean;
   nextSong: { key: string; shufflePlan?: ShufflePlan } | null;
   isNextCurrent(): boolean;
+  skipHandoff(): void;
   prepareSpeech(): Promise<void>;
   playSpeech(): Promise<void>;
   cancelDelivery(): void;

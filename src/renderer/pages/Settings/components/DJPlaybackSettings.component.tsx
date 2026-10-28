@@ -1,7 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 
-import { defaultDJPlaybackSettings, type DJPlaybackSettings as Settings } from '../../../../shared/dj-playback';
+import {
+  normalizeDJPlaybackSettings,
+  TRACK_ANNOUNCEMENT_SONG_INTERVAL,
+  type DJPlaybackSettings as Settings,
+} from '../../../../shared/dj-playback';
 import { unwrap } from '../../../api';
 import { InfoHelp } from '../../../components/InfoHelp/InfoHelp.component';
 import { ErrorNotice } from '../../../components/Shared';
@@ -29,12 +33,13 @@ export function DJPlaybackSettings() {
   });
   const edit = useGeneralSettingsEdits().playback;
   const { draft, save } = edit;
-  const settings = draft ?? state.data?.djPlayback ?? defaultDJPlaybackSettings();
+  const settings = draft ?? normalizeDJPlaybackSettings(state.data?.djPlayback);
   function change(patch: Partial<Settings>) {
     edit.change({
       everySongs: settings.everySongs,
       keepOnSeek: settings.keepOnSeek,
       voiceVolume: settings.voiceVolume,
+      announceTracks: settings.announceTracks,
       ...patch,
     });
   }
@@ -100,6 +105,19 @@ export function DJPlaybackSettings() {
             />
             <span>{settings.everySongs === 1 ? 'finished song' : 'finished songs'}</span>
           </label>
+          <label className="dj-song-interval">
+            <input
+              type="checkbox"
+              checked={settings.announceTracks}
+              aria-describedby="track-announcement-hint"
+              onChange={(event) => change({ announceTracks: event.target.checked })}
+            />
+            Occasionally announce the next song
+          </label>
+          <p className="form-hint" id="track-announcement-hint">
+            Only at a news break, with at least {TRACK_ANNOUNCEMENT_SONG_INTERVAL} finished songs between announcements.
+            The introduction replaces the closing line. Enabling this allows speech generation for these introductions.
+          </p>
           <label className="dj-song-interval">
             <input
               type="checkbox"

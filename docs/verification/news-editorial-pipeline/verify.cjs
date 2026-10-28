@@ -149,6 +149,7 @@ async function main() {
   await run('durable boundaries, separate policies, source merging and idempotent completion', async () => {
     fresh('happy');
     const take = await prepare('request-happy');
+    assert.equal(take.ending, 'story-only');
     assert.deepEqual(calls, { feeds: 2, selecting: 1, writing: 1, speech: 1 });
     assert.equal(take.selection.reasonCode, 'selected');
     const request = index().requests[0];
@@ -156,6 +157,9 @@ async function main() {
     assert.equal(request.phase, 'complete');
     assert.deepEqual(request.checkpoint.collection.candidates[0].sourceIds, ['source-a', 'source-b']);
     assert.equal(index().scripts.length, 1);
+    assert.equal(index().scripts[0].ending, 'story-only');
+    assert.match(requests.find((request) => request.phase === 'writing').instructions, /playback owns the only transition back to music/);
+    assert.match(requests.find((request) => request.phase === 'writing').instructions, /even if host preferences request one/);
     assert.equal((await prepare('request-happy')).id, take.id);
     assert.equal(calls.speech, 1);
     state.djs[0].instructions = 'Different style';

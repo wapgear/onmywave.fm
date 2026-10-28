@@ -20,15 +20,26 @@ window.__criticalPlayback = {
     const mode = window.__fixtureSeed.handoffCase;
     const fixture = window.__fixture;
     const events = [];
+    const updateSettings = async (patch) => {
+      const result = await window.wave.saveDJPlayback(patch);
+      assert(result.ok, 'Fixture settings save failed');
+      fixture.client.setQueryData(['localState'], result.value);
+      await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    };
+    await updateSettings({ enabled: false });
+    const take = fixture.takes[0];
+    if (mode !== 'legacy-ending') take.ending = 'story-only';
     let resolveLink;
     window.wave.prepareSongHandoff = async (input) => {
       events.push({ method: 'prepare', input });
-      if (mode === 'cancel-pending') await new Promise((resolve) => { resolveLink = resolve; });
+      if (mode === 'cancel-pending' || mode === 'disable-generating') await new Promise((resolve) => { resolveLink = resolve; });
+      if (mode === 'disable-generating') return { ok: false, error: { code: 'server', message: 'Fixture introduction cancelled' } };
       if (mode === 'failure') return { ok: false, error: { code: 'server', message: 'Fixture speech unavailable' } };
       return { ok: true, value: { script: 'And now, enjoy the next song.', audioUrl: `${location.origin}/fixture-handoff` } };
     };
     window.wave.cancelSongHandoff = async (id) => {
       events.push({ method: 'cancel', id });
+      if (mode === 'disable-generating') resolveLink?.();
       return { ok: true };
     };
     const BaseAudio = window.Audio;
@@ -52,15 +63,54 @@ window.__criticalPlayback = {
     }
     player().toggle();
     await waitFor(() => player().playing, 'Music did not start');
+    const music = fixture.audios.find((clip) => clip.src.startsWith('/fixture-audio/'));
+    const finishSongs = async (count) => {
+      const repeat = player().repeat;
+      player().setRepeat('one');
+      await waitFor(() => player().repeat === 'one', 'Repeat warmup did not start');
+      for (let index = 0; index < count; index++) {
+        const completed = player().completedSongs;
+        music.ended = true;
+        music.emit('ended');
+        await waitFor(() => player().completedSongs === completed + 1 && !player().busy && !music.ended && player().playing, 'Natural completion did not advance the announcement cadence');
+      }
+      player().setRepeat(repeat);
+      await waitFor(() => player().repeat === repeat, 'Repeat warmup did not restore');
+    };
+    const playBreak = async () => {
+      await player().scheduleNews(take);
+      const body = fixture.audios.find((clip) => clip.src.includes('fixture-speech-'));
+      const intro = fixture.audios.find((clip) => clip.src.includes('fixture-handoff'));
+      music.ended = true;
+      music.emit('ended');
+      await waitFor(() => !body.paused, 'Cadence bulletin did not start');
+      body.emit('ended');
+      if (intro) { await waitFor(() => !intro.paused, 'Cadence introduction did not start'); intro.emit('ended'); }
+      await waitFor(() => player().newsPhase === 'idle' && !player().busy, 'Cadence break did not finish');
+      return !!intro;
+    };
+    if (mode === 'cadence') {
+      assert(!(await playBreak()), 'The first news break announced a track before the rare cadence');
+      await finishSongs(11);
+      assert(await playBreak(), 'An eligible rare announcement was omitted');
+      assert(!(await playBreak()), 'Consecutive news breaks repeated the song introduction');
+      assert(events.filter((event) => event.method === 'prepare').length === 1, 'News-only breaks dispatched speech generation');
+      return;
+    }
+    await finishSongs(12);
+    if (mode === 'automatic') await updateSettings({ enabled: true });
     const before = player().currentKey;
     const expected = mode === 'end' ? null : mode === 'repeat-one' ? before : player().shuffle
       ? player().upcomingQueue[0]?.key : player().queue[player().queue.findIndex((entry) => entry.key === before) + 1]?.key;
-    const music = fixture.audios.find((clip) => clip.src.startsWith('/fixture-audio/'));
     if (mode === 'too-late') music.currentTime = 179;
-    const take = fixture.takes[0];
     const scheduling = mode === 'automatic'
       ? waitFor(() => player().newsPhase === 'waiting', 'Automatic DJ did not schedule the bulletin').then(() => null)
       : player().scheduleNews(take).then(() => null, (error) => error);
+    if (mode === 'disable-generating') {
+      await waitFor(() => resolveLink, 'Introduction generation did not start');
+      await updateSettings({ announceTracks: false });
+      assert(events.some((event) => event.method === 'cancel'), 'Disabling did not cancel generation');
+    }
     if (mode === 'cancel-pending') {
       await waitFor(() => resolveLink, 'Introduction request did not start');
       player().next();
@@ -81,12 +131,18 @@ window.__criticalPlayback = {
     }
     assert(!failure, `Scheduling failed: ${failure?.message}`);
     const bulletin = fixture.audios.find((clip) => clip.src.includes('fixture-speech-'));
-    const intro = fixture.audios.find((clip) => clip.src.includes('fixture-handoff'));
-    if (mode === 'end') assert(!intro && !events.some((event) => event.method === 'prepare'), 'Queue end announced an invented track');
+    let intro = fixture.audios.find((clip) => clip.src.includes('fixture-handoff'));
+    if (mode === 'disable-generating') assert(!intro, 'Cancelled generation produced an introduction');
+    else if (['end', 'disabled', 'legacy-ending'].includes(mode)) assert(!intro && !events.some((event) => event.method === 'prepare'), 'News-only playback generated a song introduction');
     else {
       assert(intro, 'No song introduction loaded');
       const chosen = events.find((event) => event.method === 'prepare').input.songId;
       if (expected) assert(player().queue.find((entry) => entry.key === expected).song.id === chosen, `Announced song differs from planned occurrence: ${JSON.stringify({mode, chosen, expectedId:player().queue.find((entry) => entry.key === expected).song.id, current:player().current.id, repeat:player().repeat, shuffle:player().shuffle})}`);
+    }
+    if (mode === 'disable-pending') {
+      await updateSettings({ announceTracks: false });
+      await waitFor(() => !intro.src, 'Disabling announcements kept the queued introduction');
+      intro = null;
     }
     if (mode === 'budget' || mode === 'seek-intro') {
       music.currentTime = 167;
@@ -112,6 +168,12 @@ window.__criticalPlayback = {
         player().playNext([fixture.songs[4]]);
         await waitFor(() => player().newsPhase === 'idle', 'Queue edit during introduction did not cancel');
         assert(intro.paused && !intro.src, 'Cancelled introduction retained audio');
+        return;
+      }
+      if (mode === 'disable-speaking') {
+        await updateSettings({ announceTracks: false });
+        await waitFor(() => player().newsPhase === 'idle' && player().currentKey !== before, 'Disabling an on-air introduction did not return to music');
+        assert(intro.paused && !intro.src, 'Disabled introduction kept playing');
         return;
       }
       if (mode === 'pause') {

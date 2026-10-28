@@ -11,7 +11,7 @@ import {
   type ReactNode,
 } from 'react';
 
-import { normalizeDJPlaybackSettings } from '../shared/dj-playback';
+import { normalizeDJPlaybackSettings, TRACK_ANNOUNCEMENT_SONG_INTERVAL } from '../shared/dj-playback';
 import { defaultNewsTransitionSettings, normalizeNewsTransitionSettings } from '../shared/news-transitions';
 import {
   createShufflePlan,
@@ -199,6 +199,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const newsNoticeRevision = useRef(0);
   const [lastNews, setLastNews] = useState<HeardNews | null>(null);
   const [completedSongs, setCompletedSongs] = useState(0);
+  const announcementSongs = useRef(0);
   const commandRevision = useRef(0);
   const [musicCommandRevision, setMusicCommandRevision] = useState(0);
   const cancelRestoreRetry = useRef<(() => void) | null>(null);
@@ -229,6 +230,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const newsSchedule = useRef<ScheduledNews | null>(null);
   const newsClock = useRef<number | null>(null);
   const cancelPreload = useRef<(() => void) | null>(null);
+  const cancelPendingHandoff = useRef<(() => void) | null>(null);
   const finishFade = useRef<((completed: boolean) => void) | null>(null);
   const consumedEnd = useRef<number | null>(null);
   const fadeOnNext = useRef<{ generation: number; seconds: number } | null>(null);
@@ -282,6 +284,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     position: 0,
     volume,
     recoveryReady,
+    announceTracks: djSettings.announceTracks,
   });
 
   useLayoutEffect(() => {
@@ -306,8 +309,19 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   );
 
   useLayoutEffect(() => {
-    live.current = { ...live.current, queue, index, current, repeat, shuffle, volume, recoveryReady };
-  }, [queue, index, current, repeat, shuffle, volume, recoveryReady]);
+    live.current = {
+      ...live.current,
+      queue,
+      index,
+      current,
+      repeat,
+      shuffle,
+      volume,
+      recoveryReady,
+      announceTracks: djSettings.announceTracks,
+    };
+    if (!djSettings.announceTracks) cancelPendingHandoff.current?.();
+  }, [queue, index, current, repeat, shuffle, volume, recoveryReady, djSettings.announceTracks]);
 
   const changeVolume = useCallback((value: number) => {
     const next = Math.max(0, Math.min(1, value));
@@ -647,6 +661,8 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     const delta = Math.max(0, (now - planned.lastTick) / 1000);
     planned.lastTick = now;
     const state = live.current;
+    if (!state.announceTracks) planned.skipHandoff();
+    if (newsSchedule.current !== planned) return;
     if (state.queue[state.index]?.key !== planned.key) {
       stopNews();
       return;
@@ -794,6 +810,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       if (preparing.current || !element.ended || consumedEnd.current === generation.current) return;
       if (countedSongGeneration.current !== generation.current) {
         countedSongGeneration.current = generation.current;
+        announcementSongs.current += 1;
         setCompletedSongs((value) => value + 1);
       }
       if (newsSchedule.current && (newsActive.current || newsSchedule.current.settings.mode === 'between-songs')) {
@@ -1769,19 +1786,36 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
               (nextState.repeat === 'all' ? nextState.queue[0]?.key : null));
       const nextEntry = nextState.queue.find((item) => item.key === nextKey);
       const nextSong = nextEntry ? { key: nextEntry.key, shufflePlan: advanced?.plan } : null;
-      const isNextCurrent = () =>
+      const isQueueCurrent = () =>
         live.current.queue === scheduledQueue &&
         live.current.repeat === scheduledRepeat &&
         live.current.shuffle === scheduledShuffle &&
         (!scheduledShuffle || shufflePlan.current === nextPlan);
+      const isNextCurrent = () => !handoff || isQueueCurrent();
       cancelPreload.current = cancelDelivery;
-      if (nextEntry && 'signature' in news) {
-        const link = unwrap(
-          await window.wave.prepareSongHandoff({ requestId, takeId: news.id, songId: nextEntry.song.id }),
-        );
-        if (token !== newsGeneration.current || !isNextCurrent())
+      const announcementDue =
+        normalizeDJPlaybackSettings(saved.djPlayback).announceTracks &&
+        announcementSongs.current >= TRACK_ANNOUNCEMENT_SONG_INTERVAL &&
+        news.ending === 'story-only';
+      if (announcementDue && nextEntry && 'signature' in news) {
+        const cancel = () => {
+          void window.wave.cancelSongHandoff(requestId).catch(() => {});
+        };
+        cancelPendingHandoff.current = cancel;
+        let link;
+        try {
+          link = unwrap(
+            await window.wave.prepareSongHandoff({ requestId, takeId: news.id, songId: nextEntry.song.id }),
+          );
+        } catch (cause) {
+          if (token !== newsGeneration.current || live.current.announceTracks) throw cause;
+          link = null;
+        } finally {
+          if (cancelPendingHandoff.current === cancel) cancelPendingHandoff.current = null;
+        }
+        if (token !== newsGeneration.current || (live.current.announceTracks && !isQueueCurrent()))
           throw new Error('The song changed before its introduction was ready.');
-        if (link) {
+        if (link && live.current.announceTracks) {
           handoff = new Audio();
           handoff.preload = 'auto';
           handoff.volume = live.current.volume * djSettings.voiceVolume;
@@ -1816,8 +1850,24 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         token,
         key,
         duration,
-        nextSong,
+        nextSong: handoff ? nextSong : null,
         isNextCurrent,
+        skipHandoff: () => {
+          const clip = handoff;
+          if (!clip) return;
+          const speaking = speech.current === clip;
+          handoff = null;
+          clip.onended = clip.onerror = clip.onplay = null;
+          clip.pause();
+          clip.removeAttribute('src');
+          clip.load();
+          planned.duration = element.duration;
+          planned.nextSong = null;
+          if (speaking) {
+            speech.current = element;
+            finishSpeech();
+          }
+        },
         bed: Math.max(0, Math.min(0.08, Number.isFinite(duckVolume) ? duckVolume : 0.05)),
         phase: 'waiting',
         trackEnded: false,
@@ -1843,6 +1893,15 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       setNewsLoading(false);
       setNewsPhase('waiting');
       let heard = false;
+      let announced = false;
+      const finishSpeech = () => {
+        setLastNews((value) => (value?.news === news ? { ...value, status: 'completed' } : value));
+        planned.phase = 'tail';
+        planned.elapsed = 0;
+        planned.lastTick = performance.now();
+        setNewsPhase(playIntent.current ? 'tail' : 'paused');
+        checkScheduledNews();
+      };
       element.onplay = () => {
         if (token !== newsGeneration.current || planned.phase !== 'speaking' || !playIntent.current) {
           speech.current?.pause();
@@ -1872,12 +1931,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
           if (playIntent.current) void handoff.play().catch(() => element.onerror?.(new Event('error')));
           return;
         }
-        setLastNews((value) => (value?.news === news ? { ...value, status: 'completed' } : value));
-        planned.phase = 'tail';
-        planned.elapsed = 0;
-        planned.lastTick = performance.now();
-        setNewsPhase(playIntent.current ? 'tail' : 'paused');
-        checkScheduledNews();
+        finishSpeech();
       };
       element.onerror = () => {
         if (token !== newsGeneration.current || newsSchedule.current !== planned) return;
@@ -1889,7 +1943,20 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       if (handoff) {
         handoff.onended = element.onended;
         handoff.onerror = element.onerror;
-        handoff.onplay = element.onplay;
+        handoff.onplay = () => {
+          if (token !== newsGeneration.current || planned.phase !== 'speaking' || !playIntent.current) {
+            handoff?.pause();
+            return;
+          }
+          if (!live.current.announceTracks) {
+            planned.skipHandoff();
+            return;
+          }
+          if (!announced) {
+            announced = true;
+            announcementSongs.current = 0;
+          }
+        };
       }
       checkScheduledNews();
     } catch (cause) {

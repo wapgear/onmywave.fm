@@ -197,6 +197,7 @@ export type ReviewedNewsArticle = NewsArticle & {
 export type NewsScript = {
   requestId: string;
   script: string;
+  ending?: 'story-only';
   articles: NewsArticle[];
   warnings: string[];
   selection?: NewsEditorialSelection;
