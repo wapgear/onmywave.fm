@@ -89,6 +89,7 @@
   --surface: #f0f0f2;
   --text: #202024;
   --sidebar: 208px;
+  --titlebar-height: 42px;
   --player-clearance: 116px;
   --section-header-height: 48px;
   --section-header-font-size: 11px;
@@ -250,7 +251,7 @@ button > svg {
   padding: 0 16px calc(var(--player-clearance) + 20px);
 }
 .traffic-light-space {
-  height: 52px;
+  height: calc(var(--titlebar-height) + 24px);
   -webkit-app-region: drag;
   flex-shrink: 0;
 }
@@ -300,14 +301,14 @@ button > svg {
   top: 0;
   left: var(--sidebar);
   right: 0;
-  height: 28px;
+  height: var(--titlebar-height);
   -webkit-app-region: drag;
 }
 .main-content {
   anchor-name: --library-panel;
   overflow-x: hidden;
   overflow-y: scroll;
-  margin: 28px 16px var(--player-clearance) 0;
+  margin: var(--titlebar-height) 16px var(--player-clearance) 0;
   border-radius: 16px;
   background: linear-gradient(
     to bottom,
@@ -1826,7 +1827,6 @@ input[type='range'] {
 }
 .titlebar-drag-region {
   z-index: 3;
-  height: 24px;
 }
 .search-field {
   background: var(--field-muted);

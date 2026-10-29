@@ -277,7 +277,7 @@
 }
 
 .side-drawer.listening-drawer {
-  margin: 28px 16px var(--player-clearance) 0;
+  margin: var(--titlebar-height) 16px var(--player-clearance) 0;
   overflow: hidden;
   border: 0;
   border-radius: 16px;
@@ -307,7 +307,7 @@
 }
 @media (max-width: 820px) {
   .side-drawer.listening-drawer {
-    top: 28px;
+    top: var(--titlebar-height);
     right: 16px;
     bottom: var(--player-clearance);
     width: min(var(--listening-sidebar-width), calc(100% - var(--sidebar) - 16px));

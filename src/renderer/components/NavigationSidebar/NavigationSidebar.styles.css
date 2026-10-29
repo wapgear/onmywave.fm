@@ -107,7 +107,7 @@
 .sidebar .sidebar-resize-handle {
   position: absolute;
   right: -4px;
-  top: 48px;
+  top: calc(var(--titlebar-height) + 20px);
   bottom: var(--player-clearance);
   width: 8px;
   outline: none;
