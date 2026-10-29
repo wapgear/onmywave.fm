@@ -1,0 +1,33 @@
+.select-field {
+  position: relative;
+  display: grid;
+  min-width: 0;
+}
+
+.select-field > select {
+  appearance: none;
+  padding-inline: var(--space-3) calc(var(--space-3) * 2 + 16px);
+}
+
+.select-field > svg {
+  position: absolute;
+  top: calc(50% - 8px);
+  right: var(--space-3);
+  color: var(--muted);
+  pointer-events: none;
+  transition: transform 180ms ease;
+}
+
+.select-field:has(select:open) > svg {
+  transform: rotate(180deg);
+}
+
+.select-field:has(select:disabled) > svg {
+  opacity: 0.65;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .select-field > svg {
+    transition: none;
+  }
+}

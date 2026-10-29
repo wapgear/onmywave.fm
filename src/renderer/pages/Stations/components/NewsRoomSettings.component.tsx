@@ -2,6 +2,7 @@ import { ChevronDown } from 'lucide-react';
 import { useLayoutEffect, useRef } from 'react';
 
 import { FilterSelect } from '../../../components/FilterSelect/FilterSelect.component';
+import { Select } from '../../../components/Select/Select.component';
 import { ErrorNotice } from '../../../components/Shared';
 import type { NewsRoomSettingsProps } from './NewsRoomSettings.types';
 
@@ -440,7 +441,7 @@ export function NewsRoomSettings({
 
               <label htmlFor="bucket-check-interval">
                 Check sources every
-                <select
+                <Select
                   id="bucket-check-interval"
                   value={workflow.everyHours}
                   disabled={disabled}
@@ -449,7 +450,7 @@ export function NewsRoomSettings({
                   <option value={1}>1 hour</option>
                   <option value={3}>3 hours</option>
                   <option value={6}>6 hours</option>
-                </select>
+                </Select>
               </label>
               <label htmlFor="bucket-recording-limit">
                 Automatic recordings per day
@@ -479,7 +480,7 @@ export function NewsRoomSettings({
             <div className="news-room-settings-fields">
               <label htmlFor="bucket-importance">
                 News selection
-                <select
+                <Select
                   id="bucket-importance"
                   value={workflow.importance}
                   disabled={disabled}
@@ -487,7 +488,7 @@ export function NewsRoomSettings({
                 >
                   <option value="major">Major developments only</option>
                   <option value="relevant">Relevant stories</option>
-                </select>
+                </Select>
               </label>
               <label htmlFor="bucket-interests">
                 News interests · Optional

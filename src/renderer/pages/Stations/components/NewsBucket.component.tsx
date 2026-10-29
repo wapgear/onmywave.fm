@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { canonicalArticleUrl, eligibleNewsTakes } from '../../../../shared/news-pool';
 import type { NewsArticle, PreparedNewsScript, PreparedNewsTake, ReviewedNewsArticle } from '../../../../shared/types';
+import { Select } from '../../../components/Select/Select.component';
 import { ErrorNotice, duration } from '../../../components/Shared';
 import { usePlayer } from '../../../player';
 import { useNewsFavorites } from './hooks/useNewsFavorites';
@@ -600,9 +601,10 @@ export function NewsBucket({
     <section className="news-bucket" aria-label="News bucket">
       <div className="news-bucket-layout">
         <nav className="news-bucket-navigation" aria-label="News categories">
-          <label className="news-bucket-navigation-select">
+          <label className="news-bucket-navigation-select" htmlFor="news-category">
             <span className="sr-only">News category</span>
-            <select
+            <Select
+              id="news-category"
               aria-label="News category"
               value={destination}
               onChange={(event) => navigate(event.target.value as Destination)}
@@ -613,7 +615,7 @@ export function NewsBucket({
                   {count !== undefined ? ` · ${count}` : ''}
                 </option>
               ))}
-            </select>
+            </Select>
           </label>
           {destinations.map(({ id, label, count }) => (
             <button
@@ -770,9 +772,10 @@ export function NewsBucket({
                 )}
                 {destination === 'past' && (
                   <>
-                    <label className="news-bucket-history-select">
+                    <label className="news-bucket-history-select" htmlFor="story-history">
                       Show
-                      <select
+                      <Select
+                        id="story-history"
                         aria-label="Story history"
                         value={pastFilter}
                         onChange={(event) => {
@@ -786,7 +789,7 @@ export function NewsBucket({
                         <option value="scripts">Saved scripts · {scriptOnly.length}</option>
                         <option value="reviewed">Reviewed stories · {reviewed.length}</option>
                         <option value="all">All saved recordings · {allTakes.length}</option>
-                      </select>
+                      </Select>
                     </label>
                     {pastFilter === 'heard' && (
                       <section aria-label="Heard recordings">

@@ -1,5 +1,14 @@
+.settings-page {
+  width: 100%;
+  max-width: 760px;
+  margin-inline: auto;
+}
+
+.settings-page .settings-content {
+  max-width: none;
+}
+
 .settings-preferences {
-  max-width: 660px;
   display: grid;
   gap: var(--space-8);
 }

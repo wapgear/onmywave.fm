@@ -3,6 +3,7 @@
   width: 100%;
   min-width: 0;
   max-width: 760px;
+  margin-inline: auto;
   padding: 0;
   background: transparent;
   color: var(--text);
@@ -226,7 +227,7 @@
   width: 100%;
   min-width: 0;
   min-height: 36px;
-  padding: 7px 9px;
+  padding-block: 7px;
   border: 1px solid var(--separator);
   border-radius: 7px;
   background: var(--canvas);

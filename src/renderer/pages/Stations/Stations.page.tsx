@@ -8,6 +8,7 @@ import type { ListeningRoom, PreparedNewsRequest } from '../../../shared/types';
 import type { WorkflowDraft } from '../../../shared/workflow';
 import { unwrap } from '../../api';
 import { Button } from '../../components/Button/Button.component';
+import { Select } from '../../components/Select/Select.component';
 import { Dialog, DialogActions, ErrorNotice, PageHeading, errorMessage } from '../../components/Shared';
 import { useDJPlayback } from '../../dj-playback';
 import { confirmLocalState } from '../../local-state-cache';
@@ -989,7 +990,7 @@ export function StationsPage({
             <>
               <label htmlFor="room-profile">
                 Room
-                <select
+                <Select
                   id="room-profile"
                   value={state.data?.activeRoomProfileId ?? ''}
                   disabled={busy || !state.data}
@@ -1003,7 +1004,7 @@ export function StationsPage({
                       {value.id === state.data?.activeRoomProfileId ? ' · Active' : ''}
                     </option>
                   ))}
-                </select>
+                </Select>
               </label>
             </>
           ) : (
@@ -1042,7 +1043,7 @@ export function StationsPage({
                     <div className="room-profile-bar">
                       <label htmlFor="room-profile">
                         Setup profile
-                        <select
+                        <Select
                           id="room-profile"
                           value={state.data.activeRoomProfileId}
                           disabled={busy}
@@ -1054,7 +1055,7 @@ export function StationsPage({
                               {value.id === state.data?.activeRoomProfileId ? ' · Active' : ''}
                             </option>
                           ))}
-                        </select>
+                        </Select>
                       </label>
                       <button
                         disabled={busy}
