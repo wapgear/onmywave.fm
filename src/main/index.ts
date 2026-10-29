@@ -1084,7 +1084,7 @@ async function createWindow() {
     minHeight: 640,
     title: 'onmywave.fm',
     titleBarStyle: 'hiddenInset',
-    trafficLightPosition: { x: 20, y: 22 },
+    trafficLightPosition: { x: 20, y: 14 },
     backgroundColor: '#faf9f6',
     show: false,
     webPreferences: {
