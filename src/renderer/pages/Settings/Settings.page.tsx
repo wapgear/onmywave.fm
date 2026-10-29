@@ -56,7 +56,7 @@ export function SettingsPage({
   }
 
   return (
-    <>
+    <div className="settings-page">
       <PageHeading title="Settings">
         {returnToSetup && <button onClick={returnToSetup}>Back to setup</button>}
       </PageHeading>
@@ -158,6 +158,6 @@ export function SettingsPage({
           </DialogActions>
         </Dialog>
       )}
-    </>
+    </div>
   );
 }

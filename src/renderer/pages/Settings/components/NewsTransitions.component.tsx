@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
-import { useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 
 import { defaultNewsTransitionSettings } from '../../../../shared/news-transitions';
 import type { NewsTransitionSettings } from '../../../../shared/types';
 import { unwrap } from '../../../api';
 import { SectionHeading } from '../../../components/SectionHeading/SectionHeading.component';
+import { Select } from '../../../components/Select/Select.component';
 import { ErrorNotice } from '../../../components/Shared';
 import { useRetryFocus } from '../../../useRetryFocus';
 import { useGeneralSettingsEdits } from '../SettingsEdits';
@@ -40,6 +41,8 @@ const fields = [
 ] as const;
 
 export function NewsTransitions() {
+  const styleId = useId();
+  const modeId = useId();
   const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()) });
   const heading = useRef<HTMLHeadingElement>(null);
   const transitionStyle = useRef<HTMLSelectElement>(null);
@@ -112,9 +115,10 @@ export function NewsTransitions() {
       >
         <fieldset className="preference-fields" disabled={!state.data || save.isPending}>
           <div className="news-transition-grid">
-            <label>
+            <label htmlFor={styleId}>
               Transition style
-              <select
+              <Select
+                id={styleId}
                 ref={transitionStyle}
                 value={preset?.id ?? 'custom'}
                 onChange={(event) => {
@@ -130,17 +134,18 @@ export function NewsTransitions() {
                     {item.name}
                   </option>
                 ))}
-              </select>
+              </Select>
             </label>
-            <label>
+            <label htmlFor={modeId}>
               Play the DJ
-              <select
+              <Select
+                id={modeId}
                 value={settings.mode}
                 onChange={(event) => change({ mode: event.target.value as NewsTransitionSettings['mode'] })}
               >
                 <option value="over-music">Over the end of a song</option>
                 <option value="between-songs">Between songs</option>
-              </select>
+              </Select>
             </label>
             {fields.map((field) => (
               <label key={field.key}>

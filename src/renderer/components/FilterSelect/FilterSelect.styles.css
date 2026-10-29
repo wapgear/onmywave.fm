@@ -20,6 +20,10 @@
   margin-left: auto;
   flex-shrink: 0;
   color: var(--muted);
+  transition: transform 180ms ease;
+}
+.filter-select-trigger[aria-expanded='true'] > svg {
+  transform: rotate(180deg);
 }
 .filter-select-popup {
   width: 276px;
@@ -77,4 +81,10 @@
   padding: 12px 10px;
   color: var(--muted);
   font-size: 12px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filter-select-trigger > svg {
+    transition: none;
+  }
 }

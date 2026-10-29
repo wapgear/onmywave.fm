@@ -1,0 +1,132 @@
+[
+  {
+    "width": 800,
+    "height": 900,
+    "theme": "dark",
+    "hover": {
+      "row": "color(srgb 0.112157 0.12549 0.148235)",
+      "item": "rgba(0, 0, 0, 0)"
+    },
+    "inset": {
+      "left": 12,
+      "right": 12,
+      "border": 1
+    },
+    "newsGeometry": {
+      "width": 532,
+      "left": 18,
+      "right": 18
+    },
+    "geometry": {
+      "width": 528,
+      "bodyWidth": 528,
+      "center": 492,
+      "parentCenter": 492
+    },
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "height": 800,
+    "theme": "dark",
+    "hover": {
+      "row": "color(srgb 0.112157 0.12549 0.148235)",
+      "item": "rgba(0, 0, 0, 0)"
+    },
+    "inset": {
+      "left": 12,
+      "right": 12,
+      "border": 1
+    },
+    "newsGeometry": {
+      "width": 760,
+      "left": 144,
+      "right": 144
+    },
+    "geometry": {
+      "width": 760,
+      "bodyWidth": 760,
+      "center": 732,
+      "parentCenter": 732
+    },
+    "errors": []
+  },
+  {
+    "width": 1600,
+    "height": 900,
+    "theme": "dark",
+    "hover": {
+      "row": "color(srgb 0.112157 0.12549 0.148235)",
+      "item": "rgba(0, 0, 0, 0)"
+    },
+    "inset": {
+      "left": 12,
+      "right": 12,
+      "border": 1
+    },
+    "newsGeometry": {
+      "width": 760,
+      "left": 304,
+      "right": 304
+    },
+    "geometry": {
+      "width": 760,
+      "bodyWidth": 760,
+      "center": 892,
+      "parentCenter": 892
+    },
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "height": 800,
+    "theme": "light",
+    "hover": {
+      "row": "color(srgb 0.978039 0.978039 0.983529)",
+      "item": "rgba(0, 0, 0, 0)"
+    },
+    "inset": {
+      "left": 12,
+      "right": 12,
+      "border": 1
+    },
+    "newsGeometry": {
+      "width": 760,
+      "left": 144,
+      "right": 144
+    },
+    "geometry": {
+      "width": 760,
+      "bodyWidth": 760,
+      "center": 732,
+      "parentCenter": 732
+    },
+    "errors": []
+  },
+  {
+    "width": 1280,
+    "height": 800,
+    "theme": "coffee",
+    "hover": {
+      "row": "color(srgb 0.949804 0.92549 0.89098)",
+      "item": "rgba(0, 0, 0, 0)"
+    },
+    "inset": {
+      "left": 12,
+      "right": 12,
+      "border": 1
+    },
+    "newsGeometry": {
+      "width": 760,
+      "left": 144,
+      "right": 144
+    },
+    "geometry": {
+      "width": 760,
+      "bodyWidth": 760,
+      "center": 732,
+      "parentCenter": 732
+    },
+    "errors": []
+  }
+]
