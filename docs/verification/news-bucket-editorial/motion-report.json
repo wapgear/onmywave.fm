@@ -1,0 +1,18 @@
+{
+  "normal": {
+    "events": [
+      "news-bucket-control-enter",
+      "news-bucket-reader-enter",
+      "news-bucket-control-enter",
+      "news-bucket-reader-enter"
+    ],
+    "hoverTransform": "matrix(1.04917, 0, 0, 1.04917, 0, 0)"
+  },
+  "reduced": {
+    "events": [],
+    "readerAnimation": "none",
+    "controlTransition": "0s"
+  },
+  "pageErrors": [],
+  "scope": "Actual renderer animation events, play-state replacement, hover transform, and reduced-motion styles; simulated audio."
+}

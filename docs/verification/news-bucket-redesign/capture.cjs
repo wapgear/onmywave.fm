@@ -51,6 +51,11 @@ async function openFixture(browser, width = 1440, height = 900, theme = 'dark') 
   });
   await page.getByRole('button', { name: 'News bucket', exact: true }).click();
   await page.waitForSelector('.news-bucket');
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+    await new Promise(requestAnimationFrame);
+    await new Promise(requestAnimationFrame);
+  });
   return { page, errors };
 }
 

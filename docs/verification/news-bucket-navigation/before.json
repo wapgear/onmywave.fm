@@ -1,0 +1,266 @@
+[
+  {
+    "width": 1440,
+    "height": 900,
+    "theme": "dark",
+    "measurements": {
+      "main": {
+        "x": 208,
+        "y": 28,
+        "width": 1216,
+        "height": 756
+      },
+      "header": {
+        "x": 238,
+        "y": 46,
+        "width": 1148,
+        "height": 66
+      },
+      "navigation": {
+        "x": 208,
+        "y": 123,
+        "width": 168,
+        "height": 661
+      },
+      "workspace": {
+        "x": 208,
+        "y": 122,
+        "width": 1208,
+        "height": 662
+      },
+      "player": {
+        "x": 16,
+        "y": 796,
+        "width": 1408,
+        "height": 88
+      },
+      "sidebar": {
+        "x": 0,
+        "y": 0,
+        "width": 208,
+        "height": 900
+      }
+    },
+    "pageErrors": []
+  },
+  {
+    "width": 1280,
+    "height": 800,
+    "theme": "light",
+    "measurements": {
+      "main": {
+        "x": 208,
+        "y": 28,
+        "width": 1056,
+        "height": 656
+      },
+      "header": {
+        "x": 238,
+        "y": 46,
+        "width": 988,
+        "height": 66
+      },
+      "navigation": {
+        "x": 208,
+        "y": 123,
+        "width": 168,
+        "height": 561
+      },
+      "workspace": {
+        "x": 208,
+        "y": 122,
+        "width": 1048,
+        "height": 562
+      },
+      "player": {
+        "x": 16,
+        "y": 696,
+        "width": 1248,
+        "height": 88
+      },
+      "sidebar": {
+        "x": 0,
+        "y": 0,
+        "width": 208,
+        "height": 800
+      }
+    },
+    "pageErrors": []
+  },
+  {
+    "width": 1280,
+    "height": 800,
+    "theme": "coffee",
+    "measurements": {
+      "main": {
+        "x": 208,
+        "y": 28,
+        "width": 1056,
+        "height": 656
+      },
+      "header": {
+        "x": 238,
+        "y": 46,
+        "width": 988,
+        "height": 66
+      },
+      "navigation": {
+        "x": 208,
+        "y": 123,
+        "width": 168,
+        "height": 561
+      },
+      "workspace": {
+        "x": 208,
+        "y": 122,
+        "width": 1048,
+        "height": 562
+      },
+      "player": {
+        "x": 16,
+        "y": 696,
+        "width": 1248,
+        "height": 88
+      },
+      "sidebar": {
+        "x": 0,
+        "y": 0,
+        "width": 208,
+        "height": 800
+      }
+    },
+    "pageErrors": []
+  },
+  {
+    "width": 1024,
+    "height": 768,
+    "theme": "dark",
+    "measurements": {
+      "main": {
+        "x": 208,
+        "y": 28,
+        "width": 800,
+        "height": 624
+      },
+      "header": {
+        "x": 232,
+        "y": 46,
+        "width": 744,
+        "height": 66
+      },
+      "navigation": {
+        "x": 208,
+        "y": 123,
+        "width": 156,
+        "height": 529
+      },
+      "workspace": {
+        "x": 208,
+        "y": 122,
+        "width": 792,
+        "height": 530
+      },
+      "player": {
+        "x": 16,
+        "y": 664,
+        "width": 992,
+        "height": 88
+      },
+      "sidebar": {
+        "x": 0,
+        "y": 0,
+        "width": 208,
+        "height": 768
+      }
+    },
+    "pageErrors": []
+  },
+  {
+    "width": 800,
+    "height": 700,
+    "theme": "dark",
+    "measurements": {
+      "main": {
+        "x": 208,
+        "y": 28,
+        "width": 576,
+        "height": 512
+      },
+      "header": {
+        "x": 228,
+        "y": 46,
+        "width": 528,
+        "height": 66
+      },
+      "navigation": {
+        "x": 208,
+        "y": 123,
+        "width": 568,
+        "height": 89
+      },
+      "workspace": {
+        "x": 208,
+        "y": 122,
+        "width": 568,
+        "height": 418
+      },
+      "player": {
+        "x": 16,
+        "y": 552,
+        "width": 768,
+        "height": 132
+      },
+      "sidebar": {
+        "x": 0,
+        "y": 0,
+        "width": 208,
+        "height": 700
+      }
+    },
+    "pageErrors": []
+  },
+  {
+    "width": 720,
+    "height": 450,
+    "theme": "light",
+    "measurements": {
+      "main": {
+        "x": 208,
+        "y": 28,
+        "width": 496,
+        "height": 262
+      },
+      "header": {
+        "x": 228,
+        "y": 46,
+        "width": 448,
+        "height": 66
+      },
+      "navigation": {
+        "x": 208,
+        "y": 123,
+        "width": 488,
+        "height": 51
+      },
+      "workspace": {
+        "x": 208,
+        "y": 122,
+        "width": 488,
+        "height": 168
+      },
+      "player": {
+        "x": 16,
+        "y": 302,
+        "width": 688,
+        "height": 132
+      },
+      "sidebar": {
+        "x": 0,
+        "y": 0,
+        "width": 208,
+        "height": 450
+      }
+    },
+    "pageErrors": []
+  }
+]
