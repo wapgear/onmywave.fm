@@ -1,11 +1,11 @@
 import { useIsMutating, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Disc3, ListMusic, Maximize2, Minimize2, Music2, Radio, Settings, X } from 'lucide-react';
-import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from 'react';
+import { Maximize2, Minimize2, X } from 'lucide-react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { flushSync } from 'react-dom';
 
 import type { Connection, Song } from '../shared/types';
 import { unwrap } from './api';
-import type { ReadyAppProps, SessionContentProps } from './App.types';
+import type { PageName, ReadyAppProps, SessionContentProps } from './App.types';
 import { AddPlaylist } from './components/AddPlaylist/AddPlaylist.component';
 import { DJSidebar } from './components/DJSidebar/DJSidebar.component';
 import { IconButton } from './components/IconButton/IconButton.component';
@@ -13,6 +13,7 @@ import { Inspector } from './components/Inspector/Inspector.component';
 import { LibrarySelectionProvider } from './components/LibrarySelection';
 import type { ConnectionTransition } from './components/LibrarySelection.types';
 import { Lyrics } from './components/Lyrics/Lyrics.component';
+import { NavigationSidebar } from './components/NavigationSidebar/NavigationSidebar.component';
 import { Player } from './components/Player/Player.component';
 import { ProviderKeyEditsProvider } from './components/ProviderKeys/ProviderKeyEdits';
 import { Queue } from './components/Queue/Queue.component';
@@ -35,16 +36,7 @@ import type { RoomSetupDraft } from './pages/Stations/Stations.types';
 import { PlayerProvider, usePlayer } from './player';
 import { useRetryFocus } from './useRetryFocus';
 
-type PageName = 'songs' | 'albums' | 'playlists' | 'stations' | 'settings';
-
 const listeningDrawerOrder = ['lyrics', 'queue', 'dj'] as const;
-
-const navigation = [
-  { id: 'songs', name: 'All songs', icon: Music2 },
-  { id: 'albums', name: 'Albums', icon: Disc3 },
-  { id: 'playlists', name: 'Playlists', icon: ListMusic },
-  { id: 'stations', name: 'News bucket', icon: Radio },
-] as const;
 
 export default function App() {
   const client = useQueryClient();
@@ -412,18 +404,6 @@ function ReadyApp({
     scrollPositions.current.clear();
     update(value);
   }
-  const client = useQueryClient();
-  const networkError = useSyncExternalStore(
-    (notify) => client.getQueryCache().subscribe(notify),
-    () =>
-      client
-        .getQueryCache()
-        .getAll()
-        .some((query) => {
-          const error = query.state.error as { code?: string } | null;
-          return error?.code === 'offline' || error?.code === 'timeout';
-        }),
-  );
   const location =
     page === 'songs'
       ? `songs-${songsView.query.search ?? ''}-${songsView.query.genre ?? ''}-${songsView.query.tag ?? ''}-${songsView.query.sort}-${songsView.query.descending}`
@@ -615,37 +595,7 @@ function ReadyApp({
     <div
       className={`app-shell ${visibleDrawer ? 'has-drawer' : ''} ${typeof visibleDrawer === 'string' ? 'has-listening-drawer' : ''}`}
     >
-      <aside className="sidebar">
-        <div className="traffic-light-space" />
-        <div className="wordmark">onmywave.fm</div>
-        <nav aria-label="Main navigation">
-          {navigation.map((item) => (
-            <button
-              key={item.id}
-              className={page === item.id ? 'active' : ''}
-              aria-current={page === item.id ? 'page' : undefined}
-              onClick={() => navigate(item.id)}
-            >
-              <item.icon size={21} strokeWidth={1.7} />
-              {item.name}
-            </button>
-          ))}
-        </nav>
-        <div className="sidebar-bottom">
-          <button
-            className={`settings-nav ${page === 'settings' ? 'active' : ''}`}
-            onClick={() => navigate('settings')}
-            aria-current={page === 'settings' ? 'page' : undefined}
-          >
-            <Settings size={20} strokeWidth={1.7} />
-            Settings
-          </button>
-          <p className={`connection-status ${networkError ? 'unreachable' : ''}`}>
-            <span />
-            {networkError ? 'Server unreachable' : 'Jellyfin connected'}
-          </p>
-        </div>
-      </aside>
+      <NavigationSidebar page={page} navigate={navigate} />
       <main
         ref={main}
         className="main-content"

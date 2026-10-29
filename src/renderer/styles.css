@@ -146,7 +146,7 @@ input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 summary:focus-visible,
-[tabindex]:focus-visible {
+[tabindex]:focus-visible:where(:not(.sidebar-resize-handle)) {
   outline: var(--control-focus-width) solid var(--focus);
   outline-offset: 2px;
 }
@@ -294,25 +294,6 @@ button > svg {
   flex-direction: column;
   gap: 10px;
   padding-top: 20px;
-}
-.connection-status {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  color: var(--muted);
-  margin-left: 15px;
-  white-space: nowrap;
-}
-.connection-status > span {
-  height: 7px;
-  width: 7px;
-  background: var(--success);
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-.connection-status.unreachable > span {
-  background: var(--warning-strong);
 }
 .titlebar-drag-region {
   position: fixed;
@@ -1423,7 +1404,7 @@ legend {
     gap: 12px;
   }
   .titlebar-drag-region {
-    left: 180px;
+    left: var(--sidebar);
   }
   .page-content {
     padding-left: 20px;
