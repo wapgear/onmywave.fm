@@ -1,20 +1,4 @@
-import {
-  ArrowLeft,
-  AtSign,
-  Clock,
-  ExternalLink,
-  Globe,
-  Inbox,
-  Newspaper,
-  Pause,
-  Play,
-  Radio,
-  Rss,
-  Search,
-  Settings,
-  Star,
-  X,
-} from 'lucide-react';
+import { ArrowLeft, ExternalLink, Inbox, Pause, Play, Radio, Search, Settings, Star, X } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { canonicalArticleUrl, eligibleNewsTakes } from '../../../../shared/news-pool';
@@ -181,13 +165,6 @@ export function NewsBucket({
   const visibleReviewed = reviewed.slice(0, historyLimit);
   const nextHistoryCount = Math.min(25, reviewed.length - visibleReviewed.length);
   const runtimeDJ = localState.djs.find((dj) => dj.id === automation.room?.room.djId);
-  function sourceIcon(sourceName: string) {
-    const source = localState.sources.find((value) => value.name === sourceName);
-    const kind = source ? (source.kind ?? 'rss') : undefined;
-    const Icon = kind === 'rss' ? Rss : kind === 'twitter' ? AtSign : kind === 'hacker-news' ? Newspaper : Globe;
-
-    return <Icon size={22} strokeWidth={1.7} aria-hidden="true" />;
-  }
   const runtimeDiffersFromPage = !!automation.room && pageProfile?.id !== automation.room.id;
   const phaseLabel =
     player.newsPhase === 'speaking'
@@ -294,13 +271,12 @@ export function NewsBucket({
           onClick={(event) => selectStory(selectionValue, event.currentTarget)}
         >
           <span className="news-bucket-item-main">
+            <strong>{title}</strong>
             {article && (
               <span className="news-bucket-item-byline">
-                <span aria-hidden="true">{sourceIcon(article.source)}</span>
                 {article.source} · {publicationTime(article)}
               </span>
             )}
-            <strong>{title}</strong>
             {excerpt && <span className="news-bucket-item-excerpt">{excerpt}</span>}
             <span className="news-bucket-item-status">{recordStatus}</span>
           </span>
@@ -593,17 +569,17 @@ export function NewsBucket({
   );
   const allTakes = [...library.takes].sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
   const destinations = [
-    { id: 'upcoming' as const, label: 'Upcoming', icon: Inbox, count: eligible.length },
-    { id: 'check' as const, label: 'Check news', icon: Search },
-    { id: 'past' as const, label: 'Past news', icon: Clock, count: heardTakes.length },
-    { id: 'favorites' as const, label: 'Favorites', icon: Star, count: favoriteArticles.length },
-    { id: 'settings' as const, label: 'Settings', icon: Settings },
+    { id: 'upcoming' as const, label: 'Upcoming', count: eligible.length },
+    { id: 'check' as const, label: 'Check news' },
+    { id: 'past' as const, label: 'Past news', count: heardTakes.length },
+    { id: 'favorites' as const, label: 'Favorites', count: favoriteArticles.length },
+    { id: 'settings' as const, label: 'Settings' },
   ];
   const descriptions = {
-    upcoming: `${eligible.length} ${eligible.length === 1 ? 'story' : 'stories'} ready for your next DJ break.`,
-    check: 'Stories found in the latest source check for this room.',
-    past: 'Your listening history and saved news records.',
-    favorites: 'Articles you have starred, from all rooms.',
+    upcoming: `${eligible.length} ready for the next DJ break.`,
+    check: 'Latest source check for this room.',
+    past: 'Listening history and saved news records.',
+    favorites: 'Starred articles from all rooms.',
     settings: 'Sources, schedule, and writing for this room.',
   };
   const currentDestination = destinations.find((item) => item.id === destination)!;
@@ -624,7 +600,6 @@ export function NewsBucket({
     <section className="news-bucket" aria-label="News bucket">
       <div className="news-bucket-layout">
         <nav className="news-bucket-navigation" aria-label="News categories">
-          <span className="news-bucket-nav-label">News</span>
           <label className="news-bucket-navigation-select">
             <span className="sr-only">News category</span>
             <select
@@ -640,14 +615,14 @@ export function NewsBucket({
               ))}
             </select>
           </label>
-          {destinations.map(({ id, label, icon: Icon, count }) => (
+          {destinations.map(({ id, label, count }) => (
             <button
               key={id}
               className={id === 'settings' ? 'news-bucket-nav-settings' : ''}
               aria-current={destination === id ? 'page' : undefined}
               onClick={() => navigate(id)}
             >
-              <Icon size={18} aria-hidden="true" />
+              {id === 'settings' && <Settings size={16} aria-hidden="true" />}
               <span>{label}</span>
               {count !== undefined && <span className="news-bucket-count">{count}</span>}
             </button>
@@ -944,6 +919,7 @@ export function NewsBucket({
               </div>
               {selection && (
                 <aside
+                  key={selectionKey(selection)}
                   id="news-story-inspector"
                   className="news-bucket-inspector"
                   aria-label="Story inspector"

@@ -983,7 +983,6 @@ export function StationsPage({
       <PageHeading
         headingRef={heading}
         title={tab === 'bucket' ? 'News bucket' : tab === 'settings' ? 'News settings' : 'Saved audio'}
-        subtitle={tab === 'bucket' ? 'Short spoken stories from your selected news sources.' : undefined}
       >
         <div className="stations-news-header-actions">
           {tab === 'bucket' ? (

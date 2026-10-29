@@ -1,5 +1,7 @@
 # News Bucket reading and setup refinement
 
+The subsequent [header and category navigation refinement](../news-bucket-navigation/README.md) replaces the inner sidebar with a compact horizontal navigation row and a narrow-pane category selector. The screenshots below document the earlier reading/setup pass.
+
 News Bucket now behaves like a focused reading and listening workspace. The sidebar retains Upcoming, Check news, Past news, Favorites, and Settings. A roomy desktop opens the first eligible story once, while compact windows show a focused reader with Back to stories. Real publication dates and short saved-script excerpts make the list useful before opening each item.
 
 The workspace meets the app surface edges, without an inset rounded frame or an extra surrounding gutter. The visual direction is a calm editorial reader within the existing app: one accent, stronger title/script hierarchy, a quieter selected row, thin pane separators, and readable metadata. The reader uses real saved content; no article artwork, durations, provider activity, or unsupported actions are invented. Subtle selection/favorite transitions and the reader entrance respond to user actions and respect reduced motion.

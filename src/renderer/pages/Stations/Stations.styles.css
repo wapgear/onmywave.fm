@@ -2,22 +2,55 @@
   max-width: 960px;
 }
 .listening-room.is-news-bucket {
+  display: flex;
   width: 100%;
   max-width: none;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+}
+.listening-room.is-news-bucket > #room-panel-bucket:not([hidden]) {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+}
+.main-content:has(.is-news-bucket-page) {
+  overflow-y: auto;
 }
 .page-content:has(.is-news-bucket-page) {
+  height: 100%;
+  padding-top: 0;
   padding-bottom: 0;
 }
-.stations-page.is-news-bucket-page .page-heading {
+.stations-page.is-news-bucket-page {
+  display: flex;
+  height: 100%;
+  min-height: 0;
+  flex-direction: column;
+}
+.stations-page.is-news-bucket-page > .page-heading {
+  min-height: 48px;
   align-items: center;
+  flex-shrink: 0;
+  flex-wrap: nowrap;
   gap: 12px 20px;
-  margin-bottom: 10px;
+  padding-block: 8px;
+  margin: 0 calc(24px - var(--content-inset));
 }
-.stations-page.is-news-bucket-page .page-heading > div:first-child {
-  flex: 0 0 auto;
+.stations-page.is-news-bucket-page > .page-heading > div:first-child {
+  min-width: 0;
+  flex: 1 1 auto;
 }
-.stations-page.is-news-bucket-page .page-heading p {
-  font-size: 15px;
+.stations-page.is-news-bucket-page > .page-heading h1 {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+.stations-page.is-news-bucket-page > .page-heading p {
+  max-width: none;
+  font-size: 12px;
+  line-height: 1.5;
 }
 .stations-news-header-actions {
   display: flex;
@@ -642,15 +675,20 @@
 }
 
 .stations-page.is-news-bucket-page .stations-news-header-actions {
-  flex-basis: 220px;
+  flex: 0 1 auto;
+}
+.stations-page.is-news-bucket-page .stations-news-header-actions select {
+  height: 32px;
+  min-height: 32px;
+  padding-block: 4px;
 }
 
 @media (max-width: 1050px) {
-  .stations-page.is-news-bucket-page .page-heading {
+  .stations-page.is-news-bucket-page > .page-heading {
     flex-direction: row;
     align-items: center;
   }
-  .stations-page.is-news-bucket-page .page-heading p {
+  .stations-page.is-news-bucket-page > .page-heading p {
     display: none;
   }
   .stations-page.is-news-bucket-page .stations-news-header-actions {

@@ -3,6 +3,7 @@ const fs = require('node:fs/promises');
 const { chromium } = require(process.env.WAVE_PLAYWRIGHT_MODULE || 'playwright');
 const { openFixture } = require('../news-bucket-redesign/capture.cjs');
 const reports = [];
+const outputDirectory = process.env.WAVE_VERIFY_OUTPUT_DIR || __dirname;
 
 async function seedBridge(page) {
   await page.evaluate(() => {
@@ -48,7 +49,7 @@ async function seedBridge(page) {
 
 const playing = page => page.evaluate(() => window.__fixture.audios.filter(audio => audio.src.includes('fixture-speech') && !audio.paused).length);
 const noOverflow = page => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth && [...document.querySelectorAll('.news-bucket-layout, .news-bucket-navigation, .news-bucket-list-column, .news-bucket-inspector')].filter(e => e.checkVisibility()).every(e => e.scrollWidth <= e.clientWidth + 1));
-const screenshot = (page, name) => page.screenshot({ path: `${__dirname}/${name}.png` });
+const screenshot = (page, name) => page.screenshot({ path: `${outputDirectory}/${name}.png` });
 const saveCalls = page => page.evaluate(() => window.__fixture.calls.filter(c => c.method === 'saveWorkflowDraft').length);
 
 async function main() {
@@ -58,6 +59,7 @@ async function main() {
       const { page, errors } = await openFixture(browser,width,height,theme);
       page.setDefaultTimeout(10000);
       try {
+        await page.evaluate(async()=>{await document.fonts.ready;await new Promise(requestAnimationFrame);});
         await seedBridge(page);
         const bucket = page.locator('.news-bucket');
         const nav = page.getByRole('navigation',{ name:'News categories' });
@@ -83,21 +85,17 @@ async function main() {
           const rect=selector=>root.querySelector(selector).getBoundingClientRect();
           const heading=rect('.news-bucket-list-column .news-bucket-content-heading h2');
           const title=rect('.news-bucket-item strong');
-          const byline=rect('.news-bucket-item-byline');
           const star=rect('.news-bucket-story-row > .news-bucket-star');
           const navigation=rect('.news-bucket-navigation');
-          const icons=[...root.querySelectorAll('.news-bucket-navigation > button > svg')].map(e=>e.getBoundingClientRect().x);
-          const label=rect('.news-bucket-nav-label');
+          const buttons=[...root.querySelectorAll('.news-bucket-navigation > button')].filter(e=>e.checkVisibility()).map(e=>e.getBoundingClientRect());
           const toolbar=root.querySelector('.news-bucket-reader-toolbar')?.getBoundingClientRect();
-          return {headingX:heading.x,titleX:title.x,bylineCenter:byline.y+byline.height/2,starCenter:star.y+star.height/2,verticalNavigation:navigation.width<200,icons,labelCenter:label.y+label.height/2,headingCenter:heading.y+heading.height/2,toolbarCenter:toolbar?toolbar.y+toolbar.height/2:null};
+          return {headingX:heading.x,titleX:title.x,titleCenter:title.y+parseFloat(getComputedStyle(root.querySelector('.news-bucket-item strong')).lineHeight)/2,starCenter:star.y+star.height/2,navigationHeight:navigation.height,buttonCenters:buttons.map(box=>box.y+box.height/2),headingCenter:heading.y+heading.height/2,toolbarCenter:toolbar?toolbar.y+toolbar.height/2:null};
         });
         assert.ok(Math.abs(alignment.headingX-alignment.titleX)<1,'List heading and story text share a left edge');
-        assert.ok(Math.abs(alignment.bylineCenter-alignment.starCenter)<1,'Favorite controls align with source metadata');
-        if(alignment.verticalNavigation){
-          assert.ok(alignment.icons.every(x=>Math.abs(x-alignment.icons[0])<1),'Every sidebar icon shares a left edge, including entries without counts');
-          assert.ok(Math.abs(alignment.labelCenter-alignment.headingCenter)<1,'Sidebar label and collection heading share a header band');
-          if(alignment.toolbarCenter!==null)assert.ok(Math.abs(alignment.labelCenter-alignment.toolbarCenter)<1,'Reader toolbar shares the header band');
-        }
+        assert.ok(Math.abs(alignment.titleCenter-alignment.starCenter)<1,'Favorite controls align with the first headline line');
+        assert.ok(alignment.navigationHeight<=52,'Category navigation stays in one compact row');
+        assert.ok(alignment.buttonCenters.every(center=>Math.abs(center-alignment.buttonCenters[0])<1),'Category destinations share a horizontal baseline');
+        if(alignment.toolbarCenter!==null)assert.ok(Math.abs(alignment.headingCenter-alignment.toolbarCenter)<1,'Reader toolbar and collection heading share the header band');
         await screenshot(page,`after-upcoming-${width}-${theme}`);
         if (await inspector.count()) {
           await inspector.getByRole('button',{name:'Close story details',exact:true}).click();
@@ -289,10 +287,10 @@ async function main() {
         assert.equal(await noOverflow(page),true);
         assert.deepEqual(await page.evaluate(()=>{const ids=[...document.querySelectorAll('[id]')].map(e=>e.id);return ids.filter((id,i)=>ids.indexOf(id)!==i)}),[],'No duplicate control IDs');
         assert.deepEqual(errors,[]);
-        reports.push({width,height,theme,passed:true,pageErrors:errors,additionalChecks:width===1440?['legacy/deleted-room recordings remain reachable without changing heard count','late favorite result preserves current focus','resume failure/retry and keyboard focus','immediate stop failure/retry and keyboard focus','room availability and keyboard focus','legacy management return','unique IDs']:['unique IDs'],checks:['flush app-surface layout without nested frame','shared pane header bands and aligned list/sidebar/favorite controls','one-time desktop reader','real publication dates and excerpts','compact reader/back/keyboard focus','category navigation remains visible','audition pause/resume/cleanup','favorites and source links','history semantics','latest source check/partial coverage','inline automatic preparation/readiness/consent','source and provider round trips retain draft/destination','validation/save error/success','no horizontal overflow']});
+        reports.push({width,height,theme,passed:true,pageErrors:errors,additionalChecks:width===1440?['legacy/deleted-room recordings remain reachable without changing heard count','late favorite result preserves current focus','resume failure/retry and keyboard focus','immediate stop failure/retry and keyboard focus','room availability and keyboard focus','legacy management return','unique IDs']:['unique IDs'],checks:['flush app-surface layout without nested frame','compact horizontal category navigation and aligned list/reader/favorite controls','one-time desktop reader','real publication dates and excerpts','compact reader/back/keyboard focus','category navigation remains visible','audition pause/resume/cleanup','favorites and source links','history semantics','latest source check/partial coverage','inline automatic preparation/readiness/consent','source and provider round trips retain draft/destination','validation/save error/success','no horizontal overflow']});
       } finally { await page.close(); }
     }
-    await fs.writeFile(`${__dirname}/report.json`,JSON.stringify(reports,null,2));
+    await fs.writeFile(`${outputDirectory}/report.json`,JSON.stringify(reports,null,2));
     console.log(JSON.stringify(reports,null,2));
   } finally { await browser.close(); }
 }

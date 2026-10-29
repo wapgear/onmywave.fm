@@ -2,6 +2,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs/promises');
 const {chromium}=require(process.env.WAVE_PLAYWRIGHT_MODULE||'playwright');
 const {openFixture}=require('../news-bucket-redesign/capture.cjs');
+const outputDirectory=process.env.WAVE_VERIFY_OUTPUT_DIR||__dirname;
 
 async function contrast(page){
  return page.evaluate(()=>{
@@ -52,7 +53,7 @@ async function main(){
     await page.evaluate(()=>{const f=window.__fixture;f.library.takes=[];f.library.scripts=[];f.library.requests=[];f.library.reviewedArticles=[];delete f.state.roomProfiles[0].workflowDraft.newsLastRun;f.client.setQueryData(['preparedNews'],structuredClone(f.library));f.client.setQueryData(['localState'],structuredClone(f.state));});
     await nav.getByRole('button',{name:/Upcoming/}).click();
     await page.getByRole('heading',{name:'Set up your news',exact:true}).waitFor();
-    await page.screenshot({path:`${__dirname}/after-empty-${theme}.png`});
+    await page.screenshot({path:`${outputDirectory}/after-empty-${theme}.png`});
     await nav.getByRole('button',{name:'Check news',exact:true}).click();
     await page.getByRole('heading',{name:'No source check yet',exact:true}).waitFor();
     assert.equal(await page.getByRole('button',{name:/Check now/i}).count(),0,'No unsupported manual generation action');
@@ -69,13 +70,13 @@ async function main(){
    await page.locator('.news-bucket-item').first().click();
    await page.getByRole('button',{name:'Back to stories',exact:true}).waitFor();
    const box=await nav.boundingBox();assert.ok(box.y>=20&&box.y+box.height<300);
-   await page.screenshot({path:`${__dirname}/after-200-percent-equivalent.png`});
+   await page.screenshot({path:`${outputDirectory}/after-200-percent-equivalent.png`});
    await nav.getByLabel('News category',{exact:true}).selectOption('settings');
    assert.equal(await page.locator('.news-room-settings').isVisible(),true);
    assert.deepEqual(errors,[]);
    report.push({viewport:{width:720,height:450,deviceScaleFactor:2},provenance:'200%-equivalent CSS viewport at 1440×900 physical pixels; not OS display or native VoiceOver verification',checks:['category selector','reader/back','Settings reachable'],pageErrors:errors});
   }finally{await page.close()}
-  await fs.writeFile(`${__dirname}/review-report.json`,JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
+  await fs.writeFile(`${outputDirectory}/review-report.json`,JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
  }finally{await b.close()}
 }
 main().catch(error=>{console.error(error);process.exitCode=1});
