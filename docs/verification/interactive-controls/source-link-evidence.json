@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-02",
+  "viewport": {
+    "width": 1280,
+    "height": 720,
+    "theme": "dark",
+    "screenshot_scale": 1
+  },
+  "basis": "Actual renderer with synthetic saved story and inert external-link bridge. User screenshot is reported before evidence; its crop differs from fixture viewport.",
+  "sha256": {
+    "src/renderer/styles.css": "753ab6860855edd8645f7ea3723c7bea0d6b333835ce07ca5a074d8e5b8a226f",
+    "src/renderer/pages/Stations/components/PreparedTakes.component.tsx": "14a9806909aed894e3e04f6e6d82325f0ff613d271e8427bf69269da6ce6c237",
+    "docs/verification/interactive-controls/source-link-idle.png": "c5f6e27e36e958950d9200e3397fb2ce9660f747dae843b83570dba5e9ef461e",
+    "docs/verification/interactive-controls/source-link-hover.png": "19a6df20cec12591c9ffdc98465e6420816a66eaada4bfc8574ca9cf5dd257c7",
+    "docs/verification/interactive-controls/source-link-hover.json": "c6b6dde5e4604f1b53cd4fb7623d44f5b903780113b7e5851181eae7308b3cf4"
+  },
+  "checks": {
+    "transparent_background": true,
+    "hover_color_change": true,
+    "no_translation": true
+  }
+}

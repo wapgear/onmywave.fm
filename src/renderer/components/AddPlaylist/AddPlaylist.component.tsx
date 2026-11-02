@@ -202,9 +202,15 @@ export function AddPlaylist({ connectionId, songs, close, checkPlaylists }: AddP
         {blockedPlaylists && !creation && (
           <p className="form-hint">
             Some playlists need review before you can add songs.{' '}
-            <button type="button" className="room-link" aria-disabled={save.isPending || undefined} onClick={review}>
+            <Button
+              variant="link"
+              type="button"
+              className="room-link"
+              aria-disabled={save.isPending || undefined}
+              onClick={review}
+            >
               Review playlists
-            </button>
+            </Button>
           </p>
         )}
         {creation && (
@@ -212,9 +218,15 @@ export function AddPlaylist({ connectionId, songs, close, checkPlaylists }: AddP
             {creation.status === 'unavailable'
               ? 'Playlist editing recovery is unavailable. You can still open and play your playlists.'
               : 'A playlist may already have been created. Review your playlists before creating another. You can choose an existing playlist.'}{' '}
-            <button type="button" className="room-link" aria-disabled={save.isPending || undefined} onClick={review}>
+            <Button
+              variant="link"
+              type="button"
+              className="room-link"
+              aria-disabled={save.isPending || undefined}
+              onClick={review}
+            >
               Review playlists
-            </button>
+            </Button>
           </p>
         )}
         <ErrorNotice

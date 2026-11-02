@@ -117,7 +117,7 @@
 .prepared-provenance summary {
   color: var(--muted);
   cursor: pointer;
-  padding: 7px 0;
+  padding: 7px var(--space-2);
 }
 .prepared-provenance dl {
   margin: 12px 0;

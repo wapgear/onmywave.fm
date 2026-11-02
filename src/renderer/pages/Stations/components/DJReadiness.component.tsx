@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
 
+import { Button } from '../../../components/Button/Button.component';
+
 type DJReadinessProps = {
   preparationProfile: string;
   preparationStatus: string;
@@ -39,9 +41,9 @@ export function DJReadiness({
             <dd className="dj-readiness-playback">
               <span>{playbackStatus}</span>
               {nextStep.action?.kind !== 'playback' && (
-                <button className="room-link" onClick={openDJControls}>
+                <Button variant="link" className="room-link" onClick={openDJControls}>
                   DJ controls
-                </button>
+                </Button>
               )}
             </dd>
           </div>

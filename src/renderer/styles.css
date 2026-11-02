@@ -125,12 +125,14 @@ button {
   justify-content: center;
   gap: var(--control-gap);
   white-space: nowrap;
-  transition: background 0.15s;
+  transition:
+    background-color 0.15s,
+    color 0.15s;
 }
-button:hover:where(:not(:disabled)) {
+button:hover:where(:not(:disabled, [aria-disabled='true'], .link)) {
   background: var(--control-hover);
 }
-button:active:where(:not(:disabled)) {
+button:active:where(:not(:disabled, [aria-disabled='true'], .link)) {
   background: var(--control-active);
   translate: 0 1px;
 }
@@ -151,22 +153,74 @@ summary:focus-visible,
   outline: var(--control-focus-width) solid var(--focus);
   outline-offset: 2px;
 }
+input:enabled:hover:not([type='checkbox'], [type='radio'], [type='range']),
+select:enabled:hover,
+textarea:enabled:hover {
+  border-color: var(--muted);
+}
 button.primary {
   background: var(--accent);
   color: var(--on-accent);
 }
-button.primary:hover:where(:not(:disabled)) {
+button.primary:hover:where(:not(:disabled, [aria-disabled='true'])) {
   background: var(--accent-hover);
 }
 button.ghost {
   background: transparent;
 }
-button.ghost:hover:where(:not(:disabled)) {
+button.ghost:hover:where(:not(:disabled, [aria-disabled='true'])) {
   background: var(--hover);
 }
 button.destructive {
   background: var(--danger-fill);
   color: white;
+}
+button.primary:active:where(:not(:disabled, [aria-disabled='true'])) {
+  background: var(--accent-strong);
+}
+button.destructive:hover:where(:not(:disabled, [aria-disabled='true'])) {
+  background: color-mix(in srgb, var(--danger-fill) 88%, black);
+}
+button.destructive:active:where(:not(:disabled, [aria-disabled='true'])) {
+  background: color-mix(in srgb, var(--danger-fill) 80%, black);
+}
+button.link {
+  min-height: var(--control-size-compact);
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--space-1);
+  background: transparent;
+  color: var(--accent);
+  font-size: 12px;
+  text-align: left;
+  text-underline-offset: 3px;
+  white-space: normal;
+}
+button.link:is(:hover, :focus-visible):where(:not(:disabled, [aria-disabled='true'])) {
+  background: transparent;
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+button.link:active:where(:not(:disabled, [aria-disabled='true'])) {
+  background: transparent;
+  color: var(--accent-strong);
+  translate: none;
+}
+button.link:is(:disabled, [aria-disabled='true']) {
+  background: transparent;
+  color: var(--muted);
+  cursor: default;
+}
+summary {
+  min-height: var(--control-size-compact);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--space-1);
+  transition:
+    background-color 0.15s,
+    color 0.15s;
+}
+summary:hover:where(:not([aria-disabled='true'])) {
+  background: var(--hover);
 }
 .danger {
   color: var(--danger) !important;
@@ -1067,6 +1121,9 @@ button > svg {
   border-radius: 13px;
   margin: 0 !important;
   cursor: pointer;
+}
+.library-option:has(:enabled):not(.chosen):hover {
+  background: var(--hover);
 }
 .library-option.chosen {
   background: var(--surface);

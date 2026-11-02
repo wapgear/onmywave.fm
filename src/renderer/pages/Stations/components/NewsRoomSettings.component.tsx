@@ -1,5 +1,6 @@
 import { useId, useLayoutEffect, useRef } from 'react';
 
+import { Button } from '../../../components/Button/Button.component';
 import { FilterSelect } from '../../../components/FilterSelect/FilterSelect.component';
 import { PreferenceSection } from '../../../components/PreferenceSection/PreferenceSection.component';
 import { Select } from '../../../components/Select/Select.component';
@@ -284,9 +285,9 @@ export function NewsRoomSettings({
             {!!workflowStatusError && (
               <div className="news-room-automation-readiness">
                 <strong>Provider access could not be confirmed.</strong>
-                <button type="button" className="news-room-link" onClick={retryWorkflowStatus}>
+                <Button variant="link" type="button" className="news-room-link" onClick={retryWorkflowStatus}>
                   Check provider access again
-                </button>
+                </Button>
               </div>
             )}
             {!canEnable && !workflowStatusError && !profileStatusUnknown && !workflowStatusLoading && (
@@ -303,9 +304,9 @@ export function NewsRoomSettings({
                       <li key={issue.message}>
                         <span>{issue.message}</span>
                         {issue.action && (
-                          <button type="button" className="news-room-link" onClick={issue.action.run}>
+                          <Button variant="link" type="button" className="news-room-link" onClick={issue.action.run}>
                             {issue.action.label}
-                          </button>
+                          </Button>
                         )}
                       </li>
                     ))}
@@ -332,9 +333,15 @@ export function NewsRoomSettings({
                 )}
               </div>
             )}
-            <button type="button" className="news-room-link" disabled={saving} onClick={configureProviders}>
+            <Button
+              variant="link"
+              type="button"
+              className="news-room-link"
+              disabled={saving}
+              onClick={configureProviders}
+            >
               Provider keys
-            </button>
+            </Button>
             {isEnabled && (dirty || saving) ? (
               <p className="news-room-paid-consent" role="note">
                 {paidProviderConsent}
@@ -371,7 +378,8 @@ export function NewsRoomSettings({
             )}
             {savedEnabled && (
               <div className="news-room-automation-actions">
-                <button
+                <Button
+                  variant="link"
                   ref={turnOffButton}
                   type="button"
                   className="news-room-link"
@@ -380,7 +388,7 @@ export function NewsRoomSettings({
                   onClick={() => runFocusedAction('stop')}
                 >
                   {stopping ? 'Turning off…' : 'Turn off now'}
-                </button>
+                </Button>
                 <div ref={stopFeedback}>
                   <ErrorNotice error={stopError} />
                 </div>
@@ -438,9 +446,15 @@ export function NewsRoomSettings({
                     ? '20 sources selected. Remove one to choose another.'
                     : 'Choose up to 20 sources.'}
                 </p>
-                <button id="bucket-manage-sources" type="button" className="news-room-link" onClick={configureSources}>
+                <Button
+                  variant="link"
+                  id="bucket-manage-sources"
+                  type="button"
+                  className="news-room-link"
+                  onClick={configureSources}
+                >
                   Manage sources
-                </button>
+                </Button>
               </fieldset>
 
               <label htmlFor="bucket-check-interval">
@@ -551,7 +565,8 @@ export function NewsRoomSettings({
                   </p>
                 </details>
               )}
-              <button
+              <Button
+                variant="link"
                 id="bucket-manage-djs"
                 type="button"
                 className="news-room-link"
@@ -559,7 +574,7 @@ export function NewsRoomSettings({
                 onClick={configureDJ}
               >
                 Manage hosts and host instructions
-              </button>
+              </Button>
               <details className="news-room-writing-policy">
                 <summary>Fixed writing policy</summary>
                 <p>

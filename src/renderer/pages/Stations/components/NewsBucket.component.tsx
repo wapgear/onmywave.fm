@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { canonicalArticleUrl, eligibleNewsTakes } from '../../../../shared/news-pool';
 import type { NewsArticle, PreparedNewsScript, PreparedNewsTake, ReviewedNewsArticle } from '../../../../shared/types';
+import { Button } from '../../../components/Button/Button.component';
 import { IconButton } from '../../../components/IconButton/IconButton.component';
 import { SectionNavigation } from '../../../components/SectionNavigation/SectionNavigation.component';
 import { Select } from '../../../components/Select/Select.component';
@@ -300,10 +301,10 @@ export function NewsBucket({
       <ul className="news-bucket-sources">
         {articles.map((article) => (
           <li key={`${article.id}-${article.url}`}>
-            <button onClick={() => openSource(article.url)}>
+            <Button variant="link" onClick={() => openSource(article.url)}>
               {article.title}
               <ExternalLink size={13} aria-hidden="true" />
-            </button>
+            </Button>
             <span>{articleSource(article)}</span>
           </li>
         ))}
@@ -395,9 +396,9 @@ export function NewsBucket({
               </button>
               <span className="news-bucket-audition-host">{take.renderingDJ.name}</span>
               {current && (
-                <button className="room-link" onClick={stopAudition}>
+                <Button variant="link" className="room-link" onClick={stopAudition}>
                   Stop
-                </button>
+                </Button>
               )}
               {current && current.phase !== 'loading' && (
                 <span>
@@ -637,9 +638,9 @@ export function NewsBucket({
               <p>{descriptions.settings}</p>
             </header>
             {roomSettings ?? (
-              <button className="room-link" onClick={openPreparation}>
+              <Button variant="link" className="room-link" onClick={openPreparation}>
                 Open news settings
-              </button>
+              </Button>
             )}
           </div>
           {destination !== 'settings' && (
@@ -721,9 +722,9 @@ export function NewsBucket({
                               ? 'Your DJ is watching your sources. Fresh recordings appear here when a story qualifies.'
                               : 'Choose your sources and host, then turn on automatic news in Settings.'}
                         </p>
-                        <button className="room-link" onClick={() => navigate('settings')}>
+                        <Button variant="link" className="room-link" onClick={() => navigate('settings')}>
                           Review news settings
-                        </button>
+                        </Button>
                       </div>
                     )}
                   </section>
@@ -762,9 +763,9 @@ export function NewsBucket({
                             ? 'The saved result is shown above. Stories from future checks will appear here.'
                             : 'Automatic checks find stories from your selected sources. Turn them on in News settings.'}
                         </p>
-                        <button className="room-link" onClick={() => navigate('settings')}>
+                        <Button variant="link" className="room-link" onClick={() => navigate('settings')}>
                           Review news settings
-                        </button>
+                        </Button>
                       </div>
                     )}
                   </section>
@@ -867,7 +868,8 @@ export function NewsBucket({
                         )}
                         {!reviewed.length && <p className="news-bucket-muted">No reviewed stories yet.</p>}
                         {nextHistoryCount > 0 && (
-                          <button
+                          <Button
+                            variant="link"
                             className="news-bucket-show-more"
                             onClick={(event) => {
                               const button = event.currentTarget;
@@ -892,7 +894,7 @@ export function NewsBucket({
                             }}
                           >
                             Show {nextHistoryCount} more stories
-                          </button>
+                          </Button>
                         )}
                       </section>
                     )}
@@ -941,10 +943,10 @@ export function NewsBucket({
                     }
                   />
                   <SidebarBody className="news-bucket-reader-body">
-                    <button className="news-bucket-reader-back" onClick={() => closeInspector()}>
+                    <Button variant="link" className="news-bucket-reader-back" onClick={() => closeInspector()}>
                       <ArrowLeft size={16} aria-hidden="true" />
                       Back to stories
-                    </button>
+                    </Button>
                     <p className="news-bucket-reader-context">{inspectorContext}</p>
                     <header>
                       <h2 ref={readerHeading} tabIndex={-1}>

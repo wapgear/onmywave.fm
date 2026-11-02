@@ -1,0 +1,204 @@
+{
+  "id": "queue:295ffabd-8056-4227-8471-534d406cd016",
+  "listHeight": 378,
+  "origin": {
+    "height": 54,
+    "left": 964,
+    "top": 269,
+    "width": 272
+  },
+  "samples": [
+    {
+      "artwork": true,
+      "listHeight": 378,
+      "placeholder": {
+        "height": 54,
+        "left": 964,
+        "top": 269,
+        "width": 272
+      },
+      "preview": {
+        "height": 54,
+        "left": 964,
+        "top": 283,
+        "width": 272
+      },
+      "text": "Evening track 001Fixture artist3:00",
+      "textWidth": 101.84375,
+      "trackWidth": 191.640625
+    },
+    {
+      "artwork": true,
+      "listHeight": 378,
+      "placeholder": {
+        "height": 54,
+        "left": 964,
+        "top": 269,
+        "width": 272
+      },
+      "preview": {
+        "height": 54,
+        "left": 964,
+        "top": 283,
+        "width": 272
+      },
+      "text": "Evening track 001Fixture artist3:00",
+      "textWidth": 101.84375,
+      "trackWidth": 191.640625
+    },
+    {
+      "artwork": true,
+      "listHeight": 378,
+      "placeholder": {
+        "height": 54,
+        "left": 964,
+        "top": 269,
+        "width": 272
+      },
+      "preview": {
+        "height": 54,
+        "left": 964,
+        "top": 296,
+        "width": 272
+      },
+      "text": "Evening track 001Fixture artist3:00",
+      "textWidth": 101.84375,
+      "trackWidth": 191.640625
+    },
+    {
+      "artwork": true,
+      "listHeight": 378,
+      "placeholder": {
+        "height": 54,
+        "left": 964,
+        "top": 269,
+        "width": 272
+      },
+      "preview": {
+        "height": 54,
+        "left": 964,
+        "top": 310,
+        "width": 272
+      },
+      "text": "Evening track 001Fixture artist3:00",
+      "textWidth": 101.84375,
+      "trackWidth": 191.640625
+    },
+    {
+      "artwork": true,
+      "listHeight": 378,
+      "placeholder": {
+        "height": 54,
+        "left": 964,
+        "top": 271.865478515625,
+        "width": 272
+      },
+      "preview": {
+        "height": 54,
+        "left": 964,
+        "top": 324,
+        "width": 272
+      },
+      "text": "Evening track 001Fixture artist3:00",
+      "textWidth": 101.84375,
+      "trackWidth": 191.640625
+    },
+    {
+      "artwork": true,
+      "listHeight": 378,
+      "placeholder": {
+        "height": 54,
+        "left": 964,
+        "top": 277.83905029296875,
+        "width": 272
+      },
+      "preview": {
+        "height": 54,
+        "left": 964,
+        "top": 337,
+        "width": 272
+      },
+      "text": "Evening track 001Fixture artist3:00",
+      "textWidth": 101.84375,
+      "trackWidth": 191.640625
+    },
+    {
+      "artwork": true,
+      "listHeight": 378,
+      "placeholder": {
+        "height": 54,
+        "left": 964,
+        "top": 282.53924560546875,
+        "width": 272
+      },
+      "preview": {
+        "height": 54,
+        "left": 964,
+        "top": 351,
+        "width": 272
+      },
+      "text": "Evening track 001Fixture artist3:00",
+      "textWidth": 101.84375,
+      "trackWidth": 191.640625
+    },
+    {
+      "artwork": true,
+      "listHeight": 378,
+      "placeholder": {
+        "height": 54,
+        "left": 964,
+        "top": 293.9102783203125,
+        "width": 272
+      },
+      "preview": {
+        "height": 54,
+        "left": 964,
+        "top": 351,
+        "width": 272
+      },
+      "text": "Evening track 001Fixture artist3:00",
+      "textWidth": 101.84375,
+      "trackWidth": 191.640625
+    },
+    {
+      "artwork": true,
+      "listHeight": 378,
+      "placeholder": {
+        "height": 54,
+        "left": 964,
+        "top": 308.81549072265625,
+        "width": 272
+      },
+      "preview": {
+        "height": 54,
+        "left": 964,
+        "top": 364,
+        "width": 272
+      },
+      "text": "Evening track 001Fixture artist3:00",
+      "textWidth": 101.84375,
+      "trackWidth": 191.640625
+    },
+    {
+      "artwork": true,
+      "listHeight": 378,
+      "placeholder": {
+        "height": 54,
+        "left": 964,
+        "top": 322.64605712890625,
+        "width": 272
+      },
+      "preview": {
+        "height": 54,
+        "left": 964,
+        "top": 378,
+        "width": 272
+      },
+      "text": "Evening track 001Fixture artist3:00",
+      "textWidth": 101.84375,
+      "trackWidth": 191.640625
+    }
+  ],
+  "textWidth": 101.84375,
+  "trackWidth": 191.640625
+}

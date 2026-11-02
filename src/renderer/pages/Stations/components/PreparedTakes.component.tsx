@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 import type { PreparedNewsTake } from '../../../../shared/types';
 import { unwrap } from '../../../api';
+import { Button } from '../../../components/Button/Button.component';
 import { ErrorNotice, duration } from '../../../components/Shared';
 import { usePlayer } from '../../../player';
 import { useSavedNewsAudition } from './hooks/useSavedNewsAudition';
@@ -211,10 +212,10 @@ export function PreparedTakes({ library, refresh, active = true }: PreparedTakes
                   <div className="prepared-source-links">
                     <h4>Configured feeds</h4>
                     {take.provenance.sources.map((feed) => (
-                      <button key={feed.id} onClick={() => source.mutate(feed.url)}>
+                      <Button variant="link" key={feed.id} onClick={() => source.mutate(feed.url)}>
                         <ExternalLink size={12} />
                         <span>{feed.name || feed.url}</span>
-                      </button>
+                      </Button>
                     ))}
                   </div>
                 )}
@@ -223,10 +224,10 @@ export function PreparedTakes({ library, refresh, active = true }: PreparedTakes
                     <h4>Story references</h4>
                     {take.articles.map((article) => (
                       <div key={article.id}>
-                        <button onClick={() => source.mutate(article.url)}>
+                        <Button variant="link" onClick={() => source.mutate(article.url)}>
                           <ExternalLink size={12} />
                           <span>{article.title}</span>
-                        </button>
+                        </Button>
                         <p>
                           {article.source}
                           {Number.isFinite(Date.parse(article.publishedAt ?? ''))

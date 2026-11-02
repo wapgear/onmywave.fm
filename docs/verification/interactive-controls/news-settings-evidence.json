@@ -1,0 +1,17 @@
+{
+  "date": "2026-11-02",
+  "viewport": {
+    "width": 1280,
+    "height": 720,
+    "theme": "dark"
+  },
+  "sha256": {
+    "src/renderer/pages/Stations/components/NewsRoomSettings.styles.css": "21c6047d7445bf386aa880bdc2810ea7aea744ad62258d828ab45125bcc37b4c",
+    "docs/verification/interactive-controls/news-settings-before-idle.png": "43dbdeaad0bf067db96236e1003b9e68b636f2401da703c2089645b7df61f6ab",
+    "docs/verification/interactive-controls/news-settings-after-hover.png": "7cd638a0946225b602c30c298ee2a88c7ab2bf71801fddbd5391b8636c4fa190",
+    "docs/verification/interactive-controls/news-settings-after-hover-top.png": "bf4495f62d8dceff730dd3419dc2eb9975578492490b48b572dbf6bb630e8703",
+    "docs/verification/interactive-controls/news-settings-before-hover.png": "08283fe4e72ae1db091870ea03c5dde56c5a2b566f223626dd8ef8f69ee6fcbb",
+    "docs/verification/interactive-controls/news-settings-after-idle.png": "0706a110a3c8dbcadc3962d5adf51baa605cbc248a1b95f80cd1a572d1711607",
+    "docs/verification/interactive-controls/news-settings-offset-results.json": "a82520f92767acccee9ceb53cb746a90d86d424fcbcb1aa04b8b28386897432a"
+  }
+}

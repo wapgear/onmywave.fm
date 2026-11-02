@@ -44,6 +44,9 @@
   background: var(--surface);
   font-size: 12px;
 }
+.settings-preferences .settings-signout:hover {
+  background: var(--control-hover);
+}
 .settings-preferences .settings-description {
   font-size: 13px;
   line-height: 1.7;
@@ -93,6 +96,9 @@
   margin: 0;
 }
 .theme-choice {
+  transition:
+    background-color 0.15s,
+    border-color 0.15s;
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -101,6 +107,10 @@
   border: 1px solid var(--border);
   border-radius: 12px;
   cursor: pointer;
+}
+.theme-choice:has(:enabled):not(:has(:checked)):hover {
+  border-color: var(--muted);
+  background: var(--hover);
 }
 .theme-choice:has(:checked) {
   border-color: var(--accent);

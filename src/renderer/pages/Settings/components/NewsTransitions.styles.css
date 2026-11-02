@@ -42,7 +42,7 @@
   width: fit-content;
   cursor: pointer;
   color: var(--text-secondary);
-  padding: var(--space-2) 0;
+  padding: var(--space-2);
 }
 .transition-preview > summary:focus-visible {
   outline: var(--control-focus-width) solid var(--focus);

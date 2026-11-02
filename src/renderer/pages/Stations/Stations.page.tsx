@@ -1258,7 +1258,8 @@ export function StationsPage({
                       cancellationRecord?.status === 'running' &&
                       cancellation?.requestId === currentCancelId) ||
                       ownsCancelAction('retry')) && (
-                      <button
+                      <Button
+                        variant="link"
                         className="room-link"
                         disabled={(cancellationPending || !preparing || oldCancelFocus) && !ownsCancelAction('retry')}
                         aria-disabled={cancellationPending || !preparing || oldCancelFocus || undefined}
@@ -1288,7 +1289,7 @@ export function StationsPage({
                                 ? 'Preparation finished'
                                 : 'Preparation stopped'
                               : 'Retry cancellation'}
-                      </button>
+                      </Button>
                     )}
                     <ErrorNotice error={localCancelError ? new Error(localCancelError) : null} />
                   </div>
@@ -1470,9 +1471,9 @@ export function StationsPage({
                       </p>
                     ))}
                   {preparationHistory.length > historyLimit && (
-                    <button className="room-link" onClick={showOlderPreparations}>
+                    <Button variant="link" className="room-link" onClick={showOlderPreparations}>
                       Show older preparations
-                    </button>
+                    </Button>
                   )}
                 </details>
               )}

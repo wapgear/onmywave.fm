@@ -61,6 +61,14 @@
     color 0.15s,
     box-shadow 0.15s;
 }
+.dj-avatar-choice:hover input:enabled:not(:checked) + .dj-avatar-choice-mark {
+  background: var(--control-hover);
+  color: var(--text);
+}
+.dj-avatar-color:hover input:enabled + span {
+  outline: 2px solid var(--muted);
+  outline-offset: 2px;
+}
 .dj-avatar-choice input:checked + .dj-avatar-choice-mark {
   background: var(--accent-soft);
   color: var(--accent);

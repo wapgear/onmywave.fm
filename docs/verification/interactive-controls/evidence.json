@@ -1,0 +1,52 @@
+{
+  "capture_date": "2026-11-02",
+  "viewport": {
+    "width": 1280,
+    "height": 720,
+    "dpr": 2,
+    "screenshot_scale": 1
+  },
+  "baseline_revision": "950a4701635ddf429c3ba60f327f1a261aca5ad3",
+  "source_sha256": {
+    "src/renderer/components/AddPlaylist/AddPlaylist.component.tsx": "401a9405e3ed68e7680d18aa31e7d1a44f2005bda6856969e77c6f3e2c382721",
+    "src/renderer/components/Button/Button.types.ts": "56b0b41065149c9edfa8f733364c5f27d6b9fc7d27188a7c5bd7af647191f754",
+    "src/renderer/components/LibraryChooser.styles.css": "3ff160717bb4444a03bf59d60a1ce8efe3595359eeab9d20f82d57bf2979ec5d",
+    "src/renderer/components/Player/Player.styles.css": "91793515b79776791c4bf8ac0bbec025e571930750e237eb28f90742f71642e1",
+    "src/renderer/components/PreferenceSection/PreferenceSection.styles.css": "6f035e673f66acae5c1dd4f3dddf6d17bce4e9a5c5f7ff9d49d45bed33ac16cf",
+    "src/renderer/components/ProviderKeys/TwitterSetupHelp.component.tsx": "6cb33f62bbaac1abdf33e8ba434313f5e87615b4f0a51b59e4b1face4b006bdc",
+    "src/renderer/components/ProviderKeys/TwitterSetupHelp.styles.css": "ba7ebddbd9f01491cca416e95cf6a53022f73cc8468a502b05152c206026ae1c",
+    "src/renderer/pages/DJs/components/DJAvatarPicker.styles.css": "df762672bfb465a3c9f2880832d5f229fa78c645869c617530c107b117e69414",
+    "src/renderer/pages/Settings/Settings.styles.css": "1dc9e65914066927a99c1b676673b7815597bb86ca20f26cd5e6e3d2cacdb3dd",
+    "src/renderer/pages/Settings/components/NewsTransitions.styles.css": "e850c1789ecd0b956185d793a4195ecb0cffd6b2222cf276e1cdb8b8c474aaff",
+    "src/renderer/pages/Stations/Stations.page.tsx": "18c70a6a2f2ed72ac4db6878d81b568c54c21cf55e92fec8565071beb820197d",
+    "src/renderer/pages/Stations/Stations.styles.css": "689cdd0565d78e29e3955cef4e804df5eac8308696064ce95f9310d7e81d78a0",
+    "src/renderer/pages/Stations/components/DJReadiness.component.tsx": "a45c044e2b8baf281df158063bd445fe50c59efc10a2dc0a130f58b97ce00a2f",
+    "src/renderer/pages/Stations/components/NewsBucket.component.tsx": "5c45f1ac89eb4dbaa337a6a0a5bea86a7a1cfb3d697d1c6ad426b98fadbc8d55",
+    "src/renderer/pages/Stations/components/NewsBucket.styles.css": "264d8af033459346ede8e4d4c9d57616f3c046776329eb7a60c720e197a90cb5",
+    "src/renderer/pages/Stations/components/NewsRoomSettings.component.tsx": "c30d2b71a0a113f0f1fb99c5868781da761793597716d68337d717234b4fbafa",
+    "src/renderer/pages/Stations/components/NewsRoomSettings.styles.css": "a71c8c2a28af6c996816dd7b3a9178b9b486191665c353563f684e115100ae1b",
+    "src/renderer/pages/Stations/components/PreparedTakes.styles.css": "cb28a0c47675d6c458351e8317b87d83738dae9a670f32bb4a5ac0d0bede2a42",
+    "src/renderer/styles.css": "fa95d7d0ae499fd832d32777de9eaf86fe9f0e4d345a7af18e94d40bf7b3daf4"
+  },
+  "evidence_sha256": {
+    "after-button-states.png": "adda765880b5cb05d275937ee2dd723cc4d8df784847f8f3f99cf4cb31615eca",
+    "after-dj-dialog.png": "47bb5aff2b429b65a07b2a176d7eb12c0e2ebb7fbe2c5d7bd326ce3195a76d80",
+    "after-link-hover.png": "40deea489204a236cb59c6bc4ebd7715fa3318f9c1ec85d0831221de27f0dd4e",
+    "after-news-settings.png": "c72d857064bb927939e541bae8a4bc941e21cfe3006bacbce4eebd50c70dfc10",
+    "after-news.png": "e96c4ed0851c6d1ff95008e54cebd727e41b5005d7d29cff743f09587d7bc2aa",
+    "after-providers.png": "61d3852db37b8e6ebbab6ad733993ff70d37873ff73c0dc7ce010fca1d25da2a",
+    "after-settings-coffee.png": "a8a2383f425772426c80d68e097de0c125a20a97eb7d4bb0694e621e61ec6b7f",
+    "after-settings-dark.png": "1bc88fe5610c2988774bfbdd3ecd2a90a7807c8c8df0f2c6f085048d5f16d595",
+    "after-settings.png": "f1ac0295e908751aae476fe9526684c6077ddd7db67e7ae5eb22d3e968919866",
+    "after-songs.png": "379cce3d2f6615c71292e2fb0c2640e941d67e2ea36bf299fd48acefe7d5e711",
+    "before-dj-dialog.png": "4cdf9c82552575129bd75168e3829ef6c603c67049084e783f2cb805793c1d7d",
+    "before-link-hover.png": "a051419f697dc3deb61db81d3fb90e3e749039c2ca6725b016340de814646c91",
+    "before-news-settings.png": "5e03b61c21cf679ed0e84aadab68fa1651b5a9eba3766aa248f6148a7a5fae4f",
+    "before-news.png": "e2fc0ed9c9f86f762378c5e75c9ffbc518ca279bee79f07113fece2bc1cb7ca5",
+    "before-providers.png": "6447f5d3e2b1e0876f856baa6d8cd148ca1c04a1e8d2bfce22f71a084628ea5b",
+    "before-settings.png": "07d864930228b5b7f4a474179112ef65fd3be9be86dab9578233164d47eed16c",
+    "before-songs.png": "18de3b8347216920d8aa2b935fe488f46cd4b8e534a24ac907e5c88082da980a",
+    "button-states.json": "62ccee81baff1977dda2e4a685a5013dae2a293ace7f3b04ad9123b188286ef1"
+  },
+  "notes": "Working tree after local repair. Hashes bind files to this record, not to whole-app compliance. Narrow viewport override did not take effect."
+}

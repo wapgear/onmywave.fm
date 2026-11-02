@@ -154,8 +154,8 @@
 .player-bar input[type='range'] {
   appearance: none;
   -webkit-appearance: none;
-  min-height: 20px;
-  height: 20px;
+  min-height: var(--space-6);
+  height: var(--space-6);
   padding: 0;
   border: 0;
   border-radius: 0;
@@ -183,6 +183,9 @@
   box-shadow:
     0 0 0 1px #0002,
     0 1px 3px #0003;
+}
+.player-bar input[type='range']:is(:hover, :focus-visible):enabled::-webkit-slider-thumb {
+  box-shadow: 0 0 0 4px var(--control-hover);
 }
 .player-bar input[type='range']:disabled {
   cursor: default;

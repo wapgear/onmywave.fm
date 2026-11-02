@@ -1,0 +1,15 @@
+{
+  "idle": {
+    "background": "rgba(0, 0, 0, 0)",
+    "color": "rgb(237, 113, 130)",
+    "hover": false,
+    "theme": "dark",
+    "translate": "none"
+  },
+  "hover": {
+    "background": "rgba(0, 0, 0, 0)",
+    "color": "rgb(242, 139, 153)",
+    "hover": true,
+    "translate": "none"
+  }
+}

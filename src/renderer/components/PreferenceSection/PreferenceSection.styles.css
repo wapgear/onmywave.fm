@@ -7,7 +7,7 @@
   grid-template-columns: minmax(0, 1fr) auto 18px;
   align-items: center;
   gap: var(--space-3);
-  padding: var(--space-4) 0;
+  padding: var(--space-4) var(--space-2);
   list-style: none;
   cursor: pointer;
   border-radius: var(--control-radius);

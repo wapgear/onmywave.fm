@@ -1,0 +1,41 @@
+{
+  "scope": "Recorded actual shared Button fixture at 1280x720, light theme. The intentional 12px target must fail LINK_TARGET. This checks finite interaction evidence, not the entire app or WCAG compliance.",
+  "checks": [
+    {
+      "rule": "LINK_TARGET",
+      "passed": true
+    },
+    {
+      "rule": "DISCLOSURE_TARGET",
+      "passed": true
+    },
+    {
+      "rule": "LINK_HOVER",
+      "passed": true
+    },
+    {
+      "rule": "DISABLED_STATES",
+      "passed": true
+    },
+    {
+      "rule": "KEYBOARD_FOCUS",
+      "passed": true
+    },
+    {
+      "rule": "LINK_WRAPPING",
+      "passed": true
+    },
+    {
+      "rule": "VARIANT_HOVER",
+      "passed": true
+    },
+    {
+      "rule": "NO_HOVER_LAYOUT_SHIFT",
+      "passed": true
+    },
+    {
+      "rule": "REJECT_BROKEN_TARGET",
+      "passed": true
+    }
+  ]
+}

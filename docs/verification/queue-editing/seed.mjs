@@ -77,3 +77,5 @@ window.addEventListener('DOMContentLoaded', () => {
     document.body.append(controls);
   }
 });
+
+if (params.has('observe-drag')) await import('../whole-row-queue/observe.mjs');

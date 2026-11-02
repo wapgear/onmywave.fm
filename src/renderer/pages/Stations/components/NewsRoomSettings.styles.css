@@ -3,7 +3,7 @@
   width: 100%;
   min-width: 0;
   max-width: 760px;
-  margin-inline: auto;
+  margin-inline: 0;
   padding: 0;
   background: transparent;
   color: var(--text);
@@ -113,9 +113,14 @@
 .news-room-paid-consent-disclosure > summary {
   width: fit-content;
   min-height: 28px;
-  padding: 3px 0;
+  padding: 3px var(--space-2);
+  margin-inline-start: calc(-1 * var(--space-2));
   cursor: pointer;
   color: var(--accent);
+}
+.news-room-paid-consent-disclosure > summary:is(:hover, :focus-visible) {
+  background: transparent;
+  color: var(--accent-hover);
 }
 .news-room-paid-consent-disclosure[open] > summary {
   margin-bottom: 5px;
@@ -258,13 +263,7 @@
 }
 .news-room-link {
   justify-self: start;
-  min-height: 28px;
-  padding: 4px 1px;
-  border: 0;
-  background: transparent;
-  color: var(--accent);
-  font-size: 12px;
-  text-align: left;
+  margin-inline-start: calc(-1 * var(--space-2));
 }
 .news-room-link:disabled,
 .news-room-link[aria-disabled='true'] {
