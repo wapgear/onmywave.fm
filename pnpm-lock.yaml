@@ -26,17 +26,17 @@ importers:
         specifier: ^0.6.0
         version: 0.6.0
       '@tanstack/ai':
-        specifier: 1.0.0
-        version: 1.0.0(zod@4.6.7)
+        specifier: 1.0.1
+        version: 1.0.1(zod@4.6.7)
       '@tanstack/ai-openai':
-        specifier: ^1.0.0
-        version: 1.0.0(@tanstack/ai@1.0.0(zod@4.6.7))(undici@7.30.1)(ws@8.22.0)(zod@4.6.7)
+        specifier: ^1.0.1
+        version: 1.0.1(@tanstack/ai@1.0.1(zod@4.6.7))(undici@7.30.1)(ws@8.22.0)(zod@4.6.7)
       '@tanstack/react-query':
-        specifier: 5.104.5
-        version: 5.104.5(@types/react@19.3.0)(react@19.3.1)
+        specifier: 5.105.0
+        version: 5.105.0(@types/react@19.3.0)(react@19.3.1)
       '@tanstack/react-virtual':
-        specifier: ^3.14.22
-        version: 3.14.22(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+        specifier: ^3.14.24
+        version: 3.14.24(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       electron-updater:
         specifier: ^6.8.11
         version: 6.8.11
@@ -213,8 +213,8 @@ packages:
     resolution: {integrity: sha512-Vj1jF3cPfxg7OAfoI7QnVKLoILlm2JF9pnVHrX8qx7AHMiYWT+NDAA7jChlNgRS4WTLc/fD1lXLmPixluj+3Gg==}
     engines: {node: '>=6.9.0'}
 
-  '@cfworker/json-schema@4.1.1':
-    resolution: {integrity: sha512-gAmrUZSGtKc3AiBL71iNWxDsyUC5uMaKKGdvzYsBoTW/xi42JQHl7eKV2OYzCUqvc+D2RCcf7EXY2iCyFIk6og==}
+  '@cfworker/json-schema@4.1.3':
+    resolution: {integrity: sha512-7WJxlFqM6opWUGEt3uzf0YePLow50lWtVAA4iyLS/eOXu1hrVohpa/1/4nx/PyeqH4Yb0UmYoJyt6cWdRBABhQ==}
 
   '@electron-internal/extract-zip@1.0.6':
     resolution: {integrity: sha512-/aQLgFDdCSnwChfUwqekSmE1q2dCTzhUy5saIHBb5vyYn5LzWaKPaIz1wM0lDMCZYBoIG4svJNvAJb6vkI8BuA==}
@@ -822,16 +822,16 @@ packages:
   '@tanstack/ai-event-client@1.0.0':
     resolution: {integrity: sha512-RXlk6XkIYU4n25QYoCmETKiFjPnEpwvQv5Ve62pdtHaEVP//VZUdwGSRGCf/PATgwYdib8FT49tPmqnKtXPDhw==}
 
-  '@tanstack/ai-openai@1.0.0':
-    resolution: {integrity: sha512-p0blsUs98FSnIXgYk8KMAbyBTWCHdZj4PyvhrUuO3vU4aNAnjlwunDyrqVhmP8gXA3k0oSUru4UAmXXKnN5j4g==}
+  '@tanstack/ai-openai@1.0.1':
+    resolution: {integrity: sha512-yfchwr7yvAokTzph5QJhH+iePeS5S6VNfT14KlxAcD2VD/a4i2vZUMGUIq5qykWXmOunixaXReQR4lh+NxMjrw==}
     peerDependencies:
-      '@tanstack/ai': ^1.0.0
+      '@tanstack/ai': ^1.0.1
 
   '@tanstack/ai-utils@1.0.0':
     resolution: {integrity: sha512-0Nl9rUmS3zTGKP8dPmyS2zJ18mieAheKqS9V+390vjViJvD6kpP+1gdCdHkNUqQsSzSFvb32QW8bkTVCAOv0qA==}
 
-  '@tanstack/ai@1.0.0':
-    resolution: {integrity: sha512-kqHkfJPLmNwZ5+dwC5cCZy4UASfIEVToBBSccRUP2ued2g1/TytZkTOHMlNsbVca2Q1pJ/pQfdQkQ7xwhze8qw==}
+  '@tanstack/ai@1.0.1':
+    resolution: {integrity: sha512-oddcGha40pa0MMWdMogvljNiul6OY3H+V9fDOS6DZ+2+8KdUXxWfOf8QDYtkat6xAuZf4E4Clc7b1RAewbxSkA==}
     engines: {node: '>=18'}
     peerDependencies:
       '@opentelemetry/api': '>=1.9.0'
@@ -849,11 +849,11 @@ packages:
     peerDependencies:
       '@tanstack/ai': ^1.0.0
 
-  '@tanstack/query-core@5.104.5':
-    resolution: {integrity: sha512-Q94gI8Opd+CbdVNOdj8ZCyV8WqLYitrDq1t96Xc8WZT6lY0r5iRnJLXYDxMex7EEf2v+mXvn4FcjaBKSxXZQ9A==}
+  '@tanstack/query-core@5.105.0':
+    resolution: {integrity: sha512-7p56vRmT/z4UJ6sctGIdl5WRUQyUv53IUpUwEKi2g97zMbO7zh8ZsCLffGAvCPBR4xD72e3VXsDyLwXHhoNTMQ==}
 
-  '@tanstack/react-query@5.104.5':
-    resolution: {integrity: sha512-RORgFe052U+93weaNuqg7qHq7vNVNzXN/VrXqD4bbAuQCWUqOl2lV5Ui9flWk5CVvMyL/Bh27QWhzwH0aaOx9g==}
+  '@tanstack/react-query@5.105.0':
+    resolution: {integrity: sha512-y+hMuDERvgg6ay1da0V1a6ZC0ZONt7dELxSFkqRZuwm7p1TTZs0MoXrPlBRflIpRoYjvzQVYxycnLImpFLhWrw==}
     peerDependencies:
       '@types/react': ^18 || ^19
       react: ^18 || ^19
@@ -861,14 +861,14 @@ packages:
       '@types/react':
         optional: true
 
-  '@tanstack/react-virtual@3.14.22':
-    resolution: {integrity: sha512-zNiB9IF3prySTfAUrj9tPHjD/lonBYkfxrPP4v4ITUx+qwHajJR5cY/xirjvwc+KWkur10GX3TpsbKh7JkD8Lw==}
+  '@tanstack/react-virtual@3.14.24':
+    resolution: {integrity: sha512-JoNsByXR68fNlB2NZuT3bSk8uYBxuOWl6YNJ7djTrw7IMwBWuaOtffxj/TcuMa80WmL6byb+80i1NEM/8Qmocw==}
     peerDependencies:
       react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
       react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
-  '@tanstack/virtual-core@3.19.7':
-    resolution: {integrity: sha512-gxy5SvH0mFRJ0YujtrflB/1HAu9Wn1KGvL0bjZfQkYVVMsIpQiwcf1mR06/ViN4NjllUb4HNCjqE9FGwgTvMCQ==}
+  '@tanstack/virtual-core@3.19.9':
+    resolution: {integrity: sha512-Syiaf3w69dFyYv4o2mqJ1/2VtBJTNq5Hu5cVXfnzOuJKFpUojukQR13ZW+5NvdMJM7GFHeNPmveMNhoIubiFyA==}
 
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
@@ -2348,7 +2348,7 @@ snapshots:
       '@babel/helper-string-parser': 7.29.7
       '@babel/helper-validator-identifier': 7.29.7
 
-  '@cfworker/json-schema@4.1.1': {}
+  '@cfworker/json-schema@4.1.3': {}
 
   '@electron-internal/extract-zip@1.0.6': {}
 
@@ -2753,11 +2753,11 @@ snapshots:
     dependencies:
       '@tanstack/devtools-event-client': 0.4.4
 
-  '@tanstack/ai-openai@1.0.0(@tanstack/ai@1.0.0(zod@4.6.7))(undici@7.30.1)(ws@8.22.0)(zod@4.6.7)':
+  '@tanstack/ai-openai@1.0.1(@tanstack/ai@1.0.1(zod@4.6.7))(undici@7.30.1)(ws@8.22.0)(zod@4.6.7)':
     dependencies:
-      '@tanstack/ai': 1.0.0(zod@4.6.7)
+      '@tanstack/ai': 1.0.1(zod@4.6.7)
       '@tanstack/ai-utils': 1.0.0
-      '@tanstack/openai-base': 1.0.0(@tanstack/ai@1.0.0(zod@4.6.7))(undici@7.30.1)(ws@8.22.0)(zod@4.6.7)
+      '@tanstack/openai-base': 1.0.0(@tanstack/ai@1.0.1(zod@4.6.7))(undici@7.30.1)(ws@8.22.0)(zod@4.6.7)
       openai: 7.45.1(undici@7.30.1)(ws@8.22.0)(zod@4.6.7)
     transitivePeerDependencies:
       - '@aws-sdk/credential-provider-node'
@@ -2770,10 +2770,10 @@ snapshots:
 
   '@tanstack/ai-utils@1.0.0': {}
 
-  '@tanstack/ai@1.0.0(zod@4.6.7)':
+  '@tanstack/ai@1.0.1(zod@4.6.7)':
     dependencies:
       '@ag-ui/core': 1.0.0(zod@4.6.7)
-      '@cfworker/json-schema': 4.1.1
+      '@cfworker/json-schema': 4.1.3
       '@standard-schema/spec': 1.1.0
       '@tanstack/ai-event-client': 1.0.0
       '@tanstack/ai-utils': 1.0.0
@@ -2784,9 +2784,9 @@ snapshots:
 
   '@tanstack/devtools-event-client@0.4.4': {}
 
-  '@tanstack/openai-base@1.0.0(@tanstack/ai@1.0.0(zod@4.6.7))(undici@7.30.1)(ws@8.22.0)(zod@4.6.7)':
+  '@tanstack/openai-base@1.0.0(@tanstack/ai@1.0.1(zod@4.6.7))(undici@7.30.1)(ws@8.22.0)(zod@4.6.7)':
     dependencies:
-      '@tanstack/ai': 1.0.0(zod@4.6.7)
+      '@tanstack/ai': 1.0.1(zod@4.6.7)
       '@tanstack/ai-utils': 1.0.0
       openai: 7.45.1(undici@7.30.1)(ws@8.22.0)(zod@4.6.7)
     transitivePeerDependencies:
@@ -2798,22 +2798,22 @@ snapshots:
       - ws
       - zod
 
-  '@tanstack/query-core@5.104.5': {}
+  '@tanstack/query-core@5.105.0': {}
 
-  '@tanstack/react-query@5.104.5(@types/react@19.3.0)(react@19.3.1)':
+  '@tanstack/react-query@5.105.0(@types/react@19.3.0)(react@19.3.1)':
     dependencies:
-      '@tanstack/query-core': 5.104.5
+      '@tanstack/query-core': 5.105.0
       react: 19.3.1
     optionalDependencies:
       '@types/react': 19.3.0
 
-  '@tanstack/react-virtual@3.14.22(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
+  '@tanstack/react-virtual@3.14.24(react-dom@19.3.1(react@19.3.1))(react@19.3.1)':
     dependencies:
-      '@tanstack/virtual-core': 3.19.7
+      '@tanstack/virtual-core': 3.19.9
       react: 19.3.1
       react-dom: 19.3.1(react@19.3.1)
 
-  '@tanstack/virtual-core@3.19.7': {}
+  '@tanstack/virtual-core@3.19.9': {}
 
   '@types/babel__core@7.20.5':
     dependencies:
