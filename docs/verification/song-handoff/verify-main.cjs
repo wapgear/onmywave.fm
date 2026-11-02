@@ -2,7 +2,9 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const Module = require('node:module');
-const ts = require('typescript');
+const { compile, registerFixtureImports } = require('../../../scripts/verification-code.mjs');
+
+registerFixtureImports();
 
 const root = process.cwd();
 const originalLoad = Module._load;
@@ -23,9 +25,7 @@ const playback = { enabled: false, roomId: null, everySongs: 3, announceTracks: 
 
 class ServiceError extends Error { constructor(code, message) { super(message); this.code = code; } }
 
-require.extensions['.ts'] = (mod, file) => mod._compile(ts.transpileModule(fs.readFileSync(file, 'utf8'), {
-  compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
-}).outputText, file);
+require.extensions['.ts'] = (mod, file) => mod._compile(compile(fs.readFileSync(file, 'utf8'), file), file);
 Module._load = function (id, parent, ...rest) {
   if (id === './storage' && parent?.filename.endsWith('/song-handoffs.ts'))
     return { getLocalState: async () => ({ djPlayback: playback, activeRoomProfileId: 'fixture-room', roomProfiles: [{ id: 'fixture-room', room: { djId: 'fixture-dj' } }], djs: [{ ...take.renderingDJ, news: { elevenVoiceId: 'fixture-voice', elevenTags: '[warm]' } }] }) };

@@ -1,8 +1,10 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
-const ts = require(path.join(process.cwd(), 'node_modules/typescript'));
-require.extensions['.ts'] = (mod, file) => mod._compile(ts.transpileModule(fs.readFileSync(file, 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } }).outputText, file);
+const { compile, registerFixtureImports } = require('../../../scripts/verification-code.mjs');
+
+registerFixtureImports();
+require.extensions['.ts'] = (mod, file) => mod._compile(compile(fs.readFileSync(file, 'utf8'), file), file);
 const { JellyfinService } = require(path.join(process.cwd(), 'src/main/jellyfin.ts'));
 const id = n => n.toString(16).padStart(32, '0');
 let catalog = Array.from({length:240}, (_,i) => ({Id:id(i+1), Name:`Match ${String(i).padStart(3,'0')}`, Artists:['Example'], RunTimeTicks:1800000000}));

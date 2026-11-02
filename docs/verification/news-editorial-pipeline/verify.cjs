@@ -6,7 +6,9 @@ const path = require('node:path');
 const Module = require('node:module');
 const { EventEmitter } = require('node:events');
 const { Readable } = require('node:stream');
-const ts = require(path.join(process.cwd(), 'node_modules/typescript'));
+const { compile, registerFixtureImports } = require('../../../scripts/verification-code.mjs');
+
+registerFixtureImports();
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'wave-editorial-flow-'));
 const originalLoad = Module._load;
@@ -24,13 +26,19 @@ let workflow;
 let news;
 let articleRequests;
 let sourceMode;
+let promptPolicyVersion;
 const reports = [];
 
-require.extensions['.ts'] = (mod, file) => mod._compile(ts.transpileModule(fs.readFileSync(file, 'utf8'), {
-  compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
-}).outputText, file);
+require.extensions['.ts'] = (mod, file) => mod._compile(compile(fs.readFileSync(file, 'utf8'), file), file);
 
 Module._load = function (id, ...args) {
+  if (id === './news-prompts' && args[0]?.filename.endsWith('/prepared-news.ts')) {
+    const actual = originalLoad.call(this, id, ...args);
+    return {
+      ...actual,
+      get NEWS_PROMPT_POLICY_VERSION() { return promptPolicyVersion ?? actual.NEWS_PROMPT_POLICY_VERSION; },
+    };
+  }
   if (id === 'node:dns/promises' && args[0]?.filename.endsWith('/news-source.ts')) return {
     lookup: async (host) => [{ address: sourceMode === 'private-dns' ? '127.0.0.1' : '93.184.216.34', family: 4 }],
   };
@@ -385,19 +393,19 @@ async function main() {
     assert.equal(currentPolicy, 4);
     try {
       for (const previousPolicy of [2, 3]) {
-        policy.NEWS_PROMPT_POLICY_VERSION = previousPolicy;
+        promptPolicyVersion = previousPolicy;
         fresh('old-policy-' + previousPolicy, { speechFailure: true });
         const id = 'request-old-policy-' + previousPolicy;
         await assert.rejects(prepare(id));
         state.roomProfiles[0].workflowDraft.newsLastRun = { requestId: id, outcome: 'interrupted', startedAt: new Date().toISOString() };
         assert.equal(await prepared.resumableRoomNewsRequest(snapshot(), 'room-a'), id);
-        policy.NEWS_PROMPT_POLICY_VERSION = currentPolicy;
+        promptPolicyVersion = currentPolicy;
         assert.equal(await prepared.resumableRoomNewsRequest(snapshot(), 'room-a'), null);
         await assert.rejects(prepare(id, true));
         assert.equal(calls.speech, 1, 'An incompatible checkpoint must not dispatch speech');
         assert.equal(index().scripts.length, 1, 'Existing saved scripts must remain intact');
       }
-    } finally { policy.NEWS_PROMPT_POLICY_VERSION = currentPolicy; }
+    } finally { promptPolicyVersion = undefined; }
   });
 
   await run('a selected story consumed elsewhere cannot trigger another paid retry', async () => {

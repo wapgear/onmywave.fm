@@ -94,7 +94,7 @@ async function main() {
     console.log('CRITICAL_PLAYBACK_STARTUP app-ready');
     const { createServer } = await import(pathToFileURL(path.join(modules, 'vite/dist/node/index.js')));
     const { default: react } = await import(pathToFileURL(path.join(modules, '@vitejs/plugin-react/dist/index.js')));
-    const { default: ts } = await import(pathToFileURL(path.join(modules, 'typescript/lib/typescript.js')));
+    const { parse, Visitor } = await import('../../../scripts/verification-code.mjs');
     const exact = (source, needle, replacement, label) => {
       const index = source.indexOf(needle);
       if (index < 0 || source.indexOf(needle, index + needle.length) >= 0)
@@ -166,31 +166,31 @@ async function main() {
             }
             if (!id.startsWith(path.join(root, 'src/renderer'))) return;
             if (id.endsWith('/App.tsx')) {
-              const parsed = ts.createSourceFile(id, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+              const parsed = parse(source, id);
               let position;
-              const visit = (node) => {
-                if (ts.isFunctionDeclaration(node) && node.name?.text === 'App' && node.body) {
-                  const statement = node.body.statements.find(ts.isReturnStatement);
-                  if (statement) position = statement.getStart(parsed);
+              new Visitor({
+                FunctionDeclaration(node) {
+                  if (node.id?.name === 'App' && node.body) {
+                    const statement = node.body.body.find((statement) => statement.type === 'ReturnStatement');
+                    if (statement) position = statement.start;
+                  }
                 }
-                ts.forEachChild(node, visit);
-              };
-              visit(parsed);
+              }).visit(parsed);
               if (position === undefined) throw new Error('App fixture instrumentation target is missing');
               return `${source.slice(0, position)}window.__fixture.client=client;\n${source.slice(position)}`;
             }
             if (!id.endsWith('/player.tsx')) return;
             if (mutationSpec) source = exact(source, mutationSpec.anchor, mutationSpec.replacement, mutation);
-            const parsed = ts.createSourceFile(id, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+            const parsed = parse(source, id);
             const target = [];
-            const visit = (node) => {
-              if (ts.isFunctionDeclaration(node) && node.name?.text === 'usePlayer' && node.body) {
-                const statement = node.body.statements.find(ts.isReturnStatement);
-                if (statement) target.push(statement.getStart(parsed));
+            new Visitor({
+              FunctionDeclaration(node) {
+                if (node.id?.name === 'usePlayer' && node.body) {
+                  const statement = node.body.body.find((statement) => statement.type === 'ReturnStatement');
+                  if (statement) target.push(statement.start);
+                }
               }
-              ts.forEachChild(node, visit);
-            };
-            visit(parsed);
+            }).visit(parsed);
             if (target.length !== 1) throw new Error('Expected one usePlayer return for fixture instrumentation');
             const position = target[0];
             return `${source.slice(0, position)}window.__fixture.player=value;\n${source.slice(position)}`;

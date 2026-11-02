@@ -1,11 +1,11 @@
 import { realpathSync } from 'node:fs';
 import { pathToFileURL } from 'node:url';
+import { parse, Visitor } from '../../../scripts/verification-code.mjs';
 const root = process.cwd();
 const port = 5205;
 const modules = realpathSync(root + '/node_modules');
 const { createServer } = await import(pathToFileURL(modules + '/vite/dist/node/index.js'));
 const { default: react } = await import(pathToFileURL(modules + '/@vitejs/plugin-react/dist/index.js'));
-const { default: ts } = await import(pathToFileURL(modules + '/typescript/lib/typescript.js'));
 const server = await createServer({
   root: root + '/src/renderer', cacheDir: root + '/node_modules/.vite-queue-editing', configFile: false,
   plugins: [{
@@ -25,15 +25,15 @@ const server = await createServer({
         return 'import "/@fs/' + root + '/docs/verification/queue-editing/seed.mjs";\n' + source;
       }
       if (!id.endsWith('/src/renderer/player.tsx')) return;
-      const parsed = ts.createSourceFile(id, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+      const parsed = parse(source, id);
       let position;
-      function visit(node) {
-        if (ts.isFunctionDeclaration(node) && node.name?.text === 'usePlayer') {
-          position = node.body.statements.find(ts.isReturnStatement)?.getStart(parsed);
+      new Visitor({
+        FunctionDeclaration(node) {
+          if (node.id?.name === 'usePlayer' && node.body) {
+            position = node.body.body.find((statement) => statement.type === 'ReturnStatement')?.start;
+          }
         }
-        ts.forEachChild(node, visit);
-      }
-      visit(parsed);
+      }).visit(parsed);
       if (position) source = source.slice(0, position) + 'window.__fixture.player=value;\n' + source.slice(position);
       return source;
     },

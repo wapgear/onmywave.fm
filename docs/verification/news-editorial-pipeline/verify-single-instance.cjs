@@ -3,15 +3,15 @@ const { spawn } = require('node:child_process');
 const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
-const ts = require(path.join(process.cwd(), 'node_modules/typescript'));
+const { parse } = require('../../../scripts/verification-code.mjs');
 
 const source = fs.readFileSync('src/main/index.ts', 'utf8');
-const parsed = ts.createSourceFile('index.ts', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-const guard = parsed.statements.find((statement) => ts.isIfStatement(statement) && statement.expression.getText(parsed).includes('app.requestSingleInstanceLock'));
+const parsed = parse(source, 'index.ts');
+const guard = parsed.body.find((statement) => statement.type === 'IfStatement' && source.slice(statement.test.start, statement.test.end).includes('app.requestSingleInstanceLock'));
 assert.ok(guard, 'The production main entry must guard the shared app-data writer');
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'wave-instance-check-'));
 const entry = path.join(root, 'instance.cjs');
-fs.writeFileSync(entry, `const {app}=require('electron');const fs=require('node:fs');app.setPath('userData',process.argv[2]);const request=app.requestSingleInstanceLock.bind(app);app.requestSingleInstanceLock=(...args)=>{const acquired=request(...args);fs.writeFileSync(process.argv[3],JSON.stringify({acquired}));return acquired;};${guard.getText(parsed)};app.whenReady().then(()=>setInterval(()=>{},1000));`);
+fs.writeFileSync(entry, `const {app}=require('electron');const fs=require('node:fs');app.setPath('userData',process.argv[2]);const request=app.requestSingleInstanceLock.bind(app);app.requestSingleInstanceLock=(...args)=>{const acquired=request(...args);fs.writeFileSync(process.argv[3],JSON.stringify({acquired}));return acquired;};${source.slice(guard.start, guard.end)};app.whenReady().then(()=>setInterval(()=>{},1000));`);
 const children = [];
 const pause = () => new Promise((resolve) => setTimeout(resolve, 50));
 const launch = (name) => {

@@ -1,6 +1,6 @@
 # Contributing
 
-Start with the [README](README.md) to run the app. Use Node.js 24 and pnpm 10.34.7, and keep `pnpm-lock.yaml` in sync with dependency changes.
+Start with the [README](README.md) to run the app. Use Node.js 26 and pnpm 10.34.7, and keep `pnpm-lock.yaml` in sync with dependency changes.
 
 ## Issues
 

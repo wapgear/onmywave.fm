@@ -4,8 +4,10 @@ const path=require('node:path');
 const os=require('node:os');
 const Module=require('node:module');
 const assert=require('node:assert/strict');
-const ts=require(path.join(process.cwd(),'node_modules/typescript'));
-require.extensions['.ts']=(mod,file)=>mod._compile(ts.transpileModule(fs.readFileSync(file,'utf8'),{compilerOptions:{module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText,file);
+const { compile, registerFixtureImports } = require('../../../scripts/verification-code.mjs');
+
+registerFixtureImports();
+require.extensions['.ts']=(mod,file)=>mod._compile(compile(fs.readFileSync(file,'utf8'), file),file);
 let userData;
 const originalLoad=Module._load;
 Module._load=function(id,...args){if(id==='electron')return {app:{getPath:()=>userData},safeStorage:{}};return originalLoad.call(this,id,...args);};

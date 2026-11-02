@@ -102,7 +102,7 @@ async function makeMain(mutant = false) {
 async function startVite() {
   const { createServer } = await import(pathToFileURL(path.join(modules, 'vite/dist/node/index.js')));
   const { default: react } = await import(pathToFileURL(path.join(modules, '@vitejs/plugin-react/dist/index.js')));
-  const ts = await import(pathToFileURL(path.join(modules, 'typescript/lib/typescript.js')));
+  const { parse, Visitor } = await import('../../../scripts/verification-code.mjs');
   const serverInstance = await createServer({
     root: path.join(root, 'src/renderer'),
     configFile: false,
@@ -112,16 +112,16 @@ async function startVite() {
         enforce: 'pre',
         transform(source, id) {
           if (!id.endsWith('/player.tsx')) return;
-          const parsed = ts.createSourceFile(id, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+          const parsed = parse(source, id);
           const target = [];
-          const visit = (node) => {
-            if (ts.isFunctionDeclaration(node) && node.name?.text === 'usePlayer' && node.body) {
-              const statement = node.body.statements.find(ts.isReturnStatement);
-              if (statement) target.push(statement.getStart(parsed));
+          new Visitor({
+            FunctionDeclaration(node) {
+              if (node.id?.name === 'usePlayer' && node.body) {
+                const statement = node.body.body.find((statement) => statement.type === 'ReturnStatement');
+                if (statement) target.push(statement.start);
+              }
             }
-            ts.forEachChild(node, visit);
-          };
-          visit(parsed);
+          }).visit(parsed);
           if (target.length !== 1) throw new Error('Expected exactly one usePlayer return to observe');
           const position = target[0];
           return `${source.slice(0, position)}window.__playbackRelaunch.player=value;\n${source.slice(position)}`;

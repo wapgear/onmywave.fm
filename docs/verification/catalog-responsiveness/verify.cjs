@@ -4,7 +4,9 @@ const fs = require('node:fs');
 const Module = require('node:module');
 const path = require('node:path');
 const { execFileSync } = require('node:child_process');
-const ts = require(path.join(process.cwd(), 'node_modules/typescript'));
+const { compile, registerFixtureImports } = require('../../../scripts/verification-code.mjs');
+
+registerFixtureImports();
 
 const servicePath = path.join(process.cwd(), 'src/main/jellyfin.ts');
 const baselineRef = process.argv.find((arg) => arg.startsWith('--baseline-ref='))?.slice('--baseline-ref='.length);
@@ -15,18 +17,14 @@ const source = baselineRef
 const sourceSha256 = crypto.createHash('sha256').update(source).digest('hex');
 require.extensions['.ts'] = (mod, file) =>
   mod._compile(
-    ts.transpileModule(fs.readFileSync(file, 'utf8'), {
-      compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
-    }).outputText,
+    compile(fs.readFileSync(file, 'utf8'), file),
     file,
   );
 const serviceModule = new Module(servicePath, module);
 serviceModule.filename = servicePath;
 serviceModule.paths = Module._nodeModulePaths(path.dirname(servicePath));
 serviceModule._compile(
-  ts.transpileModule(source, {
-    compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
-  }).outputText,
+  compile(source),
   servicePath,
 );
 const { JellyfinService } = serviceModule.exports;

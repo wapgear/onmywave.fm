@@ -4,13 +4,13 @@ const fsp = require('node:fs/promises');
 const path = require('node:path');
 const os = require('node:os');
 const Module = require('node:module');
-const ts = require(path.join(process.cwd(), 'node_modules/typescript'));
+const { compile, registerFixtureImports } = require('../../../scripts/verification-code.mjs');
+
+registerFixtureImports();
 
 require.extensions['.ts'] = (mod, file) =>
   mod._compile(
-    ts.transpileModule(fs.readFileSync(file, 'utf8'), {
-      compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
-    }).outputText,
+    compile(fs.readFileSync(file, 'utf8'), file),
     file,
   );
 

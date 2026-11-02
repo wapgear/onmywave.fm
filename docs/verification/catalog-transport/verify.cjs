@@ -3,14 +3,13 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const crypto = require('node:crypto');
-const ts = require('typescript');
+const { compile, parse, registerFixtureImports } = require('../../../scripts/verification-code.mjs');
+
+registerFixtureImports();
 const { QueryClient, QueryObserver } = require('@tanstack/react-query');
 
 const root = process.cwd();
-const compile = (source) => ts.transpileModule(source, {
-  compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
-}).outputText;
-require.extensions['.ts'] = (mod, file) => mod._compile(compile(fs.readFileSync(file, 'utf8')), file);
+require.extensions['.ts'] = (mod, file) => mod._compile(compile(fs.readFileSync(file, 'utf8'), file), file);
 const { JellyfinService, ServiceError } = require(path.join(root, 'src/main/jellyfin.ts'));
 const uid = n => n.toString(16).padStart(32, '0');
 const service = new JellyfinService({ deviceId: 'fixture', imageUrl: id => id });
@@ -33,13 +32,13 @@ global.fetch = async (url, init) => {
 
 // Execute the real IPC registration and cancellation functions, with Electron transport replaced.
 const mainSource = fs.readFileSync('src/main/index.ts', 'utf8');
-const mainAst = ts.createSourceFile('index.ts', mainSource, ts.ScriptTarget.Latest, true);
+const mainAst = parse(mainSource, 'index.ts');
 const names = new Set(['cancelCatalogRequests', 'catalogRequestId', 'readCatalog', 'registerIpc']);
-const selected = mainAst.statements.filter(node =>
-  ts.isFunctionDeclaration(node) ? names.has(node.name?.text) :
-    ts.isVariableStatement(node) && node.declarationList.declarations.some(d => ['catalogRequests', 'invalid', 'isRecord'].includes(d.name.getText(mainAst))),
-).map(node => node.getText(mainAst)).join('\n');
-assert.equal(names.size, mainAst.statements.filter(n => ts.isFunctionDeclaration(n) && names.has(n.name?.text)).length);
+const selected = mainAst.body.filter(node =>
+  node.type === 'FunctionDeclaration' ? names.has(node.id?.name) :
+    node.type === 'VariableDeclaration' && node.declarations.some(d => ['catalogRequests', 'invalid', 'isRecord'].includes(d.id.name)),
+).map(node => mainSource.slice(node.start, node.end)).join('\n');
+assert.equal(names.size, mainAst.body.filter(n => n.type === 'FunctionDeclaration' && names.has(n.id?.name)).length);
 const handlers = new Map();
 const mainFrame = {};
 const webContents = { mainFrame };
@@ -48,7 +47,7 @@ const main = vm.createContext({ service, searchDJVoices: () => { throw new Error
 vm.runInContext(compile(selected + '\nregisterIpc();'), main);
 
 const exposed = {};
-const preload = vm.createContext({ exports: {}, require: name => {
+const preload = vm.createContext({ module: { exports: {} }, require: name => {
   assert.equal(name, 'electron');
   return { contextBridge: { exposeInMainWorld: (name, api) => { exposed[name] = api; } }, ipcRenderer: {
     invoke: (channel, input) => Promise.resolve().then(() => handlers.get(channel)(event, input)),
@@ -56,12 +55,12 @@ const preload = vm.createContext({ exports: {}, require: name => {
   } };
 } });
 vm.runInContext(compile(fs.readFileSync('src/preload/index.ts', 'utf8')), preload);
-const renderer = vm.createContext({ exports: {}, require: name => {
+const renderer = vm.createContext({ module: { exports: {} }, require: name => {
   assert.equal(name, './api');
   return require(path.join(root, 'src/renderer/api.ts'));
 }, crypto, window: exposed, DOMException, Promise });
 vm.runInContext(compile(fs.readFileSync('src/renderer/catalog.ts', 'utf8')), renderer);
-const readCatalog = renderer.exports.readCatalog;
+const readCatalog = renderer.module.exports.readCatalog;
 const query = { search: 'old', start: 0, limit: 80, sort: 'name' };
 const results = [];
 const tick = () => new Promise(resolve => setTimeout(resolve, 0));

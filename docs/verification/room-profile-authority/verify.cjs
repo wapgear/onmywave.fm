@@ -4,13 +4,13 @@ const path = require('node:path');
 const os = require('node:os');
 const Module = require('node:module');
 const assert = require('node:assert/strict');
-const ts = require(path.join(process.cwd(), 'node_modules/typescript'));
+const { compile, parse, Visitor, registerFixtureImports } = require('../../../scripts/verification-code.mjs');
+
+registerFixtureImports();
 
 require.extensions['.ts'] = (mod, file) =>
   mod._compile(
-    ts.transpileModule(fs.readFileSync(file, 'utf8'), {
-      compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
-    }).outputText,
+    compile(fs.readFileSync(file, 'utf8'), file),
     file,
   );
 
@@ -73,18 +73,18 @@ const twoProfiles = (overrides = {}) => ({
   ...overrides,
 });
 const mainSource = fs.readFileSync(path.join(process.cwd(), 'src/main/index.ts'), 'utf8');
-const mainFile = ts.createSourceFile('index.ts', mainSource, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+const mainFile = parse(mainSource, 'index.ts');
 const disableNewsPreparationNode = (() => {
   let found;
-  const visit = (node) => {
-    if (ts.isPropertyAssignment(node) && node.name.getText(mainFile) === 'disableNewsPreparation') found = node.initializer;
-    if (!found) ts.forEachChild(node, visit);
-  };
-  visit(mainFile);
+  new Visitor({
+    Property(node) {
+      if (!found && !node.computed && node.key.name === 'disableNewsPreparation') found = node.value;
+    },
+  }).visit(mainFile);
   assert.ok(found, 'disableNewsPreparation handler exists');
   return found;
 })();
-const sourceDisableNewsPreparation = disableNewsPreparationNode.getText(mainFile);
+const sourceDisableNewsPreparation = mainSource.slice(disableNewsPreparationNode.start, disableNewsPreparationNode.end);
 const check = async (name, run) => {
   await run();
   results.push({ scenario: name, result: 'passed' });
@@ -160,7 +160,7 @@ const check = async (name, run) => {
         profile('room-a', { room: { djId: 'dj-a', sourceIds: ['source-a'] }, mood: 'A' }),
         profile('room-b', { room: { djId: 'dj-b', sourceIds: ['source-b'] }, mood: 'B' }),
       ],
-      djPlayback: { enabled: true, roomId: 'room-a', everySongs: 3, keepOnSeek: true, voiceVolume: 0.7, announceTracks: true, announceEverySongs: 8 },
+      djPlayback: { enabled: true, roomId: 'room-a', everySongs: 3, keepOnSeek: true, voiceVolume: 0.7, announceTracks: true, announceEverySongs: 8, announcementStyle: 'varied', announcementLines: '' },
     });
     const { file, storage } = fresh('independent-playback-room', initial);
     await storage.updateLocalState((state) => ({
@@ -236,12 +236,10 @@ const check = async (name, run) => {
         profile('room-b', { workflowDraft: { ...profile('room-b').workflowDraft, newsEnabled: true, nextNewsCheckAt: '2026-10-23T10:00:00.000Z' } }),
       ],
       activeRoomProfileId: 'room-b',
-      djPlayback: { enabled: true, roomId: 'room-a', everySongs: 3, keepOnSeek: true, voiceVolume: 0.7, announceTracks: true, announceEverySongs: 8 },
+      djPlayback: { enabled: true, roomId: 'room-a', everySongs: 3, keepOnSeek: true, voiceVolume: 0.7, announceTracks: true, announceEverySongs: 8, announcementStyle: 'varied', announcementLines: '' },
     });
     const { file, storage } = fresh('disable-handler', initial);
-    const transpiled = ts.transpileModule(`(${sourceDisableNewsPreparation})`, {
-      compilerOptions: { module: ts.ModuleKind.None, target: ts.ScriptTarget.ES2022 },
-    }).outputText;
+    const transpiled = compile(`(${sourceDisableNewsPreparation})`);
     let paused;
     const handler = new Function(
       'profileId',
