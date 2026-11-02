@@ -32,7 +32,7 @@
     "electron-updater": "^6.8.11",
     "fast-xml-parser": "^5.11.2",
     "linkedom": "^0.18.14",
-    "lucide-react": "^0.468.0",
+    "lucide-react": "^1.65.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "ws": "^8.22.0",
