@@ -3,7 +3,9 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const Module = require('node:module');
-const ts = require(path.join(process.cwd(), 'node_modules/typescript'));
+const { compile, registerFixtureImports } = require('../../../scripts/verification-code.mjs');
+
+registerFixtureImports();
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'wave-news-delivery-'));
 const originalLoad = Module._load;
@@ -28,9 +30,7 @@ require.extensions['.ts'] = (mod, file) => {
   if (sourceMutation === 'release-claim' && file === servicePath)
     source = replaceExactly(source, "take.deliveryState.status === 'claimed' ||", 'false ||');
   mod._compile(
-    ts.transpileModule(source, {
-      compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
-    }).outputText,
+    compile(source),
     file,
   );
 };

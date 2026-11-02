@@ -4,7 +4,9 @@ const fsp = require('node:fs/promises');
 const os = require('node:os');
 const path = require('node:path');
 const Module = require('node:module');
-const ts = require(path.join(process.cwd(), 'node_modules/typescript'));
+const { compile, registerFixtureImports } = require('../../../scripts/verification-code.mjs');
+
+registerFixtureImports();
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'wave-news-favorites-'));
 const directory = path.join(root, 'profile');
@@ -15,9 +17,7 @@ let renameFailure = false;
 
 require.extensions['.ts'] = (mod, file) =>
   mod._compile(
-    ts.transpileModule(fs.readFileSync(file, 'utf8'), {
-      compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 },
-    }).outputText,
+    compile(fs.readFileSync(file, 'utf8'), file),
     file,
   );
 

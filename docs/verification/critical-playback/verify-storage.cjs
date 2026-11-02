@@ -3,7 +3,9 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const Module = require('node:module');
-const ts = require('typescript');
+const { compile, registerFixtureImports } = require('../../../scripts/verification-code.mjs');
+
+registerFixtureImports();
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'wave-playback-storage-'));
 const servicePath = path.join(process.cwd(), 'src/main/storage.ts');
@@ -18,7 +20,7 @@ require.extensions['.ts'] = (mod, file) => {
     assert.equal(source.split(anchor).length, 2, 'Storage mutation anchor changed');
     source = source.replace(anchor, "await atomicWrite('local-state.json', JSON.stringify({ ...state, playback: null }));");
   }
-  mod._compile(ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } }).outputText, file);
+  mod._compile(compile(source), file);
 };
 Module._load = function (id, ...args) {
   if (id === 'electron') return { app: { getPath: () => directory }, safeStorage: {} };

@@ -32,7 +32,9 @@ Screenshots come from the [website demo](https://onmywave.izmailov.dev/) and sho
 
 ## Run from source
 
-Install [Node.js 24](https://nodejs.org/) and [pnpm 10.34.7](https://pnpm.io/installation) on macOS, then:
+Install [Node.js 26](https://nodejs.org/) and [pnpm 10.34.7](https://pnpm.io/installation) on macOS, then:
+
+With nvm, run `nvm install` and `nvm use` in the checkout to select the version in `.nvmrc`. Node 26 runs development tools and CI; the desktop app uses the Node runtime bundled with Electron.
 
 ```sh
 git clone https://github.com/wapgear/onmywave.fm.git
@@ -77,6 +79,8 @@ pnpm audit
 ```
 
 Oxlint is the single lint runner, with type-aware TypeScript analysis and the existing React, Electron, and spacing rules. Oxfmt handles formatting. React Hooks and Stylistic plugins run inside Oxlint; the ESLint engine and CLI are not installed.
+
+Type checking uses TypeScript 7 directly. Verification scripts use esbuild to transpile isolated fixtures and Rolldown to inspect source syntax, without a legacy TypeScript compiler or compatibility package.
 
 The build validates bundled voice samples without making generation requests. `pnpm run preview` opens the built app. CI runs the same quality checks and full dependency audit.
 
