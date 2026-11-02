@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "checks": [
+    "root-scoped artist pagination and deduplication",
+    "single/multiple-root artist song pagination",
+    "artist-isolated catalog snapshots",
+    "artist plus title/album/genre/tag search",
+    "collaborating artist intersection",
+    "empty result",
+    "invalid ID rejected before request",
+    "complete artist collection across 500-item pages",
+    "no selected libraries"
+  ],
+  "requests": 54
+}

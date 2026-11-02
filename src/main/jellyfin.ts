@@ -2,6 +2,7 @@ import { editablePlaylistEntryIds, playlistEntryIdentity } from '../shared/playl
 import type {
   Album,
   ApiError,
+  Artist,
   CatalogQuery,
   Connection,
   Library,
@@ -46,6 +47,7 @@ type Item = {
   AlbumPrimaryImageTag?: string;
   AlbumArtist?: string;
   Artists?: string[];
+  ArtistItems?: { Id: string; Name?: string }[];
   DateCreated?: string;
   RunTimeTicks?: number;
   ProductionYear?: number;
@@ -513,6 +515,31 @@ export class JellyfinService {
       };
     });
   }
+  async artists(): Promise<Artist[]> {
+    return this.readCurrentSession(async () => {
+      const session = this.requireSession();
+      const pages = await Promise.all(
+        session.selectedLibraryIds.map((parentId) =>
+          this.allItems('/Artists', {
+            UserId: session.userId,
+            ParentId: parentId,
+            IncludeItemTypes: 'Audio',
+            SortBy: 'SortName',
+            SortOrder: 'Ascending',
+            EnableTotalRecordCount: 'true',
+          }),
+        ),
+      );
+      return [...new Map(pages.flat().map((item) => [itemIdentity(item.Id), item])).values()]
+        .filter((item) => item.Name?.trim())
+        .map((item) => ({
+          id: validId(item.Id),
+          name: item.Name!,
+          imageUrl: item.ImageTags?.Primary ? this.deps.imageUrl(item.Id, item.ImageTags.Primary) : undefined,
+        }))
+        .sort((a, b) => catalogCollator.compare(a.name, b.name));
+    });
+  }
   async selectLibraries(values: string[]): Promise<Connection> {
     const session = this.requireSession();
     const selected = [...new Set(ids(values))];
@@ -583,6 +610,7 @@ export class JellyfinService {
       dateAdded: 'DateCreated,SortName',
     }[query.sort || 'name'];
     if (!sort) throw new ServiceError('invalid', 'Invalid catalog sort.');
+    if (query.artistId !== undefined) validId(query.artistId);
     for (const value of [query.search, query.genre, query.tag])
       if (value !== undefined && (typeof value !== 'string' || value.length > 500))
         throw new ServiceError('invalid', 'Invalid catalog filter.');
@@ -594,6 +622,7 @@ export class JellyfinService {
       type,
       query.genre || '',
       query.tag || '',
+      query.artistId ? itemIdentity(query.artistId) : '',
       query.sort || 'name',
       !!query.descending,
     ]);
@@ -626,6 +655,7 @@ export class JellyfinService {
         if (query.search) params.set('SearchTerm', query.search);
         if (query.genre) params.set('Genres', query.genre);
         if (query.tag) params.set('Tags', query.tag);
+        if (query.artistId) params.set('ArtistIds', query.artistId);
         // Complete each root before merging: provider and app sort comparators can differ.
         if (multiple) {
           const items = await this.allItems(`/Users/${s.userId}/Items`, Object.fromEntries(params), requestSignal);
@@ -705,6 +735,7 @@ export class JellyfinService {
       term,
       query.genre || '',
       query.tag || '',
+      query.artistId ? itemIdentity(query.artistId) : '',
       query.sort || 'name',
       !!query.descending,
     ]);
@@ -801,6 +832,7 @@ export class JellyfinService {
       };
       if (query.genre) base.Genres = query.genre;
       if (query.tag) base.Tags = query.tag;
+      if (query.artistId) base.ArtistIds = query.artistId;
       const titleMatches = bounded(`/Users/${session.userId}/Items`, { ...base, SearchTerm: term }, branchSignal);
       const work: Promise<Item[]>[] = [titleMatches];
       const artistMatches = artistsPromise.then(async (artists) => {
@@ -818,7 +850,15 @@ export class JellyfinService {
               branchSignal,
             ),
           ),
-        ).then((batches) => batches.flat());
+        ).then((batches) =>
+          batches
+            .flat()
+            .filter(
+              (item) =>
+                !query.artistId ||
+                item.ArtistItems?.some((artist) => itemIdentity(artist.Id) === itemIdentity(query.artistId!)),
+            ),
+        );
       });
       work.push(artistMatches);
       if (type === 'Audio') {
@@ -952,6 +992,23 @@ export class JellyfinService {
       if (item.Type !== 'MusicAlbum') throw new ServiceError('invalid', 'This item is not an album.');
       return this.albumItem(item);
     });
+  }
+  async artistTracks(value: string): Promise<Song[]> {
+    const artistId = validId(value);
+    return this.catalogOperation(new AbortController().signal, async (signal) =>
+      this.readCurrentSession(async () => {
+        const tracks: Song[] = [];
+        while (true) {
+          const page = await this.catalog(
+            'Audio',
+            { artistId, start: tracks.length, limit: 500, sort: 'album' },
+            signal,
+          );
+          tracks.push(...page.items.map((item) => this.songItem(item)));
+          if (!page.items.length || tracks.length >= page.total) return tracks;
+        }
+      }),
+    );
   }
   async albumTracks(value: string): Promise<Song[]> {
     return this.readCurrentSession(async () => {

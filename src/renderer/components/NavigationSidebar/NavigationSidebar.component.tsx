@@ -1,4 +1,4 @@
-import { Disc3, ListMusic, Music2, PanelLeftClose, PanelLeftOpen, Radio, Settings } from 'lucide-react';
+import { Disc3, ListMusic, Music2, PanelLeftClose, PanelLeftOpen, Radio, Settings, Users } from 'lucide-react';
 import { useEffect, useId, useState } from 'react';
 import type { ReactNode } from 'react';
 
@@ -9,6 +9,7 @@ import './NavigationSidebar.styles.css';
 
 const navigation = [
   { id: 'songs', name: 'All songs', icon: Music2 },
+  { id: 'artists', name: 'Artists', icon: Users },
   { id: 'albums', name: 'Albums', icon: Disc3 },
   { id: 'playlists', name: 'Playlists', icon: ListMusic },
   { id: 'stations', name: 'News bucket', icon: Radio },

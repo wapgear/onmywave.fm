@@ -2004,7 +2004,7 @@ input[type='range'] {
 .page-heading h1:focus-visible,
 .collection-heading h1:focus-visible,
 .song-load-status > span:focus-visible,
-.album-load-status > span:focus-visible {
+.collection-load-status > span:focus-visible {
   outline: var(--control-focus-width) solid var(--focus);
   outline-offset: 2px;
   border-radius: 4px;

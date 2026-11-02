@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "viewports": [
+    "1440×900",
+    "960×700"
+  ],
+  "checks": [
+    "Artists collection grid instead of a song filter",
+    "artist-name search and empty results",
+    "artist detail and only their songs",
+    "complete collection play/next/enqueue actions",
+    "keyboard grid navigation",
+    "detail entry and back focus restoration",
+    "search and detail retained across navigation",
+    "compact sidebar",
+    "no horizontal overflow",
+    "album grid/detail regression",
+    "track error, disabled playback, and retry"
+  ],
+  "pageErrors": []
+}

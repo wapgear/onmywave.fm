@@ -95,9 +95,19 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
     try {
       await client.invalidateQueries({
         predicate: (query) =>
-          ['songs', 'song', 'libraryFilters', 'albums', 'album', 'albumTracks', 'playlists', 'playlist'].includes(
-            String(query.queryKey[0]),
-          ),
+          [
+            'songs',
+            'song',
+            'artists',
+            'artist',
+            'artistTracks',
+            'libraryFilters',
+            'albums',
+            'album',
+            'albumTracks',
+            'playlists',
+            'playlist',
+          ].includes(String(query.queryKey[0])),
       });
     } finally {
       refreshInFlight.current = false;
@@ -190,7 +200,7 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
           label="Refresh library"
           aria-disabled={refreshing || undefined}
           aria-busy={refreshing}
-          title="Refresh songs, filters, albums and playlists"
+          title="Refresh songs, artists, filters, albums and playlists"
           onClick={() => void refreshLibrary()}
         >
           <RefreshCw size={17} className={refreshing ? 'spinning' : ''} aria-hidden="true" />

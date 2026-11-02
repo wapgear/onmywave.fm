@@ -527,6 +527,8 @@ function registerIpc() {
     },
     libraries: () => service.libraries(),
     libraryFilters: () => service.libraryFilters(),
+    artists: () => service.artists(),
+    artistTracks: (input) => service.artistTracks(input),
     selectLibraries: (input) => service.selectLibraries(input),
     songs: (input: CatalogRequest) => readCatalog(input, (query, signal) => service.songs(query, signal)),
     albums: (input: CatalogRequest) => readCatalog(input, (query, signal) => service.albums(query, signal)),

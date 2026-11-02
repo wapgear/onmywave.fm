@@ -43,6 +43,8 @@ export type LibraryFilters = { genres: string[]; tags: string[] };
 
 export type Library = { id: string; name: string };
 
+export type Artist = { id: string; name: string; imageUrl?: string };
+
 export type Song = {
   id: string;
   name: string;
@@ -75,6 +77,7 @@ export type CatalogQuery = {
   search?: string;
   genre?: string;
   tag?: string;
+  artistId?: string;
   sort?: 'name' | 'artist' | 'album' | 'year' | 'dateAdded';
   descending?: boolean;
 };
@@ -384,6 +387,8 @@ export interface WaveApi {
   disconnect(): Promise<Result<void>>;
   libraries(): Promise<Result<Library[]>>;
   libraryFilters(): Promise<Result<LibraryFilters>>;
+  artists(): Promise<Result<Artist[]>>;
+  artistTracks(id: string): Promise<Result<Song[]>>;
   selectLibraries(ids: string[]): Promise<Result<Connection>>;
   songs(this: void, query: CatalogRequest): Promise<Result<Page<Song>>>;
   albums(this: void, query: CatalogRequest): Promise<Result<Page<Album>>>;

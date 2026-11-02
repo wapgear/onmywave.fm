@@ -2,9 +2,9 @@
 
 A macOS music player for your Jellyfin library, with optional spoken news and song introductions. Built with Electron, React, and TypeScript.
 
-![The song library and DJ breaks panel in onmywave.fm](docs/screenshots/library.png)
+![The current song library and sidebar in onmywave.fm](docs/screenshots/library.png)
 
-Browse songs and albums, build playlists, and keep a listening queue that returns when you reopen the app. Add a DJ when you want news from your chosen sources mixed into your listening session.
+Browse songs, albums, and artists, build playlists, and keep a listening queue that returns when you reopen the app. Add a DJ when you want news from your chosen sources mixed into your listening session.
 
 ## Project status
 
@@ -14,7 +14,7 @@ You need your own Jellyfin server, an account with access to at least one music 
 
 ## What works
 
-- Browse and search songs and albums, with genre/tag filters and sorting for songs.
+- Browse and search songs, albums, and artists. Open an album or artist to see its songs and play or queue the collection. Songs also support genre/tag filters and sorting.
 - Create and edit Jellyfin playlists when your account has permission.
 - Manage the queue, shuffle, repeat, volume, and playback position. Quitting saves the latest session; reopening restores it paused, ready to continue. Periodic checkpoints provide a fallback after an unexpected exit.
 - Close the window on macOS or Windows to keep playback running in the background. Use the menu bar or system tray icon to show the window or quit the app.
@@ -28,7 +28,9 @@ AI playlist generation, weather, calendar, and reminder workflows are planned. S
 
 ![The album library with release cover artwork](docs/screenshots/albums.png)
 
-Screenshots come from the [website demo](https://onmywave.izmailov.dev/) and show the actual renderer with real song titles and matching release covers in an example catalog. See [capture details](docs/screenshots/README.md).
+![The artist collection browser](docs/screenshots/artists.png)
+
+Screenshots show the current production renderer, captured on 2 November 2026 with a disposable example catalog of real song titles and matching release covers. See [capture details](docs/screenshots/README.md).
 
 ## Run from source
 
