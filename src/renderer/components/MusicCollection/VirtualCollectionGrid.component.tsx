@@ -1,6 +1,7 @@
 import { defaultRangeExtractor, observeElementOffset, useVirtualizer } from '@tanstack/react-virtual';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react';
 
+import { primaryModifier } from '../../shortcuts';
 import { useRetryFocus } from '../../useRetryFocus';
 import { Artwork, ErrorNotice } from '../Shared';
 import type { CollectionItem, VirtualCollectionGridProps } from './MusicCollection.types';
@@ -196,7 +197,7 @@ export function VirtualCollectionGrid<T extends CollectionItem>({
           ? items.length - 1
           : Math.min(items.length - 1, index - (index % layout.columns) + layout.columns - 1);
     else return;
-    if (event.metaKey && event.key.startsWith('Arrow')) return;
+    if (primaryModifier(event) && event.key.startsWith('Arrow')) return;
     event.preventDefault();
     next = Math.min(items.length - 1, Math.max(0, next));
     const id = items[next].id;

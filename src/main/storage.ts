@@ -115,6 +115,14 @@ export function withProviderKeys<T>(operation: () => Promise<T>): Promise<T> {
   return next;
 }
 
+function protectedStorageAvailable() {
+  return (
+    safeStorage.isEncryptionAvailable() &&
+    (process.platform !== 'linux' ||
+      ['gnome_libsecret', 'kwallet', 'kwallet5', 'kwallet6'].includes(safeStorage.getSelectedStorageBackend()))
+  );
+}
+
 async function readProviderKey(provider: KeyProvider): Promise<string | null> {
   const revision = providerKeyRevisions.get(provider);
   const shared = provider === 'twitter' ? null : await readSharedProviderKey(provider);
@@ -127,8 +135,7 @@ async function readProviderKey(provider: KeyProvider): Promise<string | null> {
   if (providerKeys.has(provider)) return providerKeys.get(provider)!;
   let key: string | null = null;
   try {
-    if (safeStorage.isEncryptionAvailable())
-      key = safeStorage.decryptString(await readFile(location(`${provider}-key.enc`)));
+    if (protectedStorageAvailable()) key = safeStorage.decryptString(await readFile(location(`${provider}-key.enc`)));
   } catch {
     /* No saved key. */
   }
@@ -144,7 +151,7 @@ async function providerKeyStatus(provider: KeyProvider) {
 function writeProviderKey(provider: KeyProvider, key: string | null) {
   return withProviderKeys(async () => {
     if (provider !== 'twitter') await writeSharedProviderKey(provider, key);
-    if (!key || !safeStorage.isEncryptionAvailable()) {
+    if (!key || !protectedStorageAvailable()) {
       await unlink(location(`${provider}-key.enc`)).catch((error: NodeJS.ErrnoException) => {
         if (error.code !== 'ENOENT') throw error;
       });
@@ -192,7 +199,7 @@ export async function atomicWrite(name: string, content: string) {
 
 export async function readConnection(): Promise<StoredConnection | null> {
   try {
-    if (!safeStorage.isEncryptionAvailable()) return null;
+    if (!protectedStorageAvailable()) return null;
     const encrypted = await readFile(location('connection.enc'));
     const record = JSON.parse(safeStorage.decryptString(encrypted)) as StoredConnection;
     if (
@@ -216,7 +223,7 @@ export async function writeConnection(
   record: StoredConnection | null,
   commit: (write: () => boolean) => boolean = (write) => write(),
 ): Promise<boolean> {
-  if (!record || !safeStorage.isEncryptionAvailable()) {
+  if (!record || !protectedStorageAvailable()) {
     return commit(() => {
       try {
         unlinkSync(location('connection.enc'));

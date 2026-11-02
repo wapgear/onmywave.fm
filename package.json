@@ -4,7 +4,7 @@
   "private": true,
   "license": "GPL-3.0-only",
   "author": "onmywave.fm contributors",
-  "description": "A macOS music player for your Jellyfin library",
+  "description": "A desktop music player for your Jellyfin library",
   "main": "out/main/index.js",
   "type": "module",
   "scripts": {
@@ -19,7 +19,8 @@
     "format:check": "oxfmt --check . && oxlint --config .oxlint-format.json --max-warnings=0",
     "check": "pnpm run format:check && pnpm run lint && pnpm run build",
     "release:mac": "bash scripts/release-mac.sh",
-    "hooks:install": "node scripts/install-git-hooks.mjs"
+    "hooks:install": "node scripts/install-git-hooks.mjs",
+    "package:linux": "pnpm run build && electron-builder --linux --x64 --publish never"
   },
   "dependencies": {
     "@fontsource/inter": "^5.3.0",
@@ -85,6 +86,15 @@
       "provider": "github",
       "owner": "wapgear",
       "repo": "onmywave-app"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "AudioVideo",
+      "icon": "resources/icon.png",
+      "artifactName": "onmywave-${version}-linux-${arch}.${ext}",
+      "syncDesktopName": true
     }
   },
   "homepage": "https://github.com/wapgear/onmywave.fm#readme",
@@ -98,5 +108,6 @@
   "engines": {
     "node": ">=26 <27"
   },
-  "packageManager": "pnpm@10.34.7"
+  "packageManager": "pnpm@10.34.7",
+  "desktopName": "onmywave.fm.desktop"
 }

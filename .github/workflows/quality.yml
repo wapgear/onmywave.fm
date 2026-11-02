@@ -31,6 +31,8 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: node scripts/check-commit-files.mjs --tracked
       - run: pnpm run check
+      - name: Package Linux AppImage
+        run: pnpm run package:linux
       - run: pnpm audit
       - name: Verify catalog and news delivery behavior
         run: node scripts/verify-behavior.mjs services
