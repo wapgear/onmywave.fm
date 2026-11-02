@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-02",
+  "viewport": {
+    "width": 1280,
+    "height": 720,
+    "dpr": 2,
+    "screenshot_scale": 1
+  },
+  "sha256": {
+    "src/renderer/components/Queue/Queue.component.tsx": "40fc91d1b404174d4204f8a05d2cf2784a7936131d01995d69b241a278c8de93",
+    "src/renderer/components/Queue/hooks/useQueueReorder.ts": "bc6dcc865bdaa48ab6fada2c9461d4a8afc8f5b55fff85ea901d9c4b2129dd89",
+    "src/renderer/components/Drawer/Drawer.styles.css": "c778b22470e9ea1d794312aa70ed11c00e23abc778cab0bc0e7f42ae1bc39d0a",
+    "docs/verification/whole-row-queue/before.png": "d403d2d09f53f0a0fbfa5ce9db628517f00c76d8ecb8b81285e21b42eae92109",
+    "docs/verification/whole-row-queue/after.png": "cc96cde5fa1c4e9024f6feb3115b8917dc4294d0db85a2f2ed2c0ed07700cf32",
+    "docs/verification/whole-row-queue/dragging.png": "7c46ccc22dc9db5b0ef9db43ee611ecae43e6d54a31033f75dc194a8b7f59d16",
+    "docs/verification/whole-row-queue/after-dark.png": "4ef8956c57800817b95bc2054d62b3b7763f49fa490c4195eac065fde7d022a4",
+    "docs/verification/whole-row-queue/dragging-dark.png": "ce2010550f77ee38305a7f2e3cf94f7433592e95a795ef1832127b7544840770",
+    "docs/verification/whole-row-queue/large-drag-observations.json": "305db219de3c310ad35f94a396aed354ab0cb5eab8a6bb39578bf0f2b28b0bac",
+    "docs/verification/whole-row-queue/drag-observations.json": "cbb8e0162e149af99b96885c55742415eb600ff32f0c5fd36c8b560489db4cca",
+    "docs/verification/whole-row-queue/results.json": "479608c1bf031c917086d447aeeb21b9d5befd414db2ab76c7182573c5853753"
+  }
+}

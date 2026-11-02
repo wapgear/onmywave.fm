@@ -168,18 +168,6 @@
   align-items: center;
   gap: 12px;
 }
-.room-link {
-  font-size: 12px;
-  min-height: 26px;
-  background: transparent;
-  color: var(--accent);
-  padding: 3px 0;
-  border-radius: 3px;
-}
-.room-link:hover {
-  background: transparent;
-  text-decoration: underline;
-}
 .room-sources {
   max-height: 184px;
   overflow: auto;

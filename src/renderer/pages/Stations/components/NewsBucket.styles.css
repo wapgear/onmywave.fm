@@ -545,7 +545,7 @@
   min-width: 0;
   align-items: baseline;
   gap: 6px;
-  padding: 0;
+  padding: var(--space-1) var(--space-2);
   border: 0;
   background: transparent;
   color: var(--accent);
@@ -555,9 +555,13 @@
   text-align: left;
   overflow-wrap: anywhere;
   cursor: pointer;
+  white-space: normal;
+  text-underline-offset: 3px;
 }
 
-.news-bucket-sources button:hover {
+.news-bucket-sources button:hover:where(:not(:disabled, [aria-disabled='true'])) {
+  background: transparent;
+  color: var(--accent-hover);
   text-decoration: underline;
 }
 

@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 
 import { unwrap } from '../../api';
+import { Button } from '../Button/Button.component';
 
 import './TwitterSetupHelp.styles.css';
 
@@ -39,9 +40,9 @@ export function TwitterSetupHelp() {
       <ol>
         <li>
           <div className="twitter-help-console">
-            <button type="button" className="twitter-help-link" onClick={() => void open(links.console)}>
+            <Button variant="link" type="button" className="twitter-help-link" onClick={() => void open(links.console)}>
               X developer console
-            </button>
+            </Button>
             {feedback(links.console)}
           </div>
           Sign in and complete developer account setup.

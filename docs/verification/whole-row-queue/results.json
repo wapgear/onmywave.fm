@@ -1,0 +1,917 @@
+{
+  "checks": {
+    "wholeRowReorder": true,
+    "noPlaybackDuringDrag": true,
+    "fullPreviewAndPlaceholder": true,
+    "escapeCancel": true,
+    "outsideCancel": true,
+    "removeIndependent": true,
+    "ordinaryClickPlays": true,
+    "keyboardMoves": true,
+    "largeQueueFocus": true,
+    "edgeScroll": true,
+    "gripAndArrowsRemoved": true
+  },
+  "smallRun": {
+    "baseline": {
+      "completedSongs": 0,
+      "currentKey": "6ded619b-c074-4237-bb92-50ac8890a71f",
+      "focus": "Close queue",
+      "grips": 0,
+      "order": [
+        {
+          "id": "00000000000000000000000000000001",
+          "key": "295ffabd-8056-4227-8471-534d406cd016"
+        },
+        {
+          "id": "00000000000000000000000000000003",
+          "key": "82295f25-1d5d-4137-bbe9-39a81b0f3f81"
+        },
+        {
+          "id": "00000000000000000000000000000002",
+          "key": "af40a181-ff0b-4aa4-b13b-164f353245e2"
+        },
+        {
+          "id": "00000000000000000000000000000004",
+          "key": "09ca0372-a882-4073-97ba-08a585255564"
+        },
+        {
+          "id": "00000000000000000000000000000002",
+          "key": "7546ddfd-b21c-415d-8128-551786f65184"
+        },
+        {
+          "id": "00000000000000000000000000000005",
+          "key": "cb3c666a-4d83-4b21-9e5f-50e7f6dd9c11"
+        },
+        {
+          "id": "00000000000000000000000000000006",
+          "key": "9c3f6055-6995-4353-99b7-7a2765bc86ca"
+        }
+      ],
+      "placeholder": false,
+      "playing": false,
+      "position": 30,
+      "preview": false,
+      "requestedPlaying": false
+    },
+    "drag": {
+      "completedSongs": 0,
+      "currentKey": "6ded619b-c074-4237-bb92-50ac8890a71f",
+      "focus": "Play Evening track 001",
+      "grips": 0,
+      "order": [
+        {
+          "id": "00000000000000000000000000000003",
+          "key": "82295f25-1d5d-4137-bbe9-39a81b0f3f81"
+        },
+        {
+          "id": "00000000000000000000000000000002",
+          "key": "af40a181-ff0b-4aa4-b13b-164f353245e2"
+        },
+        {
+          "id": "00000000000000000000000000000001",
+          "key": "295ffabd-8056-4227-8471-534d406cd016"
+        },
+        {
+          "id": "00000000000000000000000000000004",
+          "key": "09ca0372-a882-4073-97ba-08a585255564"
+        },
+        {
+          "id": "00000000000000000000000000000002",
+          "key": "7546ddfd-b21c-415d-8128-551786f65184"
+        },
+        {
+          "id": "00000000000000000000000000000005",
+          "key": "cb3c666a-4d83-4b21-9e5f-50e7f6dd9c11"
+        },
+        {
+          "id": "00000000000000000000000000000006",
+          "key": "9c3f6055-6995-4353-99b7-7a2765bc86ca"
+        }
+      ],
+      "placeholder": false,
+      "playing": false,
+      "position": 30,
+      "preview": false,
+      "requestedPlaying": false
+    },
+    "escape": {
+      "completedSongs": 0,
+      "currentKey": "6ded619b-c074-4237-bb92-50ac8890a71f",
+      "focus": "Play Evening track 001",
+      "grips": 0,
+      "order": [
+        {
+          "id": "00000000000000000000000000000003",
+          "key": "82295f25-1d5d-4137-bbe9-39a81b0f3f81"
+        },
+        {
+          "id": "00000000000000000000000000000002",
+          "key": "af40a181-ff0b-4aa4-b13b-164f353245e2"
+        },
+        {
+          "id": "00000000000000000000000000000001",
+          "key": "295ffabd-8056-4227-8471-534d406cd016"
+        },
+        {
+          "id": "00000000000000000000000000000004",
+          "key": "09ca0372-a882-4073-97ba-08a585255564"
+        },
+        {
+          "id": "00000000000000000000000000000002",
+          "key": "7546ddfd-b21c-415d-8128-551786f65184"
+        },
+        {
+          "id": "00000000000000000000000000000005",
+          "key": "cb3c666a-4d83-4b21-9e5f-50e7f6dd9c11"
+        },
+        {
+          "id": "00000000000000000000000000000006",
+          "key": "9c3f6055-6995-4353-99b7-7a2765bc86ca"
+        }
+      ],
+      "placeholder": false,
+      "playing": false,
+      "position": 30,
+      "preview": false,
+      "requestedPlaying": false
+    },
+    "outside": {
+      "completedSongs": 0,
+      "currentKey": "6ded619b-c074-4237-bb92-50ac8890a71f",
+      "focus": "Play Evening track 003",
+      "grips": 0,
+      "order": [
+        {
+          "id": "00000000000000000000000000000003",
+          "key": "82295f25-1d5d-4137-bbe9-39a81b0f3f81"
+        },
+        {
+          "id": "00000000000000000000000000000002",
+          "key": "af40a181-ff0b-4aa4-b13b-164f353245e2"
+        },
+        {
+          "id": "00000000000000000000000000000001",
+          "key": "295ffabd-8056-4227-8471-534d406cd016"
+        },
+        {
+          "id": "00000000000000000000000000000004",
+          "key": "09ca0372-a882-4073-97ba-08a585255564"
+        },
+        {
+          "id": "00000000000000000000000000000002",
+          "key": "7546ddfd-b21c-415d-8128-551786f65184"
+        },
+        {
+          "id": "00000000000000000000000000000005",
+          "key": "cb3c666a-4d83-4b21-9e5f-50e7f6dd9c11"
+        },
+        {
+          "id": "00000000000000000000000000000006",
+          "key": "9c3f6055-6995-4353-99b7-7a2765bc86ca"
+        }
+      ],
+      "placeholder": false,
+      "playing": false,
+      "position": 30,
+      "preview": false,
+      "requestedPlaying": false
+    },
+    "remove": {
+      "completedSongs": 0,
+      "currentKey": "6ded619b-c074-4237-bb92-50ac8890a71f",
+      "focus": "Remove Evening track 002 from queue",
+      "grips": 0,
+      "order": [
+        {
+          "id": "00000000000000000000000000000002",
+          "key": "af40a181-ff0b-4aa4-b13b-164f353245e2"
+        },
+        {
+          "id": "00000000000000000000000000000001",
+          "key": "295ffabd-8056-4227-8471-534d406cd016"
+        },
+        {
+          "id": "00000000000000000000000000000004",
+          "key": "09ca0372-a882-4073-97ba-08a585255564"
+        },
+        {
+          "id": "00000000000000000000000000000002",
+          "key": "7546ddfd-b21c-415d-8128-551786f65184"
+        },
+        {
+          "id": "00000000000000000000000000000005",
+          "key": "cb3c666a-4d83-4b21-9e5f-50e7f6dd9c11"
+        },
+        {
+          "id": "00000000000000000000000000000006",
+          "key": "9c3f6055-6995-4353-99b7-7a2765bc86ca"
+        }
+      ],
+      "placeholder": false,
+      "playing": false,
+      "position": 30,
+      "preview": false,
+      "requestedPlaying": false
+    },
+    "click": {
+      "completedSongs": 0,
+      "currentKey": "af40a181-ff0b-4aa4-b13b-164f353245e2",
+      "focus": "Pause Evening track 002",
+      "grips": 0,
+      "order": [
+        {
+          "id": "00000000000000000000000000000001",
+          "key": "295ffabd-8056-4227-8471-534d406cd016"
+        },
+        {
+          "id": "00000000000000000000000000000004",
+          "key": "09ca0372-a882-4073-97ba-08a585255564"
+        },
+        {
+          "id": "00000000000000000000000000000002",
+          "key": "7546ddfd-b21c-415d-8128-551786f65184"
+        },
+        {
+          "id": "00000000000000000000000000000005",
+          "key": "cb3c666a-4d83-4b21-9e5f-50e7f6dd9c11"
+        },
+        {
+          "id": "00000000000000000000000000000006",
+          "key": "9c3f6055-6995-4353-99b7-7a2765bc86ca"
+        }
+      ],
+      "placeholder": false,
+      "playing": true,
+      "position": 0,
+      "preview": false,
+      "requestedPlaying": true
+    }
+  },
+  "keyboardRun": {
+    "baseline": {
+      "completedSongs": 0,
+      "currentKey": "e64fdcf6-5599-407c-b6c6-7fee0a46ebd0",
+      "focus": "Play Evening track 002",
+      "grips": 0,
+      "order": [
+        {
+          "id": "00000000000000000000000000000002",
+          "key": "93c87b06-1929-4e46-8e51-264088520c92"
+        },
+        {
+          "id": "00000000000000000000000000000001",
+          "key": "7f9c5ac7-cdf9-4c83-a4f4-bffebae8b685"
+        },
+        {
+          "id": "00000000000000000000000000000003",
+          "key": "37052bef-963c-4b36-b5d9-8360f46946a0"
+        },
+        {
+          "id": "00000000000000000000000000000004",
+          "key": "bdd892df-954b-4ee0-8b7c-730133733601"
+        },
+        {
+          "id": "00000000000000000000000000000002",
+          "key": "c178d0e9-fecf-4806-9ce1-cf67f1fad251"
+        },
+        {
+          "id": "00000000000000000000000000000005",
+          "key": "8c6d2008-98ae-4e99-a9b9-479006e374e6"
+        },
+        {
+          "id": "00000000000000000000000000000006",
+          "key": "6165861e-abbc-42ca-bb80-c61686002900"
+        }
+      ],
+      "placeholder": false,
+      "playing": false,
+      "position": 30,
+      "preview": false,
+      "requestedPlaying": false
+    },
+    "end": {
+      "completedSongs": 0,
+      "currentKey": "e64fdcf6-5599-407c-b6c6-7fee0a46ebd0",
+      "focus": "Play Evening track 002",
+      "grips": 0,
+      "order": [
+        {
+          "id": "00000000000000000000000000000001",
+          "key": "7f9c5ac7-cdf9-4c83-a4f4-bffebae8b685"
+        },
+        {
+          "id": "00000000000000000000000000000003",
+          "key": "37052bef-963c-4b36-b5d9-8360f46946a0"
+        },
+        {
+          "id": "00000000000000000000000000000004",
+          "key": "bdd892df-954b-4ee0-8b7c-730133733601"
+        },
+        {
+          "id": "00000000000000000000000000000002",
+          "key": "c178d0e9-fecf-4806-9ce1-cf67f1fad251"
+        },
+        {
+          "id": "00000000000000000000000000000005",
+          "key": "8c6d2008-98ae-4e99-a9b9-479006e374e6"
+        },
+        {
+          "id": "00000000000000000000000000000006",
+          "key": "6165861e-abbc-42ca-bb80-c61686002900"
+        },
+        {
+          "id": "00000000000000000000000000000002",
+          "key": "93c87b06-1929-4e46-8e51-264088520c92"
+        }
+      ],
+      "placeholder": false,
+      "playing": false,
+      "position": 30,
+      "preview": false,
+      "requestedPlaying": false
+    },
+    "home": {
+      "completedSongs": 0,
+      "currentKey": "e64fdcf6-5599-407c-b6c6-7fee0a46ebd0",
+      "focus": "Play Evening track 002",
+      "grips": 0,
+      "order": [
+        {
+          "id": "00000000000000000000000000000002",
+          "key": "93c87b06-1929-4e46-8e51-264088520c92"
+        },
+        {
+          "id": "00000000000000000000000000000001",
+          "key": "7f9c5ac7-cdf9-4c83-a4f4-bffebae8b685"
+        },
+        {
+          "id": "00000000000000000000000000000003",
+          "key": "37052bef-963c-4b36-b5d9-8360f46946a0"
+        },
+        {
+          "id": "00000000000000000000000000000004",
+          "key": "bdd892df-954b-4ee0-8b7c-730133733601"
+        },
+        {
+          "id": "00000000000000000000000000000002",
+          "key": "c178d0e9-fecf-4806-9ce1-cf67f1fad251"
+        },
+        {
+          "id": "00000000000000000000000000000005",
+          "key": "8c6d2008-98ae-4e99-a9b9-479006e374e6"
+        },
+        {
+          "id": "00000000000000000000000000000006",
+          "key": "6165861e-abbc-42ca-bb80-c61686002900"
+        }
+      ],
+      "placeholder": false,
+      "playing": false,
+      "position": 30,
+      "preview": false,
+      "requestedPlaying": false
+    }
+  },
+  "largeRun": {
+    "baseline": {
+      "count": 50,
+      "currentKey": "713efad0-0d0d-47ad-8f4f-adc12579ef6f",
+      "head": [
+        {
+          "id": "00000000000000000000000000000061",
+          "key": "9d86fd2f-b076-4019-af92-53fe5b18f2aa",
+          "upcomingId": "planned:9d86fd2f-b076-4019-af92-53fe5b18f2aa"
+        },
+        {
+          "id": "00000000000000000000000000000055",
+          "key": "b1b94322-034f-4973-87da-ffc0b39aad05",
+          "upcomingId": "planned:b1b94322-034f-4973-87da-ffc0b39aad05"
+        },
+        {
+          "id": "00000000000000000000000000000090",
+          "key": "c5c0ee14-7df6-407f-a307-d29a70c51f7b",
+          "upcomingId": "planned:c5c0ee14-7df6-407f-a307-d29a70c51f7b"
+        },
+        {
+          "id": "00000000000000000000000000000039",
+          "key": "1155e36f-2210-42fa-848e-7e62f5b9b93d",
+          "upcomingId": "planned:1155e36f-2210-42fa-848e-7e62f5b9b93d"
+        },
+        {
+          "id": "00000000000000000000000000000047",
+          "key": "8c42af0e-dd60-4ef6-9120-d9bcc31b8123",
+          "upcomingId": "planned:8c42af0e-dd60-4ef6-9120-d9bcc31b8123"
+        },
+        {
+          "id": "00000000000000000000000000000027",
+          "key": "6d8552d8-1b2e-4295-88a4-484c895363cf",
+          "upcomingId": "planned:6d8552d8-1b2e-4295-88a4-484c895363cf"
+        },
+        {
+          "id": "00000000000000000000000000000095",
+          "key": "653dcc5a-5efa-45e8-9bc4-c496bd030578",
+          "upcomingId": "planned:653dcc5a-5efa-45e8-9bc4-c496bd030578"
+        },
+        {
+          "id": "00000000000000000000000000000025",
+          "key": "e14a6a00-a7aa-4b15-a7d9-70e89392fbcb",
+          "upcomingId": "planned:e14a6a00-a7aa-4b15-a7d9-70e89392fbcb"
+        },
+        {
+          "id": "00000000000000000000000000000021",
+          "key": "ba478551-d5dc-4d22-8595-50b8bc6b64f5",
+          "upcomingId": "planned:ba478551-d5dc-4d22-8595-50b8bc6b64f5"
+        },
+        {
+          "id": "00000000000000000000000000000058",
+          "key": "753749bc-d9b4-4c68-8bbf-e24f27877d71",
+          "upcomingId": "planned:753749bc-d9b4-4c68-8bbf-e24f27877d71"
+        },
+        {
+          "id": "00000000000000000000000000000117",
+          "key": "b91c1315-7f5e-4b8a-b792-907aa7ba87de",
+          "upcomingId": "planned:b91c1315-7f5e-4b8a-b792-907aa7ba87de"
+        },
+        {
+          "id": "00000000000000000000000000000063",
+          "key": "ec7286ff-1338-4de3-9fb9-264298f79211",
+          "upcomingId": "planned:ec7286ff-1338-4de3-9fb9-264298f79211"
+        }
+      ],
+      "listHeight": 2700,
+      "playing": false,
+      "position": 30,
+      "rendered": 11,
+      "scrollTop": 0,
+      "shuffle": true,
+      "tail": [
+        {
+          "id": "00000000000000000000000000000081",
+          "key": "3c86e41e-b7f7-46d3-97ec-e47d598b7ba4",
+          "upcomingId": "planned:3c86e41e-b7f7-46d3-97ec-e47d598b7ba4"
+        },
+        {
+          "id": "00000000000000000000000000000064",
+          "key": "91c69cc4-4102-4798-a3e4-1b6de8d07c23",
+          "upcomingId": "planned:91c69cc4-4102-4798-a3e4-1b6de8d07c23"
+        },
+        {
+          "id": "00000000000000000000000000000089",
+          "key": "c09515df-2332-42fe-812f-1f25c075018d",
+          "upcomingId": "planned:c09515df-2332-42fe-812f-1f25c075018d"
+        },
+        {
+          "id": "00000000000000000000000000000040",
+          "key": "b1d453eb-7acb-4610-b135-70564c0e1eae",
+          "upcomingId": "planned:b1d453eb-7acb-4610-b135-70564c0e1eae"
+        },
+        {
+          "id": "00000000000000000000000000000117",
+          "key": "780b4b3a-abde-44fb-97e4-ccf8fc9a36f4",
+          "upcomingId": "planned:780b4b3a-abde-44fb-97e4-ccf8fc9a36f4"
+        },
+        {
+          "id": "00000000000000000000000000000092",
+          "key": "a8fb0cbe-3aa6-48ca-9858-678bcb6d5205",
+          "upcomingId": "planned:a8fb0cbe-3aa6-48ca-9858-678bcb6d5205"
+        },
+        {
+          "id": "00000000000000000000000000000059",
+          "key": "472cd8d0-6043-4afe-a2a4-5127a39f37ce",
+          "upcomingId": "planned:472cd8d0-6043-4afe-a2a4-5127a39f37ce"
+        },
+        {
+          "id": "00000000000000000000000000000018",
+          "key": "ee86d05a-ec5d-42b8-a608-1b57c656e61d",
+          "upcomingId": "planned:ee86d05a-ec5d-42b8-a608-1b57c656e61d"
+        },
+        {
+          "id": "00000000000000000000000000000050",
+          "key": "f3145206-9e4a-4bd9-bc64-7c0440997952",
+          "upcomingId": "planned:f3145206-9e4a-4bd9-bc64-7c0440997952"
+        },
+        {
+          "id": "00000000000000000000000000000080",
+          "key": "d9cf2270-d343-41e2-bc8f-dce99e223fa3",
+          "upcomingId": "planned:d9cf2270-d343-41e2-bc8f-dce99e223fa3"
+        },
+        {
+          "id": "00000000000000000000000000000038",
+          "key": "b375d8c1-cadd-4a84-a1c5-6c10d56eacc7",
+          "upcomingId": "planned:b375d8c1-cadd-4a84-a1c5-6c10d56eacc7"
+        },
+        {
+          "id": "00000000000000000000000000000039",
+          "key": "c171feea-c7b8-47fd-9894-5df02c5e2f8f",
+          "upcomingId": "planned:c171feea-c7b8-47fd-9894-5df02c5e2f8f"
+        }
+      ]
+    },
+    "drag": {
+      "count": 9999,
+      "currentKey": "713efad0-0d0d-47ad-8f4f-adc12579ef6f",
+      "focusIndex": "4",
+      "head": [
+        {
+          "id": "00000000000000000000000000000055",
+          "key": "b1b94322-034f-4973-87da-ffc0b39aad05",
+          "upcomingId": "planned:b1b94322-034f-4973-87da-ffc0b39aad05"
+        },
+        {
+          "id": "00000000000000000000000000000090",
+          "key": "c5c0ee14-7df6-407f-a307-d29a70c51f7b",
+          "upcomingId": "planned:c5c0ee14-7df6-407f-a307-d29a70c51f7b"
+        },
+        {
+          "id": "00000000000000000000000000000039",
+          "key": "1155e36f-2210-42fa-848e-7e62f5b9b93d",
+          "upcomingId": "planned:1155e36f-2210-42fa-848e-7e62f5b9b93d"
+        },
+        {
+          "id": "00000000000000000000000000000047",
+          "key": "8c42af0e-dd60-4ef6-9120-d9bcc31b8123",
+          "upcomingId": "planned:8c42af0e-dd60-4ef6-9120-d9bcc31b8123"
+        },
+        {
+          "id": "00000000000000000000000000000061",
+          "key": "9d86fd2f-b076-4019-af92-53fe5b18f2aa",
+          "upcomingId": "planned:9d86fd2f-b076-4019-af92-53fe5b18f2aa"
+        },
+        {
+          "id": "00000000000000000000000000000027",
+          "key": "6d8552d8-1b2e-4295-88a4-484c895363cf",
+          "upcomingId": "planned:6d8552d8-1b2e-4295-88a4-484c895363cf"
+        },
+        {
+          "id": "00000000000000000000000000000095",
+          "key": "653dcc5a-5efa-45e8-9bc4-c496bd030578",
+          "upcomingId": "planned:653dcc5a-5efa-45e8-9bc4-c496bd030578"
+        },
+        {
+          "id": "00000000000000000000000000000025",
+          "key": "e14a6a00-a7aa-4b15-a7d9-70e89392fbcb",
+          "upcomingId": "planned:e14a6a00-a7aa-4b15-a7d9-70e89392fbcb"
+        },
+        {
+          "id": "00000000000000000000000000000021",
+          "key": "ba478551-d5dc-4d22-8595-50b8bc6b64f5",
+          "upcomingId": "planned:ba478551-d5dc-4d22-8595-50b8bc6b64f5"
+        },
+        {
+          "id": "00000000000000000000000000000058",
+          "key": "753749bc-d9b4-4c68-8bbf-e24f27877d71",
+          "upcomingId": "planned:753749bc-d9b4-4c68-8bbf-e24f27877d71"
+        },
+        {
+          "id": "00000000000000000000000000000117",
+          "key": "b91c1315-7f5e-4b8a-b792-907aa7ba87de",
+          "upcomingId": "planned:b91c1315-7f5e-4b8a-b792-907aa7ba87de"
+        },
+        {
+          "id": "00000000000000000000000000000063",
+          "key": "ec7286ff-1338-4de3-9fb9-264298f79211",
+          "upcomingId": "planned:ec7286ff-1338-4de3-9fb9-264298f79211"
+        }
+      ],
+      "listHeight": 539946,
+      "playing": false,
+      "position": 30,
+      "rendered": 12,
+      "scrollTop": 20,
+      "shuffle": true,
+      "tail": [
+        {
+          "id": "00000000000000000000000000000022",
+          "key": "c72337f0-9576-4fe4-9909-784f765f7451",
+          "upcomingId": "tail:c72337f0-9576-4fe4-9909-784f765f7451"
+        },
+        {
+          "id": "00000000000000000000000000000078",
+          "key": "5e821336-f1ed-45b1-b80e-5aeb4bff789c",
+          "upcomingId": "tail:5e821336-f1ed-45b1-b80e-5aeb4bff789c"
+        },
+        {
+          "id": "00000000000000000000000000000007",
+          "key": "4049bb09-7d30-4116-9525-a7cea40d5a1d",
+          "upcomingId": "tail:4049bb09-7d30-4116-9525-a7cea40d5a1d"
+        },
+        {
+          "id": "00000000000000000000000000000056",
+          "key": "6f79d58b-0ac0-46f4-b78e-e02b1add0b41",
+          "upcomingId": "tail:6f79d58b-0ac0-46f4-b78e-e02b1add0b41"
+        },
+        {
+          "id": "00000000000000000000000000000061",
+          "key": "1849cc4a-77a3-4a1d-9e9a-2fd843df03e6",
+          "upcomingId": "tail:1849cc4a-77a3-4a1d-9e9a-2fd843df03e6"
+        },
+        {
+          "id": "00000000000000000000000000000117",
+          "key": "b147bc1c-329a-4f0a-80fe-726f3e697442",
+          "upcomingId": "tail:b147bc1c-329a-4f0a-80fe-726f3e697442"
+        },
+        {
+          "id": "00000000000000000000000000000026",
+          "key": "ce17baad-5047-4ff0-a3f6-898585d6bf76",
+          "upcomingId": "tail:ce17baad-5047-4ff0-a3f6-898585d6bf76"
+        },
+        {
+          "id": "00000000000000000000000000000001",
+          "key": "9da495a1-37c7-43ef-bc60-9352a722a164",
+          "upcomingId": "tail:9da495a1-37c7-43ef-bc60-9352a722a164"
+        },
+        {
+          "id": "00000000000000000000000000000109",
+          "key": "988f7e29-728f-4ca7-9d37-e97a92f8c727",
+          "upcomingId": "tail:988f7e29-728f-4ca7-9d37-e97a92f8c727"
+        },
+        {
+          "id": "00000000000000000000000000000086",
+          "key": "b082a76c-c52b-427d-a8a2-13765e866275",
+          "upcomingId": "tail:b082a76c-c52b-427d-a8a2-13765e866275"
+        },
+        {
+          "id": "00000000000000000000000000000028",
+          "key": "6126c6e6-83d6-4b54-b8e9-27b07d06af58",
+          "upcomingId": "tail:6126c6e6-83d6-4b54-b8e9-27b07d06af58"
+        },
+        {
+          "id": "00000000000000000000000000000061",
+          "key": "50bbfe53-23f0-468e-adf8-8d2d3799db54",
+          "upcomingId": "tail:50bbfe53-23f0-468e-adf8-8d2d3799db54"
+        }
+      ]
+    },
+    "end": {
+      "count": 9999,
+      "currentKey": "713efad0-0d0d-47ad-8f4f-adc12579ef6f",
+      "focusIndex": "9998",
+      "head": [
+        {
+          "id": "00000000000000000000000000000090",
+          "key": "c5c0ee14-7df6-407f-a307-d29a70c51f7b",
+          "upcomingId": "planned:c5c0ee14-7df6-407f-a307-d29a70c51f7b"
+        },
+        {
+          "id": "00000000000000000000000000000039",
+          "key": "1155e36f-2210-42fa-848e-7e62f5b9b93d",
+          "upcomingId": "planned:1155e36f-2210-42fa-848e-7e62f5b9b93d"
+        },
+        {
+          "id": "00000000000000000000000000000047",
+          "key": "8c42af0e-dd60-4ef6-9120-d9bcc31b8123",
+          "upcomingId": "planned:8c42af0e-dd60-4ef6-9120-d9bcc31b8123"
+        },
+        {
+          "id": "00000000000000000000000000000061",
+          "key": "9d86fd2f-b076-4019-af92-53fe5b18f2aa",
+          "upcomingId": "planned:9d86fd2f-b076-4019-af92-53fe5b18f2aa"
+        },
+        {
+          "id": "00000000000000000000000000000027",
+          "key": "6d8552d8-1b2e-4295-88a4-484c895363cf",
+          "upcomingId": "planned:6d8552d8-1b2e-4295-88a4-484c895363cf"
+        },
+        {
+          "id": "00000000000000000000000000000095",
+          "key": "653dcc5a-5efa-45e8-9bc4-c496bd030578",
+          "upcomingId": "planned:653dcc5a-5efa-45e8-9bc4-c496bd030578"
+        },
+        {
+          "id": "00000000000000000000000000000025",
+          "key": "e14a6a00-a7aa-4b15-a7d9-70e89392fbcb",
+          "upcomingId": "planned:e14a6a00-a7aa-4b15-a7d9-70e89392fbcb"
+        },
+        {
+          "id": "00000000000000000000000000000021",
+          "key": "ba478551-d5dc-4d22-8595-50b8bc6b64f5",
+          "upcomingId": "planned:ba478551-d5dc-4d22-8595-50b8bc6b64f5"
+        },
+        {
+          "id": "00000000000000000000000000000058",
+          "key": "753749bc-d9b4-4c68-8bbf-e24f27877d71",
+          "upcomingId": "planned:753749bc-d9b4-4c68-8bbf-e24f27877d71"
+        },
+        {
+          "id": "00000000000000000000000000000117",
+          "key": "b91c1315-7f5e-4b8a-b792-907aa7ba87de",
+          "upcomingId": "planned:b91c1315-7f5e-4b8a-b792-907aa7ba87de"
+        },
+        {
+          "id": "00000000000000000000000000000063",
+          "key": "ec7286ff-1338-4de3-9fb9-264298f79211",
+          "upcomingId": "planned:ec7286ff-1338-4de3-9fb9-264298f79211"
+        },
+        {
+          "id": "00000000000000000000000000000098",
+          "key": "ac1cb1fd-f020-437e-8548-36ccbf01a5af",
+          "upcomingId": "planned:ac1cb1fd-f020-437e-8548-36ccbf01a5af"
+        }
+      ],
+      "listHeight": 539946,
+      "playing": false,
+      "position": 30,
+      "rendered": 16,
+      "scrollTop": 539702.5,
+      "shuffle": true,
+      "tail": [
+        {
+          "id": "00000000000000000000000000000078",
+          "key": "5e821336-f1ed-45b1-b80e-5aeb4bff789c",
+          "upcomingId": "tail:5e821336-f1ed-45b1-b80e-5aeb4bff789c"
+        },
+        {
+          "id": "00000000000000000000000000000007",
+          "key": "4049bb09-7d30-4116-9525-a7cea40d5a1d",
+          "upcomingId": "tail:4049bb09-7d30-4116-9525-a7cea40d5a1d"
+        },
+        {
+          "id": "00000000000000000000000000000056",
+          "key": "6f79d58b-0ac0-46f4-b78e-e02b1add0b41",
+          "upcomingId": "tail:6f79d58b-0ac0-46f4-b78e-e02b1add0b41"
+        },
+        {
+          "id": "00000000000000000000000000000061",
+          "key": "1849cc4a-77a3-4a1d-9e9a-2fd843df03e6",
+          "upcomingId": "tail:1849cc4a-77a3-4a1d-9e9a-2fd843df03e6"
+        },
+        {
+          "id": "00000000000000000000000000000117",
+          "key": "b147bc1c-329a-4f0a-80fe-726f3e697442",
+          "upcomingId": "tail:b147bc1c-329a-4f0a-80fe-726f3e697442"
+        },
+        {
+          "id": "00000000000000000000000000000026",
+          "key": "ce17baad-5047-4ff0-a3f6-898585d6bf76",
+          "upcomingId": "tail:ce17baad-5047-4ff0-a3f6-898585d6bf76"
+        },
+        {
+          "id": "00000000000000000000000000000001",
+          "key": "9da495a1-37c7-43ef-bc60-9352a722a164",
+          "upcomingId": "tail:9da495a1-37c7-43ef-bc60-9352a722a164"
+        },
+        {
+          "id": "00000000000000000000000000000109",
+          "key": "988f7e29-728f-4ca7-9d37-e97a92f8c727",
+          "upcomingId": "tail:988f7e29-728f-4ca7-9d37-e97a92f8c727"
+        },
+        {
+          "id": "00000000000000000000000000000086",
+          "key": "b082a76c-c52b-427d-a8a2-13765e866275",
+          "upcomingId": "tail:b082a76c-c52b-427d-a8a2-13765e866275"
+        },
+        {
+          "id": "00000000000000000000000000000028",
+          "key": "6126c6e6-83d6-4b54-b8e9-27b07d06af58",
+          "upcomingId": "tail:6126c6e6-83d6-4b54-b8e9-27b07d06af58"
+        },
+        {
+          "id": "00000000000000000000000000000061",
+          "key": "50bbfe53-23f0-468e-adf8-8d2d3799db54",
+          "upcomingId": "tail:50bbfe53-23f0-468e-adf8-8d2d3799db54"
+        },
+        {
+          "id": "00000000000000000000000000000055",
+          "key": "b1b94322-034f-4973-87da-ffc0b39aad05",
+          "upcomingId": "planned:b1b94322-034f-4973-87da-ffc0b39aad05"
+        }
+      ]
+    },
+    "home": {
+      "count": 9999,
+      "currentKey": "713efad0-0d0d-47ad-8f4f-adc12579ef6f",
+      "focusIndex": "0",
+      "head": [
+        {
+          "id": "00000000000000000000000000000055",
+          "key": "b1b94322-034f-4973-87da-ffc0b39aad05",
+          "upcomingId": "planned:b1b94322-034f-4973-87da-ffc0b39aad05"
+        },
+        {
+          "id": "00000000000000000000000000000090",
+          "key": "c5c0ee14-7df6-407f-a307-d29a70c51f7b",
+          "upcomingId": "planned:c5c0ee14-7df6-407f-a307-d29a70c51f7b"
+        },
+        {
+          "id": "00000000000000000000000000000039",
+          "key": "1155e36f-2210-42fa-848e-7e62f5b9b93d",
+          "upcomingId": "planned:1155e36f-2210-42fa-848e-7e62f5b9b93d"
+        },
+        {
+          "id": "00000000000000000000000000000047",
+          "key": "8c42af0e-dd60-4ef6-9120-d9bcc31b8123",
+          "upcomingId": "planned:8c42af0e-dd60-4ef6-9120-d9bcc31b8123"
+        },
+        {
+          "id": "00000000000000000000000000000061",
+          "key": "9d86fd2f-b076-4019-af92-53fe5b18f2aa",
+          "upcomingId": "planned:9d86fd2f-b076-4019-af92-53fe5b18f2aa"
+        },
+        {
+          "id": "00000000000000000000000000000027",
+          "key": "6d8552d8-1b2e-4295-88a4-484c895363cf",
+          "upcomingId": "planned:6d8552d8-1b2e-4295-88a4-484c895363cf"
+        },
+        {
+          "id": "00000000000000000000000000000095",
+          "key": "653dcc5a-5efa-45e8-9bc4-c496bd030578",
+          "upcomingId": "planned:653dcc5a-5efa-45e8-9bc4-c496bd030578"
+        },
+        {
+          "id": "00000000000000000000000000000025",
+          "key": "e14a6a00-a7aa-4b15-a7d9-70e89392fbcb",
+          "upcomingId": "planned:e14a6a00-a7aa-4b15-a7d9-70e89392fbcb"
+        },
+        {
+          "id": "00000000000000000000000000000021",
+          "key": "ba478551-d5dc-4d22-8595-50b8bc6b64f5",
+          "upcomingId": "planned:ba478551-d5dc-4d22-8595-50b8bc6b64f5"
+        },
+        {
+          "id": "00000000000000000000000000000058",
+          "key": "753749bc-d9b4-4c68-8bbf-e24f27877d71",
+          "upcomingId": "planned:753749bc-d9b4-4c68-8bbf-e24f27877d71"
+        },
+        {
+          "id": "00000000000000000000000000000117",
+          "key": "b91c1315-7f5e-4b8a-b792-907aa7ba87de",
+          "upcomingId": "planned:b91c1315-7f5e-4b8a-b792-907aa7ba87de"
+        },
+        {
+          "id": "00000000000000000000000000000063",
+          "key": "ec7286ff-1338-4de3-9fb9-264298f79211",
+          "upcomingId": "planned:ec7286ff-1338-4de3-9fb9-264298f79211"
+        }
+      ],
+      "listHeight": 539946,
+      "playing": false,
+      "position": 30,
+      "rendered": 16,
+      "scrollTop": 234.5,
+      "shuffle": true,
+      "tail": [
+        {
+          "id": "00000000000000000000000000000022",
+          "key": "c72337f0-9576-4fe4-9909-784f765f7451",
+          "upcomingId": "tail:c72337f0-9576-4fe4-9909-784f765f7451"
+        },
+        {
+          "id": "00000000000000000000000000000078",
+          "key": "5e821336-f1ed-45b1-b80e-5aeb4bff789c",
+          "upcomingId": "tail:5e821336-f1ed-45b1-b80e-5aeb4bff789c"
+        },
+        {
+          "id": "00000000000000000000000000000007",
+          "key": "4049bb09-7d30-4116-9525-a7cea40d5a1d",
+          "upcomingId": "tail:4049bb09-7d30-4116-9525-a7cea40d5a1d"
+        },
+        {
+          "id": "00000000000000000000000000000056",
+          "key": "6f79d58b-0ac0-46f4-b78e-e02b1add0b41",
+          "upcomingId": "tail:6f79d58b-0ac0-46f4-b78e-e02b1add0b41"
+        },
+        {
+          "id": "00000000000000000000000000000061",
+          "key": "1849cc4a-77a3-4a1d-9e9a-2fd843df03e6",
+          "upcomingId": "tail:1849cc4a-77a3-4a1d-9e9a-2fd843df03e6"
+        },
+        {
+          "id": "00000000000000000000000000000117",
+          "key": "b147bc1c-329a-4f0a-80fe-726f3e697442",
+          "upcomingId": "tail:b147bc1c-329a-4f0a-80fe-726f3e697442"
+        },
+        {
+          "id": "00000000000000000000000000000026",
+          "key": "ce17baad-5047-4ff0-a3f6-898585d6bf76",
+          "upcomingId": "tail:ce17baad-5047-4ff0-a3f6-898585d6bf76"
+        },
+        {
+          "id": "00000000000000000000000000000001",
+          "key": "9da495a1-37c7-43ef-bc60-9352a722a164",
+          "upcomingId": "tail:9da495a1-37c7-43ef-bc60-9352a722a164"
+        },
+        {
+          "id": "00000000000000000000000000000109",
+          "key": "988f7e29-728f-4ca7-9d37-e97a92f8c727",
+          "upcomingId": "tail:988f7e29-728f-4ca7-9d37-e97a92f8c727"
+        },
+        {
+          "id": "00000000000000000000000000000086",
+          "key": "b082a76c-c52b-427d-a8a2-13765e866275",
+          "upcomingId": "tail:b082a76c-c52b-427d-a8a2-13765e866275"
+        },
+        {
+          "id": "00000000000000000000000000000028",
+          "key": "6126c6e6-83d6-4b54-b8e9-27b07d06af58",
+          "upcomingId": "tail:6126c6e6-83d6-4b54-b8e9-27b07d06af58"
+        },
+        {
+          "id": "00000000000000000000000000000061",
+          "key": "50bbfe53-23f0-468e-adf8-8d2d3799db54",
+          "upcomingId": "tail:50bbfe53-23f0-468e-adf8-8d2d3799db54"
+        }
+      ]
+    }
+  }
+}

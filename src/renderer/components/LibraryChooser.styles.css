@@ -20,6 +20,9 @@
   font-size: 13px;
   font-weight: 400;
 }
+.library-choice-row:has(:enabled):hover {
+  background: var(--hover);
+}
 .library-choice-row input {
   width: 16px;
   height: 16px;

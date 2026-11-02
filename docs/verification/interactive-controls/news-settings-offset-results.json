@@ -1,0 +1,419 @@
+{
+  "checks": {
+    "sectionAlignment": true,
+    "textAlignment": true,
+    "colorOnlyHover": true,
+    "visibleKeyboardFocus": true
+  },
+  "before": {
+    "automatic": {
+      "bottom": 300.6875,
+      "height": 19,
+      "left": 352,
+      "right": 743.59375,
+      "top": 281.6875,
+      "width": 391.59375,
+      "x": 352,
+      "y": 281.6875
+    },
+    "controls": [
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(237, 113, 130)",
+        "hover": false,
+        "marginLeft": "0px",
+        "padding": "4px 8px",
+        "paddingLeft": "8px",
+        "rect": {
+          "bottom": 446.6875,
+          "height": 32,
+          "left": 352,
+          "right": 444.9921875,
+          "top": 414.6875,
+          "width": 92.9921875,
+          "x": 352,
+          "y": 414.6875
+        },
+        "text": "Provider keys"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(237, 113, 130)",
+        "hover": false,
+        "marginLeft": "0px",
+        "padding": "3px 8px",
+        "paddingLeft": "8px",
+        "rect": {
+          "bottom": 484.6875,
+          "height": 28,
+          "left": 352,
+          "right": 522.125,
+          "top": 456.6875,
+          "width": 170.125,
+          "x": 352,
+          "y": 456.6875
+        },
+        "text": "Provider usage and costs"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(237, 113, 130)",
+        "hover": false,
+        "marginLeft": "0px",
+        "padding": "4px 8px",
+        "paddingLeft": "8px",
+        "rect": {
+          "bottom": 526.6875,
+          "height": 32,
+          "left": 352,
+          "right": 440,
+          "top": 494.6875,
+          "width": 88,
+          "x": 352,
+          "y": 494.6875
+        },
+        "text": "Turn off now"
+      }
+    ],
+    "heading": {
+      "bottom": 233.59375,
+      "height": 19.59375,
+      "left": 238,
+      "right": 1226,
+      "top": 214,
+      "width": 988,
+      "x": 238,
+      "y": 214
+    }
+  },
+  "beforeHover": {
+    "automatic": {
+      "bottom": 223.1875,
+      "height": 19,
+      "left": 352,
+      "right": 743.59375,
+      "top": 204.1875,
+      "width": 391.59375,
+      "x": 352,
+      "y": 204.1875
+    },
+    "controls": [
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(237, 113, 130)",
+        "hover": false,
+        "marginLeft": "0px",
+        "padding": "4px 8px",
+        "paddingLeft": "8px",
+        "rect": {
+          "bottom": 369.1875,
+          "height": 32,
+          "left": 352,
+          "right": 444.9921875,
+          "top": 337.1875,
+          "width": 92.9921875,
+          "x": 352,
+          "y": 337.1875
+        },
+        "text": "Provider keys"
+      },
+      {
+        "background": "rgb(48, 52, 60)",
+        "color": "rgb(237, 113, 130)",
+        "hover": true,
+        "marginLeft": "0px",
+        "padding": "3px 8px",
+        "paddingLeft": "8px",
+        "rect": {
+          "bottom": 407.1875,
+          "height": 28,
+          "left": 352,
+          "right": 522.125,
+          "top": 379.1875,
+          "width": 170.125,
+          "x": 352,
+          "y": 379.1875
+        },
+        "text": "Provider usage and costs"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(237, 113, 130)",
+        "hover": false,
+        "marginLeft": "0px",
+        "padding": "4px 8px",
+        "paddingLeft": "8px",
+        "rect": {
+          "bottom": 449.1875,
+          "height": 32,
+          "left": 352,
+          "right": 440,
+          "top": 417.1875,
+          "width": 88,
+          "x": 352,
+          "y": 417.1875
+        },
+        "text": "Turn off now"
+      }
+    ],
+    "heading": {
+      "bottom": 156.09375,
+      "height": 19.59375,
+      "left": 238,
+      "right": 1226,
+      "top": 136.5,
+      "width": 988,
+      "x": 238,
+      "y": 136.5
+    }
+  },
+  "after": {
+    "automatic": {
+      "bottom": 300.6875,
+      "height": 19,
+      "left": 238,
+      "right": 629.59375,
+      "top": 281.6875,
+      "width": 391.59375,
+      "x": 238,
+      "y": 281.6875
+    },
+    "controls": [
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(237, 113, 130)",
+        "hover": false,
+        "marginLeft": "-8px",
+        "padding": "4px 8px",
+        "paddingLeft": "8px",
+        "rect": {
+          "bottom": 446.6875,
+          "height": 32,
+          "left": 230,
+          "right": 322.9921875,
+          "top": 414.6875,
+          "width": 92.9921875,
+          "x": 230,
+          "y": 414.6875
+        },
+        "text": "Provider keys"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(237, 113, 130)",
+        "hover": false,
+        "marginLeft": "-8px",
+        "padding": "3px 8px",
+        "paddingLeft": "8px",
+        "rect": {
+          "bottom": 484.6875,
+          "height": 28,
+          "left": 230,
+          "right": 400.125,
+          "top": 456.6875,
+          "width": 170.125,
+          "x": 230,
+          "y": 456.6875
+        },
+        "text": "Provider usage and costs"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(237, 113, 130)",
+        "hover": false,
+        "marginLeft": "-8px",
+        "padding": "4px 8px",
+        "paddingLeft": "8px",
+        "rect": {
+          "bottom": 526.6875,
+          "height": 32,
+          "left": 230,
+          "right": 318,
+          "top": 494.6875,
+          "width": 88,
+          "x": 230,
+          "y": 494.6875
+        },
+        "text": "Turn off now"
+      }
+    ],
+    "heading": {
+      "bottom": 233.59375,
+      "height": 19.59375,
+      "left": 238,
+      "right": 1226,
+      "top": 214,
+      "width": 988,
+      "x": 238,
+      "y": 214
+    }
+  },
+  "afterHover": {
+    "automatic": {
+      "bottom": 223.1875,
+      "height": 19,
+      "left": 238,
+      "right": 629.59375,
+      "top": 204.1875,
+      "width": 391.59375,
+      "x": 238,
+      "y": 204.1875
+    },
+    "controls": [
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(237, 113, 130)",
+        "hover": false,
+        "marginLeft": "-8px",
+        "padding": "4px 8px",
+        "paddingLeft": "8px",
+        "rect": {
+          "bottom": 369.1875,
+          "height": 32,
+          "left": 230,
+          "right": 322.9921875,
+          "top": 337.1875,
+          "width": 92.9921875,
+          "x": 230,
+          "y": 337.1875
+        },
+        "text": "Provider keys"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(242, 139, 153)",
+        "hover": true,
+        "marginLeft": "-8px",
+        "padding": "3px 8px",
+        "paddingLeft": "8px",
+        "rect": {
+          "bottom": 407.1875,
+          "height": 28,
+          "left": 230,
+          "right": 400.125,
+          "top": 379.1875,
+          "width": 170.125,
+          "x": 230,
+          "y": 379.1875
+        },
+        "text": "Provider usage and costs"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(237, 113, 130)",
+        "hover": false,
+        "marginLeft": "-8px",
+        "padding": "4px 8px",
+        "paddingLeft": "8px",
+        "rect": {
+          "bottom": 449.1875,
+          "height": 32,
+          "left": 230,
+          "right": 318,
+          "top": 417.1875,
+          "width": 88,
+          "x": 230,
+          "y": 417.1875
+        },
+        "text": "Turn off now"
+      }
+    ],
+    "heading": {
+      "bottom": 156.09375,
+      "height": 19.59375,
+      "left": 238,
+      "right": 1226,
+      "top": 136.5,
+      "width": 988,
+      "x": 238,
+      "y": 136.5
+    }
+  },
+  "focus": {
+    "background": "rgba(0, 0, 0, 0)",
+    "focus": true,
+    "outline": "solid",
+    "outlineWidth": "2px"
+  },
+  "final": {
+    "automatic": {
+      "bottom": 300.6875,
+      "height": 19,
+      "left": 238,
+      "right": 629.59375,
+      "top": 281.6875,
+      "width": 391.59375,
+      "x": 238,
+      "y": 281.6875
+    },
+    "controls": [
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(237, 113, 130)",
+        "hover": false,
+        "marginLeft": "-8px",
+        "padding": "4px 8px",
+        "paddingLeft": "8px",
+        "rect": {
+          "bottom": 446.6875,
+          "height": 32,
+          "left": 230,
+          "right": 322.9921875,
+          "top": 414.6875,
+          "width": 92.9921875,
+          "x": 230,
+          "y": 414.6875
+        },
+        "text": "Provider keys"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(242, 139, 153)",
+        "hover": true,
+        "marginLeft": "-8px",
+        "padding": "3px 8px",
+        "paddingLeft": "8px",
+        "rect": {
+          "bottom": 484.6875,
+          "height": 28,
+          "left": 230,
+          "right": 400.125,
+          "top": 456.6875,
+          "width": 170.125,
+          "x": 230,
+          "y": 456.6875
+        },
+        "text": "Provider usage and costs"
+      },
+      {
+        "background": "rgba(0, 0, 0, 0)",
+        "color": "rgb(237, 113, 130)",
+        "hover": false,
+        "marginLeft": "-8px",
+        "padding": "4px 8px",
+        "paddingLeft": "8px",
+        "rect": {
+          "bottom": 526.6875,
+          "height": 32,
+          "left": 230,
+          "right": 318,
+          "top": 494.6875,
+          "width": 88,
+          "x": 230,
+          "y": 494.6875
+        },
+        "text": "Turn off now"
+      }
+    ],
+    "heading": {
+      "bottom": 233.59375,
+      "height": 19.59375,
+      "left": 238,
+      "right": 1226,
+      "top": 214,
+      "width": 988,
+      "x": 238,
+      "y": 214
+    }
+  }
+}
