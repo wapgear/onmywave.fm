@@ -25,6 +25,7 @@ import { SidebarBody, SidebarHeading } from './components/Sidebar/Sidebar.compon
 import { DJPlaybackProvider } from './dj-playback';
 import { NewsRecoveryNotice, NewsRecoveryProvider } from './NewsRecovery';
 import { AlbumsPage, initialAlbumsView } from './pages/Albums/Albums.page';
+import { ArtistsPage, initialArtistsView } from './pages/Artists/Artists.page';
 import { ConnectionPage } from './pages/Connection/Connection.page';
 import { PlaylistsPage, usePlaylistRecovery } from './pages/Playlists/Playlists.page';
 import { SettingsPage } from './pages/Settings/Settings.page';
@@ -214,6 +215,7 @@ function ReadyApp({
   }, []);
 
   const [songsView, setSongsView] = useState(initialSongsView);
+  const [artistsView, setArtistsView] = useState(initialArtistsView);
   const [albumsView, setAlbumsView] = useState(initialAlbumsView);
   const [playlistId, setPlaylistId] = useState<string | null>(null);
   const main = useRef<HTMLElement>(null);
@@ -224,7 +226,7 @@ function ReadyApp({
     collectionFocus.current =
       document.activeElement === origin &&
       main.current?.contains(origin) &&
-      origin.matches(playlistId ? '.back-button' : '.album-tile, .playlist-tile')
+      origin.matches(playlistId ? '.back-button' : '.collection-tile, .playlist-tile')
         ? { location, origin, playlistId }
         : null;
   }
@@ -399,6 +401,7 @@ function ReadyApp({
   function updateLibraries(value: Connection) {
     if (!active.current || value?.id !== connection.id) return;
     setSongsView(initialSongsView());
+    setArtistsView(initialArtistsView());
     setAlbumsView(initialAlbumsView());
     setPlaylistId(null);
     setDrawer(null);
@@ -407,14 +410,16 @@ function ReadyApp({
   }
   const location =
     page === 'songs'
-      ? `songs-${songsView.query.search ?? ''}-${songsView.query.genre ?? ''}-${songsView.query.tag ?? ''}-${songsView.query.sort}-${songsView.query.descending}`
-      : page === 'albums'
-        ? `albums-${albumsView.album?.id ?? albumsView.draft}`
-        : page === 'playlists'
-          ? `playlists-${playlistId ?? 'list'}`
-          : page === 'settings'
-            ? `settings-${settingsSection}`
-            : page;
+      ? `songs-${JSON.stringify(songsView.query)}`
+      : page === 'artists'
+        ? `artists-${artistsView.item?.id ?? artistsView.draft}`
+        : page === 'albums'
+          ? `albums-${albumsView.item?.id ?? albumsView.draft}`
+          : page === 'playlists'
+            ? `playlists-${playlistId ?? 'list'}`
+            : page === 'settings'
+              ? `settings-${settingsSection}`
+              : page;
 
   useLayoutEffect(() => {
     const node = main.current;
@@ -613,6 +618,15 @@ function ReadyApp({
           <RenderErrorBoundary scope="page" resetKey={location}>
             {page === 'songs' && (
               <SongsPage view={songsView} setView={setSongsView} add={setAdding} details={openDrawer} />
+            )}
+            {page === 'artists' && (
+              <ArtistsPage
+                onOpenDetail={(id, origin) => requestCollectionFocus(`artists-${id}`, origin)}
+                view={artistsView}
+                setView={setArtistsView}
+                add={setAdding}
+                details={openDrawer}
+              />
             )}
             {page === 'albums' && (
               <AlbumsPage

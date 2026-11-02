@@ -1,12 +1,12 @@
-.virtual-albums {
+.virtual-collections {
   min-width: 0;
 }
-.virtual-album-grid {
+.virtual-collection-grid {
   position: relative;
   width: 100%;
   overflow-anchor: none;
 }
-.virtual-album-row {
+.virtual-collection-row {
   position: absolute;
   top: 0;
   left: 0;
@@ -16,22 +16,22 @@
   align-items: start;
   padding-bottom: 22px;
 }
-.virtual-album-row .album-tile {
+.virtual-collection-row .album-tile {
   width: 100%;
   gap: 4px;
   border-radius: 6px;
 }
-.virtual-album-row .album-tile .artwork {
+.virtual-collection-row .album-tile .artwork {
   width: 100%;
   margin-bottom: 7px;
 }
-.virtual-album-row .album-tile strong {
+.virtual-collection-row .album-tile strong {
   font-size: 13px;
   line-height: 18px;
   height: 36px;
   min-height: 36px;
 }
-.virtual-album-row .album-tile > span {
+.virtual-collection-row .album-tile > span {
   display: block;
   max-width: 100%;
   font-size: 11px;
@@ -40,7 +40,7 @@
   text-overflow: ellipsis;
   overflow: hidden;
 }
-.album-load-status {
+.collection-load-status {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -50,10 +50,10 @@
   color: var(--muted);
   font-size: 12px;
 }
-.album-load-status .notice {
+.collection-load-status .notice {
   width: 100%;
   margin: 0;
 }
-.album-load-status > button {
+.collection-load-status > button {
   font-size: 12px;
 }

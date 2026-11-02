@@ -5,7 +5,7 @@ import type { ConnectionTransition } from './components/LibrarySelection.types';
 import type { usePlaylistRecovery } from './pages/Playlists/Playlists.page';
 import type { RoomSetupDraft } from './pages/Stations/Stations.types';
 
-export type PageName = 'songs' | 'albums' | 'playlists' | 'stations' | 'settings';
+export type PageName = 'songs' | 'artists' | 'albums' | 'playlists' | 'stations' | 'settings';
 
 export type SessionContentProps = {
   connection: Connection | null;

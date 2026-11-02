@@ -1,20 +1,12 @@
-import type { Album, Song } from '../../../shared/types';
+import type { Album } from '../../../shared/types';
+import type {
+  MusicCollectionPageProps,
+  MusicCollectionView,
+} from '../../components/MusicCollection/MusicCollection.types';
 
-export type AlbumsView = { album: Album | null; draft: string; selected: Map<string, Song> };
+export type AlbumsView = MusicCollectionView<Album>;
 
-export type AlbumsPageProps = {
-  onOpenDetail: (id: string, origin: HTMLButtonElement) => void;
-  view: AlbumsView;
-  setView: React.Dispatch<React.SetStateAction<AlbumsView>>;
-  add: (songs: Song[]) => void;
-  details: (song: Song) => void;
-};
-
-export type AlbumDetailProps = {
-  album: Album;
-  selected: Map<string, Song>;
-  select: (selected: Map<string, Song>) => void;
-  back: () => void;
-  add: (songs: Song[]) => void;
-  details: (song: Song) => void;
-};
+export type AlbumsPageProps = Pick<
+  MusicCollectionPageProps<Album>,
+  'view' | 'setView' | 'add' | 'details' | 'onOpenDetail'
+>;

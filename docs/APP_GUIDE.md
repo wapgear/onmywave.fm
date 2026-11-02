@@ -6,6 +6,12 @@ Development notes and detailed behavior for onmywave.fm. Start with the [README]
 
 Reopening automatically restores the previous queue, song, playback position, volume, shuffle, and repeat. The player is paused and ready to play, with no resume confirmation. Removed songs are skipped during restoration; temporary connection failures preserve the saved session and offer Retry.
 
+## Artists and albums
+
+Artists and Albums share the same collection browser: search by name, open a tile, and use the collection header to play, play next, add to the end of the queue, or add songs to a playlist. Back returns to the previous search and grid position, with keyboard focus restored to the opened tile. Each section keeps its own search, open collection, and song selection while navigating within the app.
+
+Artists lists the music artists in the selected Jellyfin libraries, with server artwork when available. An artist's detail view contains their accessible songs across those libraries. Playback actions use the complete collection, including songs beyond the first catalog page. Albums retains its album-specific metadata and track order. Changing selected libraries resets both views.
+
 ## Song lyrics
 
 Select a song, then use the microphone icon beside Queue in the player. Its tooltip is Lyrics. Lyrics opens an overlay across the full song-list area with larger text. Navigation and playback controls stay available. Close or Escape restores the same list position and returns focus to the Lyrics button. Opening Queue closes Lyrics, and opening Lyrics closes Queue. The overlay follows song changes and closes when there is no selected song or the account changes.

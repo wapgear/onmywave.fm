@@ -1,6 +1,6 @@
 # Close-to-tray verification
 
-Run `pnpm run build`, then `node docs/verification/close-to-tray/verify.mjs` on macOS or Windows. Set `WAVE_VERIFICATION_OUTPUT` to retain the screenshot and log. The Quality workflow runs this check on both systems.
+Run `pnpm run build`, then `node docs/verification/close-to-tray/verify.mjs` on macOS or Windows. Set `WAVE_VERIFICATION_OUTPUT` to retain the screenshot and log. This is a manual check; it is not part of the Quality workflow.
 
 The check launches the built Electron main, preload, and renderer with an isolated temporary app-data directory. It uses the bundled demo MP3 with Chromium's `--disable-audio-output` fake OS output stream, with no Jellyfin connection or live provider requests. Instrumentation is confined to a disposable copy of the main bundle.
 

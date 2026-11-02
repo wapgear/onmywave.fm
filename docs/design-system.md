@@ -55,7 +55,8 @@ Shared renderer UI lives in `src/renderer/components/`. Check this directory bef
 | Page section navigation | `SectionNavigation/SectionNavigation.component.tsx` | Settings and News bucket share compact, rounded section buttons, theme colors, hover and selected states. Optional counts stay visible, including zero. Page owners retain their navigation state and behavior; News bucket wraps the same category buttons at narrow widths, preserving visible counts and keyboard access. |
 | Heading with contextual help | `SectionHeading/SectionHeading.component.tsx` | Appearance, announcement settings, transition settings, provider keys, News setup, and DJ Voice/Host preferences. Supports semantic h2/h3 headings and local row spacing; forwards heading IDs, refs and focus attributes; keeps heading margins from shifting the help icon. |
 | Collection playback actions | `CollectionPlaybackActions/CollectionPlaybackActions.component.tsx` | Albums and Playlists share Play, Play next and Add to end buttons. Callers retain the song order and command callbacks; empty collections disable all three actions. |
-| Collection header | `CollectionHeading/CollectionHeading.component.tsx` | Albums and Playlists. |
+| Collection browser and detail | `MusicCollection/MusicCollectionPage.component.tsx`, `MusicCollection/VirtualCollectionGrid.component.tsx` | Albums and Artists share search, virtualized tiles, keyboard navigation, back/focus restoration and track actions. Page wrappers retain their data adapters and domain metadata. |
+| Collection header | `CollectionHeading/CollectionHeading.component.tsx` | Albums, Artists and Playlists. |
 | Song rows and actions | `TrackTable/TrackTable.component.tsx` | Albums, Playlists and Songs. |
 | Select with filtering | `FilterSelect/FilterSelect.component.tsx` | Songs and News setup. |
 | DJ identity | `DJAvatar/DJAvatar.component.tsx` | DJ management and News setup. |

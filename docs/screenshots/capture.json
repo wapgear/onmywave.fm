@@ -1,18 +1,20 @@
 {
-  "date": "2026-10-19",
-  "method": "Unmodified copies of the screenshots published on https://onmywave.izmailov.dev/",
+  "date": "2026-11-02",
+  "method": "Current production renderer from this checkout with a disposable browser fixture and the existing public example catalog.",
   "viewport": {
     "width": 1440,
     "height": 900
   },
-  "data": "Actual app renderer with an example catalog of real titles, artists, and matching release covers. No chart recordings or private library tracks included.",
-  "sources": {
-    "docs/screenshots/albums.png": "https://izmailov.dev/assets/onmywave/artwork-albums.png",
-    "docs/screenshots/library.png": "https://izmailov.dev/assets/onmywave/artwork-dj-breaks.png"
-  },
+  "deviceScaleFactor": 1,
+  "theme": "Light",
+  "sidebar": "Expanded, 208 CSS pixels",
+  "playback": "Paused at 30 seconds",
+  "data": "Real titles, artists, and matching release covers. No private library, credentials, provider requests, or chart recordings.",
   "artworkSources": "artwork-sources.json",
+  "verification": "../verification/artists/README.md",
   "sha256": {
-    "docs/screenshots/albums.png": "d5ac1ef3f7bc37043799cba7600e7f06d0d10a2bab3e6bf84ffa90ff008e9f2c",
-    "docs/screenshots/library.png": "448eb64d59512487b76e22ca9113e15a34efb2e5e031deb6766aa54542e52f5c"
+    "docs/screenshots/library.png": "3ce2d3a343a3df4d7313ff3a13da0068a77f071565f9fb5e019343236fb026ad",
+    "docs/screenshots/albums.png": "555d0c21544890c5f653e6a48946e4267ae36553a9dc2f2f99d4ba16a9042deb",
+    "docs/screenshots/artists.png": "fbdd97d8ba0634475aa66e7add7b160ddbd32c11508fff487ff3da0a33796b3c"
   }
 }

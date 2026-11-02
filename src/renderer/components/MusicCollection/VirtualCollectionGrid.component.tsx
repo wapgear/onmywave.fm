@@ -1,16 +1,18 @@
 import { defaultRangeExtractor, observeElementOffset, useVirtualizer } from '@tanstack/react-virtual';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent } from 'react';
 
-import { Artwork, ErrorNotice } from '../../components/Shared';
 import { useRetryFocus } from '../../useRetryFocus';
-import type { VirtualAlbumsProps } from './VirtualAlbums.types';
+import { Artwork, ErrorNotice } from '../Shared';
+import type { CollectionItem, VirtualCollectionGridProps } from './MusicCollection.types';
 
-import './Albums.styles.css';
+import './VirtualCollectionGrid.styles.css';
 
 const GAP = 22;
 
-export function VirtualAlbums({
-  albums,
+export function VirtualCollectionGrid<T extends CollectionItem>({
+  items,
+  label,
+  subtitle,
   total,
   hasNext,
   fetching,
@@ -20,11 +22,11 @@ export function VirtualAlbums({
   returnFocus,
   focused,
   onResultsElement,
-}: VirtualAlbumsProps) {
+}: VirtualCollectionGridProps<T>) {
   const grid = useRef<HTMLDivElement>(null);
   const status = useRef<HTMLSpanElement>(null);
   const retryFocus = useRetryFocus({
-    ownerKey: 'albums-next-page',
+    ownerKey: `${label}-next-page`,
     target: () => status.current,
     canFocusSuccess: () => !fetching && !nextError,
   });
@@ -41,7 +43,7 @@ export function VirtualAlbums({
   } | null>(null);
   const restoredFocus = useRef<string | null>(null);
   const [focusedId, setFocusedId] = useState<string | null>(returnFocus);
-  const focusedIndex = albums.findIndex((album) => album.id === focusedId);
+  const focusedIndex = items.findIndex((item) => item.id === focusedId);
   const focusedRow = focusedIndex < 0 ? -1 : Math.floor(focusedIndex / layout.columns);
 
   const getScrollElement = useCallback(() => grid.current?.closest<HTMLElement>('.main-content') ?? null, []);
@@ -49,7 +51,7 @@ export function VirtualAlbums({
   // TanStack Virtual mutates its instance; keep this component outside compiler memoization.
   // oxlint-disable-next-line hooks/incompatible-library
   const virtualizer = useVirtualizer({
-    count: Math.ceil(albums.length / layout.columns),
+    count: Math.ceil(items.length / layout.columns),
     getScrollElement,
     scrollPaddingEnd: paddingEnd,
     observeElementOffset: (instance, callback) => {
@@ -65,7 +67,7 @@ export function VirtualAlbums({
       if (focusedRow >= 0)
         for (let row = Math.max(0, focusedRow - 1); row <= Math.min(range.count - 1, focusedRow + 1); row++)
           indexes.push(row);
-      if (recoveryIndex !== null && recoveryIndex < albums.length)
+      if (recoveryIndex !== null && recoveryIndex < items.length)
         indexes.push(Math.floor(recoveryIndex / layout.columns));
       return [...new Set(indexes)].sort((a, b) => a - b);
     },
@@ -93,7 +95,7 @@ export function VirtualAlbums({
       const nextLayout = { columns, rowHeight, offset };
       if (old) {
         const rowPosition = Math.max(0, (scroll.scrollTop - old.offset) / old.rowHeight);
-        const anchor = albums[Math.min(albums.length - 1, Math.floor(rowPosition) * old.columns)];
+        const anchor = items[Math.min(items.length - 1, Math.floor(rowPosition) * old.columns)];
         const active = document.activeElement;
         const activeRect =
           active instanceof HTMLElement && node.contains(active) ? active.getBoundingClientRect() : null;
@@ -102,7 +104,7 @@ export function VirtualAlbums({
           layout: nextLayout,
           focusVisible: !!activeRect && activeRect.bottom > viewport.top && activeRect.top < viewport.bottom,
           anchor: scroll.scrollTop >= old.offset && anchor ? { id: anchor.id, fraction: rowPosition % 1 } : undefined,
-          focusId: active instanceof HTMLElement && node.contains(active) ? active.dataset.albumId : undefined,
+          focusId: active instanceof HTMLElement && node.contains(active) ? active.dataset.collectionId : undefined,
         };
       }
       measuredLayout.current = nextLayout;
@@ -114,7 +116,7 @@ export function VirtualAlbums({
     if (node.closest('.page-content')) observer.observe(node.closest('.page-content')!);
     measure();
     return () => observer.disconnect();
-  }, [getScrollElement, albums]);
+  }, [getScrollElement, items]);
 
   useLayoutEffect(() => {
     virtualizer.measure();
@@ -122,14 +124,14 @@ export function VirtualAlbums({
     const scroll = getScrollElement();
     if (!pending || pending.layout !== layout || !scroll || !grid.current) return;
     grid.current.style.height = `${virtualizer.getTotalSize()}px`;
-    const index = pending.anchor ? albums.findIndex((album) => album.id === pending.anchor!.id) : -1;
+    const index = pending.anchor ? items.findIndex((item) => item.id === pending.anchor!.id) : -1;
     let nextOffset =
       index >= 0
         ? layout.offset +
           Math.floor(index / layout.columns) * layout.rowHeight +
           pending.anchor!.fraction * layout.rowHeight
         : scroll.scrollTop;
-    const focusIndex = pending.focusVisible ? albums.findIndex((album) => album.id === pending.focusId) : -1;
+    const focusIndex = pending.focusVisible ? items.findIndex((item) => item.id === pending.focusId) : -1;
     if (focusIndex >= 0) {
       const style = getComputedStyle(scroll);
       const topPadding = parseFloat(style.scrollPaddingTop) || 0;
@@ -142,14 +144,14 @@ export function VirtualAlbums({
     }
     virtualizer.scrollToOffset(nextOffset);
     if (pending.focusId) {
-      const button = [...grid.current.querySelectorAll<HTMLButtonElement>('[data-album-id]')].find(
-        (node) => node.dataset.albumId === pending.focusId,
+      const button = [...grid.current.querySelectorAll<HTMLButtonElement>('[data-collection-id]')].find(
+        (node) => node.dataset.collectionId === pending.focusId,
       );
       if (button && (document.activeElement === document.body || grid.current.contains(document.activeElement)))
         button.focus({ preventScroll: true });
     }
     pendingLayout.current = null;
-  }, [layout, virtualizer, getScrollElement, albums]);
+  }, [layout, virtualizer, getScrollElement, items]);
 
   const visible = virtualizer.getVirtualItems();
   const lastVisible =
@@ -162,15 +164,15 @@ export function VirtualAlbums({
       .at(-1)?.index ?? -1;
 
   useEffect(() => {
-    if (hasNext && !fetching && !nextError && lastVisible >= Math.ceil(albums.length / layout.columns) - 4)
+    if (hasNext && !fetching && !nextError && lastVisible >= Math.ceil(items.length / layout.columns) - 4)
       void loadNext();
-  }, [lastVisible, hasNext, fetching, nextError, albums.length, layout.columns, loadNext]);
+  }, [lastVisible, hasNext, fetching, nextError, items.length, layout.columns, loadNext]);
 
   useEffect(() => {
     if (!returnFocus || restoredFocus.current === returnFocus) return;
     const frame = requestAnimationFrame(() => {
-      const button = [...(grid.current?.querySelectorAll<HTMLButtonElement>('[data-album-id]') ?? [])].find(
-        (node) => node.dataset.albumId === returnFocus,
+      const button = [...(grid.current?.querySelectorAll<HTMLButtonElement>('[data-collection-id]') ?? [])].find(
+        (node) => node.dataset.collectionId === returnFocus,
       );
       if (button) {
         restoredFocus.current = returnFocus;
@@ -191,25 +193,25 @@ export function VirtualAlbums({
     else if (event.key === 'End')
       next =
         event.metaKey || event.ctrlKey
-          ? albums.length - 1
-          : Math.min(albums.length - 1, index - (index % layout.columns) + layout.columns - 1);
+          ? items.length - 1
+          : Math.min(items.length - 1, index - (index % layout.columns) + layout.columns - 1);
     else return;
     if (event.metaKey && event.key.startsWith('Arrow')) return;
     event.preventDefault();
-    next = Math.min(albums.length - 1, Math.max(0, next));
-    const id = albums[next].id;
+    next = Math.min(items.length - 1, Math.max(0, next));
+    const id = items[next].id;
     setFocusedId(id);
     virtualizer.scrollToIndex(Math.floor(next / layout.columns), { align: 'auto' });
     requestAnimationFrame(() => {
-      [...(grid.current?.querySelectorAll<HTMLButtonElement>('[data-album-id]') ?? [])]
-        .find((node) => node.dataset.albumId === id)
+      [...(grid.current?.querySelectorAll<HTMLButtonElement>('[data-collection-id]') ?? [])]
+        .find((node) => node.dataset.collectionId === id)
         ?.focus();
     });
   }
   function retryNextPage() {
     const button = retryFocus.retryRef.current;
     if (document.activeElement !== button) return loadNext();
-    const startIndex = albums.length;
+    const startIndex = items.length;
     const token = ++recoveryToken.current;
     setRecoveryIndex(startIndex);
     return retryFocus.retry(
@@ -226,11 +228,11 @@ export function VirtualAlbums({
         return request;
       },
       () => {
-        const appended = grid.current?.querySelector<HTMLButtonElement>(`[data-album-index="${startIndex}"]`);
+        const appended = grid.current?.querySelector<HTMLButtonElement>(`[data-collection-index="${startIndex}"]`);
         const container = grid.current?.closest<HTMLElement>('.main-content');
         const viewport = container?.getBoundingClientRect();
         const bottomPadding = container ? Number.parseFloat(getComputedStyle(container).scrollPaddingBottom) || 0 : 0;
-        const retained = [...(grid.current?.querySelectorAll<HTMLButtonElement>('[data-album-index]') ?? [])].find(
+        const retained = [...(grid.current?.querySelectorAll<HTMLButtonElement>('[data-collection-index]') ?? [])].find(
           (tile) => {
             if (!viewport) return true;
             const rect = tile.getBoundingClientRect();
@@ -248,10 +250,10 @@ export function VirtualAlbums({
   }
 
   return (
-    <section ref={onResultsElement} aria-label="Album collection" className="virtual-albums">
+    <section ref={onResultsElement} aria-label={`${label} collection`} className="virtual-collections">
       <div
         ref={grid}
-        className="virtual-album-grid"
+        className="virtual-collection-grid"
         style={{ height: virtualizer.getTotalSize() }}
         onBlur={(event) => {
           if (!pendingLayout.current?.focusId && !event.currentTarget.contains(event.relatedTarget)) setFocusedId(null);
@@ -259,7 +261,7 @@ export function VirtualAlbums({
       >
         {visible.map((row) => (
           <div
-            className="virtual-album-row"
+            className="virtual-collection-row"
             key={row.key}
             style={{
               height: layout.rowHeight,
@@ -267,40 +269,41 @@ export function VirtualAlbums({
               transform: `translateY(${row.start - layout.offset}px)`,
             }}
           >
-            {albums.slice(row.index * layout.columns, (row.index + 1) * layout.columns).map((item, column) => (
+            {items.slice(row.index * layout.columns, (row.index + 1) * layout.columns).map((item, column) => (
               <button
-                className="album-tile"
+                className="album-tile collection-tile"
                 key={item.id}
-                data-album-id={item.id}
-                data-album-index={row.index * layout.columns + column}
+                data-collection-id={item.id}
+                data-album-id={label === 'Album' ? item.id : undefined}
+                data-artist-id={label === 'Artist' ? item.id : undefined}
+                data-collection-index={row.index * layout.columns + column}
                 onFocus={() => setFocusedId(item.id)}
                 onKeyDown={(event) => keyboard(event, row.index * layout.columns + column)}
                 onClick={(event) => open(item, event.currentTarget)}
-                title={`${item.name} · ${item.artist || 'Unknown artist'}`}
+                title={[item.name, subtitle?.(item)].filter(Boolean).join(' · ')}
               >
                 <Artwork url={item.imageUrl} name={item.name} />
-                <strong>{item.name || 'Untitled album'}</strong>
-                <span>
-                  {item.artist || 'Unknown artist'}
-                  {item.year ? ` · ${item.year}` : ''}
-                </span>
+                <strong>{item.name || `Untitled ${label.toLowerCase()}`}</strong>
+                {subtitle && <span>{subtitle(item)}</span>}
               </button>
             ))}
           </div>
         ))}
       </div>
-      <div className="album-load-status">
+      <div className="collection-load-status">
         <span
           ref={status}
           tabIndex={-1}
           role="group"
-          aria-label={`${albums.length.toLocaleString()} of ${total.toLocaleString()} albums`}
+          aria-label={`${items.length.toLocaleString()} of ${total.toLocaleString()} ${label.toLowerCase()}s`}
         >
-          {albums.length.toLocaleString()} of {total.toLocaleString()} albums
+          {items.length.toLocaleString()} of {total.toLocaleString()} {label.toLowerCase()}s
         </span>
-        {fetching && <span role="status">Loading albums…</span>}
+        {fetching && <span role="status">Loading {label.toLowerCase()}s…</span>}
         <ErrorNotice error={nextError} retryRef={retryFocus.retryRef} retrying={fetching} retry={retryNextPage} />
-        {!nextError && hasNext && !fetching && <button onClick={() => void loadNext()}>Load more albums</button>}
+        {!nextError && hasNext && !fetching && (
+          <button onClick={() => void loadNext()}>Load more {label.toLowerCase()}s</button>
+        )}
       </div>
     </section>
   );
