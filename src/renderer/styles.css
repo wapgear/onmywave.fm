@@ -407,6 +407,14 @@ button > svg {
 .filter-bar > button {
   font-size: 12px;
 }
+.song-sort-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--control-gap);
+}
+.song-sort-controls > button {
+  font-size: 12px;
+}
 .filter-field {
   display: flex;
   align-items: center;

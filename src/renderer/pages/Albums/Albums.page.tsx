@@ -1,10 +1,11 @@
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ArrowLeft, ListPlus, Play, Plus, Search } from 'lucide-react';
+import { ArrowLeft, Plus, Search } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 import { unwrap } from '../../api';
 import { readCatalog } from '../../catalog';
 import { CollectionHeading } from '../../components/CollectionHeading/CollectionHeading.component';
+import { CollectionPlaybackActions } from '../../components/CollectionPlaybackActions/CollectionPlaybackActions.component';
 import { Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { songRows, TrackTable } from '../../components/TrackTable/TrackTable.component';
 import { usePlayer } from '../../player';
@@ -163,18 +164,13 @@ function AlbumDetail({ album, selected, select, back, add, details }: AlbumDetai
           </>
         }
       >
-        <button className="primary" disabled={!tracks.data?.length} onClick={() => player.play(tracks.data!)}>
-          <Play size={16} fill="currentColor" />
-          Play album
-        </button>
-        <button disabled={!tracks.data?.length} onClick={() => player.playNext(tracks.data!)}>
-          <Play size={16} />
-          Play next
-        </button>
-        <button disabled={!tracks.data?.length} onClick={() => player.enqueue(tracks.data!)}>
-          <ListPlus size={17} />
-          Add to end
-        </button>
+        <CollectionPlaybackActions
+          playLabel="Play album"
+          disabled={!tracks.data?.length}
+          onPlay={() => player.play(tracks.data!)}
+          onPlayNext={() => player.playNext(tracks.data!)}
+          onEnqueue={() => player.enqueue(tracks.data!)}
+        />
         <button disabled={!tracks.data?.length} onClick={() => add(tracks.data!)}>
           <Plus size={17} />
           Add to playlist

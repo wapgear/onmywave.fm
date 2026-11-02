@@ -1,3 +1,5 @@
+import { announcementLinesError, isAnnouncementStyle, type AnnouncementStyle } from './song-announcements';
+
 export type DJPlaybackSettings = {
   enabled: boolean;
   roomId: string | null;
@@ -6,6 +8,8 @@ export type DJPlaybackSettings = {
   voiceVolume: number;
   announceTracks: boolean;
   announceEverySongs: number;
+  announcementStyle: AnnouncementStyle;
+  announcementLines: string;
 };
 
 export type DJPlaybackSettingsPatch = Partial<DJPlaybackSettings>;
@@ -18,6 +22,8 @@ export const defaultDJPlaybackSettings = (): DJPlaybackSettings => ({
   voiceVolume: 0.7,
   announceTracks: false,
   announceEverySongs: 6,
+  announcementStyle: 'varied',
+  announcementLines: '',
 });
 
 export function isDJPlaybackSettings(value: unknown): value is DJPlaybackSettings {
@@ -35,6 +41,9 @@ export function isDJPlaybackSettings(value: unknown): value is DJPlaybackSetting
       (Number.isInteger(settings.announceEverySongs) &&
         settings.announceEverySongs >= 1 &&
         settings.announceEverySongs <= 100)) &&
+    (settings.announcementStyle === undefined || isAnnouncementStyle(settings.announcementStyle)) &&
+    (settings.announcementLines === undefined || typeof settings.announcementLines === 'string') &&
+    announcementLinesError(settings.announcementStyle ?? 'varied', settings.announcementLines ?? '') === null &&
     (settings.keepOnSeek === undefined || typeof settings.keepOnSeek === 'boolean') &&
     (settings.voiceVolume === undefined ||
       (typeof settings.voiceVolume === 'number' &&
@@ -66,6 +75,8 @@ export function isDJPlaybackSettingsPatch(value: unknown): value is DJPlaybackSe
           'voiceVolume',
           'announceTracks',
           'announceEverySongs',
+          'announcementStyle',
+          'announcementLines',
         ].includes(key),
     ) ||
     Object.keys(value).length !== keys.length
@@ -86,6 +97,8 @@ export function normalizeDJPlaybackSettings(value: unknown): DJPlaybackSettings 
         voiceVolume: value.voiceVolume ?? 0.7,
         announceTracks: value.announceTracks ?? false,
         announceEverySongs: value.announceEverySongs ?? 6,
+        announcementStyle: value.announcementStyle ?? 'varied',
+        announcementLines: value.announcementLines ?? '',
       }
     : defaultDJPlaybackSettings();
 }

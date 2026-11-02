@@ -1,10 +1,13 @@
-import { ArrowLeft, ExternalLink, Inbox, Pause, Play, Radio, Search, Settings, Star, X } from 'lucide-react';
+import { ArrowLeft, ExternalLink, Inbox, Pause, Play, Radio, Search, Star, X } from 'lucide-react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { canonicalArticleUrl, eligibleNewsTakes } from '../../../../shared/news-pool';
 import type { NewsArticle, PreparedNewsScript, PreparedNewsTake, ReviewedNewsArticle } from '../../../../shared/types';
+import { IconButton } from '../../../components/IconButton/IconButton.component';
+import { SectionNavigation } from '../../../components/SectionNavigation/SectionNavigation.component';
 import { Select } from '../../../components/Select/Select.component';
 import { ErrorNotice, duration } from '../../../components/Shared';
+import { SidebarBody, SidebarHeading } from '../../../components/Sidebar/Sidebar.component';
 import { usePlayer } from '../../../player';
 import { useNewsFavorites } from './hooks/useNewsFavorites';
 import { useSavedNewsAudition } from './hooks/useSavedNewsAudition';
@@ -113,9 +116,7 @@ export function NewsBucket({
         const currentCategory = document.querySelector<HTMLButtonElement>(
           '.news-bucket-navigation [aria-current="page"]',
         );
-        const navigation = currentCategory?.checkVisibility()
-          ? currentCategory
-          : document.querySelector<HTMLSelectElement>('.news-bucket-navigation-select select');
+        const navigation = currentCategory;
         const target =
           restoreTo === 'navigation'
             ? navigation
@@ -565,6 +566,27 @@ export function NewsBucket({
     selection?.kind === 'favorite'
       ? favorites.favorites.find((article) => article.canonicalUrl === selection.id)
       : undefined;
+  const inspectorContext = selectedTake
+    ? eligible.some((take) => take.id === selectedTake.id)
+      ? 'Ready to listen'
+      : selectedTake.deliveryState?.status === 'played'
+        ? 'From your history'
+        : 'Saved recording'
+    : selectedScript
+      ? 'Script only'
+      : selectedFavorite
+        ? 'Favorite article'
+        : candidateStory
+          ? `Source check · ${selectedCandidateIsInspector ? 'selected' : 'collected'}`
+          : selectedReviewed
+            ? selectedReviewed.status === 'interrupted'
+              ? 'Review interrupted'
+              : selectedReviewed.status === 'submitted'
+                ? 'Submitted for review'
+                : selectedReviewed.outcome === 'selected'
+                  ? 'Selected for a briefing'
+                  : 'Reviewed · not selected'
+            : 'Details unavailable';
   const favoriteArticles = [...favorites.favorites].sort(
     (a, b) => Date.parse(b.favoritedAt) - Date.parse(a.favoritedAt),
   );
@@ -600,36 +622,13 @@ export function NewsBucket({
   return (
     <section className="news-bucket" aria-label="News bucket">
       <div className="news-bucket-layout">
-        <nav className="news-bucket-navigation" aria-label="News categories">
-          <label className="news-bucket-navigation-select" htmlFor="news-category">
-            <span className="sr-only">News category</span>
-            <Select
-              id="news-category"
-              aria-label="News category"
-              value={destination}
-              onChange={(event) => navigate(event.target.value as Destination)}
-            >
-              {destinations.map(({ id, label, count }) => (
-                <option key={id} value={id}>
-                  {label}
-                  {count !== undefined ? ` · ${count}` : ''}
-                </option>
-              ))}
-            </Select>
-          </label>
-          {destinations.map(({ id, label, count }) => (
-            <button
-              key={id}
-              className={id === 'settings' ? 'news-bucket-nav-settings' : ''}
-              aria-current={destination === id ? 'page' : undefined}
-              onClick={() => navigate(id)}
-            >
-              {id === 'settings' && <Settings size={16} aria-hidden="true" />}
-              <span>{label}</span>
-              {count !== undefined && <span className="news-bucket-count">{count}</span>}
-            </button>
-          ))}
-        </nav>
+        <SectionNavigation
+          className="news-bucket-navigation"
+          label="News categories"
+          items={destinations}
+          value={destination}
+          onChange={navigate}
+        />
         <div className="news-bucket-content">
           <ErrorNotice error={favorites.error} />
           <div className="news-bucket-settings-page" hidden={destination !== 'settings'}>
@@ -928,77 +927,66 @@ export function NewsBucket({
                   aria-label="Story inspector"
                   data-reader-key={selectionKey(selection)}
                 >
-                  <div className="news-bucket-reader-toolbar">
+                  <SidebarHeading
+                    compact
+                    className="news-bucket-reader-toolbar"
+                    title="Story details"
+                    actions={
+                      <>
+                        {inspectedArticle && favoriteButton(inspectedArticle)}
+                        <IconButton label="Close story details" onClick={() => closeInspector()}>
+                          <X size={20} aria-hidden="true" />
+                        </IconButton>
+                      </>
+                    }
+                  />
+                  <SidebarBody className="news-bucket-reader-body">
                     <button className="news-bucket-reader-back" onClick={() => closeInspector()}>
                       <ArrowLeft size={16} aria-hidden="true" />
                       Back to stories
                     </button>
-                    <span className="news-bucket-reader-eyebrow">
-                      {selectedTake
-                        ? eligible.some((take) => take.id === selectedTake.id)
-                          ? 'Ready to listen'
-                          : selectedTake.deliveryState?.status === 'played'
-                            ? 'From your history'
-                            : 'Saved recording'
-                        : selectedScript
-                          ? 'Script only'
-                          : selectedFavorite
-                            ? 'Favorite article'
-                            : candidateStory
-                              ? 'Source check'
-                              : 'Editorial review'}
-                    </span>
-                    <div className="news-bucket-reader-actions">
-                      {inspectedArticle && favoriteButton(inspectedArticle)}
-                      <button
-                        className="news-bucket-inspector-close"
-                        aria-label="Close story details"
-                        onClick={() => closeInspector()}
-                      >
-                        <X size={18} aria-hidden="true" />
-                      </button>
-                    </div>
-                  </div>
-                  <header>
-                    <h2 ref={readerHeading} tabIndex={-1}>
-                      {selectedFavorite?.title ?? selectedTitle}
-                    </h2>
-                    <p>
-                      {inspectedArticle
-                        ? `${inspectedArticle.source} · ${publicationTime(inspectedArticle)}`
-                        : (selectedSource ?? 'Source unavailable')}
-                    </p>
-                  </header>
-                  {selectedTake ? (
-                    renderedTake(selectedTake)
-                  ) : selectedScript ? (
-                    renderScript(selectedScript)
-                  ) : selectedReviewed ? (
-                    renderReviewed(selectedReviewed)
-                  ) : candidateStory ? (
-                    <>
-                      <h3 className="news-bucket-preview-label">Story summary</h3>
-                      <p className="news-bucket-inspector-script">
-                        {candidateStory.summary || 'No summary was saved.'}
+                    <p className="news-bucket-reader-context">{inspectorContext}</p>
+                    <header>
+                      <h2 ref={readerHeading} tabIndex={-1}>
+                        {selectedFavorite?.title ?? selectedTitle}
+                      </h2>
+                      <p>
+                        {inspectedArticle
+                          ? `${inspectedArticle.source} · ${publicationTime(inspectedArticle)}`
+                          : (selectedSource ?? 'Source unavailable')}
                       </p>
-                      {selectedCandidateIsInspector && requestWhy && (
-                        <details className="news-bucket-detail-disclosure">
-                          <summary>Why this story</summary>
-                          <p className="news-bucket-muted">{requestWhy}</p>
-                        </details>
-                      )}
-                      {renderArticles([candidateStory])}
-                    </>
-                  ) : selectedFavorite ? (
-                    <>
-                      <p className="news-bucket-muted">Saved to Favorites. Open the source to read the article.</p>
-                      {renderArticles([selectedFavorite])}
-                    </>
-                  ) : (
-                    <p className="news-bucket-muted">This story is no longer available.</p>
-                  )}
-                  {selectedTake && <p className="news-bucket-inspector-meta">{selectedStatus}</p>}
-                  <ErrorNotice error={audition.audioError ? new Error(audition.audioError) : null} />
+                    </header>
+                    {selectedTake ? (
+                      renderedTake(selectedTake)
+                    ) : selectedScript ? (
+                      renderScript(selectedScript)
+                    ) : selectedReviewed ? (
+                      renderReviewed(selectedReviewed)
+                    ) : candidateStory ? (
+                      <>
+                        <h3 className="news-bucket-preview-label">Story summary</h3>
+                        <p className="news-bucket-inspector-script">
+                          {candidateStory.summary || 'No summary was saved.'}
+                        </p>
+                        {selectedCandidateIsInspector && requestWhy && (
+                          <details className="news-bucket-detail-disclosure">
+                            <summary>Why this story</summary>
+                            <p className="news-bucket-muted">{requestWhy}</p>
+                          </details>
+                        )}
+                        {renderArticles([candidateStory])}
+                      </>
+                    ) : selectedFavorite ? (
+                      <>
+                        <p className="news-bucket-muted">Saved to Favorites. Open the source to read the article.</p>
+                        {renderArticles([selectedFavorite])}
+                      </>
+                    ) : (
+                      <p className="news-bucket-muted">This story is no longer available.</p>
+                    )}
+                    {selectedTake && <p className="news-bucket-inspector-meta">{selectedStatus}</p>}
+                    <ErrorNotice error={audition.audioError ? new Error(audition.audioError) : null} />
+                  </SidebarBody>
                 </aside>
               )}
             </div>

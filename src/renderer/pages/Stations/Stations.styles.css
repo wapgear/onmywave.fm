@@ -20,37 +20,15 @@
 }
 .page-content:has(.is-news-bucket-page) {
   height: 100%;
-  padding-top: 0;
-  padding-bottom: 0;
 }
 .stations-page.is-news-bucket-page {
   display: flex;
   height: 100%;
-  min-height: 0;
+  min-height: 480px;
   flex-direction: column;
 }
 .stations-page.is-news-bucket-page > .page-heading {
-  min-height: 48px;
-  align-items: center;
   flex-shrink: 0;
-  flex-wrap: nowrap;
-  gap: 12px 20px;
-  padding-block: 8px;
-  margin: 0 calc(24px - var(--content-inset));
-}
-.stations-page.is-news-bucket-page > .page-heading > div:first-child {
-  min-width: 0;
-  flex: 1 1 auto;
-}
-.stations-page.is-news-bucket-page > .page-heading h1 {
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: -0.025em;
-}
-.stations-page.is-news-bucket-page > .page-heading p {
-  max-width: none;
-  font-size: 12px;
-  line-height: 1.5;
 }
 .stations-news-header-actions {
   display: flex;
@@ -170,25 +148,6 @@
   padding: 0 0 28px;
   margin: 0 0 28px;
   border-bottom: 1px solid var(--separator);
-}
-.room-section-heading {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 18px;
-}
-.room-section-heading h2 {
-  font-size: 19px;
-  margin-top: 7px;
-}
-.room-section-heading > svg {
-  color: var(--muted);
-  flex-shrink: 0;
-}
-.room-section-heading > button {
-  font-size: 12px;
-  border-radius: 8px;
 }
 .room-configuration {
   display: grid;
@@ -344,18 +303,6 @@
   overflow-wrap: anywhere;
   white-space: pre-wrap;
 }
-.room-setup .room-section-heading > .form-hint {
-  margin: 0;
-}
-.room-setup .room-section-heading > div {
-  min-width: 0;
-}
-.room-setup .room-section-heading .form-hint {
-  overflow-wrap: anywhere;
-  white-space: pre-wrap;
-  max-width: 680px;
-  margin-top: 10px;
-}
 .room-automation-status {
   display: flex;
   align-items: center;
@@ -374,12 +321,6 @@
   .room-setup-summary > div {
     grid-template-columns: 1fr;
     gap: 5px;
-  }
-  .room-setup .room-section-heading {
-    align-items: flex-start;
-  }
-  .room-setup .room-section-heading > button {
-    flex-shrink: 0;
   }
 }
 
@@ -519,7 +460,7 @@
     flex-basis: 100%;
     min-width: 0;
   }
-  .stations-page.is-news-bucket-page .page-heading {
+  .stations-page.is-news-bucket-page > .page-heading {
     align-items: stretch;
   }
   .stations-news-header-actions {
@@ -665,15 +606,6 @@
   align-self: center;
   margin: 0;
 }
-
-.room-setup > .room-section-heading {
-  justify-content: flex-start;
-  gap: var(--control-gap);
-}
-.room-setup > .room-section-heading h2 {
-  margin-top: 0;
-}
-
 .stations-page.is-news-bucket-page .stations-news-header-actions {
   flex: 0 1 auto;
 }
@@ -695,4 +627,9 @@
     width: auto;
     justify-content: flex-end;
   }
+}
+
+.room-setup-heading {
+  gap: var(--control-gap);
+  margin-bottom: 18px;
 }

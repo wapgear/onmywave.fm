@@ -8,6 +8,7 @@ import { unwrap } from '../../../api';
 import { Button } from '../../../components/Button/Button.component';
 import { ConfigurationTabs } from '../../../components/ConfigurationTabs/ConfigurationTabs.component';
 import { InfoHelp } from '../../../components/InfoHelp/InfoHelp.component';
+import { SectionHeading } from '../../../components/SectionHeading/SectionHeading.component';
 import { Dialog, DialogActions, ErrorNotice } from '../../../components/Shared';
 import { confirmLocalState } from '../../../local-state-cache';
 import { DJAvatarPicker } from './DJAvatarPicker.component';
@@ -381,15 +382,17 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
             {field('personality', 'Personality', 'Warm, curious, concise. Let the music breathe.', true)}
             {field('language', 'Language', 'English')}
             <section className="dj-profile-voice">
-              <div className="dj-profile-section-heading">
-                <h3>Voice</h3>
-                <InfoHelp label="About voice IDs and delivery">
-                  <p>
-                    Find a voice ID in your ElevenLabs voice library. Your existing voice stays selected while editing.
-                  </p>
-                  <p>Delivery tags are optional bracketed cues supported by the voice provider.</p>
-                </InfoHelp>
-              </div>
+              <SectionHeading
+                as="h3"
+                className="dj-profile-section-heading"
+                title="Voice"
+                helpLabel="About voice IDs and delivery"
+              >
+                <p>
+                  Find a voice ID in your ElevenLabs voice library. Your existing voice stays selected while editing.
+                </p>
+                <p>Delivery tags are optional bracketed cues supported by the voice provider.</p>
+              </SectionHeading>
               <label>
                 ElevenLabs voice ID
                 <input
@@ -414,13 +417,15 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
               )}
             </section>
             <section className="dj-profile-advanced">
-              <div className="dj-profile-section-heading">
-                <h3>Host preferences</h3>
-                <InfoHelp label="About host preferences">
-                  <p>OpenAI prepares stories from your selected sources; ElevenLabs generates the voice.</p>
-                  <p>Set how often you hear news in Settings → General → DJ playback.</p>
-                </InfoHelp>
-              </div>
+              <SectionHeading
+                as="h3"
+                className="dj-profile-section-heading"
+                title="Host preferences"
+                helpLabel="About host preferences"
+              >
+                <p>OpenAI prepares stories from your selected sources; ElevenLabs generates the voice.</p>
+                <p>Set how often you hear news in Settings → Playback → News &amp; voice.</p>
+              </SectionHeading>
               <div>
                 <p className="form-hint">
                   OpenAI receives your host instructions, music preferences and exclusions for news preparation (up to

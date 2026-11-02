@@ -1,0 +1,42 @@
+{
+  "player": {
+    "rect": {
+      "height": 88,
+      "width": 1248,
+      "x": 16,
+      "y": 696
+    }
+  },
+  "queue": {
+    "queue_control_min_height": 24,
+    "queue_control_min_width": 24,
+    "rect": {
+      "height": 642,
+      "width": 320,
+      "x": 944,
+      "y": 42
+    }
+  },
+  "table": {
+    "rect": {
+      "height": 4536,
+      "width": 660,
+      "x": 238,
+      "y": 202
+    },
+    "row_height": 56
+  },
+  "toolbar": {
+    "rect": {
+      "height": 34,
+      "width": 660,
+      "x": 238,
+      "y": 148
+    },
+    "sort_row_aligned": true
+  },
+  "viewport": {
+    "height": 800,
+    "width": 1280
+  }
+}

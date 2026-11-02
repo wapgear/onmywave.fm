@@ -127,9 +127,25 @@
   width: 1px;
   background: transparent;
 }
+.sidebar-resize-handle:focus-visible::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 2.5px;
+  width: 3px;
+  height: 32px;
+  border-radius: 2px;
+  background: var(--muted);
+  transform: translateY(-50%);
+}
 .sidebar-resize-handle.is-hovered::after,
 .sidebar.is-resizing .sidebar-resize-handle::after {
   background: var(--border);
+}
+@media (forced-colors: active) {
+  .sidebar-resize-handle:focus-visible::before {
+    background: CanvasText;
+  }
 }
 .is-resizing-navigation,
 .is-resizing-navigation * {

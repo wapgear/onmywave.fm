@@ -9,7 +9,7 @@ export async function verifyPreferences(window, root) {
   await run(`new Promise((resolve, reject) => {
     let tries = 0;
     const timer = setInterval(() => {
-      if (document.querySelector('.room-dj-schedule input')) { clearInterval(timer); resolve(); }
+      if (document.querySelector('#appearance-title')) { clearInterval(timer); resolve(); }
       else if (++tries > 100) { clearInterval(timer); reject(new Error('General settings did not open')); }
     }, 20);
   })`);
@@ -17,10 +17,19 @@ export async function verifyPreferences(window, root) {
   for (const [width, height] of [[1440, 1000], [960, 800]]) {
     window.setContentSize(width, height);
     for (const [name, theme, selector] of [
-      ['general-light', 'light', '.room-dj-schedule'],
+      ['general-light', 'light', '.theme-picker'],
+      ['playback-light', 'light', '.settings-playback'],
+      ['announcements-light', 'light', '.song-announcement-settings'],
       ['transitions-light', 'light', '.news-transition-settings'],
-      ['general-dark', 'dark', '.room-dj-schedule'],
+      ['general-dark', 'dark', '.theme-picker'],
     ]) {
+      await run(`document.querySelector('[data-section="${name.startsWith('general') ? 'general' : 'playback'}"]').click(); new Promise((resolve) => setTimeout(resolve,100))`);
+      if (name.startsWith('announcements') || name.startsWith('transitions')) {
+        await run(`(() => {
+          const section=document.querySelector('${selector}');
+          if(!section.open) section.querySelector(':scope > summary').click();
+        })(); new Promise((resolve) => setTimeout(resolve,100))`);
+      }
       await run(`(() => {
         document.documentElement.dataset.theme = '${theme}';
         window.scrollTo(0, 0);
@@ -52,6 +61,14 @@ export async function verifyPreferences(window, root) {
     }
   }
   if (stage.startsWith('after')) {
+    await run(`document.querySelector('[data-section="playback"]').click(); new Promise((resolve) => setTimeout(resolve,100))`);
+    assert.equal(await run(`document.querySelectorAll('.settings-subsection[open]').length`), 0, 'Playback should open as a compact overview');
+    assert.equal(await run(`!!document.querySelector('#announcement-style')`), false, 'Announcement details should stay out of the default layout');
+    const compactHeight = await run(`document.querySelector('.settings-playback').getBoundingClientRect().height`);
+    assert(compactHeight < 280, 'Collapsed playback sections take too much space');
+    for (const selector of ['.room-dj-schedule', '.song-announcement-settings', '.news-transition-settings']) {
+      await run(`document.querySelector('${selector} > summary').click(); new Promise((resolve) => setTimeout(resolve,100))`);
+    }
     const layout = await run(`(() => {
       const fields = document.querySelector('.room-dj-schedule .preference-fields');
       const rows = [...fields.children].map((row) => row.getBoundingClientRect());
@@ -79,7 +96,7 @@ export async function verifyPreferences(window, root) {
     window.focus();
     window.webContents.focus();
     await run(`new Promise((resolve) => setTimeout(resolve, 200))`);
-    await run(`document.querySelector('.main-content').scrollTop = 0; document.querySelector('.room-dj-schedule .info-help').focus()`);
+    await run(`document.querySelector('.main-content').scrollTop = 0; document.querySelector('.song-announcement-settings .info-help').focus()`);
     await key('Enter');
     assert.equal(await run(`!!document.querySelector('dialog[open]')`), true, 'Enter must open contextual help');
     assert.match(await run(`document.querySelector('dialog[open]').textContent`), /or always after fact-only news/);
@@ -87,7 +104,7 @@ export async function verifyPreferences(window, root) {
     await writeFile(path.join(root, `docs/verification/preferences-design/${stage}-help-960.png`), (await window.webContents.capturePage()).toPNG());
     await key('Escape');
     assert.equal(await run(`!!document.querySelector('dialog[open]')`), false);
-    assert.equal(await run(`document.activeElement === document.querySelector('.room-dj-schedule .info-help')`), true, 'Help must return focus to its trigger');
+    assert.equal(await run(`document.activeElement === document.querySelector('.song-announcement-settings .info-help')`), true, 'Help must return focus to its trigger');
     await run(`document.querySelector('.transition-preview > summary').focus()`);
     await key('Enter');
     assert.equal(await run(`document.querySelector('.transition-preview').open`), true, 'Enter must expand the preview');
@@ -111,6 +128,22 @@ export async function verifyPreferences(window, root) {
     await key('Enter');
     assert.equal(await run(`window.__fixture.previewClosed`), 1, 'Collapsing the preview must stop its audio context');
     assert.equal(await run(`document.querySelector('.transition-preview button').textContent.trim()`), 'Play sample');
+    await run(`document.querySelector('.transition-preview > summary').click(); new Promise((resolve) => setTimeout(resolve,100))`);
+    await run(`document.querySelector('.transition-preview button').click(); new Promise((resolve) => setTimeout(resolve,100))`);
+    await run(`document.querySelector('.news-transition-settings > summary').focus()`);
+    await key('Enter');
+    assert.equal(await run(`document.querySelector('.news-transition-settings').open`), false, 'Enter must collapse the parent subsection');
+    assert.equal(await run(`window.__fixture.previewClosed`), 2, 'Collapsing DJ transitions must stop the hidden preview');
+    await key('Space');
+    assert.equal(await run(`document.querySelector('.news-transition-settings').open`), true, 'Space must expand a subsection');
+    assert.equal(await run(`document.querySelector('.transition-preview').open`), false, 'Reopening transitions must not restart the preview');
+    await run(`document.querySelector('[data-section="general"]').click(); new Promise((resolve) => setTimeout(resolve,100))`);
+    await run(`document.querySelector('#player-dj-controls').click(); new Promise((resolve) => setTimeout(resolve,150))`);
+    await run(`[...document.querySelectorAll('.dj-sidebar-content footer button')].find((button) => button.textContent.trim()==='DJ settings').focus()`);
+    await key('Enter');
+    await run(`new Promise((resolve) => setTimeout(resolve,250))`);
+    assert.equal(await run(`document.querySelector('.settings-sections [aria-current="page"]').dataset.section`), 'playback', 'The player DJ shortcut must open Playback');
+    assert.equal(await run(`document.activeElement.id`), 'dj-playback-title', 'The player shortcut must focus the visible subsection summary');
   }
-  return { scenario: 'General settings layout and contextual help', stage, passed: true };
+  return { scenario: 'Settings organization, compact playback overview, contextual help, keyboard disclosures, preview cleanup, player shortcut', stage, passed: true };
 }

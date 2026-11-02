@@ -1,0 +1,33 @@
+.section-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  margin: 0 0 var(--space-8);
+}
+
+.section-navigation > button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 12px;
+  padding: 8px 12px;
+  background: transparent;
+  color: var(--muted);
+  border-radius: 7px;
+  white-space: nowrap;
+}
+
+.section-navigation > button[aria-current='page'],
+.section-navigation > button:hover {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.section-navigation-count {
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}

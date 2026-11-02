@@ -5,23 +5,27 @@ import { unwrap } from '../../api';
 import { UpdateSettings } from '../../components/AppUpdates/AppUpdates.component';
 import { Button } from '../../components/Button/Button.component';
 import { LibraryChooser } from '../../components/LibraryChooser';
+import { PreferencesLayout } from '../../components/PreferencesLayout/PreferencesLayout.component';
 import { ProviderKeys } from '../../components/ProviderKeys/ProviderKeys.component';
 import { SectionHeading } from '../../components/SectionHeading/SectionHeading.component';
+import { SectionNavigation } from '../../components/SectionNavigation/SectionNavigation.component';
 import { Dialog, DialogActions, ErrorNotice, PageHeading } from '../../components/Shared';
 import { DJsPage } from '../DJs/DJs.page';
 import { SourcesPage } from '../Sources/Sources.page';
 import { AppearanceSettings } from './components/AppearanceSettings.component';
 import { DJPlaybackSettings } from './components/DJPlaybackSettings.component';
 import { NewsTransitions } from './components/NewsTransitions.component';
+import { SongAnnouncementSettings } from './components/SongAnnouncementSettings.component';
 import type { SettingsPageProps, SettingsSection } from './Settings.types';
 
 import './Settings.styles.css';
 
 const sections: { id: SettingsSection; label: string }[] = [
   { id: 'general', label: 'General' },
-  { id: 'keys', label: 'Provider keys' },
+  { id: 'playback', label: 'Playback' },
   { id: 'sources', label: 'Sources' },
   { id: 'djs', label: 'DJs' },
+  { id: 'keys', label: 'Provider keys' },
 ];
 
 export function SettingsPage({
@@ -56,24 +60,20 @@ export function SettingsPage({
   }
 
   return (
-    <div className="settings-page">
+    <PreferencesLayout className="settings-page">
       <PageHeading title="Settings">
         {returnToSetup && <button onClick={returnToSetup}>Back to setup</button>}
       </PageHeading>
-      <nav className="settings-sections" aria-label="Settings sections">
-        {sections.map((item) => (
-          <button
-            key={item.id}
-            aria-current={activeSection === item.id ? 'page' : undefined}
-            onClick={() => {
-              setLocalSection(item.id);
-              onSectionChange?.(item.id);
-            }}
-          >
-            {item.label}
-          </button>
-        ))}
-      </nav>
+      <SectionNavigation
+        className="settings-sections"
+        label="Settings sections"
+        items={sections}
+        value={activeSection}
+        onChange={(value) => {
+          setLocalSection(value);
+          onSectionChange?.(value);
+        }}
+      />
       {activeSection === 'keys' && (
         <div className="settings-content settings-preferences">
           <ProviderKeys />
@@ -81,10 +81,15 @@ export function SettingsPage({
       )}
       {activeSection === 'sources' && <SourcesPage />}
       {activeSection === 'djs' && <DJsPage />}
+      {activeSection === 'playback' && (
+        <div className="settings-content settings-preferences settings-playback">
+          <DJPlaybackSettings />
+          <SongAnnouncementSettings />
+          <NewsTransitions />
+        </div>
+      )}
       {activeSection === 'general' && (
         <div className="settings-content settings-preferences">
-          <DJPlaybackSettings />
-          <NewsTransitions />
           <AppearanceSettings />
           <section>
             <h2>Account</h2>
@@ -158,6 +163,6 @@ export function SettingsPage({
           </DialogActions>
         </Dialog>
       )}
-    </div>
+    </PreferencesLayout>
   );
 }

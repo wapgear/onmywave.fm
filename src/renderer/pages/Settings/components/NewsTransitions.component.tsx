@@ -8,8 +8,9 @@ import { SectionHeading } from '../../../components/SectionHeading/SectionHeadin
 import { Select } from '../../../components/Select/Select.component';
 import { ErrorNotice } from '../../../components/Shared';
 import { useRetryFocus } from '../../../useRetryFocus';
-import { useGeneralSettingsEdits } from '../SettingsEdits';
+import { useSettingsEdits } from '../SettingsEdits';
 import { NewsTransitionPreview } from './NewsTransitionPreview.component';
+import { SettingsSubsection } from './SettingsSubsection.component';
 
 import './NewsTransitions.styles.css';
 
@@ -44,19 +45,19 @@ export function NewsTransitions() {
   const styleId = useId();
   const modeId = useId();
   const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()) });
-  const heading = useRef<HTMLHeadingElement>(null);
+  const summary = useRef<HTMLElement>(null);
   const transitionStyle = useRef<HTMLSelectElement>(null);
   const saveButton = useRef<HTMLButtonElement>(null);
   const [ownsSaveFocus, setOwnsSaveFocus] = useState(false);
   const retryFocus = useRetryFocus({
-    ownerKey: 'settings:general:news-transitions',
+    ownerKey: 'settings:playback:news-transitions',
     target: () =>
-      transitionStyle.current && !transitionStyle.current.matches(':disabled')
+      transitionStyle.current?.checkVisibility() && !transitionStyle.current.matches(':disabled')
         ? transitionStyle.current
-        : heading.current,
+        : summary.current,
     canFocusSuccess: () => !state.isError && !state.isFetching && !!state.data,
   });
-  const edit = useGeneralSettingsEdits().transitions;
+  const edit = useSettingsEdits().transitions;
   const { draft, save } = edit;
   const settings = draft ?? state.data?.newsTransitions ?? defaultNewsTransitionSettings();
   const preset = presets.find((item) =>
@@ -67,14 +68,16 @@ export function NewsTransitions() {
   }
 
   return (
-    <section className="news-transition-settings" aria-labelledby="news-transitions-title">
-      <SectionHeading
-        title="DJ transitions"
-        helpLabel="DJ transition timing"
-        ref={heading}
-        tabIndex={-1}
-        id="news-transitions-title"
-      >
+    <SettingsSubsection
+      className="news-transition-settings"
+      title="DJ transitions"
+      description={`${preset?.name ?? 'Custom'} · ${settings.mode === 'over-music' ? 'Over the end of a song' : 'Between songs'}`}
+      id="news-transitions-title"
+      ref={summary}
+      dirty={draft !== null}
+      status={save.isPending ? 'Saving…' : save.isError || state.isError ? 'Needs attention' : undefined}
+    >
+      <SectionHeading title="Mix & timing" helpLabel="DJ transition timing">
         <p>Saved timings apply to the next scheduled break.</p>
         <p>
           Over music keeps a quiet music bed beneath the DJ; between songs lets the song finish before speech starts.
@@ -167,7 +170,7 @@ export function NewsTransitions() {
               </label>
             ))}
           </div>
-          <NewsTransitionPreview key={JSON.stringify(settings)} settings={settings} />
+          <NewsTransitionPreview settings={settings} />
         </fieldset>
         <button
           ref={saveButton}
@@ -188,6 +191,6 @@ export function NewsTransitions() {
           </p>
         )}
       </form>
-    </section>
+    </SettingsSubsection>
   );
 }

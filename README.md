@@ -21,7 +21,7 @@ You need your own Jellyfin server, an account with access to at least one music 
 - Read Jellyfin lyrics in the player, with timed line highlighting when available and plain-text fallback.
 - Configure named news rooms with RSS/Atom, Hacker News, or X sources and a saved DJ.
 - Prepare spoken news separately from music playback, then play saved recordings at a chosen song interval.
-- Enable song introductions after a configurable number of completed songs (default six), or after fact-only news. Both timing controls are in Settings → General.
+- Enable song introductions after a configurable number of completed songs (default six), or after fact-only news. Settings → Playback groups news timing, song announcements and transitions into compact subsections.
 - Audition bundled voices and try DJ transition timings without API keys.
 
 AI playlist generation, weather, calendar, and reminder workflows are planned. See the [app guide](docs/APP_GUIDE.md) for detailed behavior and the [acceptance checklist](docs/ACCEPTANCE_CHECKLIST.md) for verification limits.
@@ -56,7 +56,7 @@ Music playback works without a news setup. To add spoken news:
 1. Add sources and a DJ in Settings.
 2. Add your OpenAI and ElevenLabs keys in Settings → Provider keys. X sources also need an X bearer token with recent-search access. RSS and Hacker News need no source key.
 3. Open News bucket → Settings, choose sources, DJ, mood, and interests, then save and enable automatic preparation.
-4. Enable DJ separately in the player's DJ popover and select your room. Set the song interval in Settings → General.
+4. Enable DJ separately in the player's DJ popover and select your room. Set the news interval in Settings → Playback → News & voice. Song announcement timing and wording have their own subsection.
 
 Preparation runs while the app is open and your Mac is awake. It can incur provider charges. Playback uses saved recordings and does not start paid preparation. Explicit voice and DJ preview generation can also incur charges. Disabling preparation does not reverse a request already sent.
 

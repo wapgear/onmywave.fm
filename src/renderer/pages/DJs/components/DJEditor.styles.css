@@ -12,17 +12,14 @@
 .dj-profile-mode-heading > .info-help {
   margin-top: 4px;
 }
-.dj-profile-section-heading,
 .dj-simple-prompt-heading {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 .dj-profile-section-heading {
+  gap: 8px;
   margin-bottom: 18px;
-}
-.dj-profile-section-heading h3 {
-  margin: 0;
 }
 .dj-simple-prompt-heading {
   justify-content: space-between;

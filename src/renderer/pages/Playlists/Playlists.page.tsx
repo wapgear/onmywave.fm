@@ -1,11 +1,12 @@
 import { useIsFetching, useIsMutating, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ArrowLeft, ListMusic, ListPlus, LockKeyhole, Pencil, Play, Plus } from 'lucide-react';
+import { ArrowLeft, ListMusic, LockKeyhole, Pencil, Plus } from 'lucide-react';
 import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import type { PlaylistEditRecovery, PlaylistLibrary, Song } from '../../../shared/types';
 import { unwrap, WaveError } from '../../api';
 import { Button } from '../../components/Button/Button.component';
 import { CollectionHeading } from '../../components/CollectionHeading/CollectionHeading.component';
+import { CollectionPlaybackActions } from '../../components/CollectionPlaybackActions/CollectionPlaybackActions.component';
 import { Artwork, Dialog, DialogActions, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { playlistRows, TrackTable } from '../../components/TrackTable/TrackTable.component';
 import { usePlayer } from '../../player';
@@ -556,28 +557,13 @@ function PlaylistDetail({ id, listError, back, add, details, recovery }: Playlis
             eyebrow={`Playlist · ${data.entries.length} ${data.entries.length === 1 ? 'song' : 'songs'}`}
             title={data.name}
           >
-            <button
-              className="primary"
+            <CollectionPlaybackActions
+              playLabel="Play playlist"
               disabled={!data.entries.length}
-              onClick={() => player.play(data.entries.map((entry) => entry.song))}
-            >
-              <Play size={16} fill="currentColor" />
-              Play playlist
-            </button>
-            <button
-              disabled={!data.entries.length}
-              onClick={() => player.playNext(data.entries.map((entry) => entry.song))}
-            >
-              <Play size={16} />
-              Play next
-            </button>
-            <button
-              disabled={!data.entries.length}
-              onClick={() => player.enqueue(data.entries.map((entry) => entry.song))}
-            >
-              <ListPlus size={17} />
-              Add to end
-            </button>
+              onPlay={() => player.play(data.entries.map((entry) => entry.song))}
+              onPlayNext={() => player.playNext(data.entries.map((entry) => entry.song))}
+              onEnqueue={() => player.enqueue(data.entries.map((entry) => entry.song))}
+            />
             <button disabled={data.canEdit === false || editBlocked} onClick={() => setRenaming(true)}>
               <Pencil size={15} />
               Rename

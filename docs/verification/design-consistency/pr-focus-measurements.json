@@ -1,0 +1,19 @@
+{
+  "details": {
+    "background": "rgb(98, 102, 116)",
+    "content": "\"\"",
+    "height": "32px",
+    "width": "3px"
+  },
+  "rect": {
+    "height": 700,
+    "width": 64,
+    "x": 0,
+    "y": 0
+  },
+  "resize_focus_marker_visible": true,
+  "viewport": {
+    "height": 700,
+    "width": 960
+  }
+}

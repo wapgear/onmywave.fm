@@ -157,31 +157,34 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
           allowCustom
           loading={filters.isPending}
         />
-        <FilterSelect
-          label="Sort"
-          value={query.sort ?? 'name'}
-          choices={[
-            { value: 'dateAdded', label: 'Date added' },
-            { value: 'name', label: 'Title' },
-            { value: 'artist', label: 'Artist' },
-            { value: 'album', label: 'Album' },
-            { value: 'year', label: 'Year' },
-          ]}
-          onChange={(sort) => change({ sort: sort as CatalogQuery['sort'], descending: sort === 'dateAdded' })}
-          searchable={false}
-        />
-        <button
-          aria-label={query.descending ? 'Sort ascending' : 'Sort descending'}
-          onClick={() => change({ descending: !query.descending })}
-        >
-          {query.sort === 'dateAdded'
-            ? query.descending
-              ? 'Newest first'
-              : 'Oldest first'
-            : query.descending
-              ? 'Z–A'
-              : 'A–Z'}
-        </button>
+        <div className="song-sort-controls" role="group" aria-label="Song order">
+          <FilterSelect
+            label="Sort"
+            value={query.sort ?? 'name'}
+            choices={[
+              { value: 'dateAdded', label: 'Date added' },
+              { value: 'name', label: 'Title' },
+              { value: 'artist', label: 'Artist' },
+              { value: 'album', label: 'Album' },
+              { value: 'year', label: 'Year' },
+            ]}
+            onChange={(sort) => change({ sort: sort as CatalogQuery['sort'], descending: sort === 'dateAdded' })}
+            searchable={false}
+          />
+          <button
+            type="button"
+            aria-label={query.descending ? 'Sort ascending' : 'Sort descending'}
+            onClick={() => change({ descending: !query.descending })}
+          >
+            {query.sort === 'dateAdded'
+              ? query.descending
+                ? 'Newest first'
+                : 'Oldest first'
+              : query.descending
+                ? 'Z–A'
+                : 'A–Z'}
+          </button>
+        </div>
         <IconButton
           className="refresh-button"
           label="Refresh library"

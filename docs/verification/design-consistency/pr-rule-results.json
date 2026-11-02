@@ -1,0 +1,113 @@
+{
+  "version": 1,
+  "scope": {
+    "capture_count": 2,
+    "block_count": 5,
+    "rules_sha256": "45334ddaa800cf18337b02d8dbc34244a3ad245313735877bf5b16d13b242ede",
+    "evidence_sha256": "e4f14a2be4d15d7d56aa34a0232b9c0cf546a3a7c55377ab8c11c12f2fcd6612"
+  },
+  "source_freshness": [
+    {
+      "id": "app-design",
+      "freshness_checked": true,
+      "location": "../../design-system.md"
+    },
+    {
+      "id": "focus",
+      "freshness_checked": false,
+      "location": "https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html"
+    },
+    {
+      "id": "targets",
+      "freshness_checked": false,
+      "location": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html"
+    },
+    {
+      "id": "navigation",
+      "freshness_checked": true,
+      "location": "../../../src/renderer/components/NavigationSidebar/NavigationSidebar.styles.css"
+    },
+    {
+      "id": "queue",
+      "freshness_checked": true,
+      "location": "../../../src/renderer/components/Drawer/Drawer.styles.css"
+    },
+    {
+      "id": "shared-controls",
+      "freshness_checked": true,
+      "location": "../../../src/renderer/styles.css"
+    },
+    {
+      "id": "song-controls",
+      "freshness_checked": true,
+      "location": "../../../src/renderer/pages/Songs/Songs.page.tsx"
+    }
+  ],
+  "results": [
+    {
+      "id": "SORT_GROUP",
+      "status": "passed",
+      "matched_block_ids": [
+        "pr-toolbar"
+      ],
+      "reasons": [],
+      "counterexamples": []
+    },
+    {
+      "id": "NAV_RESIZE_FOCUS",
+      "status": "passed",
+      "matched_block_ids": [
+        "pr-navigation"
+      ],
+      "reasons": [],
+      "counterexamples": []
+    },
+    {
+      "id": "QUEUE_TARGET_WIDTH",
+      "status": "passed",
+      "matched_block_ids": [
+        "pr-queue"
+      ],
+      "reasons": [],
+      "counterexamples": []
+    },
+    {
+      "id": "QUEUE_TARGET_HEIGHT",
+      "status": "passed",
+      "matched_block_ids": [
+        "pr-queue"
+      ],
+      "reasons": [],
+      "counterexamples": []
+    },
+    {
+      "id": "PLAYER_FRAME",
+      "status": "passed",
+      "matched_block_ids": [
+        "pr-player"
+      ],
+      "reasons": [],
+      "counterexamples": []
+    },
+    {
+      "id": "TABLE_RHYTHM",
+      "status": "passed",
+      "matched_block_ids": [
+        "pr-table"
+      ],
+      "reasons": [],
+      "counterexamples": []
+    }
+  ],
+  "summary": {
+    "passed": 6,
+    "failed": 0,
+    "unverified": 0,
+    "review_required": 0
+  },
+  "limitations": [
+    "Covers only registered rules and supplied observations.",
+    "A hash confirms byte identity, not screenshot origin, classification correctness, or measurement accuracy.",
+    "Manual UX review remains required; estimated and absent properties cannot prove executable assertions."
+  ]
+}

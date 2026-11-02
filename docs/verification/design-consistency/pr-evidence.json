@@ -1,0 +1,188 @@
+{
+  "version": 1,
+  "captures": [
+    {
+      "id": "pr-queue-1280",
+      "platform": "macos-web-renderer",
+      "theme": "light",
+      "density": "desktop",
+      "state": "paused",
+      "viewport": {
+        "height": 800,
+        "width": 1280
+      },
+      "scale": 1,
+      "image": {
+        "path": "pr-after-queue-1280.png",
+        "sha256": "f12a0326c795c2f4120b530b427f268750d4eb4ba4ee3af8d99293c255b080d2"
+      }
+    },
+    {
+      "id": "pr-focus-960",
+      "platform": "macos-web-renderer",
+      "theme": "light",
+      "density": "desktop",
+      "state": "keyboard-focus",
+      "viewport": {
+        "height": 700,
+        "width": 960
+      },
+      "scale": 1,
+      "image": {
+        "path": "pr-after-focus-960.png",
+        "sha256": "c1ad6693e50cbcdbed05ea6352ef7fa37027c381414ab67c3ff058a601885292"
+      }
+    }
+  ],
+  "provenance": {
+    "capture_method": "CUA Chrome tab screenshot of actual production renderer with synthetic bridge",
+    "measurement_method": "CUA read-only live DOM getBoundingClientRect and computed styles; human visual inspection",
+    "base": "0012ab263ff61859c931a95ef60c1d9cbbc996a6",
+    "scope": "Finite registered light-theme representative states, not complete app certification"
+  },
+  "blocks": [
+    {
+      "id": "pr-toolbar",
+      "capture_id": "pr-queue-1280",
+      "role": "toolbar",
+      "variant": "library-search-filters",
+      "state": "paused",
+      "rect": {
+        "height": 34,
+        "width": 660,
+        "x": 238,
+        "y": 148
+      },
+      "properties": {
+        "sort_row_aligned": {
+          "value": true,
+          "method": "dom",
+          "source": "pr-queue-measurements.json; live DOM read during same paused view"
+        }
+      },
+      "crop": {
+        "path": "pr-toolbar-crop.png",
+        "sha256": "f40c78933a11d5ac78f2a32195199ce2805cd0b01cb4745c25467da69e590a7d"
+      },
+      "clipped": false,
+      "rect_provenance": {
+        "method": "dom",
+        "source": "Live DOM rectangle; table intersected with visible main viewport"
+      }
+    },
+    {
+      "id": "pr-queue",
+      "capture_id": "pr-queue-1280",
+      "role": "list",
+      "variant": "listening-queue",
+      "state": "paused",
+      "rect": {
+        "height": 642,
+        "width": 320,
+        "x": 944,
+        "y": 42
+      },
+      "properties": {
+        "queue_control_min_width": {
+          "value": 24,
+          "method": "dom",
+          "source": "pr-queue-measurements.json; live DOM read during same paused view"
+        },
+        "queue_control_min_height": {
+          "value": 24,
+          "method": "dom",
+          "source": "pr-queue-measurements.json; live DOM read during same paused view"
+        }
+      },
+      "crop": {
+        "path": "pr-queue-crop.png",
+        "sha256": "80fa43c68458e80bbd86e232d825e0f22b08b1fd2cb331c16ab62e91407a5111"
+      },
+      "clipped": false,
+      "rect_provenance": {
+        "method": "dom",
+        "source": "Live DOM rectangle; table intersected with visible main viewport"
+      }
+    },
+    {
+      "id": "pr-player",
+      "capture_id": "pr-queue-1280",
+      "role": "action-group",
+      "variant": "music-transport",
+      "state": "paused",
+      "rect": {
+        "height": 88,
+        "width": 1248,
+        "x": 16,
+        "y": 696
+      },
+      "properties": {},
+      "crop": {
+        "path": "pr-player-crop.png",
+        "sha256": "9b74794ea1593373a04ec691c6088e6a410b0f74e98b0f07e45a511e93ddcaba"
+      },
+      "clipped": false,
+      "rect_provenance": {
+        "method": "dom",
+        "source": "Live DOM rectangle; table intersected with visible main viewport"
+      }
+    },
+    {
+      "id": "pr-table",
+      "capture_id": "pr-queue-1280",
+      "role": "table",
+      "variant": "songs-visible-viewport",
+      "state": "paused",
+      "rect": {
+        "x": 238,
+        "y": 202,
+        "width": 660,
+        "height": 482
+      },
+      "properties": {
+        "row_height": {
+          "value": 56,
+          "method": "dom",
+          "source": "pr-queue-measurements.json; live DOM read during same paused view"
+        }
+      },
+      "crop": {
+        "path": "pr-table-crop.png",
+        "sha256": "24a509a65ecc2c8d88db60da92f3e681b77641b1d13c0dd908929c84b350adb1"
+      },
+      "clipped": true,
+      "rect_provenance": {
+        "method": "dom",
+        "source": "Live DOM rectangle; table intersected with visible main viewport"
+      }
+    },
+    {
+      "id": "pr-navigation",
+      "capture_id": "pr-focus-960",
+      "role": "navigation",
+      "variant": "music-sidebar",
+      "state": "keyboard-focus",
+      "rect": {
+        "height": 700,
+        "width": 64,
+        "x": 0,
+        "y": 0
+      },
+      "properties": {
+        "resize_focus_marker_visible": {
+          "value": true,
+          "method": "dom",
+          "source": "pr-focus-measurements.json; focus-visible and computed pseudo-element plus screenshot inspection"
+        }
+      },
+      "crop": {
+        "path": "pr-navigation-crop.png",
+        "sha256": "a30439a8b80c3b0f91bae2b0fbde3af03e91113537fd8b051a605607b40a011e"
+      },
+      "rect_provenance": {
+        "method": "dom",
+        "source": "Sidebar getBoundingClientRect"
+      }
+    }
+  ]
+}

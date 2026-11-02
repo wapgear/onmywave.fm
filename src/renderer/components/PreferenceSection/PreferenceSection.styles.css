@@ -1,0 +1,61 @@
+.preference-section {
+  min-width: 0;
+  border-bottom: 1px solid var(--border);
+}
+.preference-section > summary {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 18px;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) 0;
+  list-style: none;
+  cursor: pointer;
+  border-radius: var(--control-radius);
+}
+.preference-section > summary::-webkit-details-marker {
+  display: none;
+}
+.preference-section > summary:focus-visible {
+  outline: var(--control-focus-width) solid var(--focus);
+  outline-offset: var(--space-1);
+}
+.preference-section-heading {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+}
+.preference-section-title {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.preference-section-description,
+.preference-section-status {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.preference-section-status {
+  max-width: 100px;
+  text-align: right;
+}
+.preference-section > summary > svg {
+  color: var(--muted);
+  transition: transform 180ms ease;
+}
+.preference-section[open] > summary > svg {
+  transform: rotate(180deg);
+}
+.preference-section-content {
+  padding: var(--space-2) 0 var(--space-6);
+}
+.preference-section-content > .section-title h2 {
+  font-size: 13px;
+  font-weight: 500;
+}
+@media (prefers-reduced-motion: reduce) {
+  .preference-section > summary > svg {
+    transition: none;
+  }
+}
