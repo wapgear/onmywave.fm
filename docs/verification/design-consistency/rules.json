@@ -1,0 +1,201 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": "app-design",
+      "location": "../../design-system.md",
+      "kind": "code",
+      "sha256": "e494d30bbd60b1b917e01a5380aa1ca2605dc6b329d68dc780c81ac8f622050e"
+    },
+    {
+      "id": "focus",
+      "location": "https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html",
+      "kind": "guideline"
+    },
+    {
+      "id": "targets",
+      "location": "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html",
+      "kind": "guideline"
+    },
+    {
+      "id": "navigation",
+      "location": "../../../src/renderer/components/NavigationSidebar/NavigationSidebar.styles.css",
+      "kind": "code",
+      "sha256": "c65ef4560aa16941030c536cc5f5bd4f617a1866680e8f4495c3e3f86b24353c"
+    },
+    {
+      "id": "queue",
+      "location": "../../../src/renderer/components/Drawer/Drawer.styles.css",
+      "kind": "code",
+      "sha256": "11e98458b3bfd70a8eb291268061538d8d5d837d1ce6a41b3fd31096a99fcd21"
+    },
+    {
+      "id": "shared-controls",
+      "location": "../../../src/renderer/styles.css",
+      "kind": "code",
+      "sha256": "0e9a28b94c75e7778a520b5d5405dc965f5a295793515f080a49a335ed1987d8"
+    },
+    {
+      "id": "song-controls",
+      "location": "../../../src/renderer/pages/Songs/Songs.page.tsx",
+      "kind": "code",
+      "sha256": "6e3265186ac2dda29a0c5188a1679e63a013cd59003d882c2706b42d3400adba"
+    }
+  ],
+  "rules": [
+    {
+      "id": "SORT_GROUP",
+      "statement": "Sort and direction share a wrapping row",
+      "rationale": "Preserve the established desktop system and the recorded task/accessibility obligation",
+      "severity": "error",
+      "source_ids": [
+        "app-design",
+        "song-controls",
+        "shared-controls"
+      ],
+      "match": {
+        "platform": "macos-web-renderer",
+        "theme": "light",
+        "density": "desktop",
+        "role": "toolbar",
+        "variant": "library-search-filters",
+        "state": "paused"
+      },
+      "min_blocks": 1,
+      "assertion": {
+        "op": "one_of",
+        "property": "sort_row_aligned",
+        "values": [
+          true
+        ]
+      }
+    },
+    {
+      "id": "NAV_RESIZE_FOCUS",
+      "statement": "A keyboard-focused sidebar edge has its visible neutral marker",
+      "rationale": "Preserve the established desktop system and the recorded task/accessibility obligation",
+      "severity": "error",
+      "source_ids": [
+        "app-design",
+        "focus",
+        "navigation"
+      ],
+      "match": {
+        "platform": "macos-web-renderer",
+        "theme": "light",
+        "density": "desktop",
+        "role": "navigation",
+        "variant": "music-sidebar",
+        "state": "keyboard-focus"
+      },
+      "min_blocks": 1,
+      "assertion": {
+        "op": "one_of",
+        "property": "resize_focus_marker_visible",
+        "values": [
+          true
+        ]
+      }
+    },
+    {
+      "id": "QUEUE_TARGET_WIDTH",
+      "statement": "Queue move and grip targets have compact widths of 24 to 32 CSS px",
+      "rationale": "Preserve the established desktop system and the recorded task/accessibility obligation",
+      "severity": "error",
+      "source_ids": [
+        "app-design",
+        "targets",
+        "queue"
+      ],
+      "match": {
+        "platform": "macos-web-renderer",
+        "theme": "light",
+        "density": "desktop",
+        "role": "list",
+        "variant": "listening-queue",
+        "state": "paused"
+      },
+      "min_blocks": 1,
+      "assertion": {
+        "op": "range",
+        "property": "queue_control_min_width",
+        "min": 24,
+        "max": 32
+      }
+    },
+    {
+      "id": "QUEUE_TARGET_HEIGHT",
+      "statement": "Queue move and grip targets have compact heights of 24 to 32 CSS px",
+      "rationale": "Preserve the established desktop system and the recorded task/accessibility obligation",
+      "severity": "error",
+      "source_ids": [
+        "app-design",
+        "targets",
+        "queue"
+      ],
+      "match": {
+        "platform": "macos-web-renderer",
+        "theme": "light",
+        "density": "desktop",
+        "role": "list",
+        "variant": "listening-queue",
+        "state": "paused"
+      },
+      "min_blocks": 1,
+      "assertion": {
+        "op": "range",
+        "property": "queue_control_min_height",
+        "min": 24,
+        "max": 32
+      }
+    },
+    {
+      "id": "PLAYER_FRAME",
+      "statement": "The measured player frame fits this viewport",
+      "rationale": "Preserve the established desktop system and the recorded task/accessibility obligation",
+      "severity": "error",
+      "source_ids": [
+        "app-design",
+        "shared-controls"
+      ],
+      "match": {
+        "platform": "macos-web-renderer",
+        "theme": "light",
+        "density": "desktop",
+        "role": "action-group",
+        "variant": "music-transport",
+        "state": "paused"
+      },
+      "min_blocks": 1,
+      "assertion": {
+        "op": "contained"
+      }
+    },
+    {
+      "id": "TABLE_RHYTHM",
+      "statement": "Virtual song rows retain their existing 56 CSS px rhythm",
+      "rationale": "Preserve the established desktop system and the recorded task/accessibility obligation",
+      "severity": "error",
+      "source_ids": [
+        "app-design",
+        "shared-controls"
+      ],
+      "match": {
+        "platform": "macos-web-renderer",
+        "theme": "light",
+        "density": "desktop",
+        "role": "table",
+        "variant": "songs-visible-viewport",
+        "state": "paused"
+      },
+      "min_blocks": 1,
+      "assertion": {
+        "op": "one_of",
+        "property": "row_height",
+        "values": [
+          56
+        ]
+      }
+    }
+  ]
+}

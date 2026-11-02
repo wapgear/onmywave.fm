@@ -66,15 +66,15 @@ async function main(){
   try{
    assert.equal(await page.evaluate(()=>devicePixelRatio),2);
    const nav=page.getByRole('navigation',{name:'News categories'});
-   assert.equal(await nav.getByLabel('News category',{exact:true}).isVisible(),true);
+   assert.equal(await nav.locator('button:visible').count(),5);
    await page.locator('.news-bucket-item').first().click();
    await page.getByRole('button',{name:'Back to stories',exact:true}).waitFor();
    const box=await nav.boundingBox();assert.ok(box.y>=20&&box.y+box.height<300);
    await page.screenshot({path:`${outputDirectory}/after-200-percent-equivalent.png`});
-   await nav.getByLabel('News category',{exact:true}).selectOption('settings');
+   await nav.locator('[data-section="settings"]').click();
    assert.equal(await page.locator('.news-room-settings').isVisible(),true);
    assert.deepEqual(errors,[]);
-   report.push({viewport:{width:720,height:450,deviceScaleFactor:2},provenance:'200%-equivalent CSS viewport at 1440×900 physical pixels; not OS display or native VoiceOver verification',checks:['category selector','reader/back','Settings reachable'],pageErrors:errors});
+   report.push({viewport:{width:720,height:450,deviceScaleFactor:2},provenance:'200%-equivalent CSS viewport at 1440×900 physical pixels; not OS display or native VoiceOver verification',checks:['wrapped Settings-style tabs','reader/back','Settings reachable'],pageErrors:errors});
   }finally{await page.close()}
   await fs.writeFile(`${outputDirectory}/review-report.json`,JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
  }finally{await b.close()}

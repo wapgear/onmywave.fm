@@ -8,14 +8,15 @@ import type { ListeningRoom, PreparedNewsRequest } from '../../../shared/types';
 import type { WorkflowDraft } from '../../../shared/workflow';
 import { unwrap } from '../../api';
 import { Button } from '../../components/Button/Button.component';
+import { PreferencesLayout } from '../../components/PreferencesLayout/PreferencesLayout.component';
 import { Select } from '../../components/Select/Select.component';
 import { Dialog, DialogActions, ErrorNotice, PageHeading, errorMessage } from '../../components/Shared';
+import { WorkflowPreferences } from '../../components/WorkflowPreferences/WorkflowPreferences.component';
+import type { PreparationIssue } from '../../components/WorkflowPreferences/WorkflowPreferences.types';
 import { useDJPlayback } from '../../dj-playback';
 import { confirmLocalState } from '../../local-state-cache';
 import { NewsRecoveryPanel, useNewsRecovery } from '../../NewsRecovery';
 import { useRetryFocus } from '../../useRetryFocus';
-import { WorkflowPreferences } from '../Settings/components/WorkflowPreferences.component';
-import type { PreparationIssue } from '../Settings/components/WorkflowPreferences.types';
 import { DJReadiness } from './components/DJReadiness.component';
 import { NewsBucket } from './components/NewsBucket.component';
 import type { NewsBucketDestination } from './components/NewsBucket.types';
@@ -980,7 +981,10 @@ export function StationsPage({
   );
 
   return (
-    <div className={`stations-page ${tab === 'bucket' ? 'is-news-bucket-page' : ''}`}>
+    <PreferencesLayout
+      constrained={tab === 'settings'}
+      className={`stations-page ${tab === 'bucket' ? 'is-news-bucket-page' : ''}`}
+    >
       <PageHeading
         headingRef={heading}
         title={tab === 'bucket' ? 'News bucket' : tab === 'settings' ? 'News settings' : 'Saved audio'}
@@ -1556,6 +1560,6 @@ export function StationsPage({
           )}
         </>
       )}
-    </div>
+    </PreferencesLayout>
   );
 }

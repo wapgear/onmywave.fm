@@ -1,5 +1,5 @@
-import type { RoomProfile } from '../../../../shared/types';
-import type { WorkflowDraft } from '../../../../shared/workflow';
+import type { RoomProfile } from '../../../shared/types';
+import type { WorkflowDraft } from '../../../shared/workflow';
 
 export type PreparationIssue = { message: string; action?: { label: string; run: () => void } };
 

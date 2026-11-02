@@ -1,0 +1,195 @@
+.song-announcement-settings .preference-form {
+  --field-height: var(--control-size-compact);
+  --field-radius: var(--control-radius);
+}
+
+.song-announcement-settings .preference-form,
+.song-announcement-settings .preference-fields {
+  gap: var(--space-3);
+}
+
+.song-announcement-settings .dj-song-interval input[type='checkbox'],
+.song-announcement-styles input[type='radio'] {
+  width: 14px;
+  height: 14px;
+  min-height: 14px;
+  flex-basis: 14px;
+}
+
+.song-announcement-settings .dj-song-interval input[type='number'] {
+  width: 64px;
+  padding: var(--space-1) var(--space-2);
+  font-size: 12px;
+}
+
+.song-announcement-settings .settings-save {
+  min-height: var(--control-size-compact);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--control-radius);
+  font-size: 12px;
+}
+
+.song-announcement-preferences {
+  display: grid;
+  gap: var(--space-2);
+  min-width: 0;
+  container-type: inline-size;
+}
+
+.song-announcement-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.song-announcement-heading h3 {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.song-announcement-voice {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.song-announcement-styles {
+  display: grid;
+  min-width: 0;
+  margin: var(--space-1) 0;
+  border: 1px solid var(--border);
+  border-radius: var(--field-radius);
+}
+
+.song-announcement-styles .song-announcement-choice {
+  display: grid;
+  grid-template-columns: 14px 168px minmax(0, 1fr) 48px;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+  min-height: 48px;
+  margin: 0;
+  padding: var(--space-1) var(--space-3);
+  border: 1px solid transparent;
+  border-radius: 0;
+  cursor: pointer;
+}
+
+.song-announcement-choice:first-child {
+  border-radius: var(--field-radius) var(--field-radius) 0 0;
+}
+
+.song-announcement-choice:last-child {
+  border-radius: 0 0 var(--field-radius) var(--field-radius);
+}
+
+.song-announcement-choice + .song-announcement-choice {
+  box-shadow: 0 -1px 0 var(--border);
+}
+
+.song-announcement-choice:has(:enabled):not(:has(:checked)):hover {
+  background: var(--hover);
+}
+
+.song-announcement-choice:has(:checked) {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.song-announcement-choice:has(:focus-visible) {
+  outline: var(--control-focus-width) solid var(--focus);
+  outline-offset: 2px;
+}
+
+.song-announcement-choice:has(:disabled) {
+  opacity: 0.65;
+  cursor: default;
+}
+
+.song-announcement-choice input:disabled {
+  opacity: 1;
+}
+
+.song-announcement-choice-heading {
+  display: grid;
+  gap: 0;
+  min-width: 0;
+  line-height: 1.4;
+}
+
+.song-announcement-choice-title {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.song-announcement-choice-example {
+  min-width: 0;
+  padding-left: var(--space-3);
+  border-left: 1px solid var(--border);
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.song-announcement-selected {
+  justify-self: end;
+  color: var(--accent-strong);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.song-announcement-preferences > p,
+.song-announcement-examples p {
+  margin: 0;
+  line-height: 1.5;
+}
+
+.song-announcement-preferences textarea {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.song-announcement-examples {
+  padding-block: var(--space-2);
+}
+
+.song-announcement-error {
+  color: var(--danger);
+  font-size: 11px;
+}
+
+.song-announcement-examples ul {
+  display: grid;
+  gap: var(--space-1);
+  list-style: none;
+  margin: var(--space-2) 0 0;
+  padding: 0;
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+
+@container (max-width: 600px) {
+  .song-announcement-styles .song-announcement-choice {
+    grid-template-columns: 14px minmax(0, 1fr) auto;
+    gap: var(--space-1) var(--space-2);
+  }
+
+  .song-announcement-choice-example {
+    grid-column: 2 / -1;
+    grid-row: 2;
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .song-announcement-selected {
+    grid-column: 3;
+    grid-row: 1;
+  }
+}

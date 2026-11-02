@@ -41,7 +41,7 @@
 .news-room-automation-heading h3 {
   margin: 0;
   color: var(--text);
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
 }
 .news-room-automation-heading p,
@@ -147,54 +147,10 @@
   margin-top: 0;
   font-variant-numeric: tabular-nums;
 }
-.news-room-settings-group {
-  margin: 0;
-  border: 0;
-  border-bottom: 1px solid var(--separator);
-  border-radius: 0;
-  background: transparent;
-}
-.news-room-settings-group > summary {
-  display: flex;
-  min-height: 58px;
-  align-items: center;
-  gap: 11px;
-  padding: 9px 0;
-  cursor: pointer;
-  list-style: none;
-}
-.news-room-settings-group > summary::-webkit-details-marker {
-  display: none;
-}
-.news-room-settings-group-copy {
-  display: grid;
-  min-width: 0;
-  flex: 1;
-  gap: 4px;
-}
-.news-room-settings-group-copy > strong {
-  color: var(--text);
-  font-size: 15px;
-  font-weight: 600;
-}
-.news-room-settings-group-copy > small {
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.4;
-  overflow-wrap: anywhere;
-}
-.news-room-settings-chevron {
-  flex: 0 0 auto;
-  color: var(--muted);
-  transition: rotate 120ms ease;
-}
-.news-room-settings-group[open] .news-room-settings-chevron {
-  rotate: 180deg;
-}
 .news-room-settings-fields {
   display: grid;
   gap: 12px;
-  padding: 8px 0 20px;
+  padding: 0;
 }
 .news-room-sources-fields {
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -278,7 +234,7 @@
 .news-room-preparation-status,
 .news-room-host-summary,
 .news-room-writing-policy p,
-.news-room-memory > p {
+.news-room-memory p {
   color: var(--muted);
   font-size: 12px;
   line-height: 1.55;
@@ -336,7 +292,7 @@
 .news-room-memory {
   padding-bottom: 10px;
 }
-.news-room-memory > p {
+.news-room-memory p {
   padding: 0 0 14px;
   margin: 0;
 }

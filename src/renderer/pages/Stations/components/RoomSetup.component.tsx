@@ -1,6 +1,8 @@
+import { useId } from 'react';
+
 import { DJAvatar } from '../../../components/DJAvatar/DJAvatar.component';
 import { FilterSelect } from '../../../components/FilterSelect/FilterSelect.component';
-import { InfoHelp } from '../../../components/InfoHelp/InfoHelp.component';
+import { SectionHeading } from '../../../components/SectionHeading/SectionHeading.component';
 import type { RoomSetupProps } from './RoomSetup.types';
 
 export function RoomSetup({
@@ -16,17 +18,21 @@ export function RoomSetup({
   configureSources,
   configureDJ,
 }: RoomSetupProps) {
+  const sourceLimitHintId = useId();
   const selectedDJ = djs.find((dj) => dj.id === room.djId);
+  const sourceLimitReached = room.sourceIds.length >= 20;
 
   return (
     <section className="room-setup" aria-labelledby="news-setup-title">
-      <div className="room-section-heading">
-        <h2 id="news-setup-title">News sources and host</h2>
-        <InfoHelp label="About news sources and host">
-          <p>Choose sources, a DJ, and a mood for this profile. Save them with the preparation settings below.</p>
-          <p>Automatic preparation stays off until you enable and save it.</p>
-        </InfoHelp>
-      </div>
+      <SectionHeading
+        className="room-setup-heading"
+        title="News sources and host"
+        id="news-setup-title"
+        helpLabel="About news sources and host"
+      >
+        <p>Choose sources, a DJ, and a mood for this profile. Save them with the preparation settings below.</p>
+        <p>Automatic preparation stays off until you enable and save it.</p>
+      </SectionHeading>
       <fieldset className="room-wizard-fields" disabled={busy}>
         <div className="room-field-heading">
           <h3 id="room-sources-title">News sources</h3>
@@ -34,12 +40,17 @@ export function RoomSetup({
             Manage sources
           </button>
         </div>
-        <div className="room-sources" role="group" aria-labelledby="room-sources-title">
+        <div
+          className="room-sources"
+          role="group"
+          aria-labelledby="room-sources-title"
+          aria-describedby={sourceLimitHintId}
+        >
           {sources.map((source) => (
             <label key={source.id}>
               <input
                 type="checkbox"
-                disabled={room.sourceIds.length >= 20 && !room.sourceIds.includes(source.id)}
+                disabled={sourceLimitReached && !room.sourceIds.includes(source.id)}
                 checked={room.sourceIds.includes(source.id)}
                 onChange={() =>
                   setSetup({
@@ -54,6 +65,9 @@ export function RoomSetup({
             </label>
           ))}
         </div>
+        <p id={sourceLimitHintId} className="form-hint" role="status">
+          {sourceLimitReached ? '20 sources selected. Remove one to choose another.' : 'Choose up to 20 sources.'}
+        </p>
         {!sources.length && <p className="notice">Add your first source with Manage sources.</p>}
         <label className="workflow-mood" htmlFor="room-news-interests">
           News interests · Optional

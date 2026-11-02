@@ -13,6 +13,7 @@ export function NewsTransitionPreview({ settings }: { settings: NewsTransitionSe
   const [error, setError] = useState<Error | null>(null);
   const overMusic = settings.mode === 'over-music';
   const valid = isNewsTransitionSettings(settings);
+  const settingsKey = JSON.stringify(settings);
   const steps = [
     { id: 'music', label: 'Sample song', time: '2 s' },
     { id: 'fade', label: overMusic ? 'Lower music' : 'End song', time: `${settings.fadeOutSeconds} s` },
@@ -51,7 +52,7 @@ export function NewsTransitionPreview({ settings }: { settings: NewsTransitionSe
     return () => {
       active = false;
     };
-  }, [player.currentKey, player.musicCommandRevision]);
+  }, [player.currentKey, player.musicCommandRevision, settingsKey]);
 
   useEffect(() => {
     if (master.current) master.current.gain.value = player.volume;

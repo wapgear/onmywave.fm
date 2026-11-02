@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Pencil, Plus, Rss, Trash2 } from 'lucide-react';
-import { useRef, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 
 import { normalizeNewsSource } from '../../../shared/sources';
 import type { NewsSource } from '../../../shared/types';
@@ -15,6 +15,7 @@ import { useRetryFocus } from '../../useRetryFocus';
 import './Sources.styles.css';
 
 export function SourcesPage() {
+  const sourceUrlHelpId = useId();
   const client = useQueryClient();
   const state = useQuery({ queryKey: ['localState'], queryFn: async () => unwrap(await window.wave.getLocalState()) });
   const [editing, setEditing] = useState<NewsSource | null>(null);
@@ -250,20 +251,36 @@ export function SourcesPage() {
                   </select>
                 </label>
               ) : (
-                <label>
-                  RSS or Atom URL
-                  <input
-                    type="url"
-                    required
-                    maxLength={4096}
-                    placeholder="https://example.com/feed.xml"
-                    value={editing.url}
-                    onChange={(event) => {
-                      mutation.reset();
-                      setEditing({ ...editing, url: event.target.value });
-                    }}
-                  />
-                </label>
+                <>
+                  <label>
+                    RSS or Atom URL
+                    <input
+                      key="rss-feed-url"
+                      type="url"
+                      required
+                      maxLength={4096}
+                      aria-describedby={sourceUrlHelpId}
+                      placeholder="https://example.com/feed.xml"
+                      value={editing.url}
+                      onChange={(event) => {
+                        const url = event.currentTarget.value;
+                        try {
+                          normalizeNewsSource({ ...editing, name: 'Feed', url });
+                          event.currentTarget.setCustomValidity('');
+                        } catch (error) {
+                          event.currentTarget.setCustomValidity(
+                            error instanceof Error ? error.message : 'Enter a complete HTTP or HTTPS feed URL.',
+                          );
+                        }
+                        mutation.reset();
+                        setEditing({ ...editing, url });
+                      }}
+                    />
+                  </label>
+                  <p id={sourceUrlHelpId} className="form-hint">
+                    Use an HTTP or HTTPS feed URL without a username or password.
+                  </p>
+                </>
               )}
             </fieldset>
             <ErrorNotice error={mutation.error} />

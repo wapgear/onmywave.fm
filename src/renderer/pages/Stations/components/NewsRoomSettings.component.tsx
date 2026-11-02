@@ -1,7 +1,7 @@
-import { ChevronDown } from 'lucide-react';
-import { useLayoutEffect, useRef } from 'react';
+import { useId, useLayoutEffect, useRef } from 'react';
 
 import { FilterSelect } from '../../../components/FilterSelect/FilterSelect.component';
+import { PreferenceSection } from '../../../components/PreferenceSection/PreferenceSection.component';
 import { Select } from '../../../components/Select/Select.component';
 import { ErrorNotice } from '../../../components/Shared';
 import type { NewsRoomSettingsProps } from './NewsRoomSettings.types';
@@ -53,6 +53,7 @@ export function NewsRoomSettings({
   enableRoomProfile,
   save,
 }: NewsRoomSettingsProps) {
+  const sourceLimitHintId = useId();
   const recordingLimitInput = useRef<HTMLInputElement>(null);
   const automationSection = useRef<HTMLElement>(null);
   const automationToggle = useRef<HTMLInputElement>(null);
@@ -81,6 +82,7 @@ export function NewsRoomSettings({
   const previousSaveState = useRef({ dirty, saving, saveError });
   const host = djs.find((value) => value.id === room.djId);
   const selectedSources = sources.filter((source) => room.sourceIds.includes(source.id));
+  const sourceLimitReached = room.sourceIds.length >= 20;
   const disabled = busy || saving || !profile;
   const isEnabled = !!workflow.newsEnabled;
   const savedEnabled = !!profile?.workflowDraft.newsEnabled;
@@ -393,18 +395,15 @@ export function NewsRoomSettings({
             )}
           </section>
 
-          <details className="news-room-settings-group">
-            <summary>
-              <span className="news-room-settings-group-copy">
-                <strong>Sources &amp; schedule</strong>
-                <small>
-                  {selectedSources.length} sources · every {workflow.everyHours} hours
-                </small>
-              </span>
-              <ChevronDown className="news-room-settings-chevron" size={17} aria-hidden="true" />
-            </summary>
+          <PreferenceSection
+            id="bucket-sources-heading"
+            title="Sources &amp; schedule"
+            description={`${selectedSources.length} ${selectedSources.length === 1 ? 'source' : 'sources'} · every ${workflow.everyHours} hours`}
+            className="news-room-settings-group"
+            keepMounted
+          >
             <div className="news-room-settings-fields news-room-sources-fields">
-              <fieldset disabled={disabled}>
+              <fieldset disabled={disabled} aria-describedby={sourceLimitHintId}>
                 <legend>News sources</legend>
                 {sources.length ? (
                   <div className="news-room-source-list">
@@ -414,7 +413,7 @@ export function NewsRoomSettings({
                           id={`bucket-source-${source.id}`}
                           type="checkbox"
                           checked={room.sourceIds.includes(source.id)}
-                          disabled={room.sourceIds.length >= 20 && !room.sourceIds.includes(source.id)}
+                          disabled={sourceLimitReached && !room.sourceIds.includes(source.id)}
                           onChange={() =>
                             setRoom({
                               ...room,
@@ -434,6 +433,11 @@ export function NewsRoomSettings({
                 ) : (
                   <p className="news-room-settings-hint">No sources are available yet. Add one to prepare stories.</p>
                 )}
+                <p id={sourceLimitHintId} className="news-room-settings-hint" role="status">
+                  {sourceLimitReached
+                    ? '20 sources selected. Remove one to choose another.'
+                    : 'Choose up to 20 sources.'}
+                </p>
                 <button id="bucket-manage-sources" type="button" className="news-room-link" onClick={configureSources}>
                   Manage sources
                 </button>
@@ -467,16 +471,15 @@ export function NewsRoomSettings({
                 />
               </label>
             </div>
-          </details>
+          </PreferenceSection>
 
-          <details className="news-room-settings-group">
-            <summary>
-              <span className="news-room-settings-group-copy">
-                <strong>Selection</strong>
-                <small>{workflow.importance === 'major' ? 'Major developments' : 'Relevant stories'}</small>
-              </span>
-              <ChevronDown className="news-room-settings-chevron" size={17} aria-hidden="true" />
-            </summary>
+          <PreferenceSection
+            id="bucket-selection-heading"
+            title="Selection"
+            description={workflow.importance === 'major' ? 'Major developments' : 'Relevant stories'}
+            className="news-room-settings-group"
+            keepMounted
+          >
             <div className="news-room-settings-fields">
               <label htmlFor="bucket-importance">
                 News selection
@@ -503,18 +506,16 @@ export function NewsRoomSettings({
                 />
               </label>
             </div>
-          </details>
+          </PreferenceSection>
 
-          <details className="news-room-settings-group" open>
-            <summary>
-              <span className="news-room-settings-group-copy">
-                <strong>Writing</strong>
-                <small>
-                  {host?.name ?? 'Choose a host'} · {mood || 'No mood'}
-                </small>
-              </span>
-              <ChevronDown className="news-room-settings-chevron" size={17} aria-hidden="true" />
-            </summary>
+          <PreferenceSection
+            id="bucket-writing-heading"
+            title="Writing"
+            description={`${host?.name ?? 'Choose a host'} · ${mood || 'No mood'}`}
+            className="news-room-settings-group"
+            keepMounted
+            defaultOpen
+          >
             <div className="news-room-settings-fields">
               <FilterSelect
                 label="DJ"
@@ -567,21 +568,20 @@ export function NewsRoomSettings({
                 </p>
               </details>
             </div>
-          </details>
+          </PreferenceSection>
 
-          <details className="news-room-settings-group news-room-memory">
-            <summary>
-              <span className="news-room-settings-group-copy">
-                <strong>Playback memory</strong>
-                <small>Started and played stories are held out</small>
-              </span>
-              <ChevronDown className="news-room-settings-chevron" size={17} aria-hidden="true" />
-            </summary>
+          <PreferenceSection
+            id="bucket-memory-heading"
+            title="Playback memory"
+            description={'Started and played stories are held out'}
+            className="news-room-settings-group news-room-memory"
+            keepMounted
+          >
             <p>
               Playback and editorial review are separate. This list marks a story heard only after completed playback;
               in-progress and interrupted playback remain distinct.
             </p>
-          </details>
+          </PreferenceSection>
 
           <footer className="news-room-settings-save">
             <div ref={saveFeedback}>

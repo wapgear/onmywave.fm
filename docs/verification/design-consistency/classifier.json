@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "purpose": "Semantic role taxonomy and review rubric; classification is confirmed by the reviewing agent",
+  "profile_dimensions": ["role", "variant", "state", "platform", "theme", "density"],
+  "roles": [
+    {"id": "navigation", "purpose": "Move between destinations or collections", "review": ["Current location and selection are clear", "Hierarchy and labels support the task", "Keyboard/back behavior follows the platform", "Density matches neighboring navigation"]},
+    {"id": "toolbar", "purpose": "Commands acting on current content", "review": ["Command grouping and importance are clear", "Selection/context affects commands correctly", "Overflow and resizing are deliberate", "Icons, tooltips, and shortcuts follow established patterns"]},
+    {"id": "form", "purpose": "A coherent group of editable values", "review": ["Grouping and order match the task", "Labels and help are legible and useful", "Validation and error recovery are clear", "Spacing, alignment, and control variants match equivalent forms"]},
+    {"id": "field", "purpose": "A standalone input or tightly coupled input cluster", "review": ["Label, value, help, and error are associated", "Input mode and control type fit the value", "Focus and keyboard interaction work", "Text expansion and validation states fit"]},
+    {"id": "action-group", "purpose": "Primary, secondary, or destructive task actions", "review": ["Primary action is discoverable", "Action hierarchy follows the existing system", "Destructive effects and recovery are understandable", "Disabled/loading/focus states are meaningful"]},
+    {"id": "list", "purpose": "Repeated items with scan, selection, or navigation", "review": ["Order and grouping support scanning", "Selection and activation are distinct", "Row density and type roles are coherent", "Empty/loading/error and long-content states are handled"]},
+    {"id": "table", "purpose": "Comparable records with labeled columns", "review": ["Headers and data align", "Sorting, selection, and actions are discoverable", "Numeric formatting and density are consistent", "Narrow/overflow behavior preserves access"]},
+    {"id": "detail", "purpose": "Primary information about a selected item", "review": ["Content hierarchy matches user decisions", "Context and relationships remain clear", "Type, spacing, and media treatment are consistent", "Long content and missing data remain understandable"]},
+    {"id": "inspector", "purpose": "Secondary information or editing tied to a selection", "review": ["Relationship to selected content is clear", "Resizing and dismissal preserve context", "Controls use existing form/editor patterns", "It does not compete with the primary workspace"]},
+    {"id": "dialog", "purpose": "A bounded modal decision or task", "review": ["Modality is justified by the task", "Title, consequence, and actions are clear", "Focus enters, remains, and returns appropriately", "Escape/cancel, sizing, and platform conventions work"]},
+    {"id": "feedback", "purpose": "Status, validation, progress, empty or error feedback", "review": ["Status and next action are understandable", "Severity is expressed beyond color alone", "Announcements and timing fit the interaction", "Tone and visual treatment match equivalent feedback"]},
+    {"id": "content", "purpose": "Editorial, media, or custom task content", "review": ["Composition supports the primary task", "Reading order and hierarchy are clear", "Brand expression fits the surrounding product", "Content adaptation and accessible alternatives are considered"]}
+  ]
+}

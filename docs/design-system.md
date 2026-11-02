@@ -42,4 +42,43 @@ Use the shared spacing scale from `styles.css` rather than one-off gaps:
 
 `preference-form` and `preference-fields` own the 16px form gap. Labels inside them have no extra bottom margin; `preference-row` aligns inline controls and wraps when needed. Keep section margins and fieldset margins at zero inside these layouts so spacing is applied once. General settings uses a 32px group gap, without additional section padding or separator borders. Global settings defaults use low specificity and apply section spacing only to direct children, leaving nested provider forms and dialogs to their own layout.
 
+Settings → Playback uses page-owned `SettingsSubsection` disclosures for News & voice, Song announcements and DJ transitions. They start collapsed, show the current configuration and unsaved/saving/error status in the summary, and mount detailed controls only while expanded. A retained draft reopens its subsection when returning to Playback. News/voice, announcements and transitions have independent drafts, validation and save actions; save only the fields owned by that form. Collapsing transitions unmounts and stops its audio preview. The player’s DJ settings shortcut opens Playback and focuses its first visible summary. General retains appearance, account, libraries and updates; Sources, DJs and Provider keys remain separate destinations.
+
 Optional previews use a closed native disclosure instead of a second always-visible instructional section. Expanding it reveals the controls and live feedback; collapsing an active preview stops its audio. Preserve playback and save behavior when simplifying presentation.
+
+## Reuse inventory (28 October 2026)
+
+Shared renderer UI lives in `src/renderer/components/`. Check this directory before adding a control; keep components used only inside one feature in that feature's `components/` folder.
+
+| Pattern | Existing component | Current consumers |
+| --- | --- | --- |
+| Page section navigation | `SectionNavigation/SectionNavigation.component.tsx` | Settings and News bucket share compact, rounded section buttons, theme colors, hover and selected states. Optional counts stay visible, including zero. Page owners retain their navigation state and behavior; News bucket wraps the same category buttons at narrow widths, preserving visible counts and keyboard access. |
+| Heading with contextual help | `SectionHeading/SectionHeading.component.tsx` | Appearance, announcement settings, transition settings, provider keys, News setup, and DJ Voice/Host preferences. Supports semantic h2/h3 headings and local row spacing; forwards heading IDs, refs and focus attributes; keeps heading margins from shifting the help icon. |
+| Collection playback actions | `CollectionPlaybackActions/CollectionPlaybackActions.component.tsx` | Albums and Playlists share Play, Play next and Add to end buttons. Callers retain the song order and command callbacks; empty collections disable all three actions. |
+| Collection header | `CollectionHeading/CollectionHeading.component.tsx` | Albums and Playlists. |
+| Song rows and actions | `TrackTable/TrackTable.component.tsx` | Albums, Playlists and Songs. |
+| Select with filtering | `FilterSelect/FilterSelect.component.tsx` | Songs and News setup. |
+| DJ identity | `DJAvatar/DJAvatar.component.tsx` | DJ management and News setup. |
+| Library selection | `LibraryChooser.tsx`, `LibrarySelection.tsx` | Connection and Settings; the app owns selection lifetime. |
+| Provider credentials | `ProviderKeys/ProviderKeys.component.tsx` | Settings and Sources; app-owned edit state. |
+| Update UI | `AppUpdates/AppUpdates.component.tsx` | App-level update prompts and Settings. |
+| Feedback and common presentation | `Empty`, `ErrorNotice`, `Artwork`, `PageHeading`, `TrackDuration` in `Shared.tsx` | Library pages, setup pages and shared player/sidebar components. |
+| Automatic preparation controls | `WorkflowPreferences/WorkflowPreferences.component.tsx` | News setup, with shared preparation-issue types used by News room settings. Promoted out of Settings; component, styles and types stay together. |
+
+Button, IconButton, Dialog, DialogActions, InfoHelp and ConfigurationTabs remain the existing shared primitives described above. Player, Queue, Lyrics, Inspector, DJSidebar, AddPlaylist and RenderErrorBoundary are also centralized app components. `VoicePreview` stays in `pages/DJs/components/`, where DJEditor and DJPreview share it; it has no consumers outside that feature. Page-owned editors and news panels remain beside their pages.
+
+The import audit found no remaining component imports from another page's private `components/` directory. The app still imports NewsBucket navigation types from its owning page; that is a type contract, not a duplicate UI implementation.
+
+## Consistency obligations (2 November 2026)
+
+These rules extend the existing system. Captures, independent block reviews, counterexamples and decisions live in [the consistency audit](verification/design-consistency/README.md).
+
+- `SORT_GROUP`: keep the song sort criterion and direction together when the filter row wraps; retain the shared 8px control gap and existing compact controls.
+- `NAV_RESIZE_FOCUS`: keyboard focus on the sidebar separator shows a small neutral grip. Preserve its transient pointer divider and avoid a full-height accent outline.
+- `QUEUE_TARGETS`: compact queue reorder controls and grips use at least 24×24px targets. Preserve the 54px row rhythm and the existing hover/focus action pattern, with clear space before Remove.
+- `SOURCE_LIMIT`: both source-choice flows explain the 20-source cap and how to recover at the cap. Associate the visible description with its group. Use singular source counts when appropriate.
+- `URL_CONSTRAINTS`: feed and server fields describe their accepted address format and report unsupported addresses before submission. Feed URLs use the shared source normalizer; server input mirrors the HTTP(S), no-credentials, no-query/fragment service contract. Main-process validation remains authoritative.
+- `TRANSITION_PREVIEW`: editing timings stops the old preview audio while retaining its disclosure state. Collapsing the preview or its parent subsection still stops it.
+- `LYRICS_PANE`: expanded lyrics remains a named, nonmodal complementary pane. The covered library is inert; navigation and player controls remain available. Do not imply a modal dialog without modal behavior.
+
+Executable measurements cover registered captures only. Keyboard, saving, recovery and task judgments require their own interaction/review evidence. A green finite rule report does not certify all states, native behavior, accessibility or design quality.

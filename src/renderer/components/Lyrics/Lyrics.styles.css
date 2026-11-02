@@ -2,7 +2,7 @@
   position: absolute;
   grid-column: 1 / -1;
   grid-row: 1 / -1;
-  inset: 28px 16px var(--player-clearance) auto;
+  inset: var(--titlebar-height) 16px var(--player-clearance) auto;
   z-index: 30;
   width: min(var(--listening-sidebar-width), calc(100% - var(--sidebar) - 16px));
   margin: 0;

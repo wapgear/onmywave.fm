@@ -1,8 +1,8 @@
 import { type FormEvent, useLayoutEffect, useRef, useState } from 'react';
 
-import { newsPreparationStatus } from '../../../../shared/news-preparation-status';
-import { ErrorNotice, errorMessage } from '../../../components/Shared';
-import { useNewsRecovery } from '../../../NewsRecovery';
+import { newsPreparationStatus } from '../../../shared/news-preparation-status';
+import { useNewsRecovery } from '../../NewsRecovery';
+import { ErrorNotice, errorMessage } from '../Shared';
 import type { WorkflowPreferencesProps } from './WorkflowPreferences.types';
 
 import './WorkflowPreferences.styles.css';

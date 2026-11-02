@@ -1,6 +1,6 @@
 import type { DJ, ListeningRoom, NewsSource, RoomProfile } from '../../../../shared/types';
 import type { WorkflowDraft } from '../../../../shared/workflow';
-import type { PreparationIssue } from '../../Settings/components/WorkflowPreferences.types';
+import type { PreparationIssue } from '../../../components/WorkflowPreferences/WorkflowPreferences.types';
 
 export type NewsRoomSettingsProps = {
   profile: RoomProfile | null;

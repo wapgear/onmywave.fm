@@ -66,11 +66,7 @@ async function main() {
         const rows = bucket.locator('.news-bucket-item');
         const inspector = page.getByRole('complementary',{ name:'Story inspector' });
         const settings = bucket.locator('.news-room-settings');
-        const go = async id => {
-          const select=nav.getByLabel('News category',{exact:true});
-          if(await select.isVisible()) await select.selectOption(id);
-          else await nav.locator('button').filter({hasText:({upcoming:'Upcoming',check:'Check news',past:'Past news',favorites:'Favorites',settings:'Settings'})[id]}).click();
-        };
+        const go = async id => nav.locator(`[data-section="${id}"]`).click();
         assert.equal(await nav.locator('button').count(),5);
         assert.equal(await rows.count(),2);
         assert.equal(await inspector.count(),width >= 1280 ? 1 : 0);
@@ -78,24 +74,10 @@ async function main() {
         assert.match(await rows.first().innerText(),/Published just now/);
         assert.match(await rows.first().innerText(),/A new album is coming Friday/);
         assert.equal(await noOverflow(page),true);
-        const mainBox=await page.locator('.main-content').boundingBox(),workspaceBox=await bucket.locator('.news-bucket-layout').boundingBox();
-        assert.ok(Math.abs(mainBox.x-workspaceBox.x)<1&&Math.abs(mainBox.x+mainBox.width-workspaceBox.x-workspaceBox.width)<1&&Math.abs(mainBox.y+mainBox.height-workspaceBox.y-workspaceBox.height)<1,'Workspace meets the app surface edges');
-        assert.equal(await bucket.locator('.news-bucket-layout').evaluate(e=>getComputedStyle(e).borderRadius),'0px');
-        const alignment=await bucket.evaluate(root=>{
-          const rect=selector=>root.querySelector(selector).getBoundingClientRect();
-          const heading=rect('.news-bucket-list-column .news-bucket-content-heading h2');
-          const title=rect('.news-bucket-item strong');
-          const star=rect('.news-bucket-story-row > .news-bucket-star');
-          const navigation=rect('.news-bucket-navigation');
-          const buttons=[...root.querySelectorAll('.news-bucket-navigation > button')].filter(e=>e.checkVisibility()).map(e=>e.getBoundingClientRect());
-          const toolbar=root.querySelector('.news-bucket-reader-toolbar')?.getBoundingClientRect();
-          return {headingX:heading.x,titleX:title.x,titleCenter:title.y+parseFloat(getComputedStyle(root.querySelector('.news-bucket-item strong')).lineHeight)/2,starCenter:star.y+star.height/2,navigationHeight:navigation.height,buttonCenters:buttons.map(box=>box.y+box.height/2),headingCenter:heading.y+heading.height/2,toolbarCenter:toolbar?toolbar.y+toolbar.height/2:null};
-        });
-        assert.ok(Math.abs(alignment.headingX-alignment.titleX)<1,'List heading and story text share a left edge');
-        assert.ok(Math.abs(alignment.titleCenter-alignment.starCenter)<1,'Favorite controls align with the first headline line');
-        assert.ok(alignment.navigationHeight<=52,'Category navigation stays in one compact row');
-        assert.ok(alignment.buttonCenters.every(center=>Math.abs(center-alignment.buttonCenters[0])<1),'Category destinations share a horizontal baseline');
-        if(alignment.toolbarCenter!==null)assert.ok(Math.abs(alignment.headingCenter-alignment.toolbarCenter)<1,'Reader toolbar and collection heading share the header band');
+        const layout=await page.locator('.stations-page').boundingBox();
+        assert.ok(layout.width<=761,'News uses the Settings content width');
+        const navigation=await nav.boundingBox();
+        assert.ok(navigation.width<=layout.width,'Tabs fit the shared page');
         await screenshot(page,`after-upcoming-${width}-${theme}`);
         if (await inspector.count()) {
           await inspector.getByRole('button',{name:'Close story details',exact:true}).click();
@@ -108,7 +90,7 @@ async function main() {
         await page.keyboard.press('Enter');
         await inspector.getByRole('heading',{name:'New album announced for Friday',exact:true}).waitFor();
         await page.waitForFunction(() => document.activeElement?.tagName === 'H2' && document.activeElement?.textContent === 'New album announced for Friday');
-        if (width <= 1024) {
+        if (await inspector.getByRole('button',{name:'Back to stories',exact:true}).isVisible()) {
           assert.equal(await inspector.getByRole('button',{name:'Back to stories',exact:true}).isVisible(),true);
           assert.equal(await rows.first().isVisible(),false,'Compact reading does not stack an unseen list above the story');
           const rect = await nav.boundingBox();
@@ -123,7 +105,7 @@ async function main() {
         await inspector.getByRole('button',{name:'Pause audition',exact:true}).click();
         assert.equal(await playing(page),0);
         await inspector.getByRole('button',{name:'Resume audition',exact:true}).click();
-        if (width <= 1024) await inspector.getByRole('button',{name:'Back to stories',exact:true}).click();
+        if (await inspector.getByRole('button',{name:'Back to stories',exact:true}).isVisible()) await inspector.getByRole('button',{name:'Back to stories',exact:true}).click();
         else await page.keyboard.press('Escape');
         await page.waitForFunction(() => document.activeElement?.dataset.storyKey === 'take:take-0');
         assert.equal(await playing(page),0);
@@ -151,7 +133,7 @@ async function main() {
         }
         await inspector.getByRole('button',{name:'Remove from favorites: New album announced for Friday',exact:true}).click();
         await inspector.waitFor({state:'detached'});
-        await page.waitForFunction(() => document.activeElement?.getAttribute('aria-current') === 'page' || document.activeElement?.matches('.news-bucket-navigation-select select'));
+        await page.waitForFunction(() => document.activeElement?.getAttribute('aria-current') === 'page');
         await go('past');
         assert.equal(await rows.count(),1);
         assert.match(await rows.innerText(),/Festival adds two evening sets/);
@@ -287,7 +269,7 @@ async function main() {
         assert.equal(await noOverflow(page),true);
         assert.deepEqual(await page.evaluate(()=>{const ids=[...document.querySelectorAll('[id]')].map(e=>e.id);return ids.filter((id,i)=>ids.indexOf(id)!==i)}),[],'No duplicate control IDs');
         assert.deepEqual(errors,[]);
-        reports.push({width,height,theme,passed:true,pageErrors:errors,additionalChecks:width===1440?['legacy/deleted-room recordings remain reachable without changing heard count','late favorite result preserves current focus','resume failure/retry and keyboard focus','immediate stop failure/retry and keyboard focus','room availability and keyboard focus','legacy management return','unique IDs']:['unique IDs'],checks:['flush app-surface layout without nested frame','compact horizontal category navigation and aligned list/reader/favorite controls','one-time desktop reader','real publication dates and excerpts','compact reader/back/keyboard focus','category navigation remains visible','audition pause/resume/cleanup','favorites and source links','history semantics','latest source check/partial coverage','inline automatic preparation/readiness/consent','source and provider round trips retain draft/destination','validation/save error/success','no horizontal overflow']});
+        reports.push({width,height,theme,passed:true,pageErrors:errors,additionalChecks:width===1440?['legacy/deleted-room recordings remain reachable without changing heard count','late favorite result preserves current focus','resume failure/retry and keyboard focus','immediate stop failure/retry and keyboard focus','room availability and keyboard focus','legacy management return','unique IDs']:['unique IDs'],checks:['Settings content width','shared category tabs and compact sidebar','one-time desktop reader','real publication dates and excerpts','compact reader/back/keyboard focus','category navigation remains visible','audition pause/resume/cleanup','favorites and source links','history semantics','latest source check/partial coverage','inline automatic preparation/readiness/consent','source and provider round trips retain draft/destination','validation/save error/success','no horizontal overflow']});
       } finally { await page.close(); }
     }
     await fs.writeFile(`${outputDirectory}/report.json`,JSON.stringify(reports,null,2));

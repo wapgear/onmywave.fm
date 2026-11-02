@@ -1,0 +1,40 @@
+.drawer-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 0 0 auto;
+  height: calc(var(--titlebar-height) + var(--section-header-height));
+  padding: var(--titlebar-height) 18px 10px 22px;
+}
+.drawer-heading h2 {
+  font-size: 16px;
+  letter-spacing: -0.2px;
+}
+.drawer-heading button {
+  color: var(--muted);
+}
+.drawer-heading-actions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+.drawer-heading.sidebar-heading-compact {
+  height: var(--section-header-height);
+  padding: 0 18px 0 20px;
+  background: var(--table-header);
+  border-bottom: 1px solid var(--separator);
+}
+.sidebar-heading-compact h2 {
+  color: var(--muted);
+  font-size: var(--section-header-font-size);
+  font-weight: 400;
+  letter-spacing: normal;
+}
+:where(.sidebar-body) {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 20px;
+  scroll-padding-block: 20px;
+}

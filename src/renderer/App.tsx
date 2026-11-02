@@ -21,6 +21,7 @@ import { RenderErrorBoundary } from './components/RenderErrorBoundary/RenderErro
 
 import './components/Drawer/Drawer.styles.css';
 import { ErrorNotice } from './components/Shared';
+import { SidebarBody, SidebarHeading } from './components/Sidebar/Sidebar.component';
 import { DJPlaybackProvider } from './dj-playback';
 import { NewsRecoveryNotice, NewsRecoveryProvider } from './NewsRecovery';
 import { AlbumsPage, initialAlbumsView } from './pages/Albums/Albums.page';
@@ -486,7 +487,7 @@ function ReadyApp({
         ? (content.current?.querySelector<HTMLElement>('#dj-playback-title') ?? null)
         : (content.current?.querySelector<HTMLElement>('.page-heading h1') ?? null),
     canFocusSuccess: () =>
-      page === playerDestination.current && !returnToSetup && (page !== 'settings' || settingsSection === 'general'),
+      page === playerDestination.current && !returnToSetup && (page !== 'settings' || settingsSection === 'playback'),
   });
 
   useEffect(() => {
@@ -515,8 +516,8 @@ function ReadyApp({
   function openPlayerDestination(next: 'stations' | 'settings', source: HTMLButtonElement | null) {
     void enterPlayerDestination(source, async () => {
       playerDestination.current = next;
-      scrollPositions.current.delete(next === 'settings' ? 'settings-general' : 'stations');
-      if (next === 'settings') setSettingsSection('general');
+      scrollPositions.current.delete(next === 'settings' ? 'settings-playback' : 'stations');
+      if (next === 'settings') setSettingsSection('playback');
       navigate(next);
       return { isError: false };
     });
@@ -678,55 +679,58 @@ function ReadyApp({
           ref={drawerElement}
           id="listening-drawer"
           className={`side-drawer ${listeningSidebar ? 'listening-drawer' : ''} ${visibleDrawer === 'lyrics' ? `lyrics-drawer ${expandedLyrics ? 'is-expanded' : ''}` : visibleDrawer === 'dj' ? 'dj-drawer' : ''}`}
-          role={expandedLyrics ? 'dialog' : undefined}
           aria-labelledby="drawer-title"
         >
-          <header className="drawer-heading">
-            <h2 id="drawer-title">
-              {visibleDrawer === 'queue'
+          <SidebarHeading
+            compact={listeningSidebar || visibleDrawer === 'lyrics'}
+            titleId="drawer-title"
+            title={
+              visibleDrawer === 'queue'
                 ? 'Playing Next'
                 : visibleDrawer === 'lyrics'
                   ? 'Lyrics'
                   : visibleDrawer === 'dj'
                     ? 'Your DJ'
-                    : 'Song details'}
-            </h2>
-            <div className="drawer-heading-actions">
-              {visibleDrawer === 'lyrics' && (
+                    : 'Song details'
+            }
+            actions={
+              <>
+                {visibleDrawer === 'lyrics' && (
+                  <IconButton
+                    onClick={() => {
+                      cancelDrawerTransition();
+                      drawerEnter.current?.finish();
+                      setLyricsExpanded((expanded) => !expanded);
+                    }}
+                    label={expandedLyrics ? 'Return lyrics to sidebar' : 'Expand lyrics'}
+                    aria-expanded={expandedLyrics}
+                  >
+                    {expandedLyrics ? (
+                      <Minimize2 size={18} aria-hidden="true" />
+                    ) : (
+                      <Maximize2 size={18} aria-hidden="true" />
+                    )}
+                  </IconButton>
+                )}
                 <IconButton
-                  onClick={() => {
-                    cancelDrawerTransition();
-                    drawerEnter.current?.finish();
-                    setLyricsExpanded((expanded) => !expanded);
-                  }}
-                  label={expandedLyrics ? 'Return lyrics to sidebar' : 'Expand lyrics'}
-                  aria-expanded={expandedLyrics}
+                  ref={drawerClose}
+                  onClick={closeDrawer}
+                  label={
+                    visibleDrawer === 'queue'
+                      ? 'Close queue'
+                      : visibleDrawer === 'lyrics'
+                        ? 'Close lyrics'
+                        : visibleDrawer === 'dj'
+                          ? 'Close DJ sidebar'
+                          : 'Close song details'
+                  }
                 >
-                  {expandedLyrics ? (
-                    <Minimize2 size={18} aria-hidden="true" />
-                  ) : (
-                    <Maximize2 size={18} aria-hidden="true" />
-                  )}
+                  <X size={20} aria-hidden="true" />
                 </IconButton>
-              )}
-              <IconButton
-                ref={drawerClose}
-                onClick={closeDrawer}
-                label={
-                  visibleDrawer === 'queue'
-                    ? 'Close queue'
-                    : visibleDrawer === 'lyrics'
-                      ? 'Close lyrics'
-                      : visibleDrawer === 'dj'
-                        ? 'Close DJ sidebar'
-                        : 'Close song details'
-                }
-              >
-                <X size={20} aria-hidden="true" />
-              </IconButton>
-            </div>
-          </header>
-          <div
+              </>
+            }
+          />
+          <SidebarBody
             key={typeof visibleDrawer === 'string' ? visibleDrawer : visibleDrawer.id}
             className="drawer-body"
             role={visibleDrawer === 'lyrics' ? 'region' : undefined}
@@ -736,18 +740,8 @@ function ReadyApp({
             {visibleDrawer === 'dj' ? (
               <DJSidebar
                 controlsRef={setDJControlsTarget}
-                openRoom={() =>
-                  openPlayerDestination(
-                    'stations',
-                    drawerTrigger.current instanceof HTMLButtonElement ? drawerTrigger.current : null,
-                  )
-                }
-                openSettings={() =>
-                  openPlayerDestination(
-                    'settings',
-                    drawerTrigger.current instanceof HTMLButtonElement ? drawerTrigger.current : null,
-                  )
-                }
+                openRoom={(source) => openPlayerDestination('stations', source)}
+                openSettings={(source) => openPlayerDestination('settings', source)}
               />
             ) : visibleDrawer === 'queue' ? (
               <Queue />
@@ -761,7 +755,7 @@ function ReadyApp({
             ) : (
               <Inspector key={visibleDrawer.id} song={visibleDrawer} />
             )}
-          </div>
+          </SidebarBody>
         </aside>
       )}
       <Player

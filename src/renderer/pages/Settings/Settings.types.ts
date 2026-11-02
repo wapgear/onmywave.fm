@@ -1,6 +1,6 @@
 import type { Connection } from '../../../shared/types';
 
-export type SettingsSection = 'general' | 'keys' | 'sources' | 'djs';
+export type SettingsSection = 'general' | 'playback' | 'keys' | 'sources' | 'djs';
 
 export type SettingsPageProps = {
   connection: Connection;

@@ -42,11 +42,15 @@ async function roundtrip(name, mutation) {
   assert.deepEqual((await reader.getLocalState()).playback, snapshot, 'Durable playback snapshot must survive a fresh storage module');
   assert.equal((await reader.getLocalState()).djPlayback.announceTracks, false, 'Announcements must start disabled');
   assert.equal((await reader.getLocalState()).djPlayback.announceEverySongs, 6, 'The default announcement interval must be six');
+  assert.equal((await reader.getLocalState()).djPlayback.announcementStyle, 'varied');
+  assert.equal((await reader.getLocalState()).djPlayback.announcementLines, '');
   for (const announceTracks of [true, false]) {
-    await reader.updateLocalState({ djPlayback: { ...(await reader.getLocalState()).djPlayback, announceTracks, announceEverySongs: 8 } });
+    await reader.updateLocalState({ djPlayback: { ...(await reader.getLocalState()).djPlayback, announceTracks, announceEverySongs: 8, announcementStyle: 'custom', announcementLines: 'Take a breath. {track}.\nLet’s go with {track}.' } });
     delete require.cache[require.resolve(servicePath)];
     assert.equal((await require(servicePath).getLocalState()).djPlayback.announceTracks, announceTracks, 'Announcement preference did not survive reload');
     assert.equal((await require(servicePath).getLocalState()).djPlayback.announceEverySongs, 8, 'Announcement interval did not survive reload');
+    assert.equal((await require(servicePath).getLocalState()).djPlayback.announcementStyle, 'custom');
+    assert.equal((await require(servicePath).getLocalState()).djPlayback.announcementLines, 'Take a breath. {track}.\nLet’s go with {track}.');
   }
 }
 (async () => {

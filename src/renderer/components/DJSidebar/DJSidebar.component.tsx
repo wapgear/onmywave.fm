@@ -111,9 +111,6 @@ export function DJSidebar({ openRoom, openSettings, controlsRef }: DJSidebarProp
     : [];
   const playbackSetupMissing = playbackSetupIssues.length > 0;
   const source = useMutation({ mutationFn: async (url: string) => unwrap(await window.wave.openSource(url)) });
-  function navigate(action: (source: HTMLButtonElement | null) => void) {
-    action(null);
-  }
   const updating = automation.update.isPending;
   const unconfirmed = automation.unconfirmedUpdate;
   const unconfirmedEnabled = unconfirmed?.enabled;
@@ -486,11 +483,11 @@ export function DJSidebar({ openRoom, openSettings, controlsRef }: DJSidebarProp
       )}
       <ErrorNotice error={source.error} />
       <footer>
-        <button onClick={() => navigate(openRoom)}>
+        <button onClick={(event) => openRoom(event.currentTarget)}>
           <Radio size={15} />
           News bucket
         </button>
-        <button onClick={() => navigate(openSettings)}>
+        <button onClick={(event) => openSettings(event.currentTarget)}>
           <Settings size={15} />
           DJ settings
         </button>

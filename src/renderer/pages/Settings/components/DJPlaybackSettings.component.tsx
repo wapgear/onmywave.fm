@@ -7,7 +7,8 @@ import { SectionHeading } from '../../../components/SectionHeading/SectionHeadin
 import { ErrorNotice } from '../../../components/Shared';
 import { useNewsRecovery } from '../../../NewsRecovery';
 import { useRetryFocus } from '../../../useRetryFocus';
-import { useGeneralSettingsEdits } from '../SettingsEdits';
+import { useSettingsEdits } from '../SettingsEdits';
+import { SettingsSubsection } from './SettingsSubsection.component';
 
 export function DJPlaybackSettings() {
   const recovery = useNewsRecovery();
@@ -17,17 +18,19 @@ export function DJPlaybackSettings() {
     queryFn: async () => unwrap(await window.wave.getLocalState()),
     enabled: recoveryReady,
   });
-  const heading = useRef<HTMLHeadingElement>(null);
+  const summary = useRef<HTMLElement>(null);
   const intervalInput = useRef<HTMLInputElement>(null);
   const saveButton = useRef<HTMLButtonElement>(null);
   const [saveFocused, setSaveFocused] = useState(false);
   const retryFocus = useRetryFocus({
-    ownerKey: 'settings:general:dj-playback',
+    ownerKey: 'settings:playback:dj-playback',
     target: () =>
-      intervalInput.current && !intervalInput.current.matches(':disabled') ? intervalInput.current : heading.current,
+      intervalInput.current?.checkVisibility() && !intervalInput.current.matches(':disabled')
+        ? intervalInput.current
+        : summary.current,
     canFocusSuccess: () => recoveryReady && !state.isError && !state.isFetching && !!state.data,
   });
-  const edit = useGeneralSettingsEdits().playback;
+  const edit = useSettingsEdits().playback;
   const { draft, save } = edit;
   const settings = draft ?? normalizeDJPlaybackSettings(state.data?.djPlayback);
   function change(patch: Partial<Settings>) {
@@ -35,33 +38,24 @@ export function DJPlaybackSettings() {
       everySongs: settings.everySongs,
       keepOnSeek: settings.keepOnSeek,
       voiceVolume: settings.voiceVolume,
-      announceTracks: settings.announceTracks,
-      announceEverySongs: settings.announceEverySongs,
       ...patch,
     });
   }
 
   return (
-    <section className="room-dj-schedule" aria-labelledby="dj-playback-title">
-      <SectionHeading
-        title="News & song announcements"
-        helpLabel="DJ playback details"
-        ref={heading}
-        tabIndex={-1}
-        id="dj-playback-title"
-      >
+    <SettingsSubsection
+      className="room-dj-schedule"
+      title="News & voice"
+      description={`${state.data?.djPlayback.enabled ? 'News on' : 'News off'} · Voice at ${Math.round(settings.voiceVolume * 100)}%`}
+      id="dj-playback-title"
+      ref={summary}
+      dirty={draft !== null}
+      status={save.isPending ? 'Saving…' : save.isError || state.isError ? 'Needs attention' : undefined}
+    >
+      <SectionHeading title="News timing & voice" helpLabel="About news timing and voice">
         <p>
           News plays after the selected number of completed songs, when an eligible saved recording is ready. Enable
           news and choose its profile in the player's DJ sidebar. An empty pool leaves music playing.
-        </p>
-        <p>
-          Song introductions play after the configured number of completed songs, or always after fact-only news. The
-          default is six. Each introduction resets the count; skips do not count. The introduction provides the only
-          closing line, so older news recordings with their own ending play without one.
-        </p>
-        <p>
-          Enabling introductions authorizes ElevenLabs speech requests. Introductions use the saved DJ voice and the
-          next song's title and artist.
         </p>
         <p>Keeping the DJ while seeking lets speech wait for a suitable ending and resume where it paused.</p>
         <p>Voice volume is relative to the player volume.</p>
@@ -120,37 +114,6 @@ export function DJPlaybackSettings() {
               <span className="preference-note">{state.data.djPlayback.enabled ? 'News on' : 'News off'}</span>
             )}
           </div>
-          <div className="preference-row">
-            <label className="preference-row dj-song-interval">
-              <input
-                id="announce-tracks"
-                type="checkbox"
-                checked={settings.announceTracks}
-                aria-describedby="track-announcement-cost"
-                onChange={(event) => change({ announceTracks: event.target.checked })}
-              />
-              Announce the next song
-            </label>
-            <span className="preference-note" id="track-announcement-cost">
-              Uses ElevenLabs credits
-            </span>
-          </div>
-          <label className="preference-row dj-song-interval">
-            Announce after
-            <input
-              type="number"
-              min={1}
-              max={100}
-              step={1}
-              required
-              disabled={!settings.announceTracks}
-              value={Number.isNaN(settings.announceEverySongs) ? '' : settings.announceEverySongs}
-              onChange={(event) =>
-                change({ announceEverySongs: event.target.value === '' ? NaN : Number(event.target.value) })
-              }
-            />
-            <span>{settings.announceEverySongs === 1 ? 'completed song' : 'completed songs'}</span>
-          </label>
           <label className="preference-row dj-song-interval">
             <input
               type="checkbox"
@@ -182,15 +145,15 @@ export function DJPlaybackSettings() {
           onFocus={() => setSaveFocused(true)}
           onBlur={() => setSaveFocused(false)}
         >
-          {save.isPending ? 'Saving…' : 'Save announcement settings'}
+          {save.isPending ? 'Saving…' : 'Save news & voice settings'}
         </button>
         <ErrorNotice error={save.error} />
         {save.isSuccess && draft === null && (
           <p className="form-hint" role="status">
-            Announcement settings saved.
+            News &amp; voice settings saved.
           </p>
         )}
       </form>
-    </section>
+    </SettingsSubsection>
   );
 }

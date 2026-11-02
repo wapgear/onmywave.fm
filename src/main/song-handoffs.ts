@@ -1,6 +1,7 @@
-import { randomUUID } from 'node:crypto';
+import { randomInt, randomUUID } from 'node:crypto';
 
 import { normalizeDJPlaybackSettings } from '../shared/dj-playback';
+import { announcementTemplates, formatSongAnnouncement } from '../shared/song-announcements';
 import type { Song, SongHandoff } from '../shared/types';
 import { NEWS_TEXT_MODEL } from '../shared/types';
 import { ServiceError } from './jellyfin';
@@ -13,6 +14,8 @@ const clips = new Map<string, Buffer>();
 const attempts = new Map<string, { promise: Promise<SongHandoff>; clip: { id?: string } }>();
 
 const active = new Map<string, AbortController>();
+
+const recentTemplates: string[] = [];
 
 const validId = (value: unknown): value is string => typeof value === 'string' && /^[a-zA-Z0-9-]{1,128}$/.test(value);
 
@@ -36,6 +39,7 @@ export function revokeSongHandoffs() {
   active.clear();
   clips.clear();
   attempts.clear();
+  recentTemplates.length = 0;
 }
 
 export async function prepareSongHandoff(
@@ -75,10 +79,23 @@ export async function prepareSongHandoff(
     const title = spoken(song.name);
     const artists = song.artists.map(spoken).filter(Boolean).join(', ');
     if (!title || title === 'Untitled song' || title.length > 160 || artists.length > 160) return null;
-    const script = `And now, enjoy ${title}${artists ? ` by ${artists}` : ''}.`;
-    const signature = JSON.stringify([voice, delivery, script]);
+    const signature = JSON.stringify([
+      voice,
+      delivery,
+      title,
+      artists,
+      settings.announcementStyle,
+      settings.announcementLines,
+    ]);
     let attempt = attempts.get(signature);
     if (!attempt) {
+      const templates = announcementTemplates(settings.announcementStyle, settings.announcementLines);
+      const recent = templates.length === 1 ? [] : recentTemplates.slice(-Math.min(5, templates.length - 1));
+      const choices = templates.filter((template) => !recent.includes(template));
+      const template = choices[randomInt(choices.length)];
+      const script = formatSongAnnouncement(template, title, artists);
+      recentTemplates.push(template);
+      if (recentTemplates.length > 5) recentTemplates.shift();
       // Retain recent uncertain attempts so a scheduling tick cannot silently repeat a paid request.
       if (attempts.size >= 32) {
         const oldest = attempts.keys().next().value!;

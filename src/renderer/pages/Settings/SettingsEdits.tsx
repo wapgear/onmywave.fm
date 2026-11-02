@@ -2,14 +2,17 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createContext, useContext, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 
 import { isNewsTransitionSettings } from '../../../shared/news-transitions';
+import { announcementLinesError } from '../../../shared/song-announcements';
 import type { DJPlaybackSettings, LocalStateSnapshot, NewsTransitionSettings } from '../../../shared/types';
 import { unwrap } from '../../api';
 import { confirmLocalState } from '../../local-state-cache';
 import { useNewsRecovery } from '../../NewsRecovery';
 
-type PlaybackPreferences = Pick<
+type PlaybackPreferences = Pick<DJPlaybackSettings, 'everySongs' | 'keepOnSeek' | 'voiceVolume'>;
+
+type AnnouncementPreferences = Pick<
   DJPlaybackSettings,
-  'everySongs' | 'keepOnSeek' | 'voiceVolume' | 'announceTracks' | 'announceEverySongs'
+  'announceTracks' | 'announceEverySongs' | 'announcementStyle' | 'announcementLines'
 >;
 
 function useEdit<T>(write: (value: T) => Promise<LocalStateSnapshot>) {
@@ -44,7 +47,7 @@ function useEdit<T>(write: (value: T) => Promise<LocalStateSnapshot>) {
   };
 }
 
-function useSettingsEdits() {
+function useSettingsEditState() {
   const recovery = useNewsRecovery();
   const currentRecovery = useRef(recovery.status.phase);
 
@@ -57,8 +60,15 @@ function useSettingsEdits() {
       throw new Error('News data is unavailable. Recover it before changing DJ playback.');
     if (!Number.isInteger(value.everySongs) || value.everySongs < 1 || value.everySongs > 100)
       throw new Error('Choose a whole number from 1 to 100 songs.');
+    return unwrap(await window.wave.saveDJPlayback(value));
+  });
+  const announcements = useEdit<AnnouncementPreferences>(async (value) => {
+    if (currentRecovery.current !== 'ready')
+      throw new Error('News data is unavailable. Recover it before changing song announcements.');
     if (!Number.isInteger(value.announceEverySongs) || value.announceEverySongs < 1 || value.announceEverySongs > 100)
       throw new Error('Choose an announcement interval from 1 to 100 completed songs.');
+    const linesError = announcementLinesError(value.announcementStyle, value.announcementLines);
+    if (linesError) throw new Error(linesError);
     return unwrap(await window.wave.saveDJPlayback(value));
   });
   const transitions = useEdit<NewsTransitionSettings>(async (value) => {
@@ -66,19 +76,19 @@ function useSettingsEdits() {
       throw new Error('Choose fade times from 0 to 5 seconds and pauses from 0 to 3 seconds.');
     return unwrap(await window.wave.saveNewsTransitions(value));
   });
-  return { playback, transitions };
+  return { playback, announcements, transitions };
 }
 
-const SettingsEdits = createContext<ReturnType<typeof useSettingsEdits> | null>(null);
+const SettingsEdits = createContext<ReturnType<typeof useSettingsEditState> | null>(null);
 
 export function SettingsEditsProvider({ children }: { children: ReactNode }) {
-  const edits = useSettingsEdits();
+  const edits = useSettingsEditState();
 
   return <SettingsEdits.Provider value={edits}>{children}</SettingsEdits.Provider>;
 }
 
-export function useGeneralSettingsEdits() {
+export function useSettingsEdits() {
   const edits = useContext(SettingsEdits);
-  if (!edits) throw new Error('General settings require their app owner.');
+  if (!edits) throw new Error('Settings edits require their app owner.');
   return edits;
 }

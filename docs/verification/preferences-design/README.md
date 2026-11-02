@@ -1,4 +1,6 @@
-# Settings content and spacing
+# Settings organization, content and spacing
+
+Settings now separates General (appearance, account, music libraries and updates) from Playback (News & voice, Song announcements and DJ transitions). Sources, DJs and Provider keys retain their own tabs. Playback opens as three compact, initially collapsed subsections with current settings in their summaries. Detailed controls mount only when expanded. Each form has its own draft, validation and save action. Unsaved changes and save failures remain visible in a collapsed summary, and returning to Playback reopens subsections containing a draft. The player's DJ settings shortcut opens Playback and focuses the News & voice summary.
 
 The General settings controls use the shared spacing scale and form classes documented in `docs/design-system.md`. Announcement and transition rules, defaults, setup explanations and library descriptions now live in the existing named info dialogs. News on/off state, the short ElevenLabs cost notice, save feedback and errors remain visible. Transitions follow announcements; their optional sample is collapsed initially. Collapsing a running sample disposes its audio context.
 
@@ -22,5 +24,12 @@ The fixture renders the actual App, settings components and shared controls in n
 The checks cover 16px gaps between announcement rows, no repeated settings headings, one primary heading per settings tab, no repeated inline announcement/transition explanations, the visible cost description, and the initially closed preview. Native key events verify Enter opens contextual help, focus enters Close dialog, Escape dismisses it and focus returns to the trigger. Enter also expands/collapses the native preview disclosure. Its cancellation check renders the actual preview component with fixture audio/Web Audio transport and verifies that collapsing it closes the active context. It does not establish listening quality.
 
 The existing settings flow verifies the disabled default interval of six, enables introductions, saves song interval eight and news interval four, then disables introductions while preserving both intervals. Loading, errors, recovery blockers and save-state logic remain in their existing owners.
+
+The `after-subsections` fixtures verify the compact Playback overview, disclosure keyboard access with Enter/Space, contextual help focus return, and disposal of a playing preview when its parent DJ transitions subsection closes. The announcement fixture verifies independent save payloads, editing news timing while custom announcement text is invalid, preservation of announcement drafts when collapsing or switching tabs, style/wording validation, and retained custom lines after changing presets. `before-subsections` and `after-subsections` General screenshots use identical fixture data and viewport sizes (1440×1000 and 960×800, light and dark); additional captures show the collapsed Playback overview and expanded announcement/transition controls. The fixtures use no live provider requests or personal data.
+
+```sh
+WAVE_SCENARIO=preferences-design WAVE_CAPTURE_STAGE=after-subsections node_modules/.bin/electron docs/verification/critical-playback/server.mjs
+WAVE_SCENARIO=song-handoff-settings WAVE_CAPTURE_STAGE=after-subsections node_modules/.bin/electron docs/verification/critical-playback/server.mjs
+```
 
 Screenshot pairs use identical fixture data and viewport sizes. The `after-help-960.png` capture shows the relocated explanation and visible keyboard focus. Real account sign-out, provider credentials, connected-library changes and VoiceOver are not exercised by this fixture.

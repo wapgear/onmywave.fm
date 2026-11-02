@@ -1,6 +1,6 @@
 import { useIsMutating, useMutation } from '@tanstack/react-query';
 import { ArrowRight, Music2 } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 
 import { unwrap } from '../../api';
 import { InfoHelp } from '../../components/InfoHelp/InfoHelp.component';
@@ -17,6 +17,7 @@ export function ConnectionPage({
   librariesSelected,
   runConnectionTransition,
 }: ConnectionPageProps) {
+  const serverUrlHelpId = useId();
   const [serverUrl, setServerUrl] = useState(connection?.serverUrl ?? '');
   const [username, setUsername] = useState(connection?.userName ?? '');
   const [password, setPassword] = useState('');
@@ -149,12 +150,35 @@ export function ConnectionPage({
                 required
                 disabled={loginBlocked}
                 value={serverUrl}
-                onChange={(event) => setServerUrl(event.target.value)}
+                onChange={(event) => {
+                  const value = event.currentTarget.value;
+                  try {
+                    const address = new URL(value);
+                    const allowed =
+                      ['http:', 'https:'].includes(address.protocol) &&
+                      !address.username &&
+                      !address.password &&
+                      !address.search &&
+                      !address.hash;
+                    event.currentTarget.setCustomValidity(
+                      allowed ? '' : 'Use an HTTP or HTTPS base address without login details or a ? or # suffix.',
+                    );
+                  } catch {
+                    event.currentTarget.setCustomValidity(
+                      value ? 'Enter a complete HTTP or HTTPS server address.' : '',
+                    );
+                  }
+                  setServerUrl(value);
+                }}
+                aria-describedby={serverUrlHelpId}
                 placeholder="https://music.example.com"
                 autoFocus
                 autoComplete="url"
               />
             </label>
+            <p id={serverUrlHelpId} className="form-hint">
+              Enter the server’s HTTP or HTTPS base address. Leave out login details and anything after ? or #.
+            </p>
             <label>
               Username
               <input

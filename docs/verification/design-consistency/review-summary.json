@@ -1,0 +1,449 @@
+{
+  "version": 1,
+  "provenance": "Condensed independent block reviews from the initial synthetic renderer audit based on 6c55434 plus cumulative local UI work. Historical review; current-main integration checks are documented separately.",
+  "blocks": [
+    {
+      "id": "albums",
+      "classification": {
+        "role": "list-and-detail",
+        "variant": "album collection browse and album detail",
+        "confidence": "confirmed",
+        "profiles": [
+          {
+            "role": "list",
+            "variant": "albums",
+            "state": "populated; one fixture item",
+            "platform": "macos-web-renderer",
+            "theme": "light",
+            "density": "desktop",
+            "viewport": "1280x800"
+          },
+          {
+            "role": "detail",
+            "variant": "album",
+            "state": "populated; 3 fixture tracks",
+            "platform": "macos-web-renderer",
+            "theme": "light",
+            "density": "desktop",
+            "viewport": "960x700"
+          },
+          {
+            "role": "action-group",
+            "variant": "collection playback and playlist",
+            "state": "populated",
+            "platform": "macos-web-renderer",
+            "theme": "light",
+            "density": "desktop"
+          },
+          {
+            "role": "table",
+            "variant": "tracks",
+            "state": "populated",
+            "platform": "macos-web-renderer",
+            "theme": "light",
+            "density": "desktop"
+          }
+        ]
+      },
+      "findings": [],
+      "limitations": []
+    },
+    {
+      "id": "before-playback-announcements-1280",
+      "classification": {
+        "role": "form",
+        "variant": "playback-song-announcements",
+        "state": "expanded-default-announcements-off",
+        "platform": "macos-web-renderer",
+        "theme": "light",
+        "density": "desktop",
+        "confidence": "confirmed"
+      },
+      "findings": [],
+      "limitations": []
+    },
+    {
+      "id": "catalog",
+      "classification": {
+        "role": "table",
+        "variant": "songs-visible-viewport",
+        "state": "paused",
+        "platform": "macos-web-renderer",
+        "theme": "light",
+        "density": "desktop",
+        "confidence": "confirmed"
+      },
+      "findings": [
+        {
+          "id": "catalog-selection-discoverability",
+          "observation": "The visible catalog gives no cue that Command-click (or Command+Space on a focused row) selects songs. The table's aria-label documents Command-click, but that instruction is not visible in either capture. The selection toolbar only appears after selection.",
+          "severity": "low"
+        }
+      ],
+      "limitations": []
+    },
+    {
+      "id": "connection-and-library-onboarding",
+      "classification": {
+        "role": "form",
+        "variant": "first-run-jellyfin-connection-and-library-selection",
+        "confidence": "confirmed",
+        "state": "disconnected connection form; connected library chooser",
+        "profile": "light desktop macOS web renderer, synthetic bridge; captures at 1280x900 and 960x700"
+      },
+      "findings": [
+        {
+          "id": "connection-url-scheme-guidance",
+          "observation": "The server field is type=url and its example uses https://, but the visible form gives no indication that only HTTP/HTTPS addresses without embedded credentials, query, or fragment are accepted. Those restrictions are enforced later in serverAddress; a syntactically valid URL using another scheme can therefore pass browser validation and fail only after Connect.",
+          "severity": "moderate"
+        }
+      ],
+      "limitations": []
+    },
+    {
+      "id": "dj-listening-sidebar",
+      "classification": {
+        "role": "inspector",
+        "variant": "shared listening drawer / DJ playback controls and take details",
+        "state": "open; light theme; desktop density; macOS web renderer",
+        "confidence": "confirmed"
+      },
+      "findings": [],
+      "limitations": []
+    },
+    {
+      "id": "dj-management-and-editor",
+      "classification": [
+        {
+          "role": "list",
+          "variant": "settings DJ management with preview and row actions",
+          "confidence": "confirmed",
+          "evidence_ids": [
+            "before-djs-1280"
+          ]
+        },
+        {
+          "role": "dialog",
+          "variant": "wide DJ create/edit form with three configuration modes",
+          "confidence": "confirmed",
+          "evidence_ids": [
+            "before-dj-editor-1280"
+          ]
+        }
+      ],
+      "findings": [],
+      "limitations": []
+    },
+    {
+      "id": "settings-general",
+      "classification": {
+        "role": "form",
+        "variant": "general-settings-groups",
+        "confidence": "confirmed",
+        "subblocks": [
+          {
+            "role": "action-group",
+            "variant": "appearance-theme-radio-group"
+          },
+          {
+            "role": "detail",
+            "variant": "account-readonly"
+          },
+          {
+            "role": "action-group",
+            "variant": "sign-out-destructive-entry"
+          },
+          {
+            "role": "form",
+            "variant": "music-library-selection"
+          },
+          {
+            "role": "content",
+            "variant": "update-status-and-actions"
+          },
+          {
+            "role": "dialog",
+            "variant": "sign-out-confirmation"
+          }
+        ]
+      },
+      "findings": [],
+      "limitations": []
+    },
+    {
+      "id": "before-inspector-1280",
+      "classification": {
+        "role": "inspector",
+        "variant": "song-details",
+        "state": "selected song; light desktop renderer at 1280\u00d7900, scale 1",
+        "confidence": "confirmed"
+      },
+      "findings": [],
+      "limitations": []
+    },
+    {
+      "id": "provider-keys-form",
+      "classification": {
+        "role": "form",
+        "variant": "provider-keys",
+        "confidence": "confirmed",
+        "profile": {
+          "state": "empty-keys-twitter-help-collapsed",
+          "platform": "macos-web-renderer",
+          "theme": "light",
+          "density": "desktop"
+        }
+      },
+      "findings": [],
+      "limitations": []
+    },
+    {
+      "id": "lyrics-drawer",
+      "classification": {
+        "role": "detail",
+        "variant": "timed-lyrics",
+        "confidence": "confirmed",
+        "profile": {
+          "platform": "macos-web-renderer",
+          "theme": "light",
+          "density": "desktop",
+          "state": "sidebar-and-expanded"
+        }
+      },
+      "findings": [
+        {
+          "id": "lyrics-expanded-modality-semantics",
+          "observation": "Expanded lyrics are exposed as a dialog while the main workspace is made inert and hidden from accessibility APIs, but aria-modal is absent and the player remains outside the hidden region. Source does not show a focus trap. The implementation therefore leaves the expanded view's modal versus nonmodal interaction contract unclear to assistive technology.",
+          "severity": "moderate"
+        }
+      ],
+      "limitations": []
+    },
+    {
+      "id": "navigation-sidebar",
+      "classification": {
+        "role": "navigation",
+        "variant": "music-sidebar",
+        "confidence": "confirmed",
+        "state": "paused, icon-only compact mode",
+        "profile": "light desktop macOS web renderer at 1x; synthetic renderer bridge"
+      },
+      "findings": [
+        {
+          "id": "navigation-resize-focus-visible",
+          "observation": "The resize separator is keyboard-focusable and handles ArrowLeft/ArrowRight/Home/End, but its styles suppress outlines and the global focus-visible rule explicitly excludes .sidebar-resize-handle. No focus-visible replacement is defined. A keyboard user therefore has no visible indication when focus reaches the resize control.",
+          "severity": "moderate"
+        }
+      ],
+      "limitations": []
+    },
+    {
+      "id": "news-story-inspector",
+      "classification": {
+        "role": "inspector",
+        "variant": "news-reader / saved prepared take",
+        "state": "selected, available audio, not yet heard; desktop light",
+        "confidence": "confirmed"
+      },
+      "findings": [],
+      "limitations": []
+    },
+    {
+      "id": "before-news-bucket-960",
+      "classification": {
+        "role": "list",
+        "variant": "news-bucket / upcoming",
+        "confidence": "confirmed"
+      },
+      "findings": [],
+      "limitations": []
+    },
+    {
+      "id": "settings-playback-news-voice",
+      "classification": {
+        "role": "form",
+        "variant": "Settings / Playback subsection disclosure with preference form",
+        "state": "expanded and collapsed captures; light theme; desktop density; macOS web renderer",
+        "confidence": "confirmed"
+      },
+      "findings": [],
+      "limitations": []
+    },
+    {
+      "id": "music-player",
+      "classification": {
+        "role": "action-group",
+        "variant": "music-transport",
+        "confidence": "confirmed",
+        "profile": {
+          "platform": "macos-web-renderer",
+          "theme": "light",
+          "density": "desktop",
+          "state": "paused"
+        }
+      },
+      "findings": [],
+      "limitations": []
+    },
+    {
+      "id": "playlists-collection-flow",
+      "classification": {
+        "role": "detail",
+        "variant": "playlists-list-create-detail",
+        "confidence": "confirmed",
+        "coverage": [
+          "before-playlists-list-960",
+          "before-playlists-create-960",
+          "before-playlists-detail-960"
+        ]
+      },
+      "findings": [],
+      "limitations": []
+    },
+    {
+      "id": "listening-queue",
+      "classification": {
+        "role": "list",
+        "variant": "listening-queue",
+        "state": "paused",
+        "platform": "macos-web-renderer",
+        "theme": "light",
+        "density": "desktop",
+        "confidence": "confirmed"
+      },
+      "findings": [
+        {
+          "id": "queue-remove-affordance",
+          "observation": "In both paused captures, upcoming rows visibly expose a reorder grip, while the remove action is visually absent. Source styles reveal the remove IconButton only on row hover or keyboard focus; its accessible label and tooltip are present in source.",
+          "severity": "minor"
+        }
+      ],
+      "limitations": []
+    },
+    {
+      "id": "before-news-settings-960",
+      "classification": {
+        "role": "form",
+        "variant": "news-room-settings",
+        "state": "preparation-off-provider-keys-missing",
+        "platform": "macos-web-renderer",
+        "theme": "light",
+        "density": "desktop",
+        "confidence": "confirmed"
+      },
+      "findings": [
+        {
+          "id": "room-source-cap-feedback",
+          "observation": "The source chooser disables unchecked sources at 20 selected, but the source group does not explain the limit or why those choices became unavailable.",
+          "severity": "minor"
+        }
+      ],
+      "limitations": []
+    },
+    {
+      "id": "sources-management",
+      "classification": {
+        "role": "list",
+        "variant": "settings / sources management with editor dialog",
+        "confidence": "confirmed"
+      },
+      "findings": [
+        {
+          "id": "sources-rss-url-feedback",
+          "observation": "The RSS / Atom field uses native type=url validation, while the save path also rejects non-HTTP(S) schemes and credential-bearing URLs. Those additional rules are only surfaced by the mutation error after submit.",
+          "severity": "minor"
+        }
+      ],
+      "limitations": []
+    },
+    {
+      "id": "library-search-filters",
+      "classification": {
+        "role": "toolbar",
+        "variant": "library-search-filters",
+        "state": "paused",
+        "platform": "macos-web-renderer",
+        "theme": "light",
+        "density": "desktop",
+        "confidence": "confirmed"
+      },
+      "findings": [
+        {
+          "id": "toolbar-sort-direction-wrap",
+          "observation": "At the 960 px capture, the sort-direction control wraps onto a second row, separated from the Sort select it modifies; Refresh is also alone at the far right of that row. At 1280 px the direction control stays beside Sort. The 960 px toolbar crop and DOM evidence report a 496 px toolbar width and 181.4 px height, compared with 804 px and 122 px at 1280 px. Source uses a wrapping flex row with the sort selector and direction button as separate children and gives Refresh auto left margin.",
+          "severity": "minor"
+        }
+      ],
+      "limitations": []
+    },
+    {
+      "id": "settings-playback-dj-transitions",
+      "classification": {
+        "role": "form",
+        "variant": "Settings / Playback subsection disclosure with transition timing and preview",
+        "state": "expanded and collapsed captures; light theme; desktop density; macOS web renderer",
+        "confidence": "confirmed"
+      },
+      "findings": [
+        {
+          "id": "transition-preview-disclosure-resets-on-edit",
+          "observation": "NewsTransitionPreview is keyed to JSON.stringify(settings). Any timing or mode edit remounts the preview, resetting its native disclosure to closed while also stopping playback.",
+          "severity": "minor"
+        }
+      ],
+      "limitations": []
+    }
+  ],
+  "decisions": [
+    {
+      "finding_id": "toolbar-sort-direction-wrap",
+      "disposition": "fixed",
+      "reason": "Sort criterion and direction now wrap as one group."
+    },
+    {
+      "finding_id": "navigation-resize-focus-visible",
+      "disposition": "fixed",
+      "reason": "Keyboard-only neutral grip; transient pointer divider retained."
+    },
+    {
+      "finding_id": "queue-compact-target-size",
+      "disposition": "fixed",
+      "reason": "Coordinator measured adjacent22px targets; move/grip targets now24px with overlay clearance."
+    },
+    {
+      "finding_id": "transition-preview-disclosure-resets-on-edit",
+      "disposition": "fixed",
+      "reason": "Stable preview mount; settings dependency disposes old context without closing disclosure."
+    },
+    {
+      "finding_id": "room-source-cap-feedback",
+      "disposition": "fixed",
+      "reason": "Associated status explains20-source cap/recovery in both flows; count pluralization corrected."
+    },
+    {
+      "finding_id": "sources-rss-url-feedback",
+      "disposition": "fixed",
+      "reason": "Existing source normalizer supplies input custom validity plus linked visible guidance."
+    },
+    {
+      "finding_id": "connection-url-scheme-guidance",
+      "disposition": "fixed",
+      "reason": "Input custom validity mirrors existing service URL policy and linked guidance."
+    },
+    {
+      "finding_id": "lyrics-expanded-modality-semantics",
+      "disposition": "fixed",
+      "reason": "Aside retains named complementary semantics while covered main is inert."
+    },
+    {
+      "finding_id": "catalog-selection-discoverability",
+      "disposition": "retained-with-reason",
+      "reason": "Conventional macOS Command selection, accessible instructions and existing selection UI retained. Root exercisedCommand-Space selection/Escape; no task-blocking failure evidenced."
+    },
+    {
+      "finding_id": "queue-remove-affordance",
+      "disposition": "retained-with-reason",
+      "reason": "Keep established hover/focus action disclosure and density rather than permanent remove icons. Keyboard action focus remains available."
+    }
+  ]
+}
