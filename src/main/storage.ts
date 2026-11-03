@@ -115,9 +115,9 @@ export function withProviderKeys<T>(operation: () => Promise<T>): Promise<T> {
   return next;
 }
 
-function protectedStorageAvailable() {
+async function protectedStorageAvailable() {
   return (
-    safeStorage.isEncryptionAvailable() &&
+    (await safeStorage.isAsyncEncryptionAvailable()) &&
     (process.platform !== 'linux' ||
       ['gnome_libsecret', 'kwallet', 'kwallet5', 'kwallet6'].includes(safeStorage.getSelectedStorageBackend()))
   );
@@ -135,7 +135,8 @@ async function readProviderKey(provider: KeyProvider): Promise<string | null> {
   if (providerKeys.has(provider)) return providerKeys.get(provider)!;
   let key: string | null = null;
   try {
-    if (protectedStorageAvailable()) key = safeStorage.decryptString(await readFile(location(`${provider}-key.enc`)));
+    if (await protectedStorageAvailable())
+      key = (await safeStorage.decryptStringAsync(await readFile(location(`${provider}-key.enc`)))).result;
   } catch {
     /* No saved key. */
   }
@@ -151,7 +152,7 @@ async function providerKeyStatus(provider: KeyProvider) {
 function writeProviderKey(provider: KeyProvider, key: string | null) {
   return withProviderKeys(async () => {
     if (provider !== 'twitter') await writeSharedProviderKey(provider, key);
-    if (!key || !protectedStorageAvailable()) {
+    if (!key || !(await protectedStorageAvailable())) {
       await unlink(location(`${provider}-key.enc`)).catch((error: NodeJS.ErrnoException) => {
         if (error.code !== 'ENOENT') throw error;
       });
@@ -161,7 +162,7 @@ function writeProviderKey(provider: KeyProvider, key: string | null) {
     } else {
       await mkdir(app.getPath('userData'), { recursive: true, mode: 0o700 });
       const temp = location(`${provider}-key.${randomUUID()}.tmp`);
-      await writeFile(temp, safeStorage.encryptString(key), { mode: 0o600 });
+      await writeFile(temp, await safeStorage.encryptStringAsync(key), { mode: 0o600 });
       await rename(temp, location(`${provider}-key.enc`));
       providerKeys.set(provider, key);
       sessionOnlyKeys.delete(provider);
@@ -199,9 +200,9 @@ export async function atomicWrite(name: string, content: string) {
 
 export async function readConnection(): Promise<StoredConnection | null> {
   try {
-    if (!protectedStorageAvailable()) return null;
+    if (!(await protectedStorageAvailable())) return null;
     const encrypted = await readFile(location('connection.enc'));
-    const record = JSON.parse(safeStorage.decryptString(encrypted)) as StoredConnection;
+    const record = JSON.parse((await safeStorage.decryptStringAsync(encrypted)).result) as StoredConnection;
     if (
       typeof record.token !== 'string' ||
       typeof record.serverUrl !== 'string' ||
@@ -223,7 +224,7 @@ export async function writeConnection(
   record: StoredConnection | null,
   commit: (write: () => boolean) => boolean = (write) => write(),
 ): Promise<boolean> {
-  if (!record || !protectedStorageAvailable()) {
+  if (!record || !(await protectedStorageAvailable())) {
     return commit(() => {
       try {
         unlinkSync(location('connection.enc'));
@@ -236,7 +237,7 @@ export async function writeConnection(
   await mkdir(app.getPath('userData'), { recursive: true, mode: 0o700 });
   const temp = location(`connection.${randomUUID()}.enc.tmp`);
   try {
-    await writeFile(temp, safeStorage.encryptString(JSON.stringify(record)), { mode: 0o600 });
+    await writeFile(temp, await safeStorage.encryptStringAsync(JSON.stringify(record)), { mode: 0o600 });
     // Publish and promote the account in one turn so cancellation cannot split them.
     return commit(() => {
       renameSync(temp, location('connection.enc'));

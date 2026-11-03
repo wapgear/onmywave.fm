@@ -33,57 +33,59 @@ export function Inspector({ song: selected }: { song: Song }) {
   return (
     <section className="song-inspector">
       <Artwork url={song.imageUrl} name={song.name} className="inspector-art" />
-      <h2 ref={heading} tabIndex={-1}>
-        {song.name || 'Untitled song'}
-      </h2>
-      <p className="inspector-artist">{song.artists.join(', ') || 'Unknown artist'}</p>
-      <ErrorNotice
-        key={selected.id}
-        error={detail.error}
-        retryRef={retryFocus.retryRef}
-        retrying={detail.isFetching}
-        retry={() => retryFocus.retry(() => detail.refetch())}
-      />
-      <dl>
-        {[
-          ['Album', song.album || 'Unknown album'],
-          ['Album artist', song.albumArtist],
-          ['Genre', song.genres.join(', ')],
-          ['Year', positive(song.year) ? song.year : undefined],
-          ['Duration', positive(song.duration) ? duration(song.duration) : 'Unavailable'],
-          ['Track', positive(song.trackNumber) ? song.trackNumber : undefined],
-          ['Disc', positive(song.discNumber) ? song.discNumber : undefined],
-          ['Format', song.container],
-          ['Codec', song.codec?.toUpperCase() || unavailable],
-          [
-            'Bitrate',
-            positive(song.bitRate) ? `${Math.round(song.bitRate / 1000).toLocaleString()} kbps` : unavailable,
-          ],
-          [
-            'Sample rate',
-            positive(song.sampleRate)
-              ? `${(song.sampleRate / 1000).toLocaleString(undefined, { maximumFractionDigits: 3 })} kHz`
-              : unavailable,
-          ],
-          ['File size', positive(song.size) ? fileSize(song.size) : unavailable],
-        ]
-          .filter(([, value]) => value !== undefined && value !== '')
-          .map(([name, value]) => (
-            <div key={name}>
-              <dt>{name}</dt>
-              <dd>{value}</dd>
-            </div>
-          ))}
-      </dl>
-      {song.tags.length > 0 && (
-        <div className="tag-list">
-          {song.tags.map((tag) => (
-            <span className="pill" key={tag}>
-              {tag}
-            </span>
-          ))}
-        </div>
-      )}
+      <div className="inspector-details">
+        <h2 ref={heading} className="drawer-song-title" tabIndex={-1}>
+          {song.name || 'Untitled song'}
+        </h2>
+        <p className="inspector-artist drawer-song-artist">{song.artists.join(', ') || 'Unknown artist'}</p>
+        <ErrorNotice
+          key={selected.id}
+          error={detail.error}
+          retryRef={retryFocus.retryRef}
+          retrying={detail.isFetching}
+          retry={() => retryFocus.retry(() => detail.refetch())}
+        />
+        <dl>
+          {[
+            ['Album', song.album || 'Unknown album'],
+            ['Album artist', song.albumArtist],
+            ['Genre', song.genres.join(', ')],
+            ['Year', positive(song.year) ? song.year : undefined],
+            ['Duration', positive(song.duration) ? duration(song.duration) : 'Unavailable'],
+            ['Track', positive(song.trackNumber) ? song.trackNumber : undefined],
+            ['Disc', positive(song.discNumber) ? song.discNumber : undefined],
+            ['Format', song.container],
+            ['Codec', song.codec?.toUpperCase() || unavailable],
+            [
+              'Bitrate',
+              positive(song.bitRate) ? `${Math.round(song.bitRate / 1000).toLocaleString()} kbps` : unavailable,
+            ],
+            [
+              'Sample rate',
+              positive(song.sampleRate)
+                ? `${(song.sampleRate / 1000).toLocaleString(undefined, { maximumFractionDigits: 3 })} kHz`
+                : unavailable,
+            ],
+            ['File size', positive(song.size) ? fileSize(song.size) : unavailable],
+          ]
+            .filter(([, value]) => value !== undefined && value !== '')
+            .map(([name, value]) => (
+              <div key={name}>
+                <dt>{name}</dt>
+                <dd>{value}</dd>
+              </div>
+            ))}
+        </dl>
+        {song.tags.length > 0 && (
+          <div className="tag-list">
+            {song.tags.map((tag) => (
+              <span className="pill" key={tag}>
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
     </section>
   );
 }

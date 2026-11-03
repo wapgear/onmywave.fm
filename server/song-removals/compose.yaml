@@ -1,0 +1,55 @@
+services:
+  song-removals:
+    build:
+      context: ./server/song-removals
+    image: onmywave-song-removals:local
+    restart: unless-stopped
+    depends_on:
+      - jellyfin
+    environment:
+      JELLYFIN_URL: http://jellyfin:8096
+      ALLOWED_USER_IDS: ${ONMYWAVE_ALLOWED_USER_IDS:?Set allowed Jellyfin user UUIDs, separated by commas}
+      WORKER_TOKEN_FILE: /run/secrets/song-removals-worker-token
+      DATABASE_PATH: /data/removals.sqlite3
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    volumes:
+      - ./song-removals:/data
+      - ./slskd/secrets/song-removals-worker-token:/run/secrets/song-removals-worker-token:ro
+
+  song-removals-gateway:
+    image: nginx:1.29-alpine
+    restart: unless-stopped
+    user: '101:101'
+    entrypoint: []
+    command:
+      - /bin/sh
+      - -ec
+      - |
+        mkdir -p /tmp/nginx/client /tmp/nginx/proxy
+        exec nginx -g 'daemon off;'
+    depends_on:
+      - jellyfin
+      - song-removals
+    ports:
+      - ${MUSIC_BIND_IP:?Set MUSIC_BIND_IP}:8097:8097/tcp
+    volumes:
+      - ./server/song-removals/nginx.conf:/etc/nginx/nginx.conf:ro
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    tmpfs:
+      - /tmp:size=64m,uid=101,gid=101,mode=0700
+
+  music-pipeline:
+    environment:
+      SONG_REMOVALS_API_URL: http://song-removals:8080
+      SONG_REMOVALS_WORKER_TOKEN_FILE: /workspace/slskd/secrets/song-removals-worker-token
+    volumes:
+      - ./slskd/secrets/song-removals-worker-token:/workspace/slskd/secrets/song-removals-worker-token:ro

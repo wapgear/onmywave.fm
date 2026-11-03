@@ -1,0 +1,497 @@
+{
+  "results": [
+    {
+      "width": 1440,
+      "height": 900,
+      "direction": "expand",
+      "before": {
+        "x": 1124,
+        "y": 110,
+        "width": 280,
+        "height": 280
+      },
+      "target": {
+        "x": 316,
+        "y": 122,
+        "width": 433.71875,
+        "height": 433.71875
+      },
+      "frames": [
+        {
+          "progress": 0,
+          "x": 1124,
+          "y": 110,
+          "width": 280,
+          "height": 280
+        },
+        {
+          "progress": 0.1,
+          "x": 803.472,
+          "y": 114.76,
+          "width": 340.969,
+          "height": 340.969
+        },
+        {
+          "progress": 0.25,
+          "x": 504.034,
+          "y": 119.207,
+          "width": 397.938,
+          "height": 397.938
+        },
+        {
+          "progress": 0.5,
+          "x": 359.568,
+          "y": 121.353,
+          "width": 425.422,
+          "height": 425.422
+        },
+        {
+          "progress": 0.75,
+          "x": 323.185,
+          "y": 121.893,
+          "width": 432.344,
+          "height": 432.344
+        },
+        {
+          "progress": 1,
+          "x": 316,
+          "y": 122,
+          "width": 433.719,
+          "height": 433.719
+        }
+      ]
+    },
+    {
+      "width": 1440,
+      "height": 900,
+      "direction": "collapse",
+      "before": {
+        "x": 316,
+        "y": 122,
+        "width": 433.71875,
+        "height": 433.71875
+      },
+      "target": {
+        "x": 1124,
+        "y": 110,
+        "width": 280,
+        "height": 280
+      },
+      "frames": [
+        {
+          "progress": 0,
+          "x": 316,
+          "y": 122,
+          "width": 433.719,
+          "height": 433.719
+        },
+        {
+          "progress": 0.1,
+          "x": 636.528,
+          "y": 117.24,
+          "width": 372.734,
+          "height": 372.734
+        },
+        {
+          "progress": 0.25,
+          "x": 935.966,
+          "y": 112.793,
+          "width": 315.766,
+          "height": 315.766
+        },
+        {
+          "progress": 0.5,
+          "x": 1080.43,
+          "y": 110.647,
+          "width": 288.281,
+          "height": 288.281
+        },
+        {
+          "progress": 0.75,
+          "x": 1116.82,
+          "y": 110.107,
+          "width": 281.359,
+          "height": 281.359
+        },
+        {
+          "progress": 1,
+          "x": 1124,
+          "y": 110,
+          "width": 280,
+          "height": 280
+        }
+      ]
+    },
+    {
+      "width": 960,
+      "height": 700,
+      "direction": "expand",
+      "before": {
+        "x": 644,
+        "y": 110,
+        "width": 280,
+        "height": 280
+      },
+      "target": {
+        "x": 256,
+        "y": 122,
+        "width": 276.40625,
+        "height": 276.40625
+      },
+      "frames": [
+        {
+          "progress": 0,
+          "x": 644,
+          "y": 110,
+          "width": 280,
+          "height": 280
+        },
+        {
+          "progress": 0.1,
+          "x": 490.083,
+          "y": 114.76,
+          "width": 278.562,
+          "height": 278.562
+        },
+        {
+          "progress": 0.25,
+          "x": 346.294,
+          "y": 119.207,
+          "width": 277.234,
+          "height": 277.234
+        },
+        {
+          "progress": 0.5,
+          "x": 276.921,
+          "y": 121.353,
+          "width": 276.594,
+          "height": 276.594
+        },
+        {
+          "progress": 0.75,
+          "x": 259.45,
+          "y": 121.893,
+          "width": 276.438,
+          "height": 276.438
+        },
+        {
+          "progress": 1,
+          "x": 256,
+          "y": 122,
+          "width": 276.391,
+          "height": 276.391
+        }
+      ]
+    },
+    {
+      "width": 960,
+      "height": 700,
+      "direction": "collapse",
+      "before": {
+        "x": 256,
+        "y": 122,
+        "width": 276.40625,
+        "height": 276.40625
+      },
+      "target": {
+        "x": 644,
+        "y": 110,
+        "width": 280,
+        "height": 280
+      },
+      "frames": [
+        {
+          "progress": 0,
+          "x": 256,
+          "y": 122,
+          "width": 276.391,
+          "height": 276.406
+        },
+        {
+          "progress": 0.1,
+          "x": 409.917,
+          "y": 117.24,
+          "width": 277.828,
+          "height": 277.828
+        },
+        {
+          "progress": 0.25,
+          "x": 553.706,
+          "y": 112.793,
+          "width": 279.156,
+          "height": 279.156
+        },
+        {
+          "progress": 0.5,
+          "x": 623.079,
+          "y": 110.647,
+          "width": 279.797,
+          "height": 279.797
+        },
+        {
+          "progress": 0.75,
+          "x": 640.55,
+          "y": 110.107,
+          "width": 279.953,
+          "height": 279.953
+        },
+        {
+          "progress": 1,
+          "x": 644,
+          "y": 110,
+          "width": 280,
+          "height": 280
+        }
+      ]
+    },
+    {
+      "width": 800,
+      "height": 700,
+      "direction": "expand",
+      "before": {
+        "x": 484,
+        "y": 110,
+        "width": 280,
+        "height": 280
+      },
+      "target": {
+        "x": 248,
+        "y": 122,
+        "width": 213.1875,
+        "height": 213.1875
+      },
+      "frames": [
+        {
+          "progress": 0,
+          "x": 484,
+          "y": 110,
+          "width": 280,
+          "height": 280
+        },
+        {
+          "progress": 0.1,
+          "x": 390.38,
+          "y": 114.76,
+          "width": 253.484,
+          "height": 253.484
+        },
+        {
+          "progress": 0.25,
+          "x": 302.921,
+          "y": 119.207,
+          "width": 228.734,
+          "height": 228.734
+        },
+        {
+          "progress": 0.5,
+          "x": 260.725,
+          "y": 121.353,
+          "width": 216.781,
+          "height": 216.781
+        },
+        {
+          "progress": 0.75,
+          "x": 250.098,
+          "y": 121.893,
+          "width": 213.781,
+          "height": 213.781
+        },
+        {
+          "progress": 1,
+          "x": 248,
+          "y": 122,
+          "width": 213.188,
+          "height": 213.188
+        }
+      ]
+    },
+    {
+      "width": 800,
+      "height": 700,
+      "direction": "collapse",
+      "before": {
+        "x": 248,
+        "y": 122,
+        "width": 213.1875,
+        "height": 213.1875
+      },
+      "target": {
+        "x": 484,
+        "y": 110,
+        "width": 280,
+        "height": 280
+      },
+      "frames": [
+        {
+          "progress": 0,
+          "x": 248,
+          "y": 122,
+          "width": 213.188,
+          "height": 213.188
+        },
+        {
+          "progress": 0.1,
+          "x": 341.62,
+          "y": 117.24,
+          "width": 239.688,
+          "height": 239.688
+        },
+        {
+          "progress": 0.25,
+          "x": 429.079,
+          "y": 112.793,
+          "width": 264.438,
+          "height": 264.438
+        },
+        {
+          "progress": 0.5,
+          "x": 471.275,
+          "y": 110.647,
+          "width": 276.391,
+          "height": 276.391
+        },
+        {
+          "progress": 0.75,
+          "x": 481.902,
+          "y": 110.107,
+          "width": 279.391,
+          "height": 279.391
+        },
+        {
+          "progress": 1,
+          "x": 484,
+          "y": 110,
+          "width": 280,
+          "height": 280
+        }
+      ]
+    },
+    {
+      "width": 640,
+      "height": 480,
+      "direction": "expand",
+      "before": {
+        "x": 324,
+        "y": 110,
+        "width": 280,
+        "height": 280
+      },
+      "target": {
+        "x": 240,
+        "y": 122,
+        "width": 240,
+        "height": 240
+      },
+      "frames": [
+        {
+          "progress": 0,
+          "x": 324,
+          "y": 110,
+          "width": 280,
+          "height": 280
+        },
+        {
+          "progress": 0.1,
+          "x": 290.678,
+          "y": 114.76,
+          "width": 264.125,
+          "height": 264.125
+        },
+        {
+          "progress": 0.25,
+          "x": 259.548,
+          "y": 119.207,
+          "width": 249.297,
+          "height": 249.297
+        },
+        {
+          "progress": 0.5,
+          "x": 244.529,
+          "y": 121.353,
+          "width": 242.156,
+          "height": 242.156
+        },
+        {
+          "progress": 0.75,
+          "x": 240.747,
+          "y": 121.893,
+          "width": 240.344,
+          "height": 240.344
+        },
+        {
+          "progress": 1,
+          "x": 240,
+          "y": 122,
+          "width": 240,
+          "height": 240
+        }
+      ]
+    },
+    {
+      "width": 640,
+      "height": 480,
+      "direction": "collapse",
+      "before": {
+        "x": 240,
+        "y": 122,
+        "width": 240,
+        "height": 240
+      },
+      "target": {
+        "x": 324,
+        "y": 110,
+        "width": 280,
+        "height": 280
+      },
+      "frames": [
+        {
+          "progress": 0,
+          "x": 240,
+          "y": 122,
+          "width": 240,
+          "height": 240
+        },
+        {
+          "progress": 0.1,
+          "x": 273.322,
+          "y": 117.24,
+          "width": 255.859,
+          "height": 255.859
+        },
+        {
+          "progress": 0.25,
+          "x": 304.452,
+          "y": 112.793,
+          "width": 270.688,
+          "height": 270.688
+        },
+        {
+          "progress": 0.5,
+          "x": 319.471,
+          "y": 110.647,
+          "width": 277.828,
+          "height": 277.828
+        },
+        {
+          "progress": 0.75,
+          "x": 323.253,
+          "y": 110.107,
+          "width": 279.641,
+          "height": 279.641
+        },
+        {
+          "progress": 1,
+          "x": 324,
+          "y": 110,
+          "width": 280,
+          "height": 280
+        }
+      ]
+    }
+  ],
+  "reversal": true,
+  "panelSwitch": true,
+  "dismissal": true,
+  "reducedMotion": true,
+  "errors": []
+}

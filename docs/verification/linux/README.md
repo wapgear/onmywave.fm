@@ -23,3 +23,11 @@ All pairs use 1280 × 800, light appearance, the same fictional catalog, and the
 | About and updates | [Before](before-about.png) | [After](after-about.png) |
 | Provider-key help | [Before](before-providers.png) | [After](after-providers.png) |
 | Connection help | [Before](before-connection.png) | [After](after-connection.png) |
+
+## Integration with 0.7.6
+
+Merged current main (`3f31359`) while preserving its asynchronous credential encryption, song removal, title-click focus, double-click playback, and track-number width. The Linux backend guard now awaits asynchronous encryption availability before allowing persistence.
+
+`pnpm run check` passed and `pnpm run package:linux` produced `onmywave-0.7.6-linux-x86_64.AppImage`. The focused renderer checks passed again for Linux and macOS platform detection at 1280 × 800 and 960 × 640, including single-title-click focus without playback and double-click playback. See [integration results](merge-renderer-results.json). Native Linux limitations above still apply.
+
+The [current-main baseline](merge-before-player.png) and [integrated result](merge-after-player.png) use the same fictional catalog, light appearance, 1280 × 800 viewport, first track paused at 0:00, and Ctrl-click on the second row. Both captures were visually inspected.

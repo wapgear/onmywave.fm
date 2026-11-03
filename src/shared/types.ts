@@ -374,6 +374,10 @@ export type LocalStateSnapshot = LocalState & { revision: number };
 
 export type PlaybackResource = { url: string; offsetSeconds: number; transcoded: boolean };
 
+export type RemovedSong = { songId: string; removedAt: string; purgeAfter: string | null };
+
+export type SongRemovalStatus = { songs: RemovedSong[]; pending: number; syncError?: string };
+
 export interface WaveApi {
   getUpdateStatus(): Promise<Result<UpdateStatus>>;
   checkForUpdates(): Promise<Result<UpdateStatus>>;
@@ -396,6 +400,8 @@ export interface WaveApi {
   album(id: string): Promise<Result<Album>>;
   albumTracks(id: string): Promise<Result<Song[]>>;
   song(id: string): Promise<Result<Song>>;
+  removeSong(id: string): Promise<Result<RemovedSong>>;
+  removedSongs(): Promise<Result<SongRemovalStatus>>;
   lyrics(id: string): Promise<Result<SongLyrics>>;
   playlists(): Promise<Result<PlaylistLibrary>>;
   playlistPermission(id: string): Promise<Result<boolean | null>>;

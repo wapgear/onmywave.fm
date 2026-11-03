@@ -61,6 +61,7 @@ import {
   reconcilePreparedNews,
 } from './prepared-news';
 import { prepareSongHandoff, cancelSongHandoff } from './song-handoffs';
+import { SongRemovalStore } from './song-removals';
 import {
   readTwitterKey,
   twitterKeyStatus,
@@ -482,6 +483,7 @@ function registerIpc() {
         invalid();
       if (signingOut) throw new ServiceError('invalid', 'Wait for sign-out to finish before signing in.');
       await service.connect(input);
+      void service.removedSongs().catch(() => {});
       if (service.connection() && !signingOut && newsRecoveryStatus.phase === 'ready') news.resumeGeneration();
       return service.connection();
     },
@@ -529,6 +531,14 @@ function registerIpc() {
     libraryFilters: () => service.libraryFilters(),
     artists: () => service.artists(),
     artistTracks: (input) => service.artistTracks(input),
+    removeSong: (input: string) => {
+      if (!text(input, 36)) invalid();
+      return service.removeSong(input);
+    },
+    removedSongs: (input) => {
+      if (input !== undefined) invalid();
+      return service.removedSongs();
+    },
     selectLibraries: (input) => service.selectLibraries(input),
     songs: (input: CatalogRequest) => readCatalog(input, (query, signal) => service.songs(query, signal)),
     albums: (input: CatalogRequest) => readCatalog(input, (query, signal) => service.albums(query, signal)),
@@ -1144,6 +1154,7 @@ app
     persistentDeviceIdentity = identity.persistent;
     service = new JellyfinService({
       deviceId,
+      removals: new SongRemovalStore(app.getPath('userData')),
       persistConnection: async (value, commit) => {
         await writeConnection(
           value && persistentDeviceIdentity ? { ...value, id: `${value.serverUrl}|${value.userId}` } : null,
@@ -1201,7 +1212,10 @@ app
     session.defaultSession.setPermissionRequestHandler((_webContents, _permission, callback) => callback(false));
     session.defaultSession.setPermissionCheckHandler(() => false);
     const stored = await readConnection();
-    if (stored) service.restore({ ...stored, sessionOnly: !persistentDeviceIdentity });
+    if (stored) {
+      service.restore({ ...stored, sessionOnly: !persistentDeviceIdentity });
+      void service.removedSongs().catch(() => {});
+    }
     registerMedia(
       () => {
         const current = service.exportSession();

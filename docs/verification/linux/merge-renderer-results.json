@@ -1,0 +1,47 @@
+{
+  "host": "macOS Chrome with navigator.platform overridden; fixture IPC/audio; no live services",
+  "results": [
+    {
+      "platform": "Linux x86_64",
+      "viewports": [
+        "1280x800",
+        "960x640"
+      ],
+      "passed": true,
+      "checks": [
+        "single title click focuses without playing; double click plays",
+        "modifier click selects and toggles without playback",
+        "select all 80 loaded songs",
+        "Escape clears selection",
+        "search shortcut focuses input",
+        "track shortcuts ignore editable controls",
+        "next and previous track",
+        "platform shortcut labels",
+        "Space toggles playback",
+        "no horizontal overflow",
+        "no renderer errors"
+      ]
+    },
+    {
+      "platform": "MacIntel",
+      "viewports": [
+        "1280x800",
+        "960x640"
+      ],
+      "passed": true,
+      "checks": [
+        "single title click focuses without playing; double click plays",
+        "modifier click selects and toggles without playback",
+        "select all 80 loaded songs",
+        "Escape clears selection",
+        "search shortcut focuses input",
+        "track shortcuts ignore editable controls",
+        "next and previous track",
+        "platform shortcut labels",
+        "Space toggles playback",
+        "no horizontal overflow",
+        "no renderer errors"
+      ]
+    }
+  ]
+}

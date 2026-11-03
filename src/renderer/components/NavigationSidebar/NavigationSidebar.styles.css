@@ -49,6 +49,9 @@
 .sidebar .sidebar-nav-button.active {
   background: var(--nav-active);
 }
+.sidebar .sidebar-nav-button:active {
+  translate: none;
+}
 .sidebar .sidebar-toggle {
   width: 28px;
   height: 32px;

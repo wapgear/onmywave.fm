@@ -13,7 +13,10 @@ import type {
   PlaylistEntry,
   Song,
   SongLyrics,
+  RemovedSong,
+  SongRemovalStatus,
 } from '../shared/types';
+import { isRemovedSong, songIdentity, SongRemovalStore } from './song-removals';
 
 export class ServiceError extends Error {
   constructor(
@@ -90,6 +93,7 @@ type Deps = {
     operation: () => Promise<void>,
     canStart: () => boolean,
   ) => Promise<void>;
+  removals?: SongRemovalStore;
 };
 
 const fields = 'Genres,Tags,MediaSources,MediaStreams,DateCreated,Overview,SortName,ParentId';
@@ -203,6 +207,7 @@ export class JellyfinService {
   private catalogLoads = new Map<string, CatalogLoad>();
   private lyricsRequest: AbortController | null = null;
   private catalogControllers = new Set<AbortController>();
+  private removalSyncs = new Map<string, Promise<string | undefined>>();
   constructor(private deps: Deps) {}
   cancelCatalogLoads(): void {
     for (const load of this.catalogLoads.values()) load.controller.abort();
@@ -341,6 +346,110 @@ export class JellyfinService {
     if (!this.session) throw new ServiceError('unauthorized', 'Sign in to Jellyfin.');
     return this.session;
   }
+  private removalConnectionId(session: Session): string {
+    return `${session.serverUrl}|${session.userId}`;
+  }
+  private async removedIds(session: Session): Promise<Set<string>> {
+    if (!this.deps.removals) return new Set();
+    return new Set(
+      (await this.deps.removals.list(this.removalConnectionId(session))).map((item) => songIdentity(item.songId)),
+    );
+  }
+  private invalidateRemovedCatalog(): void {
+    this.catalogSnapshots.clear();
+    this.cancelCatalogLoads();
+  }
+  async removeSong(value: string): Promise<RemovedSong> {
+    const id = validId(value);
+    const session = this.requireSession();
+    const store = this.deps.removals;
+    if (!store) throw new ServiceError('unsupported', 'Song removal is unavailable.');
+    const connectionId = this.removalConnectionId(session);
+    const existing = (await store.list(connectionId)).find((item) => songIdentity(item.songId) === songIdentity(id));
+    if (this.session !== session)
+      throw new ServiceError('invalid', 'The connection changed. Try removing the song again.');
+    if (existing) {
+      void this.syncRemovals(session).catch(() => {});
+      return existing;
+    }
+    const record = { songId: songIdentity(id), removedAt: new Date().toISOString(), purgeAfter: null };
+    await store.merge(connectionId, [record]);
+    if (this.session !== session)
+      throw new ServiceError('invalid', 'The connection changed. Try removing the song again.');
+    const saved =
+      (await store.list(connectionId)).find((item) => songIdentity(item.songId) === songIdentity(id)) ?? record;
+    this.invalidateRemovedCatalog();
+    void this.syncRemovals(session).catch(() => {});
+    return saved;
+  }
+  async removedSongs(): Promise<SongRemovalStatus> {
+    const session = this.requireSession();
+    const syncError = await this.syncRemovals(session);
+    if (this.session !== session) throw new ServiceError('invalid', 'The connection changed. Refresh removed songs.');
+    const songs = (await this.deps.removals?.list(this.removalConnectionId(session))) ?? [];
+    const pending = songs.filter((item) => item.purgeAfter === null).length;
+    return { songs, pending, ...(syncError ? { syncError } : {}) };
+  }
+  private syncRemovals(session: Session): Promise<string | undefined> {
+    const store = this.deps.removals;
+    if (!store) return Promise.resolve('Song removal is unavailable.');
+    const connectionId = this.removalConnectionId(session);
+    const existing = this.removalSyncs.get(connectionId);
+    if (existing) return existing;
+    const sync = (async () => {
+      try {
+        const local = await store.list(connectionId);
+        for (const item of local.filter((record) => record.purgeAfter === null)) {
+          if (this.session !== session) throw new ServiceError('invalid', 'The connection changed.');
+          const result = await this.requestJson(
+            session.serverUrl,
+            `/OnMyWave/RemovedSongs/${item.songId}`,
+            { method: 'POST', body: JSON.stringify({ removedAt: item.removedAt }) },
+            session.token,
+          );
+          if (this.session !== session) throw new ServiceError('invalid', 'The connection changed.');
+          if (
+            !isRemovedSong(result) ||
+            result.purgeAfter === null ||
+            songIdentity(result.songId) !== songIdentity(item.songId)
+          )
+            throw new ServiceError('server', 'The server returned an invalid song removal record.');
+          await store.merge(connectionId, [result]);
+        }
+        if (this.session !== session) throw new ServiceError('invalid', 'The connection changed.');
+        const remote = await this.requestJson<{ items: unknown }>(
+          session.serverUrl,
+          '/OnMyWave/RemovedSongs',
+          {},
+          session.token,
+        );
+        if (this.session !== session) throw new ServiceError('invalid', 'The connection changed.');
+        if (
+          !Array.isArray(remote.items) ||
+          !remote.items.every((item) => isRemovedSong(item) && item.purgeAfter !== null)
+        )
+          throw new ServiceError('server', 'The server returned an invalid song removal list.');
+        const imported = remote.items as RemovedSong[];
+        const known = new Set((await store.list(connectionId)).map((item) => songIdentity(item.songId)));
+        await store.merge(connectionId, imported);
+        if (this.session !== session) throw new ServiceError('invalid', 'The connection changed.');
+        if (imported.some((item) => !known.has(songIdentity(item.songId)))) this.invalidateRemovedCatalog();
+        return undefined;
+      } catch (error) {
+        if (this.session !== session) return 'The Jellyfin connection changed before song removals could sync.';
+        return error instanceof ServiceError
+          ? error.message
+          : 'Song removals could not sync. Check the server connection.';
+      }
+    })();
+    this.removalSyncs.set(connectionId, sync);
+    void sync
+      .finally(() => {
+        if (this.removalSyncs.get(connectionId) === sync) this.removalSyncs.delete(connectionId);
+      })
+      .catch(() => {});
+    return sync;
+  }
   private async readCurrentSession<T>(operation: () => Promise<T>): Promise<T> {
     const session = this.requireSession();
     const ensureCurrent = () => {
@@ -428,8 +537,8 @@ export class JellyfinService {
       return response;
     });
   }
-  private requestJson(base: string, path: string, init: RequestInit = {}, token?: string): Promise<Item> {
-    return this.request(base, path, init, token, (response) => response.json());
+  private requestJson<T = Item>(base: string, path: string, init: RequestInit = {}, token?: string): Promise<T> {
+    return this.request(base, path, init, token, (response) => response.json() as Promise<T>);
   }
   private async json(path: string, init?: RequestInit): Promise<Item> {
     const session = this.requireSession();
@@ -614,10 +723,12 @@ export class JellyfinService {
     for (const value of [query.search, query.genre, query.tag])
       if (value !== undefined && (typeof value !== 'string' || value.length > 500))
         throw new ServiceError('invalid', 'Invalid catalog filter.');
+    const removed = type === 'Audio' ? await this.removedIds(s) : new Set<string>();
+    if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh your library.');
     if (!s.selectedLibraryIds.length) return { items: [], total: 0, start };
     if (query.search?.trim())
-      return this.searchCatalog(type, { ...query, search: query.search.trim() }, sort, start, limit, signal);
-    const multiple = s.selectedLibraryIds.length > 1;
+      return this.searchCatalog(type, { ...query, search: query.search.trim() }, sort, start, limit, signal, removed);
+    const multiple = s.selectedLibraryIds.length > 1 || removed.size > 0;
     const snapshotKey = JSON.stringify([
       type,
       query.genre || '',
@@ -677,6 +788,7 @@ export class JellyfinService {
       if (multiple) {
         if (this.session !== s) throw new ServiceError('invalid', 'The library changed. Refresh your collection.');
         items = [...new Map(items.map((item) => [itemIdentity(item.Id), item])).values()];
+        if (type === 'Audio' && removed.size) items = items.filter((item) => !removed.has(itemIdentity(item.Id)));
         const total = items.length;
         const compareText = (a: string | undefined, b: string | undefined) =>
           catalogCollator.compare(String(a || ''), String(b || ''));
@@ -726,6 +838,7 @@ export class JellyfinService {
     start: number,
     limit: number,
     signal: AbortSignal,
+    removed: Set<string>,
   ): Promise<Page<Item>> {
     const session = this.requireSession();
     const term = query.search!;
@@ -756,7 +869,7 @@ export class JellyfinService {
     const load: CatalogLoad = {
       session,
       controller,
-      promise: this.readSearchCatalog(type, query, sort, controller.signal),
+      promise: this.readSearchCatalog(type, query, sort, controller.signal, removed),
       subscribers: 0,
       settled: false,
     };
@@ -771,6 +884,7 @@ export class JellyfinService {
     query: CatalogQuery,
     sort: string,
     signal: AbortSignal,
+    removed: Set<string>,
   ): Promise<Page<Item>> {
     const session = this.requireSession();
     const term = query.search!;
@@ -806,7 +920,8 @@ export class JellyfinService {
       }
     };
     const add = (items: Item[]) => {
-      for (const item of items) matches.set(itemIdentity(item.Id), item);
+      for (const item of items)
+        if (type !== 'Audio' || !removed.has(itemIdentity(item.Id))) matches.set(itemIdentity(item.Id), item);
       if (matches.size > maximum)
         throw new ServiceError(
           'unsupported',
@@ -1013,7 +1128,8 @@ export class JellyfinService {
   async albumTracks(value: string): Promise<Song[]> {
     return this.readCurrentSession(async () => {
       const id = validId(value),
-        s = this.requireSession();
+        s = this.requireSession(),
+        removed = await this.removedIds(s);
       return (
         await this.allItems(`/Users/${s.userId}/Items`, {
           ParentId: id,
@@ -1021,13 +1137,17 @@ export class JellyfinService {
           IncludeItemTypes: 'Audio',
           SortBy: 'ParentIndexNumber,IndexNumber,SortName',
         })
-      ).map((item) => this.songItem(item));
+      )
+        .filter((item) => !removed.has(itemIdentity(item.Id)))
+        .map((item) => this.songItem(item));
     });
   }
   async song(value: string): Promise<Song> {
     return this.readCurrentSession(async () => {
       const id = validId(value),
         s = this.requireSession();
+      if ((await this.removedIds(s)).has(itemIdentity(id)))
+        throw new ServiceError('not-found', 'This song has been removed from your library.');
       const item = await this.json(`/Users/${s.userId}/Items/${id}`);
       if (item.Type !== 'Audio') throw new ServiceError('invalid', 'This item is not a song.');
       return this.songItem(item);
@@ -1178,7 +1298,7 @@ export class JellyfinService {
       if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
       const canEdit = await this.playlistPermission(id);
       if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
-      const entries = await this.entries(id);
+      const [entries, removed] = await Promise.all([this.entries(id), this.removedIds(s)]);
       if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
       return {
         ...this.playlistItem(item),
@@ -1189,7 +1309,7 @@ export class JellyfinService {
             : canEdit === false
               ? 'Your account can listen to this playlist but cannot edit it.'
               : 'Jellyfin could not confirm edit permission. The server will check each change.',
-        entries,
+        entries: entries.filter((entry) => !removed.has(itemIdentity(entry.song.id))),
       };
     });
   }
@@ -1349,12 +1469,25 @@ export class JellyfinService {
       throw new ServiceError('invalid', 'Invalid playlist position.');
     return this.serialize(id, async () => {
       const current = await this.validateEntryChanges(id, [entry]);
-      if (input.index >= current.length)
+      const removed = await this.removedIds(session);
+      const entryKey = playlistEntryIdentity(entry);
+      const remaining = current.filter((item) => playlistEntryIdentity(item.entryId) !== entryKey);
+      const visible = remaining.filter((item) => !removed.has(itemIdentity(item.song.id)));
+      if (input.index > visible.length)
         throw new ServiceError('invalid', 'The playlist changed. Refresh before moving this entry.');
+      const anchor = visible[input.index];
+      const lastVisible = visible.at(-1);
+      const targetIndex = anchor
+        ? remaining.findIndex((item) => playlistEntryIdentity(item.entryId) === playlistEntryIdentity(anchor.entryId))
+        : lastVisible
+          ? remaining.findIndex(
+              (item) => playlistEntryIdentity(item.entryId) === playlistEntryIdentity(lastVisible.entryId),
+            ) + 1
+          : remaining.length;
       const write = async () => {
         if (this.session !== session)
           throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
-        await this.authenticatedRequest(`/Playlists/${id}/Items/${entry}/Move/${input.index}`, { method: 'POST' });
+        await this.authenticatedRequest(`/Playlists/${id}/Items/${entry}/Move/${targetIndex}`, { method: 'POST' });
       };
       return this.runPlaylistWrite(session, id, true, write);
     });

@@ -145,10 +145,10 @@ export function Lyrics({ connectionId, song, expanded }: { connectionId: string;
       <div className="lyrics-heading">
         <div>
           <span className="lyrics-source">Jellyfin lyrics</span>
-          <h3 ref={heading} tabIndex={-1}>
+          <h3 ref={heading} className="drawer-song-title" tabIndex={-1}>
             {song.name || 'Untitled song'}
           </h3>
-          <p>{song.artists.join(', ') || 'Unknown artist'}</p>
+          <p className="drawer-song-artist">{song.artists.join(', ') || 'Unknown artist'}</p>
         </div>
       </div>
       {synced && !following && (
