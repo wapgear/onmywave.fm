@@ -17,7 +17,7 @@ function useUpdates() {
 function statusText(status: UpdateStatus) {
   switch (status.phase) {
     case 'unsupported':
-      return 'Automatic updates are available in the installed Apple silicon macOS app.';
+      return 'Automatic updates are not available for this build. Install a newer version manually to update.';
     case 'checking':
       return 'Checking for updates…';
     case 'current':
@@ -119,7 +119,7 @@ export function UpdateSettings() {
   return (
     <section className="app-update-settings">
       <h2>About and updates</h2>
-      <p className="settings-description">onmywave.fm for macOS{query.data ? ` · ${query.data.currentVersion}` : ''}</p>
+      <p className="settings-description">onmywave.fm{query.data ? ` · ${query.data.currentVersion}` : ''}</p>
       <ErrorNotice error={query.error} retry={() => query.refetch()} retrying={query.isFetching} />
       {query.data && <UpdateControls status={query.data} />}
     </section>

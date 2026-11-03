@@ -15,6 +15,7 @@ import {
 
 import { editablePlaylistEntryIds } from '../../../shared/playlist-entries';
 import type { PlaylistEntry, Song } from '../../../shared/types';
+import { isMac, primaryModifier } from '../../shortcuts';
 import { IconButton } from '../IconButton/IconButton.component';
 import { Artwork, Dialog, DialogActions, ErrorNotice, TrackDuration } from '../Shared';
 import { useSongRemoval } from './hooks/useSongRemoval';
@@ -190,9 +191,10 @@ export function TrackTable({
     const target = event.target as HTMLElement;
     const playbackControl = target.closest('.artwork-button,.song-name');
     if (target.closest('button,input,summary,[popover]') && !playbackControl) return;
-    if (event.ctrlKey || event.button !== 0 || (!event.metaKey && event.detail > 1)) return;
-    if (!target.closest('.artwork-button') || event.metaKey) event.currentTarget.focus({ preventScroll: true });
-    if (event.metaKey) {
+    const selecting = primaryModifier(event);
+    if ((isMac && event.ctrlKey) || event.button !== 0 || (!selecting && event.detail > 1)) return;
+    if (!target.closest('.artwork-button') || selecting) event.currentTarget.focus({ preventScroll: true });
+    if (selecting) {
       event.preventDefault();
       choose(index, event.shiftKey);
     } else if (target.closest('.artwork-button') || event.detail === 0) activate(index);
@@ -205,21 +207,21 @@ export function TrackTable({
   }
   function rowKey(event: KeyboardEvent<HTMLTableRowElement>, index: number) {
     if (event.target !== event.currentTarget) return;
-    if (event.metaKey && event.key.toLowerCase() === 'a') {
+    if (primaryModifier(event) && event.key.toLowerCase() === 'a') {
       event.preventDefault();
       const next = new Map(selected);
       for (const row of rows) next.set(row.key, row.song);
       select(next);
     } else if (event.key === ' ' || event.key === 'Enter') {
       event.preventDefault();
-      if (event.metaKey) choose(index, event.shiftKey);
+      if (primaryModifier(event)) choose(index, event.shiftKey);
       else activate(index);
     } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
       event.preventDefault();
       const next = Math.max(0, Math.min(rows.length - 1, index + (event.key === 'ArrowUp' ? -1 : 1)));
       if (rowWindow) rowWindow.focusRow(next);
       else event.currentTarget.parentElement?.querySelector<HTMLElement>(`[data-track-index="${next}"]`)?.focus();
-      if (event.metaKey) choose(next, event.shiftKey);
+      if (primaryModifier(event)) choose(next, event.shiftKey);
     } else if (event.key === 'Escape' && selected.size) {
       event.preventDefault();
       select(new Map());
@@ -240,7 +242,7 @@ export function TrackTable({
         <table
           className="song-table"
           style={{ '--track-number-width': `${String(offset + rows.length).length}ch` } as CSSProperties}
-          aria-label="Songs. Command-click to select songs."
+          aria-label={`Songs. ${isMac ? 'Command' : 'Control'}-click to select songs.`}
           aria-rowcount={rows.length + 1}
         >
           <thead>

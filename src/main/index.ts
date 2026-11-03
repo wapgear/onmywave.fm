@@ -1095,8 +1095,10 @@ async function createWindow() {
     minWidth: 960,
     minHeight: 640,
     title: 'onmywave.fm',
-    titleBarStyle: 'hiddenInset',
-    trafficLightPosition: { x: 20, y: 14 },
+    ...(process.platform === 'darwin'
+      ? { titleBarStyle: 'hiddenInset' as const, trafficLightPosition: { x: 20, y: 14 } }
+      : {}),
+    icon: process.platform === 'linux' ? join(directory, '../../resources/icon.png') : undefined,
     backgroundColor: '#faf9f6',
     show: false,
     webPreferences: {

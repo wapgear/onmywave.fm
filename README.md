@@ -1,6 +1,6 @@
 # onmywave.fm
 
-A macOS music player for your Jellyfin library, with optional spoken news and song introductions. Built with Electron, React, and TypeScript.
+A desktop music player for your Jellyfin library, with optional spoken news and song introductions. Built with Electron, React, and TypeScript.
 
 ![The current song library and sidebar in onmywave.fm](docs/screenshots/library.png)
 
@@ -8,7 +8,7 @@ Browse songs, albums, and artists, build playlists, and keep a listening queue t
 
 ## Project status
 
-Early development. The desktop app requires an Apple silicon Mac running macOS 13 or later. Linux CI checks the source and build, but Linux and Windows desktop behavior are not supported yet. Signed and notarized Apple silicon downloads are available from the [releases repository](https://github.com/wapgear/onmywave-app/releases/latest). Installed builds check the releases repository for updates at startup and every six hours. An in-app prompt lets you update now or later, shows download progress, and offers a restart when ready. Settings → General → About and updates also provides a manual check. Playback continues until you choose Restart now to install the downloaded update.
+Early development. The released desktop app requires an Apple silicon Mac running macOS 13 or later. Experimental Linux x64 support is available from source as an AppImage; CI builds it on Ubuntu. Linux desktop playback and system keyring integration still need native verification. Windows desktop behavior is not supported yet. Signed and notarized Apple silicon downloads are available from the [releases repository](https://github.com/wapgear/onmywave-app/releases/latest). Installed macOS builds check the releases repository for updates at startup and every six hours. An in-app prompt lets you update now or later, shows download progress, and offers a restart when ready. Settings → General → About and updates also provides a manual check. Playback continues until you choose Restart now to install the downloaded update.
 
 You need your own Jellyfin server, an account with access to at least one music library, and music that your server can stream. This repository includes no music library or Jellyfin server. Navidrome and Subsonic are not supported.
 
@@ -34,7 +34,7 @@ Screenshots show the current production renderer, captured on 2 November 2026 wi
 
 ## Run from source
 
-Install [Node.js 26](https://nodejs.org/) and [pnpm 10.34.7](https://pnpm.io/installation) on macOS, then:
+Install [Node.js 26](https://nodejs.org/) and [pnpm 10.34.7](https://pnpm.io/installation) on macOS or Linux, then:
 
 With nvm, run `nvm install` and `nvm use` in the checkout to select the version in `.nvmrc`. Node 26 runs development tools and CI; the desktop app uses the Node runtime bundled with Electron.
 
@@ -62,13 +62,13 @@ Music playback works without a news setup. To add spoken news:
 3. Open News bucket → Settings, choose sources, DJ, mood, and interests, then save and enable automatic preparation.
 4. Enable DJ separately in the player's DJ popover and select your room. Set the news interval in Settings → Playback → News & voice. Song announcement timing and wording have their own subsection.
 
-Preparation runs while the app is open and your Mac is awake. It can incur provider charges. Playback uses saved recordings and does not start paid preparation. Explicit voice and DJ preview generation can also incur charges. Disabling preparation does not reverse a request already sent.
+Preparation runs while the app is open and your computer is awake. It can incur provider charges. Playback uses saved recordings and does not start paid preparation. Explicit voice and DJ preview generation can also incur charges. Disabling preparation does not reverse a request already sent.
 
 ## Data and privacy
 
 The main process handles credentials and provider requests. Jellyfin tokens use Electron safeStorage; when protected storage is unavailable, sign-in lasts only for the app session. Provider keys use protected local storage, including shared onmywave Keychain entries for OpenAI and ElevenLabs on macOS.
 
-Settings, queue state, saved scripts, source snapshots, and generated audio live under `~/Library/Application Support/onmywave-light/`. Signing out pauses preparation but keeps saved news and settings. The existing data directory and bundle identifier are retained for compatibility with installations previously named onmywave.fm. Other onmywave apps can share the provider Keychain entries.
+Settings, queue state, saved scripts, source snapshots, and generated audio live under `~/Library/Application Support/onmywave-light/` on macOS and `$XDG_CONFIG_HOME/onmywave-light/` (default `~/.config/onmywave-light/`) on Linux. Signing out pauses preparation but keeps saved news and settings. The existing data directory and bundle identifier are retained for compatibility with installations previously named onmywave.fm. Other onmywave apps can share the provider Keychain entries.
 
 News preparation sends source content and your configured editorial preferences to OpenAI, and sends scripts and voice settings to ElevenLabs. Selected feeds, Hacker News, and X receive requests when their sources are checked. See the [security policy](SECURITY.md) before attaching logs or app data to an issue.
 
@@ -93,6 +93,16 @@ pnpm run package:mac
 ```
 
 Output goes to `release/`. The ZIP target ensures Electron Builder includes the updater configuration in the app, and packaging fails if that configuration is missing or points at the wrong release repository. Do not use `electron-builder --dir` for an installed app: it omits updater configuration on macOS. This command does not publish a release. Use the signed release command below for a distributable app.
+
+For an experimental Linux x64 AppImage:
+
+```sh
+pnpm run package:linux
+chmod +x release/onmywave-*-linux-x86_64.AppImage
+./release/onmywave-*-linux-x86_64.AppImage
+```
+
+The packaging command does not publish a release. Linux uses native window controls and Ctrl for selection, search, and track shortcuts. Automatic updates are unavailable in Linux builds; install a newer AppImage manually. Protected credential storage requires GNOME Secret Service or KWallet. Without a supported secret store, sign-in and provider keys last only for the current session. Closing the Linux window quits the app.
 
 For a signed, notarized Apple silicon release, export `APPLE_ID`, `APPLE_APP_SPECIFIC_PASSWORD`, and `APPLE_TEAM_ID`, or put them in ignored `scripts/.env.local`. Install the Developer ID certificate named in `electron-builder.release.mjs` and authenticate `gh` with access to `wapgear/onmywave-app`.
 

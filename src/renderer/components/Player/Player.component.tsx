@@ -21,6 +21,7 @@ import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { useDJPlayback } from '../../dj-playback';
 import { usePlayer } from '../../player';
 import type { OptionsSaveSettlement, PlaybackRetrySettlement } from '../../player.types';
+import { primaryModifierLabel } from '../../shortcuts';
 import { useRetryFocus } from '../../useRetryFocus';
 import { IconButton } from '../IconButton/IconButton.component';
 import { Artwork } from '../Shared';
@@ -267,7 +268,7 @@ export function Player({
               variant="player"
               onClick={player.previous}
               disabled={!player.current}
-              title="Previous track (⌘←)"
+              title={`Previous track (${primaryModifierLabel}←)`}
               label="Previous track"
             >
               <SkipBack size={19} fill="currentColor" aria-hidden="true" />
@@ -291,7 +292,7 @@ export function Player({
               variant="player"
               onClick={player.next}
               disabled={!player.current}
-              title="Next track (⌘→)"
+              title={`Next track (${primaryModifierLabel}→)`}
               label="Next track"
             >
               <SkipForward size={19} fill="currentColor" aria-hidden="true" />

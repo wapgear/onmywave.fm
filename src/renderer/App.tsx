@@ -37,6 +37,7 @@ import type { NewsBucketDestination } from './pages/Stations/components/NewsBuck
 import { StationsPage } from './pages/Stations/Stations.page';
 import type { RoomSetupDraft } from './pages/Stations/Stations.types';
 import { PlayerProvider, usePlayer } from './player';
+import { primaryModifier } from './shortcuts';
 import { useRetryFocus } from './useRetryFocus';
 
 const listeningDrawerOrder = ['details', 'lyrics', 'queue', 'dj'] as const;
@@ -533,7 +534,7 @@ function ReadyApp({
     const shortcut = (event: KeyboardEvent) => {
       if (event.defaultPrevented || document.querySelector('dialog[open]') || document.querySelector(':popover-open'))
         return;
-      if (event.metaKey && !event.ctrlKey && !event.altKey && !event.shiftKey && event.key.toLowerCase() === 'f') {
+      if (primaryModifier(event) && !event.altKey && !event.shiftKey && event.key.toLowerCase() === 'f') {
         const input = main.current?.querySelector<HTMLInputElement>('.search-field input');
         if (input) {
           event.preventDefault();
