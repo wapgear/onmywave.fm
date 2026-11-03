@@ -1,0 +1,175 @@
+{
+  "sidebar": {
+    "x": 1104,
+    "y": 42,
+    "width": 320,
+    "height": 742
+  },
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 900,
+      "drawer": {
+        "x": 208,
+        "y": 42,
+        "width": 1216,
+        "height": 742,
+        "right": 1424,
+        "bottom": 784
+      },
+      "cover": {
+        "x": 316,
+        "y": 122,
+        "width": 433.71875,
+        "height": 433.71875,
+        "right": 749.71875,
+        "bottom": 555.71875
+      },
+      "details": {
+        "x": 805.71875,
+        "y": 122,
+        "width": 510.28125,
+        "height": 502.09375,
+        "right": 1316,
+        "bottom": 624.09375
+      },
+      "player": {
+        "x": 16,
+        "y": 796,
+        "width": 1408,
+        "height": 88,
+        "right": 1424,
+        "bottom": 884
+      },
+      "overflow": false
+    },
+    {
+      "width": 960,
+      "height": 700,
+      "drawer": {
+        "x": 208,
+        "y": 42,
+        "width": 736,
+        "height": 542,
+        "right": 944,
+        "bottom": 584
+      },
+      "cover": {
+        "x": 256,
+        "y": 122,
+        "width": 276.40625,
+        "height": 276.40625,
+        "right": 532.40625,
+        "bottom": 398.40625
+      },
+      "details": {
+        "x": 570.796875,
+        "y": 122,
+        "width": 325.203125,
+        "height": 502.09375,
+        "right": 896,
+        "bottom": 624.09375
+      },
+      "player": {
+        "x": 16,
+        "y": 596,
+        "width": 928,
+        "height": 88,
+        "right": 944,
+        "bottom": 684
+      },
+      "overflow": false
+    },
+    {
+      "width": 800,
+      "height": 700,
+      "drawer": {
+        "x": 208,
+        "y": 42,
+        "width": 576,
+        "height": 498,
+        "right": 784,
+        "bottom": 540
+      },
+      "cover": {
+        "x": 248,
+        "y": 122,
+        "width": 213.1875,
+        "height": 213.1875,
+        "right": 461.1875,
+        "bottom": 335.1875
+      },
+      "details": {
+        "x": 493.1875,
+        "y": 122,
+        "width": 250.8125,
+        "height": 502.09375,
+        "right": 744,
+        "bottom": 624.09375
+      },
+      "player": {
+        "x": 16,
+        "y": 552,
+        "width": 768,
+        "height": 132,
+        "right": 784,
+        "bottom": 684
+      },
+      "overflow": false
+    },
+    {
+      "width": 640,
+      "height": 480,
+      "drawer": {
+        "x": 208,
+        "y": 42,
+        "width": 416,
+        "height": 278,
+        "right": 624,
+        "bottom": 320
+      },
+      "cover": {
+        "x": 240,
+        "y": 122,
+        "width": 240,
+        "height": 240,
+        "right": 480,
+        "bottom": 362
+      },
+      "details": {
+        "x": 240,
+        "y": 387.59375,
+        "width": 352,
+        "height": 502.09375,
+        "right": 592,
+        "bottom": 889.6875
+      },
+      "player": {
+        "x": 16,
+        "y": 332,
+        "width": 608,
+        "height": 132,
+        "right": 624,
+        "bottom": 464
+      },
+      "overflow": false
+    }
+  ],
+  "checks": [
+    "shared sidebar width",
+    "expand and collapse",
+    "cover left of details at desktop widths",
+    "small-window reflow without overflow",
+    "player clearance",
+    "focus retained on size toggle",
+    "inspector stays mounted",
+    "Escape restores player and library opener focus",
+    "reopening starts compact",
+    "queue switch resets expansion",
+    "lyrics expansion regression",
+    "reduced motion",
+    "keyboard Enter and Space expansion",
+    "dark appearance and long text"
+  ],
+  "errors": []
+}

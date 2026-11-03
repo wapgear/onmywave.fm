@@ -60,7 +60,7 @@ JS
 # Include the exact build inputs, without local credentials or historical documentation.
 source="onmywave-${version}-source.tar.gz"
 COPYFILE_DISABLE=1 tar --exclude='.env*' -czf "release/$source" \
-  src resources licenses scripts package.json pnpm-lock.yaml pnpm-workspace.yaml electron.vite.config.ts \
+  src server resources licenses scripts package.json pnpm-lock.yaml pnpm-workspace.yaml electron.vite.config.ts \
   electron-builder.release.mjs tsconfig.json .oxlint-format.json .oxfmtrc.json \
   .oxlintrc.json .nvmrc AGENTS.md README.md LICENSE THIRD_PARTY_NOTICES.md
 (

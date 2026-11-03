@@ -1,0 +1,2933 @@
+{
+  "initial": {
+    "x": 316,
+    "y": 122,
+    "width": 433.71875,
+    "height": 433.71875
+  },
+  "final": {
+    "x": 1124,
+    "y": 110,
+    "width": 280,
+    "height": 280
+  },
+  "frames": [
+    {
+      "fraction": 0,
+      "cover": {
+        "x": 1124,
+        "y": 110,
+        "width": 280,
+        "height": 280
+      },
+      "snapshot": {
+        "width": "433.719px",
+        "height": "433.719px",
+        "transform": "matrix(1, 0, 0, 1, 316, 122)"
+      },
+      "animations": [
+        {
+          "pseudo": null,
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 150,
+            "easing": "ease",
+            "endDelay": 0,
+            "fill": "backwards",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 150,
+            "currentIteration": 0,
+            "endTime": 150,
+            "localTime": 0,
+            "progress": 0
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "linear",
+              "composite": "auto",
+              "backgroundColor": "rgb(233, 233, 236)",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "linear",
+              "composite": "auto",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 0,
+            "progress": 0
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "65.328px",
+              "transform": "matrix(1, 0, 0, 1, 228, 58)",
+              "height": "15px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "65.328px",
+              "transform": "matrix(1, 0, 0, 1, 1124, 58)",
+              "height": "15px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-content)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 0,
+            "progress": 0
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "510.281px",
+              "transform": "matrix(1, 0, 0, 1, 806, 122)",
+              "height": "308.094px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "280px",
+              "transform": "matrix(1, 0, 0, 1, 1124, 410)",
+              "height": "283.984px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-panel)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 0,
+            "progress": 0
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "1216px",
+              "transform": "matrix(1, 0, 0, 1, 208, 42)",
+              "height": "742px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "320px",
+              "transform": "matrix(1, 0, 0, 1, 1104, 42)",
+              "height": "742px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-cover)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 0,
+            "progress": 0
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "433.719px",
+              "transform": "matrix(1, 0, 0, 1, 316, 122)",
+              "height": "433.719px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "280px",
+              "transform": "matrix(1, 0, 0, 1, 1124, 110)",
+              "height": "280px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 0,
+            "progress": 0
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "70px",
+              "transform": "matrix(1, 0, 0, 1, 1336, 49)",
+              "height": "34px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "70px",
+              "transform": "matrix(1, 0, 0, 1, 1336, 49)",
+              "height": "34px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 0,
+            "progress": 0
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 0,
+            "progress": 0
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 0,
+            "progress": 0
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 0,
+            "progress": 0
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 0,
+            "progress": 0
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 0,
+            "progress": 0
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 0,
+            "progress": 0
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 0,
+            "progress": 0
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-content)",
+          "timing": {
+            "delay": 90,
+            "direction": "normal",
+            "duration": 110,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 110,
+            "currentIteration": 0,
+            "endTime": 200,
+            "localTime": 0,
+            "progress": 0
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "ease-out",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "ease-out",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-content)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 70,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 70,
+            "currentIteration": 0,
+            "endTime": 70,
+            "localTime": 0,
+            "progress": 0
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "ease-out",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "ease-out",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fraction": 0.25,
+      "cover": {
+        "x": 1124,
+        "y": 110,
+        "width": 280,
+        "height": 280
+      },
+      "snapshot": {
+        "width": "315.766px",
+        "height": "315.766px",
+        "transform": "matrix(1, 0, 0, 1, 935.966, 112.793)"
+      },
+      "animations": [
+        {
+          "pseudo": null,
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 150,
+            "easing": "ease",
+            "endDelay": 0,
+            "fill": "backwards",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 150,
+            "currentIteration": 0,
+            "endTime": 150,
+            "localTime": 55,
+            "progress": 0.6321887330846228
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "linear",
+              "composite": "auto",
+              "backgroundColor": "rgb(233, 233, 236)",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "linear",
+              "composite": "auto",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 55,
+            "progress": 0.25
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "65.328px",
+              "transform": "matrix(1, 0, 0, 1, 228, 58)",
+              "height": "15px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "65.328px",
+              "transform": "matrix(1, 0, 0, 1, 1124, 58)",
+              "height": "15px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-content)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 55,
+            "progress": 0.25
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "510.281px",
+              "transform": "matrix(1, 0, 0, 1, 806, 122)",
+              "height": "308.094px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "280px",
+              "transform": "matrix(1, 0, 0, 1, 1124, 410)",
+              "height": "283.984px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-panel)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 55,
+            "progress": 0.25
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "1216px",
+              "transform": "matrix(1, 0, 0, 1, 208, 42)",
+              "height": "742px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "320px",
+              "transform": "matrix(1, 0, 0, 1, 1104, 42)",
+              "height": "742px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-cover)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 55,
+            "progress": 0.25
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "433.719px",
+              "transform": "matrix(1, 0, 0, 1, 316, 122)",
+              "height": "433.719px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "280px",
+              "transform": "matrix(1, 0, 0, 1, 1124, 110)",
+              "height": "280px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 55,
+            "progress": 0.25
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "70px",
+              "transform": "matrix(1, 0, 0, 1, 1336, 49)",
+              "height": "34px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "70px",
+              "transform": "matrix(1, 0, 0, 1, 1336, 49)",
+              "height": "34px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 55,
+            "progress": 0.25
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 55,
+            "progress": 0.25
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 55,
+            "progress": 0.25
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 55,
+            "progress": 0.25
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 55,
+            "progress": 0.25
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 55,
+            "progress": 0.25
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 55,
+            "progress": 0.25
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 55,
+            "progress": 0.25
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-content)",
+          "timing": {
+            "delay": 90,
+            "direction": "normal",
+            "duration": 110,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 110,
+            "currentIteration": 0,
+            "endTime": 200,
+            "localTime": 55,
+            "progress": 0
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "ease-out",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "ease-out",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-content)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 70,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 70,
+            "currentIteration": 0,
+            "endTime": 70,
+            "localTime": 55,
+            "progress": 0.7857142857142857
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "ease-out",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "ease-out",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fraction": 0.5,
+      "cover": {
+        "x": 1124,
+        "y": 110,
+        "width": 280,
+        "height": 280
+      },
+      "snapshot": {
+        "width": "288.281px",
+        "height": "288.281px",
+        "transform": "matrix(1, 0, 0, 1, 1080.43, 110.647)"
+      },
+      "animations": [
+        {
+          "pseudo": null,
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 150,
+            "easing": "ease",
+            "endDelay": 0,
+            "fill": "backwards",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 150,
+            "currentIteration": 0,
+            "endTime": 150,
+            "localTime": 110,
+            "progress": 0.9544250091885189
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "linear",
+              "composite": "auto",
+              "backgroundColor": "rgb(233, 233, 236)",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "linear",
+              "composite": "auto",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 110,
+            "progress": 0.5
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "65.328px",
+              "transform": "matrix(1, 0, 0, 1, 228, 58)",
+              "height": "15px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "65.328px",
+              "transform": "matrix(1, 0, 0, 1, 1124, 58)",
+              "height": "15px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-content)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 110,
+            "progress": 0.5
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "510.281px",
+              "transform": "matrix(1, 0, 0, 1, 806, 122)",
+              "height": "308.094px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "280px",
+              "transform": "matrix(1, 0, 0, 1, 1124, 410)",
+              "height": "283.984px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-panel)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 110,
+            "progress": 0.5
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "1216px",
+              "transform": "matrix(1, 0, 0, 1, 208, 42)",
+              "height": "742px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "320px",
+              "transform": "matrix(1, 0, 0, 1, 1104, 42)",
+              "height": "742px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-cover)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 110,
+            "progress": 0.5
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "433.719px",
+              "transform": "matrix(1, 0, 0, 1, 316, 122)",
+              "height": "433.719px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "280px",
+              "transform": "matrix(1, 0, 0, 1, 1124, 110)",
+              "height": "280px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 110,
+            "progress": 0.5
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "70px",
+              "transform": "matrix(1, 0, 0, 1, 1336, 49)",
+              "height": "34px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "70px",
+              "transform": "matrix(1, 0, 0, 1, 1336, 49)",
+              "height": "34px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 110,
+            "progress": 0.5
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 110,
+            "progress": 0.5
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 110,
+            "progress": 0.5
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 110,
+            "progress": 0.5
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 110,
+            "progress": 0.5
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 110,
+            "progress": 0.5
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 110,
+            "progress": 0.5
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 110,
+            "progress": 0.5
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-content)",
+          "timing": {
+            "delay": 90,
+            "direction": "normal",
+            "duration": 110,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 110,
+            "currentIteration": 0,
+            "endTime": 200,
+            "localTime": 110,
+            "progress": 0.18181818181818185
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "ease-out",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "ease-out",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-content)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 70,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 70,
+            "currentIteration": 0,
+            "endTime": 70,
+            "localTime": 110,
+            "progress": 1
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "ease-out",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "ease-out",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fraction": 0.75,
+      "cover": {
+        "x": 1124,
+        "y": 110,
+        "width": 280,
+        "height": 280
+      },
+      "snapshot": {
+        "width": "281.359px",
+        "height": "281.359px",
+        "transform": "matrix(1, 0, 0, 1, 1116.82, 110.107)"
+      },
+      "animations": [
+        {
+          "pseudo": null,
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 150,
+            "easing": "ease",
+            "endDelay": 0,
+            "fill": "backwards",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 150,
+            "currentIteration": null,
+            "endTime": 150,
+            "localTime": 165,
+            "progress": null
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "linear",
+              "composite": "auto",
+              "backgroundColor": "rgb(233, 233, 236)",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "linear",
+              "composite": "auto",
+              "backgroundColor": "rgba(0, 0, 0, 0)",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 165,
+            "progress": 0.75
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "65.328px",
+              "transform": "matrix(1, 0, 0, 1, 228, 58)",
+              "height": "15px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "65.328px",
+              "transform": "matrix(1, 0, 0, 1, 1124, 58)",
+              "height": "15px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-content)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 165,
+            "progress": 0.75
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "510.281px",
+              "transform": "matrix(1, 0, 0, 1, 806, 122)",
+              "height": "308.094px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "280px",
+              "transform": "matrix(1, 0, 0, 1, 1124, 410)",
+              "height": "283.984px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-panel)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 165,
+            "progress": 0.75
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "1216px",
+              "transform": "matrix(1, 0, 0, 1, 208, 42)",
+              "height": "742px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "320px",
+              "transform": "matrix(1, 0, 0, 1, 1104, 42)",
+              "height": "742px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-cover)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 165,
+            "progress": 0.75
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "433.719px",
+              "transform": "matrix(1, 0, 0, 1, 316, 122)",
+              "height": "433.719px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "280px",
+              "transform": "matrix(1, 0, 0, 1, 1124, 110)",
+              "height": "280px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 165,
+            "progress": 0.75
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "70px",
+              "transform": "matrix(1, 0, 0, 1, 1336, 49)",
+              "height": "34px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "70px",
+              "transform": "matrix(1, 0, 0, 1, 1336, 49)",
+              "height": "34px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 165,
+            "progress": 0.75
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 165,
+            "progress": 0.75
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 165,
+            "progress": 0.75
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 165,
+            "progress": 0.75
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 165,
+            "progress": 0.75
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 165,
+            "progress": 0.75
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 165,
+            "progress": 0.75
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 165,
+            "progress": 0.75
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-content)",
+          "timing": {
+            "delay": 90,
+            "direction": "normal",
+            "duration": 110,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 110,
+            "currentIteration": 0,
+            "endTime": 200,
+            "localTime": 165,
+            "progress": 0.6818181818181819
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "ease-out",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "ease-out",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-content)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 70,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 70,
+            "currentIteration": 0,
+            "endTime": 70,
+            "localTime": 165,
+            "progress": 1
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "ease-out",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "ease-out",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "fraction": 1,
+      "cover": {
+        "x": 1124,
+        "y": 110,
+        "width": 280,
+        "height": 280
+      },
+      "snapshot": {
+        "width": "280px",
+        "height": "280px",
+        "transform": "matrix(1, 0, 0, 1, 1124, 110)"
+      },
+      "animations": [
+        {
+          "pseudo": "::view-transition-group(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 220,
+            "progress": 1
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "65.328px",
+              "transform": "matrix(1, 0, 0, 1, 228, 58)",
+              "height": "15px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "65.328px",
+              "transform": "matrix(1, 0, 0, 1, 1124, 58)",
+              "height": "15px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-content)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 220,
+            "progress": 1
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "510.281px",
+              "transform": "matrix(1, 0, 0, 1, 806, 122)",
+              "height": "308.094px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "280px",
+              "transform": "matrix(1, 0, 0, 1, 1124, 410)",
+              "height": "283.984px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-panel)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 220,
+            "progress": 1
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "1216px",
+              "transform": "matrix(1, 0, 0, 1, 208, 42)",
+              "height": "742px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "320px",
+              "transform": "matrix(1, 0, 0, 1, 1104, 42)",
+              "height": "742px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-cover)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 220,
+            "progress": 1
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "433.719px",
+              "transform": "matrix(1, 0, 0, 1, 316, 122)",
+              "height": "433.719px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "280px",
+              "transform": "matrix(1, 0, 0, 1, 1124, 110)",
+              "height": "280px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-group(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 220,
+            "progress": 1
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "width": "70px",
+              "transform": "matrix(1, 0, 0, 1, 1336, 49)",
+              "height": "34px",
+              "backdropFilter": "none",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "width": "70px",
+              "transform": "matrix(1, 0, 0, 1, 1336, 49)",
+              "height": "34px",
+              "backdropFilter": "none",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 220,
+            "progress": 1
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 220,
+            "progress": 1
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 220,
+            "progress": 1
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-label)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 220,
+            "progress": 1
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 220,
+            "progress": 1
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 220,
+            "progress": 1
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 220,
+            "progress": 1
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-actions)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 220,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 220,
+            "currentIteration": 0,
+            "endTime": 220,
+            "localTime": 220,
+            "progress": 1
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+              "composite": "auto",
+              "mixBlendMode": "plus-lighter",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-new(song-details-content)",
+          "timing": {
+            "delay": 90,
+            "direction": "normal",
+            "duration": 110,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 110,
+            "currentIteration": 0,
+            "endTime": 200,
+            "localTime": 220,
+            "progress": 1
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "ease-out",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "ease-out",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 1
+            }
+          ]
+        },
+        {
+          "pseudo": "::view-transition-old(song-details-content)",
+          "timing": {
+            "delay": 0,
+            "direction": "normal",
+            "duration": 70,
+            "easing": "linear",
+            "endDelay": 0,
+            "fill": "both",
+            "iterationStart": 0,
+            "iterations": 1,
+            "activeDuration": 70,
+            "currentIteration": 0,
+            "endTime": 70,
+            "localTime": 220,
+            "progress": 1
+          },
+          "keyframes": [
+            {
+              "offset": 0,
+              "easing": "ease-out",
+              "composite": "replace",
+              "opacity": "1",
+              "computedOffset": 0
+            },
+            {
+              "offset": 1,
+              "easing": "ease-out",
+              "composite": "auto",
+              "opacity": "0",
+              "computedOffset": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

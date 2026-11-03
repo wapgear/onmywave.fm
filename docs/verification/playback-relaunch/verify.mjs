@@ -49,7 +49,7 @@ async function makeMain(mutant = false) {
   );
   source = exact(
     source,
-    /const stored = await readConnection\(\);\s*if \(stored\) service\.restore\(\{\s*\.\.\.stored,\s*sessionOnly: !persistentDeviceIdentity\s*\}\);/,
+    /const stored = await readConnection\(\);\s*if \(stored\) \{\s*service\.restore\(\{\s*\.\.\.stored,\s*sessionOnly: !persistentDeviceIdentity\s*\}\);\s*(?:void )?service\.removedSongs\(\)\.catch\(\(\) => \{\}\);\s*\}/,
     'const stored = null;\n  service.restore({ id: process.env.WAVE_FIXTURE_JELLYFIN + "|" + process.env.WAVE_FIXTURE_USER_ID, serverUrl: process.env.WAVE_FIXTURE_JELLYFIN, userId: process.env.WAVE_FIXTURE_USER_ID, userName: "Fixture listener", token: "synthetic-token", serverVersion: "10.9.0", selectedLibraryIds: [process.env.WAVE_FIXTURE_LIBRARY_ID], sessionOnly: true });',
     'synthetic provider session',
   );

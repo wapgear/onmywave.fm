@@ -18,10 +18,11 @@ import { Player } from './components/Player/Player.component';
 import { ProviderKeyEditsProvider } from './components/ProviderKeys/ProviderKeyEdits';
 import { Queue } from './components/Queue/Queue.component';
 import { RenderErrorBoundary } from './components/RenderErrorBoundary/RenderErrorBoundary.component';
+import { ErrorNotice } from './components/Shared';
 
 import './components/Drawer/Drawer.styles.css';
-import { ErrorNotice } from './components/Shared';
 import { SidebarBody, SidebarHeading } from './components/Sidebar/Sidebar.component';
+import { SongRemovalNotice } from './components/TrackTable/SongRemovalNotice.component';
 import { DJPlaybackProvider } from './dj-playback';
 import { NewsRecoveryNotice, NewsRecoveryProvider } from './NewsRecovery';
 import { AlbumsPage, initialAlbumsView } from './pages/Albums/Albums.page';
@@ -38,7 +39,7 @@ import type { RoomSetupDraft } from './pages/Stations/Stations.types';
 import { PlayerProvider, usePlayer } from './player';
 import { useRetryFocus } from './useRetryFocus';
 
-const listeningDrawerOrder = ['lyrics', 'queue', 'dj'] as const;
+const listeningDrawerOrder = ['details', 'lyrics', 'queue', 'dj'] as const;
 
 export default function App() {
   const client = useQueryClient();
@@ -256,7 +257,7 @@ function ReadyApp({
   const restoreSetupFocus = useRef(false);
   const player = usePlayer();
   const [drawer, setDrawer] = useState<Song | 'queue' | 'lyrics' | 'dj' | null>(null);
-  const [lyricsExpanded, setLyricsExpanded] = useState(false);
+  const [drawerExpanded, setDrawerExpanded] = useState(false);
   const [djControlsTarget, setDJControlsTarget] = useState<HTMLDivElement | null>(null);
   const drawerTrigger = useRef<HTMLElement | null>(null);
   const drawerClose = useRef<HTMLButtonElement>(null);
@@ -266,12 +267,15 @@ function ReadyApp({
   const drawerTransition = useRef<ViewTransition | null>(null);
   if (drawer === 'lyrics' && !player.current) setDrawer(null);
   const visibleDrawer = drawer === 'lyrics' && !player.current ? null : drawer;
-  const expandedLyrics = visibleDrawer === 'lyrics' && lyricsExpanded;
-  const listeningSidebar = typeof visibleDrawer === 'string' && !expandedLyrics;
+  const drawerMode = typeof visibleDrawer === 'string' ? visibleDrawer : visibleDrawer ? 'details' : null;
+  const expandableDrawer = drawerMode === 'lyrics' || drawerMode === 'details';
+  const expandedDrawer = expandableDrawer && drawerExpanded;
+  const expandedLyrics = drawerMode === 'lyrics' && expandedDrawer;
+  const listeningSidebar = !!visibleDrawer && !expandedDrawer;
   function cancelDrawerTransition() {
     drawerTransition.current?.skipTransition();
     drawerTransition.current = null;
-    document.documentElement.classList.remove('is-switching-sidebar');
+    document.documentElement.classList.remove('is-switching-sidebar', 'is-resizing-details');
     document.documentElement.style.removeProperty('--sidebar-switch-left');
   }
   function openDrawer(value: Song | 'queue' | 'lyrics' | 'dj', source?: HTMLElement | null) {
@@ -282,13 +286,12 @@ function ReadyApp({
     if (drawerElement.current) drawerElement.current.inert = false;
     drawerTrigger.current = source ?? (document.activeElement instanceof HTMLElement ? document.activeElement : null);
     const updateDrawer = () => {
-      setLyricsExpanded(false);
+      setDrawerExpanded(false);
       setDrawer(value);
     };
     if (
-      typeof visibleDrawer === 'string' &&
-      typeof value === 'string' &&
-      visibleDrawer !== value &&
+      drawerMode &&
+      drawerMode !== (typeof value === 'string' ? value : 'details') &&
       document.startViewTransition &&
       !window.matchMedia('(prefers-reduced-motion: reduce)').matches
     ) {
@@ -296,7 +299,8 @@ function ReadyApp({
       const panelLeft = drawerElement.current?.getBoundingClientRect().left ?? 0;
       document.documentElement.style.setProperty('--sidebar-switch-left', `${Math.max(0, panelLeft - 16)}px`);
       const direction =
-        listeningDrawerOrder.indexOf(value) > listeningDrawerOrder.indexOf(visibleDrawer)
+        listeningDrawerOrder.indexOf(typeof value === 'string' ? value : 'details') >
+        listeningDrawerOrder.indexOf(drawerMode)
           ? 'sidebar-forward'
           : 'sidebar-backward';
       const transition = document.startViewTransition({
@@ -320,13 +324,45 @@ function ReadyApp({
     }
     updateDrawer();
   }
+  function toggleDrawerExpanded() {
+    cancelDrawerTransition();
+    drawerEnter.current?.finish();
+    const update = () => setDrawerExpanded((expanded) => !expanded);
+    if (
+      drawerMode !== 'details' ||
+      !document.startViewTransition ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      update();
+      return;
+    }
+    document.documentElement.classList.add('is-resizing-details');
+    const transition = document.startViewTransition(() => {
+      if (drawerTransition.current !== transition) return;
+      flushSync(update);
+    });
+    drawerTransition.current = transition;
+    void transition.ready.catch(() => {});
+    void transition.finished.then(
+      () => {
+        if (drawerTransition.current === transition) cancelDrawerTransition();
+      },
+      () => {
+        if (drawerTransition.current === transition) cancelDrawerTransition();
+      },
+    );
+  }
   function closeDrawer() {
     cancelDrawerTransition();
     if (!drawer || drawerExit.current) return;
     const trigger = drawerTrigger.current;
-    if (trigger?.isConnected) trigger.focus({ preventScroll: true });
+    const finishClose = () => {
+      drawerTrigger.current = null;
+      flushSync(() => setDrawer(null));
+      if (trigger?.isConnected) trigger.focus({ preventScroll: true });
+    };
     const node = drawerElement.current;
-    if (typeof drawer === 'string' && node && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if (node && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       const style = getComputedStyle(node);
       const from = { transform: style.transform, opacity: style.opacity };
       drawerEnter.current?.cancel();
@@ -341,15 +377,13 @@ function ReadyApp({
         () => {
           if (drawerExit.current !== animation) return;
           drawerExit.current = null;
-          drawerTrigger.current = null;
-          setDrawer(null);
+          finishClose();
         },
         () => {},
       );
       return;
     }
-    drawerTrigger.current = null;
-    setDrawer(null);
+    finishClose();
   }
   const closeDrawerRef = useRef(closeDrawer);
 
@@ -362,11 +396,11 @@ function ReadyApp({
     else {
       drawerTransition.current?.skipTransition();
       drawerTransition.current = null;
-      document.documentElement.classList.remove('is-switching-sidebar');
+      document.documentElement.classList.remove('is-switching-sidebar', 'is-resizing-details');
       document.documentElement.style.removeProperty('--sidebar-switch-left');
     }
     if (
-      typeof visibleDrawer === 'string' &&
+      visibleDrawer &&
       drawerElement.current &&
       !drawerTransition.current &&
       !window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -391,7 +425,7 @@ function ReadyApp({
     () => () => {
       drawerTransition.current?.skipTransition();
       drawerTransition.current = null;
-      document.documentElement.classList.remove('is-switching-sidebar');
+      document.documentElement.classList.remove('is-switching-sidebar', 'is-resizing-details');
       document.documentElement.style.removeProperty('--sidebar-switch-left');
     },
     [],
@@ -598,18 +632,17 @@ function ReadyApp({
   }, [page]);
 
   return (
-    <div
-      className={`app-shell ${visibleDrawer ? 'has-drawer' : ''} ${typeof visibleDrawer === 'string' ? 'has-listening-drawer' : ''}`}
-    >
+    <div className={`app-shell ${visibleDrawer ? 'has-drawer has-listening-drawer' : ''}`}>
       <NavigationSidebar page={page} navigate={navigate} />
       <main
         ref={main}
         className="main-content"
         id="main-content"
-        inert={expandedLyrics}
-        aria-hidden={expandedLyrics || undefined}
+        inert={expandedDrawer}
+        aria-hidden={expandedDrawer || undefined}
       >
         <div ref={content} className="page-content">
+          <SongRemovalNotice />
           <NewsRecoveryNotice
             onOpenSettings={openNewsSettings}
             focusTarget={() => content.current?.querySelector<HTMLElement>('.page-heading h1') ?? null}
@@ -692,11 +725,11 @@ function ReadyApp({
         <aside
           ref={drawerElement}
           id="listening-drawer"
-          className={`side-drawer ${listeningSidebar ? 'listening-drawer' : ''} ${visibleDrawer === 'lyrics' ? `lyrics-drawer ${expandedLyrics ? 'is-expanded' : ''}` : visibleDrawer === 'dj' ? 'dj-drawer' : ''}`}
+          className={`side-drawer ${listeningSidebar ? 'listening-drawer' : ''} ${expandableDrawer ? 'expandable-drawer' : ''} ${expandedDrawer ? 'is-expanded' : ''} ${drawerMode === 'lyrics' ? 'lyrics-drawer' : drawerMode === 'details' ? 'details-drawer' : drawerMode === 'dj' ? 'dj-drawer' : ''}`}
           aria-labelledby="drawer-title"
         >
           <SidebarHeading
-            compact={listeningSidebar || visibleDrawer === 'lyrics'}
+            compact
             titleId="drawer-title"
             title={
               visibleDrawer === 'queue'
@@ -709,17 +742,18 @@ function ReadyApp({
             }
             actions={
               <>
-                {visibleDrawer === 'lyrics' && (
+                {expandableDrawer && (
                   <IconButton
-                    onClick={() => {
-                      cancelDrawerTransition();
-                      drawerEnter.current?.finish();
-                      setLyricsExpanded((expanded) => !expanded);
-                    }}
-                    label={expandedLyrics ? 'Return lyrics to sidebar' : 'Expand lyrics'}
-                    aria-expanded={expandedLyrics}
+                    onClick={toggleDrawerExpanded}
+                    label={
+                      expandedDrawer
+                        ? `Return ${drawerMode === 'lyrics' ? 'lyrics' : 'song details'} to sidebar`
+                        : `Expand ${drawerMode === 'lyrics' ? 'lyrics' : 'song details'}`
+                    }
+                    aria-expanded={expandedDrawer}
+                    aria-controls="listening-drawer"
                   >
-                    {expandedLyrics ? (
+                    {expandedDrawer ? (
                       <Minimize2 size={18} aria-hidden="true" />
                     ) : (
                       <Maximize2 size={18} aria-hidden="true" />
@@ -747,9 +781,9 @@ function ReadyApp({
           <SidebarBody
             key={typeof visibleDrawer === 'string' ? visibleDrawer : visibleDrawer.id}
             className="drawer-body"
-            role={visibleDrawer === 'lyrics' ? 'region' : undefined}
-            tabIndex={visibleDrawer === 'lyrics' ? 0 : undefined}
-            aria-label={visibleDrawer === 'lyrics' ? 'Song lyrics' : undefined}
+            role={expandableDrawer ? 'region' : undefined}
+            tabIndex={expandableDrawer ? 0 : undefined}
+            aria-label={drawerMode === 'lyrics' ? 'Song lyrics' : drawerMode === 'details' ? 'Song details' : undefined}
           >
             {visibleDrawer === 'dj' ? (
               <DJSidebar
