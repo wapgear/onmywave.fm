@@ -7,6 +7,7 @@ import {
   useLayoutEffect,
   useRef,
   useState,
+  type CSSProperties,
   type KeyboardEvent,
   type MouseEvent,
   type ReactNode,
@@ -15,7 +16,8 @@ import {
 import { editablePlaylistEntryIds } from '../../../shared/playlist-entries';
 import type { PlaylistEntry, Song } from '../../../shared/types';
 import { IconButton } from '../IconButton/IconButton.component';
-import { Artwork, TrackDuration } from '../Shared';
+import { Artwork, Dialog, DialogActions, ErrorNotice, TrackDuration } from '../Shared';
+import { useSongRemoval } from './hooks/useSongRemoval';
 import type { TrackRow, TrackTableProps } from './TrackTable.types';
 
 import './TrackTable.styles.css';
@@ -53,6 +55,9 @@ export function TrackTable({
   const anchor = useRef<string | null>(null);
   const tableRoot = useRef<HTMLDivElement>(null);
   const toolbar = useRef<HTMLDivElement>(null);
+  const cancelRemoval = useRef<HTMLButtonElement>(null);
+  const [removing, setRemoving] = useState<Song | null>(null);
+  const removal = useSongRemoval();
 
   useLayoutEffect(() => {
     const table = tableRoot.current;
@@ -186,11 +191,17 @@ export function TrackTable({
     const playbackControl = target.closest('.artwork-button,.song-name');
     if (target.closest('button,input,summary,[popover]') && !playbackControl) return;
     if (event.ctrlKey || event.button !== 0 || (!event.metaKey && event.detail > 1)) return;
-    if (!playbackControl || event.metaKey) event.currentTarget.focus({ preventScroll: true });
+    if (!target.closest('.artwork-button') || event.metaKey) event.currentTarget.focus({ preventScroll: true });
     if (event.metaKey) {
       event.preventDefault();
       choose(index, event.shiftKey);
-    } else activate(index);
+    } else if (target.closest('.artwork-button') || event.detail === 0) activate(index);
+  }
+  function rowDoubleClick(event: MouseEvent<HTMLTableRowElement>, index: number) {
+    const target = event.target as HTMLElement;
+    if (target.closest('button,input,summary,[popover]') && !target.closest('.song-name')) return;
+    if (event.ctrlKey || event.metaKey || event.button !== 0) return;
+    activate(index);
   }
   function rowKey(event: KeyboardEvent<HTMLTableRowElement>, index: number) {
     if (event.target !== event.currentTarget) return;
@@ -228,6 +239,7 @@ export function TrackTable({
       <div ref={tableRoot} className="table-scroll">
         <table
           className="song-table"
+          style={{ '--track-number-width': `${String(offset + rows.length).length}ch` } as CSSProperties}
           aria-label="Songs. Command-click to select songs."
           aria-rowcount={rows.length + 1}
         >
@@ -265,6 +277,7 @@ export function TrackTable({
                     aria-label={`${row.song.name || 'Untitled song'}, ${row.song.artists.join(', ') || 'Unknown artist'}`}
                     aria-selected={selected.has(row.key)}
                     onClick={(event) => rowClick(event, index)}
+                    onDoubleClick={(event) => rowDoubleClick(event, index)}
                     onKeyDown={(event) => rowKey(event, index)}
                   >
                     <td className="row-number">
@@ -324,6 +337,17 @@ export function TrackTable({
                         <button onClick={() => details(row.song)}>
                           <Info size={15} />
                           Song details
+                        </button>
+                        <button
+                          className="danger"
+                          disabled={removal.isPending}
+                          onClick={() => {
+                            removal.reset();
+                            setRemoving(row.song);
+                          }}
+                        >
+                          <Trash2 size={15} />
+                          Remove song
                         </button>
                         {editable && (
                           <>
@@ -389,6 +413,38 @@ export function TrackTable({
           </button>
           <button onClick={() => select(new Map())}>Clear</button>
         </div>
+      )}
+      {removing && (
+        <Dialog
+          title="Remove song?"
+          close={() => setRemoving(null)}
+          closeDisabled={removal.isPending}
+          initialFocusRef={cancelRemoval}
+        >
+          <p>“{removing.name || 'Untitled song'}” will disappear from your library on this Mac.</p>
+          <p>Once the server receives your request, its cleanup worker can delete the library file after 7 days.</p>
+          <ErrorNotice error={removal.error} />
+          <DialogActions>
+            <button ref={cancelRemoval} disabled={removal.isPending} onClick={() => setRemoving(null)}>
+              Cancel
+            </button>
+            <button
+              className="danger"
+              disabled={removal.isPending}
+              onClick={() => {
+                void removal
+                  .mutateAsync(removing.id)
+                  .then(() => {
+                    select(new Map([...selected].filter(([, song]) => song.id !== removing.id)));
+                    setRemoving(null);
+                  })
+                  .catch(() => {});
+              }}
+            >
+              {removal.isPending ? 'Removing…' : 'Remove song'}
+            </button>
+          </DialogActions>
+        </Dialog>
       )}
     </>
   );

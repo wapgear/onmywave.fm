@@ -1,0 +1,210 @@
+{
+  "stage": "before",
+  "properties": {
+    "panel": [
+      "backgroundColor",
+      "borderRadius",
+      "width",
+      "height",
+      "top",
+      "right",
+      "bottom"
+    ],
+    "header": [
+      "height",
+      "padding",
+      "backgroundColor",
+      "borderBottomColor"
+    ],
+    "body": [
+      "paddingTop",
+      "paddingRight",
+      "paddingBottom",
+      "paddingLeft",
+      "scrollPaddingBlock"
+    ],
+    "title": [
+      "fontFamily",
+      "fontSize",
+      "fontWeight",
+      "lineHeight",
+      "color"
+    ],
+    "artist": [
+      "fontFamily",
+      "fontSize",
+      "lineHeight",
+      "color",
+      "marginTop"
+    ]
+  },
+  "captures": [
+    {
+      "width": 1440,
+      "height": 900,
+      "theme": "light",
+      "peers": {
+        "lyrics": {
+          "panel": {
+            "backgroundColor": "rgb(247, 247, 249)",
+            "borderRadius": "16px",
+            "width": "1216px",
+            "height": "742px",
+            "top": "42px",
+            "right": "16px",
+            "bottom": "116px"
+          },
+          "header": {
+            "height": "48px",
+            "padding": "0px 18px 0px 20px",
+            "backgroundColor": "rgb(244, 244, 246)",
+            "borderBottomColor": "rgb(230, 230, 234)"
+          },
+          "body": {
+            "paddingTop": "32px",
+            "paddingRight": "72px",
+            "paddingBottom": "48px",
+            "paddingLeft": "72px",
+            "scrollPaddingBlock": "48px"
+          },
+          "title": {
+            "fontFamily": "Manrope, Inter, sans-serif",
+            "fontSize": "26px",
+            "fontWeight": "600",
+            "lineHeight": "35.1px",
+            "color": "rgb(32, 32, 36)"
+          },
+          "artist": {
+            "fontFamily": "Inter, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "21px",
+            "color": "rgb(98, 102, 116)",
+            "marginTop": "4px"
+          }
+        },
+        "details": {
+          "panel": {
+            "backgroundColor": "rgb(247, 247, 249)",
+            "borderRadius": "16px",
+            "width": "1216px",
+            "height": "742px",
+            "top": "42px",
+            "right": "16px",
+            "bottom": "116px"
+          },
+          "header": {
+            "height": "48px",
+            "padding": "0px 18px 0px 20px",
+            "backgroundColor": "rgb(244, 244, 246)",
+            "borderBottomColor": "rgb(230, 230, 234)"
+          },
+          "body": {
+            "paddingTop": "32px",
+            "paddingRight": "57.6px",
+            "paddingBottom": "40px",
+            "paddingLeft": "57.6px",
+            "scrollPaddingBlock": "32px"
+          },
+          "title": {
+            "fontFamily": "Manrope, Inter, sans-serif",
+            "fontSize": "28px",
+            "fontWeight": "600",
+            "lineHeight": "36.4px",
+            "color": "rgb(32, 32, 36)"
+          },
+          "artist": {
+            "fontFamily": "Inter, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "23.1px",
+            "color": "rgb(98, 102, 116)",
+            "marginTop": "6px"
+          }
+        }
+      }
+    },
+    {
+      "width": 800,
+      "height": 700,
+      "theme": "dark",
+      "peers": {
+        "lyrics": {
+          "panel": {
+            "backgroundColor": "rgb(34, 38, 45)",
+            "borderRadius": "16px",
+            "width": "576px",
+            "height": "498px",
+            "top": "42px",
+            "right": "16px",
+            "bottom": "160px"
+          },
+          "header": {
+            "height": "48px",
+            "padding": "0px 18px 0px 20px",
+            "backgroundColor": "rgb(34, 38, 45)",
+            "borderBottomColor": "rgb(52, 58, 66)"
+          },
+          "body": {
+            "paddingTop": "32px",
+            "paddingRight": "40px",
+            "paddingBottom": "48px",
+            "paddingLeft": "40px",
+            "scrollPaddingBlock": "48px"
+          },
+          "title": {
+            "fontFamily": "Manrope, Inter, sans-serif",
+            "fontSize": "26px",
+            "fontWeight": "600",
+            "lineHeight": "35.1px",
+            "color": "rgb(236, 233, 227)"
+          },
+          "artist": {
+            "fontFamily": "Inter, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "21px",
+            "color": "rgb(164, 170, 180)",
+            "marginTop": "4px"
+          }
+        },
+        "details": {
+          "panel": {
+            "backgroundColor": "rgb(34, 38, 45)",
+            "borderRadius": "16px",
+            "width": "576px",
+            "height": "498px",
+            "top": "42px",
+            "right": "16px",
+            "bottom": "160px"
+          },
+          "header": {
+            "height": "48px",
+            "padding": "0px 18px 0px 20px",
+            "backgroundColor": "rgb(34, 38, 45)",
+            "borderBottomColor": "rgb(52, 58, 66)"
+          },
+          "body": {
+            "paddingTop": "32px",
+            "paddingRight": "32px",
+            "paddingBottom": "40px",
+            "paddingLeft": "32px",
+            "scrollPaddingBlock": "32px"
+          },
+          "title": {
+            "fontFamily": "Manrope, Inter, sans-serif",
+            "fontSize": "28px",
+            "fontWeight": "600",
+            "lineHeight": "36.4px",
+            "color": "rgb(236, 233, 227)"
+          },
+          "artist": {
+            "fontFamily": "Inter, -apple-system, \"system-ui\", sans-serif",
+            "fontSize": "14px",
+            "lineHeight": "23.1px",
+            "color": "rgb(164, 170, 180)",
+            "marginTop": "6px"
+          }
+        }
+      }
+    }
+  ],
+  "errors": []
+}

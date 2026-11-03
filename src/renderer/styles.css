@@ -538,7 +538,8 @@ button > svg {
 .song-table tbody tr:hover td {
   background-color: var(--table-hover);
 }
-.song-table tbody tr.selected td {
+.song-table tbody tr.selected td,
+.song-table tbody tr:focus-within > td {
   background-color: var(--selection);
 }
 .song-table td:first-child {
@@ -548,7 +549,8 @@ button > svg {
   border-radius: 0;
 }
 .song-table .number-column {
-  width: 28px;
+  width: max(28px, calc(var(--track-number-width, 1ch) + 20px));
+  font-variant-numeric: tabular-nums;
 }
 .song-table .album-column {
   width: 24%;

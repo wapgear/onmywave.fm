@@ -19,6 +19,77 @@
 .drawer-body button:focus-visible {
   outline-offset: -2px;
 }
+/* Lyrics and song details expand within the same listening panel. */
+.app-shell .side-drawer.expandable-drawer {
+  position: absolute;
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  inset: var(--titlebar-height) 16px var(--player-clearance) auto;
+  z-index: 30;
+  width: min(var(--listening-sidebar-width), calc(100% - var(--sidebar) - 16px));
+  margin: 0;
+  border: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: width 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.app-shell .side-drawer.expandable-drawer.is-expanded {
+  width: calc(100% - var(--sidebar) - 16px);
+}
+.expandable-drawer .drawer-body {
+  overflow-anchor: none;
+  transition: padding 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.expandable-drawer.is-expanded .drawer-body {
+  padding: 32px clamp(24px, 5vw, 80px) 48px;
+  margin-bottom: 0;
+  scroll-padding-block: 48px;
+}
+.expandable-drawer.is-expanded .drawer-song-title {
+  font-size: 26px;
+  line-height: 1.35;
+}
+.expandable-drawer.is-expanded .drawer-song-artist {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.details-drawer .drawer-body {
+  container-type: inline-size;
+}
+.details-drawer.is-expanded .song-inspector {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+  align-items: start;
+  gap: clamp(24px, 4vw, 56px);
+  max-width: 1000px;
+  margin-inline: auto;
+}
+.inspector-details {
+  min-width: 0;
+}
+.details-drawer.is-expanded .song-inspector dl {
+  font-size: 13px;
+}
+.details-drawer.is-expanded .song-inspector dl > div {
+  grid-template-columns: 96px minmax(0, 1fr);
+}
+@container (max-width: 480px) {
+  .details-drawer.is-expanded .song-inspector {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .details-drawer.is-expanded .song-inspector .inspector-art {
+    max-width: 240px;
+    margin-bottom: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-shell .side-drawer.expandable-drawer,
+  .expandable-drawer .drawer-body {
+    transition: none;
+  }
+}
 .song-inspector .inspector-art {
   width: 100%;
   border-radius: 10px;
@@ -333,5 +404,76 @@
   ::view-transition-old(listening-sidebar),
   ::view-transition-new(listening-sidebar) {
     animation: none;
+  }
+}
+
+:root.is-resizing-details {
+  view-transition-name: none;
+}
+.is-resizing-details .app-shell .side-drawer.details-drawer {
+  view-transition-name: song-details-panel;
+  transition: none;
+}
+.is-resizing-details .details-drawer .drawer-body {
+  transition: none;
+}
+.is-resizing-details .details-drawer .drawer-heading h2 {
+  view-transition-name: song-details-label;
+}
+.is-resizing-details .details-drawer .drawer-heading-actions {
+  view-transition-name: song-details-actions;
+}
+.is-resizing-details .inspector-art {
+  view-transition-name: song-details-cover;
+}
+.is-resizing-details .inspector-details {
+  view-transition-name: song-details-content;
+}
+::view-transition-group(song-details-panel),
+::view-transition-group(song-details-label),
+::view-transition-group(song-details-actions),
+::view-transition-group(song-details-cover),
+::view-transition-group(song-details-content) {
+  animation-duration: 220ms;
+  animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+:root.is-resizing-details::view-transition {
+  clip-path: inset(var(--titlebar-height) 16px var(--player-clearance) var(--sidebar));
+}
+::view-transition-group(song-details-panel) {
+  border-radius: 16px;
+  overflow: clip;
+}
+::view-transition-old(song-details-panel),
+::view-transition-old(song-details-cover) {
+  animation: none;
+  height: 100%;
+}
+::view-transition-new(song-details-panel),
+::view-transition-new(song-details-cover) {
+  animation: none;
+  height: 100%;
+}
+::view-transition-old(song-details-panel),
+::view-transition-new(song-details-cover) {
+  opacity: 0;
+}
+::view-transition-old(song-details-cover) {
+  opacity: 1;
+}
+::view-transition-old(song-details-content) {
+  animation: details-content-out 70ms ease-out both;
+}
+::view-transition-new(song-details-content) {
+  animation: details-content-in 110ms ease-out 90ms both;
+}
+@keyframes details-content-out {
+  to {
+    opacity: 0;
+  }
+}
+@keyframes details-content-in {
+  from {
+    opacity: 0;
   }
 }
