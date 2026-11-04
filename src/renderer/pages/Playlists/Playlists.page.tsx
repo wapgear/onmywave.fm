@@ -7,6 +7,7 @@ import { unwrap, WaveError } from '../../api';
 import { Button } from '../../components/Button/Button.component';
 import { CollectionHeading } from '../../components/CollectionHeading/CollectionHeading.component';
 import { CollectionPlaybackActions } from '../../components/CollectionPlaybackActions/CollectionPlaybackActions.component';
+import { SaveButton } from '../../components/SaveButton/SaveButton.component';
 import { Artwork, Dialog, DialogActions, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { playlistRows, TrackTable } from '../../components/TrackTable/TrackTable.component';
 import { usePlayer } from '../../player';
@@ -935,15 +936,14 @@ function PlaylistNameDialog({ title, initial, close, save, created }: PlaylistNa
           <Button type="button" aria-disabled={mutation.isPending || undefined} onClick={cancel}>
             {uncertain ? 'Close and check playlists' : 'Cancel'}
           </Button>
-          <Button
+          <SaveButton
             type="submit"
-            variant="primary"
             disabled={!name.trim()}
             aria-disabled={mutation.isPending || uncertain || undefined}
             aria-busy={mutation.isPending || undefined}
           >
             {mutation.isPending ? 'Saving…' : 'Save playlist'}
-          </Button>
+          </SaveButton>
         </DialogActions>
       </form>
     </Dialog>

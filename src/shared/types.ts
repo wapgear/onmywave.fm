@@ -455,6 +455,8 @@ export interface WaveApi {
     requestId: string;
     takeId?: string;
     songId: string;
+    previousSongId?: string;
+    transitionId?: string;
   }): Promise<Result<SongHandoff | null>>;
   cancelSongHandoff(requestId: string): Promise<Result<void>>;
   claimPreparedNews(input: { id: string; claimId?: string }): Promise<Result<PreparedNewsTake>>;

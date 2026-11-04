@@ -972,7 +972,16 @@ function registerIpc() {
     saveDJPlayback: async (input: DJPlaybackSettingsPatch) => {
       if (!isDJPlaybackSettingsPatch(input)) invalid();
       return updateLocalStateAndGet((state) => {
-        const merged = { ...state.djPlayback, ...input };
+        const merged = {
+          ...state.djPlayback,
+          ...input,
+          ...(input.everySongs !== undefined && input.everySongsMax === undefined
+            ? { everySongsMax: input.everySongs }
+            : {}),
+          ...(input.announceEverySongs !== undefined && input.announceEverySongsMax === undefined
+            ? { announceEverySongsMax: input.announceEverySongs }
+            : {}),
+        };
         if (!isDJPlaybackSettings(merged)) invalid();
         const settings = normalizeDJPlaybackSettings(merged);
         if (settings.enabled) requireNewsReady();

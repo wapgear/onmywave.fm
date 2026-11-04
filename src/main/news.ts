@@ -26,6 +26,7 @@ import { ServiceError } from './jellyfin';
 import { isSpokenNewsText, NEWS_SELECTION_INSTRUCTIONS, NEWS_WRITING_INSTRUCTIONS } from './news-prompts';
 import { readNewsSource, withSourceContext, MAX_CONTEXT_REQUESTS } from './news-source';
 import { NewsSpeechAdapter } from './news-speech';
+import { minimumSongHandoffWords, SONG_HANDOFF_INSTRUCTIONS, type SongHandoffContext } from './song-handoff-prompts';
 
 export type { NewsArticle, NewsScript } from '../shared/types';
 
@@ -836,6 +837,48 @@ export class NewsService {
   }
   prepareScript(input: Input): Promise<NewsScript> {
     return this.run(input, (settings, key, signal) => this.script(input, settings, key, signal));
+  }
+  async writeSongHandoff(input: Input, context: SongHandoffContext, signal: AbortSignal) {
+    signal = AbortSignal.any([signal, this.generationSignal()]);
+    const editorial = this.editorialContext(input);
+    const key = await this.deps.getApiKey();
+    signal.throwIfAborted();
+    if (!key) throw new ServiceError('invalid', 'Add your OpenAI API key before generating DJ song links.');
+    const payload = await this.providerResponse(
+      input,
+      'writing',
+      key,
+      SONG_HANDOFF_INSTRUCTIONS,
+      {
+        ...context,
+        host: {
+          name: input.dj.name,
+          language: input.dj.language,
+          personality: input.dj.personality,
+          ...editorial,
+          mood: input.mood,
+        },
+      },
+      z.object({ script: z.string() }),
+      signal,
+    );
+    const script = payload.script.trim();
+    const identity = (value: string) =>
+      value
+        .normalize('NFKC')
+        .toLowerCase()
+        .replace(/[^\p{L}\p{N}]+/gu, ' ')
+        .trim();
+    const spoken = identity(script);
+    if (
+      !isSpokenNewsText(script) ||
+      script.split(/\s+/u).length < minimumSongHandoffWords(context) ||
+      /[[\]{}]/u.test(script) ||
+      ![context.upcoming.name, ...context.upcoming.artists].every((value) => spoken.includes(identity(value)))
+    )
+      throw new ServiceError('server', 'The DJ returned an invalid song link. Your music continues.');
+    signal.throwIfAborted();
+    return { script };
   }
   async renderPreparedSpeech(
     input: Input & { engine: 'elevenlabs-v4' },

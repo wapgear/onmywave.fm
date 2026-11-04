@@ -1,4 +1,4 @@
-import { defaultDJPlaybackSettings } from '/@fs/__FIXTURE_ROOT__/src/shared/dj-playback.ts';
+import { defaultDJPlaybackSettings, normalizeDJPlaybackSettings } from '/@fs/__FIXTURE_ROOT__/src/shared/dj-playback.ts';
 import { defaultNewsTransitionSettings } from '/@fs/__FIXTURE_ROOT__/src/shared/news-transitions.ts';
 import { defaultWorkflowDraft } from '/@fs/__FIXTURE_ROOT__/src/shared/workflow.ts';
 const ok=value=>Promise.resolve({ok:true,value});
@@ -10,10 +10,11 @@ if(window.__fixtureSeed?.dj){
  const dj={id:'fixture-dj',name:'Fixture DJ',description:'Fixture host',instructions:'Read the news',musicPreferences:'',exclusions:'',language:'English',personality:'Warm',speakingFrequency:'often',news:{feedUrls:[],interests:'',minStories:1,maxStories:1,voice:'fixture',textModel:'fixture',speechEngine:'elevenlabs-v4',duckVolume:.05}};
  state.djs=[dj];state.sources=[{id:'fixture-source',name:'Fixture feed',url:'https://fixture.invalid/feed',kind:'rss'}];
  state.roomProfiles[0].room={djId:dj.id,sourceIds:['fixture-source']};state.roomProfiles[0].mood='Warm';
- state.djPlayback={...state.djPlayback,enabled:true,roomId:'default-room',everySongs:window.__fixtureSeed.everySongs??1};
+ state.djPlayback={...state.djPlayback,enabled:true,roomId:'default-room',everySongs:window.__fixtureSeed.everySongs??1,everySongsMax:window.__fixtureSeed.everySongsMax??window.__fixtureSeed.everySongs??1};
  Object.assign(state.newsTransitions,{mode:'between-songs',fadeOutSeconds:0,leadInSeconds:0,postSpeechSeconds:0,fadeInSeconds:0});
 }
 if(window.__fixtureSeed?.state)Object.assign(state,window.__fixtureSeed.state);
+state.djPlayback=normalizeDJPlaybackSettings(state.djPlayback);
 window.__renders={};
 window.__fixture={songs,state,connection,audios:[],calls:[],checkpoints:[],intervals:[],tick(position){const audio=this.audios.find(a=>a.src.startsWith('/fixture-audio'));if(!audio)throw Error('No audio loaded');audio.currentTime=position;audio.emit('timeupdate');},counts(){return {...window.__renders};}};
 const nativeInterval=window.setInterval.bind(window), nativeClearInterval=window.clearInterval.bind(window);
@@ -45,7 +46,7 @@ const bridge={
  startPreparedNews:input=>{window.__fixture.calls.push({method:'startPreparedNews',input});return ok();},
  markPreparedNewsPlayed:input=>{window.__fixture.calls.push({method:'markPreparedNewsPlayed',input});return ok();},
  releasePreparedNews:input=>{window.__fixture.calls.push({method:'releasePreparedNews',input});return ok();},
- saveDJPlayback:async patch=>{window.__fixture.calls.push({method:'saveDJPlayback',patch});if(window.__fixture.saveDJGate)await window.__fixture.saveDJGate;state.djPlayback={...state.djPlayback,...patch};state.revision++;return ok(structuredClone(state));},
+ saveDJPlayback:async patch=>{window.__fixture.calls.push({method:'saveDJPlayback',patch});if(window.__fixture.saveDJGate)await window.__fixture.saveDJGate;state.djPlayback=normalizeDJPlaybackSettings({...state.djPlayback,...patch,...(patch.everySongs!==undefined&&patch.everySongsMax===undefined?{everySongsMax:patch.everySongs}:{}),...(patch.announceEverySongs!==undefined&&patch.announceEverySongsMax===undefined?{announceEverySongsMax:patch.announceEverySongs}:{})});state.revision++;return ok(structuredClone(state));},
  onNewsProgress:()=>()=>{},onUpdateStatus:()=>()=>{},onPlaybackCheckpointRequest:()=>()=>{},flushPlaybackCheckpoint:()=>ok(),
 };
 window.wave=new Proxy(bridge,{get(target,name){if(name in target)return target[name];return (...args)=>{window.__fixture.calls.push({method:name,args});return ok(null);};}});

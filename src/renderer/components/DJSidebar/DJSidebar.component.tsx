@@ -210,8 +210,11 @@ export function DJSidebar({ openRoom, openSettings, controlsRef }: DJSidebarProp
         <div className="dj-header-actions">
           <InfoHelp label="About DJ breaks">
             <p>
-              The DJ checks for matching saved news every {automation.settings.everySongs}{' '}
-              {automation.settings.everySongs === 1 ? 'song' : 'songs'}. Skips do not count. Music continues when
+              The DJ checks for matching saved news every{' '}
+              {automation.settings.everySongs === automation.settings.everySongsMax
+                ? automation.settings.everySongs
+                : `${automation.settings.everySongs}–${automation.settings.everySongsMax}`}{' '}
+              {automation.settings.everySongsMax === 1 ? 'song' : 'songs'}. Skips do not count. Music continues when
               nothing qualifies or the song ending is unsuitable.
             </p>
             <p>
@@ -275,7 +278,11 @@ export function DJSidebar({ openRoom, openSettings, controlsRef }: DJSidebarProp
         <div>
           <strong>DJ schedule</strong>
           <p className="dj-hint">
-            Every {automation.settings.everySongs} {automation.settings.everySongs === 1 ? 'song' : 'songs'}
+            Every{' '}
+            {automation.settings.everySongs === automation.settings.everySongsMax
+              ? automation.settings.everySongs
+              : `${automation.settings.everySongs}–${automation.settings.everySongsMax}`}{' '}
+            {automation.settings.everySongsMax === 1 ? 'song' : 'songs'}
           </p>
         </div>
         <button

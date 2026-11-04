@@ -67,3 +67,8 @@ Use a fresh output path. [The finite report](pr-rule-results.json) passes six re
 Formatting, type-aware lint, TypeScript, production build, service behavior, fixture speech integration and storage reload checks passed on this integration. The service harness intentionally logs assertion failures from injected mutants while returning success only when the mutations are detected.
 
 The initial `pnpm audit` failed on four packaging-chain copies of minimatch. The [packaging dependency repair](../packaging-dependencies/README.md) upgrades the legacy callers before selecting patched minimatch and glob versions. The full audit now reports no known vulnerabilities; no advisory suppression or check bypass was introduced. Production dependency resolutions remain unchanged. No release was published.
+
+
+## Shared controls, 4 November 2026
+
+The later [save-action and floating-surface audit](shared-controls.md) documents reusable animated sliders, consistent save actions, three bounded block reviews, fresh captures, and executable geometry/state checks. Earlier findings and evidence above remain historical records.

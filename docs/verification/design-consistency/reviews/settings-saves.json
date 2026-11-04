@@ -1,0 +1,66 @@
+{
+  "block_id": "SETTINGS_SAVE_ACTIONS",
+  "classification": {
+    "role": "action-group",
+    "variant_family": "save",
+    "confidence": "confirmed"
+  },
+  "scope": "Settings, library, provider key, and dialog save actions in the supplied native fixture captures.",
+  "findings": [
+    {
+      "id": "save-actions-inconsistent-geometry",
+      "severity": "moderate",
+      "basis": "measured_and_captured",
+      "observation": "Equivalent save actions use visibly different geometry. News and transitions settings use 34px height, 18px radius, 14px text, and 7px 14px padding. Announcement settings uses 32px height, 8px radius, 12px text, and 4px 12px padding. Library and provider-key saves use 34px height and 8px radius, with 12px text; key save retains 7px 14px padding. Source and DJ dialog saves use 34px height and 18px radius with primary styling.",
+      "impact": "Save actions read as unrelated control families across adjacent settings and supporting flows, weakening the requested app-wide consistency.",
+      "evidence": [
+        { "capture": "before-news-save-crop.png", "measurement": "news-save" },
+        { "capture": "before-announcement-save-crop.png", "measurement": "announcement-save" },
+        { "capture": "before-transitions-save-crop.png", "measurement": "transitions-save" },
+        { "capture": "before-library-save-crop.png", "measurement": "library-save" },
+        { "capture": "before-key-save-crop.png", "measurement": "key-save" },
+        { "capture": "before-source-dialog-crop.png", "measurement": "source-save" },
+        { "capture": "before-dj-dialog-crop.png", "measurement": "dj-save" }
+      ],
+      "recommendation": "Resolved in the current implementation with the shared SaveButton geometry (32px minimum height, 8px radius, 12px font, 4px 12px padding).",
+      "after_evidence": [
+        { "capture": "after-news-save-crop.png", "measurement": "news-save" },
+        { "capture": "after-announcement-save-crop.png", "measurement": "announcement-save" },
+        { "capture": "after-transitions-save-crop.png", "measurement": "transitions-save" },
+        { "capture": "after-library-save-crop.png", "measurement": "library-save" },
+        { "capture": "after-key-save-crop.png", "measurement": "key-save" },
+        { "capture": "after-source-save-crop.png", "measurement": "source-save" },
+        { "capture": "after-dj-save-crop.png", "measurement": "dj-save" }
+      ],
+      "verification": "Fresh matched fixture measurements confirm all reviewed settings/library/key saves and source/DJ dialog saves now use 32px height, 8px radius, 12px font, and 4px 12px padding. The shared component preserves native button props through Button, including ref, type, disabled, aria-disabled, aria-busy, and handlers; the migrations retain existing refs, labels, handlers, and explicit type attributes where present. The explicit removal of primary classes is safe because SaveButton itself defaults to the primary Button variant. The final fixture adds a deliberately forced 40px news-save height and confirms the shared geometry assertion catches its height drift. It then changes voice volume to 0.4, gates the News & voice save through fixture IPC, confirms aria-busy while pending, releases the save, confirms the persisted fixture value is 0.4, and confirms the focused save button remains document.activeElement through completion. The pending capture shows the compact SaveButton displaying “Saving…” at 32px. These are coordinator-observed checks in the synthetic macOS Electron fixture, not live provider or production IPC verification. Focus was set programmatically before a scripted click, so keyboard tab navigation and screen-reader announcements were not assessed. The runtime save flow covered only News & voice; library, provider-key, announcement, transitions, and dialog save/submit flows were not exercised."
+    }
+  ],
+  "justified_differences": [
+    "Source and DJ dialog saves are primary actions in enabled dialog contexts, while captured settings, library, and key saves are disabled/default. Their accent versus muted appearance is a justified hierarchy and state difference; do not force a single color across the family."
+  ],
+  "resolution": "The measured geometry gap is resolved across the supplied after captures. Current measured dimensions match throughout the save family; label-driven widths vary as expected.",
+  "coordinator_observed_verification": [
+    {
+      "scenario": "News & voice save pending and completion through synthetic fixture IPC",
+      "observed": [
+        "Changed voice volume to 0.4 and confirmed the fixture persisted 0.4 after the save completed.",
+        "The pending save exposed aria-busy=true and retained the compact geometry while its label read “Saving…”.",
+        "The save button remained document.activeElement across successful completion.",
+        "A controlled 40px min-height mutation was rejected by the save geometry assertion."
+      ],
+      "limits": "The fixture uses synthetic IPC without live providers or production service calls. The save test directly focused the button and invoked a scripted click; it does not verify keyboard traversal, assistive technology announcements, or another save flow."
+    },
+    {
+      "scenario": "After geometry sweep",
+      "observed": [
+        "Source dialog Cancel and provider-key companion actions now use the compact 32px/8px/12px save-action geometry.",
+        "Duplicate global settings-save state styling was removed in favor of SaveButton styles."
+      ],
+      "limits": "Cancel and provider-key companion actions were measured in the fixture, but their activation behavior was not exercised."
+    }
+  ],
+  "unverified": [
+    "Runtime save behavior for library, provider-key, announcements, transitions, and dialog commits was not exercised.",
+    "Keyboard tab navigation and screen-reader announcements were not assessed. The supplied save crops were inspected and DOM measurements reviewed; full-window visual context was not exhaustively compared."
+  ]
+}

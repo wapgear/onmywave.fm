@@ -9,6 +9,7 @@ import type { WorkflowDraft } from '../../../shared/workflow';
 import { unwrap } from '../../api';
 import { Button } from '../../components/Button/Button.component';
 import { PreferencesLayout } from '../../components/PreferencesLayout/PreferencesLayout.component';
+import { SaveButton } from '../../components/SaveButton/SaveButton.component';
 import { Select } from '../../components/Select/Select.component';
 import { Dialog, DialogActions, ErrorNotice, PageHeading, errorMessage } from '../../components/Shared';
 import { WorkflowPreferences } from '../../components/WorkflowPreferences/WorkflowPreferences.component';
@@ -344,7 +345,11 @@ export function StationsPage({
       : `${savedAudioUnconfirmed ? 'Last loaded: ' : ''}${eligibleSavedAudio.length} eligible${savedAudioUnconfirmed ? ' · status unconfirmed' : ''}`;
   const playbackProfileName =
     automation.room?.name ?? (automation.settings.roomId ? 'Profile unavailable' : 'Not selected');
-  const lastConfirmedPlayback = `${automation.settings.enabled ? 'On' : 'Off'} · ${playbackProfileName} · every ${automation.settings.everySongs} songs`;
+  const playbackInterval =
+    automation.settings.everySongs === automation.settings.everySongsMax
+      ? automation.settings.everySongs
+      : `${automation.settings.everySongs}–${automation.settings.everySongsMax}`;
+  const lastConfirmedPlayback = `${automation.settings.enabled ? 'On' : 'Off'} · ${playbackProfileName} · every ${playbackInterval} ${automation.settings.everySongsMax === 1 ? 'song' : 'songs'}`;
   const playbackStatus = !automation.state.data
     ? automation.state.isPending
       ? 'Checking playback schedule…'
@@ -1518,15 +1523,14 @@ export function StationsPage({
                   <Button type="button" aria-disabled={profiles.isPending || undefined} onClick={closeProfileDialogs}>
                     Cancel
                   </Button>
-                  <Button
+                  <SaveButton
                     type="submit"
-                    variant="primary"
                     disabled={!profileName.trim()}
                     aria-disabled={busy || undefined}
                     aria-busy={profiles.isPending || undefined}
                   >
                     {profiles.isPending ? 'Saving…' : 'Save room'}
-                  </Button>
+                  </SaveButton>
                 </DialogActions>
               </form>
             </Dialog>
@@ -1548,14 +1552,13 @@ export function StationsPage({
                 >
                   Discard and switch
                 </Button>
-                <Button
-                  variant="primary"
+                <SaveButton
                   aria-disabled={busy || undefined}
                   aria-busy={profiles.isPending || undefined}
                   onClick={() => changeProfile({ kind: 'switch', id: switchTarget, saveChanges: true })}
                 >
                   {profiles.isPending ? 'Switching…' : 'Save and switch'}
-                </Button>
+                </SaveButton>
               </DialogActions>
             </Dialog>
           )}

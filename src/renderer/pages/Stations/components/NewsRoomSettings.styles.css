@@ -310,7 +310,6 @@
   width: auto;
   min-width: 140px;
   justify-self: start;
-  min-height: 36px;
 }
 .news-room-settings-saved {
   color: var(--muted);

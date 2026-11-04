@@ -8,8 +8,10 @@ import { unwrap } from '../../../api';
 import { Button } from '../../../components/Button/Button.component';
 import { ConfigurationTabs } from '../../../components/ConfigurationTabs/ConfigurationTabs.component';
 import { InfoHelp } from '../../../components/InfoHelp/InfoHelp.component';
+import { SaveButton } from '../../../components/SaveButton/SaveButton.component';
 import { SectionHeading } from '../../../components/SectionHeading/SectionHeading.component';
 import { Dialog, DialogActions, ErrorNotice } from '../../../components/Shared';
+import { Slider } from '../../../components/Slider/Slider.component';
 import { confirmLocalState } from '../../../local-state-cache';
 import { DJAvatarPicker } from './DJAvatarPicker.component';
 import { djPresets } from './DJEditor.presets';
@@ -460,11 +462,11 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
                 <label>
                   Music level under the voice
                   <div className="dj-profile-duck">
-                    <input
-                      type="range"
-                      min="0"
+                    <Slider
+                      aria-label="Music level under the voice"
+                      min={0}
                       max={Math.max(0.08, value.news?.duckVolume ?? 0.05)}
-                      step="0.01"
+                      step={0.01}
                       value={news.duckVolume}
                       onChange={(event) => updateNews({ duckVolume: Number(event.target.value) })}
                     />
@@ -492,16 +494,15 @@ export function DJEditor({ value, close }: { value: DJ; close: () => void }) {
           <Button type="button" aria-disabled={save.isPending || undefined} onClick={closeEditor}>
             Cancel
           </Button>
-          <Button
+          <SaveButton
             type="submit"
             ref={saveButton}
-            variant="primary"
             aria-disabled={save.isPending || undefined}
             aria-busy={save.isPending || undefined}
             disabled={!draft.name.trim() || !news.elevenVoiceId?.trim()}
           >
             {save.isPending ? 'Saving…' : 'Save DJ'}
-          </Button>
+          </SaveButton>
         </DialogActions>
       </form>
     </Dialog>

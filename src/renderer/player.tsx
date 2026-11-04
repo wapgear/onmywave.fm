@@ -35,6 +35,7 @@ import type {
 } from '../shared/types';
 import { unwrap, WaveError } from './api';
 import { freshAudioUrl } from './audio';
+import { useAnnouncementCadence } from './hooks/useAnnouncementCadence';
 import { useLibraryRepeat } from './hooks/useLibraryRepeat';
 import { useNewsRecovery } from './NewsRecovery';
 import type {
@@ -200,7 +201,11 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const newsNoticeRevision = useRef(0);
   const [lastNews, setLastNews] = useState<HeardNews | null>(null);
   const [completedSongs, setCompletedSongs] = useState(0);
-  const announcementSongs = useRef(0);
+  const announcementCadence = useAnnouncementCadence(
+    djSettings.announceEverySongs,
+    djSettings.announceEverySongsMax,
+    connection?.id ?? null,
+  );
   const commandRevision = useRef(0);
   const [musicCommandRevision, setMusicCommandRevision] = useState(0);
   const cancelRestoreRetry = useRef<(() => void) | null>(null);
@@ -286,7 +291,6 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     volume,
     recoveryReady,
     announceTracks: djSettings.announceTracks,
-    announceEverySongs: djSettings.announceEverySongs,
   });
 
   useLayoutEffect(() => {
@@ -321,20 +325,9 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       volume,
       recoveryReady,
       announceTracks: djSettings.announceTracks,
-      announceEverySongs: djSettings.announceEverySongs,
     };
     if (!djSettings.announceTracks) cancelPendingHandoff.current?.();
-  }, [
-    queue,
-    index,
-    current,
-    repeat,
-    shuffle,
-    volume,
-    recoveryReady,
-    djSettings.announceTracks,
-    djSettings.announceEverySongs,
-  ]);
+  }, [queue, index, current, repeat, shuffle, volume, recoveryReady, djSettings.announceTracks]);
 
   const changeVolume = useCallback((value: number) => {
     const next = Math.max(0, Math.min(1, value));
@@ -827,7 +820,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       if (preparing.current || !element.ended || consumedEnd.current === generation.current) return;
       if (countedSongGeneration.current !== generation.current) {
         countedSongGeneration.current = generation.current;
-        announcementSongs.current += 1;
+        announcementCadence.completeSong();
         setCompletedSongs((value) => value + 1);
       }
       if (newsSchedule.current && (newsActive.current || newsSchedule.current.settings.mode === 'between-songs')) {
@@ -883,6 +876,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       audio.current = null;
     };
   }, [
+    announcementCadence,
     load,
     continueAfterSong,
     checkScheduledNews,
@@ -1838,6 +1832,8 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
               requestId,
               takeId: bulletin ? news.id : undefined,
               songId: nextEntry.song.id,
+              previousSongId: state.current.id,
+              transitionId: `${key}-${generation.current}`,
             }),
           );
         } catch (cause) {
@@ -1927,7 +1923,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
         speechAttempt: 0,
         starting: false,
         prepareSpeech: () => {
-          if (!bulletin && !announced && announcementSongs.current < live.current.announceEverySongs)
+          if (!bulletin && !announced && !announcementCadence.isDue())
             return Promise.reject(new Error('Not enough songs have finished for this track introduction.'));
           return (startPromise ??= delivery ? window.wave.startPreparedNews(delivery).then(unwrap) : Promise.resolve());
         },
@@ -1966,7 +1962,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
           }
           if (!announced) {
             announced = true;
-            announcementSongs.current = 0;
+            announcementCadence.reset();
           }
         }
         if (heard) return;
@@ -2016,7 +2012,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
           }
           if (!announced) {
             announced = true;
-            announcementSongs.current = 0;
+            announcementCadence.reset();
           }
         };
       }
@@ -2165,8 +2161,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
           repeat,
           queueSession,
           completedSongs,
-          isTrackAnnouncementDue: () =>
-            djSettings.announceTracks && announcementSongs.current + 1 >= djSettings.announceEverySongs,
+          isTrackAnnouncementDue: () => djSettings.announceTracks && announcementCadence.isDue(1),
           scheduleTrackAnnouncement: () => scheduleNews(null),
           libraryError: repeat === 'all' ? libraryError : null,
           libraryLoading: repeat === 'all' && libraryLoading,

@@ -1,0 +1,17 @@
+.song-interval-range .song-interval-label {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.song-interval-track {
+  flex: 0 1 220px;
+  width: 220px;
+  min-width: 140px;
+}
+
+.song-interval-value {
+  min-width: 68px;
+  color: var(--muted);
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}

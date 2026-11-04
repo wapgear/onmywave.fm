@@ -1,0 +1,9 @@
+{
+  "src/renderer/components/SaveButton/SaveButton.component.tsx": "718cb60488e59821da361321d223ebc9ce48a8c4f12a06f3dfbe714d681dd46f",
+  "src/renderer/components/SaveButton/SaveButton.styles.css": "3daf1818252480f544ae94a68648946bd70c9ae3d328b2b1e25509083699cc29",
+  "src/renderer/components/Slider/Slider.component.tsx": "7d941333f8c3c88bbebcf701c8c99606523b1371aea8c8f604264959187cf2d5",
+  "src/renderer/components/Slider/RangeSlider.component.tsx": "9cb2854dcbadc18d1f732bee718d2b44105788c34ff3dda5df93dacd2c9810c7",
+  "src/renderer/components/Slider/SliderTrack.component.tsx": "ab812b2de1ec56d6ba2014bae2b37554db63d4dc990b79a735e1ec9c484393f2",
+  "src/renderer/components/Slider/Slider.styles.css": "341bac3e286c7ec48042eeba7a153dc0b6617e3a952ad9df4313baf0a1314743",
+  "src/renderer/styles.css": "3b8fa29bca14a1fdbf0d89b4637f3421db13665d547b9a071d83016d0e63362c"
+}

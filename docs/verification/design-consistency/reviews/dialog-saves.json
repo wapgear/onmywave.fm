@@ -1,0 +1,84 @@
+{
+  "block_id": "DIALOG_SAVE_ACTIONS",
+  "classification": "action-group / modal-save family",
+  "stage": "after",
+  "review_scope": "Save actions in Sources, DJEditor, Playlists, and Stations room dialogs; visual consistency and source-level flow review only.",
+  "evidence": {
+    "captures": [
+      "before-source-dialog.png",
+      "before-source-dialog-crop.png",
+      "before-source-save.png",
+      "before-source-save-crop.png",
+      "before-dj-dialog.png",
+      "before-dj-dialog-crop.png",
+      "before-dj-save.png",
+      "before-dj-save-crop.png"
+    ],
+    "after_captures": [
+      "after-source-dialog.png",
+      "after-source-dialog-crop.png",
+      "after-source-save.png",
+      "after-source-save-crop.png",
+      "after-dj-dialog.png",
+      "after-dj-dialog-crop.png",
+      "after-dj-save.png",
+      "after-dj-save-crop.png"
+    ],
+    "measurements": "before-measurements.json",
+    "source_reviewed": [
+      "Shared.Dialog and DialogActions",
+      "Button component and styles.css button/modal-action tokens",
+      "Sources editor/delete dialogs",
+      "DJEditor",
+      "Playlist editor",
+      "Stations room save and save-and-switch dialogs"
+    ],
+    "capture_context": "Synthetic macOS Electron fixture, light theme, 1440x1000 logical viewport, screenshot scale 2. DOM measurements and screenshots are before-state evidence."
+  },
+  "observations": [
+    {
+      "id": "source-dj-save-match",
+      "finding": "The inspected Sources and DJEditor primary save buttons already match in appearance: both are 34px high, 18px radius, 12px type, 7px 14px padding, and use the accent fill with no border. Crops show the expected compact Save source and Save DJ labels.",
+      "evidence": ["before-measurements.json: source-dialog", "before-measurements.json: dj-dialog", "before-source-save-crop.png", "before-dj-save-crop.png"],
+      "severity": "none"
+    },
+    {
+      "id": "shared-button-system",
+      "finding": "The shared Button already provides a primary variant, and the shared modal action row controls alignment and spacing. A separate SaveButton is not justified by the observed modal-save visuals; continuing to use Button primary keeps action semantics and existing component conventions intact.",
+      "evidence": ["Button component", "Shared.Dialog / DialogActions", "styles.css button and modal-actions rules"],
+      "severity": "none"
+    },
+    {
+      "id": "after-save-commit-standardized",
+      "finding": "After captures show Save source and Save DJ now share the same compact primary geometry: 32px height, 8px radius, 12px type, 4px 12px padding, medium weight, and accent fill. The source and DJ dialog frames retain their prior dimensions and visual treatment.",
+      "evidence": ["after-measurements.json: source-save", "after-measurements.json: dj-save", "after-source-save-crop.png", "after-dj-save-crop.png", "after-source-dialog-crop.png", "after-dj-dialog-crop.png"],
+      "severity": "resolved"
+    },
+    {
+      "id": "after-source-cancel-save-pair-matched",
+      "finding": "The source dialog now gives Cancel and Save source matching 32px height, 8px radius, 12px/500 type, and 4px 12px padding. The crop shows a coherent aligned pair, with the intended secondary neutral fill retained for Cancel and accent fill retained for Save source. DOM measurements confirm both controls share the same y coordinate and height.",
+      "evidence": ["after-source-dialog-crop.png", "after-source-cancel-crop.png", "after-source-save-crop.png", "after-measurements.json: source-cancel", "after-measurements.json: source-save"],
+      "severity": "resolved"
+    }
+  ],
+  "justified_differences": [
+    "Keep Cancel as the secondary action, visually distinct from the primary commit action.",
+    "Keep Delete destructive in the Sources dialog; it is not a save action.",
+    "In Stations save-and-switch confirmation, retain the separate Discard and switch secondary action alongside Save and switch primary; their different outcomes must remain clear.",
+    "Preserve dialog-specific widths and content: the DJEditor is wider than the compact source editor for its distinct form content."
+  ],
+  "flow_review": {
+    "sources": "Save remains gated by required fields and pending state; Cancel and destructive Delete retain their separate roles.",
+    "dj_editor": "Save remains gated by required name/voice state and pending state; the handler validates the form and voice before committing.",
+    "playlists": "Blank-name and pending/uncertain-save states preserve their existing disabled and recovery wording behavior.",
+    "stations": "Room creation keeps Cancel and Save room; switching with unsaved edits retains Cancel, Discard and switch, and Save and switch as distinct choices.",
+    "verification_limit": "These flows were inspected in source, not exercised end to end in this review. The screenshots are synthetic and establish appearance only; they do not prove actual save outcomes, API success/error handling, or keyboard behavior."
+  },
+  "recommendation": "The shared compact geometry now yields a consistent modal action row while preserving primary, secondary, and destructive emphasis. No material visual issue remains in the inspected Source save pair. Retain the same sizing convention in other dialog consumers and preserve their labels and handlers.",
+  "verification_recommendations": [
+    "Compare after-state modal save captures and computed styles against the existing 34px height, 18px radius, compact 12px modal action typography, 7px 14px padding, and accent fill.",
+    "Confirm the compact secondary style on DJEditor, Playlists, and Stations action rows; their behavior remains source-reviewed only in this record.",
+    "Exercise enabled, disabled, pending, validation-failure, API-failure, and successful-save states for each dialog consumer before making behavioral claims.",
+    "Confirm Cancel, Delete, Discard and switch, and Save and switch retain their distinct visual roles and actions."
+  ]
+}

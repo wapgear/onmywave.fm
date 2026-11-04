@@ -49,7 +49,11 @@
   gap: 8px;
 }
 .provider-key-actions button {
+  min-height: var(--control-size-compact);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--control-radius);
   font-size: 12px;
+  font-weight: 500;
 }
 
 .provider-keys {

@@ -5,6 +5,7 @@ import { unwrap } from '../api';
 import { useRetryFocus } from '../useRetryFocus';
 import type { LibraryChooserProps } from './LibraryChooser.types';
 import { useLibrarySelection } from './LibrarySelection';
+import { SaveButton } from './SaveButton/SaveButton.component';
 import { Empty, ErrorNotice } from './Shared';
 
 import './LibraryChooser.styles.css';
@@ -113,9 +114,8 @@ export function LibraryChooser({
         <span aria-live="polite">
           {selectedIds.length} {selectedIds.length === 1 ? 'library' : 'libraries'} selected
         </span>
-        <button
+        <SaveButton
           ref={saveButton}
-          className="primary"
           disabled={!canSave && !ownsSaveFocus}
           aria-disabled={!canSave || undefined}
           aria-busy={selection.pending || undefined}
@@ -123,7 +123,7 @@ export function LibraryChooser({
           onBlur={() => setFocusedSave(null)}
         >
           {selection.pending ? 'Saving libraries…' : !dirty && ownsSaveFocus ? 'Libraries saved' : 'Save libraries'}
-        </button>
+        </SaveButton>
       </div>
       {onChangeAccount && (
         <button

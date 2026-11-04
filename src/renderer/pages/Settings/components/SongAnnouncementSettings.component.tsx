@@ -4,8 +4,10 @@ import { useRef, useState } from 'react';
 import { normalizeDJPlaybackSettings, type DJPlaybackSettings } from '../../../../shared/dj-playback';
 import { announcementStyles } from '../../../../shared/song-announcements';
 import { unwrap } from '../../../api';
+import { SaveButton } from '../../../components/SaveButton/SaveButton.component';
 import { SectionHeading } from '../../../components/SectionHeading/SectionHeading.component';
 import { ErrorNotice } from '../../../components/Shared';
+import { SongIntervalRange } from '../../../components/SongIntervalRange/SongIntervalRange.component';
 import { useNewsRecovery } from '../../../NewsRecovery';
 import { useRetryFocus } from '../../../useRetryFocus';
 import { useSettingsEdits } from '../SettingsEdits';
@@ -33,10 +35,15 @@ export function SongAnnouncementSettings() {
   const { draft, save } = edit;
   const settings = draft ?? normalizeDJPlaybackSettings(state.data?.djPlayback);
   const styleName = announcementStyles.find((option) => option.value === settings.announcementStyle)?.label;
+  const interval =
+    settings.announceEverySongs === settings.announceEverySongsMax
+      ? settings.announceEverySongs
+      : `${settings.announceEverySongs}–${settings.announceEverySongsMax}`;
   function change(patch: Partial<DJPlaybackSettings>) {
     edit.change({
       announceTracks: settings.announceTracks,
       announceEverySongs: settings.announceEverySongs,
+      announceEverySongsMax: settings.announceEverySongsMax,
       announcementStyle: settings.announcementStyle,
       announcementLines: settings.announcementLines,
       ...patch,
@@ -48,9 +55,7 @@ export function SongAnnouncementSettings() {
       className="song-announcement-settings"
       title="Song announcements"
       description={
-        settings.announceTracks
-          ? `On · ${styleName} · Every ${settings.announceEverySongs} songs`
-          : 'Off · Timing, style and custom lines'
+        settings.announceTracks ? `On · ${styleName} · Every ${interval} songs` : 'Off · Timing, style and custom lines'
       }
       id="song-announcements-title"
       ref={summary}
@@ -59,14 +64,15 @@ export function SongAnnouncementSettings() {
     >
       <SectionHeading title="Timing & wording" helpLabel="About song announcements">
         <p>
-          Song introductions play after the configured number of completed songs, or always after fact-only news. The
-          default is six. Each introduction resets the count; skips do not count. Older news recordings with their own
-          ending play without an introduction.
+          A random number of completed songs is picked within your range for each introduction. Equal limits give a
+          fixed interval. Existing fixed intervals are preserved. Skips do not count, and an introduction only resets
+          the count when it starts playing. Fact-only news always gets a brief handoff; older news recordings with their
+          own ending play without an introduction.
         </p>
         <p>
-          Enabling introductions authorizes ElevenLabs speech requests. Introductions use the saved DJ voice and the
-          next song's title and artist. Styles rotate their phrasing without repeating the last few lines. A repeated
-          song may reuse its recorded introduction during this session.
+          Generated introductions use OpenAI and ElevenLabs with your saved DJ voice and song metadata. Wording varies
+          automatically between a fuller story or segue and a short introduction. Short & simple, My own lines and
+          post-news handoffs keep their chosen behavior.
         </p>
         <p>Choose My own lines to write introductions in your own voice. Text examples do not use credits.</p>
       </SectionHeading>
@@ -113,25 +119,20 @@ export function SongAnnouncementSettings() {
               Announce the next song
             </label>
             <span className="preference-note" id="track-announcement-cost">
-              Uses ElevenLabs credits
+              Uses AI credits
             </span>
           </div>
-          <label className="preference-row dj-song-interval">
-            Announce after
-            <input
-              type="number"
-              min={1}
-              max={100}
-              step={1}
-              required
-              disabled={!settings.announceTracks}
-              value={Number.isNaN(settings.announceEverySongs) ? '' : settings.announceEverySongs}
-              onChange={(event) =>
-                change({ announceEverySongs: event.target.value === '' ? NaN : Number(event.target.value) })
-              }
-            />
-            <span>{settings.announceEverySongs === 1 ? 'completed song' : 'completed songs'}</span>
-          </label>
+          <SongIntervalRange
+            id="announcement-interval"
+            label="Announce after"
+            minimum={settings.announceEverySongs}
+            maximum={settings.announceEverySongsMax}
+            disabled={!settings.announceTracks}
+            onChange={(minimum, maximum) => change({ announceEverySongs: minimum, announceEverySongsMax: maximum })}
+          />
+          <p className="preference-note">
+            Drag the ends to choose 1–10 completed songs. Equal ends give a fixed interval.
+          </p>
           <SongAnnouncementPreferences
             style={settings.announcementStyle}
             lines={settings.announcementLines}
@@ -139,9 +140,9 @@ export function SongAnnouncementSettings() {
             onChange={change}
           />
         </fieldset>
-        <button
+        <SaveButton
           ref={saveButton}
-          className="primary settings-save"
+          className="settings-save"
           disabled={!save.isPending && (!recoveryReady || !state.data || (draft === null && !saveFocused))}
           aria-disabled={!recoveryReady || !state.data || draft === null || save.isPending || undefined}
           aria-busy={save.isPending || undefined}
@@ -149,7 +150,7 @@ export function SongAnnouncementSettings() {
           onBlur={() => setSaveFocused(false)}
         >
           {save.isPending ? 'Saving…' : 'Save announcement settings'}
-        </button>
+        </SaveButton>
         <ErrorNotice error={save.error} />
         {save.isSuccess && draft === null && (
           <p className="form-hint" role="status">

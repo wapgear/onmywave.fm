@@ -8,6 +8,7 @@ export type PlaybackView = {
   waiting: boolean;
   failure: string | null;
   baseline: number;
+  targetSongs: number;
   retryPhase: 'queued' | 'checking' | 'ready' | 'empty' | null;
   retryMessage: string | null;
 };

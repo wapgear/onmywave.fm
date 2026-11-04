@@ -2,6 +2,7 @@ import { type FormEvent, useLayoutEffect, useRef, useState } from 'react';
 
 import { newsPreparationStatus } from '../../../shared/news-preparation-status';
 import { useNewsRecovery } from '../../NewsRecovery';
+import { SaveButton } from '../SaveButton/SaveButton.component';
 import { ErrorNotice, errorMessage } from '../Shared';
 import type { WorkflowPreferencesProps } from './WorkflowPreferences.types';
 
@@ -238,9 +239,9 @@ export function WorkflowPreferences({
           </fieldset>
           <div ref={saveFeedback} className="news-workflow-save-feedback">
             <ErrorNotice error={saveError} />
-            <button
+            <SaveButton
               ref={saveButton}
-              className="primary settings-save news-workflow-save"
+              className="settings-save news-workflow-save"
               disabled={saveDisabled}
               aria-disabled={saveAriaDisabled || undefined}
               aria-busy={saving || undefined}
@@ -248,7 +249,7 @@ export function WorkflowPreferences({
               onBlur={() => setOwnsSaveFocus(false)}
             >
               {saving ? 'Saving…' : activating ? 'Save setup and enable preparation' : 'Save setup'}
-            </button>
+            </SaveButton>
           </div>
           {!room.enabled && (
             <p className="notice">
