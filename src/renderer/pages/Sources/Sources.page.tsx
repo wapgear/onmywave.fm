@@ -8,6 +8,7 @@ import { unwrap } from '../../api';
 import { Button } from '../../components/Button/Button.component';
 import { IconButton } from '../../components/IconButton/IconButton.component';
 import { TwitterSetupHelp } from '../../components/ProviderKeys/TwitterSetupHelp.component';
+import { SaveButton } from '../../components/SaveButton/SaveButton.component';
 import { Dialog, DialogActions, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { confirmLocalState } from '../../local-state-cache';
 import { useRetryFocus } from '../../useRetryFocus';
@@ -288,10 +289,9 @@ export function SourcesPage() {
               <Button type="button" aria-disabled={mutation.isPending || undefined} onClick={closeDialogs}>
                 Cancel
               </Button>
-              <Button
+              <SaveButton
                 type="submit"
                 ref={saveButton}
-                variant="primary"
                 aria-disabled={mutation.isPending || undefined}
                 aria-busy={mutation.isPending || undefined}
                 disabled={
@@ -299,7 +299,7 @@ export function SourcesPage() {
                 }
               >
                 {mutation.isPending ? 'Saving…' : 'Save source'}
-              </Button>
+              </SaveButton>
             </DialogActions>
           </form>
         </Dialog>

@@ -1,0 +1,564 @@
+{
+  "platform": "macOS Electron fixture",
+  "stage": "after",
+  "measurements": [
+    {
+      "id": "news-save",
+      "selector": ".room-dj-schedule .settings-save",
+      "role": "action-group",
+      "variant": "save",
+      "rect": {
+        "x": 432,
+        "y": 470.9375,
+        "width": 179.90625,
+        "height": 32
+      },
+      "text": "Save news & voice settings",
+      "properties": {
+        "height": "32px",
+        "radius": "8px",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "background": "rgb(240, 240, 242)",
+        "border": "0px none rgb(98, 102, 116)",
+        "shadow": "none",
+        "padding": "4px 12px"
+      },
+      "theme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scale": 2,
+      "method": "dom",
+      "capturedAt": "2026-11-04T16:29:39.421Z"
+    },
+    {
+      "id": "announcement-save",
+      "selector": ".song-announcement-settings .settings-save",
+      "role": "action-group",
+      "variant": "save",
+      "rect": {
+        "x": 432,
+        "y": 470.875,
+        "width": 190.1953125,
+        "height": 32
+      },
+      "text": "Save announcement settings",
+      "properties": {
+        "height": "32px",
+        "radius": "8px",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "background": "rgb(240, 240, 242)",
+        "border": "0px none rgb(98, 102, 116)",
+        "shadow": "none",
+        "padding": "4px 12px"
+      },
+      "theme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scale": 2,
+      "method": "dom",
+      "capturedAt": "2026-11-04T16:29:39.699Z"
+    },
+    {
+      "id": "transitions-save",
+      "selector": ".news-transition-settings .settings-save",
+      "role": "action-group",
+      "variant": "save",
+      "rect": {
+        "x": 432,
+        "y": 795.1640625,
+        "width": 134.2890625,
+        "height": 32
+      },
+      "text": "Save DJ transitions",
+      "properties": {
+        "height": "32px",
+        "radius": "8px",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "background": "rgb(240, 240, 242)",
+        "border": "0px none rgb(98, 102, 116)",
+        "shadow": "none",
+        "padding": "4px 12px"
+      },
+      "theme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scale": 2,
+      "method": "dom",
+      "capturedAt": "2026-11-04T16:29:39.968Z"
+    },
+    {
+      "id": "news-save-pending",
+      "selector": ".room-dj-schedule .settings-save",
+      "role": "action-group",
+      "variant": "save",
+      "rect": {
+        "x": 432,
+        "y": 470.9375,
+        "width": 73.875,
+        "height": 32
+      },
+      "text": "Saving…",
+      "properties": {
+        "height": "32px",
+        "radius": "8px",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "background": "rgb(240, 240, 242)",
+        "border": "0px none rgb(98, 102, 116)",
+        "shadow": "none",
+        "padding": "4px 12px"
+      },
+      "theme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scale": 2,
+      "method": "dom",
+      "capturedAt": "2026-11-04T16:29:40.384Z"
+    },
+    {
+      "id": "help-dialog",
+      "selector": "dialog[open]",
+      "role": "dialog",
+      "variant": "default",
+      "rect": {
+        "x": 500,
+        "y": 367.1640625,
+        "width": 440,
+        "height": 265.6640625
+      },
+      "text": "About news timing and voice\n\nNews uses a fresh random number within your range for each saved bulletin. Equal ends give a fixed interval. Enable news and choose its profile in the player's DJ sidebar. An empty pool leaves music playing.\n\nKeeping the DJ while seeking lets speech wait for a suitable ending and resume where it paused.\n\nVoice volume is relative to the player volume.",
+      "properties": {
+        "height": "265.664px",
+        "radius": "22px",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "background": "rgb(253, 253, 254)",
+        "border": "1px solid rgb(226, 226, 231)",
+        "shadow": "rgba(24, 27, 58, 0.22) 0px 24px 90px 0px",
+        "padding": "0px"
+      },
+      "theme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scale": 2,
+      "method": "dom",
+      "capturedAt": "2026-11-04T16:29:40.762Z"
+    },
+    {
+      "id": "library-save",
+      "selector": ".library-choice-footer > button",
+      "role": "action-group",
+      "variant": "save",
+      "rect": {
+        "x": 1090.5625,
+        "y": 685.1875,
+        "width": 101.4375,
+        "height": 32
+      },
+      "text": "Save libraries",
+      "properties": {
+        "height": "32px",
+        "radius": "8px",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "background": "rgb(240, 240, 242)",
+        "border": "0px none rgb(98, 102, 116)",
+        "shadow": "none",
+        "padding": "4px 12px"
+      },
+      "theme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scale": 2,
+      "method": "dom",
+      "capturedAt": "2026-11-04T16:29:41.059Z"
+    },
+    {
+      "id": "key-save",
+      "selector": ".provider-key-actions > button",
+      "role": "action-group",
+      "variant": "save",
+      "rect": {
+        "x": 432,
+        "y": 379,
+        "width": 75.4609375,
+        "height": 32
+      },
+      "text": "Save key",
+      "properties": {
+        "height": "32px",
+        "radius": "8px",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "background": "rgb(240, 240, 242)",
+        "border": "0px none rgb(98, 102, 116)",
+        "shadow": "none",
+        "padding": "4px 12px"
+      },
+      "theme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scale": 2,
+      "method": "dom",
+      "capturedAt": "2026-11-04T16:29:41.340Z"
+    },
+    {
+      "id": "source-dialog",
+      "selector": "dialog[open]",
+      "role": "dialog",
+      "variant": "default",
+      "rect": {
+        "x": 500,
+        "y": 302.5,
+        "width": 440,
+        "height": 394.9921875
+      },
+      "text": "Edit source\nName\nSource type\nRSS / Atom\nTwitter / X\nHacker News\nRSS or Atom URL\n\nUse an HTTP or HTTPS feed URL without a username or password.\n\nCancel\nSave source",
+      "properties": {
+        "height": "394.992px",
+        "radius": "22px",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "background": "rgb(253, 253, 254)",
+        "border": "1px solid rgb(226, 226, 231)",
+        "shadow": "rgba(24, 27, 58, 0.22) 0px 24px 90px 0px",
+        "padding": "0px"
+      },
+      "theme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scale": 2,
+      "method": "dom",
+      "capturedAt": "2026-11-04T16:29:41.681Z"
+    },
+    {
+      "id": "source-save",
+      "selector": "dialog[open] .modal-actions button:last-child",
+      "role": "action-group",
+      "variant": "save",
+      "rect": {
+        "x": 813.3828125,
+        "y": 644.4921875,
+        "width": 94.6171875,
+        "height": 32
+      },
+      "text": "Save source",
+      "properties": {
+        "height": "32px",
+        "radius": "8px",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "background": "rgb(201, 40, 67)",
+        "border": "0px none rgb(255, 255, 255)",
+        "shadow": "none",
+        "padding": "4px 12px"
+      },
+      "theme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scale": 2,
+      "method": "dom",
+      "capturedAt": "2026-11-04T16:29:41.962Z"
+    },
+    {
+      "id": "source-cancel",
+      "selector": "dialog[open] .modal-actions button:first-child",
+      "role": "action-group",
+      "variant": "dialog-action",
+      "rect": {
+        "x": 741.546875,
+        "y": 644.4921875,
+        "width": 63.8359375,
+        "height": 32
+      },
+      "text": "Cancel",
+      "properties": {
+        "height": "32px",
+        "radius": "8px",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "background": "rgb(239, 239, 241)",
+        "border": "0px none rgb(32, 32, 36)",
+        "shadow": "none",
+        "padding": "4px 12px"
+      },
+      "theme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scale": 2,
+      "method": "dom",
+      "capturedAt": "2026-11-04T16:29:42.245Z"
+    },
+    {
+      "id": "dj-dialog",
+      "selector": "dialog[open]",
+      "role": "dialog",
+      "variant": "default",
+      "rect": {
+        "x": 390,
+        "y": 40,
+        "width": 660,
+        "height": 920
+      },
+      "text": "Edit DJ\nPredefined\nSimple\nAdvanced\nName\nPreview\nAvatar\nFD\nInitials\nHost\nHeadphones\nMicrophone\nRadio\nMusic\nSparkles\nFox\nOwl\nBackground\n✓\nPersonality\nLanguage\nVoice\nElevenLabs voice ID\nPreview voice\nVoice JBFqnCBsd6RMkjVDRZzb · voice sample\n\nThe bundled preset sample is unavailable; synthesis is disabled for preset voices.\n\nHost preferences\n\nOpenAI receives your host instructions, music preferences and exclusions for news preparation (up to 20,000 characters per field). Longer text can increase usage and cost. Preferences guide the writing; your queue controls playback.\n\nShort description\nHost instructions\nMusic preferences\nExclusions\nNews interests\nDelivery tags\nMusic level under the voice\n5%\nApplied when you schedule a saved take over music.\n\nSaving a DJ does not generate audio or start playback.\n\nCancel\nSave DJ",
+      "properties": {
+        "height": "920px",
+        "radius": "22px",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "background": "rgb(253, 253, 254)",
+        "border": "1px solid rgb(226, 226, 231)",
+        "shadow": "rgba(24, 27, 58, 0.22) 0px 24px 90px 0px",
+        "padding": "0px"
+      },
+      "theme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scale": 2,
+      "method": "dom",
+      "capturedAt": "2026-11-04T16:29:42.625Z"
+    },
+    {
+      "id": "dj-save",
+      "selector": "dialog[open] .modal-actions button:last-child",
+      "role": "action-group",
+      "variant": "save",
+      "rect": {
+        "x": 947.140625,
+        "y": 906.8203125,
+        "width": 70.859375,
+        "height": 32
+      },
+      "text": "Save DJ",
+      "properties": {
+        "height": "32px",
+        "radius": "8px",
+        "fontSize": "12px",
+        "fontWeight": "500",
+        "background": "rgb(201, 40, 67)",
+        "border": "0px none rgb(255, 255, 255)",
+        "shadow": "none",
+        "padding": "4px 12px"
+      },
+      "theme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scale": 2,
+      "method": "dom",
+      "capturedAt": "2026-11-04T16:29:42.904Z"
+    },
+    {
+      "id": "dj-drawer",
+      "selector": ".side-drawer",
+      "role": "inspector",
+      "variant": "default",
+      "rect": {
+        "x": 1104.133056640625,
+        "y": 42,
+        "width": 320,
+        "height": 842
+      },
+      "text": "Your DJ\nOff\nDJ schedule\n\nEvery 3 songs\n\nEnable DJ\nCurrent DJ · Fixture DJ\nNews bucket\nDJ settings",
+      "properties": {
+        "height": "842px",
+        "radius": "16px",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "background": "rgb(247, 247, 249)",
+        "border": "0px none rgb(32, 32, 36)",
+        "shadow": "none",
+        "padding": "0px"
+      },
+      "theme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scale": 2,
+      "method": "dom",
+      "capturedAt": "2026-11-04T16:29:43.219Z"
+    },
+    {
+      "id": "track-menu",
+      "selector": ":popover-open",
+      "role": "toolbar",
+      "variant": "default",
+      "rect": {
+        "x": 1169,
+        "y": 306,
+        "width": 205,
+        "height": 218
+      },
+      "text": "Play song\nPlay next\nAdd to end\nAdd to playlist\nSong details\nRemove song",
+      "properties": {
+        "height": "218px",
+        "radius": "12px",
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "background": "rgb(255, 255, 255)",
+        "border": "1px solid rgb(226, 226, 231)",
+        "shadow": "rgba(23, 32, 57, 0.15) 0px 10px 32px 0px",
+        "padding": "6px"
+      },
+      "theme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scale": 2,
+      "method": "dom",
+      "capturedAt": "2026-11-04T16:29:43.834Z"
+    },
+    {
+      "id": "player",
+      "selector": ".player-bar",
+      "role": "toolbar",
+      "variant": "player",
+      "rect": {
+        "x": 16,
+        "y": 896,
+        "width": 1408,
+        "height": 88
+      },
+      "text": "Evening track 002\nFixture artist\n0:44\n−2:16",
+      "properties": {
+        "height": "88px",
+        "radius": "22px",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "background": "rgba(255, 255, 255, 0.94)",
+        "border": "0px none rgb(32, 32, 36)",
+        "shadow": "rgba(35, 36, 40, 0.08) 0px 8px 28px 0px, rgba(255, 255, 255, 0.95) 0px 0px 0px 1px",
+        "padding": "12px 18px"
+      },
+      "theme": "light",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scale": 2,
+      "method": "dom",
+      "capturedAt": "2026-11-04T16:29:44.138Z"
+    },
+    {
+      "id": "player-dark",
+      "selector": ".player-bar",
+      "role": "toolbar",
+      "variant": "player",
+      "rect": {
+        "x": 16,
+        "y": 896,
+        "width": 1408,
+        "height": 88
+      },
+      "text": "Evening track 002\nFixture artist\n0:44\n−2:16",
+      "properties": {
+        "height": "88px",
+        "radius": "22px",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "background": "rgba(35, 39, 46, 0.96)",
+        "border": "0px none rgb(236, 233, 227)",
+        "shadow": "rgba(0, 0, 0, 0.35) 0px 8px 28px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px",
+        "padding": "12px 18px"
+      },
+      "theme": "dark",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scale": 2,
+      "method": "dom",
+      "capturedAt": "2026-11-04T16:29:44.447Z"
+    },
+    {
+      "id": "player-coffee",
+      "selector": ".player-bar",
+      "role": "toolbar",
+      "variant": "player",
+      "rect": {
+        "x": 16,
+        "y": 896,
+        "width": 1408,
+        "height": 88
+      },
+      "text": "Evening track 002\nFixture artist\n0:44\n−2:16",
+      "properties": {
+        "height": "88px",
+        "radius": "22px",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "background": "rgba(250, 246, 239, 0.96)",
+        "border": "0px none rgb(52, 45, 39)",
+        "shadow": "rgba(67, 54, 41, 0.11) 0px 8px 28px 0px, rgba(248, 243, 235, 0.95) 0px 0px 0px 1px",
+        "padding": "12px 18px"
+      },
+      "theme": "coffee",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "scale": 2,
+      "method": "dom",
+      "capturedAt": "2026-11-04T16:29:44.755Z"
+    },
+    {
+      "id": "player-narrow",
+      "selector": ".player-bar",
+      "role": "toolbar",
+      "variant": "player",
+      "rect": {
+        "x": 16,
+        "y": 696,
+        "width": 928,
+        "height": 88
+      },
+      "text": "Evening track 002\nFixture artist\n0:44\n−2:16",
+      "properties": {
+        "height": "88px",
+        "radius": "22px",
+        "fontSize": "14px",
+        "fontWeight": "400",
+        "background": "rgba(255, 255, 255, 0.94)",
+        "border": "0px none rgb(32, 32, 36)",
+        "shadow": "rgba(35, 36, 40, 0.08) 0px 8px 28px 0px, rgba(255, 255, 255, 0.95) 0px 0px 0px 1px",
+        "padding": "12px 16px"
+      },
+      "theme": "light",
+      "viewport": {
+        "width": 960,
+        "height": 800
+      },
+      "scale": 2,
+      "method": "dom",
+      "capturedAt": "2026-11-04T16:29:45.036Z"
+    }
+  ]
+}

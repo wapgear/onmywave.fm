@@ -81,6 +81,9 @@
   --danger-fill: #b63131;
   --popover-radius: 12px;
   --popover-shadow: 0 10px 32px #17203926;
+  --floating-panel-radius: 16px;
+  --floating-blur: 24px;
+  --player-radius: 22px;
   --dialog-padding: 20px;
   --dialog-radius: 22px;
   --dialog-background: #fdfdfe;
@@ -686,22 +689,6 @@ button > svg {
 .popover-surface:not(:popover-open) {
   display: none;
 }
-:where(.popover-surface) {
-  position: fixed;
-  inset: auto;
-  margin: 0;
-  max-width: calc(100vw - 16px);
-  max-height: calc(100dvh - 16px);
-  border: 1px solid var(--border);
-  border-radius: var(--popover-radius);
-  background: var(--popover);
-  color: var(--text);
-  box-shadow: var(--popover-shadow);
-  -webkit-app-region: no-drag;
-}
-.popover-surface:not(:popover-open) {
-  display: none;
-}
 .row-menu {
   z-index: 20;
   display: flex;
@@ -1226,11 +1213,15 @@ button > svg {
   margin-top: 24px;
 }
 .modal-actions button {
+  min-height: var(--control-size-compact);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--control-radius);
   max-width: 100%;
   min-width: 0;
   white-space: normal;
   overflow-wrap: anywhere;
   font-size: 12px;
+  font-weight: 500;
 }
 form label {
   display: flex;

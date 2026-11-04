@@ -3,16 +3,17 @@ import { createContext, useContext, useLayoutEffect, useRef, useState, type Reac
 
 import { isNewsTransitionSettings } from '../../../shared/news-transitions';
 import { announcementLinesError } from '../../../shared/song-announcements';
+import { isSongIntervalRange } from '../../../shared/song-intervals';
 import type { DJPlaybackSettings, LocalStateSnapshot, NewsTransitionSettings } from '../../../shared/types';
 import { unwrap } from '../../api';
 import { confirmLocalState } from '../../local-state-cache';
 import { useNewsRecovery } from '../../NewsRecovery';
 
-type PlaybackPreferences = Pick<DJPlaybackSettings, 'everySongs' | 'keepOnSeek' | 'voiceVolume'>;
+type PlaybackPreferences = Pick<DJPlaybackSettings, 'everySongs' | 'everySongsMax' | 'keepOnSeek' | 'voiceVolume'>;
 
 type AnnouncementPreferences = Pick<
   DJPlaybackSettings,
-  'announceTracks' | 'announceEverySongs' | 'announcementStyle' | 'announcementLines'
+  'announceTracks' | 'announceEverySongs' | 'announceEverySongsMax' | 'announcementStyle' | 'announcementLines'
 >;
 
 function useEdit<T>(write: (value: T) => Promise<LocalStateSnapshot>) {
@@ -58,15 +59,17 @@ function useSettingsEditState() {
   const playback = useEdit<PlaybackPreferences>(async (value) => {
     if (currentRecovery.current !== 'ready')
       throw new Error('News data is unavailable. Recover it before changing DJ playback.');
-    if (!Number.isInteger(value.everySongs) || value.everySongs < 1 || value.everySongs > 100)
-      throw new Error('Choose a whole number from 1 to 100 songs.');
+    if (!isSongIntervalRange(value.everySongs, value.everySongsMax))
+      throw new Error('Choose a news interval from 1 to 10 songs, with the minimum no greater than the maximum.');
     return unwrap(await window.wave.saveDJPlayback(value));
   });
   const announcements = useEdit<AnnouncementPreferences>(async (value) => {
     if (currentRecovery.current !== 'ready')
       throw new Error('News data is unavailable. Recover it before changing song announcements.');
-    if (!Number.isInteger(value.announceEverySongs) || value.announceEverySongs < 1 || value.announceEverySongs > 100)
-      throw new Error('Choose an announcement interval from 1 to 100 completed songs.');
+    if (!isSongIntervalRange(value.announceEverySongs, value.announceEverySongsMax))
+      throw new Error(
+        'Choose an announcement interval from 1 to 10 songs, with the minimum no greater than the maximum.',
+      );
     const linesError = announcementLinesError(value.announcementStyle, value.announcementLines);
     if (linesError) throw new Error(linesError);
     return unwrap(await window.wave.saveDJPlayback(value));

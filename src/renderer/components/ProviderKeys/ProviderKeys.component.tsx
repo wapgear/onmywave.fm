@@ -3,6 +3,7 @@ import { useId, useRef, useState } from 'react';
 
 import { unwrap } from '../../api';
 import { useRetryFocus } from '../../useRetryFocus';
+import { SaveButton } from '../SaveButton/SaveButton.component';
 import { SectionHeading } from '../SectionHeading/SectionHeading.component';
 import { ErrorNotice } from '../Shared';
 import { useProviderKeyEdit } from './ProviderKeyEdits';
@@ -116,7 +117,7 @@ function ProviderKey({ provider, disabled }: { provider: 'openai' | 'elevenlabs'
         />
       </label>
       <div className="provider-key-actions">
-        <button
+        <SaveButton
           type="button"
           {...focusProps('save')}
           disabled={saveUnavailable && !ownsFocus('save')}
@@ -127,7 +128,7 @@ function ProviderKey({ provider, disabled }: { provider: 'openai' | 'elevenlabs'
           }}
         >
           {edit.pending ? 'Updating key…' : !key.trim() && ownsFocus('save') && !edit.error ? 'Key saved' : 'Save key'}
-        </button>
+        </SaveButton>
         {(status.data?.configured || ownsFocus('remove')) && (
           <button
             type="button"

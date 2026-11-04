@@ -38,7 +38,7 @@ export async function verifyAnnouncementPreferences(window, root, stage = 'after
   }
   window.show();
   window.focus();
-  await run(`document.querySelector('.song-announcement-settings input[type="number"]').focus()`);
+  await run(`document.querySelector('#announcement-interval-max').focus()`);
   window.webContents.sendInputEvent({ type: 'keyDown', keyCode: 'Tab' });
   window.webContents.sendInputEvent({ type: 'keyUp', keyCode: 'Tab' });
   await frame();
@@ -87,12 +87,13 @@ export async function verifyAnnouncementPreferences(window, root, stage = 'after
   assert.equal(await run(`document.querySelector('#announcement-lines').value`), invalidDraft, 'Navigating away erased custom wording');
   await run(`document.querySelector('.room-dj-schedule > summary').click()`);
   await frame();
-  await change('.room-dj-schedule input[type="number"]', '7', 'HTMLInputElement');
+  await change('#news-interval-max', '7', 'HTMLInputElement');
+  await change('#news-interval-min', '7', 'HTMLInputElement');
   await run(`document.querySelector('.room-dj-schedule .settings-save').click()`);
   await frame();
   assert.equal(await run(`window.__fixture.state.djPlayback.everySongs`), 7, 'An invalid announcement draft blocked saving the news schedule');
   assert.equal(await run(`document.querySelector('#announcement-lines').value`), invalidDraft, 'Saving news erased an announcement draft');
-  assert.deepEqual(await run(`Object.keys(window.__fixture.calls.filter((call) => call.method==='saveDJPlayback').at(-1).patch).sort()`), ['everySongs','keepOnSeek','voiceVolume']);
+  assert.deepEqual(await run(`Object.keys(window.__fixture.calls.filter((call) => call.method==='saveDJPlayback').at(-1).patch).sort()`), ['everySongs','everySongsMax','keepOnSeek','voiceVolume']);
   const lines = 'Let’s get lost in {track}.\nYour next little escape: {track}.\nRoom for one more? {track}.';
   await change('#announcement-lines', lines, 'HTMLTextAreaElement');
   assert.equal(await run(`document.querySelector('#announcement-lines').getAttribute('aria-invalid')`), 'false');
@@ -124,7 +125,7 @@ export async function verifyAnnouncementPreferences(window, root, stage = 'after
   await save();
   assert.equal(await run(`window.__fixture.state.djPlayback.announceTracks`), false);
   assert.equal(await run(`window.__fixture.state.djPlayback.everySongs`), 7, 'Saving announcements overwrote news timing');
-  assert.deepEqual(await run(`Object.keys(window.__fixture.calls.filter((call) => call.method==='saveDJPlayback').at(-1).patch).sort()`), ['announceEverySongs','announceTracks','announcementLines','announcementStyle']);
+  assert.deepEqual(await run(`Object.keys(window.__fixture.calls.filter((call) => call.method==='saveDJPlayback').at(-1).patch).sort()`), ['announceEverySongs','announceEverySongsMax','announceTracks','announcementLines','announcementStyle']);
   assert.equal(await run(`window.__fixture.calls.filter((call) => call.method === 'prepareSongHandoff').length`), 0, 'Text examples requested speech');
   return { scenario: 'announcement styles, custom wording, validation, draft preservation, keyboard order, disabled controls, text-only preview, responsive layout', passed: true };
 }

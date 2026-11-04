@@ -68,10 +68,8 @@
   align-items: center;
   gap: 14px;
 }
-.dj-profile-duck input {
-  padding: 0;
-  min-height: 24px;
-  accent-color: var(--accent);
+.dj-profile-duck .slider {
+  flex: 1;
 }
 .dj-profile-duck output {
   min-width: 36px;
