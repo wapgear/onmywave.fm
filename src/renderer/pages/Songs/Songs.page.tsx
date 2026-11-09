@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { CatalogQuery, Song } from '../../../shared/types';
 import { unwrap } from '../../api';
-import { readCatalog } from '../../catalog';
+import { catalogInlineError, readCatalog } from '../../catalog';
 import { FilterSelect } from '../../components/FilterSelect/FilterSelect.component';
 import { IconButton } from '../../components/IconButton/IconButton.component';
 import { Empty, ErrorNotice, PageHeading } from '../../components/Shared';
@@ -207,7 +207,7 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
         </IconButton>
       </div>
       <ErrorNotice
-        error={filters.error}
+        error={catalogInlineError(filters.error)}
         retryRef={filtersRetryFocus.retryRef}
         retrying={filters.isFetching}
         retry={() => filtersRetryFocus.retry(() => filters.refetch())}
@@ -215,7 +215,7 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
       {!songs.isFetchNextPageError && (
         <ErrorNotice
           key={`error:${JSON.stringify(catalog)}`}
-          error={songs.error}
+          error={catalogInlineError(songs.error)}
           retryRef={songsRetryFocus.retryRef}
           retrying={songs.isFetching}
           retry={() => songsRetryFocus.retry(() => songs.refetch())}

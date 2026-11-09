@@ -7,6 +7,7 @@ import type { Connection, Song } from '../shared/types';
 import { unwrap } from './api';
 import type { PageName, ReadyAppProps, SessionContentProps } from './App.types';
 import { AddPlaylist } from './components/AddPlaylist/AddPlaylist.component';
+import { CatalogConnectionBanner } from './components/CatalogConnectionBanner.component';
 import { DJSidebar } from './components/DJSidebar/DJSidebar.component';
 import { IconButton } from './components/IconButton/IconButton.component';
 import { Inspector } from './components/Inspector/Inspector.component';
@@ -635,93 +636,104 @@ function ReadyApp({
   return (
     <div className={`app-shell ${visibleDrawer ? 'has-drawer has-listening-drawer' : ''}`}>
       <NavigationSidebar page={page} navigate={navigate} />
-      <main
-        ref={main}
-        className="main-content"
-        id="main-content"
-        inert={expandedDrawer}
-        aria-hidden={expandedDrawer || undefined}
-      >
-        <div ref={content} className="page-content">
-          <SongRemovalNotice />
-          <NewsRecoveryNotice
-            onOpenSettings={openNewsSettings}
-            focusTarget={() => content.current?.querySelector<HTMLElement>('.page-heading h1') ?? null}
-            settingsTarget={() => content.current?.querySelector<HTMLElement>('#room-panel-settings') ?? null}
-          />
-          <RenderErrorBoundary scope="page" resetKey={location}>
-            {page === 'songs' && (
-              <SongsPage view={songsView} setView={setSongsView} add={setAdding} details={openDrawer} />
-            )}
-            {page === 'artists' && (
-              <ArtistsPage
-                onOpenDetail={(id, origin) => requestCollectionFocus(`artists-${id}`, origin)}
-                view={artistsView}
-                setView={setArtistsView}
-                add={setAdding}
-                details={openDrawer}
-              />
-            )}
-            {page === 'albums' && (
-              <AlbumsPage
-                onOpenDetail={(id, origin) => requestCollectionFocus(`albums-${id}`, origin)}
-                view={albumsView}
-                setView={setAlbumsView}
-                add={setAdding}
-                details={openDrawer}
-              />
-            )}
-            {page === 'playlists' && (
-              <PlaylistsPage
-                onCreateDetail={requestCreatedPlaylistFocus}
-                onReturnFromDetail={(id, origin) => requestCollectionFocus('playlists-list', origin, id)}
-                onOpenDetail={(id, origin) => requestCollectionFocus(`playlists-${id}`, origin)}
-                recovery={playlistRecovery}
-                id={playlistId}
-                setId={setPlaylistId}
-                add={setAdding}
-                details={openDrawer}
-              />
-            )}
-            {page === 'stations' && (
-              <StationsPage
-                configDraft={roomSetupDraft}
-                setConfigDraft={setRoomSetupDraft}
-                configureSources={() => configureRoom('sources')}
-                configureDJ={() => configureRoom('djs')}
-                configureSettings={() => configureRoom('keys')}
-                openDJControls={openDJControls}
-              />
-            )}
-            {page === 'settings' && (
-              <SettingsPage
-                section={settingsSection}
-                onSectionChange={setSettingsSection}
-                returnToSetup={
-                  returnToSetup
-                    ? () => {
-                        restoreSetupFocus.current = true;
-                        scrollPositions.current.delete('stations');
-                        const origin = setupReturnContext.current;
-                        setRoomSetupDraft((current) => ({
-                          ...current,
-                          tab: origin?.internalBucketSettings ? 'bucket' : (origin?.tab ?? 'settings'),
-                          bucketDestination: origin?.bucketDestination ?? current.bucketDestination,
-                        }));
-                        setupReturnContext.current = null;
-                        setPage('stations');
-                        setReturnToSetup(false);
-                      }
-                    : undefined
-                }
-                connection={connection}
-                update={updateLibraries}
-                disconnected={() => (active.current ? disconnected() : undefined)}
-              />
-            )}
-          </RenderErrorBoundary>
-        </div>
-      </main>
+      <div className="library-panel">
+        <CatalogConnectionBanner
+          page={adding ? null : page}
+          location={location}
+          focusTarget={() =>
+            expandedDrawer
+              ? drawerClose.current
+              : (content.current?.querySelector<HTMLElement>('.back-button, .page-heading h1') ?? null)
+          }
+        />
+        <main
+          ref={main}
+          className="main-content"
+          id="main-content"
+          inert={expandedDrawer}
+          aria-hidden={expandedDrawer || undefined}
+        >
+          <div ref={content} className="page-content">
+            <SongRemovalNotice />
+            <NewsRecoveryNotice
+              onOpenSettings={openNewsSettings}
+              focusTarget={() => content.current?.querySelector<HTMLElement>('.page-heading h1') ?? null}
+              settingsTarget={() => content.current?.querySelector<HTMLElement>('#room-panel-settings') ?? null}
+            />
+            <RenderErrorBoundary scope="page" resetKey={location}>
+              {page === 'songs' && (
+                <SongsPage view={songsView} setView={setSongsView} add={setAdding} details={openDrawer} />
+              )}
+              {page === 'artists' && (
+                <ArtistsPage
+                  onOpenDetail={(id, origin) => requestCollectionFocus(`artists-${id}`, origin)}
+                  view={artistsView}
+                  setView={setArtistsView}
+                  add={setAdding}
+                  details={openDrawer}
+                />
+              )}
+              {page === 'albums' && (
+                <AlbumsPage
+                  onOpenDetail={(id, origin) => requestCollectionFocus(`albums-${id}`, origin)}
+                  view={albumsView}
+                  setView={setAlbumsView}
+                  add={setAdding}
+                  details={openDrawer}
+                />
+              )}
+              {page === 'playlists' && (
+                <PlaylistsPage
+                  onCreateDetail={requestCreatedPlaylistFocus}
+                  onReturnFromDetail={(id, origin) => requestCollectionFocus('playlists-list', origin, id)}
+                  onOpenDetail={(id, origin) => requestCollectionFocus(`playlists-${id}`, origin)}
+                  recovery={playlistRecovery}
+                  id={playlistId}
+                  setId={setPlaylistId}
+                  add={setAdding}
+                  details={openDrawer}
+                />
+              )}
+              {page === 'stations' && (
+                <StationsPage
+                  configDraft={roomSetupDraft}
+                  setConfigDraft={setRoomSetupDraft}
+                  configureSources={() => configureRoom('sources')}
+                  configureDJ={() => configureRoom('djs')}
+                  configureSettings={() => configureRoom('keys')}
+                  openDJControls={openDJControls}
+                />
+              )}
+              {page === 'settings' && (
+                <SettingsPage
+                  section={settingsSection}
+                  onSectionChange={setSettingsSection}
+                  returnToSetup={
+                    returnToSetup
+                      ? () => {
+                          restoreSetupFocus.current = true;
+                          scrollPositions.current.delete('stations');
+                          const origin = setupReturnContext.current;
+                          setRoomSetupDraft((current) => ({
+                            ...current,
+                            tab: origin?.internalBucketSettings ? 'bucket' : (origin?.tab ?? 'settings'),
+                            bucketDestination: origin?.bucketDestination ?? current.bucketDestination,
+                          }));
+                          setupReturnContext.current = null;
+                          setPage('stations');
+                          setReturnToSetup(false);
+                        }
+                      : undefined
+                  }
+                  connection={connection}
+                  update={updateLibraries}
+                  disconnected={() => (active.current ? disconnected() : undefined)}
+                />
+              )}
+            </RenderErrorBoundary>
+          </div>
+        </main>
+      </div>
       {visibleDrawer && (
         <aside
           ref={drawerElement}

@@ -296,12 +296,17 @@ button > svg {
   height: 100dvh;
   display: grid;
   grid-template-columns: var(--sidebar) minmax(0, 1fr);
-  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-rows: [workspace] minmax(0, 1fr) auto;
   position: relative;
   background: var(--sidebar-background);
 }
+.app-shell:has(> .library-panel > .app-error-banner) {
+  background-image: linear-gradient(
+    color-mix(in srgb, var(--notice-error-background) 65%, var(--sidebar-background)),
+    var(--sidebar-background)
+  );
+}
 .sidebar {
-  background: var(--sidebar-background);
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -361,12 +366,26 @@ button > svg {
   height: var(--titlebar-height);
   -webkit-app-region: drag;
 }
-.main-content {
-  anchor-name: --library-panel;
-  overflow-x: hidden;
-  overflow-y: scroll;
+.library-panel {
+  grid-column: 2;
+  grid-row: workspace;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
   margin: var(--titlebar-height) 16px var(--player-clearance) 0;
   border-radius: 16px;
+  overflow: clip;
+}
+.library-panel:has(> .app-error-banner):has(+ .is-expanded) {
+  grid-column-end: -1;
+}
+.main-content {
+  anchor-name: --library-panel;
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
   background: linear-gradient(
     to bottom,
     var(--canvas) var(--table-header-top, 0px),
@@ -816,6 +835,15 @@ button > svg {
 .notice.error {
   background: var(--notice-error-background);
   color: var(--notice-error-text);
+}
+.app-error-banner {
+  flex-shrink: 0;
+  margin: 0;
+  border-radius: 0;
+  padding: 5px var(--content-inset);
+}
+.app-error-banner > button {
+  flex-shrink: 0;
 }
 .album-grid {
   display: grid;
@@ -1837,13 +1865,8 @@ legend {
 
 .sidebar {
   grid-column: 1;
-  grid-row: 1 / 3;
+  grid-row: workspace / -1;
 }
-.main-content {
-  grid-column: 2;
-  grid-row: 1;
-}
-
 .main-content {
   scroll-padding-top: 72px;
   scroll-padding-bottom: 24px;
@@ -1986,7 +2009,7 @@ input[type='range'] {
   }
   .side-drawer {
     grid-column: 1 / -1;
-    grid-row: 1 / -1;
+    grid-row: workspace / -1;
     position: absolute;
     z-index: 38;
     top: 0;

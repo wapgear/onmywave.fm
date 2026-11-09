@@ -4,6 +4,7 @@ import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import type { PlaylistEditRecovery, PlaylistLibrary, Song } from '../../../shared/types';
 import { unwrap, WaveError } from '../../api';
+import { catalogInlineError } from '../../catalog';
 import { Button } from '../../components/Button/Button.component';
 import { CollectionHeading } from '../../components/CollectionHeading/CollectionHeading.component';
 import { CollectionPlaybackActions } from '../../components/CollectionPlaybackActions/CollectionPlaybackActions.component';
@@ -140,7 +141,7 @@ export function PlaylistsPage({
       </PageHeading>
       <ErrorNotice
         key="playlists:list-error"
-        error={playlists.error}
+        error={catalogInlineError(playlists.error)}
         retryRef={listRetryFocus.retryRef}
         retrying={playlists.isFetching}
         retry={() => listRetryFocus.retry(() => playlists.refetch())}
@@ -759,7 +760,7 @@ function PlaylistDetail({ id, listError, back, add, details, recovery }: Playlis
         </p>
       )}
       <ErrorNotice
-        error={playlist.error ?? listError}
+        error={catalogInlineError(playlist.error) ?? catalogInlineError(listError)}
         retryRef={detailRetryFocus.retryRef}
         retrying={playlist.isFetching || listFetching}
         retry={() => detailRetryFocus.retry(retryReads)}
