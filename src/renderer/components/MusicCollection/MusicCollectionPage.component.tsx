@@ -3,6 +3,7 @@ import { ArrowLeft, Plus, Search } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
 import { unwrap } from '../../api';
+import { catalogInlineError } from '../../catalog';
 import { usePlayer } from '../../player';
 import { useRetryFocus } from '../../useRetryFocus';
 import { CollectionHeading } from '../CollectionHeading/CollectionHeading.component';
@@ -106,7 +107,7 @@ export function MusicCollectionPage<T extends CollectionItem>({
       {!catalog.isFetchNextPageError && (
         <ErrorNotice
           key={`error:${search}`}
-          error={catalog.error}
+          error={catalogInlineError(catalog.error)}
           retryRef={retryFocus.retryRef}
           retrying={catalog.isFetching}
           retry={() => retryFocus.retry(() => catalog.refetch())}
@@ -212,13 +213,13 @@ function MusicCollectionDetail<T extends CollectionItem>({
         </button>
       </CollectionHeading>
       <ErrorNotice
-        error={detail.error}
+        error={catalogInlineError(detail.error)}
         retryRef={detailRetryFocus.retryRef}
         retrying={detail.isFetching}
         retry={() => detailRetryFocus.retry(() => detail.refetch())}
       />
       <ErrorNotice
-        error={tracks.error}
+        error={catalogInlineError(tracks.error)}
         retryRef={tracksRetryFocus.retryRef}
         retrying={tracks.isFetching}
         retry={() => tracksRetryFocus.retry(() => tracks.refetch())}
