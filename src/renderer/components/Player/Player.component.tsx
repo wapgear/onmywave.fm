@@ -16,7 +16,7 @@ import {
   Volume2,
   VolumeX,
 } from 'lucide-react';
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { useDJPlayback } from '../../dj-playback';
 import { usePlayer } from '../../player';
@@ -46,27 +46,12 @@ export function Player({
   const automation = useDJPlayback();
   const djActive = automation.settings.enabled || player.newsPhase !== 'idle';
   const DJStatusIcon = djActive ? RadioTower : Radio;
-  const notices = useRef<HTMLDivElement>(null);
   const repeatTrigger = useRef<HTMLButtonElement>(null);
   const { retryRef: libraryRetryRef, retry: retryLibraryWithFocus } = useRetryFocus({
     ownerKey: `player:library:${player.repeat}`,
     target: () => repeatTrigger.current,
     canFocusSuccess: () => !player.libraryError && !player.libraryLoading,
   });
-
-  useLayoutEffect(() => {
-    const node = notices.current;
-    const root = document.documentElement;
-    if (!node) return;
-    const measure = () => root.style.setProperty('--player-notice-height', `${node.getBoundingClientRect().height}px`);
-    const observer = new ResizeObserver(measure);
-    observer.observe(node);
-    measure();
-    return () => {
-      observer.disconnect();
-      root.style.removeProperty('--player-notice-height');
-    };
-  }, []);
 
   const [mutedVolume, setMutedVolume] = useState(0.75);
   const playControl = useRef<HTMLButtonElement>(null);
@@ -160,7 +145,7 @@ export function Player({
 
   return (
     <>
-      <div ref={notices} className="player-notices">
+      <div className="player-notices">
         <DJBreakNotice target={djControlsTarget} />
         {player.newsNotice && (
           <div className="playback-error">
