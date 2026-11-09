@@ -27,7 +27,7 @@ import type { WorkflowDraft } from '../shared/workflow';
 import { getDJVoicePreview, prepareDJVoicePreview, getVoicePreview, prepareVoicePreview } from './dj-previews';
 import { searchDJVoices } from './dj-voices';
 import { JellyfinService, ServiceError, PLAYLIST_CREATION } from './jellyfin';
-import { preparePlayback, registerMedia, revokeMedia } from './media';
+import { getNowPlayingArtwork, preparePlayback, registerMedia, revokeMedia } from './media';
 import { NewsService, validateNewsSettings } from './news';
 import {
   pauseNewsWorkflow,
@@ -634,6 +634,12 @@ function registerIpc() {
     addPlaylistItems: (input) => service.addPlaylistItems(input),
     removePlaylistEntries: (input) => service.removePlaylistEntries(input),
     movePlaylistEntry: (input) => service.movePlaylistEntry(input),
+    getNowPlayingArtwork: async (url: string) => {
+      const connection = service.connection();
+      if (!connection) return null;
+      const artwork = await getNowPlayingArtwork(url);
+      return service.connection()?.authRevision === connection.authRevision ? artwork : null;
+    },
     preparePlayback: (input: { id: string; transcode?: boolean; offsetSeconds?: number }) => {
       if (
         !isRecord(input) ||

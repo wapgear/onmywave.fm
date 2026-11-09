@@ -413,6 +413,7 @@ export interface WaveApi {
   addPlaylistItems(input: { id: string; trackIds: string[]; skipExisting: boolean }): Promise<Result<void>>;
   removePlaylistEntries(input: { id: string; entryIds: string[] }): Promise<Result<void>>;
   movePlaylistEntry(input: { id: string; entryId: string; index: number }): Promise<Result<void>>;
+  getNowPlayingArtwork(url: string): Promise<Result<string | null>>;
   preparePlayback(input: {
     id: string;
     transcode?: boolean;

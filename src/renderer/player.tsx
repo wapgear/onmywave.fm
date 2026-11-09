@@ -280,6 +280,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
 
   const current = queue[index]?.song;
   const currentKey = queue[index]?.key;
+  const hasCurrentTrack = Boolean(current);
   const duration = current && Number.isFinite(current.duration) && current.duration > 0 ? current.duration : 0;
   const live = useRef({
     queue,
@@ -1535,16 +1536,36 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   }, [skipNext, previous, toggle, changeVolume]);
 
   useEffect(() => {
-    if (!('mediaSession' in navigator)) return;
-    navigator.mediaSession.metadata = current
-      ? new MediaMetadata({
-          title: current.name,
-          artist: current.artists.join(', '),
-          album: current.album,
-          artwork: current.imageUrl ? [{ src: current.imageUrl }] : [],
+    if (!('mediaSession' in navigator) || !current) return;
+    const session = navigator.mediaSession;
+    const metadata = new MediaMetadata({
+      title: current.name,
+      artist: current.artists.join(', '),
+      album: current.album,
+    });
+    session.metadata = metadata;
+    if (current.imageUrl) {
+      // Chromium drops wave-media: URLs from Media Session artwork.
+      void window.wave
+        .getNowPlayingArtwork(current.imageUrl)
+        .then((result) => {
+          if (result.ok && result.value && session.metadata === metadata) metadata.artwork = [{ src: result.value }];
         })
-      : null;
-    navigator.mediaSession.playbackState = playing ? 'playing' : 'paused';
+        .catch(() => {});
+    }
+
+    return () => {
+      session.metadata = null;
+    };
+  }, [current]);
+
+  useEffect(() => {
+    if (!('mediaSession' in navigator)) return;
+    navigator.mediaSession.playbackState = hasCurrentTrack ? (playing ? 'playing' : 'paused') : 'none';
+  }, [hasCurrentTrack, playing]);
+
+  useEffect(() => {
+    if (!('mediaSession' in navigator)) return;
     const handlers: [MediaSessionAction, MediaSessionActionHandler][] = [
       [
         'play',
@@ -1576,7 +1597,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     return () => {
       for (const [action] of handlers) navigator.mediaSession.setActionHandler(action, null);
     };
-  }, [current, duration, playing, skipNext, previous, seek, toggle, requestPlayback, musicCommand]);
+  }, [duration, skipNext, previous, seek, toggle, requestPlayback, musicCommand]);
 
   const playQueueEntry = (key: string, historyIndex?: number, upcomingId?: string) => {
     const state = live.current;
