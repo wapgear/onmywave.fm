@@ -2,6 +2,7 @@ import { ArrowLeft, ExternalLink, Inbox, Pause, Play, Radio, Search, Star, X } f
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { canonicalArticleUrl, eligibleNewsTakes } from '../../../../shared/news-pool';
+import { preparationHistoryMessage } from '../../../../shared/news-preparation-status';
 import type { NewsArticle, PreparedNewsScript, PreparedNewsTake, ReviewedNewsArticle } from '../../../../shared/types';
 import { Button } from '../../../components/Button/Button.component';
 import { IconButton } from '../../../components/IconButton/IconButton.component';
@@ -56,6 +57,8 @@ export function NewsBucket({
   savedNewsStale,
   openSource,
   openPreparation,
+  preparation,
+  adjustPreparationLimit,
   roomSettings,
   active = true,
   destination,
@@ -69,6 +72,8 @@ export function NewsBucket({
   const invokingSection = useRef<Destination | null>(null);
   const readerHeading = useRef<HTMLHeadingElement>(null);
   const pageProfile = localState.roomProfiles.find((room) => room.id === localState.activeRoomProfileId);
+  const atLimit = !profileStatusUnknown && preparation?.atLimit;
+  const limitAction = atLimit ? preparation.limitAction : undefined;
   const eligible = pageProfile ? eligibleNewsTakes(library.takes, localState, pageProfile.id) : [];
   const latestRoomRequest = pageProfile
     ? [...library.requests]
@@ -659,7 +664,26 @@ export function NewsBucket({
                     </span>
                   </div>
                 )}
-                {destination === 'check' && lastRun?.message && <p className="news-bucket-muted">{lastRun.message}</p>}
+                {atLimit && (destination === 'upcoming' || destination === 'check') && (
+                  <div className="news-bucket-limit">
+                    <div role="status">
+                      <strong>{preparation.label}</strong>
+                      <p>{preparation.detail}</p>
+                    </div>
+                    {limitAction && (
+                      <Button
+                        variant="link"
+                        className="room-link"
+                        onClick={() => adjustPreparationLimit(limitAction.field)}
+                      >
+                        {limitAction.label}
+                      </Button>
+                    )}
+                  </div>
+                )}
+                {destination === 'check' && lastRun?.message && (
+                  <p className="news-bucket-muted">{preparationHistoryMessage(lastRun.message)}</p>
+                )}
                 {automation.settings.enabled && automation.room && destination === 'upcoming' && (
                   <div className="news-bucket-runtime" role="status">
                     <Radio size={16} aria-hidden="true" />
@@ -718,9 +742,11 @@ export function NewsBucket({
                         <p>
                           {savedNewsStale
                             ? 'Refresh status to confirm what is ready.'
-                            : pageProfile?.workflowDraft.newsEnabled
-                              ? 'Your DJ is watching your sources. Fresh recordings appear here when a story qualifies.'
-                              : 'Choose your sources and host, then turn on automatic news in Settings.'}
+                            : atLimit
+                              ? 'Saved news appears here when it is ready for a DJ break.'
+                              : pageProfile?.workflowDraft.newsEnabled
+                                ? 'Your DJ is watching your sources. Fresh recordings appear here when a story qualifies.'
+                                : 'Choose your sources and host, then save your news settings.'}
                         </p>
                         <Button variant="link" className="room-link" onClick={() => navigate('settings')}>
                           Review news settings

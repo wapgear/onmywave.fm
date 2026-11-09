@@ -425,7 +425,10 @@ function recoverNews(): Promise<NewsRecoveryStatus> {
         await updateLocalState((state) => {
           const roomProfiles = state.roomProfiles.map((profile) =>
             profile.workflowDraft.newsEnabled
-              ? { ...profile, workflowDraft: { ...profile.workflowDraft, newsWorkflowPaused: true } }
+              ? {
+                  ...profile,
+                  workflowDraft: { ...profile.workflowDraft, newsWorkflowPaused: true, nextNewsCheckAt: undefined },
+                }
               : profile,
           );
           return {
@@ -795,7 +798,9 @@ function registerIpc() {
             );
           const profile = state.roomProfiles.find((value) => value.id === activeProfileId);
           const requested = normalizeWorkflowDraft(input.workflowDraft);
-          const explicitResume = input.resumePreparation === true;
+          const explicitResume =
+            input.resumePreparation === true ||
+            (requested.newsEnabled === true && profile?.workflowDraft.newsEnabled !== true);
           const room = { djId: input.room.djId, sourceIds: [...new Set(input.room.sourceIds)] };
           const changed =
             !profile ||
@@ -862,7 +867,7 @@ function registerIpc() {
       const name = profileName(input.name);
       const workflowDraft = {
         ...normalizeWorkflowDraft(input.workflowDraft),
-        newsEnabled: false,
+        newsEnabled: undefined,
         nextNewsCheckAt: undefined,
         newsWorkflowError: undefined,
         newsAssessmentDate: undefined,
