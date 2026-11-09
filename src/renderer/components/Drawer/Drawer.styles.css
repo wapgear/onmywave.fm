@@ -36,7 +36,7 @@
 .app-shell .side-drawer.expandable-drawer.is-expanded {
   width: calc(100% - var(--sidebar) - 16px);
 }
-.library-panel:has(> .app-error-banner) + .expandable-drawer.is-expanded {
+.library-panel:has(> .app-notices > .app-notice) + .expandable-drawer.is-expanded {
   top: anchor(--library-panel top, var(--titlebar-height));
   border-start-start-radius: 0;
   border-start-end-radius: 0;
@@ -348,7 +348,7 @@
     width: min(var(--listening-sidebar-width), calc(100% - var(--sidebar) - 16px));
     margin: 0;
   }
-  .library-panel:has(> .app-error-banner) + .side-drawer {
+  .library-panel:has(> .app-notices > .app-notice) + .side-drawer {
     top: anchor(--library-panel top, var(--titlebar-height));
   }
 }

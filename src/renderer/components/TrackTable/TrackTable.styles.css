@@ -39,12 +39,3 @@
   width: 205px;
   overflow-y: auto;
 }
-.song-removal-notice {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 16px;
-  color: var(--muted);
-  font-size: 13px;
-}

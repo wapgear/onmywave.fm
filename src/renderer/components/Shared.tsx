@@ -1,13 +1,14 @@
-import { AlertCircle, Music2, X } from 'lucide-react';
+import { Music2, X } from 'lucide-react';
 import { useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 
 import { IconButton } from './IconButton/IconButton.component';
+import { Notice, NoticeAction } from './Notice/Notice.component';
 import type { DialogProps, ErrorNoticeProps, PageHeadingProps } from './Shared.types';
 
 export const errorMessage = (error: unknown) =>
   error instanceof Error ? error.message : 'Something went wrong. Please try again.';
 
-export function ErrorNotice({ className, error, retry, retryRef, retrying = false }: ErrorNoticeProps) {
+export function ErrorNotice({ header, error, retry, retryRef, retrying = false }: ErrorNoticeProps) {
   const inFlight = useRef(false);
   const [ownsRetryFocus, setOwnsRetryFocus] = useState(false);
   const [attemptPending, setAttemptPending] = useState(false);
@@ -37,31 +38,32 @@ export function ErrorNotice({ className, error, retry, retryRef, retrying = fals
   const busyLabel = attemptPending ? 'Retrying…' : 'Checking…';
 
   return (
-    <div className={className ? `notice error ${className}` : 'notice error'}>
-      <AlertCircle size={18} aria-hidden="true" />
-      <span role="alert">{errorMessage(visibleError)}</span>
-      {retry && (
-        <>
-          <span className="sr-only" role="status">
-            {busy ? busyLabel : ''}
-          </span>
-          <button
-            type="button"
-            ref={retryRef}
-            aria-disabled={busy || undefined}
-            aria-busy={busy || undefined}
-            onFocus={() => {
-              setOwnsRetryFocus(true);
-              setRetainedError(error ?? visibleError);
-            }}
-            onBlur={() => setOwnsRetryFocus(false)}
-            onClick={() => void retryOnce()}
-          >
-            {busy ? busyLabel : 'Try again'}
-          </button>
-        </>
-      )}
-    </div>
+    <Notice
+      header={header}
+      tone="error"
+      message={errorMessage(visibleError)}
+      actions={
+        retry && (
+          <>
+            <span className="sr-only" role="status">
+              {busy ? busyLabel : ''}
+            </span>
+            <NoticeAction
+              ref={retryRef}
+              busy={busy}
+              onFocus={() => {
+                setOwnsRetryFocus(true);
+                setRetainedError(error ?? visibleError);
+              }}
+              onBlur={() => setOwnsRetryFocus(false)}
+              onClick={() => void retryOnce()}
+            >
+              {busy ? busyLabel : 'Try again'}
+            </NoticeAction>
+          </>
+        )
+      }
+    />
   );
 }
 
