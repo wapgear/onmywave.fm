@@ -1,3 +1,5 @@
+export const MAX_DAILY_NEWS_RECORDINGS = 10;
+
 export type WorkflowDraft = {
   newsInterests?: string;
   newsEnabled?: boolean;
@@ -24,7 +26,6 @@ export type WorkflowDraft = {
 
 export function defaultWorkflowDraft(): WorkflowDraft {
   return {
-    newsEnabled: false,
     everyHours: 3,
     importance: 'major',
     maxNewsClipsPerDay: 3,
@@ -79,7 +80,7 @@ export function isWorkflowDraft(value: unknown): value is WorkflowDraft {
     !['major', 'relevant'].includes(String(value.importance)) ||
     !Number.isInteger(value.maxNewsClipsPerDay) ||
     (value.maxNewsClipsPerDay as number) < 1 ||
-    (value.maxNewsClipsPerDay as number) > 10
+    (value.maxNewsClipsPerDay as number) > MAX_DAILY_NEWS_RECORDINGS
   )
     return false;
   return true;
@@ -89,7 +90,7 @@ export function normalizeWorkflowDraft(value: unknown): WorkflowDraft {
   if (!isWorkflowDraft(value)) return defaultWorkflowDraft();
   return {
     ...(value.newsInterests !== undefined ? { newsInterests: value.newsInterests.trim() } : {}),
-    newsEnabled: value.newsEnabled ?? false,
+    ...(value.newsEnabled !== undefined ? { newsEnabled: value.newsEnabled } : {}),
     ...(value.nextNewsCheckAt !== undefined ? { nextNewsCheckAt: value.nextNewsCheckAt } : {}),
     ...(typeof value.newsWorkflowError === 'string' ? { newsWorkflowError: value.newsWorkflowError } : {}),
     ...(value.newsAssessmentDate !== undefined ? { newsAssessmentDate: value.newsAssessmentDate } : {}),

@@ -1,3 +1,4 @@
+import type { newsPreparationStatus } from '../../../../shared/news-preparation-status';
 import type { DJ, ListeningRoom, NewsSource, RoomProfile } from '../../../../shared/types';
 import type { WorkflowDraft } from '../../../../shared/workflow';
 import type { PreparationIssue } from '../../../components/WorkflowPreferences/WorkflowPreferences.types';
@@ -13,7 +14,8 @@ export type NewsRoomSettingsProps = {
   preparationStatus: string;
   preparationDetail: string;
   profileStatusUnknown: boolean;
-  preparation: { checks: number; checkLimit: number; recordings: number; recordingLimit: number } | null;
+  preparation: ReturnType<typeof newsPreparationStatus> | null;
+  adjustPreparationLimit: (field: 'recording' | 'check') => void;
   workflowReady: boolean;
   workflowStatusLoading: boolean;
   workflowStatusError: unknown;

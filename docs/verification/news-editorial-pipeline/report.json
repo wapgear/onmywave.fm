@@ -14,11 +14,11 @@
       "result": "passed"
     },
     {
-      "scenario": "cancelled writing pauses and explicit Resume reuses the selected story",
+      "scenario": "the next scheduled check leaves cancelled writing in history and starts fresh",
       "result": "passed"
     },
     {
-      "scenario": "restart after speech failure resumes saved text without reselecting or rewriting",
+      "scenario": "restart after uncertain speech preserves the script and keeps the next check scheduled",
       "result": "passed"
     },
     {
@@ -50,7 +50,7 @@
       "result": "passed"
     },
     {
-      "scenario": "definitive provider rejection pauses scheduled work without automatic paid retries",
+      "scenario": "definitive provider rejection leaves the next check scheduled",
       "result": "passed"
     },
     {
