@@ -143,7 +143,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const djSettings = normalizeDJPlaybackSettings(preferences.data?.djPlayback);
   const [queue, setQueue] = useState<QueueEntry[]>([]);
   const [index, setIndex] = useState(0);
-  const [artwork, setArtwork] = useState<{ url: string; dataUrl: string }>();
+  const [artwork, setArtwork] = useState<{ url: string; dataUrl: string | null }>();
   const [playing, setPlaying] = useState(false);
   const [requestedPlaying, setRequestedPlaying] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -1581,11 +1581,14 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       void window.wave
         .getNowPlayingArtwork(url)
         .then((result) => {
-          if (!active || !result.ok || !result.value) return;
-          if (metadata) metadata.artwork = [{ src: result.value }];
-          setArtwork({ url, dataUrl: result.value });
+          if (!active) return;
+          const dataUrl = result.ok ? result.value : null;
+          if (metadata && dataUrl) metadata.artwork = [{ src: dataUrl }];
+          setArtwork({ url, dataUrl });
         })
-        .catch(() => {});
+        .catch(() => {
+          if (active) setArtwork({ url, dataUrl: null });
+        });
     }
 
     return () => {
@@ -2250,7 +2253,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
           shuffleHistoryQueue,
           shuffleRemaining,
           current,
-          currentArtwork: artwork?.url === current?.imageUrl ? artwork?.dataUrl : undefined,
+          currentArtwork: current?.imageUrl ? (artwork?.url === current.imageUrl ? artwork.dataUrl : undefined) : null,
           currentKey,
           playing,
           requestedPlaying,

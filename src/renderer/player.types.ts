@@ -40,7 +40,7 @@ export type PlayerState = {
   shuffleHistoryQueue: QueueEntry[];
   shuffleRemaining: number;
   current?: Song;
-  currentArtwork?: string;
+  currentArtwork: string | null | undefined;
   currentKey?: string;
   playing: boolean;
   requestedPlaying: boolean;

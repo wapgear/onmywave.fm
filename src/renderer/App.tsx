@@ -1,6 +1,6 @@
 import { useIsMutating, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Maximize2, Minimize2, X } from 'lucide-react';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { flushSync } from 'react-dom';
 
 import type { Connection, Song } from '../shared/types';
@@ -26,7 +26,7 @@ import './components/Drawer/Drawer.styles.css';
 import { SongNavigationProvider } from './components/SongLinks/SongLinks.component';
 import { SongRemovalNotice } from './components/TrackTable/SongRemovalNotice.component';
 import { DJPlaybackProvider } from './dj-playback';
-import { useArtworkGradient } from './hooks/useArtworkGradient';
+import { useArtworkPalette } from './hooks/useArtworkPalette';
 import { NewsRecoveryNotice, NewsRecoveryProvider } from './NewsRecovery';
 import { AlbumsPage, initialAlbumsView } from './pages/Albums/Albums.page';
 import { ArtistsPage, initialArtistsView } from './pages/Artists/Artists.page';
@@ -41,7 +41,7 @@ import { StationsPage } from './pages/Stations/Stations.page';
 import type { RoomSetupDraft } from './pages/Stations/Stations.types';
 import { PlayerProvider, usePlayer } from './player';
 import { primaryModifier } from './shortcuts';
-import { readArtworkGradient } from './theme';
+import { readArtworkAppearance } from './theme';
 import { useRetryFocus } from './useRetryFocus';
 
 const listeningDrawerOrder = ['details', 'lyrics', 'queue', 'dj'] as const;
@@ -261,8 +261,15 @@ function ReadyApp({
   } | null>(null);
   const restoreSetupFocus = useRef(false);
   const player = usePlayer();
-  const [artworkGradientEnabled, setArtworkGradientEnabled] = useState(readArtworkGradient);
-  const artworkGradient = useArtworkGradient(artworkGradientEnabled ? player.currentArtwork : undefined);
+  const [artworkAppearance, setArtworkAppearance] = useState(readArtworkAppearance);
+  const artworkBackdrop = useRef<HTMLDivElement>(null);
+  const palette = useArtworkPalette(
+    artworkAppearance.gradient || artworkAppearance.accent ? player.currentArtwork : null,
+    artworkBackdrop,
+    artworkAppearance.gradient,
+  );
+  const artworkGradient = artworkAppearance.gradient ? palette : undefined;
+  const artworkAccent = artworkAppearance.accent ? palette?.accent : undefined;
   const [drawer, setDrawer] = useState<Song | 'queue' | 'lyrics' | 'dj' | null>(null);
   const [drawerExpanded, setDrawerExpanded] = useState(false);
   const [djControlsTarget, setDJControlsTarget] = useState<HTMLDivElement | null>(null);
@@ -654,8 +661,16 @@ function ReadyApp({
       <div
         className={`app-shell ${visibleDrawer ? 'has-drawer has-listening-drawer' : ''}`}
         data-artwork-gradient={artworkGradient ? '' : undefined}
-        style={artworkGradient}
+        data-artwork-accent={artworkAccent ? '' : undefined}
+        style={
+          {
+            '--artwork-gradient-start': artworkGradient?.start,
+            '--artwork-gradient-end': artworkGradient?.end,
+            '--artwork-accent-source': artworkAccent,
+          } as CSSProperties
+        }
       >
+        <div ref={artworkBackdrop} className="artwork-backdrop" aria-hidden="true" />
         <NavigationSidebar page={page} navigate={navigate} />
         <div className="library-panel">
           <CatalogConnectionBanner
@@ -727,8 +742,10 @@ function ReadyApp({
                 )}
                 {page === 'settings' && (
                   <SettingsPage
-                    artworkGradientEnabled={artworkGradientEnabled}
-                    onArtworkGradientChange={setArtworkGradientEnabled}
+                    artworkAppearance={artworkAppearance}
+                    onArtworkAppearanceChange={(option, enabled) =>
+                      setArtworkAppearance((current) => ({ ...current, [option]: enabled }))
+                    }
                     section={settingsSection}
                     onSectionChange={setSettingsSection}
                     returnToSetup={
