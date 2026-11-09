@@ -49,6 +49,7 @@ export type Song = {
   id: string;
   name: string;
   artists: string[];
+  artistItems?: Artist[];
   album: string;
   albumId?: string;
   albumArtist?: string;
@@ -248,7 +249,14 @@ export type NewsProgress = {
   transcript?: string;
 };
 
+export type PlaybackScope = {
+  kind: 'album' | 'artist';
+  id: string;
+  mixWithLibrary: boolean;
+};
+
 export type PlaybackSnapshot = {
+  scope?: PlaybackScope;
   shufflePlan?: import('./shuffle-queue').ShuffleSnapshot;
   connectionId: string;
   trackIds: string[];
@@ -413,6 +421,7 @@ export interface WaveApi {
   addPlaylistItems(input: { id: string; trackIds: string[]; skipExisting: boolean }): Promise<Result<void>>;
   removePlaylistEntries(input: { id: string; entryIds: string[] }): Promise<Result<void>>;
   movePlaylistEntry(input: { id: string; entryId: string; index: number }): Promise<Result<void>>;
+  getNowPlayingArtwork(url: string): Promise<Result<string | null>>;
   preparePlayback(input: {
     id: string;
     transcode?: boolean;
@@ -455,6 +464,8 @@ export interface WaveApi {
     requestId: string;
     takeId?: string;
     songId: string;
+    previousSongId?: string;
+    transitionId?: string;
   }): Promise<Result<SongHandoff | null>>;
   cancelSongHandoff(requestId: string): Promise<Result<void>>;
   claimPreparedNews(input: { id: string; claimId?: string }): Promise<Result<PreparedNewsTake>>;

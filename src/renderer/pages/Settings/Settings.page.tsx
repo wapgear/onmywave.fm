@@ -32,6 +32,8 @@ export function SettingsPage({
   connection,
   update,
   disconnected,
+  artworkGradientEnabled,
+  onArtworkGradientChange,
   section,
   onSectionChange,
   returnToSetup,
@@ -90,7 +92,10 @@ export function SettingsPage({
       )}
       {activeSection === 'general' && (
         <div className="settings-content settings-preferences">
-          <AppearanceSettings />
+          <AppearanceSettings
+            artworkGradientEnabled={artworkGradientEnabled}
+            onArtworkGradientChange={onArtworkGradientChange}
+          />
           <section>
             <h2>Account</h2>
             <dl className="settings-account">

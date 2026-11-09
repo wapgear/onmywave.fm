@@ -18,6 +18,7 @@ import type { PlaylistEntry, Song } from '../../../shared/types';
 import { isMac, primaryModifier } from '../../shortcuts';
 import { IconButton } from '../IconButton/IconButton.component';
 import { Artwork, Dialog, DialogActions, ErrorNotice, TrackDuration } from '../Shared';
+import { SongAlbum, SongArtists } from '../SongLinks/SongLinks.component';
 import { useSongRemoval } from './hooks/useSongRemoval';
 import type { TrackRow, TrackTableProps } from './TrackTable.types';
 
@@ -189,7 +190,7 @@ export function TrackTable({
   }
   function rowClick(event: MouseEvent<HTMLTableRowElement>, index: number) {
     const target = event.target as HTMLElement;
-    const playbackControl = target.closest('.artwork-button,.song-name');
+    const playbackControl = target.closest('.artwork-button');
     if (target.closest('button,input,summary,[popover]') && !playbackControl) return;
     const selecting = primaryModifier(event);
     if ((isMac && event.ctrlKey) || event.button !== 0 || (!selecting && event.detail > 1)) return;
@@ -201,7 +202,7 @@ export function TrackTable({
   }
   function rowDoubleClick(event: MouseEvent<HTMLTableRowElement>, index: number) {
     const target = event.target as HTMLElement;
-    if (target.closest('button,input,summary,[popover]') && !target.closest('.song-name')) return;
+    if (target.closest('button,input,summary,[popover]')) return;
     if (event.ctrlKey || event.metaKey || event.button !== 0) return;
     activate(index);
   }
@@ -303,24 +304,23 @@ export function TrackTable({
                             <ActionIcon size={14} />
                           </span>
                         </button>
-                        <button className="song-name">
+                        <div className="song-name">
                           <span>{row.song.name || 'Untitled song'}</span>
-                          <small>{row.song.artists.join(', ') || 'Unknown artist'}</small>
-                        </button>
+                          <small>
+                            <SongArtists song={row.song} />
+                          </small>
+                        </div>
                       </div>
                     </td>
-                    <td className="album-column muted truncate">{row.song.album || 'Unknown album'}</td>
+                    <td className="album-column muted truncate">
+                      <SongAlbum song={row.song} />
+                    </td>
                     <td className="time-column muted">
                       <TrackDuration seconds={row.song.duration} />
                     </td>
                     <td className="row-actions">
                       <TrackMenu name={row.song.name}>
-                        <button
-                          onClick={() => {
-                            if (row.song.id === currentId) togglePlayback();
-                            else play([row.song]);
-                          }}
-                        >
+                        <button onClick={() => activate(index)}>
                           <ActionIcon size={15} />
                           {pausing ? 'Pause song' : 'Play song'}
                         </button>

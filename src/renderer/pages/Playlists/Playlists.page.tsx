@@ -4,9 +4,11 @@ import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import type { PlaylistEditRecovery, PlaylistLibrary, Song } from '../../../shared/types';
 import { unwrap, WaveError } from '../../api';
+import { catalogInlineError } from '../../catalog';
 import { Button } from '../../components/Button/Button.component';
 import { CollectionHeading } from '../../components/CollectionHeading/CollectionHeading.component';
 import { CollectionPlaybackActions } from '../../components/CollectionPlaybackActions/CollectionPlaybackActions.component';
+import { SaveButton } from '../../components/SaveButton/SaveButton.component';
 import { Artwork, Dialog, DialogActions, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { playlistRows, TrackTable } from '../../components/TrackTable/TrackTable.component';
 import { usePlayer } from '../../player';
@@ -139,7 +141,7 @@ export function PlaylistsPage({
       </PageHeading>
       <ErrorNotice
         key="playlists:list-error"
-        error={playlists.error}
+        error={catalogInlineError(playlists.error)}
         retryRef={listRetryFocus.retryRef}
         retrying={playlists.isFetching}
         retry={() => listRetryFocus.retry(() => playlists.refetch())}
@@ -758,7 +760,7 @@ function PlaylistDetail({ id, listError, back, add, details, recovery }: Playlis
         </p>
       )}
       <ErrorNotice
-        error={playlist.error ?? listError}
+        error={catalogInlineError(playlist.error) ?? catalogInlineError(listError)}
         retryRef={detailRetryFocus.retryRef}
         retrying={playlist.isFetching || listFetching}
         retry={() => detailRetryFocus.retry(retryReads)}
@@ -935,15 +937,14 @@ function PlaylistNameDialog({ title, initial, close, save, created }: PlaylistNa
           <Button type="button" aria-disabled={mutation.isPending || undefined} onClick={cancel}>
             {uncertain ? 'Close and check playlists' : 'Cancel'}
           </Button>
-          <Button
+          <SaveButton
             type="submit"
-            variant="primary"
             disabled={!name.trim()}
             aria-disabled={mutation.isPending || uncertain || undefined}
             aria-busy={mutation.isPending || undefined}
           >
             {mutation.isPending ? 'Saving…' : 'Save playlist'}
-          </Button>
+          </SaveButton>
         </DialogActions>
       </form>
     </Dialog>

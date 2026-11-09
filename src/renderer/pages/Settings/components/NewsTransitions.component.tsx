@@ -4,6 +4,7 @@ import { useId, useRef, useState } from 'react';
 import { defaultNewsTransitionSettings } from '../../../../shared/news-transitions';
 import type { NewsTransitionSettings } from '../../../../shared/types';
 import { unwrap } from '../../../api';
+import { SaveButton } from '../../../components/SaveButton/SaveButton.component';
 import { SectionHeading } from '../../../components/SectionHeading/SectionHeading.component';
 import { Select } from '../../../components/Select/Select.component';
 import { ErrorNotice } from '../../../components/Shared';
@@ -172,10 +173,10 @@ export function NewsTransitions() {
           </div>
           <NewsTransitionPreview settings={settings} />
         </fieldset>
-        <button
+        <SaveButton
           ref={saveButton}
           type="submit"
-          className="primary settings-save"
+          className="settings-save"
           disabled={!save.isPending && (!state.data || (!draft && !ownsSaveFocus))}
           aria-disabled={save.isPending || !draft || !state.data || undefined}
           aria-busy={save.isPending || undefined}
@@ -183,7 +184,7 @@ export function NewsTransitions() {
           onBlur={() => setOwnsSaveFocus(false)}
         >
           {save.isPending ? 'Saving…' : 'Save DJ transitions'}
-        </button>
+        </SaveButton>
         <ErrorNotice error={save.error} />
         {save.isSuccess && !draft && (
           <p className="form-hint" role="status">

@@ -7,7 +7,7 @@ import type { DialogProps, ErrorNoticeProps, PageHeadingProps } from './Shared.t
 export const errorMessage = (error: unknown) =>
   error instanceof Error ? error.message : 'Something went wrong. Please try again.';
 
-export function ErrorNotice({ error, retry, retryRef, retrying = false }: ErrorNoticeProps) {
+export function ErrorNotice({ className, error, retry, retryRef, retrying = false }: ErrorNoticeProps) {
   const inFlight = useRef(false);
   const [ownsRetryFocus, setOwnsRetryFocus] = useState(false);
   const [attemptPending, setAttemptPending] = useState(false);
@@ -37,7 +37,7 @@ export function ErrorNotice({ error, retry, retryRef, retrying = false }: ErrorN
   const busyLabel = attemptPending ? 'Retrying…' : 'Checking…';
 
   return (
-    <div className="notice error">
+    <div className={className ? `notice error ${className}` : 'notice error'}>
       <AlertCircle size={18} aria-hidden="true" />
       <span role="alert">{errorMessage(visibleError)}</span>
       {retry && (

@@ -2,7 +2,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 
 import { djPreparationKey } from '../shared/dj-avatar';
-import { defaultDJPlaybackSettings } from '../shared/dj-playback';
+import { normalizeDJPlaybackSettings } from '../shared/dj-playback';
+import { drawSongInterval } from '../shared/song-intervals';
 import type { DJPlaybackSettings, PreparedNewsTake, RoomProfile } from '../shared/types';
 import { unwrap } from './api';
 import type { PlaybackView } from './dj-playback.types';
@@ -20,7 +21,7 @@ function useDJPlaybackController() {
     queryFn: async () => unwrap(await window.wave.getLocalState()),
     enabled: recoveryReady,
   });
-  const settings = state.data?.djPlayback ?? defaultDJPlaybackSettings();
+  const settings = normalizeDJPlaybackSettings(state.data?.djPlayback);
   const writeInFlight = useRef(false);
   const [unconfirmedUpdate, setUnconfirmedUpdate] = useState<Partial<DJPlaybackSettings> | null>(null);
   const unconfirmedUpdateRef = useRef<Partial<DJPlaybackSettings> | null>(null);
@@ -33,7 +34,12 @@ function useDJPlaybackController() {
   const dj = state.data?.djs.find((dj) => dj.id === room?.room.djId);
   const sources = state.data?.sources.filter((source) => room?.room.sourceIds.includes(source.id)) ?? [];
   const configKey = JSON.stringify([
-    { enabled: settings.enabled, roomId: settings.roomId, everySongs: settings.everySongs },
+    {
+      enabled: settings.enabled,
+      roomId: settings.roomId,
+      everySongs: settings.everySongs,
+      everySongsMax: settings.everySongsMax,
+    },
     room ? { id: room.id, room: room.room, mood: room.mood, newsInterests: room.workflowDraft.newsInterests } : null,
     djPreparationKey(dj),
     sources,
@@ -94,6 +100,7 @@ function useDJPlaybackController() {
     const cycle: PlaybackView = {
       configKey,
       baseline: live.current.player.completedSongs,
+      targetSongs: drawSongInterval(config.everySongs, config.everySongsMax),
       pending: null,
       preparing: false,
       placing: false,
@@ -159,6 +166,7 @@ function useDJPlaybackController() {
         attempted.clear();
         cycle.pending = null;
         cycle.baseline = p.completedSongs;
+        cycle.targetSongs = drawSongInterval(config.everySongs, config.everySongsMax);
         publish();
         wakeTick.current();
         return;
@@ -193,7 +201,7 @@ function useDJPlaybackController() {
         return;
       }
       if (checking) return;
-      if (p.completedSongs - cycle.baseline < config.everySongs - (skipped ? 0 : 1)) {
+      if (p.completedSongs - cycle.baseline < cycle.targetSongs - (skipped ? 0 : 1)) {
         announceTrack();
         return;
       }
@@ -272,6 +280,7 @@ function useDJPlaybackController() {
     player.completedSongs,
     settings.announceTracks,
     settings.announceEverySongs,
+    settings.announceEverySongsMax,
   ]);
 
   const current = view?.configKey === configKey ? view : null;
@@ -339,7 +348,7 @@ function useDJPlaybackController() {
     refreshPlaybackStatus,
     retryPhase: current?.retryPhase ?? null,
     retryMessage: current?.retryMessage ?? null,
-    songsUntilBreak: Math.max(1, settings.everySongs - completed),
+    songsUntilBreak: Math.max(1, (current?.targetSongs ?? settings.everySongs) - completed),
     retry: () => {
       if (recoveryReady) retry.current();
     },

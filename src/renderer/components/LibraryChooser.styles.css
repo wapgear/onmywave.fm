@@ -50,10 +50,6 @@
   font-size: 12px;
   color: var(--muted);
 }
-.library-choice-footer > button {
-  border-radius: 8px;
-  font-size: 12px;
-}
 
 .library-chooser .library-choice-retry {
   display: block;

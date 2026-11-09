@@ -16,7 +16,7 @@ import {
   Volume2,
   VolumeX,
 } from 'lucide-react';
-import { useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 
 import { useDJPlayback } from '../../dj-playback';
 import { usePlayer } from '../../player';
@@ -25,14 +25,13 @@ import { primaryModifierLabel } from '../../shortcuts';
 import { useRetryFocus } from '../../useRetryFocus';
 import { IconButton } from '../IconButton/IconButton.component';
 import { Artwork } from '../Shared';
+import { Slider } from '../Slider/Slider.component';
+import { SongArtists } from '../SongLinks/SongLinks.component';
 import { DJBreakNotice } from './DJBreakNotice.component';
 import type { PlayerProps } from './Player.types';
 import { PlayerTimeline } from './PlayerTimeline.component';
 
 import './Player.styles.css';
-
-const fill = (percent: number): CSSProperties =>
-  ({ '--range-fill': `${Math.max(0, Math.min(100, percent))}%` }) as CSSProperties;
 
 export function Player({
   queueOpen,
@@ -248,7 +247,7 @@ export function Player({
           <div>
             <strong title={player.current?.name}>{player.current?.name ?? 'Your music, ready when you are'}</strong>
             <span title={player.current?.artists.join(', ')}>
-              {player.current ? player.current.artists.join(', ') || 'Unknown artist' : 'Choose a song to begin'}
+              {player.current ? <SongArtists song={player.current} /> : 'Choose a song to begin'}
             </span>
           </div>
         </div>
@@ -339,15 +338,13 @@ export function Player({
           >
             <Volume size={18} aria-hidden="true" />
           </IconButton>
-          <input
+          <Slider
             ref={volumeControl}
             className="player-volume"
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
+            min={0}
+            max={1}
+            step={0.01}
             value={player.volume}
-            style={fill(player.volume * 100)}
             onChange={(event) => player.setVolume(Number(event.target.value))}
             aria-label="Volume"
             aria-valuetext={`${Math.round(player.volume * 100)} percent`}

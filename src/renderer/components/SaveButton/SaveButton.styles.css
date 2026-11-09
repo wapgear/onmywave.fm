@@ -1,0 +1,21 @@
+button.save-button {
+  min-height: var(--control-size-compact);
+  max-width: 100%;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--control-radius);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+button.save-button:is(:disabled, [aria-disabled='true']) {
+  color: var(--muted);
+  background: var(--surface);
+  cursor: default;
+  translate: 0 0;
+}
+
+button.save-button[aria-busy='true'] {
+  cursor: progress;
+}

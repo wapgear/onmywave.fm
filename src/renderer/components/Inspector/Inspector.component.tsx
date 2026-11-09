@@ -5,6 +5,7 @@ import type { Song } from '../../../shared/types';
 import { unwrap } from '../../api';
 import { useRetryFocus } from '../../useRetryFocus';
 import { Artwork, duration, ErrorNotice } from '../Shared';
+import { SongAlbum, SongArtists } from '../SongLinks/SongLinks.component';
 
 const positive = (value: number | undefined): value is number =>
   typeof value === 'number' && Number.isFinite(value) && value > 0;
@@ -37,7 +38,9 @@ export function Inspector({ song: selected }: { song: Song }) {
         <h2 ref={heading} className="drawer-song-title" tabIndex={-1}>
           {song.name || 'Untitled song'}
         </h2>
-        <p className="inspector-artist drawer-song-artist">{song.artists.join(', ') || 'Unknown artist'}</p>
+        <p className="inspector-artist drawer-song-artist">
+          <SongArtists song={song} />
+        </p>
         <ErrorNotice
           key={selected.id}
           error={detail.error}
@@ -46,8 +49,13 @@ export function Inspector({ song: selected }: { song: Song }) {
           retry={() => retryFocus.retry(() => detail.refetch())}
         />
         <dl>
+          <div>
+            <dt>Album</dt>
+            <dd>
+              <SongAlbum song={song} />
+            </dd>
+          </div>
           {[
-            ['Album', song.album || 'Unknown album'],
             ['Album artist', song.albumArtist],
             ['Genre', song.genres.join(', ')],
             ['Year', positive(song.year) ? song.year : undefined],

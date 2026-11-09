@@ -671,6 +671,10 @@ export class JellyfinService {
       id: item.Id,
       name: item.Name || 'Untitled song',
       artists: stringArray(item.Artists),
+      artistItems: item.ArtistItems?.filter((artist) => artist.Id && artist.Name).map((artist) => ({
+        id: artist.Id,
+        name: artist.Name!,
+      })),
       album: item.Album || '',
       albumId: item.AlbumId,
       albumArtist: item.AlbumArtist,

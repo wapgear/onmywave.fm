@@ -3,8 +3,11 @@ import { useRef, useState } from 'react';
 
 import { normalizeDJPlaybackSettings, type DJPlaybackSettings as Settings } from '../../../../shared/dj-playback';
 import { unwrap } from '../../../api';
+import { SaveButton } from '../../../components/SaveButton/SaveButton.component';
 import { SectionHeading } from '../../../components/SectionHeading/SectionHeading.component';
 import { ErrorNotice } from '../../../components/Shared';
+import { Slider } from '../../../components/Slider/Slider.component';
+import { SongIntervalRange } from '../../../components/SongIntervalRange/SongIntervalRange.component';
 import { useNewsRecovery } from '../../../NewsRecovery';
 import { useRetryFocus } from '../../../useRetryFocus';
 import { useSettingsEdits } from '../SettingsEdits';
@@ -36,6 +39,7 @@ export function DJPlaybackSettings() {
   function change(patch: Partial<Settings>) {
     edit.change({
       everySongs: settings.everySongs,
+      everySongsMax: settings.everySongsMax,
       keepOnSeek: settings.keepOnSeek,
       voiceVolume: settings.voiceVolume,
       ...patch,
@@ -54,8 +58,8 @@ export function DJPlaybackSettings() {
     >
       <SectionHeading title="News timing & voice" helpLabel="About news timing and voice">
         <p>
-          News plays after the selected number of completed songs, when an eligible saved recording is ready. Enable
-          news and choose its profile in the player's DJ sidebar. An empty pool leaves music playing.
+          News uses a fresh random number within your range for each saved bulletin. Equal ends give a fixed interval.
+          Enable news and choose its profile in the player's DJ sidebar. An empty pool leaves music playing.
         </p>
         <p>Keeping the DJ while seeking lets speech wait for a suitable ending and resume where it paused.</p>
         <p>Voice volume is relative to the player volume.</p>
@@ -94,26 +98,23 @@ export function DJPlaybackSettings() {
       >
         <fieldset className="preference-fields" disabled={!recoveryReady || !state.data || save.isPending}>
           <div className="preference-row">
-            <label className="preference-row dj-song-interval">
-              Play news every
-              <input
-                ref={intervalInput}
-                type="number"
-                min={1}
-                max={100}
-                step={1}
-                required
-                value={Number.isNaN(settings.everySongs) ? '' : settings.everySongs}
-                onChange={(event) =>
-                  change({ everySongs: event.target.value === '' ? NaN : Number(event.target.value) })
-                }
-              />
-              <span>{settings.everySongs === 1 ? 'completed song' : 'completed songs'}</span>
-            </label>
+            <SongIntervalRange
+              id="news-interval"
+              label="Play news after"
+              minimum={settings.everySongs}
+              maximum={settings.everySongsMax}
+              inputRef={(element) => {
+                intervalInput.current = element;
+              }}
+              onChange={(minimum, maximum) => change({ everySongs: minimum, everySongsMax: maximum })}
+            />
             {state.data && (
               <span className="preference-note">{state.data.djPlayback.enabled ? 'News on' : 'News off'}</span>
             )}
           </div>
+          <p className="preference-note">
+            Drag the ends to choose 1–10 completed songs. Equal ends give a fixed interval.
+          </p>
           <label className="preference-row dj-song-interval">
             <input
               type="checkbox"
@@ -124,8 +125,8 @@ export function DJPlaybackSettings() {
           </label>
           <label className="preference-row dj-song-interval">
             Voice volume
-            <input
-              type="range"
+            <Slider
+              aria-label="Voice volume"
               min={0}
               max={1}
               step={0.05}
@@ -136,9 +137,9 @@ export function DJPlaybackSettings() {
             <span>{Math.round(settings.voiceVolume * 100)}%</span>
           </label>
         </fieldset>
-        <button
+        <SaveButton
           ref={saveButton}
-          className="primary settings-save"
+          className="settings-save"
           disabled={!save.isPending && (!recoveryReady || !state.data || (draft === null && !saveFocused))}
           aria-disabled={!recoveryReady || !state.data || draft === null || save.isPending || undefined}
           aria-busy={save.isPending || undefined}
@@ -146,7 +147,7 @@ export function DJPlaybackSettings() {
           onBlur={() => setSaveFocused(false)}
         >
           {save.isPending ? 'Saving…' : 'Save news & voice settings'}
-        </button>
+        </SaveButton>
         <ErrorNotice error={save.error} />
         {save.isSuccess && draft === null && (
           <p className="form-hint" role="status">

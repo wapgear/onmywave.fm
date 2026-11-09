@@ -10,10 +10,10 @@
   gap: 24px;
   padding: 12px 18px;
   height: 88px;
-  border-radius: 22px;
+  border-radius: var(--player-radius);
   background: var(--player-background);
   box-shadow: var(--player-shadow);
-  backdrop-filter: blur(24px);
+  backdrop-filter: blur(var(--floating-blur));
   -webkit-app-region: no-drag;
 }
 .player-song {
@@ -147,57 +147,26 @@
   text-align: right;
   min-width: var(--control-size-play);
 }
-.player-progress input {
+.player-progress .slider {
+  flex: 1;
   width: 100%;
   min-width: 40px;
 }
-.player-bar input[type='range'] {
-  appearance: none;
-  -webkit-appearance: none;
-  min-height: var(--space-6);
+.player-bar .slider {
+  --slider-thumb-size: 12px;
+  --slider-track-color: var(--range-track);
+  --slider-fill-color: var(--range-fill-color);
+  --slider-thumb-color: var(--player-control);
   height: var(--space-6);
-  padding: 0;
+}
+.player-bar .slider-thumb {
   border: 0;
-  border-radius: 0;
-  background: transparent;
-  cursor: pointer;
-  accent-color: var(--accent);
-}
-.player-bar input[type='range']::-webkit-slider-runnable-track {
-  height: 4px;
-  border-radius: 4px;
-  background: linear-gradient(
-    to right,
-    var(--range-fill-color) var(--range-fill),
-    var(--range-track) var(--range-fill)
-  );
-}
-.player-bar input[type='range']::-webkit-slider-thumb {
-  appearance: none;
-  -webkit-appearance: none;
-  width: 12px;
-  height: 12px;
-  margin-top: -4px;
-  border-radius: 50%;
-  background: var(--player-control);
   box-shadow:
     0 0 0 1px #0002,
     0 1px 3px #0003;
 }
-.player-bar input[type='range']:is(:hover, :focus-visible):enabled::-webkit-slider-thumb {
-  box-shadow: 0 0 0 4px var(--control-hover);
-}
-.player-bar input[type='range']:disabled {
-  cursor: default;
-  opacity: 0.45;
-}
-.player-bar input[type='range']:disabled::-webkit-slider-thumb {
+.player-bar .slider:has(input:disabled) .slider-thumb {
   visibility: hidden;
-}
-.player-bar input[type='range']:focus-visible {
-  outline: var(--control-focus-width) solid var(--focus);
-  outline-offset: 1px;
-  border-radius: 5px;
 }
 .player-volume {
   width: 84px;
@@ -228,9 +197,9 @@
   gap: 12px;
   padding: 14px 16px;
   border: 1px solid var(--border);
-  border-radius: 16px;
+  border-radius: var(--floating-panel-radius);
   box-shadow: 0 6px 20px rgb(20 25 35 / 6%);
-  backdrop-filter: blur(24px);
+  backdrop-filter: blur(var(--floating-blur));
   background: var(--player-background);
   color: var(--text);
   font-size: 12px;

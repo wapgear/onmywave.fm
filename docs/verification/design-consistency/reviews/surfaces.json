@@ -1,0 +1,133 @@
+{
+  "block_id": "FLOATING_SURFACES",
+  "classification": "dialog / anchored popover / inspector / persistent player / transient notice family",
+  "stage": "before-after",
+  "review_scope": "Material, radius, border, and shadow consistency across dialog, anchored menu, inspector drawer, player, selection toolbar, tooltip, and update notice surfaces.",
+  "evidence": {
+    "captures": [
+      "before-help-dialog.png",
+      "before-help-dialog-crop.png",
+      "before-source-dialog.png",
+      "before-source-dialog-crop.png",
+      "before-dj-dialog.png",
+      "before-dj-dialog-crop.png",
+      "before-dj-drawer.png",
+      "before-dj-drawer-crop.png",
+      "before-track-menu.png",
+      "before-track-menu-crop.png",
+      "before-player.png",
+      "before-player-crop.png",
+      "before-player-dark.png",
+      "before-player-dark-crop.png",
+      "before-player-narrow.png",
+      "before-player-narrow-crop.png",
+      "after-help-dialog.png",
+      "after-help-dialog-crop.png",
+      "after-source-dialog.png",
+      "after-source-dialog-crop.png",
+      "after-dj-dialog.png",
+      "after-dj-dialog-crop.png",
+      "after-dj-drawer.png",
+      "after-dj-drawer-crop.png",
+      "after-track-menu.png",
+      "after-track-menu-crop.png",
+      "after-player.png",
+      "after-player-crop.png",
+      "after-player-dark.png",
+      "after-player-dark-crop.png",
+      "after-player-narrow.png",
+      "after-player-narrow-crop.png"
+    ],
+    "measurements": {
+      "before": "before-measurements.json",
+      "after": "after-measurements.json"
+    },
+    "source_reviewed": [
+      "src/renderer/styles.css popover, selection-toolbar, and shared surface rules",
+      "src/renderer/themes.css surface variables for light, coffee, and dark themes",
+      "src/renderer/components/Drawer/Drawer.styles.css",
+      "src/renderer/components/Player/Player.styles.css",
+      "src/renderer/components/AppUpdates/AppUpdates.styles.css",
+      "src/renderer/pages/Songs/VirtualSongs.styles.css",
+      "src/renderer/components/NavigationSidebar/NavigationSidebar.styles.css"
+    ],
+    "capture_context": "Synthetic macOS Electron fixtures at 1440x1000 logical viewport and scale 2, except the narrow player fixture. Screenshots and DOM measurements provide appearance evidence; this review did not exercise surface interactions."
+  },
+  "observations": [
+    {
+      "id": "dialog-family-is-consistent",
+      "finding": "The help, source, and DJ dialogs use the same 22px radius, 1px light border, near-white dialog surface, and deep 24px/90px shadow. The crops show the shared modal treatment clearly, including the much taller DJ editor. Their size differences follow their content and do not read as material inconsistency.",
+      "evidence": [
+        "before-measurements.json: help-dialog",
+        "before-measurements.json: source-dialog",
+        "before-measurements.json: dj-dialog",
+        "before-help-dialog-crop.png",
+        "before-source-dialog-crop.png",
+        "before-dj-dialog-crop.png"
+      ],
+      "severity": "none"
+    },
+    {
+      "id": "role-specific-layering-is-clear",
+      "finding": "The track menu is a compact, softly bordered 12px-radius popover with a moderate shadow; the modal uses a larger radius and substantially deeper shadow. The DJ inspector drawer is flush to the app edge with a restrained panel fill and no shadow, while the persistent player keeps its intentionally larger, rounded 22px silhouette and distinct theme-aware background/shadow. These differences distinguish anchored, modal, docked, and persistent layers and appear deliberate in the captures.",
+      "evidence": [
+        "before-track-menu-crop.png",
+        "before-help-dialog-crop.png",
+        "before-dj-drawer-crop.png",
+        "before-player-crop.png",
+        "before-player-dark-crop.png",
+        "before-player-narrow-crop.png",
+        "before-measurements.json: dj-drawer",
+        "before-measurements.json: player"
+      ],
+      "severity": "none"
+    },
+    {
+      "id": "ancillary-surfaces-source-only",
+      "finding": "The selection toolbar, sidebar tooltip, AppUpdates notice, and player notices have separate source styles suited to sticky actions, anchored labels, and transient notifications. The AppUpdates and tooltip states are not represented in the supplied captures, so their visual consistency is source-only and no visible defect is established. Shared theme variables already cover popover, dialog, floating-surface, and player materials.",
+      "evidence": [
+        "src/renderer/styles.css: .selection-toolbar and .popover-surface",
+        "src/renderer/themes.css: --popover, --dialog-background, --dialog-shadow, --floating-surface, --player-background, --player-shadow",
+        "src/renderer/components/AppUpdates/AppUpdates.styles.css",
+        "src/renderer/components/NavigationSidebar/NavigationSidebar.styles.css: .sidebar-tooltip",
+        "src/renderer/components/Player/Player.styles.css: player notices"
+      ],
+      "severity": "none"
+    },
+    {
+      "id": "after-token-consolidation-no-regression",
+      "finding": "After removing the duplicate global popover declarations and introducing semantic floating-panel/player radius and blur tokens, the captured surfaces retain their before-state computed geometry and material. Help/source/DJ dialogs remain 22px radius with the same border, background, and 24px/90px shadow; the track menu remains 12px with the same white surface, border, and 10px/32px shadow; the inspector remains 16px with its existing panel fill and no shadow; and the player remains 22px with its original 88px height and theme-specific background/shadow in light, dark, and narrow captures. The crops show no visible regressions.",
+      "evidence": [
+        "before-measurements.json: help-dialog/source-dialog/dj-dialog/dj-drawer/track-menu/player",
+        "after-measurements.json: help-dialog/source-dialog/dj-dialog/dj-drawer/track-menu/player",
+        "before-help-dialog-crop.png",
+        "after-help-dialog-crop.png",
+        "before-dj-drawer-crop.png",
+        "after-dj-drawer-crop.png",
+        "before-track-menu-crop.png",
+        "after-track-menu-crop.png",
+        "before-player-crop.png",
+        "after-player-crop.png",
+        "before-player-dark-crop.png",
+        "after-player-dark-crop.png",
+        "before-player-narrow-crop.png",
+        "after-player-narrow-crop.png"
+      ],
+      "severity": "none"
+    }
+  ],
+  "justified_differences": [
+    "Preserve the 22px dialog radius and deep shadow for modal elevation, distinct from compact anchored popovers.",
+    "Preserve the player\u2019s larger persistent shape and theme-specific treatment.",
+    "Keep the DJ drawer flush and restrained as an inspector panel rather than converting it into a floating card.",
+    "Keep the sticky selection toolbar compact and capsule-like; its task role differs from dialogs and drawers."
+  ],
+  "recommendation": "The token consolidation is safe to retain: it removes duplicate popover rules and centralizes equivalent radius/blur values without changing the established computed appearance. No visual correction is justified by before/after captures. Keep the role-based distinctions and existing theme-specific materials. AppUpdates and tooltip remain source-only; no visible regression or defect is established there.",
+  "verification_recommendations": [
+    "Compare after-state help/source/DJ dialog and track-menu captures against their current measured radius, border, background, and shadow values.",
+    "Keep light, dark, and narrow player captures in the after review to detect theme or responsive regressions while preserving the player silhouette.",
+    "If AppUpdates or tooltip styles change, capture those states in light and dark themes; source inspection alone does not verify their rendered appearance.",
+    "Check that menus and dialogs retain their current dismissal, focus, and anchoring behavior if their shared styles are refactored; those interactions were not exercised here.",
+    "Before/after DOM measurements and crops confirm the reviewed surface values are unchanged; retain this capture set as the regression baseline."
+  ]
+}

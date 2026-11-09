@@ -285,12 +285,20 @@ async function main() {
       const { verifyPreferences } = await import('../preferences-design/verify.mjs');
       await open({ playback: snapshot(), dj: true, state: { djPlayback: { enabled: false, roomId: 'default-room', everySongs: 3, keepOnSeek: true, voiceVolume: 0.7 } } });
       emit(await verifyPreferences(window, root));
+    } else if (scenario === 'design-consistency') {
+      await open({ playback: snapshot(), dj: true, state: { djPlayback: { enabled: false, roomId: 'default-room', everySongs: 3, keepOnSeek: true, voiceVolume: 0.7 } } });
+      const { verifyConsistency } = await import('../design-consistency/verify.mjs');
+      emit(await verifyConsistency(window, root, process.env.WAVE_CAPTURE_STAGE ?? 'after'));
+    } else if (scenario === 'slider-components') {
+      await open({ playback: snapshot(), dj: true, state: { djPlayback: { enabled: false, roomId: 'default-room', everySongs: 3, keepOnSeek: true, voiceVolume: 0.7 } } });
+      const { verifySliders } = await import('../sliders/verify.mjs');
+      emit(await verifySliders(window, root, process.env.WAVE_CAPTURE_STAGE ?? 'after'));
     } else if (scenario === 'song-handoff-settings') {
       await open({ playback: snapshot(), dj: true, state: { djPlayback: { enabled: false, roomId: 'default-room', everySongs: 3, keepOnSeek: true, voiceVolume: 0.7 } } });
       const { verifySongHandoffSettings } = await import('../song-handoff/verify-settings.mjs');
       emit(await verifySongHandoffSettings(window, root, process.env.WAVE_CAPTURE_STAGE ?? 'after'));
     } else if (scenario === 'song-handoff') {
-      const cases = process.env.WAVE_HANDOFF_CASES?.split(',') ?? ['normal', 'automatic', 'disabled', 'legacy-ending', 'news-override', 'interval-default', 'interval-configured', 'interval-with-news', 'interval-empty-news', 'interval-disabled', 'interval-seek-end', 'interval-disable-generating', 'interval-disable-speaking', 'skip-count', 'disable-generating', 'disable-pending', 'disable-speaking', 'shuffle', 'shuffle-cycle', 'repeat-one', 'repeat-all', 'end', 'queue-edit', 'intro-edit', 'pause', 'seek-intro', 'budget', 'too-long', 'too-late', 'news-unavailable', 'failure', 'cancel-pending'];
+      const cases = process.env.WAVE_HANDOFF_CASES?.split(',') ?? ['normal', 'automatic', 'disabled', 'legacy-ending', 'news-override', 'interval-default', 'interval-configured', 'interval-random', 'news-interval-random', 'interval-with-news', 'interval-empty-news', 'interval-disabled', 'interval-seek-end', 'interval-disable-generating', 'interval-disable-speaking', 'skip-count', 'disable-generating', 'disable-pending', 'disable-speaking', 'shuffle', 'shuffle-cycle', 'repeat-one', 'repeat-all', 'end', 'queue-edit', 'intro-edit', 'pause', 'seek-intro', 'budget', 'too-long', 'too-late', 'news-unavailable', 'failure', 'cancel-pending'];
       for (const handoffCase of cases) {
         await open({
           handoffCase,

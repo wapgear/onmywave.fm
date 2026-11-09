@@ -27,7 +27,7 @@ import type { WorkflowDraft } from '../shared/workflow';
 import { getDJVoicePreview, prepareDJVoicePreview, getVoicePreview, prepareVoicePreview } from './dj-previews';
 import { searchDJVoices } from './dj-voices';
 import { JellyfinService, ServiceError, PLAYLIST_CREATION } from './jellyfin';
-import { preparePlayback, registerMedia, revokeMedia } from './media';
+import { getNowPlayingArtwork, preparePlayback, registerMedia, revokeMedia } from './media';
 import { NewsService, validateNewsSettings } from './news';
 import {
   pauseNewsWorkflow,
@@ -351,6 +351,11 @@ function validatePlayback(value: unknown): asserts value is PlaybackSnapshot | n
     typeof value.repeat !== 'string' ||
     !['off', 'all', 'one'].includes(value.repeat) ||
     (value.outputId !== undefined && !text(value.outputId, 512)) ||
+    (value.scope !== undefined &&
+      (!isRecord(value.scope) ||
+        !['album', 'artist'].includes(value.scope.kind as string) ||
+        !text(value.scope.id, 512) ||
+        typeof value.scope.mixWithLibrary !== 'boolean')) ||
     (value.shufflePlan !== undefined &&
       !isShuffleSnapshot(value.shufflePlan, (value.trackIds as string[]).length, value.currentIndex as number))
   )
@@ -634,6 +639,12 @@ function registerIpc() {
     addPlaylistItems: (input) => service.addPlaylistItems(input),
     removePlaylistEntries: (input) => service.removePlaylistEntries(input),
     movePlaylistEntry: (input) => service.movePlaylistEntry(input),
+    getNowPlayingArtwork: async (url: string) => {
+      const connection = service.connection();
+      if (!connection) return null;
+      const artwork = await getNowPlayingArtwork(url);
+      return service.connection()?.authRevision === connection.authRevision ? artwork : null;
+    },
     preparePlayback: (input: { id: string; transcode?: boolean; offsetSeconds?: number }) => {
       if (
         !isRecord(input) ||
@@ -972,7 +983,16 @@ function registerIpc() {
     saveDJPlayback: async (input: DJPlaybackSettingsPatch) => {
       if (!isDJPlaybackSettingsPatch(input)) invalid();
       return updateLocalStateAndGet((state) => {
-        const merged = { ...state.djPlayback, ...input };
+        const merged = {
+          ...state.djPlayback,
+          ...input,
+          ...(input.everySongs !== undefined && input.everySongsMax === undefined
+            ? { everySongsMax: input.everySongs }
+            : {}),
+          ...(input.announceEverySongs !== undefined && input.announceEverySongsMax === undefined
+            ? { announceEverySongsMax: input.announceEverySongs }
+            : {}),
+        };
         if (!isDJPlaybackSettings(merged)) invalid();
         const settings = normalizeDJPlaybackSettings(merged);
         if (settings.enabled) requireNewsReady();

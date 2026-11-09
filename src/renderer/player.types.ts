@@ -1,6 +1,6 @@
 import type { NewsTransitionSettings } from '../shared/news-transitions';
 import type { ShufflePlan } from '../shared/shuffle-queue';
-import type { NewsBreak, PlaybackSnapshot, Song } from '../shared/types';
+import type { NewsBreak, PlaybackScope, PlaybackSnapshot, Song } from '../shared/types';
 
 export type ScheduledNews = {
   kind: 'news' | 'track-announcement';
@@ -40,6 +40,7 @@ export type PlayerState = {
   shuffleHistoryQueue: QueueEntry[];
   shuffleRemaining: number;
   current?: Song;
+  currentArtwork?: string;
   currentKey?: string;
   playing: boolean;
   requestedPlaying: boolean;
@@ -49,6 +50,7 @@ export type PlayerState = {
   volume: number;
   shuffle: boolean;
   repeat: PlaybackSnapshot['repeat'];
+  playbackScope: PlaybackScope | null;
   queueSession: number;
   canRetry: boolean;
   completedSongs: number;
@@ -61,7 +63,8 @@ export type PlayerState = {
   optionsRevision: number;
   retryOptions(this: void): Promise<OptionsSaveSettlement>;
   getOptionsSaveGeneration(this: void): number;
-  play(this: void, songs: Song[], index?: number): void;
+  play(this: void, songs: Song[], index?: number, scope?: PlaybackScope): void;
+  setCollectionMix(this: void, scope: PlaybackScope, songs: Song[]): void;
   playQueueEntry(this: void, key: string, historyIndex?: number, upcomingId?: string): void;
   playNext(this: void, songs: Song[]): void;
   moveUpcoming(this: void, fromId: string, beforeId: string | null): void;

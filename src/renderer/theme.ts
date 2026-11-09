@@ -2,6 +2,8 @@ import type { Theme } from './theme.types';
 
 const storageKey = 'wave:theme';
 
+const artworkGradientStorageKey = 'wave:artwork-gradient';
+
 export const themes = [
   { id: 'light', label: 'Light', description: 'Clean and bright' },
   { id: 'coffee', label: 'Coffee', description: 'Warm and mellow' },
@@ -32,6 +34,23 @@ export function applyTheme(theme: Theme): boolean {
   document.documentElement.dataset.theme = theme;
   try {
     localStorage.setItem(storageKey, theme);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function readArtworkGradient(): boolean {
+  try {
+    return localStorage.getItem(artworkGradientStorageKey) === 'true';
+  } catch {
+    return false;
+  }
+}
+
+export function saveArtworkGradient(enabled: boolean): boolean {
+  try {
+    localStorage.setItem(artworkGradientStorageKey, String(enabled));
     return true;
   } catch {
     return false;

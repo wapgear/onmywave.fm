@@ -6,6 +6,8 @@ export type SettingsPageProps = {
   connection: Connection;
   update: (value: Connection) => void;
   disconnected: () => void | Promise<void>;
+  artworkGradientEnabled: boolean;
+  onArtworkGradientChange: (enabled: boolean) => void;
   section?: SettingsSection;
   onSectionChange?: (value: SettingsSection) => void;
   returnToSetup?: () => void;

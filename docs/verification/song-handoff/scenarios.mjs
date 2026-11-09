@@ -89,6 +89,79 @@ window.__criticalPlayback = {
       await waitFor(() => player().newsPhase === 'idle' && !player().busy, 'Cadence break did not finish');
       return !!intro;
     };
+    if (mode === 'news-interval-random') {
+      const originalRandom = Math.random;
+      const checks = () => fixture.calls.filter(call => call.method === 'nextRoomNews').length;
+      const frame = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+      for (let index = 1; index <= 2; index++) fixture.takes.push({ ...take, id: `fixture-take-${index}`, requestId: `fixture-request-${index}`, signature: `fixture-${index}`, audioUrl: `${location.origin}/fixture-speech-${index}`, deliveryState: { status: 'claimed', claimId: `claim-${index}` } });
+      const finishNews = async expected => {
+        music.ended = true; music.emit('ended');
+        let body;
+        await waitFor(() => { body = fixture.audios.find(clip => clip.src.includes('fixture-speech-') && !clip.paused); return !!body; }, 'The scheduled news did not start');
+        assert(player().completedSongs === expected, 'News did not wait for its selected completed-song count');
+        body.emit('ended');
+        await waitFor(() => player().newsPhase === 'idle' && !player().busy && !music.ended, 'The news cycle did not finish');
+        await frame();
+      };
+      try {
+        Math.random = () => 0;
+        await updateSettings({ enabled: true, announceTracks: false, everySongs: 2, everySongsMax: 5 });
+        player().setRepeat('one');
+        await waitFor(() => player().repeat === 'one', 'News cadence repeat setup failed');
+        assert(checks() === 0, 'News was checked before its two-song target');
+        Math.random = () => 0.999999;
+        await updateSettings({ voiceVolume: 0.6 });
+        await finishSongs(1);
+        await waitFor(() => player().newsPhase === 'waiting', 'An unrelated edit rerolled the two-song news target');
+        await finishNews(2);
+        Math.random = () => 0;
+        await updateSettings({ voiceVolume: 0.7 });
+        await finishSongs(3);
+        assert(checks() === 1, 'The five-song news target was rerolled before the next break');
+        await finishSongs(1);
+        await waitFor(() => player().newsPhase === 'waiting', 'The upper endpoint news break was not prepared');
+        await finishNews(7);
+        await finishSongs(1);
+        await waitFor(() => player().newsPhase === 'waiting', 'The next news cycle did not redraw its two-song target');
+        assert(checks() === 3 && events.every(event => event.method !== 'prepare'), 'News cycles duplicated checks or generated disabled announcements');
+      } finally { Math.random = originalRandom; }
+      return;
+    }
+    if (mode === 'interval-random') {
+      const originalRandom = Math.random;
+      try {
+        Math.random = () => 0;
+        await updateSettings({ announceTracks: true, announceEverySongs: 2, announceEverySongsMax: 6 });
+        player().setRepeat('one');
+        await waitFor(() => player().repeat === 'one', 'Random cadence repeat setup failed');
+        assert(!player().isTrackAnnouncementDue(), 'A two-song target was due before any completion');
+        Math.random = () => 0.999999;
+        await updateSettings({ voiceVolume: 0.6 });
+        await finishSongs(1);
+        await waitFor(() => player().newsPhase === 'waiting', 'An unrelated render rerolled the two-song target');
+        music.ended = true; music.emit('ended');
+        let intro;
+        await waitFor(() => { intro=fixture.audios.find(c=>c.src.includes('fixture-handoff')&&!c.paused);return !!intro; }, 'The lower endpoint announcement did not start');
+        assert(player().completedSongs===2,'The lower endpoint did not require two completed songs');
+        intro.emit('ended');
+        await waitFor(() => player().newsPhase==='idle'&&!player().busy&&!music.ended,'First random announcement did not finish');
+        Math.random = () => 0;
+        await updateSettings({ voiceVolume: 0.7 });
+        await finishSongs(4);
+        assert(!player().isTrackAnnouncementDue()&&events.filter(e=>e.method==='prepare').length===1,'The six-song target was rerolled before speech');
+        await finishSongs(1);
+        await waitFor(() => player().newsPhase==='waiting','The upper endpoint announcement was not prepared');
+        music.ended=true; music.emit('ended');
+        await waitFor(() => { intro=fixture.audios.find(c=>c.src.includes('fixture-handoff')&&!c.paused);return !!intro; },'The upper endpoint announcement did not start');
+        assert(player().completedSongs===8,'The new cycle did not require six completed songs');
+        intro.emit('ended');
+        await waitFor(() => player().newsPhase==='idle'&&!player().busy&&!music.ended,'Second random announcement did not finish');
+        await finishSongs(1);
+        await waitFor(() => player().newsPhase==='waiting','The next cycle did not redraw its two-song target');
+        assert(events.filter(e=>e.method==='prepare').length===3,'Cycle boundaries produced duplicate or missing preparations');
+      } finally { Math.random=originalRandom; }
+      return;
+    }
     if (mode === 'news-override') {
       assert(await playBreak(), 'Fact-only news must announce before the interval is reached');
       assert(!player().isTrackAnnouncementDue(), 'Post-news announcement did not reset the shared interval');

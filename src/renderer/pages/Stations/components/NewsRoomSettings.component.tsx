@@ -3,6 +3,7 @@ import { useId, useLayoutEffect, useRef } from 'react';
 import { Button } from '../../../components/Button/Button.component';
 import { FilterSelect } from '../../../components/FilterSelect/FilterSelect.component';
 import { PreferenceSection } from '../../../components/PreferenceSection/PreferenceSection.component';
+import { SaveButton } from '../../../components/SaveButton/SaveButton.component';
 import { Select } from '../../../components/Select/Select.component';
 import { ErrorNotice } from '../../../components/Shared';
 import type { NewsRoomSettingsProps } from './NewsRoomSettings.types';
@@ -603,17 +604,16 @@ export function NewsRoomSettings({
               <ErrorNotice error={saveError} />
             </div>
             {dirty || saving ? (
-              <button
+              <SaveButton
                 ref={saveButton}
                 type="button"
-                className="primary"
                 disabled={saveDisabled}
                 aria-disabled={saveDisabled || undefined}
                 aria-busy={saving || undefined}
                 onClick={submitSave}
               >
                 {saving ? 'Saving…' : 'Save setup'}
-              </button>
+              </SaveButton>
             ) : (
               <span ref={savedStatus} className="news-room-settings-saved" role="status" tabIndex={-1}>
                 Setup saved
