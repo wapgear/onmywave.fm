@@ -1,5 +1,5 @@
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
-import { RefreshCw, Search, X } from 'lucide-react';
+import { Refresh, Search, Xmark } from 'iconoir-react/regular';
 import { useEffect, useRef, useState } from 'react';
 
 import type { CatalogQuery, Song } from '../../../shared/types';
@@ -120,7 +120,7 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
     <>
       <PageHeading headingRef={headingRef} title="All songs">
         <div className="search-field">
-          <Search size={17} />
+          <Search width={17} height={17} aria-hidden="true" />
           <input
             ref={searchRef}
             aria-label="Search songs, artists and albums"
@@ -143,7 +143,7 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
                 searchRef.current?.focus();
               }}
             >
-              <X size={15} aria-hidden="true" />
+              <Xmark width={15} height={15} aria-hidden="true" />
             </IconButton>
           )}
         </div>
@@ -203,7 +203,7 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
           title="Refresh songs, artists, filters, albums and playlists"
           onClick={() => void refreshLibrary()}
         >
-          <RefreshCw size={17} className={refreshing ? 'spinning' : ''} aria-hidden="true" />
+          <Refresh width={17} height={17} className={refreshing ? 'spinning' : ''} aria-hidden="true" />
         </IconButton>
       </div>
       <ErrorNotice

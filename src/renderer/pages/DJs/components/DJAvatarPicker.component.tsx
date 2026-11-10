@@ -1,4 +1,4 @@
-import { Headphones, Mic2, Music2, Radio, Sparkles, UserRound } from 'lucide-react';
+import { AntennaSignal, Check, Headset, MicrophoneSpeaking, MusicNote, Sparks, User } from 'iconoir-react/regular';
 import { useId } from 'react';
 
 import {
@@ -15,12 +15,12 @@ import { DJAvatar } from '../../../components/DJAvatar/DJAvatar.component';
 import './DJAvatarPicker.styles.css';
 
 const icons = {
-  host: UserRound,
-  headphones: Headphones,
-  microphone: Mic2,
-  radio: Radio,
-  music: Music2,
-  sparkles: Sparkles,
+  host: User,
+  headphones: Headset,
+  microphone: MicrophoneSpeaking,
+  radio: AntennaSignal,
+  music: MusicNote,
+  sparkles: Sparks,
 } as const;
 
 type Props = { dj: DJ; onChange: (avatar: DJAvatarChoice) => void };
@@ -36,7 +36,11 @@ export function DJAvatarPicker({ dj, onChange }: Props) {
     },
     ...djAvatarIcons.map((item) => {
       const Icon = icons[item.id];
-      return { value: `icon:${item.id}`, label: item.name, content: <Icon size={20} aria-hidden="true" /> };
+      return {
+        value: `icon:${item.id}`,
+        label: item.name,
+        content: <Icon width={20} height={20} aria-hidden="true" />,
+      };
     }),
     ...djAvatarPortraits.map((item) => ({
       value: `portrait:${item.id}`,
@@ -95,7 +99,7 @@ export function DJAvatarPicker({ dj, onChange }: Props) {
                 aria-label={`${color.name} background`}
               />
               <span style={{ backgroundColor: color.background, color: color.foreground }}>
-                <span aria-hidden="true">✓</span>
+                <Check width={14} height={14} aria-hidden="true" />
               </span>
             </label>
           ))}

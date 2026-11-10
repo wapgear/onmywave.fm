@@ -1,3 +1,4 @@
+import { OpenNewWindow } from 'iconoir-react/regular';
 import { useRef, useState } from 'react';
 
 import { unwrap } from '../../api';
@@ -64,13 +65,13 @@ export function TwitterSetupHelp() {
       <div className="twitter-help-links">
         <div className="twitter-help-action">
           <button type="button" onClick={() => void open(links.token)}>
-            Official token guide ↗
+            Official token guide <OpenNewWindow width={14} height={14} aria-hidden="true" />
           </button>
           {feedback(links.token)}
         </div>
         <div className="twitter-help-action">
           <button type="button" onClick={() => void open(links.pricing)}>
-            API pricing ↗
+            API pricing <OpenNewWindow width={14} height={14} aria-hidden="true" />
           </button>
           {feedback(links.pricing)}
         </div>

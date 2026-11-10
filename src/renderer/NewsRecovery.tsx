@@ -1,5 +1,5 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { Radio } from 'lucide-react';
+import { AntennaSignal } from 'iconoir-react/regular';
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 
 import type { NewsRecoveryStatus } from '../shared/types';
@@ -163,7 +163,7 @@ export function NewsRecoveryPanel() {
 
   return (
     <section className="news-recovery-panel" aria-labelledby="news-recovery-heading">
-      <Radio size={22} aria-hidden="true" />
+      <AntennaSignal width={22} height={22} aria-hidden="true" />
       <h2 id="news-recovery-heading">
         {status.phase === 'recovering' ? 'News data is recovering' : 'News data is unavailable'}
       </h2>

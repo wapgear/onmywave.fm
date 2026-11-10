@@ -1,5 +1,5 @@
 import { useIsMutating, useMutation } from '@tanstack/react-query';
-import { ArrowRight, Music2 } from 'lucide-react';
+import { ArrowRight, MusicNote } from 'iconoir-react/regular';
 import { useEffect, useId, useRef, useState } from 'react';
 
 import { unwrap } from '../../api';
@@ -87,7 +87,7 @@ export function ConnectionPage({
   return (
     <main className="connection-page app-notice-surface">
       <div className="connection-brand">
-        <Music2 size={25} />
+        <MusicNote width={25} height={25} aria-hidden="true" />
         <span>onmywave.fm</span>
         <InfoHelp label="About connecting to Jellyfin">
           <p>Your library stays on your Jellyfin server.</p>
@@ -224,7 +224,7 @@ export function ConnectionPage({
               onBlur={() => setFocusedConnect(null)}
             >
               {login.isPending ? 'Connecting…' : 'Connect to Jellyfin'}
-              <ArrowRight size={17} />
+              <ArrowRight width={17} height={17} aria-hidden="true" />
             </button>
             {changingAccount && (
               <button

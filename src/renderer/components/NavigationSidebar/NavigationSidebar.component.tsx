@@ -1,4 +1,13 @@
-import { Disc3, ListMusic, Music2, PanelLeftClose, PanelLeftOpen, Radio, Settings, Users } from 'lucide-react';
+import {
+  AntennaSignal,
+  CompactDisc,
+  Group,
+  MusicNote,
+  Playlist,
+  Settings,
+  SidebarCollapse,
+  SidebarExpand,
+} from 'iconoir-react/regular';
 import { useEffect, useId, useState } from 'react';
 import type { ReactNode } from 'react';
 
@@ -8,11 +17,11 @@ import { useSidebarWidth } from './hooks/useSidebarWidth';
 import './NavigationSidebar.styles.css';
 
 const navigation = [
-  { id: 'songs', name: 'All songs', icon: Music2 },
-  { id: 'artists', name: 'Artists', icon: Users },
-  { id: 'albums', name: 'Albums', icon: Disc3 },
-  { id: 'playlists', name: 'Playlists', icon: ListMusic },
-  { id: 'stations', name: 'News bucket', icon: Radio },
+  { id: 'songs', name: 'All songs', icon: MusicNote },
+  { id: 'artists', name: 'Artists', icon: Group },
+  { id: 'albums', name: 'Albums', icon: CompactDisc },
+  { id: 'playlists', name: 'Playlists', icon: Playlist },
+  { id: 'stations', name: 'News bucket', icon: AntennaSignal },
 ] as const;
 
 function SidebarButton({
@@ -96,9 +105,9 @@ export function NavigationSidebar({ page, navigate }: { page: PageName; navigate
           label={sidebar.compact ? 'Expand sidebar' : 'Collapse sidebar'}
           icon={
             sidebar.compact ? (
-              <PanelLeftOpen size={20} aria-hidden="true" />
+              <SidebarExpand width={20} height={20} aria-hidden="true" />
             ) : (
-              <PanelLeftClose size={20} aria-hidden="true" />
+              <SidebarCollapse width={20} height={20} aria-hidden="true" />
             )
           }
           compact={sidebar.compact}
@@ -111,7 +120,7 @@ export function NavigationSidebar({ page, navigate }: { page: PageName; navigate
           <SidebarButton
             key={item.id}
             label={item.name}
-            icon={<item.icon size={21} strokeWidth={1.7} aria-hidden="true" />}
+            icon={<item.icon width={21} height={21} strokeWidth={1.7} aria-hidden="true" />}
             compact={sidebar.compact}
             active={page === item.id}
             onClick={() => navigate(item.id)}
@@ -122,7 +131,7 @@ export function NavigationSidebar({ page, navigate }: { page: PageName; navigate
         <SidebarButton
           label="Settings"
           className="settings-nav"
-          icon={<Settings size={20} strokeWidth={1.7} aria-hidden="true" />}
+          icon={<Settings width={20} height={20} strokeWidth={1.7} aria-hidden="true" />}
           compact={sidebar.compact}
           active={page === 'settings'}
           onClick={() => navigate('settings')}

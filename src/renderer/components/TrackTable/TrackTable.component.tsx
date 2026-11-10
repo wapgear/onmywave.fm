@@ -1,4 +1,17 @@
-import { ArrowDown, ArrowUp, Clock3, Ellipsis, Info, ListPlus, Pause, Play, Plus, Trash2 } from 'lucide-react';
+import {
+  ArrowDown,
+  ArrowUp,
+  Clock,
+  InfoCircle,
+  MoreHoriz,
+  MusicNote,
+  Pause,
+  Play,
+  PlaylistPlus,
+  Plus,
+  Trash,
+} from 'iconoir-react/regular';
+import { Play as PlaySolid } from 'iconoir-react/solid';
 import {
   Fragment,
   useCallback,
@@ -252,7 +265,7 @@ export function TrackTable({
               <th>Title</th>
               <th className="album-column">Album</th>
               <th className="time-column">
-                <Clock3 size={14} aria-label="Duration" />
+                <Clock width={14} height={14} aria-label="Duration" />
               </th>
               <th className="actions-column">
                 <span className="sr-only">Actions</span>
@@ -286,7 +299,7 @@ export function TrackTable({
                     <td className="row-number">
                       {currentId === row.song.id ? (
                         <span className="playing-bars" aria-label="Current song">
-                          ♫
+                          <MusicNote width={16} height={16} aria-hidden="true" />
                         </span>
                       ) : (
                         offset + index + 1
@@ -301,7 +314,7 @@ export function TrackTable({
                         >
                           <Artwork url={row.song.imageUrl} name={row.song.name} />
                           <span className="artwork-play" aria-hidden="true">
-                            <ActionIcon size={14} />
+                            <ActionIcon width={14} height={14} aria-hidden="true" />
                           </span>
                         </button>
                         <div className="song-name">
@@ -321,23 +334,23 @@ export function TrackTable({
                     <td className="row-actions">
                       <TrackMenu name={row.song.name}>
                         <button onClick={() => activate(index)}>
-                          <ActionIcon size={15} />
+                          <ActionIcon width={15} height={15} aria-hidden="true" />
                           {pausing ? 'Pause song' : 'Play song'}
                         </button>
                         <button onClick={() => playNext([row.song])}>
-                          <Play size={15} />
+                          <Play width={15} height={15} aria-hidden="true" />
                           Play next
                         </button>
                         <button onClick={() => enqueue([row.song])}>
-                          <ListPlus size={15} />
+                          <PlaylistPlus width={15} height={15} aria-hidden="true" />
                           Add to end
                         </button>
                         <button onClick={() => add([row.song])}>
-                          <Plus size={15} />
+                          <Plus width={15} height={15} aria-hidden="true" />
                           Add to playlist
                         </button>
                         <button onClick={() => details(row.song)}>
-                          <Info size={15} />
+                          <InfoCircle width={15} height={15} aria-hidden="true" />
                           Song details
                         </button>
                         <button
@@ -348,7 +361,7 @@ export function TrackTable({
                             setRemoving(row.song);
                           }}
                         >
-                          <Trash2 size={15} />
+                          <Trash width={15} height={15} aria-hidden="true" />
                           Remove song
                         </button>
                         {editable && (
@@ -357,14 +370,14 @@ export function TrackTable({
                               disabled={busy || row.editable === false || index === 0}
                               onClick={() => move?.(row.key, index - 1)}
                             >
-                              <ArrowUp size={15} />
+                              <ArrowUp width={15} height={15} aria-hidden="true" />
                               Move up
                             </button>
                             <button
                               disabled={busy || row.editable === false || index === rows.length - 1}
                               onClick={() => move?.(row.key, index + 1)}
                             >
-                              <ArrowDown size={15} />
+                              <ArrowDown width={15} height={15} aria-hidden="true" />
                               Move down
                             </button>
                             <button
@@ -380,7 +393,7 @@ export function TrackTable({
                                 )
                               }
                             >
-                              <Trash2 size={15} />
+                              <Trash width={15} height={15} aria-hidden="true" />
                               Remove from playlist
                             </button>
                           </>
@@ -399,15 +412,15 @@ export function TrackTable({
         <div ref={toolbar} className="selection-toolbar" aria-label="Selected songs">
           <span>{selectedSongs.length} selected</span>
           <button onClick={() => play(selectedSongs)}>
-            <Play size={16} />
+            <PlaySolid width={16} height={16} aria-hidden="true" />
             Play
           </button>
           <button onClick={() => playNext(selectedSongs)}>
-            <Play size={16} />
+            <Play width={16} height={16} aria-hidden="true" />
             Play next
           </button>
           <button onClick={() => enqueue(selectedSongs)}>
-            <ListPlus size={19} aria-hidden="true" />
+            <PlaylistPlus width={19} height={19} aria-hidden="true" />
             Add to end
           </button>
           <button className="primary" onClick={() => add(selectedSongs)}>
@@ -537,7 +550,7 @@ function TrackMenu({ name, children }: { name: string; children: ReactNode }) {
           contextPoint.current = null;
         }}
       >
-        <Ellipsis size={18} aria-hidden="true" />
+        <MoreHoriz width={18} height={18} aria-hidden="true" />
       </IconButton>
       <div
         id={id}

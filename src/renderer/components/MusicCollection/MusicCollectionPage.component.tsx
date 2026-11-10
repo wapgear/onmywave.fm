@@ -1,5 +1,5 @@
 import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ArrowLeft, Plus, Search } from 'lucide-react';
+import { ArrowLeft, Plus, Search } from 'iconoir-react/regular';
 import { useEffect, useRef, useState } from 'react';
 
 import { unwrap } from '../../api';
@@ -100,7 +100,7 @@ export function MusicCollectionPage<T extends CollectionItem>({
     <>
       <PageHeading headingRef={headingRef} title={title}>
         <div className="search-field">
-          <Search size={17} />
+          <Search width={17} height={17} aria-hidden="true" />
           <input
             placeholder={`Search ${noun}`}
             aria-label={`Search ${noun}`}
@@ -199,7 +199,7 @@ function MusicCollectionDetail<T extends CollectionItem>({
     <>
       <div className="collection-navigation">
         <button ref={backRef} aria-label={`Back to ${kind}s`} className="back-button" onClick={back}>
-          <ArrowLeft size={17} />
+          <ArrowLeft width={17} height={17} aria-hidden="true" />
           {label}s
         </button>
         <label className="collection-mix">
@@ -232,7 +232,7 @@ function MusicCollectionDetail<T extends CollectionItem>({
           onEnqueue={() => player.enqueue(tracks.data!)}
         />
         <button disabled={!tracks.data?.length} onClick={() => add(tracks.data!)}>
-          <Plus size={17} />
+          <Plus width={17} height={17} aria-hidden="true" />
           Add to playlist
         </button>
       </CollectionHeading>

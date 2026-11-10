@@ -1,5 +1,5 @@
 import { useIsMutating, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { LoaderCircle } from 'lucide-react';
+import { Refresh } from 'iconoir-react/regular';
 import { useLayoutEffect, useRef, useState } from 'react';
 
 import { eligibleNewsTakes } from '../../../shared/news-pool';
@@ -1226,7 +1226,7 @@ export function StationsPage({
             )}
             {(preparing || ownsProgressStopFocus || ownsCancelFocus) && (
               <div className="news-progress room-active-progress">
-                {preparing && <LoaderCircle className="spinning" size={17} aria-hidden="true" />}
+                {preparing && <Refresh className="spinning" width={17} height={17} aria-hidden="true" />}
                 <span role="status">
                   {!preparing
                     ? ownsCancelFocus

@@ -1,4 +1,4 @@
-import { Info } from 'lucide-react';
+import { InfoCircle } from 'iconoir-react/regular';
 import { useRef, useState, type ReactNode } from 'react';
 
 import { IconButton } from '../IconButton/IconButton.component';
@@ -23,7 +23,7 @@ export function InfoHelp({ label, children }: { label: string; children: ReactNo
         aria-haspopup="dialog"
         onClick={() => setOpen(true)}
       >
-        <Info size={17} aria-hidden="true" />
+        <InfoCircle width={17} height={17} aria-hidden="true" />
       </IconButton>
       {open && (
         <Dialog title={label} close={close}>
