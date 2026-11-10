@@ -1,0 +1,85 @@
+.notice.warning {
+  background: var(--warning-background);
+  color: var(--warning-text);
+}
+.notice.info {
+  background: var(--notice-info-background);
+  color: var(--notice-info-text);
+}
+.notice.success {
+  background: var(--success-soft);
+  color: var(--success-ink);
+}
+.notice-copy {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.notice-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+}
+.notice-actions button {
+  flex-shrink: 0;
+}
+.notice button[aria-busy='true'] {
+  cursor: progress;
+  color: var(--muted);
+}
+.notice button[aria-busy='true']:active {
+  translate: 0 0;
+}
+.app-notices {
+  flex-shrink: 0;
+  max-height: min(35dvh, 240px);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+.app-notices:not(:has(> .app-notice)) {
+  display: none;
+}
+.app-notices > .app-notice {
+  min-height: 44px;
+  margin: 0;
+  padding: 5px var(--content-inset);
+  border-radius: 0;
+}
+.app-notices > .app-notice + .app-notice {
+  border-top: 1px solid var(--separator);
+}
+.app-notice-surface {
+  --app-notice-base: var(--canvas);
+}
+.app-shell.app-notice-surface {
+  --app-notice-base: var(--sidebar-background);
+}
+.app-notice-surface:has(.app-notices > [data-tone='info']) {
+  --app-notice-tint: var(--notice-info-background);
+}
+.app-notice-surface:has(.app-notices > [data-tone='success']) {
+  --app-notice-tint: var(--success-soft);
+}
+.app-notice-surface:has(.app-notices > [data-tone='warning']) {
+  --app-notice-tint: var(--warning-background);
+}
+.app-notice-surface:has(.app-notices > [data-tone='error']) {
+  --app-notice-tint: var(--notice-error-background);
+}
+.app-notice-surface:has(.app-notices > .app-notice) {
+  background-image: linear-gradient(
+    color-mix(in srgb, var(--app-notice-tint) 65%, var(--app-notice-base)),
+    var(--app-notice-base)
+  );
+}
+.startup > .app-notices,
+.connection-page > .app-notices {
+  width: min(760px, calc(100% - 40px));
+  border-radius: 16px;
+}
+.connection-page > .app-notices {
+  width: min(760px, 100%);
+  margin: 24px auto 0;
+}

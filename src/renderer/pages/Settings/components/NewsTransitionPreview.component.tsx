@@ -1,4 +1,4 @@
-import { Play, Square } from 'lucide-react';
+import { Play, Square } from 'iconoir-react/regular';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 import { isNewsTransitionSettings, type NewsTransitionSettings } from '../../../../shared/news-transitions';
@@ -205,7 +205,11 @@ export function NewsTransitionPreview({ settings }: { settings: NewsTransitionSe
       <summary>Preview transition</summary>
       <div className="transition-preview-heading">
         <button type="button" disabled={!valid} onClick={() => (active ? stop() : void start())}>
-          {active ? <Square size={14} /> : <Play size={14} />}
+          {active ? (
+            <Square width={14} height={14} aria-hidden="true" />
+          ) : (
+            <Play width={14} height={14} aria-hidden="true" />
+          )}
           {active ? 'Stop sample' : 'Play sample'}
         </button>
         <span className="preference-note">Pauses your music</span>

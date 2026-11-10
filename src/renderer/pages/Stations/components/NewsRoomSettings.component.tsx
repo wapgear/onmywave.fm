@@ -1,5 +1,6 @@
 import { useId, useLayoutEffect, useRef } from 'react';
 
+import { MAX_DAILY_NEWS_RECORDINGS } from '../../../../shared/workflow';
 import { Button } from '../../../components/Button/Button.component';
 import { FilterSelect } from '../../../components/FilterSelect/FilterSelect.component';
 import { PreferenceSection } from '../../../components/PreferenceSection/PreferenceSection.component';
@@ -25,6 +26,7 @@ export function NewsRoomSettings({
   preparationDetail,
   profileStatusUnknown,
   preparation,
+  adjustPreparationLimit,
   workflowReady,
   workflowStatusLoading,
   workflowStatusError,
@@ -96,6 +98,8 @@ export function NewsRoomSettings({
     (!!profile.workflowDraft.newsWorkflowError || !!profile.workflowDraft.newsWorkflowPaused);
   const canResume = paused && canEnable && !resumeDisabled && !dirty;
   const canTurnOff = savedEnabled && !stopDisabled && !stopping;
+  const atLimit = !!preparation?.atLimit && isEnabled && !profileStatusUnknown;
+  const limitAction = atLimit ? preparation?.limitAction : undefined;
   const providerIssues = workflowIssues.filter((issue) => issue.action?.label === 'Provider keys');
   const setupIssues = workflowIssues.filter(
     (issue) => issue.action?.label !== 'Provider keys' && issue.action?.label !== 'Review room options',
@@ -251,7 +255,9 @@ export function NewsRoomSettings({
                 <h3 id="bucket-automation-title">Automatic preparation</h3>
                 <p>Check your sources and prepare recordings while the app is running.</p>
               </div>
-              <span className={`news-room-automation-state ${isEnabled ? 'is-enabled' : ''}`}>{activationLabel}</span>
+              <span className={`news-room-automation-state ${atLimit ? 'is-limited' : isEnabled ? 'is-enabled' : ''}`}>
+                {activationLabel}
+              </span>
             </div>
             <label className="news-room-automation-toggle">
               <input
@@ -271,13 +277,24 @@ export function NewsRoomSettings({
                   : paused
                     ? 'Automatic preparation is paused for this room. Resume it when the setup is ready.'
                     : isEnabled && !savedEnabled
-                      ? 'Preparation stays off until you save this room.'
+                      ? 'Save this room’s setup to start automatic checks.'
                       : !isEnabled && savedEnabled && dirty
                         ? 'Automatic preparation stays on until you save this room.'
                         : !isEnabled
                           ? 'Saved recordings remain available. Turn this on and save to start automatic checks.'
                           : preparationDetail}
             </p>
+            {limitAction && (
+              <Button
+                variant="link"
+                type="button"
+                className="news-room-link"
+                disabled={disabled}
+                onClick={() => adjustPreparationLimit(limitAction.field)}
+              >
+                {limitAction.label}
+              </Button>
+            )}
             {workflowStatusLoading && (
               <p className="news-room-automation-detail" role="status">
                 Checking provider access…
@@ -343,7 +360,7 @@ export function NewsRoomSettings({
             >
               Provider keys
             </Button>
-            {isEnabled && (dirty || saving) ? (
+            {isEnabled && (!savedEnabled || dirty || saving) ? (
               <p className="news-room-paid-consent" role="note">
                 {paidProviderConsent}
               </p>
@@ -355,11 +372,6 @@ export function NewsRoomSettings({
                 </p>
               </details>
             ) : null}
-            {dirty && isEnabled && !savedEnabled && (
-              <p className="news-room-settings-hint" role="status">
-                Preparation remains off until you save this setup.
-              </p>
-            )}
             {paused && isEnabled && (
               <div className="news-room-automation-actions">
                 <button
@@ -478,7 +490,7 @@ export function NewsRoomSettings({
                   id="bucket-recording-limit"
                   type="number"
                   min={1}
-                  max={10}
+                  max={MAX_DAILY_NEWS_RECORDINGS}
                   required
                   value={workflow.maxNewsClipsPerDay}
                   disabled={disabled}

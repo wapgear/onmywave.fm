@@ -1,4 +1,4 @@
-import { Mic } from 'lucide-react';
+import { Microphone } from 'iconoir-react/regular';
 
 import type { DJPlaybackSettingsPatch } from '../../../../shared/dj-playback';
 import {
@@ -39,7 +39,7 @@ export function SongAnnouncementPreferences({
       <div className="song-announcement-heading">
         <h3 id="announcement-style-title">Wording style</h3>
         <span className="song-announcement-voice preference-note">
-          <Mic size={12} aria-hidden="true" />
+          <Microphone width={12} height={12} aria-hidden="true" />
           Your DJ’s saved voice
         </span>
       </div>

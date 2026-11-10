@@ -1,0 +1,52 @@
+.collection-navigation {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin-bottom: 20px;
+}
+.collection-navigation .back-button {
+  margin-bottom: 0;
+}
+.collection-mix {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: var(--control-size);
+  cursor: pointer;
+}
+.collection-mix-copy {
+  display: grid;
+  gap: 3px;
+  font-size: 12px;
+}
+.collection-mix-copy small {
+  color: var(--muted);
+  font-size: 11px;
+}
+.collection-mix input {
+  appearance: none;
+  width: 34px;
+  height: 20px;
+  padding: 3px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--control-active);
+  cursor: inherit;
+}
+.collection-mix input::before {
+  content: '';
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--text);
+}
+.collection-mix input:checked {
+  background: var(--accent);
+}
+.collection-mix input:checked::before {
+  transform: translateX(14px);
+  background: white;
+}

@@ -1,5 +1,5 @@
 import { defaultRangeExtractor, observeElementOffset, useVirtualizer } from '@tanstack/react-virtual';
-import { ListMusic, X } from 'lucide-react';
+import { Playlist, Xmark } from 'iconoir-react/regular';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { KeyboardEvent } from 'react';
 import { createPortal } from 'react-dom';
@@ -236,7 +236,11 @@ function QueueRows({
                 className="queue-track queue-play"
                 onDragStart={(event) => event.preventDefault()}
                 onClick={(event) => {
-                  if (!reorder.preventDragClick(event)) play(item, event.currentTarget);
+                  if (!reorder.preventDragClick(event) && event.detail === 0) play(item, event.currentTarget);
+                }}
+                onDoubleClick={(event) => {
+                  if (!event.ctrlKey && !event.metaKey && !reorder.preventDragClick(event))
+                    play(item, event.currentTarget);
                 }}
                 onKeyDown={(event) => {
                   if (reorder.reorderKeyDown(event, virtualRow.index)) {
@@ -263,7 +267,7 @@ function QueueRows({
                 onClick={() => removeRow(item, virtualRow.index)}
                 onKeyDown={navigate}
               >
-                <X size={14} aria-hidden="true" />
+                <Xmark width={14} height={14} aria-hidden="true" />
               </IconButton>
             </li>
           );
@@ -300,7 +304,7 @@ function QueueRows({
               <TrackDuration seconds={draggedItem.song.duration} />
             </span>
             <span className="queue-drag-remove">
-              <X size={14} aria-hidden="true" />
+              <Xmark width={14} height={14} aria-hidden="true" />
             </span>
           </div>,
           document.body,
@@ -375,7 +379,7 @@ export function Queue() {
     <div className="queue-content">
       {!player.queue.length ? (
         <div className="drawer-empty">
-          <ListMusic size={30} strokeWidth={1.4} />
+          <Playlist width={30} height={30} strokeWidth={1.4} aria-hidden="true" />
           <h3>Your queue is empty</h3>
           <p>Play a song or add music to the queue.</p>
         </div>
@@ -387,7 +391,12 @@ export function Queue() {
               <button
                 ref={nowPlayingButton}
                 className="queue-track"
-                onClick={player.toggle}
+                onClick={(event) => {
+                  if (event.detail === 0) player.toggle();
+                }}
+                onDoubleClick={(event) => {
+                  if (!event.ctrlKey && !event.metaKey) player.toggle();
+                }}
                 aria-label={`${player.requestedPlaying ? 'Pause' : 'Play'} ${current.song.name}`}
               >
                 <Artwork url={current.song.imageUrl} name={current.song.name} />

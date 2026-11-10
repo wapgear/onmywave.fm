@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Copy, Pencil, Plus, Trash2 } from 'lucide-react';
+import { Copy, EditPencil, Plus, Trash } from 'iconoir-react/regular';
 import { useRef, useState } from 'react';
 
 import type { DJ } from '../../../shared/types';
@@ -82,7 +82,7 @@ export function DJsPage() {
     <>
       <PageHeading as="h2" title="DJs" headingRef={heading}>
         <button ref={newDJ} className="primary" disabled={!state.data} onClick={() => edit(fresh())}>
-          <Plus size={17} />
+          <Plus width={17} height={17} aria-hidden="true" />
           New DJ
         </button>
       </PageHeading>
@@ -107,13 +107,13 @@ export function DJsPage() {
                 <DJPreview dj={dj} activeId={previewing} onStart={setPreviewing} />
               </div>
               <IconButton label={`Edit ${dj.name}`} onClick={() => edit({ ...dj })}>
-                <Pencil size={17} aria-hidden="true" />
+                <EditPencil width={17} height={17} aria-hidden="true" />
               </IconButton>
               <IconButton
                 label={`Duplicate ${dj.name}`}
                 onClick={() => edit({ ...dj, id: crypto.randomUUID(), name: `${dj.name} copy` })}
               >
-                <Copy size={17} aria-hidden="true" />
+                <Copy width={17} height={17} aria-hidden="true" />
               </IconButton>
               <IconButton
                 className="danger"
@@ -123,7 +123,7 @@ export function DJsPage() {
                   setDeleting(dj);
                 }}
               >
-                <Trash2 size={17} aria-hidden="true" />
+                <Trash width={17} height={17} aria-hidden="true" />
               </IconButton>
             </article>
           ))}

@@ -97,7 +97,7 @@
   border-radius: 50%;
   background: transparent;
   box-shadow: none;
-  cursor: ew-resize;
+  cursor: pointer;
 }
 
 .slider[data-range] .slider-input {
@@ -113,8 +113,8 @@
   pointer-events: none;
 }
 
-.slider[data-equal]:not(:has(input:disabled)) {
-  cursor: ew-resize;
+.slider[data-range]:not(:has(input:disabled)) {
+  cursor: pointer;
 }
 
 .slider .slider-input:focus-visible {

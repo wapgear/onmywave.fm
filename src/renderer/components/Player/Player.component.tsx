@@ -1,22 +1,22 @@
 import {
-  ListMusic,
-  LoaderCircle,
-  MicVocal,
-  Pause,
-  Radio,
-  RadioTower,
-  Play,
+  Antenna,
+  AntennaSignal,
+  BookStack,
+  Microphone,
+  Playlist,
+  Refresh,
   Repeat,
-  Repeat1,
-  RotateCw,
+  RepeatOnce,
   Shuffle,
-  SkipBack,
-  SkipForward,
-  Volume1,
-  Volume2,
-  VolumeX,
-} from 'lucide-react';
-import { useLayoutEffect, useRef, useState } from 'react';
+  SkipNext,
+  SkipPrev,
+  SoundHigh,
+  SoundLow,
+  SoundOff,
+  WarningCircle,
+} from 'iconoir-react/regular';
+import { Pause, Play } from 'iconoir-react/solid';
+import { useRef, useState } from 'react';
 
 import { useDJPlayback } from '../../dj-playback';
 import { usePlayer } from '../../player';
@@ -26,6 +26,7 @@ import { useRetryFocus } from '../../useRetryFocus';
 import { IconButton } from '../IconButton/IconButton.component';
 import { Artwork } from '../Shared';
 import { Slider } from '../Slider/Slider.component';
+import { SongArtists } from '../SongLinks/SongLinks.component';
 import { DJBreakNotice } from './DJBreakNotice.component';
 import type { PlayerProps } from './Player.types';
 import { PlayerTimeline } from './PlayerTimeline.component';
@@ -45,28 +46,13 @@ export function Player({
   const player = usePlayer();
   const automation = useDJPlayback();
   const djActive = automation.settings.enabled || player.newsPhase !== 'idle';
-  const DJStatusIcon = djActive ? RadioTower : Radio;
-  const notices = useRef<HTMLDivElement>(null);
+  const DJStatusIcon = djActive ? Antenna : AntennaSignal;
   const repeatTrigger = useRef<HTMLButtonElement>(null);
   const { retryRef: libraryRetryRef, retry: retryLibraryWithFocus } = useRetryFocus({
     ownerKey: `player:library:${player.repeat}`,
     target: () => repeatTrigger.current,
     canFocusSuccess: () => !player.libraryError && !player.libraryLoading,
   });
-
-  useLayoutEffect(() => {
-    const node = notices.current;
-    const root = document.documentElement;
-    if (!node) return;
-    const measure = () => root.style.setProperty('--player-notice-height', `${node.getBoundingClientRect().height}px`);
-    const observer = new ResizeObserver(measure);
-    observer.observe(node);
-    measure();
-    return () => {
-      observer.disconnect();
-      root.style.removeProperty('--player-notice-height');
-    };
-  }, []);
 
   const [mutedVolume, setMutedVolume] = useState(0.75);
   const playControl = useRef<HTMLButtonElement>(null);
@@ -105,7 +91,7 @@ export function Player({
       return retrySettlement.generation === player.getPlaybackGeneration() && !player.busy && !player.error;
     },
   });
-  const Volume = player.volume === 0 ? VolumeX : player.volume < 0.5 ? Volume1 : Volume2;
+  const Volume = player.volume === 0 ? SoundOff : player.volume < 0.5 ? SoundLow : SoundHigh;
   const showRetrying = retrying && (retryingKind === 'restore' || retryingKey === player.currentKey);
   function retryPlayback() {
     const kind: 'track' | 'restore' = player.currentKey ? 'track' : 'restore';
@@ -160,15 +146,17 @@ export function Player({
 
   return (
     <>
-      <div ref={notices} className="player-notices">
+      <div className="player-notices">
         <DJBreakNotice target={djControlsTarget} />
         {player.newsNotice && (
           <div className="playback-error">
+            <WarningCircle width={22} height={22} aria-hidden="true" />
             <span role="status">{player.newsNotice}</span>
           </div>
         )}
         {(player.error || showRetrying) && (
           <div className="playback-error">
+            <WarningCircle width={22} height={22} aria-hidden="true" />
             <span role={showRetrying ? 'status' : 'alert'}>{showRetrying ? 'Retrying playback…' : player.error}</span>
             <button
               ref={retryRef}
@@ -177,7 +165,7 @@ export function Player({
               onClick={retryPlayback}
               disabled={!showRetrying && (player.busy || !player.canRetry)}
             >
-              {showRetrying ? <LoaderCircle size={14} className="player-spin" /> : <RotateCw size={14} />}
+              <Refresh width={14} height={14} className={showRetrying ? 'player-spin' : undefined} aria-hidden="true" />
               {showRetrying ? 'Retrying…' : 'Retry'}
             </button>
             {player.current && (
@@ -195,6 +183,7 @@ export function Player({
         )}
         {(player.optionsError || retryingOptions) && (
           <div className="playback-error player-options-error">
+            <WarningCircle width={22} height={22} aria-hidden="true" />
             <span role={retryingOptions ? 'status' : 'alert'}>
               {retryingOptions ? 'Saving player options…' : player.optionsError}
             </span>
@@ -204,13 +193,19 @@ export function Player({
               aria-busy={retryingOptions || undefined}
               onClick={retryOptions}
             >
-              {retryingOptions ? <LoaderCircle size={14} className="player-spin" /> : <RotateCw size={14} />}
+              <Refresh
+                width={14}
+                height={14}
+                className={retryingOptions ? 'player-spin' : undefined}
+                aria-hidden="true"
+              />
               {retryingOptions ? 'Saving options…' : 'Retry saving options'}
             </button>
           </div>
         )}
         {(player.libraryLoading || player.libraryError) && (
           <div className="playback-error player-library-notice">
+            <BookStack width={22} height={22} aria-hidden="true" />
             <span role={player.libraryLoading ? 'status' : 'alert'}>
               {player.libraryLoading ? 'Loading whole library…' : player.libraryError}
             </span>
@@ -224,7 +219,12 @@ export function Player({
                   void retryLibraryWithFocus(async () => ({ isError: !(await player.retryLibrary()) }));
                 }}
               >
-                {player.libraryLoading ? <LoaderCircle size={14} className="player-spin" /> : <RotateCw size={14} />}
+                <Refresh
+                  width={14}
+                  height={14}
+                  className={player.libraryLoading ? 'player-spin' : undefined}
+                  aria-hidden="true"
+                />
                 {player.libraryLoading ? 'Loading library…' : 'Retry library'}
               </button>
             )}
@@ -246,7 +246,7 @@ export function Player({
           <div>
             <strong title={player.current?.name}>{player.current?.name ?? 'Your music, ready when you are'}</strong>
             <span title={player.current?.artists.join(', ')}>
-              {player.current ? player.current.artists.join(', ') || 'Unknown artist' : 'Choose a song to begin'}
+              {player.current ? <SongArtists song={player.current} /> : 'Choose a song to begin'}
             </span>
           </div>
         </div>
@@ -260,7 +260,7 @@ export function Player({
               label="Shuffle"
               aria-pressed={player.shuffle}
             >
-              <Shuffle size={16} aria-hidden="true" />
+              <Shuffle width={16} height={16} aria-hidden="true" />
             </IconButton>
             <IconButton
               variant="player"
@@ -269,7 +269,7 @@ export function Player({
               title={`Previous track (${primaryModifierLabel}←)`}
               label="Previous track"
             >
-              <SkipBack size={19} fill="currentColor" aria-hidden="true" />
+              <SkipPrev width={19} height={19} aria-hidden="true" />
             </IconButton>
             <IconButton
               ref={playControl}
@@ -280,9 +280,9 @@ export function Player({
               label={player.requestedPlaying ? 'Pause' : 'Play'}
             >
               {player.requestedPlaying ? (
-                <Pause size={21} fill="currentColor" aria-hidden="true" />
+                <Pause width={21} height={21} aria-hidden="true" />
               ) : (
-                <Play size={21} fill="currentColor" aria-hidden="true" />
+                <Play className="player-play-glyph" width={21} height={21} aria-hidden="true" />
               )}
             </IconButton>
             <IconButton
@@ -293,7 +293,7 @@ export function Player({
               title={`Next track (${primaryModifierLabel}→)`}
               label="Next track"
             >
-              <SkipForward size={19} fill="currentColor" aria-hidden="true" />
+              <SkipNext width={19} height={19} aria-hidden="true" />
             </IconButton>
             <IconButton
               ref={repeatTrigger}
@@ -307,9 +307,9 @@ export function Player({
               aria-pressed={player.repeat !== 'off'}
             >
               {player.repeat === 'one' ? (
-                <Repeat1 size={16} aria-hidden="true" />
+                <RepeatOnce width={16} height={16} aria-hidden="true" />
               ) : (
-                <Repeat size={16} aria-hidden="true" />
+                <Repeat width={16} height={16} aria-hidden="true" />
               )}
             </IconButton>
           </div>
@@ -321,7 +321,7 @@ export function Player({
               <span className="sr-only" role="status">
                 Loading audio
               </span>
-              <LoaderCircle size={15} className="player-spin" aria-hidden="true" />
+              <Refresh width={15} height={15} className="player-spin" aria-hidden="true" />
             </>
           )}
           <IconButton
@@ -335,7 +335,7 @@ export function Player({
               } else player.setVolume(mutedVolume);
             }}
           >
-            <Volume size={18} aria-hidden="true" />
+            <Volume width={18} height={18} aria-hidden="true" />
           </IconButton>
           <Slider
             ref={volumeControl}
@@ -358,7 +358,7 @@ export function Player({
             aria-expanded={lyricsOpen}
             disabled={!player.current}
           >
-            <MicVocal size={18} aria-hidden="true" />
+            <Microphone width={18} height={18} aria-hidden="true" />
           </IconButton>
           <IconButton
             variant="player"
@@ -369,7 +369,7 @@ export function Player({
             aria-controls="listening-drawer"
             aria-expanded={queueOpen}
           >
-            <ListMusic size={21} aria-hidden="true" />
+            <Playlist width={21} height={21} aria-hidden="true" />
           </IconButton>
           <IconButton
             id="player-dj-controls"
@@ -382,7 +382,7 @@ export function Player({
             aria-controls="listening-drawer"
             aria-expanded={djOpen}
           >
-            <DJStatusIcon size={19} aria-hidden="true" />
+            <DJStatusIcon width={19} height={19} aria-hidden="true" />
           </IconButton>
         </div>
       </footer>

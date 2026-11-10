@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 
+import type { newsPreparationStatus } from '../../../../shared/news-preparation-status';
 import type { LocalState, PreparedNewsLibrary, PreparedNewsTake } from '../../../../shared/types';
 
 export type NewsBucketDestination = 'upcoming' | 'check' | 'past' | 'favorites' | 'settings';
@@ -21,6 +22,8 @@ export type NewsBucketProps = {
   savedNewsStale: boolean;
   openSource: (url: string) => void;
   openPreparation: () => void;
+  preparation: ReturnType<typeof newsPreparationStatus> | null;
+  adjustPreparationLimit: (field: 'recording' | 'check') => void;
   roomSettings?: ReactNode;
   active?: boolean;
   destination: NewsBucketDestination;

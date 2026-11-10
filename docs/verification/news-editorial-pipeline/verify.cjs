@@ -287,7 +287,7 @@ async function main() {
     assert.equal(calls.selecting, 2);
   });
 
-  await run('cancelled writing pauses and explicit Resume reuses the selected story', async () => {
+  await run('the next scheduled check leaves cancelled writing in history and starts fresh', async () => {
     let entered;
     const waiting = new Promise((resolve) => { entered = resolve; });
     fresh('cancel-writing', { gate: 'writing', entered });
@@ -297,33 +297,43 @@ async function main() {
     await assert.rejects(pending);
     assert.equal(index().requests[0].status, 'interrupted');
     assert.equal(index().requests[0].checkpoint.selection.candidateId, 'story-1');
-    const draft = state.roomProfiles[0].workflowDraft;
-    Object.assign(draft, { newsLastRun: { requestId: 'request-cancel', outcome: 'interrupted', startedAt: new Date().toISOString(), roomName: 'Afternoon' }, newsWorkflowPaused: true });
+    Object.assign(state.roomProfiles[0].workflowDraft, {
+      newsLastRun: { requestId: 'request-cancel', outcome: 'interrupted', startedAt: new Date().toISOString(), roomName: 'Afternoon' },
+      nextNewsCheckAt: new Date(Date.now() + 60_000).toISOString(),
+    });
     await workflow.checkNewsWorkflow(news);
-    assert.equal(calls.writing, 1, 'Paused ticks cannot silently repeat paid calls');
-    scenario.gate = null; draft.newsWorkflowPaused = false;
+    assert.equal(calls.writing, 1, 'Ticks before the reserved slot do not make a request');
+    scenario.gate = null;
+    scenario.noMatch = true;
+    state.roomProfiles[0].workflowDraft.nextNewsCheckAt = new Date(Date.now() - 1_000).toISOString();
     await workflow.checkNewsWorkflow(news);
-    assert.deepEqual(calls, { feeds: 2, selecting: 1, writing: 2, speech: 1 });
-    assert.equal(index().requests.length, 1);
-    assert.equal(state.roomProfiles[0].workflowDraft.newsLastRun.outcome, 'prepared');
+    assert.deepEqual(calls, { feeds: 4, selecting: 1, writing: 1, speech: 0 });
+    assert.equal(index().requests.length, 2);
+    assert.equal(index().requests[0].status, 'interrupted');
+    assert.notEqual(state.roomProfiles[0].workflowDraft.newsLastRun.requestId, 'request-cancel');
+    assert.equal(state.roomProfiles[0].workflowDraft.newsLastRun.outcome, 'no-news');
   });
 
-  await run('restart after speech failure resumes saved text without reselecting or rewriting', async () => {
+  await run('restart after uncertain speech preserves the script and keeps the next check scheduled', async () => {
     fresh('speech-restart', { speechFailure: true });
     await assert.rejects(prepare('request-speech'));
     assert.ok(index().requests[0].checkpoint.scriptId);
     state.roomProfiles[0].workflowDraft.newsLastRun = { requestId: 'request-speech', outcome: 'running', startedAt: new Date().toISOString(), roomName: 'Afternoon' };
+    const nextCheck = new Date(Date.now() + 60_000).toISOString();
+    state.roomProfiles[0].workflowDraft.nextNewsCheckAt = nextCheck;
     reload();
     await workflow.startNewsWorkflow(news, () => true, { immediate: false, canStart: () => false });
-    assert.equal(state.roomProfiles[0].workflowDraft.newsWorkflowPaused, true);
-    assert.equal(calls.speech, 1);
-    scenario.speechFailure = false;
-    const draft = state.roomProfiles[0].workflowDraft;
-    draft.newsWorkflowPaused = false; draft.newsWorkflowError = undefined; draft.nextNewsCheckAt = undefined;
+    assert.equal(state.roomProfiles[0].workflowDraft.newsWorkflowPaused, undefined);
+    assert.equal(state.roomProfiles[0].workflowDraft.nextNewsCheckAt, nextCheck);
     await workflow.checkNewsWorkflow(news);
-    assert.deepEqual(calls, { feeds: 2, selecting: 1, writing: 1, speech: 2 });
+    assert.equal(calls.speech, 1);
+    scenario.noMatch = true;
+    state.roomProfiles[0].workflowDraft.nextNewsCheckAt = new Date(Date.now() - 1_000).toISOString();
+    await workflow.checkNewsWorkflow(news);
+    assert.deepEqual(calls, { feeds: 4, selecting: 1, writing: 1, speech: 1 });
     assert.equal(index().scripts.length, 1);
-    assert.equal(state.roomProfiles[0].workflowDraft.newsClipsToday, 1);
+    assert.equal(state.roomProfiles[0].workflowDraft.newsLastRun.outcome, 'no-news');
+    assert.notEqual(state.roomProfiles[0].workflowDraft.newsLastRun.requestId, 'request-speech');
   });
 
   await run('server output constraints override conflicting user preferences', async () => {
@@ -445,16 +455,22 @@ async function main() {
     }
   });
 
-  await run('definitive provider rejection pauses scheduled work without automatic paid retries', async () => {
+  await run('definitive provider rejection leaves the next check scheduled', async () => {
     fresh('definitive-rejection', { providerReject: 'selecting' });
     await workflow.checkNewsWorkflow(news);
     assert.equal(index().requests[0].status, 'failed');
     assert.equal(index().requests[0].providerAttempt.outcome, 'rejected');
     assert.equal(state.roomProfiles[0].workflowDraft.newsLastRun.outcome, 'failed');
-    assert.ok(state.roomProfiles[0].workflowDraft.newsWorkflowError);
+    assert.match(state.roomProfiles[0].workflowDraft.newsLastRun.message, /OpenAI/);
+    assert.equal(state.roomProfiles[0].workflowDraft.newsWorkflowError, undefined);
     await workflow.checkNewsWorkflow(news);
     assert.equal(calls.selecting, 1);
     assert.equal(calls.writing, 0);
+    scenario.providerReject = undefined;
+    state.roomProfiles[0].workflowDraft.nextNewsCheckAt = new Date(Date.now() - 1_000).toISOString();
+    await workflow.checkNewsWorkflow(news);
+    assert.equal(calls.selecting, 2);
+    assert.equal(state.roomProfiles[0].workflowDraft.newsLastRun.outcome, 'prepared');
   });
 
   await run('startup reconciles a completed recording after the room status write fails, once', async () => {
@@ -463,7 +479,7 @@ async function main() {
     await assert.rejects(workflow.checkNewsWorkflow(news), StorageError);
     assert.equal(index().requests[0].status, 'complete');
     assert.equal(state.roomProfiles[0].workflowDraft.newsLastRun.outcome, 'interrupted');
-    assert.equal(state.roomProfiles[0].workflowDraft.newsWorkflowPaused, true);
+    assert.equal(state.roomProfiles[0].workflowDraft.newsWorkflowPaused, false);
     reload();
     await workflow.startNewsWorkflow(news, () => true, { immediate: false, canStart: () => false });
     assert.equal(state.roomProfiles[0].workflowDraft.newsLastRun.outcome, 'prepared');

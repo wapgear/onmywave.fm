@@ -1,9 +1,10 @@
 import { useQueryClient } from '@tanstack/react-query';
-import { LoaderCircle, Radio, RotateCw } from 'lucide-react';
+import { AntennaSignal } from 'iconoir-react/regular';
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactNode } from 'react';
 
 import type { NewsRecoveryStatus } from '../shared/types';
 import { unwrap } from './api';
+import { Notice, NoticeAction } from './components/Notice/Notice.component';
 import type { NewsRecoveryNoticeProps, RecoveryContextValue } from './NewsRecovery.types';
 import { useRetryFocus } from './useRetryFocus';
 
@@ -14,6 +15,7 @@ const RecoveryContext = createContext<RecoveryContextValue | null>(null);
 export function NewsRecoveryProvider({ children }: { children: ReactNode }) {
   const client = useQueryClient();
   const [status, setStatus] = useState<NewsRecoveryStatus>({ phase: 'recovering' });
+  const [statusKnown, setStatusKnown] = useState(false);
   const [retrying, setRetrying] = useState(false);
   const [retryError, setRetryError] = useState(false);
   const [recovered, setRecovered] = useState(false);
@@ -32,6 +34,7 @@ export function NewsRecoveryProvider({ children }: { children: ReactNode }) {
         void client.invalidateQueries({ queryKey: ['preparedNews'] });
       }
       previousPhase.current = next.phase;
+      setStatusKnown(true);
       setStatus((previous) => (previous.phase === next.phase ? previous : next));
     },
     [client],
@@ -79,7 +82,16 @@ export function NewsRecoveryProvider({ children }: { children: ReactNode }) {
       .finally(() => setRetrying(false));
   }, [applyStatus, retrying, status.phase]);
 
-  const value = { status, retrying, retryError, recovered, dismissed, retry, dismiss: () => setDismissed(true) };
+  const value = {
+    status,
+    statusKnown,
+    retrying,
+    retryError,
+    recovered,
+    dismissed,
+    retry,
+    dismiss: () => setDismissed(true),
+  };
 
   return <RecoveryContext.Provider value={value}>{children}</RecoveryContext.Provider>;
 }
@@ -98,8 +110,8 @@ export function NewsRecoveryNotice({ onOpenSettings, focusTarget, settingsTarget
     canFocusSuccess: () => recovery.status.phase === 'ready',
   });
   const success = recovery.status.phase === 'ready' && recovery.recovered && !recovery.dismissed;
-  if (recovery.status.phase === 'ready' && !success) return null;
-  const checking = recovery.status.phase === 'recovering';
+  if (!recovery.statusKnown || (recovery.status.phase === 'ready' && !success)) return null;
+  const checking = recovery.status.phase === 'recovering' || recovery.retrying;
   const message = success
     ? 'News data is available again. Review preparation in News settings.'
     : checking
@@ -118,37 +130,31 @@ export function NewsRecoveryNotice({ onOpenSettings, focusTarget, settingsTarget
       : 'Retry news recovery';
 
   return (
-    <aside className="news-recovery-notice" aria-label="News and DJ availability">
-      <Radio size={17} aria-hidden="true" />
-      <p role="status" aria-live="polite" aria-atomic="true">
-        {message}
-      </p>
-      <button
-        ref={retryRef}
-        type="button"
-        aria-disabled={checking}
-        onClick={() => {
-          if (checking) return;
-          if (success) {
-            void focusAfterAction(
-              async () => {
-                if (onOpenSettings) onOpenSettings();
-                else recovery.dismiss();
-                return { isError: false };
-              },
-              onOpenSettings ? settingsTarget : undefined,
-            );
-          } else recovery.retry();
-        }}
-      >
-        {checking ? (
-          <LoaderCircle size={14} className="spinning" aria-hidden="true" />
-        ) : success && onOpenSettings ? null : (
-          <RotateCw size={14} aria-hidden="true" />
-        )}
-        {action}
-      </button>
-    </aside>
+    <Notice
+      header
+      tone={success ? 'success' : checking ? 'info' : 'warning'}
+      message={message}
+      actions={
+        <NoticeAction
+          ref={retryRef}
+          busy={checking}
+          onClick={() => {
+            if (success) {
+              void focusAfterAction(
+                async () => {
+                  if (onOpenSettings) onOpenSettings();
+                  else recovery.dismiss();
+                  return { isError: false };
+                },
+                onOpenSettings ? settingsTarget : undefined,
+              );
+            } else recovery.retry();
+          }}
+        >
+          {action}
+        </NoticeAction>
+      }
+    />
   );
 }
 
@@ -157,7 +163,7 @@ export function NewsRecoveryPanel() {
 
   return (
     <section className="news-recovery-panel" aria-labelledby="news-recovery-heading">
-      <Radio size={22} aria-hidden="true" />
+      <AntennaSignal width={22} height={22} aria-hidden="true" />
       <h2 id="news-recovery-heading">
         {status.phase === 'recovering' ? 'News data is recovering' : 'News data is unavailable'}
       </h2>

@@ -1,12 +1,14 @@
 import { useIsMutating, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Maximize2, Minimize2, X } from 'lucide-react';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Enlarge, Reduce, Xmark } from 'iconoir-react/regular';
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { flushSync } from 'react-dom';
 
 import type { Connection, Song } from '../shared/types';
 import { unwrap } from './api';
 import type { PageName, ReadyAppProps, SessionContentProps } from './App.types';
 import { AddPlaylist } from './components/AddPlaylist/AddPlaylist.component';
+import { appUpdatesKey, useAppUpdateNotice } from './components/AppUpdates/AppUpdates.component';
+import { CatalogConnectionBanner } from './components/CatalogConnectionBanner.component';
 import { DJSidebar } from './components/DJSidebar/DJSidebar.component';
 import { IconButton } from './components/IconButton/IconButton.component';
 import { Inspector } from './components/Inspector/Inspector.component';
@@ -14,16 +16,19 @@ import { LibrarySelectionProvider } from './components/LibrarySelection';
 import type { ConnectionTransition } from './components/LibrarySelection.types';
 import { Lyrics } from './components/Lyrics/Lyrics.component';
 import { NavigationSidebar } from './components/NavigationSidebar/NavigationSidebar.component';
+import { AppNoticeGroup } from './components/Notice/Notice.component';
 import { Player } from './components/Player/Player.component';
 import { ProviderKeyEditsProvider } from './components/ProviderKeys/ProviderKeyEdits';
 import { Queue } from './components/Queue/Queue.component';
 import { RenderErrorBoundary } from './components/RenderErrorBoundary/RenderErrorBoundary.component';
 import { ErrorNotice } from './components/Shared';
+import { SidebarBody, SidebarHeading } from './components/Sidebar/Sidebar.component';
 
 import './components/Drawer/Drawer.styles.css';
-import { SidebarBody, SidebarHeading } from './components/Sidebar/Sidebar.component';
+import { SongNavigationProvider } from './components/SongLinks/SongLinks.component';
 import { SongRemovalNotice } from './components/TrackTable/SongRemovalNotice.component';
 import { DJPlaybackProvider } from './dj-playback';
+import { useArtworkPalette } from './hooks/useArtworkPalette';
 import { NewsRecoveryNotice, NewsRecoveryProvider } from './NewsRecovery';
 import { AlbumsPage, initialAlbumsView } from './pages/Albums/Albums.page';
 import { ArtistsPage, initialArtistsView } from './pages/Artists/Artists.page';
@@ -38,12 +43,14 @@ import { StationsPage } from './pages/Stations/Stations.page';
 import type { RoomSetupDraft } from './pages/Stations/Stations.types';
 import { PlayerProvider, usePlayer } from './player';
 import { primaryModifier } from './shortcuts';
+import { readArtworkAppearance } from './theme';
 import { useRetryFocus } from './useRetryFocus';
 
 const listeningDrawerOrder = ['details', 'lyrics', 'queue', 'dj'] as const;
 
 export default function App() {
   const client = useQueryClient();
+  const updateNotice = useAppUpdateNotice();
   const connectionQuery = useQuery({
     queryKey: ['connection'],
     queryFn: async () => unwrap(await window.wave.getConnection()),
@@ -115,7 +122,10 @@ export default function App() {
   }, [pendingAuthChanges, client, connectionQuery.data?.authRevision]);
 
   async function setConnection(connection: Connection | null, clearExpiry = true) {
-    const accountData = { predicate: (query: { queryKey: readonly unknown[] }) => query.queryKey[0] !== 'connection' };
+    const accountData = {
+      predicate: (query: { queryKey: readonly unknown[] }) =>
+        query.queryKey[0] !== 'connection' && query.queryKey[0] !== appUpdatesKey[0],
+    };
     await client.cancelQueries(accountData);
     client.removeQueries(accountData);
     client.setQueryData(['connection'], connection);
@@ -133,18 +143,22 @@ export default function App() {
         <NewsRecoveryProvider>
           <SettingsEditsProvider>
             {connectionQuery.isPending || connectionQuery.error ? (
-              <main className="startup">
+              <main className="startup app-notice-surface">
                 <h1 className="wordmark" tabIndex={-1}>
                   onmywave.fm
                 </h1>
                 {connectionQuery.isPending && <p role="status">Opening your library…</p>}
-                <ErrorNotice
-                  error={connectionQuery.error}
-                  retryRef={connectionRetryFocus.retryRef}
-                  retrying={connectionQuery.isFetching}
-                  retry={() => connectionRetryFocus.retry(() => connectionQuery.refetch())}
-                />
-                <NewsRecoveryNotice focusTarget={() => document.querySelector<HTMLElement>('.startup h1')} />
+                <AppNoticeGroup>
+                  <ErrorNotice
+                    header
+                    error={connectionQuery.error}
+                    retryRef={connectionRetryFocus.retryRef}
+                    retrying={connectionQuery.isFetching}
+                    retry={() => connectionRetryFocus.retry(() => connectionQuery.refetch())}
+                  />
+                  <NewsRecoveryNotice focusTarget={() => document.querySelector<HTMLElement>('.startup h1')} />
+                  {updateNotice}
+                </AppNoticeGroup>
               </main>
             ) : (
               <SessionContent
@@ -153,6 +167,7 @@ export default function App() {
                 expired={expired && !!connection}
                 setConnection={setConnection}
                 runConnectionTransition={runConnectionTransition}
+                updateNotice={updateNotice}
               />
             )}
           </SettingsEditsProvider>
@@ -162,7 +177,13 @@ export default function App() {
   );
 }
 
-function SessionContent({ connection, expired, setConnection, runConnectionTransition }: SessionContentProps) {
+function SessionContent({
+  connection,
+  expired,
+  setConnection,
+  runConnectionTransition,
+  updateNotice,
+}: SessionContentProps) {
   const playlistRecovery = usePlaylistRecovery();
   const [roomSetupDraft, setRoomSetupDraft] = useState<RoomSetupDraft>({ setup: null, moodDraft: null });
   const librariesSelected = (value: Connection) => setConnection(value, false);
@@ -175,6 +196,7 @@ function SessionContent({ connection, expired, setConnection, runConnectionTrans
         connected={setConnection}
         librariesSelected={librariesSelected}
         runConnectionTransition={runConnectionTransition}
+        updateNotice={updateNotice}
       />
     ) : (
       <PlayerProvider key={connection.id} connection={connection}>
@@ -187,6 +209,7 @@ function SessionContent({ connection, expired, setConnection, runConnectionTrans
             playlistRecovery={playlistRecovery}
             roomSetupDraft={roomSetupDraft}
             setRoomSetupDraft={setRoomSetupDraft}
+            updateNotice={updateNotice}
           />
         </DJPlaybackProvider>
       </PlayerProvider>
@@ -206,6 +229,7 @@ function ReadyApp({
   playlistRecovery,
   roomSetupDraft,
   setRoomSetupDraft,
+  updateNotice,
 }: ReadyAppProps) {
   const active = useRef(false);
 
@@ -227,8 +251,8 @@ function ReadyApp({
   function requestCollectionFocus(location: string, origin: HTMLButtonElement, playlistId?: string) {
     collectionFocus.current =
       document.activeElement === origin &&
-      main.current?.contains(origin) &&
-      origin.matches(playlistId ? '.back-button' : '.collection-tile, .playlist-tile')
+      (main.current?.contains(origin) || drawerElement.current?.contains(origin) || origin.closest('.player-song')) &&
+      origin.matches(playlistId ? '.back-button' : '.collection-tile, .playlist-tile, .song-metadata-link')
         ? { location, origin, playlistId }
         : null;
   }
@@ -257,6 +281,15 @@ function ReadyApp({
   } | null>(null);
   const restoreSetupFocus = useRef(false);
   const player = usePlayer();
+  const [artworkAppearance, setArtworkAppearance] = useState(readArtworkAppearance);
+  const artworkBackdrop = useRef<HTMLDivElement>(null);
+  const palette = useArtworkPalette(
+    artworkAppearance.gradient || artworkAppearance.accent ? player.currentArtwork : null,
+    artworkBackdrop,
+    artworkAppearance.gradient,
+  );
+  const artworkGradient = artworkAppearance.gradient ? palette : undefined;
+  const artworkAccent = artworkAppearance.accent ? palette?.accent : undefined;
   const [drawer, setDrawer] = useState<Song | 'queue' | 'lyrics' | 'dj' | null>(null);
   const [drawerExpanded, setDrawerExpanded] = useState(false);
   const [djControlsTarget, setDJControlsTarget] = useState<HTMLDivElement | null>(null);
@@ -633,204 +666,249 @@ function ReadyApp({
   }, [page]);
 
   return (
-    <div className={`app-shell ${visibleDrawer ? 'has-drawer has-listening-drawer' : ''}`}>
-      <NavigationSidebar page={page} navigate={navigate} />
-      <main
-        ref={main}
-        className="main-content"
-        id="main-content"
-        inert={expandedDrawer}
-        aria-hidden={expandedDrawer || undefined}
+    <SongNavigationProvider
+      openArtist={(artist, source) => {
+        requestCollectionFocus(`artists-${artist.id}`, source);
+        setArtistsView((old) => ({ ...old, item: artist, selected: new Map() }));
+        navigate('artists');
+      }}
+      openAlbum={(album, source) => {
+        requestCollectionFocus(`albums-${album.id}`, source);
+        setAlbumsView((old) => ({ ...old, item: album, selected: new Map() }));
+        navigate('albums');
+      }}
+    >
+      <div
+        className={`app-shell app-notice-surface ${visibleDrawer ? 'has-drawer has-listening-drawer' : ''}`}
+        data-artwork-gradient={artworkGradient ? '' : undefined}
+        data-artwork-accent={artworkAccent ? '' : undefined}
+        style={
+          {
+            '--artwork-gradient-start': artworkGradient?.start,
+            '--artwork-gradient-end': artworkGradient?.end,
+            '--artwork-accent-source': artworkAccent,
+          } as CSSProperties
+        }
       >
-        <div ref={content} className="page-content">
-          <SongRemovalNotice />
-          <NewsRecoveryNotice
-            onOpenSettings={openNewsSettings}
-            focusTarget={() => content.current?.querySelector<HTMLElement>('.page-heading h1') ?? null}
-            settingsTarget={() => content.current?.querySelector<HTMLElement>('#room-panel-settings') ?? null}
-          />
-          <RenderErrorBoundary scope="page" resetKey={location}>
-            {page === 'songs' && (
-              <SongsPage view={songsView} setView={setSongsView} add={setAdding} details={openDrawer} />
-            )}
-            {page === 'artists' && (
-              <ArtistsPage
-                onOpenDetail={(id, origin) => requestCollectionFocus(`artists-${id}`, origin)}
-                view={artistsView}
-                setView={setArtistsView}
-                add={setAdding}
-                details={openDrawer}
-              />
-            )}
-            {page === 'albums' && (
-              <AlbumsPage
-                onOpenDetail={(id, origin) => requestCollectionFocus(`albums-${id}`, origin)}
-                view={albumsView}
-                setView={setAlbumsView}
-                add={setAdding}
-                details={openDrawer}
-              />
-            )}
-            {page === 'playlists' && (
-              <PlaylistsPage
-                onCreateDetail={requestCreatedPlaylistFocus}
-                onReturnFromDetail={(id, origin) => requestCollectionFocus('playlists-list', origin, id)}
-                onOpenDetail={(id, origin) => requestCollectionFocus(`playlists-${id}`, origin)}
-                recovery={playlistRecovery}
-                id={playlistId}
-                setId={setPlaylistId}
-                add={setAdding}
-                details={openDrawer}
-              />
-            )}
-            {page === 'stations' && (
-              <StationsPage
-                configDraft={roomSetupDraft}
-                setConfigDraft={setRoomSetupDraft}
-                configureSources={() => configureRoom('sources')}
-                configureDJ={() => configureRoom('djs')}
-                configureSettings={() => configureRoom('keys')}
-                openDJControls={openDJControls}
-              />
-            )}
-            {page === 'settings' && (
-              <SettingsPage
-                section={settingsSection}
-                onSectionChange={setSettingsSection}
-                returnToSetup={
-                  returnToSetup
-                    ? () => {
-                        restoreSetupFocus.current = true;
-                        scrollPositions.current.delete('stations');
-                        const origin = setupReturnContext.current;
-                        setRoomSetupDraft((current) => ({
-                          ...current,
-                          tab: origin?.internalBucketSettings ? 'bucket' : (origin?.tab ?? 'settings'),
-                          bucketDestination: origin?.bucketDestination ?? current.bucketDestination,
-                        }));
-                        setupReturnContext.current = null;
-                        setPage('stations');
-                        setReturnToSetup(false);
-                      }
-                    : undefined
-                }
-                connection={connection}
-                update={updateLibraries}
-                disconnected={() => (active.current ? disconnected() : undefined)}
-              />
-            )}
-          </RenderErrorBoundary>
-        </div>
-      </main>
-      {visibleDrawer && (
-        <aside
-          ref={drawerElement}
-          id="listening-drawer"
-          className={`side-drawer ${listeningSidebar ? 'listening-drawer' : ''} ${expandableDrawer ? 'expandable-drawer' : ''} ${expandedDrawer ? 'is-expanded' : ''} ${drawerMode === 'lyrics' ? 'lyrics-drawer' : drawerMode === 'details' ? 'details-drawer' : drawerMode === 'dj' ? 'dj-drawer' : ''}`}
-          aria-labelledby="drawer-title"
-        >
-          <SidebarHeading
-            compact
-            titleId="drawer-title"
-            title={
-              visibleDrawer === 'queue'
-                ? 'Playing Next'
-                : visibleDrawer === 'lyrics'
-                  ? 'Lyrics'
-                  : visibleDrawer === 'dj'
-                    ? 'Your DJ'
-                    : 'Song details'
-            }
-            actions={
-              <>
-                {expandableDrawer && (
-                  <IconButton
-                    onClick={toggleDrawerExpanded}
-                    label={
-                      expandedDrawer
-                        ? `Return ${drawerMode === 'lyrics' ? 'lyrics' : 'song details'} to sidebar`
-                        : `Expand ${drawerMode === 'lyrics' ? 'lyrics' : 'song details'}`
-                    }
-                    aria-expanded={expandedDrawer}
-                    aria-controls="listening-drawer"
-                  >
-                    {expandedDrawer ? (
-                      <Minimize2 size={18} aria-hidden="true" />
-                    ) : (
-                      <Maximize2 size={18} aria-hidden="true" />
-                    )}
-                  </IconButton>
-                )}
-                <IconButton
-                  ref={drawerClose}
-                  onClick={closeDrawer}
-                  label={
-                    visibleDrawer === 'queue'
-                      ? 'Close queue'
-                      : visibleDrawer === 'lyrics'
-                        ? 'Close lyrics'
-                        : visibleDrawer === 'dj'
-                          ? 'Close DJ sidebar'
-                          : 'Close song details'
-                  }
-                >
-                  <X size={20} aria-hidden="true" />
-                </IconButton>
-              </>
-            }
-          />
-          <SidebarBody
-            key={typeof visibleDrawer === 'string' ? visibleDrawer : visibleDrawer.id}
-            className="drawer-body"
-            role={expandableDrawer ? 'region' : undefined}
-            tabIndex={expandableDrawer ? 0 : undefined}
-            aria-label={drawerMode === 'lyrics' ? 'Song lyrics' : drawerMode === 'details' ? 'Song details' : undefined}
+        <div ref={artworkBackdrop} className="artwork-backdrop" aria-hidden="true" />
+        <NavigationSidebar page={page} navigate={navigate} />
+        <div className="library-panel">
+          <AppNoticeGroup>
+            <CatalogConnectionBanner
+              page={adding ? null : page}
+              location={location}
+              focusTarget={() =>
+                expandedDrawer
+                  ? drawerClose.current
+                  : (content.current?.querySelector<HTMLElement>('.back-button, .page-heading h1') ?? null)
+              }
+            />
+            <NewsRecoveryNotice
+              onOpenSettings={openNewsSettings}
+              focusTarget={() => content.current?.querySelector<HTMLElement>('.page-heading h1') ?? null}
+              settingsTarget={() => content.current?.querySelector<HTMLElement>('#room-panel-settings') ?? null}
+            />
+            <SongRemovalNotice />
+            {updateNotice}
+          </AppNoticeGroup>
+          <main
+            ref={main}
+            className="main-content"
+            id="main-content"
+            inert={expandedDrawer}
+            aria-hidden={expandedDrawer || undefined}
           >
-            {visibleDrawer === 'dj' ? (
-              <DJSidebar
-                controlsRef={setDJControlsTarget}
-                openRoom={(source) => openPlayerDestination('stations', source)}
-                openSettings={(source) => openPlayerDestination('settings', source)}
-              />
-            ) : visibleDrawer === 'queue' ? (
-              <Queue />
-            ) : visibleDrawer === 'lyrics' ? (
-              <Lyrics
-                key={player.currentKey}
-                connectionId={connection.id}
-                song={player.current!}
-                expanded={expandedLyrics}
-              />
-            ) : (
-              <Inspector key={visibleDrawer.id} song={visibleDrawer} />
-            )}
-          </SidebarBody>
-        </aside>
-      )}
-      <Player
-        openDetails={(source) => {
-          if (player.current) openDrawer(player.current, source);
-        }}
-        djOpen={visibleDrawer === 'dj'}
-        djControlsTarget={djControlsTarget}
-        toggleDJ={(source) => (visibleDrawer === 'dj' ? closeDrawer() : openDrawer('dj', source))}
-        queueOpen={visibleDrawer === 'queue'}
-        lyricsOpen={visibleDrawer === 'lyrics'}
-        toggleQueue={(source) => (visibleDrawer === 'queue' ? closeDrawer() : openDrawer('queue', source))}
-        toggleLyrics={(source) => (visibleDrawer === 'lyrics' ? closeDrawer() : openDrawer('lyrics', source))}
-      />
-      {adding && (
-        <AddPlaylist
-          connectionId={connection.id}
-          songs={adding}
-          close={() => setAdding(null)}
-          checkPlaylists={() => {
-            setAdding(null);
-            setPlaylistId(null);
-            navigate('playlists');
+            <div ref={content} className="page-content">
+              <RenderErrorBoundary scope="page" resetKey={location}>
+                {page === 'songs' && (
+                  <SongsPage view={songsView} setView={setSongsView} add={setAdding} details={openDrawer} />
+                )}
+                {page === 'artists' && (
+                  <ArtistsPage
+                    onOpenDetail={(id, origin) => requestCollectionFocus(`artists-${id}`, origin)}
+                    view={artistsView}
+                    setView={setArtistsView}
+                    add={setAdding}
+                    details={openDrawer}
+                  />
+                )}
+                {page === 'albums' && (
+                  <AlbumsPage
+                    onOpenDetail={(id, origin) => requestCollectionFocus(`albums-${id}`, origin)}
+                    view={albumsView}
+                    setView={setAlbumsView}
+                    add={setAdding}
+                    details={openDrawer}
+                  />
+                )}
+                {page === 'playlists' && (
+                  <PlaylistsPage
+                    onCreateDetail={requestCreatedPlaylistFocus}
+                    onReturnFromDetail={(id, origin) => requestCollectionFocus('playlists-list', origin, id)}
+                    onOpenDetail={(id, origin) => requestCollectionFocus(`playlists-${id}`, origin)}
+                    recovery={playlistRecovery}
+                    id={playlistId}
+                    setId={setPlaylistId}
+                    add={setAdding}
+                    details={openDrawer}
+                  />
+                )}
+                {page === 'stations' && (
+                  <StationsPage
+                    configDraft={roomSetupDraft}
+                    setConfigDraft={setRoomSetupDraft}
+                    configureSources={() => configureRoom('sources')}
+                    configureDJ={() => configureRoom('djs')}
+                    configureSettings={() => configureRoom('keys')}
+                    openDJControls={openDJControls}
+                  />
+                )}
+                {page === 'settings' && (
+                  <SettingsPage
+                    artworkAppearance={artworkAppearance}
+                    onArtworkAppearanceChange={(option, enabled) =>
+                      setArtworkAppearance((current) => ({ ...current, [option]: enabled }))
+                    }
+                    section={settingsSection}
+                    onSectionChange={setSettingsSection}
+                    returnToSetup={
+                      returnToSetup
+                        ? () => {
+                            restoreSetupFocus.current = true;
+                            scrollPositions.current.delete('stations');
+                            const origin = setupReturnContext.current;
+                            setRoomSetupDraft((current) => ({
+                              ...current,
+                              tab: origin?.internalBucketSettings ? 'bucket' : (origin?.tab ?? 'settings'),
+                              bucketDestination: origin?.bucketDestination ?? current.bucketDestination,
+                            }));
+                            setupReturnContext.current = null;
+                            setPage('stations');
+                            setReturnToSetup(false);
+                          }
+                        : undefined
+                    }
+                    connection={connection}
+                    update={updateLibraries}
+                    disconnected={() => (active.current ? disconnected() : undefined)}
+                  />
+                )}
+              </RenderErrorBoundary>
+            </div>
+          </main>
+        </div>
+        {visibleDrawer && (
+          <aside
+            ref={drawerElement}
+            id="listening-drawer"
+            className={`side-drawer ${listeningSidebar ? 'listening-drawer' : ''} ${expandableDrawer ? 'expandable-drawer' : ''} ${expandedDrawer ? 'is-expanded' : ''} ${drawerMode === 'lyrics' ? 'lyrics-drawer' : drawerMode === 'details' ? 'details-drawer' : drawerMode === 'dj' ? 'dj-drawer' : ''}`}
+            aria-labelledby="drawer-title"
+          >
+            <SidebarHeading
+              compact
+              titleId="drawer-title"
+              title={
+                visibleDrawer === 'queue'
+                  ? 'Playing Next'
+                  : visibleDrawer === 'lyrics'
+                    ? 'Lyrics'
+                    : visibleDrawer === 'dj'
+                      ? 'Your DJ'
+                      : 'Song details'
+              }
+              actions={
+                <>
+                  {expandableDrawer && (
+                    <IconButton
+                      onClick={toggleDrawerExpanded}
+                      label={
+                        expandedDrawer
+                          ? `Return ${drawerMode === 'lyrics' ? 'lyrics' : 'song details'} to sidebar`
+                          : `Expand ${drawerMode === 'lyrics' ? 'lyrics' : 'song details'}`
+                      }
+                      aria-expanded={expandedDrawer}
+                      aria-controls="listening-drawer"
+                    >
+                      {expandedDrawer ? (
+                        <Reduce width={18} height={18} aria-hidden="true" />
+                      ) : (
+                        <Enlarge width={18} height={18} aria-hidden="true" />
+                      )}
+                    </IconButton>
+                  )}
+                  <IconButton
+                    ref={drawerClose}
+                    onClick={closeDrawer}
+                    label={
+                      visibleDrawer === 'queue'
+                        ? 'Close queue'
+                        : visibleDrawer === 'lyrics'
+                          ? 'Close lyrics'
+                          : visibleDrawer === 'dj'
+                            ? 'Close DJ sidebar'
+                            : 'Close song details'
+                    }
+                  >
+                    <Xmark width={20} height={20} aria-hidden="true" />
+                  </IconButton>
+                </>
+              }
+            />
+            <SidebarBody
+              key={typeof visibleDrawer === 'string' ? visibleDrawer : visibleDrawer.id}
+              className="drawer-body"
+              role={expandableDrawer ? 'region' : undefined}
+              tabIndex={expandableDrawer ? 0 : undefined}
+              aria-label={
+                drawerMode === 'lyrics' ? 'Song lyrics' : drawerMode === 'details' ? 'Song details' : undefined
+              }
+            >
+              {visibleDrawer === 'dj' ? (
+                <DJSidebar
+                  controlsRef={setDJControlsTarget}
+                  openRoom={(source) => openPlayerDestination('stations', source)}
+                  openSettings={(source) => openPlayerDestination('settings', source)}
+                />
+              ) : visibleDrawer === 'queue' ? (
+                <Queue />
+              ) : visibleDrawer === 'lyrics' ? (
+                <Lyrics
+                  key={player.currentKey}
+                  connectionId={connection.id}
+                  song={player.current!}
+                  expanded={expandedLyrics}
+                />
+              ) : (
+                <Inspector key={visibleDrawer.id} song={visibleDrawer} />
+              )}
+            </SidebarBody>
+          </aside>
+        )}
+        <Player
+          openDetails={(source) => {
+            if (player.current) openDrawer(player.current, source);
           }}
+          djOpen={visibleDrawer === 'dj'}
+          djControlsTarget={djControlsTarget}
+          toggleDJ={(source) => (visibleDrawer === 'dj' ? closeDrawer() : openDrawer('dj', source))}
+          queueOpen={visibleDrawer === 'queue'}
+          lyricsOpen={visibleDrawer === 'lyrics'}
+          toggleQueue={(source) => (visibleDrawer === 'queue' ? closeDrawer() : openDrawer('queue', source))}
+          toggleLyrics={(source) => (visibleDrawer === 'lyrics' ? closeDrawer() : openDrawer('lyrics', source))}
         />
-      )}
-    </div>
+        {adding && (
+          <AddPlaylist
+            connectionId={connection.id}
+            songs={adding}
+            close={() => setAdding(null)}
+            checkPlaylists={() => {
+              setAdding(null);
+              setPlaylistId(null);
+              navigate('playlists');
+            }}
+          />
+        )}
+      </div>
+    </SongNavigationProvider>
   );
 }

@@ -48,6 +48,8 @@
   --notice-text: #5f5245;
   --notice-error-background: #f3e1da;
   --notice-error-text: #8e3c32;
+  --notice-info-background: #e5eaf0;
+  --notice-info-text: #364d6b;
   --warning-background: #efe4d0;
   --warning-text: #69502f;
   --warning-strong: #9b6524;
@@ -119,6 +121,8 @@
   --notice-text: #c0c4cb;
   --notice-error-background: #40272a;
   --notice-error-text: #ffaaa0;
+  --notice-info-background: #253449;
+  --notice-info-text: #b9d5fb;
   --warning-background: #3b3326;
   --warning-text: #e5c58c;
   --warning-strong: #d6a250;
@@ -142,4 +146,20 @@
   --menu-hover: #30353d;
   --card-background: #252a31;
   --list-card-background: #242930;
+}
+
+@media (forced-colors: none) {
+  .app-shell[data-artwork-accent] {
+    --artwork-accent-lightness: 43%;
+    --accent: oklch(from var(--artwork-accent-source) var(--artwork-accent-lightness) min(c, 0.15) h);
+    --accent-soft: color-mix(in oklab, var(--accent) 15%, var(--canvas));
+    --accent-hover: color-mix(in oklab, var(--accent) 90%, var(--text));
+    --accent-strong: color-mix(in oklab, var(--accent) 80%, var(--text));
+    --focus: var(--accent);
+    --range-fill-color: var(--accent);
+  }
+
+  :root[data-theme='dark'] .app-shell[data-artwork-accent] {
+    --artwork-accent-lightness: 79%;
+  }
 }

@@ -42,6 +42,7 @@ const api: WaveApi = {
   addPlaylistItems: (input) => ipcRenderer.invoke('wave:addPlaylistItems', input),
   removePlaylistEntries: (input) => ipcRenderer.invoke('wave:removePlaylistEntries', input),
   movePlaylistEntry: (input) => ipcRenderer.invoke('wave:movePlaylistEntry', input),
+  getNowPlayingArtwork: (url) => ipcRenderer.invoke('wave:getNowPlayingArtwork', url),
   preparePlayback: (input) => ipcRenderer.invoke('wave:preparePlayback', input),
   getLocalState: () => ipcRenderer.invoke('wave:getLocalState'),
   saveDjs: (djs) => ipcRenderer.invoke('wave:saveDjs', djs),

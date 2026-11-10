@@ -1,4 +1,4 @@
-import { Headphones, Mic2, Music2, Radio, Sparkles, UserRound } from 'lucide-react';
+import { AntennaSignal, Headset, MicrophoneSpeaking, MusicNote, Sparks, User } from 'iconoir-react/regular';
 import { useState } from 'react';
 
 import { djAvatarColors, djInitials, resolveDJAvatar } from '../../../shared/dj-avatar';
@@ -7,19 +7,19 @@ import type { DJ } from '../../../shared/types';
 import './DJAvatar.styles.css';
 
 const icons = {
-  host: UserRound,
-  headphones: Headphones,
-  microphone: Mic2,
-  radio: Radio,
-  music: Music2,
-  sparkles: Sparkles,
+  host: User,
+  headphones: Headset,
+  microphone: MicrophoneSpeaking,
+  radio: AntennaSignal,
+  music: MusicNote,
+  sparkles: Sparks,
 } as const;
 
 export function DJAvatar({ dj, className = '' }: { dj: Pick<DJ, 'name' | 'avatar'>; className?: string }) {
   const avatar = resolveDJAvatar(dj.avatar);
   const color = djAvatarColors.find((item) => item.id === avatar.color)!;
   const [failedPortrait, setFailedPortrait] = useState<string | null>(null);
-  const Icon = avatar.kind === 'icon' ? icons[avatar.id] : UserRound;
+  const Icon = avatar.kind === 'icon' ? icons[avatar.id] : User;
   const portrait = avatar.kind === 'portrait' && failedPortrait !== avatar.id ? avatar.id : null;
 
   return (
@@ -33,7 +33,7 @@ export function DJAvatar({ dj, className = '' }: { dj: Pick<DJ, 'name' | 'avatar
       ) : portrait ? (
         <img src={`/dj-avatars/${portrait}.png`} alt="" onError={() => setFailedPortrait(portrait)} />
       ) : (
-        <Icon size={24} strokeWidth={1.7} />
+        <Icon width={24} height={24} strokeWidth={1.7} aria-hidden="true" />
       )}
     </div>
   );

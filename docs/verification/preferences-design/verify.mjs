@@ -9,21 +9,23 @@ export async function verifyPreferences(window, root) {
   await run(`new Promise((resolve, reject) => {
     let tries = 0;
     const timer = setInterval(() => {
-      if (document.querySelector('#appearance-title')) { clearInterval(timer); resolve(); }
+      if (document.querySelector('.settings-account')) { clearInterval(timer); resolve(); }
       else if (++tries > 100) { clearInterval(timer); reject(new Error('General settings did not open')); }
     }, 20);
   })`);
   await run('document.fonts.ready');
   for (const [width, height] of [[1440, 1000], [960, 800]]) {
     window.setContentSize(width, height);
-    for (const [name, theme, selector] of [
-      ['general-light', 'light', '.theme-picker'],
-      ['playback-light', 'light', '.settings-playback'],
-      ['announcements-light', 'light', '.song-announcement-settings'],
-      ['transitions-light', 'light', '.news-transition-settings'],
-      ['general-dark', 'dark', '.theme-picker'],
+    for (const [name, theme, section, selector] of [
+      ['general-light', 'light', 'general', '.settings-account'],
+      ['appearance-light', 'light', 'appearance', '#appearance-title'],
+      ['playback-light', 'light', 'playback', '.settings-playback'],
+      ['announcements-light', 'light', 'playback', '.song-announcement-settings'],
+      ['transitions-light', 'light', 'playback', '.news-transition-settings'],
+      ['general-dark', 'dark', 'general', '.settings-account'],
+      ['appearance-dark', 'dark', 'appearance', '#appearance-title'],
     ]) {
-      await run(`document.querySelector('[data-section="${name.startsWith('general') ? 'general' : 'playback'}"]').click(); new Promise((resolve) => setTimeout(resolve,100))`);
+      await run(`document.querySelector('[data-section="${section}"]').click(); new Promise((resolve) => setTimeout(resolve,100))`);
       if (name.startsWith('announcements') || name.startsWith('transitions')) {
         await run(`(() => {
           const section=document.querySelector('${selector}');
@@ -34,7 +36,7 @@ export async function verifyPreferences(window, root) {
         document.documentElement.dataset.theme = '${theme}';
         window.scrollTo(0, 0);
         const main = document.querySelector('.main-content');
-        main.scrollTop = '${name}'.startsWith('general') ? 0 : main.scrollTop + document.querySelector('${selector}').getBoundingClientRect().top - main.getBoundingClientRect().top - 24;
+        main.scrollTop = '${section}' === 'playback' ? main.scrollTop + document.querySelector('${selector}').getBoundingClientRect().top - main.getBoundingClientRect().top - 24 : 0;
         return new Promise((resolve) => setTimeout(resolve, 200));
       })()`);
       assert.equal(await run(`document.documentElement.scrollWidth > innerWidth`), false, 'Settings overflow the window');

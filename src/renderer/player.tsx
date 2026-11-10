@@ -29,6 +29,7 @@ import type {
   Connection,
   NewsBreak,
   PlaybackPreferences,
+  PlaybackScope,
   PlaybackSnapshot,
   PreparedNewsClaim,
   Song,
@@ -61,6 +62,7 @@ function playbackSnapshot(
     volume: number;
     shuffle: boolean;
     repeat: PlaybackSnapshot['repeat'];
+    playbackScope: PlaybackScope | null;
   },
   plan: ShufflePlan,
 ): PlaybackSnapshot {
@@ -74,6 +76,7 @@ function playbackSnapshot(
     volume: state.volume,
     shuffle: state.shuffle,
     repeat: state.repeat,
+    ...(state.playbackScope ? { scope: state.playbackScope } : {}),
     ...(state.shuffle
       ? {
           shufflePlan: {
@@ -140,6 +143,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const djSettings = normalizeDJPlaybackSettings(preferences.data?.djPlayback);
   const [queue, setQueue] = useState<QueueEntry[]>([]);
   const [index, setIndex] = useState(0);
+  const [artwork, setArtwork] = useState<{ url: string; dataUrl: string | null }>();
   const [playing, setPlaying] = useState(false);
   const [requestedPlaying, setRequestedPlaying] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -147,11 +151,13 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const [volume, setVolume] = useState(0.75);
   const [shuffle, setShuffle] = useState(false);
   const [repeat, setRepeat] = useState<PlaybackSnapshot['repeat']>('off');
+  const [playbackScope, setPlaybackScope] = useState<PlaybackScope | null>(null);
+  const mixWithLibrary = playbackScope?.mixWithLibrary !== false;
   const libraryScope = connection
     ? JSON.stringify([connection.id, connection.authRevision, connection.selectedLibraryIds])
     : null;
   const libraryScopeRef = useRef(libraryScope);
-  const { load: loadLibrary } = useLibraryRepeat(libraryScope, repeat === 'all');
+  const { load: loadLibrary } = useLibraryRepeat(libraryScope, repeat === 'all' && mixWithLibrary);
   const [libraryError, setLibraryError] = useState<string | null>(null);
   const [libraryLoading, setLibraryLoading] = useState(false);
   const [queueSession, setQueueSession] = useState(0);
@@ -280,12 +286,14 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
 
   const current = queue[index]?.song;
   const currentKey = queue[index]?.key;
+  const hasCurrentTrack = Boolean(current);
   const duration = current && Number.isFinite(current.duration) && current.duration > 0 ? current.duration : 0;
   const live = useRef({
     queue,
     index,
     current,
     repeat,
+    playbackScope,
     shuffle,
     position: 0,
     volume,
@@ -321,13 +329,14 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       index,
       current,
       repeat,
+      playbackScope,
       shuffle,
       volume,
       recoveryReady,
       announceTracks: djSettings.announceTracks,
     };
     if (!djSettings.announceTracks) cancelPendingHandoff.current?.();
-  }, [queue, index, current, repeat, shuffle, volume, recoveryReady, djSettings.announceTracks]);
+  }, [queue, index, current, repeat, playbackScope, shuffle, volume, recoveryReady, djSettings.announceTracks]);
 
   const changeVolume = useCallback((value: number) => {
     const next = Math.max(0, Math.min(1, value));
@@ -500,6 +509,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   );
 
   const extendLibraryQueue = useCallback(async () => {
+    if (live.current.playbackScope?.mixWithLibrary === false) return true;
     const revision = queueRevision.current;
     const modeRevision = repeatRevision.current;
     const connectionId = currentConnectionId.current;
@@ -510,7 +520,8 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       repeatRevision.current === modeRevision &&
       currentConnectionId.current === connectionId &&
       libraryScopeRef.current === scope &&
-      live.current.repeat === 'all';
+      live.current.repeat === 'all' &&
+      live.current.playbackScope?.mixWithLibrary !== false;
     if (!live.current.queue.length || !connectionId || live.current.repeat !== 'all') return false;
     setLibraryLoading(true);
     try {
@@ -627,7 +638,14 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   );
 
   useEffect(() => {
-    if (repeat !== 'all' || !connection || readyConnection !== connection.id || !live.current.queue.length) return;
+    if (
+      !mixWithLibrary ||
+      repeat !== 'all' ||
+      !connection ||
+      readyConnection !== connection.id ||
+      !live.current.queue.length
+    )
+      return;
     if (live.current.shuffle && shufflePlan.current.manualUpcoming.length) return;
     void extendLibraryQueue().then((ready) => {
       const pending = pendingLibraryNext.current;
@@ -640,7 +658,16 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       )
         void next(pending.afterNews);
     });
-  }, [connection, readyConnection, repeat, queueSession, shuffleView.manualUpcoming.length, extendLibraryQueue, next]);
+  }, [
+    connection,
+    readyConnection,
+    repeat,
+    mixWithLibrary,
+    queueSession,
+    shuffleView.manualUpcoming.length,
+    extendLibraryQueue,
+    next,
+  ]);
 
   const skipNext = useCallback(() => {
     musicCommand();
@@ -965,6 +992,8 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
             restoredKey ?? null,
           );
         updateShufflePlan(plan);
+        setPlaybackScope(saved.scope ?? null);
+        live.current.playbackScope = saved.scope ?? null;
         queueRevision.current += 1;
         setQueueSession(queueRevision.current);
         setQueue(restoredQueue);
@@ -1212,7 +1241,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       clearInterval(timer);
       window.removeEventListener('beforeunload', saveOnUnload);
     };
-  }, [connection, readyConnection, queue, index, volume, shuffle, repeat, optionsRevision, shuffleView]);
+  }, [connection, readyConnection, queue, index, volume, shuffle, repeat, playbackScope, optionsRevision, shuffleView]);
 
   useEffect(
     () =>
@@ -1535,16 +1564,46 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   }, [skipNext, previous, toggle, changeVolume]);
 
   useEffect(() => {
-    if (!('mediaSession' in navigator)) return;
-    navigator.mediaSession.metadata = current
+    if (!current) return;
+    const session = 'mediaSession' in navigator ? navigator.mediaSession : null;
+    const metadata = session
       ? new MediaMetadata({
           title: current.name,
           artist: current.artists.join(', '),
           album: current.album,
-          artwork: current.imageUrl ? [{ src: current.imageUrl }] : [],
         })
       : null;
-    navigator.mediaSession.playbackState = playing ? 'playing' : 'paused';
+    if (session) session.metadata = metadata;
+    const url = current.imageUrl;
+    let active = true;
+    if (url) {
+      // Chromium drops wave-media: URLs from Media Session artwork.
+      void window.wave
+        .getNowPlayingArtwork(url)
+        .then((result) => {
+          if (!active) return;
+          const dataUrl = result.ok ? result.value : null;
+          if (metadata && dataUrl) metadata.artwork = [{ src: dataUrl }];
+          setArtwork({ url, dataUrl });
+        })
+        .catch(() => {
+          if (active) setArtwork({ url, dataUrl: null });
+        });
+    }
+
+    return () => {
+      active = false;
+      if (session) session.metadata = null;
+    };
+  }, [current]);
+
+  useEffect(() => {
+    if (!('mediaSession' in navigator)) return;
+    navigator.mediaSession.playbackState = hasCurrentTrack ? (playing ? 'playing' : 'paused') : 'none';
+  }, [hasCurrentTrack, playing]);
+
+  useEffect(() => {
+    if (!('mediaSession' in navigator)) return;
     const handlers: [MediaSessionAction, MediaSessionActionHandler][] = [
       [
         'play',
@@ -1576,7 +1635,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     return () => {
       for (const [action] of handlers) navigator.mediaSession.setActionHandler(action, null);
     };
-  }, [current, duration, playing, skipNext, previous, seek, toggle, requestPlayback, musicCommand]);
+  }, [duration, skipNext, previous, seek, toggle, requestPlayback, musicCommand]);
 
   const playQueueEntry = (key: string, historyIndex?: number, upcomingId?: string) => {
     const state = live.current;
@@ -1603,11 +1662,11 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     }
     changeTrack(nextIndex);
   };
-  const play = (songs: Song[], start?: number) => {
+  const play = (songs: Song[], start?: number, scope?: PlaybackScope) => {
     if (!songs.length) return;
     const selectedIndex = Math.min(Math.max(0, start ?? 0), songs.length - 1);
     const state = live.current;
-    if (state.shuffle && (start !== undefined || songs.length === 1)) {
+    if (!scope && !state.playbackScope && state.shuffle && (start !== undefined || songs.length === 1)) {
       const selectedId = songs[selectedIndex].id;
       const plan = shufflePlan.current;
       const byKey = new Map(state.queue.map((item) => [item.key, item]));
@@ -1648,12 +1707,56 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       ),
     );
     excludedLibrarySongs.current.clear();
+    pendingLibraryNext.current = null;
+    setLibraryError(null);
+    setLibraryLoading(false);
+    setPlaybackScope(scope ?? null);
     queueRevision.current += 1;
     setQueueSession(queueRevision.current);
-    live.current = { ...live.current, queue: nextQueue, index: nextIndex, current: nextQueue[nextIndex]?.song };
+    live.current = {
+      ...live.current,
+      queue: nextQueue,
+      index: nextIndex,
+      current: nextQueue[nextIndex]?.song,
+      playbackScope: scope ?? null,
+    };
     setQueue(nextQueue);
     setIndex(nextIndex);
     setReadyConnection(connection?.id ?? null);
+  };
+  const setCollectionMix = (scope: PlaybackScope, songs: Song[]) => {
+    const state = live.current;
+    if (state.playbackScope?.kind !== scope.kind || state.playbackScope.id !== scope.id || !songs.length) return;
+    if (state.playbackScope.mixWithLibrary === scope.mixWithLibrary) return;
+    if (!scope.mixWithLibrary && !songs.some((song) => song.id === state.current?.id)) {
+      const wasPlaying = playIntent.current;
+      play(songs, 0, scope);
+      requestPlayback(wasPlaying);
+      return;
+    }
+    musicCommand();
+    ++repeatRevision.current;
+    pendingLibraryNext.current = null;
+    setLibraryError(null);
+    setLibraryLoading(false);
+    const allowed = new Set(songs.map((song) => song.id));
+    const nextQueue = scope.mixWithLibrary ? state.queue : state.queue.filter((entry) => allowed.has(entry.song.id));
+    const nextIndex = nextQueue.findIndex((entry) => entry.key === state.queue[state.index]?.key);
+    if (nextQueue.length !== state.queue.length) {
+      stopNews();
+      updateShufflePlan(
+        refillShufflePlan(
+          shufflePlan.current,
+          nextQueue.map((entry) => entry.key),
+        ),
+      );
+      setQueue(nextQueue);
+      setIndex(nextIndex);
+    }
+    live.current = { ...state, queue: nextQueue, index: nextIndex, playbackScope: scope };
+    setPlaybackScope(scope);
+    ++queueRevision.current;
+    setQueueSession(queueRevision.current);
   };
   const scheduleNews = async (bulletin: NewsBreak | null, duckVolume = 0.05, claimId?: string) => {
     if (!live.current.recoveryReady)
@@ -2150,6 +2253,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
           shuffleHistoryQueue,
           shuffleRemaining,
           current,
+          currentArtwork: current?.imageUrl ? (artwork?.url === current.imageUrl ? artwork.dataUrl : undefined) : null,
           currentKey,
           playing,
           requestedPlaying,
@@ -2159,12 +2263,13 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
           volume,
           shuffle,
           repeat,
+          playbackScope,
           queueSession,
           completedSongs,
           isTrackAnnouncementDue: () => djSettings.announceTracks && announcementCadence.isDue(1),
           scheduleTrackAnnouncement: () => scheduleNews(null),
-          libraryError: repeat === 'all' ? libraryError : null,
-          libraryLoading: repeat === 'all' && libraryLoading,
+          libraryError: repeat === 'all' && mixWithLibrary ? libraryError : null,
+          libraryLoading: repeat === 'all' && mixWithLibrary && libraryLoading,
           retryLibrary: async () => {
             const pending = pendingLibraryNext.current;
             const ready = await extendLibraryQueue();
@@ -2202,6 +2307,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
             if (playIntent.current) toggle('preview');
           },
           play,
+          setCollectionMix,
           playQueueEntry,
           playNext: (songs) => addToQueue(songs, 'next'),
           enqueue: (songs) => addToQueue(songs, 'end'),

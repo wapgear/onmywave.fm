@@ -1,0 +1,11 @@
+# Album and artist playback scope
+
+Album and artist pages default to playing their own tracks. The top-right “Mix with your library” switch permits the existing whole-library expansion when Repeat all is enabled. Repeat off stops at the end; Repeat one stays on the current song. Shuffle respects the selected scope. Starting collection playback replaces any previous shuffle queue, including when the selected song already exists there.
+
+The switch also updates playback already started from that collection. Disabling it removes outside tracks and repairs the shuffle plan without restarting an in-scope current song. If an outside song is current, playback returns to the collection while preserving playing/paused intent. The source and mixing choice are saved in the playback snapshot and restored on reopening. Bottom-player artist names open their individual artist pages without changing playback.
+
+Verified on 3 November 2026 using the actual renderer/player, the local queue-editing fixture server, a synthetic 120-song library, a three-song album, a separate four-song artist, and mocked audio/bridge responses. No live account or provider was used.
+
+Focused checks covered sequential and shuffled repeat cycles, Repeat off/one/all, header playback, library mixing on/off, preserving the current occurrence, pruning shuffle plans, cancelling delayed discovery, disabling mixing while an outside song was paused, artist navigation using Enter, switch activation using Space, destination focus, and scoped-session restoration after reload. No renderer console errors or warnings occurred. Formatting, lint, type checking, and the production build passed. The local runner uses Node 24 and reports the repository's Node 26 engine warning.
+
+The matching [before](before-1440.png) and [after](after-1440.png) screenshots use a 1440 × 900 viewport, light appearance, the same album, and the first song paused at 0:30. The [960 × 700 dark capture](after-960-dark.png) verifies the switch focus ring and player links at a narrower width. All captures were visually inspected; no horizontal overflow was found at the checked sizes. Native Electron, real decoded audio, and live Jellyfin were not exercised.

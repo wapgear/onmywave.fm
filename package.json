@@ -1,6 +1,6 @@
 {
   "name": "onmywave-desktop",
-  "version": "0.7.7",
+  "version": "0.8.1",
   "private": true,
   "license": "GPL-3.0-only",
   "author": "onmywave.fm contributors",
@@ -32,8 +32,8 @@
     "@tanstack/react-virtual": "^3.14.25",
     "electron-updater": "^6.8.11",
     "fast-xml-parser": "^5.11.2",
+    "iconoir-react": "7.12.2",
     "linkedom": "^0.18.15",
-    "lucide-react": "^1.66",
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "ws": "^8.22.1",

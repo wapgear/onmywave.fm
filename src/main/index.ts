@@ -27,7 +27,7 @@ import type { WorkflowDraft } from '../shared/workflow';
 import { getDJVoicePreview, prepareDJVoicePreview, getVoicePreview, prepareVoicePreview } from './dj-previews';
 import { searchDJVoices } from './dj-voices';
 import { JellyfinService, ServiceError, PLAYLIST_CREATION } from './jellyfin';
-import { preparePlayback, registerMedia, revokeMedia } from './media';
+import { getNowPlayingArtwork, preparePlayback, registerMedia, revokeMedia } from './media';
 import { NewsService, validateNewsSettings } from './news';
 import {
   pauseNewsWorkflow,
@@ -351,6 +351,11 @@ function validatePlayback(value: unknown): asserts value is PlaybackSnapshot | n
     typeof value.repeat !== 'string' ||
     !['off', 'all', 'one'].includes(value.repeat) ||
     (value.outputId !== undefined && !text(value.outputId, 512)) ||
+    (value.scope !== undefined &&
+      (!isRecord(value.scope) ||
+        !['album', 'artist'].includes(value.scope.kind as string) ||
+        !text(value.scope.id, 512) ||
+        typeof value.scope.mixWithLibrary !== 'boolean')) ||
     (value.shufflePlan !== undefined &&
       !isShuffleSnapshot(value.shufflePlan, (value.trackIds as string[]).length, value.currentIndex as number))
   )
@@ -425,7 +430,10 @@ function recoverNews(): Promise<NewsRecoveryStatus> {
         await updateLocalState((state) => {
           const roomProfiles = state.roomProfiles.map((profile) =>
             profile.workflowDraft.newsEnabled
-              ? { ...profile, workflowDraft: { ...profile.workflowDraft, newsWorkflowPaused: true } }
+              ? {
+                  ...profile,
+                  workflowDraft: { ...profile.workflowDraft, newsWorkflowPaused: true, nextNewsCheckAt: undefined },
+                }
               : profile,
           );
           return {
@@ -634,6 +642,12 @@ function registerIpc() {
     addPlaylistItems: (input) => service.addPlaylistItems(input),
     removePlaylistEntries: (input) => service.removePlaylistEntries(input),
     movePlaylistEntry: (input) => service.movePlaylistEntry(input),
+    getNowPlayingArtwork: async (url: string) => {
+      const connection = service.connection();
+      if (!connection) return null;
+      const artwork = await getNowPlayingArtwork(url);
+      return service.connection()?.authRevision === connection.authRevision ? artwork : null;
+    },
     preparePlayback: (input: { id: string; transcode?: boolean; offsetSeconds?: number }) => {
       if (
         !isRecord(input) ||
@@ -789,7 +803,9 @@ function registerIpc() {
             );
           const profile = state.roomProfiles.find((value) => value.id === activeProfileId);
           const requested = normalizeWorkflowDraft(input.workflowDraft);
-          const explicitResume = input.resumePreparation === true;
+          const explicitResume =
+            input.resumePreparation === true ||
+            (requested.newsEnabled === true && profile?.workflowDraft.newsEnabled !== true);
           const room = { djId: input.room.djId, sourceIds: [...new Set(input.room.sourceIds)] };
           const changed =
             !profile ||
@@ -856,7 +872,7 @@ function registerIpc() {
       const name = profileName(input.name);
       const workflowDraft = {
         ...normalizeWorkflowDraft(input.workflowDraft),
-        newsEnabled: false,
+        newsEnabled: undefined,
         nextNewsCheckAt: undefined,
         newsWorkflowError: undefined,
         newsAssessmentDate: undefined,

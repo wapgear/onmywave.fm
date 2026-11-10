@@ -1,13 +1,14 @@
-import { AlertCircle, Music2, X } from 'lucide-react';
+import { MusicNote, Xmark } from 'iconoir-react/regular';
 import { useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 
 import { IconButton } from './IconButton/IconButton.component';
+import { Notice, NoticeAction } from './Notice/Notice.component';
 import type { DialogProps, ErrorNoticeProps, PageHeadingProps } from './Shared.types';
 
 export const errorMessage = (error: unknown) =>
   error instanceof Error ? error.message : 'Something went wrong. Please try again.';
 
-export function ErrorNotice({ error, retry, retryRef, retrying = false }: ErrorNoticeProps) {
+export function ErrorNotice({ header, error, retry, retryRef, retrying = false }: ErrorNoticeProps) {
   const inFlight = useRef(false);
   const [ownsRetryFocus, setOwnsRetryFocus] = useState(false);
   const [attemptPending, setAttemptPending] = useState(false);
@@ -37,38 +38,39 @@ export function ErrorNotice({ error, retry, retryRef, retrying = false }: ErrorN
   const busyLabel = attemptPending ? 'Retrying…' : 'Checking…';
 
   return (
-    <div className="notice error">
-      <AlertCircle size={18} aria-hidden="true" />
-      <span role="alert">{errorMessage(visibleError)}</span>
-      {retry && (
-        <>
-          <span className="sr-only" role="status">
-            {busy ? busyLabel : ''}
-          </span>
-          <button
-            type="button"
-            ref={retryRef}
-            aria-disabled={busy || undefined}
-            aria-busy={busy || undefined}
-            onFocus={() => {
-              setOwnsRetryFocus(true);
-              setRetainedError(error ?? visibleError);
-            }}
-            onBlur={() => setOwnsRetryFocus(false)}
-            onClick={() => void retryOnce()}
-          >
-            {busy ? busyLabel : 'Try again'}
-          </button>
-        </>
-      )}
-    </div>
+    <Notice
+      header={header}
+      tone="error"
+      message={errorMessage(visibleError)}
+      actions={
+        retry && (
+          <>
+            <span className="sr-only" role="status">
+              {busy ? busyLabel : ''}
+            </span>
+            <NoticeAction
+              ref={retryRef}
+              busy={busy}
+              onFocus={() => {
+                setOwnsRetryFocus(true);
+                setRetainedError(error ?? visibleError);
+              }}
+              onBlur={() => setOwnsRetryFocus(false)}
+              onClick={() => void retryOnce()}
+            >
+              {busy ? busyLabel : 'Try again'}
+            </NoticeAction>
+          </>
+        )
+      }
+    />
   );
 }
 
 export function Empty({ title, children }: { title: string; children?: ReactNode }) {
   return (
     <div className="empty">
-      <Music2 size={30} strokeWidth={1.4} />
+      <MusicNote width={30} height={30} strokeWidth={1.4} aria-hidden="true" />
       <h2>{title}</h2>
       {children && <p>{children}</p>}
     </div>
@@ -85,7 +87,7 @@ function ArtworkImage({ url, name, className = '' }: { url?: string; name: strin
     <img className={`artwork ${className}`} src={url} alt={name} loading="lazy" onError={() => setFailed(true)} />
   ) : (
     <div className={`artwork artwork-fallback ${className}`} role="img" aria-label={`No artwork for ${name}`}>
-      <Music2 size={24} strokeWidth={1.4} />
+      <MusicNote width={24} height={24} strokeWidth={1.4} aria-hidden="true" />
     </div>
   );
 }
@@ -160,7 +162,7 @@ export function Dialog({
           }}
           label="Close dialog"
         >
-          <X size={20} aria-hidden="true" />
+          <Xmark width={20} height={20} aria-hidden="true" />
         </IconButton>
       </div>
       <div className="modal-content">{children}</div>

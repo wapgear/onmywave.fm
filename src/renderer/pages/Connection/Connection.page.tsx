@@ -1,11 +1,12 @@
 import { useIsMutating, useMutation } from '@tanstack/react-query';
-import { ArrowRight, Music2 } from 'lucide-react';
+import { ArrowRight, MusicNote } from 'iconoir-react/regular';
 import { useEffect, useId, useRef, useState } from 'react';
 
 import { unwrap } from '../../api';
 import { InfoHelp } from '../../components/InfoHelp/InfoHelp.component';
 import { LibraryChooser } from '../../components/LibraryChooser';
 import { useLibrarySelection } from '../../components/LibrarySelection';
+import { AppNoticeGroup } from '../../components/Notice/Notice.component';
 import { ErrorNotice } from '../../components/Shared';
 import { NewsRecoveryNotice } from '../../NewsRecovery';
 import type { ConnectionPageProps } from './Connection.types';
@@ -16,6 +17,7 @@ export function ConnectionPage({
   connected,
   librariesSelected,
   runConnectionTransition,
+  updateNotice,
 }: ConnectionPageProps) {
   const serverUrlHelpId = useId();
   const [serverUrl, setServerUrl] = useState(connection?.serverUrl ?? '');
@@ -83,9 +85,9 @@ export function ConnectionPage({
   const choosing = hasChooser && !changingAccount;
 
   return (
-    <main className="connection-page">
+    <main className="connection-page app-notice-surface">
       <div className="connection-brand">
-        <Music2 size={25} />
+        <MusicNote width={25} height={25} aria-hidden="true" />
         <span>onmywave.fm</span>
         <InfoHelp label="About connecting to Jellyfin">
           <p>Your library stays on your Jellyfin server.</p>
@@ -95,7 +97,10 @@ export function ConnectionPage({
           </p>
         </InfoHelp>
       </div>
-      <NewsRecoveryNotice focusTarget={() => document.querySelector<HTMLElement>('.connection-card h1')} />
+      <AppNoticeGroup>
+        <NewsRecoveryNotice focusTarget={() => document.querySelector<HTMLElement>('.connection-card h1')} />
+        {updateNotice}
+      </AppNoticeGroup>
       <section className="connection-card">
         <span className="eyebrow">Your music, on your wave</span>
         <h1 tabIndex={-1}>
@@ -219,7 +224,7 @@ export function ConnectionPage({
               onBlur={() => setFocusedConnect(null)}
             >
               {login.isPending ? 'Connecting…' : 'Connect to Jellyfin'}
-              <ArrowRight size={17} />
+              <ArrowRight width={17} height={17} aria-hidden="true" />
             </button>
             {changingAccount && (
               <button

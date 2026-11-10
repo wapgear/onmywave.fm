@@ -1,5 +1,13 @@
 import type { CatalogQuery, CatalogRequest, Page, Result } from '../shared/types';
-import { unwrap } from './api';
+import { unwrap, WaveError } from './api';
+
+export function isCatalogConnectionError(error: unknown): error is WaveError {
+  return error instanceof WaveError && (error.code === 'offline' || error.code === 'timeout');
+}
+
+export function catalogInlineError(error: unknown) {
+  return isCatalogConnectionError(error) ? null : error;
+}
 
 export async function readCatalog<T>(
   read: (request: CatalogRequest) => Promise<Result<Page<T>>>,

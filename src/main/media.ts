@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 
-import { protocol } from 'electron';
+import { net, protocol } from 'electron';
 
 import type { PlaybackResource } from '../shared/types';
 import { djPreviewAudio, bundledVoiceAudio } from './dj-previews';
@@ -90,6 +90,46 @@ export function preparePlayback(
     path: `Audio/${input.id}/${transcode ? 'universal' : 'stream'}?${query}`,
   });
   return { url: `wave-media://audio/${handle}`, offsetSeconds, transcoded: transcode };
+}
+
+export async function getNowPlayingArtwork(url: unknown): Promise<string | null> {
+  if (
+    typeof url !== 'string' ||
+    !/^wave-media:\/\/artwork\/[a-zA-Z0-9_-]{1,128}(?:\?tag=[a-zA-Z0-9_-]{1,128})?$/.test(url)
+  )
+    throw new ServiceError('invalid', 'Invalid artwork request.');
+
+  // Leave room for base64 encoding within Chromium's Media Session URL limit.
+  const limit = 1_500_000;
+  const response = await net.fetch(url, { signal: AbortSignal.timeout(20_000) });
+  const mime = response.headers.get('content-type')?.split(';', 1)[0]?.trim().toLowerCase();
+  if (
+    !response.ok ||
+    !mime ||
+    !/^image\/(?:jpeg|png|webp|gif|avif|bmp)$/.test(mime) ||
+    Number(response.headers.get('content-length')) > limit
+  ) {
+    await response.body?.cancel();
+    return null;
+  }
+
+  const reader = response.body?.getReader();
+  if (!reader) return null;
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  try {
+    while (true) {
+      const next = await reader.read();
+      if (next.done) break;
+      size += next.value.byteLength;
+      if (size > limit) return null;
+      chunks.push(next.value);
+    }
+  } finally {
+    await reader.cancel().catch(() => {});
+    reader.releaseLock();
+  }
+  return size ? `data:${mime};base64,${Buffer.concat(chunks, size).toString('base64')}` : null;
 }
 
 export function registerMedia(getSession: () => Session | null, deviceId: string, onStorageFailure?: () => void) {

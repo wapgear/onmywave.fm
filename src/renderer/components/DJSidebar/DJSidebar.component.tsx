@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { ExternalLink, Radio, Settings } from 'lucide-react';
+import { AntennaSignal, OpenNewWindow, Settings } from 'iconoir-react/regular';
 import { useId, useRef, useState } from 'react';
 
 import { newsPreparationStatus } from '../../../shared/news-preparation-status';
@@ -168,7 +168,7 @@ export function DJSidebar({ openRoom, openSettings, controlsRef }: DJSidebarProp
               <li key={article.id}>
                 <button className="dj-source-link" onClick={() => source.mutate(article.url)}>
                   <span>{article.title}</span>
-                  <ExternalLink size={12} aria-hidden="true" />
+                  <OpenNewWindow width={12} height={12} aria-hidden="true" />
                 </button>
                 <small>
                   {article.source}
@@ -491,11 +491,11 @@ export function DJSidebar({ openRoom, openSettings, controlsRef }: DJSidebarProp
       <ErrorNotice error={source.error} />
       <footer>
         <button onClick={(event) => openRoom(event.currentTarget)}>
-          <Radio size={15} />
+          <AntennaSignal width={15} height={15} aria-hidden="true" />
           News bucket
         </button>
         <button onClick={(event) => openSettings(event.currentTarget)}>
-          <Settings size={15} />
+          <Settings width={15} height={15} aria-hidden="true" />
           DJ settings
         </button>
       </footer>

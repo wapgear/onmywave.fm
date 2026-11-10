@@ -37,6 +37,8 @@
   --notice-text: #666b78;
   --notice-error-background: #fbefed;
   --notice-error-text: #a0483c;
+  --notice-info-background: #e8eff9;
+  --notice-info-text: #344d73;
   --warning-background: #f5f0e7;
   --warning-text: #6d5832;
   --scroll-thumb: #b8bac3;
@@ -296,12 +298,47 @@ button > svg {
   height: 100dvh;
   display: grid;
   grid-template-columns: var(--sidebar) minmax(0, 1fr);
-  grid-template-rows: minmax(0, 1fr) auto;
+  grid-template-rows: [workspace] minmax(0, 1fr) auto;
   position: relative;
+  isolation: isolate;
   background: var(--sidebar-background);
 }
-.sidebar {
+.artwork-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
   background: var(--sidebar-background);
+}
+@media (forced-colors: none) {
+  .app-shell[data-artwork-gradient] > .artwork-backdrop {
+    background-image: linear-gradient(
+      color-mix(in srgb, var(--artwork-gradient-start) 26%, var(--sidebar-background)),
+      color-mix(in srgb, var(--artwork-gradient-end) 18%, var(--sidebar-background)) 52%,
+      var(--sidebar-background)
+    );
+  }
+}
+.artwork-backdrop::view-transition-group(root) {
+  animation-duration: 260ms;
+}
+.artwork-backdrop::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+.artwork-backdrop::view-transition-new(root) {
+  animation: artwork-backdrop-in 260ms ease-out both;
+  mix-blend-mode: normal;
+}
+@keyframes artwork-backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+.app-shell:has(> .library-panel > .app-notices > .app-notice) > .artwork-backdrop {
+  display: none;
+}
+.sidebar {
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -361,12 +398,26 @@ button > svg {
   height: var(--titlebar-height);
   -webkit-app-region: drag;
 }
-.main-content {
-  anchor-name: --library-panel;
-  overflow-x: hidden;
-  overflow-y: scroll;
+.library-panel {
+  grid-column: 2;
+  grid-row: workspace;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
   margin: var(--titlebar-height) 16px var(--player-clearance) 0;
   border-radius: 16px;
+  overflow: clip;
+}
+.library-panel:has(> .app-notices > .app-notice):has(+ .is-expanded) {
+  grid-column-end: -1;
+}
+.main-content {
+  anchor-name: --library-panel;
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: scroll;
   background: linear-gradient(
     to bottom,
     var(--canvas) var(--table-header-top, 0px),
@@ -1403,9 +1454,6 @@ legend {
   font-size: 24px;
   margin: 0;
 }
-.startup .notice {
-  max-width: 520px;
-}
 .spinning {
   animation: spin 1.5s linear infinite;
 }
@@ -1837,13 +1885,8 @@ legend {
 
 .sidebar {
   grid-column: 1;
-  grid-row: 1 / 3;
+  grid-row: workspace / -1;
 }
-.main-content {
-  grid-column: 2;
-  grid-row: 1;
-}
-
 .main-content {
   scroll-padding-top: 72px;
   scroll-padding-bottom: 24px;
@@ -1986,7 +2029,7 @@ input[type='range'] {
   }
   .side-drawer {
     grid-column: 1 / -1;
-    grid-row: 1 / -1;
+    grid-row: workspace / -1;
     position: absolute;
     z-index: 38;
     top: 0;
@@ -2060,13 +2103,6 @@ input[type='range'] {
   border-radius: 4px;
 }
 
-.notice.error button[aria-disabled='true'] {
-  cursor: progress;
-  color: var(--muted);
-}
-.notice.error button[aria-disabled='true']:active {
-  translate: 0 0;
-}
 .modal-actions button[aria-disabled='true'] {
   cursor: progress;
   color: var(--muted);

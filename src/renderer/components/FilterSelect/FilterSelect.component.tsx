@@ -1,4 +1,4 @@
-import { Check, ChevronDown, Search } from 'lucide-react';
+import { Check, NavArrowDown, Search } from 'iconoir-react/regular';
 import { useCallback, useEffect, useId, useRef, useState, type KeyboardEvent } from 'react';
 
 import type { FilterSelectProps } from './FilterSelect.types';
@@ -117,7 +117,7 @@ export function FilterSelect({
       >
         <span className="filter-select-label">{label}</span>
         <span className="filter-select-value">{selectedLabel || emptyLabel || 'Any'}</span>
-        <ChevronDown size={14} aria-hidden="true" />
+        <NavArrowDown width={14} height={14} aria-hidden="true" />
       </button>
       <div
         id={id}
@@ -146,7 +146,7 @@ export function FilterSelect({
       >
         {searchable && (
           <label className="search-field filter-select-search">
-            <Search size={17} aria-hidden="true" />
+            <Search width={17} height={17} aria-hidden="true" />
             <input
               ref={searchInput}
               aria-label={`Search ${label.toLowerCase()}`}
@@ -160,7 +160,7 @@ export function FilterSelect({
           {emptyLabel && (
             <button role="option" aria-selected={!value} onClick={() => choose('')}>
               <span>{emptyLabel}</span>
-              {!value && <Check size={15} />}
+              {!value && <Check width={15} height={15} aria-hidden="true" />}
             </button>
           )}
           {shown.map((choice) => (
@@ -171,7 +171,7 @@ export function FilterSelect({
               onClick={() => choose(choice.value)}
             >
               <span>{choice.label}</span>
-              {choice.value === value && <Check size={15} />}
+              {choice.value === value && <Check width={15} height={15} aria-hidden="true" />}
             </button>
           ))}
           {custom && (

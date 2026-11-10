@@ -1,9 +1,9 @@
 import { useIsMutating, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { LoaderCircle } from 'lucide-react';
+import { Refresh } from 'iconoir-react/regular';
 import { useLayoutEffect, useRef, useState } from 'react';
 
 import { eligibleNewsTakes } from '../../../shared/news-pool';
-import { newsPreparationStatus } from '../../../shared/news-preparation-status';
+import { newsPreparationStatus, preparationHistoryMessage } from '../../../shared/news-preparation-status';
 import type { ListeningRoom, PreparedNewsRequest } from '../../../shared/types';
 import type { WorkflowDraft } from '../../../shared/workflow';
 import { unwrap } from '../../api';
@@ -115,15 +115,17 @@ export function StationsPage({
 
   useLayoutEffect(() => {
     const selector = pendingSetupFocus;
-    if (tab !== 'settings' || !selector) return;
+    if (!selector || (tab !== 'settings' && !(tab === 'bucket' && bucketDestination === 'settings'))) return;
     const frame = requestAnimationFrame(() => {
       const target = document.querySelector<HTMLElement>(selector);
+      const group = target?.closest('details');
+      if (group) group.open = true;
       target?.scrollIntoView({ block: 'center' });
       target?.focus({ preventScroll: true });
       setPendingSetupFocus(null);
     });
     return () => cancelAnimationFrame(frame);
-  }, [tab, pendingSetupFocus]);
+  }, [tab, bucketDestination, pendingSetupFocus]);
 
   const settingsRetryFocus = useRetryFocus({
     ownerKey: `room:settings-news:${tab}`,
@@ -200,12 +202,14 @@ export function StationsPage({
           ''));
   const workflowPatch =
     configDraft.workflow?.roomId === activeProfile?.id ? (configDraft.workflow?.patch ?? null) : null;
-  const workflowDraft = { ...activeProfile?.workflowDraft, ...workflowPatch };
+  const savedWorkflowDraft = {
+    ...activeProfile?.workflowDraft,
+    newsEnabled: activeProfile?.workflowDraft.newsEnabled ?? true,
+  };
+  const workflowDraft = { ...savedWorkflowDraft, ...workflowPatch };
   const workflowDirty =
     !!workflowPatch &&
-    Object.entries(workflowPatch).some(
-      ([key, value]) => activeProfile?.workflowDraft[key as keyof WorkflowDraft] !== value,
-    );
+    Object.entries(workflowPatch).some(([key, value]) => savedWorkflowDraft[key as keyof WorkflowDraft] !== value);
   const updateWorkflow = (patch: Partial<WorkflowDraft>) => {
     if (!activeProfile) return;
     setConfigDraft((current) => ({
@@ -233,6 +237,7 @@ export function StationsPage({
   const workflowStatusLoading = aiStatus.isPending || elevenStatus.isPending || (xKeyRequired && xStatus.isPending);
   const workflowStatusError = aiStatus.error || elevenStatus.error || (xKeyRequired && xStatus.error);
   const setupDirty = unsavedSetup || workflowDirty;
+  const hasSetupToSave = setupDirty || (activeProfile?.workflowDraft.newsEnabled === undefined && workflowReady);
   function focusSetup(selector: string) {
     if (tab !== 'settings') {
       setPendingSetupFocus(selector);
@@ -242,6 +247,11 @@ export function StationsPage({
     const target = document.querySelector<HTMLElement>(selector);
     target?.scrollIntoView({ block: 'center' });
     target?.focus({ preventScroll: true });
+  }
+
+  function adjustPreparationLimit(field: 'recording' | 'check') {
+    setBucketDestination('settings');
+    setPendingSetupFocus(field === 'recording' ? '#bucket-recording-limit' : '#bucket-check-interval');
   }
   const preparationIssues: PreparationIssue[] = [
     ...(room.sourceIds.length === 0
@@ -484,7 +494,12 @@ export function StationsPage({
         unwrap(
           await window.wave.saveWorkflowDraft({
             expectedProfileId: latest.activeRoomProfileId,
-            workflowDraft: { ...latestProfile.workflowDraft, ...workflow, newsInterests },
+            workflowDraft: {
+              ...latestProfile.workflowDraft,
+              newsEnabled: latestProfile.workflowDraft.newsEnabled ?? true,
+              ...workflow,
+              newsInterests,
+            },
             room,
             mood: mood.trim(),
           }),
@@ -695,7 +710,7 @@ export function StationsPage({
         setNewProfileOpen(false);
         setProfileName('');
         setProfileNotice(
-          `Saved ${profileName.trim()} with preparation off. Choose it from Setup profile, then use Review room options to make it available.`,
+          `Saved ${profileName.trim()}. Choose it from Setup profile, then use Review room options to make it available.`,
         );
       } else {
         setConfigDraft((current) => ({
@@ -739,7 +754,7 @@ export function StationsPage({
     profiles.isPending ||
     enableProfile.isPending;
   const saveDisabled =
-    !setupDirty ||
+    !hasSetupToSave ||
     save.isPending ||
     configurationPending ||
     setupBusy ||
@@ -789,19 +804,11 @@ export function StationsPage({
       }}
       resumeWorkflow={resumePreparation}
       turnOffWorkflow={() => turnOffPreparation('settings')}
-      preparation={
-        preparationStatus
-          ? {
-              checks: preparationStatus.checks,
-              checkLimit: preparationStatus.checkLimit,
-              recordings: preparationStatus.recordings,
-              recordingLimit: preparationStatus.recordingLimit,
-            }
-          : null
-      }
+      preparation={preparationStatus}
+      adjustPreparationLimit={adjustPreparationLimit}
       busy={setupBusy}
       saving={save.isPending}
-      dirty={setupDirty}
+      dirty={hasSetupToSave}
       saveDisabled={saveDisabled}
       saveError={
         configDraft.operationErrorTarget === 'setup' && configDraft.operationError
@@ -1160,9 +1167,7 @@ export function StationsPage({
                         A previous {restoredInterruption.kind === 'script' ? 'text' : 'audio'} preparation did not
                         finish.
                       </strong>{' '}
-                      {preparationOrigin(restoredInterruption)}. It was not restarted automatically. A provider request
-                      may have been charged. Review its saved status before resuming automatic preparation in News
-                      settings.
+                      {preparationOrigin(restoredInterruption)}. A provider request may have been charged.
                     </span>
                     <button aria-controls="preparation-history" onClick={reviewPreparationHistory}>
                       Review preparation history
@@ -1209,6 +1214,8 @@ export function StationsPage({
                     savedNewsStale={preparationStatusUnknown}
                     openSource={(url) => source.mutate(url)}
                     openPreparation={openPreparation}
+                    preparation={preparationStatus}
+                    adjustPreparationLimit={adjustPreparationLimit}
                     roomSettings={roomSettings}
                     destination={bucketDestination}
                     onDestinationChange={setBucketDestination}
@@ -1219,7 +1226,7 @@ export function StationsPage({
             )}
             {(preparing || ownsProgressStopFocus || ownsCancelFocus) && (
               <div className="news-progress room-active-progress">
-                {preparing && <LoaderCircle className="spinning" size={17} aria-hidden="true" />}
+                {preparing && <Refresh className="spinning" width={17} height={17} aria-hidden="true" />}
                 <span role="status">
                   {!preparing
                     ? ownsCancelFocus
@@ -1398,7 +1405,7 @@ export function StationsPage({
                   }
                   room={activeProfile}
                   value={workflowDraft as WorkflowDraft}
-                  dirty={setupDirty}
+                  dirty={hasSetupToSave}
                   disabled={setupBusy}
                   saving={save.isPending}
                   saveError={
@@ -1468,7 +1475,7 @@ export function StationsPage({
                         </strong>
                         <span id={`preparation-origin-${value.requestId}`}>{preparationOrigin(value)}</span>
                         <span id={`preparation-detail-${value.requestId}`}>
-                          {value.error ||
+                          {preparationHistoryMessage(value.error) ||
                             (value.status === 'skipped'
                               ? 'No audio was generated for this attempt.'
                               : 'No automatic provider retry. Completed results remain in saved audio.')}
@@ -1515,8 +1522,8 @@ export function StationsPage({
                   />
                 </label>
                 <p className="form-hint">
-                  Copies your setup with automatic preparation off. Choose the new room, then make it available in
-                  Advanced room options before enabling preparation or DJ breaks. You can finish incomplete setup later.
+                  Copies your setup. Choose the new room and make it available in Advanced room options, then save its
+                  news settings to start automatic preparation.
                 </p>
                 <ErrorNotice error={profiles.error} />
                 <DialogActions>
