@@ -4,6 +4,7 @@ import {
   initialMusicCollectionView,
   MusicCollectionPage,
 } from '../../components/MusicCollection/MusicCollectionPage.component';
+import { ArtistLink } from '../../components/SongLinks/SongLinks.component';
 import type { AlbumsPageProps } from './Albums.types';
 
 export const initialAlbumsView = () => initialMusicCollectionView<Album>();
@@ -17,6 +18,12 @@ export function AlbumsPage(props: AlbumsPageProps) {
       loadMetadata={(id) => window.wave.album(id)}
       loadTracks={(id) => window.wave.albumTracks(id)}
       subtitle={(album) => `${album.artist || 'Unknown artist'}${album.year ? ` · ${album.year}` : ''}`}
+      detailSubtitle={(album) => (
+        <>
+          <ArtistLink name={album.artist || 'Unknown artist'} />
+          {album.year ? ` · ${album.year}` : ''}
+        </>
+      )}
     />
   );
 }

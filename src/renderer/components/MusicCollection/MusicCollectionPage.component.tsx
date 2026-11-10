@@ -10,6 +10,7 @@ import { CollectionHeading } from '../CollectionHeading/CollectionHeading.compon
 import { CollectionPlaybackActions } from '../CollectionPlaybackActions/CollectionPlaybackActions.component';
 import { Empty, ErrorNotice, PageHeading } from '../Shared';
 import { songRows, TrackTable } from '../TrackTable/TrackTable.component';
+import { useCollectionPlayback } from './hooks/useCollectionPlayback';
 import type {
   CollectionItem,
   MusicCollectionPageProps,
@@ -17,6 +18,8 @@ import type {
   MusicCollectionDetailProps,
 } from './MusicCollection.types';
 import { VirtualCollectionGrid } from './VirtualCollectionGrid.component';
+
+import './MusicCollection.styles.css';
 
 export const initialMusicCollectionView = <T extends CollectionItem>(): MusicCollectionView<T> => ({
   item: null,
@@ -35,6 +38,7 @@ export function MusicCollectionPage<T extends CollectionItem>({
   loadTracks,
   loadMetadata,
   subtitle,
+  detailSubtitle,
 }: MusicCollectionPageProps<T>) {
   const { item, draft, selected } = view;
   const noun = `${label.toLowerCase()}s`;
@@ -80,6 +84,7 @@ export function MusicCollectionPage<T extends CollectionItem>({
         loadTracks={loadTracks}
         loadMetadata={loadMetadata}
         subtitle={subtitle}
+        detailSubtitle={detailSubtitle}
         selected={selected}
         select={(selected) => setView((old) => (old.item?.id === item.id ? { ...old, selected } : old))}
         back={() => {
@@ -164,8 +169,9 @@ function MusicCollectionDetail<T extends CollectionItem>({
   loadTracks,
   loadMetadata,
   subtitle,
+  detailSubtitle,
 }: MusicCollectionDetailProps<T>) {
-  const kind = label.toLowerCase();
+  const kind = label === 'Album' ? 'album' : 'artist';
   const backRef = useRef<HTMLButtonElement>(null);
   const detail = useQuery({
     queryKey: [kind, item.id],
@@ -187,23 +193,41 @@ function MusicCollectionDetail<T extends CollectionItem>({
     canFocusSuccess: () => tracks.isSuccess && !tracks.isFetching,
   });
   const player = usePlayer();
+  const playback = useCollectionPlayback(kind, item.id, tracks.data ?? []);
 
   return (
     <>
-      <button ref={backRef} aria-label={`Back to ${kind}s`} className="back-button" onClick={back}>
-        <ArrowLeft size={17} />
-        {label}s
-      </button>
+      <div className="collection-navigation">
+        <button ref={backRef} aria-label={`Back to ${kind}s`} className="back-button" onClick={back}>
+          <ArrowLeft size={17} />
+          {label}s
+        </button>
+        <label className="collection-mix">
+          <span className="collection-mix-copy">
+            <span>Mix with your library</span>
+            <small>{playback.mixWithLibrary ? 'Repeat all can include other songs' : `Play only this ${kind}`}</small>
+          </span>
+          <input
+            type="checkbox"
+            role="switch"
+            aria-label="Mix with your library"
+            aria-checked={playback.mixWithLibrary}
+            checked={playback.mixWithLibrary}
+            disabled={!tracks.data?.length}
+            onChange={(event) => playback.changeMix(event.target.checked)}
+          />
+        </label>
+      </div>
       <CollectionHeading
         artwork={metadata.imageUrl}
         eyebrow={label}
         title={metadata.name}
-        subtitle={subtitle?.(metadata)}
+        subtitle={detailSubtitle ? detailSubtitle(metadata) : subtitle?.(metadata)}
       >
         <CollectionPlaybackActions
           playLabel={`Play ${kind}`}
           disabled={!tracks.data?.length}
-          onPlay={() => player.play(tracks.data!)}
+          onPlay={() => playback.play(tracks.data!)}
           onPlayNext={() => player.playNext(tracks.data!)}
           onEnqueue={() => player.enqueue(tracks.data!)}
         />
@@ -233,14 +257,14 @@ function MusicCollectionDetail<T extends CollectionItem>({
           rows={songRows(tracks.data)}
           selected={selected}
           select={select}
-          play={player.play}
+          play={playback.play}
           playNext={player.playNext}
           enqueue={player.enqueue}
           add={add}
           details={details}
           currentId={player.current?.id}
           requestedPlaying={player.requestedPlaying}
-          togglePlayback={player.toggle}
+          togglePlayback={playback.toggle}
         />
       ) : (
         !tracks.error && <Empty title="No tracks available">This {kind} has no accessible music tracks.</Empty>

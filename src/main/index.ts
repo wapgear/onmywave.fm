@@ -351,6 +351,11 @@ function validatePlayback(value: unknown): asserts value is PlaybackSnapshot | n
     typeof value.repeat !== 'string' ||
     !['off', 'all', 'one'].includes(value.repeat) ||
     (value.outputId !== undefined && !text(value.outputId, 512)) ||
+    (value.scope !== undefined &&
+      (!isRecord(value.scope) ||
+        !['album', 'artist'].includes(value.scope.kind as string) ||
+        !text(value.scope.id, 512) ||
+        typeof value.scope.mixWithLibrary !== 'boolean')) ||
     (value.shufflePlan !== undefined &&
       !isShuffleSnapshot(value.shufflePlan, (value.trackIds as string[]).length, value.currentIndex as number))
   )

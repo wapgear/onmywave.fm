@@ -236,7 +236,11 @@ function QueueRows({
                 className="queue-track queue-play"
                 onDragStart={(event) => event.preventDefault()}
                 onClick={(event) => {
-                  if (!reorder.preventDragClick(event)) play(item, event.currentTarget);
+                  if (!reorder.preventDragClick(event) && event.detail === 0) play(item, event.currentTarget);
+                }}
+                onDoubleClick={(event) => {
+                  if (!event.ctrlKey && !event.metaKey && !reorder.preventDragClick(event))
+                    play(item, event.currentTarget);
                 }}
                 onKeyDown={(event) => {
                   if (reorder.reorderKeyDown(event, virtualRow.index)) {
@@ -387,7 +391,12 @@ export function Queue() {
               <button
                 ref={nowPlayingButton}
                 className="queue-track"
-                onClick={player.toggle}
+                onClick={(event) => {
+                  if (event.detail === 0) player.toggle();
+                }}
+                onDoubleClick={(event) => {
+                  if (!event.ctrlKey && !event.metaKey) player.toggle();
+                }}
                 aria-label={`${player.requestedPlaying ? 'Pause' : 'Play'} ${current.song.name}`}
               >
                 <Artwork url={current.song.imageUrl} name={current.song.name} />

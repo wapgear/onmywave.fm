@@ -300,7 +300,43 @@ button > svg {
   grid-template-columns: var(--sidebar) minmax(0, 1fr);
   grid-template-rows: [workspace] minmax(0, 1fr) auto;
   position: relative;
+  isolation: isolate;
   background: var(--sidebar-background);
+}
+.artwork-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--sidebar-background);
+}
+@media (forced-colors: none) {
+  .app-shell[data-artwork-gradient] > .artwork-backdrop {
+    background-image: linear-gradient(
+      color-mix(in srgb, var(--artwork-gradient-start) 26%, var(--sidebar-background)),
+      color-mix(in srgb, var(--artwork-gradient-end) 18%, var(--sidebar-background)) 52%,
+      var(--sidebar-background)
+    );
+  }
+}
+.artwork-backdrop::view-transition-group(root) {
+  animation-duration: 260ms;
+}
+.artwork-backdrop::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+.artwork-backdrop::view-transition-new(root) {
+  animation: artwork-backdrop-in 260ms ease-out both;
+  mix-blend-mode: normal;
+}
+@keyframes artwork-backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+.app-shell:has(> .library-panel > .app-notices > .app-notice) > .artwork-backdrop {
+  display: none;
 }
 .sidebar {
   display: flex;

@@ -147,3 +147,19 @@
   --card-background: #252a31;
   --list-card-background: #242930;
 }
+
+@media (forced-colors: none) {
+  .app-shell[data-artwork-accent] {
+    --artwork-accent-lightness: 43%;
+    --accent: oklch(from var(--artwork-accent-source) var(--artwork-accent-lightness) min(c, 0.15) h);
+    --accent-soft: color-mix(in oklab, var(--accent) 15%, var(--canvas));
+    --accent-hover: color-mix(in oklab, var(--accent) 90%, var(--text));
+    --accent-strong: color-mix(in oklab, var(--accent) 80%, var(--text));
+    --focus: var(--accent);
+    --range-fill-color: var(--accent);
+  }
+
+  :root[data-theme='dark'] .app-shell[data-artwork-accent] {
+    --artwork-accent-lightness: 79%;
+  }
+}

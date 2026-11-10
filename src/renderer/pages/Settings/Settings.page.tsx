@@ -22,6 +22,7 @@ import './Settings.styles.css';
 
 const sections: { id: SettingsSection; label: string }[] = [
   { id: 'general', label: 'General' },
+  { id: 'appearance', label: 'Appearance' },
   { id: 'playback', label: 'Playback' },
   { id: 'sources', label: 'Sources' },
   { id: 'djs', label: 'DJs' },
@@ -32,6 +33,8 @@ export function SettingsPage({
   connection,
   update,
   disconnected,
+  artworkAppearance,
+  onArtworkAppearanceChange,
   section,
   onSectionChange,
   returnToSetup,
@@ -88,9 +91,16 @@ export function SettingsPage({
           <NewsTransitions />
         </div>
       )}
+      {activeSection === 'appearance' && (
+        <div className="settings-content settings-preferences">
+          <AppearanceSettings
+            artworkAppearance={artworkAppearance}
+            onArtworkAppearanceChange={onArtworkAppearanceChange}
+          />
+        </div>
+      )}
       {activeSection === 'general' && (
         <div className="settings-content settings-preferences">
-          <AppearanceSettings />
           <section>
             <h2>Account</h2>
             <dl className="settings-account">

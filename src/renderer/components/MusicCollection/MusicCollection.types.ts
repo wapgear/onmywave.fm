@@ -1,5 +1,5 @@
 import type { QueryClient } from '@tanstack/react-query';
-import type { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, ReactNode, SetStateAction } from 'react';
 
 import type { CatalogQuery, Page, Result, Song } from '../../../shared/types';
 
@@ -22,11 +22,12 @@ export type MusicCollectionPageProps<T extends CollectionItem> = {
   loadMetadata?: (id: string) => Promise<Result<T>>;
   loadTracks: (id: string) => Promise<Result<Song[]>>;
   subtitle?: (item: T) => string;
+  detailSubtitle?: (item: T) => ReactNode;
 };
 
 export type MusicCollectionDetailProps<T extends CollectionItem> = Pick<
   MusicCollectionPageProps<T>,
-  'label' | 'loadMetadata' | 'loadTracks' | 'subtitle' | 'add' | 'details'
+  'label' | 'loadMetadata' | 'loadTracks' | 'subtitle' | 'detailSubtitle' | 'add' | 'details'
 > & {
   item: T;
   selected: Map<string, Song>;

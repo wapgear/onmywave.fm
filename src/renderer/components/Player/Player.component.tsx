@@ -26,6 +26,7 @@ import { useRetryFocus } from '../../useRetryFocus';
 import { IconButton } from '../IconButton/IconButton.component';
 import { Artwork } from '../Shared';
 import { Slider } from '../Slider/Slider.component';
+import { SongArtists } from '../SongLinks/SongLinks.component';
 import { DJBreakNotice } from './DJBreakNotice.component';
 import type { PlayerProps } from './Player.types';
 import { PlayerTimeline } from './PlayerTimeline.component';
@@ -231,7 +232,7 @@ export function Player({
           <div>
             <strong title={player.current?.name}>{player.current?.name ?? 'Your music, ready when you are'}</strong>
             <span title={player.current?.artists.join(', ')}>
-              {player.current ? player.current.artists.join(', ') || 'Unknown artist' : 'Choose a song to begin'}
+              {player.current ? <SongArtists song={player.current} /> : 'Choose a song to begin'}
             </span>
           </div>
         </div>

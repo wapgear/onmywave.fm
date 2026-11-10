@@ -1,11 +1,13 @@
-import type { Theme } from './theme.types';
+import type { ArtworkAppearance, Theme } from './theme.types';
 
 const storageKey = 'wave:theme';
 
+const artworkKeys = { gradient: 'wave:artwork-gradient', accent: 'wave:artwork-accent' };
+
 export const themes = [
-  { id: 'light', label: 'Light', description: 'Clean and bright' },
-  { id: 'coffee', label: 'Coffee', description: 'Warm and mellow' },
-  { id: 'dark', label: 'Dark', description: 'Soft charcoal' },
+  { id: 'light', label: 'Light', description: 'Bright panels and a pale gray sidebar' },
+  { id: 'coffee', label: 'Coffee', description: 'Warm beige panels and brown text' },
+  { id: 'dark', label: 'Dark', description: 'Charcoal panels and light text' },
 ] as const;
 
 function isTheme(value: unknown): value is Theme {
@@ -32,6 +34,26 @@ export function applyTheme(theme: Theme): boolean {
   document.documentElement.dataset.theme = theme;
   try {
     localStorage.setItem(storageKey, theme);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function readArtworkAppearance(): ArtworkAppearance {
+  try {
+    return {
+      gradient: localStorage.getItem(artworkKeys.gradient) === 'true',
+      accent: localStorage.getItem(artworkKeys.accent) === 'true',
+    };
+  } catch {
+    return { gradient: false, accent: false };
+  }
+}
+
+export function saveArtworkAppearance(option: keyof ArtworkAppearance, enabled: boolean): boolean {
+  try {
+    localStorage.setItem(artworkKeys[option], String(enabled));
     return true;
   } catch {
     return false;

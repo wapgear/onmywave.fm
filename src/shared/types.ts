@@ -49,6 +49,7 @@ export type Song = {
   id: string;
   name: string;
   artists: string[];
+  artistItems?: Artist[];
   album: string;
   albumId?: string;
   albumArtist?: string;
@@ -248,7 +249,14 @@ export type NewsProgress = {
   transcript?: string;
 };
 
+export type PlaybackScope = {
+  kind: 'album' | 'artist';
+  id: string;
+  mixWithLibrary: boolean;
+};
+
 export type PlaybackSnapshot = {
+  scope?: PlaybackScope;
   shufflePlan?: import('./shuffle-queue').ShuffleSnapshot;
   connectionId: string;
   trackIds: string[];
