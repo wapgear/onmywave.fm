@@ -124,7 +124,7 @@
     background 120ms ease;
 }
 /* The filled triangle needs optical centering within its square SVG box. */
-.player-play > .lucide-play {
+.player-play > .player-play-glyph {
   translate: 1px 0;
 }
 .player-play:hover:not(:disabled) {

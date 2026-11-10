@@ -1,21 +1,19 @@
 import {
-  ListMusic,
-  LoaderCircle,
-  MicVocal,
-  Pause,
-  Radio,
-  RadioTower,
-  Play,
+  Antenna,
+  AntennaSignal,
+  Microphone,
+  Playlist,
   Repeat,
-  Repeat1,
-  RotateCw,
+  RepeatOnce,
   Shuffle,
-  SkipBack,
-  SkipForward,
-  Volume1,
-  Volume2,
-  VolumeX,
-} from 'lucide-react';
+  SkipNext,
+  SkipPrev,
+  SoundHigh,
+  SoundLow,
+  SoundOff,
+} from 'iconoir-react/regular';
+import { Pause, Play } from 'iconoir-react/solid';
+import { LoaderCircle, RotateCw } from 'lucide-react';
 import { useRef, useState } from 'react';
 
 import { useDJPlayback } from '../../dj-playback';
@@ -46,7 +44,7 @@ export function Player({
   const player = usePlayer();
   const automation = useDJPlayback();
   const djActive = automation.settings.enabled || player.newsPhase !== 'idle';
-  const DJStatusIcon = djActive ? RadioTower : Radio;
+  const DJStatusIcon = djActive ? Antenna : AntennaSignal;
   const repeatTrigger = useRef<HTMLButtonElement>(null);
   const { retryRef: libraryRetryRef, retry: retryLibraryWithFocus } = useRetryFocus({
     ownerKey: `player:library:${player.repeat}`,
@@ -91,7 +89,7 @@ export function Player({
       return retrySettlement.generation === player.getPlaybackGeneration() && !player.busy && !player.error;
     },
   });
-  const Volume = player.volume === 0 ? VolumeX : player.volume < 0.5 ? Volume1 : Volume2;
+  const Volume = player.volume === 0 ? SoundOff : player.volume < 0.5 ? SoundLow : SoundHigh;
   const showRetrying = retrying && (retryingKind === 'restore' || retryingKey === player.currentKey);
   function retryPlayback() {
     const kind: 'track' | 'restore' = player.currentKey ? 'track' : 'restore';
@@ -246,7 +244,7 @@ export function Player({
               label="Shuffle"
               aria-pressed={player.shuffle}
             >
-              <Shuffle size={16} aria-hidden="true" />
+              <Shuffle width={16} height={16} aria-hidden="true" />
             </IconButton>
             <IconButton
               variant="player"
@@ -255,7 +253,7 @@ export function Player({
               title={`Previous track (${primaryModifierLabel}←)`}
               label="Previous track"
             >
-              <SkipBack size={19} fill="currentColor" aria-hidden="true" />
+              <SkipPrev width={19} height={19} aria-hidden="true" />
             </IconButton>
             <IconButton
               ref={playControl}
@@ -266,9 +264,9 @@ export function Player({
               label={player.requestedPlaying ? 'Pause' : 'Play'}
             >
               {player.requestedPlaying ? (
-                <Pause size={21} fill="currentColor" aria-hidden="true" />
+                <Pause width={21} height={21} aria-hidden="true" />
               ) : (
-                <Play size={21} fill="currentColor" aria-hidden="true" />
+                <Play className="player-play-glyph" width={21} height={21} aria-hidden="true" />
               )}
             </IconButton>
             <IconButton
@@ -279,7 +277,7 @@ export function Player({
               title={`Next track (${primaryModifierLabel}→)`}
               label="Next track"
             >
-              <SkipForward size={19} fill="currentColor" aria-hidden="true" />
+              <SkipNext width={19} height={19} aria-hidden="true" />
             </IconButton>
             <IconButton
               ref={repeatTrigger}
@@ -293,9 +291,9 @@ export function Player({
               aria-pressed={player.repeat !== 'off'}
             >
               {player.repeat === 'one' ? (
-                <Repeat1 size={16} aria-hidden="true" />
+                <RepeatOnce width={16} height={16} aria-hidden="true" />
               ) : (
-                <Repeat size={16} aria-hidden="true" />
+                <Repeat width={16} height={16} aria-hidden="true" />
               )}
             </IconButton>
           </div>
@@ -321,7 +319,7 @@ export function Player({
               } else player.setVolume(mutedVolume);
             }}
           >
-            <Volume size={18} aria-hidden="true" />
+            <Volume width={18} height={18} aria-hidden="true" />
           </IconButton>
           <Slider
             ref={volumeControl}
@@ -344,7 +342,7 @@ export function Player({
             aria-expanded={lyricsOpen}
             disabled={!player.current}
           >
-            <MicVocal size={18} aria-hidden="true" />
+            <Microphone width={18} height={18} aria-hidden="true" />
           </IconButton>
           <IconButton
             variant="player"
@@ -355,7 +353,7 @@ export function Player({
             aria-controls="listening-drawer"
             aria-expanded={queueOpen}
           >
-            <ListMusic size={21} aria-hidden="true" />
+            <Playlist width={21} height={21} aria-hidden="true" />
           </IconButton>
           <IconButton
             id="player-dj-controls"
@@ -368,7 +366,7 @@ export function Player({
             aria-controls="listening-drawer"
             aria-expanded={djOpen}
           >
-            <DJStatusIcon size={19} aria-hidden="true" />
+            <DJStatusIcon width={19} height={19} aria-hidden="true" />
           </IconButton>
         </div>
       </footer>
