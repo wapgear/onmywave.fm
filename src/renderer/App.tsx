@@ -7,6 +7,7 @@ import type { Connection, Song } from '../shared/types';
 import { unwrap } from './api';
 import type { PageName, ReadyAppProps, SessionContentProps } from './App.types';
 import { AddPlaylist } from './components/AddPlaylist/AddPlaylist.component';
+import { appUpdatesKey, useAppUpdateNotice } from './components/AppUpdates/AppUpdates.component';
 import { CatalogConnectionBanner } from './components/CatalogConnectionBanner.component';
 import { DJSidebar } from './components/DJSidebar/DJSidebar.component';
 import { IconButton } from './components/IconButton/IconButton.component';
@@ -15,6 +16,7 @@ import { LibrarySelectionProvider } from './components/LibrarySelection';
 import type { ConnectionTransition } from './components/LibrarySelection.types';
 import { Lyrics } from './components/Lyrics/Lyrics.component';
 import { NavigationSidebar } from './components/NavigationSidebar/NavigationSidebar.component';
+import { AppNoticeGroup } from './components/Notice/Notice.component';
 import { Player } from './components/Player/Player.component';
 import { ProviderKeyEditsProvider } from './components/ProviderKeys/ProviderKeyEdits';
 import { Queue } from './components/Queue/Queue.component';
@@ -48,6 +50,7 @@ const listeningDrawerOrder = ['details', 'lyrics', 'queue', 'dj'] as const;
 
 export default function App() {
   const client = useQueryClient();
+  const updateNotice = useAppUpdateNotice();
   const connectionQuery = useQuery({
     queryKey: ['connection'],
     queryFn: async () => unwrap(await window.wave.getConnection()),
@@ -119,7 +122,10 @@ export default function App() {
   }, [pendingAuthChanges, client, connectionQuery.data?.authRevision]);
 
   async function setConnection(connection: Connection | null, clearExpiry = true) {
-    const accountData = { predicate: (query: { queryKey: readonly unknown[] }) => query.queryKey[0] !== 'connection' };
+    const accountData = {
+      predicate: (query: { queryKey: readonly unknown[] }) =>
+        query.queryKey[0] !== 'connection' && query.queryKey[0] !== appUpdatesKey[0],
+    };
     await client.cancelQueries(accountData);
     client.removeQueries(accountData);
     client.setQueryData(['connection'], connection);
@@ -137,18 +143,22 @@ export default function App() {
         <NewsRecoveryProvider>
           <SettingsEditsProvider>
             {connectionQuery.isPending || connectionQuery.error ? (
-              <main className="startup">
+              <main className="startup app-notice-surface">
                 <h1 className="wordmark" tabIndex={-1}>
                   onmywave.fm
                 </h1>
                 {connectionQuery.isPending && <p role="status">Opening your library…</p>}
-                <ErrorNotice
-                  error={connectionQuery.error}
-                  retryRef={connectionRetryFocus.retryRef}
-                  retrying={connectionQuery.isFetching}
-                  retry={() => connectionRetryFocus.retry(() => connectionQuery.refetch())}
-                />
-                <NewsRecoveryNotice focusTarget={() => document.querySelector<HTMLElement>('.startup h1')} />
+                <AppNoticeGroup>
+                  <ErrorNotice
+                    header
+                    error={connectionQuery.error}
+                    retryRef={connectionRetryFocus.retryRef}
+                    retrying={connectionQuery.isFetching}
+                    retry={() => connectionRetryFocus.retry(() => connectionQuery.refetch())}
+                  />
+                  <NewsRecoveryNotice focusTarget={() => document.querySelector<HTMLElement>('.startup h1')} />
+                  {updateNotice}
+                </AppNoticeGroup>
               </main>
             ) : (
               <SessionContent
@@ -157,6 +167,7 @@ export default function App() {
                 expired={expired && !!connection}
                 setConnection={setConnection}
                 runConnectionTransition={runConnectionTransition}
+                updateNotice={updateNotice}
               />
             )}
           </SettingsEditsProvider>
@@ -166,7 +177,13 @@ export default function App() {
   );
 }
 
-function SessionContent({ connection, expired, setConnection, runConnectionTransition }: SessionContentProps) {
+function SessionContent({
+  connection,
+  expired,
+  setConnection,
+  runConnectionTransition,
+  updateNotice,
+}: SessionContentProps) {
   const playlistRecovery = usePlaylistRecovery();
   const [roomSetupDraft, setRoomSetupDraft] = useState<RoomSetupDraft>({ setup: null, moodDraft: null });
   const librariesSelected = (value: Connection) => setConnection(value, false);
@@ -179,6 +196,7 @@ function SessionContent({ connection, expired, setConnection, runConnectionTrans
         connected={setConnection}
         librariesSelected={librariesSelected}
         runConnectionTransition={runConnectionTransition}
+        updateNotice={updateNotice}
       />
     ) : (
       <PlayerProvider key={connection.id} connection={connection}>
@@ -191,6 +209,7 @@ function SessionContent({ connection, expired, setConnection, runConnectionTrans
             playlistRecovery={playlistRecovery}
             roomSetupDraft={roomSetupDraft}
             setRoomSetupDraft={setRoomSetupDraft}
+            updateNotice={updateNotice}
           />
         </DJPlaybackProvider>
       </PlayerProvider>
@@ -210,6 +229,7 @@ function ReadyApp({
   playlistRecovery,
   roomSetupDraft,
   setRoomSetupDraft,
+  updateNotice,
 }: ReadyAppProps) {
   const active = useRef(false);
 
@@ -659,7 +679,7 @@ function ReadyApp({
       }}
     >
       <div
-        className={`app-shell ${visibleDrawer ? 'has-drawer has-listening-drawer' : ''}`}
+        className={`app-shell app-notice-surface ${visibleDrawer ? 'has-drawer has-listening-drawer' : ''}`}
         data-artwork-gradient={artworkGradient ? '' : undefined}
         data-artwork-accent={artworkAccent ? '' : undefined}
         style={
@@ -673,15 +693,24 @@ function ReadyApp({
         <div ref={artworkBackdrop} className="artwork-backdrop" aria-hidden="true" />
         <NavigationSidebar page={page} navigate={navigate} />
         <div className="library-panel">
-          <CatalogConnectionBanner
-            page={adding ? null : page}
-            location={location}
-            focusTarget={() =>
-              expandedDrawer
-                ? drawerClose.current
-                : (content.current?.querySelector<HTMLElement>('.back-button, .page-heading h1') ?? null)
-            }
-          />
+          <AppNoticeGroup>
+            <CatalogConnectionBanner
+              page={adding ? null : page}
+              location={location}
+              focusTarget={() =>
+                expandedDrawer
+                  ? drawerClose.current
+                  : (content.current?.querySelector<HTMLElement>('.back-button, .page-heading h1') ?? null)
+              }
+            />
+            <NewsRecoveryNotice
+              onOpenSettings={openNewsSettings}
+              focusTarget={() => content.current?.querySelector<HTMLElement>('.page-heading h1') ?? null}
+              settingsTarget={() => content.current?.querySelector<HTMLElement>('#room-panel-settings') ?? null}
+            />
+            <SongRemovalNotice />
+            {updateNotice}
+          </AppNoticeGroup>
           <main
             ref={main}
             className="main-content"
@@ -690,12 +719,6 @@ function ReadyApp({
             aria-hidden={expandedDrawer || undefined}
           >
             <div ref={content} className="page-content">
-              <SongRemovalNotice />
-              <NewsRecoveryNotice
-                onOpenSettings={openNewsSettings}
-                focusTarget={() => content.current?.querySelector<HTMLElement>('.page-heading h1') ?? null}
-                settingsTarget={() => content.current?.querySelector<HTMLElement>('#room-panel-settings') ?? null}
-              />
               <RenderErrorBoundary scope="page" resetKey={location}>
                 {page === 'songs' && (
                   <SongsPage view={songsView} setView={setSongsView} add={setAdding} details={openDrawer} />

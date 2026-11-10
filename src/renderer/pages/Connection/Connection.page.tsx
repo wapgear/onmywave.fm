@@ -6,6 +6,7 @@ import { unwrap } from '../../api';
 import { InfoHelp } from '../../components/InfoHelp/InfoHelp.component';
 import { LibraryChooser } from '../../components/LibraryChooser';
 import { useLibrarySelection } from '../../components/LibrarySelection';
+import { AppNoticeGroup } from '../../components/Notice/Notice.component';
 import { ErrorNotice } from '../../components/Shared';
 import { NewsRecoveryNotice } from '../../NewsRecovery';
 import type { ConnectionPageProps } from './Connection.types';
@@ -16,6 +17,7 @@ export function ConnectionPage({
   connected,
   librariesSelected,
   runConnectionTransition,
+  updateNotice,
 }: ConnectionPageProps) {
   const serverUrlHelpId = useId();
   const [serverUrl, setServerUrl] = useState(connection?.serverUrl ?? '');
@@ -83,7 +85,7 @@ export function ConnectionPage({
   const choosing = hasChooser && !changingAccount;
 
   return (
-    <main className="connection-page">
+    <main className="connection-page app-notice-surface">
       <div className="connection-brand">
         <Music2 size={25} />
         <span>onmywave.fm</span>
@@ -95,7 +97,10 @@ export function ConnectionPage({
           </p>
         </InfoHelp>
       </div>
-      <NewsRecoveryNotice focusTarget={() => document.querySelector<HTMLElement>('.connection-card h1')} />
+      <AppNoticeGroup>
+        <NewsRecoveryNotice focusTarget={() => document.querySelector<HTMLElement>('.connection-card h1')} />
+        {updateNotice}
+      </AppNoticeGroup>
       <section className="connection-card">
         <span className="eyebrow">Your music, on your wave</span>
         <h1 tabIndex={-1}>

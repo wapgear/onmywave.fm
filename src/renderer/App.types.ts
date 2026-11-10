@@ -1,4 +1,4 @@
-import type { Dispatch, SetStateAction } from 'react';
+import type { Dispatch, ReactNode, SetStateAction } from 'react';
 
 import type { Connection } from '../shared/types';
 import type { ConnectionTransition } from './components/LibrarySelection.types';
@@ -12,6 +12,7 @@ export type SessionContentProps = {
   expired: boolean;
   setConnection: (connection: Connection | null, clearExpiry?: boolean) => Promise<void>;
   runConnectionTransition: ConnectionTransition;
+  updateNotice: ReactNode;
 };
 
 export type ReadyAppProps = {
@@ -19,6 +20,7 @@ export type ReadyAppProps = {
   update: (connection: Connection) => void;
   disconnected: () => void | Promise<void>;
   playlistRecovery: ReturnType<typeof usePlaylistRecovery>;
+  updateNotice: ReactNode;
 } & RadioDrafts;
 
 export type RadioDrafts = {

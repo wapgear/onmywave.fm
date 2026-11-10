@@ -1,6 +1,7 @@
 import { type FormEvent, useLayoutEffect, useRef, useState } from 'react';
 
 import { newsPreparationStatus } from '../../../shared/news-preparation-status';
+import { MAX_DAILY_NEWS_RECORDINGS } from '../../../shared/workflow';
 import { useNewsRecovery } from '../../NewsRecovery';
 import { SaveButton } from '../SaveButton/SaveButton.component';
 import { ErrorNotice, errorMessage } from '../Shared';
@@ -37,6 +38,8 @@ export function WorkflowPreferences({
   const [ownsSaveFocus, setOwnsSaveFocus] = useState(false);
   const stopButton = useRef<HTMLButtonElement>(null);
   const resumeButton = useRef<HTMLButtonElement>(null);
+  const recordingLimitInput = useRef<HTMLInputElement>(null);
+  const checkIntervalInput = useRef<HTMLSelectElement>(null);
   const [focusedAction, setFocusedAction] = useState<{ key: 'off' | 'resume'; element: HTMLButtonElement } | null>(
     null,
   );
@@ -45,6 +48,7 @@ export function WorkflowPreferences({
   const recovery = useNewsRecovery();
   const recoveryReady = recovery.status.phase === 'ready';
   const status = room ? newsPreparationStatus(room) : null;
+  const limitAction = recoveryReady && !profileStatusUnknown && value.newsEnabled ? status?.limitAction : undefined;
   const activating = !!value.newsEnabled && !room?.workflowDraft.newsEnabled;
   const mayEnable = recoveryReady && activationReady && !statusLoading && !statusError;
   const canTurnOn = mayEnable || !!room?.workflowDraft.newsEnabled;
@@ -141,6 +145,7 @@ export function WorkflowPreferences({
             <label>
               Check sources every
               <select
+                ref={checkIntervalInput}
                 value={value.everyHours}
                 onChange={(event) => onChange({ everyHours: Number(event.target.value) as 1 | 3 | 6 })}
               >
@@ -162,9 +167,10 @@ export function WorkflowPreferences({
             <label>
               Maximum automatic recordings per day
               <input
+                ref={recordingLimitInput}
                 type="number"
                 min={1}
-                max={10}
+                max={MAX_DAILY_NEWS_RECORDINGS}
                 required
                 value={value.maxNewsClipsPerDay}
                 onChange={(event) => onChange({ maxNewsClipsPerDay: Number(event.target.value) })}
@@ -299,6 +305,19 @@ export function WorkflowPreferences({
                 </>
               )}
             </p>
+          )}
+          {limitAction && (
+            <button
+              type="button"
+              disabled={disabled || saving}
+              onClick={() => {
+                const field =
+                  limitAction.field === 'recording' ? recordingLimitInput.current : checkIntervalInput.current;
+                field?.focus();
+              }}
+            >
+              {limitAction.label}
+            </button>
           )}
           {(needsResume || ownsAction('resume') || Boolean(resumeError)) && (
             <div className="news-workflow-action">

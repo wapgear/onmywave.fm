@@ -103,12 +103,6 @@ async function finishRun(
       ...draft,
       newsLastRun: { ...run, outcome, finishedAt, ...(message ? { message: message.slice(0, 2000) } : {}) },
       ...(outcome === 'prepared' ? { newsClipDate: date, newsClipsToday: count + 1 } : {}),
-      ...(outcome === 'interrupted' ? { newsWorkflowPaused: true } : {}),
-      ...(outcome === 'failed'
-        ? { newsWorkflowError: message?.slice(0, 2000) }
-        : outcome === 'prepared' || outcome === 'no-news' || outcome === 'partial-coverage' || outcome === 'interrupted'
-          ? { newsWorkflowError: undefined }
-          : {}),
     };
     return {
       roomProfiles: state.roomProfiles.map((value) => (value.id === profileId ? { ...value, workflowDraft } : value)),
@@ -144,7 +138,9 @@ async function processProfile(news: NewsService, profile: RoomProfile) {
     return;
   }
 
-  const retryRequestId = await resumableRoomNewsRequest(state, current.id);
+  // An interrupted provider request may already have incurred charges. Start the next check fresh.
+  const retryRequestId =
+    draft.newsLastRun?.outcome === 'failed' ? await resumableRoomNewsRequest(state, current.id) : null;
   const requestId = retryRequestId ?? randomUUID();
   let snapshot: Pick<LocalState, 'roomProfiles' | 'djs' | 'sources'> | undefined;
   let reservation: { before: WorkflowDraft; started: WorkflowDraft } | undefined;
@@ -335,7 +331,6 @@ export async function startNewsWorkflow(
         ...profile,
         workflowDraft: {
           ...profile.workflowDraft,
-          newsWorkflowPaused: profile.workflowDraft.newsWorkflowPaused || outcome === 'interrupted',
           ...(outcome === 'prepared' ? { newsWorkflowError: undefined } : {}),
           ...(outcome === 'prepared' ? { newsClipDate: date, newsClipsToday: count + 1 } : {}),
           newsLastRun: { ...run, outcome, finishedAt, ...(message ? { message: message.slice(0, 2000) } : {}) },

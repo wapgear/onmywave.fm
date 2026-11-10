@@ -411,8 +411,7 @@ async function load() {
             ...(request.providerAttempt?.outcome === 'pending'
               ? { providerAttempt: { ...request.providerAttempt, outcome: 'uncertain' as const } }
               : {}),
-            error:
-              'The app stopped before this request completed. Review News settings before resuming automatic preparation.',
+            error: 'The app stopped before this request completed.',
           })
         : request,
     );
@@ -1430,7 +1429,7 @@ async function execute<T extends PreparedNewsTake>(
       const message = publicationRecoveryUnavailable
         ? 'The recording receipt could not be confirmed. News recovery will check the saved audio before retrying.'
         : uncertain
-          ? `${failure.message} A provider request may have been charged. Review News settings before explicitly resuming preparation.`
+          ? `${failure.message} A provider request may have been charged.`
           : failure.message;
       await change((current) => ({
         ...current,
@@ -1560,10 +1559,9 @@ export async function prepareRoomNews(
       const dj = provenance.dj;
       const sources = provenance.sources;
       const settings = checkpoint.settings;
-      if (!(await readOpenAIKey()))
-        invalid('Add your OpenAI API key in Settings → Provider keys before resuming automatic preparation.');
+      if (!(await readOpenAIKey())) invalid('Add your OpenAI API key in Settings → Provider keys to prepare news.');
       if (!(await readElevenLabsKey()))
-        invalid('Add your ElevenLabs API key in Settings → Provider keys before resuming automatic preparation.');
+        invalid('Add your ElevenLabs API key in Settings → Provider keys to prepare news.');
       if (sources.some((source) => source.kind === 'twitter') && !(await readTwitterKey()))
         invalid('Add an X bearer token for this Listening Room’s sources.');
       const cancel = () => news.cancel(input.requestId);

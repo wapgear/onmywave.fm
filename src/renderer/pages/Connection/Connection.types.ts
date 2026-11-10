@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import type { Connection } from '../../../shared/types';
 import type { ConnectionTransition } from '../../components/LibrarySelection.types';
 
@@ -7,4 +9,5 @@ export type ConnectionPageProps = {
   connected: (value: Connection) => void | Promise<void>;
   librariesSelected: (value: Connection) => void | Promise<void>;
   runConnectionTransition: ConnectionTransition;
+  updateNotice: ReactNode;
 };

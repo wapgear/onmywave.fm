@@ -316,6 +316,13 @@ export async function getLocalState(): Promise<LocalStateSnapshot> {
           throw new StorageError();
         const workflow = (draft: unknown) => {
           const result = normalizeWorkflowDraft(draft);
+          // Older scheduled failures stopped the runner despite having reserved its next check.
+          // Sign-out and recovery holds have no next check and still require an explicit resume.
+          if (result.nextNewsCheckAt && result.newsLastRun?.outcome === 'interrupted') delete result.newsWorkflowPaused;
+          if (result.newsLastRun?.outcome === 'failed' && result.newsWorkflowError) {
+            result.newsLastRun.message ??= result.newsWorkflowError;
+            delete result.newsWorkflowError;
+          }
           if (value.preparationErrorVersion !== 1) {
             const message = 'Earlier preparation details are unavailable. Review the setup before retrying.';
             if (result.newsWorkflowError) result.newsWorkflowError = message;

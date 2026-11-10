@@ -45,7 +45,7 @@ export function CatalogConnectionBanner({
 
   return (
     <ErrorNotice
-      className="app-error-banner"
+      header
       error={error}
       retryRef={retryFocus.retryRef}
       retrying={retrying}

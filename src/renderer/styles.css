@@ -37,6 +37,8 @@
   --notice-text: #666b78;
   --notice-error-background: #fbefed;
   --notice-error-text: #a0483c;
+  --notice-info-background: #e8eff9;
+  --notice-info-text: #344d73;
   --warning-background: #f5f0e7;
   --warning-text: #6d5832;
   --scroll-thumb: #b8bac3;
@@ -333,13 +335,7 @@ button > svg {
     opacity: 0;
   }
 }
-.app-shell:has(> .library-panel > .app-error-banner) {
-  background-image: linear-gradient(
-    color-mix(in srgb, var(--notice-error-background) 65%, var(--sidebar-background)),
-    var(--sidebar-background)
-  );
-}
-.app-shell:has(> .library-panel > .app-error-banner) > .artwork-backdrop {
+.app-shell:has(> .library-panel > .app-notices > .app-notice) > .artwork-backdrop {
   display: none;
 }
 .sidebar {
@@ -413,7 +409,7 @@ button > svg {
   border-radius: 16px;
   overflow: clip;
 }
-.library-panel:has(> .app-error-banner):has(+ .is-expanded) {
+.library-panel:has(> .app-notices > .app-notice):has(+ .is-expanded) {
   grid-column-end: -1;
 }
 .main-content {
@@ -871,15 +867,6 @@ button > svg {
 .notice.error {
   background: var(--notice-error-background);
   color: var(--notice-error-text);
-}
-.app-error-banner {
-  flex-shrink: 0;
-  margin: 0;
-  border-radius: 0;
-  padding: 5px var(--content-inset);
-}
-.app-error-banner > button {
-  flex-shrink: 0;
 }
 .album-grid {
   display: grid;
@@ -1466,9 +1453,6 @@ legend {
   color: var(--text);
   font-size: 24px;
   margin: 0;
-}
-.startup .notice {
-  max-width: 520px;
 }
 .spinning {
   animation: spin 1.5s linear infinite;
@@ -2119,13 +2103,6 @@ input[type='range'] {
   border-radius: 4px;
 }
 
-.notice.error button[aria-disabled='true'] {
-  cursor: progress;
-  color: var(--muted);
-}
-.notice.error button[aria-disabled='true']:active {
-  translate: 0 0;
-}
 .modal-actions button[aria-disabled='true'] {
   cursor: progress;
   color: var(--muted);

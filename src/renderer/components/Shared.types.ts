@@ -1,7 +1,7 @@
 import type { ReactNode, RefObject } from 'react';
 
 export type ErrorNoticeProps = {
-  className?: string;
+  header?: boolean;
   error: unknown;
   retry?: () => void | Promise<unknown>;
   retryRef?: RefObject<HTMLButtonElement | null>;

@@ -65,6 +65,10 @@
 .news-room-automation-state.is-enabled {
   color: var(--accent);
 }
+.news-room-automation-state.is-limited {
+  background: var(--warning-background);
+  color: var(--warning-text);
+}
 .news-room-automation-toggle {
   display: flex;
   min-height: 40px;
