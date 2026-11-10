@@ -1,5 +1,5 @@
 import { useIsMutating, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Maximize2, Minimize2, X } from 'lucide-react';
+import { Enlarge, Reduce, Xmark } from 'iconoir-react/regular';
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { flushSync } from 'react-dom';
 
@@ -830,9 +830,9 @@ function ReadyApp({
                       aria-controls="listening-drawer"
                     >
                       {expandedDrawer ? (
-                        <Minimize2 size={18} aria-hidden="true" />
+                        <Reduce width={18} height={18} aria-hidden="true" />
                       ) : (
-                        <Maximize2 size={18} aria-hidden="true" />
+                        <Enlarge width={18} height={18} aria-hidden="true" />
                       )}
                     </IconButton>
                   )}
@@ -849,7 +849,7 @@ function ReadyApp({
                             : 'Close song details'
                     }
                   >
-                    <X size={20} aria-hidden="true" />
+                    <Xmark width={20} height={20} aria-hidden="true" />
                   </IconButton>
                 </>
               }

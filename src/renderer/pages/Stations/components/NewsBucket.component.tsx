@@ -1,4 +1,15 @@
-import { ArrowLeft, ExternalLink, Inbox, Pause, Play, Radio, Search, Star, X } from 'lucide-react';
+import {
+  ArrowLeft,
+  AntennaSignal,
+  MailIn,
+  OpenNewWindow,
+  Pause,
+  Play,
+  Search,
+  Star,
+  Xmark,
+} from 'iconoir-react/regular';
+import { Star as SolidStar } from 'iconoir-react/solid';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { canonicalArticleUrl, eligibleNewsTakes } from '../../../../shared/news-pool';
@@ -247,7 +258,11 @@ export function NewsBucket({
           })
         }
       >
-        <Star size={17} fill={saved ? 'currentColor' : 'none'} aria-hidden="true" />
+        {saved ? (
+          <SolidStar width={17} height={17} aria-hidden="true" />
+        ) : (
+          <Star width={17} height={17} aria-hidden="true" />
+        )}
       </button>
     );
   }
@@ -308,7 +323,7 @@ export function NewsBucket({
           <li key={`${article.id}-${article.url}`}>
             <Button variant="link" onClick={() => openSource(article.url)}>
               {article.title}
-              <ExternalLink size={13} aria-hidden="true" />
+              <OpenNewWindow width={13} height={13} aria-hidden="true" />
             </Button>
             <span>{articleSource(article)}</span>
           </li>
@@ -386,14 +401,14 @@ export function NewsBucket({
                 ) : current?.phase === 'playing' ? (
                   <>
                     <span className="news-bucket-audition-disc">
-                      <Pause size={14} aria-hidden="true" />
+                      <Pause width={14} height={14} aria-hidden="true" />
                     </span>{' '}
                     Pause
                   </>
                 ) : (
                   <>
                     <span className="news-bucket-audition-disc">
-                      <Play size={14} aria-hidden="true" />
+                      <Play width={14} height={14} aria-hidden="true" />
                     </span>{' '}
                     {current?.phase === 'paused' ? 'Resume' : 'Listen'}
                   </>
@@ -686,7 +701,7 @@ export function NewsBucket({
                 )}
                 {automation.settings.enabled && automation.room && destination === 'upcoming' && (
                   <div className="news-bucket-runtime" role="status">
-                    <Radio size={16} aria-hidden="true" />
+                    <AntennaSignal width={16} height={16} aria-hidden="true" />
                     <span>
                       {runtimeDJ?.name ?? 'DJ'} · {phaseLabel}
                       {!runtimePending && !onAir && !scheduled
@@ -737,7 +752,7 @@ export function NewsBucket({
                       </div>
                     ) : (
                       <div className="news-bucket-empty">
-                        <Inbox size={28} aria-hidden="true" />
+                        <MailIn width={28} height={28} aria-hidden="true" />
                         <h2>{pageProfile?.workflowDraft.newsEnabled ? 'No stories ready yet' : 'Set up your news'}</h2>
                         <p>
                           {savedNewsStale
@@ -782,7 +797,7 @@ export function NewsBucket({
                       </>
                     ) : (
                       <div className="news-bucket-empty">
-                        <Search size={28} aria-hidden="true" />
+                        <Search width={28} height={28} aria-hidden="true" />
                         <h2>{lastRun ? 'No story list saved for this check' : 'No source check yet'}</h2>
                         <p>
                           {lastRun
@@ -939,7 +954,7 @@ export function NewsBucket({
                       )
                     ) : (
                       <div className="news-bucket-empty">
-                        <Star size={28} aria-hidden="true" />
+                        <Star width={28} height={28} aria-hidden="true" />
                         <h2>Keep the stories you like</h2>
                         <p>Star any article to find it here, even after its recording is gone.</p>
                       </div>
@@ -963,14 +978,14 @@ export function NewsBucket({
                       <>
                         {inspectedArticle && favoriteButton(inspectedArticle)}
                         <IconButton label="Close story details" onClick={() => closeInspector()}>
-                          <X size={20} aria-hidden="true" />
+                          <Xmark width={20} height={20} aria-hidden="true" />
                         </IconButton>
                       </>
                     }
                   />
                   <SidebarBody className="news-bucket-reader-body">
                     <Button variant="link" className="news-bucket-reader-back" onClick={() => closeInspector()}>
-                      <ArrowLeft size={16} aria-hidden="true" />
+                      <ArrowLeft width={16} height={16} aria-hidden="true" />
                       Back to stories
                     </Button>
                     <p className="news-bucket-reader-context">{inspectorContext}</p>

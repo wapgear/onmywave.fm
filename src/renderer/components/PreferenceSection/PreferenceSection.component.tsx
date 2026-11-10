@@ -1,4 +1,4 @@
-import { ChevronDown } from 'lucide-react';
+import { NavArrowDown } from 'iconoir-react/regular';
 import { useState, type ReactNode, type Ref } from 'react';
 
 import './PreferenceSection.styles.css';
@@ -46,7 +46,7 @@ export function PreferenceSection({
         <span className="preference-section-status" role="status">
           {status ?? (dirty ? 'Unsaved changes' : '')}
         </span>
-        <ChevronDown size={18} aria-hidden="true" />
+        <NavArrowDown width={18} height={18} aria-hidden="true" />
       </summary>
       {(open || keepMounted) && <div className="preference-section-content">{children}</div>}
     </details>

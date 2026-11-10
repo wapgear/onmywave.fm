@@ -1,8 +1,10 @@
 import {
   Antenna,
   AntennaSignal,
+  BookStack,
   Microphone,
   Playlist,
+  Refresh,
   Repeat,
   RepeatOnce,
   Shuffle,
@@ -11,9 +13,9 @@ import {
   SoundHigh,
   SoundLow,
   SoundOff,
+  WarningCircle,
 } from 'iconoir-react/regular';
 import { Pause, Play } from 'iconoir-react/solid';
-import { LoaderCircle, RotateCw } from 'lucide-react';
 import { useRef, useState } from 'react';
 
 import { useDJPlayback } from '../../dj-playback';
@@ -148,11 +150,13 @@ export function Player({
         <DJBreakNotice target={djControlsTarget} />
         {player.newsNotice && (
           <div className="playback-error">
+            <WarningCircle width={22} height={22} aria-hidden="true" />
             <span role="status">{player.newsNotice}</span>
           </div>
         )}
         {(player.error || showRetrying) && (
           <div className="playback-error">
+            <WarningCircle width={22} height={22} aria-hidden="true" />
             <span role={showRetrying ? 'status' : 'alert'}>{showRetrying ? 'Retrying playback…' : player.error}</span>
             <button
               ref={retryRef}
@@ -161,7 +165,7 @@ export function Player({
               onClick={retryPlayback}
               disabled={!showRetrying && (player.busy || !player.canRetry)}
             >
-              {showRetrying ? <LoaderCircle size={14} className="player-spin" /> : <RotateCw size={14} />}
+              <Refresh width={14} height={14} className={showRetrying ? 'player-spin' : undefined} aria-hidden="true" />
               {showRetrying ? 'Retrying…' : 'Retry'}
             </button>
             {player.current && (
@@ -179,6 +183,7 @@ export function Player({
         )}
         {(player.optionsError || retryingOptions) && (
           <div className="playback-error player-options-error">
+            <WarningCircle width={22} height={22} aria-hidden="true" />
             <span role={retryingOptions ? 'status' : 'alert'}>
               {retryingOptions ? 'Saving player options…' : player.optionsError}
             </span>
@@ -188,13 +193,19 @@ export function Player({
               aria-busy={retryingOptions || undefined}
               onClick={retryOptions}
             >
-              {retryingOptions ? <LoaderCircle size={14} className="player-spin" /> : <RotateCw size={14} />}
+              <Refresh
+                width={14}
+                height={14}
+                className={retryingOptions ? 'player-spin' : undefined}
+                aria-hidden="true"
+              />
               {retryingOptions ? 'Saving options…' : 'Retry saving options'}
             </button>
           </div>
         )}
         {(player.libraryLoading || player.libraryError) && (
           <div className="playback-error player-library-notice">
+            <BookStack width={22} height={22} aria-hidden="true" />
             <span role={player.libraryLoading ? 'status' : 'alert'}>
               {player.libraryLoading ? 'Loading whole library…' : player.libraryError}
             </span>
@@ -208,7 +219,12 @@ export function Player({
                   void retryLibraryWithFocus(async () => ({ isError: !(await player.retryLibrary()) }));
                 }}
               >
-                {player.libraryLoading ? <LoaderCircle size={14} className="player-spin" /> : <RotateCw size={14} />}
+                <Refresh
+                  width={14}
+                  height={14}
+                  className={player.libraryLoading ? 'player-spin' : undefined}
+                  aria-hidden="true"
+                />
                 {player.libraryLoading ? 'Loading library…' : 'Retry library'}
               </button>
             )}
@@ -305,7 +321,7 @@ export function Player({
               <span className="sr-only" role="status">
                 Loading audio
               </span>
-              <LoaderCircle size={15} className="player-spin" aria-hidden="true" />
+              <Refresh width={15} height={15} className="player-spin" aria-hidden="true" />
             </>
           )}
           <IconButton

@@ -1,4 +1,4 @@
-import { Music2, X } from 'lucide-react';
+import { MusicNote, Xmark } from 'iconoir-react/regular';
 import { useId, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 
 import { IconButton } from './IconButton/IconButton.component';
@@ -70,7 +70,7 @@ export function ErrorNotice({ header, error, retry, retryRef, retrying = false }
 export function Empty({ title, children }: { title: string; children?: ReactNode }) {
   return (
     <div className="empty">
-      <Music2 size={30} strokeWidth={1.4} />
+      <MusicNote width={30} height={30} strokeWidth={1.4} aria-hidden="true" />
       <h2>{title}</h2>
       {children && <p>{children}</p>}
     </div>
@@ -87,7 +87,7 @@ function ArtworkImage({ url, name, className = '' }: { url?: string; name: strin
     <img className={`artwork ${className}`} src={url} alt={name} loading="lazy" onError={() => setFailed(true)} />
   ) : (
     <div className={`artwork artwork-fallback ${className}`} role="img" aria-label={`No artwork for ${name}`}>
-      <Music2 size={24} strokeWidth={1.4} />
+      <MusicNote width={24} height={24} strokeWidth={1.4} aria-hidden="true" />
     </div>
   );
 }
@@ -162,7 +162,7 @@ export function Dialog({
           }}
           label="Close dialog"
         >
-          <X size={20} aria-hidden="true" />
+          <Xmark width={20} height={20} aria-hidden="true" />
         </IconButton>
       </div>
       <div className="modal-content">{children}</div>

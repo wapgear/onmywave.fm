@@ -1,3 +1,4 @@
+import { Antenna } from 'iconoir-react/regular';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -53,6 +54,7 @@ export function DJBreakNotice({ target }: { target: HTMLDivElement | null }) {
 
         return (
           <div key={runId} className="radio-speaking">
+            {!target && <Antenna width={22} height={22} aria-hidden="true" />}
             <span role="status">{current ? breakStatus : terminal}</span>
             {actions.map((action) => (
               <button

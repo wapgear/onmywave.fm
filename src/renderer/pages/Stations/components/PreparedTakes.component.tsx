@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { ExternalLink, Headphones, LoaderCircle, Pause, Play, Square } from 'lucide-react';
+import { Headset, OpenNewWindow, Pause, Play, Refresh, Square } from 'iconoir-react/regular';
 import { useState } from 'react';
 
 import type { PreparedNewsTake } from '../../../../shared/types';
@@ -91,7 +91,7 @@ export function PreparedTakes({ library, refresh, active = true }: PreparedTakes
       <ErrorNotice error={audioError ? new Error(audioError) : null} />
       {!takes.length && (
         <div className="prepared-empty">
-          <Headphones size={28} />
+          <Headset width={28} height={28} aria-hidden="true" />
           <h3>No saved audio yet</h3>
           <p>Automatically prepared recordings will appear here.</p>
         </div>
@@ -132,11 +132,11 @@ export function PreparedTakes({ library, refresh, active = true }: PreparedTakes
                   }
                 >
                   {current?.phase === 'loading' ? (
-                    <LoaderCircle size={15} className="spinning" />
+                    <Refresh width={15} height={15} className="spinning" aria-hidden="true" />
                   ) : current?.phase === 'playing' ? (
-                    <Pause size={15} />
+                    <Pause width={15} height={15} aria-hidden="true" />
                   ) : (
-                    <Play size={15} />
+                    <Play width={15} height={15} aria-hidden="true" />
                   )}
                   {current?.phase === 'loading'
                     ? 'Loading…'
@@ -148,7 +148,7 @@ export function PreparedTakes({ library, refresh, active = true }: PreparedTakes
                 </button>
                 {current && (
                   <button onClick={stop} aria-label="Stop audition">
-                    <Square size={13} />
+                    <Square width={13} height={13} aria-hidden="true" />
                     Stop
                   </button>
                 )}
@@ -213,7 +213,7 @@ export function PreparedTakes({ library, refresh, active = true }: PreparedTakes
                     <h4>Configured feeds</h4>
                     {take.provenance.sources.map((feed) => (
                       <Button variant="link" key={feed.id} onClick={() => source.mutate(feed.url)}>
-                        <ExternalLink size={12} />
+                        <OpenNewWindow width={12} height={12} aria-hidden="true" />
                         <span>{feed.name || feed.url}</span>
                       </Button>
                     ))}
@@ -225,7 +225,7 @@ export function PreparedTakes({ library, refresh, active = true }: PreparedTakes
                     {take.articles.map((article) => (
                       <div key={article.id}>
                         <Button variant="link" onClick={() => source.mutate(article.url)}>
-                          <ExternalLink size={12} />
+                          <OpenNewWindow width={12} height={12} aria-hidden="true" />
                           <span>{article.title}</span>
                         </Button>
                         <p>

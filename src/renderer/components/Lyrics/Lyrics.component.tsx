@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Music2 } from 'lucide-react';
+import { MusicNote } from 'iconoir-react/regular';
 import { useEffect, useRef, useState } from 'react';
 
 import type { Song, SongLyrics } from '../../../shared/types';
@@ -172,7 +172,7 @@ export function Lyrics({ connectionId, song, expanded }: { connectionId: string;
       )}
       {lyrics.isSuccess && !lines.length && (
         <div className="lyrics-empty">
-          <Music2 size={25} strokeWidth={1.4} aria-hidden="true" />
+          <MusicNote width={25} height={25} strokeWidth={1.4} aria-hidden="true" />
           <p>No lyrics are available for this song.</p>
           <small>Enable Jellyfin’s LRCLIB plugin on your server to provide lyrics.</small>
         </div>

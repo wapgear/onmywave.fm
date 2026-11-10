@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { LoaderCircle, Play, Square } from 'lucide-react';
+import { Play, Refresh, Square } from 'iconoir-react/regular';
 import { useId, useLayoutEffect, useRef, useState } from 'react';
 
 import { PRESET_VOICE_IDS } from '../../../../shared/voice-previews';
@@ -264,11 +264,11 @@ export function VoicePreview({ resource, label, playbackId, activeId, onStart, a
         aria-label={`${pending ? 'Loading preview' : buttonLabel} for ${label}`}
       >
         {pending ? (
-          <LoaderCircle size={14} className="spinning" />
+          <Refresh width={14} height={14} className="spinning" aria-hidden="true" />
         ) : playing ? (
-          <Square size={14} />
+          <Square width={14} height={14} aria-hidden="true" />
         ) : (
-          <Play size={14} />
+          <Play width={14} height={14} aria-hidden="true" />
         )}
         {pending ? 'Loading…' : buttonLabel}
       </button>

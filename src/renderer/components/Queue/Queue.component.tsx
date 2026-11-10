@@ -1,5 +1,5 @@
 import { defaultRangeExtractor, observeElementOffset, useVirtualizer } from '@tanstack/react-virtual';
-import { ListMusic, X } from 'lucide-react';
+import { Playlist, Xmark } from 'iconoir-react/regular';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { KeyboardEvent } from 'react';
 import { createPortal } from 'react-dom';
@@ -267,7 +267,7 @@ function QueueRows({
                 onClick={() => removeRow(item, virtualRow.index)}
                 onKeyDown={navigate}
               >
-                <X size={14} aria-hidden="true" />
+                <Xmark width={14} height={14} aria-hidden="true" />
               </IconButton>
             </li>
           );
@@ -304,7 +304,7 @@ function QueueRows({
               <TrackDuration seconds={draggedItem.song.duration} />
             </span>
             <span className="queue-drag-remove">
-              <X size={14} aria-hidden="true" />
+              <Xmark width={14} height={14} aria-hidden="true" />
             </span>
           </div>,
           document.body,
@@ -379,7 +379,7 @@ export function Queue() {
     <div className="queue-content">
       {!player.queue.length ? (
         <div className="drawer-empty">
-          <ListMusic size={30} strokeWidth={1.4} />
+          <Playlist width={30} height={30} strokeWidth={1.4} aria-hidden="true" />
           <h3>Your queue is empty</h3>
           <p>Play a song or add music to the queue.</p>
         </div>

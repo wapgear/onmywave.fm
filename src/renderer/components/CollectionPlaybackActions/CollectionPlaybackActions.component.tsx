@@ -1,4 +1,5 @@
-import { ListPlus, Play } from 'lucide-react';
+import { Play, PlaylistPlus } from 'iconoir-react/regular';
+import { Play as PlaySolid } from 'iconoir-react/solid';
 
 import { Button } from '../Button/Button.component';
 
@@ -20,15 +21,15 @@ export function CollectionPlaybackActions({
   return (
     <>
       <Button type="button" variant="primary" disabled={disabled} onClick={onPlay}>
-        <Play size={16} fill="currentColor" aria-hidden="true" />
+        <PlaySolid width={16} height={16} aria-hidden="true" />
         {playLabel}
       </Button>
       <Button type="button" disabled={disabled} onClick={onPlayNext}>
-        <Play size={16} aria-hidden="true" />
+        <Play width={16} height={16} aria-hidden="true" />
         Play next
       </Button>
       <Button type="button" disabled={disabled} onClick={onEnqueue}>
-        <ListPlus size={17} aria-hidden="true" />
+        <PlaylistPlus width={17} height={17} aria-hidden="true" />
         Add to end
       </Button>
     </>

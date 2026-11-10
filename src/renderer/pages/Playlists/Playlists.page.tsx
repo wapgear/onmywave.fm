@@ -1,5 +1,5 @@
 import { useIsFetching, useIsMutating, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { ArrowLeft, ListMusic, LockKeyhole, Pencil, Plus } from 'lucide-react';
+import { ArrowLeft, EditPencil, Lock, Playlist, Plus } from 'iconoir-react/regular';
 import { useCallback, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 import type { PlaylistEditRecovery, PlaylistLibrary, Song } from '../../../shared/types';
@@ -135,7 +135,7 @@ export function PlaylistsPage({
     <>
       <PageHeading title="Playlists" subtitle="Your collections, on every Jellyfin client" headingRef={heading}>
         <button ref={newPlaylist} className="primary" disabled={creationBlocked} onClick={() => setCreating(true)}>
-          <Plus size={17} />
+          <Plus width={17} height={17} aria-hidden="true" />
           New playlist
         </button>
       </PageHeading>
@@ -293,7 +293,7 @@ export function PlaylistsPage({
               <div>
                 <strong>{item.name}</strong>
                 <span>
-                  <ListMusic size={14} />
+                  <Playlist width={14} height={14} aria-hidden="true" />
                   {item.songCount === undefined ? 'Playlist' : `${item.songCount} songs`}
                 </span>
                 {item.recoveryStatus && (
@@ -549,7 +549,7 @@ function PlaylistDetail({ id, listError, back, add, details, recovery }: Playlis
         className="back-button"
         onClick={(event) => back(event.currentTarget)}
       >
-        <ArrowLeft size={17} />
+        <ArrowLeft width={17} height={17} aria-hidden="true" />
         Playlists
       </button>
       {data && (
@@ -567,13 +567,13 @@ function PlaylistDetail({ id, listError, back, add, details, recovery }: Playlis
               onEnqueue={() => player.enqueue(data.entries.map((entry) => entry.song))}
             />
             <button disabled={data.canEdit === false || editBlocked} onClick={() => setRenaming(true)}>
-              <Pencil size={15} />
+              <EditPencil width={15} height={15} aria-hidden="true" />
               Rename
             </button>
           </CollectionHeading>
           {data.canEdit !== true && (
             <p className="notice">
-              <LockKeyhole size={17} />
+              <Lock width={17} height={17} aria-hidden="true" />
               {data.restriction ||
                 (data.canEdit === false
                   ? 'You can listen to this playlist, but your account cannot edit it.'

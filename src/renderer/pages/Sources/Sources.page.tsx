@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Pencil, Plus, Rss, Trash2 } from 'lucide-react';
+import { EditPencil, Plus, RssFeed, Trash } from 'iconoir-react/regular';
 import { useId, useRef, useState } from 'react';
 
 import { normalizeNewsSource } from '../../../shared/sources';
@@ -95,7 +95,7 @@ export function SourcesPage() {
           disabled={!state.data || mutation.isPending}
           onClick={() => edit({ id: crypto.randomUUID(), name: '', url: '' })}
         >
-          <Plus size={16} />
+          <Plus width={16} height={16} aria-hidden="true" />
           Add source
         </button>
       </PageHeading>
@@ -114,7 +114,7 @@ export function SourcesPage() {
         <div className="source-list" ref={results}>
           {sources.map((source) => (
             <article className="source-row" key={source.id}>
-              <Rss size={18} aria-hidden="true" />
+              <RssFeed width={18} height={18} aria-hidden="true" />
               <div>
                 <h2>{source.name}</h2>
                 <p>{source.kind === 'twitter' ? source.query : source.url}</p>
@@ -130,7 +130,7 @@ export function SourcesPage() {
                   ?.room.sourceIds.includes(source.id) && <span>Selected in News bucket</span>}
               </div>
               <IconButton disabled={mutation.isPending} label={`Edit ${source.name}`} onClick={() => edit(source)}>
-                <Pencil size={16} aria-hidden="true" />
+                <EditPencil width={16} height={16} aria-hidden="true" />
               </IconButton>
               <IconButton
                 className="danger"
@@ -141,7 +141,7 @@ export function SourcesPage() {
                   setDeleting(source);
                 }}
               >
-                <Trash2 size={16} aria-hidden="true" />
+                <Trash width={16} height={16} aria-hidden="true" />
               </IconButton>
             </article>
           ))}
