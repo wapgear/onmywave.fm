@@ -17,7 +17,7 @@ export function DJBreakNotice({ target }: { target: HTMLDivElement | null }) {
   const showNewsControls = recovery.status.phase === 'ready' || knownSpeech;
   const breakStatus = {
     idle: '',
-    waiting: 'DJ break scheduled for the end of this song.',
+    waiting: 'DJ break near the end of this song.',
     fading: 'Lowering the music for your DJ.',
     'lead-in': 'Your DJ starts shortly.',
     speaking: 'Your DJ is on air.',
