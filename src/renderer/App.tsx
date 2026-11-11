@@ -43,7 +43,7 @@ import { StationsPage } from './pages/Stations/Stations.page';
 import type { RoomSetupDraft } from './pages/Stations/Stations.types';
 import { PlayerProvider, usePlayer } from './player';
 import { primaryModifier } from './shortcuts';
-import { readArtworkAppearance } from './theme';
+import { accentFavorites, favoriteColor, gradientFavorites, readAppearancePreferences } from './theme';
 import { useRetryFocus } from './useRetryFocus';
 
 const listeningDrawerOrder = ['details', 'lyrics', 'queue', 'dj'] as const;
@@ -281,15 +281,26 @@ function ReadyApp({
   } | null>(null);
   const restoreSetupFocus = useRef(false);
   const player = usePlayer();
-  const [artworkAppearance, setArtworkAppearance] = useState(readArtworkAppearance);
+  const [appearance, setAppearance] = useState(readAppearancePreferences);
   const artworkBackdrop = useRef<HTMLDivElement>(null);
+  const { accent, gradient, customAccent, customGradient } = appearance;
   const palette = useArtworkPalette(
-    artworkAppearance.gradient || artworkAppearance.accent ? player.currentArtwork : null,
+    gradient.mode === 'dynamic' || accent.mode === 'dynamic' ? player.currentArtwork : null,
     artworkBackdrop,
-    artworkAppearance.gradient,
+    gradient.mode === 'dynamic',
   );
-  const artworkGradient = artworkAppearance.gradient ? palette : undefined;
-  const artworkAccent = artworkAppearance.accent ? palette?.accent : undefined;
+  const gradientColors =
+    gradient.mode === 'dynamic'
+      ? palette
+      : gradient.choice === 'custom'
+        ? customGradient
+        : favoriteColor(gradient.choice, gradientFavorites(appearance.favoriteGradients));
+  const accentColor =
+    accent.mode === 'dynamic'
+      ? palette?.accent
+      : accent.choice === 'custom'
+        ? customAccent
+        : favoriteColor(accent.choice, accentFavorites(appearance.favoriteAccents));
   const [drawer, setDrawer] = useState<Song | 'queue' | 'lyrics' | 'dj' | null>(null);
   const [drawerExpanded, setDrawerExpanded] = useState(false);
   const [djControlsTarget, setDJControlsTarget] = useState<HTMLDivElement | null>(null);
@@ -680,13 +691,13 @@ function ReadyApp({
     >
       <div
         className={`app-shell app-notice-surface ${visibleDrawer ? 'has-drawer has-listening-drawer' : ''}`}
-        data-artwork-gradient={artworkGradient ? '' : undefined}
-        data-artwork-accent={artworkAccent ? '' : undefined}
+        data-gradient={gradientColors ? '' : undefined}
+        data-custom-accent={accentColor ? '' : undefined}
         style={
           {
-            '--artwork-gradient-start': artworkGradient?.start,
-            '--artwork-gradient-end': artworkGradient?.end,
-            '--artwork-accent-source': artworkAccent,
+            '--gradient-start': gradientColors?.start,
+            '--gradient-end': gradientColors?.end,
+            '--accent-source': accentColor,
           } as CSSProperties
         }
       >
@@ -765,10 +776,8 @@ function ReadyApp({
                 )}
                 {page === 'settings' && (
                   <SettingsPage
-                    artworkAppearance={artworkAppearance}
-                    onArtworkAppearanceChange={(option, enabled) =>
-                      setArtworkAppearance((current) => ({ ...current, [option]: enabled }))
-                    }
+                    appearance={appearance}
+                    onAppearanceChange={setAppearance}
                     section={settingsSection}
                     onSectionChange={setSettingsSection}
                     returnToSetup={

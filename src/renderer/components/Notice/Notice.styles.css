@@ -33,6 +33,8 @@
   translate: 0 0;
 }
 .app-notices {
+  --app-notice-padding-block: 5px;
+  --app-notice-height: calc(var(--control-size) + 2 * var(--app-notice-padding-block));
   flex-shrink: 0;
   max-height: min(35dvh, 240px);
   overflow: auto;
@@ -42,12 +44,14 @@
   display: none;
 }
 .app-notices > .app-notice {
-  min-height: 44px;
+  min-height: var(--app-notice-height);
   margin: 0;
-  padding: 5px var(--content-inset);
+  padding: var(--app-notice-padding-block) var(--content-inset);
   border-radius: 0;
+  line-height: 1.4;
 }
 .app-notices > .app-notice + .app-notice {
+  min-height: calc(var(--app-notice-height) + 1px);
   border-top: 1px solid var(--separator);
 }
 .app-notice-surface {
@@ -68,7 +72,7 @@
 .app-notice-surface:has(.app-notices > [data-tone='error']) {
   --app-notice-tint: var(--notice-error-background);
 }
-.app-notice-surface:has(.app-notices > .app-notice) {
+.app-notice-surface:not([data-gradient]):has(.app-notices > .app-notice) {
   background-image: linear-gradient(
     color-mix(in srgb, var(--app-notice-tint) 65%, var(--app-notice-base)),
     var(--app-notice-base)

@@ -149,17 +149,20 @@
 }
 
 @media (forced-colors: none) {
-  .app-shell[data-artwork-accent] {
-    --artwork-accent-lightness: 43%;
-    --accent: oklch(from var(--artwork-accent-source) var(--artwork-accent-lightness) min(c, 0.15) h);
+  :root {
+    --accent-lightness: 43%;
+  }
+
+  :root[data-theme='dark'] {
+    --accent-lightness: 79%;
+  }
+
+  .app-shell[data-custom-accent] {
+    --accent: oklch(from var(--accent-source) var(--accent-lightness) min(c, 0.15) h);
     --accent-soft: color-mix(in oklab, var(--accent) 15%, var(--canvas));
     --accent-hover: color-mix(in oklab, var(--accent) 90%, var(--text));
     --accent-strong: color-mix(in oklab, var(--accent) 80%, var(--text));
     --focus: var(--accent);
     --range-fill-color: var(--accent);
-  }
-
-  :root[data-theme='dark'] .app-shell[data-artwork-accent] {
-    --artwork-accent-lightness: 79%;
   }
 }
