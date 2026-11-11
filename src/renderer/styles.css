@@ -308,15 +308,18 @@ button > svg {
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: var(--sidebar-background);
 }
 @media (forced-colors: none) {
-  .app-shell[data-artwork-gradient] > .artwork-backdrop {
-    background-image: linear-gradient(
-      color-mix(in srgb, var(--artwork-gradient-start) 26%, var(--sidebar-background)),
-      color-mix(in srgb, var(--artwork-gradient-end) 18%, var(--sidebar-background)) 52%,
+  .app-shell[data-gradient] {
+    --backdrop-gradient: linear-gradient(
+      color-mix(in srgb, var(--gradient-start) 26%, var(--sidebar-background)),
+      color-mix(in srgb, var(--gradient-end) 18%, var(--sidebar-background)) 52%,
       var(--sidebar-background)
     );
+  }
+
+  .artwork-backdrop {
+    background-image: var(--backdrop-gradient, none);
   }
 }
 .artwork-backdrop::view-transition-group(root) {
@@ -334,9 +337,6 @@ button > svg {
   from {
     opacity: 0;
   }
-}
-.app-shell:has(> .library-panel > .app-notices > .app-notice) > .artwork-backdrop {
-  display: none;
 }
 .sidebar {
   display: flex;

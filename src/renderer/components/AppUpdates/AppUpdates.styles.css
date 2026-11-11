@@ -26,6 +26,16 @@
   align-items: center;
   padding-top: 4px;
 }
+.app-notice .notice-copy:has(> .app-update-download) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+}
+.app-notice .app-update-download {
+  flex: 1 1 112px;
+  min-width: 0;
+}
 .app-update-download {
   display: flex;
   align-items: center;

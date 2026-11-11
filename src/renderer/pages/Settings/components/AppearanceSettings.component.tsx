@@ -1,25 +1,20 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { SectionHeading } from '../../../components/SectionHeading/SectionHeading.component';
-import { applyTheme, currentTheme, saveArtworkAppearance, themes } from '../../../theme';
-import type { ArtworkAppearance, Theme } from '../../../theme.types';
+import {
+  accentFavorites,
+  applyTheme,
+  currentTheme,
+  favoriteId,
+  gradientFavorites,
+  saveAppearancePreferences,
+  themes,
+} from '../../../theme';
+import type { AppearancePreferences } from '../../../theme.types';
 import type { SettingsPageProps } from '../Settings.types';
+import { AppearanceColorChoices, CustomColorInput, SaveColorFavorite } from './AppearanceColorChoices.component';
 
-const artworkOptions = {
-  gradient: {
-    title: 'Now Playing gradient',
-    off: 'Use the solid theme backdrop',
-    on: 'Tint the area behind the sidebar and player with cover art',
-  },
-  accent: {
-    title: 'Now Playing accent',
-    off: 'Use the theme color for highlights and controls',
-    on: 'Use cover art to color the selected song, icons, and slider fills',
-  },
-};
-
-function AppearanceChoice({
-  name,
+function ThemeChoice({
   value,
   preview,
   label,
@@ -27,7 +22,6 @@ function AppearanceChoice({
   checked,
   onChange,
 }: {
-  name: string;
   value: string;
   preview: string;
   label: string;
@@ -35,7 +29,7 @@ function AppearanceChoice({
   checked: boolean;
   onChange: () => void;
 }) {
-  const id = `${name}-${value}`;
+  const id = `theme-${value}`;
 
   return (
     <label className="theme-choice">
@@ -43,7 +37,7 @@ function AppearanceChoice({
       <span className="theme-choice-label">
         <input
           type="radio"
-          name={name}
+          name="theme"
           value={value}
           checked={checked}
           aria-labelledby={`${id}-label`}
@@ -59,56 +53,30 @@ function AppearanceChoice({
   );
 }
 
-function ArtworkPicker({
-  option,
-  theme,
-  enabled,
-  onChange,
-}: {
-  option: keyof ArtworkAppearance;
-  theme: Theme;
-  enabled: boolean;
-  onChange: (option: keyof ArtworkAppearance, enabled: boolean) => void;
-}) {
-  const [saved, setSaved] = useState(true);
-  const copy = artworkOptions[option];
-
-  return (
-    <section>
-      <fieldset className="theme-picker artwork-picker">
-        <legend>{copy.title}</legend>
-        {(['off', 'on'] as const).map((value) => (
-          <AppearanceChoice
-            key={value}
-            name={`artwork-${option}`}
-            value={value}
-            preview={`${theme}-${value === 'on' ? option : 'theme'}`}
-            label={value === 'on' ? 'On' : 'Off'}
-            description={copy[value]}
-            checked={enabled === (value === 'on')}
-            onChange={() => {
-              const next = value === 'on';
-              onChange(option, next);
-              setSaved(saveArtworkAppearance(option, next));
-            }}
-          />
-        ))}
-      </fieldset>
-      {!saved && (
-        <p className="settings-footnote" role="status">
-          This choice applies for now. It could not be saved on this device.
-        </p>
-      )}
-    </section>
-  );
-}
-
 export function AppearanceSettings({
-  artworkAppearance,
-  onArtworkAppearanceChange,
-}: Pick<SettingsPageProps, 'artworkAppearance' | 'onArtworkAppearanceChange'>) {
+  appearance,
+  onAppearanceChange,
+}: Pick<SettingsPageProps, 'appearance' | 'onAppearanceChange'>) {
   const [theme, setTheme] = useState(currentTheme);
-  const [saved, setSaved] = useState(true);
+  const [themeSaved, setThemeSaved] = useState(true);
+  const [colorsSaved, setColorsSaved] = useState(true);
+  const latestAppearance = useRef(appearance);
+  const { customAccent, customGradient, favoriteAccents, favoriteGradients } = appearance;
+  const accentIsFavorite = favoriteAccents.some(({ color }) => color === customAccent);
+  const gradientIsFavorite = favoriteGradients.some(
+    ({ color }) => color.start === customGradient.start && color.end === customGradient.end,
+  );
+
+  function updateColors(
+    changes: Partial<AppearancePreferences> | ((current: AppearancePreferences) => Partial<AppearancePreferences>),
+  ) {
+    const current = latestAppearance.current;
+    const next = { ...current, ...(typeof changes === 'function' ? changes(current) : changes) };
+
+    latestAppearance.current = next;
+    onAppearanceChange(next);
+    setColorsSaved(saveAppearancePreferences(next));
+  }
 
   return (
     <>
@@ -118,9 +86,8 @@ export function AppearanceSettings({
         </SectionHeading>
         <fieldset className="theme-picker" aria-labelledby="appearance-title">
           {themes.map((option) => (
-            <AppearanceChoice
+            <ThemeChoice
               key={option.id}
-              name="theme"
               value={option.id}
               preview={`${option.id}-theme`}
               label={option.label}
@@ -128,29 +95,122 @@ export function AppearanceSettings({
               checked={theme === option.id}
               onChange={() => {
                 setTheme(option.id);
-                setSaved(applyTheme(option.id));
+                setThemeSaved(applyTheme(option.id));
               }}
             />
           ))}
         </fieldset>
-        {!saved && (
+        {!themeSaved && (
           <p className="settings-footnote" role="status">
             Theme applied for now. It could not be saved on this device. Choose another theme to retry.
           </p>
         )}
       </section>
-      <ArtworkPicker
-        option="gradient"
-        theme={theme}
-        enabled={artworkAppearance.gradient}
-        onChange={onArtworkAppearanceChange}
-      />
-      <ArtworkPicker
-        option="accent"
-        theme={theme}
-        enabled={artworkAppearance.accent}
-        onChange={onArtworkAppearanceChange}
-      />
+      <section>
+        <AppearanceColorChoices
+          name="accent"
+          title="Accent color"
+          value={appearance.accent}
+          favorites={accentFavorites(favoriteAccents)}
+          swatch={(color) => `oklch(from ${color} var(--accent-lightness, l) min(c, 0.15) h)`}
+          onChange={(accent) => updateColors({ accent })}
+          onRename={({ color }, name) =>
+            updateColors((current) => ({
+              favoriteAccents: current.favoriteAccents.map((saved) =>
+                saved.color === color ? { ...saved, name } : saved,
+              ),
+            }))
+          }
+          onRemove={({ id, color }) =>
+            updateColors((current) => ({
+              ...(current.accent.choice === id && {
+                accent: { ...current.accent, choice: 'custom' },
+                customAccent: color,
+              }),
+              favoriteAccents: current.favoriteAccents.filter((saved) => saved.color !== color),
+            }))
+          }
+        />
+        {appearance.accent.mode === 'static' && appearance.accent.choice === 'custom' && (
+          <>
+            <div className="appearance-custom-colors">
+              <CustomColorInput
+                label="Custom accent"
+                value={appearance.customAccent}
+                onChange={(customAccent) => updateColors({ customAccent })}
+              />
+              <SaveColorFavorite
+                kind="accent"
+                saved={accentIsFavorite}
+                onSave={(name) =>
+                  updateColors((current) => ({
+                    accent: { ...current.accent, choice: favoriteId(customAccent) },
+                    favoriteAccents: [...current.favoriteAccents, { color: customAccent, name }],
+                  }))
+                }
+              />
+            </div>
+            <p className="settings-footnote">The accent shade adapts to the theme for readability.</p>
+          </>
+        )}
+      </section>
+      <section>
+        <AppearanceColorChoices
+          name="gradient"
+          title="Backdrop gradient"
+          value={appearance.gradient}
+          favorites={gradientFavorites(favoriteGradients)}
+          swatch={({ start, end }) => `linear-gradient(${start}, ${end})`}
+          onChange={(gradient) => updateColors({ gradient })}
+          onRename={({ id }, name) =>
+            updateColors((current) => ({
+              favoriteGradients: current.favoriteGradients.map((saved) =>
+                favoriteId(saved.color.start, saved.color.end) === id ? { ...saved, name } : saved,
+              ),
+            }))
+          }
+          onRemove={({ id, color }) =>
+            updateColors((current) => ({
+              ...(current.gradient.choice === id && {
+                gradient: { ...current.gradient, choice: 'custom' },
+                customGradient: color,
+              }),
+              favoriteGradients: current.favoriteGradients.filter(
+                ({ color }) => favoriteId(color.start, color.end) !== id,
+              ),
+            }))
+          }
+        />
+        {appearance.gradient.mode === 'static' && appearance.gradient.choice === 'custom' && (
+          <div className="appearance-custom-colors">
+            <CustomColorInput
+              label="Start color"
+              value={appearance.customGradient.start}
+              onChange={(start) => updateColors({ customGradient: { ...appearance.customGradient, start } })}
+            />
+            <CustomColorInput
+              label="End color"
+              value={appearance.customGradient.end}
+              onChange={(end) => updateColors({ customGradient: { ...appearance.customGradient, end } })}
+            />
+            <SaveColorFavorite
+              kind="gradient"
+              saved={gradientIsFavorite}
+              onSave={(name) =>
+                updateColors((current) => ({
+                  gradient: { ...current.gradient, choice: favoriteId(customGradient.start, customGradient.end) },
+                  favoriteGradients: [...current.favoriteGradients, { color: customGradient, name }],
+                }))
+              }
+            />
+          </div>
+        )}
+      </section>
+      {!colorsSaved && (
+        <p className="settings-footnote" role="status">
+          Colors applied for now. They could not be saved on this device.
+        </p>
+      )}
     </>
   );
 }

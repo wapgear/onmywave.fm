@@ -33,8 +33,8 @@ export function SettingsPage({
   connection,
   update,
   disconnected,
-  artworkAppearance,
-  onArtworkAppearanceChange,
+  appearance,
+  onAppearanceChange,
   section,
   onSectionChange,
   returnToSetup,
@@ -93,10 +93,7 @@ export function SettingsPage({
       )}
       {activeSection === 'appearance' && (
         <div className="settings-content settings-preferences">
-          <AppearanceSettings
-            artworkAppearance={artworkAppearance}
-            onArtworkAppearanceChange={onArtworkAppearanceChange}
-          />
+          <AppearanceSettings appearance={appearance} onAppearanceChange={onAppearanceChange} />
         </div>
       )}
       {activeSection === 'general' && (
