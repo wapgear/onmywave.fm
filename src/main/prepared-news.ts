@@ -287,6 +287,12 @@ let initialization: Promise<PreparedNewsLibrary> | undefined;
 
 let writes = Promise.resolve();
 
+let notifyChange: (() => void) | undefined;
+
+export function setPreparedNewsChangeListener(listener: () => void) {
+  notifyChange = listener;
+}
+
 let recoveryDirty = true;
 
 let recoveryPromise: Promise<void> | undefined;
@@ -635,6 +641,7 @@ async function change(update: (current: PreparedNewsLibrary) => PreparedNewsLibr
     library = next;
   });
   writes = task.catch(() => {});
+  void task.then(() => notifyChange?.()).catch(() => {});
   return task;
 }
 

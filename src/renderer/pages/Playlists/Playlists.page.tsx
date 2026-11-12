@@ -10,7 +10,8 @@ import { CollectionHeading } from '../../components/CollectionHeading/Collection
 import { CollectionPlaybackActions } from '../../components/CollectionPlaybackActions/CollectionPlaybackActions.component';
 import { SaveButton } from '../../components/SaveButton/SaveButton.component';
 import { Artwork, Dialog, DialogActions, Empty, ErrorNotice, PageHeading } from '../../components/Shared';
-import { playlistRows, TrackTable } from '../../components/TrackTable/TrackTable.component';
+import { playlistRows } from '../../components/TrackTable/TrackTable.component';
+import { VirtualTrackTable } from '../../components/TrackTable/VirtualTrackTable.component';
 import { usePlayer } from '../../player';
 import { useRetryFocus } from '../../useRetryFocus';
 import type { PlaylistDetailProps, PlaylistNameDialogProps, PlaylistsPageProps } from './Playlists.types';
@@ -719,7 +720,7 @@ function PlaylistDetail({ id, listError, back, add, details, recovery }: Playlis
             </p>
           )}
           {data.entries.length ? (
-            <TrackTable
+            <VirtualTrackTable
               rows={rows}
               selected={selected}
               select={setSelected}

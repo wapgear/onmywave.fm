@@ -1,15 +1,15 @@
-.virtual-songs {
+.virtual-track-table {
   min-width: 0;
   overflow-anchor: none;
 }
-.virtual-songs .song-table tbody tr:not(.song-spacer) {
+.virtual-track-table .song-table tbody tr:not(.song-spacer) {
   height: 56px;
 }
-.virtual-songs .song-table tbody tr:not(.song-spacer) > td {
+.virtual-track-table .song-table tbody tr:not(.song-spacer) > td {
   height: 56px;
   max-height: 56px;
 }
-.virtual-songs .song-table .song-spacer > td {
+.virtual-track-table .song-table .song-spacer > td {
   background: transparent;
   line-height: 0;
 }

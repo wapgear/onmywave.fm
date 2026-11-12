@@ -25,8 +25,8 @@ function useEdit<T>(write: (value: T) => Promise<LocalStateSnapshot>) {
     onMutate: () => client.cancelQueries({ queryKey: ['localState'], exact: true }),
     onSuccess: async (result) => {
       await confirmLocalState(client, result);
-      await client.invalidateQueries({ queryKey: ['localState'], exact: true });
       setDraft(null);
+      void client.invalidateQueries({ queryKey: ['localState'], exact: true });
     },
     onSettled: () => {
       inFlight.current = false;

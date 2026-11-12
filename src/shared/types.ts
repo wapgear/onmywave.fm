@@ -242,6 +242,8 @@ export type NewsRecoveryStatus = { phase: 'recovering' | 'ready' | 'unavailable'
 
 export type AiStatus = { configured: boolean; sessionOnly: boolean };
 
+export type NewsPreparationChange = 'library' | 'schedule';
+
 export type NewsProgress = {
   requestId: string;
   phase: 'feeds' | 'writing' | 'speech' | 'live-recording';
@@ -473,6 +475,7 @@ export interface WaveApi {
   releasePreparedNews(input: PreparedNewsClaim & { neverPlayInvoked?: boolean }): Promise<Result<void>>;
   markPreparedNewsPlayed(input: PreparedNewsClaim): Promise<Result<void>>;
   getPreparedNews(): Promise<Result<PreparedNewsLibrary>>;
+  onNewsPreparationChanged(callback: (change: NewsPreparationChange) => void): () => void;
   setNewsFavorite(input: { article: NewsArticle; favorite: boolean }): Promise<Result<PreparedNewsLibrary>>;
   cancelPreparedNews(requestId: string): Promise<Result<void>>;
   getVoicePreview(voiceId: string): Promise<Result<DJVoicePreview>>;

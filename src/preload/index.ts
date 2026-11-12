@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron';
 
-import type { NewsProgress, WaveApi } from '../shared/types';
+import type { NewsPreparationChange, NewsProgress, WaveApi } from '../shared/types';
 import type { UpdateStatus } from '../shared/update';
 
 const api: WaveApi = {
@@ -74,6 +74,11 @@ const api: WaveApi = {
   releasePreparedNews: (input) => ipcRenderer.invoke('wave:releasePreparedNews', input),
   markPreparedNewsPlayed: (input) => ipcRenderer.invoke('wave:markPreparedNewsPlayed', input),
   getPreparedNews: () => ipcRenderer.invoke('wave:getPreparedNews'),
+  onNewsPreparationChanged: (callback) => {
+    const listener = (_event: Electron.IpcRendererEvent, change: NewsPreparationChange) => callback(change);
+    ipcRenderer.on('wave:newsPreparationChanged', listener);
+    return () => ipcRenderer.removeListener('wave:newsPreparationChanged', listener);
+  },
   setNewsFavorite: (input) => ipcRenderer.invoke('wave:setNewsFavorite', input),
   cancelPreparedNews: (id) => ipcRenderer.invoke('wave:cancelPreparedNews', id),
   getVoicePreview: (voiceId) => ipcRenderer.invoke('wave:getVoicePreview', voiceId),
