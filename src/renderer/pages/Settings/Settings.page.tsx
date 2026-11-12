@@ -27,6 +27,7 @@ const sections: { id: SettingsSection; label: string }[] = [
   { id: 'sources', label: 'Sources' },
   { id: 'djs', label: 'DJs' },
   { id: 'keys', label: 'Provider keys' },
+  { id: 'updates', label: 'Updates' },
 ];
 
 export function SettingsPage({
@@ -96,6 +97,11 @@ export function SettingsPage({
           <AppearanceSettings appearance={appearance} onAppearanceChange={onAppearanceChange} />
         </div>
       )}
+      {activeSection === 'updates' && (
+        <div className="settings-content settings-preferences">
+          <UpdateSettings />
+        </div>
+      )}
       {activeSection === 'general' && (
         <div className="settings-content settings-preferences">
           <section>
@@ -136,7 +142,6 @@ export function SettingsPage({
             </SectionHeading>
             <LibraryChooser key={connection.id} connection={connection} done={update} disabled={disconnect.isPending} />
           </section>
-          <UpdateSettings />
         </div>
       )}
       {confirm && (

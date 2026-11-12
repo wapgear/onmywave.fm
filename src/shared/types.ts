@@ -1,3 +1,4 @@
+import type { AppMenuCommand, LibraryMenuState } from './app-menu';
 import type { DJPlaybackSettings, DJPlaybackSettingsPatch } from './dj-playback';
 import type { UpdateStatus } from './update';
 import type { WorkflowDraft } from './workflow';
@@ -389,6 +390,8 @@ export type RemovedSong = { songId: string; removedAt: string; purgeAfter: strin
 export type SongRemovalStatus = { songs: RemovedSong[]; pending: number; syncError?: string };
 
 export interface WaveApi {
+  onMenuCommand(callback: (command: AppMenuCommand) => void): () => void;
+  setLibraryMenuState(state: LibraryMenuState | null): Promise<Result<void>>;
   getUpdateStatus(): Promise<Result<UpdateStatus>>;
   checkForUpdates(): Promise<Result<UpdateStatus>>;
   downloadUpdate(): Promise<Result<UpdateStatus>>;

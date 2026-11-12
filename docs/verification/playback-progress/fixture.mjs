@@ -47,6 +47,6 @@ const bridge={
  markPreparedNewsPlayed:input=>{window.__fixture.calls.push({method:'markPreparedNewsPlayed',input});return ok();},
  releasePreparedNews:input=>{window.__fixture.calls.push({method:'releasePreparedNews',input});return ok();},
  saveDJPlayback:async patch=>{window.__fixture.calls.push({method:'saveDJPlayback',patch});if(window.__fixture.saveDJGate)await window.__fixture.saveDJGate;state.djPlayback=normalizeDJPlaybackSettings({...state.djPlayback,...patch,...(patch.everySongs!==undefined&&patch.everySongsMax===undefined?{everySongsMax:patch.everySongs}:{}),...(patch.announceEverySongs!==undefined&&patch.announceEverySongsMax===undefined?{announceEverySongsMax:patch.announceEverySongs}:{})});state.revision++;return ok(structuredClone(state));},
- onNewsProgress:()=>()=>{},onNewsPreparationChanged:()=>()=>{},onUpdateStatus:()=>()=>{},onPlaybackCheckpointRequest:()=>()=>{},flushPlaybackCheckpoint:()=>ok(),
+ onNewsProgress:()=>()=>{},onNewsPreparationChanged:()=>()=>{},onUpdateStatus:()=>()=>{},onMenuCommand:()=>()=>{},setLibraryMenuState:()=>ok(),onPlaybackCheckpointRequest:()=>()=>{},flushPlaybackCheckpoint:()=>ok(),
 };
 window.wave=new Proxy(bridge,{get(target,name){if(name in target)return target[name];return (...args)=>{window.__fixture.calls.push({method:name,args});return ok(null);};}});

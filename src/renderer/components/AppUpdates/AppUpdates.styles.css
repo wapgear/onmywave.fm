@@ -62,13 +62,16 @@
   font-variant-numeric: tabular-nums;
   text-align: right;
 }
-.app-update-settings {
+.app-update-details {
   display: grid;
   gap: 12px;
 }
-.app-update-settings > h2,
-.app-update-settings > p {
+.app-update-details > p {
   margin: 0;
+}
+.app-update-version {
+  color: var(--muted);
+  font-size: 13px;
 }
 @keyframes app-update-content {
   from {
@@ -82,7 +85,6 @@
   .app-update-status {
     animation: none;
   }
-  .app-update-settings button,
   .app-update-progress > span {
     transition: none;
   }

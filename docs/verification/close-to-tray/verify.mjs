@@ -20,16 +20,19 @@ source = source.replace(
   'app.setName("onmywave.fm");',
   'app.setPath("appData", process.env.WAVE_TRAY_DATA);\napp.setName("onmywave.fm");',
 );
+const updateSupport = 'app.isPackaged && process.platform === "darwin" && process.arch === "arm64"';
+assert.ok(source.includes(`return ${updateSupport};`), 'Expected built updater support check');
+source = source.replace(`return ${updateSupport};`, `return verificationSupportsUpdates || (${updateSupport});`);
 source += `
 const { default: verify } = await import('node:assert/strict');
 const { writeFile: saveEvidence } = await import('node:fs/promises');
 const wait = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 let verificationMenu;
-const buildMenu = Menu.buildFromTemplate;
-Menu.buildFromTemplate = function(template) {
-  const menu = buildMenu.call(Menu, template);
-  if (template.some(item => item.label === 'Show onmywave.fm')) verificationMenu = menu;
-  return menu;
+let verificationSupportsUpdates = false;
+const setContextMenu = Tray.prototype.setContextMenu;
+Tray.prototype.setContextMenu = function(menu) {
+  verificationMenu = menu;
+  return setContextMenu.call(this, menu);
 };
 app.whenReady().then(async () => {
   try {
@@ -67,7 +70,7 @@ app.whenReady().then(async () => {
       await wait(100);
     }
     verify.ok(!audio.paused && audio.time > before + 0.5, 'Audio advances while hidden: ' + JSON.stringify({ before, audio }));
-    verificationMenu.items[0].click();
+    verificationMenu.items.find(item => item.label === 'Show onmywave.fm').click();
     verify.ok(target.isVisible() && window === target, 'Show restores the same window');
     verify.equal(await contents.executeJavaScript('window.trayCheckMarker'), 'same-renderer');
     target.minimize();
@@ -84,13 +87,101 @@ app.whenReady().then(async () => {
       tray.emit('click');
       verify.ok(target.isVisible(), 'Windows tray click restores the window');
     }
+    const checkFrom = async (menu, source) => {
+      target.close();
+      const check = menu.items.find(item => item.label === 'Check for Updates…');
+      verify.ok(check, source + ' offers Check for Updates');
+      check.click();
+      const updateDialog = 'dialog[open]';
+      let status;
+      for (let attempt = 0; attempt < 40; attempt++) {
+        status = await contents.executeJavaScript('document.querySelector(' + JSON.stringify(updateDialog) + ')?.textContent');
+        if (status?.includes('Automatic updates are not available for this build.')) break;
+        await wait(100);
+      }
+      verify.ok(target.isVisible() && window === target, source + ' restores the same window');
+      verify.ok(status?.includes('Software updates') && status.includes('Automatic updates are not available for this build.'), source + ' shows the update status when signed out');
+      await contents.executeJavaScript("document.querySelector('dialog[open] .modal-close').click()");
+    };
+    const item = (label) => verificationMenu.items.find(item => item.label === label);
+    const click = (label) => {
+      verify.ok(item(label)?.enabled, label + ' is available in the tray');
+      item(label).click();
+    };
+    const currentVersion = app.getVersion();
+    verify.equal(item('Version ' + currentVersion)?.enabled, false, 'Installed version is informational');
+    verify.equal(item('Updates Unavailable')?.enabled, false, 'Unsupported builds explain why the tray cannot check');
+    verify.ok(!item('About onmywave.fm'), 'About is absent from the tray');
+    if (process.platform === 'darwin') {
+      const appMenu = Menu.getApplicationMenu().items[0].submenu;
+      verify.ok(appMenu.items.some(item => item.label === 'About onmywave.fm'), 'App menu offers About');
+      await checkFrom(appMenu, 'App menu');
+    }
+
     target.close();
+    let finishCheck;
+    let finishDownload;
+    let installCalls = 0;
+    const releaseUpdater = updater.autoUpdater;
+    releaseUpdater.checkForUpdates = () => new Promise(resolve => { finishCheck = resolve; });
+    releaseUpdater.downloadUpdate = () => new Promise(resolve => { finishDownload = resolve; });
+    releaseUpdater.quitAndInstall = () => {
+      installCalls++;
+      throw new Error('Simulated restart failure');
+    };
+    verificationSupportsUpdates = true;
+    setStatus({ phase: 'idle', currentVersion });
+    click('Check for Updates');
+    verify.equal(item('Checking for Updates…')?.enabled, false);
+    verify.ok(!target.isVisible(), 'Tray check keeps the window hidden');
+    finishCheck({ isUpdateAvailable: false });
+    await wait(0);
+    verify.equal(item('Up to Date')?.enabled, false);
+
+    const offerUpdate = async (version) => {
+      click('Check for Updates');
+      finishCheck({ isUpdateAvailable: true, updateInfo: { version } });
+      await wait(0);
+    };
+    await offerUpdate('99.0.0');
+    click('Update Later');
+    verify.ok(item('Version 99.0.0 Available…')?.enabled && !item('Update Now'), 'A deferred update remains accessible');
+    verify.ok(!finishDownload && !target.isVisible(), 'Deferral keeps playback in the background');
+    click('Version 99.0.0 Available…');
+    let details;
+    for (let attempt = 0; attempt < 40; attempt++) {
+      details = await contents.executeJavaScript("document.querySelector('dialog[open]')?.textContent");
+      if (details?.includes('Version 99.0.0 is available.')) break;
+      await wait(100);
+    }
+    verify.ok(details?.includes('Version 99.0.0 is available.'), 'Deferred update opens its details');
+    await contents.executeJavaScript("document.querySelector('dialog[open] .modal-close').click()");
+    target.close();
+
+    const nextCheck = checkForUpdates();
+    finishCheck({ isUpdateAvailable: true, updateInfo: { version: '99.0.1' } });
+    await nextCheck;
+    click('Update Now');
+    verify.equal(item('Downloading Update…')?.enabled, false);
+    verify.ok(!target.isVisible(), 'Tray download keeps the window hidden');
+    finishDownload([]);
+    await wait(0);
+    verify.equal(installCalls, 0, 'Download does not restart the app');
+    click('Restart Now');
+    click('Restart Now');
+    for (let attempt = 0; attempt < 40 && !installCalls; attempt++) await wait(100);
+    verify.equal(installCalls, 1);
+    verify.equal(checkpointRequests, 1, 'Restart checkpoints playback');
+    verify.equal(item('Could Not Restart to Install Update')?.enabled, false);
+    click('Restart Later');
+    verify.ok(item('Version 99.0.1 Ready to Install…')?.enabled && !item('Restart Now'), 'The downloaded update stays accessible after deferral');
+
     app.once('will-quit', () => {
       verify.ok(closing && shutdownStarted, 'Explicit Quit starts shutdown');
-      verify.equal(checkpointRequests, 1, 'Explicit Quit checkpoints playback');
+      verify.equal(checkpointRequests, 2, 'Explicit Quit checkpoints playback again');
       console.log('CLOSE_TO_TRAY_PASS', process.platform);
     });
-    verificationMenu.items[2].click();
+    verificationMenu.items.find(item => item.label === 'Quit onmywave.fm').click();
   } catch (error) {
     console.error(error?.stack ?? String(error));
     app.exit(1);

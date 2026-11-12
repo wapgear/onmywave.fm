@@ -1,13 +1,14 @@
 import { useIsMutating, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Enlarge, Reduce, Xmark } from 'iconoir-react/regular';
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
+import { useEffect, useEffectEvent, useLayoutEffect, useRef, useState, type CSSProperties } from 'react';
 import { flushSync } from 'react-dom';
 
+import type { AppMenuCommand } from '../shared/app-menu';
 import type { Connection, Song } from '../shared/types';
 import { unwrap } from './api';
 import type { PageName, ReadyAppProps, SessionContentProps } from './App.types';
 import { AddPlaylist } from './components/AddPlaylist/AddPlaylist.component';
-import { appUpdatesKey, useAppUpdateNotice } from './components/AppUpdates/AppUpdates.component';
+import { appUpdatesKey, UpdateDialog, useAppUpdateNotice } from './components/AppUpdates/AppUpdates.component';
 import { CatalogConnectionBanner } from './components/CatalogConnectionBanner.component';
 import { DJSidebar } from './components/DJSidebar/DJSidebar.component';
 import { IconButton } from './components/IconButton/IconButton.component';
@@ -42,7 +43,7 @@ import type { NewsBucketDestination } from './pages/Stations/components/NewsBuck
 import { StationsPage } from './pages/Stations/Stations.page';
 import type { RoomSetupDraft } from './pages/Stations/Stations.types';
 import { PlayerProvider, usePlayer } from './player';
-import { primaryModifier } from './shortcuts';
+import { isMac, primaryModifier } from './shortcuts';
 import { accentFavorites, favoriteColor, gradientFavorites, readAppearancePreferences } from './theme';
 import { useRetryFocus } from './useRetryFocus';
 
@@ -50,6 +51,7 @@ const listeningDrawerOrder = ['details', 'lyrics', 'queue', 'dj'] as const;
 
 export default function App() {
   const client = useQueryClient();
+  const [showUpdates, setShowUpdates] = useState(false);
   const updateNotice = useAppUpdateNotice();
   const connectionQuery = useQuery({
     queryKey: ['connection'],
@@ -97,6 +99,14 @@ export default function App() {
       () => source,
     );
   };
+
+  useLayoutEffect(
+    () =>
+      window.wave.onMenuCommand((command) => {
+        if (command === 'updates') setShowUpdates(true);
+      }),
+    [],
+  );
 
   useEffect(() => {
     const expire = (event: Event) => {
@@ -173,6 +183,7 @@ export default function App() {
           </SettingsEditsProvider>
         </NewsRecoveryProvider>
       </ProviderKeyEditsProvider>
+      {showUpdates && <UpdateDialog close={() => setShowUpdates(false)} />}
     </>
   );
 }
@@ -597,6 +608,72 @@ function ReadyApp({
     setDrawer(null);
     setReturnToSetup(false);
   }
+
+  const handleMenuCommand = useEffectEvent((command: AppMenuCommand) => {
+    switch (command) {
+      case 'settings':
+      case 'songs':
+      case 'artists':
+      case 'albums':
+      case 'playlists':
+      case 'stations':
+        if (document.querySelector('dialog[open], :popover-open')) break;
+        navigate(command);
+        break;
+      case 'queue':
+      case 'lyrics':
+        if (document.querySelector('dialog[open], :popover-open')) break;
+        if (command === 'lyrics' && !player.current) break;
+        if (visibleDrawer === command) closeDrawer();
+        else openDrawer(command);
+        break;
+      case 'play-pause':
+        if (player.current) player.toggle();
+        break;
+      case 'next':
+        if (player.current) player.next();
+        break;
+      case 'previous':
+        if (player.current) player.previous();
+        break;
+      case 'shuffle':
+        player.toggleShuffle();
+        break;
+      case 'repeat-off':
+        player.setRepeat('off');
+        break;
+      case 'repeat-all':
+        player.setRepeat('all');
+        break;
+      case 'repeat-one':
+        player.setRepeat('one');
+        break;
+      case 'volume-up':
+        player.setVolume(player.volume + 0.05);
+        break;
+      case 'volume-down':
+        player.setVolume(player.volume - 0.05);
+        break;
+    }
+  });
+
+  useEffect(() => {
+    if (!isMac) return;
+    const unsubscribe = window.wave.onMenuCommand((command) => handleMenuCommand(command));
+    return () => {
+      unsubscribe();
+      void window.wave.setLibraryMenuState(null).catch(() => {});
+    };
+  }, []);
+
+  const hasTrack = !!player.current;
+  const { requestedPlaying, shuffle, repeat } = player;
+
+  useEffect(() => {
+    if (isMac)
+      void window.wave.setLibraryMenuState({ hasTrack, playing: requestedPlaying, shuffle, repeat }).catch(() => {});
+  }, [hasTrack, requestedPlaying, shuffle, repeat]);
+
   function openPlayerDestination(next: 'stations' | 'settings', source: HTMLButtonElement | null) {
     void enterPlayerDestination(source, async () => {
       playerDestination.current = next;

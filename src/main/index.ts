@@ -2,8 +2,9 @@ import { randomUUID } from 'node:crypto';
 import { dirname, extname, join, relative, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
-import { app, BrowserWindow, ipcMain, Menu, nativeImage, net, protocol, session, shell, Tray } from 'electron';
+import { app, BrowserWindow, ipcMain, nativeImage, net, protocol, session, shell, Tray } from 'electron';
 
+import type { AppMenuCommand } from '../shared/app-menu';
 import { djPreparationKey, isDJAvatar } from '../shared/dj-avatar';
 import { isDJPlaybackSettings, isDJPlaybackSettingsPatch, normalizeDJPlaybackSettings } from '../shared/dj-playback';
 import type { DJPlaybackSettingsPatch } from '../shared/dj-playback';
@@ -23,8 +24,10 @@ import type {
   CatalogRequest,
   Page,
 } from '../shared/types';
+import type { UpdateStatus } from '../shared/update';
 import { isWorkflowDraft, normalizeWorkflowDraft } from '../shared/workflow';
 import type { WorkflowDraft } from '../shared/workflow';
+import { installMacMenu, updateLibraryMenu } from './app-menu';
 import { getDJVoicePreview, prepareDJVoicePreview, getVoicePreview, prepareVoicePreview } from './dj-previews';
 import { searchDJVoices } from './dj-voices';
 import { JellyfinService, ServiceError, PLAYLIST_CREATION } from './jellyfin';
@@ -84,6 +87,7 @@ import {
   writeElevenLabsKey,
 } from './storage';
 import { StorageError } from './storage-error';
+import { createTrayMenu } from './tray-menu';
 import {
   checkForUpdates as checkForAppUpdates,
   downloadUpdate as downloadAppUpdate,
@@ -110,6 +114,8 @@ let window: BrowserWindow | null = null;
 
 let tray: Tray | null = null;
 
+let updateInstall: Promise<UpdateStatus> | null = null;
+
 function showWindow() {
   if (closing) return;
   if (!window || window.isDestroyed()) {
@@ -119,6 +125,37 @@ function showWindow() {
   if (window.isMinimized()) window.restore();
   window.show();
   window.focus();
+}
+
+function sendMenuCommand(command: AppMenuCommand) {
+  if (closing) return;
+  showWindow();
+  const contents = window?.webContents;
+  if (!contents || contents.isDestroyed()) return;
+  const send = () => {
+    if (!closing && !contents.isDestroyed()) contents.send('wave:menuCommand', command);
+  };
+  if (contents.isLoadingMainFrame()) contents.once('did-finish-load', send);
+  else send();
+}
+
+function checkForUpdatesFromMenu() {
+  if (closing) return;
+  sendMenuCommand('updates');
+  void checkForAppUpdates();
+}
+
+function installUpdateWithCheckpoint() {
+  if (updateInstall) return updateInstall;
+  const status = getUpdateStatus();
+  if (closing || status.phase !== 'downloaded') return Promise.resolve(status);
+
+  updateInstall = requestPlaybackCheckpoint()
+    .then(() => (closing ? getUpdateStatus() : installAppUpdate()))
+    .finally(() => {
+      updateInstall = null;
+    });
+  return updateInstall;
 }
 
 app.on('second-instance', showWindow);
@@ -487,14 +524,27 @@ const newsOperations = new Set([
 
 function registerIpc() {
   const operations: Record<string, (input: never) => unknown> = {
+    setLibraryMenuState: (input: unknown) => {
+      if (input === null) return updateLibraryMenu(null);
+      if (
+        !isRecord(input) ||
+        typeof input.hasTrack !== 'boolean' ||
+        typeof input.playing !== 'boolean' ||
+        typeof input.shuffle !== 'boolean' ||
+        (input.repeat !== 'off' && input.repeat !== 'all' && input.repeat !== 'one')
+      )
+        return invalid();
+      updateLibraryMenu({
+        hasTrack: input.hasTrack,
+        playing: input.playing,
+        shuffle: input.shuffle,
+        repeat: input.repeat,
+      });
+    },
     getUpdateStatus: () => getUpdateStatus(),
     checkForUpdates: () => checkForAppUpdates(),
     downloadUpdate: () => downloadAppUpdate(),
-    installUpdate: async () => {
-      if (getUpdateStatus().phase !== 'downloaded') return installAppUpdate();
-      await requestPlaybackCheckpoint();
-      return installAppUpdate();
-    },
+    installUpdate: installUpdateWithCheckpoint,
     getNewsRecoveryStatus: () => ({ ...newsRecoveryStatus }),
     retryNewsRecovery: () => recoverNews(),
     getConnection: () => service.connection(),
@@ -1153,11 +1203,13 @@ async function createWindow() {
   window.webContents.on('will-attach-webview', (event) => event.preventDefault());
   window.webContents.on('did-start-navigation', (_event, _url, _isInPlace, isMainFrame) => {
     if (isMainFrame) {
+      updateLibraryMenu(null);
       cancelCatalogRequests();
       finishPlaybackCheckpointsFor(contents);
     }
   });
   window.webContents.on('render-process-gone', () => {
+    updateLibraryMenu(null);
     cancelCatalogRequests();
     finishPlaybackCheckpointsFor(contents);
   });
@@ -1173,6 +1225,7 @@ async function createWindow() {
     }
   });
   createdWindow.on('closed', () => {
+    updateLibraryMenu(null);
     cancelCatalogRequests();
     cancelNews();
     finishPlaybackCheckpointsFor(contents);
@@ -1262,6 +1315,14 @@ app
       newsUnavailable,
     );
     registerIpc();
+    app.setAboutPanelOptions({
+      applicationName: app.name,
+      applicationVersion: app.getVersion(),
+      credits: 'A desktop music player for your Jellyfin library.\n\nonmywave.fm contributors · GPL-3.0-only',
+      iconPath: join(directory, '../../resources/icon.png'),
+    });
+    let updateTrayMenu: ReturnType<typeof createTrayMenu> | undefined;
+    if (process.platform === 'darwin') installMacMenu(sendMenuCommand, checkForUpdatesFromMenu, showWindow);
     if (process.platform === 'darwin' || process.platform === 'win32') {
       const image = nativeImage.createFromPath(
         join(directory, '../../resources', process.platform === 'darwin' ? 'trayTemplate.png' : 'icon.png'),
@@ -1270,19 +1331,25 @@ app
       if (process.platform === 'darwin') image.setTemplateImage(true);
       tray = new Tray(image);
       tray.setToolTip('onmywave.fm');
-      tray.setContextMenu(
-        Menu.buildFromTemplate([
-          { label: 'Show onmywave.fm', click: showWindow },
-          { type: 'separator' },
-          { label: 'Quit onmywave.fm', click: () => app.quit() },
-        ]),
-      );
+      updateTrayMenu = createTrayMenu(tray, {
+        showWindow,
+        showUpdates: () => sendMenuCommand('updates'),
+        check: () => {
+          if (!closing) void checkForAppUpdates();
+        },
+        download: () => {
+          if (!closing) void downloadAppUpdate();
+        },
+        install: () => void installUpdateWithCheckpoint(),
+      });
       if (process.platform === 'win32') tray.on('click', showWindow);
     }
-    await createWindow();
     startUpdates((status) => {
+      updateTrayMenu?.(status);
       if (window && !window.isDestroyed()) window.webContents.send('wave:updateStatus', status);
     }, beginShutdown);
+    updateTrayMenu?.(getUpdateStatus());
+    await createWindow();
     void recoverNews();
     app.on('activate', showWindow);
   })

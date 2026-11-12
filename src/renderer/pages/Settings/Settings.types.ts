@@ -1,7 +1,7 @@
 import type { Connection } from '../../../shared/types';
 import type { AppearancePreferences } from '../../theme.types';
 
-export type SettingsSection = 'general' | 'appearance' | 'playback' | 'keys' | 'sources' | 'djs';
+export type SettingsSection = 'general' | 'appearance' | 'playback' | 'keys' | 'sources' | 'djs' | 'updates';
 
 export type SettingsPageProps = {
   connection: Connection;
