@@ -21,3 +21,15 @@ export type TrackTableProps = {
   move?: (key: string, index: number) => void;
   rowWindow?: { indices: number[]; rowHeight: number; focusRow: (index: number) => void };
 };
+
+export type VirtualTrackTableProps = Omit<TrackTableProps, 'rowWindow'> & {
+  updating?: boolean;
+  pagination?: {
+    total: number;
+    hasNext: boolean;
+    fetching: boolean;
+    nextError: unknown;
+    loadNext: () => Promise<{ isError: boolean }>;
+  };
+  onResultsElement?: (node: HTMLDivElement | null) => void;
+};

@@ -1298,11 +1298,12 @@ export class JellyfinService {
     return this.readCurrentSession(async () => {
       const id = validId(value),
         s = this.requireSession();
-      const item = await this.json(`/Users/${s.userId}/Items/${id}`);
-      if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
-      const canEdit = await this.playlistPermission(id);
-      if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
-      const [entries, removed] = await Promise.all([this.entries(id), this.removedIds(s)]);
+      const [item, canEdit, entries, removed] = await Promise.all([
+        this.json(`/Users/${s.userId}/Items/${id}`),
+        this.playlistPermission(id),
+        this.entries(id),
+        this.removedIds(s),
+      ]);
       if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh this playlist.');
       return {
         ...this.playlistItem(item),

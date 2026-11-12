@@ -24,6 +24,27 @@ let canRun = () => true;
 
 let generation = 0;
 
+let notifyScheduleChange: (() => void) | undefined;
+
+export function setNewsScheduleChangeListener(listener: () => void) {
+  notifyScheduleChange = listener;
+}
+
+async function updateSchedule(update: (state: LocalState) => Partial<LocalState>) {
+  let changed = false;
+  const saved = updateLocalState((state) => {
+    const patch = update(state);
+    changed = patch.roomProfiles !== undefined;
+    return patch;
+  });
+  void saved
+    .then(() => {
+      if (changed) notifyScheduleChange?.();
+    })
+    .catch(() => {});
+  await saved;
+}
+
 export function invalidateNewsWorkflow() {
   ++generation;
 }
@@ -44,7 +65,7 @@ function sameProducerConfig(a: RoomProfile, b: RoomProfile) {
 
 async function deferWorkflow(profile: RoomProfile, reason: 'limit' | 'busy'): Promise<boolean> {
   let applied = false;
-  await updateLocalState((state) => {
+  await updateSchedule((state) => {
     const latest = state.roomProfiles.find((value) => value.id === profile.id);
     if (
       !latest ||
@@ -92,7 +113,7 @@ async function finishRun(
   message?: string,
   finishedAt = new Date().toISOString(),
 ) {
-  await updateLocalState((state) => {
+  await updateSchedule((state) => {
     const profile = state.roomProfiles.find((value) => value.id === profileId);
     const run = profile?.workflowDraft.newsLastRun;
     if (!profile || run?.requestId !== requestId || run.outcome !== 'running') return {};
@@ -144,7 +165,7 @@ async function processProfile(news: NewsService, profile: RoomProfile) {
   const requestId = retryRequestId ?? randomUUID();
   let snapshot: Pick<LocalState, 'roomProfiles' | 'djs' | 'sources'> | undefined;
   let reservation: { before: WorkflowDraft; started: WorkflowDraft } | undefined;
-  await updateLocalState((state) => {
+  await updateSchedule((state) => {
     if (!canRun() || epoch !== generation) return {};
     const latest = state.roomProfiles.find((value) => value.id === current.id);
     if (!latest || !sameProducerConfig(latest, current)) return {};
@@ -218,7 +239,7 @@ async function processProfile(news: NewsService, profile: RoomProfile) {
     if (error instanceof ServiceError && /another preparation is running/i.test(message)) {
       const reserved = reservation;
       if (!reserved) return;
-      await updateLocalState((state) => {
+      await updateSchedule((state) => {
         const latest = state.roomProfiles.find((value) => value.id === current.id);
         const run = latest?.workflowDraft.newsLastRun;
         if (
@@ -303,7 +324,7 @@ export async function startNewsWorkflow(
   if (timer) return;
   const prepared = await getPreparedNews();
   const requests = new Map(prepared.requests.map((request) => [request.requestId, request]));
-  await updateLocalState((state) => {
+  await updateSchedule((state) => {
     const changed = state.roomProfiles.map((profile) => {
       const run = profile.workflowDraft.newsLastRun;
       if (!run) return profile;

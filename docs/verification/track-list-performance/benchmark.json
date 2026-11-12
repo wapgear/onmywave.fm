@@ -1,0 +1,177 @@
+{
+  "viewport": [
+    1440,
+    900
+  ],
+  "fixtureDelayMs": 35,
+  "tracksPerDetail": 1000,
+  "measurement": "Click to first row and full ARIA row count, plus one animation frame. Shipped v0.8.2 and final production renderer bundles in Chromium with synthetic preload API. Five paired trials per view, with order alternating.",
+  "samples": {
+    "before": {
+      "artist": [
+        {
+          "ms": 570,
+          "mountedRows": 1000,
+          "mainElements": 47050
+        },
+        {
+          "ms": 565,
+          "mountedRows": 1000,
+          "mainElements": 47050
+        },
+        {
+          "ms": 555,
+          "mountedRows": 1000,
+          "mainElements": 47050
+        },
+        {
+          "ms": 555,
+          "mountedRows": 1000,
+          "mainElements": 47050
+        },
+        {
+          "ms": 549,
+          "mountedRows": 1000,
+          "mainElements": 47050
+        }
+      ],
+      "album": [
+        {
+          "ms": 555,
+          "mountedRows": 1000,
+          "mainElements": 47052
+        },
+        {
+          "ms": 561,
+          "mountedRows": 1000,
+          "mainElements": 47052
+        },
+        {
+          "ms": 546,
+          "mountedRows": 1000,
+          "mainElements": 47052
+        },
+        {
+          "ms": 564,
+          "mountedRows": 1000,
+          "mainElements": 47052
+        },
+        {
+          "ms": 591,
+          "mountedRows": 1000,
+          "mainElements": 47052
+        }
+      ],
+      "playlist": [
+        {
+          "ms": 643,
+          "mountedRows": 1000,
+          "mainElements": 57044
+        },
+        {
+          "ms": 628,
+          "mountedRows": 1000,
+          "mainElements": 57044
+        },
+        {
+          "ms": 584,
+          "mountedRows": 1000,
+          "mainElements": 57044
+        },
+        {
+          "ms": 591,
+          "mountedRows": 1000,
+          "mainElements": 57044
+        },
+        {
+          "ms": 602,
+          "mountedRows": 1000,
+          "mainElements": 57044
+        }
+      ]
+    },
+    "after": {
+      "artist": [
+        {
+          "ms": 51,
+          "mountedRows": 14,
+          "mainElements": 711
+        },
+        {
+          "ms": 51,
+          "mountedRows": 14,
+          "mainElements": 711
+        },
+        {
+          "ms": 59,
+          "mountedRows": 14,
+          "mainElements": 711
+        },
+        {
+          "ms": 58,
+          "mountedRows": 14,
+          "mainElements": 711
+        },
+        {
+          "ms": 51,
+          "mountedRows": 14,
+          "mainElements": 711
+        }
+      ],
+      "album": [
+        {
+          "ms": 50,
+          "mountedRows": 14,
+          "mainElements": 713
+        },
+        {
+          "ms": 50,
+          "mountedRows": 14,
+          "mainElements": 713
+        },
+        {
+          "ms": 50,
+          "mountedRows": 14,
+          "mainElements": 713
+        },
+        {
+          "ms": 51,
+          "mountedRows": 14,
+          "mainElements": 713
+        },
+        {
+          "ms": 53,
+          "mountedRows": 14,
+          "mainElements": 713
+        }
+      ],
+      "playlist": [
+        {
+          "ms": 53,
+          "mountedRows": 14,
+          "mainElements": 845
+        },
+        {
+          "ms": 53,
+          "mountedRows": 14,
+          "mainElements": 845
+        },
+        {
+          "ms": 53,
+          "mountedRows": 14,
+          "mainElements": 845
+        },
+        {
+          "ms": 53,
+          "mountedRows": 14,
+          "mainElements": 845
+        },
+        {
+          "ms": 53,
+          "mountedRows": 14,
+          "mainElements": 845
+        }
+      ]
+    }
+  }
+}

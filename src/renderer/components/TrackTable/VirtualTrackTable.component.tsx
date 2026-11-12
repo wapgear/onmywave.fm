@@ -1,24 +1,17 @@
 import { defaultRangeExtractor, observeElementOffset, useVirtualizer } from '@tanstack/react-virtual';
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-import { ErrorNotice } from '../../components/Shared';
-import { TrackTable } from '../../components/TrackTable/TrackTable.component';
 import { useRetryFocus } from '../../useRetryFocus';
-import type { VirtualSongsProps } from './VirtualSongs.types';
+import { ErrorNotice } from '../Shared';
+import { TrackTable } from './TrackTable.component';
+import type { VirtualTrackTableProps } from './TrackTable.types';
 
-import './VirtualSongs.styles.css';
+import './VirtualTrackTable.styles.css';
 
 const ROW_HEIGHT = 56;
 
-export function VirtualSongs({
-  total,
-  hasNext,
-  fetching,
-  nextError,
-  loadNext,
-  onResultsElement,
-  ...table
-}: VirtualSongsProps) {
+export function VirtualTrackTable({ pagination, onResultsElement, updating, ...table }: VirtualTrackTableProps) {
+  const { total, hasNext, fetching, nextError, loadNext } = pagination ?? {};
   const root = useRef<HTMLDivElement>(null);
   const status = useRef<HTMLSpanElement>(null);
   const retryFocus = useRetryFocus({
@@ -91,7 +84,7 @@ export function VirtualSongs({
       .at(-1)?.index ?? -1;
 
   useEffect(() => {
-    if (hasNext && !fetching && !nextError && lastVisible >= table.rows.length - 12) void loadNext();
+    if (hasNext && !fetching && !nextError && lastVisible >= table.rows.length - 12) void loadNext?.();
   }, [hasNext, fetching, nextError, lastVisible, table.rows.length, loadNext]);
 
   function focusRow(index: number) {
@@ -112,6 +105,7 @@ export function VirtualSongs({
       });
   }
   function retryNextPage() {
+    if (!loadNext) return;
     const button = retryFocus.retryRef.current;
     if (document.activeElement !== button) return loadNext();
     const startIndex = table.rows.length;
@@ -156,7 +150,8 @@ export function VirtualSongs({
         root.current = node;
         onResultsElement?.(node);
       }}
-      className="virtual-songs"
+      className="virtual-track-table"
+      inert={updating}
       onFocusCapture={(event) => {
         const row = (event.target as HTMLElement).closest<HTMLElement>('[data-track-key]');
         if (row) setFocusedKey(row.dataset.trackKey ?? null);
@@ -169,20 +164,22 @@ export function VirtualSongs({
         {...table}
         rowWindow={{ indices: visible.map((row) => row.index), rowHeight: ROW_HEIGHT, focusRow }}
       />
-      <div className="song-load-status">
-        <span
-          ref={status}
-          className={`song-load-count ${virtualizer.isScrolling ? 'is-scrolling' : ''}`}
-          tabIndex={-1}
-          role="group"
-          aria-label={`${table.rows.length.toLocaleString()} of ${total.toLocaleString()} songs loaded`}
-        >
-          {table.rows.length.toLocaleString()} of {total.toLocaleString()} songs loaded
-        </span>
-        {fetching && <span role="status">Loading songs…</span>}
-        <ErrorNotice error={nextError} retryRef={retryFocus.retryRef} retrying={fetching} retry={retryNextPage} />
-        {!nextError && hasNext && !fetching && <button onClick={() => void loadNext()}>Load more songs</button>}
-      </div>
+      {total !== undefined && (
+        <div className="song-load-status">
+          <span
+            ref={status}
+            className={`song-load-count ${virtualizer.isScrolling ? 'is-scrolling' : ''}`}
+            tabIndex={-1}
+            role="group"
+            aria-label={`${table.rows.length.toLocaleString()} of ${total.toLocaleString()} songs loaded`}
+          >
+            {table.rows.length.toLocaleString()} of {total.toLocaleString()} songs loaded
+          </span>
+          {fetching && <span role="status">Loading songs…</span>}
+          <ErrorNotice error={nextError} retryRef={retryFocus.retryRef} retrying={fetching} retry={retryNextPage} />
+          {!nextError && hasNext && !fetching && <button onClick={() => void loadNext?.()}>Load more songs</button>}
+        </div>
+      )}
     </div>
   );
 }

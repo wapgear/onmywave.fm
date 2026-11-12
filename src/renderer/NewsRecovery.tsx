@@ -65,6 +65,25 @@ export function NewsRecoveryProvider({ children }: { children: ReactNode }) {
     };
   }, [applyStatus]);
 
+  useEffect(() => {
+    if (status.phase !== 'ready') return;
+    let refresh: number | undefined;
+    const pending = new Set<'preparedNews' | 'localState'>();
+    const unsubscribe = window.wave.onNewsPreparationChanged((change) => {
+      pending.add(change === 'library' ? 'preparedNews' : 'localState');
+      if (refresh !== undefined) return;
+      refresh = window.setTimeout(() => {
+        refresh = undefined;
+        for (const key of pending) void client.invalidateQueries({ queryKey: [key], exact: true });
+        pending.clear();
+      }, 75);
+    });
+    return () => {
+      window.clearTimeout(refresh);
+      unsubscribe();
+    };
+  }, [client, status.phase]);
+
   const retry = useCallback(() => {
     if (status.phase === 'recovering' || retrying) return;
     retryRequested.current = true;

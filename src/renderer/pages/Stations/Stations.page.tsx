@@ -83,7 +83,7 @@ export function StationsPage({
     enabled: newsRecoveryReady,
     refetchInterval: (query) =>
       newsRecoveryReady && query.state.data?.requests.some((value) => value.status === 'running')
-        ? 1000
+        ? 5000
         : newsRecoveryReady
           ? 10000
           : false,

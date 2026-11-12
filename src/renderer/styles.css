@@ -454,6 +454,7 @@ button > svg {
   font-size: 13px;
 }
 .search-field {
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -483,6 +484,13 @@ button > svg {
 }
 .search-field > svg {
   flex-shrink: 0;
+}
+.search-field .search-status {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  color: var(--muted);
+  font-size: 12px;
 }
 .search-field .search-clear {
   --icon-button-size: 26px;

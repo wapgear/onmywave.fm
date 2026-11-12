@@ -1,0 +1,66 @@
+{
+  "selection": {
+    "Artists": {
+      "mountedAtEnd": 20,
+      "fullRange": true,
+      "selectAll": true,
+      "focusPreserved": true
+    },
+    "Albums": {
+      "mountedAtEnd": 20,
+      "fullRange": true,
+      "selectAll": true,
+      "focusPreserved": true
+    },
+    "Playlists": {
+      "mountedAtEnd": 20,
+      "fullRange": true,
+      "selectAll": true,
+      "focusPreserved": true,
+      "reorderCalls": [
+        {
+          "method": "movePlaylistEntry",
+          "id": "p1",
+          "entryId": "e999",
+          "index": 998
+        },
+        {
+          "method": "movePlaylistEntry",
+          "id": "p1",
+          "entryId": "e999",
+          "index": 999
+        }
+      ],
+      "fullPlaybackQueue": true
+    }
+  },
+  "updates": {
+    "songEnterMs": 47,
+    "cachedArtistSearchMs": 3,
+    "albumEnterMs": 33,
+    "newsRefreshStartedMs": 77,
+    "scheduleRefreshStartedMs": 83,
+    "settingsConfirmedMs": 8
+  },
+  "compactViewport": {
+    "viewport": [
+      1024,
+      720
+    ],
+    "details": {
+      "Artists": {
+        "mounted": 17,
+        "lastRowVisible": true
+      },
+      "Albums": {
+        "mounted": 17,
+        "lastRowVisible": true
+      },
+      "Playlists": {
+        "mounted": 17,
+        "lastRowVisible": true
+      }
+    },
+    "songsManualAndAutoPagination": true
+  }
+}

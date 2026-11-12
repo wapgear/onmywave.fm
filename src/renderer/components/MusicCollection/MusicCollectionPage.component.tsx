@@ -1,6 +1,6 @@
-import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
+import { keepPreviousData, useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ArrowLeft, Plus, Search } from 'iconoir-react/regular';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { unwrap } from '../../api';
 import { catalogInlineError } from '../../catalog';
@@ -9,7 +9,8 @@ import { useRetryFocus } from '../../useRetryFocus';
 import { CollectionHeading } from '../CollectionHeading/CollectionHeading.component';
 import { CollectionPlaybackActions } from '../CollectionPlaybackActions/CollectionPlaybackActions.component';
 import { Empty, ErrorNotice, PageHeading } from '../Shared';
-import { songRows, TrackTable } from '../TrackTable/TrackTable.component';
+import { songRows } from '../TrackTable/TrackTable.component';
+import { VirtualTrackTable } from '../TrackTable/VirtualTrackTable.component';
 import { useCollectionPlayback } from './hooks/useCollectionPlayback';
 import type {
   CollectionItem,
@@ -45,19 +46,23 @@ export function MusicCollectionPage<T extends CollectionItem>({
   const title = `${label}s`;
   const client = useQueryClient();
   const [returnFocus, setReturnFocus] = useState<string | null>(null);
-  const [search, setSearch] = useState(draft.trim());
+  const [submitted, setSubmitted] = useState(draft.trim());
+  const term = draft.trim();
+  const search = label === 'Artist' ? term : submitted;
   const headingRef = useRef<HTMLHeadingElement>(null);
   const resultsRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => setSearch(draft.trim()), 300);
+    if (label === 'Artist' || submitted === term) return;
+    const timer = setTimeout(() => setSubmitted(term), term ? 150 : 0);
     return () => clearTimeout(timer);
-  }, [draft]);
+  }, [label, submitted, term]);
 
   const catalog = useInfiniteQuery({
     queryKey: [noun, 'infinite', search],
     queryFn: ({ pageParam, signal }) => loadPage({ search, start: pageParam, limit: 48 }, signal, client),
     initialPageParam: 0,
+    placeholderData: keepPreviousData,
     getNextPageParam: (last) =>
       last.items.length && last.start + last.items.length < last.total ? last.start + last.items.length : undefined,
     enabled: !item,
@@ -74,7 +79,13 @@ export function MusicCollectionPage<T extends CollectionItem>({
     target: () => resultsRef.current?.querySelector<HTMLElement>('[data-collection-id]') ?? headingRef.current,
     canFocusSuccess: () => catalog.isSuccess && !catalog.isFetching,
   });
-  const items = [...new Map(catalog.data?.pages.flatMap((page) => page.items).map((item) => [item.id, item])).values()];
+  const data = catalog.data;
+
+  const items = useMemo(
+    () => [...new Map(data?.pages.flatMap((page) => page.items).map((item) => [item.id, item])).values()],
+    [data],
+  );
+
   if (item)
     return (
       <MusicCollectionDetail
@@ -105,8 +116,17 @@ export function MusicCollectionPage<T extends CollectionItem>({
             placeholder={`Search ${noun}`}
             aria-label={`Search ${noun}`}
             value={draft}
-            onChange={(event) => setView((old) => ({ ...old, draft: event.target.value }))}
+            onChange={(event) => {
+              const draft = event.target.value;
+              setView((old) => ({ ...old, draft }));
+            }}
+            onKeyDown={(event) => {
+              if (label === 'Album' && event.key === 'Enter' && !event.nativeEvent.isComposing) setSubmitted(term);
+            }}
           />
+          <span className="search-status" role="status">
+            {catalog.isPlaceholderData ? 'Updating…' : ''}
+          </span>
         </div>
       </PageHeading>
       {!catalog.isFetchNextPageError && (
@@ -132,8 +152,9 @@ export function MusicCollectionPage<T extends CollectionItem>({
           label={label}
           subtitle={subtitle}
           total={catalog.data?.pages[0]?.total ?? items.length}
-          hasNext={catalog.hasNextPage}
-          fetching={catalog.isFetching}
+          hasNext={!catalog.isPlaceholderData && catalog.hasNextPage}
+          fetching={!catalog.isPlaceholderData && catalog.isFetching}
+          updating={catalog.isPlaceholderData}
           nextError={catalog.isFetchNextPageError ? catalog.error : null}
           loadNext={() => catalog.fetchNextPage()}
           returnFocus={returnFocus}
@@ -193,7 +214,11 @@ function MusicCollectionDetail<T extends CollectionItem>({
     canFocusSuccess: () => tracks.isSuccess && !tracks.isFetching,
   });
   const player = usePlayer();
-  const playback = useCollectionPlayback(kind, item.id, tracks.data ?? []);
+  const trackItems = tracks.data;
+
+  const rows = useMemo(() => songRows(trackItems ?? []), [trackItems]);
+
+  const playback = useCollectionPlayback(kind, item.id, trackItems ?? []);
 
   return (
     <>
@@ -253,8 +278,8 @@ function MusicCollectionDetail<T extends CollectionItem>({
           Loading {kind} tracks…
         </p>
       ) : tracks.data?.length ? (
-        <TrackTable
-          rows={songRows(tracks.data)}
+        <VirtualTrackTable
+          rows={rows}
           selected={selected}
           select={select}
           play={playback.play}

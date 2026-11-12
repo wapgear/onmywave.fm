@@ -1,6 +1,6 @@
-import { useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
+import { keepPreviousData, useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Refresh, Search, Xmark } from 'iconoir-react/regular';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import type { CatalogQuery, Song } from '../../../shared/types';
 import { unwrap } from '../../api';
@@ -9,10 +9,10 @@ import { FilterSelect } from '../../components/FilterSelect/FilterSelect.compone
 import { IconButton } from '../../components/IconButton/IconButton.component';
 import { Empty, ErrorNotice, PageHeading } from '../../components/Shared';
 import { songRows } from '../../components/TrackTable/TrackTable.component';
+import { VirtualTrackTable } from '../../components/TrackTable/VirtualTrackTable.component';
 import { usePlayer } from '../../player';
 import { useRetryFocus } from '../../useRetryFocus';
 import type { SongsPageProps, SongsView } from './Songs.types';
-import { VirtualSongs } from './VirtualSongs.component';
 
 const PAGE_SIZE = 80;
 
@@ -21,6 +21,12 @@ export const initialSongsView = (): SongsView => ({
   query: { start: 0, limit: PAGE_SIZE, sort: 'dateAdded', descending: true, search: '' },
   selected: new Map(),
 });
+
+function applySearch(setView: SongsPageProps['setView'], search: string) {
+  setView((old) =>
+    old.query.search === search ? old : { ...old, query: { ...old.query, start: 0, search }, selected: new Map() },
+  );
+}
 
 export function SongsPage({ add, details, view, setView }: SongsPageProps) {
   const player = usePlayer();
@@ -35,17 +41,11 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
   const resultsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const timer = setTimeout(
-      () =>
-        setView((old) =>
-          old.query.search === search.trim()
-            ? old
-            : { ...old, query: { ...old.query, start: 0, search: search.trim() }, selected: new Map() },
-        ),
-      search.trim() ? 300 : 0,
-    );
+    const term = search.trim();
+    if (term === query.search) return;
+    const timer = setTimeout(() => applySearch(setView, term), term ? 150 : 0);
     return () => clearTimeout(timer);
-  }, [search, setView]);
+  }, [query.search, search, setView]);
 
   function change(next: Partial<CatalogQuery>) {
     setQuery((old) => ({ ...old, ...next, start: 0 }));
@@ -63,6 +63,7 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
     queryFn: ({ pageParam, signal }) =>
       readCatalog(window.wave.songs, { ...catalog, start: pageParam, limit: PAGE_SIZE }, signal),
     initialPageParam: 0,
+    placeholderData: keepPreviousData,
     getNextPageParam: (last) =>
       last.items.length && last.start + last.items.length < last.total ? last.start + last.items.length : undefined,
     staleTime: 60_000,
@@ -114,7 +115,12 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
       setRefreshPending(false);
     }
   }
-  const items = [...new Map(songs.data?.pages.flatMap((page) => page.items).map((song) => [song.id, song])).values()];
+  const data = songs.data;
+
+  const rows = useMemo(
+    () => songRows([...new Map(data?.pages.flatMap((page) => page.items).map((song) => [song.id, song])).values()]),
+    [data],
+  );
 
   return (
     <>
@@ -127,7 +133,13 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
             placeholder="Search your library"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter' && !event.nativeEvent.isComposing) applySearch(setView, search.trim());
+            }}
           />
+          <span className="search-status" role="status">
+            {songs.isPlaceholderData ? 'Updating…' : ''}
+          </span>
           {search && (
             <IconButton
               className="search-clear"
@@ -225,18 +237,21 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
         <div className="loading" role="status">
           Loading your songs…
         </div>
-      ) : items.length ? (
-        <VirtualSongs
+      ) : rows.length ? (
+        <VirtualTrackTable
           key={JSON.stringify(catalog)}
           onResultsElement={(node) => {
             resultsRef.current = node;
           }}
-          total={songs.data?.pages[0]?.total ?? items.length}
-          hasNext={songs.hasNextPage}
-          fetching={songs.isFetching}
-          nextError={songs.isFetchNextPageError ? songs.error : null}
-          loadNext={() => songs.fetchNextPage()}
-          rows={songRows(items)}
+          pagination={{
+            total: songs.data?.pages[0]?.total ?? rows.length,
+            hasNext: !songs.isPlaceholderData && songs.hasNextPage,
+            fetching: !songs.isPlaceholderData && songs.isFetching,
+            nextError: songs.isFetchNextPageError ? songs.error : null,
+            loadNext: () => songs.fetchNextPage(),
+          }}
+          rows={rows}
+          updating={songs.isPlaceholderData}
           selected={selected}
           select={setSelected}
           play={player.play}

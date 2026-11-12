@@ -12,6 +12,7 @@ import { isShuffleSnapshot } from '../shared/shuffle-queue';
 import { normalizeNewsSource } from '../shared/sources';
 import type {
   NewsRecoveryStatus,
+  NewsPreparationChange,
   ApiError,
   DJ,
   PlaybackSnapshot,
@@ -35,6 +36,7 @@ import {
   stopNewsWorkflow,
   invalidateNewsWorkflow,
   checkNewsWorkflow,
+  setNewsScheduleChangeListener,
 } from './news-workflow';
 import { defaultPlaybackPreferences, playbackPreferenceKey } from './playback-preferences';
 import {
@@ -49,6 +51,7 @@ import {
 } from './playlist-recovery';
 import {
   getPreparedNews,
+  setPreparedNewsChangeListener,
   setNewsFavorite,
   cancelPreparedNews,
   cancelActivePreparedNews,
@@ -141,6 +144,15 @@ let shutdownStarted = false;
 let quitCheckpointInFlight = false;
 
 let quitCheckpointed = false;
+
+function notifyNewsPreparationChange(change: NewsPreparationChange) {
+  if (!closing && newsRecoveryStatus.phase === 'ready' && window && !window.isDestroyed())
+    window.webContents.send('wave:newsPreparationChanged', change);
+}
+
+setPreparedNewsChangeListener(() => notifyNewsPreparationChange('library'));
+
+setNewsScheduleChangeListener(() => notifyNewsPreparationChange('schedule'));
 
 const playbackCheckpointWaiters = new Map<
   string,

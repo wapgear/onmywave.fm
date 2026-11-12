@@ -42,6 +42,7 @@ export type VirtualCollectionGridProps<T extends CollectionItem> = {
   total: number;
   hasNext: boolean;
   fetching: boolean;
+  updating: boolean;
   nextError: unknown;
   loadNext: () => Promise<{ isError: boolean }>;
   open: (item: T, origin: HTMLButtonElement) => void;

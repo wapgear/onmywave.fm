@@ -17,6 +17,7 @@ export function VirtualCollectionGrid<T extends CollectionItem>({
   total,
   hasNext,
   fetching,
+  updating,
   nextError,
   loadNext,
   open,
@@ -251,7 +252,7 @@ export function VirtualCollectionGrid<T extends CollectionItem>({
   }
 
   return (
-    <section ref={onResultsElement} aria-label={`${label} collection`} className="virtual-collections">
+    <section ref={onResultsElement} aria-label={`${label} collection`} className="virtual-collections" inert={updating}>
       <div
         ref={grid}
         className="virtual-collection-grid"
