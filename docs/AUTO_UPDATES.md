@@ -4,7 +4,7 @@ Installed Apple silicon macOS builds check `wapgear/onmywave-app` at startup and
 
 Both `pnpm run package:mac` and the release script verify the app's `Contents/Resources/app-update.yml` before succeeding. The check requires the configured GitHub release repository and an updater cache directory. Local packaging builds a ZIP because Electron Builder skips this file for macOS directory-only targets. An app copied from a `--dir` build cannot check for updates; reinstall a correctly packaged build to restore them.
 
-The app offers Update now or Later when a release is available. Update now downloads it with percentage progress. Restart now installs the downloaded update and stops playback; Restart later keeps the app running. Settings → General → About and updates shows the current version and provides a manual check. Check, download, and installation failures offer retry actions.
+The app offers Update now or Later when a release is available. Update now downloads it with percentage progress. Restart now installs the downloaded update and stops playback. Restart later keeps the app running. Settings → Updates shows the current version and provides a manual check. On macOS, the tray shows the installed version and lets you check, download, and choose when to restart. The app menu also has a Check for Updates command. Check, download, and installation failures offer retry actions.
 
 ## Publishing
 

@@ -4,7 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { UpdateStatus } from '../../../shared/update';
 import { unwrap } from '../../api';
 import { Notice, NoticeAction } from '../Notice/Notice.component';
-import { ErrorNotice, errorMessage } from '../Shared';
+import { Dialog, ErrorNotice, errorMessage } from '../Shared';
 
 import './AppUpdates.styles.css';
 
@@ -135,16 +135,33 @@ function UpdateControls({ status }: { status: UpdateStatus }) {
   );
 }
 
-export function UpdateSettings() {
+function UpdateDetails() {
   const query = useUpdates();
 
   return (
-    <section className="app-update-settings">
-      <h2>About and updates</h2>
-      <p className="settings-description">onmywave.fm{query.data ? ` · ${query.data.currentVersion}` : ''}</p>
+    <div className="app-update-details">
+      {query.isPending && <p role="status">Loading update status…</p>}
+      {query.data && <p className="app-update-version">Installed version {query.data.currentVersion}</p>}
       <ErrorNotice error={query.error} retry={() => query.refetch()} retrying={query.isFetching} />
       {query.data && <UpdateControls status={query.data} />}
+    </div>
+  );
+}
+
+export function UpdateSettings() {
+  return (
+    <section>
+      <h2>Software updates</h2>
+      <UpdateDetails />
     </section>
+  );
+}
+
+export function UpdateDialog({ close }: { close: () => void }) {
+  return (
+    <Dialog title="Software updates" close={close}>
+      <UpdateDetails />
+    </Dialog>
   );
 }
 

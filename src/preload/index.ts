@@ -1,9 +1,16 @@
 import { contextBridge, ipcRenderer } from 'electron';
 
+import type { AppMenuCommand } from '../shared/app-menu';
 import type { NewsPreparationChange, NewsProgress, WaveApi } from '../shared/types';
 import type { UpdateStatus } from '../shared/update';
 
 const api: WaveApi = {
+  onMenuCommand: (callback) => {
+    const listener = (_event: Electron.IpcRendererEvent, command: AppMenuCommand) => callback(command);
+    ipcRenderer.on('wave:menuCommand', listener);
+    return () => ipcRenderer.removeListener('wave:menuCommand', listener);
+  },
+  setLibraryMenuState: (state) => ipcRenderer.invoke('wave:setLibraryMenuState', state),
   getUpdateStatus: () => ipcRenderer.invoke('wave:getUpdateStatus'),
   checkForUpdates: () => ipcRenderer.invoke('wave:checkForUpdates'),
   downloadUpdate: () => ipcRenderer.invoke('wave:downloadUpdate'),
