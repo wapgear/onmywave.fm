@@ -288,6 +288,15 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
   const currentKey = queue[index]?.key;
   const hasCurrentTrack = Boolean(current);
   const duration = current && Number.isFinite(current.duration) && current.duration > 0 ? current.duration : 0;
+
+  const getMusicElement = useCallback(() => audio.current, []);
+
+  const readPlayingPosition = useCallback(() => {
+    const element = audio.current;
+    if (!element?.src || element.paused || element.ended || element.seeking || preparing.current) return;
+    return offset.current + element.currentTime;
+  }, []);
+
   const live = useRef({
     queue,
     index,
@@ -810,6 +819,7 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
     const activeNews = newsActive;
     const deferredFade = fadeOnNext;
     const element = new Audio();
+    element.crossOrigin = 'anonymous';
     element.preload = 'metadata';
     audio.current = element;
     element.onplay = () => {
@@ -838,13 +848,22 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
       setBusy(false);
     };
     element.ontimeupdate = () => {
-      if (!newsSchedule.current?.trackEnded) publishPosition(offset.current + element.currentTime);
+      // Clearing a finished or replaced source can emit a final timeupdate at zero.
+      if (!preparing.current && element.src && !newsSchedule.current?.trackEnded) {
+        publishPosition(offset.current + element.currentTime);
+      }
       checkScheduledNews();
     };
     if (newsSchedule.current) startNewsClock();
     element.onended = () => {
       // A queue change can precede replacement of the outgoing audio source.
       if (preparing.current || !element.ended || consumedEnd.current === generation.current) return;
+      const trackDuration = live.current.current?.duration;
+      publishPosition(
+        trackDuration && Number.isFinite(trackDuration) && trackDuration > 0
+          ? trackDuration
+          : offset.current + element.currentTime,
+      );
       if (countedSongGeneration.current !== generation.current) {
         countedSongGeneration.current = generation.current;
         announcementCadence.completeSong();
@@ -2256,6 +2275,8 @@ export function PlayerProvider({ connection, children }: { connection: Connectio
           currentArtwork: current?.imageUrl ? (artwork?.url === current.imageUrl ? artwork.dataUrl : undefined) : null,
           currentKey,
           playing,
+          getMusicElement,
+          readPlayingPosition,
           requestedPlaying,
           busy,
           duration,

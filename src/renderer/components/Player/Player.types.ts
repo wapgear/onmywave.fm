@@ -1,4 +1,7 @@
+import type { DynamicBarPreferences } from '../../theme.types';
+
 export type PlayerProps = {
+  dynamicBar: DynamicBarPreferences;
   queueOpen: boolean;
   lyricsOpen: boolean;
   toggleQueue: (source: HTMLButtonElement) => void;

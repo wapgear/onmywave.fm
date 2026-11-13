@@ -28,12 +28,14 @@ import { Artwork } from '../Shared';
 import { Slider } from '../Slider/Slider.component';
 import { SongArtists } from '../SongLinks/SongLinks.component';
 import { DJBreakNotice } from './DJBreakNotice.component';
+import { SpectrumBackdrop } from './DynamicPlayerBar.component';
 import type { PlayerProps } from './Player.types';
 import { PlayerTimeline } from './PlayerTimeline.component';
 
 import './Player.styles.css';
 
 export function Player({
+  dynamicBar,
   queueOpen,
   lyricsOpen,
   toggleQueue,
@@ -231,7 +233,8 @@ export function Player({
           </div>
         )}
       </div>
-      <footer className="player-bar" aria-label="Music player">
+      <footer className="player-bar" data-dynamic-bar={dynamicBar.mode} aria-label="Music player">
+        {dynamicBar.mode === 'spectrum' && <SpectrumBackdrop variant={dynamicBar.spectrum} />}
         <div className="player-song">
           <button
             className="player-artwork"
@@ -313,7 +316,7 @@ export function Player({
               )}
             </IconButton>
           </div>
-          <PlayerTimeline />
+          <PlayerTimeline progressStyle={dynamicBar.mode === 'progress' ? dynamicBar.progress : undefined} />
         </div>
         <div className="player-tools">
           {player.busy && (

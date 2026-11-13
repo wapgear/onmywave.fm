@@ -2,6 +2,7 @@ import type {
   AppearancePreferences,
   ColorFavorite,
   ColorSelection,
+  DynamicBarPreferences,
   Favorite,
   GradientColors,
   SavedColorFavorite,
@@ -26,6 +27,7 @@ const favoriteColors = Object.keys(colorFavorites) as ColorFavorite[];
 const defaultAppearance: AppearancePreferences = {
   accent: { mode: 'dynamic', choice: 'purple' },
   gradient: { mode: 'dynamic', choice: 'blue' },
+  dynamicBar: { mode: 'none', progress: 'soft-fill', spectrum: 'bars' },
   customAccent: '#9b6cd6',
   customGradient: colorFavorites.blue.gradient,
   favoriteAccents: [],
@@ -156,6 +158,14 @@ function readFavoriteGradients(value: unknown): SavedFavorite<GradientColors>[] 
   return [...gradients.values()];
 }
 
+function readDynamicBar(value: Partial<DynamicBarPreferences> | undefined): DynamicBarPreferences {
+  return {
+    mode: value?.mode === 'progress' || value?.mode === 'spectrum' ? value.mode : 'none',
+    progress: value?.progress === 'bottom-wash' || value?.progress === 'border-fill' ? value.progress : 'soft-fill',
+    spectrum: value?.spectrum === 'segments' ? 'segments' : 'bars',
+  };
+}
+
 export function readAppearancePreferences(): AppearancePreferences {
   try {
     const saved = JSON.parse(localStorage.getItem(appearanceKey) ?? 'null') as Partial<AppearancePreferences> | null;
@@ -170,6 +180,7 @@ export function readAppearancePreferences(): AppearancePreferences {
         defaultAppearance.accent,
       ),
       gradient: readColorSelection(saved?.gradient, gradientFavorites(favoriteGradients), defaultAppearance.gradient),
+      dynamicBar: readDynamicBar(saved?.dynamicBar),
       customAccent: parseHexColor(saved?.customAccent) ?? defaultAppearance.customAccent,
       customGradient: {
         start: parseHexColor(saved?.customGradient?.start) ?? defaultAppearance.customGradient.start,

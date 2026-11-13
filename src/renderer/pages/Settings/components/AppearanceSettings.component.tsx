@@ -13,6 +13,7 @@ import {
 import type { AppearancePreferences } from '../../../theme.types';
 import type { SettingsPageProps } from '../Settings.types';
 import { AppearanceColorChoices, CustomColorInput, SaveColorFavorite } from './AppearanceColorChoices.component';
+import { DynamicBarSettings } from './DynamicBarSettings.component';
 
 function ThemeChoice({
   value,
@@ -59,7 +60,7 @@ export function AppearanceSettings({
 }: Pick<SettingsPageProps, 'appearance' | 'onAppearanceChange'>) {
   const [theme, setTheme] = useState(currentTheme);
   const [themeSaved, setThemeSaved] = useState(true);
-  const [colorsSaved, setColorsSaved] = useState(true);
+  const [appearanceSaved, setAppearanceSaved] = useState(true);
   const latestAppearance = useRef(appearance);
   const { customAccent, customGradient, favoriteAccents, favoriteGradients } = appearance;
   const accentIsFavorite = favoriteAccents.some(({ color }) => color === customAccent);
@@ -67,7 +68,7 @@ export function AppearanceSettings({
     ({ color }) => color.start === customGradient.start && color.end === customGradient.end,
   );
 
-  function updateColors(
+  function updateAppearance(
     changes: Partial<AppearancePreferences> | ((current: AppearancePreferences) => Partial<AppearancePreferences>),
   ) {
     const current = latestAppearance.current;
@@ -75,7 +76,7 @@ export function AppearanceSettings({
 
     latestAppearance.current = next;
     onAppearanceChange(next);
-    setColorsSaved(saveAppearancePreferences(next));
+    setAppearanceSaved(saveAppearancePreferences(next));
   }
 
   return (
@@ -113,16 +114,16 @@ export function AppearanceSettings({
           value={appearance.accent}
           favorites={accentFavorites(favoriteAccents)}
           swatch={(color) => `oklch(from ${color} var(--accent-lightness, l) min(c, 0.15) h)`}
-          onChange={(accent) => updateColors({ accent })}
+          onChange={(accent) => updateAppearance({ accent })}
           onRename={({ color }, name) =>
-            updateColors((current) => ({
+            updateAppearance((current) => ({
               favoriteAccents: current.favoriteAccents.map((saved) =>
                 saved.color === color ? { ...saved, name } : saved,
               ),
             }))
           }
           onRemove={({ id, color }) =>
-            updateColors((current) => ({
+            updateAppearance((current) => ({
               ...(current.accent.choice === id && {
                 accent: { ...current.accent, choice: 'custom' },
                 customAccent: color,
@@ -137,13 +138,13 @@ export function AppearanceSettings({
               <CustomColorInput
                 label="Custom accent"
                 value={appearance.customAccent}
-                onChange={(customAccent) => updateColors({ customAccent })}
+                onChange={(customAccent) => updateAppearance({ customAccent })}
               />
               <SaveColorFavorite
                 kind="accent"
                 saved={accentIsFavorite}
                 onSave={(name) =>
-                  updateColors((current) => ({
+                  updateAppearance((current) => ({
                     accent: { ...current.accent, choice: favoriteId(customAccent) },
                     favoriteAccents: [...current.favoriteAccents, { color: customAccent, name }],
                   }))
@@ -161,16 +162,16 @@ export function AppearanceSettings({
           value={appearance.gradient}
           favorites={gradientFavorites(favoriteGradients)}
           swatch={({ start, end }) => `linear-gradient(${start}, ${end})`}
-          onChange={(gradient) => updateColors({ gradient })}
+          onChange={(gradient) => updateAppearance({ gradient })}
           onRename={({ id }, name) =>
-            updateColors((current) => ({
+            updateAppearance((current) => ({
               favoriteGradients: current.favoriteGradients.map((saved) =>
                 favoriteId(saved.color.start, saved.color.end) === id ? { ...saved, name } : saved,
               ),
             }))
           }
           onRemove={({ id, color }) =>
-            updateColors((current) => ({
+            updateAppearance((current) => ({
               ...(current.gradient.choice === id && {
                 gradient: { ...current.gradient, choice: 'custom' },
                 customGradient: color,
@@ -186,18 +187,18 @@ export function AppearanceSettings({
             <CustomColorInput
               label="Start color"
               value={appearance.customGradient.start}
-              onChange={(start) => updateColors({ customGradient: { ...appearance.customGradient, start } })}
+              onChange={(start) => updateAppearance({ customGradient: { ...appearance.customGradient, start } })}
             />
             <CustomColorInput
               label="End color"
               value={appearance.customGradient.end}
-              onChange={(end) => updateColors({ customGradient: { ...appearance.customGradient, end } })}
+              onChange={(end) => updateAppearance({ customGradient: { ...appearance.customGradient, end } })}
             />
             <SaveColorFavorite
               kind="gradient"
               saved={gradientIsFavorite}
               onSave={(name) =>
-                updateColors((current) => ({
+                updateAppearance((current) => ({
                   gradient: { ...current.gradient, choice: favoriteId(customGradient.start, customGradient.end) },
                   favoriteGradients: [...current.favoriteGradients, { color: customGradient, name }],
                 }))
@@ -206,9 +207,10 @@ export function AppearanceSettings({
           </div>
         )}
       </section>
-      {!colorsSaved && (
+      <DynamicBarSettings value={appearance.dynamicBar} onChange={(dynamicBar) => updateAppearance({ dynamicBar })} />
+      {!appearanceSaved && (
         <p className="settings-footnote" role="status">
-          Colors applied for now. They could not be saved on this device.
+          Appearance changes applied for now. They could not be saved on this device.
         </p>
       )}
     </>

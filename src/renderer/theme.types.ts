@@ -22,9 +22,18 @@ export type SavedFavorite<T> = { color: T; name?: string };
 
 export type GradientColors = { start: string; end: string };
 
+export type DynamicBarMode = 'none' | 'progress' | 'spectrum';
+
+export type DynamicBarPreferences = {
+  mode: DynamicBarMode;
+  progress: 'soft-fill' | 'bottom-wash' | 'border-fill';
+  spectrum: 'bars' | 'segments';
+};
+
 export type AppearancePreferences = {
   accent: ColorSelection;
   gradient: ColorSelection;
+  dynamicBar: DynamicBarPreferences;
   customAccent: string;
   customGradient: GradientColors;
   favoriteAccents: SavedFavorite<string>[];
