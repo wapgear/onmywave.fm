@@ -105,7 +105,10 @@ if (!app.requestSingleInstanceLock()) app.exit(0);
 
 protocol.registerSchemesAsPrivileged([
   { scheme: 'wave-app', privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true } },
-  { scheme: 'wave-media', privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true } },
+  {
+    scheme: 'wave-media',
+    privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true, corsEnabled: true },
+  },
 ]);
 
 const directory = dirname(fileURLToPath(import.meta.url));

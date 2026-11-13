@@ -16,6 +16,89 @@
   backdrop-filter: blur(var(--floating-blur));
   -webkit-app-region: no-drag;
 }
+
+.player-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: var(--player-radius);
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.player-bar[data-dynamic-bar]:not([data-dynamic-bar='none']) {
+  isolation: isolate;
+}
+
+.player-backdrop-progress {
+  --elapsed: var(--live-elapsed, var(--reported-elapsed));
+}
+
+.player-backdrop-soft-fill {
+  --feather: min(4%, var(--elapsed), 100% - var(--elapsed));
+  background: linear-gradient(
+    to right,
+    color-mix(in oklab, var(--accent) 20%, transparent) calc(var(--elapsed) - var(--feather)),
+    transparent calc(var(--elapsed) + var(--feather))
+  );
+}
+
+.player-backdrop-bottom-wash {
+  background: linear-gradient(to top, color-mix(in oklab, var(--accent) 28%, transparent), transparent);
+  background-size: 100% 40%;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  clip-path: inset(0 calc(100% - var(--elapsed)) 0 0);
+}
+
+.player-backdrop-border-fill::before,
+.player-backdrop-border-fill::after {
+  position: absolute;
+  inset: 0;
+  border: 1px solid color-mix(in oklab, var(--player-icon) 17%, transparent);
+  border-radius: inherit;
+  content: '';
+}
+
+.player-backdrop-border-fill::after {
+  border-color: color-mix(in oklab, var(--accent) 75%, transparent);
+  clip-path: inset(0 calc(100% - var(--elapsed)) 0 0);
+}
+
+.player-backdrop-spectrum {
+  inset: auto 0 0;
+  height: 55%;
+  display: grid;
+  grid-template-columns: repeat(32, minmax(0, 1fr));
+  gap: clamp(2px, 0.42vw, 7px);
+  padding-inline: 2%;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  align-items: end;
+}
+
+.player-backdrop-spectrum > span {
+  height: 100%;
+}
+
+.player-backdrop-bars > span {
+  background: linear-gradient(to top, transparent, color-mix(in oklab, var(--accent) 29%, transparent));
+  border-radius: 4px 4px 0 0;
+  transform: scaleY(var(--band-level, 0));
+  transform-origin: bottom;
+}
+
+.player-backdrop-segments > span {
+  --segment-ink: color-mix(in oklab, var(--accent) 30%, transparent);
+  background: repeating-linear-gradient(to top, transparent 0 10%, var(--segment-ink) 10% 16%, transparent 16% 20%);
+  clip-path: inset(calc(100% - round(down, var(--band-level, 0) * 100%, 20%)) 0 0);
+}
+
+@media (prefers-reduced-motion: reduce), (forced-colors: active) {
+  .player-backdrop-spectrum {
+    display: none;
+  }
+}
 .player-song {
   display: flex;
   align-items: center;

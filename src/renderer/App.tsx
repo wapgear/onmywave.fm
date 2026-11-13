@@ -971,6 +971,7 @@ function ReadyApp({
           </aside>
         )}
         <Player
+          dynamicBar={appearance.dynamicBar}
           openDetails={(source) => {
             if (player.current) openDrawer(player.current, source);
           }}

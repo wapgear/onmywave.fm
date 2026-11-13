@@ -43,6 +43,8 @@ export type PlayerState = {
   currentArtwork: string | null | undefined;
   currentKey?: string;
   playing: boolean;
+  getMusicElement(this: void): HTMLAudioElement | null;
+  readPlayingPosition(this: void): number | undefined;
   requestedPlaying: boolean;
   busy: boolean;
   duration: number;

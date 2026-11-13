@@ -19,6 +19,16 @@ const activeRequests = new Set<AbortController>();
 
 const itemId = (id: string) => /^[a-zA-Z0-9_-]{1,128}$/.test(id);
 
+function allowMusicAnalysis(request: Request, headers: Headers) {
+  const origin = request.headers.get('origin');
+  const devUrl = process.env.ELECTRON_RENDERER_URL;
+
+  if (origin && (origin === 'wave-app://bundle' || (devUrl && origin === new URL(devUrl).origin))) {
+    headers.set('Access-Control-Allow-Origin', origin);
+  }
+  headers.set('Vary', 'Origin');
+}
+
 export function revokeMedia() {
   revokeSongHandoffs();
   resources.clear();
@@ -212,6 +222,7 @@ export function registerMedia(getSession: () => Session | null, deviceId: string
       }
       if (!response) return new Response(null, { status: 502 });
       const outgoing = new Headers({ 'Cache-Control': 'no-store' });
+      if (url.hostname === 'audio') allowMusicAnalysis(request, outgoing);
       for (const key of ['content-type', 'content-length', 'content-range', 'accept-ranges']) {
         const value = response.headers.get(key);
         if (value) outgoing.set(key, value);

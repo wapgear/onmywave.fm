@@ -14,7 +14,7 @@ export function Slider({
   min: number;
   max: number;
   value: number;
-  step?: number;
+  step?: number | 'any';
 }) {
   const percent = max > min ? Math.max(0, Math.min(100, ((value - min) / (max - min)) * 100)) : 0;
 
