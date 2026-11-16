@@ -1,5 +1,5 @@
 import { keepPreviousData, useInfiniteQuery, useQuery, useQueryClient } from '@tanstack/react-query';
-import { Refresh, Search, Xmark } from 'iconoir-react/regular';
+import { CompactDisc, Refresh, Search, Xmark } from 'iconoir-react/regular';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import type { CatalogQuery, Song } from '../../../shared/types';
@@ -12,9 +12,10 @@ import { songRows } from '../../components/TrackTable/TrackTable.component';
 import { VirtualTrackTable } from '../../components/TrackTable/VirtualTrackTable.component';
 import { usePlayer } from '../../player';
 import { useRetryFocus } from '../../useRetryFocus';
+import { musicFacts } from './musicFacts';
 import type { SongsPageProps, SongsView } from './Songs.types';
 
-const PAGE_SIZE = 80;
+const PAGE_SIZE = 200;
 
 export const initialSongsView = (): SongsView => ({
   search: '',
@@ -25,6 +26,30 @@ export const initialSongsView = (): SongsView => ({
 function applySearch(setView: SongsPageProps['setView'], search: string) {
   setView((old) =>
     old.query.search === search ? old : { ...old, query: { ...old.query, start: 0, search }, selected: new Map() },
+  );
+}
+
+function SongsLoading() {
+  const [facts] = useState(() => {
+    const first = Math.floor(Math.random() * musicFacts.length);
+    const second = Math.floor(Math.random() * (musicFacts.length - 1));
+    return [musicFacts[first], musicFacts[second < first ? second : second + 1]];
+  });
+
+  return (
+    <div className="songs-loading">
+      <div className="songs-loading-icon" aria-hidden="true">
+        <CompactDisc width={30} height={30} />
+      </div>
+      <p className="songs-loading-title" role="status">
+        Cueing up your collection…
+      </p>
+      <div className="songs-loading-facts">
+        {facts.map((fact) => (
+          <p key={fact}>{fact}</p>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -124,119 +149,119 @@ export function SongsPage({ add, details, view, setView }: SongsPageProps) {
 
   return (
     <>
-      <PageHeading headingRef={headingRef} title="All songs">
-        <div className="search-field">
-          <Search width={17} height={17} aria-hidden="true" />
-          <input
-            ref={searchRef}
-            aria-label="Search songs, artists and albums"
-            placeholder="Search your library"
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            onKeyDown={(event) => {
-              if (event.key === 'Enter' && !event.nativeEvent.isComposing) applySearch(setView, search.trim());
-            }}
-          />
-          <span className="search-status" role="status">
-            {songs.isPlaceholderData ? 'Updating…' : ''}
-          </span>
-          {search && (
-            <IconButton
-              className="search-clear"
-              variant="compact"
-              label="Clear search"
-              onClick={() => {
-                setView((old) => ({
-                  ...old,
-                  search: '',
-                  query: { ...old.query, start: 0, search: '' },
-                  selected: new Map(),
-                }));
-                searchRef.current?.focus();
+      <div className="songs-page-controls">
+        <PageHeading headingRef={headingRef} title="All songs">
+          <div className="search-field">
+            <Search width={17} height={17} aria-hidden="true" />
+            <input
+              ref={searchRef}
+              aria-label="Search songs, artists and albums"
+              placeholder="Search your library"
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              onKeyDown={(event) => {
+                if (event.key === 'Enter' && !event.nativeEvent.isComposing) applySearch(setView, search.trim());
               }}
-            >
-              <Xmark width={15} height={15} aria-hidden="true" />
-            </IconButton>
-          )}
-        </div>
-      </PageHeading>
-      <div className="filter-bar">
-        <FilterSelect
-          label="Genre"
-          value={query.genre ?? ''}
-          emptyLabel="Any genre"
-          choices={(filters.data?.genres ?? []).map((value) => ({ value, label: value }))}
-          onChange={(genre) => change({ genre: genre || undefined })}
-          allowCustom
-          loading={filters.isPending}
-        />
-        <FilterSelect
-          label="Tag"
-          value={query.tag ?? ''}
-          emptyLabel="Any tag"
-          choices={(filters.data?.tags ?? []).map((value) => ({ value, label: value }))}
-          onChange={(tag) => change({ tag: tag || undefined })}
-          allowCustom
-          loading={filters.isPending}
-        />
-        <div className="song-sort-controls" role="group" aria-label="Song order">
+            />
+            <span className="search-status" role="status">
+              {songs.isPlaceholderData ? 'Updating…' : ''}
+            </span>
+            {search && (
+              <IconButton
+                className="search-clear"
+                variant="compact"
+                label="Clear search"
+                onClick={() => {
+                  setView((old) => ({
+                    ...old,
+                    search: '',
+                    query: { ...old.query, start: 0, search: '' },
+                    selected: new Map(),
+                  }));
+                  searchRef.current?.focus();
+                }}
+              >
+                <Xmark width={15} height={15} aria-hidden="true" />
+              </IconButton>
+            )}
+          </div>
+        </PageHeading>
+        <div className="filter-bar">
           <FilterSelect
-            label="Sort"
-            value={query.sort ?? 'name'}
-            choices={[
-              { value: 'dateAdded', label: 'Date added' },
-              { value: 'name', label: 'Title' },
-              { value: 'artist', label: 'Artist' },
-              { value: 'album', label: 'Album' },
-              { value: 'year', label: 'Year' },
-            ]}
-            onChange={(sort) => change({ sort: sort as CatalogQuery['sort'], descending: sort === 'dateAdded' })}
-            searchable={false}
+            label="Genre"
+            value={query.genre ?? ''}
+            emptyLabel="Any genre"
+            choices={(filters.data?.genres ?? []).map((value) => ({ value, label: value }))}
+            onChange={(genre) => change({ genre: genre || undefined })}
+            allowCustom
+            loading={filters.isPending}
           />
-          <button
-            type="button"
-            aria-label={query.descending ? 'Sort ascending' : 'Sort descending'}
-            onClick={() => change({ descending: !query.descending })}
+          <FilterSelect
+            label="Tag"
+            value={query.tag ?? ''}
+            emptyLabel="Any tag"
+            choices={(filters.data?.tags ?? []).map((value) => ({ value, label: value }))}
+            onChange={(tag) => change({ tag: tag || undefined })}
+            allowCustom
+            loading={filters.isPending}
+          />
+          <div className="song-sort-controls" role="group" aria-label="Song order">
+            <FilterSelect
+              label="Sort"
+              value={query.sort ?? 'name'}
+              choices={[
+                { value: 'dateAdded', label: 'Date added' },
+                { value: 'name', label: 'Title' },
+                { value: 'artist', label: 'Artist' },
+                { value: 'album', label: 'Album' },
+                { value: 'year', label: 'Year' },
+              ]}
+              onChange={(sort) => change({ sort: sort as CatalogQuery['sort'], descending: sort === 'dateAdded' })}
+              searchable={false}
+            />
+            <button
+              type="button"
+              aria-label={query.descending ? 'Sort ascending' : 'Sort descending'}
+              onClick={() => change({ descending: !query.descending })}
+            >
+              {query.sort === 'dateAdded'
+                ? query.descending
+                  ? 'Newest first'
+                  : 'Oldest first'
+                : query.descending
+                  ? 'Z–A'
+                  : 'A–Z'}
+            </button>
+          </div>
+          <IconButton
+            className="refresh-button"
+            label="Refresh library"
+            aria-disabled={refreshing || undefined}
+            aria-busy={refreshing}
+            title="Refresh songs, artists, filters, albums and playlists"
+            onClick={() => void refreshLibrary()}
           >
-            {query.sort === 'dateAdded'
-              ? query.descending
-                ? 'Newest first'
-                : 'Oldest first'
-              : query.descending
-                ? 'Z–A'
-                : 'A–Z'}
-          </button>
+            <Refresh width={17} height={17} className={refreshing ? 'spinning' : ''} aria-hidden="true" />
+          </IconButton>
         </div>
-        <IconButton
-          className="refresh-button"
-          label="Refresh library"
-          aria-disabled={refreshing || undefined}
-          aria-busy={refreshing}
-          title="Refresh songs, artists, filters, albums and playlists"
-          onClick={() => void refreshLibrary()}
-        >
-          <Refresh width={17} height={17} className={refreshing ? 'spinning' : ''} aria-hidden="true" />
-        </IconButton>
-      </div>
-      <ErrorNotice
-        error={catalogInlineError(filters.error)}
-        retryRef={filtersRetryFocus.retryRef}
-        retrying={filters.isFetching}
-        retry={() => filtersRetryFocus.retry(() => filters.refetch())}
-      />
-      {!songs.isFetchNextPageError && (
         <ErrorNotice
-          key={`error:${JSON.stringify(catalog)}`}
-          error={catalogInlineError(songs.error)}
-          retryRef={songsRetryFocus.retryRef}
-          retrying={songs.isFetching}
-          retry={() => songsRetryFocus.retry(() => songs.refetch())}
+          error={catalogInlineError(filters.error)}
+          retryRef={filtersRetryFocus.retryRef}
+          retrying={filters.isFetching}
+          retry={() => filtersRetryFocus.retry(() => filters.refetch())}
         />
-      )}
+        {!songs.isFetchNextPageError && (
+          <ErrorNotice
+            key={`error:${JSON.stringify(catalog)}`}
+            error={catalogInlineError(songs.error)}
+            retryRef={songsRetryFocus.retryRef}
+            retrying={songs.isFetching}
+            retry={() => songsRetryFocus.retry(() => songs.refetch())}
+          />
+        )}
+      </div>
       {songs.isPending ? (
-        <div className="loading" role="status">
-          Loading your songs…
-        </div>
+        <SongsLoading />
       ) : rows.length ? (
         <VirtualTrackTable
           key={JSON.stringify(catalog)}
