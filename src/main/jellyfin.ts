@@ -22,6 +22,7 @@ export class ServiceError extends Error {
   constructor(
     public code: ApiError['code'],
     message: string,
+    public status?: number,
   ) {
     super(message);
   }
@@ -204,6 +205,7 @@ export class JellyfinService {
   private connectionWrites = Promise.resolve();
   private writes = new Map<string, Promise<unknown>>();
   private catalogSnapshots = new Map<string, { session: Session; items: Item[] }>();
+  private serverWithoutSongPages = new WeakSet<Session>();
   private catalogLoads = new Map<string, CatalogLoad>();
   private lyricsRequest: AbortController | null = null;
   private catalogControllers = new Set<AbortController>();
@@ -498,9 +500,13 @@ export class JellyfinService {
         throw new ServiceError('unauthorized', 'Your Jellyfin session expired. Sign in again.');
       if (response.status === 403)
         throw new ServiceError('forbidden', 'Your Jellyfin account cannot perform this action.');
-      if (response.status === 404) throw new ServiceError('not-found', 'This Jellyfin item is unavailable.');
+      if (response.status === 404) throw new ServiceError('not-found', 'This Jellyfin item is unavailable.', 404);
       if (!response.ok)
-        throw new ServiceError('server', `Jellyfin could not complete the request (${response.status}).`);
+        throw new ServiceError(
+          'server',
+          `Jellyfin could not complete the request (${response.status}).`,
+          response.status,
+        );
       return await consume(response);
     } catch (error) {
       if (error instanceof ServiceError) throw error;
@@ -727,11 +733,156 @@ export class JellyfinService {
     for (const value of [query.search, query.genre, query.tag])
       if (value !== undefined && (typeof value !== 'string' || value.length > 500))
         throw new ServiceError('invalid', 'Invalid catalog filter.');
-    const removed = type === 'Audio' ? await this.removedIds(s) : new Set<string>();
+    const removals = type === 'Audio' ? ((await this.deps.removals?.list(this.removalConnectionId(s))) ?? []) : [];
     if (this.session !== s) throw new ServiceError('invalid', 'The connection changed. Refresh your library.');
     if (!s.selectedLibraryIds.length) return { items: [], total: 0, start };
+    const removed = new Set(removals.map((item) => songIdentity(item.songId)));
     if (query.search?.trim())
       return this.searchCatalog(type, { ...query, search: query.search.trim() }, sort, start, limit, signal, removed);
+    const [parentId] = s.selectedLibraryIds;
+    const sortOrder = query.descending ? 'Descending' : 'Ascending';
+    const filters: Record<string, string> = {};
+    if (query.genre) filters.Genres = query.genre;
+    if (query.tag) filters.Tags = query.tag;
+    if (query.artistId) filters.ArtistIds = query.artistId;
+    if (
+      type === 'Audio' &&
+      parentId &&
+      s.selectedLibraryIds.length === 1 &&
+      this.deps.removals &&
+      !this.serverWithoutSongPages.has(s) &&
+      !removals.some((item) => item.purgeAfter === null)
+    ) {
+      const params = new URLSearchParams({
+        ...filters,
+        ParentId: parentId,
+        StartIndex: String(start),
+        Limit: String(limit),
+        SortBy: sort,
+        SortOrder: sortOrder,
+      });
+      try {
+        const page = await catalogLimiter.run(signal, () =>
+          this.requestJson<{ items: Item[]; total: number }>(
+            s.serverUrl,
+            `/OnMyWave/Songs?${params}`,
+            { signal },
+            s.token,
+          ),
+        );
+        if (this.session !== s) throw new ServiceError('invalid', 'The library changed. Refresh your collection.');
+        if (!Array.isArray(page.items) || !Number.isSafeInteger(page.total) || page.total < 0)
+          throw new ServiceError('server', 'The server returned an invalid song page.');
+        return { items: page.items, total: page.total, start };
+      } catch (error) {
+        if (!(error instanceof ServiceError) || error.code !== 'not-found') throw error;
+        if (this.session !== s) throw new ServiceError('invalid', 'The library changed. Refresh your collection.');
+        this.serverWithoutSongPages.add(s);
+      }
+    }
+    // Use Jellyfin's paging with local removal records when the sidecar cannot serve the page.
+    if (
+      type === 'Audio' &&
+      parentId &&
+      s.selectedLibraryIds.length === 1 &&
+      removed.size > 0 &&
+      [...removed].every((id) => /^[a-f\d]{32}$/.test(id))
+    ) {
+      const params = new URLSearchParams({
+        ...filters,
+        ParentId: parentId,
+        Recursive: 'true',
+        IncludeItemTypes: 'Audio',
+        Fields: fields,
+        StartIndex: String(start),
+        Limit: String(limit),
+        SortBy: sort,
+        SortOrder: sortOrder,
+        EnableTotalRecordCount: 'true',
+      });
+      const buildPath = (excluded: Set<string>) => {
+        const ids = [...excluded].sort().join(',');
+        return `/Users/${s.userId}/Items?${params}${ids ? `&ExcludeItemIds=${ids}` : ''}`;
+      };
+      const readExcludedPage = async (excluded: Set<string>) => {
+        try {
+          const page = await catalogLimiter.run(signal, () => this.json(buildPath(excluded), { signal }));
+          if (this.session !== s) throw new ServiceError('invalid', 'The library changed. Refresh your collection.');
+          const items = page.Items;
+          if (
+            Array.isArray(items) &&
+            items.every((item) => item && typeof item.Id === 'string') &&
+            Number.isSafeInteger(page.TotalRecordCount) &&
+            (page.TotalRecordCount || 0) >= 0 &&
+            !items.some((item) => removed.has(itemIdentity(item.Id)))
+          )
+            return { page: { items, total: page.TotalRecordCount!, start } };
+          return {};
+        } catch (error) {
+          if (!(error instanceof ServiceError) || ![400, 404, 414].includes(error.status ?? 0)) throw error;
+          if (this.session !== s) throw new ServiceError('invalid', 'The library changed. Refresh your collection.');
+          return { tooLong: error.status === 414 };
+        }
+      };
+      const compactExclusions = async (): Promise<Set<string> | undefined> => {
+        const groupSize = 150;
+        if (removed.size > 4 * groupSize) return undefined;
+        const ids = [...removed];
+        const visible = new Set<string>();
+        for (let offset = 0; offset < ids.length; offset += groupSize) {
+          const group = ids.slice(offset, offset + groupSize);
+          const lookup = new URLSearchParams({
+            UserId: s.userId,
+            Ids: group.join(','),
+            IncludeItemTypes: 'Audio',
+            Recursive: 'true',
+            Limit: String(group.length),
+            EnableImages: 'false',
+            EnableUserData: 'false',
+            EnableTotalRecordCount: 'true',
+          });
+          let result: Item;
+          try {
+            result = await catalogLimiter.run(signal, () => this.json(`/Items?${lookup}`, { signal }));
+          } catch (error) {
+            if (!(error instanceof ServiceError) || ![400, 404, 414].includes(error.status ?? 0)) throw error;
+            if (this.session !== s) throw new ServiceError('invalid', 'The library changed. Refresh your collection.');
+            return undefined;
+          }
+          if (this.session !== s) throw new ServiceError('invalid', 'The library changed. Refresh your collection.');
+          const items = result.Items;
+          const groupIds = new Set(group);
+          if (
+            !Array.isArray(items) ||
+            !Number.isSafeInteger(result.TotalRecordCount) ||
+            result.TotalRecordCount !== items.length ||
+            items.length > group.length ||
+            !items.every((item) => item && typeof item.Id === 'string' && /^[a-f\d]{32}$/.test(itemIdentity(item.Id)))
+          )
+            return undefined;
+          for (const item of items) {
+            const id = itemIdentity(item.Id);
+            if (!groupIds.has(id) || visible.has(id)) return undefined;
+            visible.add(id);
+          }
+        }
+        return visible;
+      };
+
+      let shouldCompact = buildPath(removed).length > 7900;
+      if (!shouldCompact) {
+        const result = await readExcludedPage(removed);
+        if (result.page) return result.page;
+        shouldCompact = result.tooLong === true;
+      }
+      if (shouldCompact) {
+        const compact = await compactExclusions();
+        if (compact && compact.size < removed.size && buildPath(compact).length <= 7900) {
+          const result = await readExcludedPage(compact);
+          if (result.page) return result.page;
+        }
+      }
+    }
     const multiple = s.selectedLibraryIds.length > 1 || removed.size > 0;
     const snapshotKey = JSON.stringify([
       type,
@@ -757,6 +908,7 @@ export class JellyfinService {
     const read = async (requestSignal: AbortSignal) => {
       const pageReads = s.selectedLibraryIds.map(async (parent) => {
         const params = new URLSearchParams({
+          ...filters,
           ParentId: parent,
           Recursive: 'true',
           IncludeItemTypes: type,
@@ -764,13 +916,9 @@ export class JellyfinService {
           StartIndex: String(start),
           Limit: String(limit),
           SortBy: sort,
-          SortOrder: query.descending ? 'Descending' : 'Ascending',
+          SortOrder: sortOrder,
           EnableTotalRecordCount: 'true',
         });
-        if (query.search) params.set('SearchTerm', query.search);
-        if (query.genre) params.set('Genres', query.genre);
-        if (query.tag) params.set('Tags', query.tag);
-        if (query.artistId) params.set('ArtistIds', query.artistId);
         // Complete each root before merging: provider and app sort comparators can differ.
         if (multiple) {
           const items = await this.allItems(`/Users/${s.userId}/Items`, Object.fromEntries(params), requestSignal);

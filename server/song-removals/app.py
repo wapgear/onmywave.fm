@@ -12,14 +12,23 @@ from datetime import datetime, timedelta, timezone
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.error import HTTPError, URLError
-from urllib.parse import parse_qsl
+from urllib.parse import parse_qsl, urlencode
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 
 
 PREFIX = "/OnMyWave/RemovedSongs"
+SONGS_ROUTE = "/OnMyWave/Songs"
 RETENTION = timedelta(days=7)
 MAX_BODY = 4096
 MAX_USER_ITEMS = 100_000
+CATALOG_FIELDS = "Genres,Tags,MediaSources,MediaStreams,DateCreated,Overview,SortName,ParentId"
+CATALOG_SORTS = {
+    "SortName", "Artist,SortName", "Album,ParentIndexNumber,IndexNumber,SortName",
+    "ProductionYear,SortName", "DateCreated,SortName",
+}
+MAX_CATALOG_PATH = 7900  # Leave room for the rest of the request line at Jellyfin.
+MAX_COMPACTION_IDS = 600
+COMPACTION_CHUNK_SIZE = 150
 TOKEN_PATTERN = re.compile(r'(?:^|,)\s*Token="([A-Za-z0-9._~+/=-]{1,4096})"(?:,|$)')
 UUID_PATTERN = re.compile(r"^[a-fA-F0-9]{32}$|^[a-fA-F0-9]{8}(?:-[a-fA-F0-9]{4}){3}-[a-fA-F0-9]{12}$")
 
@@ -98,6 +107,7 @@ def initialize_db():
                 PRIMARY KEY (song_id, user_id)
             );
             CREATE INDEX IF NOT EXISTS jobs_purge_id ON jobs(purge_after, id);
+            CREATE INDEX IF NOT EXISTS requests_user_song ON requests(user_id, song_id);
             """
         )
 
@@ -110,7 +120,15 @@ class RejectRedirects(HTTPRedirectHandler):
 JELLYFIN_HTTP = build_opener(RejectRedirects())
 
 
-def jellyfin_json(path, token):
+class RequestTooLong(RuntimeError):
+    pass
+
+
+class AuthenticationError(PermissionError):
+    pass
+
+
+def jellyfin_json(path, token, max_bytes=1_000_000):
     request = Request(
         JELLYFIN_URL + path,
         headers={"Authorization": f'MediaBrowser Token="{token}"', "Accept": "application/json"},
@@ -119,35 +137,42 @@ def jellyfin_json(path, token):
         with JELLYFIN_HTTP.open(request, timeout=8) as response:
             if response.status != 200:
                 raise RuntimeError("Jellyfin rejected the request")
-            return json.loads(response.read(1_000_001))
+            body = response.read(max_bytes + 1)
+            if len(body) > max_bytes:
+                raise RuntimeError("Jellyfin response is too large")
+            return json.loads(body)
     except HTTPError as error:
-        if error.code in (401, 403):
+        if error.code == 401:
+            raise AuthenticationError from error
+        if error.code == 403:
             raise PermissionError from error
         if error.code == 404:
             raise LookupError from error
+        if error.code == 414:
+            raise RequestTooLong from error
         raise RuntimeError("Jellyfin request failed") from error
     except (URLError, TimeoutError, json.JSONDecodeError, OSError) as error:
         raise RuntimeError("Jellyfin request failed") from error
 
 
-def authorize_jellyfin(header):
+def authorize_jellyfin(header, require_removal_access=True):
     if not header or not header.startswith("MediaBrowser "):
-        raise PermissionError
+        raise AuthenticationError
     match = TOKEN_PATTERN.search(header[len("MediaBrowser ") :])
     if not match:
-        raise PermissionError
+        raise AuthenticationError
     token = match.group(1)
     try:
         user = jellyfin_json("/Users/Me", token)
     except LookupError as error:
-        raise PermissionError from error
+        raise AuthenticationError from error
     try:
         if not isinstance(user, dict):
             raise ValueError("invalid user")
         user_id = canonical_uuid(user.get("Id"))
     except ValueError as error:
-        raise PermissionError from error
-    if user_id not in ALLOWED_USER_IDS:
+        raise AuthenticationError from error
+    if require_removal_access and user_id not in ALLOWED_USER_IDS:
         raise PermissionError
     return token, user_id
 
@@ -158,6 +183,128 @@ def job_dict(row):
         "removedAt": row["removed_at"],
         "purgeAfter": row["purge_after"],
     }
+
+
+def catalog_page(token, user_id, query, removed):
+    start = int(query.get("StartIndex", "0"))
+    limit = int(query.get("Limit", "80"))
+    sort = query.get("SortBy", "DateCreated,SortName")
+    order = query.get("SortOrder", "Descending")
+    if not 0 <= start <= 1_000_000 or not 1 <= limit <= 500 or sort not in CATALOG_SORTS:
+        raise ValueError("invalid catalog page")
+    if order not in ("Ascending", "Descending"):
+        raise ValueError("invalid catalog order")
+    if any(len(query.get(key, "")) > 500 for key in ("Genres", "Tags")):
+        raise ValueError("invalid catalog filter")
+    params = {
+        "UserId": user_id,
+        "ParentId": canonical_uuid(query.get("ParentId")),
+        "IncludeItemTypes": "Audio",
+        "Recursive": "true",
+        "SortBy": sort,
+        "SortOrder": order,
+        "EnableTotalRecordCount": "true",
+    }
+    for key in ("Genres", "Tags"):
+        if key in query:
+            params[key] = query[key]
+    if "ArtistIds" in query:
+        params["ArtistIds"] = canonical_uuid(query["ArtistIds"])
+
+    def page_path(offset, size, excluded=(), fields=CATALOG_FIELDS):
+        path = "/Items?" + urlencode({**params, "StartIndex": offset, "Limit": size, "Fields": fields})
+        return path + "&ExcludeItemIds=" + ",".join(excluded) if excluded else path
+
+    def read(path):
+        data = jellyfin_json(path, token, max_bytes=16_000_000)
+        if not isinstance(data, dict) or not isinstance(data.get("Items"), list):
+            raise RuntimeError("invalid Jellyfin catalog page")
+        if not all(isinstance(item, dict) and isinstance(item.get("Id"), str) for item in data["Items"]):
+            raise RuntimeError("invalid Jellyfin item identifier")
+        if type(data.get("TotalRecordCount")) is not int or data["TotalRecordCount"] < 0:
+            raise RuntimeError("invalid Jellyfin catalog count")
+        return data["Items"], data["TotalRecordCount"]
+
+    direct = page_path(start, limit, sorted(removed))
+    if len(direct) <= MAX_CATALOG_PATH:
+        try:
+            items, total = read(direct)
+        except RequestTooLong:
+            pass
+        else:
+            if any(canonical_uuid(item["Id"]) in removed for item in items):
+                raise RuntimeError("Jellyfin ignored the exclusion filter")
+            return items, total
+
+    # Old removal records can refer to items no longer visible in Jellyfin. Prune
+    # only the request-local exclusion list so those IDs don't bloat the page URL.
+    # The SQLite tombstones remain untouched and authoritative for later requests.
+    if 0 < len(removed) <= MAX_COMPACTION_IDS:
+        visible_removed = set()
+        try:
+            ids = sorted(removed)
+            for offset in range(0, len(ids), COMPACTION_CHUNK_SIZE):
+                chunk = ids[offset : offset + COMPACTION_CHUNK_SIZE]
+                lookup = urlencode({
+                    "UserId": user_id,
+                    "Ids": ",".join(chunk),
+                    "IncludeItemTypes": "Audio",
+                    "Recursive": "true",
+                    "EnableImages": "false",
+                    "EnableUserData": "false",
+                    "EnableTotalRecordCount": "true",
+                    "StartIndex": "0",
+                    "Limit": str(len(chunk)),
+                })
+                matches, match_count = read("/Items?" + lookup)
+                match_ids = [canonical_uuid(item["Id"]) for item in matches]
+                if (
+                    match_count != len(matches)
+                    or len(match_ids) != len(set(match_ids))
+                    or not set(match_ids).issubset(chunk)
+                ):
+                    raise RuntimeError("incomplete Jellyfin visibility lookup")
+                visible_removed.update(match_ids)
+
+        except (RuntimeError, LookupError, PermissionError, ValueError, TypeError):
+            visible_removed = None
+
+        if visible_removed is not None and len(visible_removed) < len(removed):
+            compacted = page_path(start, limit, sorted(visible_removed))
+            if len(compacted) <= MAX_CATALOG_PATH:
+                try:
+                    items, total = read(compacted)
+                except RequestTooLong:
+                    pass
+                else:
+                    if not any(canonical_uuid(item["Id"]) in removed for item in items):
+                        return items, total
+
+    # Keep each fallback request small. Count the filtered rows without fetching their metadata.
+    _, unfiltered_total = read(page_path(0, 1, fields=""))
+    total = unfiltered_total
+    ids = sorted(removed)
+    for offset in range(0, len(ids), 100):
+        _, remaining = read(page_path(0, 1, ids[offset : offset + 100], fields=""))
+        total -= unfiltered_total - remaining
+
+    items = []
+    offset = 0
+    visible = 0
+    while start < total and offset < unfiltered_total and len(items) < limit:
+        batch, _ = read(page_path(offset, min(500, limit + min(len(ids), 500))))
+        if not batch:
+            break
+        offset += len(batch)
+        for item in batch:
+            if canonical_uuid(item["Id"]) in removed:
+                continue
+            if visible >= start:
+                items.append(item)
+                if len(items) == limit:
+                    break
+            visible += 1
+    return items, max(0, total)
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -250,6 +397,10 @@ class Handler(BaseHTTPRequestHandler):
             self.reply(404, {"error": "song-unavailable"})
 
     def do_GET(self):
+        route, _separator, query = self.path.partition("?")
+        if route == SONGS_ROUTE:
+            self.get_songs(query)
+            return
         if self.path == PREFIX:
             self.get_user_jobs()
             return
@@ -257,6 +408,30 @@ class Handler(BaseHTTPRequestHandler):
             self.get_due_jobs()
             return
         self.reply(404, {"error": "not-found"})
+
+    def get_songs(self, query):
+        try:
+            parts = parse_qsl(query, keep_blank_values=True, strict_parsing=True, max_num_fields=8)
+            params = dict(parts)
+            if len(parts) != len(params) or set(params) - {
+                "ParentId", "StartIndex", "Limit", "SortBy", "SortOrder", "Genres", "Tags", "ArtistIds",
+            }:
+                raise ValueError("invalid catalog parameters")
+            token, user_id = authorize_jellyfin(self.headers.get("Authorization", ""), require_removal_access=False)
+            with closing(connect_db()) as db:
+                removed = {row["song_id"] for row in db.execute("SELECT song_id FROM requests WHERE user_id = ?", (user_id,))}
+            items, total = catalog_page(token, user_id, params, removed)
+            self.reply(200, {"items": items, "total": total})
+        except ValueError:
+            self.reply(400, {"error": "invalid-request"})
+        except AuthenticationError:
+            self.reply(401, {"error": "unauthorized"})
+        except (PermissionError, LookupError):
+            self.reply(403, {"error": "forbidden"})
+        except sqlite3.Error:
+            self.reply(503, {"error": "removal-store-unavailable"})
+        except (RuntimeError, KeyError, TypeError):
+            self.reply(502, {"error": "jellyfin-unavailable"})
 
     def get_user_jobs(self):
         try:

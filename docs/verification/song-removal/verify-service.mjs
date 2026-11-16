@@ -58,6 +58,8 @@ function startFakeJellyfin(catalog) {
   const rejectPosts = new Set();
   const tokenUsers = new Map();
   const postCount = new Map();
+  const catalogReads = [];
+  let exclusionLengthLimit = Infinity;
   let blockNextPost = false;
   let blockedPostStarted;
   let releaseBlockedPost;
@@ -111,12 +113,23 @@ function startFakeJellyfin(catalog) {
     }
 
     if (url.pathname === '/Artists' || url.pathname === '/Artists/AlbumArtists') return reply(200, { Items: [], TotalRecordCount: 0 });
+    if (url.pathname === '/Items' && url.searchParams.has('Ids')) {
+      assert.equal(url.searchParams.get('UserId'), userId);
+      const ids = new Set(url.searchParams.get('Ids').split(','));
+      const items = catalog.filter((item) => ids.has(item.Id.replaceAll('-', '')));
+      catalogReads.push({ lookup: ids.size });
+      return reply(200, { Items: items, TotalRecordCount: items.length });
+    }
     if (/^\/Users\/[a-f\d-]+\/Items$/.test(url.pathname)) {
       let items = url.searchParams.get('IncludeItemTypes') === 'MusicAlbum' ? [] : catalog;
       const search = url.searchParams.get('SearchTerm')?.toLowerCase();
       if (search) items = items.filter((item) => item.Name.toLowerCase().includes(search));
       const start = Number(url.searchParams.get('StartIndex') ?? 0);
       const limit = Number(url.searchParams.get('Limit') ?? 100);
+      const exclude = new Set(url.searchParams.get('ExcludeItemIds')?.split(',') ?? []);
+      catalogReads.push({ start, limit, exclude: exclude.size });
+      if (exclude.size > exclusionLengthLimit) return reply(414, { error: 'request-target-too-long' });
+      items = items.filter((item) => !exclude.has(item.Id.replaceAll('-', '')));
       return reply(200, { Items: items.slice(start, start + limit), TotalRecordCount: items.length });
     }
     return reply(404, { error: 'not-found' });
@@ -134,6 +147,10 @@ function startFakeJellyfin(catalog) {
         requests,
         rejectPosts,
         postCount,
+        catalogReads,
+        setExclusionLengthLimit(limit) {
+          exclusionLengthLimit = limit;
+        },
         blockedPost,
         blockPost() {
           blockNextPost = true;
@@ -205,11 +222,19 @@ async function main() {
   await Promise.all(removeLeading);
   const synced = await serviceA.removedSongs();
   assert.equal(synced.pending, 0, 'accepted server records clear the outbox');
+  serverA.catalogReads.length = 0;
   let page = await serviceA.songs({ start: 0, limit: 2, sort: 'name' });
   assert.equal(page.total, 3, 'total counts only songs that remain visible');
   assert.deepEqual(page.items.map((song) => song.name), ['Song 06', 'Song 07'], 'all leading pages are skipped without losing visible songs');
   page = await serviceA.songs({ start: 2, limit: 2, sort: 'name' });
   assert.deepEqual(page.items.map((song) => song.name), ['Song 08'], 'pagination continues from the filtered offset');
+  assert.deepEqual(serverA.catalogReads, [{ start: 0, limit: 2, exclude: 5 }, { start: 2, limit: 2, exclude: 5 }]);
+
+  serverA.setExclusionLengthLimit(0);
+  const compatibilityPage = await serviceA.songs({ start: 0, limit: 2, sort: 'name' });
+  assert.equal(compatibilityPage.total, 3, 'rejected exclusion lists still yield an exact visible count');
+  assert.deepEqual(compatibilityPage.items.map((song) => song.name), ['Song 06', 'Song 07']);
+  serverA.setExclusionLengthLimit(Infinity);
 
   const unsupportedId = catalog[5].Id;
   serverA.rejectPosts.add(unsupportedId.replaceAll('-', '').toLowerCase());
@@ -222,6 +247,18 @@ async function main() {
   const userBService = makeService(JellyfinService, store, serverA.url, userB, 'token-user-b');
   assert.equal((await userBService.removedSongs()).songs.length, 0, 'one Jellyfin user does not inherit another user’s removals');
   assert.equal((await userBService.songs({ start: 0, limit: 20, sort: 'name' })).items.length, catalog.length);
+  const oldRemovals = Array.from({ length: 250 }, (_, index) => ({
+    songId: (index + 1).toString(16).padStart(32, '0'),
+    removedAt: new Date().toISOString(),
+    purgeAfter: synced.songs[0].purgeAfter,
+  }));
+  await store.merge(`${serverA.url}|${userB}`, [...oldRemovals, { ...synced.songs[0], songId: firstId.replaceAll('-', '') }]);
+  serverA.catalogReads.length = 0;
+  const compactedPage = await userBService.songs({ start: 0, limit: 2, sort: 'name' });
+  assert.equal(compactedPage.total, catalog.length - 1, 'records for songs no longer in Jellyfin do not affect the count');
+  assert.deepEqual(compactedPage.items.map((song) => song.name), ['Song 02', 'Song 03']);
+  assert.ok(serverA.catalogReads.some((read) => read.lookup > 0), 'oversized removal lists use an ID lookup');
+  assert.deepEqual(serverA.catalogReads.at(-1), { start: 0, limit: 2, exclude: 1 }, 'only the requested page is read');
   const serverBService = makeService(JellyfinService, store, serverB.url, userA, 'token-user-a');
   assert.equal((await serverBService.removedSongs()).songs.length, 0, 'another Jellyfin server has an independent local ledger');
 

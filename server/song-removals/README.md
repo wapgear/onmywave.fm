@@ -30,8 +30,11 @@ The client uses its Jellyfin `Authorization: MediaBrowser ... Token="..."` crede
 
 - `POST /OnMyWave/RemovedSongs/{songId}` with `{"removedAt":"2026-11-03T14:20:00Z"}` records an audio item visible to an allowlisted Jellyfin user. The response is `{ "songId": "<32 lowercase hex>", "removedAt": "<UTC>", "purgeAfter": "<UTC>" }`.
 - `GET /OnMyWave/RemovedSongs` returns that user's requested items in the same shape. The result is capped at 100,000 rows.
+- `GET /OnMyWave/Songs?ParentId=<libraryId>&StartIndex=0&Limit=80` returns `{ "items": [...], "total": 123 }` for one selected Jellyfin library. The server uses the authenticated listener's removal records to exclude songs before pagination and counting. Regular Jellyfin listeners can read the catalog with their usual library permissions. `SortBy`, `SortOrder`, `Genres`, `Tags`, and `ArtistIds` are optional.
 
-The sidecar validates the Jellyfin token by calling `/Users/Me`; it checks that the user is allowlisted before accepting access. A new song ID is checked through `/Users/{userId}/Items/{songId}` and must be an audio item. A retry for an existing ID returns the original job even if Jellyfin no longer exposes that item. A second allowed user can associate their request with that global job.
+The sidecar validates the Jellyfin token by calling `/Users/Me` and restricts the removal routes to allowlisted users. A new song ID is checked through `/Users/{userId}/Items/{songId}` and must be an audio item. A retry for an existing ID returns the original job even if Jellyfin no longer exposes that item. A second allowed user can associate their request with that global job.
+
+Rebuild the sidecar using the deployment command above before using the new Songs route. Until then, the desktop can request filtered song pages directly from Jellyfin using its synced and pending removal records.
 
 The future pipeline worker uses its separate bearer secret:
 
